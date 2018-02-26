@@ -10,6 +10,9 @@ import info from './icons/info';
 import success from './icons/success';
 import warning from './icons/warning';
 
+//Importing Classname
+import classnames from 'classnames';
+
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
