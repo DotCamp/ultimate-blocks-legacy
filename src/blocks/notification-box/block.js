@@ -82,16 +82,68 @@ registerBlockType( 'ub/notification-box', {
             props.setAttributes ( { ub_notify_info: value } );
         };
 
+        const infoClassChange = value => {
+        	props.setAttributes( { ub_selected_notify: 'ub_notify_info' } );
+		};
+
+        const successClassChange = value => {
+            props.setAttributes( { ub_selected_notify: 'ub_notify_success' } );
+        };
+
+        const warningClassChange = value => {
+            props.setAttributes( { ub_selected_notify: 'ub_notify_warning' } );
+        };
+
 		return (
 			<div className={ props.className }>
-                <RichText
+
+                {
+                    !! props.focus && (
+                        <BlockControls key="custom-controls">
+
+                            <Toolbar className="components-toolbar">
+                                <Button
+                                    className={ classnames(
+                                        'components-icon-button',
+                                        'components-toolbar-control',
+                                    )}
+                                    onClick = { infoClassChange }
+                                >
+                                    { info }
+                                </Button>
+                                <Button
+                                    className={ classnames(
+                                        'components-icon-button',
+                                        'components-toolbar-control',
+                                    )}
+                                    onClick = { successClassChange }
+                                >
+                                    { success }
+                                </Button>
+                                <Button
+                                    className={ classnames(
+                                        'components-icon-button',
+                                        'components-toolbar-control',
+                                    )}
+                                    onClick = { warningClassChange }
+                                >
+                                    { warning }
+                                </Button>
+                            </Toolbar>
+
+                        </BlockControls>
+                    )
+                }
+
+				<RichText
                     tagName="div"
-                    className="ub_notify_info"
+                    className={ props.attributes.ub_selected_notify }
 					onChange={ onChangeNotifyInfo }
 					value={ props.attributes.ub_notify_info }
                     focus={ props.focus }
                     keepPlaceholderOnFocus={true}
                 />
+
 			</div>
 		);
 	},
@@ -107,7 +159,7 @@ registerBlockType( 'ub/notification-box', {
 	save: function( props ) {
 		return (
 			<div className={ props.className }>
-                <div class="ub_notify_info">
+                <div className={ props.attributes.ub_selected_notify }>
 					{ props.attributes.ub_notify_info }
                 </div>
 			</div>
