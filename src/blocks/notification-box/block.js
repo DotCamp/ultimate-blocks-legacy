@@ -59,7 +59,7 @@ registerBlockType( 'ub/notification-box', {
         ub_notify_info: {
             type: 'array',
             source: 'children',
-            selector: '.ub_notify_info',
+            selector: '.ub_notify_text',
             default: 'Replace this text with your own text.'
         },
 		ub_selected_notify: {
@@ -159,7 +159,7 @@ registerBlockType( 'ub/notification-box', {
 	save: function( props ) {
 		return (
 			<div className={ props.className }>
-                <div className={ props.attributes.ub_selected_notify }>
+                <div className={ classnames( props.attributes.ub_selected_notify, 'ub_notify_text') }>
 					{ props.attributes.ub_notify_info }
                 </div>
 			</div>
