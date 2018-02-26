@@ -1,0 +1,41 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+.wp-block-ub-block-notification-box  {
+  background: $red;
+  border: 0.2rem solid $black;
+  color: $black;
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 2rem;
+}
+
+.ub_notify_info, .ub_notify_success, .ub_notify_warning, .ub_notify_error {
+  margin: 10px 0px;
+  padding: 15px;
+
+}
+.ub_notify_info {
+  color: #00529B;
+  background-color: #BDE5F8;
+}
+.ub_notify_success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+.ub_notify_warning {
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+.ub_notify_error {
+  color: #D8000C;
+  background-color: #FFD2D2;
+}
+.ub_notify_info i, .ub_notify_success i, .ub_notify_warning i, .ub_notify_error i {
+  margin:10px 22px;
+  font-size:2em;
+  vertical-align:middle;
+}
