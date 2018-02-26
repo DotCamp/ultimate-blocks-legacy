@@ -5,6 +5,11 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
+//Import Icons
+import info from './icons/info';
+import success from './icons/success';
+import warning from './icons/warning';
+
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
@@ -12,8 +17,17 @@ import './editor.scss';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
 	registerBlockType,
-	RichText
+	RichText,
+	AlignmentToolbar,
+	BlockControls,
+	BlockAlignmentToolbar,
 } = wp.blocks;
+
+const {
+	Toolbar,
+	Button,
+	Tooltip
+} = wp.components;
 
 /**
  * Register: aa Gutenberg Block.
@@ -45,6 +59,10 @@ registerBlockType( 'ub/notification-box', {
             selector: '.ub_notify_info',
             default: 'Replace this text with your own text.'
         },
+		ub_selected_notify: {
+        	type: 'string',
+			default: 'ub_notify_info'
+		}
     },
 
 	/**
