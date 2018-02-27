@@ -126,24 +126,25 @@ registerBlockType( 'ub/testimonial-block', {
                     <div className="ub_testimonial_img">
                         { ! props.attributes.imgID ? (
 
-                            <MediaUpload
-                                onSelect={ onSelectImage }
-                                type="image"
-                                value={ props.attributes.imgID }
-                                render={ ( { open } ) => (
-                                    <Button
-                                        className="components-button button button-medium"
-                                        onClick={ open }>
-                                        Upload Image
-                                    </Button>
-                                ) }
-                             >
-
-                            </MediaUpload>
+                            <div className="ub_testimonial_upload_button">
+                                <MediaUpload
+                                    onSelect={ onSelectImage }
+                                    type="image"
+                                    value={ props.attributes.imgID }
+                                    render={ ( { open } ) => (
+                                        <Button
+                                            className="components-button button button-medium"
+                                            onClick={ open }>
+                                            Upload Image
+                                        </Button>
+                                    ) }
+                                />
+                                <p>Ideal Image size is Square i.e 150x150.</p>
+                            </div>
 
                         ) : (
 
-                            <p className="image-wrapper">
+                            <p>
                                 <img
                                     src={ props.attributes.imgURL }
                                     alt={ props.attributes.imgAlt }
