@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Ultimate Blocks
- * Plugin URI: https://imtiazrayhan.com/
+ * Plugin URI: https://profiles.wordpress.org/imtiazrayhan#content-plugins
  * Description: Ultimate Blocks for Gutenberg.
  * Author: Imtiaz Rayhan
  * Author URI: https://imtiazrayhan.com/

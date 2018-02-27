@@ -1,6 +1,6 @@
 === Ultimate Blocks ===
 Contributors: imtiazrayhan
-Tags: block, gutenberg, blocks
+Tags: blocks, gutenberg blocks, block, editor
 Requires at least: 4.9
 Tested up to: 4.9
 Stable tag: 1.0.0
@@ -24,6 +24,8 @@ Right now we have two blocks.
 We will add more over the time.
 
 Check out [GitHub repository](https://github.com/imtiazrayhan/Ultimate-Blocks), if you find any problem create an issue there.
+
+This plugin was created using [Create Guten Block](https://github.com/ahmadawais/create-guten-block).
 
 == Frequently Asked Questions ==
 
