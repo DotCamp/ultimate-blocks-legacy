@@ -1,3 +1,5 @@
+import icons from './icons';
+
 //Importing Classname
 import classnames from 'classnames';
 
@@ -12,6 +14,7 @@ const {
     AlignmentToolbar,
     BlockControls,
     BlockAlignmentToolbar,
+    MediaUpload
 } = wp.blocks;
 
 const {
@@ -62,6 +65,21 @@ registerBlockType( 'ub/testimonial-block', {
             selector: '.ub_testimonial_author_role',
             default: 'Founder, Company X'
         },
+        imgURL: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'src',
+            selector: 'img',
+        },
+        imgID: {
+            type: 'number',
+        },
+        imgAlt: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'alt',
+            selector: 'img',
+        },
     },
 
     /**
@@ -86,12 +104,62 @@ registerBlockType( 'ub/testimonial-block', {
             props.setAttributes( { ub_testimonial_author_role: value } );
         };
 
+        const onSelectImage = img => {
+            props.setAttributes( {
+                imgID: img.id,
+                imgURL: img.url,
+                imgAlt: img.alt,
+            } );
+        };
+        const onRemoveImage = () => {
+            props.setAttributes({
+                imgID: null,
+                imgURL: null,
+                imgAlt: null,
+            });
+        };
+
         // Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
         return (
             <div className={ props.className }>
                 <div className="ub_testimonial">
                     <div className="ub_testimonial_img">
-                        <img height="100" width="100" src="https://whatswp.com/wp-content/uploads/2013/11/hostgator.jpg"/>
+                        { ! props.attributes.imgID ? (
+
+                            <MediaUpload
+                                onSelect={ onSelectImage }
+                                type="image"
+                                value={ props.attributes.imgID }
+                                render={ ( { open } ) => (
+                                    <Button
+                                        className="components-button button button-medium"
+                                        onClick={ open }>
+                                        Upload Image
+                                    </Button>
+                                ) }
+                             >
+
+                            </MediaUpload>
+
+                        ) : (
+
+                            <p className="image-wrapper">
+                                <img
+                                    src={ props.attributes.imgURL }
+                                    alt={ props.attributes.imgAlt }
+                                    height={100}
+                                    width={100}
+                                />
+                                { props.focus ? (
+                                    <Button
+                                        className="remove-image"
+                                        onClick={ onRemoveImage }
+                                    >
+                                        { icons.remove }
+                                    </Button>
+                                ) : null }
+                            </p>
+                        )}
                     </div>
                     <div className="ub_testimonial_content">
                         <RichText
@@ -139,7 +207,12 @@ registerBlockType( 'ub/testimonial-block', {
             <div className={ props.className }>
                 <div className="ub_testimonial">
                     <div className="ub_testimonial_img">
-                        <img height="100" width="100" src="https://whatswp.com/wp-content/uploads/2013/11/hostgator.jpg"/>
+                        <img
+                            src={ props.attributes.imgURL }
+                            alt={ props.attributes.imgAlt }
+                            height={100}
+                            width={100}
+                        />
                     </div>
                     <div className="ub_testimonial_content">
                         <p className="ub_testimonial_text">{ props.attributes.ub_testimonial_text }</p>

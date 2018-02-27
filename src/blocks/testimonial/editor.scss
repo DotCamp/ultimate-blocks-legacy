@@ -23,7 +23,11 @@
 .ub_testimonial_img img {
   margin: 0 auto;
   padding: 0;
-  margin-top: 13px;
+  margin-top: 10px;
   border-radius: 50%;
 }
 
+.ub_testimonial_img {
+  max-width: 20% !important;
+  padding: 0px 10px !important;
+ }
