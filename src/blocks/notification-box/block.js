@@ -49,7 +49,7 @@ registerBlockType( 'ub/notification-box', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'Notification Box' ), // Block title.
 	icon: 'info', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'notification' ),
 		__( 'warning' ),
@@ -159,8 +159,8 @@ registerBlockType( 'ub/notification-box', {
 	save: function( props ) {
 		return (
 			<div className={ props.className }>
-                <div className={ classnames( props.attributes.ub_selected_notify, 'ub_notify_text') }>
-					{ props.attributes.ub_notify_info }
+                <div className={ props.attributes.ub_selected_notify }>
+					<p className="ub_notify_text">{ props.attributes.ub_notify_info }</p>
                 </div>
 			</div>
 		);

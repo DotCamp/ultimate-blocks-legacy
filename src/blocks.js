@@ -10,3 +10,4 @@
  */
 
 import './blocks/notification-box/block.js';
+import './blocks/testimonial/block.js';
