@@ -1,0 +1,57 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+.wp-block-ub-block-call-to-action  {
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 2rem;
+}
+
+.ub_call_to_action {
+  box-sizing: border-box;
+  width: 100%;
+  background: #ffffff;
+  padding: 0 20px;
+  margin: 30px 0 30px 0;
+  border: 3px solid #f8f8f8;
+}
+
+.ub_call_to_action_headline {
+  width: 100%;
+}
+
+.ub_call_to_action_headline p {
+  font-size: 30px !important;
+  text-align: center;
+  padding: 0px 20px 0px 20px;
+}
+
+.ub_call_to_action_content {
+  width: 100%;
+  padding: 0 0 30px 0;
+}
+
+.ub_call_to_action_content p {
+  text-align: justify;
+}
+
+.ub_call_to_action_button {
+  display: flex;
+  align-items: center;
+}
+
+.ub_call_to_action_button a {
+  max-width: 300px;
+  margin-bottom: -30px !important;
+  background-color: rgb(239, 104, 95) !important;
+  color: #ffffff;
+  padding: 20px !important;
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

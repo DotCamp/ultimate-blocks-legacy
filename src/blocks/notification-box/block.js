@@ -6,6 +6,7 @@
  */
 
 //Import Icons
+import icon from './icons/icon';
 import info from './icons/info';
 import success from './icons/success';
 import warning from './icons/warning';
@@ -48,7 +49,7 @@ const {
 registerBlockType( 'ub/notification-box', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'Notification Box' ), // Block title.
-	icon: 'info', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
+	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'notification' ),
