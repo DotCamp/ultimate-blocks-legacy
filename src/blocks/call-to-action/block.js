@@ -45,6 +45,20 @@ registerBlockType( 'ub/call-to-action', {
         __( 'Conversion' ),
         __( 'optimize' ),
     ],
+    attributes: {
+        ub_call_to_action_headline_text: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_call_to_action_headline_text',
+            default: 'This is the Headline of the Call to Action Box'
+        },
+        ub_call_to_action_content_text: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_call_to_action_content_text',
+            default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed scelerisque sapien. Nulla fermentum in leo ut consectetur. In facilisis id tellus vitae vulputate. Sed tincidunt turpis eu turpis eleifend scelerisque. Cras posuere nisl iaculis augue ultricies, non volutpat velit tincidunt. Donec sed libero sit amet augue finibus ullamcorper nec at erat. In hac habitasse platea dictumst. '
+        }
+    },
 
 
     /**
@@ -57,16 +71,38 @@ registerBlockType( 'ub/call-to-action', {
      */
     edit: function( props ) {
 
+        const onChangeHeadlineText = value => {
+            props.setAttributes( { ub_call_to_action_headline_text: value } );
+        };
+
+        const onChangeContentText = value => {
+            props.setAttributes( { ub_call_to_action_content_text: value } );
+        };
+
         return (
             <div className={ props.className }>
-                <div class="ub_call_to_action">
-                    <div class="ub_call_to_action_headline">
-                        <p>This is the Headline of the Call to Action Box</p>
+                <div className="ub_call_to_action">
+                    <div className="ub_call_to_action_headline">
+                        <RichText
+                            tagName="p"
+                            className="ub_call_to_action_headline_text"
+                            onChange={ onChangeHeadlineText }
+                            value={ props.attributes.ub_call_to_action_headline_text }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
                     </div>
-                    <div class="ub_call_to_action_content">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <div className="ub_call_to_action_content">
+                        <RichText
+                            tagName="p"
+                            className="ub_call_to_action_content_text"
+                            onChange={ onChangeContentText }
+                            value={ props.attributes.ub_call_to_action_content_text }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
                     </div>
-                    <div class="ub_call_to_action_button">
+                    <div className="ub_call_to_action_button">
                         <a href="#">Let's Get Started!</a>
                     </div>
                 </div>
@@ -85,14 +121,14 @@ registerBlockType( 'ub/call-to-action', {
     save: function( props ) {
         return (
             <div className={ props.className }>
-                <div class="ub_call_to_action">
-                    <div class="ub_call_to_action_headline">
-                        <p>This is the Headline of the Call to Action Box</p>
+                <div className="ub_call_to_action">
+                    <div className="ub_call_to_action_headline">
+                        <p className="ub_call_to_action_headline_text">{ props.attributes.ub_call_to_action_headline_text }</p>
                     </div>
-                    <div class="ub_call_to_action_content">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <div className="ub_call_to_action_content">
+                        <p className="ub_call_to_action_content_text">{ props.attributes.ub_call_to_action_content_text }</p>
                     </div>
-                    <div class="ub_call_to_action_button">
+                    <div className="ub_call_to_action_button">
                         <a href="#">Let's Get Started!</a>
                     </div>
                 </div>
