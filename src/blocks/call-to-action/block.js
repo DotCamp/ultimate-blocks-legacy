@@ -7,20 +7,34 @@ import './editor.scss';
 import icon from './icons/icon';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
+const { Component } = wp.element;
 const {
     registerBlockType,
     RichText,
     AlignmentToolbar,
     BlockControls,
     BlockAlignmentToolbar,
-    MediaUpload
+    MediaUpload,
+    ColorPalette,
+    UrlInput,
+    InspectorControls,
 } = wp.blocks;
 
 const {
     Toolbar,
     Button,
-    Tooltip
+    IconButton,
+    Tooltip,
+    PanelColor,
+    PanelBody,
+    PanelRow,
+    FormToggle,
+    RangeControl
 } = wp.components;
+
+const {
+    SelectControl,
+} = wp.blocks.InspectorControls;
 
 /**
  * Register: aa Gutenberg Block.
@@ -57,6 +71,22 @@ registerBlockType( 'ub/call-to-action', {
             source: 'children',
             selector: '.ub_call_to_action_content_text',
             default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed scelerisque sapien. Nulla fermentum in leo ut consectetur. In facilisis id tellus vitae vulputate. Sed tincidunt turpis eu turpis eleifend scelerisque. Cras posuere nisl iaculis augue ultricies, non volutpat velit tincidunt. Donec sed libero sit amet augue finibus ullamcorper nec at erat. In hac habitasse platea dictumst. '
+        },
+        headFontSize: {
+            type: 'number',
+            default: 30
+        },
+        headColor: {
+            type: 'string',
+            default: '#444444'
+        },
+        contentFontSize: {
+            type: 'number',
+            default: 14
+        },
+        contentColor: {
+            type: 'string',
+            default: '#444444'
         }
     },
 
@@ -79,13 +109,68 @@ registerBlockType( 'ub/call-to-action', {
             props.setAttributes( { ub_call_to_action_content_text: value } );
         };
 
-        return (
+        return [
+
+            !! props.focus && (
+                <InspectorControls key="inspectors">
+
+                    <PanelBody
+                        title={ __( 'Headline Settings' ) }
+                        initialOpen={ false }
+                    >
+
+                        <RangeControl
+                            label={ __( 'Font Size' ) }
+                            value={ props.attributes.headFontSize }
+                            onChange={ ( value ) => props.setAttributes( { headFontSize: value } ) }
+                            min={ 10 }
+                            max={ 200 }
+                            beforeIcon="editor-textcolor"
+                            allowReset
+                        />
+                        <p>Color</p>
+                        <ColorPalette
+                            value={ props.attributes.headColor }
+                            onChange={ ( colorValue ) => props.setAttributes( { headColor: colorValue } ) }
+                        />
+
+                    </PanelBody>
+
+                    <PanelBody
+                        title={ __( 'Content Settings' ) }
+                        initialOpen={ false }
+                    >
+
+                        <RangeControl
+                            label={ __( 'Font Size' ) }
+                            value={ props.attributes.contentFontSize }
+                            onChange={ ( value ) => props.setAttributes( { contentFontSize: value } ) }
+                            min={ 10 }
+                            max={ 200 }
+                            beforeIcon="editor-textcolor"
+                            allowReset
+                        />
+                        <p>Color</p>
+                        <ColorPalette
+                            value={ props.attributes.contentColor }
+                            onChange={ ( colorValue ) => props.setAttributes( { contentColor: colorValue } ) }
+                        />
+
+                    </PanelBody>
+
+                </InspectorControls>
+            ),
+
             <div className={ props.className }>
                 <div className="ub_call_to_action">
                     <div className="ub_call_to_action_headline">
                         <RichText
                             tagName="p"
                             className="ub_call_to_action_headline_text"
+                            style={{
+                                fontSize: props.attributes.headFontSize + 'px',
+                                color: props.attributes.headColor
+                            }}
                             onChange={ onChangeHeadlineText }
                             value={ props.attributes.ub_call_to_action_headline_text }
                             focus={ props.focus }
@@ -96,6 +181,10 @@ registerBlockType( 'ub/call-to-action', {
                         <RichText
                             tagName="p"
                             className="ub_call_to_action_content_text"
+                            style={{
+                                fontSize: props.attributes.contentFontSize + 'px',
+                                color: props.attributes.contentColor
+                            }}
                             onChange={ onChangeContentText }
                             value={ props.attributes.ub_call_to_action_content_text }
                             focus={ props.focus }
@@ -107,7 +196,7 @@ registerBlockType( 'ub/call-to-action', {
                     </div>
                 </div>
             </div>
-        );
+        ];
     },
 
     /**
