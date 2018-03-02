@@ -12,10 +12,8 @@
 .ub_call_to_action {
   box-sizing: border-box;
   width: 100%;
-  background: #ffffff;
-  padding: 0 20px;
+  padding: 0 35px;
   margin: 30px 0 60px 0;
-  border: 3px solid #ececec;
 }
 
 .ub_call_to_action_headline {
@@ -25,6 +23,7 @@
 .ub_call_to_action_headline p {
   text-align: center;
   padding: 15px 20px 0 20px;
+  font-family: Noto Serif,serif;
 }
 
 .ub_call_to_action_content {
@@ -41,11 +40,8 @@
   align-items: center;
 }
 
-.ub_call_to_action_button a {
-  max-width: 300px;
-  margin-bottom: -30px !important;
-  background-color: rgb(239, 104, 95) !important;
-  color: #ffffff;
+.ub_cta_button {
+  margin-bottom: -31px !important;
   padding: 20px !important;
   position: relative;
   box-sizing: border-box;
@@ -53,3 +49,9 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.ub_cta_button_text {
+  margin: 0 !important;
+  text-align: center;
+}
+
