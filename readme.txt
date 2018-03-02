@@ -1,6 +1,6 @@
 === Ultimate Blocks ===
 Contributors: imtiazrayhan
-Tags: blocks, gutenberg blocks, block, editor
+Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 4.9
 Stable tag: 1.0.0
@@ -12,14 +12,16 @@ Collection of blocks for Gutenberg Editor
 
 == Description ==
 
-This is a collection of blocks for Gutenberg Editor.
+Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of custom blocks for Gutenberg Editor.
 
 **Warning: You must have [Gutenberg](https://wordpress.org/plugins/gutenberg/) installed to use this plugin.**
 
-Right now we have two blocks.
+Right now we have three amazing blocks.
 
+* Call to Action Block
 * Testimonial Block
 * Notification Box Block
+* Divider Block
 
 We will add more over the time.
 
@@ -42,10 +44,18 @@ That's it. You're done!
 
 == Screenshot ==
 
-1. Adding Testimonial Block
-2. Adding Notification Block
+1. Adding Call to Action Block
+2. Adding Testimonial Block
+3. Adding Notification Block
 
 == Changelog ==
+
+= 1.0.1 =
+
+Release Date:
+
+* Added Call to Action Block.
+* Added Divider Block.
 
 = 1.0.0 =
 
