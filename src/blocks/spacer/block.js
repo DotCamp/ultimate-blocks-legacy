@@ -1,5 +1,5 @@
 /**
- * BLOCK: divider
+ * BLOCK: spacer
  *
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
@@ -16,8 +16,6 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
     registerBlockType,
     InspectorControls,
-    AlignmentToolbar,
-    ColorPalette,
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
@@ -39,32 +37,20 @@ const {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'ub/divider', {
+registerBlockType( 'ub/spacer', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Divider' ), // Block title.
+	title: __( 'Spacer' ), // Block title.
 	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'layout', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
+		__( 'Spacer' ),
 		__( 'Divider' ),
-		__( 'Separator' ),
-		__( 'Separate' ),
+		__( 'Margin' ),
 	],
     attributes: {
-	    borderSize: {
+        spacerSize: {
 	        type: 'number',
-            default: 2
-        },
-        borderStyle: {
-	        type: 'string',
-            default: 'solid'
-        },
-        borderColor: {
-	        type: 'string',
-            default: '#ccc'
-        },
-        borderHeight: {
-	        type: 'number',
-            default: 20
+            default: 10
         }
     },
 
@@ -79,42 +65,22 @@ registerBlockType( 'ub/divider', {
 	edit: function( props ) {
 
 	    const {
-	        borderSize,
-            borderStyle,
-            borderColor,
-            borderHeight
+	        spacerSize
         } = props.attributes;
 
-		// Creates a <p class='wp-block-cgb-block-divider'></p>.
+		// Creates a <p class='wp-block-cgb-block-spacer'></p>.
 		return [
 
             !! props.focus && (
                 <InspectorControls key="inspectors">
 
                     <RangeControl
-                        label={ __( 'Thickness' ) }
-                        value={ borderSize }
-                        onChange={ ( value ) => props.setAttributes( { borderSize: value } ) }
-                        min={ 1 }
-                        max={ 20 }
-                        beforeIcon="minus"
-                        allowReset
-                    />
-
-                    <RangeControl
-                        label={ __( 'Height' ) }
-                        value={ borderHeight }
-                        onChange={ ( value ) => props.setAttributes( { borderHeight: value } ) }
-                        min={ 10 }
+                        label={ __( 'Spacer Height' ) }
+                        value={ spacerSize }
+                        onChange={ ( value ) => props.setAttributes( { spacerSize: value } ) }
+                        min={ 5 }
                         max={ 200 }
                         beforeIcon="minus"
-                        allowReset
-                    />
-
-                    <p>Color</p>
-                    <ColorPalette
-                        value={ borderColor }
-                        onChange={ ( colorValue ) => props.setAttributes( { borderColor: colorValue } ) }
                         allowReset
                     />
 
@@ -122,16 +88,15 @@ registerBlockType( 'ub/divider', {
             ),
 
 			<div className={ props.className }>
-                <div
-                    className="ub_divider"
+				<div
+                    className="ub_spacer"
                     style={{
-                        borderTop: borderSize + 'px ' + borderStyle + ' ' + borderColor,
-                        marginTop: borderHeight + 'px',
-                        marginBottom: borderHeight + 'px'
+                        marginTop: spacerSize,
+                        marginBottom: spacerSize
                     }}
                 >
                 </div>
-            </div>
+			</div>
 		];
 	},
 
@@ -146,24 +111,20 @@ registerBlockType( 'ub/divider', {
 	save: function( props ) {
 
 	    const {
-            borderSize,
-            borderStyle,
-            borderColor,
-            borderHeight
+            spacerSize
         } = props.attributes;
 
 		return (
 			<div className={ props.className }>
                 <div
-                    className="ub_divider"
+                    className="ub_spacer"
                     style={{
-                        borderTop: borderSize + 'px ' + borderStyle + ' ' + borderColor,
-                        marginTop: borderHeight + 'px',
-                        marginBottom: borderHeight + 'px'
+                        marginTop: spacerSize,
+                        marginBottom: spacerSize
                     }}
                 >
                 </div>
-			</div>
+            </div>
 		);
 	},
 } );

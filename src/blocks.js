@@ -9,7 +9,8 @@
  * Webpack is compiling as the input file.
  */
 
-import './blocks/notification-box/block.js';
-import './blocks/testimonial/block.js';
-import './blocks/call-to-action/block.js';
-import './blocks/divider/block.js';
+import './blocks/notification-box/block';
+import './blocks/testimonial/block';
+import './blocks/call-to-action/block';
+import './blocks/divider/block';
+import './blocks/spacer/block';

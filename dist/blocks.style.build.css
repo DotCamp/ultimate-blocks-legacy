@@ -174,3 +174,22 @@
   margin-right: auto;
   -ms-flex-line-pack: center;
       align-content: center; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+.wp-block-ub-block-spacer {
+  margin: 0 auto;
+  max-width: 740px; }
+
+.ub_spacer {
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%; }
