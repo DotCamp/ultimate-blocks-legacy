@@ -1,6 +1,8 @@
 # Ultimate Blocks
 
-This will be a collection of blocks for Gutenberg Editor.
+![Ultimate Blocks](https://image.ibb.co/mSShQ7/banner_1544x500.png)
+
+This will be a collection of blocks for Gutenberg Editor. [Download the Plugin from WP.org](https://wordpress.org/plugins/ultimate-blocks/)
 
 This project was bootstrapped with [Create Guten Block](https://github.com/ahmadawais/create-guten-block).
 
