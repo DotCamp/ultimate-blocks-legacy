@@ -1,14 +1,14 @@
 === Ultimate Blocks ===
-Contributors: imtiazrayhan
+Contributors: imtiazrayhan, freemius
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 4.9
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Collection of blocks for Gutenberg Editor
+Add awesome custom Blocks in Gutenberg Editor.
 
 == Description ==
 
@@ -16,14 +16,15 @@ Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of cust
 
 **Warning: You must have [Gutenberg](https://wordpress.org/plugins/gutenberg/) installed to use this plugin.**
 
-Right now we have three amazing blocks.
+Right now we have 5 blocks.
 
 * Call to Action Block
 * Testimonial Block
 * Notification Box Block
 * Divider Block
+* Spacer
 
-We will add more over the time.
+We are continuously working on new blocks.
 
 Check out [GitHub repository](https://github.com/imtiazrayhan/Ultimate-Blocks), if you find any problem create an issue there.
 
@@ -52,10 +53,12 @@ That's it. You're done!
 
 = 1.0.1 =
 
-Release Date:
+Release Date: March 4th, 2018
 
 * Added Call to Action Block.
 * Added Divider Block.
+* Added Spacer Block.
+* Integrated Freemius SDK.
 
 = 1.0.0 =
 

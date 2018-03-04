@@ -4,8 +4,8 @@
  * Plugin URI: https://profiles.wordpress.org/imtiazrayhan#content-plugins
  * Description: Ultimate Blocks for Gutenberg.
  * Author: Imtiaz Rayhan
- * Author URI: https://imtiazrayhan.com/
- * Version: 1.0.0
+ * Author URI: http://imtiazrayhan.com/
+ * Version: 1.0.1
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
