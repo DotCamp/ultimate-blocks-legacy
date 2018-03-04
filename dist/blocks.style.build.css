@@ -151,3 +151,28 @@
 .ub_cta_button_text {
   margin: 0 !important;
   text-align: center; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+.wp-block-ub-block-divider {
+  margin: 0 auto;
+  max-width: 740px; }
+
+.ub_divider {
+  display: -ms-flexbox;
+  display: flex;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px; }

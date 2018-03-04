@@ -91,3 +91,18 @@
   position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-block-divider {
+  margin: 0 auto;
+  max-width: 740px; }
