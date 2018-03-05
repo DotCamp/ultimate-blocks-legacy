@@ -14,3 +14,4 @@ import './blocks/testimonial/block';
 import './blocks/call-to-action/block';
 import './blocks/divider/block';
 import './blocks/spacer/block';
+import './blocks/click-to-tweet/block';

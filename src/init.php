@@ -62,3 +62,11 @@ function ultimate_blocks_cgb_editor_assets() {
 
 // Hook: Editor assets.
 add_action( 'enqueue_block_editor_assets', 'ultimate_blocks_cgb_editor_assets' );
+
+function ub_register_meta() {
+	register_meta( 'post', 'ub_ctt_tweet', array(
+		'show_in_rest' => true,
+	) );
+}
+
+add_action( 'init', 'ub_register_meta' );
