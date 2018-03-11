@@ -64,21 +64,43 @@ registerBlockType( 'ub/number-box', {
 		return (
 			<div className={ props.className }>
                 <div class="ub_number_box column_3">
-                    <div class="ub_number_1_3">
+                    <div class="ub_number_1">
                         <div class="ub_number_box_number">
                             1
                         </div>
                         Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
                     </div>
-                    <div class="ub_number_2_3">
+                    <div class="ub_number_2">
                         <div class="ub_number_box_number">
                             2
                         </div>
                         Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
                     </div>
-                    <div class="ub_number_3_3">
+                    <div class="ub_number_3">
                         <div class="ub_number_box_number">
                             3
+                        </div>
+                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                    </div>
+                </div>
+                <div class="ub_number_box column_2">
+                    <div class="ub_number_1">
+                        <div class="ub_number_box_number">
+                            1
+                        </div>
+                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                    </div>
+                    <div class="ub_number_2">
+                        <div class="ub_number_box_number">
+                            2
+                        </div>
+                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                    </div>
+                </div>
+                <div class="ub_number_box column_1">
+                    <div class="ub_number_1">
+                        <div class="ub_number_box_number">
+                            1
                         </div>
                         Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
                     </div>
@@ -99,21 +121,43 @@ registerBlockType( 'ub/number-box', {
 		return (
 			<div className={ props.className }>
                 <div class="ub_number_box column_3">
-                    <div class="ub_number_1_3">
+                    <div class="ub_number_1">
                         <div class="ub_number_box_number">
                             1
                         </div>
                         Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
                     </div>
-                    <div class="ub_number_2_3">
+                    <div class="ub_number_2">
                         <div class="ub_number_box_number">
                             2
                         </div>
                         Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
                     </div>
-                    <div class="ub_number_3_3">
+                    <div class="ub_number_3">
                         <div class="ub_number_box_number">
                             3
+                        </div>
+                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                    </div>
+                </div>
+                <div class="ub_number_box column_2">
+                    <div class="ub_number_1">
+                        <div class="ub_number_box_number">
+                            1
+                        </div>
+                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                    </div>
+                    <div class="ub_number_2">
+                        <div class="ub_number_box_number">
+                            2
+                        </div>
+                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                    </div>
+                </div>
+                <div class="ub_number_box column_1">
+                    <div class="ub_number_1">
+                        <div class="ub_number_box_number">
+                            1
                         </div>
                         Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
                     </div>

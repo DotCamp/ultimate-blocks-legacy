@@ -7,6 +7,7 @@
 .wp-block-ub-number-box  {
   margin: 0 auto;
   max-width: 740px;
+  margin-bottom: 50px;
 }
 
 
@@ -21,6 +22,22 @@
   margin: 0 auto;
   margin-right: auto;
   margin-left: auto;
+}
+
+.ub_number_box.column_1 > div {
+  width: 100%;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+
+.ub_number_box.column_2 > div {
+  width: 49%;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
 }
 
 .ub_number_box.column_3 > div:first-child {
