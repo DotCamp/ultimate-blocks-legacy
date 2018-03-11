@@ -1,0 +1,54 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+.wp-block-ub-number-box  {
+  margin: 0 auto;
+  max-width: 740px;
+}
+
+
+.ub_number_box {
+  display: flex;
+  margin: 1rem 0;
+  margin-top: 5rem;
+}
+
+.ub_number_box > div {
+  text-align: justify;
+  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.ub_number_box.column_3 > div:first-child {
+  margin-left: 0;
+}
+
+.ub_number_box.column_3 > div {
+  width: 33.2%;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+
+.ub_number_box_number {
+  border-radius: 100px;
+  overflow: hidden;
+  border: medium none;
+  background-image: none !important;
+  background-color: #ccc !important;
+  max-width: 80px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: -60px !important;
+  margin-bottom: 25px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px !important;
+  text-align: center;
+  color: #000 !important;
+  line-height: 80px !important;
+}
