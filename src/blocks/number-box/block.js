@@ -111,6 +111,18 @@ registerBlockType( 'ub/number-box', {
             source: 'children',
             selector: '.ub_number_three_body',
             default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+        },
+        numberBackground: {
+	        type: 'string',
+            default: '#CCCCCC'
+        },
+        numberColor: {
+	        type: 'string',
+            default: '#000000'
+        },
+        borderColor: {
+	        type: 'string',
+            default: '#CCCCCC'
         }
     },
 
@@ -134,7 +146,10 @@ registerBlockType( 'ub/number-box', {
             columnThreeTitle,
             columnOneBody,
             columnTwoBody,
-            columnThreeBody
+            columnThreeBody,
+            numberBackground,
+            numberColor,
+            borderColor
         } = props.attributes;
 
         const columns = [
@@ -148,6 +163,7 @@ registerBlockType( 'ub/number-box', {
             <BlockControls key="controls"/>,
             !! props.focus && (
                 <InspectorControls key={ 'inspector' }>
+
                     <SelectControl
                         label={ __( 'Column Number' ) }
                         value={ column }
@@ -157,16 +173,51 @@ registerBlockType( 'ub/number-box', {
                         } ) ) }
                         onChange={ ( value ) => { props.setAttributes( { column: value } ) } }
                     />
+
+                    <p>Number Background Color</p>
+                    <ColorPalette
+                        value={ numberBackground }
+                        onChange={ ( colorValue ) => props.setAttributes( { numberBackground: colorValue } ) }
+                        allowReset
+                    />
+
+                    <p>Number Color</p>
+                    <ColorPalette
+                        value={ numberColor }
+                        onChange={ ( colorValue ) => props.setAttributes( { numberColor: colorValue } ) }
+                        allowReset
+                    />
+
+                    <p>Border Color</p>
+                    <ColorPalette
+                        value={ borderColor }
+                        onChange={ ( colorValue ) => props.setAttributes( { borderColor: colorValue } ) }
+                        allowReset
+                    />
+
                 </InspectorControls>
             ),
 
 			<div className={ props.className }>
                 <div className={`ub_number_box column_${column}`}>
-                    <div className="ub_number_1">
-                        <div className="ub_number_box_number">
+                    <div
+                        className="ub_number_1"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
+                        <div
+                            className="ub_number_box_number"
+                            style={{
+                                backgroundColor: numberBackground,
+                            }}
+                        >
                             <RichText
                                 tagName="p"
                                 className="ub_number_one_number"
+                                style={{
+                                    color: numberColor
+                                }}
                                 value={ columnOneNumber }
                                 onChange={ ( value ) => props.setAttributes( { columnOneNumber: value } ) }
                                 focus={ props.focus }
@@ -190,11 +241,24 @@ registerBlockType( 'ub/number-box', {
                             keepPlaceholderOnFocus={true}
                         />
                     </div>
-                    <div className="ub_number_2">
-                        <div className="ub_number_box_number">
+                    <div
+                        className="ub_number_2"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
+                        <div
+                            className="ub_number_box_number"
+                            style={{
+                                backgroundColor: numberBackground,
+                            }}
+                        >
                             <RichText
                                 tagName="p"
                                 className="ub_number_two_number"
+                                style={{
+                                    color: numberColor
+                                }}
                                 value={ columnTwoNumber }
                                 onChange={ ( value ) => props.setAttributes( { columnTwoNumber: value } ) }
                                 focus={ props.focus }
@@ -218,11 +282,24 @@ registerBlockType( 'ub/number-box', {
                             keepPlaceholderOnFocus={true}
                         />
                     </div>
-                    <div className="ub_number_3">
-                        <div className="ub_number_box_number">
+                    <div
+                        className="ub_number_3"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
+                        <div
+                            className="ub_number_box_number"
+                            style={{
+                                backgroundColor: numberBackground,
+                            }}
+                        >
                             <RichText
                                 tagName="p"
                                 className="ub_number_three_number"
+                                style={{
+                                    color: numberColor
+                                }}
                                 value={ columnThreeNumber }
                                 onChange={ ( value ) => props.setAttributes( { columnThreeNumber: value } ) }
                                 focus={ props.focus }
@@ -271,29 +348,83 @@ registerBlockType( 'ub/number-box', {
             columnThreeTitle,
             columnOneBody,
             columnTwoBody,
-            columnThreeBody
+            columnThreeBody,
+            numberBackground,
+            numberColor,
+            borderColor
         } = props.attributes;
 
 		return (
 			<div className={ props.className }>
                 <div className={`ub_number_box column_${column}`}>
-                    <div className="ub_number_1">
-                        <div className="ub_number_box_number">
-                            <p className="ub_number_one_number">{ columnOneNumber }</p>
+                    <div
+                        className="ub_number_1"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
+                        <div
+                            className="ub_number_box_number"
+                            style={{
+                                backgroundColor: numberBackground,
+                            }}
+                        >
+                            <p
+                                className="ub_number_one_number"
+                                style={{
+                                    color: numberColor
+                                }}
+                            >
+                                { columnOneNumber }
+                            </p>
                         </div>
                         <p className="ub_number_one_title">{ columnOneTitle }</p>
                         <p className="ub_number_one_body">{ columnOneBody }</p>
                     </div>
-                    <div className="ub_number_2">
-                        <div className="ub_number_box_number">
-                            <p className="ub_number_two_number">{ columnTwoNumber }</p>
+                    <div
+                        className="ub_number_2"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
+                        <div
+                            className="ub_number_box_number"
+                            style={{
+                                backgroundColor: numberBackground,
+                            }}
+                        >
+                            <p
+                                className="ub_number_two_number"
+                                style={{
+                                    color: numberColor
+                                }}
+                            >
+                                { columnTwoNumber }
+                            </p>
                         </div>
                         <p className="ub_number_two_title">{ columnTwoTitle }</p>
                         <p className="ub_number_two_body">{ columnTwoBody }</p>
                     </div>
-                    <div className="ub_number_3">
-                        <div className="ub_number_box_number">
-                            <p className="ub_number_three_number">{ columnThreeNumber }</p>
+                    <div
+                        className="ub_number_3"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
+                        <div
+                            className="ub_number_box_number"
+                            style={{
+                                backgroundColor: numberBackground,
+                            }}
+                        >
+                            <p
+                                className="ub_number_three_number"
+                                style={{
+                                    color: numberColor
+                                }}
+                            >
+                                { columnThreeNumber }
+                            </p>
                         </div>
                         <p className="ub_number_three_title">{ columnThreeTitle }</p>
                         <p className="ub_number_three_body">{ columnThreeBody }</p>

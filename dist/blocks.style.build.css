@@ -275,7 +275,7 @@
   width: 100%;
   margin-left: .5rem;
   margin-right: .5rem;
-  border: 1px solid #ccc;
+  border: 1px solid;
   padding: 1rem; }
 
 .ub_number_box.column_2 .ub_number_3 {
@@ -285,14 +285,14 @@
   width: 49%;
   margin-left: .5rem;
   margin-right: .5rem;
-  border: 1px solid #ccc;
+  border: 1px solid;
   padding: 1rem; }
 
 .ub_number_box.column_3 > div {
   width: 33.2%;
   margin-left: .5rem;
   margin-right: .5rem;
-  border: 1px solid #ccc;
+  border: 1px solid;
   padding: 1rem; }
 
 .ub_number_box.column_3 > div:first-child {
@@ -305,7 +305,6 @@
   border-radius: 100px;
   overflow: hidden;
   border: medium none;
-  background-color: #ccc !important;
   max-width: 80px;
   margin-left: auto !important;
   margin-right: auto !important;
@@ -315,7 +314,6 @@
 .ub_number_one_number, .ub_number_two_number, .ub_number_three_number {
   font-size: 40px !important;
   text-align: center;
-  color: #000 !important;
   line-height: 80px !important;
   margin: 0 auto !important; }
 
