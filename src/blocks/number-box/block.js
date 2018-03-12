@@ -18,13 +18,16 @@ const {
     InspectorControls,
     AlignmentToolbar,
     ColorPalette,
+    BlockControls,
+    RichText
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
     PanelBody,
     Toolbar,
     RangeControl,
-    Dashicon
+    Dashicon,
+    SelectControl
 } = wp.components;
 
 /**
@@ -44,12 +47,72 @@ registerBlockType( 'ub/number-box', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'Number Box' ), // Block title.
 	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'Number box' ),
 		__( 'Feature' ),
-		__( 'Number' ),
+		__( 'Columns' ),
 	],
+    attributes: {
+	    column: {
+	        type: 'select',
+            default: '2'
+        },
+        columnOneNumber: {
+	        type: 'array',
+            source: 'children',
+            selector: '.ub_number_one_number',
+            default: '1'
+        },
+        columnTwoNumber: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_number_two_number',
+            default: '2'
+        },
+        columnThreeNumber: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_number_three_number',
+            default: '3'
+        },
+        columnOneTitle: {
+	        type: 'array',
+            source: 'children',
+            selector: '.ub_number_one_title',
+            default: 'Title One'
+        },
+        columnTwoTitle: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_number_two_title',
+            default: 'Title Two'
+        },
+        columnThreeTitle: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_number_three_title',
+            default: 'Title Three'
+        },
+        columnOneBody: {
+	        type: 'array',
+            source: 'children',
+            selector: '.ub_number_one_body',
+            default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+        },
+        columnTwoBody: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_number_two_body',
+            default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+        },
+        columnThreeBody: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub_number_three_body',
+            default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+        }
+    },
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -60,53 +123,132 @@ registerBlockType( 'ub/number-box', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: function( props ) {
-		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
-		return (
+
+	    const {
+	        column,
+            columnOneNumber,
+            columnTwoNumber,
+            columnThreeNumber,
+            columnOneTitle,
+            columnTwoTitle,
+            columnThreeTitle,
+            columnOneBody,
+            columnTwoBody,
+            columnThreeBody
+        } = props.attributes;
+
+        const columns = [
+            { value: '1', label: __( 'One Column' ) },
+            { value: '2', label: __( 'Two Column' ) },
+            { value: '3', label: __( 'Three Column' ) },
+        ];
+
+		return [
+
+            <BlockControls key="controls"/>,
+            !! props.focus && (
+                <InspectorControls key={ 'inspector' }>
+                    <SelectControl
+                        label={ __( 'Column Number' ) }
+                        value={ column }
+                        options={ columns.map( ({ value, label }) => ( {
+                            value: value,
+                            label: label,
+                        } ) ) }
+                        onChange={ ( value ) => { props.setAttributes( { column: value } ) } }
+                    />
+                </InspectorControls>
+            ),
+
 			<div className={ props.className }>
-                <div class="ub_number_box column_3">
-                    <div class="ub_number_1">
-                        <div class="ub_number_box_number">
-                            1
+                <div className={`ub_number_box column_${column}`}>
+                    <div className="ub_number_1">
+                        <div className="ub_number_box_number">
+                            <RichText
+                                tagName="p"
+                                className="ub_number_one_number"
+                                value={ columnOneNumber }
+                                onChange={ ( value ) => props.setAttributes( { columnOneNumber: value } ) }
+                                focus={ props.focus }
+                                keepPlaceholderOnFocus={true}
+                            />
                         </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                        <RichText
+                            tagName="p"
+                            className="ub_number_one_title"
+                            value={ columnOneTitle }
+                            onChange={ ( value ) => props.setAttributes( { columnOneTitle: value } ) }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
+                        <RichText
+                            tagName="p"
+                            className="ub_number_one_body"
+                            value={ columnOneBody }
+                            onChange={ ( value ) => props.setAttributes( { columnOneBody: value } ) }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
                     </div>
-                    <div class="ub_number_2">
-                        <div class="ub_number_box_number">
-                            2
+                    <div className="ub_number_2">
+                        <div className="ub_number_box_number">
+                            <RichText
+                                tagName="p"
+                                className="ub_number_two_number"
+                                value={ columnTwoNumber }
+                                onChange={ ( value ) => props.setAttributes( { columnTwoNumber: value } ) }
+                                focus={ props.focus }
+                                keepPlaceholderOnFocus={true}
+                            />
                         </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                        <RichText
+                            tagName="p"
+                            className="ub_number_two_title"
+                            value={ columnTwoTitle }
+                            onChange={ ( value ) => props.setAttributes( { columnTwoTitle: value } ) }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
+                        <RichText
+                            tagName="p"
+                            className="ub_number_two_body"
+                            value={ columnTwoBody }
+                            onChange={ ( value ) => props.setAttributes( { columnTwoBody: value } ) }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
                     </div>
-                    <div class="ub_number_3">
-                        <div class="ub_number_box_number">
-                            3
+                    <div className="ub_number_3">
+                        <div className="ub_number_box_number">
+                            <RichText
+                                tagName="p"
+                                className="ub_number_three_number"
+                                value={ columnThreeNumber }
+                                onChange={ ( value ) => props.setAttributes( { columnThreeNumber: value } ) }
+                                focus={ props.focus }
+                                keepPlaceholderOnFocus={true}
+                            />
                         </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
-                    </div>
-                </div>
-                <div class="ub_number_box column_2">
-                    <div class="ub_number_1">
-                        <div class="ub_number_box_number">
-                            1
-                        </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
-                    </div>
-                    <div class="ub_number_2">
-                        <div class="ub_number_box_number">
-                            2
-                        </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
-                    </div>
-                </div>
-                <div class="ub_number_box column_1">
-                    <div class="ub_number_1">
-                        <div class="ub_number_box_number">
-                            1
-                        </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                        <RichText
+                            tagName="p"
+                            className="ub_number_three_title"
+                            value={ columnThreeTitle }
+                            onChange={ ( value ) => props.setAttributes( { columnThreeTitle: value } ) }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
+                        <RichText
+                            tagName="p"
+                            className="ub_number_three_body"
+                            value={ columnThreeBody }
+                            onChange={ ( value ) => props.setAttributes( { columnThreeBody: value } ) }
+                            focus={ props.focus }
+                            keepPlaceholderOnFocus={true}
+                        />
                     </div>
                 </div>
 			</div>
-		);
+		];
 	},
 
 	/**
@@ -118,51 +260,46 @@ registerBlockType( 'ub/number-box', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( props ) {
+
+	    const {
+            column,
+            columnOneNumber,
+            columnTwoNumber,
+            columnThreeNumber,
+            columnOneTitle,
+            columnTwoTitle,
+            columnThreeTitle,
+            columnOneBody,
+            columnTwoBody,
+            columnThreeBody
+        } = props.attributes;
+
 		return (
 			<div className={ props.className }>
-                <div class="ub_number_box column_3">
-                    <div class="ub_number_1">
-                        <div class="ub_number_box_number">
-                            1
+                <div className={`ub_number_box column_${column}`}>
+                    <div className="ub_number_1">
+                        <div className="ub_number_box_number">
+                            <p className="ub_number_one_number">{ columnOneNumber }</p>
                         </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                        <p className="ub_number_one_title">{ columnOneTitle }</p>
+                        <p className="ub_number_one_body">{ columnOneBody }</p>
                     </div>
-                    <div class="ub_number_2">
-                        <div class="ub_number_box_number">
-                            2
+                    <div className="ub_number_2">
+                        <div className="ub_number_box_number">
+                            <p className="ub_number_two_number">{ columnTwoNumber }</p>
                         </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                        <p className="ub_number_two_title">{ columnTwoTitle }</p>
+                        <p className="ub_number_two_body">{ columnTwoBody }</p>
                     </div>
-                    <div class="ub_number_3">
-                        <div class="ub_number_box_number">
-                            3
+                    <div className="ub_number_3">
+                        <div className="ub_number_box_number">
+                            <p className="ub_number_three_number">{ columnThreeNumber }</p>
                         </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
-                    </div>
-                </div>
-                <div class="ub_number_box column_2">
-                    <div class="ub_number_1">
-                        <div class="ub_number_box_number">
-                            1
-                        </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
-                    </div>
-                    <div class="ub_number_2">
-                        <div class="ub_number_box_number">
-                            2
-                        </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
-                    </div>
-                </div>
-                <div class="ub_number_box column_1">
-                    <div class="ub_number_1">
-                        <div class="ub_number_box_number">
-                            1
-                        </div>
-                        Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur ut rhon cus turpis.
+                        <p className="ub_number_three_title">{ columnThreeTitle }</p>
+                        <p className="ub_number_three_body">{ columnThreeBody }</p>
                     </div>
                 </div>
 			</div>
-		);
+        );
 	},
 } );

@@ -255,9 +255,8 @@
  * CSS for both Frontend+Backend.
  */
 .wp-block-ub-number-box {
-  margin: 0 auto;
-  max-width: 740px;
-  margin-bottom: 50px; }
+  margin: 50px 0 50px 0;
+  max-width: 740px; }
 
 .ub_number_box {
   display: -ms-flexbox;
@@ -267,9 +266,10 @@
 
 .ub_number_box > div {
   text-align: justify;
-  margin: 0 auto;
-  margin-right: auto;
-  margin-left: auto; }
+  margin: 0 auto; }
+
+.ub_number_box.column_1 .ub_number_2, .ub_number_box.column_1 .ub_number_3 {
+  display: none; }
 
 .ub_number_box.column_1 > div {
   width: 100%;
@@ -278,15 +278,15 @@
   border: 1px solid #ccc;
   padding: 1rem; }
 
+.ub_number_box.column_2 .ub_number_3 {
+  display: none; }
+
 .ub_number_box.column_2 > div {
   width: 49%;
   margin-left: .5rem;
   margin-right: .5rem;
   border: 1px solid #ccc;
   padding: 1rem; }
-
-.ub_number_box.column_3 > div:first-child {
-  margin-left: 0; }
 
 .ub_number_box.column_3 > div {
   width: 33.2%;
@@ -295,19 +295,46 @@
   border: 1px solid #ccc;
   padding: 1rem; }
 
+.ub_number_box.column_3 > div:first-child {
+  margin-left: 0; }
+
+.ub_number_box.column_3 > div:last-child {
+  margin-right: 0; }
+
 .ub_number_box_number {
   border-radius: 100px;
   overflow: hidden;
   border: medium none;
-  background-image: none !important;
   background-color: #ccc !important;
   max-width: 80px;
   margin-left: auto !important;
   margin-right: auto !important;
   margin-top: -60px !important;
-  margin-bottom: 25px;
-  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 25px; }
+
+.ub_number_one_number, .ub_number_two_number, .ub_number_three_number {
   font-size: 40px !important;
   text-align: center;
   color: #000 !important;
-  line-height: 80px !important; }
+  line-height: 80px !important;
+  margin: 0 auto !important; }
+
+.ub_number_one_title, .ub_number_two_title, .ub_number_three_title {
+  font-size: 30px !important;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0; }
+
+@media screen and (max-width: 800px) {
+  .ub_number_box.column_3.column_3 {
+    display: block; }
+    .ub_number_box.column_3.column_3 > div {
+      width: 100%;
+      margin: 0; } }
+
+@media screen and (max-width: 600px) {
+  .ub_number_box.column_2.column_2 {
+    display: block; }
+    .ub_number_box.column_2.column_2 > div {
+      width: 100%;
+      margin: 0; } }
