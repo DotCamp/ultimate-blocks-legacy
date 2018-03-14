@@ -139,19 +139,29 @@ registerBlockType( 'ub/call-to-action', {
             !! props.focus && (
                 <InspectorControls key="inspectors">
 
-                    <p>Background Color</p>
-                    <ColorPalette
-                        value={ props.attributes.ctaBackgroundColor }
-                        onChange={ ( colorValue ) => props.setAttributes( { ctaBackgroundColor: colorValue } ) }
-                        allowReset
-                    />
+                    <PanelColor
+                        title={__('Background Color')}
+                        colorValue={ props.attributes.ctaBackgroundColor }
+                        initialOpen={ false }
+                    >
+                        <ColorPalette
+                            value={ props.attributes.ctaBackgroundColor }
+                            onChange={ ( colorValue ) => props.setAttributes( { ctaBackgroundColor: colorValue } ) }
+                            allowReset
+                        />
+                    </PanelColor>
 
-                    <p>Border Color</p>
-                    <ColorPalette
-                        value={ props.attributes.ctaBorderColor }
-                        onChange={ ( colorValue ) => props.setAttributes( { ctaBorderColor: colorValue } ) }
-                        allowReset
-                    />
+                    <PanelColor
+                        title={__('Border Color')}
+                        colorValue={ props.attributes.ctaBorderColor }
+                        initialOpen={ false }
+                    >
+                        <ColorPalette
+                            value={ props.attributes.ctaBorderColor }
+                            onChange={ ( colorValue ) => props.setAttributes( { ctaBorderColor: colorValue } ) }
+                            allowReset
+                        />
+                    </PanelColor>
 
                     <PanelBody
                         title={ __( 'Headline Settings' ) }

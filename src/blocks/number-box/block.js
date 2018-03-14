@@ -27,6 +27,7 @@ const {
     Toolbar,
     RangeControl,
     Dashicon,
+    PanelColor,
     SelectControl
 } = wp.components;
 
@@ -174,26 +175,41 @@ registerBlockType( 'ub/number-box', {
                         onChange={ ( value ) => { props.setAttributes( { column: value } ) } }
                     />
 
-                    <p>Number Background Color</p>
-                    <ColorPalette
-                        value={ numberBackground }
-                        onChange={ ( colorValue ) => props.setAttributes( { numberBackground: colorValue } ) }
-                        allowReset
-                    />
+                    <PanelColor
+                        title={__('Number Background Color')}
+                        colorValue={ numberBackground }
+                        initialOpen={ false }
+                    >
+                        <ColorPalette
+                            value={ numberBackground }
+                            onChange={ ( colorValue ) => props.setAttributes( { numberBackground: colorValue } ) }
+                            allowReset
+                        />
+                    </PanelColor>
 
-                    <p>Number Color</p>
-                    <ColorPalette
-                        value={ numberColor }
-                        onChange={ ( colorValue ) => props.setAttributes( { numberColor: colorValue } ) }
-                        allowReset
-                    />
+                    <PanelColor
+                        title={__('Number Color')}
+                        colorValue={ numberColor }
+                        initialOpen={ false }
+                    >
+                        <ColorPalette
+                            value={ numberColor }
+                            onChange={ ( colorValue ) => props.setAttributes( { numberColor: colorValue } ) }
+                            allowReset
+                        />
+                    </PanelColor>
 
-                    <p>Border Color</p>
-                    <ColorPalette
-                        value={ borderColor }
-                        onChange={ ( colorValue ) => props.setAttributes( { borderColor: colorValue } ) }
-                        allowReset
-                    />
+                    <PanelColor
+                        title={__('Border Color')}
+                        colorValue={ borderColor }
+                        initialOpen={ false }
+                    >
+                        <ColorPalette
+                            value={ borderColor }
+                            onChange={ ( colorValue ) => props.setAttributes( { borderColor: colorValue } ) }
+                            allowReset
+                        />
+                    </PanelColor>
 
                 </InspectorControls>
             ),
