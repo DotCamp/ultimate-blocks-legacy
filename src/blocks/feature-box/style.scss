@@ -96,21 +96,21 @@
 }
 
 @media screen and (max-width: 800px) {
-  .ub_feature_box.column_3.column_3 {
+  .ub_feature_box.column_3 {
     display: block;
     > div {
-      width: 100%;
-      margin: 0;
+      width: 90% !important;
+      margin: 0 !important;
     }
   }
 }
 
 @media screen and (max-width: 600px) {
-  .ub_feature_box.column_2.column_2 {
+  .ub_feature_box.column_2 {
     display: block;
     > div {
-      width: 100%;
-      margin: 0;
+      width: 90% !important;
+      margin: 0 !important;
     }
   }
 }
