@@ -348,20 +348,13 @@
  * CSS for both Frontend+Backend.
  */
 .wp-block-ub-feature-box {
-  margin: 50px 0 50px 0;
+  margin: 20px 0 20px 0;
   max-width: 740px; }
 
 .ub_feature_box {
   display: -ms-flexbox;
   display: flex;
   margin: 1rem 0; }
-  .ub_feature_box > img {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-        align-items: center;
-    margin-right: auto;
-    margin-left: auto; }
   .ub_feature_box > div {
     text-align: justify;
     margin: 0 auto; }
@@ -415,8 +408,17 @@
 .ub_feature_one_title, .ub_feature_two_title, .ub_feature_three_title {
   font-size: 30px !important;
   text-align: center;
-  margin: 10px 0;
+  margin: 10px 0 !important;
   padding: 0; }
+
+.ub_feature_1 > img, .ub_feature_2 > img, .ub_feature_3 > img {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%; }
 
 @media screen and (max-width: 800px) {
   .ub_feature_box.column_3.column_3 {
