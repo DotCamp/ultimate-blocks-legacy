@@ -7,10 +7,12 @@
 
 //Import Icon
 import icon from './icons/icon';
+import remove_icon from './icons/remove_icon';
 
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import icons from "../testimonial/icons";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
@@ -19,7 +21,8 @@ const {
     AlignmentToolbar,
     ColorPalette,
     BlockControls,
-    RichText
+    RichText,
+    MediaUpload
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
@@ -27,7 +30,8 @@ const {
     Toolbar,
     RangeControl,
     Dashicon,
-    SelectControl
+    SelectControl,
+    Button
 } = wp.components;
 
 /**
@@ -94,6 +98,51 @@ registerBlockType( 'ub/feature-box', {
             selector: '.ub_feature_three_body',
             default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
         },
+        imgOneURL: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'src',
+            selector: '.ub_feature_one_img',
+        },
+        imgOneID: {
+            type: 'number',
+        },
+        imgOneAlt: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'alt',
+            selector: '.ub_feature_one_img',
+        },
+        imgTwoURL: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'src',
+            selector: '.ub_feature_two_img',
+        },
+        imgTwoID: {
+            type: 'number',
+        },
+        imgTwoAlt: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'alt',
+            selector: '.ub_feature_two_img',
+        },
+        imgThreeURL: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'src',
+            selector: '.ub_feature_three_img',
+        },
+        imgThreeID: {
+            type: 'number',
+        },
+        imgThreeAlt: {
+            type: 'string',
+            source: 'attribute',
+            attribute: 'alt',
+            selector: '.ub_feature_three_img',
+        },
     },
 
 	/**
@@ -113,6 +162,15 @@ registerBlockType( 'ub/feature-box', {
             columnOneBody,
             columnTwoBody,
             columnThreeBody,
+            imgOneURL,
+            imgOneID,
+            imgOneAlt,
+            imgTwoURL,
+            imgTwoID,
+            imgTwoAlt,
+            imgThreeURL,
+            imgThreeID,
+            imgThreeAlt,
         } = props.attributes;
 
         const columns = [
@@ -120,16 +178,61 @@ registerBlockType( 'ub/feature-box', {
             { value: '2', label: __( 'Two Column' ) },
             { value: '3', label: __( 'Three Column' ) },
         ];
-		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
-		return [
 
+
+        const onSelectImageOne = img => {
+            props.setAttributes( {
+                imgOneID: img.id,
+                imgOneURL: img.url,
+                imgOneAlt: img.alt,
+            } );
+        };
+
+        const onSelectImageTwo = img => {
+            props.setAttributes( {
+                imgTwoID: img.id,
+                imgTwoURL: img.url,
+                imgTwoAlt: img.alt,
+            } );
+        };
+
+        const onSelectImageThree = img => {
+            props.setAttributes( {
+                imgThreeID: img.id,
+                imgThreeURL: img.url,
+                imgThreeAlt: img.alt,
+            } );
+        };
+
+        const onRemoveImageOne = () => {
+            props.setAttributes({
+                imgOneID: null,
+                imgOneURL: null,
+                imgOneAlt: null,
+            });
+        };
+
+        const onRemoveImageTwo = () => {
+            props.setAttributes({
+                imgTwoID: null,
+                imgTwoURL: null,
+                imgTwoAlt: null,
+            });
+        };
+
+        const onRemoveImageThree = () => {
+            props.setAttributes({
+                imgThreeID: null,
+                imgThreeURL: null,
+                imgThreeAlt: null,
+            });
+        };
+
+        return [
 
             !! props.focus && (
-
                 <BlockControls key="controls"/>,
-
                 <InspectorControls key={ 'inspector' }>
-
                     <SelectControl
                         label={ __( 'Column Number' ) }
                         value={ column }
@@ -139,14 +242,45 @@ registerBlockType( 'ub/feature-box', {
                         } ) ) }
                         onChange={ ( value ) => { props.setAttributes( { column: value } ) } }
                     />
-
                 </InspectorControls>
             ),
 
 			<div className={ props.className }>
                 <div className={`ub_feature_box column_${column}`}>
                     <div class="ub_feature_1">
-                        <img src="http://materialdesignblog.com/wp-content/uploads/2015/11/1200x628.png" alt=""/>
+                        { ! props.attributes.imgOneID ? (
+
+                            <div className="ub_feature_upload_button">
+                                <MediaUpload
+                                    onSelect={ onSelectImageOne }
+                                    type="image"
+                                    value={ imgOneID }
+                                    render={ ( { open } ) => (
+                                        <Button
+                                            className="components-button button button-medium"
+                                            onClick={ open }>
+                                            Upload Image
+                                        </Button>
+                                    ) }
+                                />
+                            </div>
+                        ) : (
+                            <React.Fragment>
+                                { props.focus ? (
+                                    <Button
+                                        className="remove-image"
+                                        onClick={ onRemoveImageOne }
+                                    >
+                                        { remove_icon }
+                                    </Button>
+                                ) : null }
+                                <img
+                                    className="ub_feature_one_img"
+                                    src={ imgOneURL }
+                                    alt={ imgOneAlt }
+                                />
+                            </React.Fragment>
+                        )}
                         <RichText
                             tagName="p"
                             className="ub_feature_one_title"
@@ -165,7 +299,38 @@ registerBlockType( 'ub/feature-box', {
                         />
                     </div>
                     <div class="ub_feature_2">
-                        <img src="http://materialdesignblog.com/wp-content/uploads/2015/11/1200x628.png" alt=""/>
+                        { ! props.attributes.imgTwoID ? (
+                            <div className="ub_feature_upload_button">
+                                <MediaUpload
+                                    onSelect={ onSelectImageTwo }
+                                    type="image"
+                                    value={ imgTwoID }
+                                    render={ ( { open } ) => (
+                                        <Button
+                                            className="components-button button button-medium"
+                                            onClick={ open }>
+                                            Upload Image
+                                        </Button>
+                                    ) }
+                                />
+                            </div>
+                        ) : (
+                            <React.Fragment>
+                                { props.focus ? (
+                                    <Button
+                                        className="remove-image"
+                                        onClick={ onRemoveImageTwo }
+                                    >
+                                        { remove_icon }
+                                    </Button>
+                                ) : null }
+                                <img
+                                    className="ub_feature_two_img"
+                                    src={ imgTwoURL }
+                                    alt={ imgTwoAlt }
+                                />
+                            </React.Fragment>
+                        )}
                         <RichText
                             tagName="p"
                             className="ub_feature_two_title"
@@ -184,7 +349,38 @@ registerBlockType( 'ub/feature-box', {
                         />
                     </div>
                     <div class="ub_feature_3">
-                        <img src="http://materialdesignblog.com/wp-content/uploads/2015/11/1200x628.png" alt=""/>
+                        { ! props.attributes.imgThreeID ? (
+                            <div className="ub_feature_upload_button">
+                                <MediaUpload
+                                    onSelect={ onSelectImageThree }
+                                    type="image"
+                                    value={ imgThreeID }
+                                    render={ ( { open } ) => (
+                                        <Button
+                                            className="components-button button button-medium"
+                                            onClick={ open }>
+                                            Upload Image
+                                        </Button>
+                                    ) }
+                                />
+                            </div>
+                        ) : (
+                            <React.Fragment>
+                                { props.focus ? (
+                                    <Button
+                                        className="remove-image"
+                                        onClick={ onRemoveImageThree }
+                                    >
+                                        { remove_icon }
+                                    </Button>
+                                ) : null }
+                                <img
+                                    className="ub_feature_three_img"
+                                    src={ imgThreeURL }
+                                    alt={ imgThreeAlt }
+                                />
+                            </React.Fragment>
+                        )}
                         <RichText
                             tagName="p"
                             className="ub_feature_three_title"
@@ -224,23 +420,44 @@ registerBlockType( 'ub/feature-box', {
             columnOneBody,
             columnTwoBody,
             columnThreeBody,
+            imgOneURL,
+            imgOneID,
+            imgOneAlt,
+            imgTwoURL,
+            imgTwoID,
+            imgTwoAlt,
+            imgThreeURL,
+            imgThreeID,
+            imgThreeAlt,
         } = props.attributes;
 
 		return (
 			<div className={ props.className }>
                 <div className={`ub_feature_box column_${column}`}>
                     <div class="ub_feature_1">
-                        <img src="http://materialdesignblog.com/wp-content/uploads/2015/11/1200x628.png" alt=""/>
+                        <img
+                            className="ub_feature_one_img"
+                            src={ imgOneURL }
+                            alt={ imgOneAlt }
+                        />
                         <p className="ub_feature_one_title">{ columnOneTitle }</p>
                         <p className="ub_feature_one_body">{ columnOneBody }</p>
                     </div>
                     <div class="ub_feature_2">
-                        <img src="http://materialdesignblog.com/wp-content/uploads/2015/11/1200x628.png" alt=""/>
+                        <img
+                            className="ub_feature_two_img"
+                            src={ imgTwoURL }
+                            alt={ imgTwoAlt }
+                        />
                         <p className="ub_feature_two_title">{ columnTwoTitle }</p>
                         <p className="ub_feature_two_body">{ columnTwoBody }</p>
                     </div>
                     <div class="ub_feature_3">
-                        <img src="http://materialdesignblog.com/wp-content/uploads/2015/11/1200x628.png" alt=""/>
+                        <img
+                            className="ub_feature_three_img"
+                            src={ imgThreeURL }
+                            alt={ imgThreeAlt }
+                        />
                         <p className="ub_feature_three_title">{ columnThreeTitle }</p>
                         <p className="ub_feature_three_body">{ columnThreeBody }</p>
                     </div>
