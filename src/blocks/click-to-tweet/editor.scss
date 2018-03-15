@@ -1,0 +1,34 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-ub-block-click-to-tweet {
+  margin: 0 auto;
+  max-width: 740px;
+}
+
+.ub_tweet {
+  display: block;
+  margin: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  resize: none;
+  background: transparent !important;
+  overflow: hidden;
+  line-height: 1.4;
+  padding: 10px;
+  transition: padding .2s linear;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.ub_click_tweet i {
+  top: 4px !important;
+}

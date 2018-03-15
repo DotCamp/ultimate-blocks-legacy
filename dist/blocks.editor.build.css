@@ -164,3 +164,41 @@
   font-size: 12px;
   text-align: justify;
   margin: 5px 0 0 3px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-block-click-to-tweet {
+  margin: 0 auto;
+  max-width: 740px; }
+
+.ub_tweet {
+  display: block;
+  margin: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  resize: none;
+  background: transparent !important;
+  overflow: hidden;
+  line-height: 1.4;
+  padding: 10px;
+  -webkit-transition: padding .2s linear;
+  -o-transition: padding .2s linear;
+  transition: padding .2s linear; }
+  .ub_tweet:focus {
+    -webkit-box-shadow: none;
+            box-shadow: none; }
+
+.ub_click_tweet i {
+  top: 4px !important; }

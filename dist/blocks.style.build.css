@@ -383,3 +383,52 @@
     .ub_feature_box.column_2 > div {
       width: 90% !important;
       margin: 0 !important; } }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+.wp-block-ub-block-click-to-tweet {
+  margin: 0 auto;
+  max-width: 740px; }
+
+.ub_click_to_tweet {
+  width: 95%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 25px 0px; }
+
+.ub_tweet {
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px; }
+
+.ub_click_tweet {
+  width: 50%;
+  float: right;
+  text-align: right;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px; }
+
+.ub_click_tweet i {
+  display: inline-block;
+  width: 16px;
+  height: 14px;
+  background: url("../src/blocks/click-to-tweet/icons/sprite-twitter.png") no-repeat;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  margin-right: 3px;
+  position: relative;
+  top: 0;
+  background-position: 0 -151px;
+  width: 25px;
+  height: 20px; }
