@@ -16,15 +16,24 @@ Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of cust
 
 **Warning: You must have [Gutenberg](https://wordpress.org/plugins/gutenberg/) installed to use this plugin.**
 
-Right now we have 5 blocks.
+Right now we have 7 blocks.
 
 * Call to Action Block
+  - Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
+* Number Box Block
+  - Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
+* Feature Box Block
+  - Add boxes with images. Highlight the features of any product or service. 3 columns options.
 * Testimonial Block
+  - Nice, simple testimonial box with option to add image, name, role of the testimonial author.
 * Notification Box Block
+  - Highlight important information in your posts/pages. Comes in three different designs.
 * Divider Block
-* Spacer
+  - Add custom divider between your blocks. Customize the color, size, everything.
+* Spacer Block
+  - Add more space between your blocks with this insanely easy to use block.
 
-We are continuously working on new blocks.
+We are continuously working on new blocks. If you have any block ideas, let us know. We are on [Twitter](https://twitter.com/Ultimate_Blocks).
 
 Check out [GitHub repository](https://github.com/imtiazrayhan/Ultimate-Blocks), if you find any problem create an issue there.
 
@@ -50,6 +59,14 @@ That's it. You're done!
 3. Adding Notification Block
 
 == Changelog ==
+
+= 1.0.2 =
+
+Release Date:
+
+* Added Click to Tweet Block.
+* Added Number Box Block.
+* Added Feature Box Block.
 
 = 1.0.1 =
 

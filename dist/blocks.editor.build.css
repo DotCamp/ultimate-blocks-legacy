@@ -133,21 +133,6 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
-.wp-block-ub-block-click-to-tweet {
-  margin: 0 auto;
-  max-width: 740px; }
-/**
- * #.# Common SCSS
- *
- * Can include things like variables and mixins
- * that are used across the project.
-*/
-/**
- * #.# Editor Styles
- *
- * CSS for just Backend enqueued after style.scss
- * which makes it higher in priority.
- */
 .wp-block-ub-number-box {
   margin: 0 auto;
   max-width: 740px; }
