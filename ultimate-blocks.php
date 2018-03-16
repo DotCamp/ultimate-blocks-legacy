@@ -53,4 +53,3 @@ do_action( 'ub_fs_loaded' );
  * Block Initializer.
  */
 require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
-require_once plugin_dir_path( __FILE__ ) . 'src/blocks/click-to-tweet/block.php';

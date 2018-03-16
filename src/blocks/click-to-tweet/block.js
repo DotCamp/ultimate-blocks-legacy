@@ -63,6 +63,14 @@ registerBlockType( 'ub/click-to-tweet', {
 		tweetFontSize: {
 	    	type: 'number',
 			default: 20
+		},
+		tweetColor: {
+	    	type: 'string',
+			default: '#444444'
+		},
+		borderColor: {
+	    	type: 'string',
+			default: '#CCCCCC'
 		}
     },
 
@@ -80,7 +88,9 @@ registerBlockType( 'ub/click-to-tweet', {
 
 	    const {
 	        ubTweet,
-			tweetFontSize
+			tweetFontSize,
+			tweetColor,
+			borderColor
         } = props.attributes;
 
 		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
@@ -96,13 +106,31 @@ registerBlockType( 'ub/click-to-tweet', {
                         beforeIcon="editor-textcolor"
                         allowReset
                     />
+					<p>{ __('Tweet Color') }</p>
+                    <ColorPalette
+                        value={ tweetColor }
+                        onChange={ ( colorValue ) => props.setAttributes( { tweetColor: colorValue } ) }
+                        allowReset
+                    />
+                    <p>{ __('Border Color') }</p>
+                    <ColorPalette
+                        value={ borderColor }
+                        onChange={ ( colorValue ) => props.setAttributes( { borderColor: colorValue } ) }
+                        allowReset
+                    />
 				</InspectorControls>
 			),
 			<div className={ props.className }>
-                <div className="ub_click_to_tweet">
+                <div
+					className="ub_click_to_tweet"
+					style={{
+						borderColor: borderColor
+					}}
+				>
                     <TextareaAutosize
 						style={{
-							fontSize: tweetFontSize + 'px'
+							fontSize: tweetFontSize + 'px',
+							color: tweetColor
 						}}
                         className="ub_tweet"
                         value={ ubTweet }

@@ -12,7 +12,7 @@
 .ub_click_to_tweet {
   width: 95%;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 1px solid;
   border-radius: 4px;
   padding: 10px;
   margin: 25px 0px;
@@ -20,7 +20,6 @@
 
 .ub_tweet {
   padding: 10px;
-  margin-top: 10px;
   margin-left: 10px;
 }
 
@@ -30,7 +29,6 @@
   text-align: right;
   padding: 10px;
   margin-right: 10px;
-  margin-bottom: 10px;
 }
 
 .ub_click_tweet i {

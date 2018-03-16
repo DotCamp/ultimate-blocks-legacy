@@ -62,3 +62,6 @@ function ultimate_blocks_cgb_editor_assets() {
 
 // Hook: Editor assets.
 add_action( 'enqueue_block_editor_assets', 'ultimate_blocks_cgb_editor_assets' );
+
+//Click to Tweet Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/click-to-tweet/block.php';

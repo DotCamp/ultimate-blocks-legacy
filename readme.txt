@@ -16,7 +16,7 @@ Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of cust
 
 **Warning: You must have [Gutenberg](https://wordpress.org/plugins/gutenberg/) installed to use this plugin.**
 
-Right now we have 7 blocks.
+Right now we have 8 blocks.
 
 * Call to Action Block
   - Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
@@ -32,6 +32,8 @@ Right now we have 7 blocks.
   - Add custom divider between your blocks. Customize the color, size, everything.
 * Spacer Block
   - Add more space between your blocks with this insanely easy to use block.
+* Click to Tweet
+  - Add tweetable content in your posts/pages.
 
 We are continuously working on new blocks. If you have any block ideas, let us know. We are on [Twitter](https://twitter.com/Ultimate_Blocks).
 
