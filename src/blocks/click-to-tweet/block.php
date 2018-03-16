@@ -43,17 +43,16 @@ function render_block( $attributes ) {
 	$url       = apply_filters( 'ub_click_to_tweet_url', "http://twitter.com/share?&text={$tweet_url}&url={$permalink}{$via}" );
 
 	$output = '';
-	$output .= '<div class="ub_click_to_tweet" style="'. $borderColor .'">';
-	$output .= '<div class="ub_tweet" style="'. $tweetFontSize .'px;' . $tweetColor . '">';
-	$output .= $tweet;
-	$output .= '</div>';
-	$output .= '<div class="ub_click_tweet">';
-	$output .= '<span style="display: inline-flex">';
-	$output .= '<i></i>';
+	$output .= sprintf('<div class="ub_click_to_tweet" style="%1$s">', esc_attr( $borderColor ));
+	$output .= sprintf( '<div class="ub_tweet" style="%1$spx; %2$s"> %3$s', esc_attr( $tweetFontSize ), esc_attr( $tweetColor ), esc_html( $tweet ) );
+	$output .= sprintf('</div>');
+	$output .= sprintf( '<div class="ub_click_tweet">' );
+	$output .= sprintf( '<span style="display: inline-flex">');
+	$output .= sprintf( '<i></i>');
 	$output .= sprintf( '<a target="_blank" href="%1$s">Click to Tweet</a>', esc_url( $url ) );
-	$output .= '</span>';
-	$output .= '</div>';
-	$output .= '</div>';
+	$output .= sprintf( '</span>');
+	$output .= sprintf( '</div>');
+	$output .= sprintf( '</div>');
 
 	return $output;
 }
