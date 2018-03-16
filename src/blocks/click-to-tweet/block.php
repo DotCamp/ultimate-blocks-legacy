@@ -11,6 +11,10 @@ function ub_register_meta() {
 		'show_in_rest' => true,
 		'single' => true
 	) );
+	register_meta( 'post', 'ub_ctt_via', array(
+		'show_in_rest' => true,
+		'single' => true
+	) );
 }
 
 add_action( 'init', 'ub_register_meta' );
@@ -24,7 +28,9 @@ add_action( 'init', 'ub_register_meta' );
  *
  */
 function render_block( $attributes ) {
-	// Tweet.
+
+	$via = get_post_meta( get_the_ID(), 'ub_ctt_via', true );
+	$via = ( $via ) ? '&via=' . str_replace( '@', '', $via ) : false;
 	$tweet      = get_post_meta( get_the_ID(), 'ub_ctt_tweet', true );
 	$tweet_url  = ( $tweet ) ? rawurlencode( $tweet ) : false;
 	$tweet_text = ( $tweet ) ? $tweet : false;
@@ -34,7 +40,7 @@ function render_block( $attributes ) {
 	$borderColor = is_array( $attributes ) && isset( $attributes['borderColor'] ) ? "border-color:{$attributes['borderColor']}" : "border-color: #CCCCCC";
 
 	$permalink = esc_url( get_the_permalink() );
-	$url       = apply_filters( 'ub_click_to_tweet_url', "http://twitter.com/share?&text={$tweet_url}&url={$permalink}" );
+	$url       = apply_filters( 'ub_click_to_tweet_url', "http://twitter.com/share?&text={$tweet_url}&url={$permalink}{$via}" );
 
 	$output = '';
 	$output .= '<div class="ub_click_to_tweet" style="'. $borderColor .'">';

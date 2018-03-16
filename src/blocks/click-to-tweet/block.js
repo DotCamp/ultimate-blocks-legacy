@@ -17,15 +17,15 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
     registerBlockType,
     RichText,
-    InspectorControls,
     AlignmentToolbar,
     ColorPalette,
-    source
+    InspectorControls
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
     PanelBody,
     Toolbar,
+	TextControl,
     RangeControl,
     Dashicon
 } = wp.components;
@@ -60,6 +60,10 @@ registerBlockType( 'ub/click-to-tweet', {
 	        source: 'meta',
             meta: 'ub_ctt_tweet'
         },
+		ubVia: {
+	    	source: 'meta',
+			meta: 'ub_ctt_via'
+		},
 		tweetFontSize: {
 	    	type: 'number',
 			default: 20
@@ -88,6 +92,7 @@ registerBlockType( 'ub/click-to-tweet', {
 
 	    const {
 	        ubTweet,
+			ubVia,
 			tweetFontSize,
 			tweetColor,
 			borderColor
@@ -97,6 +102,12 @@ registerBlockType( 'ub/click-to-tweet', {
 		return [
 			!! props.focus && (
                 <InspectorControls key="inspectors">
+                    <TextControl
+                        label={ __( 'Twitter Username' ) }
+                        placeholder='@'
+                        value={ ubVia }
+                        onChange={ ( value ) => props.setAttributes( { ubVia: value } ) }
+                    />
                     <RangeControl
                         label={ __( 'Font Size' ) }
                         value={ tweetFontSize }
