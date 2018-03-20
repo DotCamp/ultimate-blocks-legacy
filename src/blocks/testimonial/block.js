@@ -20,7 +20,8 @@ const {
 const {
     Toolbar,
     Button,
-    Tooltip
+    Tooltip,
+    withState
 } = wp.components;
 
 /**
@@ -90,110 +91,129 @@ registerBlockType( 'ub/testimonial-block', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: function( props ) {
+    edit: withState( { editable: 'content', } ) ( function( props )
+        {
+            const {
+                isSelected,
+                editable,
+                setState
+            } = props;
 
-        const onChangeTestimonialText = value => {
-            props.setAttributes( { ub_testimonial_text: value } );
-        };
+            const onSetActiveEditable = ( newEditable ) => () => {
+                setState( { editable: newEditable } )
+            };
 
-        const onChangeTestimonialAuthor = value => {
-            props.setAttributes( { ub_testimonial_author: value } );
-        };
+            const onChangeTestimonialText = value => {
+                props.setAttributes( { ub_testimonial_text: value } );
+            };
 
-        const onChangeTestimonialAuthorRole = value => {
-            props.setAttributes( { ub_testimonial_author_role: value } );
-        };
+            const onChangeTestimonialAuthor = value => {
+                props.setAttributes( { ub_testimonial_author: value } );
+            };
 
-        const onSelectImage = img => {
-            props.setAttributes( {
-                imgID: img.id,
-                imgURL: img.url,
-                imgAlt: img.alt,
-            } );
-        };
-        const onRemoveImage = () => {
-            props.setAttributes({
-                imgID: null,
-                imgURL: null,
-                imgAlt: null,
-            });
-        };
+            const onChangeTestimonialAuthorRole = value => {
+                props.setAttributes( { ub_testimonial_author_role: value } );
+            };
 
-        // Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
-        return (
-            <div className={ props.className }>
-                <div className="ub_testimonial">
-                    <div className="ub_testimonial_img">
-                        { ! props.attributes.imgID ? (
+            const onSelectImage = img => {
+                props.setAttributes( {
+                    imgID: img.id,
+                    imgURL: img.url,
+                    imgAlt: img.alt,
+                } );
+            };
+            const onRemoveImage = () => {
+                props.setAttributes({
+                    imgID: null,
+                    imgURL: null,
+                    imgAlt: null,
+                });
+            };
 
-                            <div className="ub_testimonial_upload_button">
-                                <MediaUpload
-                                    onSelect={ onSelectImage }
-                                    type="image"
-                                    value={ props.attributes.imgID }
-                                    render={ ( { open } ) => (
+            // Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
+            return [
+
+                isSelected && (
+                    <BlockControls key="controls"/>
+                ),
+
+                <div className={ props.className }>
+                    <div className="ub_testimonial">
+                        <div className="ub_testimonial_img">
+                            { ! props.attributes.imgID ? (
+
+                                <div className="ub_testimonial_upload_button">
+                                    <MediaUpload
+                                        onSelect={ onSelectImage }
+                                        type="image"
+                                        value={ props.attributes.imgID }
+                                        render={ ( { open } ) => (
+                                            <Button
+                                                className="components-button button button-medium"
+                                                onClick={ open }>
+                                                Upload Image
+                                            </Button>
+                                        ) }
+                                    />
+                                    <p>Ideal Image size is Square i.e 150x150.</p>
+                                </div>
+
+                            ) : (
+
+                                <p>
+                                    <img
+                                        src={ props.attributes.imgURL }
+                                        alt={ props.attributes.imgAlt }
+                                        height={ 100 }
+                                        width={ 100 }
+                                    />
+                                    { props.focus ? (
                                         <Button
-                                            className="components-button button button-medium"
-                                            onClick={ open }>
-                                            Upload Image
+                                            className="remove-image"
+                                            onClick={ onRemoveImage }
+                                        >
+                                            { icons.remove }
                                         </Button>
-                                    ) }
-                                />
-                                <p>Ideal Image size is Square i.e 150x150.</p>
-                            </div>
-
-                        ) : (
-
-                            <p>
-                                <img
-                                    src={ props.attributes.imgURL }
-                                    alt={ props.attributes.imgAlt }
-                                    height={100}
-                                    width={100}
-                                />
-                                { props.focus ? (
-                                    <Button
-                                        className="remove-image"
-                                        onClick={ onRemoveImage }
-                                    >
-                                        { icons.remove }
-                                    </Button>
-                                ) : null }
-                            </p>
-                        )}
-                    </div>
-                    <div className="ub_testimonial_content">
-                        <RichText
-                            tagName="p"
-                            className="ub_testimonial_text"
-                            onChange={ onChangeTestimonialText }
-                            value={ props.attributes.ub_testimonial_text }
-                            focus={ props.focus }
-                            keepPlaceholderOnFocus={true}
-                        />
-                    </div>
-                    <div className="ub_testimonial_sign">
-                        <RichText
-                            tagName="p"
-                            className="ub_testimonial_author"
-                            onChange={ onChangeTestimonialAuthor }
-                            value={ props.attributes.ub_testimonial_author }
-                            focus={ props.focus }
-                            keepPlaceholderOnFocus={true}
-                        />
-                        <RichText
-                            tagName="i"
-                            className="ub_testimonial_author_role"
-                            onChange={ onChangeTestimonialAuthorRole }
-                            value={ props.attributes.ub_testimonial_author_role }
-                            focus={ props.focus }
-                            keepPlaceholderOnFocus={true}
-                        />
+                                    ) : null }
+                                </p>
+                            )}
+                        </div>
+                        <div className="ub_testimonial_content">
+                            <RichText
+                                tagName="p"
+                                className="ub_testimonial_text"
+                                onChange={ onChangeTestimonialText }
+                                value={ props.attributes.ub_testimonial_text }
+                                isSelected={ isSelected && editable === 'testimonial_content' }
+                                onFocus={ onSetActiveEditable( 'testimonial_content' ) }
+                                keepPlaceholderOnFocus={ true }
+                            />
+                        </div>
+                        <div className="ub_testimonial_sign">
+                            <RichText
+                                tagName="p"
+                                className="ub_testimonial_author"
+                                onChange={ onChangeTestimonialAuthor }
+                                value={ props.attributes.ub_testimonial_author }
+                                isSelected={ isSelected && editable === 'testimonial_author' }
+                                onFocus={ onSetActiveEditable( 'testimonial_author' ) }
+                                keepPlaceholderOnFocus={ true }
+                            />
+                            <RichText
+                                tagName="i"
+                                className="ub_testimonial_author_role"
+                                onChange={ onChangeTestimonialAuthorRole }
+                                value={ props.attributes.ub_testimonial_author_role }
+                                isSelected={ isSelected && editable === 'testimonial_author_role' }
+                                onFocus={ onSetActiveEditable( 'testimonial_author_role' ) }
+                                keepPlaceholderOnFocus={ true }
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
-    },
+            ];
+        },
+    ),
 
     /**
      * The save function defines the way in which the different attributes should be combined
@@ -211,8 +231,8 @@ registerBlockType( 'ub/testimonial-block', {
                         <img
                             src={ props.attributes.imgURL }
                             alt={ props.attributes.imgAlt }
-                            height={100}
-                            width={100}
+                            height={ 100 }
+                            width={ 100 }
                         />
                     </div>
                     <div className="ub_testimonial_content">

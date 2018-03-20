@@ -86,8 +86,8 @@ registerBlockType( 'ub/notification-box', {
                 setState
             } = props;
 
-            const onSetActiveEditable = (newEditable) => () => {
-                setState({editable: newEditable})
+            const onSetActiveEditable = ( newEditable ) => () => {
+                setState( { editable: newEditable } )
             };
 
             const onChangeNotifyInfo = value => {
