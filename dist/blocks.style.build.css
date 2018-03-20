@@ -270,7 +270,7 @@
 .ub_number_one_title, .ub_number_two_title, .ub_number_three_title {
   font-size: 30px !important;
   text-align: center;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 0; }
 
 @media screen and (max-width: 800px) {
