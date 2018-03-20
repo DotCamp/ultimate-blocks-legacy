@@ -30,7 +30,8 @@ const {
 const {
 	Toolbar,
 	Button,
-	Tooltip
+	Tooltip,
+	withState
 } = wp.components;
 
 /**
@@ -77,77 +78,92 @@ registerBlockType( 'ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props ) {
+	edit: withState( { editable: 'content', } ) ( function( props )
+        {
+            const {
+                isSelected,
+                editable,
+                setState
+            } = props;
 
-        const onChangeNotifyInfo = value => {
-            props.setAttributes ( { ub_notify_info: value } );
-        };
+            const onSetActiveEditable = (newEditable) => () => {
+                setState({editable: newEditable})
+            };
 
-        const infoClassChange = value => {
-        	props.setAttributes( { ub_selected_notify: 'ub_notify_info' } );
-		};
+            const onChangeNotifyInfo = value => {
+                props.setAttributes ( { ub_notify_info: value } );
+            };
 
-        const successClassChange = value => {
-            props.setAttributes( { ub_selected_notify: 'ub_notify_success' } );
-        };
+            const infoClassChange = value => {
+                props.setAttributes( { ub_selected_notify: 'ub_notify_info' } );
+            };
 
-        const warningClassChange = value => {
-            props.setAttributes( { ub_selected_notify: 'ub_notify_warning' } );
-        };
+            const successClassChange = value => {
+                props.setAttributes( { ub_selected_notify: 'ub_notify_success' } );
+            };
 
-		return (
-			<div className={ props.className }>
+            const warningClassChange = value => {
+                props.setAttributes( { ub_selected_notify: 'ub_notify_warning' } );
+            };
 
-                {
-                    !! props.focus && (
-                        <BlockControls key="custom-controls">
+            return [
 
-                            <Toolbar className="components-toolbar">
-                                <Button
-                                    className={ classnames(
-                                        'components-icon-button',
-                                        'components-toolbar-control',
-                                    )}
-                                    onClick = { infoClassChange }
-                                >
-                                    { info }
-                                </Button>
-                                <Button
-                                    className={ classnames(
-                                        'components-icon-button',
-                                        'components-toolbar-control',
-                                    )}
-                                    onClick = { successClassChange }
-                                >
-                                    { success }
-                                </Button>
-                                <Button
-                                    className={ classnames(
-                                        'components-icon-button',
-                                        'components-toolbar-control',
-                                    )}
-                                    onClick = { warningClassChange }
-                                >
-                                    { warning }
-                                </Button>
-                            </Toolbar>
+                isSelected && (
+                    <BlockControls key="controls"/>
+                ),
 
-                        </BlockControls>
-                    )
-                }
+                isSelected && (
+                    <BlockControls key="custom-controls">
 
-				<RichText
-                    tagName="div"
-                    className={ props.attributes.ub_selected_notify }
-					onChange={ onChangeNotifyInfo }
-					value={ props.attributes.ub_notify_info }
-                    focus={ props.focus }
-                    keepPlaceholderOnFocus={true}
-                />
+                        <Toolbar className="components-toolbar">
+                            <Button
+                                className={ classnames(
+                                    'components-icon-button',
+                                    'components-toolbar-control',
+                                )}
+                                onClick = { infoClassChange }
+                            >
+                                { info }
+                            </Button>
+                            <Button
+                                className={ classnames(
+                                    'components-icon-button',
+                                    'components-toolbar-control',
+                                )}
+                                onClick = { successClassChange }
+                            >
+                                { success }
+                            </Button>
+                            <Button
+                                className={ classnames(
+                                    'components-icon-button',
+                                    'components-toolbar-control',
+                                )}
+                                onClick = { warningClassChange }
+                            >
+                                { warning }
+                            </Button>
+                        </Toolbar>
 
-			</div>
-		);
-	},
+                    </BlockControls>
+                ),
+
+				<div key={ 'editable' } className={ props.className }>
+
+                    <RichText
+                        tagName="div"
+                        className={ props.attributes.ub_selected_notify }
+                        onChange={ onChangeNotifyInfo }
+                        value={ props.attributes.ub_notify_info }
+                        isSelected={ isSelected && editable === 'notify_info' }
+                        onFocus={ onSetActiveEditable( 'notify_info' ) }
+                        keepPlaceholderOnFocus={true}
+                    />
+
+                </div>
+            ];
+        },
+	),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
