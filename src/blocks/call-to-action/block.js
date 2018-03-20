@@ -14,6 +14,7 @@ const {
     ColorPalette,
     InspectorControls,
     UrlInput,
+    BlockControls
 } = wp.blocks;
 
 const {
@@ -25,7 +26,8 @@ const {
     Dashicon,
     IconButton,
     FormToggle,
-    RangeControl
+    RangeControl,
+    withState
 } = wp.components;
 
 /**
@@ -131,167 +133,183 @@ registerBlockType( 'ub/call-to-action', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: function( props ) {
+    edit: withState( { editable: 'content', } ) ( function( props ) {
 
-        // Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
-        return [
+            const {
+                isSelected,
+                editable,
+                setState
+            } = props;
 
-            !! props.focus && (
-                <InspectorControls key="inspectors">
+            const onSetActiveEditable = (newEditable) => () => {
+                setState({editable: newEditable})
+            };
 
-                    <PanelColor
-                        title={__('Background Color')}
-                        colorValue={ props.attributes.ctaBackgroundColor }
-                        initialOpen={ false }
-                    >
-                        <ColorPalette
-                            value={ props.attributes.ctaBackgroundColor }
-                            onChange={ ( colorValue ) => props.setAttributes( { ctaBackgroundColor: colorValue } ) }
-                            allowReset
-                        />
-                    </PanelColor>
+            // Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
+            return [
 
-                    <PanelColor
-                        title={__('Border Color')}
-                        colorValue={ props.attributes.ctaBorderColor }
-                        initialOpen={ false }
-                    >
-                        <ColorPalette
-                            value={ props.attributes.ctaBorderColor }
-                            onChange={ ( colorValue ) => props.setAttributes( { ctaBorderColor: colorValue } ) }
-                            allowReset
-                        />
-                    </PanelColor>
+                isSelected && (
+                    <BlockControls key="controls"/>
+                ),
 
-                    <PanelBody
-                        title={ __( 'Headline Settings' ) }
-                        initialOpen={ false }
-                    >
+                isSelected && (
+                    <InspectorControls key="inspectors">
 
-                        <RangeControl
-                            label={ __( 'Font Size' ) }
-                            value={ props.attributes.headFontSize }
-                            onChange={ ( value ) => props.setAttributes( { headFontSize: value } ) }
-                            min={ 10 }
-                            max={ 200 }
-                            beforeIcon="editor-textcolor"
-                            allowReset
-                        />
-                        <p>Color</p>
-                        <ColorPalette
-                            value={ props.attributes.headColor }
-                            onChange={ ( colorValue ) => props.setAttributes( { headColor: colorValue } ) }
-                        />
+                        <PanelColor
+                            title={ __( 'Background Color' ) }
+                            colorValue={ props.attributes.ctaBackgroundColor }
+                            initialOpen={ false }
+                        >
+                            <ColorPalette
+                                value={ props.attributes.ctaBackgroundColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { ctaBackgroundColor: colorValue } ) }
+                                allowReset
+                            />
+                        </PanelColor>
 
-                    </PanelBody>
+                        <PanelColor
+                            title={ __( 'Border Color' ) }
+                            colorValue={ props.attributes.ctaBorderColor }
+                            initialOpen={ false }
+                        >
+                            <ColorPalette
+                                value={ props.attributes.ctaBorderColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { ctaBorderColor: colorValue } ) }
+                                allowReset
+                            />
+                        </PanelColor>
 
-                    <PanelBody
-                        title={ __( 'Content Settings' ) }
-                        initialOpen={ false }
-                    >
+                        <PanelBody
+                            title={ __( 'Headline Settings' ) }
+                            initialOpen={ false }
+                        >
 
-                        <RangeControl
-                            label={ __( 'Font Size' ) }
-                            value={ props.attributes.contentFontSize }
-                            onChange={ ( value ) => props.setAttributes( { contentFontSize: value } ) }
-                            min={ 10 }
-                            max={ 200 }
-                            beforeIcon="editor-textcolor"
-                            allowReset
-                        />
-                        <p>Color</p>
-                        <ColorPalette
-                            value={ props.attributes.contentColor }
-                            onChange={ ( colorValue ) => props.setAttributes( { contentColor: colorValue } ) }
-                        />
+                            <RangeControl
+                                label={ __( 'Font Size' ) }
+                                value={ props.attributes.headFontSize }
+                                onChange={ ( value ) => props.setAttributes( { headFontSize: value } ) }
+                                min={ 10 }
+                                max={ 200 }
+                                beforeIcon="editor-textcolor"
+                                allowReset
+                            />
+                            <p>Color</p>
+                            <ColorPalette
+                                value={ props.attributes.headColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { headColor: colorValue } ) }
+                            />
 
-                    </PanelBody>
+                        </PanelBody>
 
-                    <PanelBody
-                        title={ __( 'Button Settings' ) }
-                        initialOpen={ false }
-                    >
+                        <PanelBody
+                            title={ __( 'Content Settings' ) }
+                            initialOpen={ false }
+                        >
 
-                        <RangeControl
-                            label={ __( 'Button Width' ) }
-                            value={ props.attributes.buttonWidth }
-                            onChange={ ( value ) => props.setAttributes( { buttonWidth: value } ) }
-                            min={ 10 }
-                            max={ 500 }
-                            beforeIcon="editor-code"
-                            allowReset
-                        />
+                            <RangeControl
+                                label={ __( 'Font Size' ) }
+                                value={ props.attributes.contentFontSize }
+                                onChange={ ( value ) => props.setAttributes( { contentFontSize: value } ) }
+                                min={ 10 }
+                                max={ 200 }
+                                beforeIcon="editor-textcolor"
+                                allowReset
+                            />
+                            <p>Color</p>
+                            <ColorPalette
+                                value={ props.attributes.contentColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { contentColor: colorValue } ) }
+                            />
 
-                        <RangeControl
-                            label={ __( 'Font Size' ) }
-                            value={ props.attributes.buttonFontSize }
-                            onChange={ ( value ) => props.setAttributes( { buttonFontSize: value } ) }
-                            min={ 10 }
-                            max={ 200 }
-                            beforeIcon="editor-textcolor"
-                            allowReset
-                        />
-                        <p>Button Color</p>
-                        <ColorPalette
-                            value={ props.attributes.buttonColor }
-                            onChange={ ( colorValue ) => props.setAttributes( { buttonColor: colorValue } ) }
-                        />
+                        </PanelBody>
 
-                        <p>Button Text Color</p>
-                        <ColorPalette
-                            value={ props.attributes.buttonTextColor }
-                            onChange={ ( colorValue ) => props.setAttributes( { buttonTextColor: colorValue } ) }
-                        />
+                        <PanelBody
+                            title={ __( 'Button Settings' ) }
+                            initialOpen={ false }
+                        >
 
+                            <RangeControl
+                                label={ __( 'Button Width' ) }
+                                value={ props.attributes.buttonWidth }
+                                onChange={ ( value ) => props.setAttributes( { buttonWidth: value } ) }
+                                min={ 10 }
+                                max={ 500 }
+                                beforeIcon="editor-code"
+                                allowReset
+                            />
+
+                            <RangeControl
+                                label={ __( 'Font Size' ) }
+                                value={ props.attributes.buttonFontSize }
+                                onChange={ ( value ) => props.setAttributes( { buttonFontSize: value } ) }
+                                min={ 10 }
+                                max={ 200 }
+                                beforeIcon="editor-textcolor"
+                                allowReset
+                            />
+                            <p>Button Color</p>
+                            <ColorPalette
+                                value={ props.attributes.buttonColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { buttonColor: colorValue } ) }
+                            />
+
+                            <p>Button Text Color</p>
+                            <ColorPalette
+                                value={ props.attributes.buttonTextColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { buttonTextColor: colorValue } ) }
+                            />
+
+                            <br/>
+
+                        </PanelBody>
                         <br/>
+                    </InspectorControls>
 
-                    </PanelBody>
-                    <br/>
-                </InspectorControls>
+                ),
 
-            ),
+                <div key={ 'editable'  } className={ props.className }>
+                    <div
+                        className="ub_call_to_action"
+                        style={{
+                            backgroundColor: props.attributes.ctaBackgroundColor,
+                            border: props.attributes.ctaBorderSize + 'px solid',
+                            borderColor: props.attributes.ctaBorderColor
+                        }}
+                    >
 
-            <div className={ props.className }>
-                <div
-                    className="ub_call_to_action"
-                    style={{
-                        backgroundColor: props.attributes.ctaBackgroundColor,
-                        border: props.attributes.ctaBorderSize + 'px solid',
-                        borderColor: props.attributes.ctaBorderColor
-                    }}
-                >
+                        <div className="ub_call_to_action_headline">
+                            <RichText
+                                tagName="p"
+                                className="ub_call_to_action_headline_text"
+                                style={{
+                                    fontSize: props.attributes.headFontSize + 'px',
+                                    color: props.attributes.headColor
+                                }}
+                                onChange={ ( value ) => props.setAttributes( { ub_call_to_action_headline_text: value } ) }
+                                value={ props.attributes.ub_call_to_action_headline_text }
+                                isSelected={ isSelected && editable === 'cta_headline' }
+                                onFocus={ onSetActiveEditable( 'cta_headline' ) }
+                                keepPlaceholderOnFocus={ true }
+                            />
+                        </div>
 
-                    <div className="ub_call_to_action_headline">
-                        <RichText
-                            tagName="p"
-                            className="ub_call_to_action_headline_text"
-                            style={{
-                                fontSize: props.attributes.headFontSize + 'px',
-                                color: props.attributes.headColor
-                            }}
-                            onChange={ ( value ) => props.setAttributes( { ub_call_to_action_headline_text: value } ) }
-                            value={ props.attributes.ub_call_to_action_headline_text }
-                            focus={ props.focus }
-                            keepPlaceholderOnFocus={true}
-                        />
-                    </div>
+                        <div className="ub_call_to_action_content">
+                            <RichText
+                                tagName="p"
+                                className="ub_cta_content_text"
+                                style={{
+                                    fontSize: props.attributes.contentFontSize + 'px',
+                                    color: props.attributes.contentColor
+                                }}
+                                onChange={ ( value ) => props.setAttributes( { ub_cta_content_text: value } ) }
+                                value={ props.attributes.ub_cta_content_text }
+                                isSelected={ isSelected && editable === 'cta_content' }
+                                onFocus={ onSetActiveEditable( 'cta_content' ) }
+                                keepPlaceholderOnFocus={true}
+                            />
+                        </div>
 
-                    <div className="ub_call_to_action_content">
-                        <RichText
-                            tagName="p"
-                            className="ub_cta_content_text"
-                            style={{
-                                fontSize: props.attributes.contentFontSize + 'px',
-                                color: props.attributes.contentColor
-                            }}
-                            onChange={ ( value ) => props.setAttributes( { ub_cta_content_text: value } ) }
-                            value={ props.attributes.ub_cta_content_text }
-                            focus={ props.focus }
-                            keepPlaceholderOnFocus={true}
-                        />
-                    </div>
-
-                    <div className="ub_call_to_action_button">
+                        <div className="ub_call_to_action_button">
                         <span
                             className={`wp-block-button ub_cta_button`}
                             style={{
@@ -308,36 +326,38 @@ registerBlockType( 'ub/call-to-action', {
                                 }}
                                 onChange={ ( value ) => props.setAttributes( { ub_cta_button_text: value } ) }
                                 value={ props.attributes.ub_cta_button_text }
-                                focus={ props.focus }
-                                keepPlaceholderOnFocus={true}
+                                isSelected={ isSelected && editable === 'cta_button_text' }
+                                onFocus={ onSetActiveEditable( 'cta_button_text' ) }
+                                keepPlaceholderOnFocus={ true }
                             />
                         </span>
+                        </div>
+                    </div>
+                    <div className="ub_call_to_action_url_input">
+                        {
+                            focus && (
+                                <form
+                                    key={ 'form-link' }
+                                    onSubmit={ ( event ) => event.preventDefault() }
+                                    className={ `blocks-button__inline-link ub_cta_url_input_box`}>
+                                    <Dashicon icon={ 'admin-links' } />
+                                    <UrlInput
+                                        value={ props.attributes.url }
+                                        onChange={ ( value ) => props.setAttributes( { url: value } ) }
+                                    />
+                                    <IconButton
+                                        icon={ 'editor-break' }
+                                        label={ __( 'Apply' ) }
+                                        type={ 'submit' }
+                                    />
+                                </form>
+                            )
+                        }
                     </div>
                 </div>
-                <div className="ub_call_to_action_url_input">
-                    {
-                        focus && (
-                            <form
-                                key={ 'form-link' }
-                                onSubmit={ ( event ) => event.preventDefault() }
-                                className={ `blocks-button__inline-link ub_cta_url_input_box`}>
-                                <Dashicon icon={ 'admin-links' } />
-                                <UrlInput
-                                    value={ props.attributes.url }
-                                    onChange={ ( value ) => props.setAttributes( { url: value } ) }
-                                />
-                                <IconButton
-                                    icon={ 'editor-break' }
-                                    label={ __( 'Apply' ) }
-                                    type={ 'submit' }
-                                />
-                            </form>
-                        )
-                    }
-                </div>
-            </div>
-        ];
-    },
+            ];
+        },
+    ),
 
     /**
      * The save function defines the way in which the different attributes should be combined
