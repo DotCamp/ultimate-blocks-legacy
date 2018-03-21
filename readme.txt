@@ -3,7 +3,7 @@ Contributors: imtiazrayhan, freemius
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 4.9
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,24 +16,24 @@ Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of cust
 
 **Warning: You must have [Gutenberg](https://wordpress.org/plugins/gutenberg/) installed to use this plugin.**
 
-Right now we have 8 blocks.
+Currently, we have 8 blocks. More in the making.
 
 * Call to Action Block
   - Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
-* Number Box Block
-  - Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
-* Feature Box Block
-  - Add boxes with images. Highlight the features of any product or service. 3 columns options.
-* Testimonial Block
-  - Nice, simple testimonial box with option to add image, name, role of the testimonial author.
-* Notification Box Block
-  - Highlight important information in your posts/pages. Comes in three different designs.
-* Divider Block
-  - Add custom divider between your blocks. Customize the color, size, everything.
-* Spacer Block
-  - Add more space between your blocks with this insanely easy to use block.
 * Click to Tweet
   - Add tweetable content in your posts/pages.
+* Divider Block
+  - Add custom divider between your blocks. Customize the color, size, everything.
+* Feature Box Block
+  - Add boxes with images. Highlight the features of any product or service. 3 columns options.
+* Notification Box Block
+  - Highlight important information in your posts/pages. Comes in three different designs.
+* Number Box Block
+  - Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
+* Testimonial Block
+  - Nice, simple testimonial box with option to add image, name, role of the testimonial author.
+* Spacer Block
+  - Add more space between your blocks with this insanely easy to use block.
 
 We are continuously working on new blocks. If you have any block ideas, let us know. We are on [Twitter](https://twitter.com/Ultimate_Blocks).
 
@@ -64,11 +64,12 @@ That's it. You're done!
 
 = 1.0.2 =
 
-Release Date:
+Release Date: March 20th, 2018
 
 * Added Click to Tweet Block.
 * Added Number Box Block.
 * Added Feature Box Block.
+* Improvements on previous blocks.
 
 = 1.0.1 =
 
