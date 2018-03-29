@@ -1,0 +1,22 @@
+.wp-block-ub-social-share {
+	.social-share-icons {
+		display: flex;
+		.social-share-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			margin: 0 7px;
+		}
+	}
+}
+.align-icons-center {
+	justify-content: center;
+}
+.align-icons-left {
+	justify-content: flex-start;
+}
+.align-icons-right {
+	justify-content: flex-end;
+}
+

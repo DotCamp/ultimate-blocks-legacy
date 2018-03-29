@@ -17,3 +17,4 @@ import './blocks/spacer/block';
 import './blocks/number-box/block';
 import './blocks/feature-box/block';
 import './blocks/click-to-tweet/block';
+import './blocks/social-share/block';
