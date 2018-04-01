@@ -468,3 +468,17 @@
 .align-icons-right {
   -ms-flex-pack: end;
       justify-content: flex-end; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+.wp-block-ub-content-toggle {
+  margin: 20px 0 20px 0;
+  max-width: 740px; }
