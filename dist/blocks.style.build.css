@@ -446,8 +446,14 @@
         align-items: center;
     -ms-flex-pack: center;
         justify-content: center;
+    -webkit-box-shadow: 0px 5px 8px grey;
+            box-shadow: 0px 5px 8px grey;
     border-radius: 50%;
     margin: 0 7px; }
+    .wp-block-ub-social-share .social-share-icons .social-share-icon.circle {
+      border-radius: 50%; }
+    .wp-block-ub-social-share .social-share-icons .social-share-icon.square {
+      border-radius: 0%; }
 
 .align-icons-center {
   -ms-flex-pack: center;

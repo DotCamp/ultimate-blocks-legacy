@@ -5,12 +5,10 @@ const { __ } = wp.i18n;
 const { Component } = wp.element;
 const {
 	InspectorControls,
-	ColorPalette,
 } = wp.blocks;
 const {
 	PanelBody,
 	PanelRow,
-	PanelColor,
 	RadioControl,
 	FormToggle,
 } = wp.components;
@@ -24,7 +22,7 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={ __( 'Size' ) } initialOpen={ false }>
 					<RadioControl
-						label="Icon Sizes"
+						label="Select Size"
 						selected={ this.props.attributes.iconSize }
 						options={ [
 							{ label: 'Normal', value: 'normal' },
@@ -35,34 +33,24 @@ export default class Inspector extends Component {
 
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Facebook' ) } initialOpen={ false }>
-					<PanelColor
-						title={ __( 'Background Color' ) }
-						colorValue={ this.props.attributes.facebookIconBgColor }
-						initialOpen={ false }
-					>
-						<ColorPalette
-							colors={ [ '#0000ff' ] }
-							value={ this.props.attributes.facebookIconBgColor }
-							onChange={ this.props.onChangeFacebookIconBgColor }
-						/>
-					</PanelColor>
-					<PanelColor
-						title={ __( 'Text Color' ) }
-						colorValue={ this.props.attributes.facebookIconTextColor }
-						initialOpen={ false }
-					>
-						<ColorPalette
-							colors={ [ '#ffffff' ] }
-							value={ this.props.attributes.facebookIconTextColor }
-							onChange={ this.props.onChangeFacebookIconTextColor }
-						/>
-					</PanelColor>
+				<PanelBody title={ __( 'Shape' ) } initialOpen={ false }>
+					<RadioControl
+						label="Select Shape"
+						selected={ this.props.attributes.iconShape }
+						options={ [
+							{ label: 'Circle', value: 'circle' },
+							{ label: 'Square', value: 'square' },
+						] }
+						onChange={ this.props.onShapeChange }
+
+					/>
+				</PanelBody>
+				<PanelBody title={ __( 'Visibility' ) } initialOpen={ false }>
 					<PanelRow>
 						<label
 							htmlFor="facebook-icon-form-toggle"
 						>
-							<b>{ __( 'Visibility' ) }</b>
+							<b>{ __( 'Facebook' ) }</b>
 						</label>
 						<FormToggle
 							id="facebook-icon-form-toggle"
@@ -71,35 +59,11 @@ export default class Inspector extends Component {
 							onChange={ this.props.toggleFacebookIcon }
 						/>
 					</PanelRow>
-				</PanelBody>
-				<PanelBody title={ __( 'Twitter' ) } initialOpen={ false }>
-					<PanelColor
-						title={ __( 'Background Color' ) }
-						colorValue={ this.props.attributes.twitterIconBgColor }
-						initialOpen={ false }
-					>
-						<ColorPalette
-							colors={ [ '#0000ff' ] }
-							value={ this.props.attributes.twitterIconBgColor }
-							onChange={ this.props.onChangeTwitterIconBgColor }
-						/>
-					</PanelColor>
-					<PanelColor
-						title={ __( 'Text Color' ) }
-						colorValue={ this.props.attributes.twitterIconTextColor }
-						initialOpen={ false }
-					>
-						<ColorPalette
-							colors={ [ '#0000ff' ] }
-							value={ this.props.attributes.twitterIconTextColor }
-							onChange={ this.props.onChangeTwitterIconTextColor }
-						/>
-					</PanelColor>
 					<PanelRow>
 						<label
 							htmlFor="twitter-icon-form-toggle"
 						>
-							<b>{ __( 'Visibility' ) }</b>
+							<b>{ __( 'Twitter' ) }</b>
 						</label>
 						<FormToggle
 							id="twitter-icon-form-toggle"

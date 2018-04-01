@@ -1,8 +1,9 @@
 <?php
 /**
- * Svg Icon pack.
+ * Generate Svg Icons.
  *
- * @package SocialShareIcons
+ * @category Block Icons
+ * @package   SocialShareBlockIcons
  */
 
 /**

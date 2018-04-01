@@ -54,24 +54,8 @@ registerBlockType( 'ub/social-share', {
 	],
 
 	edit: function( props ) {
-		const onChangeFacebookIconBgColor = value => {
-			props.setAttributes( { facebookIconBgColor: value } );
-		};
-
-		const onChangeFacebookIconTextColor = value => {
-			props.setAttributes( { facebookIconTextColor: value } );
-		};
-
 		const toggleFacebookIcon = () => {
 			props.setAttributes( { showFacebookIcon: ! props.attributes.showFacebookIcon } );
-		};
-
-		const onChangeTwitterIconBgColor = value => {
-			props.setAttributes( { twitterIconBgColor: value } );
-		};
-
-		const onChangeTwitterIconTextColor = value => {
-			props.setAttributes( { twitterIconTextColor: value } );
 		};
 
 		const toggleTwitterIcon = () => {
@@ -80,6 +64,10 @@ registerBlockType( 'ub/social-share', {
 
 		const onSizeChange = value => {
 			props.setAttributes( { iconSize: value } );
+		};
+
+		const onShapeChange = value => {
+			props.setAttributes( { iconShape: value } );
 		};
 
 		const iconSize = iconSizes[ props.attributes.iconSize ];
@@ -101,24 +89,21 @@ registerBlockType( 'ub/social-share', {
 			!! props.focus && (
 				<Inspector { ...{
 					onSizeChange,
-					onChangeFacebookIconTextColor,
-					onChangeFacebookIconBgColor,
+					onShapeChange,
 					toggleFacebookIcon,
-					onChangeTwitterIconBgColor,
-					onChangeTwitterIconTextColor,
 					toggleTwitterIcon,
 					...props } } key="inspector-control" /> ),
 			<div id="ub-social-share-block-editor" className={ props.className } key="block-editor">
 				<div className={ 'social-share-icons ' + 'align-icons-' + props.attributes.align }>
 					{ props.attributes.showFacebookIcon && <a
 						href="#ub-social-share-block-editor"
-						className="social-share-icon"
+						className={ 'social-share-icon ' + props.attributes.iconShape }
 						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.facebookIconBgColor } }>
 						<FacebookIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.facebookIconTextColor } />
 					</a> }
 					{ props.attributes.showTwitterIcon && <a
 						href="#ub-social-share-block-editor"
-						className="social-share-icon"
+						className={ 'social-share-icon ' + props.attributes.iconShape }
 						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.twitterIconBgColor } }>
 						<TwitterIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.twitterIconTextColor } />
 					</a> }

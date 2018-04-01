@@ -1,11 +1,14 @@
 <?php
 /**
- * Click to tweet block.
+ * Socialize your content with Social Share Block.
  *
- * @package Social Share
+ * @package SocialShareBlock
  */
 
-include_once 'icons/icons.php';
+/**
+ * Include icons.
+ */
+require_once 'icons/icons.php';
 
 /**
  * Renders from server side.
@@ -22,8 +25,10 @@ function ub_render_block( $attributes ) {
 
 	$icon_size = $icon_sizes[ $attributes ['iconSize'] ];
 
-	$facebook = get_facebook_icon( $attributes, $icon_size );
-	$twitter  = get_twitter_icon( $attributes, $icon_size );
+	$icon_shape = $attributes['iconShape'];
+
+	$facebook = get_facebook_icon( $attributes, $icon_size, $icon_shape );
+	$twitter  = get_twitter_icon( $attributes, $icon_size, $icon_shape );
 
 	return '<div id="ub-social-share-block-editor" class="wp-block-ub-social-share">
 		<div class="social-share-icons align-icons-' . $attributes['align'] . '">
@@ -38,9 +43,10 @@ function ub_render_block( $attributes ) {
  *
  * @param  array   $attributes Options of the block.
  * @param  integer $icon_size Size of Icon.
+ * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_facebook_icon( $attributes, $icon_size ) {
+function get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showFacebookIcon'] ) {
 		return '';
 	}
@@ -61,21 +67,21 @@ function get_facebook_icon( $attributes, $icon_size ) {
 
 	return '<a
 		href="' . $facebook_url . '"
-		class="social-share-icon"
+		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['facebookIconBgColor'] . '">
 		' . $facebook_icon . '
 	</a>';
 }
-
 
 /**
  * Generate Twitter Icon.
  *
  * @param  array   $attributes Options of the block.
  * @param  integer $icon_size Size of Icon.
+ * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_twitter_icon( $attributes, $icon_size ) {
+function get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showTwitterIcon'] ) {
 		return '';
 	}
@@ -96,7 +102,7 @@ function get_twitter_icon( $attributes, $icon_size ) {
 
 	return '<a
 		href="' . $twitter_url . '"
-		class="social-share-icon"
+		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['twitterIconBgColor'] . '">
 		' . $twitter_icon . '
 	</a>';
@@ -111,43 +117,39 @@ function get_twitter_icon( $attributes, $icon_size ) {
 function ub_register_block() {
 	register_block_type( 'ub/social-share', array(
 		'attributes'      => array(
-			'twitter'         => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'facebook'        => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'facebookIconBgColor' => array (
+			'facebookIconBgColor'   => array(
 				'type'    => 'string',
-				'default' => '#0000ff',
+				'default' => '#365899',
 			),
 			'facebookIconTextColor' => array(
 				'type'    => 'string',
 				'default' => '#ffffff',
 			),
-			'showFacebookIcon' => array(
+			'showFacebookIcon'      => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'twitterIconBgColor' => array(
+			'twitterIconBgColor'    => array(
 				'type'    => 'string',
-				'default' => '#8ed1fc',
+				'default' => '#1da1f2',
 			),
-			'twitterIconTextColor' => array(
+			'twitterIconTextColor'  => array(
 				'type'    => 'string',
 				'default' => '#ffffff',
 			),
-			'showTwitterIcon' => array(
+			'showTwitterIcon'       => array(
 				'type'    => 'boolean',
 				'default' => true,
 			),
-			'iconSize'    => array(
+			'iconSize'              => array(
 				'type'    => 'string',
 				'default' => 'normal',
 			),
-			'align' => array(
+			'iconShape'             => array(
+				'type'    => 'string',
+				'default' => 'circle',
+			),
+			'align'                 => array(
 				'type'    => 'string',
 				'default' => 'left',
 			),

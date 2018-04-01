@@ -5,8 +5,15 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			border-radius: 50%;
+			box-shadow: 0px 5px 8px grey;
 			margin: 0 7px;
+			transition: all 0.2s ease-in-out;
+			&.circle {
+				border-radius: 50%;
+			}
+			&.square {
+				border-radius: 0%;
+			}
 		}
 	}
 }
