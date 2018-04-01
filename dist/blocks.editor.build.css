@@ -220,8 +220,8 @@
         align-items: center;
     -ms-flex-pack: center;
         justify-content: center;
-    -webkit-box-shadow: 0px 5px 8px grey;
-            box-shadow: 0px 5px 8px grey;
+    -webkit-box-shadow: 0px 3px 2px grey;
+            box-shadow: 0px 3px 2px grey;
     margin: 7px;
     -webkit-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
