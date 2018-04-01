@@ -301,9 +301,9 @@ function get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
 
 	// Generate the tumblr URL.
 	$tumblr_url = '
-		https://www.tumblr.com/share/link?
-		url=' . rawurlencode( get_the_permalink() ) . '
-		&name=' . get_the_title();
+		https://www.tumblr.com/widgets/share/tool?
+		canonicalUrl==' . rawurlencode( get_the_permalink() ) . '
+		&title=' . get_the_title();
 
 	return '<a
 		href="' . $tumblr_url . '"
