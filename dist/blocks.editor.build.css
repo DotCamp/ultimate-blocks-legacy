@@ -210,7 +210,9 @@
 */
 .wp-block-ub-social-share .social-share-icons {
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
   .wp-block-ub-social-share .social-share-icons .social-share-icon {
     display: -ms-flexbox;
     display: flex;
@@ -220,7 +222,7 @@
         justify-content: center;
     -webkit-box-shadow: 0px 5px 8px grey;
             box-shadow: 0px 5px 8px grey;
-    margin: 0 7px;
+    margin: 7px;
     -webkit-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out; }

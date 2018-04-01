@@ -10,7 +10,16 @@ import './style.scss';
 import './editor.scss';
 
 // Import Icons
-import { FacebookIcon, TwitterIcon, icon } from './icons/icons';
+import {
+	FacebookIcon,
+	TwitterIcon,
+	LinkedInIcon,
+	PinterestIcon,
+	RedditIcon,
+	GooglePlusIcon,
+	TumblrIcon,
+	icon,
+} from './icons/icons';
 
 // Import components
 import Inspector from './inspector';
@@ -62,6 +71,26 @@ registerBlockType( 'ub/social-share', {
 			props.setAttributes( { showTwitterIcon: ! props.attributes.showTwitterIcon } );
 		};
 
+		const toggleLinkedInIcon = () => {
+			props.setAttributes( { showLinkedInIcon: ! props.attributes.showLinkedInIcon } );
+		};
+
+		const togglePinterestIcon = () => {
+			props.setAttributes( { showPinterestIcon: ! props.attributes.showPinterestIcon } );
+		};
+
+		const toggleRedditIcon = () => {
+			props.setAttributes( { showRedditIcon: ! props.attributes.showRedditIcon } );
+		};
+
+		const toggleGooglePlusIcon = () => {
+			props.setAttributes( { showGooglePlusIcon: ! props.attributes.showGooglePlusIcon } );
+		};
+
+		const toggleTumblrIcon = () => {
+			props.setAttributes( { showTumblrIcon: ! props.attributes.showTumblrIcon } );
+		};
+
 		const onSizeChange = value => {
 			props.setAttributes( { iconSize: value } );
 		};
@@ -92,6 +121,11 @@ registerBlockType( 'ub/social-share', {
 					onShapeChange,
 					toggleFacebookIcon,
 					toggleTwitterIcon,
+					toggleLinkedInIcon,
+					togglePinterestIcon,
+					toggleRedditIcon,
+					toggleGooglePlusIcon,
+					toggleTumblrIcon,
 					...props } } key="inspector-control" /> ),
 			<div id="ub-social-share-block-editor" className={ props.className } key="block-editor">
 				<div className={ 'social-share-icons ' + 'align-icons-' + props.attributes.align }>
@@ -106,6 +140,36 @@ registerBlockType( 'ub/social-share', {
 						className={ 'social-share-icon ' + props.attributes.iconShape }
 						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.twitterIconBgColor } }>
 						<TwitterIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.twitterIconTextColor } />
+					</a> }
+					{ props.attributes.showLinkedInIcon && <a
+						href="#ub-social-share-block-editor"
+						className={ 'social-share-icon ' + props.attributes.iconShape }
+						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.linkedInIconBgColor } }>
+						<LinkedInIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.linkedInIconTextColor } />
+					</a> }
+					{ props.attributes.showPinterestIcon && <a
+						href="#ub-social-share-block-editor"
+						className={ 'social-share-icon ' + props.attributes.iconShape }
+						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.pinterestIconBgColor } }>
+						<PinterestIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.pinterestIconTextColor } />
+					</a> }
+					{ props.attributes.showRedditIcon && <a
+						href="#ub-social-share-block-editor"
+						className={ 'social-share-icon ' + props.attributes.iconShape }
+						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.redditIconBgColor } }>
+						<RedditIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.redditIconTextColor } />
+					</a> }
+					{ props.attributes.showGooglePlusIcon && <a
+						href="#ub-social-share-block-editor"
+						className={ 'social-share-icon ' + props.attributes.iconShape }
+						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.googlePlusIconBgColor } }>
+						<GooglePlusIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.googlePlusIconTextColor } />
+					</a> }
+					{ props.attributes.showTumblrIcon && <a
+						href="#ub-social-share-block-editor"
+						className={ 'social-share-icon ' + props.attributes.iconShape }
+						style={ { width: ( iconSize * 1.5 ), height: ( iconSize * 1.5 ), backgroundColor: props.attributes.tumblrIconBgColor } }>
+						<TumblrIcon width={ iconSize } height={ iconSize } fillColor={ props.attributes.tumblrIconTextColor } />
 					</a> }
 				</div>
 			</div>,

@@ -1,13 +1,14 @@
 .wp-block-ub-social-share {
 	.social-share-icons {
 		display: flex;
+		flex-wrap: wrap;
 		.social-share-icon {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			box-shadow: 0px 5px 8px grey;
 			border-radius: 50%;
-			margin: 0 7px;
+			margin: 7px;
 			&.circle {
 				border-radius: 50%;
 			}
