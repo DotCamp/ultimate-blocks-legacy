@@ -72,9 +72,8 @@ function get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
 	// Generate the Facebook URL.
 	$facebook_url = '
 		https://www.facebook.com/sharer/sharer.php?
-		u=' . get_the_permalink() . '
-		&title=' . get_the_title() . '
-	';
+		u=' . rawurlencode( get_the_permalink() ) . '
+		&title=' . get_the_title();
 
 	return '<a
 		href="' . $facebook_url . '"
@@ -110,8 +109,7 @@ function get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
 	$twitter_url = '
 		http://twitter.com/share?
 		text=' . get_the_title() . '
-		&url=' . get_the_permalink() . '
-	';
+		&url=' . rawurlencode( get_the_permalink() );
 
 	return '<a
 		href="' . $twitter_url . '"
@@ -147,9 +145,8 @@ function get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
 	// Generate the Linked In URL.
 	$linkedin_url = '
 		https://www.linkedin.com/shareArticle?mini=true
-		&url=' . get_the_permalink() . '
-		&title=' . get_the_title() . '
-	';
+		&url=' . rawurlencode( get_the_permalink() ) . '
+		&title=' . get_the_title();
 
 	return '<a
 		href="' . $linkedin_url . '"
@@ -195,10 +192,9 @@ function get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
 	// Generate the Pinterest URL.
 	$pinterest_url = '
 		https://pinterest.com/pin/create/button/?
-		&url=' . get_the_permalink() . '
+		&url=' . rawurlencode( get_the_permalink() ) . '
 		&description=' . get_the_title() . '
-		&media=' . esc_url( $thumbnail ) . '
-	';
+		&media=' . esc_url( $thumbnail );
 
 	return '<a
 		href="' . $pinterest_url . '"
@@ -234,8 +230,7 @@ function get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
 	// Generate the Reddit URL.
 	$reddit_url = '
 		http://www.reddit.com/submit?
-		url=' . get_the_permalink() . '
-	';
+		url=' . rawurlencode( get_the_permalink() );
 
 	return '<a
 		href="' . $reddit_url . '"
@@ -271,8 +266,7 @@ function get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
 	// Generate the Google Plus URL.
 	$googleplus_url = '
 		https://plus.google.com/share?
-		url=' . get_the_permalink() . '
-	';
+		url=' . rawurlencode( get_the_permalink() );
 
 	return '<a
 		href="' . $googleplus_url . '"
@@ -307,10 +301,9 @@ function get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
 
 	// Generate the tumblr URL.
 	$tumblr_url = '
-		https://tumblr.com/share/link?
-		url=' . get_the_permalink() . '
-		&name=' . get_the_title() . '
-	';
+		https://www.tumblr.com/share/link?
+		url=' . rawurlencode( get_the_permalink() ) . '
+		&name=' . get_the_title();
 
 	return '<a
 		href="' . $tumblr_url . '"
