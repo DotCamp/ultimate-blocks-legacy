@@ -230,7 +230,8 @@ function get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
 	// Generate the Reddit URL.
 	$reddit_url = '
 		http://www.reddit.com/submit?
-		url=' . rawurlencode( get_the_permalink() );
+		url=' . rawurlencode( get_the_permalink() ) . '
+		&title=' . get_the_title();
 
 	return '<a
 		href="' . $reddit_url . '"
@@ -302,7 +303,7 @@ function get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
 	// Generate the tumblr URL.
 	$tumblr_url = '
 		https://www.tumblr.com/widgets/share/tool?
-		canonicalUrl==' . rawurlencode( get_the_permalink() ) . '
+		canonicalUrl=' . rawurlencode( get_the_permalink() ) . '
 		&title=' . get_the_title();
 
 	return '<a
