@@ -18,3 +18,4 @@ import './blocks/number-box/block';
 import './blocks/feature-box/block';
 import './blocks/click-to-tweet/block';
 import './blocks/social-share/block';
+import './blocks/content-toggle/block';
