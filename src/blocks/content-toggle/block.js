@@ -14,17 +14,11 @@ import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
-    registerBlockType,
-    InspectorControls,
-    AlignmentToolbar,
-    ColorPalette,
+	registerBlockType,
+	RichText,
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
-    PanelBody,
-    Toolbar,
-    RangeControl,
-    Dashicon
 } = wp.components;
 
 /**
@@ -51,6 +45,13 @@ registerBlockType( 'ub/content-toggle', {
 		__( 'Accordion' ),
 	],
 
+	attributes: {
+		'content' : {
+			'type': 'string',
+			'default': ''
+		}
+	},
+
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -58,12 +59,20 @@ registerBlockType( 'ub/content-toggle', {
 	 * The "edit" property must be a valid function.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+	 * @param props asdsdsd.
+	 * @returns object
 	 */
 	edit: function( props ) {
 		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
 		return (
 			<div className={ props.className }>
 				<p>— Hello from the backend.</p>
+				<RichText
+					tagName="h2"
+					className={ props.className }
+					value={ props.attributes.content }
+					onChange={ ( content ) => props.setAttributes( { content } ) }
+				/>
 			</div>
 		);
 	},

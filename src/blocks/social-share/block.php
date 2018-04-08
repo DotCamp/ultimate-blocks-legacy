@@ -76,6 +76,7 @@ function get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
 		&title=' . get_the_title();
 
 	return '<a
+		target="_blank"
 		href="' . $facebook_url . '"
 		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['facebookIconBgColor'] . '">
@@ -112,6 +113,7 @@ function get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
 		&url=' . rawurlencode( get_the_permalink() );
 
 	return '<a
+		target="_blank"
 		href="' . $twitter_url . '"
 		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['twitterIconBgColor'] . '">
@@ -149,6 +151,7 @@ function get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
 		&title=' . get_the_title();
 
 	return '<a
+		target="_blank"
 		href="' . $linkedin_url . '"
 		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['linkedInIconBgColor'] . '">
@@ -197,6 +200,7 @@ function get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
 		&media=' . esc_url( $thumbnail );
 
 	return '<a
+		target="_blank"
 		href="' . $pinterest_url . '"
 		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['pinterestIconBgColor'] . '">
@@ -234,6 +238,7 @@ function get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
 		&title=' . get_the_title();
 
 	return '<a
+		target="_blank"
 		href="' . $reddit_url . '"
 		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['redditIconBgColor'] . '">
@@ -270,6 +275,7 @@ function get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
 		url=' . rawurlencode( get_the_permalink() );
 
 	return '<a
+		target="_blank"
 		href="' . $googleplus_url . '"
 		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['googlePlusIconBgColor'] . '">
@@ -307,6 +313,7 @@ function get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
 		&title=' . get_the_title();
 
 	return '<a
+		target="_blank"
 		href="' . $tumblr_url . '"
 		class="social-share-icon ' . $icon_shape . '"
 		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['tumblrIconBgColor'] . '">
