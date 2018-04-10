@@ -46,49 +46,153 @@ registerBlockType( 'ub/content-toggle', {
 	],
 
 	attributes: {
-		'content' : {
-			'type': 'string',
-			'default': ''
-		}
+		accordions: {
+			source: 'query',
+			selector: '.wp-block-ub-content-toggle-accordion',
+			query: {
+				title: { type: 'array', source: 'children', selector: '.wp-block-ub-content-toggle-accordion-title' },
+				content: { type: 'array', source: 'children', selector: '.wp-block-ub-content-toggle-accordion-content' },
+			},
+		},
+		accordionsState: {
+			type: 'string',
+			default: '[]',
+		},
+		watcher: {
+			type: 'boolean',
+			default: false,
+		},
+		activeControl: {
+			type: 'string',
+			default: '',
+		},
 	},
 
-	/**
-	 * The edit function describes the structure of your block in the context of the editor.
-	 * This represents what the editor will render when the block is used.
-	 *
-	 * The "edit" property must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 * @param props asdsdsd.
-	 * @returns object
-	 */
-	edit: function( props ) {
-		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
+	edit: function( { attributes, setAttributes, className } ) {
+		if ( ! attributes.accordions ) {
+			attributes.accordions = [];
+		}
+
+		const sample = { title: 'The Title', content: 'The Content' };
+		const accordionsState = JSON.parse( attributes.accordionsState );
+		const showControls = ( type, index ) => {
+			setAttributes( { activeControl: type + '-' + index } );
+		};
+
+		const addAccord = ( i ) => {
+			if ( i <= 0 ) {
+				attributes.accordions.unshift( sample );
+				setAttributes( { accordions: attributes.accordions } );
+
+				accordionsState.unshift( true );
+				setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+			} else if ( i >= attributes.accordions.length ) {
+				attributes.accordions.push( sample );
+				setAttributes( { accordions: attributes.accordions } );
+
+				accordionsState.push( true );
+				setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+			} else {
+				attributes.accordions.splice( i, 0, sample );
+				setAttributes( { accordions: attributes.accordions } );
+
+				accordionsState.splice( i, 0, true );
+				setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+			}
+			updateWatcher();
+		};
+
+		const deleteAccord = ( i ) => {
+			attributes.accordions.slice( i, 1 );
+			setAttributes( { accordions: attributes.accordions } );
+
+			updateWatcher();
+		};
+
+		const toggleAccordionState = ( i ) => {
+			accordionsState[ i ] = ! accordionsState[ i ];
+			setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+
+			updateWatcher();
+		};
+
+		const updateWatcher = () => {
+			setAttributes( { watcher: ! attributes.watcher } );
+		};
+
+		if ( attributes.accordions.length === 0 ) {
+			addAccord( 0 );
+		}
+		console.log( accordionsState );
+
 		return (
-			<div className={ props.className }>
-				<p>— Hello from the backend.</p>
-				<RichText
-					tagName="h2"
-					className={ props.className }
-					value={ props.attributes.content }
-					onChange={ ( content ) => props.setAttributes( { content } ) }
-				/>
+			<div className={ className }>
+				{
+					attributes.accordions.map( ( accordion, i ) => {
+						return <div className="wp-block-ub-content-toggle-accordion" key={ i }>
+							<div className="wp-block-ub-content-toggle-accordion-title-wrap">
+								<RichText
+									tagName="h2"
+									className="wp-block-ub-content-toggle-accordion-title"
+									value={ accordion.title }
+									formattingControls={ [ 'bold', 'italic' ] }
+									isSelected={ attributes.activeControl === 'title-' + i }
+									onClick={ () => showControls( 'title', i ) }
+									onChange={ ( title ) => {
+										const accordions = attributes.accordions;
+										accordions[ i ].title = title;
+										setAttributes( { accordions: accordions } );
+
+										updateWatcher();
+									} }
+								/>
+								<span onClick={ () => { toggleAccordionState( i ) } } className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( accordionsState[ i ] ? 'open' : '' ) }></span>
+							</div>
+							{ accordionsState[ i ] &&
+							<div className="wp-block-ub-content-toggle-accordion-content-wrap">
+								<RichText
+									tagName="div"
+									className="wp-block-ub-content-toggle-accordion-content"
+									value={ accordion.content }
+									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+									isSelected={ attributes.activeControl === 'content-' + i }
+									onClick={ () => showControls( 'content', i ) }
+									onChange={ ( content ) => {
+										const accordions = attributes.accordions;
+										accordions[ i ].content = content;
+										setAttributes( { accordions: accordions } );
+
+										updateWatcher();
+									} }
+								/>
+							</div> }
+							<div className="wp-block-ub-content-toggle-accordion-controls-top">
+								<span onClick={ () => addAccord( i ) } className="dashicons dashicons-plus-alt"></span>
+								<span onClick={ () => deleteAccord( i ) } class="dashicons dashicons-dismiss"></span>
+							</div>
+							<div className="wp-block-ub-content-toggle-accordion-controls-bottom">
+								<span onClick={ () => addAccord( i + 1 ) } className="dashicons dashicons-plus-alt"></span>
+								<span onClick={ () => deleteAccord( i ) } class="dashicons dashicons-dismiss"></span>
+							</div>
+						</div>;
+					} )
+				}
 			</div>
 		);
 	},
 
-	/**
-	 * The save function defines the way in which the different attributes should be combined
-	 * into the final markup, which is then serialized by Gutenberg into post_content.
-	 *
-	 * The "save" property must be specified and must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
 	save: function( props ) {
+		const accordions = props.attributes.accordions;
 		return (
 			<div className={ props.className }>
-				<p>— Hello from the frontend.</p>
+				{
+					accordions.map( ( accordion, i ) => {
+						return <div className="wp-block-ub-content-toggle-accordion" key={ i }>
+							<h2 className="wp-block-ub-content-toggle-accordion-title">{ accordion.title }</h2>
+							<div className="wp-block-ub-content-toggle-accordion-content">{ accordion.content }</div>
+						</div>;
+					} )
+				}
 			</div>
 		);
 	},
