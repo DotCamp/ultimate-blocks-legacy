@@ -8,6 +8,7 @@ const {
 	ColorPalette,
 } = wp.blocks;
 const {
+    PanelColor,
 	PanelBody,
 	PanelRow,
 	FormToggle,
@@ -20,14 +21,17 @@ export default class Inspector extends Component {
 	render() {
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Color Scheme' ) } initialOpen={ true }>
-					<PanelRow>
-						<ColorPalette
-							value={ this.props.attributes.theme }
-							onChange={ this.props.onThemeChange }
-						/>
-					</PanelRow>
-				</PanelBody>
+                <PanelColor
+                    title={ __('Color Scheme' ) }
+                    colorValue={ this.props.attributes.theme }
+                    initialOpen={false}
+                >
+                    <ColorPalette
+                        value={ this.props.attributes.theme }
+                        onChange={ this.props.onThemeChange }
+                        allowReset
+                    />
+                </PanelColor>
 				<PanelBody title={ __( 'Initial State' ) } initialOpen={ true }>
 					<PanelRow>
                         <label htmlFor="ub-content-toggle-state">
