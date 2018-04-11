@@ -12,6 +12,7 @@ import icon from './icons/icon';
 import './style.scss';
 import './editor.scss';
 import Accordion from './components/accordion';
+import Inspector from './components/inspector';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
@@ -63,6 +64,14 @@ registerBlockType( 'ub/content-toggle', {
 		activeControl: {
 			type: 'string',
 			default: '',
+		},
+		theme: {
+			type: 'string',
+			default: '#ffa07a',
+		},
+		collapsed: {
+			type: 'boolean',
+			default: false,
 		},
 	},
 
@@ -128,35 +137,40 @@ registerBlockType( 'ub/content-toggle', {
 			updateTimeStamp();
 		};
 
+		const onThemeChange = ( value ) => setAttributes( { theme: value } );
+
+		const onCollapseChange = () => setAttributes( { collapsed: ! attributes.collapsed } );
+
 		if ( attributes.accordions.length === 0 ) {
 			addAccord( 0 );
 		}
 
-		return (
-			<div className={ className }>
+		return [
+			<Inspector { ...{ attributes, onThemeChange, onCollapseChange } } key="inspector" />,
+			<div className={ className } key="accordions">
 				{
 					attributes.accordions.map( ( accordion, i ) => {
 						return <Accordion { ...{ isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState } } key={ i } />;
 					} )
 				}
-			</div>
-		);
+			</div>,
+		];
 	},
 
 	save: function( props ) {
 		const accordions = props.attributes.accordions;
-		const accordionsState = JSON.parse( props.attributes.accordionsState );
+		const collapsed = props.attributes.collapsed;
 
 		return (
 			<div>
 				{
 					accordions.map( ( accordion, i ) => {
-						return <div className="wp-block-ub-content-toggle-accordion" key={ i }>
-							<div className="wp-block-ub-content-toggle-accordion-title-wrap">
+						return <div style={ { borderColor: props.attributes.theme } } className="wp-block-ub-content-toggle-accordion" key={ i }>
+							<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={ { backgroundColor: props.attributes.theme } }>
 								<span className="wp-block-ub-content-toggle-accordion-title">{ accordion.title }</span>
-								<span className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( accordionsState[ i ] ? 'open' : '' ) }></span>
+								<span className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( collapsed ? 'open' : '' ) }></span>
 							</div>
-							<div style={ { display: ( accordionsState[ i ] ? 'block' : 'none' ) } } className="wp-block-ub-content-toggle-accordion-content-wrap">
+							<div style={ { display: ( collapsed ? 'block' : 'none' ) } } className="wp-block-ub-content-toggle-accordion-content-wrap">
 								<div className="wp-block-ub-content-toggle-accordion-content">{ accordion.content }</div>
 							</div>
 						</div>;

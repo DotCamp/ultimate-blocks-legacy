@@ -562,7 +562,8 @@
     display: flex;
     -ms-flex-align: baseline;
         align-items: baseline;
-    background: lightsalmon; }
+    background: lightsalmon;
+    cursor: pointer; }
     .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap > *:first-child {
       -ms-flex-positive: 1;
           flex-grow: 1; }

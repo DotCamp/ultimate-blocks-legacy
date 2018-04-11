@@ -8,17 +8,12 @@ const { RichText } = wp.blocks;
 /**
  * Create an Inspector Controls wrapper Component
  */
-export default class Inspector extends Component {
-
-	constructor( props ) {
-		super( ...arguments );
-	}
-
+export default class Accordion extends Component {
 	render() {
 		const { isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState } = this.props;
 
-		return <div className="wp-block-ub-content-toggle-accordion" key={ i }>
-			<div className="wp-block-ub-content-toggle-accordion-title-wrap">
+		return <div className="wp-block-ub-content-toggle-accordion" style={ { borderColor: attributes.theme } } key={ i }>
+			<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={ { backgroundColor: attributes.theme } }>
 				<RichText
 					tagName="span"
 					className="wp-block-ub-content-toggle-accordion-title"

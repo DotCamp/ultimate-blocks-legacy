@@ -4,13 +4,13 @@
 		const indicator = '.wp-block-ub-content-toggle-accordion-state-indicator';
 		const contentWrap = '.wp-block-ub-content-toggle-accordion-content-wrap';
 		$( document )
-			.on( 'click', indicator, function() {
-				$( this ).toggleClass( 'open' );
-				const contentWrapEl = $( this ).closest( titleWrap ).siblings( contentWrap );
-				if ( $( this ).hasClass( 'open' ) ) {
-					contentWrapEl.slideDown();
+			.on( 'click', titleWrap, function() {
+				$( this ).find( indicator ).toggleClass( 'open' );
+				const contentWrapEl = $( this ).siblings( contentWrap );
+				if ( $( this ).find( indicator ).hasClass( 'open' ) ) {
+					contentWrapEl.slideDown( 500 );
 				} else {
-					contentWrapEl.slideUp();
+					contentWrapEl.slideUp( 500 );
 				}
 			} );
 	} );
