@@ -38,11 +38,11 @@ export default class Accordion extends Component {
 				/>
 			</div> }
 			<div className="wp-block-ub-content-toggle-accordion-controls-top">
-				<span title={ __( 'Insert new content above' ) } onClick={ () => addAccord( i ) } className="dashicons dashicons-plus-alt"></span>
+				<span title={ __( 'Insert New Toggle Above' ) } onClick={ () => addAccord( i ) } className="dashicons dashicons-plus-alt"></span>
 			</div>
 			<div className="wp-block-ub-content-toggle-accordion-controls-bottom">
-				<span title={ __( 'Insert new content below' ) } onClick={ () => addAccord( i + 1 ) } className="dashicons dashicons-plus-alt"></span>
-				<span title={ __( 'Delete this accordion' ) } onClick={ () => deleteAccord( i ) } class="dashicons dashicons-dismiss"></span>
+				<span title={ __( 'Insert New Toggle Below' ) } onClick={ () => addAccord( i + 1 ) } className="dashicons dashicons-plus-alt"></span>
+				<span title={ __( 'Delete This Toggle' ) } onClick={ () => deleteAccord( i ) } class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>;
 	}
