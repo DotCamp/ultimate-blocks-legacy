@@ -80,7 +80,7 @@ registerBlockType( 'ub/content-toggle', {
 			attributes.accordions = [];
 		}
 
-		const sample = { title: 'The Title', content: 'The Content' };
+		const sample = { title: 'Title', content: 'Content goes here.' };
 		const accordionsState = JSON.parse( attributes.accordionsState );
 
 		const showControls = ( type, index ) => {
