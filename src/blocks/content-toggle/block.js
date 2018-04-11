@@ -146,7 +146,9 @@ registerBlockType( 'ub/content-toggle', {
 		}
 
 		return [
-			<Inspector { ...{ attributes, onThemeChange, onCollapseChange } } key="inspector" />,
+            isSelected && (
+            	<Inspector { ...{ attributes, onThemeChange, onCollapseChange } } key="inspector" />
+			),
 			<div className={ className } key="accordions">
 				{
 					attributes.accordions.map( ( accordion, i ) => {
