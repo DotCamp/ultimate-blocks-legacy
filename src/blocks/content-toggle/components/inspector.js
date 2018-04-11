@@ -20,7 +20,7 @@ export default class Inspector extends Component {
 	render() {
 		return (
 			<InspectorControls>
-				<PanelBody title={ __( 'Theme' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Color Scheme' ) } initialOpen={ true }>
 					<PanelRow>
 						<ColorPalette
 							value={ this.props.attributes.theme }
@@ -28,9 +28,13 @@ export default class Inspector extends Component {
 						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={ __( 'State' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Initial State' ) } initialOpen={ true }>
 					<PanelRow>
+                        <label htmlFor="ub-content-toggle-state">
+							{ __( 'Collapsed' ) }
+						</label>
 						<FormToggle
+							id="ub-content-toggle-state"
 							label={ __( 'Collapsed' ) }
 							checked={ this.props.attributes.collapsed }
 							onChange={ this.props.onCollapseChange }
