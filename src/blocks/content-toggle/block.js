@@ -1,5 +1,5 @@
 /**
- * BLOCK: sample-block
+ * BLOCK: Content Toggle
  *
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
@@ -11,12 +11,10 @@ import icon from './icons/icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import Accordion from './components/accordion';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
-const {
-	registerBlockType,
-	RichText,
-} = wp.blocks; // Import registerBlockType() from wp.blocks
+const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
 } = wp.components;
@@ -58,9 +56,9 @@ registerBlockType( 'ub/content-toggle', {
 			type: 'string',
 			default: '[]',
 		},
-		watcher: {
-			type: 'boolean',
-			default: false,
+		timestamp: {
+			type: 'number',
+			default: 0,
 		},
 		activeControl: {
 			type: 'string',
@@ -68,13 +66,14 @@ registerBlockType( 'ub/content-toggle', {
 		},
 	},
 
-	edit: function( { attributes, setAttributes, className } ) {
+	edit: function( { attributes, setAttributes, className, isSelected } ) {
 		if ( ! attributes.accordions ) {
 			attributes.accordions = [];
 		}
 
 		const sample = { title: 'The Title', content: 'The Content' };
 		const accordionsState = JSON.parse( attributes.accordionsState );
+
 		const showControls = ( type, index ) => {
 			setAttributes( { activeControl: type + '-' + index } );
 		};
@@ -99,82 +98,45 @@ registerBlockType( 'ub/content-toggle', {
 				accordionsState.splice( i, 0, true );
 				setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
 			}
-			updateWatcher();
 		};
 
 		const deleteAccord = ( i ) => {
-			attributes.accordions.slice( i, 1 );
-			setAttributes( { accordions: attributes.accordions } );
+			accordionsState.splice( i, 1 );
+			setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
 
-			updateWatcher();
+			const accordionsClone = attributes.accordions.slice( 0 );
+			accordionsClone.splice( i, 1 );
+			setAttributes( { accordions: accordionsClone } );
 		};
 
 		const toggleAccordionState = ( i ) => {
 			accordionsState[ i ] = ! accordionsState[ i ];
 			setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
-
-			updateWatcher();
 		};
 
-		const updateWatcher = () => {
-			setAttributes( { watcher: ! attributes.watcher } );
+		const updateTimeStamp = () => {
+			setAttributes( { timestamp: ( new Date() ).getTime() } );
+		};
+
+		const onChangeTitle = ( title, i ) => {
+			attributes.accordions[ i ].title = title;
+			updateTimeStamp();
+		};
+
+		const onChangeContent = ( content, i ) => {
+			attributes.accordions[ i ].content = content;
+			updateTimeStamp();
 		};
 
 		if ( attributes.accordions.length === 0 ) {
 			addAccord( 0 );
 		}
-		console.log( accordionsState );
 
 		return (
 			<div className={ className }>
 				{
 					attributes.accordions.map( ( accordion, i ) => {
-						return <div className="wp-block-ub-content-toggle-accordion" key={ i }>
-							<div className="wp-block-ub-content-toggle-accordion-title-wrap">
-								<RichText
-									tagName="h2"
-									className="wp-block-ub-content-toggle-accordion-title"
-									value={ accordion.title }
-									formattingControls={ [ 'bold', 'italic' ] }
-									isSelected={ attributes.activeControl === 'title-' + i }
-									onClick={ () => showControls( 'title', i ) }
-									onChange={ ( title ) => {
-										const accordions = attributes.accordions;
-										accordions[ i ].title = title;
-										setAttributes( { accordions: accordions } );
-
-										updateWatcher();
-									} }
-								/>
-								<span onClick={ () => { toggleAccordionState( i ) } } className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( accordionsState[ i ] ? 'open' : '' ) }></span>
-							</div>
-							{ accordionsState[ i ] &&
-							<div className="wp-block-ub-content-toggle-accordion-content-wrap">
-								<RichText
-									tagName="div"
-									className="wp-block-ub-content-toggle-accordion-content"
-									value={ accordion.content }
-									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-									isSelected={ attributes.activeControl === 'content-' + i }
-									onClick={ () => showControls( 'content', i ) }
-									onChange={ ( content ) => {
-										const accordions = attributes.accordions;
-										accordions[ i ].content = content;
-										setAttributes( { accordions: accordions } );
-
-										updateWatcher();
-									} }
-								/>
-							</div> }
-							<div className="wp-block-ub-content-toggle-accordion-controls-top">
-								<span onClick={ () => addAccord( i ) } className="dashicons dashicons-plus-alt"></span>
-								<span onClick={ () => deleteAccord( i ) } class="dashicons dashicons-dismiss"></span>
-							</div>
-							<div className="wp-block-ub-content-toggle-accordion-controls-bottom">
-								<span onClick={ () => addAccord( i + 1 ) } className="dashicons dashicons-plus-alt"></span>
-								<span onClick={ () => deleteAccord( i ) } class="dashicons dashicons-dismiss"></span>
-							</div>
-						</div>;
+						return <Accordion { ...{ isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState } } key={ i } />;
 					} )
 				}
 			</div>
@@ -183,13 +145,20 @@ registerBlockType( 'ub/content-toggle', {
 
 	save: function( props ) {
 		const accordions = props.attributes.accordions;
+		const accordionsState = JSON.parse( props.attributes.accordionsState );
+
 		return (
-			<div className={ props.className }>
+			<div>
 				{
 					accordions.map( ( accordion, i ) => {
 						return <div className="wp-block-ub-content-toggle-accordion" key={ i }>
-							<h2 className="wp-block-ub-content-toggle-accordion-title">{ accordion.title }</h2>
-							<div className="wp-block-ub-content-toggle-accordion-content">{ accordion.content }</div>
+							<div className="wp-block-ub-content-toggle-accordion-title-wrap">
+								<span className="wp-block-ub-content-toggle-accordion-title">{ accordion.title }</span>
+								<span className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( accordionsState[ i ] ? 'open' : '' ) }></span>
+							</div>
+							<div style={ { display: ( accordionsState[ i ] ? 'block' : 'none' ) } } className="wp-block-ub-content-toggle-accordion-content-wrap">
+								<div className="wp-block-ub-content-toggle-accordion-content">{ accordion.content }</div>
+							</div>
 						</div>;
 					} )
 				}

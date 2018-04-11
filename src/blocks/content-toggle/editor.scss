@@ -17,6 +17,10 @@
 	margin-bottom: 10px;
 	.wp-block-ub-content-toggle-accordion-title {
 		padding: 10px;
+		color: white;
+		margin: 0;
+		font-size: 25px;
+		display: block;
 	}
 	.wp-block-ub-content-toggle-accordion-content {
 		padding: 10px;
@@ -52,6 +56,7 @@
 	.wp-block-ub-content-toggle-accordion-title-wrap {
 		display: flex;
 		align-items: baseline;
+		background: lightsalmon;
 		> *:first-child {
 			flex-grow: 1;
 		}
@@ -60,6 +65,7 @@
 			margin: 10px;
 			transition: 0.5s all;
 			transform: rotate(0deg);
+			color: white;
 			&.open {
 				transform: rotate(90deg);
 			}

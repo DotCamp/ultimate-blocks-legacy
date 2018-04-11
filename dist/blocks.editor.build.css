@@ -4,6 +4,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -23,6 +26,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Styles
  *
@@ -65,6 +71,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -97,6 +106,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -112,6 +124,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -127,6 +142,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -142,6 +160,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -170,6 +191,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -208,6 +232,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 .wp-block-ub-social-share .social-share-icons {
   display: -ms-flexbox;
   display: flex;
@@ -248,6 +275,9 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.ub-hide {
+  display: none !important; }
+
 /**
  * #.# Editor Styles
  *
@@ -263,7 +293,11 @@
   border: 1px solid lightsalmon;
   margin-bottom: 10px; }
   .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title {
-    padding: 10px; }
+    padding: 10px;
+    color: white;
+    margin: 0;
+    font-size: 25px;
+    display: block; }
   .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-content {
     padding: 10px; }
   .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top {
@@ -302,7 +336,8 @@
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: baseline;
-        align-items: baseline; }
+        align-items: baseline;
+    background: lightsalmon; }
     .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap > *:first-child {
       -ms-flex-positive: 1;
           flex-grow: 1; }
@@ -314,7 +349,8 @@
       transition: 0.5s all;
       -webkit-transform: rotate(0deg);
           -ms-transform: rotate(0deg);
-              transform: rotate(0deg); }
+              transform: rotate(0deg);
+      color: white; }
       .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap .wp-block-ub-content-toggle-accordion-state-indicator.open {
         -webkit-transform: rotate(90deg);
             -ms-transform: rotate(90deg);
