@@ -22,19 +22,19 @@
   padding: 15px; }
 
 .ub_notify_info {
-  color: #31708F;
+  color: #31708F !important;
   background-color: #D9EDF7;
-  border: 1px solid #BCE8F1; }
+  border-left: 4px solid #31708F; }
 
 .ub_notify_success {
-  color: #3C763D;
+  color: #3C763D !important;
   background-color: #DFF0D8;
-  border: 1px solid #D6E9C6; }
+  border-left: 4px solid #3C763D; }
 
 .ub_notify_warning {
-  color: #D8000C;
+  color: #D8000C !important;
   background-color: #FFD2D2;
-  border: 1px solid #EBCCD1; }
+  border-left: 4px solid #D8000C; }
 
 .ub_notify_text {
   margin: 0 auto !important; }
