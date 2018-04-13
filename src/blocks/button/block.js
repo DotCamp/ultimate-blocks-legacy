@@ -19,7 +19,8 @@ const {
     AlignmentToolbar,
 	BlockControls,
     ColorPalette,
-	RichText
+	RichText,
+    BlockAlignmentToolbar
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
@@ -57,8 +58,12 @@ registerBlockType( 'ub/button-block', {
 		buttonText: {
 			type: 'array',
 			source: 'children',
-			selector: '.ub-button-text',
+			selector: '.ub-button-block-btn',
 			default: 'Default Button Text'
+		},
+		align: {
+			type: 'string',
+			default: 'left'
 		}
 	},
 	/**
@@ -77,27 +82,35 @@ registerBlockType( 'ub/button-block', {
                 setState
             } = props;
 
-            const {
-            	buttonText
-			} = props.attributes;
-
             const onSetActiveEditable = ( newEditable ) => () => {
                 setState( { editable: newEditable } )
             };
 
+            const {
+            	buttonText,
+				align
+			} = props.attributes;
+
 			return [
 
                 isSelected && (
-                    <BlockControls key="controls"/>
+                    <BlockControls key="controls"/>,
+                    <BlockControls>
+                        <BlockAlignmentToolbar
+                            value={ align }
+                            onChange={ ( newAlignment ) => props.setAttributes( { align: newAlignment } ) }
+                            controls={ [ 'left', 'center', 'right' ] }
+                        />
+                    </BlockControls>
                 ),
 
 				<div key={ 'editable' } className={ props.className }>
 					<div
-						className='ub-button-block-btn'
+						className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
 					>
                         <RichText
                             tagName="p"
-                            className="ub-button-text"
+                            className="ub-button-block-btn"
                             onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
                             value={ buttonText }
                             isSelected={ isSelected && editable === 'button_text' }
@@ -123,9 +136,9 @@ registerBlockType( 'ub/button-block', {
 		return (
 			<div className={ props.className }>
                 <div
-                    className='ub-button-block-btn'
+                    className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
                 >
-                	<p className="ub-button-text"> { props.attributes.buttonText } </p>
+                	<p className="ub-button-block-btn"> { props.attributes.buttonText } </p>
 				</div>
 			</div>
 		);

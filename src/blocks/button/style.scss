@@ -9,6 +9,10 @@
   display: flex;
 }
 
+.ub-button-container {
+  display: flex;
+}
+
 .ub-button-block-btn {
   background-color:#44c767;
   display:inline-block;
@@ -20,4 +24,14 @@
   padding:16px;
   width: 200px;
   text-align: center;
+}
+
+.align-button-center {
+  justify-content: center;
+}
+.align-button-left {
+  justify-content: flex-start;
+}
+.align-button-right {
+  justify-content: flex-end;
 }

@@ -499,6 +499,10 @@
   display: -ms-flexbox;
   display: flex; }
 
+.ub-button-container {
+  display: -ms-flexbox;
+  display: flex; }
+
 .ub-button-block-btn {
   background-color: #44c767;
   display: inline-block;
@@ -510,3 +514,15 @@
   padding: 16px;
   width: 200px;
   text-align: center; }
+
+.align-button-center {
+  -ms-flex-pack: center;
+      justify-content: center; }
+
+.align-button-left {
+  -ms-flex-pack: start;
+      justify-content: flex-start; }
+
+.align-button-right {
+  -ms-flex-pack: end;
+      justify-content: flex-end; }
