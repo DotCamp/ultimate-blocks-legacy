@@ -1,5 +1,5 @@
 /**
- * BLOCK: sample-block
+ * BLOCK: Button Block
  *
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
@@ -17,7 +17,9 @@ const {
     registerBlockType,
     InspectorControls,
     AlignmentToolbar,
+	BlockControls,
     ColorPalette,
+	RichText
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
 const {
@@ -51,7 +53,14 @@ registerBlockType( 'ub/button-block', {
 		__( 'Buttons' ),
 		__( 'Content' ),
 	],
-
+	attributes: {
+		buttonText: {
+			type: 'array',
+			source: 'children',
+			selector: '.ub-button-text',
+			default: 'Default Button Text'
+		}
+	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -62,21 +71,43 @@ registerBlockType( 'ub/button-block', {
 	 */
 	edit: withState( { editable: 'content', } ) ( function( props )
         {
-			const {
-                	isSelected,
-                	editable,
-                	setState
-            	} = props;
+            const {
+                isSelected,
+                editable,
+                setState
+            } = props;
 
-            	const onSetActiveEditable = ( newEditable ) => () => {
-                	setState( { editable: newEditable } )
-            	};
+            const {
+            	buttonText
+			} = props.attributes;
 
-			return (
+            const onSetActiveEditable = ( newEditable ) => () => {
+                setState( { editable: newEditable } )
+            };
+
+			return [
+
+                isSelected && (
+                    <BlockControls key="controls"/>
+                ),
+
 				<div key={ 'editable' } className={ props.className }>
-                    <a href="#" class="ub-button-block-btn">Default Button Text</a>
+					<div
+						className='ub-button-block-btn'
+					>
+                        <RichText
+                            tagName="p"
+                            className="ub-button-text"
+                            onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
+                            value={ buttonText }
+                            isSelected={ isSelected && editable === 'button_text' }
+                            onFocus={ onSetActiveEditable( 'button_text' ) }
+                            keepPlaceholderOnFocus={ true }
+                        />
+
+					</div>
 				</div>
-			);
+			];
 		}
 	),
 
@@ -91,7 +122,11 @@ registerBlockType( 'ub/button-block', {
 	save: function( props ) {
 		return (
 			<div className={ props.className }>
-                <a href="#" class="ub-button-block-btn">Default Button Text</a>
+                <div
+                    className='ub-button-block-btn'
+                >
+                	<p className="ub-button-text"> { props.attributes.buttonText } </p>
+				</div>
 			</div>
 		);
 	},
