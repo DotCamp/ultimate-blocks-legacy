@@ -19,7 +19,7 @@ export default class Accordion extends Component {
 					className="wp-block-ub-content-toggle-accordion-title"
 					value={ accordion.title }
 					formattingControls={ [ 'italic' ] }
-					isSelected={ attributes.activeControl === 'title-' + i }
+					isSelected={ attributes.activeControl === 'title-' + i && isSelected  }
 					onClick={ () => showControls( 'title', i ) }
 					onChange={ ( title ) => onChangeTitle( title, i ) }
 				/>

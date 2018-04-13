@@ -170,9 +170,9 @@ registerBlockType( 'ub/content-toggle', {
 						return <div style={ { borderColor: props.attributes.theme } } className="wp-block-ub-content-toggle-accordion" key={ i }>
 							<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={ { backgroundColor: props.attributes.theme } }>
 								<span className="wp-block-ub-content-toggle-accordion-title">{ accordion.title }</span>
-								<span className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( collapsed ? 'open' : '' ) }></span>
+								<span className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( collapsed ? '' : 'open' ) }></span>
 							</div>
-							<div style={ { display: ( collapsed ? 'block' : 'none' ) } } className="wp-block-ub-content-toggle-accordion-content-wrap">
+							<div style={ { display: ( collapsed ? 'none' : 'block' ) } } className="wp-block-ub-content-toggle-accordion-content-wrap">
 								<div className="wp-block-ub-content-toggle-accordion-content">{ accordion.content }</div>
 							</div>
 						</div>;
