@@ -19,6 +19,7 @@ const {
     AlignmentToolbar,
 	BlockControls,
     ColorPalette,
+    UrlInput,
 	RichText,
     BlockAlignmentToolbar
 } = wp.blocks; // Import registerBlockType() from wp.blocks
@@ -26,6 +27,7 @@ const {
 const {
     PanelBody,
     Toolbar,
+    IconButton,
     RangeControl,
     Dashicon,
     withState
