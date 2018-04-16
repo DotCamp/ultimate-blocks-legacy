@@ -64,7 +64,13 @@ registerBlockType( 'ub/button-block', {
 		align: {
 			type: 'string',
 			default: 'left'
-		}
+		},
+        url: {
+            type: 'string',
+            source: 'attribute',
+            selector: 'a',
+            attribute: 'href',
+        },
 	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -119,6 +125,27 @@ registerBlockType( 'ub/button-block', {
                         />
 
 					</div>
+                    <div className="ub_button_url_input">
+                        {
+                            focus && (
+                                <form
+                                    key={ 'form-link' }
+                                    onSubmit={ ( event ) => event.preventDefault() }
+                                    className={ `blocks-button__inline-link ub_button_input_box`}>
+                                    <Dashicon icon={ 'admin-links' } />
+                                    <UrlInput
+                                        value={ props.attributes.url }
+                                        onChange={ ( value ) => props.setAttributes( { url: value } ) }
+                                    />
+                                    <IconButton
+                                        icon={ 'editor-break' }
+                                        label={ __( 'Apply' ) }
+                                        type={ 'submit' }
+                                    />
+                                </form>
+                            )
+                        }
+                    </div>
 				</div>
 			];
 		}
