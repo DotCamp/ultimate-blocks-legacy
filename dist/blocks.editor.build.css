@@ -272,3 +272,17 @@
 .wp-block-ub-block-button-block {
   margin: 0 auto;
   max-width: 100%; }
+
+.ub_button_url_input {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-top: -20px; }
+
+.ub_button_input_box {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }

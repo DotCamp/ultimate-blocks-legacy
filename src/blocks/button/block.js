@@ -17,10 +17,10 @@ const {
     registerBlockType,
     InspectorControls,
     AlignmentToolbar,
-	BlockControls,
+    BlockControls,
     ColorPalette,
     UrlInput,
-	RichText,
+    RichText,
     BlockAlignmentToolbar
 } = wp.blocks; // Import registerBlockType() from wp.blocks
 
@@ -30,7 +30,9 @@ const {
     IconButton,
     RangeControl,
     Dashicon,
-    withState
+    withState,
+    Button,
+    ButtonGroup
 } = wp.components;
 
 /**
@@ -47,42 +49,47 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/button-block', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Button (Improved)' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'layout', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	keywords: [
-		__( 'Button' ),
-		__( 'Buttons' ),
-		__( 'Content' ),
-	],
-	attributes: {
-		buttonText: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub-button-block-btn',
-			default: 'Default Button Text'
-		},
-		align: {
-			type: 'string',
-			default: 'left'
-		},
+    // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
+    title: __( 'Button (Improved)' ), // Block title.
+    icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
+    category: 'layout', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+    keywords: [
+        __( 'Button' ),
+        __( 'Buttons' ),
+        __( 'Content' ),
+    ],
+    attributes: {
+        buttonText: {
+            type: 'array',
+            source: 'children',
+            selector: '.ub-button-block-btn',
+            default: 'Default Button Text'
+        },
+        align: {
+            type: 'string',
+            default: 'left'
+        },
         url: {
             type: 'string',
             source: 'attribute',
             selector: 'a',
             attribute: 'href',
         },
-	},
-	/**
-	 * The edit function describes the structure of your block in the context of the editor.
-	 * This represents what the editor will render when the block is used.
-	 *
-	 * The "edit" property must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
-	edit: withState( { editable: 'content', } ) ( function( props )
+        size: {
+            type: 'string',
+            default: 'medium'
+        }
+
+    },
+    /**
+     * The edit function describes the structure of your block in the context of the editor.
+     * This represents what the editor will render when the block is used.
+     *
+     * The "edit" property must be a valid function.
+     *
+     * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+     */
+    edit: withState( { editable: 'content', } ) ( function( props )
         {
             const {
                 isSelected,
@@ -95,27 +102,83 @@ registerBlockType( 'ub/button-block', {
             };
 
             const {
-            	buttonText,
-				align
-			} = props.attributes;
+                buttonText,
+                align,
+                url,
+                size
+            } = props.attributes;
 
-			return [
+            const BUTTON_SIZES = {
+                small: 'small',
+                medium: 'medium',
+                large: 'large',
+                larger: 'larger'
+            };
+
+            const changeButtonSize = ( buttonSizeValue ) => () => {
+                props.setAttributes( { size: buttonSizeValue } )
+            };
+
+            return [
 
                 isSelected && (
                     <BlockControls key="controls"/>,
-                    <BlockControls>
-                        <BlockAlignmentToolbar
-                            value={ align }
-                            onChange={ ( newAlignment ) => props.setAttributes( { align: newAlignment } ) }
-                            controls={ [ 'left', 'center', 'right' ] }
-                        />
-                    </BlockControls>
+                        <BlockControls>
+                            <BlockAlignmentToolbar
+                                value={ align }
+                                onChange={ ( newAlignment ) => props.setAttributes( { align: newAlignment } ) }
+                                controls={ [ 'left', 'center', 'right' ] }
+                            />
+                        </BlockControls>
                 ),
 
-				<div key={ 'editable' } className={ props.className }>
-					<div
-						className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
-					>
+                isSelected && (
+                    <InspectorControls>
+                        <PanelBody title={ __( 'Button Size' ) }>
+                            <div className="blocks-font-size__main">
+                                <ButtonGroup aria-label={ __( 'Button Size' ) }>
+                                    <Button
+                                        isLarge
+                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'small' ] }
+                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'small' ] }
+                                        onClick={ () => props.setAttributes( { size: 'small' } ) }
+                                    >
+                                        S
+                                    </Button>
+                                    <Button
+                                        isLarge
+                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'medium' ] }
+                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'medium' ] }
+                                        onClick={ () => props.setAttributes( { size: 'medium' } ) }
+                                    >
+                                        M
+                                    </Button>
+                                    <Button
+                                        isLarge
+                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'large' ] }
+                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'large' ] }
+                                        onClick={ () => props.setAttributes( { size: 'large' } ) }
+                                    >
+                                        L
+                                    </Button>
+                                    <Button
+                                        isLarge
+                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'larger' ] }
+                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'larger' ] }
+                                        onClick={ () => props.setAttributes( { size: 'larger' } ) }
+                                    >
+                                        XL
+                                    </Button>
+                                </ButtonGroup>
+                            </div>
+                        </PanelBody>
+                    </InspectorControls>
+                ),
+
+                <div key={ 'editable' } className={ props.className }>
+                    <div
+                        className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
+                    >
                         <RichText
                             tagName="p"
                             className="ub-button-block-btn"
@@ -125,8 +188,8 @@ registerBlockType( 'ub/button-block', {
                             onFocus={ onSetActiveEditable( 'button_text' ) }
                             keepPlaceholderOnFocus={ true }
                         />
-
-					</div>
+                    </div>
+                    <br/>
                     <div className="ub_button_url_input">
                         {
                             focus && (
@@ -148,28 +211,28 @@ registerBlockType( 'ub/button-block', {
                             )
                         }
                     </div>
-				</div>
-			];
-		}
-	),
+                </div>
+            ];
+        }
+    ),
 
-	/**
-	 * The save function defines the way in which the different attributes should be combined
-	 * into the final markup, which is then serialized by Gutenberg into post_content.
-	 *
-	 * The "save" property must be specified and must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
-	save: function( props ) {
-		return (
-			<div className={ props.className }>
+    /**
+     * The save function defines the way in which the different attributes should be combined
+     * into the final markup, which is then serialized by Gutenberg into post_content.
+     *
+     * The "save" property must be specified and must be a valid function.
+     *
+     * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+     */
+    save: function( props ) {
+        return (
+            <div className={ props.className }>
                 <div
                     className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
                 >
-                	<p className="ub-button-block-btn"> { props.attributes.buttonText } </p>
-				</div>
-			</div>
-		);
-	},
+                    <p className="ub-button-block-btn"> { props.attributes.buttonText } </p>
+                </div>
+            </div>
+        );
+    },
 } );
