@@ -510,9 +510,6 @@
   margin-right: auto;
   cursor: pointer;
   color: #ffffff;
-  font-size: 17px;
-  padding: 16px;
-  width: 200px;
   text-align: center; }
 
 .align-button-center {
@@ -526,3 +523,23 @@
 .align-button-right {
   -ms-flex-pack: end;
       justify-content: flex-end; }
+
+.ub-button-small {
+  width: 180px;
+  padding: 10px;
+  font-size: 100%; }
+
+.ub-button-medium {
+  width: 275px;
+  padding: 15px;
+  font-size: 100%; }
+
+.ub-button-large {
+  width: 417px;
+  padding: 20px;
+  font-size: 100%; }
+
+.ub-button-larger {
+  width: 512px;
+  padding: 20px;
+  font-size: 100%; }

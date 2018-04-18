@@ -181,7 +181,7 @@ registerBlockType( 'ub/button-block', {
                     >
                         <RichText
                             tagName="p"
-                            className="ub-button-block-btn"
+                            className={ 'ub-button-block-btn' + ' ub-button-' + props.attributes.size }
                             onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
                             value={ buttonText }
                             isSelected={ isSelected && editable === 'button_text' }
