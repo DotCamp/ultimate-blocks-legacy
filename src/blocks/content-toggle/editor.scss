@@ -19,7 +19,7 @@
 		padding: 10px;
 		color: white;
 		margin: 0;
-		font-size: 20px;
+		font-size: 22px;
 		display: block;
 	}
 	.wp-block-ub-content-toggle-accordion-content {
@@ -37,6 +37,11 @@
 		> span {
 			display: inline-block;
 			margin: 0 3px;
+			cursor: pointer;
+		}
+		> span:nth-of-type(2) {
+			position: absolute;
+			right: -15px;
 		}
 	}
 	.wp-block-ub-content-toggle-accordion-controls-bottom {
@@ -51,6 +56,7 @@
 		> span {
 			display: inline-block;
 			margin: 0 3px;
+			cursor: pointer;
 		}
 	}
 	.wp-block-ub-content-toggle-accordion-title-wrap {

@@ -152,7 +152,7 @@ registerBlockType( 'ub/content-toggle', {
 			<div className={ className } key="accordions">
 				{
 					attributes.accordions.map( ( accordion, i ) => {
-						return <Accordion { ...{ isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState } } key={ i } />;
+						return <Accordion { ...{ isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState } } count={ attributes.accordions.length } key={ i } />;
 					} )
 				}
 			</div>,
