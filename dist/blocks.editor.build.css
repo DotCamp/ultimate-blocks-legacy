@@ -278,7 +278,7 @@
   display: flex;
   -ms-flex-align: center;
       align-items: center;
-  margin-top: -20px; }
+  margin-top: 5px; }
 
 .ub_button_input_box {
   margin-left: auto;

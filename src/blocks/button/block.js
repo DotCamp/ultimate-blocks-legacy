@@ -115,21 +115,16 @@ registerBlockType( 'ub/button-block', {
                 larger: 'larger'
             };
 
-            const changeButtonSize = ( buttonSizeValue ) => () => {
-                props.setAttributes( { size: buttonSizeValue } )
-            };
-
             return [
 
                 isSelected && (
-                    <BlockControls key="controls"/>,
-                        <BlockControls>
-                            <BlockAlignmentToolbar
-                                value={ align }
-                                onChange={ ( newAlignment ) => props.setAttributes( { align: newAlignment } ) }
-                                controls={ [ 'left', 'center', 'right' ] }
-                            />
-                        </BlockControls>
+                    <BlockControls>
+                        <BlockAlignmentToolbar
+                            value={ align }
+                            onChange={ ( newAlignment ) => props.setAttributes( { align: newAlignment } ) }
+                            controls={ [ 'left', 'center', 'right' ] }
+                        />
+                    </BlockControls>
                 ),
 
                 isSelected && (
@@ -139,32 +134,32 @@ registerBlockType( 'ub/button-block', {
                                 <ButtonGroup aria-label={ __( 'Button Size' ) }>
                                     <Button
                                         isLarge
-                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'small' ] }
-                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'small' ] }
+                                        isPrimary={ size === BUTTON_SIZES [ 'small' ] }
+                                        aria-pressed={ size === BUTTON_SIZES [ 'small' ] }
                                         onClick={ () => props.setAttributes( { size: 'small' } ) }
                                     >
                                         S
                                     </Button>
                                     <Button
                                         isLarge
-                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'medium' ] }
-                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'medium' ] }
+                                        isPrimary={ size === BUTTON_SIZES [ 'medium' ] }
+                                        aria-pressed={ size === BUTTON_SIZES [ 'medium' ] }
                                         onClick={ () => props.setAttributes( { size: 'medium' } ) }
                                     >
                                         M
                                     </Button>
                                     <Button
                                         isLarge
-                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'large' ] }
-                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'large' ] }
+                                        isPrimary={ size === BUTTON_SIZES [ 'large' ] }
+                                        aria-pressed={ size === BUTTON_SIZES [ 'large' ] }
                                         onClick={ () => props.setAttributes( { size: 'large' } ) }
                                     >
                                         L
                                     </Button>
                                     <Button
                                         isLarge
-                                        isPrimary={ props.attributes.size === BUTTON_SIZES [ 'larger' ] }
-                                        aria-pressed={ props.attributes.size === BUTTON_SIZES [ 'larger' ] }
+                                        isPrimary={ size === BUTTON_SIZES [ 'larger' ] }
+                                        aria-pressed={ size === BUTTON_SIZES [ 'larger' ] }
                                         onClick={ () => props.setAttributes( { size: 'larger' } ) }
                                     >
                                         XL
@@ -184,12 +179,12 @@ registerBlockType( 'ub/button-block', {
                             className={ 'ub-button-block-btn' + ' ub-button-' + props.attributes.size }
                             onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
                             value={ buttonText }
+                            formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
                             isSelected={ isSelected && editable === 'button_text' }
                             onFocus={ onSetActiveEditable( 'button_text' ) }
                             keepPlaceholderOnFocus={ true }
                         />
                     </div>
-                    <br/>
                     <div className="ub_button_url_input">
                         {
                             focus && (
