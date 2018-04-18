@@ -26,6 +26,7 @@ const {
 
 const {
     PanelBody,
+    PanelColor,
     Toolbar,
     IconButton,
     RangeControl,
@@ -78,8 +79,11 @@ registerBlockType( 'ub/button-block', {
         size: {
             type: 'string',
             default: 'medium'
+        },
+        buttonColor: {
+            type: 'string',
+            default: '#44c767'
         }
-
     },
     /**
      * The edit function describes the structure of your block in the context of the editor.
@@ -105,7 +109,8 @@ registerBlockType( 'ub/button-block', {
                 buttonText,
                 align,
                 url,
-                size
+                size,
+                buttonColor
             } = props.attributes;
 
             const BUTTON_SIZES = {
@@ -167,16 +172,30 @@ registerBlockType( 'ub/button-block', {
                                 </ButtonGroup>
                             </div>
                         </PanelBody>
+                        <PanelColor
+                            title={ __( 'Button Color' ) }
+                            colorValue={ buttonColor }
+                            initialOpen={ true }
+                        >
+                            <ColorPalette
+                                value={ buttonColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { buttonColor: colorValue } ) }
+                                allowReset
+                            />
+                        </PanelColor>
                     </InspectorControls>
                 ),
 
                 <div key={ 'editable' } className={ props.className }>
                     <div
-                        className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
+                        className={ 'ub-button-container' + ' align-button-' + align }
                     >
                         <RichText
                             tagName="p"
-                            className={ 'ub-button-block-btn' + ' ub-button-' + props.attributes.size }
+                            style={{
+                                backgroundColor: buttonColor
+                            }}
+                            className={ 'ub-button-block-btn' + ' ub-button-' + size }
                             onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
                             value={ buttonText }
                             formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
@@ -194,7 +213,7 @@ registerBlockType( 'ub/button-block', {
                                     className={ `blocks-button__inline-link ub_button_input_box`}>
                                     <Dashicon icon={ 'admin-links' } />
                                     <UrlInput
-                                        value={ props.attributes.url }
+                                        value={ url }
                                         onChange={ ( value ) => props.setAttributes( { url: value } ) }
                                     />
                                     <IconButton
@@ -220,17 +239,29 @@ registerBlockType( 'ub/button-block', {
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
     save: function( props ) {
+
+        const {
+            buttonText,
+            align,
+            url,
+            size,
+            buttonColor
+        } = props.attributes;
+
         return (
             <div className={ props.className }>
                 <div
-                    className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
+                    className={ 'ub-button-container' + ' align-button-' + align }
                 >
                     <a
-                        href={ props.attributes.url }
+                        href={ url }
                         target="_blank"
-                        className={ 'ub-button-block-btn' + ' ub-button-' + props.attributes.size }
+                        className={ 'ub-button-block-btn' + ' ub-button-' + size }
+                        style={{
+                            backgroundColor: buttonColor
+                        }}
                     >
-                        { props.attributes.buttonText }
+                        { buttonText }
                     </a>
                 </div>
             </div>

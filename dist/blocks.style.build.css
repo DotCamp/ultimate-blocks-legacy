@@ -493,18 +493,15 @@
  *
  * CSS for both Frontend+Backend.
  */
-.wp-block-ub-block-button-block {
-  margin: 0 auto;
-  max-width: 100%;
-  display: -ms-flexbox;
-  display: flex; }
+.wp-block-ub-button-block {
+  margin: 20px auto;
+  max-width: 100%; }
 
 .ub-button-container {
   display: -ms-flexbox;
   display: flex; }
 
 .ub-button-block-btn {
-  background-color: #44c767;
   display: inline-block;
   margin-left: auto;
   margin-right: auto;
