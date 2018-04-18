@@ -225,7 +225,13 @@ registerBlockType( 'ub/button-block', {
                 <div
                     className={ 'ub-button-container' + ' align-button-' + props.attributes.align }
                 >
-                    <p className="ub-button-block-btn"> { props.attributes.buttonText } </p>
+                    <a
+                        href={ props.attributes.url }
+                        target="_blank"
+                        className={ 'ub-button-block-btn' + ' ub-button-' + props.attributes.size }
+                    >
+                        { props.attributes.buttonText }
+                    </a>
                 </div>
             </div>
         );
