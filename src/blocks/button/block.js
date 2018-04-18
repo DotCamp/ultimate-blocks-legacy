@@ -83,7 +83,11 @@ registerBlockType( 'ub/button-block', {
         buttonColor: {
             type: 'string',
             default: '#44c767'
-        }
+        },
+        buttonTextColor: {
+            type: 'string',
+            default: '#ffffff'
+        },
     },
     /**
      * The edit function describes the structure of your block in the context of the editor.
@@ -110,7 +114,8 @@ registerBlockType( 'ub/button-block', {
                 align,
                 url,
                 size,
-                buttonColor
+                buttonColor,
+                buttonTextColor
             } = props.attributes;
 
             const BUTTON_SIZES = {
@@ -183,6 +188,17 @@ registerBlockType( 'ub/button-block', {
                                 allowReset
                             />
                         </PanelColor>
+                        <PanelColor
+                            title={ __( 'Button Text Color' ) }
+                            colorValue={ buttonTextColor }
+                            initialOpen={ true }
+                        >
+                            <ColorPalette
+                                value={ buttonTextColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { buttonTextColor: colorValue } ) }
+                                allowReset
+                            />
+                        </PanelColor>
                     </InspectorControls>
                 ),
 
@@ -193,7 +209,8 @@ registerBlockType( 'ub/button-block', {
                         <RichText
                             tagName="p"
                             style={{
-                                backgroundColor: buttonColor
+                                backgroundColor: buttonColor,
+                                color: buttonTextColor
                             }}
                             className={ 'ub-button-block-btn' + ' ub-button-' + size }
                             onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
@@ -245,7 +262,8 @@ registerBlockType( 'ub/button-block', {
             align,
             url,
             size,
-            buttonColor
+            buttonColor,
+            buttonTextColor
         } = props.attributes;
 
         return (
@@ -258,7 +276,8 @@ registerBlockType( 'ub/button-block', {
                         target="_blank"
                         className={ 'ub-button-block-btn' + ' ub-button-' + size }
                         style={{
-                            backgroundColor: buttonColor
+                            backgroundColor: buttonColor,
+                            color: buttonTextColor
                         }}
                     >
                         { buttonText }
