@@ -47,7 +47,7 @@ registerBlockType( 'ub/divider', {
 	keywords: [
 		__( 'Divider' ),
 		__( 'Separator' ),
-		__( 'Separate' ),
+		__( 'Ultimate Blocks' ),
 	],
     attributes: {
 	    borderSize: {

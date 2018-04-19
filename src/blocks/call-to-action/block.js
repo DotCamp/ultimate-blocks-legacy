@@ -48,7 +48,7 @@ registerBlockType( 'ub/call-to-action', {
     keywords: [
         __( 'call to action' ),
         __( 'conversion' ),
-        __( 'optimize' ),
+        __( 'Ultimate Blocks' ),
     ],
     attributes: {
         ub_call_to_action_headline_text: {

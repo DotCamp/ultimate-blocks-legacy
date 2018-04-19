@@ -56,7 +56,7 @@ registerBlockType( 'ub/button-block', {
     keywords: [
         __( 'Button' ),
         __( 'Buttons' ),
-        __( 'Content' ),
+        __( 'Ultimate Blocks' ),
     ],
     attributes: {
         buttonText: {

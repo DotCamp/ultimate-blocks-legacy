@@ -56,7 +56,7 @@ registerBlockType( 'ub/feature-box', {
 	keywords: [
 		__( 'Feature Box' ),
 		__( 'Column' ),
-		__( 'Feature Image' ),
+		__( 'Ultimate Blocks' ),
 	],
     attributes: {
         column: {

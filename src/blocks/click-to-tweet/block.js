@@ -52,8 +52,8 @@ registerBlockType( 'ub/click-to-tweet', {
 	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'Click to tweet' ),
-		__( 'Tweet' ),
 		__( 'Twitter' ),
+		__( 'Ultimate Blocks' ),
 	],
     attributes: {
 	    ubTweet: {

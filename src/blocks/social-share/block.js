@@ -59,7 +59,7 @@ registerBlockType( 'ub/social-share', {
 	keywords: [
 		__( 'social' ),
 		__( 'share' ),
-		__( 'widget' ),
+		__( 'Ultimate Blocks' ),
 	],
 
 	edit: function( props ) {

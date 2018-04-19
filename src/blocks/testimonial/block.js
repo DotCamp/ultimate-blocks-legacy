@@ -47,7 +47,7 @@ registerBlockType( 'ub/testimonial-block', {
     keywords: [
         __( 'testimonial' ),
         __( 'quotes' ),
-        __( 'customer' ),
+        __( 'Ultimate Blocks' ),
     ],
     attributes: {
         ub_testimonial_text: {

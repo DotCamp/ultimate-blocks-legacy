@@ -40,9 +40,9 @@ registerBlockType( 'ub/content-toggle', {
 	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'Content' ),
+		__( 'Content Accordion' ),
 		__( 'Toggle Collapse' ),
-		__( 'Accordion' ),
+		__( 'Ultimate Blocks' ),
 	],
 
 	attributes: {
