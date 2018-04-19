@@ -494,7 +494,7 @@
  * CSS for both Frontend+Backend.
  */
 .wp-block-ub-button-block {
-  margin: 20px auto;
+  margin: 30px auto;
   max-width: 100%; }
 
 .ub-button-container {
@@ -506,7 +506,6 @@
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
-  color: #ffffff;
   text-align: center; }
 
 .align-button-center {

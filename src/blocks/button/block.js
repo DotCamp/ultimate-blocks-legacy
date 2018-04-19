@@ -16,7 +16,6 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
     registerBlockType,
     InspectorControls,
-    AlignmentToolbar,
     BlockControls,
     ColorPalette,
     UrlInput,
@@ -27,13 +26,13 @@ const {
 const {
     PanelBody,
     PanelColor,
-    Toolbar,
     IconButton,
-    RangeControl,
     Dashicon,
     withState,
     Button,
-    ButtonGroup
+    ButtonGroup,
+    ToggleControl,
+    FormToggle
 } = wp.components;
 
 /**
@@ -88,6 +87,10 @@ registerBlockType( 'ub/button-block', {
             type: 'string',
             default: '#ffffff'
         },
+        buttonRounded: {
+            type: 'boolean',
+            default: 'true'
+        }
     },
     /**
      * The edit function describes the structure of your block in the context of the editor.
@@ -115,7 +118,8 @@ registerBlockType( 'ub/button-block', {
                 url,
                 size,
                 buttonColor,
-                buttonTextColor
+                buttonTextColor,
+                buttonRounded
             } = props.attributes;
 
             const BUTTON_SIZES = {
@@ -177,6 +181,13 @@ registerBlockType( 'ub/button-block', {
                                 </ButtonGroup>
                             </div>
                         </PanelBody>
+                        <PanelBody title={ __( 'Button Style' ) }>
+                            <ToggleControl
+                                label={ __( 'Rounded' ) }
+                                checked= { buttonRounded }
+                                onChange={ () => props.setAttributes( { buttonRounded: ! buttonRounded } ) }
+                            />
+                        </PanelBody>
                         <PanelColor
                             title={ __( 'Button Color' ) }
                             colorValue={ buttonColor }
@@ -210,7 +221,8 @@ registerBlockType( 'ub/button-block', {
                             tagName="p"
                             style={{
                                 backgroundColor: buttonColor,
-                                color: buttonTextColor
+                                color: buttonTextColor,
+                                borderRadius: ( buttonRounded ? '60px' : '0px' )
                             }}
                             className={ 'ub-button-block-btn' + ' ub-button-' + size }
                             onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
@@ -263,7 +275,8 @@ registerBlockType( 'ub/button-block', {
             url,
             size,
             buttonColor,
-            buttonTextColor
+            buttonTextColor,
+            buttonRounded
         } = props.attributes;
 
         return (
@@ -277,7 +290,8 @@ registerBlockType( 'ub/button-block', {
                         className={ 'ub-button-block-btn' + ' ub-button-' + size }
                         style={{
                             backgroundColor: buttonColor,
-                            color: buttonTextColor
+                            color: buttonTextColor,
+                            borderRadius: ( buttonRounded ? '60px' : '0px' )
                         }}
                     >
                         { buttonText }
