@@ -18,16 +18,13 @@ const {
 } = wp.blocks;
 
 const {
-    Toolbar,
-    Button,
     PanelColor,
     PanelBody,
-    PanelRow,
     Dashicon,
     IconButton,
-    FormToggle,
     RangeControl,
-    withState
+    withState,
+    SelectControl
 } = wp.components;
 
 /**
@@ -122,6 +119,10 @@ registerBlockType( 'ub/call-to-action', {
             selector: 'a',
             attribute: 'href',
         },
+        contentAlign: {
+            type: 'string',
+            default: 'center'
+        }
 
     },
 
@@ -205,6 +206,17 @@ registerBlockType( 'ub/call-to-action', {
                             title={ __( 'Content Settings' ) }
                             initialOpen={ false }
                         >
+                            <SelectControl
+                                label={ __( 'Content Align' ) }
+                                value={ props.attributes.contentAlign }
+                                onChange={ ( value ) => props.setAttributes( { contentAlign: value } ) }
+                                options={ [
+                                    { value: 'left', label: __( 'Left' ) },
+                                    { value: 'center', label: __( 'Center' ) },
+                                    { value: 'right', label: __( 'Right' ) },
+                                    { value: 'justify', label: __( 'Justify' ) }
+                                ] }
+                            />
 
                             <RangeControl
                                 label={ __( 'Font Size' ) }
@@ -299,7 +311,8 @@ registerBlockType( 'ub/call-to-action', {
                                 className="ub_cta_content_text"
                                 style={{
                                     fontSize: props.attributes.contentFontSize + 'px',
-                                    color: props.attributes.contentColor
+                                    color: props.attributes.contentColor,
+                                    textAlign: props.attributes.contentAlign
                                 }}
                                 onChange={ ( value ) => props.setAttributes( { ub_cta_content_text: value } ) }
                                 value={ props.attributes.ub_cta_content_text }
@@ -394,7 +407,9 @@ registerBlockType( 'ub/call-to-action', {
                             className="ub_cta_content_text"
                             style={{
                                 fontSize: props.attributes.contentFontSize + 'px',
-                                color: props.attributes.contentColor
+                                color: props.attributes.contentColor,
+                                textAlign: props.attributes.contentAlign
+
                             }}
                         >
                             { props.attributes.ub_cta_content_text }
