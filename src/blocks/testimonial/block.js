@@ -20,7 +20,9 @@ const {
 
 const {
     Button,
+    PanelBody,
     PanelColor,
+    RangeControl,
     withState
 } = wp.components;
 
@@ -88,8 +90,11 @@ registerBlockType( 'ub/testimonial-block', {
         textColor: {
             type: 'string',
             default: '#444444'
+        },
+        textSize: {
+            type: 'number',
+            default: 17
         }
-
     },
 
     /**
@@ -158,17 +163,25 @@ registerBlockType( 'ub/testimonial-block', {
                                 allowReset
                             />
                         </PanelColor>
-                        <PanelColor
-                            title={ __( 'Text Color' ) }
-                            colorValue={ props.attributes.textColor }
-                            initialOpen={ true }
+                        <PanelBody
+                            title={ __( 'Testimonial Body' ) }
                         >
+                            <p>Font Color</p>
                             <ColorPalette
                                 value={ props.attributes.textColor }
                                 onChange={ ( colorValue ) => props.setAttributes( { textColor: colorValue } ) }
                                 allowReset
                             />
-                        </PanelColor>
+                            <RangeControl
+                                label={ __( 'Font Size' ) }
+                                value={ props.attributes.textSize }
+                                onChange={ ( value ) => props.setAttributes( { textSize: value } ) }
+                                min={ 14 }
+                                max={ 200 }
+                                beforeIcon="editor-textcolor"
+                                allowReset
+                            />
+                        </PanelBody>
                     </InspectorControls>
                 ),
 
@@ -223,6 +236,9 @@ registerBlockType( 'ub/testimonial-block', {
                             <RichText
                                 tagName="p"
                                 className="ub_testimonial_text"
+                                style={{
+                                    fontSize: props.attributes.textSize
+                                }}
                                 onChange={ onChangeTestimonialText }
                                 value={ props.attributes.ub_testimonial_text }
                                 isSelected={ isSelected && editable === 'testimonial_content' }
@@ -283,7 +299,14 @@ registerBlockType( 'ub/testimonial-block', {
                         />
                     </div>
                     <div className="ub_testimonial_content">
-                        <p className="ub_testimonial_text">{ props.attributes.ub_testimonial_text }</p>
+                        <p
+                            className="ub_testimonial_text"
+                            style={{
+                                fontSize: props.attributes.textSize
+                            }}
+                        >
+                            { props.attributes.ub_testimonial_text }
+                        </p>
                     </div>
                     <div className="ub_testimonial_sign">
                         <p className="ub_testimonial_author">{ props.attributes.ub_testimonial_author }</p>
