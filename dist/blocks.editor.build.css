@@ -28,13 +28,9 @@
  *
  * CSS for Backend only.
  */
-.wp-block-ub-block-testimonial-block {
-  background: orangered;
-  border: 0.2rem solid #292929;
-  color: #292929;
+.wp-block-ub-testimonial-block {
   margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
+  max-width: 740px; }
 
 .ub_testimonial_content {
   max-width: 78% !important;

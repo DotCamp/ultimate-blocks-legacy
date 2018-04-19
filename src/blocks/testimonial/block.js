@@ -6,21 +6,21 @@ import classnames from 'classnames';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import Inspector from "../social-share/inspector";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
     registerBlockType,
     RichText,
-    AlignmentToolbar,
     BlockControls,
-    BlockAlignmentToolbar,
-    MediaUpload
+    MediaUpload,
+    InspectorControls,
+    ColorPalette
 } = wp.blocks;
 
 const {
-    Toolbar,
     Button,
-    Tooltip,
+    PanelColor,
     withState
 } = wp.components;
 
@@ -81,6 +81,15 @@ registerBlockType( 'ub/testimonial-block', {
             attribute: 'alt',
             selector: 'img',
         },
+        backgroundColor: {
+            type: 'string',
+            default: '#f4f6f6'
+        },
+        textColor: {
+            type: 'string',
+            default: '#444444'
+        }
+
     },
 
     /**
@@ -130,15 +139,47 @@ registerBlockType( 'ub/testimonial-block', {
                 });
             };
 
-            // Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
             return [
 
                 isSelected && (
                     <BlockControls key="controls"/>
                 ),
 
+                isSelected && (
+                    <InspectorControls>
+                        <PanelColor
+                            title={ __( 'Background Color' ) }
+                            colorValue={ props.attributes.backgroundColor }
+                            initialOpen={ true }
+                        >
+                            <ColorPalette
+                                value={ props.attributes.backgroundColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { backgroundColor: colorValue } ) }
+                                allowReset
+                            />
+                        </PanelColor>
+                        <PanelColor
+                            title={ __( 'Text Color' ) }
+                            colorValue={ props.attributes.textColor }
+                            initialOpen={ true }
+                        >
+                            <ColorPalette
+                                value={ props.attributes.textColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { textColor: colorValue } ) }
+                                allowReset
+                            />
+                        </PanelColor>
+                    </InspectorControls>
+                ),
+
                 <div className={ props.className }>
-                    <div className="ub_testimonial">
+                    <div
+                        className="ub_testimonial"
+                        style={{
+                            backgroundColor: props.attributes.backgroundColor,
+                            color: props.attributes.textColor
+                        }}
+                    >
                         <div className="ub_testimonial_img">
                             { ! props.attributes.imgID ? (
 
@@ -226,7 +267,13 @@ registerBlockType( 'ub/testimonial-block', {
     save: function( props ) {
         return (
             <div className={ props.className }>
-                <div className="ub_testimonial">
+                <div
+                    className="ub_testimonial"
+                    style={{
+                        backgroundColor: props.attributes.backgroundColor,
+                        color: props.attributes.textColor
+                    }}
+                >
                     <div className="ub_testimonial_img">
                         <img
                             src={ props.attributes.imgURL }

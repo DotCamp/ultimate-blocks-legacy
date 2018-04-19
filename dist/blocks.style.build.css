@@ -49,18 +49,13 @@
  *
  * CSS for both Frontend+Backend.
  */
-.wp-block-ub-block-testimonial-block {
-  background: orangered;
-  border: 0.2rem solid #292929;
-  color: #292929;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
+.wp-block-ub-testimonial-block {
+  margin: 30px auto;
+  max-width: 740px; }
 
 .ub_testimonial {
-  background-color: #f4f6f6;
   max-width: 100%;
-  padding: 10px;
+  padding: 30px;
   display: inline-block; }
 
 .ub_testimonial_img {
@@ -75,12 +70,13 @@
 
 .ub_testimonial_content {
   max-width: 75%;
-  padding: 11px 17px;
+  padding: 11px 20px;
   float: left; }
 
 .ub_testimonial_content p {
   font-style: italic;
-  font-size: 17px; }
+  font-size: 17px;
+  text-align: justify; }
 
 .ub_testimonial_sign {
   text-align: right;
@@ -89,11 +85,9 @@
   padding-bottom: 10px; }
 
 .ub_testimonial_sign p {
-  margin-bottom: 2px !important;
-  color: #7C838A; }
+  margin-bottom: 2px !important; }
 
 .ub_testimonial_sign i {
-  color: #7C838A;
   font-size: 13px; }
 /**
  * #.# Common SCSS
