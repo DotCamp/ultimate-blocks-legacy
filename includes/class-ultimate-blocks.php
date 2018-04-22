@@ -40,24 +40,6 @@ class Ultimate_Blocks {
 	protected $loader;
 
 	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.2
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
-
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.2
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
-
-	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -67,12 +49,6 @@ class Ultimate_Blocks {
 	 * @since    1.0.2
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
-		} else {
-			$this->version = '1.0.2';
-		}
-		$this->plugin_name = 'ultimate-blocks';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -103,24 +79,24 @@ class Ultimate_Blocks {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ultimate-blocks-loader.php';
+		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ultimate-blocks-i18n.php';
+		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ultimate-blocks-admin.php';
+		require_once ULTIMATE_BLOCKS_PATH . 'admin/class-ultimate-blocks-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-ultimate-blocks-public.php';
+		require_once ULTIMATE_BLOCKS_PATH . 'public/class-ultimate-blocks-public.php';
 
 		$this->loader = new Ultimate_Blocks_Loader();
 
@@ -152,10 +128,12 @@ class Ultimate_Blocks {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Ultimate_Blocks_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Ultimate_Blocks_Admin();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_admin_menus' );
 
 	}
 
@@ -168,7 +146,7 @@ class Ultimate_Blocks {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Ultimate_Blocks_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Ultimate_Blocks_Public();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -185,17 +163,6 @@ class Ultimate_Blocks {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.2
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.2
@@ -203,16 +170,6 @@ class Ultimate_Blocks {
 	 */
 	public function get_loader() {
 		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.2
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
 	}
 
 }

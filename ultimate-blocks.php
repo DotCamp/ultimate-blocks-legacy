@@ -19,12 +19,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once 'includes/class-ultimate-blocks-constants.php';
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NAME_VERSION', '1.0.2' );
+define( 'ULTIMATE_BLOCKS_VERSION', Ultimate_Blocks_Constants::plugin_version() );
+/**
+ * Plugin Name
+ */
+define( 'ULTIMATE_BLOCKS_NAME', Ultimate_Blocks_Constants::plugin_name() );
+/**
+ * Plugin Path
+ */
+define( 'ULTIMATE_BLOCKS_PATH', Ultimate_Blocks_Constants::plugin_path() );
+/**
+ * Plugin URL
+ */
+define( 'ULTIMATE_BLOCKS_URL', Ultimate_Blocks_Constants::plugin_url() );
+
+
 
 /**
  * Create a helper function for easy SDK access.
@@ -102,7 +117,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-ultimate-blocks.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    1.0.2
  */
 function run_ultimate_blocks() {
 

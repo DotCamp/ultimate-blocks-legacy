@@ -41,16 +41,24 @@ class Ultimate_Blocks_Admin {
 	private $version;
 
 	/**
+	 * The PATH of this plugin.
+	 *
+	 * @since    1.0.2
+	 * @access   private
+	 * @var      string    $plugin_name    The PATH of this plugin.
+	 */
+	private $plugin_path;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.2
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct() {
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->plugin_name = ULTIMATE_BLOCKS_NAME;
+		$this->version     = ULTIMATE_BLOCKS_VERSION;
+		$this->plugin_path = ULTIMATE_BLOCKS_PATH;
 
 	}
 
@@ -99,5 +107,34 @@ class Ultimate_Blocks_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ultimate-blocks-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+
+
+	/**
+	 * Register Setting Pages for the admin area.
+	 *
+	 * @since    1.0.2
+	 */
+	public function register_admin_menus() {
+		error_log($this->plugin_path . 'admin/templates/menus/main-menu.php');
+		add_menu_page(
+			'UltimateBlocks Settings',
+			'Ultimate Blocks',
+			'manage_options',
+			'ultimate-blocks',
+			array( $this, 'main_menu_template_cb'),
+			'',
+			20
+		);
+	}
+
+	/**
+	 * Set template for main setting page
+	 *
+	 * @return void
+	 */
+	public function main_menu_template_cb() {
+		require_once($this->plugin_path . 'admin/templates/menus/main-menu.php');
+	}
+
 
 }
