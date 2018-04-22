@@ -122,7 +122,7 @@ class Ultimate_Blocks_Admin {
 			'manage_options',
 			'ultimate-blocks',
 			array( $this, 'main_menu_template_cb'),
-			'',
+			'dashicons-tagcloud',
 			20
 		);
 	}
