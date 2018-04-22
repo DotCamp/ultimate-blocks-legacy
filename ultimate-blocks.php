@@ -8,6 +8,8 @@
  * Version: 1.0.2
  * License: GPL3+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
+ * Text Domain: ultimate-blocks
+ * Domain Path: /languages
  *
  * @package UB
  */
@@ -16,6 +18,14 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+/**
+ * Currently plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
+define( 'PLUGIN_NAME_VERSION', '1.0.2' );
+
 // Create a helper function for easy SDK access.
 function ub_fs() {
 	global $ub_fs;
@@ -48,8 +58,52 @@ ub_fs();
 // Signal that SDK was initiated.
 do_action( 'ub_fs_loaded' );
 
-
 /**
  * Block Initializer.
  */
 require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
+
+
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-ultimate-blocks-activator.php
+ */
+function activate_ultimate_blocks() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-ultimate-blocks-activator.php';
+	Ultimate_Blocks_Activator::activate();
+}
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-ultimate-blocks-deactivator.php
+ */
+function deactivate_ultimate_blocks() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-ultimate-blocks-deactivator.php';
+	Ultimate_Blocks_Deactivator::deactivate();
+}
+
+register_activation_hook( __FILE__, 'activate_ultimate_blocks' );
+register_deactivation_hook( __FILE__, 'deactivate_ultimate_blocks' );
+
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-ultimate-blocks.php';
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function run_ultimate_blocks() {
+
+	$plugin = new Ultimate_Blocks();
+	$plugin->run();
+
+}
+run_ultimate_blocks();
