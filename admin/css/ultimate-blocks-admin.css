@@ -8,7 +8,64 @@
  }
 
 
- /* Main Settings Page */
+
+ /*******************************************
+ * Components
+ *********************************************/
+
+ /* Slider Switch */
+
+.switch input {
+	display:none;
+  }
+
+  .switch {
+	display: inline-block;
+	width: 60px;
+	height: 30px;
+	transform: translateY(50%);
+	position: relative;
+	margin-top: -20px;
+  }
+
+  .slider {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-radius: 15px;
+	cursor: pointer;
+	border: 2px solid transparent;
+	overflow:hidden;
+	transition:.4s;
+	background-color: #e2e2e3;
+  }
+
+  .slider:before {
+	position:absolute;
+	content:"";
+	width: 100%;
+	height: 100%;
+	background:white;
+	border-radius: 30px;
+	transform: translateX(-30px);
+	transition: .4s;
+  }
+
+  input:checked + .slider:before {
+	transform:translateX(30px);
+	background: white;
+  }
+
+  input:checked + .slider {
+	background-color: #f64646;
+  }
+
+
+/*******************************************
+ * Main Settings Page
+ *********************************************/
 
  #ultimate-blocks__main-menu__header {
 	 padding: 30px;
@@ -19,3 +76,34 @@
 	margin: auto;
 	display: block;
  }
+
+ .ultimate-blocks__collection {
+	 padding: 0px;
+	 max-width: 700px;
+	 margin: auto;
+	 box-sizing: border-box;
+ }
+
+ .ultimate-blocks__collection__item {
+	border: 1px solid lightgrey;
+	padding: 15px;
+	margin: 15px 0;
+ }
+
+ .ultimate-blocks__collection__item__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+ }
+
+ .ultimate-blocks__collection__item:hover {
+	box-shadow: 0 0 10px lightgrey;
+ }
+
+ .ultimate-blocks__collection__item__title {
+	font-weight: 300;
+	font-size: 16px;
+ }
+
+
+

@@ -63,4 +63,13 @@ class Ultimate_Blocks_Constants {
 	public static function plugin_url() {
 		return plugin_dir_url( dirname( __FILE__ ) );
 	}
+
+	/**
+	 * Get Plugin TEXT DOMAIN
+	 *
+	 * @return string
+	 */
+	public static function text_domain() {
+		return 'ultimate_blocks';
+	}
 }

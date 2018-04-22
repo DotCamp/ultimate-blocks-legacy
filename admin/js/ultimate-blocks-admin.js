@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 (function( $ ) {
 	'use strict';
 
@@ -28,5 +30,120 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+
+	var blocks = [
+		{
+			label: 'Button (Improved)',
+			name: 'ub/button-block',
+			active: true,
+		},
+		{
+			label: 'Call To Action',
+			name: 'ub/call-to-action',
+			active: true,
+		},
+		{
+			label: 'Call To Tweet',
+			name: 'ub/click-to-tweet',
+			active: true,
+		},
+		{
+			label: 'Content Toggle',
+			name: 'ub/content-toggle',
+			active: true,
+		},
+		{
+			label: 'Divider',
+			name: 'ub/divider',
+			active: true,
+		},
+		{
+			label: 'Feature Box',
+			name: 'ub/feature-box',
+			active: true,
+		},
+		{
+			label: 'Notification Box',
+			name: 'ub/notification-box',
+			active: true,
+		},
+		{
+			label: 'Number Box',
+			name: 'ub/number-box',
+			active: true,
+		},
+		{
+			label: 'Number Box',
+			name: 'ub/number-box',
+			active: true,
+		},
+		{
+			label: 'Social Share',
+			name: 'ub/social-share',
+			active: true
+		},
+		{
+			label: 'Spacer',
+			name: 'ub/spacer',
+			active: true
+		},
+		{
+			label: 'Testimonial',
+			name: 'ub/testimonial-block',
+			active: true
+		}
+	];
+
+
+	$(function() {
+		var isBlocksListEmpty = $('.ultimate-blocks__collection__item').length === 0
+
+		if(isBlocksListEmpty) {
+			insertBlocks();
+		}
+
+		$(document).on('change', 'input[name="block_status"]', function(){
+
+			toggleBlockStatus(
+				$(this).val(),
+				$(this).closest('.ultimate-blocks__collection__item').data('id')
+			)
+
+		});
+
+
+		function insertBlocks() {
+			var blocksHtml = '';
+
+			$.each(blocks, function(index, block){
+				//item start
+				blocksHtml += '<div class="ultimate-blocks__collection__item" data-id="' + block.name + '">';
+
+				//item header start
+				blocksHtml += '<div class="ultimate-blocks__collection__item__header" data-id="' + block.name + '">';
+
+				// title
+				blocksHtml += '<h3 class="ultimate-blocks__collection__item__title">' + block.label + '</h3>';
+				// switch
+				blocksHtml += '<label class="switch">';
+				blocksHtml += '<input type="checkbox" name="block_status">';
+				blocksHtml += '<span class="slider"></span>';
+				blocksHtml += '</label>';
+
+				// item header end
+				blocksHtml += '</div>';
+
+				//item end
+				blocksHtml += '</div>';
+			});
+
+			$('.ultimate-blocks__collection').html(blocksHtml);
+		}
+
+		function toggleBlockStatus(enable, id) {
+			console.log(enable, id);
+		}
+
+	});
 
 })( jQuery );

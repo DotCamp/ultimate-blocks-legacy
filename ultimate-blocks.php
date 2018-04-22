@@ -38,7 +38,10 @@ define( 'ULTIMATE_BLOCKS_PATH', Ultimate_Blocks_Constants::plugin_path() );
  * Plugin URL
  */
 define( 'ULTIMATE_BLOCKS_URL', Ultimate_Blocks_Constants::plugin_url() );
-
+/**
+ * Plugin TextDomain
+ */
+define( 'ULTIMATE_BLOCKS_TEXT_DOMAIN', Ultimate_Blocks_Constants::text_domain() );
 
 
 /**
