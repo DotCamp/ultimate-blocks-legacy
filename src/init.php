@@ -68,3 +68,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/click-to-tweet/block.php';
 
 // Social Share Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/social-share/block.php';
+
+// Content toggle Block.
+require_once plugin_dir_path( __FILE__ ) . 'blocks/content-toggle/block.php';
