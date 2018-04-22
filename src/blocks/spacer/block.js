@@ -45,7 +45,7 @@ registerBlockType( 'ub/spacer', {
 	keywords: [
 		__( 'Spacer' ),
 		__( 'Divider' ),
-		__( 'Margin' ),
+		__( 'Ultimate Blocks' ),
 	],
     attributes: {
         spacerSize: {

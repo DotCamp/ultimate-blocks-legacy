@@ -54,8 +54,8 @@ registerBlockType( 'ub/notification-box', {
 	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'notification' ),
-		__( 'warning' ),
-		__( 'info' ),
+		__( 'warning info' ),
+		__( 'Ultimate Blocks' ),
 	],
     attributes: {
         ub_notify_info: {

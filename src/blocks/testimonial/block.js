@@ -6,21 +6,23 @@ import classnames from 'classnames';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import Inspector from "../social-share/inspector";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
     registerBlockType,
     RichText,
-    AlignmentToolbar,
     BlockControls,
-    BlockAlignmentToolbar,
-    MediaUpload
+    MediaUpload,
+    InspectorControls,
+    ColorPalette
 } = wp.blocks;
 
 const {
-    Toolbar,
     Button,
-    Tooltip,
+    PanelBody,
+    PanelColor,
+    RangeControl,
     withState
 } = wp.components;
 
@@ -45,7 +47,7 @@ registerBlockType( 'ub/testimonial-block', {
     keywords: [
         __( 'testimonial' ),
         __( 'quotes' ),
-        __( 'customer' ),
+        __( 'Ultimate Blocks' ),
     ],
     attributes: {
         ub_testimonial_text: {
@@ -81,6 +83,18 @@ registerBlockType( 'ub/testimonial-block', {
             attribute: 'alt',
             selector: 'img',
         },
+        backgroundColor: {
+            type: 'string',
+            default: '#f4f6f6'
+        },
+        textColor: {
+            type: 'string',
+            default: '#444444'
+        },
+        textSize: {
+            type: 'number',
+            default: 17
+        }
     },
 
     /**
@@ -130,15 +144,55 @@ registerBlockType( 'ub/testimonial-block', {
                 });
             };
 
-            // Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
             return [
 
                 isSelected && (
                     <BlockControls key="controls"/>
                 ),
 
+                isSelected && (
+                    <InspectorControls>
+                        <PanelColor
+                            title={ __( 'Background Color' ) }
+                            colorValue={ props.attributes.backgroundColor }
+                            initialOpen={ true }
+                        >
+                            <ColorPalette
+                                value={ props.attributes.backgroundColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { backgroundColor: colorValue } ) }
+                                allowReset
+                            />
+                        </PanelColor>
+                        <PanelBody
+                            title={ __( 'Testimonial Body' ) }
+                        >
+                            <p>Font Color</p>
+                            <ColorPalette
+                                value={ props.attributes.textColor }
+                                onChange={ ( colorValue ) => props.setAttributes( { textColor: colorValue } ) }
+                                allowReset
+                            />
+                            <RangeControl
+                                label={ __( 'Font Size' ) }
+                                value={ props.attributes.textSize }
+                                onChange={ ( value ) => props.setAttributes( { textSize: value } ) }
+                                min={ 14 }
+                                max={ 200 }
+                                beforeIcon="editor-textcolor"
+                                allowReset
+                            />
+                        </PanelBody>
+                    </InspectorControls>
+                ),
+
                 <div className={ props.className }>
-                    <div className="ub_testimonial">
+                    <div
+                        className="ub_testimonial"
+                        style={{
+                            backgroundColor: props.attributes.backgroundColor,
+                            color: props.attributes.textColor
+                        }}
+                    >
                         <div className="ub_testimonial_img">
                             { ! props.attributes.imgID ? (
 
@@ -182,6 +236,9 @@ registerBlockType( 'ub/testimonial-block', {
                             <RichText
                                 tagName="p"
                                 className="ub_testimonial_text"
+                                style={{
+                                    fontSize: props.attributes.textSize
+                                }}
                                 onChange={ onChangeTestimonialText }
                                 value={ props.attributes.ub_testimonial_text }
                                 isSelected={ isSelected && editable === 'testimonial_content' }
@@ -226,7 +283,13 @@ registerBlockType( 'ub/testimonial-block', {
     save: function( props ) {
         return (
             <div className={ props.className }>
-                <div className="ub_testimonial">
+                <div
+                    className="ub_testimonial"
+                    style={{
+                        backgroundColor: props.attributes.backgroundColor,
+                        color: props.attributes.textColor
+                    }}
+                >
                     <div className="ub_testimonial_img">
                         <img
                             src={ props.attributes.imgURL }
@@ -236,7 +299,14 @@ registerBlockType( 'ub/testimonial-block', {
                         />
                     </div>
                     <div className="ub_testimonial_content">
-                        <p className="ub_testimonial_text">{ props.attributes.ub_testimonial_text }</p>
+                        <p
+                            className="ub_testimonial_text"
+                            style={{
+                                fontSize: props.attributes.textSize
+                            }}
+                        >
+                            { props.attributes.ub_testimonial_text }
+                        </p>
                     </div>
                     <div className="ub_testimonial_sign">
                         <p className="ub_testimonial_author">{ props.attributes.ub_testimonial_author }</p>

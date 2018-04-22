@@ -52,7 +52,7 @@ registerBlockType('ub/number-box', {
     keywords: [
         __('Number box'),
         __('Feature'),
-        __('Columns'),
+        __('Ultimate Blocks'),
     ],
     attributes: {
         column: {
