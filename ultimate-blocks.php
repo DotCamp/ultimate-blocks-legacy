@@ -26,26 +26,30 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'PLUGIN_NAME_VERSION', '1.0.2' );
 
-// Create a helper function for easy SDK access.
+/**
+ * Create a helper function for easy SDK access.
+ *
+ * @return Freemius
+ */
 function ub_fs() {
 	global $ub_fs;
 
 	if ( ! isset( $ub_fs ) ) {
 		// Include Freemius SDK.
-		require_once dirname(__FILE__) . '/freemius/start.php';
+		require_once dirname( __FILE__ ) . '/freemius/start.php';
 
 		$ub_fs = fs_dynamic_init( array(
-			'id'                  => '1798',
-			'slug'                => 'ultimate-blocks',
-			'type'                => 'plugin',
-			'public_key'          => 'pk_bd3d3c8e255543256632fd4bb9842',
-			'is_premium'          => false,
-			'has_addons'          => false,
-			'has_paid_plans'      => false,
-			'menu'                => array(
-				'first-path'     => 'plugins.php',
-				'account'        => false,
-				'contact'        => false,
+			'id'             => '1798',
+			'slug'           => 'ultimate-blocks',
+			'type'           => 'plugin',
+			'public_key'     => 'pk_bd3d3c8e255543256632fd4bb9842',
+			'is_premium'     => false,
+			'has_addons'     => false,
+			'has_paid_plans' => false,
+			'menu'           => array(
+				'first-path' => 'plugins.php',
+				'account'    => false,
+				'contact'    => false,
 			),
 		) );
 	}
