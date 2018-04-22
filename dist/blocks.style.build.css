@@ -554,8 +554,8 @@
   .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap {
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-align: baseline;
-        align-items: baseline;
+    -ms-flex-align: center;
+        align-items: center;
     background: lightsalmon;
     cursor: pointer; }
     .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap > *:first-child {
@@ -563,7 +563,7 @@
           flex-grow: 1; }
     .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap .wp-block-ub-content-toggle-accordion-state-indicator {
       display: block;
-      margin: 10px;
+      margin: 0 10px;
       -webkit-transition: 0.5s all;
       -o-transition: 0.5s all;
       transition: 0.5s all;

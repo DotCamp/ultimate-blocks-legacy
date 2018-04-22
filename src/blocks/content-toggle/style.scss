@@ -54,7 +54,7 @@
 	}
 	.wp-block-ub-content-toggle-accordion-title-wrap {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		background: lightsalmon;
 		cursor: pointer;
 		> *:first-child {
@@ -62,7 +62,7 @@
 		}
 		.wp-block-ub-content-toggle-accordion-state-indicator {
 			display: block;
-			margin: 10px;
+			margin: 0 10px;
 			transition: 0.5s all;
 			transform: rotate(0deg);
 			color: white;
