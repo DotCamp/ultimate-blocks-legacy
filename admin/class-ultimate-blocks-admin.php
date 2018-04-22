@@ -50,6 +50,15 @@ class Ultimate_Blocks_Admin {
 	private $plugin_path;
 
 	/**
+	 * The URL of this plugin.
+	 *
+	 * @since    1.0.2
+	 * @access   private
+	 * @var      string    $plugin_name    The URL of this plugin.
+	 */
+	private $plugin_url;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.2
@@ -59,6 +68,7 @@ class Ultimate_Blocks_Admin {
 		$this->plugin_name = ULTIMATE_BLOCKS_NAME;
 		$this->version     = ULTIMATE_BLOCKS_VERSION;
 		$this->plugin_path = ULTIMATE_BLOCKS_PATH;
+		$this->plugin_url  = ULTIMATE_BLOCKS_URL;
 
 	}
 
@@ -115,16 +125,17 @@ class Ultimate_Blocks_Admin {
 	 * @since    1.0.2
 	 */
 	public function register_admin_menus() {
-		error_log($this->plugin_path . 'admin/templates/menus/main-menu.php');
+
 		add_menu_page(
 			'UltimateBlocks Settings',
 			'Ultimate Blocks',
 			'manage_options',
 			'ultimate-blocks',
-			array( $this, 'main_menu_template_cb'),
+			array( $this, 'main_menu_template_cb' ),
 			'dashicons-tagcloud',
 			20
 		);
+
 	}
 
 	/**
@@ -133,7 +144,9 @@ class Ultimate_Blocks_Admin {
 	 * @return void
 	 */
 	public function main_menu_template_cb() {
-		require_once($this->plugin_path . 'admin/templates/menus/main-menu.php');
+
+		require_once $this->plugin_path . 'admin/templates/menus/main-menu.php';
+
 	}
 
 

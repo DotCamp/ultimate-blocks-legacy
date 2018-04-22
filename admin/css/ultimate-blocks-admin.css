@@ -2,3 +2,20 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+ body {
+	background: white;
+ }
+
+
+ /* Main Settings Page */
+
+ #ultimate-blocks__main-menu__header {
+	 padding: 30px;
+ }
+
+ #ultimate-blocks__main-menu__header img {
+	max-height: 100px;
+	margin: auto;
+	display: block;
+ }
