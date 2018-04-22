@@ -149,5 +149,126 @@ class Ultimate_Blocks_Admin {
 
 	}
 
+	/**
+	 * Enable/Disable Block
+	 *
+	 * @return void
+	 */
+	public function toggle_block_status() {
+
+		check_ajax_referer( 'toggle_block_status' );
+
+		$block_name = sanitize_text_field( $_POST['block_name'] );
+
+		$enable = $_POST['enable'];
+
+		if ( ! $this->block_exists( $block_name ) ) {
+			wp_send_json_error( array(
+				'error_message' => 'Unknown block name',
+			));
+		}
+
+		$saved_blocks = get_option( 'ultimate_blocks', false );
+		if ( $saved_blocks ) {
+			foreach ( $saved_blocks as $key => $block ) {
+				if ( $block['name'] === $block_name ) {
+					$saved_blocks[ $key ]['active'] = ( $enable === 'true' );
+				}
+			}
+			update_option( 'ultimate_blocks', $saved_blocks );
+		} else {
+			update_option( 'ultimate_blocks', $this->blocks() );
+		}
+
+		wp_send_json_success( get_option( 'ultimate_blocks', false ) );
+	}
+
+	/**
+	 * Check block exists.
+	 *
+	 * @param string $name Block Name.
+	 * @return bool
+	 */
+	protected function block_exists( $name ) {
+		$blocks = $this->blocks();
+
+		$unknown_block = true;
+		foreach ( $blocks as $key => $block ) {
+			if ( $block['name'] === $name ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Get Plugin BLOCKS
+	 *
+	 * @return array
+	 */
+	protected static function blocks() {
+		return [
+			array(
+				'label'  => 'Button (Improved)',
+				'name'   => 'ub/button-block',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Call To Action',
+				'name'   => 'ub/call-to-action',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Call To Tweet',
+				'name'   => 'ub/click-to-tweet',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Content Toggle',
+				'name'   => 'ub/content-toggle',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Divider',
+				'name'   => 'ub/divider',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Feature Box',
+				'name'   => 'ub/feature-box',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Notification Box',
+				'name'   => 'ub/notification-box',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Number Box',
+				'name'   => 'ub/number-box',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Number Box',
+				'name'   => 'ub/number-box',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Social Share',
+				'name'   => 'ub/social-share',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Spacer',
+				'name'   => 'ub/spacer',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Testimonial',
+				'name'   => 'ub/testimonial-block',
+				'active' => true,
+			),
+		];
+	}
 
 }

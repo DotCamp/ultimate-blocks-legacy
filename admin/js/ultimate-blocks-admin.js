@@ -105,7 +105,8 @@
 		$(document).on('change', 'input[name="block_status"]', function(){
 
 			toggleBlockStatus(
-				$(this).val(),
+				$(this),
+				$(this).prop('checked'),
 				$(this).closest('.ultimate-blocks__collection__item').data('id')
 			)
 
@@ -140,8 +141,28 @@
 			$('.ultimate-blocks__collection').html(blocksHtml);
 		}
 
-		function toggleBlockStatus(enable, id) {
+		function toggleBlockStatus(selector, enable, id) {
 			console.log(enable, id);
+			var data = {
+				enable: enable,
+				block_name: id,
+				action: 'toggle_block_status',
+				_ajax_nonce: $('input[name="ultimate_blocks_nonce"]').val()
+			};
+			console.log(data);
+
+			$.ajax({
+				url: $('input[name="ultimate_blocks_ajax_url"]').val(),
+				type: 'POST',
+				data: data,
+				'Content-Type': 'application/json',
+				success: function(data, status, xhr) {
+					console.log(data);
+				},
+				error: function(xhr, status, error) {
+					console.log(error);
+				}
+			});
 		}
 
 	});

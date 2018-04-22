@@ -135,6 +135,9 @@ class Ultimate_Blocks {
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_admin_menus' );
 
+		// Ajax hooks.
+		$this->loader->add_action( 'wp_ajax_toggle_block_status', $plugin_admin, 'toggle_block_status' );
+
 	}
 
 	/**

@@ -31,6 +31,11 @@ class Ultimate_Blocks_Activator {
 	 */
 	public static function activate() {
 
+		$blocks = get_option( 'ultimate_blocks', false );
+
+		if ( ! $blocks ) {
+			update_option( 'ultimate_blocks', Ultimate_Blocks_Constants::blocks() );
+		}
 	}
 
 }
