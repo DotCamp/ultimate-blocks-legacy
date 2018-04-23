@@ -132,7 +132,7 @@ class Ultimate_Blocks_Admin {
 			'manage_options',
 			'ultimate-blocks',
 			array( $this, 'main_menu_template_cb' ),
-			'dashicons-tagcloud',
+			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.png',
 			20
 		);
 
