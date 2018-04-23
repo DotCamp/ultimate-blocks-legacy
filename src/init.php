@@ -51,6 +51,15 @@ function ultimate_blocks_cgb_editor_assets() {
 		// filemtime( plugin_dir_path( __FILE__ ) . 'block.js' ) // Version: filemtime — Gets file modification time.
 	);
 
+	wp_enqueue_script(
+		'ultimate_blocks-cgb-deactivator-js', // Handle.
+		plugins_url( '/dist/deactivator.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
+		array( 'wp-blocks', 'wp-i18n', 'wp-element' ), // Dependencies, defined above.
+		// filemtime( plugin_dir_path( __FILE__ ) . 'block.js' ) // Version: filemtime — Gets file modification time.
+		'',
+		true
+	);
+
 	// Styles.
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-block-editor-css', // Handle.

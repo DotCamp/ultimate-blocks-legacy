@@ -183,6 +183,15 @@ class Ultimate_Blocks_Admin {
 		wp_send_json_success( get_option( 'ultimate_blocks', false ) );
 	}
 
+	public function insert_blocks_settings() {
+		$ultimate_blocks_settings = wp_json_encode( get_option( 'ultimate_blocks', array() ) );
+		?>
+
+		<script> window.ultimate_blocks=<?php echo $ultimate_blocks_settings; ?> </script>
+
+		<?php
+	}
+
 	/**
 	 * Check block exists.
 	 *

@@ -9,8 +9,8 @@
  * @link       http://imtiazrayhan.com/
  * @since      1.0.2
  *
- * @package    Ultimate_Blocks
- * @subpackage Ultimate_Blocks/includes
+ * @package    ultimate_blocks
+ * @subpackage ultimate_blocks/includes
  */
 
 /**
@@ -23,8 +23,8 @@
  * version of the plugin.
  *
  * @since      1.0.2
- * @package    Ultimate_Blocks
- * @subpackage Ultimate_Blocks/includes
+ * @package    ultimate_blocks
+ * @subpackage ultimate_blocks/includes
  * @author     Imtiaz Rayhan <imtiazrayhan@gmail.com>
  */
 class Ultimate_Blocks {
@@ -137,6 +137,8 @@ class Ultimate_Blocks {
 
 		// Ajax hooks.
 		$this->loader->add_action( 'wp_ajax_toggle_block_status', $plugin_admin, 'toggle_block_status' );
+		// Insert blocks setting.
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'insert_blocks_settings' );
 
 	}
 
