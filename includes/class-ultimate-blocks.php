@@ -93,6 +93,11 @@ class Ultimate_Blocks {
 		require_once ULTIMATE_BLOCKS_PATH . 'admin/class-ultimate-blocks-admin.php';
 
 		/**
+		 * The class responsible for defining all actions that occur in the admin help area.
+		 */
+		require_once ULTIMATE_BLOCKS_PATH . 'admin/class-ultimate-blocks-help.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -129,11 +134,17 @@ class Ultimate_Blocks {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Ultimate_Blocks_Admin();
+		$plugin_help = new Ultimate_Blocks_Help();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		// Styles and Scripts for Help Page.
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_help, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_help, 'enqueue_scripts' );
+
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_admin_menus' );
+		$this->loader->add_action( 'admin_menu', $plugin_help, 'register_help_admin_menu' );
 
 		// Ajax hooks.
 		$this->loader->add_action( 'wp_ajax_toggle_block_status', $plugin_admin, 'toggle_block_status' );
