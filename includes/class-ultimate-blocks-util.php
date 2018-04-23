@@ -42,7 +42,7 @@ class Ultimate_Blocks_Util {
 				'active' => true,
 			),
 			array(
-				'label'  => 'Call To Tweet',
+				'label'  => 'Click To Tweet',
 				'name'   => 'ub/click-to-tweet',
 				'active' => true,
 			),
