@@ -73,11 +73,6 @@
 			active: true,
 		},
 		{
-			label: 'Number Box',
-			name: 'ub/number-box',
-			active: true,
-		},
-		{
 			label: 'Social Share',
 			name: 'ub/social-share',
 			active: true
@@ -96,7 +91,7 @@
 
 
 	$(function() {
-		var isBlocksListEmpty = $('.ultimate-blocks__collection__item').length === 0
+		var isBlocksListEmpty = $('.ub__collection__item').length === 0
 
 		if(isBlocksListEmpty) {
 			insertBlocks();
@@ -107,8 +102,26 @@
 			toggleBlockStatus(
 				$(this),
 				$(this).prop('checked'),
-				$(this).closest('.ultimate-blocks__collection__item').data('id')
+				$(this).closest('.ub__collection__item').data('id')
 			)
+
+		});
+
+		$(document).on('click', '.filter-action', function() {
+			$('.filter-action').removeClass('active');
+			$(this).addClass('active');
+
+			var filter_status = $(this).data('filter-status');
+
+			if(filter_status === 'all') {
+				$('.ub__collection__item').removeClass('ub-hide');
+			} else if (filter_status == 'enabled') {
+				$('.ub__collection__item').addClass('ub-hide');
+				$('.ub__collection__item.active').removeClass('ub-hide');
+			} else if (filter_status == 'disabled') {
+				$('.ub__collection__item').removeClass('ub-hide');
+				$('.ub__collection__item.active').addClass('ub-hide');
+			}
 
 		});
 
@@ -118,13 +131,13 @@
 
 			$.each(blocks, function(index, block){
 				//item start
-				blocksHtml += '<div class="ultimate-blocks__collection__item" data-id="' + block.name + '">';
+				blocksHtml += '<div class="ub__collection__item" data-id="' + block.name + '">';
 
 				//item header start
-				blocksHtml += '<div class="ultimate-blocks__collection__item__header" data-id="' + block.name + '">';
+				blocksHtml += '<div class="ub__collection__item__header" data-id="' + block.name + '">';
 
 				// title
-				blocksHtml += '<h3 class="ultimate-blocks__collection__item__title">' + block.label + '</h3>';
+				blocksHtml += '<h3 class="ub__collection__item__title">' + block.label + '</h3>';
 				// switch
 				blocksHtml += '<label class="switch">';
 				blocksHtml += '<input type="checkbox" name="block_status">';
@@ -138,18 +151,16 @@
 				blocksHtml += '</div>';
 			});
 
-			$('.ultimate-blocks__collection').html(blocksHtml);
+			$('.ub__collection').html(blocksHtml);
 		}
 
 		function toggleBlockStatus(selector, enable, id) {
-			console.log(enable, id);
 			var data = {
 				enable: enable,
 				block_name: id,
 				action: 'toggle_block_status',
 				_ajax_nonce: $('input[name="ultimate_blocks_nonce"]').val()
 			};
-			console.log(data);
 
 			$.ajax({
 				url: $('input[name="ultimate_blocks_ajax_url"]').val(),
@@ -158,6 +169,7 @@
 				'Content-Type': 'application/json',
 				success: function(data, status, xhr) {
 					console.log(data);
+					selector.closest('.ub__collection__item').toggleClass('active');
 				},
 				error: function(xhr, status, error) {
 					console.log(error);

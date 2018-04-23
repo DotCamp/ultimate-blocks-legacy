@@ -13,23 +13,28 @@
 
 ?>
 
-<div id="ultimate-blocks__main-menu">
+<div id="ub__main-menu">
 
-	<div id="ultimate-blocks__main-menu__header">
+	<div id="ub__main-menu__header">
 		<img src="<?php echo esc_url( ULTIMATE_BLOCKS_URL . 'admin/images/banners/banner-772x250.png' ); ?>" alt="Ultimate Blocks" />
 	</div>
 
-	<div id="ultimate-blocks__main-menu__body">
+	<div id="ub__main-menu__body">
 
-		<div class="ultimate-blocks__collection <?php echo esc_html( get_option( 'ultimate_blocks', 'empty' ) ); ?>">
+		<div class="ub_collection_filter">
+			<span class="filter-action active" data-filter-status="all">All</span>
+			<span class="filter-action" data-filter-status="enabled">Enabled</span>
+			<span class="filter-action" data-filter-status="disabled">Disabled</span>
+		</div>
+		<div class="ub__collection <?php echo count( get_option( 'ultimate_blocks', [] ) ) === 0 ? 'empty' : ''; ?>">
 
 			<?php foreach ( get_option( 'ultimate_blocks', array() ) as $block ) : ?>
-				<div class="ultimate-blocks__collection__item" data-id="<?php echo esc_html( $block['name'] ); ?>">
-					<div class="ultimate-blocks__collection__item__header">
-						<h3 class="ultimate-blocks__collection__item__title"><?php printf( esc_html__( '%s', 'ultimate-blocks' ), $block['label'] ); ?></h3>
-						<label class="switch">
+				<div class="ub__collection__item <?php echo $block['active'] ? 'active' : ''; ?> " data-id="<?php echo esc_html( $block['name'] ); ?>">
+					<div class="ub__collection__item__header">
+						<h3 class="ub__collection__item__title"><?php printf( esc_html__( '%s', 'ultimate-blocks' ), $block['label'] ); ?></h3>
+						<label class="ub-switch-input">
 							<input type="checkbox" name="block_status" <?php echo $block['active'] ? 'checked' : ''; ?>>
-							<span class="slider"></span>
+							<span class="ub-switch-input-slider"></span>
 						</label>
 					</div>
 				</div>

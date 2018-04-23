@@ -3,32 +3,33 @@
  * included in this file.
  */
 
- body {
+body {
 	background: white;
- }
+}
 
+.ub-hide {
+	display: none !important;
+}
 
+/*******************************************
+* Components
+*********************************************/
 
- /*******************************************
- * Components
- *********************************************/
+/* Slider Switch Input*/
 
- /* Slider Switch */
-
-.switch input {
+.ub-switch-input input {
 	display:none;
-  }
+}
 
-  .switch {
+.ub-switch-input {
 	display: inline-block;
 	width: 60px;
 	height: 30px;
 	transform: translateY(50%);
 	position: relative;
-	margin-top: -20px;
-  }
+}
 
-  .slider {
+.ub-switch-input-slider {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -40,9 +41,9 @@
 	overflow:hidden;
 	transition:.4s;
 	background-color: #e2e2e3;
-  }
+}
 
-  .slider:before {
+.ub-switch-input-slider:before {
 	position:absolute;
 	content:"";
 	width: 100%;
@@ -51,59 +52,87 @@
 	border-radius: 30px;
 	transform: translateX(-30px);
 	transition: .4s;
-  }
+}
 
-  input:checked + .slider:before {
+input:checked + .ub-switch-input-slider:before {
 	transform:translateX(30px);
 	background: white;
-  }
+}
 
-  input:checked + .slider {
+input:checked + .ub-switch-input-slider {
 	background-color: #f64646;
-  }
+}
 
 
 /*******************************************
- * Main Settings Page
+ * Main Menu Settings Page
  *********************************************/
 
- #ultimate-blocks__main-menu__header {
-	 padding: 30px;
- }
+#ub__main-menu__header {
+	padding: 30px;
+}
 
- #ultimate-blocks__main-menu__header img {
+#ub__main-menu__header img {
 	max-height: 100px;
 	margin: auto;
 	display: block;
- }
+}
 
- .ultimate-blocks__collection {
-	 padding: 0px;
-	 max-width: 700px;
-	 margin: auto;
-	 box-sizing: border-box;
- }
+.ub__collection {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 15px;
+	margin: auto;
+	box-sizing: border-box;
+}
 
- .ultimate-blocks__collection__item {
+.ub__collection__item {
 	border: 1px solid lightgrey;
 	padding: 15px;
 	margin: 15px 0;
- }
+	max-width: 200px;
+	height: 160px;
+	width: 100%;
+	margin: 10px;
+	transition: all 0.5s ease-in-out;
+	box-sizing: border-box;
+}
 
- .ultimate-blocks__collection__item__header {
+.ub__collection__item.active {
+	border: 2px solid #f64646;
+}
+
+.ub__collection__item__header {
 	display: flex;
-	justify-content: space-between;
+	flex-direction: column;
 	align-items: center;
- }
+}
 
- .ultimate-blocks__collection__item:hover {
+.ub__collection__item:hover {
 	box-shadow: 0 0 10px lightgrey;
- }
+}
 
- .ultimate-blocks__collection__item__title {
+.ub__collection__item__title {
 	font-weight: 300;
 	font-size: 16px;
- }
+}
 
+.ub_collection_filter {
+	display: flex;
+	justify-content: center;
+}
+
+.ub_collection_filter .filter-action {
+	display: block;
+	padding: 5px;
+	margin: 0 10px;
+	cursor: pointer;
+	transition: all 0.5s ease-in-out;
+}
+
+.ub_collection_filter .filter-action.active {
+	color: #f64646;
+	border-bottom: 2px solid #f64646;
+}
 
 

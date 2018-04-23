@@ -2,12 +2,12 @@
 
 if (window.ultimate_blocks) {
 
-	var deactivatedBlocks = window.ultimate_blocks;
-
-	deactivatedBlocks.forEach( block => {
+	window.ultimate_blocks.forEach( block => {
 		if(!block.active) {
-			console.log('uregister', block.name)
-			wp.blocks.unregisterBlockType(block.name);
+			var in_use = $('.wp-block-' + block.name.replace('/', '-')).length > 0;
+			if(!in_use) {
+				wp.blocks.unregisterBlockType(block.name);
+			}
 		}
 	});
 

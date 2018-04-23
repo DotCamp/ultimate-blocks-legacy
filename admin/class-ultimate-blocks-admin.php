@@ -141,6 +141,7 @@ class Ultimate_Blocks_Admin {
 	/**
 	 * Set template for main setting page
 	 *
+	 * @since    1.0.2
 	 * @return void
 	 */
 	public function main_menu_template_cb() {
@@ -152,6 +153,7 @@ class Ultimate_Blocks_Admin {
 	/**
 	 * Enable/Disable Block
 	 *
+	 * @since    1.0.2
 	 * @return void
 	 */
 	public function toggle_block_status() {
@@ -195,6 +197,7 @@ class Ultimate_Blocks_Admin {
 	/**
 	 * Check block exists.
 	 *
+	 * @since    1.0.2
 	 * @param string $name Block Name.
 	 * @return bool
 	 */
@@ -213,71 +216,14 @@ class Ultimate_Blocks_Admin {
 	/**
 	 * Get Plugin BLOCKS
 	 *
+	 * @since    1.0.2
 	 * @return array
 	 */
 	protected static function blocks() {
-		return [
-			array(
-				'label'  => 'Button (Improved)',
-				'name'   => 'ub/button-block',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Call To Action',
-				'name'   => 'ub/call-to-action',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Call To Tweet',
-				'name'   => 'ub/click-to-tweet',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Content Toggle',
-				'name'   => 'ub/content-toggle',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Divider',
-				'name'   => 'ub/divider',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Feature Box',
-				'name'   => 'ub/feature-box',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Notification Box',
-				'name'   => 'ub/notification-box',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Number Box',
-				'name'   => 'ub/number-box',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Number Box',
-				'name'   => 'ub/number-box',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Social Share',
-				'name'   => 'ub/social-share',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Spacer',
-				'name'   => 'ub/spacer',
-				'active' => true,
-			),
-			array(
-				'label'  => 'Testimonial',
-				'name'   => 'ub/testimonial-block',
-				'active' => true,
-			),
-		];
+
+		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-util.php';
+
+		return Ultimate_Blocks_Util::blocks();
 	}
 
 }
