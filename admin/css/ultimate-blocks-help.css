@@ -1,5 +1,17 @@
-#wpbody {
-    margin-left: -20px !important;
+.container {
+    margin: 50px auto;
+    max-width: 860px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #f63d3d;
+}
+
+.container *,
+.container::before,
+.container::after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .ultimate-blocks {
@@ -16,13 +28,108 @@
 }
 
 .ultimate-blocks h1 {
-    font-size: 45px;
+    font-size: 40px;
     font-weight: 500;
     color: #fff;
     margin: 20px 0 0 0;
 }
 
 .ultimate-blocks h5 {
-    font-size: 20px;
+    font-size: 16px;
     color: #fff;
+}
+
+.intro {
+    padding: 40px;
+}
+
+.intro p {
+    font-family: "Open Sans";
+    font-size: 18px;
+    text-align: center;
+    color: #444;
+    line-height: 1.6em;
+}
+
+.intro h2 {
+    font-size: 30px;
+    font-family: "Open Sans";
+    text-align: center;
+    margin: 60px auto 40px auto;
+}
+
+.color-red {
+    color: #e82f2f;
+}
+
+.ultimate-blocks-clear::after {
+    clear: both;
+    content: " ";
+    display: table;
+}
+
+.button-wrap {
+    margin-top: 70px !important;
+    text-align: center;
+}
+
+.button-wrap {
+    max-width: 590px;
+    margin: 0 auto 0 auto;
+}
+
+.right {
+    float: right;
+    width: 50%;
+    padding-left: 20px;
+}
+
+.left {
+    float: left;
+    width: 50%;
+    padding-right: 20px;
+}
+
+.ultimate-blocks-btn-red {
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+    color: #fff;
+}
+
+a.ultimate-blocks-btn-red {
+    color: #fff;
+}
+
+.ultimate-blocks-btn-grey {
+    background-color: #eee;
+    border-color: #ccc;
+    color: #666;
+}
+
+a.ultimate-blocks-btn-grey:hover {
+    color: #e82f2f;
+}
+
+.ultimate-blocks-btn-lg {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 28px;
+}
+
+.ultimate-blocks-btn-block {
+    display: block;
+    width: 100%;
+}
+
+.ultimate-blocks-btn {
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    box-shadow: none;
 }
