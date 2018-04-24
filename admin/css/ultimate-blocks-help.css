@@ -1,0 +1,28 @@
+#wpbody {
+    margin-left: -20px !important;
+}
+
+.ultimate-blocks {
+    font-family: "Open Sans";
+    min-height: 300px;
+    width: 100%;
+    margin: 0;
+    background: url('../images/banners/help-bg.png');
+    background-repeat: repeat-x;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ultimate-blocks h1 {
+    font-size: 45px;
+    font-weight: 500;
+    color: #fff;
+    margin: 20px 0 0 0;
+}
+
+.ultimate-blocks h5 {
+    font-size: 20px;
+    color: #fff;
+}
