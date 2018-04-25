@@ -5,6 +5,7 @@
 
 body {
 	background: white;
+	overflow: scroll;
 }
 
 .ub-hide {
@@ -87,7 +88,7 @@ input:checked + .ub-switch-input-slider {
 }
 
 .ub__collection__item {
-	border: 1px solid lightgrey;
+	border: 2px dashed lightgrey;
 	padding: 15px;
 	margin: 15px 0;
 	max-width: 200px;
@@ -99,7 +100,7 @@ input:checked + .ub-switch-input-slider {
 }
 
 .ub__collection__item.active {
-	border: 2px solid #f64646;
+	border: 2px dashed #f64646;
 }
 
 .ub__collection__item__header {

@@ -34,7 +34,7 @@ class Ultimate_Blocks_Activator {
 
 		$blocks = get_option( 'ultimate_blocks', false );
 
-		if ( ! $blocks || true) {
+		if ( ! $blocks ) {
 			update_option( 'ultimate_blocks', Ultimate_Blocks_Util::blocks() );
 		}
 	}

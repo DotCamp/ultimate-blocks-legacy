@@ -26,8 +26,6 @@ class Ultimate_Blocks_Constants {
 
 	const PLUGIN_NAME = 'ultimate-blocks';
 
-	const PLUGIN_PATH = WP_PLUGIN_DIR . '/' . self::PLUGIN_NAME . '/';
-
 	/**
 	 * Get Plugin version
 	 *
@@ -52,7 +50,7 @@ class Ultimate_Blocks_Constants {
 	 * @return string
 	 */
 	public static function plugin_path() {
-		return self::PLUGIN_PATH;
+		return WP_PLUGIN_DIR . '/' . self::plugin_name() . '/';
 	}
 
 	/**
