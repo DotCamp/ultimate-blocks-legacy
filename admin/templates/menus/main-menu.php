@@ -16,16 +16,18 @@
 <div id="ub__main-menu">
 
 	<div id="ub__main-menu__header">
-		<img src="<?php echo esc_url( ULTIMATE_BLOCKS_URL . 'admin/images/banners/banner-772x250.png' ); ?>" alt="Ultimate Blocks" />
+		<div class="ub__header-container">
+			<img src="<?php echo esc_url( ULTIMATE_BLOCKS_URL . 'admin/images/banners/banner-772x250.png' ); ?>" alt="Ultimate Blocks" />
+			<div class="ub_collection_filter">
+				<span class="filter-action active" data-filter-status="all">All</span>
+				<span class="filter-action" data-filter-status="enabled">Enabled</span>
+				<span class="filter-action" data-filter-status="disabled">Disabled</span>
+			</div>
+		</div>
 	</div>
 
 	<div id="ub__main-menu__body">
 
-		<div class="ub_collection_filter">
-			<span class="filter-action active" data-filter-status="all">All</span>
-			<span class="filter-action" data-filter-status="enabled">Enabled</span>
-			<span class="filter-action" data-filter-status="disabled">Disabled</span>
-		</div>
 		<div class="ub__collection <?php echo count( get_option( 'ultimate_blocks', [] ) ) === 0 ? 'empty' : ''; ?>">
 
 			<?php foreach ( get_option( 'ultimate_blocks', array() ) as $block ) : ?>
