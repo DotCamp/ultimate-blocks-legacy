@@ -22,11 +22,11 @@
  */
 class Ultimate_Blocks_Constants {
 
-	protected const PLUGIN_VERSION = '1.0.2';
+	const PLUGIN_VERSION = '1.0.2';
 
-	protected const PLUGIN_NAME = 'ultimate-blocks';
+	const PLUGIN_NAME = 'ultimate-blocks';
 
-	protected const PLUGIN_PATH = WP_PLUGIN_DIR . '/' . self::PLUGIN_NAME . '/';
+	const PLUGIN_PATH = WP_PLUGIN_DIR . '/' . self::PLUGIN_NAME . '/';
 
 	/**
 	 * Get Plugin version
