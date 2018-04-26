@@ -167,7 +167,6 @@
                 data: data,
                 'Content-Type': 'application/json',
                 success: function(data, status, xhr) {
-                    console.log(data);
                     selector.closest('.ub__collection__item').toggleClass('active');
                 },
                 error: function(xhr, status, error) {
