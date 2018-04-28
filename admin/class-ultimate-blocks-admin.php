@@ -162,7 +162,7 @@ class Ultimate_Blocks_Admin {
 
 		$block_name = sanitize_text_field( $_POST['block_name'] );
 
-		$enable = $_POST['enable'];
+		$enable = sanitize_text_field( $_POST['enable'] );
 
 		if ( ! $this->block_exists( $block_name ) ) {
 			wp_send_json_error( array(
@@ -185,6 +185,12 @@ class Ultimate_Blocks_Admin {
 		wp_send_json_success( get_option( 'ultimate_blocks', false ) );
 	}
 
+	/**
+	 * Insert Blocks Settings as a Js Global variable.
+	 *
+	 * @since    1.0.2
+	 * @return void
+	 */
 	public function insert_blocks_settings() {
 		$ultimate_blocks_settings = wp_json_encode( get_option( 'ultimate_blocks', array() ) );
 		?>
