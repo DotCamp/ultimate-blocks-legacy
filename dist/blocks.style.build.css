@@ -116,7 +116,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
-  padding: 0 35px;
+  padding: 0 60px;
   margin: 30px 0 60px 0; }
 
 .ub_call_to_action_headline {
@@ -126,11 +126,11 @@
 .ub_call_to_action_headline p {
   text-align: center;
   padding: 15px 20px 0 20px;
-  font-family: Noto Serif,serif; }
+  font-family: Noto Serif, serif; }
 
 .ub_call_to_action_content {
   width: 100%;
-  padding: 0 40px 30px 40px; }
+  padding: 0; }
 
 .ub_call_to_action_content p {
   text-align: justify; }
