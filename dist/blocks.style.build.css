@@ -511,13 +511,13 @@
   border: 1px solid lightsalmon;
   margin-bottom: 10px; }
   .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title {
-    padding: 10px;
+    padding: 10px 10px 10px 25px;
     color: white;
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
     display: block; }
   .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-content {
-    padding: 10px; }
+    padding: 25px; }
   .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top {
     position: absolute;
     top: -10px;
