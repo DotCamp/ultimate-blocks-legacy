@@ -81,7 +81,12 @@
   max-width: 740px; }
 
 .ub_call_to_action_headline p {
-  padding-bottom: 15px !important; }
+  text-align: center;
+  padding: 20px 20px 0 20px; }
+
+.ub_call_to_action_content {
+  width: 100%;
+  padding: 0 0 40px 0; }
 
 .ub_call_to_action_url_input {
   display: -ms-flexbox;
