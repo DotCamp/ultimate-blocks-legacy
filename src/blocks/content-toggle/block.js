@@ -73,6 +73,10 @@ registerBlockType( 'ub/content-toggle', {
 			type: 'boolean',
 			default: false,
 		},
+		titleColor: {
+			type: 'string',
+			default: '#ffffff'
+		}
 	},
 
 	edit: function( { attributes, setAttributes, className, isSelected } ) {
@@ -139,6 +143,8 @@ registerBlockType( 'ub/content-toggle', {
 
 		const onThemeChange = ( value ) => setAttributes( { theme: value } );
 
+		const onTitleColorChange = ( value ) => setAttributes( { titleColor: value } );
+
 		const onCollapseChange = () => setAttributes( { collapsed: ! attributes.collapsed } );
 
 		if ( attributes.accordions.length === 0 ) {
@@ -147,7 +153,7 @@ registerBlockType( 'ub/content-toggle', {
 
 		return [
 			isSelected && (
-				<Inspector { ...{ attributes, onThemeChange, onCollapseChange } } key="inspector" />
+				<Inspector { ...{ attributes, onThemeChange, onCollapseChange, onTitleColorChange } } key="inspector" />
 			),
 			<div className={ className } key="accordions">
 				{
@@ -169,7 +175,13 @@ registerBlockType( 'ub/content-toggle', {
 					accordions.map( ( accordion, i ) => {
 						return <div style={ { borderColor: props.attributes.theme } } className="wp-block-ub-content-toggle-accordion" key={ i }>
 							<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={ { backgroundColor: props.attributes.theme } }>
-								<span className="wp-block-ub-content-toggle-accordion-title">{ accordion.title }</span>
+								<span 
+								className="wp-block-ub-content-toggle-accordion-title" 
+								style={{
+									color: props.attributes.titleColor
+								}}>
+									{ accordion.title }
+								</span>
 								<span className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( collapsed ? '' : 'open' ) }></span>
 							</div>
 							<div style={ { display: ( collapsed ? 'none' : 'block' ) } } className="wp-block-ub-content-toggle-accordion-content-wrap">

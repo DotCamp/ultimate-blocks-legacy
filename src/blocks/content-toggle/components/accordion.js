@@ -16,6 +16,9 @@ export default class Accordion extends Component {
 			<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={ { backgroundColor: attributes.theme } }>
 				<RichText
 					tagName="span"
+					style={{
+						color: attributes.titleColor
+					}}
 					className="wp-block-ub-content-toggle-accordion-title"
 					value={ accordion.title }
 					formattingControls={ [ 'italic' ] }
