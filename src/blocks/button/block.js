@@ -62,12 +62,11 @@ registerBlockType( 'ub/button-block', {
         buttonText: {
             type: 'array',
             source: 'children',
-            selector: '.ub-button-block-btn',
-            default: 'Default Button Text'
+            selector: '.ub-button-block-btn'
         },
         align: {
             type: 'string',
-            default: 'left'
+            default: 'center'
         },
         url: {
             type: 'string',
@@ -219,6 +218,7 @@ registerBlockType( 'ub/button-block', {
                     >
                         <RichText
                             tagName="p"
+                            placeholder={ __( 'Button Text' ) }
                             style={{
                                 backgroundColor: buttonColor,
                                 color: buttonTextColor,
