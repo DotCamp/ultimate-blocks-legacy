@@ -55,19 +55,16 @@ registerBlockType( 'ub/call-to-action', {
             type: 'array',
             source: 'children',
             selector: '.ub_call_to_action_headline_text',
-            default: 'This is the headline.'
         },
         ub_cta_content_text: {
             type: 'array',
             source: 'children',
             selector: '.ub_cta_content_text',
-            default: 'Content area for the call to action box. Utilize it to state why the action should be taken.'
         },
         ub_cta_button_text: {
             type: 'array',
             source: 'children',
-            selector: '.ub_cta_button_text',
-            default: 'Get Started'
+            selector: '.ub_cta_button_text'
         },
         headFontSize: {
             type: 'number',
@@ -79,7 +76,7 @@ registerBlockType( 'ub/call-to-action', {
         },
         contentFontSize: {
             type: 'number',
-            default: 14
+            default: 15
         },
         contentColor: {
             type: 'string',
@@ -292,6 +289,7 @@ registerBlockType( 'ub/call-to-action', {
                         <div className="ub_call_to_action_headline">
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'CTA Title Goes Here' ) }
                                 className="ub_call_to_action_headline_text"
                                 style={{
                                     fontSize: props.attributes.headFontSize + 'px',
@@ -308,6 +306,7 @@ registerBlockType( 'ub/call-to-action', {
                         <div className="ub_call_to_action_content">
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Add Call to Action Text Here' ) }
                                 className="ub_cta_content_text"
                                 style={{
                                     fontSize: props.attributes.contentFontSize + 'px',
@@ -332,6 +331,7 @@ registerBlockType( 'ub/call-to-action', {
                         >
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Button Text' ) }
                                 className="ub_cta_button_text"
                                 style={{
                                     color: props.attributes.buttonTextColor,
