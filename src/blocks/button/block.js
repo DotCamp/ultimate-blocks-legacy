@@ -88,7 +88,7 @@ registerBlockType( 'ub/button-block', {
         },
         buttonRounded: {
             type: 'boolean',
-            default: 'true'
+            default: 'false'
         }
     },
     /**

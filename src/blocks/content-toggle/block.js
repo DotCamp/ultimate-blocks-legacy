@@ -67,7 +67,7 @@ registerBlockType( 'ub/content-toggle', {
 		},
 		theme: {
 			type: 'string',
-			default: '#ffa07a',
+			default: '#f63d3d',
 		},
 		collapsed: {
 			type: 'boolean',
@@ -84,7 +84,7 @@ registerBlockType( 'ub/content-toggle', {
 			attributes.accordions = [];
 		}
 
-		const sample = { title: 'Title', content: 'Content goes here.' };
+		const sample = { title: '', content: '' };
 		const accordionsState = JSON.parse( attributes.accordionsState );
 
 		const showControls = ( type, index ) => {

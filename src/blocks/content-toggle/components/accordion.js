@@ -25,6 +25,8 @@ export default class Accordion extends Component {
 					isSelected={ attributes.activeControl === 'title-' + i && isSelected  }
 					onClick={ () => showControls( 'title', i ) }
 					onChange={ ( title ) => onChangeTitle( title, i ) }
+					placeholder={ __( 'Toggle Title Here' ) }
+					keepPlaceholderOnFocus={ true }
 				/>
 				<span onClick={ () => { toggleAccordionState( i ) } } className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( accordionsState[ i ] ? 'open' : '' ) }></span>
 			</div>
@@ -38,6 +40,8 @@ export default class Accordion extends Component {
 					isSelected={ attributes.activeControl === 'content-' + i && isSelected }
 					onClick={ () => showControls( 'content', i ) }
 					onChange={ ( content ) => onChangeContent( content, i ) }
+					placeholder={ __( 'Toggle Content Goes Here' ) }
+					keepPlaceholderOnFocus={ true }
 				/>
 			</div> }
 			<div className="wp-block-ub-content-toggle-accordion-controls-top">
