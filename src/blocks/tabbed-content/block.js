@@ -44,6 +44,10 @@ registerBlockType( 'ub/tabbed-content', {
 		activeControl: {
 			type: 'string',
 		},
+		timestamp: {
+			type: 'number',
+			default: 0,
+		},
 		tabsContent: {
 			source: 'query',
 			selector: '.wp-block-ub-tabbed-content-tab-content',
@@ -51,7 +55,18 @@ registerBlockType( 'ub/tabbed-content', {
 				content: {
 					type: 'array',
 					source: 'children',
-					selector: '.wp-block-ub-tabbed-content-tab-content',
+					selector: '.wp-block-ub-tabbed-content-tabs-content',
+				},
+			},
+		},
+		tabsTitle: {
+			source: 'query',
+			selector: '.wp-block-ub-tabbed-content-tabs-title',
+			query: {
+				content: {
+					type: 'array',
+					source: 'children',
+					selector: '.wp-block-ub-tabbed-content-tab-title',
 				},
 			},
 		},
@@ -62,6 +77,14 @@ registerBlockType( 'ub/tabbed-content', {
 			attributes.tabsContent = [];
 		}
 
+		if ( ! attributes.tabsTitle ) {
+			attributes.tabsTitle = [];
+		}
+
+		const updateTimeStamp = () => {
+			setAttributes( { timestamp: ( new Date() ).getTime() } );
+		};
+
 		const showControls = ( type, index ) => {
 			setAttributes( { activeControl: type + '-' + index } );
 		};
@@ -70,9 +93,20 @@ registerBlockType( 'ub/tabbed-content', {
 			attributes.tabsContent[ i ].content = content;
 		};
 
+		const onChangeTabTitle = ( content, i ) => {
+			attributes.tabsTitle[ i ].content = content;
+		};
+
 		const addTab = ( i ) => {
-			attributes.tabsContent[ i ] = { content: '<p>Tab Content </p>' };
-			setAttributes( { tabsContent: attributes.accordions } );
+			attributes.tabsTitle[ i ] = { content: 'Tab Title' };
+			setAttributes( { tabsTitle: attributes.tabsTitle } );
+
+			attributes.tabsContent[ i ] = { content: 'Enter the Tab Content here.' };
+			setAttributes( { tabsContent: attributes.tabsContent } );
+
+			showControls( 'tab-title', i );
+
+			updateTimeStamp();
 		};
 
 		if ( attributes.tabsContent.length === 0 ) {
@@ -81,22 +115,34 @@ registerBlockType( 'ub/tabbed-content', {
 
 		return <div className={ className }>
 			<div className={ className + '-holder' }>
-				<div className={ className + '-tabs' }>
-					<div className={ className + '-tab' }>Tab 1</div>
-					<div className={ className + '-tab' }>Tab 2</div>
-					<div className={ className + '-tab' }>Tab 3</div>
+				<div className={ className + '-tabs-title' }>
+					{
+						attributes.tabsTitle.map( ( tabTitle, i ) => {
+							return <div className={ className + '-tab-title-wrap' } key={ i }>
+								<RichText
+									tagName="div"
+									className={ className + '-tab-title' }
+									value={ tabTitle.content }
+									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+									isSelected={ attributes.activeControl === 'tab-title-' + i && isSelected }
+									onClick={ () => showControls( 'tab-title', i ) }
+									onChange={ ( content ) => onChangeTabTitle( content, i ) }
+								/>
+							</div>;
+						} )
+					}
 				</div>
 				<div className={ className + '-tabs-content' }>
 					{
 						attributes.tabsContent.map( ( tabContent, i ) => {
-							return <div className={ className + '-tab-content' } key={ i }>
+							return <div className={ className + '-tab-content-wrap' } key={ i }>
 								<RichText
 									tagName="div"
-									className="wp-block-ub-content-toggle-accordion-content"
+									className={ className + '-tab-content' }
 									value={ tabContent.content }
 									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-									isSelected={ attributes.activeControl === 'content-' + i && isSelected }
-									onClick={ () => showControls( 'content', i ) }
+									isSelected={ attributes.activeControl === 'tab-content-' + i && isSelected }
+									onClick={ () => showControls( 'tab-content', i ) }
 									onChange={ ( content ) => onChangeTabContent( content, i ) }
 								/>
 							</div>;

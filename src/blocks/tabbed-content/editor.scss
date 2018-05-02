@@ -9,16 +9,17 @@
 
 }
 
-.wp-block-ub-tabbed-content-tabs {
+.wp-block-ub-tabbed-content-tabs-title {
 	display: flex;
-	.wp-block-ub-tabbed-content-tab {
-		border: 1px solid lightgrey;
-		border-top-right-radius: 5px;
-		border-top-left-radius: 5px;
-		padding: 10px;
-		border-bottom: 0;
-		margin-right: 5px;
-	}
+}
+
+.wp-block-ub-tabbed-content-tab-title-wrap {
+	border: 1px solid lightgrey;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	padding: 10px;
+	border-bottom: 0;
+	margin-right: 5px;
 }
 
 .wp-block-ub-tabbed-content-tabs-content {
