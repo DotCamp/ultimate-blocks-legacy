@@ -416,7 +416,13 @@
   border-top-left-radius: 5px;
   padding: 10px;
   border-bottom: 0;
-  margin-right: 5px; }
+  margin-right: 5px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center; }
+  .wp-block-ub-tabbed-content-tab-title-wrap:last-child {
+    cursor: pointer; }
 
 .wp-block-ub-tabbed-content-tabs-content {
   border: 1px solid lightgrey;

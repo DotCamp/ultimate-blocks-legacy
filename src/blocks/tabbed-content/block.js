@@ -123,7 +123,7 @@ registerBlockType( 'ub/tabbed-content', {
 									tagName="div"
 									className={ className + '-tab-title' }
 									value={ tabTitle.content }
-									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+									formattingControls={ [ 'bold', 'italic' ] }
 									isSelected={ attributes.activeControl === 'tab-title-' + i && isSelected }
 									onClick={ () => showControls( 'tab-title', i ) }
 									onChange={ ( content ) => onChangeTabTitle( content, i ) }
@@ -131,6 +131,11 @@ registerBlockType( 'ub/tabbed-content', {
 							</div>;
 						} )
 					}
+					<div
+						className={ className + '-tab-title-wrap' } key={ attributes.tabsTitle.length }
+						onClick={ () => addTab( attributes.tabsTitle.length ) } >
+						<span className="dashicons dashicons-plus-alt"></span>
+					</div>
 				</div>
 				<div className={ className + '-tabs-content' }>
 					{

@@ -20,6 +20,11 @@
 	padding: 10px;
 	border-bottom: 0;
 	margin-right: 5px;
+	display: flex;
+	align-items: center;
+	&:last-child {
+		cursor: pointer;
+	}
 }
 
 .wp-block-ub-tabbed-content-tabs-content {
