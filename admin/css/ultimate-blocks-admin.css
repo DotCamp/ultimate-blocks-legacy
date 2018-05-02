@@ -1,0 +1,163 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+body {
+    background: white;
+    overflow: scroll;
+}
+
+.ub-hide {
+    display: none !important;
+}
+
+
+/*******************************************
+* Components
+*********************************************/
+
+
+/* Slider Switch Input*/
+
+.ub-switch-input input {
+    display: none;
+}
+
+.ub-switch-input {
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    transform: translateY(0%);
+    position: relative;
+}
+
+.ub-switch-input-slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 15px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    overflow: hidden;
+    transition: .4s;
+    background-color: #e2e2e3;
+}
+
+.ub-switch-input-slider:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 30px;
+    transform: translateX(-30px);
+    transition: .4s;
+}
+
+input:checked+.ub-switch-input-slider:before {
+    transform: translateX(30px);
+    background: white;
+}
+
+input:checked+.ub-switch-input-slider {
+    background-color: #f64646;
+}
+
+
+/*******************************************
+ * Main Menu Settings Page
+ *********************************************/
+
+#ub__main-menu {
+    background: #f8f8f8;
+    margin-left: -20px;
+    padding-bottom: 40px;
+}
+
+#ub__main-menu__header {
+    padding: 0;
+    background: #fff;
+    margin-bottom: 40px;
+    box-shadow: 0px 2px 8px #e8e8e8;
+}
+
+.ub__header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ub__header-container img {
+    max-height: 80px;
+    justify-content: flex-start;
+}
+
+.ub__collection {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    margin: auto;
+    height: 440px;
+    width: 100%;
+    max-width: 1040px;
+    box-sizing: border-box;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+}
+
+.ub__collection__item {
+    border: 1px solid lightgrey;
+    padding: 15px;
+    margin: 15px 0;
+    height: 80px;
+    max-width: 50%;
+    margin: 10px;
+    transition: all 0.5s ease-in-out;
+    box-sizing: border-box;
+}
+
+.ub__collection__item.active {
+    border: 1px solid #f64646;
+}
+
+.ub__collection__item__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ub__collection__item:hover {
+    box-shadow: 0 0 10px lightgrey;
+}
+
+.ub__collection__item__title {
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.ub_collection_filter {
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.ub_collection_filter .filter-action {
+    display: inline-block;
+    padding: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    font-size: 15px;
+}
+
+.ub_collection_filter .filter-action.active {
+    color: #f64646;
+    border-bottom: 2px solid #f64646;
+}
