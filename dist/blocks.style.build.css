@@ -638,3 +638,17 @@
   width: 512px;
   padding: 20px;
   font-size: 25px !important; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */

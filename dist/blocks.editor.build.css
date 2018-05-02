@@ -391,3 +391,32 @@
   position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-tabbed-content-tabs {
+  display: -ms-flexbox;
+  display: flex; }
+  .wp-block-ub-tabbed-content-tabs .wp-block-ub-tabbed-content-tab {
+    border: 1px solid lightgrey;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 10px;
+    border-bottom: 0;
+    margin-right: 5px; }
+
+.wp-block-ub-tabbed-content-tabs-content {
+  border: 1px solid lightgrey;
+  padding: 10px; }
