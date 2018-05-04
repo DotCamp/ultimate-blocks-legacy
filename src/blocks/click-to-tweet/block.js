@@ -141,8 +141,10 @@ registerBlockType( 'ub/click-to-tweet', {
                     <TextareaAutosize
 						style={{
 							fontSize: tweetFontSize + 'px',
-							color: tweetColor
+							color: tweetColor,
+							border: 'none'
 						}}
+						placeholder={ __( 'Add Tweetable Content Here' ) }
                         className="ub_tweet"
                         value={ ubTweet }
                         onChange = { ( event ) => { props.setAttributes( { ubTweet: event.target.value } ) } }
