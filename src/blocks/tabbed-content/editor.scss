@@ -6,7 +6,9 @@
  */
 
 .wp-block-ub-tabbed-content-holder {
-
+	.blocks-rich-text__tinymce.mce-content-body {
+		font-size: 14px;
+	}
 }
 
 .wp-block-ub-tabbed-content-tabs-title {
@@ -24,6 +26,20 @@
 	align-items: center;
 	&:last-child {
 		cursor: pointer;
+	}
+	&.active {
+		background: yellowgreen;
+		color: white;
+	}
+	.remove-tab-icon {
+		width: 16px;
+		height: 16px;
+		background: #444444;
+		color: white;
+		border-radius: 50%;
+		font-size: 15px;
+		margin-left: 5px;
+		line-height: 17px;
 	}
 }
 

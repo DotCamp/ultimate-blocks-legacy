@@ -406,6 +406,9 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
+.wp-block-ub-tabbed-content-holder .blocks-rich-text__tinymce.mce-content-body {
+  font-size: 14px; }
+
 .wp-block-ub-tabbed-content-tabs-title {
   display: -ms-flexbox;
   display: flex; }
@@ -423,6 +426,18 @@
       align-items: center; }
   .wp-block-ub-tabbed-content-tab-title-wrap:last-child {
     cursor: pointer; }
+  .wp-block-ub-tabbed-content-tab-title-wrap.active {
+    background: yellowgreen;
+    color: white; }
+  .wp-block-ub-tabbed-content-tab-title-wrap .remove-tab-icon {
+    width: 16px;
+    height: 16px;
+    background: #444444;
+    color: white;
+    border-radius: 50%;
+    font-size: 15px;
+    margin-left: 5px;
+    line-height: 17px; }
 
 .wp-block-ub-tabbed-content-tabs-content {
   border: 1px solid lightgrey;

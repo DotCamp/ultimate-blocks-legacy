@@ -44,6 +44,10 @@ registerBlockType( 'ub/tabbed-content', {
 		activeControl: {
 			type: 'string',
 		},
+		activeTab: {
+			type: 'number',
+			default: 0,
+		},
 		timestamp: {
 			type: 'number',
 			default: 0,
@@ -87,6 +91,7 @@ registerBlockType( 'ub/tabbed-content', {
 
 		const showControls = ( type, index ) => {
 			setAttributes( { activeControl: type + '-' + index } );
+			setAttributes( { activeTab: index } );
 		};
 
 		const onChangeTabContent = ( content, i ) => {
@@ -104,9 +109,23 @@ registerBlockType( 'ub/tabbed-content', {
 			attributes.tabsContent[ i ] = { content: 'Enter the Tab Content here.' };
 			setAttributes( { tabsContent: attributes.tabsContent } );
 
+			setAttributes( { activeTab: i } );
+
 			showControls( 'tab-title', i );
 
 			updateTimeStamp();
+		};
+
+		const removeTab = ( i ) => {
+			const tabsTitleClone = attributes.tabsTitle.slice( 0 );
+			tabsTitleClone.splice( i, 1 );
+			setAttributes( { tabsTitle: tabsTitleClone } );
+
+			const tabsContentClone = attributes.tabsContent.slice( 0 );
+			tabsContentClone.splice( i, 1 );
+			setAttributes( { tabsContent: tabsContentClone } );
+
+			setAttributes( { activeTab: i } );
 		};
 
 		if ( attributes.tabsContent.length === 0 ) {
@@ -118,16 +137,17 @@ registerBlockType( 'ub/tabbed-content', {
 				<div className={ className + '-tabs-title' }>
 					{
 						attributes.tabsTitle.map( ( tabTitle, i ) => {
-							return <div className={ className + '-tab-title-wrap' } key={ i }>
+							return <div className={ className + '-tab-title-wrap' + ( attributes.activeTab === i ? ' active' : '' ) } key={ i }>
 								<RichText
 									tagName="div"
-									className={ className + '-tab-title' }
+									className={ className + '-tab-title ' }
 									value={ tabTitle.content }
 									formattingControls={ [ 'bold', 'italic' ] }
 									isSelected={ attributes.activeControl === 'tab-title-' + i && isSelected }
 									onClick={ () => showControls( 'tab-title', i ) }
 									onChange={ ( content ) => onChangeTabTitle( content, i ) }
 								/>
+								<span className={ "dashicons dashicons-minus remove-tab-icon " + ( attributes.tabsTitle.length === 1 ? 'ub-hide' : '' ) } onClick={ () => removeTab(i) }></span>
 							</div>;
 						} )
 					}
@@ -140,7 +160,7 @@ registerBlockType( 'ub/tabbed-content', {
 				<div className={ className + '-tabs-content' }>
 					{
 						attributes.tabsContent.map( ( tabContent, i ) => {
-							return <div className={ className + '-tab-content-wrap' } key={ i }>
+							return <div className={ className + '-tab-content-wrap' + ( attributes.activeTab === i ? 'active' : ' ub-hide' ) } key={ i }>
 								<RichText
 									tagName="div"
 									className={ className + '-tab-content' }
