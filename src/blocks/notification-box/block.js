@@ -61,8 +61,7 @@ registerBlockType( 'ub/notification-box', {
         ub_notify_info: {
             type: 'array',
             source: 'children',
-            selector: '.ub_notify_text',
-            default: 'Replace this text with your own text.'
+            selector: '.ub_notify_text'
         },
 		ub_selected_notify: {
         	type: 'string',
@@ -152,12 +151,13 @@ registerBlockType( 'ub/notification-box', {
 
                     <RichText
                         tagName="div"
+                        placeholder={ __( 'Add Your Content Here' ) }
                         className={ props.attributes.ub_selected_notify }
                         onChange={ onChangeNotifyInfo }
                         value={ props.attributes.ub_notify_info }
                         isSelected={ isSelected && editable === 'notify_info' }
                         onFocus={ onSetActiveEditable( 'notify_info' ) }
-                        keepPlaceholderOnFocus={true}
+                        keepPlaceholderOnFocus={ true }
                     />
 
                 </div>
