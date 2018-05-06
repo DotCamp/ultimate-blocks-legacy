@@ -14,6 +14,7 @@ import {
 	SortableHandle,
 	arrayMove,
 } from 'react-sortable-hoc';
+import Inspector from './components/inspector';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
@@ -62,20 +63,24 @@ registerBlockType( 'ub/tabbed-content', {
 			type: 'number',
 			default: 0,
 		},
+		theme: {
+			type: 'string',
+			default: '#ffa07a',
+		},
 		tabsContent: {
 			source: 'query',
-			selector: '.wp-block-ub-tabbed-content-tab-content',
+			selector: '.wp-block-ub-tabbed-content-tab-content-wrap',
 			query: {
 				content: {
 					type: 'array',
 					source: 'children',
-					selector: '.wp-block-ub-tabbed-content-tabs-content',
+					selector: '.wp-block-ub-tabbed-content-tab-content',
 				},
 			},
 		},
 		tabsTitle: {
 			source: 'query',
-			selector: '.wp-block-ub-tabbed-content-tabs-title',
+			selector: '.wp-block-ub-tabbed-content-tab-title-wrap',
 			query: {
 				content: {
 					type: 'array',
@@ -108,10 +113,14 @@ registerBlockType( 'ub/tabbed-content', {
 
 		const onChangeTabContent = ( content, i ) => {
 			attributes.tabsContent[ i ].content = content;
+
+			updateTimeStamp();
 		};
 
 		const onChangeTabTitle = ( content, i ) => {
 			attributes.tabsTitle[ i ].content = content;
+
+			updateTimeStamp();
 		};
 
 		const addTab = ( i ) => {
@@ -137,8 +146,13 @@ registerBlockType( 'ub/tabbed-content', {
 			tabsContentClone.splice( i, 1 );
 			setAttributes( { tabsContent: tabsContentClone } );
 
-			setAttributes( { activeTab: i } );
+			setAttributes( { activeTab: 0 } );
+			showControls( 'tab-title', 0 );
+
+			updateTimeStamp();
 		};
+
+		const onThemeChange = ( value ) => setAttributes( { theme: value } );
 
 		if ( attributes.tabsContent.length === 0 ) {
 			addTab( 0 );
@@ -163,7 +177,9 @@ registerBlockType( 'ub/tabbed-content', {
 		if ( ! SortableItem ) {
 			SortableItem = SortableElement( ( { value, i, propz, onChangeTitle, onRemoveTitle, toggleTitle } ) => {
 				return (
-					<div className={ propz.className + '-tab-title-wrap SortableItem ' + ( propz.attributes.activeTab === i ? ' active' : '' ) }>
+					<div
+						className={ propz.className + '-tab-title-wrap SortableItem' + ( propz.attributes.activeTab === i ? ' active' : '' ) }
+						style={ { backgroundColor: propz.attributes.activeTab === i ? propz.attributes.theme : 'initial' } }>
 						<DragHandle />
 						<RichText
 							tagName="div"
@@ -174,7 +190,7 @@ registerBlockType( 'ub/tabbed-content', {
 							onClick={ () => toggleTitle( 'tab-title', i ) }
 							onChange={ ( content ) => onChangeTitle( content, i ) }
 						/>
-						<span className={ "dashicons dashicons-minus remove-tab-icon " + ( propz.attributes.tabsTitle.length === 1 ? 'ub-hide' : '' ) } onClick={ () => onRemoveTitle(i) }></span>
+						<span className={ 'dashicons dashicons-minus remove-tab-icon' + ( propz.attributes.tabsTitle.length === 1 ? ' ub-hide' : '' ) } onClick={ () => onRemoveTitle(i) }></span>
 					</div>
 				);
 			});
@@ -187,7 +203,7 @@ registerBlockType( 'ub/tabbed-content', {
 						{ items.map( ( value, index ) => {
 							return <SortableItem propz={ propz } key={ `item-${ index }` } i={ index } index={ index } value={ value } onChangeTitle={ onChangeTitle } onRemoveTitle={ onRemoveTitle } toggleTitle={ toggleTitle } />;
 						} ) }
-						<div className={ className + '-tab-title-wrap' } key={ attributes.tabsTitle.length } onClick={ () => addTab( attributes.tabsTitle.length ) } >
+						<div className={ className + '-tab-title-wrap' } key={ propz.attributes.tabsTitle.length } onClick={ () => addTab( propz.attributes.tabsTitle.length ) } >
 							<span className="dashicons dashicons-plus-alt"></span>
 						</div>
 					</div>
@@ -195,35 +211,70 @@ registerBlockType( 'ub/tabbed-content', {
 			} );
 		}
 
-		return <div className={ className }>
+		return [
+			isSelected && (
+				<Inspector { ...{ attributes, onThemeChange } } key="inspector" />
+			),
+			<div className={ className } key="tabber">
+				<div className={ className + '-holder' }>
+					{
+						<SortableList axis="x" propz={ props } items={ attributes.tabsTitle } onSortEnd={ onSortEnd } useDragHandle={ true } onChangeTitle={ onChangeTabTitle } onRemoveTitle={ removeTab } toggleTitle={ showControls } />
+					}
+					<div className={ className + '-tabs-content' }>
+						{
+							attributes.tabsContent.map( ( tabContent, i ) => {
+								return <div className={ className + '-tab-content-wrap' + ( attributes.activeTab === i ? ' active' : ' ub-hide' ) } key={ i }>
+									<RichText
+										tagName="div"
+										className={ className + '-tab-content' }
+										value={ tabContent.content }
+										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
+										isSelected={ attributes.activeControl === 'tab-content-' + i && isSelected }
+										onClick={ () => showControls( 'tab-content', i ) }
+										onChange={ ( content ) => onChangeTabContent( content, i ) }
+									/>
+								</div>;
+							} )
+						}
+					</div>
+				</div>
+			</div>
+		];
+	},
+
+	save: function( props ) {
+		const className = 'wp-block-ub-tabbed-content';
+
+		const { activeTab, theme } = props.attributes;
+
+		return <div>
 			<div className={ className + '-holder' }>
-				{
-					<SortableList axis="x" propz={ props } items={ attributes.tabsTitle } onSortEnd={ onSortEnd } useDragHandle={ true } onChangeTitle={ onChangeTabTitle } onRemoveTitle={ removeTab } toggleTitle={ showControls } />
-				}
+				<div className={ className + '-tabs-title' }>
+					{
+						props.attributes.tabsTitle.map( ( value, i ) => {
+							return <div
+								className={ className + '-tab-title-wrap' + ( activeTab === i ? ' active' : '' ) }
+								style={ { backgroundColor: activeTab === i ? theme : 'initial', borderColor: activeTab === i ? theme : 'lightgrey' } }
+								key={ i }>
+								<div className={ className + '-tab-title' }>
+									{ value.content }
+								</div>
+							</div>;
+						} )
+					}
+				</div>
 				<div className={ className + '-tabs-content' }>
 					{
-						attributes.tabsContent.map( ( tabContent, i ) => {
-							return <div className={ className + '-tab-content-wrap' + ( attributes.activeTab === i ? 'active' : ' ub-hide' ) } key={ i }>
-								<RichText
-									tagName="div"
-									className={ className + '-tab-content' }
-									value={ tabContent.content }
-									formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
-									isSelected={ attributes.activeControl === 'tab-content-' + i && isSelected }
-									onClick={ () => showControls( 'tab-content', i ) }
-									onChange={ ( content ) => onChangeTabContent( content, i ) }
-								/>
+						props.attributes.tabsContent.map( ( value, i ) => {
+							return <div className={ className + '-tab-content-wrap' + ( activeTab === i ? ' active' : ' ub-hide' ) } key={ i }>
+								<div className={ className + '-tab-content' }>
+									{ value.content }
+								</div>
 							</div>;
 						} )
 					}
 				</div>
 			</div>
-		</div>;
-	},
-
-	save: function() {
-		return <div>
-			Tabbed
 		</div>;
 	},
 } );

@@ -428,7 +428,6 @@
   .wp-block-ub-tabbed-content-tab-title-wrap:last-child {
     cursor: pointer; }
   .wp-block-ub-tabbed-content-tab-title-wrap.active {
-    background: yellowgreen;
     color: white; }
   .wp-block-ub-tabbed-content-tab-title-wrap .remove-tab-icon {
     width: 16px;
