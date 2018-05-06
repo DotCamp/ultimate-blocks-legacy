@@ -8,6 +8,12 @@
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import {
+	SortableContainer,
+	SortableElement,
+	SortableHandle,
+	arrayMove,
+} from 'react-sortable-hoc';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
@@ -17,6 +23,10 @@ const {
 
 const {
 } = wp.components;
+
+let SortableItem;
+let SortableList;
+
 /**
  * Register: aa Gutenberg Block.
  *
@@ -76,7 +86,9 @@ registerBlockType( 'ub/tabbed-content', {
 		},
 	},
 
-	edit: function( { className, setAttributes, attributes, isSelected } ) {
+	edit: function( props ) {
+		const { className, setAttributes, attributes, isSelected } = props;
+
 		if ( ! attributes.tabsContent ) {
 			attributes.tabsContent = [];
 		}
@@ -132,24 +144,59 @@ registerBlockType( 'ub/tabbed-content', {
 			addTab( 0 );
 		}
 
+		const onSortEnd = ( { oldIndex, newIndex } ) => {
+			const titleItems = attributes.tabsTitle.slice( 0 );
+
+			setAttributes( { tabsTitle: arrayMove( titleItems, oldIndex, newIndex ) } );
+
+			const contentItems = attributes.tabsContent.slice( 0 );
+
+			setAttributes( { tabsContent: arrayMove( contentItems, oldIndex, newIndex ) } );
+
+			setAttributes( { activeTab: newIndex } );
+
+			showControls( 'tab-title', newIndex );
+		};
+
+		const DragHandle = SortableHandle( () => <span className="dashicons dashicons-move drag-handle"></span> );
+
+		if ( ! SortableItem ) {
+			SortableItem = SortableElement( ( { value, i, propz, onChangeTitle, onRemoveTitle, toggleTitle } ) => {
+				return (
+					<div className={ propz.className + '-tab-title-wrap SortableItem ' + ( propz.attributes.activeTab === i ? ' active' : '' ) }>
+						<DragHandle />
+						<RichText
+							tagName="div"
+							className={ propz.className + '-tab-title ' }
+							value={ value.content }
+							formattingControls={ [ 'bold', 'italic' ] }
+							isSelected={ propz.attributes.activeControl === 'tab-title-' + i && propz.isSelected }
+							onClick={ () => toggleTitle( 'tab-title', i ) }
+							onChange={ ( content ) => onChangeTitle( content, i ) }
+						/>
+						<span className={ "dashicons dashicons-minus remove-tab-icon " + ( propz.attributes.tabsTitle.length === 1 ? 'ub-hide' : '' ) } onClick={ () => onRemoveTitle(i) }></span>
+					</div>
+				);
+			});
+		}
+
+		if ( ! SortableList ) {
+			SortableList = SortableContainer( ( { items, propz, onChangeTitle, onRemoveTitle, toggleTitle } ) => {
+				return (
+					<div className={ className + '-tabs-title SortableList' }>
+						{ items.map( ( value, index ) => {
+							return <SortableItem propz={ propz } key={ `item-${ index }` } i={ index } index={ index } value={ value } onChangeTitle={ onChangeTitle } onRemoveTitle={ onRemoveTitle } toggleTitle={ toggleTitle } />;
+						} ) }
+					</div>
+				);
+			} );
+		}
+
 		return <div className={ className }>
 			<div className={ className + '-holder' }>
 				<div className={ className + '-tabs-title' }>
 					{
-						attributes.tabsTitle.map( ( tabTitle, i ) => {
-							return <div className={ className + '-tab-title-wrap' + ( attributes.activeTab === i ? ' active' : '' ) } key={ i }>
-								<RichText
-									tagName="div"
-									className={ className + '-tab-title ' }
-									value={ tabTitle.content }
-									formattingControls={ [ 'bold', 'italic' ] }
-									isSelected={ attributes.activeControl === 'tab-title-' + i && isSelected }
-									onClick={ () => showControls( 'tab-title', i ) }
-									onChange={ ( content ) => onChangeTabTitle( content, i ) }
-								/>
-								<span className={ "dashicons dashicons-minus remove-tab-icon " + ( attributes.tabsTitle.length === 1 ? 'ub-hide' : '' ) } onClick={ () => removeTab(i) }></span>
-							</div>;
-						} )
+						<SortableList axis="x" propz={ props } items={ attributes.tabsTitle } onSortEnd={ onSortEnd } useDragHandle={ true } onChangeTitle={ onChangeTabTitle } onRemoveTitle={ removeTab } toggleTitle={ showControls } />
 					}
 					<div
 						className={ className + '-tab-title-wrap' } key={ attributes.tabsTitle.length }

@@ -24,6 +24,7 @@
 	margin-right: 5px;
 	display: flex;
 	align-items: center;
+	position: relative;
 	&:last-child {
 		cursor: pointer;
 	}
@@ -40,6 +41,23 @@
 		font-size: 15px;
 		margin-left: 5px;
 		line-height: 17px;
+	}
+	.drag-handle {
+		font-size: 16px;
+		margin-right: 3px;
+		color: black;
+		position: absolute;
+		top: -7px;
+		left: 0;
+		right: 0;
+		margin: auto;
+		transition: all -.5s ease-in-out;
+		display: none;
+	}
+	&:hover {
+		.drag-handle {
+			display: inline-block;
+		}
 	}
 }
 
