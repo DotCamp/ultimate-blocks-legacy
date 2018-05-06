@@ -670,35 +670,10 @@
   display: flex;
   -ms-flex-align: center;
       align-items: center;
-  position: relative; }
-  .wp-block-ub-tabbed-content-tab-title-wrap:last-child {
-    cursor: pointer; }
+  position: relative;
+  cursor: pointer; }
   .wp-block-ub-tabbed-content-tab-title-wrap.active {
     color: white; }
-  .wp-block-ub-tabbed-content-tab-title-wrap .remove-tab-icon {
-    width: 16px;
-    height: 16px;
-    background: #444444;
-    color: white;
-    border-radius: 50%;
-    font-size: 15px;
-    margin-left: 5px;
-    line-height: 17px; }
-  .wp-block-ub-tabbed-content-tab-title-wrap .drag-handle {
-    font-size: 16px;
-    margin-right: 3px;
-    color: black;
-    position: absolute;
-    top: -7px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    -webkit-transition: all -.5s ease-in-out;
-    -o-transition: all -.5s ease-in-out;
-    transition: all -.5s ease-in-out;
-    display: none; }
-  .wp-block-ub-tabbed-content-tab-title-wrap:hover .drag-handle {
-    display: inline-block; }
 
 .wp-block-ub-tabbed-content-tabs-content {
   border: 1px solid lightgrey;

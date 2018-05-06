@@ -80,3 +80,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/social-share/block.php';
 
 // Content toggle Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/content-toggle/block.php';
+
+// Tabbed Content Block.
+require_once plugin_dir_path( __FILE__ ) . 'blocks/tabbed-content/block.php';

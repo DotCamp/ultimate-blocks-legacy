@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 ( function( $ ) {
 	$( document ).ready( function() {
 		const titleWrap = '.wp-block-ub-content-toggle-accordion-title-wrap';
