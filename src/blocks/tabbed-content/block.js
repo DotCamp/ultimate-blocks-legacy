@@ -187,6 +187,9 @@ registerBlockType( 'ub/tabbed-content', {
 						{ items.map( ( value, index ) => {
 							return <SortableItem propz={ propz } key={ `item-${ index }` } i={ index } index={ index } value={ value } onChangeTitle={ onChangeTitle } onRemoveTitle={ onRemoveTitle } toggleTitle={ toggleTitle } />;
 						} ) }
+						<div className={ className + '-tab-title-wrap' } key={ attributes.tabsTitle.length } onClick={ () => addTab( attributes.tabsTitle.length ) } >
+							<span className="dashicons dashicons-plus-alt"></span>
+						</div>
 					</div>
 				);
 			} );
@@ -194,16 +197,9 @@ registerBlockType( 'ub/tabbed-content', {
 
 		return <div className={ className }>
 			<div className={ className + '-holder' }>
-				<div className={ className + '-tabs-title' }>
-					{
-						<SortableList axis="x" propz={ props } items={ attributes.tabsTitle } onSortEnd={ onSortEnd } useDragHandle={ true } onChangeTitle={ onChangeTabTitle } onRemoveTitle={ removeTab } toggleTitle={ showControls } />
-					}
-					<div
-						className={ className + '-tab-title-wrap' } key={ attributes.tabsTitle.length }
-						onClick={ () => addTab( attributes.tabsTitle.length ) } >
-						<span className="dashicons dashicons-plus-alt"></span>
-					</div>
-				</div>
+				{
+					<SortableList axis="x" propz={ props } items={ attributes.tabsTitle } onSortEnd={ onSortEnd } useDragHandle={ true } onChangeTitle={ onChangeTabTitle } onRemoveTitle={ removeTab } toggleTitle={ showControls } />
+				}
 				<div className={ className + '-tabs-content' }>
 					{
 						attributes.tabsContent.map( ( tabContent, i ) => {
