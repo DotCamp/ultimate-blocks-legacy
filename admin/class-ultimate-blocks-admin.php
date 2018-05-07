@@ -201,6 +201,42 @@ class Ultimate_Blocks_Admin {
 	}
 
 	/**
+	 * Execute functions when admin area is loaded.
+	 *
+	 * @since    1.0.2
+	 * @return void
+	 */
+	public function on_admin_init() {
+		$this->register_new_blocks();
+	}
+
+	/**
+	 * Insert Blocks Settings as a Js Global variable.
+	 *
+	 * @since    1.0.2
+	 * @return void
+	 */
+	public function register_new_blocks() {
+		$blocks = $this->blocks();
+
+		$registered_blocks = get_option( 'ultimate_blocks', false );
+
+		$new_blocks = [];
+
+		if ( $registered_blocks ) {
+			foreach ( $blocks as $block ) {
+				if ( ! $this->is_block_registered( $block['name'], $registered_blocks ) ) {
+					$new_blocks[] = $block;
+				}
+			}
+			$registered_blocks = array_merge( $registered_blocks, $new_blocks );
+			update_option( 'ultimate_blocks', $registered_blocks );
+		} else {
+			update_option( 'ultimate_blocks', $blocks );
+		}
+	}
+
+	/**
 	 * Check block exists.
 	 *
 	 * @since    1.0.2
@@ -209,6 +245,25 @@ class Ultimate_Blocks_Admin {
 	 */
 	protected function block_exists( $name ) {
 		$blocks = $this->blocks();
+
+		$unknown_block = true;
+		foreach ( $blocks as $key => $block ) {
+			if ( $block['name'] === $name ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Check block is registered.
+	 *
+	 * @since    1.0.2
+	 * @param string $name Block Name.
+	 * @return bool
+	 */
+	protected function is_block_registered( $name, $registered_blocks ) {
+		$blocks = $registered_blocks;
 
 		$unknown_block = true;
 		foreach ( $blocks as $key => $block ) {

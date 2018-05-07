@@ -85,6 +85,11 @@
             label: 'Testimonial',
             name: 'ub/testimonial-block',
             active: true
+		},
+		{
+            label: 'Tabber',
+            name: 'ub/tabbed-content',
+            active: true
         }
     ];
 

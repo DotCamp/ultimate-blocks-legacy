@@ -138,6 +138,7 @@ class Ultimate_Blocks {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'on_admin_init' );
 
 		// Styles and Scripts for Help Page.
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_help, 'enqueue_styles' );
