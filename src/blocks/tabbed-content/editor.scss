@@ -32,19 +32,22 @@
 		color: white;
 	}
 	.remove-tab-icon {
-		width: 16px;
-		height: 16px;
+		width: 15px;
+		height: 15px;
 		background: #444444;
 		color: white;
 		border-radius: 50%;
-		font-size: 15px;
+		font-size: 13px;
 		margin-left: 5px;
-		line-height: 17px;
+		line-height: 15px;
 	}
 	.drag-handle {
 		font-size: 16px;
 		margin-right: 3px;
 		color: black;
+	}
+	.tab-actions {
+		justify-content: space-between;
 		position: absolute;
 		top: -7px;
 		left: 0;
@@ -54,8 +57,8 @@
 		display: none;
 	}
 	&:hover {
-		.drag-handle {
-			display: inline-block;
+		.tab-actions {
+			display: flex;
 		}
 	}
 }

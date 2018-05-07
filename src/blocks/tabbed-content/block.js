@@ -180,7 +180,6 @@ registerBlockType( 'ub/tabbed-content', {
 					<div
 						className={ propz.className + '-tab-title-wrap SortableItem' + ( propz.attributes.activeTab === i ? ' active' : '' ) }
 						style={ { backgroundColor: propz.attributes.activeTab === i ? propz.attributes.theme : 'initial' } }>
-						<DragHandle />
 						<RichText
 							tagName="div"
 							className={ propz.className + '-tab-title ' }
@@ -190,7 +189,10 @@ registerBlockType( 'ub/tabbed-content', {
 							onClick={ () => toggleTitle( 'tab-title', i ) }
 							onChange={ ( content ) => onChangeTitle( content, i ) }
 						/>
-						<span className={ 'dashicons dashicons-minus remove-tab-icon' + ( propz.attributes.tabsTitle.length === 1 ? ' ub-hide' : '' ) } onClick={ () => onRemoveTitle(i) }></span>
+						<div class="tab-actions">
+							<DragHandle />
+							<span className={ 'dashicons dashicons-minus remove-tab-icon' + ( propz.attributes.tabsTitle.length === 1 ? ' ub-hide' : '' ) } onClick={ () => onRemoveTitle(i) }></span>
+						</div>
 					</div>
 				);
 			});

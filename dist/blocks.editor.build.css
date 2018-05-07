@@ -430,18 +430,21 @@
   .wp-block-ub-tabbed-content-tab-title-wrap.active {
     color: white; }
   .wp-block-ub-tabbed-content-tab-title-wrap .remove-tab-icon {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     background: #444444;
     color: white;
     border-radius: 50%;
-    font-size: 15px;
+    font-size: 13px;
     margin-left: 5px;
-    line-height: 17px; }
+    line-height: 15px; }
   .wp-block-ub-tabbed-content-tab-title-wrap .drag-handle {
     font-size: 16px;
     margin-right: 3px;
-    color: black;
+    color: black; }
+  .wp-block-ub-tabbed-content-tab-title-wrap .tab-actions {
+    -ms-flex-pack: justify;
+        justify-content: space-between;
     position: absolute;
     top: -7px;
     left: 0;
@@ -451,8 +454,9 @@
     -o-transition: all -.5s ease-in-out;
     transition: all -.5s ease-in-out;
     display: none; }
-  .wp-block-ub-tabbed-content-tab-title-wrap:hover .drag-handle {
-    display: inline-block; }
+  .wp-block-ub-tabbed-content-tab-title-wrap:hover .tab-actions {
+    display: -ms-flexbox;
+    display: flex; }
 
 .wp-block-ub-tabbed-content-tabs-content {
   border: 1px solid lightgrey;
