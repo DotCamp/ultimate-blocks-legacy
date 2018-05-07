@@ -86,6 +86,11 @@ class Ultimate_Blocks_Util {
 				'name'   => 'ub/testimonial-block',
 				'active' => true,
 			),
+			array(
+				'label'  => 'Tabber',
+				'name'   => 'ub/tabbed-content',
+				'active' => true,
+			),
 		];
 	}
 

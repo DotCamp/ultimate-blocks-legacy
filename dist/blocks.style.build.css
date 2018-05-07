@@ -652,6 +652,9 @@
  *
  * CSS for both Frontend+Backend.
  */
+.wp-block-ub-tabbed-content {
+  margin: 20px 0; }
+
 .wp-block-ub-tabbed-content-holder .blocks-rich-text__tinymce.mce-content-body {
   font-size: 14px; }
 
