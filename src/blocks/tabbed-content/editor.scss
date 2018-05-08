@@ -6,64 +6,64 @@
  */
 
 .wp-block-ub-tabbed-content-holder {
-	.blocks-rich-text__tinymce.mce-content-body {
-		font-size: 14px;
-	}
+    .blocks-rich-text__tinymce.mce-content-body {
+        font-size: 14px;
+    }
 }
 
 .wp-block-ub-tabbed-content-tabs-title {
-	display: flex;
+    display: flex;
 }
 
 .wp-block-ub-tabbed-content-tab-title-wrap {
-	border: 1px solid lightgrey;
-	border-top-right-radius: 5px;
-	border-top-left-radius: 5px;
-	padding: 10px;
-	border-bottom: 0;
-	margin-right: 5px;
-	display: flex;
-	align-items: center;
-	position: relative;
-	&:last-child {
-		cursor: pointer;
-	}
-	&.active {
-		color: white;
-	}
-	.remove-tab-icon {
-		width: 15px;
-		height: 15px;
-		background: #444444;
-		color: white;
-		border-radius: 50%;
-		font-size: 13px;
-		margin-left: 5px;
-		line-height: 15px;
-	}
-	.drag-handle {
-		font-size: 16px;
-		margin-right: 3px;
-		color: black;
-	}
-	.tab-actions {
-		justify-content: space-between;
-		position: absolute;
-		top: -7px;
-		left: 0;
-		right: 0;
-		margin: auto;
-		transition: all -.5s ease-in-out;
-		display: none;
-	}
-	&:hover {
-		.tab-actions {
-			display: flex;
-		}
-	}
+    border: 1px solid lightgrey;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 15px;
+    border-bottom: 0;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    &:last-child {
+        cursor: pointer;
+    }
+    &.active {
+        color: white;
+    }
+    .remove-tab-icon {
+        width: 15px;
+        height: 15px;
+        background: #444444;
+        color: white;
+        border-radius: 50%;
+        font-size: 13px;
+        margin-left: 5px;
+        line-height: 15px;
+    }
+    .drag-handle {
+        font-size: 16px;
+        margin-right: 3px;
+        color: black;
+    }
+    .tab-actions {
+        justify-content: space-between;
+        position: absolute;
+        top: -7px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transition: all -.5s ease-in-out;
+        display: none;
+    }
+    &:hover {
+        .tab-actions {
+            display: flex;
+        }
+    }
 }
 
 .wp-block-ub-tabbed-content-tabs-content {
-	border: 1px solid lightgrey;
-	padding: 10px;
+    border: 1px solid lightgrey;
+    padding: 20px;
 }

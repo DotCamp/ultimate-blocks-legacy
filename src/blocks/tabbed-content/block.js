@@ -70,7 +70,11 @@ registerBlockType( 'ub/tabbed-content', {
 		},
 		theme: {
 			type: 'string',
-			default: '#ffa07a',
+			default: '#eeeeee',
+		},
+		titleColor: {
+			type: 'string',
+			default: '#000000'
 		},
 		tabsContent: {
 			source: 'query',
@@ -179,6 +183,7 @@ registerBlockType( 'ub/tabbed-content', {
 		};
 
 		const onThemeChange = ( value ) => setAttributes( { theme: value } );
+		const onTitleColorChange = ( value ) => setAttributes( { titleColor: value } );
 
 		if ( attributes.tabsContent.length === 0 ) {
 			addTab( 0 );
@@ -205,7 +210,7 @@ registerBlockType( 'ub/tabbed-content', {
 				return (
 					<div
 						className={ propz.className + '-tab-title-wrap SortableItem' + ( propz.attributes.activeTab === i ? ' active' : '' ) }
-						style={ { backgroundColor: propz.attributes.activeTab === i ? propz.attributes.theme : 'initial' } }>
+						style={ { backgroundColor: propz.attributes.activeTab === i ? propz.attributes.theme : 'initial', color: propz.attributes.activeTab === i ? propz.attributes.titleColor: '#000000' } }>
 						<RichText
 							tagName="div"
 							className={ propz.className + '-tab-title ' }
@@ -241,7 +246,7 @@ registerBlockType( 'ub/tabbed-content', {
 
 		return [
 			isSelected && (
-				<Inspector { ...{ attributes, onThemeChange } } key="inspector" />
+				<Inspector { ...{ attributes, onThemeChange, onTitleColorChange } } key="inspector" />
 			),
 			<div className={ className } key="tabber">
 				<div className={ className + '-holder' }>
@@ -273,7 +278,7 @@ registerBlockType( 'ub/tabbed-content', {
 	save: function( props ) {
 		const className = 'wp-block-ub-tabbed-content';
 
-		const { activeTab, theme } = props.attributes;
+		const { activeTab, theme, titleColor } = props.attributes;
 
 		return <div data-id={ props.attributes.id }>
 			<div className={ className + '-holder' }>
@@ -282,7 +287,7 @@ registerBlockType( 'ub/tabbed-content', {
 						props.attributes.tabsTitle.map( ( value, i ) => {
 							return <div
 								className={ className + '-tab-title-wrap' + ( activeTab === i ? ' active' : '' ) }
-								style={ { backgroundColor: activeTab === i ? theme : 'initial', borderColor: activeTab === i ? theme : 'lightgrey' } }
+								style={ { backgroundColor: activeTab === i ? theme : 'initial', borderColor: activeTab === i ? theme : 'lightgrey', color: activeTab === i ? titleColor: '#000000' } }
 								key={ i }>
 								<div className={ className + '-tab-title' }>
 									{ value.content }
