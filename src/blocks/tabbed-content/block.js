@@ -15,6 +15,7 @@ import {
 	arrayMove,
 } from 'react-sortable-hoc';
 import Inspector from './components/inspector';
+import icon from './icons/icon';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const {
@@ -43,11 +44,11 @@ const {
  */
 registerBlockType( 'ub/tabbed-content', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Tabber' ), // Block title.
-	icon: 'schedule', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
+	title: __( 'Tabbed Content' ), // Block title.
+	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'layout', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'Tabber' ),
+		__( 'Tabbed Content' ),
 		__( 'Tabs' ),
 		__( 'Ultimate Blocks' ),
 	],
