@@ -87,7 +87,7 @@
             active: true
 		},
 		{
-            label: 'Tabber',
+            label: 'Tabbed Content',
             name: 'ub/tabbed-content',
             active: true
         }

@@ -87,7 +87,7 @@ class Ultimate_Blocks_Util {
 				'active' => true,
 			),
 			array(
-				'label'  => 'Tabber',
+				'label'  => 'Tabbed Content',
 				'name'   => 'ub/tabbed-content',
 				'active' => true,
 			),
