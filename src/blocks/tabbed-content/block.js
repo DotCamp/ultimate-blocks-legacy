@@ -152,7 +152,7 @@ registerBlockType( 'ub/tabbed-content', {
 			attributes.tabsTitle[ i ] = { content: 'Tab Title' };
 			setAttributes( { tabsTitle: attributes.tabsTitle } );
 
-			attributes.tabsContent[ i ] = { content: 'Enter the Tab Content here.' };
+			attributes.tabsContent[ i ] = { content: '' };
 			setAttributes( { tabsContent: attributes.tabsContent } );
 
 			setAttributes( { activeTab: i } );
@@ -213,6 +213,7 @@ registerBlockType( 'ub/tabbed-content', {
 							isSelected={ propz.attributes.activeControl === 'tab-title-' + i && propz.isSelected }
 							onClick={ () => toggleTitle( 'tab-title', i ) }
 							onChange={ ( content ) => onChangeTitle( content, i ) }
+							placeholder="Tab Title"
 						/>
 						<div class="tab-actions">
 							<DragHandle />
@@ -259,6 +260,7 @@ registerBlockType( 'ub/tabbed-content', {
 										isSelected={ attributes.activeControl === 'tab-content-' + i && isSelected }
 										onClick={ () => showControls( 'tab-content', i ) }
 										onChange={ ( content ) => onChangeTabContent( content, i ) }
+										placeholder="Enter the Tab Content here..."
 									/>
 								</div>;
 							} )
