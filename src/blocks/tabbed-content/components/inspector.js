@@ -16,13 +16,24 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelColor
-					title={ __('Color Scheme' ) }
+					title={ __('Active Tab Color' ) }
 					colorValue={ this.props.attributes.theme }
-					initialOpen={ false }
+					initialOpen={ true }
 				>
 					<ColorPalette
 						value={ this.props.attributes.theme }
 						onChange={ this.props.onThemeChange }
+						allowReset
+					/>
+				</PanelColor>
+				<PanelColor
+					title={ __('Active Tab Title Color' ) }
+					colorValue={ this.props.attributes.titleColor }
+					initialOpen={ true }
+				>
+					<ColorPalette
+						value={ this.props.attributes.titleColor }
+						onChange={ this.props.onTitleColorChange }
 						allowReset
 					/>
 				</PanelColor>

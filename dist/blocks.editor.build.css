@@ -417,7 +417,7 @@
   border: 1px solid lightgrey;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  padding: 10px;
+  padding: 15px;
   border-bottom: 0;
   margin-right: 5px;
   display: -ms-flexbox;
@@ -460,4 +460,4 @@
 
 .wp-block-ub-tabbed-content-tabs-content {
   border: 1px solid lightgrey;
-  padding: 10px; }
+  padding: 20px; }
