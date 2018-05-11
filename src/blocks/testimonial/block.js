@@ -53,20 +53,17 @@ registerBlockType( 'ub/testimonial-block', {
         ub_testimonial_text: {
             type: 'array',
             source: 'children',
-            selector: '.ub_testimonial_text',
-            default: 'This is the testimonial body. Replace this with the testimonial text you want to add here.'
+            selector: '.ub_testimonial_text'
         },
         ub_testimonial_author: {
             type: 'array',
             source: 'children',
-            selector: '.ub_testimonial_author',
-            default: 'John Doe'
+            selector: '.ub_testimonial_author'
         },
         ub_testimonial_author_role: {
             type: 'array',
             source: 'children',
-            selector: '.ub_testimonial_author_role',
-            default: 'Founder, Company X'
+            selector: '.ub_testimonial_author_role'
         },
         imgURL: {
             type: 'string',
@@ -235,6 +232,7 @@ registerBlockType( 'ub/testimonial-block', {
                         <div className="ub_testimonial_content">
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'This is the testimonial body. Add the testimonial text you want to add here.' ) }
                                 className="ub_testimonial_text"
                                 style={{
                                     fontSize: props.attributes.textSize
@@ -249,6 +247,7 @@ registerBlockType( 'ub/testimonial-block', {
                         <div className="ub_testimonial_sign">
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'John Doe' ) }
                                 className="ub_testimonial_author"
                                 onChange={ onChangeTestimonialAuthor }
                                 value={ props.attributes.ub_testimonial_author }
@@ -258,6 +257,7 @@ registerBlockType( 'ub/testimonial-block', {
                             />
                             <RichText
                                 tagName="i"
+                                placeholder={ __( 'Founder, Company X' ) }
                                 className="ub_testimonial_author_role"
                                 onChange={ onChangeTestimonialAuthorRole }
                                 value={ props.attributes.ub_testimonial_author_role }

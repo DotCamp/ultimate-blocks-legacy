@@ -20,4 +20,3 @@ import './blocks/click-to-tweet/block';
 import './blocks/social-share/block';
 import './blocks/content-toggle/block';
 import './blocks/button/block';
-import './blocks/tabbed-content/block';

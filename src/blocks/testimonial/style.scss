@@ -4,52 +4,51 @@
  * CSS for both Frontend+Backend.
  */
 
-.wp-block-ub-testimonial-block  {
-  margin: 30px auto;
-  max-width: 740px;
+.wp-block-ub-testimonial-block {
+    margin: 30px auto;
+    max-width: 740px;
 }
 
 .ub_testimonial {
-  max-width: 100%;
-  padding: 30px;
-  display: inline-block;
+    max-width: 100%;
+    padding: 30px;
+    display: inline-block;
 }
 
 .ub_testimonial_img {
-  max-width: 25%;
-  padding: 10px 10px;
-  float: left;
+    max-width: 25%;
+    padding: 10px 10px;
+    float: left;
 }
 
 .ub_testimonial_img img {
-  margin: 0 auto;
-  padding: 0;
-  border-radius: 50%;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 50%;
 }
 
 .ub_testimonial_content {
-  max-width: 75%;
-  padding: 11px 20px;
-  float: left;
+    max-width: 72%;
+    padding: 11px 20px;
+    float: left;
 }
 
 .ub_testimonial_content p {
-  font-style: italic;
-  text-align: justify;
+    font-style: italic;
+    text-align: justify;
 }
 
 .ub_testimonial_sign {
-  text-align:right;
-  float:right;
-  padding-right: 10px;
-  padding-bottom: 10px;
+    text-align: right;
+    float: right;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }
 
 .ub_testimonial_sign p {
-  margin-bottom: 2px !important;
+    margin-bottom: 2px !important;
 }
 
 .ub_testimonial_sign i {
-  font-size: 13px;
+    font-size: 13px;
 }
-

@@ -5,24 +5,30 @@
  * which makes it higher in priority.
  */
 
-.wp-block-ub-call-to-action  {
-  margin: 0 auto;
-  max-width: 740px;
+.wp-block-ub-call-to-action {
+    margin: 0 auto;
+    max-width: 740px;
 }
 
 .ub_call_to_action_headline p {
-  padding-bottom: 15px !important;
+    text-align: center;
+    padding: 20px 20px 0 20px;
+}
+
+.ub_call_to_action_content {
+    width: 100%;
+    padding: 0 0 40px 0;
 }
 
 .ub_call_to_action_url_input {
-  display: flex;
-  align-items: center;
-  margin-top: -20px;
+    display: flex;
+    align-items: center;
+    margin-top: -20px;
 }
 
 .ub_cta_url_input_box {
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    box-sizing: border-box;
 }

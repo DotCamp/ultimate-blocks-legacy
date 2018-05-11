@@ -62,56 +62,47 @@ registerBlockType('ub/number-box', {
         columnOneNumber: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_one_number',
-            default: '1'
+            selector: '.ub_number_one_number'
         },
         columnTwoNumber: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_two_number',
-            default: '2'
+            selector: '.ub_number_two_number'
         },
         columnThreeNumber: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_three_number',
-            default: '3'
+            selector: '.ub_number_three_number'
         },
         columnOneTitle: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_one_title',
-            default: 'Title One'
+            selector: '.ub_number_one_title'
         },
         columnTwoTitle: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_two_title',
-            default: 'Title Two'
+            selector: '.ub_number_two_title'
         },
         columnThreeTitle: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_three_title',
-            default: 'Title Three'
+            selector: '.ub_number_three_title'
         },
         columnOneBody: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_one_body',
-            default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+            selector: '.ub_number_one_body'
         },
         columnTwoBody: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_two_body',
-            default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+            selector: '.ub_number_two_body'
         },
         columnThreeBody: {
             type: 'array',
             source: 'children',
-            selector: '.ub_number_three_body',
-            default: 'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+            selector: '.ub_number_three_body'
         },
         numberBackground: {
             type: 'string',
@@ -135,7 +126,7 @@ registerBlockType('ub/number-box', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: withState({editable: 'content',})(function (props) {
+    edit: withState( { editable: 'content' } ) ( function ( props ) {
 
             const {
                 isSelected,
@@ -160,13 +151,13 @@ registerBlockType('ub/number-box', {
             } = props.attributes;
 
             const columns = [
-                {value: '1', label: __('One Column')},
-                {value: '2', label: __('Two Column')},
-                {value: '3', label: __('Three Column')},
+                { value: '1', label: __( 'One Column' ) },
+                { value: '2', label: __( 'Two Column' ) },
+                { value: '3', label: __( 'Three Column' ) },
             ];
 
-            const onSetActiveEditable = (newEditable) => () => {
-                setState({editable: newEditable})
+            const onSetActiveEditable = ( newEditable ) => () => {
+                setState( { editable: newEditable } )
             };
 
             return [
@@ -245,6 +236,7 @@ registerBlockType('ub/number-box', {
                             >
                                 <RichText
                                     tagName="p"
+                                    placeholder={ __( '1' ) }
                                     className="ub_number_one_number"
                                     style={{
                                         color: numberColor
@@ -258,6 +250,7 @@ registerBlockType('ub/number-box', {
                             </div>
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Title One' ) }
                                 className="ub_number_one_title"
                                 value={columnOneTitle}
                                 onChange={(value) => props.setAttributes({columnOneTitle: value})}
@@ -267,6 +260,7 @@ registerBlockType('ub/number-box', {
                             />
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Your content goes here.' ) }
                                 className="ub_number_one_body"
                                 value={columnOneBody}
                                 onChange={(value) => props.setAttributes({columnOneBody: value})}
@@ -289,6 +283,7 @@ registerBlockType('ub/number-box', {
                             >
                                 <RichText
                                     tagName="p"
+                                    placeholder={ __( '2' ) }
                                     className="ub_number_two_number"
                                     style={{
                                         color: numberColor
@@ -302,6 +297,7 @@ registerBlockType('ub/number-box', {
                             </div>
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Title Two' ) }
                                 className="ub_number_two_title"
                                 value={columnTwoTitle}
                                 onChange={(value) => props.setAttributes({columnTwoTitle: value})}
@@ -311,6 +307,7 @@ registerBlockType('ub/number-box', {
                             />
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Your content goes here.' ) }
                                 className="ub_number_two_body"
                                 value={columnTwoBody}
                                 onChange={(value) => props.setAttributes({columnTwoBody: value})}
@@ -333,6 +330,7 @@ registerBlockType('ub/number-box', {
                             >
                                 <RichText
                                     tagName="p"
+                                    placeholder={ __( '3' ) }
                                     className="ub_number_three_number"
                                     style={{
                                         color: numberColor
@@ -346,6 +344,7 @@ registerBlockType('ub/number-box', {
                             </div>
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Title Three' ) }
                                 className="ub_number_three_title"
                                 value={columnThreeTitle}
                                 onChange={(value) => props.setAttributes({columnThreeTitle: value})}
@@ -355,6 +354,7 @@ registerBlockType('ub/number-box', {
                             />
                             <RichText
                                 tagName="p"
+                                placeholder={ __( 'Your content goes here.' ) }
                                 className="ub_number_three_body"
                                 value={columnThreeBody}
                                 onChange={(value) => props.setAttributes({columnThreeBody: value})}
