@@ -77,16 +77,11 @@
             active: true
         },
         {
-            label: 'Spacer',
-            name: 'ub/spacer',
-            active: true
-        },
-        {
             label: 'Testimonial',
             name: 'ub/testimonial-block',
             active: true
-		},
-		{
+        },
+        {
             label: 'Tabbed Content',
             name: 'ub/tabbed-content',
             active: true

@@ -77,11 +77,6 @@ class Ultimate_Blocks_Util {
 				'active' => true,
 			),
 			array(
-				'label'  => 'Spacer',
-				'name'   => 'ub/spacer',
-				'active' => true,
-			),
-			array(
 				'label'  => 'Testimonial',
 				'name'   => 'ub/testimonial-block',
 				'active' => true,

@@ -32,8 +32,7 @@ Currently, we have 8 blocks. More in the making.
   - Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
 * Testimonial Block
   - Nice, simple testimonial box with option to add image, name, role of the testimonial author.
-* Spacer Block
-  - Add more space between your blocks with this insanely easy to use block.
+
 
 We are continuously working on new blocks. If you have any block ideas, let us know. We are on [Twitter](https://twitter.com/Ultimate_Blocks).
 
