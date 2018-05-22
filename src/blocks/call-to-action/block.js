@@ -6,16 +6,16 @@ import './style.scss';
 import './editor.scss';
 import icon from './icons/icon';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
+const { __ } = wp.i18n;
 const { Component } = wp.element;
+const { registerBlockType } = wp.blocks;
 const {
-    registerBlockType,
     RichText,
     ColorPalette,
     InspectorControls,
     UrlInput,
     BlockControls
-} = wp.blocks;
+} = wp.editor;
 
 const {
     PanelColor,
@@ -41,10 +41,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/call-to-action', {
-    // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-    title: __( 'Call to Action' ), // Block title.
-    icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-    category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+    title: __( 'Call to Action' ),
+    icon: icon,
+    category: 'formatting',
     keywords: [
         __( 'call to action' ),
         __( 'conversion' ),
@@ -352,7 +352,7 @@ registerBlockType( 'ub/call-to-action', {
                                 <form
                                     key={ 'form-link' }
                                     onSubmit={ ( event ) => event.preventDefault() }
-                                    className={ `blocks-button__inline-link ub_cta_url_input_box`}>
+                                    className={ `core-blocks-button__inline-link ub_cta_url_input_box`}>
                                     <Dashicon icon={ 'admin-links' } />
                                     <UrlInput
                                         value={ props.attributes.url }

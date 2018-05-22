@@ -14,16 +14,17 @@ import './style.scss';
 import './editor.scss';
 import icons from "../testimonial/icons";
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
+
 const {
-    registerBlockType,
     InspectorControls,
     AlignmentToolbar,
     ColorPalette,
     BlockControls,
     RichText,
     MediaUpload
-} = wp.blocks; // Import registerBlockType() from wp.blocks
+} = wp.editor;
 
 const {
     PanelBody,
@@ -49,10 +50,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/feature-box', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Feature Box' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+	title: __( 'Feature Box' ),
+	icon: icon,
+	category: 'formatting',
 	keywords: [
 		__( 'Feature Box' ),
 		__( 'Column' ),

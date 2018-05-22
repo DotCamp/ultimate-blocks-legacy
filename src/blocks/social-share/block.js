@@ -32,11 +32,12 @@ const iconSizes = {
 };
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
+const { registerBlockType } = wp.blocks;
+
 const {
-	registerBlockType,
 	BlockControls,
 	AlignmentToolbar,
-} = wp.blocks; // Import registerBlockType() from wp.blocks
+} = wp.editor;
 
 /**
  * Register: aa Gutenberg Block.
@@ -52,10 +53,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/social-share', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Social Share' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'widgets', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+	title: __( 'Social Share' ),
+	icon: icon,
+	category: 'widgets',
 	keywords: [
 		__( 'social' ),
 		__( 'share' ),

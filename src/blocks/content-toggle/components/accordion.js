@@ -3,7 +3,7 @@
  */
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { RichText } = wp.blocks;
+const { RichText } = wp.editor;
 
 /**
  * Create an Inspector Controls wrapper Component

@@ -12,13 +12,14 @@ import icon from './icons/icon';
 import './style.scss';
 import './editor.scss';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
+
 const {
-    registerBlockType,
     InspectorControls,
     AlignmentToolbar,
     ColorPalette,
-} = wp.blocks; // Import registerBlockType() from wp.blocks
+} = wp.editor;
 
 const {
     PanelBody,
@@ -40,10 +41,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/divider', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Divider' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'layout', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+	title: __( 'Divider' ),
+	icon: icon,
+	category: 'layout',
 	keywords: [
 		__( 'Divider' ),
 		__( 'Separator' ),

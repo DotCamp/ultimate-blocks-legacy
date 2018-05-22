@@ -12,17 +12,16 @@ import icon from './icons/icons';
 import './style.scss';
 import './editor.scss';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const {
-    registerBlockType,
+const { __ } = wp.i18n; 
+const { registerBlockType } = wp.blocks; 
+const { 
     InspectorControls,
     BlockControls,
     ColorPalette,
     UrlInput,
     RichText,
-    BlockAlignmentToolbar
-} = wp.blocks; // Import registerBlockType() from wp.blocks
-
+    BlockAlignmentToolbar 
+} = wp.editor;
 const {
     PanelBody,
     PanelColor,
@@ -49,10 +48,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/button-block', {
-    // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-    title: __( 'Button (Improved)' ), // Block title.
-    icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-    category: 'layout', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+    title: __( 'Button (Improved)' ),
+    icon: icon, 
+    category: 'layout',
     keywords: [
         __( 'Button' ),
         __( 'Buttons' ),
@@ -239,7 +238,7 @@ registerBlockType( 'ub/button-block', {
                                 <form
                                     key={ 'form-link' }
                                     onSubmit={ ( event ) => event.preventDefault() }
-                                    className={ `blocks-button__inline-link ub_button_input_box`}>
+                                    className={ `core-blocks-button__inline-link ub_button_input_box`}>
                                     <Dashicon icon={ 'admin-links' } />
                                     <UrlInput
                                         value={ url }

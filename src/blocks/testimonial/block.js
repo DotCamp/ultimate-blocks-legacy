@@ -9,14 +9,15 @@ import './editor.scss';
 import Inspector from "../social-share/inspector";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
+const { registerBlockType } = wp.blocks;
+
 const {
-    registerBlockType,
     RichText,
     BlockControls,
     MediaUpload,
     InspectorControls,
     ColorPalette
-} = wp.blocks;
+} = wp.editor;
 
 const {
     Button,
@@ -40,10 +41,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/testimonial-block', {
-    // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-    title: __( 'Testimonial' ), // Block title.
-    icon: icons.testimonial, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-    category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+    title: __( 'Testimonial' ),
+    icon: icons.testimonial,
+    category: 'formatting',
     keywords: [
         __( 'testimonial' ),
         __( 'quotes' ),

@@ -17,17 +17,12 @@ import {
 import Inspector from './components/inspector';
 import icon from './icons/icon';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const {
-	registerBlockType,
-	RichText,
-} = wp.blocks; // Import registerBlockType() from wp.blocks
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
 
 const {
-} = wp.components;
-
-// let SortableItem = null;
-// let SortableList = null;
+	RichText
+} = wp.editor;
 
 /**
  * Register: aa Gutenberg Block.
@@ -43,10 +38,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/tabbed-content', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Tabbed Content' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'layout', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+	title: __( 'Tabbed Content' ),
+	icon: icon,
+	category: 'layout',
 	keywords: [
 		__( 'Tabbed Content' ),
 		__( 'Tabs' ),

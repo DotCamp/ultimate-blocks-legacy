@@ -18,14 +18,15 @@ import classnames from 'classnames';
 import './style.scss';
 import './editor.scss';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
+
 const {
-	registerBlockType,
-	RichText,
+    RichText,
 	AlignmentToolbar,
 	BlockControls,
 	BlockAlignmentToolbar,
-} = wp.blocks;
+} = wp.editor;
 
 const {
 	Toolbar,
@@ -48,10 +49,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/notification-box', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Notification Box' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+	title: __( 'Notification Box' ),
+	icon: icon,
+	category: 'formatting',
 	keywords: [
 		__( 'notification' ),
 		__( 'warning info' ),

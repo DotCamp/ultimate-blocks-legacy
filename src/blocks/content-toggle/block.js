@@ -14,11 +14,8 @@ import './editor.scss';
 import Accordion from './components/accordion';
 import Inspector from './components/inspector';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-
-const {
-} = wp.components;
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
 
 /**
  * Register: aa Gutenberg Block.
@@ -34,10 +31,10 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/content-toggle', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Content Toggle' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+	title: __( 'Content Toggle' ),
+	icon: icon,
+	category: 'formatting',
 	keywords: [
 		__( 'Content Accordion' ),
 		__( 'Toggle Collapse' ),

@@ -13,14 +13,14 @@ import TextareaAutosize from 'react-autosize-textarea';
 import './style.scss';
 import './editor.scss';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
 const {
-    registerBlockType,
-    RichText,
+	RichText,
     AlignmentToolbar,
     ColorPalette,
     InspectorControls
-} = wp.blocks; // Import registerBlockType() from wp.blocks
+} = wp.editor;
 
 const {
     PanelBody,
@@ -46,10 +46,10 @@ const { Component } = wp.element;
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'ub/click-to-tweet', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Click to Tweet' ), // Block title.
-	icon: icon, // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'formatting', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+	title: __( 'Click to Tweet' ),
+	icon: icon,
+	category: 'formatting',
 	keywords: [
 		__( 'Click to tweet' ),
 		__( 'Twitter' ),
