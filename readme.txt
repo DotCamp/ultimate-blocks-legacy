@@ -3,7 +3,7 @@ Contributors: imtiazrayhan, freemius
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 4.9
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,26 +12,58 @@ Add awesome custom Blocks in Gutenberg Editor.
 
 == Description ==
 
-Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of custom blocks for Gutenberg Editor.
+Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of custom blocks for Gutenberg Editor that makes it easier for you to create content with Gutenberg.
 
 **Warning: You must have [Gutenberg](https://wordpress.org/plugins/gutenberg/) installed to use this plugin.**
 
-Currently, we have 8 blocks. More in the making.
+Currently, we have 11 blocks. More in the making.
 
-* Call to Action Block
-  - Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
-* Click to Tweet
-  - Add tweetable content in your posts/pages.
-* Divider Block
-  - Add custom divider between your blocks. Customize the color, size, everything.
-* Feature Box Block
-  - Add boxes with images. Highlight the features of any product or service. 3 columns options.
-* Notification Box Block
-  - Highlight important information in your posts/pages. Comes in three different designs.
-* Number Box Block
-  - Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
-* Testimonial Block
-  - Nice, simple testimonial box with option to add image, name, role of the testimonial author.
+These are the blocks we have right now:
+
+1. Button (Improved)
+2. Call to Action
+3. Click to Tweet
+4. Content Toggle
+5. Divider
+6. Feature Box
+7. Notification Box
+8. Number Box
+9. Social Share
+10. Tabbed Content
+11. Testimonial
+
+** 1. Button **
+Button block with more customization options and controls.
+
+** 2. Call to Action Block **
+Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
+
+** 3. Click to Tweet **
+Add tweetable content in your posts/pages.
+
+** 4. Content Toggle **
+Add contents in accordions. Let visitors expand them and show the content.
+
+** 5. Divider Block **
+Add custom divider between your blocks. Customize the color, size, everything.
+
+** 6. Feature Box Block **
+Add boxes with images. Highlight the features of any product or service. 3 columns options.
+
+** 7. Notification Box Block **
+Highlight important information in your posts/pages. Comes in three different designs.
+
+** 8. Number Box Block **
+Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
+
+** 9. Social Share Block **
+Add social share buttons in your posts and pages with this blocks. It comes with lots of customization options too.
+
+** 10. Tabbed Content **
+Add content in tabs in your posts/pages. This comes with a nice drag and drop feature to sort the tabs.
+
+** 11. Testimonial Block **
+Nice, simple testimonial box with option to add image, name, role of the testimonial author.
 
 
 We are continuously working on new blocks. If you have any block ideas, let us know. We are on [Twitter](https://twitter.com/Ultimate_Blocks).
@@ -60,6 +92,18 @@ That's it. You're done!
 3. Adding Notification Block
 
 == Changelog ==
+
+= 1.0.3 = 
+
+Release Date: May 22nd, 2018
+
+* Add - Admin Panel to Enable/Disable Ultimate blocks.
+* Add - Button (Improved) Block
+* Add - Content Toggle Block
+* Add - Social Share Block
+* Add - Tabbed Content Block
+* Remove - Space block, since it's in Gutenberg now
+* Fix - Compatibility with Gutenberg 2.9+
 
 = 1.0.2 =
 
