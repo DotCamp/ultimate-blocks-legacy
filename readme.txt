@@ -1,5 +1,5 @@
 === Ultimate Blocks ===
-Contributors: imtiazrayhan, freemius
+Contributors: imtiazrayhan, aqibrashid, freemius
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 4.9
@@ -32,37 +32,37 @@ These are the blocks we have right now:
 10. Tabbed Content
 11. Testimonial
 
-** 1. Button **
+**1. Button**
 Button block with more customization options and controls.
 
-** 2. Call to Action Block **
+**2. Call to Action Block**
 Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
 
-** 3. Click to Tweet **
+**3. Click to Tweet**
 Add tweetable content in your posts/pages.
 
-** 4. Content Toggle **
+**4. Content Toggle**
 Add contents in accordions. Let visitors expand them and show the content.
 
-** 5. Divider Block **
+**5. Divider Block**
 Add custom divider between your blocks. Customize the color, size, everything.
 
-** 6. Feature Box Block **
+**6. Feature Box Block**
 Add boxes with images. Highlight the features of any product or service. 3 columns options.
 
-** 7. Notification Box Block **
+**7. Notification Box Block**
 Highlight important information in your posts/pages. Comes in three different designs.
 
-** 8. Number Box Block **
+**8. Number Box Block**
 Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
 
-** 9. Social Share Block **
+**9. Social Share Block**
 Add social share buttons in your posts and pages with this blocks. It comes with lots of customization options too.
 
-** 10. Tabbed Content **
+**10. Tabbed Content**
 Add content in tabs in your posts/pages. This comes with a nice drag and drop feature to sort the tabs.
 
-** 11. Testimonial Block **
+**11. Testimonial Block**
 Nice, simple testimonial box with option to add image, name, role of the testimonial author.
 
 
