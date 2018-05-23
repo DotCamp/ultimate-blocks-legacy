@@ -32,7 +32,7 @@
             <div class="right">
                 <a href="http://ultimateblocks.io/"
                         class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-grey" target="_blank" rel="noopener noreferrer">
-                        <?php esc_html_e( 'Read the Documentation', 'ultimate-blocks-coupon' ); ?>
+                        <?php esc_html_e( 'Learn More', 'ultimate-blocks-coupon' ); ?>
                 </a>
             </div>
         </div>

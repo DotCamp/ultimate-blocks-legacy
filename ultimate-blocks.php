@@ -65,7 +65,7 @@ function ub_fs() {
 			'has_addons'     => false,
 			'has_paid_plans' => false,
 			'menu'           => array(
-				'first-path' => 'plugins.php',
+				'first-path' => 'admin.php?page=ultimate-blocks-help',
 				'account'    => false,
 				'contact'    => false,
 			),
