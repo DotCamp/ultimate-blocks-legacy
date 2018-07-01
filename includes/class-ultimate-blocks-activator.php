@@ -30,6 +30,7 @@ class Ultimate_Blocks_Activator {
 	 * @since    1.0.2
 	 */
 	public static function activate() {
+
 		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-util.php';
 
 		$blocks = get_option( 'ultimate_blocks', false );
@@ -37,6 +38,7 @@ class Ultimate_Blocks_Activator {
 		if ( ! $blocks ) {
 			update_option( 'ultimate_blocks', Ultimate_Blocks_Util::blocks() );
 		}
+
 	}
 
 }

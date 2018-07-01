@@ -149,6 +149,7 @@ class Ultimate_Blocks {
 
 		// Ajax hooks.
 		$this->loader->add_action( 'wp_ajax_toggle_block_status', $plugin_admin, 'toggle_block_status' );
+
 		// Insert blocks setting.
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'insert_blocks_settings' );
 

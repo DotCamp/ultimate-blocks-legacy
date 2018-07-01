@@ -207,6 +207,15 @@ class Ultimate_Blocks_Admin {
 	 * @return void
 	 */
 	public function on_admin_init() {
+		if ( ! in_array( 'gutenberg/gutenberg.php', get_option( 'active_plugins' ), true ) ) {
+
+			deactivate_plugins( plugin_basename( ULTIMATE_BLOCKS_PATH ) . '/ultimate-blocks.php' );
+
+			wp_die( 'You must install <strong>Gutenberg Plugin</strong> to activate <strong>Ultimate Blocks Plugin</strong> plugins. If you have gutenberg plugin already installed please check if it\'s  activated. We are redirecting in <span id="seconds">5</span> seconds... <script> setTimeout(function() { window.location.href = "/wp-admin/plugins.php"; document.getElementById("seconds").text = "a"}, 5000);</script>' );
+
+			return;
+		}
+
 		$this->register_new_blocks();
 	}
 

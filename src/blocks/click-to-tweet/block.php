@@ -61,9 +61,11 @@ function render_block( $attributes ) {
  * Registering dynamic block.
  */
 function register_block() {
-	register_block_type( 'ub/click-to-tweet', array(
-		'render_callback' => 'render_block',
-	) );
+	if ( function_exists( 'register_block_type' ) ) {
+		register_block_type( 'ub/click-to-tweet', array(
+			'render_callback' => 'render_block',
+		) );
+	}
 }
 
 add_action('init', 'register_block');

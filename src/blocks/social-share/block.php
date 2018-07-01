@@ -327,115 +327,117 @@ function get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
  * @return void
  */
 function ub_register_block() {
-	register_block_type( 'ub/social-share', array(
-		'attributes'      => array(
-			// Facebook.
-			'facebookIconBgColor'     => array(
-				'type'    => 'string',
-				'default' => '#365899',
+	if( function_exists( 'register_block_type' ) ) {
+		register_block_type( 'ub/social-share', array(
+			'attributes'      => array(
+				// Facebook.
+				'facebookIconBgColor'     => array(
+					'type'    => 'string',
+					'default' => '#365899',
+				),
+				'facebookIconTextColor'   => array(
+					'type'    => 'string',
+					'default' => '#ffffff',
+				),
+				'showFacebookIcon'        => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				// Twitter.
+				'twitterIconBgColor'      => array(
+					'type'    => 'string',
+					'default' => '#1da1f2',
+				),
+				'twitterIconTextColor'    => array(
+					'type'    => 'string',
+					'default' => '#ffffff',
+				),
+				'showTwitterIcon'         => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				// Linked In.
+				'linkedInIconBgColor'     => array(
+					'type'    => 'string',
+					'default' => '#0073b1',
+				),
+				'linkedInIconTextColor'   => array(
+					'type'    => 'string',
+					'default' => '#ffffff',
+				),
+				'showLinkedInIcon'        => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				// Pinterest.
+				'pinterestIconBgColor'    => array(
+					'type'    => 'string',
+					'default' => '#bd081c',
+				),
+				'pinterestIconTextColor'  => array(
+					'type'    => 'string',
+					'default' => '#ffffff',
+				),
+				'showPinterestIcon'       => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				// Reddit.
+				'redditIconBgColor'       => array(
+					'type'    => 'string',
+					'default' => '#cee3f8',
+				),
+				'redditIconTextColor'     => array(
+					'type'    => 'string',
+					'default' => '#ffffff',
+				),
+				'showRedditIcon'          => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				// Google Plus.
+				'googlePlusIconBgColor'   => array(
+					'type'    => 'string',
+					'default' => '#db4437',
+				),
+				'googlePlusIconTextColor' => array(
+					'type'    => 'string',
+					'default' => '#ffffff',
+				),
+				'showGooglePlusIcon'      => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				// Tumblr.
+				'tumblrIconBgColor'       => array(
+					'type'    => 'string',
+					'default' => '#36465d',
+				),
+				'tumblrIconTextColor'     => array(
+					'type'    => 'string',
+					'default' => '#ffffff',
+				),
+				'showTumblrIcon'          => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				// Common.
+				'iconSize'                => array(
+					'type'    => 'string',
+					'default' => 'normal',
+				),
+				'iconShape'               => array(
+					'type'    => 'string',
+					'default' => 'circle',
+				),
+				'align'                   => array(
+					'type'    => 'string',
+					'default' => 'left',
+				),
 			),
-			'facebookIconTextColor'   => array(
-				'type'    => 'string',
-				'default' => '#ffffff',
-			),
-			'showFacebookIcon'        => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			// Twitter.
-			'twitterIconBgColor'      => array(
-				'type'    => 'string',
-				'default' => '#1da1f2',
-			),
-			'twitterIconTextColor'    => array(
-				'type'    => 'string',
-				'default' => '#ffffff',
-			),
-			'showTwitterIcon'         => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			// Linked In.
-			'linkedInIconBgColor'     => array(
-				'type'    => 'string',
-				'default' => '#0073b1',
-			),
-			'linkedInIconTextColor'   => array(
-				'type'    => 'string',
-				'default' => '#ffffff',
-			),
-			'showLinkedInIcon'        => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			// Pinterest.
-			'pinterestIconBgColor'    => array(
-				'type'    => 'string',
-				'default' => '#bd081c',
-			),
-			'pinterestIconTextColor'  => array(
-				'type'    => 'string',
-				'default' => '#ffffff',
-			),
-			'showPinterestIcon'       => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			// Reddit.
-			'redditIconBgColor'       => array(
-				'type'    => 'string',
-				'default' => '#cee3f8',
-			),
-			'redditIconTextColor'     => array(
-				'type'    => 'string',
-				'default' => '#ffffff',
-			),
-			'showRedditIcon'          => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			// Google Plus.
-			'googlePlusIconBgColor'   => array(
-				'type'    => 'string',
-				'default' => '#db4437',
-			),
-			'googlePlusIconTextColor' => array(
-				'type'    => 'string',
-				'default' => '#ffffff',
-			),
-			'showGooglePlusIcon'      => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			// Tumblr.
-			'tumblrIconBgColor'       => array(
-				'type'    => 'string',
-				'default' => '#36465d',
-			),
-			'tumblrIconTextColor'     => array(
-				'type'    => 'string',
-				'default' => '#ffffff',
-			),
-			'showTumblrIcon'          => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			// Common.
-			'iconSize'                => array(
-				'type'    => 'string',
-				'default' => 'normal',
-			),
-			'iconShape'               => array(
-				'type'    => 'string',
-				'default' => 'circle',
-			),
-			'align'                   => array(
-				'type'    => 'string',
-				'default' => 'left',
-			),
-		),
-		'render_callback' => 'ub_render_block',
-	) );
+			'render_callback' => 'ub_render_block',
+		) );
+	}
 }
 
 
