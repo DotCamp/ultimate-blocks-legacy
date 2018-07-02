@@ -130,7 +130,7 @@ class Ultimate_Blocks_Admin {
 			'UltimateBlocks Settings',
 			'Ultimate Blocks',
 			'manage_options',
-			'ultimate-blocks',
+			'ultimate-blocks-settings',
 			array( $this, 'main_menu_template_cb' ),
 			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.png',
 			20
@@ -211,7 +211,7 @@ class Ultimate_Blocks_Admin {
 
 			deactivate_plugins( plugin_basename( ULTIMATE_BLOCKS_PATH ) . '/ultimate-blocks.php' );
 
-			wp_die( 'You must install <strong>Gutenberg Plugin</strong> to activate <strong>Ultimate Blocks Plugin</strong> plugins. If you have gutenberg plugin already installed please check if it\'s  activated. We are redirecting in <span id="seconds">5</span> seconds... <script> setTimeout(function() { window.location.href = "/wp-admin/plugins.php"; document.getElementById("seconds").text = "a"}, 5000);</script>' );
+			wp_die( 'You must have <strong>Gutenberg Plugin</strong> installed to activate/use <strong>Ultimate Blocks</strong> plugin. If you have Gutenberg already installed please check if it\'s  activated. We are redirecting in <span id="seconds">5</span> seconds... <script> setTimeout(function() { window.location.href = "/wp-admin/plugins.php"; document.getElementById("seconds").text = "a"}, 5000);</script>' );
 
 			return;
 		}

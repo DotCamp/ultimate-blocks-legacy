@@ -19,9 +19,9 @@
 		<div class="ub__header-container">
 			<img src="<?php echo esc_url( ULTIMATE_BLOCKS_URL . 'admin/images/banners/banner-772x250.png' ); ?>" alt="Ultimate Blocks" />
 			<div class="ub_collection_filter">
-				<span class="filter-action active" data-filter-status="all">All</span>
-				<span class="filter-action" data-filter-status="enabled">Enabled</span>
-				<span class="filter-action" data-filter-status="disabled">Disabled</span>
+				<span class="filter-action active" data-filter-status="all"><?php esc_html_e( 'All', 'ultimate-blocks' ); ?></span>
+				<span class="filter-action" data-filter-status="enabled"><?php esc_html_e( 'Enabled', 'ultimate-blocks' ); ?></span>
+				<span class="filter-action" data-filter-status="disabled"><?php esc_html_e( 'Disabled', 'ultimate-blocks' ); ?></span>
 			</div>
 		</div>
 	</div>
