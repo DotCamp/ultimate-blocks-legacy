@@ -23,9 +23,13 @@ const {
     Dashicon,
     IconButton,
     RangeControl,
-    withState,
     SelectControl
 } = wp.components;
+
+const {
+	withState,
+} = wp.compose;
+
 
 /**
  * Register: aa Gutenberg Block.
@@ -131,7 +135,7 @@ registerBlockType( 'ub/call-to-action', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: withState( { editable: 'content', } ) ( function( props ) {
+    edit: withState( { editable: 'content' } ) ( function( props ) {
 
             const {
                 isSelected,

@@ -29,8 +29,11 @@ const {
     RangeControl,
     PanelColor,
     SelectControl,
-    withState
 } = wp.components;
+
+const {
+	withState,
+} = wp.compose;
 
 /**
  * Register: aa Gutenberg Block.

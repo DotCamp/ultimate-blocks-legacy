@@ -33,8 +33,13 @@ const {
     Dashicon,
     SelectControl,
     Button,
-    withState
+    withAPIData
 } = wp.components;
+
+const {
+	withState,
+} = wp.compose;
+
 
 /**
  * Register: aa Gutenberg Block.
@@ -155,7 +160,7 @@ registerBlockType( 'ub/feature-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState( { editable: 'content', } ) ( function( props )
+	edit: withState( { editable: 'content' } ) ( function( props )
         {
             const {
                 isSelected,

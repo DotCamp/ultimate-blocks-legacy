@@ -24,8 +24,11 @@ const {
     PanelBody,
     PanelColor,
     RangeControl,
-    withState
 } = wp.components;
+
+const {
+	withState,
+} = wp.compose;
 
 /**
  * Register: aa Gutenberg Block.
@@ -103,7 +106,7 @@ registerBlockType( 'ub/testimonial-block', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: withState( { editable: 'content', } ) ( function( props )
+    edit: withState( { editable: 'content' } ) ( function( props )
         {
             const {
                 isSelected,

@@ -115,8 +115,8 @@ registerBlockType( 'ub/social-share', {
 		);
 
 		return [
-			!! props.focus && controls,
-			!! props.focus && (
+			props.isSelected && controls,
+			props.isSelected && (
 				<Inspector { ...{
 					onSizeChange,
 					onShapeChange,

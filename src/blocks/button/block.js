@@ -12,27 +12,30 @@ import icon from './icons/icons';
 import './style.scss';
 import './editor.scss';
 
-const { __ } = wp.i18n; 
-const { registerBlockType } = wp.blocks; 
-const { 
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
+const {
     InspectorControls,
     BlockControls,
     ColorPalette,
     UrlInput,
     RichText,
-    BlockAlignmentToolbar 
+    BlockAlignmentToolbar
 } = wp.editor;
 const {
     PanelBody,
     PanelColor,
     IconButton,
     Dashicon,
-    withState,
     Button,
     ButtonGroup,
     ToggleControl,
     FormToggle
 } = wp.components;
+
+const {
+	withState,
+} = wp.compose;
 
 /**
  * Register: aa Gutenberg Block.
@@ -50,7 +53,7 @@ const {
 registerBlockType( 'ub/button-block', {
 
     title: __( 'Button (Improved)' ),
-    icon: icon, 
+    icon: icon,
     category: 'layout',
     keywords: [
         __( 'Button' ),
@@ -98,8 +101,9 @@ registerBlockType( 'ub/button-block', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: withState( { editable: 'content', } ) ( function( props )
+    edit: withState( { editable: 'content' } )( function( props )
         {
+
             const {
                 isSelected,
                 editable,

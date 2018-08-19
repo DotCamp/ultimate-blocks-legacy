@@ -132,6 +132,7 @@ registerBlockType( 'ub/tabbed-content', {
 		};
 
 		const showControls = ( type, index ) => {
+			console.log('show controls')
 			setAttributes( { activeControl: type + '-' + index } );
 			setAttributes( { activeTab: index } );
 		};
@@ -205,14 +206,13 @@ registerBlockType( 'ub/tabbed-content', {
 				return (
 					<div
 						className={ propz.className + '-tab-title-wrap SortableItem' + ( propz.attributes.activeTab === i ? ' active' : '' ) }
-						style={ { backgroundColor: propz.attributes.activeTab === i ? propz.attributes.theme : 'initial', color: propz.attributes.activeTab === i ? propz.attributes.titleColor: '#000000' } }>
+						style={ { backgroundColor: propz.attributes.activeTab === i ? propz.attributes.theme : 'initial', color: propz.attributes.activeTab === i ? propz.attributes.titleColor: '#000000' } } onClick={ () => toggleTitle( 'tab-title', i ) }>
 						<RichText
 							tagName="div"
 							className={ propz.className + '-tab-title ' }
 							value={ value.content }
 							formattingControls={ [ 'bold', 'italic' ] }
 							isSelected={ propz.attributes.activeControl === 'tab-title-' + i && propz.isSelected }
-							onClick={ () => toggleTitle( 'tab-title', i ) }
 							onChange={ ( content ) => onChangeTitle( content, i ) }
 							placeholder="Tab Title"
 						/>
