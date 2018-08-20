@@ -43,43 +43,6 @@ define( 'ULTIMATE_BLOCKS_URL', Ultimate_Blocks_Constants::plugin_url() );
  */
 define( 'ULTIMATE_BLOCKS_TEXT_DOMAIN', Ultimate_Blocks_Constants::text_domain() );
 
-
-/**
- * Create a helper function for easy SDK access.
- *
- * @return Freemius
- */
-function ub_fs() {
-	global $ub_fs;
-
-	if ( ! isset( $ub_fs ) ) {
-		// Include Freemius SDK.
-		require_once dirname( __FILE__ ) . '/freemius/start.php';
-
-		$ub_fs = fs_dynamic_init( array(
-			'id'             => '1798',
-			'slug'           => 'ultimate-blocks',
-			'type'           => 'plugin',
-			'public_key'     => 'pk_bd3d3c8e255543256632fd4bb9842',
-			'is_premium'     => false,
-			'has_addons'     => false,
-			'has_paid_plans' => false,
-			'menu'           => array(
-				'first-path' => 'admin.php?page=ultimate-blocks-help',
-				'account'    => false,
-				'contact'    => false,
-			),
-		) );
-	}
-
-	return $ub_fs;
-}
-
-// Init Freemius.
-ub_fs();
-// Signal that SDK was initiated.
-do_action( 'ub_fs_loaded' );
-
 /**
  * Block Initializer.
  */
