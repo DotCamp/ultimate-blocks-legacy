@@ -31,6 +31,8 @@ class Ultimate_Blocks_Deactivator {
 	 */
 	public static function deactivate() {
 
+		delete_option( 'ultimate_blocks' );
+
 	}
 
 }

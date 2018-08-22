@@ -18,7 +18,7 @@ const {
     InspectorControls,
     BlockControls,
     ColorPalette,
-    UrlInput,
+    URLInput,
     RichText,
     BlockAlignmentToolbar
 } = wp.editor;
@@ -34,7 +34,7 @@ const {
 } = wp.components;
 
 const {
-	withState,
+    withState,
 } = wp.compose;
 
 /**
@@ -50,15 +50,15 @@ const {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'ub/button-block', {
+registerBlockType('ub/button-block', {
 
-    title: __( 'Button (Improved)' ),
+    title: __('Button (Improved)'),
     icon: icon,
     category: 'layout',
     keywords: [
-        __( 'Button' ),
-        __( 'Buttons' ),
-        __( 'Ultimate Blocks' ),
+        __('Button'),
+        __('Buttons'),
+        __('Ultimate Blocks'),
     ],
     attributes: {
         buttonText: {
@@ -101,165 +101,165 @@ registerBlockType( 'ub/button-block', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: withState( { editable: 'content' } )( function( props )
-        {
+    edit: withState({ editable: 'content' })(function (props) {
 
-            const {
-                isSelected,
-                editable,
-                setState
-            } = props;
+        const {
+            isSelected,
+            editable,
+            setState
+        } = props;
 
-            const onSetActiveEditable = ( newEditable ) => () => {
-                setState( { editable: newEditable } )
-            };
+        const onSetActiveEditable = (newEditable) => () => {
+            setState({ editable: newEditable })
+        };
 
-            const {
-                buttonText,
-                align,
-                url,
-                size,
-                buttonColor,
-                buttonTextColor,
-                buttonRounded
-            } = props.attributes;
+        const {
+            buttonText,
+            align,
+            url,
+            size,
+            buttonColor,
+            buttonTextColor,
+            buttonRounded
+        } = props.attributes;
 
-            const BUTTON_SIZES = {
-                small: 'small',
-                medium: 'medium',
-                large: 'large',
-                larger: 'larger'
-            };
+        const BUTTON_SIZES = {
+            small: 'small',
+            medium: 'medium',
+            large: 'large',
+            larger: 'larger'
+        };
 
-            return [
+        return [
 
-                isSelected && (
-                    <BlockControls>
-                        <BlockAlignmentToolbar
-                            value={ align }
-                            onChange={ ( newAlignment ) => props.setAttributes( { align: newAlignment } ) }
-                            controls={ [ 'left', 'center', 'right' ] }
+            isSelected && (
+                <BlockControls>
+                    <BlockAlignmentToolbar
+                        value={align}
+                        onChange={(newAlignment) => props.setAttributes({ align: newAlignment })}
+                        controls={['left', 'center', 'right']}
+                    />
+                </BlockControls>
+            ),
+
+            isSelected && (
+                <InspectorControls>
+                    <PanelBody title={__('Button Size')}>
+                        <div className="blocks-font-size__main">
+                            <ButtonGroup aria-label={__('Button Size')}>
+                                <Button
+                                    isLarge
+                                    isPrimary={size === BUTTON_SIZES['small']}
+                                    aria-pressed={size === BUTTON_SIZES['small']}
+                                    onClick={() => props.setAttributes({ size: 'small' })}
+                                >
+                                    S
+                                    </Button>
+                                <Button
+                                    isLarge
+                                    isPrimary={size === BUTTON_SIZES['medium']}
+                                    aria-pressed={size === BUTTON_SIZES['medium']}
+                                    onClick={() => props.setAttributes({ size: 'medium' })}
+                                >
+                                    M
+                                    </Button>
+                                <Button
+                                    isLarge
+                                    isPrimary={size === BUTTON_SIZES['large']}
+                                    aria-pressed={size === BUTTON_SIZES['large']}
+                                    onClick={() => props.setAttributes({ size: 'large' })}
+                                >
+                                    L
+                                    </Button>
+                                <Button
+                                    isLarge
+                                    isPrimary={size === BUTTON_SIZES['larger']}
+                                    aria-pressed={size === BUTTON_SIZES['larger']}
+                                    onClick={() => props.setAttributes({ size: 'larger' })}
+                                >
+                                    XL
+                                    </Button>
+                            </ButtonGroup>
+                        </div>
+                    </PanelBody>
+                    <PanelBody title={__('Button Style')}>
+                        <ToggleControl
+                            label={__('Rounded')}
+                            checked={buttonRounded}
+                            onChange={() => props.setAttributes({ buttonRounded: !buttonRounded })}
                         />
-                    </BlockControls>
-                ),
-
-                isSelected && (
-                    <InspectorControls>
-                        <PanelBody title={ __( 'Button Size' ) }>
-                            <div className="blocks-font-size__main">
-                                <ButtonGroup aria-label={ __( 'Button Size' ) }>
-                                    <Button
-                                        isLarge
-                                        isPrimary={ size === BUTTON_SIZES [ 'small' ] }
-                                        aria-pressed={ size === BUTTON_SIZES [ 'small' ] }
-                                        onClick={ () => props.setAttributes( { size: 'small' } ) }
-                                    >
-                                        S
-                                    </Button>
-                                    <Button
-                                        isLarge
-                                        isPrimary={ size === BUTTON_SIZES [ 'medium' ] }
-                                        aria-pressed={ size === BUTTON_SIZES [ 'medium' ] }
-                                        onClick={ () => props.setAttributes( { size: 'medium' } ) }
-                                    >
-                                        M
-                                    </Button>
-                                    <Button
-                                        isLarge
-                                        isPrimary={ size === BUTTON_SIZES [ 'large' ] }
-                                        aria-pressed={ size === BUTTON_SIZES [ 'large' ] }
-                                        onClick={ () => props.setAttributes( { size: 'large' } ) }
-                                    >
-                                        L
-                                    </Button>
-                                    <Button
-                                        isLarge
-                                        isPrimary={ size === BUTTON_SIZES [ 'larger' ] }
-                                        aria-pressed={ size === BUTTON_SIZES [ 'larger' ] }
-                                        onClick={ () => props.setAttributes( { size: 'larger' } ) }
-                                    >
-                                        XL
-                                    </Button>
-                                </ButtonGroup>
-                            </div>
-                        </PanelBody>
-                        <PanelBody title={ __( 'Button Style' ) }>
-                            <ToggleControl
-                                label={ __( 'Rounded' ) }
-                                checked= { buttonRounded }
-                                onChange={ () => props.setAttributes( { buttonRounded: ! buttonRounded } ) }
-                            />
-                        </PanelBody>
-                        <PanelColor
-                            title={ __( 'Button Color' ) }
-                            colorValue={ buttonColor }
-                            initialOpen={ true }
-                        >
-                            <ColorPalette
-                                value={ buttonColor }
-                                onChange={ ( colorValue ) => props.setAttributes( { buttonColor: colorValue } ) }
-                                allowReset
-                            />
-                        </PanelColor>
-                        <PanelColor
-                            title={ __( 'Button Text Color' ) }
-                            colorValue={ buttonTextColor }
-                            initialOpen={ true }
-                        >
-                            <ColorPalette
-                                value={ buttonTextColor }
-                                onChange={ ( colorValue ) => props.setAttributes( { buttonTextColor: colorValue } ) }
-                                allowReset
-                            />
-                        </PanelColor>
-                    </InspectorControls>
-                ),
-
-                <div key={ 'editable' } className={ props.className }>
-                    <div
-                        className={ 'ub-button-container' + ' align-button-' + align }
+                    </PanelBody>
+                    <PanelColor
+                        title={__('Button Color')}
+                        colorValue={buttonColor}
+                        initialOpen={true}
                     >
-                        <RichText
-                            tagName="p"
-                            placeholder={ __( 'Button Text' ) }
-                            style={{
-                                backgroundColor: buttonColor,
-                                color: buttonTextColor,
-                                borderRadius: ( buttonRounded ? '60px' : '0px' )
-                            }}
-                            className={ 'ub-button-block-btn' + ' ub-button-' + size }
-                            onChange={ ( value ) => props.setAttributes( { buttonText: value } ) }
-                            value={ buttonText }
-                            formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-                            isSelected={ isSelected && editable === 'button_text' }
-                            onFocus={ onSetActiveEditable( 'button_text' ) }
-                            keepPlaceholderOnFocus={ true }
+                        <ColorPalette
+                            value={buttonColor}
+                            onChange={(colorValue) => props.setAttributes({ buttonColor: colorValue })}
+                            allowReset
                         />
-                    </div>
-                    <div className="ub_button_url_input">
-                        {
-                            focus && (
-                                <form
-                                    key={ 'form-link' }
-                                    onSubmit={ ( event ) => event.preventDefault() }
-                                    className={ `core-blocks-button__inline-link ub_button_input_box`}>
-                                    <Dashicon icon={ 'admin-links' } />
-                                    <UrlInput
-                                        value={ url }
-                                        onChange={ ( value ) => props.setAttributes( { url: value } ) }
-                                    />
-                                    <IconButton
-                                        icon={ 'editor-break' }
-                                        label={ __( 'Apply' ) }
-                                        type={ 'submit' }
-                                    />
-                                </form>
-                            )
-                        }
-                    </div>
+                    </PanelColor>
+                    <PanelColor
+                        title={__('Button Text Color')}
+                        colorValue={buttonTextColor}
+                        initialOpen={true}
+                    >
+                        <ColorPalette
+                            value={buttonTextColor}
+                            onChange={(colorValue) => props.setAttributes({ buttonTextColor: colorValue })}
+                            allowReset
+                        />
+                    </PanelColor>
+                </InspectorControls>
+            ),
+
+            <div key={'editable'} className={props.className}>
+                <div
+                    className={'ub-button-container' + ' align-button-' + align}
+                >
+                    <RichText
+                        tagName="p"
+                        placeholder={__('Button Text')}
+                        style={{
+                            backgroundColor: buttonColor,
+                            color: buttonTextColor,
+                            borderRadius: (buttonRounded ? '60px' : '0px')
+                        }}
+                        className={'ub-button-block-btn' + ' ub-button-' + size}
+                        onChange={(value) => props.setAttributes({ buttonText: value })}
+                        value={buttonText}
+                        formattingControls={['bold', 'italic', 'strikethrough']}
+                        isSelected={isSelected && editable === 'button_text'}
+                        onFocus={onSetActiveEditable('button_text')}
+                        keepPlaceholderOnFocus={true}
+                    />
                 </div>
-            ];
-        }
+                <div className="ub_button_url_input">
+                    {
+                        focus && (
+                            <form
+                                key={'form-link'}
+                                onSubmit={(event) => event.preventDefault()}
+                                className={`editor-format-toolbar__link-modal-line ub_button_input_box`}>
+                                <Dashicon icon={'admin-links'} />
+                                <URLInput
+                                    className="button-url"
+                                    value={url}
+                                    onChange={(value) => props.setAttributes({ url: value })}
+                                />
+                                <IconButton
+                                    icon={'editor-break'}
+                                    label={__('Apply')}
+                                    type={'submit'}
+                                />
+                            </form>
+                        )
+                    }
+                </div>
+            </div>
+        ];
+    }
     ),
 
     /**
@@ -270,7 +270,7 @@ registerBlockType( 'ub/button-block', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    save: function( props ) {
+    save: function (props) {
 
         const {
             buttonText,
@@ -283,24 +283,24 @@ registerBlockType( 'ub/button-block', {
         } = props.attributes;
 
         return (
-            <div className={ props.className }>
+            <div className={props.className}>
                 <div
-                    className={ 'ub-button-container' + ' align-button-' + align }
+                    className={'ub-button-container' + ' align-button-' + align}
                 >
                     <a
-                        href={ url }
+                        href={url}
                         target="_blank"
-                        className={ 'ub-button-block-btn' + ' ub-button-' + size }
+                        className={'ub-button-block-btn' + ' ub-button-' + size}
                         style={{
                             backgroundColor: buttonColor,
                             color: buttonTextColor,
-                            borderRadius: ( buttonRounded ? '60px' : '0px' )
+                            borderRadius: (buttonRounded ? '60px' : '0px')
                         }}
                     >
-                        { buttonText }
+                        {buttonText}
                     </a>
                 </div>
             </div>
         );
     },
-} );
+});
