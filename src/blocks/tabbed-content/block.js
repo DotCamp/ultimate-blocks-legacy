@@ -69,7 +69,7 @@ registerBlockType( 'ub/tabbed-content', {
 		},
 		titleColor: {
 			type: 'string',
-			default: '#000000'
+			default: '#000000',
 		},
 		tabsContent: {
 			source: 'query',
@@ -132,7 +132,6 @@ registerBlockType( 'ub/tabbed-content', {
 		};
 
 		const showControls = ( type, index ) => {
-			console.log('show controls')
 			setAttributes( { activeControl: type + '-' + index } );
 			setAttributes( { activeTab: index } );
 		};
@@ -252,14 +251,13 @@ registerBlockType( 'ub/tabbed-content', {
 					<div className={ className + '-tabs-content' }>
 						{
 							attributes.tabsContent.map( ( tabContent, i ) => {
-								return <div className={ className + '-tab-content-wrap' + ( attributes.activeTab === i ? ' active' : ' ub-hide' ) } key={ i }>
+								return <div className={ className + '-tab-content-wrap' + ( attributes.activeTab === i ? ' active' : ' ub-hide' ) } onClick={ () => showControls( 'tab-content', i ) } key={ i }>
 									<RichText
 										tagName="div"
 										className={ className + '-tab-content' }
 										value={ tabContent.content }
 										formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
 										isSelected={ attributes.activeControl === 'tab-content-' + i && isSelected }
-										onClick={ () => showControls( 'tab-content', i ) }
 										onChange={ ( content ) => onChangeTabContent( content, i ) }
 										placeholder="Enter the Tab Content here..."
 									/>
