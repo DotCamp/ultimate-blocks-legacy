@@ -25,7 +25,7 @@ function ultimate_blocks_cgb_block_assets() {
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-style-css', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-		array( 'wp-editor', 'wp-blocks', 'wp-edit-post' ) // Dependency to include the CSS after it.
+		array( 'wp-editor', 'wp-blocks' ) // Dependency to include the CSS after it.
 		// filemtime( plugin_dir_path( __FILE__ ) . 'editor.css' ) // Version: filemtime — Gets file modification time.
 	);
 } // End function ultimate_blocks_cgb_block_assets().
