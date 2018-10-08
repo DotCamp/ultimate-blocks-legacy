@@ -32,6 +32,7 @@ class Ultimate_Blocks_Deactivator {
 	public static function deactivate() {
 
 		delete_option( 'ultimate_blocks' );
+		delete_transient( '_welcome_redirect_ub' );
 
 	}
 

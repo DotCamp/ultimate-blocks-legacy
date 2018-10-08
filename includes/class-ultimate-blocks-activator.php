@@ -31,6 +31,8 @@ class Ultimate_Blocks_Activator {
 	 */
 	public static function activate() {
 
+		set_transient( '_welcome_redirect_ub', true, 60 );
+
 		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-util.php';
 
 		$blocks = get_option( 'ultimate_blocks', false );
