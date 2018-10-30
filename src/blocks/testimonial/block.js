@@ -27,7 +27,7 @@ const {
 } = wp.components;
 
 const {
-	withState,
+    withState,
 } = wp.compose;
 
 /**
@@ -43,15 +43,15 @@ const {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'ub/testimonial-block', {
+registerBlockType('ub/testimonial-block', {
 
-    title: __( 'Testimonial' ),
+    title: __('Testimonial'),
     icon: icons.testimonial,
-    category: 'formatting',
+    category: 'ultimateblocks',
     keywords: [
-        __( 'testimonial' ),
-        __( 'quotes' ),
-        __( 'Ultimate Blocks' ),
+        __('testimonial'),
+        __('quotes'),
+        __('Ultimate Blocks'),
     ],
     attributes: {
         ub_testimonial_text: {
@@ -106,174 +106,173 @@ registerBlockType( 'ub/testimonial-block', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: withState( { editable: 'content' } ) ( function( props )
-        {
-            const {
-                isSelected,
-                editable,
-                setState
-            } = props;
+    edit: withState({ editable: 'content' })(function (props) {
+        const {
+            isSelected,
+            editable,
+            setState
+        } = props;
 
-            const onSetActiveEditable = ( newEditable ) => () => {
-                setState( { editable: newEditable } )
-            };
+        const onSetActiveEditable = (newEditable) => () => {
+            setState({ editable: newEditable })
+        };
 
-            const onChangeTestimonialText = value => {
-                props.setAttributes( { ub_testimonial_text: value } );
-            };
+        const onChangeTestimonialText = value => {
+            props.setAttributes({ ub_testimonial_text: value });
+        };
 
-            const onChangeTestimonialAuthor = value => {
-                props.setAttributes( { ub_testimonial_author: value } );
-            };
+        const onChangeTestimonialAuthor = value => {
+            props.setAttributes({ ub_testimonial_author: value });
+        };
 
-            const onChangeTestimonialAuthorRole = value => {
-                props.setAttributes( { ub_testimonial_author_role: value } );
-            };
+        const onChangeTestimonialAuthorRole = value => {
+            props.setAttributes({ ub_testimonial_author_role: value });
+        };
 
-            const onSelectImage = img => {
-                props.setAttributes( {
-                    imgID: img.id,
-                    imgURL: img.url,
-                    imgAlt: img.alt,
-                } );
-            };
-            const onRemoveImage = () => {
-                props.setAttributes({
-                    imgID: null,
-                    imgURL: null,
-                    imgAlt: null,
-                });
-            };
+        const onSelectImage = img => {
+            props.setAttributes({
+                imgID: img.id,
+                imgURL: img.url,
+                imgAlt: img.alt,
+            });
+        };
+        const onRemoveImage = () => {
+            props.setAttributes({
+                imgID: null,
+                imgURL: null,
+                imgAlt: null,
+            });
+        };
 
-            return [
+        return [
 
-                isSelected && (
-                    <BlockControls key="controls"/>
-                ),
+            isSelected && (
+                <BlockControls key="controls" />
+            ),
 
-                isSelected && (
-                    <InspectorControls>
-                        <PanelColor
-                            title={ __( 'Background Color' ) }
-                            colorValue={ props.attributes.backgroundColor }
-                            initialOpen={ true }
-                        >
-                            <ColorPalette
-                                value={ props.attributes.backgroundColor }
-                                onChange={ ( colorValue ) => props.setAttributes( { backgroundColor: colorValue } ) }
-                                allowReset
-                            />
-                        </PanelColor>
-                        <PanelBody
-                            title={ __( 'Testimonial Body' ) }
-                        >
-                            <p>Font Color</p>
-                            <ColorPalette
-                                value={ props.attributes.textColor }
-                                onChange={ ( colorValue ) => props.setAttributes( { textColor: colorValue } ) }
-                                allowReset
-                            />
-                            <RangeControl
-                                label={ __( 'Font Size' ) }
-                                value={ props.attributes.textSize }
-                                onChange={ ( value ) => props.setAttributes( { textSize: value } ) }
-                                min={ 14 }
-                                max={ 200 }
-                                beforeIcon="editor-textcolor"
-                                allowReset
-                            />
-                        </PanelBody>
-                    </InspectorControls>
-                ),
-
-                <div className={ props.className }>
-                    <div
-                        className="ub_testimonial"
-                        style={{
-                            backgroundColor: props.attributes.backgroundColor,
-                            color: props.attributes.textColor
-                        }}
+            isSelected && (
+                <InspectorControls>
+                    <PanelColor
+                        title={__('Background Color')}
+                        colorValue={props.attributes.backgroundColor}
+                        initialOpen={true}
                     >
-                        <div className="ub_testimonial_img">
-                            { ! props.attributes.imgID ? (
+                        <ColorPalette
+                            value={props.attributes.backgroundColor}
+                            onChange={(colorValue) => props.setAttributes({ backgroundColor: colorValue })}
+                            allowReset
+                        />
+                    </PanelColor>
+                    <PanelBody
+                        title={__('Testimonial Body')}
+                    >
+                        <p>Font Color</p>
+                        <ColorPalette
+                            value={props.attributes.textColor}
+                            onChange={(colorValue) => props.setAttributes({ textColor: colorValue })}
+                            allowReset
+                        />
+                        <RangeControl
+                            label={__('Font Size')}
+                            value={props.attributes.textSize}
+                            onChange={(value) => props.setAttributes({ textSize: value })}
+                            min={14}
+                            max={200}
+                            beforeIcon="editor-textcolor"
+                            allowReset
+                        />
+                    </PanelBody>
+                </InspectorControls>
+            ),
 
-                                <div className="ub_testimonial_upload_button">
-                                    <MediaUpload
-                                        onSelect={ onSelectImage }
-                                        type="image"
-                                        value={ props.attributes.imgID }
-                                        render={ ( { open } ) => (
-                                            <Button
-                                                className="components-button button button-medium"
-                                                onClick={ open }>
-                                                Upload Image
+            <div className={props.className}>
+                <div
+                    className="ub_testimonial"
+                    style={{
+                        backgroundColor: props.attributes.backgroundColor,
+                        color: props.attributes.textColor
+                    }}
+                >
+                    <div className="ub_testimonial_img">
+                        {!props.attributes.imgID ? (
+
+                            <div className="ub_testimonial_upload_button">
+                                <MediaUpload
+                                    onSelect={onSelectImage}
+                                    type="image"
+                                    value={props.attributes.imgID}
+                                    render={({ open }) => (
+                                        <Button
+                                            className="components-button button button-medium"
+                                            onClick={open}>
+                                            Upload Image
                                             </Button>
-                                        ) }
-                                    />
-                                    <p>Ideal Image size is Square i.e 150x150.</p>
-                                </div>
+                                    )}
+                                />
+                                <p>Ideal Image size is Square i.e 150x150.</p>
+                            </div>
 
-                            ) : (
+                        ) : (
 
                                 <p>
                                     <img
-                                        src={ props.attributes.imgURL }
-                                        alt={ props.attributes.imgAlt }
-                                        height={ 100 }
-                                        width={ 100 }
+                                        src={props.attributes.imgURL}
+                                        alt={props.attributes.imgAlt}
+                                        height={100}
+                                        width={100}
                                     />
-                                    { props.focus ? (
+                                    {props.focus ? (
                                         <Button
                                             className="remove-image"
-                                            onClick={ onRemoveImage }
+                                            onClick={onRemoveImage}
                                         >
-                                            { icons.remove }
+                                            {icons.remove}
                                         </Button>
-                                    ) : null }
+                                    ) : null}
                                 </p>
                             )}
-                        </div>
-                        <div className="ub_testimonial_content">
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'This is the testimonial body. Add the testimonial text you want to add here.' ) }
-                                className="ub_testimonial_text"
-                                style={{
-                                    fontSize: props.attributes.textSize
-                                }}
-                                onChange={ onChangeTestimonialText }
-                                value={ props.attributes.ub_testimonial_text }
-                                isSelected={ isSelected && editable === 'testimonial_content' }
-                                onFocus={ onSetActiveEditable( 'testimonial_content' ) }
-                                keepPlaceholderOnFocus={ true }
-                            />
-                        </div>
-                        <div className="ub_testimonial_sign">
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'John Doe' ) }
-                                className="ub_testimonial_author"
-                                onChange={ onChangeTestimonialAuthor }
-                                value={ props.attributes.ub_testimonial_author }
-                                isSelected={ isSelected && editable === 'testimonial_author' }
-                                onFocus={ onSetActiveEditable( 'testimonial_author' ) }
-                                keepPlaceholderOnFocus={ true }
-                            />
-                            <RichText
-                                tagName="i"
-                                placeholder={ __( 'Founder, Company X' ) }
-                                className="ub_testimonial_author_role"
-                                onChange={ onChangeTestimonialAuthorRole }
-                                value={ props.attributes.ub_testimonial_author_role }
-                                isSelected={ isSelected && editable === 'testimonial_author_role' }
-                                onFocus={ onSetActiveEditable( 'testimonial_author_role' ) }
-                                keepPlaceholderOnFocus={ true }
-                            />
-                        </div>
+                    </div>
+                    <div className="ub_testimonial_content">
+                        <RichText
+                            tagName="p"
+                            placeholder={__('This is the testimonial body. Add the testimonial text you want to add here.')}
+                            className="ub_testimonial_text"
+                            style={{
+                                fontSize: props.attributes.textSize
+                            }}
+                            onChange={onChangeTestimonialText}
+                            value={props.attributes.ub_testimonial_text}
+                            isSelected={isSelected && editable === 'testimonial_content'}
+                            onFocus={onSetActiveEditable('testimonial_content')}
+                            keepPlaceholderOnFocus={true}
+                        />
+                    </div>
+                    <div className="ub_testimonial_sign">
+                        <RichText
+                            tagName="p"
+                            placeholder={__('John Doe')}
+                            className="ub_testimonial_author"
+                            onChange={onChangeTestimonialAuthor}
+                            value={props.attributes.ub_testimonial_author}
+                            isSelected={isSelected && editable === 'testimonial_author'}
+                            onFocus={onSetActiveEditable('testimonial_author')}
+                            keepPlaceholderOnFocus={true}
+                        />
+                        <RichText
+                            tagName="i"
+                            placeholder={__('Founder, Company X')}
+                            className="ub_testimonial_author_role"
+                            onChange={onChangeTestimonialAuthorRole}
+                            value={props.attributes.ub_testimonial_author_role}
+                            isSelected={isSelected && editable === 'testimonial_author_role'}
+                            onFocus={onSetActiveEditable('testimonial_author_role')}
+                            keepPlaceholderOnFocus={true}
+                        />
                     </div>
                 </div>
-            ];
-        },
+            </div>
+        ];
+    },
     ),
 
     /**
@@ -284,9 +283,9 @@ registerBlockType( 'ub/testimonial-block', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    save: function( props ) {
+    save: function (props) {
         return (
-            <div className={ props.className }>
+            <div className={props.className}>
                 <div
                     className="ub_testimonial"
                     style={{
@@ -296,10 +295,10 @@ registerBlockType( 'ub/testimonial-block', {
                 >
                     <div className="ub_testimonial_img">
                         <img
-                            src={ props.attributes.imgURL }
-                            alt={ props.attributes.imgAlt }
-                            height={ 100 }
-                            width={ 100 }
+                            src={props.attributes.imgURL}
+                            alt={props.attributes.imgAlt}
+                            height={100}
+                            width={100}
                         />
                     </div>
                     <div className="ub_testimonial_content">
@@ -309,15 +308,15 @@ registerBlockType( 'ub/testimonial-block', {
                                 fontSize: props.attributes.textSize
                             }}
                         >
-                            { props.attributes.ub_testimonial_text }
+                            {props.attributes.ub_testimonial_text}
                         </p>
                     </div>
                     <div className="ub_testimonial_sign">
-                        <p className="ub_testimonial_author">{ props.attributes.ub_testimonial_author }</p>
-                        <i className="ub_testimonial_author_role">{ props.attributes.ub_testimonial_author_role }</i>
+                        <p className="ub_testimonial_author">{props.attributes.ub_testimonial_author}</p>
+                        <i className="ub_testimonial_author_role">{props.attributes.ub_testimonial_author_role}</i>
                     </div>
                 </div>
             </div>
         );
     },
-} );
+});

@@ -23,19 +23,19 @@ const { registerBlockType } = wp.blocks;
 
 const {
     RichText,
-	AlignmentToolbar,
-	BlockControls,
-	BlockAlignmentToolbar,
+    AlignmentToolbar,
+    BlockControls,
+    BlockAlignmentToolbar,
 } = wp.editor;
 
 const {
-	Toolbar,
-	Button,
-	Tooltip,
+    Toolbar,
+    Button,
+    Tooltip,
 } = wp.components;
 
 const {
-	withState,
+    withState,
 } = wp.compose;
 
 /**
@@ -51,26 +51,26 @@ const {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'ub/notification-box', {
+registerBlockType('ub/notification-box', {
 
-	title: __( 'Notification Box' ),
-	icon: icon,
-	category: 'formatting',
-	keywords: [
-		__( 'notification' ),
-		__( 'warning info' ),
-		__( 'Ultimate Blocks' ),
-	],
+    title: __('Notification Box'),
+    icon: icon,
+    category: 'ultimateblocks',
+    keywords: [
+        __('notification'),
+        __('warning info'),
+        __('Ultimate Blocks'),
+    ],
     attributes: {
         ub_notify_info: {
             type: 'array',
             source: 'children',
             selector: '.ub_notify_text'
         },
-		ub_selected_notify: {
-        	type: 'string',
-			default: 'ub_notify_info'
-		}
+        ub_selected_notify: {
+            type: 'string',
+            default: 'ub_notify_info'
+        }
     },
 
 	/**
@@ -81,93 +81,92 @@ registerBlockType( 'ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState( { editable: 'content' } ) ( function( props )
-        {
-            const {
-                isSelected,
-                editable,
-                setState
-            } = props;
+    edit: withState({ editable: 'content' })(function (props) {
+        const {
+            isSelected,
+            editable,
+            setState
+        } = props;
 
-            const onSetActiveEditable = ( newEditable ) => () => {
-                setState( { editable: newEditable } )
-            };
+        const onSetActiveEditable = (newEditable) => () => {
+            setState({ editable: newEditable })
+        };
 
-            const onChangeNotifyInfo = value => {
-                props.setAttributes ( { ub_notify_info: value } );
-            };
+        const onChangeNotifyInfo = value => {
+            props.setAttributes({ ub_notify_info: value });
+        };
 
-            const infoClassChange = value => {
-                props.setAttributes( { ub_selected_notify: 'ub_notify_info' } );
-            };
+        const infoClassChange = value => {
+            props.setAttributes({ ub_selected_notify: 'ub_notify_info' });
+        };
 
-            const successClassChange = value => {
-                props.setAttributes( { ub_selected_notify: 'ub_notify_success' } );
-            };
+        const successClassChange = value => {
+            props.setAttributes({ ub_selected_notify: 'ub_notify_success' });
+        };
 
-            const warningClassChange = value => {
-                props.setAttributes( { ub_selected_notify: 'ub_notify_warning' } );
-            };
+        const warningClassChange = value => {
+            props.setAttributes({ ub_selected_notify: 'ub_notify_warning' });
+        };
 
-            return [
+        return [
 
-                isSelected && (
-                    <BlockControls key="controls"/>
-                ),
+            isSelected && (
+                <BlockControls key="controls" />
+            ),
 
-                isSelected && (
-                    <BlockControls key="custom-controls">
+            isSelected && (
+                <BlockControls key="custom-controls">
 
-                        <Toolbar className="components-toolbar">
-                            <Button
-                                className={ classnames(
-                                    'components-icon-button',
-                                    'components-toolbar-control',
-                                )}
-                                onClick = { infoClassChange }
-                            >
-                                { info }
-                            </Button>
-                            <Button
-                                className={ classnames(
-                                    'components-icon-button',
-                                    'components-toolbar-control',
-                                )}
-                                onClick = { successClassChange }
-                            >
-                                { success }
-                            </Button>
-                            <Button
-                                className={ classnames(
-                                    'components-icon-button',
-                                    'components-toolbar-control',
-                                )}
-                                onClick = { warningClassChange }
-                            >
-                                { warning }
-                            </Button>
-                        </Toolbar>
+                    <Toolbar className="components-toolbar">
+                        <Button
+                            className={classnames(
+                                'components-icon-button',
+                                'components-toolbar-control',
+                            )}
+                            onClick={infoClassChange}
+                        >
+                            {info}
+                        </Button>
+                        <Button
+                            className={classnames(
+                                'components-icon-button',
+                                'components-toolbar-control',
+                            )}
+                            onClick={successClassChange}
+                        >
+                            {success}
+                        </Button>
+                        <Button
+                            className={classnames(
+                                'components-icon-button',
+                                'components-toolbar-control',
+                            )}
+                            onClick={warningClassChange}
+                        >
+                            {warning}
+                        </Button>
+                    </Toolbar>
 
-                    </BlockControls>
-                ),
+                </BlockControls>
+            ),
 
-				<div key={ 'editable' } className={ props.className }>
+            <div key={'editable'} className={props.className}>
 
-                    <RichText
-                        tagName="div"
-                        placeholder={ __( 'Add Your Content Here' ) }
-                        className={ props.attributes.ub_selected_notify }
-                        onChange={ onChangeNotifyInfo }
-                        value={ props.attributes.ub_notify_info }
-                        isSelected={ isSelected && editable === 'notify_info' }
-                        onFocus={ onSetActiveEditable( 'notify_info' ) }
-                        keepPlaceholderOnFocus={ true }
-                    />
+                <RichText
+                    tagName="div"
+                    placeholder={__('Add Your Content Here')}
+                    className={props.attributes.ub_selected_notify}
+                    onChange={onChangeNotifyInfo}
+                    value={props.attributes.ub_notify_info}
+                    isSelected={isSelected && editable === 'notify_info'}
+                    onFocus={onSetActiveEditable('notify_info')}
+                    keepPlaceholderOnFocus={true}
+                />
 
-                </div>
-            ];
-        },
-	),
+            </div>
+        ];
+    },
+    ),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
@@ -177,13 +176,13 @@ registerBlockType( 'ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function( props ) {
-		return (
-			<div className={ props.className }>
-                <div className={ props.attributes.ub_selected_notify }>
-					<p className="ub_notify_text">{ props.attributes.ub_notify_info }</p>
+    save: function (props) {
+        return (
+            <div className={props.className}>
+                <div className={props.attributes.ub_selected_notify}>
+                    <p className="ub_notify_text">{props.attributes.ub_notify_info}</p>
                 </div>
-			</div>
-		);
-	},
-} );
+            </div>
+        );
+    },
+});

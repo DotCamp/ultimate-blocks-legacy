@@ -54,7 +54,7 @@ registerBlockType('ub/button-block', {
 
     title: __('Button (Improved)'),
     icon: icon,
-    category: 'layout',
+    category: 'ultimateblocks',
     keywords: [
         __('Button'),
         __('Buttons'),

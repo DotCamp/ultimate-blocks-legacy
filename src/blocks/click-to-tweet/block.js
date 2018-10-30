@@ -17,17 +17,17 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const {
 	RichText,
-    AlignmentToolbar,
-    ColorPalette,
-    InspectorControls
+	AlignmentToolbar,
+	ColorPalette,
+	InspectorControls
 } = wp.editor;
 
 const {
-    PanelBody,
-    Toolbar,
+	PanelBody,
+	Toolbar,
 	TextControl,
-    RangeControl,
-    Dashicon
+	RangeControl,
+	Dashicon
 } = wp.components;
 
 const { Component } = wp.element;
@@ -45,40 +45,40 @@ const { Component } = wp.element;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'ub/click-to-tweet', {
+registerBlockType('ub/click-to-tweet', {
 
-	title: __( 'Click to Tweet' ),
+	title: __('Click to Tweet'),
 	icon: icon,
-	category: 'formatting',
+	category: 'ultimateblocks',
 	keywords: [
-		__( 'Click to tweet' ),
-		__( 'Twitter' ),
-		__( 'Ultimate Blocks' ),
+		__('Click to tweet'),
+		__('Twitter'),
+		__('Ultimate Blocks'),
 	],
-    attributes: {
-	    ubTweet: {
-	        source: 'meta',
-            meta: 'ub_ctt_tweet'
-        },
+	attributes: {
+		ubTweet: {
+			source: 'meta',
+			meta: 'ub_ctt_tweet'
+		},
 		ubVia: {
-	    	source: 'meta',
+			source: 'meta',
 			meta: 'ub_ctt_via'
 		},
 		tweetFontSize: {
-	    	type: 'number',
+			type: 'number',
 			default: 20
 		},
 		tweetColor: {
-	    	type: 'string',
+			type: 'string',
 			default: '#444444'
 		},
 		borderColor: {
-	    	type: 'string',
+			type: 'string',
 			default: '#CCCCCC'
 		}
-    },
+	},
 
-    useOnce: true,
+	useOnce: true,
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -88,79 +88,79 @@ registerBlockType( 'ub/click-to-tweet', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props ) {
+	edit: function (props) {
 
-	    const {
-	        ubTweet,
+		const {
+			ubTweet,
 			ubVia,
 			tweetFontSize,
 			tweetColor,
 			borderColor
-        } = props.attributes;
+		} = props.attributes;
 
 		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
 		return [
-			!! props.focus && (
-                <InspectorControls key="inspectors">
-                    <TextControl
-                        label={ __( 'Twitter Username' ) }
-                        placeholder='@'
-                        value={ ubVia }
-                        onChange={ ( value ) => props.setAttributes( { ubVia: value } ) }
-                    />
-                    <RangeControl
-                        label={ __( 'Font Size' ) }
-                        value={ tweetFontSize }
-                        onChange={ ( value ) => props.setAttributes( { tweetFontSize: value } ) }
-                        min={ 10 }
-                        max={ 200 }
-                        beforeIcon="editor-textcolor"
-                        allowReset
-                    />
-					<p>{ __('Tweet Color') }</p>
-                    <ColorPalette
-                        value={ tweetColor }
-                        onChange={ ( colorValue ) => props.setAttributes( { tweetColor: colorValue } ) }
-                        allowReset
-                    />
-                    <p>{ __('Border Color') }</p>
-                    <ColorPalette
-                        value={ borderColor }
-                        onChange={ ( colorValue ) => props.setAttributes( { borderColor: colorValue } ) }
-                        allowReset
-                    />
+			!!props.focus && (
+				<InspectorControls key="inspectors">
+					<TextControl
+						label={__('Twitter Username')}
+						placeholder='@'
+						value={ubVia}
+						onChange={(value) => props.setAttributes({ ubVia: value })}
+					/>
+					<RangeControl
+						label={__('Font Size')}
+						value={tweetFontSize}
+						onChange={(value) => props.setAttributes({ tweetFontSize: value })}
+						min={10}
+						max={200}
+						beforeIcon="editor-textcolor"
+						allowReset
+					/>
+					<p>{__('Tweet Color')}</p>
+					<ColorPalette
+						value={tweetColor}
+						onChange={(colorValue) => props.setAttributes({ tweetColor: colorValue })}
+						allowReset
+					/>
+					<p>{__('Border Color')}</p>
+					<ColorPalette
+						value={borderColor}
+						onChange={(colorValue) => props.setAttributes({ borderColor: colorValue })}
+						allowReset
+					/>
 				</InspectorControls>
 			),
-			<div className={ props.className }>
-                <div
+			<div className={props.className}>
+				<div
 					className="ub_click_to_tweet"
 					style={{
 						borderColor: borderColor
 					}}
 				>
-                    <TextareaAutosize
+					<TextareaAutosize
 						style={{
 							fontSize: tweetFontSize + 'px',
 							color: tweetColor,
 							border: 'none'
 						}}
-						placeholder={ __( 'Add Tweetable Content Here' ) }
-                        className="ub_tweet"
-                        value={ ubTweet }
-                        onChange = { ( event ) => { props.setAttributes( { ubTweet: event.target.value } ) } }
-                        focus={ props.focus }
-                        keepPlaceholderOnFocus={true}
-                    />
-                    <div className="ub_click_tweet">
-                        <span
-                            style={{
-                                display: 'inline-flex'
-                            }}
-                        >
-                            <i></i>Click to Tweet
+						placeholder={__('Add Tweetable Content Here')}
+						className="ub_tweet"
+						value={ubTweet}
+						onChange={(event) => { props.setAttributes({ ubTweet: event.target.value }) }}
+						focus={props.focus}
+						keepPlaceholderOnFocus={true}
+					/>
+					<div className="ub_click_tweet">
+						<span
+							style={{
+								display: 'inline-flex'
+							}}
+						>
+							<i></i>Click to Tweet
                         </span>
-                    </div>
-                </div>
+					</div>
+				</div>
 			</div>
 		];
 	},
@@ -173,9 +173,9 @@ registerBlockType( 'ub/click-to-tweet', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function( props ) {
+	save: function (props) {
 		return (
-            null
+			null
 		);
 	},
-} );
+});

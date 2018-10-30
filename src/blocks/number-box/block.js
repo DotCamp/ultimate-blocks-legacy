@@ -12,7 +12,7 @@ import icon from './icons/icon';
 import './style.scss';
 import './editor.scss';
 
-const {__} = wp.i18n;
+const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const {
@@ -32,7 +32,7 @@ const {
 } = wp.components;
 
 const {
-	withState,
+    withState,
 } = wp.compose;
 
 /**
@@ -52,7 +52,7 @@ registerBlockType('ub/number-box', {
 
     title: __('Number Box'),
     icon: icon,
-    category: 'formatting',
+    category: 'ultimateblocks',
     keywords: [
         __('Number box'),
         __('Feature'),
@@ -130,247 +130,247 @@ registerBlockType('ub/number-box', {
      *
      * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
      */
-    edit: withState( { editable: 'content' } ) ( function ( props ) {
+    edit: withState({ editable: 'content' })(function (props) {
 
-            const {
-                isSelected,
-                editable,
-                setState
-            } = props;
+        const {
+            isSelected,
+            editable,
+            setState
+        } = props;
 
-            const {
-                column,
-                columnOneNumber,
-                columnTwoNumber,
-                columnThreeNumber,
-                columnOneTitle,
-                columnTwoTitle,
-                columnThreeTitle,
-                columnOneBody,
-                columnTwoBody,
-                columnThreeBody,
-                numberBackground,
-                numberColor,
-                borderColor
-            } = props.attributes;
+        const {
+            column,
+            columnOneNumber,
+            columnTwoNumber,
+            columnThreeNumber,
+            columnOneTitle,
+            columnTwoTitle,
+            columnThreeTitle,
+            columnOneBody,
+            columnTwoBody,
+            columnThreeBody,
+            numberBackground,
+            numberColor,
+            borderColor
+        } = props.attributes;
 
-            const columns = [
-                { value: '1', label: __( 'One Column' ) },
-                { value: '2', label: __( 'Two Column' ) },
-                { value: '3', label: __( 'Three Column' ) },
-            ];
+        const columns = [
+            { value: '1', label: __('One Column') },
+            { value: '2', label: __('Two Column') },
+            { value: '3', label: __('Three Column') },
+        ];
 
-            const onSetActiveEditable = ( newEditable ) => () => {
-                setState( { editable: newEditable } )
-            };
+        const onSetActiveEditable = (newEditable) => () => {
+            setState({ editable: newEditable })
+        };
 
-            return [
+        return [
 
-                isSelected && (
-                    <BlockControls key="controls"/>
-                ),
+            isSelected && (
+                <BlockControls key="controls" />
+            ),
 
-                isSelected && (
-                    <InspectorControls key={'inspector'}>
+            isSelected && (
+                <InspectorControls key={'inspector'}>
 
-                        <SelectControl
-                            label={__('Column Number')}
-                            value={column}
-                            options={columns.map(({value, label}) => ({
-                                value: value,
-                                label: label,
-                            }))}
-                            onChange={(value) => {
-                                props.setAttributes({column: value})
-                            }}
+                    <SelectControl
+                        label={__('Column Number')}
+                        value={column}
+                        options={columns.map(({ value, label }) => ({
+                            value: value,
+                            label: label,
+                        }))}
+                        onChange={(value) => {
+                            props.setAttributes({ column: value })
+                        }}
+                    />
+
+                    <PanelColor
+                        title={__('Number Background Color')}
+                        colorValue={numberBackground}
+                        initialOpen={false}
+                    >
+                        <ColorPalette
+                            value={numberBackground}
+                            onChange={(colorValue) => props.setAttributes({ numberBackground: colorValue })}
+                            allowReset
                         />
+                    </PanelColor>
 
-                        <PanelColor
-                            title={__('Number Background Color')}
-                            colorValue={numberBackground}
-                            initialOpen={false}
-                        >
-                            <ColorPalette
-                                value={numberBackground}
-                                onChange={(colorValue) => props.setAttributes({numberBackground: colorValue})}
-                                allowReset
-                            />
-                        </PanelColor>
+                    <PanelColor
+                        title={__('Number Color')}
+                        colorValue={numberColor}
+                        initialOpen={false}
+                    >
+                        <ColorPalette
+                            value={numberColor}
+                            onChange={(colorValue) => props.setAttributes({ numberColor: colorValue })}
+                            allowReset
+                        />
+                    </PanelColor>
 
-                        <PanelColor
-                            title={__('Number Color')}
-                            colorValue={numberColor}
-                            initialOpen={false}
-                        >
-                            <ColorPalette
-                                value={numberColor}
-                                onChange={(colorValue) => props.setAttributes({numberColor: colorValue})}
-                                allowReset
-                            />
-                        </PanelColor>
+                    <PanelColor
+                        title={__('Border Color')}
+                        colorValue={borderColor}
+                        initialOpen={false}
+                    >
+                        <ColorPalette
+                            value={borderColor}
+                            onChange={(colorValue) => props.setAttributes({ borderColor: colorValue })}
+                            allowReset
+                        />
+                    </PanelColor>
 
-                        <PanelColor
-                            title={__('Border Color')}
-                            colorValue={borderColor}
-                            initialOpen={false}
-                        >
-                            <ColorPalette
-                                value={borderColor}
-                                onChange={(colorValue) => props.setAttributes({borderColor: colorValue})}
-                                allowReset
-                            />
-                        </PanelColor>
+                </InspectorControls>
+            ),
 
-                    </InspectorControls>
-                ),
-
-                <div key={'editable'} className={props.className}>
-                    <div className={`ub_number_box column_${column}`}>
+            <div key={'editable'} className={props.className}>
+                <div className={`ub_number_box column_${column}`}>
+                    <div
+                        className="ub_number_1"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
                         <div
-                            className="ub_number_1"
+                            className="ub_number_box_number"
                             style={{
-                                borderColor: borderColor
+                                backgroundColor: numberBackground,
                             }}
                         >
-                            <div
-                                className="ub_number_box_number"
+                            <RichText
+                                tagName="p"
+                                placeholder={__('1')}
+                                className="ub_number_one_number"
                                 style={{
-                                    backgroundColor: numberBackground,
+                                    color: numberColor
                                 }}
-                            >
-                                <RichText
-                                    tagName="p"
-                                    placeholder={ __( '1' ) }
-                                    className="ub_number_one_number"
-                                    style={{
-                                        color: numberColor
-                                    }}
-                                    value={columnOneNumber}
-                                    onChange={(value) => props.setAttributes({columnOneNumber: value})}
-                                    isSelected={isSelected && editable === 'number_one'}
-                                    onFocus={onSetActiveEditable('number_one')}
-                                    keepPlaceholderOnFocus={true}
-                                />
-                            </div>
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'Title One' ) }
-                                className="ub_number_one_title"
-                                value={columnOneTitle}
-                                onChange={(value) => props.setAttributes({columnOneTitle: value})}
-                                isSelected={isSelected && editable === 'title_one'}
-                                onFocus={onSetActiveEditable('title_one')}
-                                keepPlaceholderOnFocus={true}
-                            />
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'Your content goes here.' ) }
-                                className="ub_number_one_body"
-                                value={columnOneBody}
-                                onChange={(value) => props.setAttributes({columnOneBody: value})}
-                                isSelected={isSelected && editable === 'body_one'}
-                                onFocus={onSetActiveEditable('body_one')}
+                                value={columnOneNumber}
+                                onChange={(value) => props.setAttributes({ columnOneNumber: value })}
+                                isSelected={isSelected && editable === 'number_one'}
+                                onFocus={onSetActiveEditable('number_one')}
                                 keepPlaceholderOnFocus={true}
                             />
                         </div>
+                        <RichText
+                            tagName="p"
+                            placeholder={__('Title One')}
+                            className="ub_number_one_title"
+                            value={columnOneTitle}
+                            onChange={(value) => props.setAttributes({ columnOneTitle: value })}
+                            isSelected={isSelected && editable === 'title_one'}
+                            onFocus={onSetActiveEditable('title_one')}
+                            keepPlaceholderOnFocus={true}
+                        />
+                        <RichText
+                            tagName="p"
+                            placeholder={__('Your content goes here.')}
+                            className="ub_number_one_body"
+                            value={columnOneBody}
+                            onChange={(value) => props.setAttributes({ columnOneBody: value })}
+                            isSelected={isSelected && editable === 'body_one'}
+                            onFocus={onSetActiveEditable('body_one')}
+                            keepPlaceholderOnFocus={true}
+                        />
+                    </div>
+                    <div
+                        className="ub_number_2"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
                         <div
-                            className="ub_number_2"
+                            className="ub_number_box_number"
                             style={{
-                                borderColor: borderColor
+                                backgroundColor: numberBackground,
                             }}
                         >
-                            <div
-                                className="ub_number_box_number"
+                            <RichText
+                                tagName="p"
+                                placeholder={__('2')}
+                                className="ub_number_two_number"
                                 style={{
-                                    backgroundColor: numberBackground,
+                                    color: numberColor
                                 }}
-                            >
-                                <RichText
-                                    tagName="p"
-                                    placeholder={ __( '2' ) }
-                                    className="ub_number_two_number"
-                                    style={{
-                                        color: numberColor
-                                    }}
-                                    value={columnTwoNumber}
-                                    onChange={(value) => props.setAttributes({columnTwoNumber: value})}
-                                    isSelected={isSelected && editable === 'number_two'}
-                                    onFocus={onSetActiveEditable('number_two')}
-                                    keepPlaceholderOnFocus={true}
-                                />
-                            </div>
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'Title Two' ) }
-                                className="ub_number_two_title"
-                                value={columnTwoTitle}
-                                onChange={(value) => props.setAttributes({columnTwoTitle: value})}
-                                isSelected={isSelected && editable === 'title_two'}
-                                onFocus={onSetActiveEditable('title_two')}
-                                keepPlaceholderOnFocus={true}
-                            />
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'Your content goes here.' ) }
-                                className="ub_number_two_body"
-                                value={columnTwoBody}
-                                onChange={(value) => props.setAttributes({columnTwoBody: value})}
-                                isSelected={isSelected && editable === 'body_two'}
-                                onFocus={onSetActiveEditable('body_two')}
+                                value={columnTwoNumber}
+                                onChange={(value) => props.setAttributes({ columnTwoNumber: value })}
+                                isSelected={isSelected && editable === 'number_two'}
+                                onFocus={onSetActiveEditable('number_two')}
                                 keepPlaceholderOnFocus={true}
                             />
                         </div>
+                        <RichText
+                            tagName="p"
+                            placeholder={__('Title Two')}
+                            className="ub_number_two_title"
+                            value={columnTwoTitle}
+                            onChange={(value) => props.setAttributes({ columnTwoTitle: value })}
+                            isSelected={isSelected && editable === 'title_two'}
+                            onFocus={onSetActiveEditable('title_two')}
+                            keepPlaceholderOnFocus={true}
+                        />
+                        <RichText
+                            tagName="p"
+                            placeholder={__('Your content goes here.')}
+                            className="ub_number_two_body"
+                            value={columnTwoBody}
+                            onChange={(value) => props.setAttributes({ columnTwoBody: value })}
+                            isSelected={isSelected && editable === 'body_two'}
+                            onFocus={onSetActiveEditable('body_two')}
+                            keepPlaceholderOnFocus={true}
+                        />
+                    </div>
+                    <div
+                        className="ub_number_3"
+                        style={{
+                            borderColor: borderColor
+                        }}
+                    >
                         <div
-                            className="ub_number_3"
+                            className="ub_number_box_number"
                             style={{
-                                borderColor: borderColor
+                                backgroundColor: numberBackground,
                             }}
                         >
-                            <div
-                                className="ub_number_box_number"
+                            <RichText
+                                tagName="p"
+                                placeholder={__('3')}
+                                className="ub_number_three_number"
                                 style={{
-                                    backgroundColor: numberBackground,
+                                    color: numberColor
                                 }}
-                            >
-                                <RichText
-                                    tagName="p"
-                                    placeholder={ __( '3' ) }
-                                    className="ub_number_three_number"
-                                    style={{
-                                        color: numberColor
-                                    }}
-                                    value={columnThreeNumber}
-                                    onChange={(value) => props.setAttributes({columnThreeNumber: value})}
-                                    isSelected={isSelected && editable === 'number_three'}
-                                    onFocus={onSetActiveEditable('number_three')}
-                                    keepPlaceholderOnFocus={true}
-                                />
-                            </div>
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'Title Three' ) }
-                                className="ub_number_three_title"
-                                value={columnThreeTitle}
-                                onChange={(value) => props.setAttributes({columnThreeTitle: value})}
-                                isSelected={isSelected && editable === 'title_three'}
-                                onFocus={onSetActiveEditable('title_three')}
-                                keepPlaceholderOnFocus={true}
-                            />
-                            <RichText
-                                tagName="p"
-                                placeholder={ __( 'Your content goes here.' ) }
-                                className="ub_number_three_body"
-                                value={columnThreeBody}
-                                onChange={(value) => props.setAttributes({columnThreeBody: value})}
-                                isSelected={isSelected && editable === 'body_three'}
-                                onFocus={onSetActiveEditable('body_three')}
+                                value={columnThreeNumber}
+                                onChange={(value) => props.setAttributes({ columnThreeNumber: value })}
+                                isSelected={isSelected && editable === 'number_three'}
+                                onFocus={onSetActiveEditable('number_three')}
                                 keepPlaceholderOnFocus={true}
                             />
                         </div>
+                        <RichText
+                            tagName="p"
+                            placeholder={__('Title Three')}
+                            className="ub_number_three_title"
+                            value={columnThreeTitle}
+                            onChange={(value) => props.setAttributes({ columnThreeTitle: value })}
+                            isSelected={isSelected && editable === 'title_three'}
+                            onFocus={onSetActiveEditable('title_three')}
+                            keepPlaceholderOnFocus={true}
+                        />
+                        <RichText
+                            tagName="p"
+                            placeholder={__('Your content goes here.')}
+                            className="ub_number_three_body"
+                            value={columnThreeBody}
+                            onChange={(value) => props.setAttributes({ columnThreeBody: value })}
+                            isSelected={isSelected && editable === 'body_three'}
+                            onFocus={onSetActiveEditable('body_three')}
+                            keepPlaceholderOnFocus={true}
+                        />
                     </div>
                 </div>
-            ];
-        },
+            </div>
+        ];
+    },
     ),
 
     /**

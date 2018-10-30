@@ -48,7 +48,7 @@ registerBlockType('ub/call-to-action', {
 
     title: __('Call to Action'),
     icon: icon,
-    category: 'formatting',
+    category: 'ultimateblocks',
     keywords: [
         __('call to action'),
         __('conversion'),

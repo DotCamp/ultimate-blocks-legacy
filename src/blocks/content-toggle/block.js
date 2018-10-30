@@ -30,15 +30,15 @@ const { registerBlockType } = wp.blocks;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'ub/content-toggle', {
+registerBlockType('ub/content-toggle', {
 
-	title: __( 'Content Toggle' ),
+	title: __('Content Toggle'),
 	icon: icon,
-	category: 'formatting',
+	category: 'ultimateblocks',
 	keywords: [
-		__( 'Content Accordion' ),
-		__( 'Toggle Collapse' ),
-		__( 'Ultimate Blocks' ),
+		__('Content Accordion'),
+		__('Toggle Collapse'),
+		__('Ultimate Blocks'),
 	],
 
 	attributes: {
@@ -76,118 +76,118 @@ registerBlockType( 'ub/content-toggle', {
 		}
 	},
 
-	edit: function( { attributes, setAttributes, className, isSelected } ) {
-		if ( ! attributes.accordions ) {
+	edit: function ({ attributes, setAttributes, className, isSelected }) {
+		if (!attributes.accordions) {
 			attributes.accordions = [];
 		}
 
 		const sample = { title: '', content: '' };
-		const accordionsState = JSON.parse( attributes.accordionsState );
+		const accordionsState = JSON.parse(attributes.accordionsState);
 
-		const showControls = ( type, index ) => {
-			setAttributes( { activeControl: type + '-' + index } );
+		const showControls = (type, index) => {
+			setAttributes({ activeControl: type + '-' + index });
 		};
 
-		const addAccord = ( i ) => {
-			if ( i <= 0 ) {
-				attributes.accordions.unshift( sample );
-				setAttributes( { accordions: attributes.accordions } );
+		const addAccord = (i) => {
+			if (i <= 0) {
+				attributes.accordions.unshift(sample);
+				setAttributes({ accordions: attributes.accordions });
 
-				accordionsState.unshift( true );
-				setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
-			} else if ( i >= attributes.accordions.length ) {
-				attributes.accordions.push( sample );
-				setAttributes( { accordions: attributes.accordions } );
+				accordionsState.unshift(true);
+				setAttributes({ accordionsState: JSON.stringify(accordionsState) });
+			} else if (i >= attributes.accordions.length) {
+				attributes.accordions.push(sample);
+				setAttributes({ accordions: attributes.accordions });
 
-				accordionsState.push( true );
-				setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+				accordionsState.push(true);
+				setAttributes({ accordionsState: JSON.stringify(accordionsState) });
 			} else {
-				attributes.accordions.splice( i, 0, sample );
-				setAttributes( { accordions: attributes.accordions } );
+				attributes.accordions.splice(i, 0, sample);
+				setAttributes({ accordions: attributes.accordions });
 
-				accordionsState.splice( i, 0, true );
-				setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+				accordionsState.splice(i, 0, true);
+				setAttributes({ accordionsState: JSON.stringify(accordionsState) });
 			}
 		};
 
-		const deleteAccord = ( i ) => {
-			accordionsState.splice( i, 1 );
-			setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+		const deleteAccord = (i) => {
+			accordionsState.splice(i, 1);
+			setAttributes({ accordionsState: JSON.stringify(accordionsState) });
 
-			const accordionsClone = attributes.accordions.slice( 0 );
-			accordionsClone.splice( i, 1 );
-			setAttributes( { accordions: accordionsClone } );
+			const accordionsClone = attributes.accordions.slice(0);
+			accordionsClone.splice(i, 1);
+			setAttributes({ accordions: accordionsClone });
 		};
 
-		const toggleAccordionState = ( i ) => {
-			accordionsState[ i ] = ! accordionsState[ i ];
-			setAttributes( { accordionsState: JSON.stringify( accordionsState ) } );
+		const toggleAccordionState = (i) => {
+			accordionsState[i] = !accordionsState[i];
+			setAttributes({ accordionsState: JSON.stringify(accordionsState) });
 		};
 
 		const updateTimeStamp = () => {
-			setAttributes( { timestamp: ( new Date() ).getTime() } );
+			setAttributes({ timestamp: (new Date()).getTime() });
 		};
 
-		const onChangeTitle = ( title, i ) => {
-			attributes.accordions[ i ].title = title;
+		const onChangeTitle = (title, i) => {
+			attributes.accordions[i].title = title;
 			updateTimeStamp();
 		};
 
-		const onChangeContent = ( content, i ) => {
-			attributes.accordions[ i ].content = content;
+		const onChangeContent = (content, i) => {
+			attributes.accordions[i].content = content;
 			updateTimeStamp();
 		};
 
-		const onThemeChange = ( value ) => setAttributes( { theme: value } );
+		const onThemeChange = (value) => setAttributes({ theme: value });
 
-		const onTitleColorChange = ( value ) => setAttributes( { titleColor: value } );
+		const onTitleColorChange = (value) => setAttributes({ titleColor: value });
 
-		const onCollapseChange = () => setAttributes( { collapsed: ! attributes.collapsed } );
+		const onCollapseChange = () => setAttributes({ collapsed: !attributes.collapsed });
 
-		if ( attributes.accordions.length === 0 ) {
-			addAccord( 0 );
+		if (attributes.accordions.length === 0) {
+			addAccord(0);
 		}
 
 		return [
 			isSelected && (
-				<Inspector { ...{ attributes, onThemeChange, onCollapseChange, onTitleColorChange } } key="inspector" />
+				<Inspector {...{ attributes, onThemeChange, onCollapseChange, onTitleColorChange }} key="inspector" />
 			),
-			<div className={ className } key="accordions">
+			<div className={className} key="accordions">
 				{
-					attributes.accordions.map( ( accordion, i ) => {
-						return <Accordion { ...{ isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState } } count={ attributes.accordions.length } key={ i } />;
-					} )
+					attributes.accordions.map((accordion, i) => {
+						return <Accordion {...{ isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState }} count={attributes.accordions.length} key={i} />;
+					})
 				}
 			</div>,
 		];
 	},
 
-	save: function( props ) {
+	save: function (props) {
 		const accordions = props.attributes.accordions;
 		const collapsed = props.attributes.collapsed;
 
 		return (
 			<div>
 				{
-					accordions.map( ( accordion, i ) => {
-						return <div style={ { borderColor: props.attributes.theme } } className="wp-block-ub-content-toggle-accordion" key={ i }>
-							<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={ { backgroundColor: props.attributes.theme } }>
-								<span 
-								className="wp-block-ub-content-toggle-accordion-title" 
-								style={{
-									color: props.attributes.titleColor
-								}}>
-									{ accordion.title }
+					accordions.map((accordion, i) => {
+						return <div style={{ borderColor: props.attributes.theme }} className="wp-block-ub-content-toggle-accordion" key={i}>
+							<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={{ backgroundColor: props.attributes.theme }}>
+								<span
+									className="wp-block-ub-content-toggle-accordion-title"
+									style={{
+										color: props.attributes.titleColor
+									}}>
+									{accordion.title}
 								</span>
-								<span className={ 'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + ( collapsed ? '' : 'open' ) }></span>
+								<span className={'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + (collapsed ? '' : 'open')}></span>
 							</div>
-							<div style={ { display: ( collapsed ? 'none' : 'block' ) } } className="wp-block-ub-content-toggle-accordion-content-wrap">
-								<div className="wp-block-ub-content-toggle-accordion-content">{ accordion.content }</div>
+							<div style={{ display: (collapsed ? 'none' : 'block') }} className="wp-block-ub-content-toggle-accordion-content-wrap">
+								<div className="wp-block-ub-content-toggle-accordion-content">{accordion.content}</div>
 							</div>
 						</div>;
-					} )
+					})
 				}
 			</div>
 		);
 	},
-} );
+});

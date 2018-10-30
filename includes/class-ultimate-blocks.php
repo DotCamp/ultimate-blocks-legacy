@@ -86,6 +86,7 @@ class Ultimate_Blocks {
 		 * of the plugin.
 		 */
 		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-i18n.php';
+		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-category.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
