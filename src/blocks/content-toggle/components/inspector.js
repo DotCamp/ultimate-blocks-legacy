@@ -5,10 +5,9 @@ const { __ } = wp.i18n;
 const { Component } = wp.element;
 const {
 	InspectorControls,
-	ColorPalette,
+	PanelColorSettings
 } = wp.editor;
 const {
-    PanelColor,
 	PanelBody,
 	PanelRow,
 	FormToggle,
@@ -21,28 +20,22 @@ export default class Inspector extends Component {
 	render() {
 		return (
 			<InspectorControls>
-                <PanelColor
-                    title={ __( 'Color Scheme' ) }
-                    colorValue={ this.props.attributes.theme }
-                    initialOpen={ false }
-                >
-                    <ColorPalette
-                        value={ this.props.attributes.theme }
-                        onChange={ this.props.onThemeChange }
-                        allowReset
-                    />
-				</PanelColor>
-				<PanelColor
-                    title={ __( 'Title Color' ) }
-                    colorValue={ this.props.attributes.titleColor }
-                    initialOpen={ false }
-                >
-                    <ColorPalette
-                        value={ this.props.attributes.titleColor }
-                        onChange={ this.props.onTitleColorChange }
-                        allowReset
-                    />
-                </PanelColor>
+				<PanelColorSettings
+					title={ __( 'Color Scheme' ) }
+					initialOpen={ false }
+					colorSettings = {[
+						{
+							value: this.props.attributes.theme,
+							onChange: this.props.onThemeChange,
+							label: __('Container Color')
+						},
+						{
+							value: this.props.attributes.titleColor,
+							onChange: this.props.onTitleColorChange,
+							label: __('Title Color')
+						}
+					]}
+				/>
 				<PanelBody title={ __( 'Initial State' ) } initialOpen={ true }>
 					<PanelRow>
                         <label htmlFor="ub-content-toggle-state">

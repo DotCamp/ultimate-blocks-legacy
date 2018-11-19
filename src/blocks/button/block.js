@@ -20,7 +20,8 @@ const {
     ColorPalette,
     URLInput,
     RichText,
-    BlockAlignmentToolbar
+    BlockAlignmentToolbar,
+    PanelColorSettings
 } = wp.editor;
 const {
     PanelBody,
@@ -189,28 +190,22 @@ registerBlockType('ub/button-block', {
                             onChange={() => props.setAttributes({ buttonRounded: !buttonRounded })}
                         />
                     </PanelBody>
-                    <PanelColor
-                        title={__('Button Color')}
-                        colorValue={buttonColor}
+                    <PanelColorSettings
+                        title={__('Button Colors')}
                         initialOpen={true}
-                    >
-                        <ColorPalette
-                            value={buttonColor}
-                            onChange={(colorValue) => props.setAttributes({ buttonColor: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
-                    <PanelColor
-                        title={__('Button Text Color')}
-                        colorValue={buttonTextColor}
-                        initialOpen={true}
-                    >
-                        <ColorPalette
-                            value={buttonTextColor}
-                            onChange={(colorValue) => props.setAttributes({ buttonTextColor: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
+                        colorSettings={[
+                            {
+                                value: buttonColor,
+                                onChange: colorValue =>  props.setAttributes({ buttonColor: colorValue }),
+                                label: __('Button Background')
+                            },
+                            {
+                                value: buttonTextColor,
+                                onChange: colorValue => props.setAttributes({ buttonTextColor: colorValue }),
+                                label: __('Button Text Color')
+                            }
+                        ]}
+                    />
                 </InspectorControls>
             ),
 

@@ -16,13 +16,13 @@ const {
     BlockControls,
     MediaUpload,
     InspectorControls,
-    ColorPalette
+    ColorPalette,
+    PanelColorSettings
 } = wp.editor;
 
 const {
     Button,
     PanelBody,
-    PanelColor,
     RangeControl,
 } = wp.components;
 
@@ -152,17 +152,15 @@ registerBlockType('ub/testimonial-block', {
 
             isSelected && (
                 <InspectorControls>
-                    <PanelColor
+                    <PanelColorSettings
                         title={__('Background Color')}
-                        colorValue={props.attributes.backgroundColor}
                         initialOpen={true}
-                    >
-                        <ColorPalette
-                            value={props.attributes.backgroundColor}
-                            onChange={(colorValue) => props.setAttributes({ backgroundColor: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
+                        colorSettings={[{
+                            value: props.attributes.backgroundColor,
+                            onChange: (colorValue) => props.setAttributes({ backgroundColor: colorValue }),
+                            label: ''
+                        }]}
+                    />
                     <PanelBody
                         title={__('Testimonial Body')}
                     >

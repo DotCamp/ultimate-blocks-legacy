@@ -18,7 +18,7 @@ const { registerBlockType } = wp.blocks;
 const {
     InspectorControls,
     AlignmentToolbar,
-    ColorPalette,
+    PanelColorSettings,
     BlockControls,
     RichText
 } = wp.editor;
@@ -27,7 +27,6 @@ const {
     PanelBody,
     Toolbar,
     RangeControl,
-    PanelColor,
     SelectControl,
 } = wp.components;
 
@@ -184,43 +183,27 @@ registerBlockType('ub/number-box', {
                             props.setAttributes({ column: value })
                         }}
                     />
-
-                    <PanelColor
-                        title={__('Number Background Color')}
-                        colorValue={numberBackground}
+                    <PanelColorSettings
+                        title={__('Color Scheme')}
                         initialOpen={false}
-                    >
-                        <ColorPalette
-                            value={numberBackground}
-                            onChange={(colorValue) => props.setAttributes({ numberBackground: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
-
-                    <PanelColor
-                        title={__('Number Color')}
-                        colorValue={numberColor}
-                        initialOpen={false}
-                    >
-                        <ColorPalette
-                            value={numberColor}
-                            onChange={(colorValue) => props.setAttributes({ numberColor: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
-
-                    <PanelColor
-                        title={__('Border Color')}
-                        colorValue={borderColor}
-                        initialOpen={false}
-                    >
-                        <ColorPalette
-                            value={borderColor}
-                            onChange={(colorValue) => props.setAttributes({ borderColor: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
-
+                        colorSettings={[
+                            {
+                                value: numberBackground,
+                                onChange: colorValue => props.setAttributes({ numberBackground: colorValue }),
+                                label:__('Number Background Color')
+                            },
+                            {
+                                value: numberColor,
+                                onChange: colorValue => props.setAttributes({ numberColor: colorValue }),
+                                label:__('Number Color')
+                            },
+                            {
+                                value: borderColor,
+                                onChange: colorValue => props.setAttributes({ borderColor: colorValue }),
+                                label:__('Border Color')
+                            },
+                        ]}
+                    />
                 </InspectorControls>
             ),
 

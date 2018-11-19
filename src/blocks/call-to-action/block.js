@@ -14,11 +14,11 @@ const {
     ColorPalette,
     InspectorControls,
     URLInput,
-    BlockControls
+    BlockControls,
+    PanelColorSettings
 } = wp.editor;
 
 const {
-    PanelColor,
     PanelBody,
     Dashicon,
     IconButton,
@@ -143,6 +143,21 @@ registerBlockType('ub/call-to-action', {
             setState
         } = props;
 
+        const {
+            ctaBackgroundColor,
+            ctaBorderColor,
+            ctaBorderSize,
+            headFontSize,
+            headColor,
+            contentAlign,
+            contentColor,
+            contentFontSize,
+            buttonWidth,
+            buttonFontSize,
+            buttonColor,
+            buttonTextColor
+        } = props.attributes
+
         const onSetActiveEditable = (newEditable) => () => {
             setState({ editable: newEditable })
         };
@@ -156,30 +171,22 @@ registerBlockType('ub/call-to-action', {
 
             isSelected && (
                 <InspectorControls key="inspectors">
-
-                    <PanelColor
-                        title={__('Background Color')}
-                        colorValue={props.attributes.ctaBackgroundColor}
+                    <PanelColorSettings
+                        title={__('Color Settings')}
                         initialOpen={false}
-                    >
-                        <ColorPalette
-                            value={props.attributes.ctaBackgroundColor}
-                            onChange={(colorValue) => props.setAttributes({ ctaBackgroundColor: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
-
-                    <PanelColor
-                        title={__('Border Color')}
-                        colorValue={props.attributes.ctaBorderColor}
-                        initialOpen={false}
-                    >
-                        <ColorPalette
-                            value={props.attributes.ctaBorderColor}
-                            onChange={(colorValue) => props.setAttributes({ ctaBorderColor: colorValue })}
-                            allowReset
-                        />
-                    </PanelColor>
+                        colorSettings={[
+                            {
+                                value: ctaBackgroundColor,
+                                onChange: colorValue => props.setAttributes({ ctaBackgroundColor: colorValue }),
+                                label: __('Background Color')
+                            },
+                            {
+                                value: ctaBorderColor,
+                                onChange: colorValue => props.setAttributes({ ctaBorderColor: colorValue }),
+                                label: __('Border Color')
+                            }
+                        ]}
+                    />
 
                     <PanelBody
                         title={__('Headline Settings')}
@@ -188,7 +195,7 @@ registerBlockType('ub/call-to-action', {
 
                         <RangeControl
                             label={__('Font Size')}
-                            value={props.attributes.headFontSize}
+                            value={headFontSize}
                             onChange={(value) => props.setAttributes({ headFontSize: value })}
                             min={10}
                             max={200}
@@ -197,7 +204,7 @@ registerBlockType('ub/call-to-action', {
                         />
                         <p>Color</p>
                         <ColorPalette
-                            value={props.attributes.headColor}
+                            value={headColor}
                             onChange={(colorValue) => props.setAttributes({ headColor: colorValue })}
                         />
 
@@ -209,7 +216,7 @@ registerBlockType('ub/call-to-action', {
                     >
                         <SelectControl
                             label={__('Content Align')}
-                            value={props.attributes.contentAlign}
+                            value={contentAlign}
                             onChange={(value) => props.setAttributes({ contentAlign: value })}
                             options={[
                                 { value: 'left', label: __('Left') },
@@ -221,7 +228,7 @@ registerBlockType('ub/call-to-action', {
 
                         <RangeControl
                             label={__('Font Size')}
-                            value={props.attributes.contentFontSize}
+                            value={contentFontSize}
                             onChange={(value) => props.setAttributes({ contentFontSize: value })}
                             min={10}
                             max={200}
@@ -230,7 +237,7 @@ registerBlockType('ub/call-to-action', {
                         />
                         <p>Color</p>
                         <ColorPalette
-                            value={props.attributes.contentColor}
+                            value={contentColor}
                             onChange={(colorValue) => props.setAttributes({ contentColor: colorValue })}
                         />
 
@@ -243,7 +250,7 @@ registerBlockType('ub/call-to-action', {
 
                         <RangeControl
                             label={__('Button Width')}
-                            value={props.attributes.buttonWidth}
+                            value={buttonWidth}
                             onChange={(value) => props.setAttributes({ buttonWidth: value })}
                             min={10}
                             max={500}
@@ -253,7 +260,7 @@ registerBlockType('ub/call-to-action', {
 
                         <RangeControl
                             label={__('Font Size')}
-                            value={props.attributes.buttonFontSize}
+                            value={buttonFontSize}
                             onChange={(value) => props.setAttributes({ buttonFontSize: value })}
                             min={10}
                             max={200}
@@ -262,13 +269,13 @@ registerBlockType('ub/call-to-action', {
                         />
                         <p>Button Color</p>
                         <ColorPalette
-                            value={props.attributes.buttonColor}
+                            value={buttonColor}
                             onChange={(colorValue) => props.setAttributes({ buttonColor: colorValue })}
                         />
 
                         <p>Button Text Color</p>
                         <ColorPalette
-                            value={props.attributes.buttonTextColor}
+                            value={buttonTextColor}
                             onChange={(colorValue) => props.setAttributes({ buttonTextColor: colorValue })}
                         />
 
@@ -284,9 +291,9 @@ registerBlockType('ub/call-to-action', {
                 <div
                     className="ub_call_to_action"
                     style={{
-                        backgroundColor: props.attributes.ctaBackgroundColor,
-                        border: props.attributes.ctaBorderSize + 'px solid',
-                        borderColor: props.attributes.ctaBorderColor
+                        backgroundColor: ctaBackgroundColor,
+                        border: ctaBorderSize + 'px solid',
+                        borderColor: ctaBorderColor
                     }}
                 >
 
@@ -296,8 +303,8 @@ registerBlockType('ub/call-to-action', {
                             placeholder={__('CTA Title Goes Here')}
                             className="ub_call_to_action_headline_text"
                             style={{
-                                fontSize: props.attributes.headFontSize + 'px',
-                                color: props.attributes.headColor
+                                fontSize: headFontSize + 'px',
+                                color: headColor
                             }}
                             onChange={(value) => props.setAttributes({ ub_call_to_action_headline_text: value })}
                             value={props.attributes.ub_call_to_action_headline_text}
@@ -313,9 +320,9 @@ registerBlockType('ub/call-to-action', {
                             placeholder={__('Add Call to Action Text Here')}
                             className="ub_cta_content_text"
                             style={{
-                                fontSize: props.attributes.contentFontSize + 'px',
-                                color: props.attributes.contentColor,
-                                textAlign: props.attributes.contentAlign
+                                fontSize: contentFontSize + 'px',
+                                color: contentColor,
+                                textAlign: contentAlign
                             }}
                             onChange={(value) => props.setAttributes({ ub_cta_content_text: value })}
                             value={props.attributes.ub_cta_content_text}
@@ -329,8 +336,8 @@ registerBlockType('ub/call-to-action', {
                         <span
                             className={`wp-block-button ub_cta_button`}
                             style={{
-                                backgroundColor: props.attributes.buttonColor,
-                                width: props.attributes.buttonWidth + 'px'
+                                backgroundColor: buttonColor,
+                                width: buttonWidth + 'px'
                             }}
                         >
                             <RichText
@@ -338,8 +345,8 @@ registerBlockType('ub/call-to-action', {
                                 placeholder={__('Button Text')}
                                 className="ub_cta_button_text"
                                 style={{
-                                    color: props.attributes.buttonTextColor,
-                                    fontSize: props.attributes.buttonFontSize + 'px'
+                                    color: buttonTextColor,
+                                    fontSize: buttonFontSize + 'px'
                                 }}
                                 onChange={(value) => props.setAttributes({ ub_cta_button_text: value })}
                                 value={props.attributes.ub_cta_button_text}
