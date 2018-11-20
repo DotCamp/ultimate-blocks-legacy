@@ -659,3 +659,17 @@
 .wp-block-ub-tabbed-content-tabs-content {
   border: 1px solid lightgrey;
   padding: 25px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.wp-block-ub-rating .star-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row; }
