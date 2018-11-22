@@ -33,6 +33,9 @@ registerBlockType('ub/table-of-contents',{
             default: ''
         }
     },
+    supports:{
+        multiple: false
+    },
     edit(props){
         const editor = select( 'core/editor' );
         const headers = editor.getBlocks()
