@@ -72,18 +72,28 @@
             active: true,
         },
         {
+            label: 'Rating',
+            name: 'ub/rating',
+            active: true
+        },
+        {
             label: 'Social Share',
             name: 'ub/social-share',
             active: true
         },
         {
-            label: 'Testimonial',
-            name: 'ub/testimonial-block',
+            label: 'Tabbed Content',
+            name: 'ub/tabbed-content',
             active: true
         },
         {
-            label: 'Tabbed Content',
-            name: 'ub/tabbed-content',
+            label: 'Table of Contents',
+            name: 'ub/table-of-contents',
+            active: true
+        },
+        {
+            label: 'Testimonial',
+            name: 'ub/testimonial-block',
             active: true
         }
     ];

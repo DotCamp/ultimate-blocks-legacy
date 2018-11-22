@@ -70,6 +70,11 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Number Box',
 				'name'   => 'ub/number-box',
 				'active' => true,
+            ),
+			array(
+				'label'  => 'Rating',
+				'name'   => 'ub/rating',
+				'active' => true,
 			),
 			array(
 				'label'  => 'Social Share',
@@ -77,15 +82,20 @@ class Ultimate_Blocks_Util {
 				'active' => true,
 			),
 			array(
-				'label'  => 'Testimonial',
-				'name'   => 'ub/testimonial-block',
-				'active' => true,
-			),
-			array(
 				'label'  => 'Tabbed Content',
 				'name'   => 'ub/tabbed-content',
 				'active' => true,
-			),
+            ),
+			array(
+				'label'  => 'Table of Contents',
+				'name'   => 'ub/table-of-contents',
+				'active' => true,
+            ),
+            array(
+				'label'  => 'Testimonial',
+				'name'   => 'ub/testimonial-block',
+				'active' => true,
+			)
 		];
 	}
 
