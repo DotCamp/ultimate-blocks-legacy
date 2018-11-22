@@ -668,7 +668,7 @@
 .ub-hide {
   display: none !important; }
 
-.wp-block-ub-rating .star-container {
+.ub-star-container {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;

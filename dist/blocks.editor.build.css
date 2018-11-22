@@ -466,11 +466,7 @@
 .ub-hide {
   display: none !important; }
 
-.gutenberg .container {
-  border: 1px solid #dedede;
-  padding: 1rem; }
-
-.gutenberg .star-container {
+.ub-star-container {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
