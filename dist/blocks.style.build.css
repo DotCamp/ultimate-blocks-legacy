@@ -673,3 +673,29 @@
   display: flex;
   -ms-flex-direction: row;
       flex-direction: row; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.ub_table-of-contents li + ul {
+  margin-bottom: 0; }
+
+.ub_table-of-contents ul {
+  padding-left: 1.3em; }
+
+.ub_table-of-contents > ul {
+  padding-left: 0; }
