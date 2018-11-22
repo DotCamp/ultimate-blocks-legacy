@@ -72,11 +72,12 @@ registerBlockType('ub/table-of-contents',{
         const linkList = headerArray(headers)
         props.setAttributes({links: JSON.stringify(linkList)})
         
-        return(<div className = "ub_table-of-contents">{parseList(linkList)}</div>);
+        return(<div className = "ub_table-of-contents">{linkList ? parseList(linkList) : "Add a header"}</div>);
     },
     save(props){
+        const linkList = JSON.parse(props.attributes.links)
         return(<div className = "ub_table-of-contents">
-            {parseList(JSON.parse(props.attributes.links))}
+            {linkList && parseList(linkList)}
         </div>);
     }
 })
