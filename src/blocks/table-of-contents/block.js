@@ -3,7 +3,7 @@ import icon from './icon';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { select } = wp.data;
+const { select, withSelect } = wp.data;
 
 import './editor.scss';
 import './style.scss';
@@ -36,11 +36,8 @@ registerBlockType('ub/table-of-contents',{
     supports:{
         multiple: false
     },
-    edit(props){
-        const editor = select( 'core/editor' );
-        const headers = editor.getBlocks()
-            .filter( block => block.name === 'core/heading' )
-            .map(header => header.attributes)
+    edit: withSelect((select, ownProps) => {
+        let {links} = ownProps;
 
         const headerArray = origHeaders =>{
             let arrays = [];
@@ -68,14 +65,18 @@ registerBlockType('ub/table-of-contents',{
             }
             return(arrays[0])
         }
-
-        const linkList = headerArray(headers)
-        props.setAttributes({links: JSON.stringify(linkList)})
-        
-        return(<div className = "ub_table-of-contents">{linkList ? parseList(linkList) : "Add a header"}</div>);
-    },
+        links = headerArray(select( 'core/editor' ).getBlocks()
+            .filter( block => block.name === 'core/heading' )
+            .map(header => header.attributes))
+        return{
+            headers: links
+        };
+    })(({headers}) =>{
+        return(<div className = "ub_table-of-contents">{headers ? parseList(headers) : "Add a header"}</div>);
+    }),
     save(props){
-        const linkList = JSON.parse(props.attributes.links)
+        let linkList
+        if(props.attributes.links !== "") linkList = JSON.parse(props.attributes.links)
         return(<div className = "ub_table-of-contents">
             {linkList && parseList(linkList)}
         </div>);
