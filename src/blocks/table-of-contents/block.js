@@ -11,126 +11,180 @@ import './style.scss';
 import { Component } from 'react';
 
 class TableOfContents extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			headers: props.headers,
+			unsubscribe: null
+		};
+	}
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            headers: props.headers,
-            unsubscribe: null
-        }
-    }
+	componentDidMount() {
+		const makeHeaderArray = origHeaders => {
+			let arrays = [];
+			origHeaders.forEach(header => {
+				let last = arrays.length - 1;
+				if (
+					arrays.length === 0 ||
+					arrays[last][0].level < header.level
+				) {
+					arrays.push([header]);
+				} else if (arrays[last][0].level === header.level) {
+					arrays[last].push(header);
+				} else {
+					while (arrays[last][0].level > header.level) {
+						if (arrays.length > 1) {
+							arrays[arrays.length - 2].push(arrays.pop());
+							last = arrays.length - 1;
+						} else break;
+					}
+					if (arrays[last][0].level === header.level) {
+						arrays[last].push(header);
+					}
+				}
+			});
 
-    componentDidMount() {
+			while (
+				arrays.length > 1 &&
+				arrays[arrays.length - 1][0].level >
+					arrays[arrays.length - 2][0].level
+			) {
+				arrays[arrays.length - 2].push(arrays.pop());
+			}
 
-        const makeHeaderArray = origHeaders => {
-            let arrays = [];
-            origHeaders.forEach(header => {
-                let last = arrays.length - 1;
-                if (arrays.length === 0 || arrays[last][0].level < header.level) {
-                    arrays.push([header]);
-                } else if (arrays[last][0].level === header.level) {
-                    arrays[last].push(header);
-                } else if (arrays.length > 2) {
-                    while (arrays[last][0].level > header.level) {
-                        arrays[arrays.length - 2].push(arrays.pop());
-                        last = arrays.length - 1;
-                    }
-                    if (arrays[last][0].level === header.level) {
-                        arrays[last].push(header);
-                    }
-                }
-            })
+			return arrays[0];
+		};
 
-            while (arrays.length > 1 && arrays[arrays.length - 1][0].level > arrays[arrays.length - 2][0].level) {
-                arrays[arrays.length - 2].push(arrays.pop());
-            }
+		const getHeaderBlocks = () =>
+			select('core/editor')
+				.getBlocks()
+				.filter(block => block.name === 'core/heading');
 
-            return (arrays[0])
+		const setHeaders = () => {
+			const headers = getHeaderBlocks().map(header => header.attributes);
 
-        }
+			headers.forEach((heading, key) => {
+				const headingAnchorEmpty =
+					typeof heading.anchor === 'undefined' ||
+					heading.anchor === '';
+				const headingContentEmpty =
+					typeof heading.content === 'undefined' ||
+					heading.content === '';
+				const headingDefaultAnchor =
+					!headingAnchorEmpty &&
+					heading.anchor.indexOf(key + '-') === 0;
+				if (
+					!headingContentEmpty &&
+					(headingAnchorEmpty || headingDefaultAnchor)
+				) {
+					heading.anchor =
+						key +
+						'-' +
+						heading.content
+							.toString()
+							.toLowerCase()
+							.replace(' ', '-');
+				}
+			});
 
-        const getHeaderBlocks = () => select('core/editor').getBlocks().filter(block => block.name === 'core/heading')
+			this.setState({ headers: makeHeaderArray(headers) });
+		};
 
-        const unsubscribe = subscribe(() => {
+		setHeaders();
 
-            const headers = getHeaderBlocks().map(header => header.attributes);
+		const unsubscribe = subscribe(() => {
+			setHeaders();
+		});
+		this.setState({ unsubscribe });
+	}
 
-            headers.forEach((heading, key) => {
-                const headingAnchorEmpty = (typeof heading.anchor === 'undefined' || heading.anchor === '');
-                const headingContentEmpty = (typeof heading.content === 'undefined' || heading.content === '');
-                const headingDefaultAnchor = (!headingAnchorEmpty && heading.anchor.indexOf(key + '-') === 0);
-                if (!headingContentEmpty && (headingAnchorEmpty || headingDefaultAnchor)) {
-                    heading.anchor = key + '-' + heading.content.toString().toLowerCase().replace(' ', '-');
-                }
-            })
+	componentWillUnmount() {
+		this.state.unsubscribe();
+	}
 
-            this.setState({ headers: makeHeaderArray(headers) });
+	componentDidUpdate(prevProps, prevState) {
+		if (
+			JSON.stringify(prevProps.headers) !==
+			JSON.stringify(prevState.headers)
+		) {
+			this.props.blockProp.setAttributes({
+				links: JSON.stringify(this.state.headers)
+			});
+		}
+	}
 
-        })
+	render() {
+		const parseList = list => {
+			let items = [];
+			list.forEach(item => {
+				items.push(
+					Array.isArray(item) ? (
+						parseList(item)
+					) : (
+						<li>
+							<a href={`#${item.anchor}`}>{item.content}</a>
+						</li>
+					)
+				);
+			});
+			return <ul>{items}</ul>;
+		};
 
-        this.setState({ unsubscribe })
-
-    }
-
-    componentWillUnmount() {
-        this.state.unsubscribe();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (JSON.stringify(prevProps.headers) !== JSON.stringify(prevState.headers)) {
-            this.props.blockProp.setAttributes({ links: JSON.stringify(this.state.headers) })
-        }
-    }
-
-    render() {
-
-        const parseList = list => {
-            let items = []
-            list.forEach(item => {
-                items.push(Array.isArray(item) ?
-                    parseList(item) :
-                    <li><a href={`#${item.anchor}`}>{item.content}</a></li>
-                );
-            })
-            return (<ul>{items}</ul>);
-        }
-
-        if (this.state.headers) {
-            return (<div className="ub_table-of-contents">
-                {parseList(this.state.headers)}
-            </div>)
-        } else {
-            return (<p className="ub_table-of-contents">Add a header to begin generating the table of contents</p>)
-        }
-    }
+		if (this.state.headers) {
+			return (
+				<div className="ub_table-of-contents">
+					{parseList(this.state.headers)}
+				</div>
+			);
+		} else {
+			return (
+				<p className="ub_table-of-contents">
+					Add a header to begin generating the table of contents
+				</p>
+			);
+		}
+	}
 }
 
 registerBlockType('ub/table-of-contents', {
-    title: __('Table of Contents'),
-    icon: icon,
-    category: 'ultimateblocks',
-    keywords: [
-        __('Table of Contents'),
-        __('Ultimate Blocks')
-    ],
+	title: __('Table of Contents'),
+	icon: icon,
+	category: 'ultimateblocks',
+	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
 
-    attributes: {
-        links: {
-            type: 'string',
-            default: ''
-        }
-    },
+	attributes: {
+		links: {
+			type: 'string',
+			default: ''
+		}
+	},
 
-    supports: {
-        multiple: false
-    },
+	supports: {
+		multiple: false
+	},
 
-    edit(props) {
-        return (<TableOfContents headers={props.attributes.links ? JSON.parse(props.attributes.links) : props.attributes.links} blockProp={props} />);
-    },
+	edit(props) {
+		return (
+			<TableOfContents
+				headers={
+					props.attributes.links
+						? JSON.parse(props.attributes.links)
+						: props.attributes.links
+				}
+				blockProp={props}
+			/>
+		);
+	},
 
-    save(props) {
-        return (<TableOfContents headers={props.attributes.links ? JSON.parse(props.attributes.links) : props.attributes.links} />);
-    }
-
-})
+	save(props) {
+		return (
+			<TableOfContents
+				headers={
+					props.attributes.links
+						? JSON.parse(props.attributes.links)
+						: props.attributes.links
+				}
+			/>
+		);
+	}
+});
