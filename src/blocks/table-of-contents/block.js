@@ -29,9 +29,9 @@ class TableOfContents extends Component{
                 else if(arrays[last][0].level === header.level){
                     arrays[last].push(header);
                 }
-                else{
+                else if(arrays.length > 2){
                     while(arrays[last][0].level > header.level){
-                        arrays[arrays.length-2].push(arrays.pop());
+                        arrays[arrays.length - 2].push(arrays.pop());
                         last = arrays.length - 1;
                     }
                     if(arrays[last][0].level === header.level){
@@ -46,18 +46,16 @@ class TableOfContents extends Component{
         }
         const getHeaderBlocks = () => select('core/editor').getBlocks().filter(block => block.name === 'core/heading')
         const unsubscribe = subscribe(() =>{
-            getHeaderBlocks().forEach((heading, key) => {
-                let {anchor, content} = heading.attributes;
-                const headingAnchorEmpty = (typeof anchor === 'undefined' || anchor === '');
-                const headingContentEmpty = (typeof content === 'undefined' || content === '');
-                const headingDefaultAnchor = (!headingAnchorEmpty && anchor.indexOf( key + '-') === 0);
-        
+            const headers = getHeaderBlocks().map(header => header.attributes);
+            headers.forEach((heading, key) => {
+                const headingAnchorEmpty = (typeof heading.anchor === 'undefined' || heading.anchor === '');
+                const headingContentEmpty = (typeof heading.content === 'undefined' || heading.content === '');
+                const headingDefaultAnchor = (!headingAnchorEmpty && heading.anchor.indexOf( key + '-') === 0);
                 if (!headingContentEmpty && (headingAnchorEmpty || headingDefaultAnchor)) {
-                    anchor = key + '-' + content.toString().toLowerCase().replace(' ', '-');
+                    heading.anchor = key + '-' + heading.content.toString().toLowerCase().replace(' ', '-');
                 }
             })
-            const headers = makeHeaderArray(getHeaderBlocks().map(header => header.attributes));
-            this.setState({headers});
+            this.setState({headers: makeHeaderArray(headers)});
         })
         this.setState({unsubscribe})
     }
@@ -67,9 +65,7 @@ class TableOfContents extends Component{
     componentDidUpdate(prevProps, prevState){
         if(JSON.stringify(prevProps.headers) !== JSON.stringify(prevState.headers)){
             this.props.blockProp.setAttributes({links: JSON.stringify(this.state.headers)})
-            
         }
-        console.log("Props updated")
     }
     render(){
         const parseList = list => {
