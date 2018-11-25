@@ -44,10 +44,9 @@ class TableOfContents extends Component{
             }
             return(arrays[0])
         }
-        
-        const headerBlocks = select('core/editor').getBlocks().filter(block => block.name === 'core/heading')
+        const getHeaderBlocks = () => select('core/editor').getBlocks().filter(block => block.name === 'core/heading')
         const unsubscribe = subscribe(() =>{
-            headerBlocks.forEach((heading, key) => {
+            getHeaderBlocks().forEach((heading, key) => {
                 let {anchor, content} = heading.attributes;
                 const headingAnchorEmpty = (typeof anchor === 'undefined' || anchor === '');
                 const headingContentEmpty = (typeof content === 'undefined' || content === '');
@@ -57,7 +56,7 @@ class TableOfContents extends Component{
                     anchor = key + '-' + content.toString().toLowerCase().replace(' ', '-');
                 }
             })
-            const headers = makeHeaderArray(headerBlocks.map(header => header.attributes));
+            const headers = makeHeaderArray(getHeaderBlocks().map(header => header.attributes));
             this.setState({headers});
         })
         this.setState({unsubscribe})
@@ -68,7 +67,9 @@ class TableOfContents extends Component{
     componentDidUpdate(prevProps, prevState){
         if(JSON.stringify(prevProps.headers) !== JSON.stringify(prevState.headers)){
             this.props.blockProp.setAttributes({links: JSON.stringify(this.state.headers)})
+            
         }
+        console.log("Props updated")
     }
     render(){
         const parseList = list => {
@@ -81,9 +82,9 @@ class TableOfContents extends Component{
             })
             return(<ul>{items}</ul>);
         }
-        if(this.props.headers){
+        if(this.state.headers){
             return(<div className = "ub_table-of-contents">
-                {parseList(this.props.headers)}
+                {parseList(this.state.headers)}
             </div>)
         }
         else{
