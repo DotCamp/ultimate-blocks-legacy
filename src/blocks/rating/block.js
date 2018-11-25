@@ -13,11 +13,11 @@ import {
     FullStar
 } from './icons'
 
-registerBlockType('ub/rating', {   
+registerBlockType('ub/rating', {
     title: __('Rating'),
     icon: HalfStar,
     category: 'ultimateblocks',
-  
+
     attributes: {
         starCount: {
             type: 'number',
@@ -35,15 +35,15 @@ registerBlockType('ub/rating', {
             type: 'number',
             default: 0
         },
-        reviewText:{
+        reviewText: {
             type: 'array',
             source: 'children',
             selector: '.ub-review-text'
         }
     },
 
-    edit: withState({ editable: 'content' }) (function (props) {
-        const{
+    edit: withState({ editable: 'content' })(function (props) {
+        const {
             editable,
             isSelected,
             setAttributes,
@@ -63,21 +63,21 @@ registerBlockType('ub/rating', {
         };
 
         return [isSelected && <InspectorControls key="inspectors">
-    		<PanelColorSettings
-                title={ __( 'Star Color' ) }
-                initialOpen={ false }
-                colorSettings = {[
+            <PanelColorSettings
+                title={__('Star Color')}
+                initialOpen={false}
+                colorSettings={[
                     {
                         value: starColor,
-                        onChange: colorValue => setAttributes({starColor: colorValue}),
+                        onChange: colorValue => setAttributes({ starColor: colorValue }),
                         label: __('')
                     }
                 ]}
-			/>
+            />
             <RangeControl
                 label={__('Star size')}
                 value={starSize}
-                onChange={value => setAttributes({starSize: value})}
+                onChange={value => setAttributes({ starSize: value })}
                 min={10}
                 max={30}
                 beforeIcon="editor-contract"
@@ -87,8 +87,10 @@ registerBlockType('ub/rating', {
             <RangeControl
                 label={__('Number of stars')}
                 value={starCount}
-                onChange={value => setAttributes({starCount: value,
-                    selectedStars: (value < selectedStars ? value : selectedStars)})}
+                onChange={value => setAttributes({
+                    starCount: value,
+                    selectedStars: (value < selectedStars ? value : selectedStars)
+                })}
                 min={5}
                 max={10}
                 beforeIcon="star-empty"
@@ -97,7 +99,7 @@ registerBlockType('ub/rating', {
             <RangeControl
                 label={__('Number of selected stars')}
                 value={selectedStars}
-                onChange={value => setAttributes({selectedStars: value })}
+                onChange={value => setAttributes({ selectedStars: value })}
                 min={0}
                 max={starCount}
                 beforeIcon="star-filled"
@@ -108,7 +110,7 @@ registerBlockType('ub/rating', {
             <div className="ub-star-container">
                 {[...Array(starCount)].map((e, i) =>
                     <div key={i}>
-                        {i < selectedStars ? <FullStar size={starSize} fillColor={starColor}/> : <EmptyStar size={starSize}/>}
+                        {i < selectedStars ? <FullStar size={starSize} fillColor={starColor} /> : <EmptyStar size={starSize} />}
                     </div>)}
             </div>
             <div key={'editable'} className="ub-review-text">
@@ -116,7 +118,7 @@ registerBlockType('ub/rating', {
                     tagName="div"
                     placeholder={__('The text of the review goes here')}
                     value={reviewText}
-                    onChange={text => setAttributes({reviewText: text})}
+                    onChange={text => setAttributes({ reviewText: text })}
                     keepPlaceholderOnFocus={true}
                     isSelected={isSelected && editable === 'review_text'}
                     onFocus={onSetActiveEditable('review_text')}
@@ -126,19 +128,19 @@ registerBlockType('ub/rating', {
     }),
 
     save(props) {
-        const {starCount, starSize, starColor, selectedStars, reviewText} = props.attributes;
+        const { starCount, starSize, starColor, selectedStars, reviewText } = props.attributes;
         return (
             <div className="ub-rating">
                 <div className="ub-star-container">
                     {[...Array(starCount)].map((e, i) =>
                         <div key={i}>
-                            {i < selectedStars ? <FullStar size={starSize} fillColor={starColor}/> : <EmptyStar size={starSize}/>}
+                            {i < selectedStars ? <FullStar size={starSize} fillColor={starColor} /> : <EmptyStar size={starSize} />}
                         </div>)}
                 </div>
                 <div className="ub-review-text">
                     {reviewText}
                 </div>
             </div>
-            );
-        }
+        );
+    }
 });
