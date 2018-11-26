@@ -15,7 +15,8 @@ class TableOfContents extends Component {
 		super(props);
 		this.state = {
 			headers: props.headers,
-			unsubscribe: null
+			unsubscribe: null,
+			showList: true
 		};
 	}
 
@@ -132,13 +133,18 @@ class TableOfContents extends Component {
 
 		if (this.state.headers) {
 			return (
-				<div className="ub_table-of-contents">
+				<div
+					className="ub_table-of-contents-container"
+					style={{
+						display: this.props.isHidden ? 'none' : 'initial'
+					}}
+				>
 					{parseList(this.state.headers)}
 				</div>
 			);
 		} else {
 			return (
-				<p className="ub_table-of-contents">
+				<p className="ub_table-of-contents-placeholder">
 					Add a header to begin generating the table of contents
 				</p>
 			);
@@ -153,6 +159,14 @@ registerBlockType('ub/table-of-contents', {
 	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
 
 	attributes: {
+		title: {
+			type: 'string',
+			default: ''
+		},
+		showList: {
+			type: 'boolean',
+			default: true
+		},
 		links: {
 			type: 'string',
 			default: ''
@@ -164,27 +178,42 @@ registerBlockType('ub/table-of-contents', {
 	},
 
 	edit(props) {
+		const { showList, links } = props.attributes;
 		return (
-			<TableOfContents
-				headers={
-					props.attributes.links
-						? JSON.parse(props.attributes.links)
-						: props.attributes.links
-				}
-				blockProp={props}
-			/>
+			<div className="ub_table-of-contents">
+				<a
+					className="ub_table-of-contents-toggle"
+					href="#"
+					onClick={() => {
+						props.setAttributes({
+							showList: !showList
+						});
+					}}
+				>
+					{showList ? __('hide') : __('show')}
+				</a>
+				{showList && (
+					<TableOfContents
+						headers={links && JSON.parse(links)}
+						blockProp={props}
+					/>
+				)}
+			</div>
 		);
 	},
 
 	save(props) {
+		const { showList, links } = props.attributes;
 		return (
-			<TableOfContents
-				headers={
-					props.attributes.links
-						? JSON.parse(props.attributes.links)
-						: props.attributes.links
-				}
-			/>
+			<div className="ub_table-of-contents">
+				<a className="ub_table-of-contents-toggle" href="#">
+					{showList ? __('hide') : __('show')}
+				</a>
+				<TableOfContents
+					isHidden={!showList}
+					headers={links && JSON.parse(links)}
+				/>
+			</div>
 		);
 	}
 });
