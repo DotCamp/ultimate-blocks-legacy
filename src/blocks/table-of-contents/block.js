@@ -5,6 +5,10 @@ const { registerBlockType } = wp.blocks;
 
 const { select, subscribe } = wp.data;
 
+const { RichText } = wp.editor;
+
+const { withState } = wp.compose;
+
 import './editor.scss';
 import './style.scss';
 
@@ -161,7 +165,8 @@ registerBlockType('ub/table-of-contents', {
 	attributes: {
 		title: {
 			type: 'string',
-			default: ''
+			default: '',
+			selector: '.ub_table-of-contents-title'
 		},
 		showList: {
 			type: 'boolean',
@@ -177,10 +182,27 @@ registerBlockType('ub/table-of-contents', {
 		multiple: false
 	},
 
-	edit(props) {
-		const { showList, links } = props.attributes;
+	edit: withState({ editable: 'content' })(function(props) {
+		const { editable, setAttributes, isSelected } = props;
+		const { showList, links, title } = props.attributes;
+		const onSetActiveEditable = newEditable => () => {
+			setState({ editable: newEditable });
+		};
 		return (
 			<div className="ub_table-of-contents">
+				<RichText
+					placeholder={__('Optional title')}
+					className="ub_table-of-contents-title"
+					onChange={text => setAttributes({ title: text })}
+					value={title}
+					multiline={false}
+					isSelected={
+						isSelected && editable === 'table_of_contents_title'
+					}
+					onFocus={onSetActiveEditable('table_of_contents_title')}
+					keepPlaceholderOnFocus={true}
+				/>
+				[
 				<a
 					className="ub_table-of-contents-toggle"
 					href="#"
@@ -192,6 +214,7 @@ registerBlockType('ub/table-of-contents', {
 				>
 					{showList ? __('hide') : __('show')}
 				</a>
+				]
 				{showList && (
 					<TableOfContents
 						headers={links && JSON.parse(links)}
@@ -200,17 +223,26 @@ registerBlockType('ub/table-of-contents', {
 				)}
 			</div>
 		);
-	},
+	}),
 
 	save(props) {
-		const { showList, links } = props.attributes;
+		const { showList, links, title } = props.attributes;
 		return (
 			<div className="ub_table-of-contents">
-				<a className="ub_table-of-contents-toggle" href="#">
-					{showList ? __('hide') : __('show')}
-				</a>
+				{title && (
+					<span>
+						<span className="ub_table-of-contents-title">
+							{title}
+						</span>{' '}
+						[
+						<a className="ub_table-of-contents-toggle" href="#">
+							{showList ? __('hide') : __('show')}
+						</a>
+						]
+					</span>
+				)}
 				<TableOfContents
-					isHidden={!showList}
+					isHidden={!showList || title}
 					headers={links && JSON.parse(links)}
 				/>
 			</div>
