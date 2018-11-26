@@ -15,18 +15,9 @@ import './editor.scss';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const {
-    InspectorControls,
-    AlignmentToolbar,
-    ColorPalette,
-} = wp.editor;
+const { InspectorControls, AlignmentToolbar, ColorPalette } = wp.editor;
 
-const {
-    PanelBody,
-    Toolbar,
-    RangeControl,
-    Dashicon
-} = wp.components;
+const { PanelBody, Toolbar, RangeControl, Dashicon } = wp.components;
 /**
  * Register: aa Gutenberg Block.
  *
@@ -41,33 +32,28 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType('ub/divider', {
-
-    title: __('Divider'),
-    icon: icon,
-    category: 'ultimateblocks',
-    keywords: [
-        __('Divider'),
-        __('Separator'),
-        __('Ultimate Blocks'),
-    ],
-    attributes: {
-        borderSize: {
-            type: 'number',
-            default: 2
-        },
-        borderStyle: {
-            type: 'string',
-            default: 'solid'
-        },
-        borderColor: {
-            type: 'string',
-            default: '#ccc'
-        },
-        borderHeight: {
-            type: 'number',
-            default: 20
-        }
-    },
+	title: __('Divider'),
+	icon: icon,
+	category: 'ultimateblocks',
+	keywords: [__('Divider'), __('Separator'), __('Ultimate Blocks')],
+	attributes: {
+		borderSize: {
+			type: 'number',
+			default: 2
+		},
+		borderStyle: {
+			type: 'string',
+			default: 'solid'
+		},
+		borderColor: {
+			type: 'string',
+			default: '#ccc'
+		},
+		borderHeight: {
+			type: 'number',
+			default: 20
+		}
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -77,64 +63,70 @@ registerBlockType('ub/divider', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-    edit: function (props) {
+	edit: function(props) {
+		const {
+			borderSize,
+			borderStyle,
+			borderColor,
+			borderHeight
+		} = props.attributes;
 
-        const {
-            borderSize,
-            borderStyle,
-            borderColor,
-            borderHeight
-        } = props.attributes;
+		// Creates a <p class='wp-block-cgb-block-divider'></p>.
+		return [
+			props.isSelected && (
+				<InspectorControls key="inspectors">
+					<RangeControl
+						label={__('Thickness')}
+						value={borderSize}
+						onChange={value =>
+							props.setAttributes({ borderSize: value })
+						}
+						min={1}
+						max={20}
+						beforeIcon="minus"
+						allowReset
+					/>
 
-        // Creates a <p class='wp-block-cgb-block-divider'></p>.
-        return [
+					<RangeControl
+						label={__('Height')}
+						value={borderHeight}
+						onChange={value =>
+							props.setAttributes({ borderHeight: value })
+						}
+						min={10}
+						max={200}
+						beforeIcon="minus"
+						allowReset
+					/>
 
-            !!props.focus && (
-                <InspectorControls key="inspectors">
+					<p>Color</p>
+					<ColorPalette
+						value={borderColor}
+						onChange={colorValue =>
+							props.setAttributes({ borderColor: colorValue })
+						}
+						allowReset
+					/>
+				</InspectorControls>
+			),
 
-                    <RangeControl
-                        label={__('Thickness')}
-                        value={borderSize}
-                        onChange={(value) => props.setAttributes({ borderSize: value })}
-                        min={1}
-                        max={20}
-                        beforeIcon="minus"
-                        allowReset
-                    />
-
-                    <RangeControl
-                        label={__('Height')}
-                        value={borderHeight}
-                        onChange={(value) => props.setAttributes({ borderHeight: value })}
-                        min={10}
-                        max={200}
-                        beforeIcon="minus"
-                        allowReset
-                    />
-
-                    <p>Color</p>
-                    <ColorPalette
-                        value={borderColor}
-                        onChange={(colorValue) => props.setAttributes({ borderColor: colorValue })}
-                        allowReset
-                    />
-
-                </InspectorControls>
-            ),
-
-            <div className={props.className}>
-                <div
-                    className="ub_divider"
-                    style={{
-                        borderTop: borderSize + 'px ' + borderStyle + ' ' + borderColor,
-                        marginTop: borderHeight + 'px',
-                        marginBottom: borderHeight + 'px'
-                    }}
-                >
-                </div>
-            </div>
-        ];
-    },
+			<div className={props.className}>
+				<div
+					className="ub_divider"
+					style={{
+						borderTop:
+							borderSize +
+							'px ' +
+							borderStyle +
+							' ' +
+							borderColor,
+						marginTop: borderHeight + 'px',
+						marginBottom: borderHeight + 'px'
+					}}
+				/>
+			</div>
+		];
+	},
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
@@ -144,27 +136,30 @@ registerBlockType('ub/divider', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-    save: function (props) {
+	save: function(props) {
+		const {
+			borderSize,
+			borderStyle,
+			borderColor,
+			borderHeight
+		} = props.attributes;
 
-        const {
-            borderSize,
-            borderStyle,
-            borderColor,
-            borderHeight
-        } = props.attributes;
-
-        return (
-            <div className={props.className}>
-                <div
-                    className="ub_divider"
-                    style={{
-                        borderTop: borderSize + 'px ' + borderStyle + ' ' + borderColor,
-                        marginTop: borderHeight + 'px',
-                        marginBottom: borderHeight + 'px'
-                    }}
-                >
-                </div>
-            </div>
-        );
-    },
+		return (
+			<div className={props.className}>
+				<div
+					className="ub_divider"
+					style={{
+						borderTop:
+							borderSize +
+							'px ' +
+							borderStyle +
+							' ' +
+							borderColor,
+						marginTop: borderHeight + 'px',
+						marginBottom: borderHeight + 'px'
+					}}
+				/>
+			</div>
+		);
+	}
 });
