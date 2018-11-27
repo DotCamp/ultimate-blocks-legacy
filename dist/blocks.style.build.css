@@ -691,11 +691,14 @@
 .ub-hide {
   display: none !important; }
 
-.ub_table-of-contents li + ul {
-  margin-bottom: 0; }
+.ub_table-of-contents {
+  background-color: #fafafa;
+  border: 1px solid black; }
+  .ub_table-of-contents ul {
+    padding-left: 1.3em;
+    margin-bottom: 0; }
+  .ub_table-of-contents > ul {
+    padding-left: 0; }
 
-.ub_table-of-contents ul {
-  padding-left: 1.3em; }
-
-.ub_table-of-contents > ul {
-  padding-left: 0; }
+.ub_table-of-contents-header {
+  text-align: center; }

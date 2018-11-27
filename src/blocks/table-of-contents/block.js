@@ -89,6 +89,7 @@ class TableOfContents extends Component {
 							.toString()
 							.toLowerCase()
 							.replace(' ', '-');
+					heading.anchor.replace(/[^\w\s-]/g, '');
 				}
 			});
 
@@ -190,31 +191,43 @@ registerBlockType('ub/table-of-contents', {
 		};
 		return (
 			<div className="ub_table-of-contents">
-				<RichText
-					placeholder={__('Optional title')}
-					className="ub_table-of-contents-title"
-					onChange={text => setAttributes({ title: text })}
-					value={title}
-					multiline={false}
-					isSelected={
-						isSelected && editable === 'table_of_contents_title'
-					}
-					onFocus={onSetActiveEditable('table_of_contents_title')}
-					keepPlaceholderOnFocus={true}
-				/>
-				[
-				<a
-					className="ub_table-of-contents-toggle"
-					href="#"
-					onClick={() => {
-						props.setAttributes({
-							showList: !showList
-						});
-					}}
-				>
-					{showList ? __('hide') : __('show')}
-				</a>
-				]
+				<div className="ub_table-of-contents-header">
+					<div className="ub_table-of-contents-title">
+						<RichText
+							placeholder={__('Optional title')}
+							className="ub_table-of-contents-title"
+							onChange={text => setAttributes({ title: text })}
+							value={title}
+							multiline={false}
+							isSelected={
+								isSelected &&
+								editable === 'table_of_contents_title'
+							}
+							onFocus={onSetActiveEditable(
+								'table_of_contents_title'
+							)}
+							keepPlaceholderOnFocus={true}
+						/>
+					</div>
+					<div
+						className="ub_table-of-contents-header-toggle"
+						style={{ float: 'right' }}
+					>
+						[
+						<a
+							className="ub_table-of-contents-toggle"
+							href="#"
+							onClick={() => {
+								props.setAttributes({
+									showList: !showList
+								});
+							}}
+						>
+							{showList ? __('hide') : __('show')}
+						</a>
+						]
+					</div>
+				</div>
 				{showList && (
 					<TableOfContents
 						headers={links && JSON.parse(links)}
@@ -230,7 +243,7 @@ registerBlockType('ub/table-of-contents', {
 		return (
 			<div className="ub_table-of-contents">
 				{title && (
-					<span>
+					<div className="ub_table-of-contents-header">
 						<span className="ub_table-of-contents-title">
 							{title}
 						</span>{' '}
@@ -239,10 +252,10 @@ registerBlockType('ub/table-of-contents', {
 							{showList ? __('hide') : __('show')}
 						</a>
 						]
-					</span>
+					</div>
 				)}
 				<TableOfContents
-					isHidden={!showList || title}
+					isHidden={!showList && title}
 					headers={links && JSON.parse(links)}
 				/>
 			</div>

@@ -491,3 +491,11 @@
 .editor-styles-wrapper .ub_table-of-contents ul {
   padding-left: 1.3em;
   margin-left: 1.3em; }
+
+.ub_table-of-contents-title {
+  max-width: 90%; }
+
+.ub_table-of-contents-header-toggle {
+  position: absolute;
+  top: 0;
+  right: 0; }
