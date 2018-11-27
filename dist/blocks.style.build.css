@@ -62,38 +62,38 @@
 .ub_testimonial {
   max-width: 100%;
   padding: 30px;
-  display: inline-block; }
+  display: grid;
+  grid-template-columns: fit-content(25%) auto;
+  grid-template-rows: auto auto; }
 
 .ub_testimonial_img {
-  max-width: 25%;
   padding: 10px 10px;
-  float: left; }
-
-.ub_testimonial_img img {
-  margin: 0 auto;
-  padding: 0;
-  border-radius: 50%; }
+  grid-column-start: 1;
+  grid-row-start: 1;
+  grid-row-end: span 2; }
+  .ub_testimonial_img img {
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 50%; }
 
 .ub_testimonial_content {
-  max-width: 72%;
-  padding: 11px 20px;
-  float: left; }
-
-.ub_testimonial_content p {
-  font-style: italic;
-  text-align: justify; }
+  grid-row-start: 1;
+  grid-column-start: 2;
+  padding: 11px 20px; }
+  .ub_testimonial_content p {
+    font-style: italic;
+    text-align: justify; }
 
 .ub_testimonial_sign {
   text-align: right;
-  float: right;
   padding-right: 10px;
-  padding-bottom: 10px; }
-
-.ub_testimonial_sign p {
-  margin-bottom: 2px !important; }
-
-.ub_testimonial_sign i {
-  font-size: 13px; }
+  padding-bottom: 10px;
+  grid-column-start: 2;
+  grid-row-start: 2; }
+  .ub_testimonial_sign p {
+    margin-bottom: 2px !important; }
+  .ub_testimonial_sign i {
+    font-size: 13px; }
 /**
  * #.# Common SCSS
  *

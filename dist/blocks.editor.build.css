@@ -38,29 +38,28 @@
   margin: 0 auto;
   max-width: 740px; }
 
+.ub_testimonial {
+  display: grid;
+  grid-template-columns: fit-content(20%) auto; }
+
 .ub_testimonial_content {
-  max-width: 78% !important;
   padding: 5px 17px !important;
-  float: left;
   margin-top: 15px; }
 
-.ub_testimonial_img img {
-  margin: 0 auto;
-  padding: 0;
-  margin-top: 10px;
-  border-radius: 50%; }
-
 .ub_testimonial_img {
-  max-width: 20% !important;
   padding: 0px 10px !important; }
+  .ub_testimonial_img img {
+    margin: 0 auto;
+    padding: 0;
+    margin-top: 10px;
+    border-radius: 50%; }
 
 .ub_testimonial_upload_button {
   margin: 24px 0px 0px 0px; }
-
-.ub_testimonial_upload_button p {
-  font-size: 12px;
-  text-align: justify;
-  margin: 5px 0 0 3px; }
+  .ub_testimonial_upload_button p {
+    font-size: 12px;
+    text-align: justify;
+    margin: 5px 0 0 3px; }
 /**
  * #.# Common SCSS
  *
