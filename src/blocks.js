@@ -21,5 +21,5 @@ import './blocks/content-toggle/block';
 import './blocks/button/block';
 import './blocks/tabbed-content/block';
 
-import './blocks/rating/block';
+import './blocks/star-rating/block';
 import './blocks/table-of-contents/block';
