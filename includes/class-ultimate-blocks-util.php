@@ -72,13 +72,13 @@ class Ultimate_Blocks_Util {
 				'active' => true,
             ),
 			array(
-				'label'  => 'Rating',
-				'name'   => 'ub/rating',
-				'active' => true,
-			),
-			array(
 				'label'  => 'Social Share',
 				'name'   => 'ub/social-share',
+				'active' => true,
+            ),
+            array(
+				'label'  => 'Star Rating',
+				'name'   => 'ub/star-rating',
 				'active' => true,
 			),
 			array(
