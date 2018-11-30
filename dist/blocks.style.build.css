@@ -672,7 +672,8 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
-      flex-direction: row; }
+      flex-direction: row;
+  margin: 20px 0; }
 /**
  * #.# Common SCSS
  *
@@ -694,7 +695,8 @@
 .ub_table-of-contents {
   background-color: #fafafa;
   border: 1px solid #dfdfdf;
-  padding: 30px; }
+  padding: 30px;
+  margin: 20px 0; }
   .ub_table-of-contents ul {
     padding-left: 1.3em;
     margin-bottom: 0; }
