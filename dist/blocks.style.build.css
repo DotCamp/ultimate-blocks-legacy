@@ -693,7 +693,8 @@
 
 .ub_table-of-contents {
   background-color: #fafafa;
-  border: 1px solid black; }
+  border: 1px solid #dfdfdf;
+  padding: 30px; }
   .ub_table-of-contents ul {
     padding-left: 1.3em;
     margin-bottom: 0; }
@@ -701,4 +702,7 @@
     padding-left: 0; }
 
 .ub_table-of-contents-header {
-  text-align: center; }
+  text-align: center;
+  margin-bottom: 13px;
+  font-size: 20px;
+  font-weight: 500; }
