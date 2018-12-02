@@ -707,4 +707,12 @@
   text-align: center;
   margin-bottom: 13px;
   font-size: 20px;
-  font-weight: 500; }
+  font-weight: 500;
+  display: grid;
+  grid-template-columns: fit-content(90%) auto; }
+
+.ub_table-of-contents-header-toggle {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center; }

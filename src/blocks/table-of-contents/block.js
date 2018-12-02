@@ -165,8 +165,8 @@ registerBlockType('ub/table-of-contents', {
 
 	attributes: {
 		title: {
-			type: 'string',
-			default: '',
+			type: 'array',
+			source: 'children',
 			selector: '.ub_table-of-contents-title'
 		},
 		showList: {
@@ -209,23 +209,22 @@ registerBlockType('ub/table-of-contents', {
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
-					<div
-						className="ub_table-of-contents-header-toggle"
-						style={{ float: 'right' }}
-					>
-						[
-						<a
-							className="ub_table-of-contents-toggle"
-							href="#"
-							onClick={() => {
-								props.setAttributes({
-									showList: !showList
-								});
-							}}
-						>
-							{showList ? __('hide') : __('show')}
-						</a>
-						]
+					<div className="ub_table-of-contents-header-toggle">
+						<div className="ub_table-of-contents-toggle">
+							[
+							<a
+								className="ub_table-of-contents-toggle-link"
+								href="#"
+								onClick={() => {
+									props.setAttributes({
+										showList: !showList
+									});
+								}}
+							>
+								{showList ? __('hide') : __('show')}
+							</a>
+							]
+						</div>
 					</div>
 				</div>
 				{showList && (
@@ -242,16 +241,24 @@ registerBlockType('ub/table-of-contents', {
 		const { showList, links, title } = props.attributes;
 		return (
 			<div className="ub_table-of-contents">
-				{title && (
+				{(title.length > 1 ||
+					(title.length === 1 && title[0] !== '')) && (
 					<div className="ub_table-of-contents-header">
-						<span className="ub_table-of-contents-title">
+						<div className="ub_table-of-contents-title">
 							{title}
-						</span>{' '}
-						[
-						<a className="ub_table-of-contents-toggle" href="#">
-							{showList ? __('hide') : __('show')}
-						</a>
-						]
+						</div>
+						<div className="ub_table-of-contents-header-toggle">
+							<div className="ub_table-of-contents-toggle">
+								[
+								<a
+									className="ub_table-of-contents-toggle-link"
+									href="#"
+								>
+									{showList ? __('hide') : __('show')}
+								</a>
+								]
+							</div>
+						</div>
 					</div>
 				)}
 				<TableOfContents

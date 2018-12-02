@@ -1,21 +1,28 @@
 @import '../../common';
 .ub_table-of-contents {
-    background-color: #fafafa;
-    border: 1px solid #dfdfdf;
-    padding: 30px;
-    margin: 20px 0;
-    ul {
-        padding-left: 1.3em;
-        margin-bottom: 0;
-    }
-    >ul {
-        padding-left: 0;
-    }
+	background-color: #fafafa;
+	border: 1px solid #dfdfdf;
+	padding: 30px;
+	margin: 20px 0;
+	ul {
+		padding-left: 1.3em;
+		margin-bottom: 0;
+	}
+	> ul {
+		padding-left: 0;
+	}
 }
 
 .ub_table-of-contents-header {
-    text-align: center;
-    margin-bottom: 13px;
-    font-size: 20px;
-    font-weight: 500;
+	text-align: center;
+	margin-bottom: 13px;
+	font-size: 20px;
+	font-weight: 500;
+	display: grid;
+	grid-template-columns: fit-content(90%) auto;
+}
+
+.ub_table-of-contents-header-toggle {
+	display: flex;
+	align-items: center;
 }
