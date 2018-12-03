@@ -71,6 +71,11 @@ class Ultimate_Blocks_Util {
 				'name'   => 'ub/number-box',
 				'active' => true,
             ),
+            array(
+				'label'  => 'Progress Bar',
+				'name'   => 'ub/progress-bar',
+				'active' => true,
+			),
 			array(
 				'label'  => 'Social Share',
 				'name'   => 'ub/social-share',

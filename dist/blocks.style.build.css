@@ -716,3 +716,39 @@
   display: flex;
   -ms-flex-align: center;
       align-items: center; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.ub_progress-bar-line-trail {
+  stroke: #d9d9d9;
+  fill-opacity: 0;
+  stroke-linecap: 'round'; }
+
+.ub_progress-bar-line-path {
+  stroke-dasharray: 100px, 100px;
+  -webkit-transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear 0s;
+  -o-transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear 0s;
+  transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear 0s;
+  fill-opacity: 0;
+  stroke-linecap: round; }
+
+.ub_progress-bar-circle-path {
+  stroke-dashoffset: 0px;
+  -webkit-transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s, stroke-width 0.06s ease 0.3s;
+  -o-transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s, stroke-width 0.06s ease 0.3s;
+  transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s, stroke-width 0.06s ease 0.3s;
+  fill-opacity: 0; }
+
+.ub_progress-bar-circle-trail {
+  stroke: #d9d9d9;
+  stroke-dashoffset: 0px;
+  -webkit-transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s;
+  -o-transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s;
+  transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s;
+  fill-opacity: 0; }

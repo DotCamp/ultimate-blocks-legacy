@@ -86,3 +86,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/tabbed-content/block.php';
 
 // Table of Contents Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/table-of-contents/block.php';
+
+// Progress Bar Block.
+require_once plugin_dir_path( __FILE__ ) . 'blocks/progress-bar/block.php';
