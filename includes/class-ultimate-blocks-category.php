@@ -56,7 +56,7 @@ class UltimateBlocks_Block_Category {
 			array(
 				array(
 					'slug'  => 'ultimateblocks',
-					'title' => __( 'Ultimate Blocks', '@@textdomain' ),
+					'title' => __( 'Ultimate Blocks', 'ultimate-blocks' ),
 				),
 			)
 		);

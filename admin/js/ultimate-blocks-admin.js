@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-(function($) {
+(function ($) {
     'use strict';
 
     /**
@@ -32,81 +32,86 @@
      */
 
     var blocks = [{
-            label: 'Button (Improved)',
-            name: 'ub/button-block',
-            active: true,
-        },
-        {
-            label: 'Call To Action',
-            name: 'ub/call-to-action',
-            active: true,
-        },
-        {
-            label: 'Click To Tweet',
-            name: 'ub/click-to-tweet',
-            active: true,
-        },
-        {
-            label: 'Content Toggle',
-            name: 'ub/content-toggle',
-            active: true,
-        },
-        {
-            label: 'Divider',
-            name: 'ub/divider',
-            active: true,
-        },
-        {
-            label: 'Feature Box',
-            name: 'ub/feature-box',
-            active: true,
-        },
-        {
-            label: 'Notification Box',
-            name: 'ub/notification-box',
-            active: true,
-        },
-        {
-            label: 'Number Box',
-            name: 'ub/number-box',
-            active: true,
-        },
-        {
-            label: 'Rating',
-            name: 'ub/rating',
-            active: true
-        },
-        {
-            label: 'Social Share',
-            name: 'ub/social-share',
-            active: true
-        },
-        {
-            label: 'Tabbed Content',
-            name: 'ub/tabbed-content',
-            active: true
-        },
-        {
-            label: 'Table of Contents',
-            name: 'ub/table-of-contents',
-            active: true
-        },
-        {
-            label: 'Testimonial',
-            name: 'ub/testimonial-block',
-            active: true
-        }
+        label: 'Button (Improved)',
+        name: 'ub/button-block',
+        active: true,
+    },
+    {
+        label: 'Call To Action',
+        name: 'ub/call-to-action',
+        active: true,
+    },
+    {
+        label: 'Click To Tweet',
+        name: 'ub/click-to-tweet',
+        active: true,
+    },
+    {
+        label: 'Content Toggle',
+        name: 'ub/content-toggle',
+        active: true,
+    },
+    {
+        label: 'Divider',
+        name: 'ub/divider',
+        active: true,
+    },
+    {
+        label: 'Feature Box',
+        name: 'ub/feature-box',
+        active: true,
+    },
+    {
+        label: 'Notification Box',
+        name: 'ub/notification-box',
+        active: true,
+    },
+    {
+        label: 'Number Box',
+        name: 'ub/number-box',
+        active: true,
+    },
+    {
+        label: 'Star Rating',
+        name: 'ub/star-rating',
+        active: true
+    },
+    {
+        label: 'Social Share',
+        name: 'ub/social-share',
+        active: true
+    },
+    {
+        label: 'Tabbed Content',
+        name: 'ub/tabbed-content',
+        active: true
+    },
+    {
+        label: 'Table of Contents',
+        name: 'ub/table-of-contents',
+        active: true
+    },
+    {
+        label: 'Testimonial',
+        name: 'ub/testimonial-block',
+        active: true
+    },
+    {
+        label: 'Progress Bar',
+        name: 'ub/progress-bar',
+        active: true
+    }
     ];
 
 
-    $(function() {
+    $(function () {
         var isBlocksListEmpty = $('.ub__collection__item').length === 0
 
         if (isBlocksListEmpty) {
             insertBlocks();
         }
 
-        $(document).on('change', 'input[name="block_status"]', function() {
+        $(document).on('change', 'input[name="block_status"]', function () {
 
             toggleBlockStatus(
                 $(this),
@@ -116,7 +121,7 @@
 
         });
 
-        $(document).on('click', '.filter-action', function() {
+        $(document).on('click', '.filter-action', function () {
             $('.filter-action').removeClass('active');
             $(this).addClass('active');
 
@@ -138,7 +143,7 @@
         function insertBlocks() {
             var blocksHtml = '';
 
-            $.each(blocks, function(index, block) {
+            $.each(blocks, function (index, block) {
                 //item start
                 blocksHtml += '<div class="ub__collection__item" data-id="' + block.name + '">';
 
@@ -176,10 +181,10 @@
                 type: 'POST',
                 data: data,
                 'Content-Type': 'application/json',
-                success: function(data, status, xhr) {
+                success: function (data, status, xhr) {
                     selector.closest('.ub__collection__item').toggleClass('active');
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.log(error);
                 }
             });

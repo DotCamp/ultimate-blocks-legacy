@@ -1,9 +1,9 @@
 === Ultimate Blocks ===
-Contributors: imtiazrayhan, aqibrashid, freemius
+Contributors: imtiazrayhan, wpleaders1, wpcdplugin
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
-Tested up to: 4.9
-Stable tag: 1.0.7
+Tested up to: 5.0
+Stable tag: 1.0.8
 Requires PHP: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,11 +12,9 @@ Add awesome custom Blocks in Gutenberg Editor.
 
 == Description ==
 
-Ultimate Blocks is a Gutenberg Blocks Plugin. It comes with a collection of custom blocks for Gutenberg Editor that makes it easier for you to create content with Gutenberg.
+Ultimate Blocks is a collection of essential custom blocks for Gutenberg Editor that makes it easier for you to create content with Gutenberg.
 
-**Warning: You must have [Gutenberg](https://wordpress.org/plugins/gutenberg/) installed to use this plugin.**
-
-Currently, we have 11 blocks. More in the making.
+Currently, we have 14 blocks. More in the making.
 
 These are the blocks we have right now:
 
@@ -31,6 +29,9 @@ These are the blocks we have right now:
 9. Social Share
 10. Tabbed Content
 11. Testimonial
+12. Table of Contents
+13. Progress Bar
+14. Star Rating
 
 **1. Button**
 Button block with more customization options and controls.
@@ -65,6 +66,14 @@ Add content in tabs in your posts/pages. This comes with a nice drag and drop fe
 **11. Testimonial Block**
 Nice, simple testimonial box with option to add image, name, role of the testimonial author.
 
+**12. Table of Contents**
+Generate a table of contents from your headings. 
+
+**13. Progress Bar**
+Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.
+
+**14. Star Rating**
+Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.
 
 We are continuously working on new blocks. If you have any block ideas, let us know. We are on [Twitter](https://twitter.com/Ultimate_Blocks).
 
@@ -92,6 +101,15 @@ That's it. You're done!
 3. Adding Notification Block
 
 == Changelog ==
+
+= 1.0.8 =
+
+Release Date: December 3rd, 2018
+* Add - Table of Contents Block.
+* Add - Progress Bar Block.
+* Add - Star Rating Block.
+* Fix - Latest Gutenberg Compatibility.
+* Fix - Other minor bug fixes.
 
 = 1.0.7 = 
 
