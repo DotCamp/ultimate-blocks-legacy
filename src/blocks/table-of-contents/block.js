@@ -5,9 +5,11 @@ const { registerBlockType } = wp.blocks;
 
 const { select, subscribe } = wp.data;
 
-const { RichText } = wp.editor;
+const { InspectorControls, RichText } = wp.editor;
 
 const { withState } = wp.compose;
+
+const { PanelBody, PanelRow, FormToggle } = wp.components;
 
 import './editor.scss';
 import './style.scss';
@@ -189,7 +191,33 @@ registerBlockType('ub/table-of-contents', {
 		const onSetActiveEditable = newEditable => () => {
 			setState({ editable: newEditable });
 		};
-		return (
+		return [
+			isSelected &&
+				(title.length > 1 ||
+					(title.length === 1 && title[0] !== '')) && (
+					<InspectorControls key="inspectors">
+						<PanelBody
+							title={__('Content Visibility')}
+							initialOpen={true}
+						>
+							<PanelRow>
+								<label htmlFor="ub_table-of-content-state">
+									{__('Visible')}
+								</label>
+								<FormToggle
+									id="ub_table-of-content-state"
+									label={__('Visible')}
+									checked={showList}
+									onChange={() => {
+										setAttributes({
+											showList: !showList
+										});
+									}}
+								/>
+							</PanelRow>
+						</PanelBody>
+					</InspectorControls>
+				),
 			<div className="ub_table-of-contents">
 				<div className="ub_table-of-contents-header">
 					<div className="ub_table-of-contents-title">
@@ -198,7 +226,6 @@ registerBlockType('ub/table-of-contents', {
 							className="ub_table-of-contents-title"
 							onChange={text => setAttributes({ title: text })}
 							value={title}
-							multiline={false}
 							isSelected={
 								isSelected &&
 								editable === 'table_of_contents_title'
@@ -216,7 +243,7 @@ registerBlockType('ub/table-of-contents', {
 								className="ub_table-of-contents-toggle-link"
 								href="#"
 								onClick={() => {
-									props.setAttributes({
+									setAttributes({
 										showList: !showList
 									});
 								}}
@@ -234,7 +261,7 @@ registerBlockType('ub/table-of-contents', {
 					/>
 				)}
 			</div>
-		);
+		];
 	}),
 
 	save(props) {
