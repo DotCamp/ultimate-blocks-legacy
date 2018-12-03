@@ -4,20 +4,24 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
-.wp-block-ub-button-block  {
-  margin: 0 auto;
-  max-width: 100%;
+.wp-block-ub-button-block {
+	margin: 0 auto;
+	max-width: 100%;
 }
 
 .ub_button_url_input {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
+	display: flex;
+	align-items: center;
+	margin-top: 5px;
 }
 
 .ub_button_input_box {
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  box-sizing: border-box;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.flex-container {
+	display: flex;
 }
