@@ -1,12 +1,12 @@
 === Ultimate Blocks ===
-Contributors: imtiazrayhan, wpleaders1, wpcdplugin
+Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 5.0
 Stable tag: 1.0.8
 Requires PHP: 5.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPL3+
+License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
 Add awesome custom Blocks in Gutenberg Editor.
 
