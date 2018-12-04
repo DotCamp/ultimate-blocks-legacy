@@ -5,11 +5,9 @@ const { registerBlockType } = wp.blocks;
 
 const { select, subscribe } = wp.data;
 
-const { InspectorControls, RichText } = wp.editor;
+const { RichText } = wp.editor;
 
 const { withState } = wp.compose;
-
-const { PanelBody, PanelRow, FormToggle } = wp.components;
 
 import './editor.scss';
 import './style.scss';
@@ -21,8 +19,7 @@ class TableOfContents extends Component {
 		super(props);
 		this.state = {
 			headers: props.headers,
-			unsubscribe: null,
-			showList: true
+			unsubscribe: null
 		};
 	}
 
@@ -68,7 +65,6 @@ class TableOfContents extends Component {
 
 		const setHeaders = () => {
 			const headers = getHeaderBlocks().map(header => header.attributes);
-
 			headers.forEach((heading, key) => {
 				const headingAnchorEmpty =
 					typeof heading.anchor === 'undefined' ||
@@ -143,16 +139,21 @@ class TableOfContents extends Component {
 
 		if (this.state.headers) {
 			return (
-				<div
-					className="ub_table-of-contents-container"
-					style={{
-						display: this.props.isHidden ? 'none' : 'initial'
-					}}
-				>
+				<div className="ub_table-of-contents-container">
 					{parseList(this.state.headers)}
 				</div>
 			);
-		} else return null;
+		} else {
+			return (
+				this.props.blockProp && (
+					<p className="ub_table-of-contents-placeholder">
+						{__(
+							'Add a header to begin generating the table of contents'
+						)}
+					</p>
+				)
+			);
+		}
 	}
 }
 
@@ -168,10 +169,6 @@ registerBlockType('ub/table-of-contents', {
 			source: 'children',
 			selector: '.ub_table-of-contents-title'
 		},
-		showList: {
-			type: 'boolean',
-			default: true
-		},
 		links: {
 			type: 'string',
 			default: ''
@@ -184,37 +181,11 @@ registerBlockType('ub/table-of-contents', {
 
 	edit: withState({ editable: 'content' })(function(props) {
 		const { editable, setAttributes, isSelected } = props;
-		const { showList, links, title } = props.attributes;
+		const { links, title } = props.attributes;
 		const onSetActiveEditable = newEditable => () => {
 			setState({ editable: newEditable });
 		};
-		return [
-			isSelected &&
-				(title.length > 1 ||
-					(title.length === 1 && title[0] !== '')) && (
-					<InspectorControls key="inspectors">
-						<PanelBody
-							title={__('Content Visibility')}
-							initialOpen={true}
-						>
-							<PanelRow>
-								<label htmlFor="ub_table-of-content-state">
-									{__('Visible')}
-								</label>
-								<FormToggle
-									id="ub_table-of-content-state"
-									label={__('Visible')}
-									checked={showList}
-									onChange={() => {
-										setAttributes({
-											showList: !showList
-										});
-									}}
-								/>
-							</PanelRow>
-						</PanelBody>
-					</InspectorControls>
-				),
+		return (
 			<div className="ub_table-of-contents">
 				<div className="ub_table-of-contents-header">
 					<div className="ub_table-of-contents-title">
@@ -233,43 +204,17 @@ registerBlockType('ub/table-of-contents', {
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
-					<div className="ub_table-of-contents-header-toggle">
-						<div className="ub_table-of-contents-toggle">
-							[
-							<a
-								className="ub_table-of-contents-toggle-link"
-								href="#"
-								onClick={() => {
-									setAttributes({
-										showList: !showList
-									});
-								}}
-							>
-								{showList ? __('hide') : __('show')}
-							</a>
-							]
-						</div>
-					</div>
 				</div>
-				{showList &&
-					(links ? (
-						<TableOfContents
-							headers={JSON.parse(links)}
-							blockProp={props}
-						/>
-					) : (
-						<p className="ub_table-of-contents-placeholder">
-							{__(
-								'Add a header to begin generating the table of contents'
-							)}
-						</p>
-					))}
+				<TableOfContents
+					headers={links && JSON.parse(links)}
+					blockProp={props}
+				/>
 			</div>
-		];
+		);
 	}),
 
 	save(props) {
-		const { showList, links, title } = props.attributes;
+		const { links, title } = props.attributes;
 		return (
 			<div className="ub_table-of-contents">
 				{(title.length > 1 ||
@@ -278,24 +223,9 @@ registerBlockType('ub/table-of-contents', {
 						<div className="ub_table-of-contents-title">
 							{title}
 						</div>
-						<div className="ub_table-of-contents-header-toggle">
-							<div className="ub_table-of-contents-toggle">
-								[
-								<a
-									className="ub_table-of-contents-toggle-link"
-									href="#"
-								>
-									{showList ? __('hide') : __('show')}
-								</a>
-								]
-							</div>
-						</div>
 					</div>
 				)}
-				<TableOfContents
-					isHidden={!showList && title}
-					headers={links && JSON.parse(links)}
-				/>
+				<TableOfContents headers={links && JSON.parse(links)} />
 			</div>
 		);
 	}
