@@ -3,12 +3,12 @@ Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 5.0
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
-Add awesome custom Blocks in Gutenberg Editor.
+Essential Collection of Custom Blocks for Gutenberg Editor.
 
 == Description ==
 
@@ -101,6 +101,11 @@ That's it. You're done!
 3. Adding Notification Block
 
 == Changelog ==
+
+= 1.0.9 = 
+
+Release Date: December 4th, 2018
+* Fix - Issue with Table of Contents Block.
 
 = 1.0.8 =
 
