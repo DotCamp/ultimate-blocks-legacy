@@ -58,7 +58,6 @@ class TableOfContents extends Component {
 			) {
 				arrays[arrays.length - 2].push(arrays.pop());
 			}
-
 			return arrays[0];
 		};
 
@@ -90,8 +89,8 @@ class TableOfContents extends Component {
 						heading.content
 							.toString()
 							.toLowerCase()
-							.replace(' ', '-');
-					heading.anchor.replace(/[^\w\s-]/g, '');
+							.replace(/( |<br>)/g, '-');
+					heading.anchor = heading.anchor.replace(/[^\w\s-]/g, '');
 				}
 			});
 
@@ -125,15 +124,19 @@ class TableOfContents extends Component {
 		const parseList = list => {
 			let items = [];
 			list.forEach(item => {
-				items.push(
-					Array.isArray(item) ? (
-						parseList(item)
-					) : (
+				if (Array.isArray(item)) {
+					items.push(parseList(item));
+				} else {
+					let multilineItem = item.content.split('<br>');
+					for (let i = 0; i < multilineItem.length - 1; i++) {
+						multilineItem[i] = [multilineItem[i], <br />];
+					}
+					items.push(
 						<li>
-							<a href={`#${item.anchor}`}>{item.content}</a>
+							<a href={`#${item.anchor}`}>{multilineItem}</a>
 						</li>
-					)
-				);
+					);
+				}
 			});
 			return <ul>{items}</ul>;
 		};
@@ -149,13 +152,7 @@ class TableOfContents extends Component {
 					{parseList(this.state.headers)}
 				</div>
 			);
-		} else {
-			return (
-				<p className="ub_table-of-contents-placeholder">
-					Add a header to begin generating the table of contents
-				</p>
-			);
-		}
+		} else return null;
 	}
 }
 
@@ -254,12 +251,19 @@ registerBlockType('ub/table-of-contents', {
 						</div>
 					</div>
 				</div>
-				{showList && (
-					<TableOfContents
-						headers={links && JSON.parse(links)}
-						blockProp={props}
-					/>
-				)}
+				{showList &&
+					(links ? (
+						<TableOfContents
+							headers={JSON.parse(links)}
+							blockProp={props}
+						/>
+					) : (
+						<p className="ub_table-of-contents-placeholder">
+							{__(
+								'Add a header to begin generating the table of contents'
+							)}
+						</p>
+					))}
 			</div>
 		];
 	}),
