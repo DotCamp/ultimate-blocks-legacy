@@ -27,7 +27,7 @@ add_action( 'init', 'ub_register_meta' );
  * @return string
  *
  */
-function render_block( $attributes ) {
+function render_click_to_tweet_block( $attributes ) {
 
 	$via = get_post_meta( get_the_ID(), 'ub_ctt_via', true );
 	$via = ( $via ) ? '&via=' . str_replace( '@', '', $via ) : false;
@@ -63,7 +63,7 @@ function render_block( $attributes ) {
 function register_block() {
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/click-to-tweet', array(
-			'render_callback' => 'render_block',
+			'render_callback' => 'render_click_to_tweet_block',
 		) );
 	}
 }
