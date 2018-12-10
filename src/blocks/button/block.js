@@ -226,7 +226,6 @@ registerBlockType('ub/button-block', {
 					className={'ub-button-container' + ' align-button-' + align}
 				>
 					<RichText
-						tagName="p"
 						placeholder={__('Button Text')}
 						style={{
 							backgroundColor: buttonColor,
