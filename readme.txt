@@ -3,7 +3,7 @@ Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 5.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -101,6 +101,11 @@ That's it. You're done!
 3. Adding Notification Block
 
 == Changelog ==
+
+= 1.1.1 = 
+
+Release Date: December 13th, 2018
+* Fix - CSS not loading issue.
 
 = 1.1.0 =
 
