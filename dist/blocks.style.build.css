@@ -404,7 +404,8 @@
 
 .ub_tweet {
   padding: 10px;
-  margin-left: 10px; }
+  margin-left: 10px;
+  font-family: 'Segoe UI', Arial, sans-serif; }
 
 .ub_click_tweet {
   width: 50%;

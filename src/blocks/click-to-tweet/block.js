@@ -7,30 +7,17 @@
 
 //Import Icon
 import icon from './icons/icon';
-import TextareaAutosize from 'react-autosize-textarea';
 
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import { string } from 'prop-types';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const {
-	RichText,
-	AlignmentToolbar,
-	ColorPalette,
-	InspectorControls
-} = wp.editor;
+const { RichText, InspectorControls, PanelColorSettings } = wp.editor;
 
-const {
-	PanelBody,
-	Toolbar,
-	TextControl,
-	RangeControl,
-	Dashicon
-} = wp.components;
-
-const { Component } = wp.element;
+const { TextControl, RangeControl } = wp.components;
 
 /**
  * Register: aa Gutenberg Block.
@@ -46,19 +33,14 @@ const { Component } = wp.element;
  *                             registered; otherwise `undefined`.
  */
 registerBlockType('ub/click-to-tweet', {
-
 	title: __('Click to Tweet'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [
-		__('Click to tweet'),
-		__('Twitter'),
-		__('Ultimate Blocks'),
-	],
+	keywords: [__('Click to tweet'), __('Twitter'), __('Ultimate Blocks')],
 	attributes: {
 		ubTweet: {
-			source: 'meta',
-			meta: 'ub_ctt_tweet'
+			type: 'string',
+			default: ''
 		},
 		ubVia: {
 			source: 'meta',
@@ -77,9 +59,9 @@ registerBlockType('ub/click-to-tweet', {
 			default: '#CCCCCC'
 		}
 	},
-    supports:{
-        multiple: false
-    },
+	supports: {
+		multiple: false
+	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -88,8 +70,7 @@ registerBlockType('ub/click-to-tweet', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function (props) {
-
+	edit: function(props) {
 		const {
 			ubTweet,
 			ubVia,
@@ -98,36 +79,46 @@ registerBlockType('ub/click-to-tweet', {
 			borderColor
 		} = props.attributes;
 
+		const { isSelected, setAttributes } = props;
+
 		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
 		return [
-			!!props.focus && (
+			isSelected && (
 				<InspectorControls key="inspectors">
 					<TextControl
 						label={__('Twitter Username')}
-						placeholder='@'
+						placeholder="@"
 						value={ubVia}
-						onChange={(value) => props.setAttributes({ ubVia: value })}
+						onChange={value => setAttributes({ ubVia: value })}
 					/>
 					<RangeControl
 						label={__('Font Size')}
 						value={tweetFontSize}
-						onChange={(value) => props.setAttributes({ tweetFontSize: value })}
+						onChange={value =>
+							setAttributes({ tweetFontSize: value })
+						}
 						min={10}
 						max={200}
 						beforeIcon="editor-textcolor"
 						allowReset
 					/>
-					<p>{__('Tweet Color')}</p>
-					<ColorPalette
-						value={tweetColor}
-						onChange={(colorValue) => props.setAttributes({ tweetColor: colorValue })}
-						allowReset
-					/>
-					<p>{__('Border Color')}</p>
-					<ColorPalette
-						value={borderColor}
-						onChange={(colorValue) => props.setAttributes({ borderColor: colorValue })}
-						allowReset
+					<PanelColorSettings
+						title={__('Color Scheme')}
+						initialOpen={true}
+						colorSettings={[
+							{
+								value: tweetColor,
+								onChange: colorValue =>
+									setAttributes({ tweetColor: colorValue }),
+								label: __('Tweet Color')
+							},
+							{
+								value: borderColor,
+								onChange: colorValue =>
+									setAttributes({ borderColor: colorValue }),
+								label: __('Border Color')
+							}
+						]}
 					/>
 				</InspectorControls>
 			),
@@ -138,7 +129,7 @@ registerBlockType('ub/click-to-tweet', {
 						borderColor: borderColor
 					}}
 				>
-					<TextareaAutosize
+					<RichText
 						style={{
 							fontSize: tweetFontSize + 'px',
 							color: tweetColor,
@@ -147,18 +138,18 @@ registerBlockType('ub/click-to-tweet', {
 						placeholder={__('Add Tweetable Content Here')}
 						className="ub_tweet"
 						value={ubTweet}
-						onChange={(event) => { props.setAttributes({ ubTweet: event.target.value }) }}
-						focus={props.focus}
-						keepPlaceholderOnFocus={true}
+						onChange={value => setAttributes({ ubTweet: value })}
 					/>
+
 					<div className="ub_click_tweet">
 						<span
 							style={{
 								display: 'inline-flex'
 							}}
 						>
-							<i></i>Click to Tweet
-                        </span>
+							<i />
+							Click to Tweet
+						</span>
 					</div>
 				</div>
 			</div>
@@ -173,9 +164,7 @@ registerBlockType('ub/click-to-tweet', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function (props) {
-		return (
-			null
-		);
-	},
+	save() {
+		return null;
+	}
 });

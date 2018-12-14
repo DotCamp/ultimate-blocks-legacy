@@ -13,9 +13,12 @@ import './style.scss';
 import './editor.scss';
 import Accordion from './components/accordion';
 import Inspector from './components/inspector';
+import { runInThisContext } from 'vm';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
+
+const { RichText } = wp.editor;
 
 /**
  * Register: aa Gutenberg Block.
@@ -31,14 +34,13 @@ const { registerBlockType } = wp.blocks;
  *                             registered; otherwise `undefined`.
  */
 registerBlockType('ub/content-toggle', {
-
 	title: __('Content Toggle'),
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [
 		__('Content Accordion'),
 		__('Toggle Collapse'),
-		__('Ultimate Blocks'),
+		__('Ultimate Blocks')
 	],
 
 	attributes: {
@@ -46,29 +48,37 @@ registerBlockType('ub/content-toggle', {
 			source: 'query',
 			selector: '.wp-block-ub-content-toggle-accordion',
 			query: {
-				title: { type: 'array', source: 'children', selector: '.wp-block-ub-content-toggle-accordion-title' },
-				content: { type: 'array', source: 'children', selector: '.wp-block-ub-content-toggle-accordion-content' },
-			},
+				title: {
+					type: 'array',
+					source: 'children',
+					selector: '.wp-block-ub-content-toggle-accordion-title'
+				},
+				content: {
+					type: 'array',
+					source: 'children',
+					selector: '.wp-block-ub-content-toggle-accordion-content'
+				}
+			}
 		},
 		accordionsState: {
 			type: 'string',
-			default: '[]',
+			default: '[]'
 		},
 		timestamp: {
 			type: 'number',
-			default: 0,
+			default: 0
 		},
 		activeControl: {
 			type: 'string',
-			default: '',
+			default: ''
 		},
 		theme: {
 			type: 'string',
-			default: '#f63d3d',
+			default: '#f63d3d'
 		},
 		collapsed: {
 			type: 'boolean',
-			default: false,
+			default: false
 		},
 		titleColor: {
 			type: 'string',
@@ -76,7 +86,7 @@ registerBlockType('ub/content-toggle', {
 		}
 	},
 
-	edit: function ({ attributes, setAttributes, className, isSelected }) {
+	edit: function({ attributes, setAttributes, className, isSelected }) {
 		if (!attributes.accordions) {
 			attributes.accordions = [];
 		}
@@ -88,29 +98,35 @@ registerBlockType('ub/content-toggle', {
 			setAttributes({ activeControl: type + '-' + index });
 		};
 
-		const addAccord = (i) => {
+		const addAccord = i => {
 			if (i <= 0) {
 				attributes.accordions.unshift(sample);
 				setAttributes({ accordions: attributes.accordions });
 
 				accordionsState.unshift(true);
-				setAttributes({ accordionsState: JSON.stringify(accordionsState) });
+				setAttributes({
+					accordionsState: JSON.stringify(accordionsState)
+				});
 			} else if (i >= attributes.accordions.length) {
 				attributes.accordions.push(sample);
 				setAttributes({ accordions: attributes.accordions });
 
 				accordionsState.push(true);
-				setAttributes({ accordionsState: JSON.stringify(accordionsState) });
+				setAttributes({
+					accordionsState: JSON.stringify(accordionsState)
+				});
 			} else {
 				attributes.accordions.splice(i, 0, sample);
 				setAttributes({ accordions: attributes.accordions });
 
 				accordionsState.splice(i, 0, true);
-				setAttributes({ accordionsState: JSON.stringify(accordionsState) });
+				setAttributes({
+					accordionsState: JSON.stringify(accordionsState)
+				});
 			}
 		};
 
-		const deleteAccord = (i) => {
+		const deleteAccord = i => {
 			accordionsState.splice(i, 1);
 			setAttributes({ accordionsState: JSON.stringify(accordionsState) });
 
@@ -119,13 +135,13 @@ registerBlockType('ub/content-toggle', {
 			setAttributes({ accordions: accordionsClone });
 		};
 
-		const toggleAccordionState = (i) => {
+		const toggleAccordionState = i => {
 			accordionsState[i] = !accordionsState[i];
 			setAttributes({ accordionsState: JSON.stringify(accordionsState) });
 		};
 
 		const updateTimeStamp = () => {
-			setAttributes({ timestamp: (new Date()).getTime() });
+			setAttributes({ timestamp: new Date().getTime() });
 		};
 
 		const onChangeTitle = (title, i) => {
@@ -138,11 +154,13 @@ registerBlockType('ub/content-toggle', {
 			updateTimeStamp();
 		};
 
-		const onThemeChange = (value) => setAttributes({ theme: value });
+		const onThemeChange = value => setAttributes({ theme: value });
 
-		const onTitleColorChange = (value) => setAttributes({ titleColor: value });
+		const onTitleColorChange = value =>
+			setAttributes({ titleColor: value });
 
-		const onCollapseChange = () => setAttributes({ collapsed: !attributes.collapsed });
+		const onCollapseChange = () =>
+			setAttributes({ collapsed: !attributes.collapsed });
 
 		if (attributes.accordions.length === 0) {
 			addAccord(0);
@@ -150,44 +168,89 @@ registerBlockType('ub/content-toggle', {
 
 		return [
 			isSelected && (
-				<Inspector {...{ attributes, onThemeChange, onCollapseChange, onTitleColorChange }} key="inspector" />
+				<Inspector
+					{...{
+						attributes,
+						onThemeChange,
+						onCollapseChange,
+						onTitleColorChange
+					}}
+					key="inspector"
+				/>
 			),
 			<div className={className} key="accordions">
-				{
-					attributes.accordions.map((accordion, i) => {
-						return <Accordion {...{ isSelected, accordion, i, attributes, accordionsState, onChangeContent, onChangeTitle, showControls, deleteAccord, addAccord, toggleAccordionState }} count={attributes.accordions.length} key={i} />;
-					})
-				}
-			</div>,
+				{attributes.accordions.map((accordion, i) => {
+					return (
+						<Accordion
+							{...{
+								isSelected,
+								accordion,
+								i,
+								attributes,
+								accordionsState,
+								onChangeContent,
+								onChangeTitle,
+								showControls,
+								deleteAccord,
+								addAccord,
+								toggleAccordionState
+							}}
+							count={attributes.accordions.length}
+							key={i}
+						/>
+					);
+				})}
+			</div>
 		];
 	},
 
-	save: function (props) {
-		const accordions = props.attributes.accordions;
-		const collapsed = props.attributes.collapsed;
-
+	save: function(props) {
+		const { accordions, collapsed, theme, titleColor } = props.attributes;
+		const classNamePrefix = 'wp-block-ub-content-toggle';
 		return (
 			<div>
-				{
-					accordions.map((accordion, i) => {
-						return <div style={{ borderColor: props.attributes.theme }} className="wp-block-ub-content-toggle-accordion" key={i}>
-							<div className="wp-block-ub-content-toggle-accordion-title-wrap" style={{ backgroundColor: props.attributes.theme }}>
-								<span
-									className="wp-block-ub-content-toggle-accordion-title"
+				{accordions.map((accordion, i) => {
+					return (
+						<div
+							style={{ borderColor: theme }}
+							className={`${classNamePrefix}-accordion`}
+							key={i}
+						>
+							<div
+								className={`${classNamePrefix}-accordion-title-wrap`}
+								style={{ backgroundColor: theme }}
+							>
+								<RichText.Content
+									tagName="span"
+									className={`${classNamePrefix}-accordion-title`}
 									style={{
-										color: props.attributes.titleColor
-									}}>
-									{accordion.title}
-								</span>
-								<span className={'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' + (collapsed ? '' : 'open')}></span>
+										color: titleColor
+									}}
+									value={accordion.title}
+								/>
+								<span
+									className={
+										`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
+										(collapsed ? '' : 'open')
+									}
+								/>
 							</div>
-							<div style={{ display: (collapsed ? 'none' : 'block') }} className="wp-block-ub-content-toggle-accordion-content-wrap">
-								<div className="wp-block-ub-content-toggle-accordion-content">{accordion.content}</div>
+							<div
+								style={{
+									display: collapsed ? 'none' : 'block'
+								}}
+								className={`${classNamePrefix}-accordion-content-wrap`}
+							>
+								<RichText.Content
+									tagName="div"
+									className={`${classNamePrefix}-accordion-content`}
+									value={accordion.content}
+								/>
 							</div>
-						</div>;
-					})
-				}
+						</div>
+					);
+				})}
 			</div>
 		);
-	},
+	}
 });
