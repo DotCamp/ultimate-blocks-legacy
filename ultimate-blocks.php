@@ -5,7 +5,7 @@
  * Description: Ultimate Blocks for Gutenberg.
  * Author: Imtiaz Rayhan
  * Author URI: http://imtiazrayhan.com/
- * Version: 1.1.1
+ * Version: 1.1.2
  * License: GPL3+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: ultimate-blocks
