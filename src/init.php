@@ -72,6 +72,10 @@ function ultimate_blocks_cgb_editor_assets() {
 // Hook: Editor assets.
 add_action( 'enqueue_block_editor_assets', 'ultimate_blocks_cgb_editor_assets' );
 
+function generateBlockID($length = 10) {
+    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+}
+
 // Click to Tweet Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/click-to-tweet/block.php';
 
@@ -86,3 +90,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/tabbed-content/block.php';
 
 // Progress Bar Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/progress-bar/block.php';
+
+// Countdown Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/countdown/block.php';
