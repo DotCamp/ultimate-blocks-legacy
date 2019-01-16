@@ -22,8 +22,6 @@ const {
 	TextareaControl
 } = wp.components;
 
-const { withState } = wp.compose;
-
 class Timer extends Component {
 	constructor(props) {
 		super(props);
@@ -50,13 +48,16 @@ class Timer extends Component {
 		}
 	}
 	componentDidUpdate() {
-		//console.log(this.state.timeLeft);
+		if (this.state.timeLeft === -1) {
+			clearInterval(this.tick);
+		}
 	}
 	componentWillUnmount() {
 		clearInterval(this.tick);
 	}
 	render() {
 		const { timeLeft } = this.state;
+		const { expiryMessage } = this.props;
 		const seconds = timeLeft % 60;
 		const minutes = ((timeLeft - seconds) % 3600) / 60;
 		const hours = ((timeLeft - minutes * 60 - seconds) % 86400) / 3600;
@@ -137,7 +138,7 @@ class Timer extends Component {
 				selectedFormat = defaultFormat;
 		}
 
-		return selectedFormat;
+		return timeLeft < 0 ? <p>{expiryMessage}</p> : selectedFormat;
 	}
 }
 
@@ -222,11 +223,11 @@ registerBlockType('ub/countdown', {
 				</InspectorControls>
 			),
 
-			endDate - Math.floor(Date.now() / 1000) > 0 ? (
-				<Timer timerStyle={style} deadline={endDate} />
-			) : (
-				<p>{expiryMessage}</p>
-			)
+			<Timer
+				timerStyle={style}
+				deadline={endDate}
+				expiryMessage={expiryMessage}
+			/>
 		];
 	},
 
