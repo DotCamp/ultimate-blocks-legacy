@@ -107,7 +107,7 @@ function ub_render_countdown_block($attributes){
                     }
                     else{
                         clearInterval(timer_'.$elementID.');
-                        document.getElementById("ub_countdown_'.$elementID.'").insertAdjacentHTML("afterend","'.$attributes['expiryMessage'].'");
+                        document.getElementById("ub_countdown_'.$elementID.'").innerHTML="'.$attributes['expiryMessage'].'";
                     }
                 }, 1000);</script>';
     }
