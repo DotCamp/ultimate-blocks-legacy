@@ -83,13 +83,7 @@ class Timer extends Component {
 		const separator = <span className="ub-countdown-separator">:</span>;
 
 		const odometerFormat = (
-			<div
-				style={{
-					display: 'grid',
-					gridTemplateColumns:
-						'1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr'
-				}}
-			>
+			<div className="ub-countdown-odometer-container">
 				<span>Weeks</span>
 				<span />
 				<span>Days</span>
@@ -99,7 +93,6 @@ class Timer extends Component {
 				<span>Minutes</span>
 				<span />
 				<span>Seconds</span>
-				<span />
 				<Odometer
 					value={
 						weeks < 0
