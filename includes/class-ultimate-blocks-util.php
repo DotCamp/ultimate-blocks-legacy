@@ -50,7 +50,12 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Content Toggle',
 				'name'   => 'ub/content-toggle',
 				'active' => true,
-			),
+            ),
+            array(
+                'label'  => 'Countdown',
+                'name'   => 'ub/countdown',
+                'active' => true,
+            ),
 			array(
 				'label'  => 'Divider',
 				'name'   => 'ub/divider',
