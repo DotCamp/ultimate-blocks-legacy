@@ -13,8 +13,14 @@ import './style.scss';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InspectorControls, BlockControls, RichText } = wp.editor;
-const { DateTimePicker, Toolbar, Button } = wp.components;
+const { InspectorControls } = wp.editor;
+const {
+	DateTimePicker,
+	ButtonGroup,
+	IconButton,
+	PanelBody,
+	TextareaControl
+} = wp.components;
 
 const { withState } = wp.compose;
 
@@ -155,69 +161,74 @@ registerBlockType('ub/countdown', {
 		}
 	},
 
-	edit: withState({ editable: 'content' })(function(props) {
-		const { editable, isSelected, setAttributes } = props;
+	edit(props) {
+		const { isSelected, setAttributes } = props;
 		const { style, endDate, expiryMessage } = props.attributes;
-
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
 
 		return [
 			isSelected && (
-				<BlockControls>
-					<Toolbar>
-						<Button
-							onClick={() => setAttributes({ style: 'Regular' })}
-						>
-							{RegularCountdownIcon}
-						</Button>
-						<Button
-							onClick={() => setAttributes({ style: 'Circular' })}
-						>
-							{CircularCountdownIcon}
-						</Button>
-						<Button
-							onClick={() => setAttributes({ style: 'Odometer' })}
-						>
-							{TickingCountdownIcon}
-						</Button>
-					</Toolbar>
-				</BlockControls>
-			),
-			isSelected && (
 				<InspectorControls>
-					<DateTimePicker
-						currentDate={endDate * 1000}
-						onChange={value => {
-							console.log(Math.floor(Date.parse(value) / 1000));
-							setAttributes({
-								endDate: Math.floor(Date.parse(value) / 1000)
-							});
-						}}
-					/>
+					<PanelBody title={__('Timer expiration')}>
+						<DateTimePicker
+							currentDate={endDate * 1000}
+							onChange={value => {
+								console.log(
+									Math.floor(Date.parse(value) / 1000)
+								);
+								setAttributes({
+									endDate: Math.floor(
+										Date.parse(value) / 1000
+									)
+								});
+							}}
+						/>
+					</PanelBody>
+					<PanelBody title={__('Timer Style')}>
+						<ButtonGroup className="ub_countdown_style_selector">
+							<IconButton
+								isPrimary={style === 'Regular'}
+								icon={RegularCountdownIcon}
+								label={__('Regular')}
+								onClick={() =>
+									setAttributes({ style: 'Regular' })
+								}
+							/>
+							<IconButton
+								isPrimary={style === 'Circular'}
+								icon={CircularCountdownIcon}
+								label={__('Circular')}
+								onClick={() =>
+									setAttributes({ style: 'Circular' })
+								}
+							/>
+							<IconButton
+								isPrimary={style === 'Odometer'}
+								icon={TickingCountdownIcon}
+								label={__('Odometer')}
+								onClick={() =>
+									setAttributes({ style: 'Odometer' })
+								}
+							/>
+						</ButtonGroup>
+					</PanelBody>
+					<PanelBody title={__('Display text when expired')}>
+						<TextareaControl
+							value={expiryMessage}
+							onChange={text =>
+								setAttributes({ expiryMessage: text })
+							}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
-			<React.Fragment>
+
+			endDate - Math.floor(Date.now() / 1000) > 0 ? (
 				<Timer timerStyle={style} deadline={endDate} />
-				<div key="editable">
-					<RichText
-						tagName="p"
-						placeholder={__('Text to display when time runs out')}
-						value={expiryMessage}
-						onChange={text =>
-							setAttributes({ expiryMessage: text })
-						}
-						keepPlaceholderOnFocus={true}
-						isSelected={
-							isSelected && editable === 'countdown_expiry_text'
-						}
-						onFocus={onSetActiveEditable('countdown_expiry_text')}
-					/>
-				</div>
-			</React.Fragment>
+			) : (
+				<p>{expiryMessage}</p>
+			)
 		];
-	}),
+	},
 
 	save() {
 		return null;

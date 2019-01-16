@@ -794,7 +794,9 @@
 
 .ub-countdown-odometer-container {
   display: grid;
-  grid-template-columns: 1fr 0.2fr 1fr 0.2fr 1fr 0.2fr 1fr 0.2fr 1fr; }
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr; }
+  .ub-countdown-odometer-container span {
+    text-align: center; }
 
 .ub-countdown-odometer {
   margin: 0 auto;
@@ -864,3 +866,9 @@
               transform: translateY(0); }
   .ub-countdown-odometer .ub-countdown-odometer-inside .ub-countdown-odometer-digit:first-child {
     display: none; }
+
+.ub_countdown_style_selector {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row; }

@@ -123,3 +123,8 @@
 		display: none; //workaround for displaying leading zeroes, as recommended at https://github.com/HubSpot/odometer/issues/106
 	}
 }
+
+.ub_countdown_style_selector {
+	display: flex;
+	flex-direction: row;
+}
