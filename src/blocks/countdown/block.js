@@ -13,14 +13,10 @@ import './style.scss';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InspectorControls } = wp.editor;
-const {
-	DateTimePicker,
-	ButtonGroup,
-	IconButton,
-	PanelBody,
-	TextareaControl
-} = wp.components;
+const { InspectorControls, RichText } = wp.editor;
+const { DateTimePicker, ButtonGroup, IconButton, PanelBody } = wp.components;
+
+const { withState } = wp.compose;
 
 class Timer extends Component {
 	constructor(props) {
@@ -31,7 +27,9 @@ class Timer extends Component {
 		return this.props.deadline - Math.floor(Date.now() / 1000);
 	};
 	componentDidMount() {
-		this.tick = setInterval(this.ticker, 1000);
+		if (this.props.deadline - Math.floor(Date.now() / 1000) > 0) {
+			this.tick = setInterval(this.ticker, 1000);
+		}
 	}
 	ticker = () => {
 		this.setState({
@@ -41,14 +39,17 @@ class Timer extends Component {
 	componentWillReceiveProps(newProps) {
 		if (newProps.deadline !== this.props.deadline) {
 			clearInterval(this.tick);
+			let timeLeft = newProps.deadline - Math.floor(Date.now() / 1000);
 			this.setState({
-				timeLeft: newProps.deadline - Math.floor(Date.now() / 1000)
+				timeLeft: timeLeft
 			});
-			this.tick = setInterval(this.ticker, 1000);
+			if (timeLeft > 0) {
+				this.tick = setInterval(this.ticker, 1000);
+			}
 		}
 	}
 	componentDidUpdate() {
-		if (this.state.timeLeft === -1) {
+		if (this.state.timeLeft <= -1) {
 			clearInterval(this.tick);
 		}
 	}
@@ -57,7 +58,6 @@ class Timer extends Component {
 	}
 	render() {
 		const { timeLeft } = this.state;
-		const { expiryMessage } = this.props;
 		const seconds = timeLeft % 60;
 		const minutes = ((timeLeft - seconds) % 3600) / 60;
 		const hours = ((timeLeft - minutes * 60 - seconds) % 86400) / 3600;
@@ -138,7 +138,7 @@ class Timer extends Component {
 				selectedFormat = defaultFormat;
 		}
 
-		return timeLeft < 0 ? <p>{expiryMessage}</p> : selectedFormat;
+		return selectedFormat;
 	}
 }
 
@@ -158,13 +158,17 @@ registerBlockType('ub/countdown', {
 		},
 		expiryMessage: {
 			type: 'string',
-			default: 'Timer expired'
+			default: ''
 		}
 	},
 
-	edit(props) {
-		const { isSelected, setAttributes } = props;
+	edit: withState({ editable: 'content' })(function(props) {
+		const { editable, isSelected, setAttributes } = props;
 		const { style, endDate, expiryMessage } = props.attributes;
+
+		const onSetActiveEditable = newEditable => () => {
+			setState({ editable: newEditable });
+		};
 
 		return [
 			isSelected && (
@@ -212,24 +216,30 @@ registerBlockType('ub/countdown', {
 							/>
 						</ButtonGroup>
 					</PanelBody>
-					<PanelBody title={__('Display text when expired')}>
-						<TextareaControl
-							value={expiryMessage}
-							onChange={text =>
-								setAttributes({ expiryMessage: text })
-							}
-						/>
-					</PanelBody>
 				</InspectorControls>
 			),
-
-			<Timer
-				timerStyle={style}
-				deadline={endDate}
-				expiryMessage={expiryMessage}
-			/>
+			<React.Fragment>
+				<Timer timerStyle={style} deadline={endDate} />
+				<div key="editable">
+					<RichText
+						tagName="p"
+						placeholder={__(
+							'Text to show after the countdown is over'
+						)}
+						value={expiryMessage}
+						onChange={text =>
+							setAttributes({ expiryMessage: text })
+						}
+						keepPlaceholderOnFocus={true}
+						isSelected={
+							isSelected && editable === 'countdown_expiry_text'
+						}
+						onFocus={onSetActiveEditable('countdown_expiry_text')}
+					/>
+				</div>
+			</React.Fragment>
 		];
-	},
+	}),
 
 	save() {
 		return null;
