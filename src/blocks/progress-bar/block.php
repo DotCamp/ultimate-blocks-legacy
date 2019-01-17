@@ -1,14 +1,10 @@
 <?php
 
-function generateRandomString($length = 10) {
-    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
-}
-
 function ub_render_progress_bar_block($attributes){
-    $elementID = generateRandomString();
+    $className = 'ub_progress-bar';
+    $elementID = $className .'-'. generateBlockId();
     $chosenProgressBar = '';
     $initializationCode = '';
-    $className = 'ub_progress-bar';
     $barThickness = $attributes['barThickness'];
     $barColor = $attributes['barColor'];
     $percentage = $attributes['percentage'];
