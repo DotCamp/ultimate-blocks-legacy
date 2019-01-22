@@ -25,3 +25,4 @@ import './blocks/star-rating/block';
 import './blocks/table-of-contents/block';
 import './blocks/progress-bar/block';
 import './blocks/countdown/block';
+import './blocks/review/block';

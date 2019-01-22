@@ -1,0 +1,41 @@
+.ub_review_entry,
+.ub_review_overall_value {
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	.components-icon-button {
+		padding: 0;
+	}
+	.dashicons-trash {
+		color: #aaa;
+		&:hover {
+			color: #222;
+		}
+	}
+}
+.ub_review_rating {
+	text-align: right;
+	font-size: 40px;
+}
+.ub_review_average_stars {
+	grid-area: stars;
+	justify-self: self-end;
+}
+
+.ub_review_cta_panel {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	grid-template-areas: 'cta . stars';
+	button {
+		min-width: 100px;
+		padding: 0 10px 0 10px;
+	}
+}
+
+.ub_review_add_entry {
+	left: 50%;
+	width: 100%;
+}
+.ub_review_link_input {
+	display: flex;
+	flex-direction: row;
+}
