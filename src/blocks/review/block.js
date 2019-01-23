@@ -126,6 +126,10 @@ class ReviewBody extends Component {
 
 	render() {
 		const {
+			reviewTitle,
+			setReviewTitle,
+			authorName,
+			setAuthorName,
 			itemName,
 			setItemName,
 			ID,
@@ -154,6 +158,18 @@ class ReviewBody extends Component {
 			<div>
 				<RichText
 					tagName="h1"
+					placeholder={__('Title of the review')}
+					value={reviewTitle}
+					onChange={text => setReviewTitle(text)}
+				/>
+				<RichText
+					tagName="p"
+					placeholder={__('Author name')}
+					value={authorName}
+					onChange={text => setAuthorName(text)}
+				/>
+				<RichText
+					tagName="h2"
 					placeholder={__('Name of item under review')}
 					value={itemName}
 					onChange={text => setItemName(text)}
@@ -250,19 +266,22 @@ class ReviewBody extends Component {
 					</div>
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
-							<button
+							<div
 								style={{
 									backgroundColor: callToActionBackColor,
 									border: `1px solid ${callToActionForeColor}`
 								}}
 							>
 								<RichText
-									style={{ color: callToActionForeColor }}
+									style={{
+										color: callToActionForeColor,
+										textAlign: 'center'
+									}}
 									placeholder={__('Call to action text')}
 									value={callToActionText}
 									onChange={text => setCallToActionText(text)}
 								/>
-							</button>
+							</div>
 						</div>
 						<Stars
 							id={`${ID}-average`}
@@ -306,6 +325,18 @@ registerBlockType('ub/review', {
 	category: 'ultimateblocks',
 	keywords: [__('Review'), __('Ultimate Blocks')],
 	attributes: {
+		ID: {
+			type: 'string',
+			default: ''
+		},
+		reviewTitle: {
+			type: 'string',
+			default: ''
+		},
+		authorName: {
+			type: 'string',
+			default: ''
+		},
 		itemName: {
 			type: 'string'
 		},
@@ -355,6 +386,9 @@ registerBlockType('ub/review', {
 	edit(props) {
 		const { setAttributes, isSelected } = props;
 		const {
+			ID,
+			reviewTitle,
+			authorName,
 			itemName,
 			items,
 			starCount,
@@ -369,10 +403,14 @@ registerBlockType('ub/review', {
 			selectedStarColor
 		} = props.attributes;
 
-		const blockID = Math.random()
-			.toString(36)
-			.replace(/[^a-z0-9]+/g, '')
-			.substr(1, 10);
+		if (ID === '') {
+			setAttributes({
+				ID: Math.random()
+					.toString(36)
+					.replace(/[^a-z0-9]+/g, '')
+					.substr(1, 10)
+			});
+		}
 
 		return [
 			isSelected && (
@@ -427,8 +465,10 @@ registerBlockType('ub/review', {
 				</InspectorControls>
 			),
 			<ReviewBody
+				reviewTitle={reviewTitle}
+				authorName={authorName}
 				itemName={itemName}
-				ID={blockID}
+				ID={ID}
 				items={JSON.parse(items)}
 				starCount={starCount}
 				summaryTitle={summaryTitle}
@@ -440,6 +480,12 @@ registerBlockType('ub/review', {
 				inactiveStarColor={inactiveStarColor}
 				activeStarColor={activeStarColor}
 				selectedStarColor={selectedStarColor}
+				setReviewTitle={newValue =>
+					setAttributes({ reviewTitle: newValue })
+				}
+				setAuthorName={newValue =>
+					setAttributes({ authorName: newValue })
+				}
 				setItemName={newValue => setAttributes({ itemName: newValue })}
 				setItems={newValue =>
 					setAttributes({ items: JSON.stringify(newValue) })
@@ -462,6 +508,9 @@ registerBlockType('ub/review', {
 	},
 	save(props) {
 		const {
+			ID,
+			reviewTitle,
+			authorName,
 			itemName,
 			items,
 			starCount,
@@ -480,26 +529,27 @@ registerBlockType('ub/review', {
 				.map(i => i.value)
 				.reduce((total, v) => total + v) / JSON.parse(items).length;
 
-		const blockID = Math.random()
-			.toString(36)
-			.replace(/[^a-z0-9]+/g, '')
-			.substr(1, 10);
-
 		return (
 			<div itemscope itemtype="http://schema.org/Review">
-				<h1
+				<h1 itemProp="headline">
+					<RichText.Content value={reviewTitle} />
+				</h1>
+				<p itemProp="author">
+					<RichText.Content value={authorName} />
+				</p>
+				<h2
 					itemprop="itemReviewed name"
 					itemscope
 					itemtype="http://schema.org/Thing"
 				>
 					<RichText.Content value={itemName} />
-				</h1>
+				</h2>
 				{JSON.parse(items).map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText.Content key={i} value={j.label} />
 						<Stars
 							style={{ justifySelf: 'self-end' }}
-							id={`${blockID}-${i}`}
+							id={`${ID}-${i}`}
 							key={i}
 							value={j.value}
 							limit={starCount}
@@ -547,7 +597,7 @@ registerBlockType('ub/review', {
 							</button>
 						</div>
 						<Stars
-							id={`${blockID}-average`}
+							id={`${ID}-average`}
 							className="ub_review_average_stars"
 							onHover={() => null}
 							setValue={() => null}

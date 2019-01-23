@@ -25,7 +25,8 @@
 	display: grid;
 	grid-template-columns: 2fr 1fr 1fr;
 	grid-template-areas: 'cta . stars';
-	button {
+	button,
+	.ub_review_cta_main > div {
 		min-width: 100px;
 		padding: 0 10px 0 10px;
 	}
