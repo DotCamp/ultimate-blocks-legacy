@@ -80,7 +80,12 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Progress Bar',
 				'name'   => 'ub/progress-bar',
 				'active' => true,
-			),
+            ),
+            array(
+                'label'  => 'Review',
+                'name'   => 'ub/review',
+                'active' => true,
+            ),
 			array(
 				'label'  => 'Social Share',
 				'name'   => 'ub/social-share',
