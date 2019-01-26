@@ -12,31 +12,106 @@ import remove_icon from './icons/remove_icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
-import icons from '../testimonial/icons';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const {
-	InspectorControls,
-	AlignmentToolbar,
-	ColorPalette,
-	BlockControls,
-	RichText,
-	MediaUpload
-} = wp.editor;
+const { InspectorControls, BlockControls, RichText, MediaUpload } = wp.editor;
 
-const {
-	PanelBody,
-	Toolbar,
-	RangeControl,
-	Dashicon,
-	SelectControl,
-	Button,
-	withAPIData
-} = wp.components;
+const { SelectControl, Button } = wp.components;
 
 const { withState } = wp.compose;
+
+const attributes = {
+	column: {
+		type: 'select',
+		default: '2'
+	},
+	columnOneTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_one_title',
+		default: 'Title One'
+	},
+	columnTwoTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_two_title',
+		default: 'Title Two'
+	},
+	columnThreeTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_three_title',
+		default: 'Title Three'
+	},
+	columnOneBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_one_body',
+		default:
+			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+	},
+	columnTwoBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_two_body',
+		default:
+			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+	},
+	columnThreeBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_three_body',
+		default:
+			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+	},
+	imgOneURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.ub_feature_one_img'
+	},
+	imgOneID: {
+		type: 'number'
+	},
+	imgOneAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.ub_feature_one_img'
+	},
+	imgTwoURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.ub_feature_two_img'
+	},
+	imgTwoID: {
+		type: 'number'
+	},
+	imgTwoAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.ub_feature_two_img'
+	},
+	imgThreeURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.ub_feature_three_img'
+	},
+	imgThreeID: {
+		type: 'number'
+	},
+	imgThreeAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.ub_feature_three_img'
+	}
+};
 
 /**
  * Register: aa Gutenberg Block.
@@ -56,96 +131,7 @@ registerBlockType('ub/feature-box', {
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [__('Feature Box'), __('Column'), __('Ultimate Blocks')],
-	attributes: {
-		column: {
-			type: 'select',
-			default: '2'
-		},
-		columnOneTitle: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_feature_one_title',
-			default: 'Title One'
-		},
-		columnTwoTitle: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_feature_two_title',
-			default: 'Title Two'
-		},
-		columnThreeTitle: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_feature_three_title',
-			default: 'Title Three'
-		},
-		columnOneBody: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_feature_one_body',
-			default:
-				'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
-		},
-		columnTwoBody: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_feature_two_body',
-			default:
-				'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
-		},
-		columnThreeBody: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_feature_three_body',
-			default:
-				'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
-		},
-		imgOneURL: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'src',
-			selector: '.ub_feature_one_img'
-		},
-		imgOneID: {
-			type: 'number'
-		},
-		imgOneAlt: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'alt',
-			selector: '.ub_feature_one_img'
-		},
-		imgTwoURL: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'src',
-			selector: '.ub_feature_two_img'
-		},
-		imgTwoID: {
-			type: 'number'
-		},
-		imgTwoAlt: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'alt',
-			selector: '.ub_feature_two_img'
-		},
-		imgThreeURL: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'src',
-			selector: '.ub_feature_three_img'
-		},
-		imgThreeID: {
-			type: 'number'
-		},
-		imgThreeAlt: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'alt',
-			selector: '.ub_feature_three_img'
-		}
-	},
+	attributes,
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -499,5 +485,76 @@ registerBlockType('ub/feature-box', {
 				</div>
 			</div>
 		);
-	}
+	},
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				const {
+					column,
+					columnOneTitle,
+					columnTwoTitle,
+					columnThreeTitle,
+					columnOneBody,
+					columnTwoBody,
+					columnThreeBody,
+					imgOneURL,
+					imgOneID,
+					imgOneAlt,
+					imgTwoURL,
+					imgTwoID,
+					imgTwoAlt,
+					imgThreeURL,
+					imgThreeID,
+					imgThreeAlt
+				} = props.attributes;
+
+				return (
+					<div className={props.className}>
+						<div className={`ub_feature_box column_${column}`}>
+							<div class="ub_feature_1">
+								<img
+									className="ub_feature_one_img"
+									src={imgOneURL}
+									alt={imgOneAlt}
+								/>
+								<p className="ub_feature_one_title">
+									{columnOneTitle}
+								</p>
+								<p className="ub_feature_one_body">
+									{columnOneBody}
+								</p>
+							</div>
+							<div class="ub_feature_2">
+								<img
+									className="ub_feature_two_img"
+									src={imgTwoURL}
+									alt={imgTwoAlt}
+								/>
+								<p className="ub_feature_two_title">
+									{columnTwoTitle}
+								</p>
+								<p className="ub_feature_two_body">
+									{columnTwoBody}
+								</p>
+							</div>
+							<div class="ub_feature_3">
+								<img
+									className="ub_feature_three_img"
+									src={imgThreeURL}
+									alt={imgThreeAlt}
+								/>
+								<p className="ub_feature_three_title">
+									{columnThreeTitle}
+								</p>
+								<p className="ub_feature_three_body">
+									{columnThreeBody}
+								</p>
+							</div>
+						</div>
+					</div>
+				);
+			}
+		}
+	]
 });

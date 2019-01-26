@@ -1,8 +1,5 @@
 import icons from './icons';
 
-//Importing Classname
-import classnames from 'classnames';
-
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
@@ -23,6 +20,51 @@ const { Button, PanelBody, RangeControl } = wp.components;
 
 const { withState } = wp.compose;
 
+const attributes = {
+	ub_testimonial_text: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_testimonial_text'
+	},
+	ub_testimonial_author: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_testimonial_author'
+	},
+	ub_testimonial_author_role: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_testimonial_author_role'
+	},
+	imgURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: 'img'
+	},
+	imgID: {
+		type: 'number'
+	},
+	imgAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: 'img'
+	},
+	backgroundColor: {
+		type: 'string',
+		default: '#f4f6f6'
+	},
+	textColor: {
+		type: 'string',
+		default: '#444444'
+	},
+	textSize: {
+		type: 'number',
+		default: 17
+	}
+};
+
 /**
  * Register: aa Gutenberg Block.
  *
@@ -41,50 +83,7 @@ registerBlockType('ub/testimonial-block', {
 	icon: icons.testimonial,
 	category: 'ultimateblocks',
 	keywords: [__('testimonial'), __('quotes'), __('Ultimate Blocks')],
-	attributes: {
-		ub_testimonial_text: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_testimonial_text'
-		},
-		ub_testimonial_author: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_testimonial_author'
-		},
-		ub_testimonial_author_role: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_testimonial_author_role'
-		},
-		imgURL: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'src',
-			selector: 'img'
-		},
-		imgID: {
-			type: 'number'
-		},
-		imgAlt: {
-			type: 'string',
-			source: 'attribute',
-			attribute: 'alt',
-			selector: 'img'
-		},
-		backgroundColor: {
-			type: 'string',
-			default: '#f4f6f6'
-		},
-		textColor: {
-			type: 'string',
-			default: '#444444'
-		},
-		textSize: {
-			type: 'number',
-			default: 17
-		}
-	},
+	attributes,
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -338,5 +337,60 @@ registerBlockType('ub/testimonial-block', {
 				</div>
 			</div>
 		);
-	}
+	},
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				const {
+					backgroundColor,
+					textColor,
+					textSize,
+					imgURL,
+					imgAlt,
+					ub_testimonial_author,
+					ub_testimonial_author_role,
+					ub_testimonial_text
+				} = props.attributes;
+				return (
+					<div className={props.className}>
+						<div
+							className="ub_testimonial"
+							style={{
+								backgroundColor: backgroundColor,
+								color: textColor
+							}}
+						>
+							<div className="ub_testimonial_img">
+								<img
+									src={imgURL}
+									alt={imgAlt}
+									height={100}
+									width={100}
+								/>
+							</div>
+							<div className="ub_testimonial_content">
+								<p
+									className="ub_testimonial_text"
+									style={{
+										fontSize: textSize
+									}}
+								>
+									{ub_testimonial_text}
+								</p>
+							</div>
+							<div className="ub_testimonial_sign">
+								<p className="ub_testimonial_author">
+									{ub_testimonial_author}
+								</p>
+								<i className="ub_testimonial_author_role">
+									{ub_testimonial_author_role}
+								</i>
+							</div>
+						</div>
+					</div>
+				);
+			}
+		}
+	]
 });

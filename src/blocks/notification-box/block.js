@@ -22,21 +22,27 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const {
-    RichText,
-    AlignmentToolbar,
-    BlockControls,
-    BlockAlignmentToolbar,
+	RichText,
+	AlignmentToolbar,
+	BlockControls,
+	BlockAlignmentToolbar
 } = wp.editor;
 
-const {
-    Toolbar,
-    Button,
-    Tooltip,
-} = wp.components;
+const { Toolbar, Button, Tooltip } = wp.components;
 
-const {
-    withState,
-} = wp.compose;
+const { withState } = wp.compose;
+
+const attributes = {
+	ub_notify_info: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_notify_text'
+	},
+	ub_selected_notify: {
+		type: 'string',
+		default: 'ub_notify_info'
+	}
+};
 
 /**
  * Register: aa Gutenberg Block.
@@ -52,26 +58,11 @@ const {
  *                             registered; otherwise `undefined`.
  */
 registerBlockType('ub/notification-box', {
-
-    title: __('Notification Box'),
-    icon: icon,
-    category: 'ultimateblocks',
-    keywords: [
-        __('notification'),
-        __('warning info'),
-        __('Ultimate Blocks'),
-    ],
-    attributes: {
-        ub_notify_info: {
-            type: 'array',
-            source: 'children',
-            selector: '.ub_notify_text'
-        },
-        ub_selected_notify: {
-            type: 'string',
-            default: 'ub_notify_info'
-        }
-    },
+	title: __('Notification Box'),
+	icon: icon,
+	category: 'ultimateblocks',
+	keywords: [__('notification'), __('warning info'), __('Ultimate Blocks')],
+	attributes,
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -81,92 +72,80 @@ registerBlockType('ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-    edit: withState({ editable: 'content' })(function (props) {
-        const {
-            isSelected,
-            editable,
-            setState
-        } = props;
+	edit: withState({ editable: 'content' })(function(props) {
+		const { isSelected, editable, setState, setAttributes } = props;
 
-        const onSetActiveEditable = (newEditable) => () => {
-            setState({ editable: newEditable })
-        };
+		const onSetActiveEditable = newEditable => () => {
+			setState({ editable: newEditable });
+		};
 
-        const onChangeNotifyInfo = value => {
-            props.setAttributes({ ub_notify_info: value });
-        };
+		const onChangeNotifyInfo = value => {
+			setAttributes({ ub_notify_info: value });
+		};
 
-        const infoClassChange = value => {
-            props.setAttributes({ ub_selected_notify: 'ub_notify_info' });
-        };
+		const infoClassChange = value => {
+			setAttributes({ ub_selected_notify: 'ub_notify_info' });
+		};
 
-        const successClassChange = value => {
-            props.setAttributes({ ub_selected_notify: 'ub_notify_success' });
-        };
+		const successClassChange = value => {
+			setAttributes({ ub_selected_notify: 'ub_notify_success' });
+		};
 
-        const warningClassChange = value => {
-            props.setAttributes({ ub_selected_notify: 'ub_notify_warning' });
-        };
+		const warningClassChange = value => {
+			setAttributes({ ub_selected_notify: 'ub_notify_warning' });
+		};
 
-        return [
+		return [
+			isSelected && <BlockControls key="controls" />,
 
-            isSelected && (
-                <BlockControls key="controls" />
-            ),
+			isSelected && (
+				<BlockControls key="custom-controls">
+					<Toolbar className="components-toolbar">
+						<Button
+							className={classnames(
+								'components-icon-button',
+								'components-toolbar-control'
+							)}
+							onClick={infoClassChange}
+						>
+							{info}
+						</Button>
+						<Button
+							className={classnames(
+								'components-icon-button',
+								'components-toolbar-control'
+							)}
+							onClick={successClassChange}
+						>
+							{success}
+						</Button>
+						<Button
+							className={classnames(
+								'components-icon-button',
+								'components-toolbar-control'
+							)}
+							onClick={warningClassChange}
+						>
+							{warning}
+						</Button>
+					</Toolbar>
+				</BlockControls>
+			),
 
-            isSelected && (
-                <BlockControls key="custom-controls">
-
-                    <Toolbar className="components-toolbar">
-                        <Button
-                            className={classnames(
-                                'components-icon-button',
-                                'components-toolbar-control',
-                            )}
-                            onClick={infoClassChange}
-                        >
-                            {info}
-                        </Button>
-                        <Button
-                            className={classnames(
-                                'components-icon-button',
-                                'components-toolbar-control',
-                            )}
-                            onClick={successClassChange}
-                        >
-                            {success}
-                        </Button>
-                        <Button
-                            className={classnames(
-                                'components-icon-button',
-                                'components-toolbar-control',
-                            )}
-                            onClick={warningClassChange}
-                        >
-                            {warning}
-                        </Button>
-                    </Toolbar>
-
-                </BlockControls>
-            ),
-
-            <div key={'editable'} className={props.className}>
-
-                <RichText
-                    tagName="div"
-                    placeholder={__('Add Your Content Here')}
-                    className={props.attributes.ub_selected_notify}
-                    onChange={onChangeNotifyInfo}
-                    value={props.attributes.ub_notify_info}
-                    isSelected={isSelected && editable === 'notify_info'}
-                    onFocus={onSetActiveEditable('notify_info')}
-                    keepPlaceholderOnFocus={true}
-                />
-
-            </div>
-        ];
-    },
-    ),
+			<div key={'editable'} className={props.className}>
+				<RichText
+					tagName="div"
+					placeholder={__('Add Your Content Here')}
+					className={props.attributes.ub_selected_notify}
+					onChange={onChangeNotifyInfo}
+					value={props.attributes.ub_notify_info}
+					isSelected={isSelected && editable === 'notify_info'}
+					onFocus={onSetActiveEditable('notify_info')}
+					keepPlaceholderOnFocus={true}
+				/>
+			</div>
+		];
+	}),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
@@ -176,13 +155,31 @@ registerBlockType('ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-    save: function (props) {
-        return (
-            <div className={props.className}>
-                <div className={props.attributes.ub_selected_notify}>
-                    <p className="ub_notify_text">{props.attributes.ub_notify_info}</p>
-                </div>
-            </div>
-        );
-    },
+	save: function(props) {
+		return (
+			<div className={props.className}>
+				<div className={props.attributes.ub_selected_notify}>
+					<p className="ub_notify_text">
+						{props.attributes.ub_notify_info}
+					</p>
+				</div>
+			</div>
+		);
+	},
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				return (
+					<div className={props.className}>
+						<div className={props.attributes.ub_selected_notify}>
+							<p className="ub_notify_text">
+								{props.attributes.ub_notify_info}
+							</p>
+						</div>
+					</div>
+				);
+			}
+		}
+	]
 });

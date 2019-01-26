@@ -319,70 +319,72 @@ class ReviewBody extends Component {
 	}
 }
 
+const attributes = {
+	ID: {
+		type: 'string',
+		default: ''
+	},
+	reviewTitle: {
+		type: 'string',
+		default: ''
+	},
+	authorName: {
+		type: 'string',
+		default: ''
+	},
+	itemName: {
+		type: 'string'
+	},
+	items: {
+		type: 'string',
+		default: '[{"label": "", "value": 0}]'
+	},
+	starCount: {
+		type: 'number',
+		default: 5
+	},
+	summaryTitle: {
+		type: 'string',
+		default: 'Summary'
+	},
+	summaryDescription: {
+		type: 'string'
+	},
+	callToActionText: {
+		type: 'string'
+	},
+	callToActionURL: {
+		type: 'string',
+		default: ''
+	},
+	callToActionBackColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	callToActionForeColor: {
+		type: 'string',
+		default: '#0000ff'
+	},
+	inactiveStarColor: {
+		type: 'string',
+		default: '#888888'
+	},
+	activeStarColor: {
+		type: 'string',
+		default: '#eeee00'
+	},
+	selectedStarColor: {
+		type: 'string',
+		default: '#ffff00'
+	}
+};
+
 registerBlockType('ub/review', {
 	title: __('Review'),
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [__('Review'), __('Ultimate Blocks')],
-	attributes: {
-		ID: {
-			type: 'string',
-			default: ''
-		},
-		reviewTitle: {
-			type: 'string',
-			default: ''
-		},
-		authorName: {
-			type: 'string',
-			default: ''
-		},
-		itemName: {
-			type: 'string'
-		},
-		items: {
-			type: 'string',
-			default: '[{"label": "", "value": 0}]'
-		},
-		starCount: {
-			type: 'number',
-			default: 5
-		},
-		summaryTitle: {
-			type: 'string',
-			default: 'Summary'
-		},
-		summaryDescription: {
-			type: 'string'
-		},
-		callToActionText: {
-			type: 'string'
-		},
-		callToActionURL: {
-			type: 'string',
-			default: ''
-		},
-		callToActionBackColor: {
-			type: 'string',
-			default: '#ffffff'
-		},
-		callToActionForeColor: {
-			type: 'string',
-			default: '#0000ff'
-		},
-		inactiveStarColor: {
-			type: 'string',
-			default: '#888888'
-		},
-		activeStarColor: {
-			type: 'string',
-			default: '#eeee00'
-		},
-		selectedStarColor: {
-			type: 'string',
-			default: '#ffff00'
-		}
-	},
+	attributes,
 	edit(props) {
 		const { setAttributes, isSelected } = props;
 		const {
@@ -610,5 +612,125 @@ registerBlockType('ub/review', {
 				</div>
 			</div>
 		);
-	}
+	},
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				const {
+					ID,
+					reviewTitle,
+					authorName,
+					itemName,
+					items,
+					starCount,
+					summaryTitle,
+					summaryDescription,
+					callToActionText,
+					callToActionURL,
+					callToActionBackColor,
+					callToActionForeColor,
+					inactiveStarColor,
+					activeStarColor
+				} = props.attributes;
+
+				const average =
+					JSON.parse(items)
+						.map(i => i.value)
+						.reduce((total, v) => total + v) /
+					JSON.parse(items).length;
+
+				return (
+					<div itemscope itemtype="http://schema.org/Review">
+						<h1 itemProp="headline">
+							<RichText.Content value={reviewTitle} />
+						</h1>
+						<p itemProp="author">
+							<RichText.Content value={authorName} />
+						</p>
+						<h2
+							itemprop="itemReviewed name"
+							itemscope
+							itemtype="http://schema.org/Thing"
+						>
+							<RichText.Content value={itemName} />
+						</h2>
+						{JSON.parse(items).map((j, i) => (
+							<div className="ub_review_entry">
+								<RichText.Content key={i} value={j.label} />
+								<Stars
+									style={{ justifySelf: 'self-end' }}
+									id={`${ID}-${i}`}
+									key={i}
+									value={j.value}
+									limit={starCount}
+									inactiveStarColor={inactiveStarColor}
+									activeStarColor={activeStarColor}
+								/>
+							</div>
+						))}
+						<div clasName="ub_review_summary">
+							<RichText.Content
+								tagName="h2"
+								value={summaryTitle}
+							/>
+							<div className="ub_review_overall_value">
+								<p itemprop="description reviewBody">
+									<RichText.Content
+										value={summaryDescription}
+									/>
+								</p>
+								<span
+									itemprop="ratingValue"
+									className="ub_review_rating"
+								>
+									{Math.round(average * 100) / 100}
+								</span>
+							</div>
+							<div className="ub_review_cta_panel">
+								<div className="ub_review_cta_main">
+									<button
+										style={{
+											backgroundColor: callToActionBackColor,
+											border: `1px solid ${callToActionForeColor}`
+										}}
+									>
+										<a
+											itemprop="url"
+											href={
+												callToActionURL
+													? callToActionURL
+													: '#'
+											}
+										>
+											<RichText.Content
+												style={{
+													color: callToActionForeColor
+												}}
+												value={
+													callToActionText
+														? callToActionText
+														: 'Click here'
+												}
+											/>
+										</a>
+									</button>
+								</div>
+								<Stars
+									id={`${ID}-average`}
+									className="ub_review_average_stars"
+									onHover={() => null}
+									setValue={() => null}
+									value={average}
+									limit={starCount}
+									inactiveStarColor={inactiveStarColor}
+									activeStarColor={activeStarColor}
+								/>
+							</div>
+						</div>
+					</div>
+				);
+			}
+		}
+	]
 });

@@ -9,34 +9,36 @@ import './editor.scss';
 
 import { EmptyStar, HalfStar, FullStar } from './icons';
 
+const attributes = {
+	starCount: {
+		type: 'number',
+		default: 5
+	},
+	starSize: {
+		type: 'number',
+		default: 20
+	},
+	starColor: {
+		type: 'string',
+		default: '#ffff00'
+	},
+	selectedStars: {
+		type: 'number',
+		default: 0
+	},
+	reviewText: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub-review-text'
+	}
+};
+
 registerBlockType('ub/star-rating', {
 	title: __('Star Rating'),
 	icon: HalfStar,
 	category: 'ultimateblocks',
 
-	attributes: {
-		starCount: {
-			type: 'number',
-			default: 5
-		},
-		starSize: {
-			type: 'number',
-			default: 20
-		},
-		starColor: {
-			type: 'string',
-			default: '#ffff00'
-		},
-		selectedStars: {
-			type: 'number',
-			default: 0
-		},
-		reviewText: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub-review-text'
-		}
-	},
+	attributes,
 
 	edit: withState({ editable: 'content' })(function(props) {
 		const { editable, isSelected, setAttributes, setState } = props;
@@ -165,5 +167,39 @@ registerBlockType('ub/star-rating', {
 				<div className="ub-review-text">{reviewText}</div>
 			</div>
 		);
-	}
+	},
+
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				const {
+					starCount,
+					starSize,
+					starColor,
+					selectedStars,
+					reviewText
+				} = props.attributes;
+				return (
+					<div className="ub-star-rating">
+						<div className="ub-star-container">
+							{[...Array(starCount)].map((e, i) => (
+								<div key={i}>
+									{i < selectedStars ? (
+										<FullStar
+											size={starSize}
+											fillColor={starColor}
+										/>
+									) : (
+										<EmptyStar size={starSize} />
+									)}
+								</div>
+							))}
+						</div>
+						<div className="ub-review-text">{reviewText}</div>
+					</div>
+				);
+			}
+		}
+	]
 });

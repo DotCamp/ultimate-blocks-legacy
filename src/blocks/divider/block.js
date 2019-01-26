@@ -15,9 +15,28 @@ import './editor.scss';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { InspectorControls, AlignmentToolbar, ColorPalette } = wp.editor;
+const { InspectorControls, ColorPalette } = wp.editor;
 
-const { PanelBody, Toolbar, RangeControl, Dashicon } = wp.components;
+const { RangeControl } = wp.components;
+
+const attributes = {
+	borderSize: {
+		type: 'number',
+		default: 2
+	},
+	borderStyle: {
+		type: 'string',
+		default: 'solid'
+	},
+	borderColor: {
+		type: 'string',
+		default: '#ccc'
+	},
+	borderHeight: {
+		type: 'number',
+		default: 20
+	}
+};
 /**
  * Register: aa Gutenberg Block.
  *
@@ -36,24 +55,7 @@ registerBlockType('ub/divider', {
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [__('Divider'), __('Separator'), __('Ultimate Blocks')],
-	attributes: {
-		borderSize: {
-			type: 'number',
-			default: 2
-		},
-		borderStyle: {
-			type: 'string',
-			default: 'solid'
-		},
-		borderColor: {
-			type: 'string',
-			default: '#ccc'
-		},
-		borderHeight: {
-			type: 'number',
-			default: 20
-		}
-	},
+	attributes,
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -71,16 +73,16 @@ registerBlockType('ub/divider', {
 			borderHeight
 		} = props.attributes;
 
+		const { isSelected, setAttributes, className } = props;
+
 		// Creates a <p class='wp-block-cgb-block-divider'></p>.
 		return [
-			props.isSelected && (
+			isSelected && (
 				<InspectorControls key="inspectors">
 					<RangeControl
 						label={__('Thickness')}
 						value={borderSize}
-						onChange={value =>
-							props.setAttributes({ borderSize: value })
-						}
+						onChange={value => setAttributes({ borderSize: value })}
 						min={1}
 						max={20}
 						beforeIcon="minus"
@@ -91,7 +93,7 @@ registerBlockType('ub/divider', {
 						label={__('Height')}
 						value={borderHeight}
 						onChange={value =>
-							props.setAttributes({ borderHeight: value })
+							setAttributes({ borderHeight: value })
 						}
 						min={10}
 						max={200}
@@ -103,14 +105,14 @@ registerBlockType('ub/divider', {
 					<ColorPalette
 						value={borderColor}
 						onChange={colorValue =>
-							props.setAttributes({ borderColor: colorValue })
+							setAttributes({ borderColor: colorValue })
 						}
 						allowReset
 					/>
 				</InspectorControls>
 			),
 
-			<div className={props.className}>
+			<div className={className}>
 				<div
 					className="ub_divider"
 					style={{
@@ -161,5 +163,37 @@ registerBlockType('ub/divider', {
 				/>
 			</div>
 		);
-	}
+	},
+
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				const {
+					borderSize,
+					borderStyle,
+					borderColor,
+					borderHeight
+				} = props.attributes;
+
+				return (
+					<div className={props.className}>
+						<div
+							className="ub_divider"
+							style={{
+								borderTop:
+									borderSize +
+									'px ' +
+									borderStyle +
+									' ' +
+									borderColor,
+								marginTop: borderHeight + 'px',
+								marginBottom: borderHeight + 'px'
+							}}
+						/>
+					</div>
+				);
+			}
+		}
+	]
 });

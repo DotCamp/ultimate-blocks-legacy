@@ -14,6 +14,18 @@ import './style.scss';
 
 import { Component } from 'react';
 
+const attributes = {
+	title: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_table-of-contents-title'
+	},
+	links: {
+		type: 'string',
+		default: ''
+	}
+};
+
 class TableOfContents extends Component {
 	constructor(props) {
 		super(props);
@@ -163,17 +175,7 @@ registerBlockType('ub/table-of-contents', {
 	category: 'ultimateblocks',
 	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
 
-	attributes: {
-		title: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub_table-of-contents-title'
-		},
-		links: {
-			type: 'string',
-			default: ''
-		}
-	},
+	attributes,
 
 	supports: {
 		multiple: false
@@ -228,5 +230,26 @@ registerBlockType('ub/table-of-contents', {
 				<TableOfContents headers={links && JSON.parse(links)} />
 			</div>
 		);
-	}
+	},
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				const { links, title } = props.attributes;
+				return (
+					<div className="ub_table-of-contents">
+						{(title.length > 1 ||
+							(title.length === 1 && title[0] !== '')) && (
+							<div className="ub_table-of-contents-header">
+								<div className="ub_table-of-contents-title">
+									{title}
+								</div>
+							</div>
+						)}
+						<TableOfContents headers={links && JSON.parse(links)} />
+					</div>
+				);
+			}
+		}
+	]
 });

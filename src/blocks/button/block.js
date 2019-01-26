@@ -46,44 +46,46 @@ const { withState } = wp.compose;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
+
+const attributes = {
+	buttonText: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub-button-block-btn'
+	},
+	align: {
+		type: 'string',
+		default: 'center'
+	},
+	url: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'a',
+		attribute: 'href'
+	},
+	size: {
+		type: 'string',
+		default: 'medium'
+	},
+	buttonColor: {
+		type: 'string',
+		default: '#44c767'
+	},
+	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonRounded: {
+		type: 'boolean',
+		default: 'false'
+	}
+};
+
 registerBlockType('ub/button-block', {
 	title: __('Button (Improved)'),
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [__('Button'), __('Buttons'), __('Ultimate Blocks')],
-	attributes: {
-		buttonText: {
-			type: 'array',
-			source: 'children',
-			selector: '.ub-button-block-btn'
-		},
-		align: {
-			type: 'string',
-			default: 'center'
-		},
-		url: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'a',
-			attribute: 'href'
-		},
-		size: {
-			type: 'string',
-			default: 'medium'
-		},
-		buttonColor: {
-			type: 'string',
-			default: '#44c767'
-		},
-		buttonTextColor: {
-			type: 'string',
-			default: '#ffffff'
-		},
-		buttonRounded: {
-			type: 'boolean',
-			default: 'false'
-		}
-	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -91,7 +93,7 @@ registerBlockType('ub/button-block', {
 	 * The "edit" property must be a valid function.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
+	 */ attributes,
 	edit: withState({ editable: 'content' })(function(props) {
 		const { isSelected, editable, setState } = props;
 
@@ -110,10 +112,10 @@ registerBlockType('ub/button-block', {
 		} = props.attributes;
 
 		const BUTTON_SIZES = {
-			small: 'small',
-			medium: 'medium',
-			large: 'large',
-			larger: 'larger'
+			small: 'S',
+			medium: 'M',
+			large: 'L',
+			larger: 'XL'
 		};
 
 		return [
@@ -134,54 +136,18 @@ registerBlockType('ub/button-block', {
 					<PanelBody title={__('Button Size')}>
 						<div className="blocks-font-size__main">
 							<ButtonGroup aria-label={__('Button Size')}>
-								<Button
-									isLarge
-									isPrimary={size === BUTTON_SIZES['small']}
-									aria-pressed={
-										size === BUTTON_SIZES['small']
-									}
-									onClick={() =>
-										props.setAttributes({ size: 'small' })
-									}
-								>
-									S
-								</Button>
-								<Button
-									isLarge
-									isPrimary={size === BUTTON_SIZES['medium']}
-									aria-pressed={
-										size === BUTTON_SIZES['medium']
-									}
-									onClick={() =>
-										props.setAttributes({ size: 'medium' })
-									}
-								>
-									M
-								</Button>
-								<Button
-									isLarge
-									isPrimary={size === BUTTON_SIZES['large']}
-									aria-pressed={
-										size === BUTTON_SIZES['large']
-									}
-									onClick={() =>
-										props.setAttributes({ size: 'large' })
-									}
-								>
-									L
-								</Button>
-								<Button
-									isLarge
-									isPrimary={size === BUTTON_SIZES['larger']}
-									aria-pressed={
-										size === BUTTON_SIZES['larger']
-									}
-									onClick={() =>
-										props.setAttributes({ size: 'larger' })
-									}
-								>
-									XL
-								</Button>
+								{Object.keys(BUTTON_SIZES).map(b => (
+									<Button
+										isLarge
+										isPrimary={size === b}
+										aria-pressed={size === b}
+										onClick={() =>
+											props.setAttributes({ size: b })
+										}
+									>
+										{BUTTON_SIZES[b]}
+									</Button>
+								))}
 							</ButtonGroup>
 						</div>
 					</PanelBody>
@@ -244,7 +210,7 @@ registerBlockType('ub/button-block', {
 					/>
 				</div>
 				<div className="ub_button_url_input">
-					{focus && (
+					{isSelected && (
 						<form
 							key={'form-link'}
 							onSubmit={event => event.preventDefault()}
@@ -316,5 +282,46 @@ registerBlockType('ub/button-block', {
 				</div>
 			</div>
 		);
-	}
+	},
+	deprecated: [
+		{
+			attributes,
+			save(props) {
+				const {
+					buttonText,
+					align,
+					url,
+					size,
+					buttonColor,
+					buttonTextColor,
+					buttonRounded
+				} = props.attributes;
+
+				return (
+					<div className={props.className}>
+						<div
+							className={
+								'ub-button-container' + ' align-button-' + align
+							}
+						>
+							<a
+								href={url}
+								target="_blank"
+								className={
+									'ub-button-block-btn' + ' ub-button-' + size
+								}
+								style={{
+									backgroundColor: buttonColor,
+									color: buttonTextColor,
+									borderRadius: buttonRounded ? '60px' : '0px'
+								}}
+							>
+								{buttonText}
+							</a>
+						</div>
+					</div>
+				);
+			}
+		}
+	]
 });
