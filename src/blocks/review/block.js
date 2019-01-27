@@ -3,6 +3,7 @@ import './style.scss';
 
 import { Stars, ReviewBody } from './components';
 import { version_1_1_2 } from './oldVersions';
+import { JSONLD, Generic } from 'react-structured-data';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -294,6 +295,15 @@ registerBlockType('ub/review', {
 						/>
 					</div>
 				</div>
+
+				<JSONLD>
+					<Generic type="review" jsonldtype="Review" schema={{ reviewBody: summaryDescription }} >
+						<Generic type="itemReviewed" jsonldtype="Product" schema={{ name: itemName }} />
+						<Generic type="reviewRating" jsonldtype="Rating" schema={{ "ratingValue": average, "bestRating": 5 }} />
+						<Generic type="author" jsonldtype="Person" schema={{ name: authorName }} />
+					</Generic>
+				</JSONLD>
+
 			</div>
 		);
 	},

@@ -14,7 +14,8 @@
         "react": "16.2.0",
         "react-autosize-textarea": "2.0.0",
         "react-dom": "16.2.0",
-        "react-sortable-hoc": "^0.6.8"
+        "react-sortable-hoc": "^0.6.8",
+        "react-structured-data": "0.0.11"
     },
     "devDependencies": {
         "classnames": "^2.2.5",
