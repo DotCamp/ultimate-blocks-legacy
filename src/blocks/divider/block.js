@@ -11,6 +11,7 @@ import icon from './icons/icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import { version_1_1_2 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -168,32 +169,7 @@ registerBlockType('ub/divider', {
 	deprecated: [
 		{
 			attributes,
-			save(props) {
-				const {
-					borderSize,
-					borderStyle,
-					borderColor,
-					borderHeight
-				} = props.attributes;
-
-				return (
-					<div className={props.className}>
-						<div
-							className="ub_divider"
-							style={{
-								borderTop:
-									borderSize +
-									'px ' +
-									borderStyle +
-									' ' +
-									borderColor,
-								marginTop: borderHeight + 'px',
-								marginBottom: borderHeight + 'px'
-							}}
-						/>
-					</div>
-				);
-			}
+			save: version_1_1_2
 		}
 	]
 });

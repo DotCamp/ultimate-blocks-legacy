@@ -8,6 +8,7 @@ import './style.scss';
 import './editor.scss';
 
 import { EmptyStar, HalfStar, FullStar } from './icons';
+import { version_1_1_2 } from './oldVersions';
 
 const attributes = {
 	starCount: {
@@ -172,34 +173,7 @@ registerBlockType('ub/star-rating', {
 	deprecated: [
 		{
 			attributes,
-			save(props) {
-				const {
-					starCount,
-					starSize,
-					starColor,
-					selectedStars,
-					reviewText
-				} = props.attributes;
-				return (
-					<div className="ub-star-rating">
-						<div className="ub-star-container">
-							{[...Array(starCount)].map((e, i) => (
-								<div key={i}>
-									{i < selectedStars ? (
-										<FullStar
-											size={starSize}
-											fillColor={starColor}
-										/>
-									) : (
-										<EmptyStar size={starSize} />
-									)}
-								</div>
-							))}
-						</div>
-						<div className="ub-review-text">{reviewText}</div>
-					</div>
-				);
-			}
+			save: version_1_1_2
 		}
 	]
 });

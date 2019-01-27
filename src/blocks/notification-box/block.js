@@ -18,6 +18,8 @@ import classnames from 'classnames';
 import './style.scss';
 import './editor.scss';
 
+import { version_1_1_2 } from './oldVersions';
+
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
@@ -169,17 +171,7 @@ registerBlockType('ub/notification-box', {
 	deprecated: [
 		{
 			attributes,
-			save(props) {
-				return (
-					<div className={props.className}>
-						<div className={props.attributes.ub_selected_notify}>
-							<p className="ub_notify_text">
-								{props.attributes.ub_notify_info}
-							</p>
-						</div>
-					</div>
-				);
-			}
+			save: version_1_1_2
 		}
 	]
 });

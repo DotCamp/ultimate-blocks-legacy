@@ -12,6 +12,8 @@ import icon from './icons/icons';
 import './style.scss';
 import './editor.scss';
 
+import { version_1_1_2 } from './oldVersions';
+
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const {
@@ -286,42 +288,7 @@ registerBlockType('ub/button-block', {
 	deprecated: [
 		{
 			attributes,
-			save(props) {
-				const {
-					buttonText,
-					align,
-					url,
-					size,
-					buttonColor,
-					buttonTextColor,
-					buttonRounded
-				} = props.attributes;
-
-				return (
-					<div className={props.className}>
-						<div
-							className={
-								'ub-button-container' + ' align-button-' + align
-							}
-						>
-							<a
-								href={url}
-								target="_blank"
-								className={
-									'ub-button-block-btn' + ' ub-button-' + size
-								}
-								style={{
-									backgroundColor: buttonColor,
-									color: buttonTextColor,
-									borderRadius: buttonRounded ? '60px' : '0px'
-								}}
-							>
-								{buttonText}
-							</a>
-						</div>
-					</div>
-				);
-			}
+			save: version_1_1_2
 		}
 	]
 });
