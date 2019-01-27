@@ -155,12 +155,13 @@ class ReviewBody extends Component {
 		const { average } = this.state;
 
 		return (
-			<div>
+			<div className="ub_review_block">
 				<RichText
-					tagName="h1"
+					className="ub_review_item_name"
+					tagName="p"
 					placeholder={__('Title of the review')}
-					value={reviewTitle}
-					onChange={text => setReviewTitle(text)}
+					value={itemName}
+					onChange={text => setItemName(text)}
 				/>
 				<RichText
 					tagName="p"
@@ -168,18 +169,12 @@ class ReviewBody extends Component {
 					value={authorName}
 					onChange={text => setAuthorName(text)}
 				/>
-				<RichText
-					tagName="h2"
-					placeholder={__('Name of item under review')}
-					value={itemName}
-					onChange={text => setItemName(text)}
-				/>
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText
 							key={i}
 							placeholder={__(
-								'Aspect of the item being reviewed'
+								'Feature Name'
 							)}
 							value={j.label}
 							onChange={text => {
@@ -249,8 +244,9 @@ class ReviewBody extends Component {
 				/>
 				<div clasName="ub_review_summary">
 					<RichText
+						className="ub_review_summary_title"
 						placeholder={__('Title of the summary goes here')}
-						tagName="h2"
+						tagName="p"
 						onChange={text => setSummaryTitle(text)}
 						value={summaryTitle}
 					/>
@@ -267,6 +263,7 @@ class ReviewBody extends Component {
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
 							<div
+								className="ub_review_cta_btn"
 								style={{
 									backgroundColor: callToActionBackColor,
 									border: `1px solid ${callToActionForeColor}`
@@ -277,7 +274,7 @@ class ReviewBody extends Component {
 										color: callToActionForeColor,
 										textAlign: 'center'
 									}}
-									placeholder={__('Call to action text')}
+									placeholder={__('Call to action')}
 									value={callToActionText}
 									onChange={text => setCallToActionText(text)}
 								/>
@@ -359,11 +356,11 @@ const attributes = {
 	},
 	callToActionBackColor: {
 		type: 'string',
-		default: '#ffffff'
+		default: '#f63d3d'
 	},
 	callToActionForeColor: {
 		type: 'string',
-		default: '#0000ff'
+		default: '#ffffff'
 	},
 	inactiveStarColor: {
 		type: 'string',
@@ -438,20 +435,20 @@ registerBlockType('ub/review', {
 								label: __('Button Text Color')
 							},
 							{
-								value: inactiveStarColor,
-								onChange: colorValue =>
-									setAttributes({
-										inactiveStarColor: colorValue
-									}),
-								label: __('Inactive Star Color')
-							},
-							{
 								value: activeStarColor,
 								onChange: colorValue =>
 									setAttributes({
 										activeStarColor: colorValue
 									}),
 								label: __('Active Star Color')
+							},
+							{
+								value: inactiveStarColor,
+								onChange: colorValue =>
+									setAttributes({
+										inactiveStarColor: colorValue
+									}),
+								label: __('Inactive Star Color')
 							},
 							{
 								value: selectedStarColor,
@@ -532,20 +529,13 @@ registerBlockType('ub/review', {
 				.reduce((total, v) => total + v) / JSON.parse(items).length;
 
 		return (
-			<div itemscope itemtype="http://schema.org/Review">
-				<h1 itemProp="headline">
-					<RichText.Content value={reviewTitle} />
-				</h1>
-				<p itemProp="author">
+			<div className="ub_review_block">
+				<p className="ub_review_item_name">
+					<RichText.Content value={itemName} />
+				</p>
+				<p>
 					<RichText.Content value={authorName} />
 				</p>
-				<h2
-					itemprop="itemReviewed name"
-					itemscope
-					itemtype="http://schema.org/Thing"
-				>
-					<RichText.Content value={itemName} />
-				</h2>
 				{JSON.parse(items).map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText.Content key={i} value={j.label} />
@@ -561,13 +551,16 @@ registerBlockType('ub/review', {
 					</div>
 				))}
 				<div clasName="ub_review_summary">
-					<RichText.Content tagName="h2" value={summaryTitle} />
+					<RichText.Content
+						className="ub_review_summary_title"
+						tagName="p"
+						value={summaryTitle}
+					/>
 					<div className="ub_review_overall_value">
-						<p itemprop="description reviewBody">
+						<p>
 							<RichText.Content value={summaryDescription} />
 						</p>
 						<span
-							itemprop="ratingValue"
 							className="ub_review_rating"
 						>
 							{Math.round(average * 100) / 100}
@@ -576,13 +569,14 @@ registerBlockType('ub/review', {
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
 							<button
+								className="ub_review_cta_btn"
 								style={{
 									backgroundColor: callToActionBackColor,
 									border: `1px solid ${callToActionForeColor}`
 								}}
 							>
 								<a
-									itemprop="url"
+									style={{ color: callToActionForeColor }}
 									href={
 										callToActionURL ? callToActionURL : '#'
 									}
@@ -641,20 +635,13 @@ registerBlockType('ub/review', {
 					JSON.parse(items).length;
 
 				return (
-					<div itemscope itemtype="http://schema.org/Review">
-						<h1 itemProp="headline">
-							<RichText.Content value={reviewTitle} />
-						</h1>
-						<p itemProp="author">
+					<div className="ub_review_block">
+						<p>
+							<RichText.Content value={itemName} />
+						</p>
+						<p>
 							<RichText.Content value={authorName} />
 						</p>
-						<h2
-							itemprop="itemReviewed name"
-							itemscope
-							itemtype="http://schema.org/Thing"
-						>
-							<RichText.Content value={itemName} />
-						</h2>
 						{JSON.parse(items).map((j, i) => (
 							<div className="ub_review_entry">
 								<RichText.Content key={i} value={j.label} />
@@ -670,18 +657,12 @@ registerBlockType('ub/review', {
 							</div>
 						))}
 						<div clasName="ub_review_summary">
-							<RichText.Content
-								tagName="h2"
-								value={summaryTitle}
-							/>
+							<RichText.Content tagName="p" value={summaryTitle} />
 							<div className="ub_review_overall_value">
-								<p itemprop="description reviewBody">
-									<RichText.Content
-										value={summaryDescription}
-									/>
+								<p>
+									<RichText.Content value={summaryDescription} />
 								</p>
 								<span
-									itemprop="ratingValue"
 									className="ub_review_rating"
 								>
 									{Math.round(average * 100) / 100}
@@ -690,23 +671,20 @@ registerBlockType('ub/review', {
 							<div className="ub_review_cta_panel">
 								<div className="ub_review_cta_main">
 									<button
+										className="ub_review_cta_btn"
 										style={{
 											backgroundColor: callToActionBackColor,
 											border: `1px solid ${callToActionForeColor}`
 										}}
 									>
 										<a
-											itemprop="url"
+											style={{ color: callToActionForeColor }}
 											href={
-												callToActionURL
-													? callToActionURL
-													: '#'
+												callToActionURL ? callToActionURL : '#'
 											}
 										>
 											<RichText.Content
-												style={{
-													color: callToActionForeColor
-												}}
+												style={{ color: callToActionForeColor }}
 												value={
 													callToActionText
 														? callToActionText
