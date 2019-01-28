@@ -1,5 +1,5 @@
 const { RichText } = wp.editor;
-const { Stars } = './components';
+import { Stars } from './components';
 import { JSONLD, Generic } from 'react-structured-data';
 
 const version_1_1_2 = props => {
@@ -50,7 +50,7 @@ const version_1_1_2 = props => {
 					/>
 				</div>
 			))}
-			<div clasName="ub_review_summary">
+			<div className="ub_review_summary">
 				<RichText.Content
 					className="ub_review_summary_title"
 					tagName="p"
@@ -99,7 +99,6 @@ const version_1_1_2 = props => {
 					/>
 				</div>
 			</div>
-
 			<JSONLD>
 				<Generic
 					type="review"

@@ -237,7 +237,7 @@ registerBlockType('ub/review', {
 						/>
 					</div>
 				))}
-				<div clasName="ub_review_summary">
+				<div className="ub_review_summary">
 					<RichText.Content
 						className="ub_review_summary_title"
 						tagName="p"
@@ -286,7 +286,6 @@ registerBlockType('ub/review', {
 						/>
 					</div>
 				</div>
-
 				<JSONLD>
 					<Generic
 						type="review"

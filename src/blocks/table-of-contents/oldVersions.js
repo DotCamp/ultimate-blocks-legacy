@@ -1,3 +1,5 @@
+import TableOfContents from './components';
+
 const version_1_1_2 = props => {
 	const { links, title } = props.attributes;
 	return (
