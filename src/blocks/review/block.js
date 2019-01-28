@@ -251,18 +251,17 @@ registerBlockType('ub/review', {
 					</div>
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
-							<button
-								className="ub_review_cta_btn"
-								style={{
-									backgroundColor: callToActionBackColor,
-									border: `1px solid ${callToActionForeColor}`
-								}}
+							<a
+								style={{ color: callToActionForeColor }}
+								href={callToActionURL ? callToActionURL : '#'}
+								target="_blank"
 							>
-								<a
-									style={{ color: callToActionForeColor }}
-									href={
-										callToActionURL ? callToActionURL : '#'
-									}
+								<button
+									className="ub_review_cta_btn"
+									style={{
+										backgroundColor: callToActionBackColor,
+										border: `1px solid ${callToActionForeColor}`
+									}}
 								>
 									<RichText.Content
 										style={{ color: callToActionForeColor }}
@@ -272,8 +271,8 @@ registerBlockType('ub/review', {
 												: 'Click here'
 										}
 									/>
-								</a>
-							</button>
+								</button>
+							</a>
 						</div>
 						<Stars
 							id={`${ID}-average`}
