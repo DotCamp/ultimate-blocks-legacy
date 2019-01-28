@@ -23,7 +23,7 @@ function ub_render_countdown_block($attributes){
             return '<div style="height: 70px; width: 70px;" class="ub_countdown_'.$label.'">
                         <svg height="70" width="70" viewBox="0 0 100 100" style="position: absolute;">
                             <path class="'.$prefix.'trail" d="'.$circlePath.'" stroke-width="3" style="stroke-dasharray: 219.911px, 219.911px;"></path>
-                            <path class="'.$prefix.'path" d="'.$circlePath.'" stroke="#2DB7F5" stroke-width="3" stroke-linecap="round" style="stroke-dasharray: '.$value*219.911/$limit.'px, 219.911px;"></path>
+                            <path class="'.$prefix.'path" d="'.$circlePath.'" stroke="#2DB7F5" stroke-width="3" style="stroke-dasharray: '.$value*219.911/$limit.'px, 219.911px; stroke-linecap=\'round\';"></path>
                         </svg>
                         <div class="'.$prefix.'label">'.$value.'</div>
                     </div>';
@@ -47,6 +47,7 @@ function ub_render_countdown_block($attributes){
     if(!function_exists('circleUpdate')){
         function circleUpdate($part, $limit, $ID){
             return 'document.querySelector("#ub_countdown_'.$ID.' .ub_countdown_'.$part.' .ub_countdown_circle_path").style.strokeDasharray = `${'.$part.'s * 219.911 / '.$limit.'}px, 219.911px`;
+            document.querySelector("#ub_countdown_'.$ID.' .ub_countdown_'.$part.' .ub_countdown_circle_path").style.strokeLinecap = `${'.$part.'s > 0 ? "round": "butt"}`;
             document.querySelector("#ub_countdown_'.$ID.' .ub_countdown_'.$part.' .ub_countdown_circle_label").innerHTML = '.$part.'s;';
         }
     }
@@ -124,7 +125,7 @@ function ub_register_countdown_block() {
                 ),
                 'style'=> array(
                     'type' => 'string',
-                    'default' => 'Regular'
+                    'default' => 'Odometer'
                 ),
                 'expiryMessage' => array(
                     'type' => 'string',

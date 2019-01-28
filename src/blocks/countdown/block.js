@@ -26,7 +26,7 @@ registerBlockType('ub/countdown', {
 		},
 		style: {
 			type: 'string',
-			default: 'Regular' //available types: Regular, Circular, Odometer
+			default: 'Odometer' //available types: Regular, Circular, Odometer
 		},
 		expiryMessage: {
 			type: 'string',
@@ -45,21 +45,6 @@ registerBlockType('ub/countdown', {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__('Timer expiration')}>
-						<DateTimePicker
-							currentDate={endDate * 1000}
-							onChange={value => {
-								console.log(
-									Math.floor(Date.parse(value) / 1000)
-								);
-								setAttributes({
-									endDate: Math.floor(
-										Date.parse(value) / 1000
-									)
-								});
-							}}
-						/>
-					</PanelBody>
 					<PanelBody title={__('Timer Style')}>
 						<ButtonGroup className="ub_countdown_style_selector">
 							<IconButton
@@ -87,6 +72,21 @@ registerBlockType('ub/countdown', {
 								}
 							/>
 						</ButtonGroup>
+					</PanelBody>
+					<PanelBody title={__('Timer expiration')}>
+						<DateTimePicker
+							currentDate={endDate * 1000}
+							onChange={value => {
+								console.log(
+									Math.floor(Date.parse(value) / 1000)
+								);
+								setAttributes({
+									endDate: Math.floor(
+										Date.parse(value) / 1000
+									)
+								});
+							}}
+						/>
 					</PanelBody>
 				</InspectorControls>
 			),
