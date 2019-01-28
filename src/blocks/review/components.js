@@ -56,7 +56,16 @@ class Stars extends Component {
 			style
 		} = this.props;
 		return (
-			<div className={className} style={style}>
+			<div
+				className={className}
+				style={Object.assign(
+					{
+						display: 'flex',
+						flexDirection: 'flex-row'
+					},
+					style
+				)}
+			>
 				{[...Array(limit).keys()].map(i => (
 					<svg
 						key={i}
@@ -122,8 +131,6 @@ class ReviewBody extends Component {
 
 	render() {
 		const {
-			reviewTitle,
-			setReviewTitle,
 			authorName,
 			setAuthorName,
 			itemName,
@@ -168,6 +175,7 @@ class ReviewBody extends Component {
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText
+							style={{ marginRight: 'auto' }}
 							key={i}
 							placeholder={__('Feature name')}
 							value={j.label}
@@ -177,7 +185,13 @@ class ReviewBody extends Component {
 								setItems(newArray);
 							}}
 						/>
-						<div key={i}>
+						<div
+							key={i}
+							style={{
+								marginLeft: 'auto',
+								minWidth: items.length > 1 ? 120 : 100
+							}}
+						>
 							{items.length > 1 && (
 								<div
 									className="dashicons dashicons-trash"
@@ -205,7 +219,6 @@ class ReviewBody extends Component {
 								key={i}
 								value={j.value}
 								limit={starCount}
-								style={{ float: 'right' }}
 								setValue={newValue => {
 									let newArray = items;
 									newArray[i].value = newValue;
@@ -251,7 +264,7 @@ class ReviewBody extends Component {
 							value={summaryDescription}
 						/>
 						<span className="ub_review_rating">
-							{Math.round(average * 100) / 100}
+							{Math.round(average * 10) / 10}
 						</span>
 					</div>
 					<div className="ub_review_cta_panel">
@@ -284,7 +297,9 @@ class ReviewBody extends Component {
 							inactiveStarColor={inactiveStarColor}
 							activeStarColor={activeStarColor}
 							selectedStarColor={selectedStarColor}
-							style={{ float: 'right' }}
+							style={{
+								float: 'right'
+							}}
 						/>
 					</div>
 					{hasFocus && (

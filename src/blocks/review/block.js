@@ -14,10 +14,6 @@ const attributes = {
 		type: 'string',
 		default: ''
 	},
-	reviewTitle: {
-		type: 'string',
-		default: ''
-	},
 	authorName: {
 		type: 'string',
 		default: ''
@@ -79,7 +75,6 @@ registerBlockType('ub/review', {
 		const { setAttributes, isSelected } = props;
 		const {
 			ID,
-			reviewTitle,
 			authorName,
 			itemName,
 			items,
@@ -157,7 +152,6 @@ registerBlockType('ub/review', {
 				</InspectorControls>
 			),
 			<ReviewBody
-				reviewTitle={reviewTitle}
 				authorName={authorName}
 				itemName={itemName}
 				ID={ID}
@@ -172,9 +166,6 @@ registerBlockType('ub/review', {
 				inactiveStarColor={inactiveStarColor}
 				activeStarColor={activeStarColor}
 				selectedStarColor={selectedStarColor}
-				setReviewTitle={newValue =>
-					setAttributes({ reviewTitle: newValue })
-				}
 				setAuthorName={newValue =>
 					setAttributes({ authorName: newValue })
 				}
@@ -201,7 +192,6 @@ registerBlockType('ub/review', {
 	save(props) {
 		const {
 			ID,
-			reviewTitle,
 			authorName,
 			itemName,
 			items,
@@ -217,9 +207,13 @@ registerBlockType('ub/review', {
 		} = props.attributes;
 
 		const average =
-			JSON.parse(items)
-				.map(i => i.value)
-				.reduce((total, v) => total + v) / JSON.parse(items).length;
+			Math.round(
+				(JSON.parse(items)
+					.map(i => i.value)
+					.reduce((total, v) => total + v) /
+					JSON.parse(items).length) *
+					10
+			) / 10;
 
 		return (
 			<div className="ub_review_block">
@@ -233,7 +227,7 @@ registerBlockType('ub/review', {
 					<div className="ub_review_entry">
 						<RichText.Content key={i} value={j.label} />
 						<Stars
-							style={{ justifySelf: 'self-end' }}
+							style={{ marginLeft: 'auto' }}
 							id={`${ID}-${i}`}
 							key={i}
 							value={j.value}
@@ -253,9 +247,7 @@ registerBlockType('ub/review', {
 						<p>
 							<RichText.Content value={summaryDescription} />
 						</p>
-						<span className="ub_review_rating">
-							{Math.round(average * 100) / 100}
-						</span>
+						<span className="ub_review_rating">{average}</span>
 					</div>
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
@@ -297,13 +289,28 @@ registerBlockType('ub/review', {
 				</div>
 
 				<JSONLD>
-					<Generic type="review" jsonldtype="Review" schema={{ reviewBody: summaryDescription }} >
-						<Generic type="itemReviewed" jsonldtype="Product" schema={{ name: itemName }} />
-						<Generic type="reviewRating" jsonldtype="Rating" schema={{ "ratingValue": average, "bestRating": 5 }} />
-						<Generic type="author" jsonldtype="Person" schema={{ name: authorName }} />
+					<Generic
+						type="review"
+						jsonldtype="Review"
+						schema={{ reviewBody: summaryDescription }}
+					>
+						<Generic
+							type="itemReviewed"
+							jsonldtype="Product"
+							schema={{ name: itemName }}
+						/>
+						<Generic
+							type="reviewRating"
+							jsonldtype="Rating"
+							schema={{ ratingValue: average, bestRating: 5 }}
+						/>
+						<Generic
+							type="author"
+							jsonldtype="Person"
+							schema={{ name: authorName }}
+						/>
 					</Generic>
 				</JSONLD>
-
 			</div>
 		);
 	},
