@@ -49,7 +49,7 @@ class Circle extends Component {
 		}
 	}
 	render() {
-		const { amount, total } = this.props;
+		const { amount, total, color } = this.props;
 		const { indicator, isActive } = this.state;
 		const circleRadius = 35;
 		const circlePathLength = circleRadius * Math.PI * 2;
@@ -81,7 +81,7 @@ class Circle extends Component {
 					<path
 						className="ub_countdown_circle_path"
 						d={progressBarPath}
-						stroke="#2DB7F5"
+						stroke={color}
 						strokeWidth={3}
 						strokeLinecap={indicator === 0 ? 'butt' : 'round'}
 						style={{

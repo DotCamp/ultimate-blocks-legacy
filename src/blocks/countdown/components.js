@@ -43,6 +43,7 @@ class Timer extends Component {
 	}
 	render() {
 		const { timeLeft } = this.state;
+		const { color } = this.props;
 		const seconds = timeLeft % 60;
 		const minutes = ((timeLeft - seconds) % 3600) / 60;
 		const hours = ((timeLeft - minutes * 60 - seconds) % 86400) / 3600;
@@ -59,11 +60,11 @@ class Timer extends Component {
 
 		const circularFormat = (
 			<div className="ub_countdown_circular_container">
-				<Circle amount={weeks} total={52} />
-				<Circle amount={days} total={7} />
-				<Circle amount={hours} total={24} />
-				<Circle amount={minutes} total={60} />
-				<Circle amount={seconds} total={60} />
+				<Circle color={color} amount={weeks} total={52} />
+				<Circle color={color} amount={days} total={7} />
+				<Circle color={color} amount={hours} total={24} />
+				<Circle color={color} amount={minutes} total={60} />
+				<Circle color={color} amount={seconds} total={60} />
 				<p>Weeks</p>
 				<p>Days</p>
 				<p>Hours</p>

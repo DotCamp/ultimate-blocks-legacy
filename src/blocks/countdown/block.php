@@ -17,13 +17,13 @@ function ub_render_countdown_block($attributes){
     $defaultUpdate = 'document.getElementById("ub_countdown_'.$elementID.'").innerHTML = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;';
 
     if(!function_exists('generateCircle')){
-        function generateCircle($label, $value, $limit){
+        function generateCircle($label, $value, $limit, $color){
             $circlePath="M 50,50 m 0,-35 a 35,35 0 1 1 0,70 a 35,35 0 1 1 0,-70";
             $prefix="ub_countdown_circle_";
             return '<div style="height: 70px; width: 70px;" class="ub_countdown_'.$label.'">
                         <svg height="70" width="70" viewBox="0 0 100 100" style="position: absolute;">
                             <path class="'.$prefix.'trail" d="'.$circlePath.'" stroke-width="3" style="stroke-dasharray: 219.911px, 219.911px;"></path>
-                            <path class="'.$prefix.'path" d="'.$circlePath.'" stroke="#2DB7F5" stroke-width="3" style="stroke-dasharray: '.$value*219.911/$limit.'px, 219.911px; stroke-linecap=\'round\';"></path>
+                            <path class="'.$prefix.'path" d="'.$circlePath.'" stroke="'.$color.'" stroke-width="3" style="stroke-dasharray: '.$value*219.911/$limit.'px, 219.911px; stroke-linecap=\'round\';"></path>
                         </svg>
                         <div class="'.$prefix.'label">'.$value.'</div>
                     </div>';
@@ -32,11 +32,11 @@ function ub_render_countdown_block($attributes){
 
     
     $circularFormat = '<div class="ub_countdown_circular_container">
-                        '.generateCircle("week", $weeks, 52)
-                        .generateCircle("day", $days, 7)
-                        .generateCircle("hour", $hours, 24)
-                        .generateCircle("minute", $minutes, 60)
-                        .generateCircle("second", $seconds, 60).'
+                        '.generateCircle("week", $weeks, 52, $attributes['circleColor'])
+                        .generateCircle("day", $days, 7, $attributes['circleColor'])
+                        .generateCircle("hour", $hours, 24, $attributes['circleColor'])
+                        .generateCircle("minute", $minutes, 60, $attributes['circleColor'])
+                        .generateCircle("second", $seconds, 60, $attributes['circleColor']).'
                         <p>Weeks</p>
                         <p>Days</p>
                         <p>Hours</p>
@@ -130,6 +130,10 @@ function ub_register_countdown_block() {
                 'expiryMessage' => array(
                     'type' => 'string',
                     'default' => 'Timer expired'
+                ),
+                'circleColor' => array(
+                    'type' => 'string',
+                    'default' => '#2DB7F5'
                 )
             ),
             'render_callback' => 'ub_render_countdown_block'));

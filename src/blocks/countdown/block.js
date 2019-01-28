@@ -9,7 +9,7 @@ import Timer from './components';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InspectorControls, RichText } = wp.editor;
+const { InspectorControls, RichText, PanelColorSettings } = wp.editor;
 const { DateTimePicker, ButtonGroup, IconButton, PanelBody } = wp.components;
 
 const { withState } = wp.compose;
@@ -31,12 +31,16 @@ registerBlockType('ub/countdown', {
 		expiryMessage: {
 			type: 'string',
 			default: ''
+		},
+		circleColor: {
+			type: 'string',
+			default: '#2DB7F5'
 		}
 	},
 
 	edit: withState({ editable: 'content' })(function(props) {
 		const { editable, isSelected, setAttributes } = props;
-		const { style, endDate, expiryMessage } = props.attributes;
+		const { style, endDate, expiryMessage, circleColor } = props.attributes;
 
 		const onSetActiveEditable = newEditable => () => {
 			setState({ editable: newEditable });
@@ -73,6 +77,22 @@ registerBlockType('ub/countdown', {
 							/>
 						</ButtonGroup>
 					</PanelBody>
+					{style === 'Circular' && (
+						<PanelColorSettings
+							title={__('Circle Color')}
+							initialOpen={true}
+							colorSettings={[
+								{
+									value: circleColor,
+									onChange: colorValue =>
+										setAttributes({
+											circleColor: colorValue
+										}),
+									label: ''
+								}
+							]}
+						/>
+					)}
 					<PanelBody title={__('Timer expiration')}>
 						<DateTimePicker
 							currentDate={endDate * 1000}
@@ -91,7 +111,11 @@ registerBlockType('ub/countdown', {
 				</InspectorControls>
 			),
 			<React.Fragment>
-				<Timer timerStyle={style} deadline={endDate} />
+				<Timer
+					timerStyle={style}
+					deadline={endDate}
+					color={circleColor}
+				/>
 				<div key="editable">
 					<RichText
 						tagName="p"
