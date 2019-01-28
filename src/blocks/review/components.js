@@ -161,7 +161,7 @@ class ReviewBody extends Component {
 				/>
 				<RichText
 					tagName="p"
-					placeholder={__('Author name')}
+					placeholder={__('Review Author name')}
 					value={authorName}
 					onChange={text => setAuthorName(text)}
 				/>
