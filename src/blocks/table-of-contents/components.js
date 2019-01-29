@@ -1,5 +1,4 @@
 const { select, subscribe } = wp.data;
-const { RichText } = wp.editor;
 import { Component } from 'react';
 const { __ } = wp.i18n;
 
@@ -74,7 +73,10 @@ class TableOfContents extends Component {
 						heading.content
 							.toString()
 							.toLowerCase()
-							.replace(/( |<br>)/g, '-');
+							.replace(
+								/( |<br>|<strong>|<\/strong>|<em>|<\/em>|<a.+?>|<\/a>|&nbsp;)/g,
+								'-'
+							);
 					heading.anchor = heading.anchor.replace(/[^\w\s-]/g, '');
 				}
 			});
@@ -112,16 +114,18 @@ class TableOfContents extends Component {
 				if (Array.isArray(item)) {
 					items.push(parseList(item));
 				} else {
+					let multilineItem = item.content
+						.replace(
+							/(<strong>|<\/strong>|<em>|<\/em>|<a.+?>|<\/a>|&nbsp;)/g,
+							''
+						)
+						.split('<br>');
+					for (let i = 0; i < multilineItem.length - 1; i++) {
+						multilineItem[i] = [multilineItem[i], <br />];
+					}
 					items.push(
 						<li>
-							<RichText.Content
-								tagName="a"
-								href={`#${item.anchor}`}
-								value={item.content.replace(
-									/(<a.+?>|<\/a>)/g,
-									''
-								)}
-							/>
+							<a href={`#${item.anchor}`}>{multilineItem}</a>
 						</li>
 					);
 				}

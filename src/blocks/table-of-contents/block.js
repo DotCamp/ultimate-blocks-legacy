@@ -87,13 +87,7 @@ registerBlockType('ub/table-of-contents', {
 		);
 	},
 	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_3
-		}
+		{ attributes, save: version_1_1_2 },
+		{ attributes, save: version_1_1_3 }
 	]
 });
