@@ -73,10 +73,7 @@ class TableOfContents extends Component {
 						heading.content
 							.toString()
 							.toLowerCase()
-							.replace(
-								/( |<br>|<strong>|<\/strong>|<em>|<\/em>|<a.+?>|<\/a>|&nbsp;)/g,
-								'-'
-							);
+							.replace(/( |<.+?>|&nbsp;)/g, '-');
 					heading.anchor = heading.anchor.replace(/[^\w\s-]/g, '');
 				}
 			});
@@ -114,18 +111,17 @@ class TableOfContents extends Component {
 				if (Array.isArray(item)) {
 					items.push(parseList(item));
 				} else {
-					let multilineItem = item.content
-						.replace(
-							/(<strong>|<\/strong>|<em>|<\/em>|<a.+?>|<\/a>|&nbsp;)/g,
-							''
-						)
-						.split('<br>');
-					for (let i = 0; i < multilineItem.length - 1; i++) {
-						multilineItem[i] = [multilineItem[i], <br />];
-					}
 					items.push(
 						<li>
-							<a href={`#${item.anchor}`}>{multilineItem}</a>
+							<a
+								href={`#${item.anchor}`}
+								dangerouslySetInnerHTML={{
+									__html: item.content.replace(
+										/(<a.+?>|<\/a>)/g,
+										''
+									)
+								}}
+							/>
 						</li>
 					);
 				}
