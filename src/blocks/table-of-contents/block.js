@@ -1,6 +1,6 @@
 import icon from './icon';
 import TableOfContents from './components';
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2, version_1_1_3 } from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
@@ -90,6 +90,10 @@ registerBlockType('ub/table-of-contents', {
 		{
 			attributes,
 			save: version_1_1_2
+		},
+		{
+			attributes,
+			save: version_1_1_3
 		}
 	]
 });
