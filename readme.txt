@@ -3,96 +3,109 @@ Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 5.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
-Essential Collection of Custom Blocks for Gutenberg Editor.
+Custom Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
 
 == Description ==
 
-Ultimate Blocks is a collection of essential custom blocks for Gutenberg Editor that makes it easier for you to create content with Gutenberg.
+Ultimate Blocks is a collection of custom Gutenberg blocks for bloggers and marketers. Our goal is to make it insanely easy for you to create better and engaging content with Gutenberg.
 
-Currently, we have 14 blocks. More in the making.
+Ultimate Blocks currently includes the following blocks:
 
-These are the blocks we have right now:
+* Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.io/schema-review-block-gutenberg)
+* Table of Contents - [View Demo](https://ultimateblocks.io/table-of-contents-block-for-gutenberg-editor/)
+* Tabbed Content - [View Demo](https://ultimateblocks.io/tabbed-content-block-for-gutenberg/)
+* Call to Action - [View Demo](https://ultimateblocks.io/call-to-action-block-gutenberg/)
+* Content Toggle (Accordion) - [View Demo](https://ultimateblocks.io/content-toggle-block-gutenberg/)
+* Feature Box - [View Demo](https://ultimateblocks.io/feature-box-block-for-gutenberg-editor/)
+* Notification Box - [View Demo](https://ultimateblocks.io/notification-box-block-for-gutenberg-editor/)
+* Number Box - [View Demo](https://ultimateblocks.io/number-box-block-for-gutenberg-editor/)
+* Testimonial - [View Demo](https://ultimateblocks.io/testimonial-block-for-gutenberg-editor/)
+* Click to Tweet - [View Demo](https://ultimateblocks.io/click-to-tweet-block-gutenberg/)
+* Social Share - [View Demo](https://ultimateblocks.io/social-share-block-for-gutenberg-editor/)
+* Countdown - [View Demo](https://ultimateblocks.io/countdown-block-gutenberg/)
+* Progress Bar - [View Demo](https://ultimateblocks.io/progress-bar-block-for-gutenberg-editor/)
+* Star Rating - [View Demo](https://ultimateblocks.io/star-rating-block/)
+* Button (Improved) - [View Demo](https://ultimateblocks.io/improved-button-block-gutenberg/)
+* Divider - [View Demo](https://ultimateblocks.io/divider-block-for-gutenberg/)
 
-1. Button (Improved)
-2. Call to Action
-3. Click to Tweet
-4. Content Toggle
-5. Divider
-6. Feature Box
-7. Notification Box
-8. Number Box
-9. Social Share
-10. Tabbed Content
-11. Testimonial
-12. Table of Contents
-13. Progress Bar
-14. Star Rating
+We have more exciting blocks in the making. Have a suggestion? [Let us know](https://ultimateblocks.io/contact/).
 
-**1. Button**
-Button block with more customization options and controls.
+## Join Us To Get Updates and Resources
 
-**2. Call to Action Block**
-Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
+* [Visit Ultimate Blocks Website](https://ultimateblocks.io?utm_medium=wp.org&utm_source=wordpressorg&utm_campaign=readme&utm_content=ultimateblocks)
+* [Follow Us on Twitter](http://twitter.com/Ultimate_Blocks)
+* [Join Our Facebook Group](https://www.facebook.com/groups/2063872290348170/)
 
-**3. Click to Tweet**
-Add tweetable content in your posts/pages.
+## More Info About the Blocks
 
-**4. Content Toggle**
-Add contents in accordions. Let visitors expand them and show the content.
+**Reveiw Block**
+Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.
 
-**5. Divider Block**
-Add custom divider between your blocks. Customize the color, size, everything.
-
-**6. Feature Box Block**
-Add boxes with images. Highlight the features of any product or service. 3 columns options.
-
-**7. Notification Box Block**
-Highlight important information in your posts/pages. Comes in three different designs.
-
-**8. Number Box Block**
-Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
-
-**9. Social Share Block**
-Add social share buttons in your posts and pages with this blocks. It comes with lots of customization options too.
-
-**10. Tabbed Content**
-Add content in tabs in your posts/pages. This comes with a nice drag and drop feature to sort the tabs.
-
-**11. Testimonial Block**
-Nice, simple testimonial box with option to add image, name, role of the testimonial author.
-
-**12. Table of Contents**
+**Table of Contents Block**
 Generate a table of contents from your headings. 
 
-**13. Progress Bar**
+**Tabbed Content Block**
+Add content in tabs in your posts/pages. This comes with a nice drag and drop feature to sort the tabs.
+
+**Call to Action Block**
+Add a nice call to action box with a button. Encourage users to take action, engage more. You can customize everything in the block.
+
+**Content Toggle**
+Add contents in accordions. Let visitors expand them and show the content.
+
+**Feature Box Block**
+Add boxes with images. Highlight the features of any product or service. 3 columns options.
+
+**Notification Box Block**
+Highlight important information in your posts/pages. Comes in three different designs.
+
+**Number Box Block**
+Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
+
+**Testimonial Block**
+Nice, simple testimonial box with option to add image, name, role of the testimonial author.
+
+**Click to Tweet**
+Add tweetable content in your posts/pages.
+
+**Social Share Block**
+Add social share buttons in your posts and pages with this blocks. It comes with lots of customization options too.
+
+**Countdown Block**
+Add a countdown in your post/pages. Comes with three different styles.
+
+**Progress Bar Block**
 Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.
 
-**14. Star Rating**
+**Star Rating Block**
 Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.
 
-We are continuously working on new blocks. If you have any block ideas, let us know. We are on [Twitter](https://twitter.com/Ultimate_Blocks).
+**Button**
+Button block with more customization options and controls.
 
-Check out [GitHub repository](https://github.com/imtiazrayhan/Ultimate-Blocks), if you find any problem create an issue there.
-
-This plugin was created using [Create Guten Block](https://github.com/ahmadawais/create-guten-block).
+**Divider Block**
+Add custom divider between your blocks. Customize the color, size, everything.
 
 == Frequently Asked Questions ==
 
 = Installation Instructions =
 
-Please remember you MUST have Gutenberg installed to be able to use this plugin.
-Once you have Gutenberg installed, install this plugin like any other WordPress Plugin.
+Please remember you MUST have WordPress 5.0+ or Gutenberg installed to be able to use this plugin.
 
-1. Install Gutenberg if you don't have it installed.
+1. Install Gutenberg if you are not on WordPress version 5.0+.
 2. Upload the ultimate-blocks.zip file via the plugin page of WordPress by clicking ‘Add New’ and selecting the zip from your local computer.
 3. Activate the plugins through the ‘Plugins’ menu in WordPress.
 
 That's it. You're done!
+
+= I Need Help with Gutenberg =
+
+[Join Our Facebook Group](https://www.facebook.com/groups/2063872290348170/) and ask us. We will help you.
 
 == Screenshot ==
 
@@ -101,6 +114,17 @@ That's it. You're done!
 3. Adding Notification Block
 
 == Changelog ==
+
+= 1.1.3 =
+
+Release Date: January 29th, 2018
+
+* NEW: Review Block (Schema Markup Enabled).
+* NEW: Countdown Block.
+* FIX: Image Change issue in Feature Box Block and Testimonial Block.
+* FIX: Rendering issue in Table of Contents Block.
+* UPDATE: Other minor Improvements.
+* NOTE: v1.1.3 is not backward compatible with lower versions, upgrading can weird out some of your existing blocks. If that happens, you’ll need to redo some of your blocks.
 
 = 1.1.2 =
 

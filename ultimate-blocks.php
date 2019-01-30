@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Ultimate Blocks - Custom Gutenberg Blocks
- * Plugin URI: http://ultimateblocks.io
- * Description: Ultimate Blocks for Gutenberg.
- * Author: Imtiaz Rayhan
- * Author URI: http://imtiazrayhan.com/
- * Version: 1.1.2
+ * Plugin URI: https://ultimateblocks.io
+ * Description: Custom Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
+ * Author: Ultimate Blocks
+ * Author URI: https://ultimateblocks.io/
+ * Version: 1.1.3
  * License: GPL3+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: ultimate-blocks
