@@ -59,7 +59,7 @@ function ub_render_countdown_block($attributes){
     $odometerFormat = '<div class="ub-countdown-odometer-container">
                         <span>Weeks</span><span></span><span>Days</span><span></span><span>Hours</span><span></span>
                         <span>Minutes</span><span></span><span>Seconds</span>
-                        <div class="ub-countdown-odometer ub_countdown_week">' . ($weeks < 0 ? $weeks : $weeks + 10 ** ($weeks > 0 ? floor(log10($weeks) + 1) : 1)).'</div> 
+                        <div class="ub-countdown-odometer ub_countdown_week">' . ($weeks < 0 ? $weeks : $weeks + pow(10, ($weeks > 0 ? floor(log10($weeks) + 1) : 1))).'</div> 
                         '. $odometerSeparator.' <div class="ub-countdown-odometer ub_countdown_day">' . ($days < 0 ? $days : $days + 10) . '</div>
                         '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_hour">' . ($hours < 0 ? $hours : $hours + 100) . '</div>
                         '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_minute">' . ($minutes < 0 ? $minutes : $minutes + 100) . '</div>
