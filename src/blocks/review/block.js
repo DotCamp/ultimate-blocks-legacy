@@ -255,6 +255,7 @@ registerBlockType('ub/review', {
 								style={{ color: callToActionForeColor }}
 								href={callToActionURL ? callToActionURL : '#'}
 								target="_blank"
+								rel="nofollow"
 							>
 								<button
 									className="ub_review_cta_btn"
