@@ -13,12 +13,55 @@ import './style.scss';
 import './editor.scss';
 import Accordion from './components/accordion';
 import Inspector from './components/inspector';
-import { runInThisContext } from 'vm';
+import { version_1_1_2 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const { RichText } = wp.editor;
+
+const attributes = {
+	accordions: {
+		source: 'query',
+		selector: '.wp-block-ub-content-toggle-accordion',
+		query: {
+			title: {
+				type: 'array',
+				source: 'children',
+				selector: '.wp-block-ub-content-toggle-accordion-title'
+			},
+			content: {
+				type: 'array',
+				source: 'children',
+				selector: '.wp-block-ub-content-toggle-accordion-content'
+			}
+		}
+	},
+	accordionsState: {
+		type: 'string',
+		default: '[]'
+	},
+	timestamp: {
+		type: 'number',
+		default: 0
+	},
+	activeControl: {
+		type: 'string',
+		default: ''
+	},
+	theme: {
+		type: 'string',
+		default: '#f63d3d'
+	},
+	collapsed: {
+		type: 'boolean',
+		default: false
+	},
+	titleColor: {
+		type: 'string',
+		default: '#ffffff'
+	}
+};
 
 /**
  * Register: aa Gutenberg Block.
@@ -43,48 +86,7 @@ registerBlockType('ub/content-toggle', {
 		__('Ultimate Blocks')
 	],
 
-	attributes: {
-		accordions: {
-			source: 'query',
-			selector: '.wp-block-ub-content-toggle-accordion',
-			query: {
-				title: {
-					type: 'array',
-					source: 'children',
-					selector: '.wp-block-ub-content-toggle-accordion-title'
-				},
-				content: {
-					type: 'array',
-					source: 'children',
-					selector: '.wp-block-ub-content-toggle-accordion-content'
-				}
-			}
-		},
-		accordionsState: {
-			type: 'string',
-			default: '[]'
-		},
-		timestamp: {
-			type: 'number',
-			default: 0
-		},
-		activeControl: {
-			type: 'string',
-			default: ''
-		},
-		theme: {
-			type: 'string',
-			default: '#f63d3d'
-		},
-		collapsed: {
-			type: 'boolean',
-			default: false
-		},
-		titleColor: {
-			type: 'string',
-			default: '#ffffff'
-		}
-	},
+	attributes,
 
 	edit: function({ attributes, setAttributes, className, isSelected }) {
 		if (!attributes.accordions) {
@@ -252,5 +254,11 @@ registerBlockType('ub/content-toggle', {
 				})}
 			</div>
 		);
-	}
+	},
+	deprecated: [
+		{
+			attributes,
+			save: version_1_1_2
+		}
+	]
 });

@@ -16,11 +16,60 @@ import {
 } from 'react-sortable-hoc';
 import Inspector from './components/inspector';
 import icon from './icons/icon';
+import { version_1_1_2 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const { RichText } = wp.editor;
+
+const attributes = {
+	id: {
+		type: 'number',
+		default: -1
+	},
+	activeControl: {
+		type: 'string'
+	},
+	activeTab: {
+		type: 'number',
+		default: 0
+	},
+	timestamp: {
+		type: 'number',
+		default: 0
+	},
+	theme: {
+		type: 'string',
+		default: '#eeeeee'
+	},
+	titleColor: {
+		type: 'string',
+		default: '#000000'
+	},
+	tabsContent: {
+		source: 'query',
+		selector: '.wp-block-ub-tabbed-content-tab-content-wrap',
+		query: {
+			content: {
+				type: 'array',
+				source: 'children',
+				selector: '.wp-block-ub-tabbed-content-tab-content'
+			}
+		}
+	},
+	tabsTitle: {
+		source: 'query',
+		selector: '.wp-block-ub-tabbed-content-tab-title-wrap',
+		query: {
+			content: {
+				type: 'array',
+				source: 'children',
+				selector: '.wp-block-ub-tabbed-content-tab-title'
+			}
+		}
+	}
+};
 
 /**
  * Register: aa Gutenberg Block.
@@ -40,53 +89,7 @@ registerBlockType('ub/tabbed-content', {
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [__('Tabbed Content'), __('Tabs'), __('Ultimate Blocks')],
-	attributes: {
-		id: {
-			type: 'number',
-			default: -1
-		},
-		activeControl: {
-			type: 'string'
-		},
-		activeTab: {
-			type: 'number',
-			default: 0
-		},
-		timestamp: {
-			type: 'number',
-			default: 0
-		},
-		theme: {
-			type: 'string',
-			default: '#eeeeee'
-		},
-		titleColor: {
-			type: 'string',
-			default: '#000000'
-		},
-		tabsContent: {
-			source: 'query',
-			selector: '.wp-block-ub-tabbed-content-tab-content-wrap',
-			query: {
-				content: {
-					type: 'array',
-					source: 'children',
-					selector: '.wp-block-ub-tabbed-content-tab-content'
-				}
-			}
-		},
-		tabsTitle: {
-			source: 'query',
-			selector: '.wp-block-ub-tabbed-content-tab-title-wrap',
-			query: {
-				content: {
-					type: 'array',
-					source: 'children',
-					selector: '.wp-block-ub-tabbed-content-tab-title'
-				}
-			}
-		}
-	},
+	attributes,
 
 	edit: function(props) {
 		window.ubTabbedContentBlocks = window.ubTabbedContentBlocks || [];
@@ -433,5 +436,11 @@ registerBlockType('ub/tabbed-content', {
 				</div>
 			</div>
 		);
-	}
+	},
+	deprecated: [
+		{
+			attributes,
+			save: version_1_1_2
+		}
+	]
 });
