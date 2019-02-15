@@ -93,3 +93,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/progress-bar/block.php';
 
 // Countdown Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/countdown/block.php';
+
+// Image Slider Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/image-slider/block.php';

@@ -65,7 +65,12 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Feature Box',
 				'name'   => 'ub/feature-box',
 				'active' => true,
-			),
+            ),
+            array(
+                'label'  => 'Image Slider',
+                'name'   => 'ub/image-slider',
+                'active' => true,
+            ),
 			array(
 				'label'  => 'Notification Box',
 				'name'   => 'ub/notification-box',
