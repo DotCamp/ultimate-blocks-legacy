@@ -11,6 +11,7 @@
     "dependencies": {
         "ajv": ">=6.0.0",
         "cgb-scripts": "1.13.0",
+        "flickity-as-nav-for": "^2.0.1",
         "react": "16.2.0",
         "react-autosize-textarea": "2.0.0",
         "react-dom": "16.2.0",
