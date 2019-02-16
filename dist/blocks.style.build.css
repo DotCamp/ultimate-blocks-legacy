@@ -954,12 +954,16 @@
   display: none !important; }
 
 /*Block styles*/
-/*
-
 .ub_image_slider .flickity-viewport .components-form-file-upload {
-	top: 50%;
-	transform: translateY(-50%);
-}*/
+  height: 100%; }
+
+.ub_image_slider_add_images {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin: auto; }
+
 /*! Flickity v2.2.0
 https://flickity.metafizzy.co
 ---------------------------------------------- */
@@ -981,9 +985,9 @@ https://flickity.metafizzy.co
 /* draggable */
 .flickity-enabled.is-draggable {
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; }
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
 
 .flickity-enabled.is-draggable .flickity-viewport {
   cursor: move;
@@ -1059,16 +1063,13 @@ https://flickity.metafizzy.co
   text-align: center;
   line-height: 1; }
   .flickity-page-dots .dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 8px;
-    background: #333;
-    border-radius: 50%;
-    opacity: 0.25;
-    cursor: pointer; }
+    width: 12px;
+    height: 12px;
+    opacity: 1;
+    background: #333; }
     .flickity-page-dots .dot.is-selected {
-      opacity: 1; }
+      background: white;
+      border: 2px solid #333; }
 
 .flickity-rtl .flickity-page-dots {
   direction: rtl; }

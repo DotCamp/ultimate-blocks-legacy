@@ -241,11 +241,6 @@ registerBlockType('ub/image-slider', {
 										className="ub_image_slider_add_images"
 										accept="image/*"
 										icon="insert"
-										style={{
-											display: 'block',
-											top: '50%',
-											margin: 'auto'
-										}}
 									>
 										{__('Upload an image')}
 									</FormFileUpload>
