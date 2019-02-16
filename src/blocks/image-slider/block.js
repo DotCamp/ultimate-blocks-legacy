@@ -21,17 +21,12 @@ const {
 	Toolbar,
 	ToggleControl,
 	FormFileUpload,
-	SelectControl,
 	RangeControl
 } = wp.components;
 
 const { withState } = wp.compose;
 
 const attributes = {
-	ID: {
-		type: 'string',
-		default: ''
-	},
 	images: {
 		type: 'string',
 		default: '[]'
@@ -60,10 +55,6 @@ const attributes = {
 		type: 'number',
 		default: 3
 	},
-	navOption: {
-		type: 'string',
-		default: 'Page Dots'
-	},
 	sliderHeight: {
 		type: 'number',
 		default: 250
@@ -84,25 +75,15 @@ registerBlockType('ub/image-slider', {
 	edit: withState({ componentKey: 0 })(function(props) {
 		const { setAttributes, isSelected, setState, componentKey } = props;
 		const {
-			ID,
 			images,
 			wrapsAround,
 			isDraggable,
 			autoplays,
 			autoplayDuration,
-			navOption,
-			sliderHeight
+			sliderHeight,
+			showPageDots
 		} = props.attributes;
 		const imageArray = JSON.parse(images);
-
-		if (ID === '') {
-			setAttributes({
-				ID: Math.random()
-					.toString(36)
-					.replace(/[^a-z0-9]+/g, '')
-					.substr(1, 10)
-			});
-		}
 
 		return [
 			isSelected && (
@@ -148,6 +129,14 @@ registerBlockType('ub/image-slider', {
 						}}
 					/>
 					<ToggleControl
+						label={__('Show page dots')}
+						checked={showPageDots}
+						onChange={() => {
+							setAttributes({ showPageDots: !showPageDots });
+							setState({ componentKey: componentKey + 1 });
+						}}
+					/>
+					<ToggleControl
 						label={__('Enable autoplay')}
 						checked={autoplays}
 						onChange={() => {
@@ -167,19 +156,6 @@ registerBlockType('ub/image-slider', {
 							max={10}
 						/>
 					)}
-					<SelectControl
-						label={__('Gallery Navigation')}
-						value={navOption}
-						options={[
-							{ label: __('None'), value: 'None' },
-							{ label: __('Page Dots'), value: 'Page Dots' },
-							{ label: __('Mini Gallery'), value: 'Mini Gallery' }
-						]}
-						onChange={option => {
-							setAttributes({ navOption: option });
-							setState({ componentKey: componentKey + 1 });
-						}}
-					/>
 					<RangeControl
 						label={__('Height')}
 						value={sliderHeight}
@@ -215,7 +191,6 @@ registerBlockType('ub/image-slider', {
 					<React.Fragment>
 						<Flickity
 							key={componentKey}
-							className={`ub_image_slider_${ID}`}
 							elementType={'div'}
 							options={{
 								imagesLoaded: true,
@@ -224,7 +199,7 @@ registerBlockType('ub/image-slider', {
 								autoPlay: autoplays
 									? autoplayDuration * 1000
 									: autoplays,
-								pageDots: navOption === 'Page Dots'
+								pageDots: showPageDots
 							}}
 							reloadOnUpdate={true}
 							imagesLoaded={true}
@@ -277,26 +252,6 @@ registerBlockType('ub/image-slider', {
 								</div>
 							)}
 						</Flickity>
-						{navOption === 'Mini Gallery' && (
-							<div
-								data-flickity={JSON.stringify({
-									asNavFor: `.ub_image_slider_${ID}`,
-									contain: true,
-									pageDots: false
-								})}
-							>
-								{JSON.parse(images).map((c, i) => (
-									<img
-										style={{
-											maxHeight: '100px',
-											objectFit: 'contain'
-										}}
-										key={i}
-										src={c.url}
-									/>
-								))}
-							</div>
-						)}
 					</React.Fragment>
 				)}
 			</div>
@@ -304,25 +259,29 @@ registerBlockType('ub/image-slider', {
 	}),
 	save(props) {
 		const {
-			ID,
 			images,
 			isDraggable,
 			wrapsAround,
 			autoplays,
 			autoplayDuration,
-			navOption,
-			sliderHeight
+			sliderHeight,
+			showPageDots
 		} = props.attributes;
 		const imageArray = JSON.parse(images);
 
 		return (
-			<div>
+			<div
+				className="ub_image_slider"
+				style={{
+					minHeight: `${25 +
+						(imageArray.length ? sliderHeight : 200)}px`,
+					display: 'block'
+				}}
+			>
 				<div
-					className="ub_image_slider"
-					id={ID}
 					data-flickity={JSON.stringify({
 						draggable: isDraggable,
-						pageDots: navOption === 'Page Dots',
+						pageDots: showPageDots,
 						wrapAround: wrapsAround,
 						autoPlay: autoplays
 							? autoplayDuration * 1000
@@ -345,26 +304,6 @@ registerBlockType('ub/image-slider', {
 						</div>
 					))}
 				</div>
-				{navOption === 'Mini Gallery' && (
-					<div
-						data-flickity={JSON.stringify({
-							asNavFor: `#${ID}`,
-							contain: true,
-							pageDots: false
-						})}
-					>
-						{imageArray.map((c, i) => (
-							<img
-								style={{
-									maxHeight: '100px',
-									objectFit: 'contain'
-								}}
-								key={i}
-								src={c.url}
-							/>
-						))}
-					</div>
-				)}
 			</div>
 		);
 	},

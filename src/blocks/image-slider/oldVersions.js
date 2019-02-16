@@ -1,23 +1,27 @@
 const version_1_1_4 = props => {
 	const {
-		ID,
 		images,
 		isDraggable,
 		wrapsAround,
 		autoplays,
 		autoplayDuration,
-		navOption,
-		sliderHeight
+		sliderHeight,
+		showPageDots
 	} = props.attributes;
 	const imageArray = JSON.parse(images);
+
 	return (
-		<div>
+		<div
+			className="ub_image_slider"
+			style={{
+				minHeight: `${25 + (imageArray.length ? sliderHeight : 200)}px`,
+				display: 'block'
+			}}
+		>
 			<div
-				className="ub_image_slider"
-				id={ID}
 				data-flickity={JSON.stringify({
 					draggable: isDraggable,
-					pageDots: navOption === 'Page Dots',
+					pageDots: showPageDots,
 					wrapAround: wrapsAround,
 					autoPlay: autoplays ? autoplayDuration * 1000 : autoplays,
 					adaptiveHeight: true
@@ -38,26 +42,6 @@ const version_1_1_4 = props => {
 					</div>
 				))}
 			</div>
-			{navOption === 'Mini Gallery' && (
-				<div
-					data-flickity={JSON.stringify({
-						asNavFor: `#${ID}`,
-						contain: true,
-						pageDots: false
-					})}
-				>
-					{imageArray.map((c, i) => (
-						<img
-							style={{
-								maxHeight: '100px',
-								objectFit: 'contain'
-							}}
-							key={i}
-							src={c.url}
-						/>
-					))}
-				</div>
-			)}
 		</div>
 	);
 };

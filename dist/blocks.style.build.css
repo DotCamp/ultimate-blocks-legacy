@@ -954,12 +954,12 @@
   display: none !important; }
 
 /*Block styles*/
-.ub_image_slider .components-form-file-upload {
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%); }
+/*
 
+.ub_image_slider .flickity-viewport .components-form-file-upload {
+	top: 50%;
+	transform: translateY(-50%);
+}*/
 /*! Flickity v2.2.0
 https://flickity.metafizzy.co
 ---------------------------------------------- */
