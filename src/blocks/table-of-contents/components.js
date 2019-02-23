@@ -74,7 +74,10 @@ class TableOfContents extends Component {
 							.toString()
 							.toLowerCase()
 							.replace(/( |<.+?>|&nbsp;)/g, '-');
-					heading.anchor = heading.anchor.replace(/[^\w\s-]/g, '');
+					heading.anchor = heading.anchor.replace(
+						/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
+						''
+					);
 				}
 			});
 
