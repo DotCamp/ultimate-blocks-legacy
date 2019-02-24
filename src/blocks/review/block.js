@@ -2,7 +2,7 @@ import icon from './icon';
 import './style.scss';
 
 import { Stars, ReviewBody } from './components';
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2, version_1_1_4 } from './oldVersions';
 import { JSONLD, Generic } from 'react-structured-data';
 
 const { __ } = wp.i18n;
@@ -255,7 +255,7 @@ registerBlockType('ub/review', {
 								style={{ color: callToActionForeColor }}
 								href={callToActionURL ? callToActionURL : '#'}
 								target="_blank"
-								rel="nofollow"
+								rel="nofollow noopener noreferrer"
 							>
 								<button
 									className="ub_review_cta_btn"
@@ -317,6 +317,10 @@ registerBlockType('ub/review', {
 		{
 			attributes,
 			save: version_1_1_2
+		},
+		{
+			attributes,
+			save: version_1_1_4
 		}
 	]
 });

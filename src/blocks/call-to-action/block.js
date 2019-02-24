@@ -6,7 +6,7 @@ import './style.scss';
 import './editor.scss';
 import icon from './icons/icon';
 
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2, version_1_1_4 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -485,7 +485,11 @@ registerBlockType('ub/call-to-action', {
 								width: buttonWidth + 'px'
 							}}
 						>
-							<a href={url} target="_blank">
+							<a
+								href={url}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
 								<p
 									className="ub_cta_button_text"
 									style={{
@@ -506,6 +510,10 @@ registerBlockType('ub/call-to-action', {
 		{
 			attributes,
 			save: version_1_1_2
+		},
+		{
+			attributes,
+			save: version_1_1_4
 		}
 	]
 });

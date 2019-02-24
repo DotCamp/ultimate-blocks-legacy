@@ -12,7 +12,7 @@ import icon from './icons/icons';
 import './style.scss';
 import './editor.scss';
 
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2, version_1_1_4 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -278,6 +278,7 @@ registerBlockType('ub/button-block', {
 							color: buttonTextColor,
 							borderRadius: buttonRounded ? '60px' : '0px'
 						}}
+						rel="noopener noreferrer"
 					>
 						{buttonText}
 					</a>
@@ -289,6 +290,10 @@ registerBlockType('ub/button-block', {
 		{
 			attributes,
 			save: version_1_1_2
+		},
+		{
+			attributes,
+			save: version_1_1_4
 		}
 	]
 });
