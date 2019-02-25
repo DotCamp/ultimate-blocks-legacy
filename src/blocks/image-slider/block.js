@@ -1,7 +1,10 @@
 import icon, { editGallery } from './icon';
 
+import { Component } from 'react';
+
 import Flickity from 'react-flickity-component';
 
+import './editor.scss';
 import './style.scss';
 
 import { version_1_1_4 } from './oldVersions';
@@ -13,10 +16,13 @@ const {
 	MediaUpload,
 	MediaPlaceholder,
 	BlockControls,
+	URLInput,
 	InspectorControls,
-	mediaUpload
+	mediaUpload,
+	RichText
 } = wp.editor;
 const {
+	Icon,
 	IconButton,
 	Toolbar,
 	ToggleControl,
@@ -33,11 +39,7 @@ const attributes = {
 	},
 	captions: {
 		type: 'string',
-		default: '[]'
-	},
-	links: {
-		type: 'string',
-		default: '[]'
+		default: '[]' //starts as empty, should take {text: '', link: '', id: -1}
 	},
 	wrapsAround: {
 		type: 'boolean',
@@ -65,6 +67,55 @@ const attributes = {
 	}
 };
 
+class Slider extends Component {
+	componentDidMount() {
+		this.flkty.on('select', () => {
+			this.props.setActiveSlide(this.flkty.selectedIndex);
+		});
+	}
+	shouldComponentUpdate(newProps, newState) {
+		const oldCaptions = this.props.slides
+			.filter(s => Array.isArray(s))[0]
+			.map(slide => slide.props.children[1].props.value);
+
+		const newCaptions = newProps.slides
+			.filter(s => Array.isArray(s))[0]
+			.map(slide => slide.props.children[1].props.value);
+
+		const oldImages = this.props.slides
+			.filter(s => Array.isArray(s))[0]
+			.map(slide => slide.props.children[0].props.src);
+
+		const newImages = newProps.slides
+			.filter(s => Array.isArray(s))[0]
+			.map(slide => slide.props.children[0].props.src);
+
+		const imagesChanged =
+			JSON.stringify(oldImages) !== JSON.stringify(newImages);
+
+		const indexUnchanged =
+			this.props.options.initialIndex === newProps.options.initialIndex;
+
+		const captionUnchanged =
+			JSON.stringify(oldCaptions) === JSON.stringify(newCaptions);
+
+		return (indexUnchanged && captionUnchanged) || imagesChanged;
+	}
+	render() {
+		return (
+			<Flickity
+				elementType={'div'}
+				flickityRef={c => (this.flkty = c)}
+				options={this.props.options}
+				reloadOnUpdate={true}
+				imagesLoaded={true}
+			>
+				{this.props.slides}
+			</Flickity>
+		);
+	}
+}
+
 registerBlockType('ub/image-slider', {
 	title: __('Image Slider'),
 	icon: icon,
@@ -72,10 +123,17 @@ registerBlockType('ub/image-slider', {
 	keywords: [__('Image Slider'), __('Ultimate Blocks')],
 	attributes,
 
-	edit: withState({ componentKey: 0 })(function(props) {
-		const { setAttributes, isSelected, setState, componentKey } = props;
+	edit: withState({ componentKey: 0, activeSlide: 0 })(function(props) {
+		const {
+			setAttributes,
+			isSelected,
+			setState,
+			componentKey,
+			activeSlide
+		} = props;
 		const {
 			images,
+			captions,
 			wrapsAround,
 			isDraggable,
 			autoplays,
@@ -84,6 +142,7 @@ registerBlockType('ub/image-slider', {
 			showPageDots
 		} = props.attributes;
 		const imageArray = JSON.parse(images);
+		const captionArray = JSON.parse(captions);
 
 		return [
 			isSelected && (
@@ -102,8 +161,25 @@ registerBlockType('ub/image-slider', {
 								/>
 							)}
 							onSelect={newImages => {
+								const newCaptionArray = newImages.map(
+									(img, i) => {
+										return captionArray.find(
+											c => c.id === img.id
+										)
+											? captionArray.find(
+													c => c.id === img.id
+											  )
+											: {
+													text: '',
+													link: '',
+													id: img.id
+											  };
+									}
+								);
+
 								setAttributes({
-									images: JSON.stringify(newImages)
+									images: JSON.stringify(newImages),
+									captions: JSON.stringify(newCaptionArray)
 								});
 							}}
 						/>
@@ -159,9 +235,10 @@ registerBlockType('ub/image-slider', {
 					<RangeControl
 						label={__('Height')}
 						value={sliderHeight}
-						onChange={newHeight =>
-							setAttributes({ sliderHeight: newHeight })
-						}
+						onChange={newHeight => {
+							setAttributes({ sliderHeight: newHeight });
+							setState({ componentKey: componentKey + 1 }); //ensure proper placement of arrows and page dots
+						}}
 						min={200}
 						max={500}
 					/>
@@ -181,7 +258,16 @@ registerBlockType('ub/image-slider', {
 						value={imageArray}
 						onSelect={newImages => {
 							props.setAttributes({
-								images: JSON.stringify(newImages)
+								images: JSON.stringify(newImages),
+								captions: JSON.stringify(
+									newImages.map(img => {
+										return {
+											id: img.id,
+											text: '',
+											link: ''
+										};
+									})
+								)
 							});
 						}}
 						allowedTypes={['image']}
@@ -189,9 +275,13 @@ registerBlockType('ub/image-slider', {
 					/>
 				) : (
 					<React.Fragment>
-						<Flickity
+						<Slider
 							key={componentKey}
-							elementType={'div'}
+							setActiveSlide={val => {
+								if (val !== activeSlide)
+									//needed to prevent instance of React error #185
+									setState({ activeSlide: val });
+							}}
 							options={{
 								imagesLoaded: true,
 								wrapAround: wrapsAround,
@@ -199,54 +289,139 @@ registerBlockType('ub/image-slider', {
 								autoPlay: autoplays
 									? autoplayDuration * 1000
 									: autoplays,
-								pageDots: showPageDots
+								pageDots: showPageDots,
+								initialIndex: activeSlide
 							}}
-							reloadOnUpdate={true}
-							imagesLoaded={true}
-						>
-							{JSON.parse(images).map((c, i) => (
-								<div style={{ width: '100%' }}>
-									<img
-										key={i}
-										src={c.url}
-										style={{
-											display: 'block',
-											height: `${sliderHeight}px`,
-											objectFit: 'contain',
-											margin: '0 auto'
-										}}
-									/>
-								</div>
-							))}
-							{isSelected && (
-								<div style={{ width: '100%', height: '100%' }}>
-									<FormFileUpload
-										multiple
-										isLarge
-										onChange={event => {
-											mediaUpload({
-												allowedTypes: ['image'],
-												filesList: event.target.files,
-												onFileChange: images => {
+							slides={[
+								...[
+									JSON.parse(images).map((c, i) => (
+										<div style={{ width: '100%' }}>
+											<img
+												key={i}
+												src={c.url}
+												style={{
+													display: 'block',
+													height: `${sliderHeight}px`,
+													objectFit: 'contain',
+													margin: '0 auto'
+												}}
+											/>
+											<RichText
+												formattingControls={[
+													'bold',
+													'italic',
+													'strikethrough'
+												]}
+												inlineToolbar
+												style={{
+													display: 'block',
+													textAlign: 'center'
+												}}
+												value={
+													JSON.parse(captions)[i].text
+												}
+												placeholder={__(
+													'Caption goes here'
+												)}
+												onChange={text => {
+													captionArray[i].text = text;
 													setAttributes({
-														images: JSON.sttringify(
-															imageArray.concat(
-																images
-															)
+														captions: JSON.stringify(
+															captionArray
 														)
 													});
-												}
-											});
+												}}
+											/>
+										</div>
+									))
+								],
+								isSelected && (
+									<div
+										style={{
+											width: '100%',
+											height: '100%'
 										}}
-										className="ub_image_slider_add_images"
-										accept="image/*"
-										icon="insert"
 									>
-										{__('Upload an image')}
-									</FormFileUpload>
+										<FormFileUpload
+											multiple
+											isLarge
+											onChange={event => {
+												mediaUpload({
+													allowedTypes: ['image'],
+													filesList:
+														event.target.files,
+													onFileChange: images => {
+														setAttributes({
+															images: JSON.stringify(
+																imageArray.concat(
+																	images
+																)
+															),
+															captions: JSON.stringify(
+																captionArray.concat(
+																	images.map(
+																		img => {
+																			return {
+																				id:
+																					img.id,
+																				text:
+																					'',
+																				link:
+																					''
+																			};
+																		}
+																	)
+																)
+															)
+														});
+													}
+												});
+											}}
+											className="ub_image_slider_add_images"
+											accept="image/*"
+											icon="insert"
+										>
+											{__('Upload an image')}
+										</FormFileUpload>
+									</div>
+								)
+							]}
+						/>
+						{isSelected && activeSlide < captionArray.length && (
+							<form
+								key={'form-link'}
+								onSubmit={event => event.preventDefault()}
+								className={`editor-format-toolbar__link-modal-line ub_image_slider_url_input flex-container`}
+							>
+								<div
+									style={{
+										position: 'relative',
+										transform: 'translate(-25%,25%)'
+									}}
+								>
+									<Icon icon="admin-links" />
 								</div>
-							)}
-						</Flickity>
+								<URLInput
+									className="button-url"
+									value={
+										JSON.parse(captions)[activeSlide].link
+									}
+									onChange={url => {
+										captionArray[activeSlide].link = url;
+										setAttributes({
+											captions: JSON.stringify(
+												captionArray
+											)
+										});
+									}}
+								/>
+								<IconButton
+									icon={'editor-break'}
+									label={__('Apply')}
+									type={'submit'}
+								/>
+							</form>
+						)}
 					</React.Fragment>
 				)}
 			</div>
@@ -260,9 +435,12 @@ registerBlockType('ub/image-slider', {
 			autoplays,
 			autoplayDuration,
 			sliderHeight,
-			showPageDots
+			showPageDots,
+			captions
 		} = props.attributes;
+
 		const imageArray = JSON.parse(images);
+		const captionArray = JSON.parse(captions);
 
 		return (
 			<div
@@ -296,6 +474,28 @@ registerBlockType('ub/image-slider', {
 									margin: '0 auto'
 								}}
 							/>
+							{captionArray[i].link !== '' ? (
+								<a
+									style={{
+										display: 'block',
+										textAlign: 'center'
+									}}
+									href={captionArray[i].link}
+								>
+									<RichText.Content
+										value={captionArray[i].text}
+									/>
+								</a>
+							) : (
+								<RichText.Content
+									tagName="span"
+									style={{
+										display: 'block',
+										textAlign: 'center'
+									}}
+									value={captionArray[i].text}
+								/>
+							)}
 						</div>
 					))}
 				</div>

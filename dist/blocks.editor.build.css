@@ -495,3 +495,14 @@
 .editor-styles-wrapper .ub_table-of-contents ul {
   padding-left: 1.3em;
   margin-left: 1.3em; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.ub_image_slider .flickity-enabled .flickity-page-dots {
+  bottom: 30px; }

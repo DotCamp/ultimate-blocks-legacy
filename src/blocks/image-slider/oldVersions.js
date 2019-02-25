@@ -6,9 +6,12 @@ const version_1_1_4 = props => {
 		autoplays,
 		autoplayDuration,
 		sliderHeight,
-		showPageDots
+		showPageDots,
+		captions
 	} = props.attributes;
+
 	const imageArray = JSON.parse(images);
+	const captionArray = JSON.parse(captions);
 
 	return (
 		<div
@@ -39,6 +42,28 @@ const version_1_1_4 = props => {
 								margin: '0 auto'
 							}}
 						/>
+						{captionArray[i].link !== '' ? (
+							<a
+								style={{
+									display: 'block',
+									textAlign: 'center'
+								}}
+								href={captionArray[i].link}
+							>
+								<RichText.Content
+									value={captionArray[i].text}
+								/>
+							</a>
+						) : (
+							<RichText.Content
+								tagName="span"
+								style={{
+									display: 'block',
+									textAlign: 'center'
+								}}
+								value={captionArray[i].text}
+							/>
+						)}
 					</div>
 				))}
 			</div>
