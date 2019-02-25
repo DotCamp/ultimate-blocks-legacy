@@ -21,7 +21,7 @@ const {
 
 const {
 	PanelBody,
-	Dashicon,
+	Icon,
 	IconButton,
 	RangeControl,
 	SelectControl
@@ -395,9 +395,16 @@ registerBlockType('ub/call-to-action', {
 						<form
 							key={'form-link'}
 							onSubmit={event => event.preventDefault()}
-							className={`editor-format-toolbar__link-modal-line ub_cta_url_input_box`}
+							className={`editor-format-toolbar__link-modal-line ub_cta_url_input_box flex-container`}
 						>
-							<Dashicon icon={'admin-links'} />
+							<div
+								style={{
+									position: 'relative',
+									transform: 'translate(-25%,25%)'
+								}}
+							>
+								<Icon icon="admin-links" />
+							</div>
 							<URLInput
 								className="button-url"
 								value={props.attributes.url}
