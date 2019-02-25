@@ -18,7 +18,7 @@ import classnames from 'classnames';
 import './style.scss';
 import './editor.scss';
 
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2, version_1_1_4 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -43,6 +43,10 @@ const attributes = {
 	ub_selected_notify: {
 		type: 'string',
 		default: 'ub_notify_info'
+	},
+	align: {
+		type: 'string',
+		default: 'left'
 	}
 };
 
@@ -97,6 +101,8 @@ registerBlockType('ub/notification-box', {
 			setAttributes({ ub_selected_notify: 'ub_notify_warning' });
 		};
 
+		const { align, ub_selected_notify, ub_notify_info } = props.attributes;
+
 		return [
 			isSelected && <BlockControls key="controls" />,
 
@@ -131,18 +137,30 @@ registerBlockType('ub/notification-box', {
 							{warning}
 						</Button>
 					</Toolbar>
+					<AlignmentToolbar
+						value={align}
+						onChange={newAlignment =>
+							props.setAttributes({ align: newAlignment })
+						}
+						controls={['left', 'center', 'right']}
+					/>
 				</BlockControls>
 			),
 
 			<div key={'editable'} className={props.className}>
 				<RichText
+					style={{ textAlign: align }}
 					tagName="div"
 					placeholder={__('Add Your Content Here')}
-					className={props.attributes.ub_selected_notify}
+					formattingControls={[
+						'bold',
+						'italic',
+						'link',
+						'strikethrough'
+					]}
+					className={ub_selected_notify}
 					onChange={onChangeNotifyInfo}
-					value={props.attributes.ub_notify_info}
-					isSelected={isSelected && editable === 'notify_info'}
-					onFocus={onSetActiveEditable('notify_info')}
+					value={ub_notify_info}
 					keepPlaceholderOnFocus={true}
 				/>
 			</div>
@@ -158,12 +176,15 @@ registerBlockType('ub/notification-box', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function(props) {
+		const { align, ub_notify_info, ub_selected_notify } = props.attributes;
 		return (
 			<div className={props.className}>
-				<div className={props.attributes.ub_selected_notify}>
-					<p className="ub_notify_text">
-						{props.attributes.ub_notify_info}
-					</p>
+				<div className={ub_selected_notify}>
+					<RichText.Content
+						tagName="p"
+						style={{ textAlign: align }}
+						value={ub_notify_info}
+					/>
 				</div>
 			</div>
 		);
@@ -172,6 +193,10 @@ registerBlockType('ub/notification-box', {
 		{
 			attributes,
 			save: version_1_1_2
+		},
+		{
+			attributes,
+			save: version_1_1_4
 		}
 	]
 });
