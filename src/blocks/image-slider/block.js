@@ -283,12 +283,10 @@ registerBlockType('ub/image-slider', {
 									setState({ activeSlide: val });
 							}}
 							options={{
+								//exclude autoplay, it doesn't work properly
 								imagesLoaded: true,
 								wrapAround: wrapsAround,
 								draggable: isDraggable,
-								autoPlay: autoplays
-									? autoplayDuration * 1000
-									: autoplays,
 								pageDots: showPageDots,
 								initialIndex: activeSlide
 							}}
@@ -312,11 +310,7 @@ registerBlockType('ub/image-slider', {
 													'italic',
 													'strikethrough'
 												]}
-												inlineToolbar
-												style={{
-													display: 'block',
-													textAlign: 'center'
-												}}
+												className="ub_image_silder_image_caption"
 												value={
 													JSON.parse(captions)[i].text
 												}
@@ -476,10 +470,7 @@ registerBlockType('ub/image-slider', {
 							/>
 							{captionArray[i].link !== '' ? (
 								<a
-									style={{
-										display: 'block',
-										textAlign: 'center'
-									}}
+									className="ub_image_silder_image_caption"
 									href={captionArray[i].link}
 								>
 									<RichText.Content
@@ -489,10 +480,7 @@ registerBlockType('ub/image-slider', {
 							) : (
 								<RichText.Content
 									tagName="span"
-									style={{
-										display: 'block',
-										textAlign: 'center'
-									}}
+									className="ub_image_silder_image_caption"
 									value={captionArray[i].text}
 								/>
 							)}

@@ -1,3 +1,5 @@
+const { RichText } = wp.editor;
+
 const version_1_1_2 = props => {
 	return (
 		<div className={props.className}>

@@ -1,3 +1,5 @@
+const { RichText } = wp.editor;
+
 const version_1_1_4 = props => {
 	const {
 		images,
@@ -44,10 +46,7 @@ const version_1_1_4 = props => {
 						/>
 						{captionArray[i].link !== '' ? (
 							<a
-								style={{
-									display: 'block',
-									textAlign: 'center'
-								}}
+								className="ub_image_silder_image_caption"
 								href={captionArray[i].link}
 							>
 								<RichText.Content
@@ -57,10 +56,7 @@ const version_1_1_4 = props => {
 						) : (
 							<RichText.Content
 								tagName="span"
-								style={{
-									display: 'block',
-									textAlign: 'center'
-								}}
+								className="ub_image_silder_image_caption"
 								value={captionArray[i].text}
 							/>
 						)}
