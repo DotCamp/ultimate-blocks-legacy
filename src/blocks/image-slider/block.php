@@ -10,7 +10,7 @@ function ub_image_slider_add_frontend_assets() {
         'ultimate_blocks-image-slider-front-script',
         plugins_url( '/flickity.pkgd.js', __FILE__ ),
         [ 'wp-blocks', 'wp-element', 'wp-components', 'wp-i18n' ],
-        filemtime( plugin_dir_path( __FILE__ ) . 'flickity.pkgd.js' ) 
+        Ultimate_Blocks_Constants::plugin_version()
     );
 }
 

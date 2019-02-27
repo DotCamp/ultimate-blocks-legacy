@@ -10,7 +10,7 @@ function ub_content_toggle_add_frontend_assets() {
 		'ultimate_blocks-content-toggle-front-script',
 		plugins_url( 'content-toggle/front.js', dirname( __FILE__ ) ),
 		array( 'jquery' ),
-		'1.0',
+		Ultimate_Blocks_Constants::plugin_version(),
 		true
 	);
 }

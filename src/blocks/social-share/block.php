@@ -43,7 +43,7 @@ function ub_render_social_share_block( $attributes ) {
 			' . $reddit . '
 			' . $google_plus . '
 			' . $tumblr . '
-		</div>
+        </div>
 	</div>';
 }
 

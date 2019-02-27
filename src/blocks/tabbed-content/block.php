@@ -10,7 +10,7 @@ function ub_tabbed_content_add_frontend_assets() {
 		'ultimate_blocks-tabbed-content-front-script',
 		plugins_url( 'tabbed-content/front.js', dirname( __FILE__ ) ),
 		array( 'jquery' ),
-		'1.0',
+		Ultimate_Blocks_Constants::plugin_version(),
 		true
 	);
 }

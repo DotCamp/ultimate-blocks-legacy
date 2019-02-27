@@ -47,16 +47,15 @@ function ultimate_blocks_cgb_editor_assets() {
 	wp_enqueue_script(
 		'ultimate_blocks-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor') // Dependencies, defined above.
-		// filemtime( plugin_dir_path( __FILE__ ) . 'block.js' ) // Version: filemtime — Gets file modification time.
+		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor'), // Dependencies, defined above.
+		Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
 	);
 
 	wp_enqueue_script(
 		'ultimate_blocks-cgb-deactivator-js', // Handle.
 		plugins_url( '/dist/deactivator.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-editor', 'wp-blocks', 'wp-i18n', 'wp-element' ), // Dependencies, defined above.
-		// filemtime( plugin_dir_path( __FILE__ ) . 'block.js' ) // Version: filemtime — Gets file modification time.
-		'',
+		Ultimate_Blocks_Constants::plugin_version(), // Version: latest version number.
 		true
 	);
 
@@ -64,8 +63,8 @@ function ultimate_blocks_cgb_editor_assets() {
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-block-editor-css', // Handle.
 		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
-		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-		// filemtime( plugin_dir_path( __FILE__ ) . 'editor.css' ) // Version: filemtime — Gets file modification time.
+		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
+		Ultimate_Blocks_Constants::plugin_version() // Version: latest version number
 	);
 } // End function ultimate_blocks_cgb_editor_assets().
 
