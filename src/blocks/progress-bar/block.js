@@ -13,6 +13,7 @@ const { Toolbar, Button, RangeControl, PanelBody } = wp.components;
 
 const { withState } = wp.compose;
 
+import './editor.scss';
 import './style.scss';
 
 import Circle from './Circle';
@@ -81,6 +82,7 @@ registerBlockType('ub/progress-bar', {
 					</Toolbar>
 					<Toolbar>
 						<RangeControl
+							className="ub_progress_bar_value"
 							value={percentage}
 							onChange={value =>
 								setAttributes({ percentage: value })

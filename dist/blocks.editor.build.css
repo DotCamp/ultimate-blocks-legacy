@@ -504,5 +504,19 @@
 .ub-hide {
   display: none !important; }
 
+.ub_progress_bar_value {
+  padding-left: 5px;
+  -webkit-transform: translateY(5px);
+      -ms-transform: translateY(5px);
+          transform: translateY(5px); }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
 .ub_image_slider .flickity-enabled .flickity-page-dots {
   bottom: 30px; }
