@@ -305,11 +305,7 @@ registerBlockType('ub/image-slider', {
 												}}
 											/>
 											<RichText
-												formattingControls={[
-													'bold',
-													'italic',
-													'strikethrough'
-												]}
+												formattingControls={[]}
 												className="ub_image_silder_image_caption"
 												value={
 													JSON.parse(captions)[i].text
