@@ -15,7 +15,7 @@ require_once 'icons/icons.php';
  *
  * @param array $attributes The block attributes.
  */
-function ub_render_block( $attributes ) {
+function ub_render_social_share_block( $attributes ) {
 
 	$icon_sizes = array(
 		'normal' => 20,
@@ -26,13 +26,13 @@ function ub_render_block( $attributes ) {
 	$icon_size  = $icon_sizes[ $attributes ['iconSize'] ];
 	$icon_shape = $attributes['iconShape'];
 
-	$facebook    = get_facebook_icon( $attributes, $icon_size, $icon_shape );
-	$twitter     = get_twitter_icon( $attributes, $icon_size, $icon_shape );
-	$linkedin    = get_linkedin_icon( $attributes, $icon_size, $icon_shape );
-	$pinterest   = get_pinterest_icon( $attributes, $icon_size, $icon_shape );
-	$reddit      = get_reddit_icon( $attributes, $icon_size, $icon_shape );
-	$google_plus = get_googleplus_icon( $attributes, $icon_size, $icon_shape );
-	$tumblr      = get_tumblr_icon( $attributes, $icon_size, $icon_shape );
+	$facebook    = ub_get_facebook_icon( $attributes, $icon_size, $icon_shape );
+	$twitter     = ub_get_twitter_icon( $attributes, $icon_size, $icon_shape );
+	$linkedin    = ub_get_linkedin_icon( $attributes, $icon_size, $icon_shape );
+	$pinterest   = ub_get_pinterest_icon( $attributes, $icon_size, $icon_shape );
+	$reddit      = ub_get_reddit_icon( $attributes, $icon_size, $icon_shape );
+	$google_plus = ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape );
+	$tumblr      = ub_get_tumblr_icon( $attributes, $icon_size, $icon_shape );
 
 	return '<div id="ub-social-share-block-editor" class="wp-block-ub-social-share">
 		<div class="social-share-icons align-icons-' . $attributes['align'] . '">
@@ -55,7 +55,7 @@ function ub_render_block( $attributes ) {
  * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
+function ub_get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showFacebookIcon'] ) {
 		return '';
 	}
@@ -92,7 +92,7 @@ function get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
  * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
+function ub_get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showTwitterIcon'] ) {
 		return '';
 	}
@@ -130,7 +130,7 @@ function get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
  * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
+function ub_get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showLinkedInIcon'] ) {
 		return '';
 	}
@@ -168,7 +168,7 @@ function get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
  * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
+function ub_get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
 	global $post;
 
 	if ( ! $attributes['showPinterestIcon'] ) {
@@ -217,7 +217,7 @@ function get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
  * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
+function ub_get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showRedditIcon'] ) {
 		return '';
 	}
@@ -255,7 +255,7 @@ function get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
  * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
+function ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showGooglePlusIcon'] ) {
 		return '';
 	}
@@ -292,7 +292,7 @@ function get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
  * @param  string  $icon_shape Shape of Icon.
  * @return string
  */
-function get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
+function ub_get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
 	if ( ! $attributes['showTumblrIcon'] ) {
 		return '';
 	}
@@ -435,7 +435,7 @@ function ub_register_block() {
 					'default' => 'left',
 				),
 			),
-			'render_callback' => 'ub_render_block',
+			'render_callback' => 'ub_render_social_share_block',
 		) );
 	}
 }

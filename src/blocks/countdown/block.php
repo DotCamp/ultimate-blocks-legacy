@@ -9,15 +9,15 @@ function ub_render_countdown_block($attributes){
     $days = (($timeLeft - $hours * 3600 - $minutes * 60 - $seconds) % 604800) / 86400;
     $weeks = ($timeLeft - $days * 86400 - $hours * 3600 - $minutes * 60 - $seconds) / 604800;
     
-    $elementID = generateBlockID();
+    $elementID = ub_generateBlockID();
 
     $defaultFormat = $weeks . ' weeks ' . $days . ' days ' . $hours . ' hours ' .
                     $minutes . ' minutes ' . $seconds . ' seconds ';
 
     $defaultUpdate = 'document.getElementById("ub_countdown_'.$elementID.'").innerHTML = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;';
 
-    if(!function_exists('generateCircle')){
-        function generateCircle($label, $value, $limit, $color){
+    if(!function_exists('ub_generateCircle')){
+        function ub_generateCircle($label, $value, $limit, $color){
             $circlePath="M 50,50 m 0,-35 a 35,35 0 1 1 0,70 a 35,35 0 1 1 0,-70";
             $prefix="ub_countdown_circle_";
             return '<div style="height: 70px; width: 70px;" class="ub_countdown_'.$label.'">
@@ -32,11 +32,11 @@ function ub_render_countdown_block($attributes){
 
     
     $circularFormat = '<div class="ub_countdown_circular_container">
-                        '.generateCircle("week", $weeks, 52, $attributes['circleColor'])
-                        .generateCircle("day", $days, 7, $attributes['circleColor'])
-                        .generateCircle("hour", $hours, 24, $attributes['circleColor'])
-                        .generateCircle("minute", $minutes, 60, $attributes['circleColor'])
-                        .generateCircle("second", $seconds, 60, $attributes['circleColor']).'
+                        '.ub_generateCircle("week", $weeks, 52, $attributes['circleColor'])
+                        .ub_generateCircle("day", $days, 7, $attributes['circleColor'])
+                        .ub_generateCircle("hour", $hours, 24, $attributes['circleColor'])
+                        .ub_generateCircle("minute", $minutes, 60, $attributes['circleColor'])
+                        .ub_generateCircle("second", $seconds, 60, $attributes['circleColor']).'
                         <p>Weeks</p>
                         <p>Days</p>
                         <p>Hours</p>
@@ -44,15 +44,15 @@ function ub_render_countdown_block($attributes){
                         <p>Seconds</p>
                     </div>';
     
-    if(!function_exists('circleUpdate')){
-        function circleUpdate($part, $limit, $ID){
+    if(!function_exists('ub_circleUpdate')){
+        function ub_circleUpdate($part, $limit, $ID){
             return 'document.querySelector("#ub_countdown_'.$ID.' .ub_countdown_'.$part.' .ub_countdown_circle_path").style.strokeDasharray = `${'.$part.'s * 219.911 / '.$limit.'}px, 219.911px`;
             document.querySelector("#ub_countdown_'.$ID.' .ub_countdown_'.$part.' .ub_countdown_circle_path").style.strokeLinecap = `${'.$part.'s > 0 ? "round": "butt"}`;
             document.querySelector("#ub_countdown_'.$ID.' .ub_countdown_'.$part.' .ub_countdown_circle_label").innerHTML = '.$part.'s;';
         }
     }
     
-    $circularUpdate = circleUpdate("week", 52, $elementID) . circleUpdate("day", 7, $elementID) . circleUpdate("hour", 24, $elementID) . circleUpdate("minute", 60, $elementID) . circleUpdate("second", 60, $elementID);
+    $circularUpdate = ub_circleUpdate("week", 52, $elementID) . ub_circleUpdate("day", 7, $elementID) . ub_circleUpdate("hour", 24, $elementID) . ub_circleUpdate("minute", 60, $elementID) . ub_circleUpdate("second", 60, $elementID);
 
     $odometerSeparator = '<span class="ub-countdown-separator">:</span>';
 

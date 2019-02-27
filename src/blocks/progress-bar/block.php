@@ -2,7 +2,7 @@
 
 function ub_render_progress_bar_block($attributes){
     $className = 'ub_progress-bar';
-    $elementID = $className .'-'. generateBlockId();
+    $elementID = $className .'-'. ub_generateBlockID();
     $chosenProgressBar = '';
     $initializationCode = '';
     $barThickness = $attributes['barThickness'];
