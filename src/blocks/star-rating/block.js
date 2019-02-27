@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { InspectorControls, PanelColorSettings, RichText } = wp.editor;
 const { registerBlockType } = wp.blocks;
-const { RangeControl } = wp.components;
+const { PanelBody, RangeControl } = wp.components;
 const { withState } = wp.compose;
 
 import './style.scss';
@@ -59,56 +59,62 @@ registerBlockType('ub/star-rating', {
 		return [
 			isSelected && (
 				<InspectorControls key="inspectors">
-					<PanelColorSettings
-						title={__('Star Color')}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: starColor,
-								onChange: colorValue =>
-									setAttributes({ starColor: colorValue }),
-								label: __('')
+					<PanelBody title={__('Star Settings')}>
+						<PanelColorSettings
+							title={__('Color')}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: starColor,
+									onChange: colorValue =>
+										setAttributes({
+											starColor: colorValue
+										}),
+									label: __('')
+								}
+							]}
+						/>
+						<RangeControl
+							label={__('Star size')}
+							value={starSize}
+							onChange={value =>
+								setAttributes({ starSize: value })
 							}
-						]}
-					/>
-					<RangeControl
-						label={__('Star size')}
-						value={starSize}
-						onChange={value => setAttributes({ starSize: value })}
-						min={10}
-						max={30}
-						beforeIcon="editor-contract"
-						afterIcon="editor-expand"
-						allowReset
-					/>
-					<RangeControl
-						label={__('Number of stars')}
-						value={starCount}
-						onChange={value =>
-							setAttributes({
-								starCount: value,
-								selectedStars:
-									value < selectedStars
-										? value
-										: selectedStars
-							})
-						}
-						min={5}
-						max={10}
-						beforeIcon="star-empty"
-						allowReset
-					/>
-					<RangeControl
-						label={__('Number of selected stars')}
-						value={selectedStars}
-						onChange={value =>
-							setAttributes({ selectedStars: value })
-						}
-						min={0}
-						max={starCount}
-						beforeIcon="star-filled"
-						allowReset
-					/>
+							min={10}
+							max={30}
+							beforeIcon="editor-contract"
+							afterIcon="editor-expand"
+							allowReset
+						/>
+						<RangeControl
+							label={__('Number of stars')}
+							value={starCount}
+							onChange={value =>
+								setAttributes({
+									starCount: value,
+									selectedStars:
+										value < selectedStars
+											? value
+											: selectedStars
+								})
+							}
+							min={5}
+							max={10}
+							beforeIcon="star-empty"
+							allowReset
+						/>
+						<RangeControl
+							label={__('Number of selected stars')}
+							value={selectedStars}
+							onChange={value =>
+								setAttributes({ selectedStars: value })
+							}
+							min={0}
+							max={starCount}
+							beforeIcon="star-filled"
+							allowReset
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 			<div className="ub-star-rating">

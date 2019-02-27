@@ -103,25 +103,9 @@ registerBlockType('ub/review', {
 			isSelected && (
 				<InspectorControls>
 					<PanelColorSettings
-						title={__('Button Colors')}
+						title={__('Star Colors')}
 						initialOpen={true}
 						colorSettings={[
-							{
-								value: callToActionBackColor,
-								onChange: colorValue =>
-									setAttributes({
-										callToActionBackColor: colorValue
-									}),
-								label: __('Button Background')
-							},
-							{
-								value: callToActionForeColor,
-								onChange: colorValue =>
-									setAttributes({
-										callToActionForeColor: colorValue
-									}),
-								label: __('Button Text Color')
-							},
 							{
 								value: activeStarColor,
 								onChange: colorValue =>
@@ -148,7 +132,28 @@ registerBlockType('ub/review', {
 							}
 						]}
 					/>
-					,
+					<PanelColorSettings
+						title={__('Button Colors')}
+						initialOpen={false}
+						colorSettings={[
+							{
+								value: callToActionBackColor,
+								onChange: colorValue =>
+									setAttributes({
+										callToActionBackColor: colorValue
+									}),
+								label: __('Button Background')
+							},
+							{
+								value: callToActionForeColor,
+								onChange: colorValue =>
+									setAttributes({
+										callToActionForeColor: colorValue
+									}),
+								label: __('Button Text Color')
+							}
+						]}
+					/>
 				</InspectorControls>
 			),
 			<ReviewBody

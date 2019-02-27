@@ -1,8 +1,6 @@
 import icon, { editGallery } from './icon';
 
-import { Component } from 'react';
-
-import Flickity from 'react-flickity-component';
+import { Slider } from './components';
 
 import './editor.scss';
 import './style.scss';
@@ -27,7 +25,8 @@ const {
 	Toolbar,
 	ToggleControl,
 	FormFileUpload,
-	RangeControl
+	RangeControl,
+	PanelBody
 } = wp.components;
 
 const { withState } = wp.compose;
@@ -67,60 +66,11 @@ const attributes = {
 	}
 };
 
-class Slider extends Component {
-	componentDidMount() {
-		this.flkty.on('select', () => {
-			this.props.setActiveSlide(this.flkty.selectedIndex);
-		});
-	}
-	shouldComponentUpdate(newProps, newState) {
-		const oldCaptions = this.props.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[1].props.value);
-
-		const newCaptions = newProps.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[1].props.value);
-
-		const oldImages = this.props.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[0].props.src);
-
-		const newImages = newProps.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[0].props.src);
-
-		const imagesChanged =
-			JSON.stringify(oldImages) !== JSON.stringify(newImages);
-
-		const indexUnchanged =
-			this.props.options.initialIndex === newProps.options.initialIndex;
-
-		const captionUnchanged =
-			JSON.stringify(oldCaptions) === JSON.stringify(newCaptions);
-
-		return (indexUnchanged && captionUnchanged) || imagesChanged;
-	}
-	render() {
-		return (
-			<Flickity
-				elementType={'div'}
-				flickityRef={c => (this.flkty = c)}
-				options={this.props.options}
-				reloadOnUpdate={true}
-				imagesLoaded={true}
-			>
-				{this.props.slides}
-			</Flickity>
-		);
-	}
-}
-
 registerBlockType('ub/image-slider', {
 	title: __('Image Slider'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [__('Image Slider'), __('Ultimate Blocks')],
+	keywords: [__('Image Slider'), __('Slideshow'), __('Ultimate Blocks')],
 	attributes,
 
 	edit: withState({ componentKey: 0, activeSlide: 0 })(function(props) {
@@ -188,60 +138,67 @@ registerBlockType('ub/image-slider', {
 			),
 			isSelected && imageArray.length > 0 && (
 				<InspectorControls>
-					<ToggleControl
-						label={__('Wrap around')}
-						checked={wrapsAround}
-						onChange={() => {
-							setAttributes({ wrapsAround: !wrapsAround });
-							setState({ componentKey: componentKey + 1 });
-						}}
-					/>
-					<ToggleControl
-						label={__('Allow dragging')}
-						checked={isDraggable}
-						onChange={() => {
-							setAttributes({ isDraggable: !isDraggable });
-							setState({ componentKey: componentKey + 1 });
-						}}
-					/>
-					<ToggleControl
-						label={__('Show page dots')}
-						checked={showPageDots}
-						onChange={() => {
-							setAttributes({ showPageDots: !showPageDots });
-							setState({ componentKey: componentKey + 1 });
-						}}
-					/>
-					<ToggleControl
-						label={__('Enable autoplay')}
-						checked={autoplays}
-						onChange={() => {
-							setAttributes({ autoplays: !autoplays });
-							setState({ componentKey: componentKey + 1 });
-						}}
-					/>
-					{autoplays && (
-						<RangeControl
-							label={__('Autoplay duration')}
-							value={autoplayDuration}
-							onChange={value => {
-								setAttributes({ autoplayDuration: value });
+					<PanelBody
+						title={__('Slider Settings')}
+						initialOpen={false}
+					>
+						<ToggleControl
+							label={__('Wrap around')}
+							checked={wrapsAround}
+							onChange={() => {
+								setAttributes({ wrapsAround: !wrapsAround });
 								setState({ componentKey: componentKey + 1 });
 							}}
-							min={1}
-							max={10}
 						/>
-					)}
-					<RangeControl
-						label={__('Height')}
-						value={sliderHeight}
-						onChange={newHeight => {
-							setAttributes({ sliderHeight: newHeight });
-							setState({ componentKey: componentKey + 1 }); //ensure proper placement of arrows and page dots
-						}}
-						min={200}
-						max={500}
-					/>
+						<ToggleControl
+							label={__('Allow dragging')}
+							checked={isDraggable}
+							onChange={() => {
+								setAttributes({ isDraggable: !isDraggable });
+								setState({ componentKey: componentKey + 1 });
+							}}
+						/>
+						<ToggleControl
+							label={__('Show page dots')}
+							checked={showPageDots}
+							onChange={() => {
+								setAttributes({ showPageDots: !showPageDots });
+								setState({ componentKey: componentKey + 1 });
+							}}
+						/>
+						<ToggleControl
+							label={__('Enable autoplay')}
+							checked={autoplays}
+							onChange={() => {
+								setAttributes({ autoplays: !autoplays });
+								setState({ componentKey: componentKey + 1 });
+							}}
+						/>
+						{autoplays && (
+							<RangeControl
+								label={__('Autoplay duration (seconds)')}
+								value={autoplayDuration}
+								onChange={value => {
+									setAttributes({ autoplayDuration: value });
+									setState({
+										componentKey: componentKey + 1
+									});
+								}}
+								min={1}
+								max={10}
+							/>
+						)}
+						<RangeControl
+							label={__('Height')}
+							value={sliderHeight}
+							onChange={newHeight => {
+								setAttributes({ sliderHeight: newHeight });
+								setState({ componentKey: componentKey + 1 }); //ensure proper placement of arrows and page dots
+							}}
+							min={200}
+							max={500}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 

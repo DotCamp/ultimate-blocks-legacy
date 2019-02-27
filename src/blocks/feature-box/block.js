@@ -228,7 +228,7 @@ registerBlockType('ub/feature-box', {
 			isSelected && (
 				<InspectorControls key={'inspector'}>
 					<SelectControl
-						label={__('Column Number')}
+						label={__('Number of Columns')}
 						value={column}
 						options={columns.map(({ value, label }) => ({
 							value: value,

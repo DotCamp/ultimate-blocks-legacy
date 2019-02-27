@@ -9,7 +9,7 @@ const {
 	RichText
 } = wp.editor;
 
-const { Toolbar, Button, RangeControl } = wp.components;
+const { Toolbar, Button, RangeControl, PanelBody } = wp.components;
 
 const { withState } = wp.compose;
 
@@ -79,40 +79,45 @@ registerBlockType('ub/progress-bar', {
 							{CircProgressIcon}
 						</Button>
 					</Toolbar>
+					<Toolbar>
+						<RangeControl
+							value={percentage}
+							onChange={value =>
+								setAttributes({ percentage: value })
+							}
+							min={0}
+							max={100}
+							allowReset
+						/>
+					</Toolbar>
 				</BlockControls>
 			),
 			isSelected && (
 				<InspectorControls key="inspectors">
-					<RangeControl
-						label={__('Value')}
-						value={percentage}
-						onChange={value => setAttributes({ percentage: value })}
-						min={0}
-						max={100}
-						allowReset
-					/>
-					<PanelColorSettings
-						title={__('Progress Bar Color')}
-						initialOpen={true}
-						colorSettings={[
-							{
-								value: barColor,
-								onChange: colorValue =>
-									setAttributes({ barColor: colorValue }),
-								label: ''
+					<PanelBody title={__('Progress Bar Settings')}>
+						<PanelColorSettings
+							title={__('Color')}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: barColor,
+									onChange: colorValue =>
+										setAttributes({ barColor: colorValue }),
+									label: ''
+								}
+							]}
+						/>
+						<RangeControl
+							label={__('Thickness')}
+							value={barThickness}
+							onChange={value =>
+								setAttributes({ barThickness: value })
 							}
-						]}
-					/>
-					<RangeControl
-						label={__('Progress Bar Thickness')}
-						value={barThickness}
-						onChange={value =>
-							setAttributes({ barThickness: value })
-						}
-						min={1}
-						max={5}
-						allowReset
-					/>
+							min={1}
+							max={5}
+							allowReset
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 			<div className="ub_progress-bar">

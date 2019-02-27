@@ -17,7 +17,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { RichText, InspectorControls, PanelColorSettings } = wp.editor;
 
-const { TextControl, RangeControl } = wp.components;
+const { TextControl, RangeControl, PanelBody } = wp.components;
 
 /**
  * Register: aa Gutenberg Block.
@@ -85,41 +85,47 @@ registerBlockType('ub/click-to-tweet', {
 		return [
 			isSelected && (
 				<InspectorControls key="inspectors">
-					<TextControl
-						label={__('Twitter Username')}
-						placeholder="@"
-						value={ubVia}
-						onChange={value => setAttributes({ ubVia: value })}
-					/>
-					<RangeControl
-						label={__('Font Size')}
-						value={tweetFontSize}
-						onChange={value =>
-							setAttributes({ tweetFontSize: value })
-						}
-						min={10}
-						max={200}
-						beforeIcon="editor-textcolor"
-						allowReset
-					/>
-					<PanelColorSettings
-						title={__('Color Scheme')}
-						initialOpen={true}
-						colorSettings={[
-							{
-								value: tweetColor,
-								onChange: colorValue =>
-									setAttributes({ tweetColor: colorValue }),
-								label: __('Tweet Color')
-							},
-							{
-								value: borderColor,
-								onChange: colorValue =>
-									setAttributes({ borderColor: colorValue }),
-								label: __('Border Color')
+					<PanelBody title={__('Click to Tweet Settings')}>
+						<TextControl
+							label={__('Twitter Username')}
+							placeholder="@"
+							value={ubVia}
+							onChange={value => setAttributes({ ubVia: value })}
+						/>
+						<RangeControl
+							label={__('Font Size')}
+							value={tweetFontSize}
+							onChange={value =>
+								setAttributes({ tweetFontSize: value })
 							}
-						]}
-					/>
+							min={10}
+							max={200}
+							beforeIcon="editor-textcolor"
+							allowReset
+						/>
+						<PanelColorSettings
+							title={__('Color Scheme')}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: tweetColor,
+									onChange: colorValue =>
+										setAttributes({
+											tweetColor: colorValue
+										}),
+									label: __('Tweet Color')
+								},
+								{
+									value: borderColor,
+									onChange: colorValue =>
+										setAttributes({
+											borderColor: colorValue
+										}),
+									label: __('Border Color')
+								}
+							]}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 			<div className={props.className}>

@@ -18,7 +18,7 @@ const { registerBlockType } = wp.blocks;
 
 const { InspectorControls, ColorPalette } = wp.editor;
 
-const { RangeControl } = wp.components;
+const { PanelBody, RangeControl } = wp.components;
 
 const attributes = {
 	borderSize: {
@@ -80,36 +80,40 @@ registerBlockType('ub/divider', {
 		return [
 			isSelected && (
 				<InspectorControls key="inspectors">
-					<RangeControl
-						label={__('Thickness')}
-						value={borderSize}
-						onChange={value => setAttributes({ borderSize: value })}
-						min={1}
-						max={20}
-						beforeIcon="minus"
-						allowReset
-					/>
+					<PanelBody title={__('Divider Settings')}>
+						<RangeControl
+							label={__('Thickness')}
+							value={borderSize}
+							onChange={value =>
+								setAttributes({ borderSize: value })
+							}
+							min={1}
+							max={20}
+							beforeIcon="minus"
+							allowReset
+						/>
 
-					<RangeControl
-						label={__('Height')}
-						value={borderHeight}
-						onChange={value =>
-							setAttributes({ borderHeight: value })
-						}
-						min={10}
-						max={200}
-						beforeIcon="minus"
-						allowReset
-					/>
+						<RangeControl
+							label={__('Height')}
+							value={borderHeight}
+							onChange={value =>
+								setAttributes({ borderHeight: value })
+							}
+							min={10}
+							max={200}
+							beforeIcon="minus"
+							allowReset
+						/>
 
-					<p>Color</p>
-					<ColorPalette
-						value={borderColor}
-						onChange={colorValue =>
-							setAttributes({ borderColor: colorValue })
-						}
-						allowReset
-					/>
+						<p>Color</p>
+						<ColorPalette
+							value={borderColor}
+							onChange={colorValue =>
+								setAttributes({ borderColor: colorValue })
+							}
+							allowReset
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 

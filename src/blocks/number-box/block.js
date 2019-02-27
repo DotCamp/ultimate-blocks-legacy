@@ -154,47 +154,49 @@ registerBlockType('ub/number-box', {
 
 			isSelected && (
 				<InspectorControls key={'inspector'}>
-					<SelectControl
-						label={__('Column Number')}
-						value={column}
-						options={columns.map(({ value, label }) => ({
-							value: value,
-							label: label
-						}))}
-						onChange={value => {
-							props.setAttributes({ column: value });
-						}}
-					/>
-					<PanelColorSettings
-						title={__('Color Scheme')}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: numberBackground,
-								onChange: colorValue =>
-									props.setAttributes({
-										numberBackground: colorValue
-									}),
-								label: __('Number Background Color')
-							},
-							{
-								value: numberColor,
-								onChange: colorValue =>
-									props.setAttributes({
-										numberColor: colorValue
-									}),
-								label: __('Number Color')
-							},
-							{
-								value: borderColor,
-								onChange: colorValue =>
-									props.setAttributes({
-										borderColor: colorValue
-									}),
-								label: __('Border Color')
-							}
-						]}
-					/>
+					<PanelBody title={__('Number Box Settings')}>
+						<SelectControl
+							label={__('Number of Columns')}
+							value={column}
+							options={columns.map(({ value, label }) => ({
+								value: value,
+								label: label
+							}))}
+							onChange={value => {
+								props.setAttributes({ column: value });
+							}}
+						/>
+						<PanelColorSettings
+							title={__('Color Scheme')}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: numberBackground,
+									onChange: colorValue =>
+										props.setAttributes({
+											numberBackground: colorValue
+										}),
+									label: __('Number Background Color')
+								},
+								{
+									value: numberColor,
+									onChange: colorValue =>
+										props.setAttributes({
+											numberColor: colorValue
+										}),
+									label: __('Number Color')
+								},
+								{
+									value: borderColor,
+									onChange: colorValue =>
+										props.setAttributes({
+											borderColor: colorValue
+										}),
+									label: __('Border Color')
+								}
+							]}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 
