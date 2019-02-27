@@ -97,9 +97,6 @@ registerBlockType('ub/countdown', {
 						<DateTimePicker
 							currentDate={endDate * 1000}
 							onChange={value => {
-								console.log(
-									Math.floor(Date.parse(value) / 1000)
-								);
 								setAttributes({
 									endDate: Math.floor(
 										Date.parse(value) / 1000
