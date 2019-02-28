@@ -97,43 +97,47 @@ registerBlockType('ub/image-slider', {
 		return [
 			isSelected && (
 				<BlockControls>
-					<Toolbar>
-						<MediaUpload
-							value={imageArray.map(img => img.id)}
-							allowedTypes={['image']}
-							multiple
-							gallery
-							render={({ open }) => (
-								<IconButton
-									icon={editGallery}
-									onClick={open}
-									label={__('Edit selection')}
-								/>
-							)}
-							onSelect={newImages => {
-								const newCaptionArray = newImages.map(
-									(img, i) => {
-										return captionArray.find(
-											c => c.id === img.id
-										)
-											? captionArray.find(
-													c => c.id === img.id
-											  )
-											: {
-													text: '',
-													link: '',
-													id: img.id
-											  };
-									}
-								);
+					{imageArray.length > 0 && (
+						<Toolbar>
+							<MediaUpload
+								value={JSON.parse(images).map(img => img.id)}
+								allowedTypes={['image']}
+								multiple
+								gallery
+								render={({ open }) => (
+									<IconButton
+										icon={editGallery}
+										onClick={open}
+										label={__('Edit selection')}
+									/>
+								)}
+								onSelect={newImages => {
+									const newCaptionArray = newImages.map(
+										(img, i) => {
+											return captionArray.find(
+												c => c.id === img.id
+											)
+												? captionArray.find(
+														c => c.id === img.id
+												  )
+												: {
+														text: '',
+														link: '',
+														id: img.id
+												  };
+										}
+									);
 
-								setAttributes({
-									images: JSON.stringify(newImages),
-									captions: JSON.stringify(newCaptionArray)
-								});
-							}}
-						/>
-					</Toolbar>
+									setAttributes({
+										images: JSON.stringify(newImages),
+										captions: JSON.stringify(
+											newCaptionArray
+										)
+									});
+								}}
+							/>
+						</Toolbar>
+					)}
 				</BlockControls>
 			),
 			isSelected && imageArray.length > 0 && (
