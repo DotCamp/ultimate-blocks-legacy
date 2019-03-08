@@ -1,11 +1,12 @@
 import icon from './icon';
 import TableOfContents from './components';
-import { version_1_1_2, version_1_1_3 } from './oldVersions';
+import { version_1_1_2, version_1_1_3, version_1_1_5 } from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { RichText } = wp.editor;
+const { ToggleControl, PanelRow, PanelBody } = wp.components;
+const { RichText, InspectorControls } = wp.editor;
 
 const { withState } = wp.compose;
 
@@ -18,9 +19,17 @@ const attributes = {
 		source: 'children',
 		selector: '.ub_table-of-contents-title'
 	},
+	allowedHeaders: {
+		type: 'array',
+		default: [true, true, true, true, true, true]
+	},
 	links: {
 		type: 'string',
 		default: ''
+	},
+	showList: {
+		type: 'boolean',
+		default: true
 	}
 };
 
@@ -38,11 +47,32 @@ registerBlockType('ub/table-of-contents', {
 
 	edit: withState({ editable: 'content' })(function(props) {
 		const { editable, setAttributes, isSelected } = props;
-		const { links, title } = props.attributes;
+		const { links, title, allowedHeaders, showList } = props.attributes;
 		const onSetActiveEditable = newEditable => () => {
 			setState({ editable: newEditable });
 		};
-		return (
+		return [
+			isSelected && (
+				<InspectorControls>
+					<PanelBody title={__('Allowed Headers')}>
+						{allowedHeaders.map((a, i) => (
+							<ToggleControl
+								label={`H${i + 1}`}
+								checked={a}
+								onChange={() =>
+									setAttributes({
+										allowedHeaders: [
+											...allowedHeaders.slice(0, i),
+											!allowedHeaders[i],
+											...allowedHeaders.slice(i + 1)
+										]
+									})
+								}
+							/>
+						))}
+					</PanelBody>
+				</InspectorControls>
+			),
 			<div className="ub_table-of-contents">
 				<div className="ub_table-of-contents-header">
 					<div className="ub_table-of-contents-title">
@@ -61,17 +91,37 @@ registerBlockType('ub/table-of-contents', {
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
+					<div id="ub_table-of-contents-header-toggle">
+						<div id="ub_table-of-contents-toggle">
+							[
+							<a
+								id="ub_table-of-contents-toggle-link"
+								href="#"
+								onClick={() => {
+									setAttributes({
+										showList: !showList
+									});
+								}}
+							>
+								{showList ? __('hide') : __('show')}
+							</a>
+							]
+						</div>
+					</div>
 				</div>
-				<TableOfContents
-					headers={links && JSON.parse(links)}
-					blockProp={props}
-				/>
+				{showList && (
+					<TableOfContents
+						allowedHeaders={allowedHeaders}
+						headers={links && JSON.parse(links)}
+						blockProp={props}
+					/>
+				)}
 			</div>
-		);
+		];
 	}),
 
 	save(props) {
-		const { links, title } = props.attributes;
+		const { links, title, allowedHeaders, showList } = props.attributes;
 		return (
 			<div className="ub_table-of-contents">
 				{(title.length > 1 ||
@@ -80,14 +130,59 @@ registerBlockType('ub/table-of-contents', {
 						<div className="ub_table-of-contents-title">
 							{title}
 						</div>
+						<div id="ub_table-of-contents-header-toggle">
+							<div id="ub_table-of-contents-toggle">
+								[
+								<a
+									id="ub_table-of-contents-toggle-link"
+									href="#"
+									onClick={() => {
+										setAttributes({
+											showList: !showList
+										});
+									}}
+								>
+									{showList ? __('hide') : __('show')}
+								</a>
+								]
+							</div>
+						</div>
 					</div>
 				)}
-				<TableOfContents headers={links && JSON.parse(links)} />
+
+				<TableOfContents
+					style={{
+						display:
+							showList ||
+							title.length === 0 ||
+							(title.length === 1 && title[0] === '')
+								? 'initial'
+								: 'none'
+					}}
+					allowedHeaders={allowedHeaders}
+					headers={links && JSON.parse(links)}
+				/>
 			</div>
 		);
 	},
 	deprecated: [
 		{ attributes, save: version_1_1_2 },
-		{ attributes, save: version_1_1_3 }
+		{
+			attributes,
+			migrate: function(attributes) {
+				function flattenArray(arr) {
+					return arr.reduce(
+						(acc, val) =>
+							acc.concat(
+								Array.isArray(val) ? flattenArray(val) : val
+							),
+						[]
+					);
+				}
+				return { links: flattenArray(attributes.links) };
+			},
+			save: version_1_1_3
+		},
+		{ attributes, save: version_1_1_5 }
 	]
 });

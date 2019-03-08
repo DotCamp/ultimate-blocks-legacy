@@ -12,40 +12,6 @@ class TableOfContents extends Component {
 	}
 
 	componentDidMount() {
-		const makeHeaderArray = origHeaders => {
-			let arrays = [];
-			origHeaders.forEach(header => {
-				let last = arrays.length - 1;
-				if (
-					arrays.length === 0 ||
-					arrays[last][0].level < header.level
-				) {
-					arrays.push([header]);
-				} else if (arrays[last][0].level === header.level) {
-					arrays[last].push(header);
-				} else {
-					while (arrays[last][0].level > header.level) {
-						if (arrays.length > 1) {
-							arrays[arrays.length - 2].push(arrays.pop());
-							last = arrays.length - 1;
-						} else break;
-					}
-					if (arrays[last][0].level === header.level) {
-						arrays[last].push(header);
-					}
-				}
-			});
-
-			while (
-				arrays.length > 1 &&
-				arrays[arrays.length - 1][0].level >
-					arrays[arrays.length - 2][0].level
-			) {
-				arrays[arrays.length - 2].push(arrays.pop());
-			}
-			return arrays[0];
-		};
-
 		const getHeaderBlocks = () =>
 			select('core/editor')
 				.getBlocks()
@@ -81,7 +47,7 @@ class TableOfContents extends Component {
 				}
 			});
 
-			this.setState({ headers: makeHeaderArray(headers) });
+			this.setState({ headers });
 		};
 
 		setHeaders();
@@ -108,6 +74,47 @@ class TableOfContents extends Component {
 	}
 
 	render() {
+		const { allowedHeaders, blockProp, style } = this.props;
+
+		const { headers } = this.state;
+
+		const makeHeaderArray = origHeaders => {
+			let arrays = [];
+
+			origHeaders
+				.filter(header => allowedHeaders[header.level - 1])
+				.forEach(header => {
+					let last = arrays.length - 1;
+					if (
+						arrays.length === 0 ||
+						arrays[last][0].level < header.level
+					) {
+						arrays.push([header]);
+					} else if (arrays[last][0].level === header.level) {
+						arrays[last].push(header);
+					} else {
+						while (arrays[last][0].level > header.level) {
+							if (arrays.length > 1) {
+								arrays[arrays.length - 2].push(arrays.pop());
+								last = arrays.length - 1;
+							} else break;
+						}
+						if (arrays[last][0].level === header.level) {
+							arrays[last].push(header);
+						}
+					}
+				});
+
+			while (
+				arrays.length > 1 &&
+				arrays[arrays.length - 1][0].level >
+					arrays[arrays.length - 2][0].level
+			) {
+				arrays[arrays.length - 2].push(arrays.pop());
+			}
+			return arrays[0];
+		};
+
 		const parseList = list => {
 			let items = [];
 			list.forEach(item => {
@@ -132,15 +139,19 @@ class TableOfContents extends Component {
 			return <ul>{items}</ul>;
 		};
 
-		if (this.state.headers) {
+		if (
+			headers.length > 0 &&
+			headers.filter(header => allowedHeaders[header.level - 1]).length >
+				0
+		) {
 			return (
-				<div className="ub_table-of-contents-container">
-					{parseList(this.state.headers)}
+				<div style={style} className="ub_table-of-contents-container">
+					{parseList(makeHeaderArray(headers))}
 				</div>
 			);
 		} else {
 			return (
-				this.props.blockProp && (
+				blockProp && (
 					<p className="ub_table-of-contents-placeholder">
 						{__(
 							'Add a header to begin generating the table of contents'
