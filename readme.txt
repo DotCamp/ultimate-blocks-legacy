@@ -3,7 +3,7 @@ Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 5.0
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -30,6 +30,7 @@ Ultimate Blocks currently includes the following blocks:
 * Countdown - [View Demo](https://ultimateblocks.io/countdown-block-gutenberg/)
 * Progress Bar - [View Demo](https://ultimateblocks.io/progress-bar-block-for-gutenberg-editor/)
 * Star Rating - [View Demo](https://ultimateblocks.io/star-rating-block/)
+* Image Slider - [View Demo](https://ultimateblocks.io/image-slider-block-for-gutenberg-editor/)
 * Button (Improved) - [View Demo](https://ultimateblocks.io/improved-button-block-gutenberg/)
 * Divider - [View Demo](https://ultimateblocks.io/divider-block-for-gutenberg/)
 
@@ -43,7 +44,7 @@ We have more exciting blocks in the making. Have a suggestion? [Let us know](htt
 
 ## More Info About the Blocks
 
-**Reveiw Block**
+**Review Block**
 Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.
 
 **Table of Contents Block**
@@ -85,7 +86,10 @@ Add Cirle/Line Progress bar with this blocks. Comes with options to change thick
 **Star Rating Block**
 Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.
 
-**Button**
+**Image Slider Block**
+Add a lightweight, simple image slider in your post. Comes with additional settings.
+
+**Button Block**
 Button block with more customization options and controls.
 
 **Divider Block**
@@ -115,9 +119,18 @@ That's it. You're done!
 
 == Changelog ==
 
+= 1.1.4 =
+
+Release Date: February 28th, 2019
+
+NEW: Image Slider Block.
+NEW: Support for Unicode character anchors in Table of Contents Block.
+FIX: Dashboard background color issue.
+FIX: Link issues on Button, Call to Action, Review Block.
+
 = 1.1.3 =
 
-Release Date: January 29th, 2018
+Release Date: January 29th, 2019
 
 * NEW: Review Block (Schema Markup Enabled).
 * NEW: Countdown Block.
