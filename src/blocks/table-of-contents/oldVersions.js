@@ -362,7 +362,7 @@ const version_1_1_5 = props => {
 						showList ||
 						title.length === 0 ||
 						(title.length === 1 && title[0] === '')
-							? 'initial'
+							? 'block'
 							: 'none',
 					columnCount: numColumns
 				}}

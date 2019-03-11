@@ -5,7 +5,7 @@ import { version_1_1_2, version_1_1_3, version_1_1_5 } from './oldVersions';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { ToggleControl, PanelRow, PanelBody, SelectControl } = wp.components;
+const { ToggleControl, PanelRow, PanelBody, RangeControl } = wp.components;
 const { RichText, InspectorControls } = wp.editor;
 
 const { withState } = wp.compose;
@@ -128,16 +128,12 @@ registerBlockType('ub/table-of-contents', {
 						<label htmlFor="ub_toc_col_count">
 							{__('Columns')}
 						</label>
-
-						<SelectControl
+						<RangeControl
 							id="ub_toc_col_count"
 							value={numColumns}
-							options={[...Array(4).keys()].map(a => {
-								return { label: `${a + 1}`, value: a + 1 };
-							})}
-							onChange={numColumns =>
-								setAttributes({ numColumns })
-							}
+							onChange={val => setAttributes({ numColumns: val })}
+							min={1}
+							max={4}
 						/>
 					</PanelRow>
 				</InspectorControls>
@@ -230,7 +226,7 @@ registerBlockType('ub/table-of-contents', {
 							showList ||
 							title.length === 0 ||
 							(title.length === 1 && title[0] === '')
-								? 'initial'
+								? 'block'
 								: 'none',
 						columnCount: numColumns
 					}}
