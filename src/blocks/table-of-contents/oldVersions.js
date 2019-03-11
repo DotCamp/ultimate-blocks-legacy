@@ -326,29 +326,33 @@ const version_1_1_3 = props => {
 };
 
 const version_1_1_5 = props => {
-	const { links, title, allowedHeaders, showList } = props.attributes;
+	const {
+		links,
+		title,
+		allowedHeaders,
+		showList,
+		numColumns,
+		allowToCHiding
+	} = props.attributes;
 	return (
 		<div className="ub_table-of-contents">
 			{(title.length > 1 || (title.length === 1 && title[0] !== '')) && (
 				<div className="ub_table-of-contents-header">
 					<div className="ub_table-of-contents-title">{title}</div>
-					<div id="ub_table-of-contents-header-toggle">
-						<div id="ub_table-of-contents-toggle">
-							[
-							<a
-								id="ub_table-of-contents-toggle-link"
-								href="#"
-								onClick={() => {
-									setAttributes({
-										showList: !showList
-									});
-								}}
-							>
-								{showList ? __('hide') : __('show')}
-							</a>
-							]
+					{allowToCHiding && (
+						<div id="ub_table-of-contents-header-toggle">
+							<div id="ub_table-of-contents-toggle">
+								[
+								<a
+									id="ub_table-of-contents-toggle-link"
+									href="#"
+								>
+									{showList ? __('hide') : __('show')}
+								</a>
+								]
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 			)}
 
@@ -359,7 +363,8 @@ const version_1_1_5 = props => {
 						title.length === 0 ||
 						(title.length === 1 && title[0] === '')
 							? 'initial'
-							: 'none'
+							: 'none',
+					columnCount: numColumns
 				}}
 				allowedHeaders={allowedHeaders}
 				headers={links && JSON.parse(links)}

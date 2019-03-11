@@ -5,7 +5,7 @@ import { version_1_1_2, version_1_1_3, version_1_1_5 } from './oldVersions';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { ToggleControl, PanelRow, PanelBody } = wp.components;
+const { ToggleControl, PanelRow, PanelBody, SelectControl } = wp.components;
 const { RichText, InspectorControls } = wp.editor;
 
 const { withState } = wp.compose;
@@ -21,15 +21,23 @@ const attributes = {
 	},
 	allowedHeaders: {
 		type: 'array',
-		default: [true, true, true, true, true, true]
+		default: Array(6).fill(true)
 	},
 	links: {
 		type: 'string',
 		default: ''
 	},
+	allowToCHiding: {
+		type: 'boolean',
+		default: false
+	},
 	showList: {
 		type: 'boolean',
 		default: true
+	},
+	numColumns: {
+		type: 'number',
+		default: 1
 	}
 };
 
@@ -47,30 +55,91 @@ registerBlockType('ub/table-of-contents', {
 
 	edit: withState({ editable: 'content' })(function(props) {
 		const { editable, setAttributes, isSelected } = props;
-		const { links, title, allowedHeaders, showList } = props.attributes;
+		const {
+			links,
+			title,
+			allowedHeaders,
+			showList,
+			allowToCHiding,
+			numColumns
+		} = props.attributes;
 		const onSetActiveEditable = newEditable => () => {
 			setState({ editable: newEditable });
 		};
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__('Allowed Headers')}>
+					<PanelBody
+						title={__('Allowed Headers')}
+						initialOpen={false}
+					>
 						{allowedHeaders.map((a, i) => (
-							<ToggleControl
-								label={`H${i + 1}`}
-								checked={a}
-								onChange={() =>
-									setAttributes({
-										allowedHeaders: [
-											...allowedHeaders.slice(0, i),
-											!allowedHeaders[i],
-											...allowedHeaders.slice(i + 1)
-										]
-									})
-								}
-							/>
+							<PanelRow>
+								<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i +
+									1}`}</label>
+								<ToggleControl
+									id={`ub_toggle_h${i + 1}`}
+									checked={a}
+									onChange={() =>
+										setAttributes({
+											allowedHeaders: [
+												...allowedHeaders.slice(0, i),
+												!allowedHeaders[i],
+												...allowedHeaders.slice(i + 1)
+											]
+										})
+									}
+								/>
+							</PanelRow>
 						))}
 					</PanelBody>
+					<PanelRow>
+						<label htmlFor="ub_toc_toggle_display">
+							{__('Toggle Table of Contents display')}
+						</label>
+						<ToggleControl
+							id="ub_toc_toggle_display"
+							checked={allowToCHiding}
+							onChange={allowToCHiding => {
+								setAttributes({
+									allowToCHiding,
+									showList: allowToCHiding ? showList : true
+								});
+							}}
+						/>
+					</PanelRow>
+					{allowToCHiding && (
+						<PanelRow>
+							<label htmlFor="ub_show_toc">
+								{__('Show Table of Contents')}
+							</label>
+							<ToggleControl
+								id="ub_show_toc"
+								checked={showList}
+								onChange={() => {
+									setAttributes({
+										showList: !showList
+									});
+								}}
+							/>
+						</PanelRow>
+					)}
+					<PanelRow>
+						<label htmlFor="ub_toc_col_count">
+							{__('Columns')}
+						</label>
+
+						<SelectControl
+							id="ub_toc_col_count"
+							value={numColumns}
+							options={[...Array(4).keys()].map(a => {
+								return { label: `${a + 1}`, value: a + 1 };
+							})}
+							onChange={numColumns =>
+								setAttributes({ numColumns })
+							}
+						/>
+					</PanelRow>
 				</InspectorControls>
 			),
 			<div className="ub_table-of-contents">
@@ -91,26 +160,27 @@ registerBlockType('ub/table-of-contents', {
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
-					<div id="ub_table-of-contents-header-toggle">
-						<div id="ub_table-of-contents-toggle">
-							[
-							<a
-								id="ub_table-of-contents-toggle-link"
-								href="#"
-								onClick={() => {
-									setAttributes({
-										showList: !showList
-									});
-								}}
-							>
-								{showList ? __('hide') : __('show')}
-							</a>
-							]
+					{allowToCHiding && (
+						<div id="ub_table-of-contents-header-toggle">
+							<div id="ub_table-of-contents-toggle">
+								[
+								<a
+									id="ub_table-of-contents-toggle-link"
+									href="#"
+									onClick={() => {
+										setAttributes({ showList: !showList });
+									}}
+								>
+									{showList ? __('hide') : __('show')}
+								</a>
+								]
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 				{showList && (
 					<TableOfContents
+						style={{ columnCount: numColumns }}
 						allowedHeaders={allowedHeaders}
 						headers={links && JSON.parse(links)}
 						blockProp={props}
@@ -121,7 +191,14 @@ registerBlockType('ub/table-of-contents', {
 	}),
 
 	save(props) {
-		const { links, title, allowedHeaders, showList } = props.attributes;
+		const {
+			links,
+			title,
+			allowedHeaders,
+			showList,
+			numColumns,
+			allowToCHiding
+		} = props.attributes;
 		return (
 			<div className="ub_table-of-contents">
 				{(title.length > 1 ||
@@ -130,23 +207,20 @@ registerBlockType('ub/table-of-contents', {
 						<div className="ub_table-of-contents-title">
 							{title}
 						</div>
-						<div id="ub_table-of-contents-header-toggle">
-							<div id="ub_table-of-contents-toggle">
-								[
-								<a
-									id="ub_table-of-contents-toggle-link"
-									href="#"
-									onClick={() => {
-										setAttributes({
-											showList: !showList
-										});
-									}}
-								>
-									{showList ? __('hide') : __('show')}
-								</a>
-								]
+						{allowToCHiding && (
+							<div id="ub_table-of-contents-header-toggle">
+								<div id="ub_table-of-contents-toggle">
+									[
+									<a
+										id="ub_table-of-contents-toggle-link"
+										href="#"
+									>
+										{showList ? __('hide') : __('show')}
+									</a>
+									]
+								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				)}
 
@@ -157,7 +231,8 @@ registerBlockType('ub/table-of-contents', {
 							title.length === 0 ||
 							(title.length === 1 && title[0] === '')
 								? 'initial'
-								: 'none'
+								: 'none',
+						columnCount: numColumns
 					}}
 					allowedHeaders={allowedHeaders}
 					headers={links && JSON.parse(links)}
