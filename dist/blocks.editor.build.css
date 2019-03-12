@@ -495,6 +495,18 @@
 .editor-styles-wrapper .ub_table-of-contents ul {
   padding-left: 1.3em;
   margin-left: 1.3em; }
+
+.ub_toc_column_selector.is-primary {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%); }
+
+.ub_toc_column_buttons {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row; }
 /**
  * #.# Common SCSS
  *

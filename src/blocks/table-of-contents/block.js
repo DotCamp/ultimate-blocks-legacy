@@ -1,12 +1,18 @@
-import icon from './icon';
+import icon, { oneColumnIcon, twoColumnsIcon, threeColumnsIcon } from './icon';
 import TableOfContents from './components';
 import { version_1_1_2, version_1_1_3, version_1_1_5 } from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { ToggleControl, PanelRow, PanelBody, RangeControl } = wp.components;
-const { RichText, InspectorControls } = wp.editor;
+const {
+	ToggleControl,
+	PanelRow,
+	PanelBody,
+	IconButton,
+	ButtonGroup
+} = wp.components;
+const { RichText, InspectorControls, BlockControls } = wp.editor;
 
 const { withState } = wp.compose;
 
@@ -124,19 +130,34 @@ registerBlockType('ub/table-of-contents', {
 							/>
 						</PanelRow>
 					)}
-					<PanelRow>
-						<label htmlFor="ub_toc_col_count">
-							{__('Columns')}
-						</label>
-						<RangeControl
-							id="ub_toc_col_count"
-							value={numColumns}
-							onChange={val => setAttributes({ numColumns: val })}
-							min={1}
-							max={3}
-						/>
-					</PanelRow>
 				</InspectorControls>
+			),
+			isSelected && (
+				<BlockControls>
+					<ButtonGroup className="ub_toc_column_buttons">
+						<IconButton
+							className={'ub_toc_column_selector'}
+							icon={oneColumnIcon}
+							label={__('One column')}
+							isPrimary={numColumns === 1}
+							onClick={() => setAttributes({ numColumns: 1 })}
+						/>
+						<IconButton
+							className={'ub_toc_column_selector'}
+							icon={twoColumnsIcon}
+							label={__('Two column')}
+							isPrimary={numColumns === 2}
+							onClick={() => setAttributes({ numColumns: 2 })}
+						/>
+						<IconButton
+							className={'ub_toc_column_selector'}
+							icon={threeColumnsIcon}
+							label={__('Three column')}
+							isPrimary={numColumns === 3}
+							onClick={() => setAttributes({ numColumns: 3 })}
+						/>
+					</ButtonGroup>
+				</BlockControls>
 			),
 			<div className="ub_table-of-contents">
 				<div className="ub_table-of-contents-header">
