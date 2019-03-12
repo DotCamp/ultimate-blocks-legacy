@@ -133,7 +133,7 @@ registerBlockType('ub/table-of-contents', {
 							value={numColumns}
 							onChange={val => setAttributes({ numColumns: val })}
 							min={1}
-							max={4}
+							max={3}
 						/>
 					</PanelRow>
 				</InspectorControls>
