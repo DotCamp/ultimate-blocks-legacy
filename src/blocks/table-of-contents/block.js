@@ -9,8 +9,8 @@ const {
 	ToggleControl,
 	PanelRow,
 	PanelBody,
-	IconButton,
-	ButtonGroup
+	Toolbar,
+	IconButton
 } = wp.components;
 const { RichText, InspectorControls, BlockControls } = wp.editor;
 
@@ -134,7 +134,7 @@ registerBlockType('ub/table-of-contents', {
 			),
 			isSelected && (
 				<BlockControls>
-					<ButtonGroup className="ub_toc_column_buttons">
+					<Toolbar>
 						<IconButton
 							className={'ub_toc_column_selector'}
 							icon={oneColumnIcon}
@@ -145,18 +145,18 @@ registerBlockType('ub/table-of-contents', {
 						<IconButton
 							className={'ub_toc_column_selector'}
 							icon={twoColumnsIcon}
-							label={__('Two column')}
+							label={__('Two columns')}
 							isPrimary={numColumns === 2}
 							onClick={() => setAttributes({ numColumns: 2 })}
 						/>
 						<IconButton
 							className={'ub_toc_column_selector'}
 							icon={threeColumnsIcon}
-							label={__('Three column')}
+							label={__('Three columns')}
 							isPrimary={numColumns === 3}
 							onClick={() => setAttributes({ numColumns: 3 })}
 						/>
-					</ButtonGroup>
+					</Toolbar>
 				</BlockControls>
 			),
 			<div className="ub_table-of-contents">
