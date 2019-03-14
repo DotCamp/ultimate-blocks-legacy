@@ -77,7 +77,7 @@ registerBlockType('ub/table-of-contents', {
 				<InspectorControls>
 					<PanelBody
 						title={__('Allowed Headers')}
-						initialOpen={false}
+						initialOpen={true}
 					>
 						{allowedHeaders.map((a, i) => (
 							<PanelRow>
@@ -99,37 +99,42 @@ registerBlockType('ub/table-of-contents', {
 							</PanelRow>
 						))}
 					</PanelBody>
-					<PanelRow>
-						<label htmlFor="ub_toc_toggle_display">
-							{__('Toggle Table of Contents display')}
-						</label>
-						<ToggleControl
-							id="ub_toc_toggle_display"
-							checked={allowToCHiding}
-							onChange={allowToCHiding => {
-								setAttributes({
-									allowToCHiding,
-									showList: allowToCHiding ? showList : true
-								});
-							}}
-						/>
-					</PanelRow>
-					{allowToCHiding && (
+					<PanelBody
+						title={__('Additional Settings')}
+						initialOpen={true}
+					>
 						<PanelRow>
-							<label htmlFor="ub_show_toc">
-								{__('Show Table of Contents')}
+							<label htmlFor="ub_toc_toggle_display">
+								{__('Allow users to toggle the visibility of the table of contents')}
 							</label>
 							<ToggleControl
-								id="ub_show_toc"
-								checked={showList}
-								onChange={() => {
+								id="ub_toc_toggle_display"
+								checked={allowToCHiding}
+								onChange={allowToCHiding => {
 									setAttributes({
-										showList: !showList
+										allowToCHiding,
+										showList: allowToCHiding ? showList : true
 									});
 								}}
 							/>
 						</PanelRow>
-					)}
+						{allowToCHiding && (
+							<PanelRow>
+								<label htmlFor="ub_show_toc">
+									{__('Inititally Show Table of Contents')}
+								</label>
+								<ToggleControl
+									id="ub_show_toc"
+									checked={showList}
+									onChange={() => {
+										setAttributes({
+											showList: !showList
+										});
+									}}
+								/>
+							</PanelRow>
+						)}
+					</PanelBody>
 				</InspectorControls>
 			),
 			isSelected && (
