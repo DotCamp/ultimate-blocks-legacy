@@ -698,6 +698,8 @@
   border: 1px solid #dfdfdf;
   padding: 30px;
   margin: 20px 0; }
+  .ub_table-of-contents ul {
+    margin-bottom: 0; }
 
 .ub_table-of-contents-header {
   text-align: center;
