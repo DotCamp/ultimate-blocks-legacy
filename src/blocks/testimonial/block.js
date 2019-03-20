@@ -94,7 +94,7 @@ registerBlockType('ub/testimonial-block', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState({ editable: 'content' })(function(props) {
+	edit: withState({ editable: '' })(function(props) {
 		const { isSelected, editable, setState, setAttributes } = props;
 
 		const {
@@ -108,10 +108,6 @@ registerBlockType('ub/testimonial-block', {
 			ub_testimonial_author_role,
 			ub_testimonial_text
 		} = props.attributes;
-
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
 
 		const onChangeTestimonialText = value => {
 			setAttributes({ ub_testimonial_text: value });
@@ -141,7 +137,7 @@ registerBlockType('ub/testimonial-block', {
 		};
 
 		return [
-			isSelected && <BlockControls key="controls" />,
+			isSelected && <BlockControls />,
 
 			isSelected && (
 				<InspectorControls>
@@ -240,11 +236,12 @@ registerBlockType('ub/testimonial-block', {
 							}}
 							onChange={onChangeTestimonialText}
 							value={ub_testimonial_text}
-							isSelected={
-								isSelected && editable === 'testimonial_content'
-							}
-							onFocus={onSetActiveEditable('testimonial_content')}
 							keepPlaceholderOnFocus={true}
+							formattingControls={[
+								'bold',
+								'strikethrough',
+								'link'
+							]}
 						/>
 					</div>
 					<div className="ub_testimonial_sign">
@@ -254,26 +251,20 @@ registerBlockType('ub/testimonial-block', {
 							className="ub_testimonial_author"
 							onChange={onChangeTestimonialAuthor}
 							value={ub_testimonial_author}
-							isSelected={
-								isSelected && editable === 'testimonial_author'
-							}
-							onFocus={onSetActiveEditable('testimonial_author')}
 							keepPlaceholderOnFocus={true}
 						/>
 						<RichText
-							tagName="i"
+							tagName="p"
 							placeholder={__('Founder, Company X')}
 							className="ub_testimonial_author_role"
 							onChange={onChangeTestimonialAuthorRole}
 							value={ub_testimonial_author_role}
-							isSelected={
-								isSelected &&
-								editable === 'testimonial_author_role'
-							}
-							onFocus={onSetActiveEditable(
-								'testimonial_author_role'
-							)}
 							keepPlaceholderOnFocus={true}
+							formattingControls={[
+								'bold',
+								'strikethrough',
+								'link'
+							]}
 						/>
 					</div>
 				</div>

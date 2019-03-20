@@ -2,7 +2,6 @@ const { __ } = wp.i18n;
 const { InspectorControls, PanelColorSettings, RichText } = wp.editor;
 const { registerBlockType } = wp.blocks;
 const { PanelBody, RangeControl } = wp.components;
-const { withState } = wp.compose;
 
 import './style.scss';
 import './editor.scss';
@@ -41,8 +40,8 @@ registerBlockType('ub/star-rating', {
 
 	attributes,
 
-	edit: withState({ editable: 'content' })(function(props) {
-		const { editable, isSelected, setAttributes, setState } = props;
+	edit(props) {
+		const { isSelected, setAttributes } = props;
 
 		const {
 			starCount,
@@ -52,13 +51,9 @@ registerBlockType('ub/star-rating', {
 			reviewText
 		} = props.attributes;
 
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
-
 		return [
 			isSelected && (
-				<InspectorControls key="inspectors">
+				<InspectorControls>
 					<PanelBody title={__('Star Settings')}>
 						<PanelColorSettings
 							title={__('Color')}
@@ -132,20 +127,24 @@ registerBlockType('ub/star-rating', {
 						</div>
 					))}
 				</div>
-				<div key={'editable'} className="ub-review-text">
+				<div className="ub-review-text">
 					<RichText
 						tagName="div"
 						placeholder={__('The text of the review goes here')}
 						value={reviewText}
 						onChange={text => setAttributes({ reviewText: text })}
 						keepPlaceholderOnFocus={true}
-						isSelected={isSelected && editable === 'review_text'}
-						onFocus={onSetActiveEditable('review_text')}
+						formattingControls={[
+							'bold',
+							'italic',
+							'strikethrough',
+							'link'
+						]}
 					/>
 				</div>
 			</div>
 		];
-	}),
+	},
 
 	save(props) {
 		const {

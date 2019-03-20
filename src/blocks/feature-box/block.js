@@ -6,7 +6,11 @@
  */
 
 //Import Icon
-import icon from './icons/icon';
+import icon, {
+	oneColumnIcon,
+	twoColumnsIcon,
+	threeColumnsIcon
+} from './icons/icon';
 import remove_icon from './icons/remove_icon';
 
 //  Import CSS.
@@ -19,7 +23,7 @@ const { registerBlockType } = wp.blocks;
 
 const { InspectorControls, BlockControls, RichText, MediaUpload } = wp.editor;
 
-const { SelectControl, Button } = wp.components;
+const { Button, Toolbar, IconButton } = wp.components;
 
 const { withState } = wp.compose;
 
@@ -223,25 +227,35 @@ registerBlockType('ub/feature-box', {
 		};
 
 		return [
-			isSelected && <BlockControls key="controls" />,
-
 			isSelected && (
-				<InspectorControls key={'inspector'}>
-					<SelectControl
-						label={__('Number of Columns')}
-						value={column}
-						options={columns.map(({ value, label }) => ({
-							value: value,
-							label: label
-						}))}
-						onChange={value => {
-							setAttributes({ column: value });
-						}}
-					/>
-				</InspectorControls>
+				<BlockControls>
+					{' '}
+					<Toolbar>
+						<IconButton
+							icon={oneColumnIcon}
+							label={__('One column')}
+							isActive={column === '1'}
+							onClick={() => setAttributes({ column: '1' })}
+						/>
+						<IconButton
+							icon={twoColumnsIcon}
+							label={__('Two columns')}
+							isActive={column === '2'}
+							onClick={() => setAttributes({ column: '2' })}
+						/>
+						<IconButton
+							icon={threeColumnsIcon}
+							label={__('Three columns')}
+							isActive={column === '3'}
+							onClick={() => setAttributes({ column: '3' })}
+						/>
+					</Toolbar>
+				</BlockControls>
 			),
 
-			<div key={'editable'} className={props.className}>
+			isSelected && <InspectorControls />,
+
+			<div className={props.className}>
 				<div className={`ub_feature_box column_${column}`}>
 					<div class="ub_feature_1">
 						{!imgOneID ? (
@@ -284,8 +298,6 @@ registerBlockType('ub/feature-box', {
 							onChange={value =>
 								setAttributes({ columnOneTitle: value })
 							}
-							isSelected={isSelected && editable === 'title_one'}
-							onFocus={onSetActiveEditable('title_one')}
 							keepPlaceholderOnFocus={true}
 						/>
 						<RichText
@@ -295,8 +307,6 @@ registerBlockType('ub/feature-box', {
 							onChange={value =>
 								setAttributes({ columnOneBody: value })
 							}
-							isSelected={isSelected && editable === 'body_one'}
-							onFocus={onSetActiveEditable('body_one')}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -341,8 +351,6 @@ registerBlockType('ub/feature-box', {
 							onChange={value =>
 								setAttributes({ columnTwoTitle: value })
 							}
-							isSelected={isSelected && editable === 'title_two'}
-							onFocus={onSetActiveEditable('title_two')}
 							keepPlaceholderOnFocus={true}
 						/>
 						<RichText
@@ -352,8 +360,6 @@ registerBlockType('ub/feature-box', {
 							onChange={value =>
 								setAttributes({ columnTwoBody: value })
 							}
-							isSelected={isSelected && editable === 'body_two'}
-							onFocus={onSetActiveEditable('body_two')}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -398,10 +404,6 @@ registerBlockType('ub/feature-box', {
 							onChange={value =>
 								setAttributes({ columnThreeTitle: value })
 							}
-							isSelected={
-								isSelected && editable === 'title_three'
-							}
-							onFocus={onSetActiveEditable('title_three')}
 							keepPlaceholderOnFocus={true}
 						/>
 						<RichText
@@ -411,8 +413,6 @@ registerBlockType('ub/feature-box', {
 							onChange={value =>
 								setAttributes({ columnThreeBody: value })
 							}
-							isSelected={isSelected && editable === 'body_three'}
-							onFocus={onSetActiveEditable('body_three')}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -439,13 +439,10 @@ registerBlockType('ub/feature-box', {
 			columnTwoBody,
 			columnThreeBody,
 			imgOneURL,
-			imgOneID,
 			imgOneAlt,
 			imgTwoURL,
-			imgTwoID,
 			imgTwoAlt,
 			imgThreeURL,
-			imgThreeID,
 			imgThreeAlt
 		} = props.attributes;
 

@@ -11,8 +11,6 @@ const {
 
 const { Toolbar, Button, RangeControl, PanelBody } = wp.components;
 
-const { withState } = wp.compose;
-
 import './editor.scss';
 import './style.scss';
 
@@ -48,8 +46,8 @@ registerBlockType('ub/progress-bar', {
 		}
 	},
 
-	edit: withState({ editable: 'content' })(function(props) {
-		const { editable, isSelected, setAttributes, setState } = props;
+	edit(props) {
+		const { isSelected, setAttributes } = props;
 		const {
 			percentage,
 			barType,
@@ -58,14 +56,9 @@ registerBlockType('ub/progress-bar', {
 			barThickness
 		} = props.attributes;
 
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
-
 		return [
-			isSelected && <BlockControls key="controls" />,
 			isSelected && (
-				<BlockControls key="controls">
+				<BlockControls>
 					<Toolbar>
 						<Button
 							onClick={() => setAttributes({ barType: 'linear' })}
@@ -95,7 +88,7 @@ registerBlockType('ub/progress-bar', {
 				</BlockControls>
 			),
 			isSelected && (
-				<InspectorControls key="inspectors">
+				<InspectorControls>
 					<PanelBody title={__('Progress Bar Settings')}>
 						<PanelColorSettings
 							title={__('Color')}
@@ -123,17 +116,13 @@ registerBlockType('ub/progress-bar', {
 				</InspectorControls>
 			),
 			<div className="ub_progress-bar">
-				<div key={'editable'} className="ub_progress-bar-text">
+				<div className="ub_progress-bar-text">
 					<RichText
 						tagName="p"
 						placeholder={__('Progress bar description')}
 						value={detail}
 						onChange={text => setAttributes({ detail: text })}
 						keepPlaceholderOnFocus={true}
-						isSelected={
-							isSelected && editable === 'progress_bar_text'
-						}
-						onFocus={onSetActiveEditable('progress_bar_text')}
 					/>
 				</div>
 				{barType === 'linear' ? (
@@ -151,7 +140,7 @@ registerBlockType('ub/progress-bar', {
 				)}
 			</div>
 		];
-	}),
+	},
 
 	save() {
 		return null;

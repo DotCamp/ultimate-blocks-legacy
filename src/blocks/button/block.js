@@ -33,8 +33,6 @@ const {
 	ToggleControl
 } = wp.components;
 
-const { withState } = wp.compose;
-
 /**
  * Register: aa Gutenberg Block.
  *
@@ -96,12 +94,8 @@ registerBlockType('ub/button-block', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */ attributes,
-	edit: withState({ editable: 'content' })(function(props) {
-		const { isSelected, editable, setState } = props;
-
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
+	edit(props) {
+		const { isSelected, setAttributes } = props;
 
 		const {
 			buttonText,
@@ -126,7 +120,7 @@ registerBlockType('ub/button-block', {
 					<BlockAlignmentToolbar
 						value={align}
 						onChange={newAlignment =>
-							props.setAttributes({ align: newAlignment })
+							setAttributes({ align: newAlignment })
 						}
 						controls={['left', 'center', 'right']}
 					/>
@@ -144,7 +138,7 @@ registerBlockType('ub/button-block', {
 										isPrimary={size === b}
 										aria-pressed={size === b}
 										onClick={() =>
-											props.setAttributes({ size: b })
+											setAttributes({ size: b })
 										}
 									>
 										{BUTTON_SIZES[b]}
@@ -158,7 +152,7 @@ registerBlockType('ub/button-block', {
 							label={__('Rounded')}
 							checked={buttonRounded}
 							onChange={() =>
-								props.setAttributes({
+								setAttributes({
 									buttonRounded: !buttonRounded
 								})
 							}
@@ -171,7 +165,7 @@ registerBlockType('ub/button-block', {
 							{
 								value: buttonColor,
 								onChange: colorValue =>
-									props.setAttributes({
+									setAttributes({
 										buttonColor: colorValue
 									}),
 								label: __('Button Background')
@@ -189,7 +183,7 @@ registerBlockType('ub/button-block', {
 				</InspectorControls>
 			),
 
-			<div key={'editable'} className={props.className}>
+			<div className={props.className}>
 				<div
 					className={'ub-button-container' + ' align-button-' + align}
 				>
@@ -201,13 +195,9 @@ registerBlockType('ub/button-block', {
 							borderRadius: buttonRounded ? '60px' : '0px'
 						}}
 						className={'ub-button-block-btn' + ' ub-button-' + size}
-						onChange={value =>
-							props.setAttributes({ buttonText: value })
-						}
+						onChange={value => setAttributes({ buttonText: value })}
 						value={buttonText}
 						formattingControls={['bold', 'italic', 'strikethrough']}
-						isSelected={isSelected && editable === 'button_text'}
-						onFocus={onSetActiveEditable('button_text')}
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
@@ -230,7 +220,7 @@ registerBlockType('ub/button-block', {
 								className="button-url"
 								value={url}
 								onChange={value =>
-									props.setAttributes({ url: value })
+									setAttributes({ url: value })
 								}
 							/>
 							<IconButton
@@ -243,7 +233,7 @@ registerBlockType('ub/button-block', {
 				</div>
 			</div>
 		];
-	}),
+	},
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined

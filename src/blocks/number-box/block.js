@@ -120,8 +120,8 @@ registerBlockType('ub/number-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState({ editable: 'content' })(function(props) {
-		const { isSelected, editable, setState } = props;
+	edit: withState({ editable: '' })(function(props) {
+		const { isSelected, setAttributes, editable, setState } = props;
 
 		const {
 			column,
@@ -145,15 +145,11 @@ registerBlockType('ub/number-box', {
 			{ value: '3', label: __('Three Column') }
 		];
 
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
-
 		return [
-			isSelected && <BlockControls key="controls" />,
+			isSelected && <BlockControls />,
 
 			isSelected && (
-				<InspectorControls key={'inspector'}>
+				<InspectorControls>
 					<PanelBody title={__('Number Box Settings')}>
 						<SelectControl
 							label={__('Number of Columns')}
@@ -163,7 +159,7 @@ registerBlockType('ub/number-box', {
 								label: label
 							}))}
 							onChange={value => {
-								props.setAttributes({ column: value });
+								setAttributes({ column: value });
 							}}
 						/>
 						<PanelColorSettings
@@ -173,7 +169,7 @@ registerBlockType('ub/number-box', {
 								{
 									value: numberBackground,
 									onChange: colorValue =>
-										props.setAttributes({
+										setAttributes({
 											numberBackground: colorValue
 										}),
 									label: __('Number Background Color')
@@ -181,7 +177,7 @@ registerBlockType('ub/number-box', {
 								{
 									value: numberColor,
 									onChange: colorValue =>
-										props.setAttributes({
+										setAttributes({
 											numberColor: colorValue
 										}),
 									label: __('Number Color')
@@ -189,7 +185,7 @@ registerBlockType('ub/number-box', {
 								{
 									value: borderColor,
 									onChange: colorValue =>
-										props.setAttributes({
+										setAttributes({
 											borderColor: colorValue
 										}),
 									label: __('Border Color')
@@ -223,14 +219,10 @@ registerBlockType('ub/number-box', {
 								}}
 								value={columnOneNumber}
 								onChange={value =>
-									props.setAttributes({
+									setAttributes({
 										columnOneNumber: value
 									})
 								}
-								isSelected={
-									isSelected && editable === 'number_one'
-								}
-								onFocus={onSetActiveEditable('number_one')}
 								keepPlaceholderOnFocus={true}
 							/>
 						</div>
@@ -240,10 +232,8 @@ registerBlockType('ub/number-box', {
 							className="ub_number_one_title"
 							value={columnOneTitle}
 							onChange={value =>
-								props.setAttributes({ columnOneTitle: value })
+								setAttributes({ columnOneTitle: value })
 							}
-							isSelected={isSelected && editable === 'title_one'}
-							onFocus={onSetActiveEditable('title_one')}
 							keepPlaceholderOnFocus={true}
 						/>
 						<RichText
@@ -252,10 +242,8 @@ registerBlockType('ub/number-box', {
 							className="ub_number_one_body"
 							value={columnOneBody}
 							onChange={value =>
-								props.setAttributes({ columnOneBody: value })
+								setAttributes({ columnOneBody: value })
 							}
-							isSelected={isSelected && editable === 'body_one'}
-							onFocus={onSetActiveEditable('body_one')}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -280,14 +268,10 @@ registerBlockType('ub/number-box', {
 								}}
 								value={columnTwoNumber}
 								onChange={value =>
-									props.setAttributes({
+									setAttributes({
 										columnTwoNumber: value
 									})
 								}
-								isSelected={
-									isSelected && editable === 'number_two'
-								}
-								onFocus={onSetActiveEditable('number_two')}
 								keepPlaceholderOnFocus={true}
 							/>
 						</div>
@@ -297,10 +281,8 @@ registerBlockType('ub/number-box', {
 							className="ub_number_two_title"
 							value={columnTwoTitle}
 							onChange={value =>
-								props.setAttributes({ columnTwoTitle: value })
+								setAttributes({ columnTwoTitle: value })
 							}
-							isSelected={isSelected && editable === 'title_two'}
-							onFocus={onSetActiveEditable('title_two')}
 							keepPlaceholderOnFocus={true}
 						/>
 						<RichText
@@ -309,10 +291,8 @@ registerBlockType('ub/number-box', {
 							className="ub_number_two_body"
 							value={columnTwoBody}
 							onChange={value =>
-								props.setAttributes({ columnTwoBody: value })
+								setAttributes({ columnTwoBody: value })
 							}
-							isSelected={isSelected && editable === 'body_two'}
-							onFocus={onSetActiveEditable('body_two')}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -337,14 +317,10 @@ registerBlockType('ub/number-box', {
 								}}
 								value={columnThreeNumber}
 								onChange={value =>
-									props.setAttributes({
+									setAttributes({
 										columnThreeNumber: value
 									})
 								}
-								isSelected={
-									isSelected && editable === 'number_three'
-								}
-								onFocus={onSetActiveEditable('number_three')}
 								keepPlaceholderOnFocus={true}
 							/>
 						</div>
@@ -354,12 +330,8 @@ registerBlockType('ub/number-box', {
 							className="ub_number_three_title"
 							value={columnThreeTitle}
 							onChange={value =>
-								props.setAttributes({ columnThreeTitle: value })
+								setAttributes({ columnThreeTitle: value })
 							}
-							isSelected={
-								isSelected && editable === 'title_three'
-							}
-							onFocus={onSetActiveEditable('title_three')}
 							keepPlaceholderOnFocus={true}
 						/>
 						<RichText
@@ -368,10 +340,8 @@ registerBlockType('ub/number-box', {
 							className="ub_number_three_body"
 							value={columnThreeBody}
 							onChange={value =>
-								props.setAttributes({ columnThreeBody: value })
+								setAttributes({ columnThreeBody: value })
 							}
-							isSelected={isSelected && editable === 'body_three'}
-							onFocus={onSetActiveEditable('body_three')}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>

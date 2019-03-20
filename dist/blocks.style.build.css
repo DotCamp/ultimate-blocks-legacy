@@ -92,8 +92,9 @@
   grid-row-start: 2; }
   .ub_testimonial_sign p {
     margin-bottom: 2px !important; }
-  .ub_testimonial_sign i {
-    font-size: 13px; }
+  .ub_testimonial_sign .ub_testimonial_author_role {
+    font-size: 13px;
+    font-style: italic; }
 /**
  * #.# Common SCSS
  *

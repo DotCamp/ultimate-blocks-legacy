@@ -1,6 +1,3 @@
-//Importing Classname
-import classnames from 'classnames';
-
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
@@ -151,16 +148,12 @@ registerBlockType('ub/call-to-action', {
 			ub_cta_button_text
 		} = props.attributes;
 
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
-
 		// Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
 		return [
-			isSelected && <BlockControls key="controls" />,
+			isSelected && <BlockControls />,
 
 			isSelected && (
-				<InspectorControls key="inspectors">
+				<InspectorControls>
 					<PanelColorSettings
 						title={__('Color Settings')}
 						initialOpen={false}
@@ -296,14 +289,11 @@ registerBlockType('ub/call-to-action', {
 								})
 							}
 						/>
-
-						<br />
 					</PanelBody>
-					<br />
 				</InspectorControls>
 			),
 
-			<div key={'editable'} className={props.className}>
+			<div className={props.className}>
 				<div
 					className="ub_call_to_action"
 					style={{
@@ -327,10 +317,11 @@ registerBlockType('ub/call-to-action', {
 								})
 							}
 							value={ub_call_to_action_headline_text}
-							isSelected={
-								isSelected && editable === 'cta_headline'
-							}
-							onFocus={onSetActiveEditable('cta_headline')}
+							formattingControls={[
+								'bold',
+								'italic',
+								'strikethrough'
+							]}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -351,10 +342,6 @@ registerBlockType('ub/call-to-action', {
 								})
 							}
 							value={ub_cta_content_text}
-							isSelected={
-								isSelected && editable === 'cta_content'
-							}
-							onFocus={onSetActiveEditable('cta_content')}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -381,10 +368,6 @@ registerBlockType('ub/call-to-action', {
 									})
 								}
 								value={ub_cta_button_text}
-								isSelected={
-									isSelected && editable === 'cta_button_text'
-								}
-								onFocus={onSetActiveEditable('cta_button_text')}
 								keepPlaceholderOnFocus={true}
 							/>
 						</span>

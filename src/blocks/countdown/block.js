@@ -12,8 +12,6 @@ const { registerBlockType } = wp.blocks;
 const { InspectorControls, RichText, PanelColorSettings } = wp.editor;
 const { DateTimePicker, ButtonGroup, IconButton, PanelBody } = wp.components;
 
-const { withState } = wp.compose;
-
 registerBlockType('ub/countdown', {
 	title: __('Countdown'),
 	icon: icon,
@@ -38,13 +36,9 @@ registerBlockType('ub/countdown', {
 		}
 	},
 
-	edit: withState({ editable: 'content' })(function(props) {
-		const { editable, isSelected, setAttributes } = props;
+	edit(props) {
+		const { isSelected, setAttributes } = props;
 		const { style, endDate, expiryMessage, circleColor } = props.attributes;
-
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
 
 		return [
 			isSelected && (
@@ -113,7 +107,7 @@ registerBlockType('ub/countdown', {
 					deadline={endDate}
 					color={circleColor}
 				/>
-				<div key="editable">
+				<div>
 					<RichText
 						tagName="p"
 						placeholder={__(
@@ -124,15 +118,11 @@ registerBlockType('ub/countdown', {
 							setAttributes({ expiryMessage: text })
 						}
 						keepPlaceholderOnFocus={true}
-						isSelected={
-							isSelected && editable === 'countdown_expiry_text'
-						}
-						onFocus={onSetActiveEditable('countdown_expiry_text')}
 					/>
 				</div>
 			</React.Fragment>
 		];
-	}),
+	},
 
 	save() {
 		return null;
