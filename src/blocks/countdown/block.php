@@ -11,10 +11,10 @@ function ub_render_countdown_block($attributes){
     
     $elementID = ub_generateBlockID();
 
-    $defaultFormat = $weeks . ' weeks ' . $days . ' days ' . $hours . ' hours ' .
-                    $minutes . ' minutes ' . $seconds . ' seconds ';
+    $defaultFormat = sprintf( esc_html__('%1$d weeks, %2$d days, %3$d hours, %4$d minutes, %5$d seconds',
+                        'ultimate-blocks'),  $weeks, $days, $hours, $minutes, $seconds);
 
-    $defaultUpdate = 'document.getElementById("ub_countdown_'.$elementID.'").innerHTML = `${weeks} weeks ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;';
+    $defaultUpdate = 'document.getElementById("ub_countdown_'.$elementID.'").innerHTML = `${weeks} ${wp.i18n.__("weeks")} ${days} ${wp.i18n.__("days")} ${hours} ${wp.i18n.__("hours")} ${minutes} ${wp.i18n.__("minutes")} ${seconds} ${wp.i18n.__("seconds")}`;';
 
     if(!function_exists('ub_generateCircle')){
         function ub_generateCircle($label, $value, $limit, $color){
@@ -37,11 +37,11 @@ function ub_render_countdown_block($attributes){
                         .ub_generateCircle("hour", $hours, 24, $attributes['circleColor'])
                         .ub_generateCircle("minute", $minutes, 60, $attributes['circleColor'])
                         .ub_generateCircle("second", $seconds, 60, $attributes['circleColor']).'
-                        <p>Weeks</p>
-                        <p>Days</p>
-                        <p>Hours</p>
-                        <p>Minutes</p>
-                        <p>Seconds</p>
+                        <p>'.__('Weeks', 'ultimate-blocks').'</p>
+                        <p>'.__('Days', 'ultimate-blocks').'</p>
+                        <p>'.__('Hours', 'ultimate-blocks').'</p>
+                        <p>'.__('Minutes', 'ultimate-blocks').'</p>
+                        <p>'.__('Seconds', 'ultimate-blocks').'</p>
                     </div>';
     
     if(!function_exists('ub_circleUpdate')){

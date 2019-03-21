@@ -3,6 +3,8 @@ import { Component } from 'react';
 import Circle from './CircularCountdown';
 import Odometer from './React-Odometer';
 
+const { __ } = wp.i18n;
+
 class Timer extends Component {
 	constructor(props) {
 		super(props);
@@ -55,7 +57,9 @@ class Timer extends Component {
 			604800;
 
 		const defaultFormat = (
-			<p>{`${weeks} weeks ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`}</p>
+			<p>{`${weeks} ${__('weeks')} ${days} ${__('days')} ${hours} ${__(
+				'hours'
+			)} ${minutes} ${__('minutes')} ${seconds} ${__('seconds')}`}</p>
 		);
 
 		const circularFormat = (
@@ -65,11 +69,11 @@ class Timer extends Component {
 				<Circle color={color} amount={hours} total={24} />
 				<Circle color={color} amount={minutes} total={60} />
 				<Circle color={color} amount={seconds} total={60} />
-				<p>Weeks</p>
-				<p>Days</p>
-				<p>Hours</p>
-				<p>Minutes</p>
-				<p>Seconds</p>
+				<p>{__('Weeks')}</p>
+				<p>{__('Days')}</p>
+				<p>{__('Hours')}</p>
+				<p>{__('Minutes')}</p>
+				<p>{__('Seconds')}</p>
 			</div>
 		);
 
@@ -77,15 +81,15 @@ class Timer extends Component {
 
 		const odometerFormat = (
 			<div className="ub-countdown-odometer-container">
-				<span>Weeks</span>
+				<span>{__('Weeks')}</span>
 				<span />
-				<span>Days</span>
+				<span>{__('Days')}</span>
 				<span />
-				<span>Hours</span>
+				<span>{__('Hours')}</span>
 				<span />
-				<span>Minutes</span>
+				<span>{__('Minutes')}</span>
 				<span />
-				<span>Seconds</span>
+				<span>{__('Seconds')}</span>
 				<Odometer
 					value={
 						weeks < 0
