@@ -45,7 +45,7 @@ function ub_render_click_to_tweet_block( $attributes ) {
 	$output .= sprintf( '<div class="ub_click_tweet">' );
 	$output .= sprintf( '<span style="display: inline-flex">');
 	$output .= sprintf( '<i></i>');
-	$output .= sprintf( '<a target="_blank" href="%1$s">Click to Tweet</a>',  $url  );
+	$output .= sprintf( esc_html__('<a target="_blank" href="%1$s">Click to Tweet</a>', 'ultimate-blocks'),  $url  );
 	$output .= sprintf( '</span>');
 	$output .= sprintf( '</div>');
     $output .= sprintf( '</div>');
