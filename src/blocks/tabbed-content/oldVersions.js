@@ -1,6 +1,6 @@
 const { RichText } = wp.editor;
 
-const version_1_1_2 = props => {
+export const version_1_1_2 = props => {
 	const className = 'wp-block-ub-tabbed-content';
 
 	const { activeTab, theme, titleColor } = props.attributes;
@@ -60,5 +60,3 @@ const version_1_1_2 = props => {
 		</div>
 	);
 };
-
-export { version_1_1_2 };

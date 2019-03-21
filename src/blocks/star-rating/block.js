@@ -12,7 +12,7 @@ import './style.scss';
 import './editor.scss';
 
 import { EmptyStar, HalfStar, FullStar } from './icons';
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2, version_1_1_5 } from './oldVersions';
 
 const attributes = {
 	starCount: {
@@ -218,6 +218,10 @@ registerBlockType('ub/star-rating', {
 		{
 			attributes,
 			save: version_1_1_2
+		},
+		{
+			attributes,
+			save: version_1_1_5
 		}
 	]
 });

@@ -1,6 +1,6 @@
 const { RichText } = wp.editor;
 
-const version_1_1_2 = props => {
+export const version_1_1_2 = props => {
 	const { accordions, collapsed, theme, titleColor } = props.attributes;
 	const classNamePrefix = 'wp-block-ub-content-toggle';
 	return (
@@ -49,5 +49,3 @@ const version_1_1_2 = props => {
 		</div>
 	);
 };
-
-export { version_1_1_2 };

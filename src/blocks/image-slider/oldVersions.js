@@ -1,6 +1,6 @@
 const { RichText } = wp.editor;
 
-const version_1_1_4 = props => {
+export const version_1_1_4 = props => {
 	const {
 		images,
 		isDraggable,
@@ -66,5 +66,3 @@ const version_1_1_4 = props => {
 		</div>
 	);
 };
-
-export { version_1_1_4 };

@@ -1,4 +1,4 @@
-const version_1_1_2 = props => {
+export const version_1_1_2 = props => {
 	const {
 		borderSize,
 		borderStyle,
@@ -20,5 +20,3 @@ const version_1_1_2 = props => {
 		</div>
 	);
 };
-
-export { version_1_1_2 };

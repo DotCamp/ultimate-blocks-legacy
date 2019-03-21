@@ -18,7 +18,7 @@ import classnames from 'classnames';
 import './style.scss';
 import './editor.scss';
 
-import { version_1_1_2, version_1_1_4 } from './oldVersions';
+import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -194,6 +194,10 @@ registerBlockType('ub/notification-box', {
 		{
 			attributes,
 			save: version_1_1_4
+		},
+		{
+			attributes,
+			save: version_1_1_5
 		}
 	]
 });

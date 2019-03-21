@@ -1,6 +1,6 @@
 const { RichText } = wp.editor;
 
-const version_1_1_2 = props => {
+export const version_1_1_2 = props => {
 	return (
 		<div className={props.className}>
 			<div className={props.attributes.ub_selected_notify}>
@@ -12,7 +12,7 @@ const version_1_1_2 = props => {
 	);
 };
 
-const version_1_1_4 = props => {
+export const version_1_1_4 = props => {
 	const { align, ub_notify_info, ub_selected_notify } = props.attributes;
 	return (
 		<div className={props.className}>
@@ -26,4 +26,19 @@ const version_1_1_4 = props => {
 		</div>
 	);
 };
-export { version_1_1_2, version_1_1_4 };
+
+export const version_1_1_5 = props => {
+	const { align, ub_notify_info, ub_selected_notify } = props.attributes;
+	return (
+		<div className={props.className}>
+			<div className={ub_selected_notify}>
+				<RichText.Content
+					tagName="p"
+					className={'ub_notify_text'}
+					style={{ textAlign: align }}
+					value={ub_notify_info}
+				/>
+			</div>
+		</div>
+	);
+};

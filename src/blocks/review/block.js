@@ -2,7 +2,7 @@ import icon from './icon';
 import './style.scss';
 
 import { Stars, ReviewBody } from './components';
-import { version_1_1_2, version_1_1_4 } from './oldVersions';
+import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
 import { JSONLD, Generic } from 'react-structured-data';
 
 const { __ } = wp.i18n;
@@ -395,6 +395,10 @@ registerBlockType('ub/review', {
 		{
 			attributes,
 			save: version_1_1_4
+		},
+		{
+			attributes,
+			save: version_1_1_5
 		}
 	]
 });

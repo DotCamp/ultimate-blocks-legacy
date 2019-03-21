@@ -1,5 +1,5 @@
 import icons from './icons';
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2, version_1_1_5 } from './oldVersions';
 
 //  Import CSS.
 import './style.scss';
@@ -417,6 +417,10 @@ registerBlockType('ub/testimonial-block', {
 		{
 			attributes,
 			save: version_1_1_2
+		},
+		{
+			attributes,
+			save: version_1_1_5
 		}
 	]
 });
