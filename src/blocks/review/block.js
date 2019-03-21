@@ -7,7 +7,15 @@ import { JSONLD, Generic } from 'react-structured-data';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, PanelColorSettings } = wp.editor;
+const {
+	RichText,
+	BlockControls,
+	InspectorControls,
+	PanelColorSettings
+} = wp.editor;
+
+const { Toolbar, IconButton } = wp.components;
+const { withState } = wp.compose;
 
 const attributes = {
 	ID: {
@@ -62,6 +70,14 @@ const attributes = {
 	selectedStarColor: {
 		type: 'string',
 		default: '#ffff00'
+	},
+	titleAlign: {
+		type: 'string',
+		default: 'left'
+	},
+	authorAlign: {
+		type: 'string',
+		default: 'left'
 	}
 };
 
@@ -71,8 +87,8 @@ registerBlockType('ub/review', {
 	category: 'ultimateblocks',
 	keywords: [__('Review'), __('Ultimate Blocks')],
 	attributes,
-	edit(props) {
-		const { setAttributes, isSelected } = props;
+	edit: withState({ editable: '' })(function(props) {
+		const { setAttributes, isSelected, editable, setState } = props;
 		const {
 			ID,
 			authorName,
@@ -87,7 +103,9 @@ registerBlockType('ub/review', {
 			callToActionForeColor,
 			inactiveStarColor,
 			activeStarColor,
-			selectedStarColor
+			selectedStarColor,
+			titleAlign,
+			authorAlign
 		} = props.attributes;
 
 		if (ID === '') {
@@ -98,6 +116,26 @@ registerBlockType('ub/review', {
 					.substr(1, 10)
 			});
 		}
+
+		const setAlignment = (target, value) => {
+			switch (target) {
+				case 'reviewTitle':
+					setAttributes({ titleAlign: value });
+					break;
+				case 'reviewAuthor':
+					setAttributes({ authorAlign: value });
+					break;
+			}
+		};
+
+		const getCurrentAlignment = target => {
+			switch (target) {
+				case 'reviewTitle':
+					return titleAlign;
+				case 'reviewAuthor':
+					return authorAlign;
+			}
+		};
 
 		return [
 			isSelected && (
@@ -156,6 +194,30 @@ registerBlockType('ub/review', {
 					/>
 				</InspectorControls>
 			),
+			isSelected && (
+				<BlockControls>
+					{editable !== '' && (
+						<Toolbar>
+							{['left', 'center', 'right', 'justify'].map(a => (
+								<IconButton
+									icon={`editor-${
+										a === 'justify' ? a : 'align' + a
+									}`}
+									label={__(
+										(a !== 'justify' ? 'Align ' : '') +
+											a[0].toUpperCase() +
+											a.slice(1)
+									)}
+									isActive={
+										getCurrentAlignment(editable) === a
+									}
+									onClick={() => setAlignment(editable, a)}
+								/>
+							))}
+						</Toolbar>
+					)}
+				</BlockControls>
+			),
 			<ReviewBody
 				authorName={authorName}
 				itemName={itemName}
@@ -191,9 +253,11 @@ registerBlockType('ub/review', {
 					setAttributes({ callToActionURL: newValue })
 				}
 				hasFocus={isSelected}
+				setEditable={newValue => setState({ editable: newValue })}
+				alignments={{ titleAlign, authorAlign }}
 			/>
 		];
-	},
+	}),
 	save(props) {
 		const {
 			ID,
@@ -208,7 +272,9 @@ registerBlockType('ub/review', {
 			callToActionBackColor,
 			callToActionForeColor,
 			inactiveStarColor,
-			activeStarColor
+			activeStarColor,
+			titleAlign,
+			authorAlign
 		} = props.attributes;
 
 		const average =
@@ -222,10 +288,13 @@ registerBlockType('ub/review', {
 
 		return (
 			<div className="ub_review_block">
-				<p className="ub_review_item_name">
+				<p
+					className="ub_review_item_name"
+					style={{ textAlign: titleAlign }}
+				>
 					<RichText.Content value={itemName} />
 				</p>
-				<p>
+				<p style={{ textAlign: authorAlign }}>
 					<RichText.Content value={authorName} />
 				</p>
 				{JSON.parse(items).map((j, i) => (

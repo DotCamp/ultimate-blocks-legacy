@@ -9,8 +9,20 @@ import Timer from './components';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InspectorControls, RichText, PanelColorSettings } = wp.editor;
-const { DateTimePicker, ButtonGroup, IconButton, PanelBody } = wp.components;
+const {
+	InspectorControls,
+	RichText,
+	PanelColorSettings,
+	BlockControls
+} = wp.editor;
+const {
+	DateTimePicker,
+	ButtonGroup,
+	IconButton,
+	PanelBody,
+	Toolbar,
+	IconButtons
+} = wp.components;
 
 registerBlockType('ub/countdown', {
 	title: __('Countdown'),
@@ -30,6 +42,10 @@ registerBlockType('ub/countdown', {
 			type: 'string',
 			default: ''
 		},
+		messageAlign: {
+			type: 'string',
+			default: 'left'
+		},
 		circleColor: {
 			type: 'string',
 			default: '#2DB7F5'
@@ -38,39 +54,17 @@ registerBlockType('ub/countdown', {
 
 	edit(props) {
 		const { isSelected, setAttributes } = props;
-		const { style, endDate, expiryMessage, circleColor } = props.attributes;
+		const {
+			style,
+			endDate,
+			expiryMessage,
+			circleColor,
+			messageAlign
+		} = props.attributes;
 
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__('Timer Style')}>
-						<ButtonGroup className="ub_countdown_style_selector">
-							<IconButton
-								isPrimary={style === 'Regular'}
-								icon={RegularCountdownIcon}
-								label={__('Regular')}
-								onClick={() =>
-									setAttributes({ style: 'Regular' })
-								}
-							/>
-							<IconButton
-								isPrimary={style === 'Circular'}
-								icon={CircularCountdownIcon}
-								label={__('Circular')}
-								onClick={() =>
-									setAttributes({ style: 'Circular' })
-								}
-							/>
-							<IconButton
-								isPrimary={style === 'Odometer'}
-								icon={TickingCountdownIcon}
-								label={__('Odometer')}
-								onClick={() =>
-									setAttributes({ style: 'Odometer' })
-								}
-							/>
-						</ButtonGroup>
-					</PanelBody>
 					{style === 'Circular' && (
 						<PanelColorSettings
 							title={__('Circle Color')}
@@ -101,6 +95,48 @@ registerBlockType('ub/countdown', {
 					</PanelBody>
 				</InspectorControls>
 			),
+			isSelected && (
+				<BlockControls>
+					<Toolbar>
+						<IconButton
+							isPrimary={style === 'Regular'}
+							icon={RegularCountdownIcon}
+							label={__('Regular')}
+							onClick={() => setAttributes({ style: 'Regular' })}
+						/>
+						<IconButton
+							isPrimary={style === 'Circular'}
+							icon={CircularCountdownIcon}
+							label={__('Circular')}
+							onClick={() => setAttributes({ style: 'Circular' })}
+						/>
+						<IconButton
+							isPrimary={style === 'Odometer'}
+							icon={TickingCountdownIcon}
+							label={__('Odometer')}
+							onClick={() => setAttributes({ style: 'Odometer' })}
+						/>
+					</Toolbar>
+					<Toolbar>
+						{['left', 'center', 'right', 'justify'].map(a => (
+							<IconButton
+								icon={`editor-${
+									a === 'justify' ? a : 'align' + a
+								}`}
+								label={__(
+									(a !== 'justify' ? 'Align ' : '') +
+										a[0].toUpperCase() +
+										a.slice(1)
+								)}
+								isActive={a}
+								onClick={() => {
+									setAttributes({ messageAlign: a });
+								}}
+							/>
+						))}
+					</Toolbar>
+				</BlockControls>
+			),
 			<React.Fragment>
 				<Timer
 					timerStyle={style}
@@ -113,6 +149,7 @@ registerBlockType('ub/countdown', {
 						placeholder={__(
 							'Text to show after the countdown is over'
 						)}
+						style={{ textAlign: messageAlign }}
 						value={expiryMessage}
 						onChange={text =>
 							setAttributes({ expiryMessage: text })

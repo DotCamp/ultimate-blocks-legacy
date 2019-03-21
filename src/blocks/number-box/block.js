@@ -18,13 +18,18 @@ const { registerBlockType } = wp.blocks;
 
 const {
 	InspectorControls,
-	AlignmentToolbar,
 	PanelColorSettings,
 	BlockControls,
 	RichText
 } = wp.editor;
 
-const { PanelBody, Toolbar, RangeControl, SelectControl } = wp.components;
+const {
+	PanelBody,
+	Toolbar,
+	RangeControl,
+	SelectControl,
+	IconButton
+} = wp.components;
 
 const { withState } = wp.compose;
 
@@ -89,6 +94,30 @@ const attributes = {
 	borderColor: {
 		type: 'string',
 		default: '#CCCCCC'
+	},
+	title1Align: {
+		type: 'string',
+		default: 'center'
+	},
+	title2Align: {
+		type: 'string',
+		default: 'center'
+	},
+	title3Align: {
+		type: 'string',
+		default: 'center'
+	},
+	body1Align: {
+		type: 'string',
+		default: 'left'
+	},
+	body2Align: {
+		type: 'string',
+		default: 'left'
+	},
+	body3Align: {
+		type: 'string',
+		default: 'left'
 	}
 };
 
@@ -136,7 +165,13 @@ registerBlockType('ub/number-box', {
 			columnThreeBody,
 			numberBackground,
 			numberColor,
-			borderColor
+			borderColor,
+			title1Align,
+			title2Align,
+			title3Align,
+			body1Align,
+			body2Align,
+			body3Align
 		} = props.attributes;
 
 		const columns = [
@@ -145,8 +180,79 @@ registerBlockType('ub/number-box', {
 			{ value: '3', label: __('Three Column') }
 		];
 
+		const selectedTextAlignment = () => {
+			switch ('editable') {
+				case 'title1':
+					return title1Align;
+				case 'body1':
+					return body1Align;
+				case 'title2':
+					return title2Align;
+				case 'body2':
+					return body2Align;
+				case 'title3':
+					return title3Align;
+				case 'body3':
+					return body3Align;
+			}
+		};
+
 		return [
-			isSelected && <BlockControls />,
+			isSelected && (
+				<BlockControls>
+					<Toolbar>
+						{['left', 'center', 'right', 'justify']
+							.slice(0, editable.indexOf('title') > -1 ? 3 : 4)
+							.map(a => (
+								<IconButton
+									icon={`editor-${
+										a === 'justify' ? a : 'align' + a
+									}`}
+									label={__(
+										(a !== 'justify' ? 'Align ' : '') +
+											a[0].toUpperCase() +
+											a.slice(1)
+									)}
+									isActive={selectedTextAlignment === a}
+									onClick={() => {
+										switch (editable) {
+											case 'title1':
+												setAttributes({
+													title1Align: a
+												});
+												break;
+											case 'body1':
+												setAttributes({
+													body1Align: a
+												});
+												break;
+											case 'title2':
+												setAttributes({
+													title2Align: a
+												});
+												break;
+											case 'body2':
+												setAttributes({
+													body2Align: a
+												});
+												break;
+											case 'title3':
+												setAttributes({
+													title3Align: a
+												});
+												break;
+											case 'body3':
+												setAttributes({
+													body3Align: a
+												});
+												break;
+										}
+									}}
+								/>
+							))}
+					</Toolbar>
+				</BlockControls>
+			),
 
 			isSelected && (
 				<InspectorControls>
@@ -196,7 +302,7 @@ registerBlockType('ub/number-box', {
 				</InspectorControls>
 			),
 
-			<div key={'editable'} className={props.className}>
+			<div className={props.className}>
 				<div className={`ub_number_box column_${column}`}>
 					<div
 						className="ub_number_1"
@@ -224,27 +330,38 @@ registerBlockType('ub/number-box', {
 									})
 								}
 								keepPlaceholderOnFocus={true}
+								unstableOnFocus={() =>
+									setState({ editable: '' })
+								}
 							/>
 						</div>
 						<RichText
 							tagName="p"
 							placeholder={__('Title One')}
+							style={{ textAlign: title1Align }}
 							className="ub_number_one_title"
 							value={columnOneTitle}
 							onChange={value =>
 								setAttributes({ columnOneTitle: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'title1' })
+							}
 						/>
 						<RichText
 							tagName="p"
 							placeholder={__('Your content goes here.')}
+							style={{ textAlign: body1Align }}
 							className="ub_number_one_body"
 							value={columnOneBody}
 							onChange={value =>
 								setAttributes({ columnOneBody: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'body1' })
+							}
 						/>
 					</div>
 					<div
@@ -273,27 +390,38 @@ registerBlockType('ub/number-box', {
 									})
 								}
 								keepPlaceholderOnFocus={true}
+								unstableOnFocus={() =>
+									setState({ editable: '' })
+								}
 							/>
 						</div>
 						<RichText
 							tagName="p"
 							placeholder={__('Title Two')}
+							style={{ textAlign: title2Align }}
 							className="ub_number_two_title"
 							value={columnTwoTitle}
 							onChange={value =>
 								setAttributes({ columnTwoTitle: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'title2' })
+							}
 						/>
 						<RichText
 							tagName="p"
 							placeholder={__('Your content goes here.')}
+							style={{ textAlign: body2Align }}
 							className="ub_number_two_body"
 							value={columnTwoBody}
 							onChange={value =>
 								setAttributes({ columnTwoBody: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'body2' })
+							}
 						/>
 					</div>
 					<div
@@ -322,27 +450,38 @@ registerBlockType('ub/number-box', {
 									})
 								}
 								keepPlaceholderOnFocus={true}
+								unstableOnFocus={() =>
+									setState({ editable: '' })
+								}
 							/>
 						</div>
 						<RichText
 							tagName="p"
 							placeholder={__('Title Three')}
+							style={{ textAlign: title3Align }}
 							className="ub_number_three_title"
 							value={columnThreeTitle}
 							onChange={value =>
 								setAttributes({ columnThreeTitle: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'title3' })
+							}
 						/>
 						<RichText
 							tagName="p"
 							placeholder={__('Your content goes here.')}
+							style={{ textAlign: body3Align }}
 							className="ub_number_three_body"
 							value={columnThreeBody}
 							onChange={value =>
 								setAttributes({ columnThreeBody: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'body3' })
+							}
 						/>
 					</div>
 				</div>
@@ -372,7 +511,13 @@ registerBlockType('ub/number-box', {
 			columnThreeBody,
 			numberBackground,
 			numberColor,
-			borderColor
+			borderColor,
+			title1Align,
+			title2Align,
+			title3Align,
+			body1Align,
+			body2Align,
+			body3Align
 		} = props.attributes;
 
 		return (
@@ -399,8 +544,18 @@ registerBlockType('ub/number-box', {
 								{columnOneNumber}
 							</p>
 						</div>
-						<p className="ub_number_one_title">{columnOneTitle}</p>
-						<p className="ub_number_one_body">{columnOneBody}</p>
+						<p
+							className="ub_number_one_title"
+							style={{ textAlign: title1Align }}
+						>
+							{columnOneTitle}
+						</p>
+						<p
+							className="ub_number_one_body"
+							style={{ textAlign: body1Align }}
+						>
+							{columnOneBody}
+						</p>
 					</div>
 					<div
 						className="ub_number_2"
@@ -423,8 +578,18 @@ registerBlockType('ub/number-box', {
 								{columnTwoNumber}
 							</p>
 						</div>
-						<p className="ub_number_two_title">{columnTwoTitle}</p>
-						<p className="ub_number_two_body">{columnTwoBody}</p>
+						<p
+							className="ub_number_two_title"
+							style={{ textAlign: title2Align }}
+						>
+							{columnTwoTitle}
+						</p>
+						<p
+							className="ub_number_two_body"
+							style={{ textAlign: body2Align }}
+						>
+							{columnTwoBody}
+						</p>
 					</div>
 					<div
 						className="ub_number_3"
@@ -447,10 +612,16 @@ registerBlockType('ub/number-box', {
 								{columnThreeNumber}
 							</p>
 						</div>
-						<p className="ub_number_three_title">
+						<p
+							className="ub_number_three_title"
+							style={{ textAlign: title3Align }}
+						>
 							{columnThreeTitle}
 						</p>
-						<p className="ub_number_three_body">
+						<p
+							className="ub_number_three_body"
+							style={{ textAlign: body3Align }}
+						>
 							{columnThreeBody}
 						</p>
 					</div>

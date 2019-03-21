@@ -38,17 +38,29 @@ const attributes = {
 		selector: '.ub_feature_one_title',
 		default: 'Title One'
 	},
+	title1Align: {
+		type: 'string',
+		default: 'center'
+	},
 	columnTwoTitle: {
 		type: 'array',
 		source: 'children',
 		selector: '.ub_feature_two_title',
 		default: 'Title Two'
 	},
+	title2Align: {
+		type: 'string',
+		default: 'center'
+	},
 	columnThreeTitle: {
 		type: 'array',
 		source: 'children',
 		selector: '.ub_feature_three_title',
 		default: 'Title Three'
+	},
+	title3Align: {
+		type: 'string',
+		default: 'center'
 	},
 	columnOneBody: {
 		type: 'array',
@@ -57,6 +69,10 @@ const attributes = {
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
+	body1Align: {
+		type: 'string',
+		default: 'left'
+	},
 	columnTwoBody: {
 		type: 'array',
 		source: 'children',
@@ -64,12 +80,20 @@ const attributes = {
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
+	body2Align: {
+		type: 'string',
+		default: 'left'
+	},
 	columnThreeBody: {
 		type: 'array',
 		source: 'children',
 		selector: '.ub_feature_three_body',
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+	},
+	body3Align: {
+		type: 'string',
+		default: 'left'
 	},
 	imgOneURL: {
 		type: 'string',
@@ -146,7 +170,7 @@ registerBlockType('ub/feature-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState({ editable: 'content' })(function(props) {
+	edit: withState({ editable: '' })(function(props) {
 		const { isSelected, editable, setState, setAttributes } = props;
 
 		const {
@@ -165,18 +189,14 @@ registerBlockType('ub/feature-box', {
 			imgTwoAlt,
 			imgThreeURL,
 			imgThreeID,
-			imgThreeAlt
+			imgThreeAlt,
+			title1Align,
+			body1Align,
+			title2Align,
+			body2Align,
+			title3Align,
+			body3Align
 		} = props.attributes;
-
-		const columns = [
-			{ value: '1', label: __('One Column') },
-			{ value: '2', label: __('Two Column') },
-			{ value: '3', label: __('Three Column') }
-		];
-
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
 
 		const onSelectImageOne = img => {
 			setAttributes({
@@ -226,6 +246,23 @@ registerBlockType('ub/feature-box', {
 			});
 		};
 
+		const selectedTextAlignment = () => {
+			switch ('editable') {
+				case 'title1':
+					return title1Align;
+				case 'body1':
+					return body1Align;
+				case 'title2':
+					return title2Align;
+				case 'body2':
+					return body2Align;
+				case 'title3':
+					return title3Align;
+				case 'body3':
+					return body3Align;
+			}
+		};
+
 		return [
 			isSelected && (
 				<BlockControls>
@@ -249,6 +286,57 @@ registerBlockType('ub/feature-box', {
 							isActive={column === '3'}
 							onClick={() => setAttributes({ column: '3' })}
 						/>
+					</Toolbar>
+					<Toolbar>
+						{['left', 'center', 'right', 'justify']
+							.slice(0, editable.indexOf('title') > -1 ? 3 : 4)
+							.map(a => (
+								<IconButton
+									icon={`editor-${
+										a === 'justify' ? a : 'align' + a
+									}`}
+									label={__(
+										(a !== 'justify' ? 'Align ' : '') +
+											a[0].toUpperCase() +
+											a.slice(1)
+									)}
+									isActive={selectedTextAlignment === a}
+									onClick={() => {
+										switch (editable) {
+											case 'title1':
+												setAttributes({
+													title1Align: a
+												});
+												break;
+											case 'body1':
+												setAttributes({
+													body1Align: a
+												});
+												break;
+											case 'title2':
+												setAttributes({
+													title2Align: a
+												});
+												break;
+											case 'body2':
+												setAttributes({
+													body2Align: a
+												});
+												break;
+											case 'title3':
+												setAttributes({
+													title3Align: a
+												});
+												break;
+											case 'body3':
+												setAttributes({
+													body3Align: a
+												});
+												break;
+										}
+									}}
+								/>
+							))}
 					</Toolbar>
 				</BlockControls>
 			),
@@ -294,20 +382,28 @@ registerBlockType('ub/feature-box', {
 						<RichText
 							tagName="p"
 							className="ub_feature_one_title"
+							style={{ textAlign: title1Align }}
 							value={columnOneTitle}
 							onChange={value =>
 								setAttributes({ columnOneTitle: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'title1' })
+							}
 						/>
 						<RichText
 							tagName="p"
 							className="ub_feature_one_body"
+							style={{ textAlign: body1Align }}
 							value={columnOneBody}
 							onChange={value =>
 								setAttributes({ columnOneBody: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'body1' })
+							}
 						/>
 					</div>
 					<div class="ub_feature_2">
@@ -347,20 +443,28 @@ registerBlockType('ub/feature-box', {
 						<RichText
 							tagName="p"
 							className="ub_feature_two_title"
+							style={{ textAlign: title2Align }}
 							value={columnTwoTitle}
 							onChange={value =>
 								setAttributes({ columnTwoTitle: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'title2' })
+							}
 						/>
 						<RichText
 							tagName="p"
 							className="ub_feature_two_body"
+							style={{ textAlign: body2Align }}
 							value={columnTwoBody}
 							onChange={value =>
 								setAttributes({ columnTwoBody: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'body2' })
+							}
 						/>
 					</div>
 					<div class="ub_feature_3">
@@ -400,20 +504,28 @@ registerBlockType('ub/feature-box', {
 						<RichText
 							tagName="p"
 							className="ub_feature_three_title"
+							style={{ textAlign: title3Align }}
 							value={columnThreeTitle}
 							onChange={value =>
 								setAttributes({ columnThreeTitle: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'title3' })
+							}
 						/>
 						<RichText
 							tagName="p"
 							className="ub_feature_three_body"
+							style={{ textAlign: body3Align }}
 							value={columnThreeBody}
 							onChange={value =>
 								setAttributes({ columnThreeBody: value })
 							}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'body3' })
+							}
 						/>
 					</div>
 				</div>
@@ -443,7 +555,13 @@ registerBlockType('ub/feature-box', {
 			imgTwoURL,
 			imgTwoAlt,
 			imgThreeURL,
-			imgThreeAlt
+			imgThreeAlt,
+			title1Align,
+			title2Align,
+			title3Align,
+			body1Align,
+			body2Align,
+			body3Align
 		} = props.attributes;
 
 		return (
@@ -455,8 +573,18 @@ registerBlockType('ub/feature-box', {
 							src={imgOneURL}
 							alt={imgOneAlt}
 						/>
-						<p className="ub_feature_one_title">{columnOneTitle}</p>
-						<p className="ub_feature_one_body">{columnOneBody}</p>
+						<p
+							className="ub_feature_one_title"
+							style={{ textAlign: title1Align }}
+						>
+							{columnOneTitle}
+						</p>
+						<p
+							className="ub_feature_one_body"
+							style={{ textAlign: body1Align }}
+						>
+							{columnOneBody}
+						</p>
 					</div>
 					<div class="ub_feature_2">
 						<img
@@ -464,8 +592,18 @@ registerBlockType('ub/feature-box', {
 							src={imgTwoURL}
 							alt={imgTwoAlt}
 						/>
-						<p className="ub_feature_two_title">{columnTwoTitle}</p>
-						<p className="ub_feature_two_body">{columnTwoBody}</p>
+						<p
+							className="ub_feature_two_title"
+							style={{ textAlign: title2Align }}
+						>
+							{columnTwoTitle}
+						</p>
+						<p
+							className="ub_feature_two_body"
+							style={{ textAlign: body2Align }}
+						>
+							{columnTwoBody}
+						</p>
 					</div>
 					<div class="ub_feature_3">
 						<img
@@ -473,10 +611,16 @@ registerBlockType('ub/feature-box', {
 							src={imgThreeURL}
 							alt={imgThreeAlt}
 						/>
-						<p className="ub_feature_three_title">
+						<p
+							className="ub_feature_three_title"
+							style={{ align: title3Align }}
+						>
 							{columnThreeTitle}
 						</p>
-						<p className="ub_feature_three_body">
+						<p
+							className="ub_feature_three_body"
+							style={{ align: body3Align }}
+						>
 							{columnThreeBody}
 						</p>
 					</div>

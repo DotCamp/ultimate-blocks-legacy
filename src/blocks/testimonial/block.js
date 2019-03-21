@@ -17,7 +17,7 @@ const {
 	PanelColorSettings
 } = wp.editor;
 
-const { Button, PanelBody, RangeControl } = wp.components;
+const { Button, PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
 const { withState } = wp.compose;
 
@@ -27,15 +27,27 @@ const attributes = {
 		source: 'children',
 		selector: '.ub_testimonial_text'
 	},
+	textAlign: {
+		type: 'string',
+		default: 'justify'
+	},
 	ub_testimonial_author: {
 		type: 'array',
 		source: 'children',
 		selector: '.ub_testimonial_author'
 	},
+	authorAlign: {
+		type: 'string',
+		default: 'right'
+	},
 	ub_testimonial_author_role: {
 		type: 'array',
 		source: 'children',
 		selector: '.ub_testimonial_author_role'
+	},
+	authorRoleAlign: {
+		type: 'string',
+		default: 'right'
 	},
 	imgURL: {
 		type: 'string',
@@ -106,7 +118,10 @@ registerBlockType('ub/testimonial-block', {
 			imgAlt,
 			ub_testimonial_author,
 			ub_testimonial_author_role,
-			ub_testimonial_text
+			ub_testimonial_text,
+			textAlign,
+			authorAlign,
+			authorRoleAlign
 		} = props.attributes;
 
 		const onChangeTestimonialText = value => {
@@ -137,7 +152,53 @@ registerBlockType('ub/testimonial-block', {
 		};
 
 		return [
-			isSelected && <BlockControls />,
+			isSelected && (
+				<BlockControls>
+					<Toolbar>
+						{['left', 'center', 'right', 'justify']
+							.slice(0, editable.indexOf('text') > 0 ? 4 : 3)
+							.map(a => (
+								<IconButton
+									icon={`editor-${
+										a === 'justify' ? a : 'align' + a
+									}`}
+									label={__(
+										(a !== 'justify' ? 'Align ' : '') +
+											a[0].toUpperCase() +
+											a.slice(1)
+									)}
+									isActive={() => {
+										switch (editable) {
+											case 'testimonial_text':
+												return textAlign === a;
+											case 'author':
+												return authorAlign === a;
+											case 'author_role':
+												return authorRoleAlign === a;
+										}
+									}}
+									onClick={() => {
+										switch (editable) {
+											case 'testimonial_text':
+												setAttributes({ textAlign: a });
+												break;
+											case 'author':
+												setAttributes({
+													authorAlign: a
+												});
+												break;
+											case 'author_role':
+												setAttributes({
+													authorRoleAlign: a
+												});
+												break;
+										}
+									}}
+								/>
+							))}
+					</Toolbar>
+				</BlockControls>
+			),
 
 			isSelected && (
 				<InspectorControls>
@@ -232,7 +293,8 @@ registerBlockType('ub/testimonial-block', {
 							)}
 							className="ub_testimonial_text"
 							style={{
-								fontSize: textSize
+								fontSize: textSize,
+								textAlign: textAlign
 							}}
 							onChange={onChangeTestimonialText}
 							value={ub_testimonial_text}
@@ -242,20 +304,28 @@ registerBlockType('ub/testimonial-block', {
 								'strikethrough',
 								'link'
 							]}
+							unstableOnFocus={() =>
+								setState({ editable: 'testimonial_text' })
+							}
 						/>
 					</div>
 					<div className="ub_testimonial_sign">
 						<RichText
 							tagName="p"
 							placeholder={__('John Doe')}
+							style={{ textAlign: authorAlign }}
 							className="ub_testimonial_author"
 							onChange={onChangeTestimonialAuthor}
 							value={ub_testimonial_author}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'author' })
+							}
 						/>
 						<RichText
 							tagName="p"
 							placeholder={__('Founder, Company X')}
+							style={{ textAlign: authorRoleAlign }}
 							className="ub_testimonial_author_role"
 							onChange={onChangeTestimonialAuthorRole}
 							value={ub_testimonial_author_role}
@@ -265,6 +335,9 @@ registerBlockType('ub/testimonial-block', {
 								'strikethrough',
 								'link'
 							]}
+							unstableOnFocus={() =>
+								setState({ editable: 'author_role' })
+							}
 						/>
 					</div>
 				</div>
@@ -289,7 +362,10 @@ registerBlockType('ub/testimonial-block', {
 			imgAlt,
 			ub_testimonial_author,
 			ub_testimonial_author_role,
-			ub_testimonial_text
+			ub_testimonial_text,
+			textAlign,
+			authorAlign,
+			authorRoleAlign
 		} = props.attributes;
 		return (
 			<div className={props.className}>
@@ -312,19 +388,26 @@ registerBlockType('ub/testimonial-block', {
 						<p
 							className="ub_testimonial_text"
 							style={{
-								fontSize: textSize
+								fontSize: textSize,
+								textAlign: textAlign
 							}}
 						>
 							{ub_testimonial_text}
 						</p>
 					</div>
 					<div className="ub_testimonial_sign">
-						<p className="ub_testimonial_author">
+						<p
+							className="ub_testimonial_author"
+							style={{ textAlign: authorAlign }}
+						>
 							{ub_testimonial_author}
 						</p>
-						<i className="ub_testimonial_author_role">
+						<p
+							className="ub_testimonial_author_role"
+							style={{ textAlign: authorRoleAlign }}
+						>
 							{ub_testimonial_author_role}
-						</i>
+						</p>
 					</div>
 				</div>
 			</div>

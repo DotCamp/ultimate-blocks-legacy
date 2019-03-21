@@ -1,7 +1,12 @@
 const { __ } = wp.i18n;
-const { InspectorControls, PanelColorSettings, RichText } = wp.editor;
+const {
+	InspectorControls,
+	PanelColorSettings,
+	RichText,
+	BlockControls
+} = wp.editor;
 const { registerBlockType } = wp.blocks;
-const { PanelBody, RangeControl } = wp.components;
+const { PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
 import './style.scss';
 import './editor.scss';
@@ -30,6 +35,10 @@ const attributes = {
 		type: 'array',
 		source: 'children',
 		selector: '.ub-review-text'
+	},
+	reviewTextAlign: {
+		type: 'string',
+		default: 'text'
 	}
 };
 
@@ -48,10 +57,33 @@ registerBlockType('ub/star-rating', {
 			starSize,
 			starColor,
 			selectedStars,
-			reviewText
+			reviewText,
+			reviewTextAlign
 		} = props.attributes;
 
 		return [
+			isSelected && (
+				<BlockControls>
+					<Toolbar>
+						{['left', 'center', 'right', 'justify'].map(a => (
+							<IconButton
+								icon={`editor-${
+									a === 'justify' ? a : 'align' + a
+								}`}
+								label={__(
+									(a !== 'justify' ? 'Align ' : '') +
+										a[0].toUpperCase() +
+										a.slice(1)
+								)}
+								isActive={reviewTextAlign === a}
+								onClick={() =>
+									setAttributes({ reviewTextAlign: a })
+								}
+							/>
+						))}
+					</Toolbar>
+				</BlockControls>
+			),
 			isSelected && (
 				<InspectorControls>
 					<PanelBody title={__('Star Settings')}>
@@ -132,6 +164,7 @@ registerBlockType('ub/star-rating', {
 						tagName="div"
 						placeholder={__('The text of the review goes here')}
 						value={reviewText}
+						style={{ textAlign: reviewTextAlign }}
 						onChange={text => setAttributes({ reviewText: text })}
 						keepPlaceholderOnFocus={true}
 						formattingControls={[
@@ -152,7 +185,8 @@ registerBlockType('ub/star-rating', {
 			starSize,
 			starColor,
 			selectedStars,
-			reviewText
+			reviewText,
+			reviewTextAlign
 		} = props.attributes;
 		return (
 			<div className="ub-star-rating">
@@ -170,7 +204,12 @@ registerBlockType('ub/star-rating', {
 						</div>
 					))}
 				</div>
-				<div className="ub-review-text">{reviewText}</div>
+				<div
+					className="ub-review-text"
+					style={{ textAlign: reviewTextAlign }}
+				>
+					{reviewText}
+				</div>
 			</div>
 		);
 	},

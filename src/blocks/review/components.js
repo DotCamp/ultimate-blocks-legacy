@@ -152,9 +152,12 @@ class ReviewBody extends Component {
 			callToActionForeColor,
 			inactiveStarColor,
 			activeStarColor,
-			selectedStarColor
+			selectedStarColor,
+			setEditable,
+			alignments
 		} = this.props;
 
+		const { titleAlign, authorAlign } = alignments;
 		const { average } = this.state;
 
 		return (
@@ -164,13 +167,17 @@ class ReviewBody extends Component {
 					tagName="p"
 					placeholder={__('Title of the review')}
 					value={itemName}
+					style={{ textAlign: titleAlign }}
 					onChange={text => setItemName(text)}
+					unstableOnFocus={() => setEditable('reviewTitle')}
 				/>
 				<RichText
 					tagName="p"
 					placeholder={__('Review Author name')}
 					value={authorName}
+					style={{ textAlign: authorAlign }}
 					onChange={text => setAuthorName(text)}
+					unstableOnFocus={() => setEditable('reviewAuthor')}
 				/>
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
@@ -184,6 +191,7 @@ class ReviewBody extends Component {
 								newArray[i].label = text;
 								setItems(newArray);
 							}}
+							unstableOnFocus={() => setEditable('')}
 						/>
 						<div
 							key={i}
@@ -197,6 +205,7 @@ class ReviewBody extends Component {
 									className="dashicons dashicons-trash"
 									style={{ float: 'right' }}
 									onClick={() => {
+										setEditable('');
 										let newItems = items
 											.slice(0, i)
 											.concat(
@@ -256,12 +265,14 @@ class ReviewBody extends Component {
 						tagName="p"
 						onChange={text => setSummaryTitle(text)}
 						value={summaryTitle}
+						unstableOnFocus={() => setEditable('')}
 					/>
 					<div className="ub_review_overall_value">
 						<RichText
 							placeholder={__('Summary of the review goes here')}
 							onChange={text => setSummaryDescription(text)}
 							value={summaryDescription}
+							unstableOnFocus={() => setEditable('')}
 						/>
 						<span className="ub_review_rating">
 							{Math.round(average * 10) / 10}
@@ -284,6 +295,7 @@ class ReviewBody extends Component {
 									placeholder={__('Call to action')}
 									value={callToActionText}
 									onChange={text => setCallToActionText(text)}
+									unstableOnFocus={() => setEditable('')}
 								/>
 							</div>
 						</div>

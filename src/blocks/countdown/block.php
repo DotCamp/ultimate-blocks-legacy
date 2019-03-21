@@ -112,7 +112,7 @@ function ub_render_countdown_block($attributes){
                     }
                 }, 1000);</script>';
     }
-    else return '<div>'.$attributes['expiryMessage'].'</div>';
+    else return '<div style="text-align:'.$attributes['messageAlign'].';">'.$attributes['expiryMessage'].'</div>';
 }
 
 function ub_register_countdown_block() {
@@ -130,6 +130,10 @@ function ub_register_countdown_block() {
                 'expiryMessage' => array(
                     'type' => 'string',
                     'default' => 'Timer expired'
+                ),
+                'messageAlign' => array(
+                    'type' => 'string',
+                    'default' => 'left'
                 ),
                 'circleColor' => array(
                     'type' => 'string',

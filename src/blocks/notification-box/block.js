@@ -23,16 +23,9 @@ import { version_1_1_2, version_1_1_4 } from './oldVersions';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const {
-	RichText,
-	AlignmentToolbar,
-	BlockControls,
-	BlockAlignmentToolbar
-} = wp.editor;
+const { RichText, BlockControls } = wp.editor;
 
-const { Toolbar, Button, Tooltip } = wp.components;
-
-const { withState } = wp.compose;
+const { Toolbar, Button, IconButton } = wp.components;
 
 const attributes = {
 	ub_notify_info: {
@@ -78,36 +71,30 @@ registerBlockType('ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState({ editable: 'content' })(function(props) {
-		const { isSelected, editable, setState, setAttributes } = props;
-
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
+	edit(props) {
+		const { isSelected, setAttributes } = props;
 
 		const onChangeNotifyInfo = value => {
 			setAttributes({ ub_notify_info: value });
 		};
 
-		const infoClassChange = value => {
+		const infoClassChange = () => {
 			setAttributes({ ub_selected_notify: 'ub_notify_info' });
 		};
 
-		const successClassChange = value => {
+		const successClassChange = () => {
 			setAttributes({ ub_selected_notify: 'ub_notify_success' });
 		};
 
-		const warningClassChange = value => {
+		const warningClassChange = () => {
 			setAttributes({ ub_selected_notify: 'ub_notify_warning' });
 		};
 
 		const { align, ub_selected_notify, ub_notify_info } = props.attributes;
 
 		return [
-			isSelected && <BlockControls key="controls" />,
-
 			isSelected && (
-				<BlockControls key="custom-controls">
+				<BlockControls>
 					<Toolbar className="components-toolbar">
 						<Button
 							className={classnames(
@@ -137,17 +124,26 @@ registerBlockType('ub/notification-box', {
 							{warning}
 						</Button>
 					</Toolbar>
-					<AlignmentToolbar
-						value={align}
-						onChange={newAlignment =>
-							props.setAttributes({ align: newAlignment })
-						}
-						controls={['left', 'center', 'right']}
-					/>
+					<Toolbar>
+						{['left', 'center', 'right', 'justify'].map(a => (
+							<IconButton
+								icon={`editor-${
+									a === 'justify' ? a : 'align' + a
+								}`}
+								label={__(
+									(a !== 'justify' ? 'Align ' : '') +
+										a[0].toUpperCase() +
+										a.slice(1)
+								)}
+								isActive={align === a}
+								onClick={() => setAttributes({ align: a })}
+							/>
+						))}
+					</Toolbar>
 				</BlockControls>
 			),
 
-			<div key={'editable'} className={props.className}>
+			<div className={props.className}>
 				<RichText
 					style={{ textAlign: align }}
 					tagName="div"
@@ -165,7 +161,7 @@ registerBlockType('ub/notification-box', {
 				/>
 			</div>
 		];
-	}),
+	},
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
@@ -182,6 +178,7 @@ registerBlockType('ub/notification-box', {
 				<div className={ub_selected_notify}>
 					<RichText.Content
 						tagName="p"
+						className={'ub_notify_text'}
 						style={{ textAlign: align }}
 						value={ub_notify_info}
 					/>

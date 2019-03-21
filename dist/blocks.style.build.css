@@ -81,11 +81,9 @@
   grid-column-start: 2;
   padding: 11px 20px; }
   .ub_testimonial_content p {
-    font-style: italic;
-    text-align: justify; }
+    font-style: italic; }
 
 .ub_testimonial_sign {
-  text-align: right;
   padding-right: 10px;
   padding-bottom: 10px;
   grid-column-start: 2;

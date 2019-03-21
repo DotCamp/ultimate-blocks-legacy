@@ -13,13 +13,15 @@ const {
 	InspectorControls,
 	URLInput,
 	BlockControls,
-	PanelColorSettings
+	PanelColorSettings,
+	AlignmentToolbar
 } = wp.editor;
 
 const {
 	PanelBody,
 	Icon,
 	IconButton,
+	Toolbar,
 	RangeControl,
 	SelectControl
 } = wp.components;
@@ -63,6 +65,10 @@ const attributes = {
 	headColor: {
 		type: 'string',
 		default: '#444444'
+	},
+	headAlign: {
+		type: 'string',
+		default: 'center'
 	},
 	contentFontSize: {
 		type: 'number',
@@ -127,7 +133,7 @@ registerBlockType('ub/call-to-action', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState({ editable: 'content' })(function(props) {
+	edit: withState({ editable: '' })(function(props) {
 		const { isSelected, editable, setState, setAttributes } = props;
 
 		const {
@@ -136,6 +142,7 @@ registerBlockType('ub/call-to-action', {
 			ctaBorderSize,
 			headFontSize,
 			headColor,
+			headAlign,
 			contentAlign,
 			contentColor,
 			contentFontSize,
@@ -150,7 +157,41 @@ registerBlockType('ub/call-to-action', {
 
 		// Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
 		return [
-			isSelected && <BlockControls />,
+			isSelected && (
+				<BlockControls>
+					{['header', 'content'].includes(editable) && (
+						<Toolbar>
+							{['left', 'center', 'right', 'justify']
+								.slice(0, editable === 'header' ? 3 : 4)
+								.map(a => (
+									<IconButton
+										icon={`editor-${
+											a === 'justify' ? a : 'align' + a
+										}`}
+										label={__(
+											(a !== 'justify' ? 'Align ' : '') +
+												a[0].toUpperCase() +
+												a.slice(1)
+										)}
+										isActive={
+											(editable === 'header'
+												? headAlign
+												: contentAlign) === a
+										}
+										onClick={() => {
+											if (editable === 'header') {
+												setAttributes({ headAlign: a });
+											} else
+												setAttributes({
+													contentAlign: a
+												});
+										}}
+									/>
+								))}
+						</Toolbar>
+					)}
+				</BlockControls>
+			),
 
 			isSelected && (
 				<InspectorControls>
@@ -205,24 +246,6 @@ registerBlockType('ub/call-to-action', {
 						title={__('Content Settings')}
 						initialOpen={false}
 					>
-						<SelectControl
-							label={__('Content Align')}
-							value={contentAlign}
-							onChange={value =>
-								setAttributes({ contentAlign: value })
-							}
-							options={['left', 'center', 'right', 'justify'].map(
-								a => {
-									return {
-										value: a,
-										label: __(
-											a[0].toUpperCase() + a.slice(1)
-										)
-									};
-								}
-							)}
-						/>
-
 						<RangeControl
 							label={__('Font Size')}
 							value={contentFontSize}
@@ -309,7 +332,8 @@ registerBlockType('ub/call-to-action', {
 							className="ub_call_to_action_headline_text"
 							style={{
 								fontSize: headFontSize + 'px',
-								color: headColor
+								color: headColor,
+								textAlign: headAlign
 							}}
 							onChange={value =>
 								setAttributes({
@@ -323,6 +347,9 @@ registerBlockType('ub/call-to-action', {
 								'strikethrough'
 							]}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'header' })
+							}
 						/>
 					</div>
 
@@ -343,6 +370,9 @@ registerBlockType('ub/call-to-action', {
 							}
 							value={ub_cta_content_text}
 							keepPlaceholderOnFocus={true}
+							unstableOnFocus={() =>
+								setState({ editable: 'content' })
+							}
 						/>
 					</div>
 
@@ -369,6 +399,9 @@ registerBlockType('ub/call-to-action', {
 								}
 								value={ub_cta_button_text}
 								keepPlaceholderOnFocus={true}
+								unstableOnFocus={() =>
+									setState({ editable: 'button' })
+								}
 							/>
 						</span>
 					</div>
@@ -393,6 +426,9 @@ registerBlockType('ub/call-to-action', {
 								value={props.attributes.url}
 								onChange={value =>
 									setAttributes({ url: value })
+								}
+								unstableOnFocus={() =>
+									setState({ editable: 'URLInput' })
 								}
 							/>
 							<IconButton
@@ -422,6 +458,7 @@ registerBlockType('ub/call-to-action', {
 			ctaBorderColor,
 			headFontSize,
 			headColor,
+			headAlign,
 			ub_call_to_action_headline_text,
 			contentFontSize,
 			contentColor,
@@ -449,7 +486,8 @@ registerBlockType('ub/call-to-action', {
 							className="ub_call_to_action_headline_text"
 							style={{
 								fontSize: headFontSize + 'px',
-								color: headColor
+								color: headColor,
+								textAlign: headAlign
 							}}
 						>
 							{ub_call_to_action_headline_text}

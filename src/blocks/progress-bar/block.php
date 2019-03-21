@@ -52,7 +52,7 @@ function ub_render_progress_bar_block($attributes){
 
     return '<div class="ub_progress-bar">
                 <div class="ub_progress-bar-text">
-                <p>'.$attributes['detail'].'</p></div>'
+                <p  style="text-align: '. $attributes['detailAlign'] .';">'.$attributes['detail'].'</p></div>'
             . $chosenProgressBar
         . '</div>
         <script type="text/javascript">
@@ -81,6 +81,10 @@ function ub_register_progress_bar_block() {
                     'type' => 'string',
                     'default' => ''
                 ),             
+                'detailAlign' => array(
+                    'type' => 'string',
+                    'default' => 'left'
+                ),
                 'barColor' => array(
                     'type' => 'string',
                     'default' => '#2db7f5'
