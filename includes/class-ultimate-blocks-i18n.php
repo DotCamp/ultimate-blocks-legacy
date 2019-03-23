@@ -42,6 +42,4 @@ class Ultimate_Blocks_i18n {
 
 	}
 
-
-
 }

@@ -52,7 +52,11 @@
 			name: 'ub/content-toggle',
 			active: true
 		},
-		{ label: 'Countdown', name: 'ub/countdown', active: true },
+		{ 
+			label: 'Countdown', 
+			name: 'ub/countdown', 
+			active: true 
+		},
 		{
 			label: 'Divider',
 			name: 'ub/divider',
@@ -63,7 +67,11 @@
 			name: 'ub/feature-box',
 			active: true
 		},
-		{ label: 'Image Slider', name: 'ub/image-slider', active: true },
+		{ 
+			label: 'Image Slider', 
+			name: 'ub/image-slider', 
+			active: true 
+		},
 		{
 			label: 'Notification Box',
 			name: 'ub/notification-box',
@@ -79,7 +87,11 @@
 			name: 'ub/progress-bar',
 			active: true
 		},
-		{ label: 'Review', name: 'ub/review', active: 'true' },
+		{ 
+			label: 'Review', 
+			name: 'ub/review', 
+			active: 'true' 
+		},
 		{
 			label: 'Social Share',
 			name: 'ub/social-share',

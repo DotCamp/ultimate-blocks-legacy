@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
-Tested up to: 5.0
-Stable tag: 1.1.4
+Tested up to: 5.1
+Stable tag: 1.1.5
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -119,14 +119,24 @@ That's it. You're done!
 
 == Changelog ==
 
+= 1.1.5 =
+
+Release Date: March 22nd, 2019
+
+* NEW: Option to choose which tags (h1, h2, h3, h4, h5, h6) to include/exclude in Table of Contents block. 
+* NEW: Option to toggle Show/Hide for Table of Contents block.
+* NEW: Option to split the table of contents in two, three columns.
+* NEW: Formatting and alignment options for Button, Call to Action, Content Toggle, Countdown, Feature Box, Number Box, Progress Bar, Review,  Star Rating, and Testimonial block.
+* ADD: Missing Translation for Click to Tweet and Countdown block.
+
 = 1.1.4 =
 
 Release Date: February 28th, 2019
 
-NEW: Image Slider Block.
-NEW: Support for Unicode character anchors in Table of Contents Block.
-FIX: Dashboard background color issue.
-FIX: Link issues on Button, Call to Action, Review Block.
+* NEW: Image Slider Block.
+* NEW: Support for Unicode character anchors in Table of Contents Block.
+* FIX: Dashboard background color issue.
+* FIX: Link issues on Button, Call to Action, Review Block.
 
 = 1.1.3 =
 
