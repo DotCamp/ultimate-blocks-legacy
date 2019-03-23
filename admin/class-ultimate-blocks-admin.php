@@ -127,7 +127,7 @@ class Ultimate_Blocks_Admin {
 	public function register_admin_menus() {
 
 		add_menu_page(
-			'UltimateBlocks Settings',
+			'Ultimate Blocks Settings',
 			'Ultimate Blocks',
 			'manage_options',
 			'ultimate-blocks-settings',

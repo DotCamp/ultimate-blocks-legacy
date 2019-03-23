@@ -1,4 +1,4 @@
-.container {
+.ub-container {
     margin: 50px auto;
     max-width: 860px;
     padding: 0;
@@ -6,9 +6,9 @@
     border: 1px solid #f63d3d;
 }
 
-.container *,
-.container::before,
-.container::after {
+.ub-container *,
+.ub-container::before,
+.ub-container::after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -39,11 +39,11 @@
     color: #fff;
 }
 
-.intro {
+.ub-intro {
     padding: 40px;
 }
 
-.intro p {
+.ub-intro p {
     font-family: "Open Sans";
     font-size: 18px;
     text-align: center;
@@ -51,11 +51,30 @@
     line-height: 1.6em;
 }
 
-.intro h2 {
+.ub-intro h2 {
     font-size: 30px;
     font-family: "Open Sans";
     text-align: center;
     margin: 60px auto 40px auto;
+}
+
+.ub-social-intro {
+    padding: 40px;
+}
+
+.ub-social-intro p {
+    font-family: "Open Sans";
+    font-size: 18px;
+    text-align: center;
+    color: #444;
+    line-height: 1.6em;
+}
+
+.ub-social-intro h2 {
+    font-size: 30px;
+    font-family: "Open Sans";
+    text-align: center;
+    margin: 20px auto 40px auto;
 }
 
 .color-red {
@@ -68,12 +87,22 @@
     display: table;
 }
 
-.button-wrap {
+.ub-button-wrap {
     margin-top: 70px !important;
     text-align: center;
 }
 
-.button-wrap {
+.ub-button-wrap {
+    max-width: 590px;
+    margin: 0 auto 0 auto;
+}
+
+.ub-social-button-wrap {
+    margin-top: 40px !important;
+    text-align: center;
+}
+
+.ub-social-button-wrap {
     max-width: 590px;
     margin: 0 auto 0 auto;
 }
@@ -88,6 +117,34 @@
     float: left;
     width: 50%;
     padding-right: 20px;
+}
+
+.ultimate-blocks-btn-twitter {
+    background-color: #1DA1F2;
+    border-color: #1DA1F2;
+    color: #fff;
+}
+
+a.ultimate-blocks-btn-twitter {
+    color: #fff;
+}
+
+a.ultimate-blocks-btn-twitter:hover {
+    color: #fff;
+}
+
+.ultimate-blocks-btn-facebook {
+    background-color: #3b5998;
+    border-color: #3b5998;
+    color: #fff;
+}
+
+a.ultimate-blocks-btn-facebook {
+    color: #fff;
+}
+
+a.ultimate-blocks-btn-facebook:hover {
+    color: #fff;
 }
 
 .ultimate-blocks-btn-red {
