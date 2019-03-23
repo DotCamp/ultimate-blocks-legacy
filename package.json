@@ -6,7 +6,7 @@
         "start": "cgb-scripts start",
         "build": "cgb-scripts build",
         "eject": "cgb-scripts eject",
-        "pot": "wp-pot --src '**/*.php' --dest-file 'languages/ultimate-blocks.pot' --package 'Ultimate_Blocks' --domain 'ultimate-blocks' --last-translator 'Imtiaz Rayhan <irayhan.asif@gmail.com>' --team 'Ultimate Blocks <irayhan.asif@gmail.com>' --bug-report 'https://github.com/imtiazrayhan/Ultimate-Blocks/issues'"
+        "pot": "wp-pot --src '{,!(node_modules)/**}/*.php' --dest-file 'languages/ultimate-blocks.pot' --package 'Ultimate_Blocks' --domain 'ultimate-blocks' --last-translator 'Imtiaz Rayhan <irayhan.asif@gmail.com>' --team 'Ultimate Blocks <irayhan.asif@gmail.com>' --bug-report 'https://github.com/imtiazrayhan/Ultimate-Blocks/issues'"
     },
     "dependencies": {
         "ajv": ">=6.0.0",

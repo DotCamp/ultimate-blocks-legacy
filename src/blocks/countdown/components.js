@@ -57,9 +57,7 @@ class Timer extends Component {
 			604800;
 
 		const defaultFormat = (
-			<p>{`${weeks} ${__('weeks')} ${days} ${__('days')} ${hours} ${__(
-				'hours'
-			)} ${minutes} ${__('minutes')} ${seconds} ${__('seconds')}`}</p>
+			<p>{`${weeks} ${__('weeks', 'ultimate-blocks')} ${days} ${__('days', 'ultimate-blocks')} ${hours} ${__('hours', 'ultimate-blocks')} ${minutes} ${__('minutes', 'ultimate-blocks')} ${seconds} ${__('seconds', 'ultimate-blocks')}`}</p>
 		);
 
 		const circularFormat = (
@@ -69,11 +67,11 @@ class Timer extends Component {
 				<Circle color={color} amount={hours} total={24} />
 				<Circle color={color} amount={minutes} total={60} />
 				<Circle color={color} amount={seconds} total={60} />
-				<p>{__('Weeks')}</p>
-				<p>{__('Days')}</p>
-				<p>{__('Hours')}</p>
-				<p>{__('Minutes')}</p>
-				<p>{__('Seconds')}</p>
+				<p>{__('Weeks', 'ultimate-blocks')}</p>
+				<p>{__('Days', 'ultimate-blocks')}</p>
+				<p>{__('Hours', 'ultimate-blocks')}</p>
+				<p>{__('Minutes', 'ultimate-blocks')}</p>
+				<p>{__('Seconds', 'ultimate-blocks')}</p>
 			</div>
 		);
 
@@ -81,15 +79,15 @@ class Timer extends Component {
 
 		const odometerFormat = (
 			<div className="ub-countdown-odometer-container">
-				<span>{__('Weeks')}</span>
+				<span>{__('Weeks', 'ultimate-blocks')}</span>
 				<span />
-				<span>{__('Days')}</span>
+				<span>{__('Days', 'ultimate-blocks')}</span>
 				<span />
-				<span>{__('Hours')}</span>
+				<span>{__('Hours', 'ultimate-blocks')}</span>
 				<span />
-				<span>{__('Minutes')}</span>
+				<span>{__('Minutes', 'ultimate-blocks')}</span>
 				<span />
-				<span>{__('Seconds')}</span>
+				<span>{__('Seconds', 'ultimate-blocks')}</span>
 				<Odometer
 					value={
 						weeks < 0
