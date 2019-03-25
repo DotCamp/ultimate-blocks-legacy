@@ -1,15 +1,535 @@
-.ub-hide{display:none !important}.wp-block-ub-block-notification-box{background:#bada55;border:0.2rem solid #292929;color:#292929;margin:0 auto;max-width:740px;padding:2rem}
-.ub-hide{display:none !important}.wp-block-ub-testimonial-block{margin:0 auto;max-width:740px}.ub_testimonial{display:grid;grid-template-columns:fit-content(20%) auto}.ub_testimonial_content{padding:5px 17px !important;margin-top:15px}.ub_testimonial_img{padding:0px 10px !important}.ub_testimonial_img img{margin:0 auto;padding:0;margin-top:10px;border-radius:50%}.ub_testimonial_upload_button{margin:24px 0px 0px 0px}.ub_testimonial_upload_button p{font-size:12px;text-align:justify;margin:5px 0 0 3px}
-.ub-hide{display:none !important}.wp-block-ub-call-to-action{margin:0 auto;max-width:740px}.ub_call_to_action_headline p{text-align:center;padding:20px 20px 0 20px}.ub_call_to_action_content{width:100%;padding:0 0 40px 0}.ub_call_to_action_url_input{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;margin-top:-20px}.ub_cta_url_input_box{margin-left:auto;margin-right:auto;position:relative;-webkit-box-sizing:border-box;box-sizing:border-box}
-.ub-hide{display:none !important}.wp-block-ub-block-divider{margin:0 auto;max-width:740px}
-.ub-hide{display:none !important}.wp-block-ub-number-box{margin:0 auto;max-width:740px}
-.ub-hide{display:none !important}.wp-block-ub-feature-box{margin:20px 0 20px 0;max-width:740px}.ub_feature_upload_button>button{display:-ms-flexbox !important;display:flex !important;-ms-flex-align:center;align-items:center;margin-left:auto !important;margin-right:auto !important}.ub_feature_upload_button>p{font-size:12px;text-align:justify;margin:5px 0 0 3px}
-.ub-hide{display:none !important}.wp-block-ub-block-click-to-tweet{margin:0 auto;max-width:740px}.ub_tweet{display:block;margin:0;width:100%;border:none;outline:none;-webkit-box-shadow:none;box-shadow:none;resize:none;background:transparent !important;overflow:hidden;line-height:1.4;padding:10px;-webkit-transition:padding .2s linear;-o-transition:padding .2s linear;transition:padding .2s linear}.ub_tweet:focus{-webkit-box-shadow:none;box-shadow:none}.ub_click_tweet i{top:4px !important}
-.ub-hide{display:none !important}.wp-block-ub-social-share .social-share-icons{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.wp-block-ub-social-share .social-share-icons .social-share-icon{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;-webkit-box-shadow:0px 3px 2px grey;box-shadow:0px 3px 2px grey;margin:7px;-webkit-transition:all 0.2s ease-in-out;-o-transition:all 0.2s ease-in-out;transition:all 0.2s ease-in-out}.wp-block-ub-social-share .social-share-icons .social-share-icon.circle{border-radius:50%}.wp-block-ub-social-share .social-share-icons .social-share-icon.square{border-radius:0%}.align-icons-center{-ms-flex-pack:center;justify-content:center}.align-icons-left{-ms-flex-pack:start;justify-content:flex-start}.align-icons-right{-ms-flex-pack:end;justify-content:flex-end}
-.ub-hide{display:none !important}.wp-block-ub-content-toggle{margin:20px 0 20px 0;max-width:740px}.wp-block-ub-content-toggle-accordion{position:relative;border:1px solid lightsalmon;margin-bottom:10px}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title{padding:10px 10px 10px 25px;color:white;margin:0;font-size:18px;display:block}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-content{padding:25px}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top{position:absolute;top:-10px;left:0;right:0;-ms-flex-pack:center;justify-content:center;display:-ms-flexbox;display:flex;opacity:0;-webkit-transition:0.5s opacity ease-in-out;-o-transition:0.5s opacity ease-in-out;transition:0.5s opacity ease-in-out}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top>span{display:inline-block;margin:0 3px;cursor:pointer}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top>span:nth-of-type(2){position:absolute;right:-15px}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-bottom{position:absolute;bottom:-10px;left:0;right:0;-ms-flex-pack:center;justify-content:center;display:-ms-flexbox;display:flex;opacity:0;-webkit-transition:0.5s opacity ease-in-out;-o-transition:0.5s opacity ease-in-out;transition:0.5s opacity ease-in-out}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-bottom>span{display:inline-block;margin:0 3px;cursor:pointer}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap{display:-ms-flexbox;display:flex;-ms-flex-align:baseline;align-items:baseline;background:lightsalmon}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap>*:first-child{-ms-flex-positive:1;flex-grow:1}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap .wp-block-ub-content-toggle-accordion-state-indicator{display:block;margin:10px;-webkit-transition:0.5s all;-o-transition:0.5s all;transition:0.5s all;-webkit-transform:rotate(0deg);-ms-transform:rotate(0deg);transform:rotate(0deg);color:white}.wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap .wp-block-ub-content-toggle-accordion-state-indicator.open{-webkit-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg)}.wp-block-ub-content-toggle-accordion:hover .wp-block-ub-content-toggle-accordion-controls-top,.wp-block-ub-content-toggle-accordion:hover .wp-block-ub-content-toggle-accordion-controls-bottom{opacity:1}
-.ub-hide{display:none !important}.wp-block-ub-button-block{margin:0 auto;max-width:100%}.ub_button_url_input{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;margin-top:5px}.ub_button_input_box{margin-left:auto;margin-right:auto;position:relative;-webkit-box-sizing:border-box;box-sizing:border-box}.flex-container{display:-ms-flexbox;display:flex}
-.ub-hide{display:none !important}.wp-block-ub-tabbed-content-holder .blocks-rich-text__tinymce.mce-content-body{font-size:14px}.wp-block-ub-tabbed-content-tabs-title{display:-ms-flexbox;display:flex}.wp-block-ub-tabbed-content-tab-title-wrap{border:1px solid lightgrey;border-top-right-radius:5px;border-top-left-radius:5px;padding:15px;border-bottom:0;margin-right:5px;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;position:relative}.wp-block-ub-tabbed-content-tab-title-wrap:last-child{cursor:pointer}.wp-block-ub-tabbed-content-tab-title-wrap.active{color:white}.wp-block-ub-tabbed-content-tab-title-wrap .remove-tab-icon{width:15px;height:15px;background:#444444;color:white;border-radius:50%;font-size:13px;margin-left:5px;line-height:15px}.wp-block-ub-tabbed-content-tab-title-wrap .drag-handle{font-size:16px;margin-right:3px;color:black}.wp-block-ub-tabbed-content-tab-title-wrap .tab-actions{-ms-flex-pack:justify;justify-content:space-between;position:absolute;top:7px;left:0;right:0;margin:auto;-webkit-transition:all -.5s ease-in-out;-o-transition:all -.5s ease-in-out;transition:all -.5s ease-in-out;display:none}.wp-block-ub-tabbed-content-tab-title-wrap:hover .tab-actions{display:-ms-flexbox;display:flex}.wp-block-ub-tabbed-content-tabs-content{border:1px solid lightgrey;padding:20px}
-.ub-hide{display:none !important}.ub-hide{display:none !important}.ub-star-container{display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row}
-.ub-hide{display:none !important}.ub-hide{display:none !important}.editor-styles-wrapper .ub_table-of-contents ul{padding-left:1.3em}.ub_toc_column_selector.is-primary{top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.ub_toc_column_buttons{display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row}
-.ub-hide{display:none !important}.ub_progress_bar_value{padding-left:5px;-webkit-transform:translateY(5px);-ms-transform:translateY(5px);transform:translateY(5px)}.ub_progress_bar_value button{display:none}
-.ub-hide{display:none !important}.ub_image_slider .flickity-enabled .flickity-page-dots{bottom:30px}
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-block-notification-box {
+  background: #bada55;
+  border: 0.2rem solid #292929;
+  color: #292929;
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 2rem; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Styles
+ *
+ * CSS for Backend only.
+ */
+.wp-block-ub-testimonial-block {
+  margin: 0 auto;
+  max-width: 740px; }
+
+.ub_testimonial {
+  display: grid;
+  grid-template-columns: fit-content(20%) auto; }
+
+.ub_testimonial_content {
+  padding: 5px 17px !important;
+  margin-top: 15px; }
+
+.ub_testimonial_img {
+  padding: 0px 10px !important; }
+  .ub_testimonial_img img {
+    margin: 0 auto;
+    padding: 0;
+    margin-top: 10px;
+    border-radius: 50%; }
+
+.ub_testimonial_upload_button {
+  margin: 24px 0px 0px 0px; }
+  .ub_testimonial_upload_button p {
+    font-size: 12px;
+    text-align: justify;
+    margin: 5px 0 0 3px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-call-to-action {
+  margin: 0 auto;
+  max-width: 740px; }
+
+.ub_call_to_action_headline p {
+  text-align: center;
+  padding: 20px 20px 0 20px; }
+
+.ub_call_to_action_content {
+  width: 100%;
+  padding: 0 0 40px 0; }
+
+.ub_call_to_action_url_input {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-top: -20px; }
+
+.ub_cta_url_input_box {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-block-divider {
+  margin: 0 auto;
+  max-width: 740px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-number-box {
+  margin: 0 auto;
+  max-width: 740px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-feature-box {
+  margin: 20px 0 20px 0;
+  max-width: 740px; }
+
+.ub_feature_upload_button > button {
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-left: auto !important;
+  margin-right: auto !important; }
+
+.ub_feature_upload_button > p {
+  font-size: 12px;
+  text-align: justify;
+  margin: 5px 0 0 3px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-block-click-to-tweet {
+  margin: 0 auto;
+  max-width: 740px; }
+
+.ub_tweet {
+  display: block;
+  margin: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  resize: none;
+  background: transparent !important;
+  overflow: hidden;
+  line-height: 1.4;
+  padding: 10px;
+  -webkit-transition: padding .2s linear;
+  -o-transition: padding .2s linear;
+  transition: padding .2s linear; }
+  .ub_tweet:focus {
+    -webkit-box-shadow: none;
+            box-shadow: none; }
+
+.ub_click_tweet i {
+  top: 4px !important; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.wp-block-ub-social-share .social-share-icons {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+  .wp-block-ub-social-share .social-share-icons .social-share-icon {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -webkit-box-shadow: 0px 3px 2px grey;
+            box-shadow: 0px 3px 2px grey;
+    margin: 7px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out; }
+    .wp-block-ub-social-share .social-share-icons .social-share-icon.circle {
+      border-radius: 50%; }
+    .wp-block-ub-social-share .social-share-icons .social-share-icon.square {
+      border-radius: 0%; }
+
+.align-icons-center {
+  -ms-flex-pack: center;
+      justify-content: center; }
+
+.align-icons-left {
+  -ms-flex-pack: start;
+      justify-content: flex-start; }
+
+.align-icons-right {
+  -ms-flex-pack: end;
+      justify-content: flex-end; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-content-toggle {
+  margin: 20px 0 20px 0;
+  max-width: 740px; }
+
+.wp-block-ub-content-toggle-accordion {
+  position: relative;
+  border: 1px solid lightsalmon;
+  margin-bottom: 10px; }
+  .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title {
+    padding: 10px 10px 10px 25px;
+    color: white;
+    margin: 0;
+    font-size: 18px;
+    display: block; }
+  .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-content {
+    padding: 25px; }
+  .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    -ms-flex-pack: center;
+        justify-content: center;
+    display: -ms-flexbox;
+    display: flex;
+    opacity: 0;
+    -webkit-transition: 0.5s opacity ease-in-out;
+    -o-transition: 0.5s opacity ease-in-out;
+    transition: 0.5s opacity ease-in-out; }
+    .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top > span {
+      display: inline-block;
+      margin: 0 3px;
+      cursor: pointer; }
+    .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-top > span:nth-of-type(2) {
+      position: absolute;
+      right: -15px; }
+  .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-bottom {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    -ms-flex-pack: center;
+        justify-content: center;
+    display: -ms-flexbox;
+    display: flex;
+    opacity: 0;
+    -webkit-transition: 0.5s opacity ease-in-out;
+    -o-transition: 0.5s opacity ease-in-out;
+    transition: 0.5s opacity ease-in-out; }
+    .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-controls-bottom > span {
+      display: inline-block;
+      margin: 0 3px;
+      cursor: pointer; }
+  .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: baseline;
+        align-items: baseline;
+    background: lightsalmon; }
+    .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap > *:first-child {
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+    .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap .wp-block-ub-content-toggle-accordion-state-indicator {
+      display: block;
+      margin: 10px;
+      -webkit-transition: 0.5s all;
+      -o-transition: 0.5s all;
+      transition: 0.5s all;
+      -webkit-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+              transform: rotate(0deg);
+      color: white; }
+      .wp-block-ub-content-toggle-accordion .wp-block-ub-content-toggle-accordion-title-wrap .wp-block-ub-content-toggle-accordion-state-indicator.open {
+        -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+                transform: rotate(90deg); }
+  .wp-block-ub-content-toggle-accordion:hover .wp-block-ub-content-toggle-accordion-controls-top,
+  .wp-block-ub-content-toggle-accordion:hover .wp-block-ub-content-toggle-accordion-controls-bottom {
+    opacity: 1; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-button-block {
+  margin: 0 auto;
+  max-width: 100%; }
+
+.ub_button_url_input {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-top: 5px; }
+
+.ub_button_input_box {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+.flex-container {
+  display: -ms-flexbox;
+  display: flex; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-ub-tabbed-content-holder .blocks-rich-text__tinymce.mce-content-body {
+  font-size: 14px; }
+
+.wp-block-ub-tabbed-content-tabs-title {
+  display: -ms-flexbox;
+  display: flex; }
+
+.wp-block-ub-tabbed-content-tab-title-wrap {
+  border: 1px solid lightgrey;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  padding: 15px;
+  border-bottom: 0;
+  margin-right: 5px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  position: relative; }
+  .wp-block-ub-tabbed-content-tab-title-wrap:last-child {
+    cursor: pointer; }
+  .wp-block-ub-tabbed-content-tab-title-wrap.active {
+    color: white; }
+  .wp-block-ub-tabbed-content-tab-title-wrap .remove-tab-icon {
+    width: 15px;
+    height: 15px;
+    background: #444444;
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    margin-left: 5px;
+    line-height: 15px; }
+  .wp-block-ub-tabbed-content-tab-title-wrap .drag-handle {
+    font-size: 16px;
+    margin-right: 3px;
+    color: black; }
+  .wp-block-ub-tabbed-content-tab-title-wrap .tab-actions {
+    -ms-flex-pack: justify;
+        justify-content: space-between;
+    position: absolute;
+    top: 7px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    -webkit-transition: all -.5s ease-in-out;
+    -o-transition: all -.5s ease-in-out;
+    transition: all -.5s ease-in-out;
+    display: none; }
+  .wp-block-ub-tabbed-content-tab-title-wrap:hover .tab-actions {
+    display: -ms-flexbox;
+    display: flex; }
+
+.wp-block-ub-tabbed-content-tabs-content {
+  border: 1px solid lightgrey;
+  padding: 20px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.ub-star-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.editor-styles-wrapper .ub_table-of-contents ul {
+  padding-left: 1.3em; }
+
+.ub_toc_column_selector.is-primary {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%); }
+
+.ub_toc_column_buttons {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.ub_progress_bar_value {
+  padding-left: 5px;
+  -webkit-transform: translateY(5px);
+      -ms-transform: translateY(5px);
+          transform: translateY(5px); }
+  .ub_progress_bar_value button {
+    display: none; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.ub_image_slider .flickity-enabled .flickity-page-dots {
+  bottom: 30px; }

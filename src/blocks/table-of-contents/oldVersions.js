@@ -147,7 +147,7 @@ class TableOfContents_1_1_2 extends Component {
 	}
 }
 
-const version_1_1_2 = props => {
+export const version_1_1_2 = props => {
 	const { links, title } = props.attributes;
 	return (
 		<div className="ub_table-of-contents">
@@ -311,7 +311,7 @@ class TableOfContents_1_1_3 extends Component {
 	}
 }
 
-const version_1_1_3 = props => {
+export const version_1_1_3 = props => {
 	const { links, title } = props.attributes;
 	return (
 		<div className="ub_table-of-contents">
@@ -325,7 +325,7 @@ const version_1_1_3 = props => {
 	);
 };
 
-const version_1_1_5 = props => {
+export const version_1_1_5 = props => {
 	const {
 		links,
 		title,
@@ -373,4 +373,55 @@ const version_1_1_5 = props => {
 	);
 };
 
-export { version_1_1_2, version_1_1_3, version_1_1_5 };
+export const version_1_1_6 = props => {
+	const {
+		links,
+		title,
+		allowedHeaders,
+		showList,
+		numColumns,
+		allowToCHiding
+	} = props.attributes;
+	return (
+		<div className="ub_table-of-contents">
+			{(title.length > 1 || (title.length === 1 && title[0] !== '')) && (
+				<div className="ub_table-of-contents-header">
+					<div
+						className="ub_table-of-contents-title"
+						id="ub_table-of-contents-title"
+					>
+						{title}
+					</div>
+					{allowToCHiding && (
+						<div id="ub_table-of-contents-header-toggle">
+							<div id="ub_table-of-contents-toggle">
+								[
+								<a
+									id="ub_table-of-contents-toggle-link"
+									href="#"
+								>
+									{showList ? __('hide') : __('show')}
+								</a>
+								]
+							</div>
+						</div>
+					)}
+				</div>
+			)}
+
+			<TableOfContents
+				style={{
+					display:
+						showList ||
+						title.length === 0 ||
+						(title.length === 1 && title[0] === '')
+							? 'block'
+							: 'none',
+					columnCount: numColumns
+				}}
+				allowedHeaders={allowedHeaders}
+				headers={links && JSON.parse(links)}
+			/>
+		</div>
+	);
+};

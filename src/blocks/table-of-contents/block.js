@@ -1,6 +1,11 @@
 import icon, { oneColumnIcon, twoColumnsIcon, threeColumnsIcon } from './icon';
 import TableOfContents from './components';
-import { version_1_1_2, version_1_1_3, version_1_1_5 } from './oldVersions';
+import {
+	version_1_1_2,
+	version_1_1_3,
+	version_1_1_5,
+	version_1_1_6
+} from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
@@ -75,10 +80,7 @@ registerBlockType('ub/table-of-contents', {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody
-						title={__('Allowed Headers')}
-						initialOpen={true}
-					>
+					<PanelBody title={__('Allowed Headers')} initialOpen={true}>
 						{allowedHeaders.map((a, i) => (
 							<PanelRow>
 								<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i +
@@ -105,7 +107,9 @@ registerBlockType('ub/table-of-contents', {
 					>
 						<PanelRow>
 							<label htmlFor="ub_toc_toggle_display">
-								{__('Allow users to toggle the visibility of the table of contents')}
+								{__(
+									'Allow users to toggle the visibility of the table of contents'
+								)}
 							</label>
 							<ToggleControl
 								id="ub_toc_toggle_display"
@@ -113,7 +117,9 @@ registerBlockType('ub/table-of-contents', {
 								onChange={allowToCHiding => {
 									setAttributes({
 										allowToCHiding,
-										showList: allowToCHiding ? showList : true
+										showList: allowToCHiding
+											? showList
+											: true
 									});
 								}}
 							/>
@@ -226,7 +232,10 @@ registerBlockType('ub/table-of-contents', {
 				{(title.length > 1 ||
 					(title.length === 1 && title[0] !== '')) && (
 					<div className="ub_table-of-contents-header">
-						<div className="ub_table-of-contents-title">
+						<div
+							className="ub_table-of-contents-title"
+							id="ub_table-of-contents-title"
+						>
 							{title}
 						</div>
 						{allowToCHiding && (
@@ -235,7 +244,7 @@ registerBlockType('ub/table-of-contents', {
 									[
 									<a
 										id="ub_table-of-contents-toggle-link"
-										href="#"
+										href="#ub_table-of-contents-title"
 									>
 										{showList ? __('hide') : __('show')}
 									</a>
@@ -280,6 +289,7 @@ registerBlockType('ub/table-of-contents', {
 			},
 			save: version_1_1_3
 		},
-		{ attributes, save: version_1_1_5 }
+		{ attributes, save: version_1_1_5 },
+		{ attributes, save: version_1_1_6 }
 	]
 });
