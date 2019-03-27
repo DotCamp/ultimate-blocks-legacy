@@ -208,7 +208,7 @@ registerBlockType('ub/table-of-contents', {
 				</div>
 				{showList && (
 					<TableOfContents
-						style={{ columnCount: numColumns }}
+						numColumns={numColumns}
 						allowedHeaders={allowedHeaders}
 						headers={links && JSON.parse(links)}
 						blockProp={props}
@@ -256,14 +256,14 @@ registerBlockType('ub/table-of-contents', {
 				)}
 
 				<TableOfContents
+					numColumns={numColumns}
 					style={{
 						display:
 							showList ||
 							title.length === 0 ||
 							(title.length === 1 && title[0] === '')
 								? 'block'
-								: 'none',
-						columnCount: numColumns
+								: 'none'
 					}}
 					allowedHeaders={allowedHeaders}
 					headers={links && JSON.parse(links)}

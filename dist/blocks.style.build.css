@@ -713,6 +713,25 @@
   display: flex;
   -ms-flex-align: center;
       align-items: center; }
+
+.ub_table-of-contents-1-column {
+  -webkit-column-count: 1;
+          column-count: 1; }
+
+.ub_table-of-contents-2-column {
+  -webkit-column-count: 2;
+          column-count: 2; }
+
+.ub_table-of-contents-3-column {
+  -webkit-column-count: 3;
+          column-count: 3; }
+
+@media screen and (max-width: 600px) {
+  .ub_table-of-contents-1-column,
+  .ub_table-of-contents-2-column,
+  .ub_table-of-contents-3-column {
+    -webkit-column-count: 1;
+            column-count: 1; } }
 /**
  * #.# Common SCSS
  *

@@ -22,3 +22,23 @@
 	display: flex;
 	align-items: center;
 }
+
+.ub_table-of-contents-1-column {
+	column-count: 1;
+}
+
+.ub_table-of-contents-2-column {
+	column-count: 2;
+}
+
+.ub_table-of-contents-3-column {
+	column-count: 3;
+}
+
+@media screen and (max-width: 600px) {
+	.ub_table-of-contents-1-column,
+	.ub_table-of-contents-2-column,
+	.ub_table-of-contents-3-column {
+		column-count: 1;
+	}
+}

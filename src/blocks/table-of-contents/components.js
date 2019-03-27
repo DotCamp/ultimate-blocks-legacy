@@ -74,7 +74,7 @@ class TableOfContents extends Component {
 	}
 
 	render() {
-		const { allowedHeaders, blockProp, style } = this.props;
+		const { allowedHeaders, blockProp, style, numColumns } = this.props;
 
 		const { headers } = this.state;
 
@@ -145,7 +145,10 @@ class TableOfContents extends Component {
 				0
 		) {
 			return (
-				<div style={style} className="ub_table-of-contents-container">
+				<div
+					style={style}
+					className={`ub_table-of-contents-container ub_table-of-contents-${numColumns}-column`}
+				>
 					{parseList(makeHeaderArray(headers))}
 				</div>
 			);
