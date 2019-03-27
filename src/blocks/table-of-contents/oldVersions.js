@@ -4,6 +4,52 @@ const { select, subscribe } = wp.data;
 import { Component } from 'react';
 const { __ } = wp.i18n;
 
+const ToCPlaceholder = (
+	<p className="ub_table-of-contents-placeholder">
+		{__('Add a header to begin generating the table of contents')}
+	</p>
+);
+
+const getHeaderBlocks = () =>
+	select('core/editor')
+		.getBlocks()
+		.filter(block => block.name === 'core/heading');
+
+const makeNestedArray = (item, array) => {
+	let last = array.length - 1;
+	if (array.length === 0 || array[last][0].level < item.level) {
+		array.push([item]);
+	} else if (array[last][0].level === item.level) {
+		array[last].push(item);
+	} else {
+		while (array[last][0].level > item.level) {
+			if (array.length > 1) {
+				array[array.length - 2].push(array.pop());
+				last = array.length - 1;
+			} else break;
+		}
+		if (array[last][0].level === item.level) {
+			array[last].push(item);
+		}
+	}
+};
+
+const combineSubarrays = array => {
+	while (
+		array.length > 1 &&
+		array[array.length - 1][0].level > array[array.length - 2][0].level
+	) {
+		array[array.length - 2].push(array.pop());
+	}
+	return array[0];
+};
+
+const makeHeaderArray_1_1_2 = origHeaders => {
+	let arrays = [];
+	origHeaders.forEach(header => makeNestedArray(header, arrays));
+	return combineSubarrays(arrays);
+};
+
 class TableOfContents_1_1_2 extends Component {
 	constructor(props) {
 		super(props);
@@ -14,45 +60,6 @@ class TableOfContents_1_1_2 extends Component {
 	}
 
 	componentDidMount() {
-		const makeHeaderArray = origHeaders => {
-			let arrays = [];
-			origHeaders.forEach(header => {
-				let last = arrays.length - 1;
-				if (
-					arrays.length === 0 ||
-					arrays[last][0].level < header.level
-				) {
-					arrays.push([header]);
-				} else if (arrays[last][0].level === header.level) {
-					arrays[last].push(header);
-				} else {
-					while (arrays[last][0].level > header.level) {
-						if (arrays.length > 1) {
-							arrays[arrays.length - 2].push(arrays.pop());
-							last = arrays.length - 1;
-						} else break;
-					}
-					if (arrays[last][0].level === header.level) {
-						arrays[last].push(header);
-					}
-				}
-			});
-
-			while (
-				arrays.length > 1 &&
-				arrays[arrays.length - 1][0].level >
-					arrays[arrays.length - 2][0].level
-			) {
-				arrays[arrays.length - 2].push(arrays.pop());
-			}
-			return arrays[0];
-		};
-
-		const getHeaderBlocks = () =>
-			select('core/editor')
-				.getBlocks()
-				.filter(block => block.name === 'core/heading');
-
 		const setHeaders = () => {
 			const headers = getHeaderBlocks().map(header => header.attributes);
 			headers.forEach((heading, key) => {
@@ -80,7 +87,7 @@ class TableOfContents_1_1_2 extends Component {
 				}
 			});
 
-			this.setState({ headers: makeHeaderArray(headers) });
+			this.setState({ headers: makeHeaderArray_1_1_2(headers) });
 		};
 
 		setHeaders();
@@ -107,11 +114,11 @@ class TableOfContents_1_1_2 extends Component {
 	}
 
 	render() {
-		const parseList = list => {
+		const parseList_1_1_2 = list => {
 			let items = [];
 			list.forEach(item => {
 				if (Array.isArray(item)) {
-					items.push(parseList(item));
+					items.push(parseList_1_1_2(item));
 				} else {
 					let multilineItem = item.content.split('<br>');
 					for (let i = 0; i < multilineItem.length - 1; i++) {
@@ -130,19 +137,11 @@ class TableOfContents_1_1_2 extends Component {
 		if (this.state.headers) {
 			return (
 				<div className="ub_table-of-contents-container">
-					{parseList(this.state.headers)}
+					{parseList_1_1_2(this.state.headers)}
 				</div>
 			);
 		} else {
-			return (
-				this.props.blockProp && (
-					<p className="ub_table-of-contents-placeholder">
-						{__(
-							'Add a header to begin generating the table of contents'
-						)}
-					</p>
-				)
-			);
+			return this.props.blockProp && ToCPlaceholder;
 		}
 	}
 }
@@ -161,6 +160,27 @@ export const version_1_1_2 = props => {
 	);
 };
 
+const parseList_1_1_3 = list => {
+	let items = [];
+	list.forEach(item => {
+		if (Array.isArray(item)) {
+			items.push(parseList_1_1_3(item));
+		} else {
+			items.push(
+				<li>
+					<a
+						href={`#${item.anchor}`}
+						dangerouslySetInnerHTML={{
+							__html: item.content.replace(/(<a.+?>|<\/a>)/g, '')
+						}}
+					/>
+				</li>
+			);
+		}
+	});
+	return <ul>{items}</ul>;
+};
+
 class TableOfContents_1_1_3 extends Component {
 	constructor(props) {
 		super(props);
@@ -171,45 +191,6 @@ class TableOfContents_1_1_3 extends Component {
 	}
 
 	componentDidMount() {
-		const makeHeaderArray = origHeaders => {
-			let arrays = [];
-			origHeaders.forEach(header => {
-				let last = arrays.length - 1;
-				if (
-					arrays.length === 0 ||
-					arrays[last][0].level < header.level
-				) {
-					arrays.push([header]);
-				} else if (arrays[last][0].level === header.level) {
-					arrays[last].push(header);
-				} else {
-					while (arrays[last][0].level > header.level) {
-						if (arrays.length > 1) {
-							arrays[arrays.length - 2].push(arrays.pop());
-							last = arrays.length - 1;
-						} else break;
-					}
-					if (arrays[last][0].level === header.level) {
-						arrays[last].push(header);
-					}
-				}
-			});
-
-			while (
-				arrays.length > 1 &&
-				arrays[arrays.length - 1][0].level >
-					arrays[arrays.length - 2][0].level
-			) {
-				arrays[arrays.length - 2].push(arrays.pop());
-			}
-			return arrays[0];
-		};
-
-		const getHeaderBlocks = () =>
-			select('core/editor')
-				.getBlocks()
-				.filter(block => block.name === 'core/heading');
-
 		const setHeaders = () => {
 			const headers = getHeaderBlocks().map(header => header.attributes);
 			headers.forEach((heading, key) => {
@@ -239,8 +220,7 @@ class TableOfContents_1_1_3 extends Component {
 					);
 				}
 			});
-
-			this.setState({ headers: makeHeaderArray(headers) });
+			this.setState({ headers: makeHeaderArray_1_1_2(headers) });
 		};
 
 		setHeaders();
@@ -267,46 +247,14 @@ class TableOfContents_1_1_3 extends Component {
 	}
 
 	render() {
-		const parseList = list => {
-			let items = [];
-			list.forEach(item => {
-				if (Array.isArray(item)) {
-					items.push(parseList(item));
-				} else {
-					items.push(
-						<li>
-							<a
-								href={`#${item.anchor}`}
-								dangerouslySetInnerHTML={{
-									__html: item.content.replace(
-										/(<a.+?>|<\/a>)/g,
-										''
-									)
-								}}
-							/>
-						</li>
-					);
-				}
-			});
-			return <ul>{items}</ul>;
-		};
-
 		if (this.state.headers) {
 			return (
 				<div className="ub_table-of-contents-container">
-					{parseList(this.state.headers)}
+					{parseList_1_1_3(this.state.headers)}
 				</div>
 			);
 		} else {
-			return (
-				this.props.blockProp && (
-					<p className="ub_table-of-contents-placeholder">
-						{__(
-							'Add a header to begin generating the table of contents'
-						)}
-					</p>
-				)
-			);
+			return this.props.blockProp && ToCPlaceholder;
 		}
 	}
 }
@@ -325,6 +273,25 @@ export const version_1_1_3 = props => {
 	);
 };
 
+class ToggleButton extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
+		return (
+			<div id="ub_table-of-contents-header-toggle">
+				<div id="ub_table-of-contents-toggle">
+					[
+					<a id="ub_table-of-contents-toggle-link" href="#">
+						{this.props.showList ? __('hide') : __('show')}
+					</a>
+					]
+				</div>
+			</div>
+		);
+	}
+}
+
 class TableOfContents_1_1_5 extends Component {
 	constructor(props) {
 		super(props);
@@ -335,11 +302,6 @@ class TableOfContents_1_1_5 extends Component {
 	}
 
 	componentDidMount() {
-		const getHeaderBlocks = () =>
-			select('core/editor')
-				.getBlocks()
-				.filter(block => block.name === 'core/heading');
-
 		const setHeaders = () => {
 			const headers = getHeaderBlocks().map(header => header.attributes);
 			headers.forEach((heading, key) => {
@@ -369,7 +331,6 @@ class TableOfContents_1_1_5 extends Component {
 					);
 				}
 			});
-
 			this.setState({ headers });
 		};
 
@@ -406,60 +367,8 @@ class TableOfContents_1_1_5 extends Component {
 
 			origHeaders
 				.filter(header => allowedHeaders[header.level - 1])
-				.forEach(header => {
-					let last = arrays.length - 1;
-					if (
-						arrays.length === 0 ||
-						arrays[last][0].level < header.level
-					) {
-						arrays.push([header]);
-					} else if (arrays[last][0].level === header.level) {
-						arrays[last].push(header);
-					} else {
-						while (arrays[last][0].level > header.level) {
-							if (arrays.length > 1) {
-								arrays[arrays.length - 2].push(arrays.pop());
-								last = arrays.length - 1;
-							} else break;
-						}
-						if (arrays[last][0].level === header.level) {
-							arrays[last].push(header);
-						}
-					}
-				});
-
-			while (
-				arrays.length > 1 &&
-				arrays[arrays.length - 1][0].level >
-					arrays[arrays.length - 2][0].level
-			) {
-				arrays[arrays.length - 2].push(arrays.pop());
-			}
-			return arrays[0];
-		};
-
-		const parseList = list => {
-			let items = [];
-			list.forEach(item => {
-				if (Array.isArray(item)) {
-					items.push(parseList(item));
-				} else {
-					items.push(
-						<li>
-							<a
-								href={`#${item.anchor}`}
-								dangerouslySetInnerHTML={{
-									__html: item.content.replace(
-										/(<a.+?>|<\/a>)/g,
-										''
-									)
-								}}
-							/>
-						</li>
-					);
-				}
-			});
-			return <ul>{items}</ul>;
+				.forEach(header => makeNestedArray(header, arrays));
+			return combineSubarrays(arrays);
 		};
 
 		if (
@@ -469,19 +378,11 @@ class TableOfContents_1_1_5 extends Component {
 		) {
 			return (
 				<div style={style} className="ub_table-of-contents-container">
-					{parseList(makeHeaderArray(headers))}
+					{parseList_1_1_3(makeHeaderArray(headers))}
 				</div>
 			);
 		} else {
-			return (
-				blockProp && (
-					<p className="ub_table-of-contents-placeholder">
-						{__(
-							'Add a header to begin generating the table of contents'
-						)}
-					</p>
-				)
-			);
+			return blockProp && ToCPlaceholder;
 		}
 	}
 }
@@ -500,20 +401,7 @@ export const version_1_1_5 = props => {
 			{(title.length > 1 || (title.length === 1 && title[0] !== '')) && (
 				<div className="ub_table-of-contents-header">
 					<div className="ub_table-of-contents-title">{title}</div>
-					{allowToCHiding && (
-						<div id="ub_table-of-contents-header-toggle">
-							<div id="ub_table-of-contents-toggle">
-								[
-								<a
-									id="ub_table-of-contents-toggle-link"
-									href="#"
-								>
-									{showList ? __('hide') : __('show')}
-								</a>
-								]
-							</div>
-						</div>
-					)}
+					{allowToCHiding && <ToggleButton showList={showList} />}
 				</div>
 			)}
 
@@ -553,20 +441,7 @@ export const version_1_1_6 = props => {
 					>
 						{title}
 					</div>
-					{allowToCHiding && (
-						<div id="ub_table-of-contents-header-toggle">
-							<div id="ub_table-of-contents-toggle">
-								[
-								<a
-									id="ub_table-of-contents-toggle-link"
-									href="#"
-								>
-									{showList ? __('hide') : __('show')}
-								</a>
-								]
-							</div>
-						</div>
-					)}
+					{allowToCHiding && <ToggleButton showList={showList} />}
 				</div>
 			)}
 
