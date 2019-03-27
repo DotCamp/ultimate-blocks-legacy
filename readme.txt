@@ -3,12 +3,12 @@ Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 4.9
 Tested up to: 5.1
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
-Custom Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
+Custom Gutenberg Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
 
 == Description ==
 
@@ -118,6 +118,13 @@ That's it. You're done!
 3. Adding Notification Block
 
 == Changelog ==
+
+= 1.1.6 =
+
+Release Date: March 27th, 2019
+
+* FIX: Forcing one column for Table of Contents on smaller screens.
+* FIX: Prevent Show/Hide button from taking focus away from Table of Contents.
 
 = 1.1.5 =
 
