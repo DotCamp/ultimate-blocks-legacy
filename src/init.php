@@ -14,31 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Check if the current page is the Gutenberg block editor.
- *
- * @author Vova Feldman (@svovaf)
- * @since  2.2.3
- *
- * @return bool
- */
-function ub_check_is_gutenberg_page() {
-
-	// The Gutenberg plugin is on.
-    if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) { 
-        return true;
-    }
-	
-	// Gutenberg page on WordPress 5+.
-	$current_screen = get_current_screen();
-	if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-        return true;
-	}
-	
-    return false;
-
-}
-
-/**
  * Enqueue Gutenberg block assets for both frontend + backend.
  *
  * `wp-blocks`: includes block type registration and related functions.
@@ -47,15 +22,12 @@ function ub_check_is_gutenberg_page() {
  */
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
-	if ( ( is_singular() and has_blocks() ) or ub_check_is_gutenberg_page() ) {
-		wp_enqueue_style(
-			'ultimate_blocks-cgb-style-css', // Handle.
-			plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-			array(), // Dependency to include the CSS after it.
-			Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
-		);
-	}
-	
+	wp_enqueue_style(
+		'ultimate_blocks-cgb-style-css', // Handle.
+		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+		array(), // Dependency to include the CSS after it.
+		Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+	);
 } // End function ultimate_blocks_cgb_block_assets().
 
 // Hook: Frontend assets.
