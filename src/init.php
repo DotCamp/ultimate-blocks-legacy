@@ -13,6 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( !function_exists( 'get_current_screen' ) ) {
+	require_once( ABSPATH . 'wp-admin/includes/screen.php' );
+}
+
 /**
  * Check if the current page is the Gutenberg block editor.
  * @return bool
