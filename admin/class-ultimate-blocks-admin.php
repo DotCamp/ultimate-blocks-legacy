@@ -77,7 +77,7 @@ class Ultimate_Blocks_Admin {
 	 *
 	 * @since    1.0.2
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -90,6 +90,11 @@ class Ultimate_Blocks_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		global $menu_page;
+
+		if ( $hook != $menu_page ) {
+			return;
+		}
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ultimate-blocks-admin.css', array(), $this->version, 'all' );
 
@@ -100,7 +105,7 @@ class Ultimate_Blocks_Admin {
 	 *
 	 * @since    1.0.2
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -113,6 +118,11 @@ class Ultimate_Blocks_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		global $menu_page;
+
+		if ( $hook != $menu_page ) {
+			return;
+		}
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ultimate-blocks-admin.js', array( 'jquery' ), $this->version, false );
 
@@ -126,7 +136,9 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function register_admin_menus() {
 
-		add_menu_page(
+		global $menu_page;
+
+		$menu_page = add_menu_page(
 			'Ultimate Blocks Settings',
 			'Ultimate Blocks',
 			'manage_options',
