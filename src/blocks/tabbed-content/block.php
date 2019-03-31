@@ -6,7 +6,7 @@
  * @return void
  */
 function ub_tabbed_content_add_frontend_assets() {
-    if(has_block('ub/tabbed-content')){
+    if ( has_block( 'ub/tabbed-content' ) ) {
         wp_enqueue_script(
             'ultimate_blocks-tabbed-content-front-script',
             plugins_url( 'tabbed-content/front.js', dirname( __FILE__ ) ),

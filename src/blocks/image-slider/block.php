@@ -6,7 +6,7 @@
  * @return void
  */
 function ub_image_slider_add_frontend_assets() {
-    if(has_block('ub/image-slider')){
+    if ( has_block( 'ub/image-slider' ) ) {
         wp_enqueue_script(
             'ultimate_blocks-image-slider-front-script',
             plugins_url( '/flickity.pkgd.js', __FILE__ ),
