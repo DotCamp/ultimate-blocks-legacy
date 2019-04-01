@@ -45,17 +45,36 @@ function ub_check_is_gutenberg_page() {
  *
  * @since 1.0.0
  */
+
+function ub_load_assets(){
+    wp_enqueue_style(
+        'ultimate_blocks-cgb-style-css', // Handle.
+        plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+        array(), // Dependency to include the CSS after it.
+        Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+    );
+}
+
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
-	if ( ( is_singular() and has_blocks() ) or ub_check_is_gutenberg_page() ) {
-		wp_enqueue_style(
-			'ultimate_blocks-cgb-style-css', // Handle.
-			plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-			array(), // Dependency to include the CSS after it.
-			Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
-		);
-	}
-	
+	if ( is_singular() and has_blocks() ){
+        function ub_getNamesOfPresentBlocks($value){
+            return $value['blockName'];
+        }
+
+        $presentBlocks = array_map( 'ub_getNamesOfPresentBlocks',
+                                    parse_blocks( get_post()->post_content ) );
+
+        foreach( $presentBlocks as $blockName ){
+            if( strpos($blockName, 'ub/' )===0){
+                ub_load_assets();
+                break;
+            }
+        }
+    }
+    elseif ( ub_check_is_gutenberg_page() ){
+        ub_load_assets();
+    }
 } // End function ultimate_blocks_cgb_block_assets().
 
 // Hook: Frontend assets.
