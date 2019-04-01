@@ -25,7 +25,7 @@
         <h2><span class="color-red"><?php esc_html_e( '17 awesome blocks.', 'ultimate-blocks' ); ?></span> <?php esc_html_e( 'More in the making...', 'ultimate-blocks' ); ?></h2>
         <div class="ub-button-wrap ultimate-blocks-clear">
             <div class="left">
-                <a href="<?php echo admin_url( 'admin.php?page=ultimate-blocks-settings' ); ?>" class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-red">
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=ultimate-blocks-settings' ) ); ?>" class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-red">
                         <?php esc_html_e( 'Manage the Blocks', 'ultimate-blocks' ); ?>
                 </a>
             </div>
@@ -45,14 +45,14 @@
         <p><?php esc_html_e( 'For upcoming plugins updates, news, tips and tutorials on Gutenberg in general you can stay connected with us.', 'ultimate-blocks' ); ?></p>
         <div class="ub-social-button-wrap ultimate-blocks-clear">
             <div class="left">
-                <a href="https://twitter.com/Ultimate_Blocks" class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-twitter">
+                <a href="https://twitter.com/Ultimate_Blocks" target="_blank" class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-twitter">
                         <?php esc_html_e( 'Follow Us On Twitter!', 'ultimate-blocks' ); ?>
                 </a>
             </div>
             <div class="right">
                 <a href="https://www.facebook.com/groups/2063872290348170/"
                         class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-facebook" target="_blank" rel="noopener noreferrer">
-                        <?php esc_html_e( 'Join Our Facebook Group!', 'ultimate-blocks-coupon' ); ?>
+                        <?php esc_html_e( 'Join Our Facebook Group!', 'ultimate-blocks' ); ?>
                 </a>
             </div>
         </div>
