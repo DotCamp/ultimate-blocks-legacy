@@ -11,7 +11,7 @@ function ub_table_of_contents_add_frontend_assets() {
             'ultimate_blocks-table-of-contents-front-script',
             plugins_url( 'table-of-contents/front.js', dirname( __FILE__ ) ),
             array( 'jquery' ),
-            '1.0',
+            Ultimate_Blocks_Constants::plugin_version(),
             true
         );
     }

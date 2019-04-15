@@ -3,10 +3,14 @@
 		const toggleButton = '#ub_table-of-contents-toggle-link';
 		const toggleContent = '.ub_table-of-contents-container';
 		$(toggleButton).click(function() {
-			$(toggleContent).toggle();
-			$(toggleButton).html(
-				$(toggleContent).css('display') === 'none' ? 'show' : 'hide'
-			);
+			$(toggleContent).slideToggle();
+			if ($(toggleButton).html() === 'hide') {
+				$(toggleButton).html('show');
+			} else {
+				console.log($(toggleButton).html());
+				$(toggleButton).html('hide');
+			}
+			return false; //needed to prevent scrolling
 		});
 	});
 })(jQuery);
