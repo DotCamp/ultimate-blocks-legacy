@@ -1,4 +1,9 @@
-import icon, { oneColumnIcon, twoColumnsIcon, threeColumnsIcon } from './icon';
+import icon, {
+	oneColumnIcon,
+	twoColumnsIcon,
+	threeColumnsIcon,
+	plainList
+} from './icon';
 import TableOfContents from './components';
 import {
 	version_1_1_2,
@@ -49,6 +54,10 @@ const attributes = {
 	numColumns: {
 		type: 'number',
 		default: 1
+	},
+	listStyle: {
+		type: 'string',
+		default: 'bulleted' //other options: numbered, plain
 	}
 };
 
@@ -72,7 +81,8 @@ registerBlockType('ub/table-of-contents', {
 			allowedHeaders,
 			showList,
 			allowToCHiding,
-			numColumns
+			numColumns,
+			listStyle
 		} = props.attributes;
 		const onSetActiveEditable = newEditable => () => {
 			setState({ editable: newEditable });
@@ -168,6 +178,29 @@ registerBlockType('ub/table-of-contents', {
 							onClick={() => setAttributes({ numColumns: 3 })}
 						/>
 					</Toolbar>
+					<Toolbar>
+						<IconButton
+							icon="editor-ul"
+							label={__('Bulleted list')}
+							onClick={() =>
+								setAttributes({ listStyle: 'bulleted' })
+							}
+						/>
+						<IconButton
+							icon="editor-ol"
+							label={__('Numbered list')}
+							onClick={() =>
+								setAttributes({ listStyle: 'numbered' })
+							}
+						/>
+						<IconButton
+							icon={plainList}
+							label={__('Plain list')}
+							onClick={() =>
+								setAttributes({ listStyle: 'plain' })
+							}
+						/>
+					</Toolbar>
 				</BlockControls>
 			),
 			<div className="ub_table-of-contents">
@@ -208,6 +241,7 @@ registerBlockType('ub/table-of-contents', {
 				</div>
 				{showList && (
 					<TableOfContents
+						listStyle={listStyle}
 						numColumns={numColumns}
 						allowedHeaders={allowedHeaders}
 						headers={links && JSON.parse(links)}

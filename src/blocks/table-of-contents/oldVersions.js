@@ -1,5 +1,3 @@
-import TableOfContents from './components';
-
 const { select, subscribe } = wp.data;
 import { Component } from 'react';
 const { __ } = wp.i18n;
@@ -292,6 +290,44 @@ class ToggleButton extends Component {
 	}
 }
 
+const setHeaders_1_1_5 = () => {
+	const headers = getHeaderBlocks().map(header => header.attributes);
+	headers.forEach((heading, key) => {
+		const headingAnchorEmpty =
+			typeof heading.anchor === 'undefined' || heading.anchor === '';
+		const headingContentEmpty =
+			typeof heading.content === 'undefined' || heading.content === '';
+		const headingDefaultAnchor =
+			!headingAnchorEmpty && heading.anchor.indexOf(key + '-') === 0;
+		if (
+			!headingContentEmpty &&
+			(headingAnchorEmpty || headingDefaultAnchor)
+		) {
+			heading.anchor =
+				key +
+				'-' +
+				heading.content
+					.toString()
+					.toLowerCase()
+					.replace(/( |<.+?>|&nbsp;)/g, '-');
+			heading.anchor = heading.anchor.replace(
+				/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
+				''
+			);
+		}
+	});
+	this.setState({ headers });
+};
+
+const makeHeaderArray_1_1_5 = origHeaders => {
+	let arrays = [];
+
+	origHeaders
+		.filter(header => allowedHeaders[header.level - 1])
+		.forEach(header => makeNestedArray(header, arrays));
+	return combineSubarrays(arrays);
+};
+
 class TableOfContents_1_1_5 extends Component {
 	constructor(props) {
 		super(props);
@@ -302,42 +338,10 @@ class TableOfContents_1_1_5 extends Component {
 	}
 
 	componentDidMount() {
-		const setHeaders = () => {
-			const headers = getHeaderBlocks().map(header => header.attributes);
-			headers.forEach((heading, key) => {
-				const headingAnchorEmpty =
-					typeof heading.anchor === 'undefined' ||
-					heading.anchor === '';
-				const headingContentEmpty =
-					typeof heading.content === 'undefined' ||
-					heading.content === '';
-				const headingDefaultAnchor =
-					!headingAnchorEmpty &&
-					heading.anchor.indexOf(key + '-') === 0;
-				if (
-					!headingContentEmpty &&
-					(headingAnchorEmpty || headingDefaultAnchor)
-				) {
-					heading.anchor =
-						key +
-						'-' +
-						heading.content
-							.toString()
-							.toLowerCase()
-							.replace(/( |<.+?>|&nbsp;)/g, '-');
-					heading.anchor = heading.anchor.replace(
-						/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
-						''
-					);
-				}
-			});
-			this.setState({ headers });
-		};
-
-		setHeaders();
+		setHeaders_1_1_5();
 
 		const unsubscribe = subscribe(() => {
-			setHeaders();
+			setHeaders_1_1_5();
 		});
 		this.setState({ unsubscribe });
 	}
@@ -362,15 +366,6 @@ class TableOfContents_1_1_5 extends Component {
 
 		const { headers } = this.state;
 
-		const makeHeaderArray = origHeaders => {
-			let arrays = [];
-
-			origHeaders
-				.filter(header => allowedHeaders[header.level - 1])
-				.forEach(header => makeNestedArray(header, arrays));
-			return combineSubarrays(arrays);
-		};
-
 		if (
 			headers.length > 0 &&
 			headers.filter(header => allowedHeaders[header.level - 1]).length >
@@ -378,7 +373,7 @@ class TableOfContents_1_1_5 extends Component {
 		) {
 			return (
 				<div style={style} className="ub_table-of-contents-container">
-					{parseList_1_1_3(makeHeaderArray(headers))}
+					{parseList_1_1_3(makeHeaderArray_1_1_5(headers))}
 				</div>
 			);
 		} else {
@@ -422,6 +417,62 @@ export const version_1_1_5 = props => {
 	);
 };
 
+class TableOfContents_1_1_6 extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			headers: props.headers,
+			unsubscribe: null
+		};
+	}
+
+	componentDidMount() {
+		setHeaders_1_1_5();
+		const unsubscribe = subscribe(() => {
+			setHeaders_1_1_5();
+		});
+		this.setState({ unsubscribe });
+	}
+
+	componentWillUnmount() {
+		this.state.unsubscribe();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (
+			JSON.stringify(prevProps.headers) !==
+			JSON.stringify(prevState.headers)
+		) {
+			this.props.blockProp.setAttributes({
+				links: JSON.stringify(this.state.headers)
+			});
+		}
+	}
+
+	render() {
+		const { allowedHeaders, blockProp, style, numColumns } = this.props;
+
+		const { headers } = this.state;
+
+		if (
+			headers.length > 0 &&
+			headers.filter(header => allowedHeaders[header.level - 1]).length >
+				0
+		) {
+			return (
+				<div
+					style={style}
+					className={`ub_table-of-contents-container ub_table-of-contents-${numColumns}-column`}
+				>
+					{parseList_1_1_3(makeHeaderArray_1_1_5(headers))}
+				</div>
+			);
+		} else {
+			return blockProp && ToCPlaceholder;
+		}
+	}
+}
+
 export const version_1_1_6 = props => {
 	const {
 		links,
@@ -445,7 +496,7 @@ export const version_1_1_6 = props => {
 				</div>
 			)}
 
-			<TableOfContents
+			<TableOfContents_1_1_6
 				style={{
 					display:
 						showList ||

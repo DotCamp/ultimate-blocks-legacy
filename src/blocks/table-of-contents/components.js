@@ -74,7 +74,13 @@ class TableOfContents extends Component {
 	}
 
 	render() {
-		const { allowedHeaders, blockProp, style, numColumns } = this.props;
+		const {
+			allowedHeaders,
+			blockProp,
+			style,
+			numColumns,
+			listStyle
+		} = this.props;
 
 		const { headers } = this.state;
 
@@ -136,7 +142,19 @@ class TableOfContents extends Component {
 					);
 				}
 			});
-			return <ul>{items}</ul>;
+			if (listStyle === 'numbered') {
+				return <ol>{items}</ol>;
+			} else {
+				return (
+					<ul
+						style={{
+							listStyle: listStyle === 'plain' ? 'none' : null
+						}}
+					>
+						{items}
+					</ul>
+				);
+			}
 		};
 
 		if (

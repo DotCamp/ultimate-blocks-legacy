@@ -1,7 +1,10 @@
 @import '../../common';
 
-.editor-styles-wrapper .ub_table-of-contents ul {
-	padding-left: 1.3em;
+.editor-styles-wrapper .ub_table-of-contents {
+	ul,
+	ol {
+		padding-left: 1.3em;
+	}
 }
 
 .ub_toc_column_selector.is-primary {
