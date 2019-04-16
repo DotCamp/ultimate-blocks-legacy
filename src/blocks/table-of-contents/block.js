@@ -259,7 +259,8 @@ registerBlockType('ub/table-of-contents', {
 			allowedHeaders,
 			showList,
 			numColumns,
-			allowToCHiding
+			allowToCHiding,
+			listStyle
 		} = props.attributes;
 		return (
 			<div className="ub_table-of-contents">
@@ -290,6 +291,7 @@ registerBlockType('ub/table-of-contents', {
 				)}
 
 				<TableOfContents
+					listStyle={listStyle}
 					numColumns={numColumns}
 					style={{
 						display:
