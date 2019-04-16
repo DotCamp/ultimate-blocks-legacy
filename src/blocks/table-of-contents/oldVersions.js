@@ -319,7 +319,7 @@ const setHeaders_1_1_5 = () => {
 	this.setState({ headers });
 };
 
-const makeHeaderArray_1_1_5 = origHeaders => {
+const makeHeaderArray_1_1_5 = (origHeaders, allowedHeaders) => {
 	let arrays = [];
 
 	origHeaders
@@ -373,7 +373,9 @@ class TableOfContents_1_1_5 extends Component {
 		) {
 			return (
 				<div style={style} className="ub_table-of-contents-container">
-					{parseList_1_1_3(makeHeaderArray_1_1_5(headers))}
+					{parseList_1_1_3(
+						makeHeaderArray_1_1_5(headers, allowedHeaders)
+					)}
 				</div>
 			);
 		} else {
