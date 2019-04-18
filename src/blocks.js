@@ -18,6 +18,7 @@ import './blocks/feature-box/block';
 import './blocks/click-to-tweet/block';
 import './blocks/social-share/block';
 import './blocks/content-toggle/block';
+import './blocks/content-toggle/components/panel';
 import './blocks/button/block';
 import './blocks/tabbed-content/block';
 

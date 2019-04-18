@@ -6,7 +6,7 @@
  * @return void
  */
 function ub_content_toggle_add_frontend_assets() {
-    if ( has_block( 'ub/content-toggle' ) ) {
+    if ( has_block( 'ub/content-toggle' ) or has_block('ub/content-toggle-panel') ) {
         wp_enqueue_script(
             'ultimate_blocks-content-toggle-front-script',
             plugins_url( 'content-toggle/front.js', dirname( __FILE__ ) ),
