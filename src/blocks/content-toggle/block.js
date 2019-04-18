@@ -119,6 +119,7 @@ class PanelContent extends Component {
 			setState,
 			selectBlock,
 			insertBlock,
+			insertBlocks,
 			removeBlock,
 			selectedBlock,
 			parentOfSelectedBlock,
@@ -166,6 +167,25 @@ class PanelContent extends Component {
 			);
 		};
 
+		const richTextToHTML = elem => {
+			let outputString = '';
+			outputString += `<${
+				elem.type === 'a'
+					? `${elem.type} href='${elem.href}'`
+					: elem.type
+			}>`;
+			elem.props.children.forEach(child => {
+				if (typeof child === 'string') {
+					outputString += child;
+				} else {
+					outputString += richTextToHTML(child);
+				}
+			});
+			outputString += `</${elem.type}>`;
+
+			return outputString;
+		};
+
 		//Detect if one of the child blocks has received a command to add another child block
 		if (JSON.stringify(newBlockTarget) !== '[]') {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -207,13 +227,66 @@ class PanelContent extends Component {
 						collapsed: collapsed,
 						titleColor: titleColor
 					});
-					insertBlock(
-						createBlock('core/paragraph', {
-							content: accordions[panel.attributes.index].content
-						}),
-						0,
-						panel.clientId
-					);
+
+					if (
+						accordions[panel.attributes.index].content.filter(
+							a => a.type === 'br'
+						).length > 0
+					) {
+						let paragraphs = [];
+
+						accordions[panel.attributes.index].content.forEach(
+							(item, i) => {
+								const part =
+									typeof item === 'string'
+										? item
+										: richTextToHTML(item);
+								if (item.type === 'br') {
+									if (
+										paragraphs.length === 0 ||
+										accordions[panel.attributes.index]
+											.content[i - 1].type === 'br'
+									) {
+										paragraphs.push(item);
+									}
+								} else {
+									if (
+										paragraphs.length === 0 ||
+										accordions[panel.attributes.index]
+											.content[i - 1].type === 'br'
+									) {
+										paragraphs.push(part);
+									} else {
+										paragraphs[
+											paragraphs.length - 1
+										] += part;
+									}
+								}
+							}
+						);
+
+						const newParagraphs = paragraphs.map(part => {
+							return createBlock(
+								'core/paragraph',
+								typeof part === 'object'
+									? { type: part.type, content: part.content }
+									: {
+											content: part
+									  }
+							);
+						});
+
+						insertBlocks(newParagraphs, 0, panel.clientId);
+					} else {
+						insertBlock(
+							createBlock('core/paragraph', {
+								content:
+									accordions[panel.attributes.index].content
+							}),
+							0,
+							panel.clientId
+						);
+					}
 				});
 				setAttributes({ accordions: [] }); //clear old data after successful transfer
 			}
@@ -289,6 +362,7 @@ registerBlockType('ub/content-toggle', {
 			const {
 				updateBlockAttributes,
 				insertBlock,
+				insertBlocks,
 				removeBlock,
 				selectBlock
 			} = dispatch('core/editor');
@@ -296,6 +370,7 @@ registerBlockType('ub/content-toggle', {
 			return {
 				updateBlockAttributes,
 				insertBlock,
+				insertBlocks,
 				removeBlock,
 				selectBlock
 			};

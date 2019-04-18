@@ -118,7 +118,8 @@ class TabHolder extends Component {
 			removeBlock,
 			selectedBlock,
 			selectBlock,
-			insertBlock
+			insertBlock,
+			insertBlocks
 		} = this.props;
 
 		window.ubTabbedContentBlocks = window.ubTabbedContentBlocks || [];
@@ -335,6 +336,25 @@ class TabHolder extends Component {
 			tabs.map(tab => tab.attributes.index)
 		);
 
+		const richTextToHTML = elem => {
+			let outputString = '';
+			outputString += `<${
+				elem.type === 'a'
+					? `${elem.type} href='${elem.href}'`
+					: elem.type
+			}>`;
+			elem.props.children.forEach(child => {
+				if (typeof child === 'string') {
+					outputString += child;
+				} else {
+					outputString += richTextToHTML(child);
+				}
+			});
+			outputString += `</${elem.type}>`;
+
+			return outputString;
+		};
+
 		if (newArrangement !== oldArrangement) {
 			tabs.forEach((tab, i) =>
 				updateBlockAttributes(tab.clientId, {
@@ -349,15 +369,64 @@ class TabHolder extends Component {
 				JSON.stringify(attributes.tabsContent) !== '[]'
 			) {
 				tabs.forEach(tab => {
-					insertBlock(
-						createBlock('core/paragraph', {
-							content:
-								attributes.tabsContent[tab.attributes.index]
-									.content
-						}),
-						0,
-						tab.clientId
-					);
+					if (
+						attributes.tabsContent[
+							tab.attributes.index
+						].content.filter(a => a.type === 'br').length > 0
+					) {
+						let paragraphs = [];
+
+						attributes.tabsContent[
+							tab.attributes.index
+						].content.forEach((item, i) => {
+							const part =
+								typeof item === 'string'
+									? item
+									: richTextToHTML(item);
+							if (item.type === 'br') {
+								if (
+									paragraphs.length === 0 ||
+									attributes.tabsContent[tab.attributes.index]
+										.content[i - 1].type === 'br'
+								) {
+									paragraphs.push(item);
+								}
+							} else {
+								if (
+									paragraphs.length === 0 ||
+									attributes.tabsContent[tab.attributes.index]
+										.content[i - 1].type === 'br'
+								) {
+									paragraphs.push(part);
+								} else {
+									paragraphs[paragraphs.length - 1] += part;
+								}
+							}
+						});
+
+						const newParagraphs = paragraphs.map(part => {
+							return createBlock(
+								'core/paragraph',
+								typeof part === 'object'
+									? { type: part.type, content: part.content }
+									: {
+											content: part
+									  }
+							);
+						});
+
+						insertBlocks(newParagraphs, 0, tab.clientId);
+					} else {
+						insertBlock(
+							createBlock('core/paragraph', {
+								content:
+									attributes.tabsContent[tab.attributes.index]
+										.content
+							}),
+							0,
+							tab.clientId
+						);
+					}
 				});
 				setAttributes({ tabsContent: [] });
 			}
@@ -438,6 +507,7 @@ registerBlockType('ub/tabbed-content', {
 			const {
 				updateBlockAttributes,
 				insertBlock,
+				insertBlocks,
 				removeBlock,
 				moveBlockToPosition,
 				selectBlock
@@ -446,6 +516,7 @@ registerBlockType('ub/tabbed-content', {
 			return {
 				updateBlockAttributes,
 				insertBlock,
+				insertBlocks,
 				removeBlock,
 				moveBlockToPosition,
 				selectBlock
