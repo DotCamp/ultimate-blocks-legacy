@@ -21,6 +21,7 @@ import './blocks/content-toggle/block';
 import './blocks/content-toggle/components/panel';
 import './blocks/button/block';
 import './blocks/tabbed-content/block';
+import './blocks/tabbed-content/components/tab';
 
 import './blocks/star-rating/block';
 import './blocks/table-of-contents/block';
