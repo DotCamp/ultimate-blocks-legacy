@@ -28,7 +28,7 @@ function ub_render_click_to_tweet_block( $attributes ) {
 	$via = get_post_meta( get_the_ID(), 'ub_ctt_via', true );
 	$via = ( $via ) ? '&via=' . str_replace( '@', '', $via ) : false;
     $tweet = preg_replace('/<br><br>$/', '<br>', $attributes['ubTweet']);
-	$tweet_url  = ( $tweet ) ? rawurlencode( str_replace("<br>","\n",$tweet) ) : false;
+	$tweet_url  = ( $tweet ) ? rawurlencode( preg_replace('/<.+?>/', '', str_replace("<br>","\n",$tweet) )) : false;
 
 	$tweetFontSize = isset( $attributes['tweetFontSize'] ) ? "font-size:{$attributes['tweetFontSize']}" : "font-size: 20";
 	$tweetColor = isset( $attributes['tweetColor'] ) ? "color:{$attributes['tweetColor']}" : "color: #444444";
