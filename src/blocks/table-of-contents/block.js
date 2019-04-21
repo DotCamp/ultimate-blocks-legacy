@@ -9,7 +9,8 @@ import {
 	version_1_1_2,
 	version_1_1_3,
 	version_1_1_5,
-	version_1_1_6
+	version_1_1_6,
+	version_1_1_8
 } from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
@@ -326,6 +327,7 @@ registerBlockType('ub/table-of-contents', {
 			save: version_1_1_3
 		},
 		{ attributes, save: version_1_1_5 },
-		{ attributes, save: version_1_1_6 }
+		{ attributes, save: version_1_1_6 },
+		{ attributes, save: version_1_1_8 }
 	]
 });

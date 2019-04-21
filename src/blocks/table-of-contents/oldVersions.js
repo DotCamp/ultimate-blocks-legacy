@@ -1,5 +1,7 @@
-const { select, subscribe } = wp.data;
 import { Component } from 'react';
+import TableOfContents from './components';
+
+const { select, subscribe } = wp.data;
 const { __ } = wp.i18n;
 
 const ToCPlaceholder = (
@@ -466,7 +468,9 @@ class TableOfContents_1_1_6 extends Component {
 					style={style}
 					className={`ub_table-of-contents-container ub_table-of-contents-${numColumns}-column`}
 				>
-					{parseList_1_1_3(makeHeaderArray_1_1_5(headers))}
+					{parseList_1_1_3(
+						makeHeaderArray_1_1_5(headers, allowedHeaders)
+					)}
 				</div>
 			);
 		} else {
@@ -505,8 +509,51 @@ export const version_1_1_6 = props => {
 						title.length === 0 ||
 						(title.length === 1 && title[0] === '')
 							? 'block'
-							: 'none',
-					columnCount: numColumns
+							: 'none'
+				}}
+				numColumns={numColumns}
+				allowedHeaders={allowedHeaders}
+				headers={links && JSON.parse(links)}
+			/>
+		</div>
+	);
+};
+
+export const version_1_1_8 = props => {
+	const {
+		links,
+		title,
+		allowedHeaders,
+		showList,
+		numColumns,
+		allowToCHiding,
+		listStyle
+	} = props.attributes;
+
+	return (
+		<div className="ub_table-of-contents">
+			{(title.length > 1 || (title.length === 1 && title[0] !== '')) && (
+				<div className="ub_table-of-contents-header">
+					<div
+						className="ub_table-of-contents-title"
+						id="ub_table-of-contents-title"
+					>
+						{title}
+					</div>
+					{allowToCHiding && <ToggleButton showList={showList} />}
+				</div>
+			)}
+
+			<TableOfContents
+				listStyle={listStyle}
+				numColumns={numColumns}
+				style={{
+					display:
+						showList ||
+						title.length === 0 ||
+						(title.length === 1 && title[0] === '')
+							? 'block'
+							: 'none'
 				}}
 				allowedHeaders={allowedHeaders}
 				headers={links && JSON.parse(links)}
