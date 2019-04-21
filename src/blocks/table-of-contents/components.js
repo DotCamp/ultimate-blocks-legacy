@@ -84,77 +84,52 @@ class TableOfContents extends Component {
 
 		const { headers } = this.state;
 
+		const placeItem = (arr, item) => {
+			if (arr.length === 0 || arr[0].level === item.level) {
+				arr.push(Object.assign({}, item));
+			} else if (arr[arr.length - 1].level < item.level) {
+				if (!arr[arr.length - 1].children) {
+					arr[arr.length - 1].children = [Object.assign({}, item)];
+				} else placeItem(arr[arr.length - 1].children, item);
+			}
+		};
+
 		const makeHeaderArray = origHeaders => {
-			let arrays = [];
+			let array = [];
 
 			origHeaders
 				.filter(header => allowedHeaders[header.level - 1])
 				.forEach(header => {
-					let last = arrays.length - 1;
-					if (
-						arrays.length === 0 ||
-						arrays[last][0].level < header.level
-					) {
-						arrays.push([header]);
-					} else if (arrays[last][0].level === header.level) {
-						arrays[last].push(header);
-					} else {
-						while (arrays[last][0].level > header.level) {
-							if (arrays.length > 1) {
-								arrays[arrays.length - 2].push(arrays.pop());
-								last = arrays.length - 1;
-							} else break;
-						}
-						if (arrays[last][0].level === header.level) {
-							arrays[last].push(header);
-						}
-					}
+					placeItem(array, header);
 				});
 
-			while (
-				arrays.length > 1 &&
-				arrays[arrays.length - 1][0].level >
-					arrays[arrays.length - 2][0].level
-			) {
-				arrays[arrays.length - 2].push(arrays.pop());
-			}
-			return arrays[0];
+			return array;
 		};
 
 		const parseList = list => {
-			let items = [];
-			list.forEach(item => {
-				if (Array.isArray(item)) {
-					items.push(parseList(item));
-				} else {
-					items.push(
-						<li>
-							<a
-								href={`#${item.anchor}`}
-								dangerouslySetInnerHTML={{
-									__html: item.content.replace(
-										/(<a.+?>|<\/a>)/g,
-										''
-									)
-								}}
-							/>
-						</li>
-					);
-				}
-			});
-			if (listStyle === 'numbered') {
-				return <ol>{items}</ol>;
-			} else {
-				return (
-					<ul
-						style={{
-							listStyle: listStyle === 'plain' ? 'none' : null
+			return list.map(item => (
+				<li>
+					<a
+						href={`#${item.anchor}`}
+						dangerouslySetInnerHTML={{
+							__html: item.content.replace(/(<a.+?>|<\/a>)/g, '')
 						}}
-					>
-						{items}
-					</ul>
-				);
-			}
+					/>
+					{item.children &&
+						(listStyle === 'numbered' ? (
+							<ol>{parseList(item.children)}</ol>
+						) : (
+							<ul
+								style={{
+									listStyle:
+										listStyle === 'plain' ? 'none' : null
+								}}
+							>
+								{parseList(item.children)}
+							</ul>
+						))}
+				</li>
+			));
 		};
 
 		if (
@@ -167,7 +142,17 @@ class TableOfContents extends Component {
 					style={style}
 					className={`ub_table-of-contents-container ub_table-of-contents-${numColumns}-column`}
 				>
-					{parseList(makeHeaderArray(headers))}
+					{listStyle === 'numbered' ? (
+						<ol>{parseList(makeHeaderArray(headers))}</ol>
+					) : (
+						<ul
+							style={{
+								listStyle: listStyle === 'plain' ? 'none' : null
+							}}
+						>
+							{parseList(makeHeaderArray(headers))}
+						</ul>
+					)}
 				</div>
 			);
 		} else {
