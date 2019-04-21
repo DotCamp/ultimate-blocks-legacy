@@ -702,8 +702,26 @@
   margin: 20px 0; }
   .ub_table-of-contents ul,
   .ub_table-of-contents ol {
-    margin-bottom: 0;
-    margin-left: 2em; }
+    margin-bottom: 0; }
+  .ub_table-of-contents li > ul {
+    margin-left: 0; }
+  .ub_table-of-contents ol {
+    list-style-type: none;
+    counter-reset: item;
+    margin: 0;
+    padding: 0; }
+    .ub_table-of-contents ol > li {
+      display: table;
+      counter-increment: item;
+      margin-bottom: 0.6em; }
+      .ub_table-of-contents ol > li:before {
+        content: counters(item, ".") ". ";
+        display: table-cell;
+        padding-right: 0.6em; }
+  .ub_table-of-contents li ol > li {
+    margin: 0; }
+    .ub_table-of-contents li ol > li:before {
+      content: counters(item, ".") " "; }
 
 .ub_table-of-contents-header {
   text-align: center;
