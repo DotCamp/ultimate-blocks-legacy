@@ -702,9 +702,10 @@
   margin: 20px 0; }
   .ub_table-of-contents ul,
   .ub_table-of-contents ol {
-    margin-bottom: 0; }
-  .ub_table-of-contents li > ul {
-    margin-left: 0; }
+    margin-bottom: 0;
+    margin-left: 1.3em;
+    -webkit-padding-start: 0;
+            padding-inline-start: 0; }
   .ub_table-of-contents ol {
     list-style-type: none;
     counter-reset: item;
@@ -712,8 +713,7 @@
     padding: 0; }
     .ub_table-of-contents ol > li {
       display: table;
-      counter-increment: item;
-      margin-bottom: 0.6em; }
+      counter-increment: item; }
       .ub_table-of-contents ol > li:before {
         content: counters(item, ".") ". ";
         display: table-cell;
