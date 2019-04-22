@@ -4,12 +4,6 @@ import TableOfContents from './components';
 const { select, subscribe } = wp.data;
 const { __ } = wp.i18n;
 
-const ToCPlaceholder = (
-	<p className="ub_table-of-contents-placeholder">
-		{__('Add a header to begin generating the table of contents')}
-	</p>
-);
-
 const getHeaderBlocks = () =>
 	select('core/editor')
 		.getBlocks()
@@ -44,13 +38,151 @@ const combineSubarrays = array => {
 	return array[0];
 };
 
-const makeHeaderArray_1_1_2 = origHeaders => {
+const makeHeaderArray_1_0_8 = origHeaders => {
 	let arrays = [];
 	origHeaders.forEach(header => makeNestedArray(header, arrays));
 	return combineSubarrays(arrays);
 };
 
-class TableOfContents_1_1_2 extends Component {
+class TableOfContents_1_0_8 extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			headers: props.headers,
+			unsubscribe: null,
+			showList: true
+		};
+	}
+
+	componentDidMount() {
+		const setHeaders = () => {
+			const headers = getHeaderBlocks().map(header => header.attributes);
+
+			headers.forEach((heading, key) => {
+				const headingAnchorEmpty =
+					typeof heading.anchor === 'undefined' ||
+					heading.anchor === '';
+				const headingContentEmpty =
+					typeof heading.content === 'undefined' ||
+					heading.content === '';
+				const headingDefaultAnchor =
+					!headingAnchorEmpty &&
+					heading.anchor.indexOf(key + '-') === 0;
+				if (
+					!headingContentEmpty &&
+					(headingAnchorEmpty || headingDefaultAnchor)
+				) {
+					heading.anchor =
+						key +
+						'-' +
+						heading.content
+							.toString()
+							.toLowerCase()
+							.replace(' ', '-');
+					heading.anchor.replace(/[^\w\s-]/g, '');
+				}
+			});
+
+			this.setState({ headers: makeHeaderArray_1_0_8(headers) });
+		};
+
+		setHeaders();
+
+		const unsubscribe = subscribe(() => {
+			setHeaders();
+		});
+		this.setState({ unsubscribe });
+	}
+
+	componentWillUnmount() {
+		this.state.unsubscribe();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (
+			JSON.stringify(prevProps.headers) !==
+			JSON.stringify(prevState.headers)
+		) {
+			this.props.blockProp.setAttributes({
+				links: JSON.stringify(this.state.headers)
+			});
+		}
+	}
+
+	render() {
+		const parseList_1_0_8 = list => {
+			let items = [];
+			list.forEach(item => {
+				items.push(
+					Array.isArray(item) ? (
+						parseList_1_0_8(item)
+					) : (
+						<li>
+							<a href={`#${item.anchor}`}>{item.content}</a>
+						</li>
+					)
+				);
+			});
+			return <ul>{items}</ul>;
+		};
+
+		if (this.state.headers) {
+			return (
+				<div
+					className="ub_table-of-contents-container"
+					style={{
+						display: this.props.isHidden ? 'none' : 'initial'
+					}}
+				>
+					{parseList_1_0_8(this.state.headers)}
+				</div>
+			);
+		} else {
+			return (
+				<p className="ub_table-of-contents-placeholder">
+					Add a header to begin generating the table of contents
+				</p>
+			);
+		}
+	}
+}
+
+export const version_1_0_8 = props => {
+	const { showList, links, title } = props.attributes;
+	return (
+		<div className="ub_table-of-contents">
+			{(title.length > 1 || (title.length === 1 && title[0] !== '')) && (
+				<div className="ub_table-of-contents-header">
+					<div className="ub_table-of-contents-title">{title}</div>
+					<div className="ub_table-of-contents-header-toggle">
+						<div className="ub_table-of-contents-toggle">
+							[
+							<a
+								className="ub_table-of-contents-toggle-link"
+								href="#"
+							>
+								{showList ? __('hide') : __('show')}
+							</a>
+							]
+						</div>
+					</div>
+				</div>
+			)}
+			<TableOfContents_1_0_8
+				isHidden={!showList && title}
+				headers={links && JSON.parse(links)}
+			/>
+		</div>
+	);
+};
+
+const ToCPlaceholder = (
+	<p className="ub_table-of-contents-placeholder">
+		{__('Add a header to begin generating the table of contents')}
+	</p>
+);
+
+class TableOfContents_1_0_9 extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -87,7 +219,7 @@ class TableOfContents_1_1_2 extends Component {
 				}
 			});
 
-			this.setState({ headers: makeHeaderArray_1_1_2(headers) });
+			this.setState({ headers: makeHeaderArray_1_0_8(headers) });
 		};
 
 		setHeaders();
@@ -114,11 +246,11 @@ class TableOfContents_1_1_2 extends Component {
 	}
 
 	render() {
-		const parseList_1_1_2 = list => {
+		const parseList_1_0_9 = list => {
 			let items = [];
 			list.forEach(item => {
 				if (Array.isArray(item)) {
-					items.push(parseList_1_1_2(item));
+					items.push(parseList_1_0_9(item));
 				} else {
 					let multilineItem = item.content.split('<br>');
 					for (let i = 0; i < multilineItem.length - 1; i++) {
@@ -137,7 +269,7 @@ class TableOfContents_1_1_2 extends Component {
 		if (this.state.headers) {
 			return (
 				<div className="ub_table-of-contents-container">
-					{parseList_1_1_2(this.state.headers)}
+					{parseList_1_0_9(this.state.headers)}
 				</div>
 			);
 		} else {
@@ -146,7 +278,7 @@ class TableOfContents_1_1_2 extends Component {
 	}
 }
 
-export const version_1_1_2 = props => {
+export const version_1_0_9 = props => {
 	const { links, title } = props.attributes;
 	return (
 		<div className="ub_table-of-contents">
@@ -155,7 +287,7 @@ export const version_1_1_2 = props => {
 					<div className="ub_table-of-contents-title">{title}</div>
 				</div>
 			)}
-			<TableOfContents_1_1_2 headers={links && JSON.parse(links)} />
+			<TableOfContents_1_0_9 headers={links && JSON.parse(links)} />
 		</div>
 	);
 };
@@ -220,7 +352,7 @@ class TableOfContents_1_1_3 extends Component {
 					);
 				}
 			});
-			this.setState({ headers: makeHeaderArray_1_1_2(headers) });
+			this.setState({ headers: makeHeaderArray_1_0_9(headers) });
 		};
 
 		setHeaders();

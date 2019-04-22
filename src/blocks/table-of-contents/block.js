@@ -6,7 +6,8 @@ import icon, {
 } from './icon';
 import TableOfContents from './components';
 import {
-	version_1_1_2,
+	version_1_0_8,
+	version_1_0_9,
 	version_1_1_3,
 	version_1_1_5,
 	version_1_1_6,
@@ -309,7 +310,8 @@ registerBlockType('ub/table-of-contents', {
 		);
 	},
 	deprecated: [
-		{ attributes, save: version_1_1_2 },
+		{ attributes, save: version_1_0_8 },
+		{ attributes, save: version_1_0_9 },
 		{
 			attributes,
 			migrate: function(attributes) {
