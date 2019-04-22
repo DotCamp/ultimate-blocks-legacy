@@ -414,7 +414,10 @@ class ToggleButton extends Component {
 			<div id="ub_table-of-contents-header-toggle">
 				<div id="ub_table-of-contents-toggle">
 					[
-					<a id="ub_table-of-contents-toggle-link" href="#">
+					<a
+						id="ub_table-of-contents-toggle-link"
+						href="#ub_table-of-contents-title"
+					>
 						{this.props.showList ? __('hide') : __('show')}
 					</a>
 					]
