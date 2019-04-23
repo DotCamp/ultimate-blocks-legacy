@@ -6,34 +6,34 @@
 
 Ultimate Blocks is a collection of custom Gutenberg blocks for bloggers and marketers. Our goal is to make it insanely easy for you to create better and engaging content with Gutenberg.
 
-![Ultimate Blocks](https://ultimateblocks.io/wp-content/uploads/2019/01/banner-1544x500.jpg)
+![Ultimate Blocks](https://ultimateblocks.com/wp-content/uploads/2019/01/banner-1544x500.jpg)
 
 You can download Ultimate Blocks for free from [here](https://wordpress.org/plugins/ultimate-blocks/).
 
 ## Ultimate Blocks currently includes the following blocks:
 
-* Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.io/schema-review-block-gutenberg)
-* Table of Contents - [View Demo](https://ultimateblocks.io/table-of-contents-block-for-gutenberg-editor/)
-* Tabbed Content - [View Demo](https://ultimateblocks.io/tabbed-content-block-for-gutenberg/)
-* Call to Action - [View Demo](https://ultimateblocks.io/call-to-action-block-gutenberg/)
-* Content Toggle (Accordion) - [View Demo](https://ultimateblocks.io/content-toggle-block-gutenberg/)
-* Feature Box - [View Demo](https://ultimateblocks.io/feature-box-block-for-gutenberg-editor/)
-* Notification Box - [View Demo](https://ultimateblocks.io/notification-box-block-for-gutenberg-editor/)
-* Number Box - [View Demo](https://ultimateblocks.io/number-box-block-for-gutenberg-editor/)
-* Testimonial - [View Demo](https://ultimateblocks.io/testimonial-block-for-gutenberg-editor/)
-* Click to Tweet - [View Demo](https://ultimateblocks.io/click-to-tweet-block-gutenberg/)
-* Social Share - [View Demo](https://ultimateblocks.io/social-share-block-for-gutenberg-editor/)
-* Countdown - [View Demo](https://ultimateblocks.io/countdown-block-gutenberg/)
-* Progress Bar - [View Demo](https://ultimateblocks.io/progress-bar-block-for-gutenberg-editor/)
-* Star Rating - [View Demo](https://ultimateblocks.io/star-rating-block/)
-* Button (Improved) - [View Demo](https://ultimateblocks.io/improved-button-block-gutenberg/)
-* Divider - [View Demo](https://ultimateblocks.io/divider-block-for-gutenberg/)
+* Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.com/schema-review-block-gutenberg)
+* Table of Contents - [View Demo](https://ultimateblocks.com/table-of-contents-block-for-gutenberg-editor/)
+* Tabbed Content - [View Demo](https://ultimateblocks.com/tabbed-content-block-for-gutenberg/)
+* Call to Action - [View Demo](https://ultimateblocks.com/call-to-action-block-gutenberg/)
+* Content Toggle (Accordion) - [View Demo](https://ultimateblocks.com/content-toggle-block-gutenberg/)
+* Feature Box - [View Demo](https://ultimateblocks.com/feature-box-block-for-gutenberg-editor/)
+* Notification Box - [View Demo](https://ultimateblocks.com/notification-box-block-for-gutenberg-editor/)
+* Number Box - [View Demo](https://ultimateblocks.com/number-box-block-for-gutenberg-editor/)
+* Testimonial - [View Demo](https://ultimateblocks.com/testimonial-block-for-gutenberg-editor/)
+* Click to Tweet - [View Demo](https://ultimateblocks.com/click-to-tweet-block-gutenberg/)
+* Social Share - [View Demo](https://ultimateblocks.com/social-share-block-for-gutenberg-editor/)
+* Countdown - [View Demo](https://ultimateblocks.com/countdown-block-gutenberg/)
+* Progress Bar - [View Demo](https://ultimateblocks.com/progress-bar-block-for-gutenberg-editor/)
+* Star Rating - [View Demo](https://ultimateblocks.com/star-rating-block/)
+* Button (Improved) - [View Demo](https://ultimateblocks.com/improved-button-block-gutenberg/)
+* Divider - [View Demo](https://ultimateblocks.com/divider-block-for-gutenberg/)
 
-We have more exciting blocks in the making. Have a suggestion? [Let us know](https://ultimateblocks.io/contact/).
+We have more exciting blocks in the making. Have a suggestion? [Let us know](https://ultimateblocks.com/contact/).
 
 ## Join Us To Get Updates and Resources
 
-* [Visit Ultimate Blocks Website](https://ultimateblocks.io?utm_medium=wp.org&utm_source=wordpressorg&utm_campaign=readme&utm_content=ultimateblocks)
+* [Visit Ultimate Blocks Website](https://ultimateblocks.com?utm_medium=wp.org&utm_source=wordpressorg&utm_campaign=readme&utm_content=ultimateblocks)
 * [Follow Us on Twitter](http://twitter.com/Ultimate_Blocks)
 * [Join Our Facebook Group](https://www.facebook.com/groups/2063872290348170/)
 

@@ -22,7 +22,7 @@
  */
 class Ultimate_Blocks_Constants {
 
-	const PLUGIN_VERSION = '1.1.7';
+	const PLUGIN_VERSION = '1.1.8';
 
 	const PLUGIN_NAME = 'ultimate-blocks';
 
@@ -68,6 +68,6 @@ class Ultimate_Blocks_Constants {
 	 * @return string
 	 */
 	public static function text_domain() {
-		return 'ultimate_blocks';
+		return 'ultimate-blocks';
 	}
 }

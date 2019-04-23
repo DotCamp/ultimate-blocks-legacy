@@ -30,7 +30,7 @@
                 </a>
             </div>
             <div class="right">
-                <a href="https://ultimateblocks.io/"
+                <a href="https://ultimateblocks.com/"
                         class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-grey" target="_blank" rel="noopener noreferrer">
                         <?php esc_html_e( 'Learn More', 'ultimate-blocks-coupon' ); ?>
                 </a>

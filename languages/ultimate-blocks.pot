@@ -19,7 +19,7 @@ msgid "Ultimate Blocks - Custom Gutenberg Blocks"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://ultimateblocks.io"
+msgid "https://ultimateblocks.com"
 msgstr ""
 
 #. Description of the plugin
@@ -32,7 +32,7 @@ msgid "Ultimate Blocks"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://ultimateblocks.io/"
+msgid "https://ultimateblocks.com/"
 msgstr ""
 
 #: admin/templates/menus/main-menu.php:22
