@@ -1,0 +1,90 @@
+.ub-content-filter-parent {
+	display: grid;
+	grid-template-columns: 2fr 2fr 1fr;
+	> div {
+		border: 1px solid black;
+	}
+}
+
+.ub-content-filter-top {
+	position: absolute;
+	top: -10px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		display: inline-block;
+		margin: 0 3px;
+		cursor: pointer;
+	}
+	> span:nth-of-type(2) {
+		position: absolute;
+		right: -15px;
+	}
+}
+
+.ub-content-filter-tag:hover .ub-content-filter-tag-top,
+.ub-content-filter-category:hover .ub-content-filter-category-top {
+	opacity: 1;
+}
+
+.ub-content-filter-category-top {
+	position: relative;
+	top: -14px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		position: absolute;
+		right: -14px;
+	}
+}
+
+.ub-content-filter-tag-top {
+	position: relative;
+	top: -15px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		position: absolute;
+		right: -10px;
+		color: #000000;
+	}
+}
+
+.ub-content-filter-bottom {
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		display: inline-block;
+		margin: 0 3px;
+		cursor: pointer;
+	}
+}
+
+.ub-content-filter-panel:hover {
+	.ub-content-filter-top,
+	.ub-content-filter-bottom {
+		opacity: 1;
+	}
+}
+
+.ub-content-filter-panel {
+	border: 1px solid black;
+}

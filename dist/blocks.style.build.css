@@ -1159,3 +1159,18 @@ https://flickity.metafizzy.co
         border: 2px solid #333; }
   .ub_image_slider .flickity-rtl .flickity-page-dots {
     direction: rtl; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }
+
+.ub-content-filter-tag {
+  display: inline-block;
+  min-height: 32px;
+  min-width: 100px;
+  margin: 5px;
+  padding: 5px; }
