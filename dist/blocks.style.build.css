@@ -1172,5 +1172,6 @@ https://flickity.metafizzy.co
   display: inline-block;
   min-height: 32px;
   min-width: 100px;
-  margin: 5px;
-  padding: 5px; }
+  margin: 5px 10px 5px 0;
+  padding: 8px;
+  border-radius: 3px; }
