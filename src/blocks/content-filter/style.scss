@@ -1,8 +1,13 @@
 .ub-content-filter-tag {
-    display: inline-block;
-    min-height: 32px;
-    min-width: 100px;
-    margin: 5px 10px 5px 0;
-    padding: 8px;
-    border-radius: 3px;
+	display: inline-block;
+	min-height: 32px;
+	min-width: 100px;
+	margin: 5px 10px 5px 0;
+	padding: 8px;
+	border-radius: 3px;
+}
+
+.ub-content-filter-category-name {
+	font-size: 1.625em;
+	font-weight: 800;
 }

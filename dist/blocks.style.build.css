@@ -1175,3 +1175,7 @@ https://flickity.metafizzy.co
   margin: 5px 10px 5px 0;
   padding: 8px;
   border-radius: 3px; }
+
+.ub-content-filter-category-name {
+  font-size: 1.625em;
+  font-weight: 800; }

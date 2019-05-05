@@ -265,6 +265,7 @@ class PanelContent extends Component {
 							</div>
 							<div>
 								<RichText
+									className="ub-content-filter-category-name"
 									placeholder="Category name"
 									value={f.category}
 									onChange={newVal => {
