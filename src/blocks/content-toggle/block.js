@@ -83,29 +83,9 @@ class PanelContent extends Component {
 	constructor(props) {
 		super(props);
 		this.getPanels = this.getPanels.bind(this);
-		this.getPanelTemplate = this.getPanelTemplate.bind(this);
 	}
 	getPanels() {
 		return this.props.block.innerBlocks;
-	}
-	getPanelTemplate() {
-		let result = [];
-
-		const { accordions } = this.props.attributes;
-
-		if (JSON.stringify(accordions) === '[]') {
-			this.getPanels().forEach(() => {
-				result.push(['ub/content-toggle-panel']);
-			});
-		} else {
-			accordions.forEach(() => {
-				result.push(['ub/content-toggle-panel']);
-			});
-		}
-
-		return JSON.stringify(result) === '[]'
-			? [['ub/content-toggle-panel']]
-			: result;
 	}
 	render() {
 		const {
@@ -175,11 +155,8 @@ class PanelContent extends Component {
 					: elem.type
 			}>`;
 			elem.props.children.forEach(child => {
-				if (typeof child === 'string') {
-					outputString += child;
-				} else {
-					outputString += richTextToHTML(child);
-				}
+				outputString +=
+					typeof child === 'string' ? child : richTextToHTML(child);
 			});
 			outputString += `</${elem.type}>`;
 
@@ -219,51 +196,48 @@ class PanelContent extends Component {
 			}
 		} else {
 			//Look for data intended for the old version
-			if (JSON.stringify(accordions) !== '[]') {
-				panels.forEach(panel => {
+			if (
+				JSON.stringify(accordions) !== '[]' &&
+				oldArrangement ===
+					JSON.stringify([...Array(accordions.length).keys()])
+			) {
+				panels.forEach((panel, i) => {
 					updateBlockAttributes(panel.clientId, {
-						panelTitle: accordions[panel.attributes.index].title,
+						panelTitle: accordions[i].title,
 						theme: theme,
 						collapsed: collapsed,
 						titleColor: titleColor
 					});
 
 					if (
-						accordions[panel.attributes.index].content.filter(
-							a => a.type === 'br'
-						).length > 0
+						accordions[i].content.filter(a => a.type === 'br')
+							.length > 0
 					) {
 						let paragraphs = [];
 
-						accordions[panel.attributes.index].content.forEach(
-							(item, i) => {
-								const part =
-									typeof item === 'string'
-										? item
-										: richTextToHTML(item);
-								if (item.type === 'br') {
-									if (
-										paragraphs.length === 0 ||
-										accordions[panel.attributes.index]
-											.content[i - 1].type === 'br'
-									) {
-										paragraphs.push(item);
-									}
+						accordions[i].content.forEach((item, j) => {
+							const part =
+								typeof item === 'string'
+									? item
+									: richTextToHTML(item);
+							if (item.type === 'br') {
+								if (
+									paragraphs.length === 0 ||
+									accordions[i].content[j - 1].type === 'br'
+								) {
+									paragraphs.push(item);
+								}
+							} else {
+								if (
+									paragraphs.length === 0 ||
+									accordions[i].content[j - 1].type === 'br'
+								) {
+									paragraphs.push(part);
 								} else {
-									if (
-										paragraphs.length === 0 ||
-										accordions[panel.attributes.index]
-											.content[i - 1].type === 'br'
-									) {
-										paragraphs.push(part);
-									} else {
-										paragraphs[
-											paragraphs.length - 1
-										] += part;
-									}
+									paragraphs[paragraphs.length - 1] += part;
 								}
 							}
-						);
+						});
 
 						const newParagraphs = paragraphs.map(part => {
 							return createBlock(
@@ -280,8 +254,7 @@ class PanelContent extends Component {
 					} else {
 						insertBlock(
 							createBlock('core/paragraph', {
-								content:
-									accordions[panel.attributes.index].content
+								content: accordions[i].content
 							}),
 							0,
 							panel.clientId
@@ -319,8 +292,15 @@ class PanelContent extends Component {
 			),
 			<div className={className}>
 				<InnerBlocks
-					template={this.getPanelTemplate()}
-					templateLock={'insert'} //allows rearrangement of panels
+					template={
+						Array.isArray(accordions) &&
+						Array(
+							JSON.stringify(accordions) !== '[]'
+								? accordions.length
+								: 1
+						).fill(['ub/content-toggle-panel'])
+					} //initial content
+					templateLock={false}
 					allowedBlocks={['ub/content-toggle-panel']}
 				/>
 			</div>
