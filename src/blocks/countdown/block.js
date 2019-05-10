@@ -15,14 +15,7 @@ const {
 	PanelColorSettings,
 	BlockControls
 } = wp.editor;
-const {
-	DateTimePicker,
-	ButtonGroup,
-	IconButton,
-	PanelBody,
-	Toolbar,
-	IconButtons
-} = wp.components;
+const { DateTimePicker, IconButton, PanelBody, Toolbar } = wp.components;
 
 registerBlockType('ub/countdown', {
 	title: __('Countdown'),

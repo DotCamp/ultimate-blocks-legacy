@@ -23,13 +23,7 @@ const {
 	RichText
 } = wp.editor;
 
-const {
-	PanelBody,
-	Toolbar,
-	RangeControl,
-	SelectControl,
-	IconButton
-} = wp.components;
+const { PanelBody, Toolbar, SelectControl, IconButton } = wp.components;
 
 const { withState } = wp.compose;
 

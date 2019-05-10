@@ -220,22 +220,15 @@ class PanelContent extends Component {
 								typeof item === 'string'
 									? item
 									: richTextToHTML(item);
-							if (item.type === 'br') {
-								if (
-									paragraphs.length === 0 ||
-									accordions[i].content[j - 1].type === 'br'
-								) {
-									paragraphs.push(item);
-								}
-							} else {
-								if (
-									paragraphs.length === 0 ||
-									accordions[i].content[j - 1].type === 'br'
-								) {
-									paragraphs.push(part);
-								} else {
-									paragraphs[paragraphs.length - 1] += part;
-								}
+							if (
+								paragraphs.length === 0 ||
+								accordions[i].content[j - 1].type === 'br'
+							) {
+								paragraphs.push(
+									item.type === 'br' ? item : part
+								);
+							} else if (item.type !== 'br') {
+								paragraphs[paragraphs.length - 1] += part;
 							}
 						});
 

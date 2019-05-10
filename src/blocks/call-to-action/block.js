@@ -13,18 +13,10 @@ const {
 	InspectorControls,
 	URLInput,
 	BlockControls,
-	PanelColorSettings,
-	AlignmentToolbar
+	PanelColorSettings
 } = wp.editor;
 
-const {
-	PanelBody,
-	Icon,
-	IconButton,
-	Toolbar,
-	RangeControl,
-	SelectControl
-} = wp.components;
+const { PanelBody, Icon, IconButton, Toolbar, RangeControl } = wp.components;
 
 const { withState } = wp.compose;
 
@@ -179,12 +171,13 @@ registerBlockType('ub/call-to-action', {
 												: contentAlign) === a
 										}
 										onClick={() => {
-											if (editable === 'header') {
-												setAttributes({ headAlign: a });
-											} else
-												setAttributes({
-													contentAlign: a
-												});
+											setAttributes(
+												editable === 'header'
+													? { headAlign: a }
+													: {
+															contentAlign: a
+													  }
+											);
 										}}
 									/>
 								))}
