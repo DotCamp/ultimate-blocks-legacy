@@ -58,7 +58,7 @@
 		<div class="ub__settings_column">
 			<h3><?php esc_html_e( 'Stay Connected with Us', 'ultimate-blocks' ); ?></h3>
 			<ul class="ub__settings_list">
-				<li><a href="https://www.facebook.com/groups/2063872290348170/" target="_blank"><?php esc_html_e( 'Join Our Facebook Group!', 'ultimate-blocks' ); ?></a></li>
+				<li><a href="https://www.facebook.com/groups/ultimateblocks/" target="_blank"><?php esc_html_e( 'Join Our Facebook Group!', 'ultimate-blocks' ); ?></a></li>
 				<li><a href="https://twitter.com/Ultimate_Blocks" target="_blank""><?php esc_html_e( 'Follow Us on Twitter!', 'ultimate-blocks' ); ?></a></li>
 			</ul>
 		</div>

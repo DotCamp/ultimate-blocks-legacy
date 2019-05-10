@@ -4,15 +4,15 @@
  * CSS for both Frontend+Backend.
  */
 
-.wp-block-ub-block-divider  {
-  margin: 0 auto;
-  max-width: 740px;
+.wp-block-ub-block-divider {
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 .ub_divider {
-  display: flex;
-  width: 95%;
-  margin-left: auto;
-  margin-right: auto;
-  align-content: center;
+    display: flex;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    align-content: center;
 }

@@ -5,11 +5,11 @@
  * which makes it higher in priority.
  */
 
-.wp-block-ub-block-notification-box  {
-  background: $green;
-  border: 0.2rem solid $black;
-  color: $black;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
+.wp-block-ub-block-notification-box {
+    background: $green;
+    border: 0.2rem solid $black;
+    color: $black;
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 2rem;
 }

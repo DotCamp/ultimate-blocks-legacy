@@ -35,7 +35,7 @@ We have more exciting blocks in the making. Have a suggestion? [Let us know](htt
 
 * [Visit Ultimate Blocks Website](https://ultimateblocks.com?utm_medium=wp.org&utm_source=wordpressorg&utm_campaign=readme&utm_content=ultimateblocks)
 * [Follow Us on Twitter](http://twitter.com/Ultimate_Blocks)
-* [Join Our Facebook Group](https://www.facebook.com/groups/2063872290348170/)
+* [Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/)
 
 ## More Info About the Blocks
 

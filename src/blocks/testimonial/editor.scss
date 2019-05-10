@@ -5,35 +5,35 @@
  */
 
 .wp-block-ub-testimonial-block {
-	margin: 0 auto;
-	max-width: 740px;
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 .ub_testimonial {
-	display: grid;
-	grid-template-columns: fit-content(20%) auto;
+    display: grid;
+    grid-template-columns: fit-content(20%) auto;
 }
 
 .ub_testimonial_content {
-	padding: 5px 17px !important;
-	margin-top: 15px;
+    padding: 5px 17px !important;
+    margin-top: 15px;
 }
 
 .ub_testimonial_img {
-	padding: 0px 10px !important;
-	img {
-		margin: 0 auto;
-		padding: 0;
-		margin-top: 10px;
-		border-radius: 50%;
-	}
+    padding: 0px 10px !important;
+    img {
+        margin: 0 auto;
+        padding: 0;
+        margin-top: 10px;
+        border-radius: 50%;
+    }
 }
 
 .ub_testimonial_upload_button {
-	margin: 24px 0px 0px 0px;
-	p {
-		font-size: 12px;
-		text-align: justify;
-		margin: 5px 0 0 3px;
-	}
+    margin: 24px 0px 0px 0px;
+    p {
+        font-size: 12px;
+        text-align: justify;
+        margin: 5px 0 0 3px;
+    }
 }

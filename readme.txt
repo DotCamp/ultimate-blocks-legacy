@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.1
-Stable tag: 1.1.8
+Tested up to: 5.2
+Stable tag: 1.1.9
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -40,7 +40,7 @@ We have more exciting blocks in the making. Have a suggestion? [Let us know](htt
 
 * [Visit Ultimate Blocks Website](https://ultimateblocks.com?utm_medium=wp.org&utm_source=wordpressorg&utm_campaign=readme&utm_content=ultimateblocks)
 * [Follow Us on Twitter](http://twitter.com/Ultimate_Blocks)
-* [Join Our Facebook Group](https://www.facebook.com/groups/2063872290348170/)
+* [Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/)
 
 ## More Info About the Blocks
 
@@ -109,7 +109,7 @@ That's it. You're done!
 
 = I Need Help with Gutenberg =
 
-[Join Our Facebook Group](https://www.facebook.com/groups/2063872290348170/) and ask us. We will help you.
+[Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/) and ask us. We will help you.
 
 == Screenshot ==
 
@@ -119,140 +119,12 @@ That's it. You're done!
 
 == Changelog ==
 
-= 1.1.8 =
+= 1.1.9 =
 
-Release Date: April 23rd, 2019
+Release Date: May 10th, 2019
 
-* NEW - List style for Table of Contents (Bulleted, Numbered and Plain).
-* NEW - Nested Blocks support in Tabbed Content.
-* NEW - Nested Blocks support for Content Toggle (Accordion).
-* FIX - Click to Tweet including HTML tag issue.
-* FIX - Table of Contents Compatibility issue with older versions.
+* FIX: Bug that prevented adding panels to Content Toggle in WordPress 5.2.
+* FIX: Issue with conversion of old data from Content Toggle and Tabbed Content in WordPress 5.2.
+* FIX: Countdown block refreshing issue on the front-end when in regular mode.
 
-= 1.1.7 =
-
-Release Date: March 31st, 2019
-
-* IMPROVE: Loading Assets conditionally for better performance.
-
-= 1.1.6 =
-
-Release Date: March 27th, 2019
-
-* FIX: Forcing one column for Table of Contents on smaller screens.
-* FIX: Prevent Show/Hide button from taking focus away from Table of Contents.
-
-= 1.1.5 =
-
-Release Date: March 22nd, 2019
-
-* NEW: Option to choose which tags (h1, h2, h3, h4, h5, h6) to include/exclude in Table of Contents block. 
-* NEW: Option to toggle Show/Hide for Table of Contents block.
-* NEW: Option to split the table of contents in two, three columns.
-* NEW: Formatting and alignment options for Button, Call to Action, Content Toggle, Countdown, Feature Box, Number Box, Progress Bar, Review,  Star Rating, and Testimonial block.
-* ADD: Missing Translation for Click to Tweet and Countdown block.
-
-= 1.1.4 =
-
-Release Date: February 28th, 2019
-
-* NEW: Image Slider Block.
-* NEW: Support for Unicode character anchors in Table of Contents Block.
-* FIX: Dashboard background color issue.
-* FIX: Link issues on Button, Call to Action, Review Block.
-
-= 1.1.3 =
-
-Release Date: January 29th, 2019
-
-* NEW: Review Block (Schema Markup Enabled).
-* NEW: Countdown Block.
-* FIX: Image Change issue in Feature Box Block and Testimonial Block.
-* FIX: Rendering issue in Table of Contents Block.
-* UPDATE: Other minor Improvements.
-* NOTE: v1.1.3 is not backward compatible with lower versions, upgrading can weird out some of your existing blocks. If that happens, you’ll need to redo some of your blocks.
-
-= 1.1.2 =
-
-Release Date: December 14th, 2018
-Fix - Random <br> tag issue in Content Toggle and Tabbed Content Block.
-
-= 1.1.1 = 
-
-Release Date: December 13th, 2018
-* Fix - CSS not loading issue.
-
-= 1.1.0 =
-
-Release Date: December 9th, 2018
-* Fix - WordPress 5.0 Compatibility Issue.
-
-= 1.0.9 = 
-
-Release Date: December 4th, 2018
-* Fix - Issue with Table of Contents Block.
-
-= 1.0.8 =
-
-Release Date: December 3rd, 2018
-* Add - Table of Contents Block.
-* Add - Progress Bar Block.
-* Add - Star Rating Block.
-* Fix - Latest Gutenberg Compatibility.
-* Fix - Other minor bug fixes.
-
-= 1.0.7 = 
-
-Release Date: October 8th, 2018
-* Fix - Gutenberg Column Block issue.
-
-= 1.0.6 =
-
-Release Date: October 8th, 2018
-* Fixed - Tabbed Content Issue.
-
-= 1.0.5 =
-
-Release Date: August 22nd, 2018
-* Fixed - All issues with updated Gutenbergs
-
-= 1.0.4 = 
-
-Release Date: July 2nd, 2018
-
-* Add - Translation File.
-* Fix - White Screen bug if Gutenberg is not installed.
-
-= 1.0.3 = 
-
-Release Date: May 22nd, 2018
-
-* Add - Admin Panel to Enable/Disable Ultimate blocks.
-* Add - Button (Improved) Block
-* Add - Content Toggle Block
-* Add - Social Share Block
-* Add - Tabbed Content Block
-* Remove - Space block, since it's in Gutenberg now
-* Fix - Compatibility with Gutenberg 2.9+
-
-= 1.0.2 =
-
-Release Date: March 20th, 2018
-
-* Added Click to Tweet Block.
-* Added Number Box Block.
-* Added Feature Box Block.
-* Improvements on previous blocks.
-
-= 1.0.1 =
-
-Release Date: March 4th, 2018
-
-* Added Call to Action Block.
-* Added Divider Block.
-* Added Spacer Block.
-* Integrated Freemius SDK.
-
-= 1.0.0 =
-
-* Initial Release
+Full changelog can be found here - **[Ultimate Blocks changelog](https://ultimateblocks.com/changelog/)**

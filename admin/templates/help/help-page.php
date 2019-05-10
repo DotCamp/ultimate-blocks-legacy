@@ -50,7 +50,7 @@
                 </a>
             </div>
             <div class="right">
-                <a href="https://www.facebook.com/groups/2063872290348170/"
+                <a href="https://www.facebook.com/groups/ultimateblocks/"
                         class="ultimate-blocks-btn ultimate-blocks-btn-block ultimate-blocks-btn-lg ultimate-blocks-btn-facebook" target="_blank" rel="noopener noreferrer">
                         <?php esc_html_e( 'Join Our Facebook Group!', 'ultimate-blocks' ); ?>
                 </a>
