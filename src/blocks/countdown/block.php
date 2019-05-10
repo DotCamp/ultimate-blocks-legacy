@@ -13,7 +13,7 @@ function ub_render_countdown_block($attributes){
 
     $defaultFormat = $weeks . ' ' . __( 'weeks', 'ultimate-blocks' ) . ' ' . $days . ' ' . __('days', 'ultimate-blocks') . ' ' . $hours . ' ' . __( 'hours', 'ultimate-blocks' ) . ' ' . $minutes . ' ' . __( 'minutes', 'ultimate-blocks' ) . ' ' . $seconds . ' ' . __( 'seconds', 'ultimate-blocks' );
 
-    $defaultUpdate = 'document.getElementById("ub_countdown_'.$elementID.'").innerHTML = `${weeks} ${wp.i18n.__("weeks", "ultimate-blocks")} ${days} ${wp.i18n.__("days", "ultimate-blocks")} ${hours} ${wp.i18n.__("hours", "ultimate-blocks")} ${minutes} ${wp.i18n.__("minutes", "ultimate-blocks")} ${seconds} ${wp.i18n.__("seconds", "ultimate-blocks")}`;';
+    $defaultUpdate = 'document.getElementById("ub_countdown_'.$elementID.'").innerHTML = `${weeks} ' . __( 'weeks', 'ultimate-blocks' ) . ' ${days} ' . __( 'days', 'ultimate-blocks' ) . ' ${hours} ' . __( 'hours', 'ultimate-blocks' ) . ' ${minutes} ' . __( 'minutes', 'ultimate-blocks' ) . ' ${seconds} ' . __( 'seconds', 'ultimate-blocks' ) . '`;';
 
     if(!function_exists('ub_generateCircle')){
         function ub_generateCircle($label, $value, $limit, $color){
