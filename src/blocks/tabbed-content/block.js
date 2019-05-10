@@ -344,11 +344,8 @@ class TabHolder extends Component {
 					: elem.type
 			}>`;
 			elem.props.children.forEach(child => {
-				if (typeof child === 'string') {
-					outputString += child;
-				} else {
-					outputString += richTextToHTML(child);
-				}
+				outputString +=
+					typeof child === 'string' ? child : richTextToHTML(child);
 			});
 			outputString += `</${elem.type}>`;
 
@@ -365,20 +362,21 @@ class TabHolder extends Component {
 			setState({ oldArrangement: newArrangement });
 		} else {
 			if (
-				attributes.tabsContent &&
-				JSON.stringify(attributes.tabsContent) !== '[]'
+				JSON.stringify(attributes.tabsContent) !== '[]' &&
+				oldArrangement ===
+					JSON.stringify([
+						...Array(attributes.tabsContent.length).keys()
+					])
 			) {
-				tabs.forEach(tab => {
+				tabs.forEach((tab, i) => {
 					if (
-						attributes.tabsContent[
-							tab.attributes.index
-						].content.filter(a => a.type === 'br').length > 0
+						attributes.tabsContent[i].content.filter(
+							a => a.type === 'br'
+						).length > 0
 					) {
 						let paragraphs = [];
 
-						attributes.tabsContent[
-							tab.attributes.index
-						].content.forEach((item, i) => {
+						attributes.tabsContent[i].content.forEach((item, j) => {
 							const part =
 								typeof item === 'string'
 									? item
@@ -386,16 +384,16 @@ class TabHolder extends Component {
 							if (item.type === 'br') {
 								if (
 									paragraphs.length === 0 ||
-									attributes.tabsContent[tab.attributes.index]
-										.content[i - 1].type === 'br'
+									attributes.tabsContent[i].content[j - 1]
+										.type === 'br'
 								) {
 									paragraphs.push(item);
 								}
 							} else {
 								if (
 									paragraphs.length === 0 ||
-									attributes.tabsContent[tab.attributes.index]
-										.content[i - 1].type === 'br'
+									attributes.tabsContent[i].content[j - 1]
+										.type === 'br'
 								) {
 									paragraphs.push(part);
 								} else {
@@ -419,9 +417,7 @@ class TabHolder extends Component {
 					} else {
 						insertBlock(
 							createBlock('core/paragraph', {
-								content:
-									attributes.tabsContent[tab.attributes.index]
-										.content
+								content: attributes.tabsContent[i].content
 							}),
 							0,
 							tab.clientId
