@@ -145,3 +145,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/image-slider/block.php';
 
 // Table of Contents Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/table-of-contents/block.php';
+
+// Button Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/button/block.php';

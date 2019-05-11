@@ -5,54 +5,73 @@
  */
 
 .wp-block-ub-button-block {
-    margin: 30px auto;
-    max-width: 100%;
+	margin: 30px auto;
+	max-width: 100%;
 }
 
 .ub-button-container {
-    display: flex;
+	max-width: 100%;
+	display: flex;
+	> div {
+		transition: background-color 0.5s, color 0.5s;
+	}
 }
 
-.ub-button-block-btn {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    text-align: center;
+.ub-button-block-main {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
 }
 
 .align-button-center {
-    justify-content: center;
+	justify-content: center;
 }
 
 .align-button-left {
-    justify-content: flex-start;
+	justify-content: flex-start;
 }
 
 .align-button-right {
-    justify-content: flex-end;
+	justify-content: flex-end;
 }
 
 .ub-button-small {
-    width: 180px;
-    padding: 10px;
-    font-size: 13px !important;
+	width: 180px;
+	padding: 10px;
+	font-size: 13px !important;
 }
 
 .ub-button-medium {
-    width: 275px;
-    padding: 15px;
-    font-size: 17px !important;
+	width: 275px;
+	padding: 15px;
+	font-size: 17px !important;
 }
 
 .ub-button-large {
-    width: 417px;
-    padding: 20px;
-    font-size: 22px !important;
+	width: 417px;
+	padding: 20px;
+	font-size: 22px !important;
 }
 
 .ub-button-larger {
-    width: 512px;
-    padding: 20px;
-    font-size: 25px !important;
+	width: 512px;
+	padding: 20px;
+	font-size: 25px !important;
+}
+
+.ub-button-block-btn {
+	text-align: center;
+	color: inherit;
+}
+
+.ub-button-content-holder {
+	display: flex;
+	margin: 0 auto;
+}
+
+.ub-button-icon-holder {
+	display: flex;
+	align-items: center;
+	padding: 0 2px;
 }

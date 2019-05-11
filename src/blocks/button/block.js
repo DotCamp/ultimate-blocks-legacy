@@ -14,8 +14,13 @@ import './editor.scss';
 
 import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
 
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
+const { withState } = wp.compose;
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
+
 const {
 	InspectorControls,
 	BlockControls,
@@ -30,7 +35,10 @@ const {
 	Icon,
 	Button,
 	ButtonGroup,
-	ToggleControl
+	ToggleControl,
+	Dropdown,
+	CheckboxControl,
+	SelectControl
 } = wp.components;
 
 /**
@@ -71,15 +79,64 @@ const attributes = {
 		type: 'string',
 		default: '#44c767'
 	},
+	buttonHoverColor: {
+		type: 'string',
+		default: '#44c767'
+	},
 	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonTextHoverColor: {
 		type: 'string',
 		default: '#ffffff'
 	},
 	buttonRounded: {
 		type: 'boolean',
-		default: 'false'
+		default: true
+	},
+	chosenIcon: {
+		type: 'string',
+		default: ''
+	},
+	iconPosition: {
+		type: 'string',
+		default: 'left'
+	},
+	buttonIsTransparent: {
+		type: 'boolean',
+		default: false
+	},
+	addNofollow: {
+		type: 'boolean',
+		default: false
+	},
+	openInNewTab: {
+		type: 'boolean',
+		default: true
 	}
 };
+
+const dashesToCamelcase = str =>
+	str
+		.split('-')
+		.map(s => s[0].toUpperCase() + s.slice(1))
+		.join('');
+
+const generateIcon = (selectedIcon, size) => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		height={size}
+		width={size}
+		viewBox={`0, 0, ${selectedIcon.icon[0]}, ${selectedIcon.icon[1]}`}
+	>
+		<path fill={'currentColor'} d={selectedIcon.icon[4]} />
+	</svg>
+);
+
+const iconSize = { small: 25, medium: 30, large: 35, larger: 40 };
+
+const allIcons = Object.assign(fas, fab);
 
 registerBlockType('ub/button-block', {
 	title: __('Button (Improved)'),
@@ -94,8 +151,21 @@ registerBlockType('ub/button-block', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */ attributes,
-	edit(props) {
-		const { isSelected, setAttributes } = props;
+	edit: withState({
+		isMouseHovered: false,
+		availableIcons: [],
+		iconSearchTerm: '',
+		allowHover: false
+	})(function(props) {
+		const {
+			isSelected,
+			setAttributes,
+			isMouseHovered,
+			setState,
+			availableIcons,
+			iconSearchTerm,
+			allowHover
+		} = props;
 
 		const {
 			buttonText,
@@ -104,7 +174,14 @@ registerBlockType('ub/button-block', {
 			size,
 			buttonColor,
 			buttonTextColor,
-			buttonRounded
+			buttonHoverColor,
+			buttonTextHoverColor,
+			buttonRounded,
+			chosenIcon,
+			iconPosition,
+			buttonIsTransparent,
+			addNofollow,
+			openInNewTab
 		} = props.attributes;
 
 		const BUTTON_SIZES = {
@@ -112,6 +189,66 @@ registerBlockType('ub/button-block', {
 			medium: 'M',
 			large: 'L',
 			larger: 'XL'
+		};
+
+		if (availableIcons.length === 0) {
+			const iconList = Object.keys(allIcons).sort();
+			setState({ availableIcons: iconList.map(name => allIcons[name]) });
+		}
+
+		const generateColorPanel = () => {
+			let colorSettings = [
+				{
+					value: buttonColor,
+					onChange: colorValue =>
+						setAttributes({
+							buttonColor: colorValue
+						}),
+					label: __('Button Background')
+				},
+				{
+					value: buttonTextColor,
+					onChange: colorValue =>
+						setAttributes({
+							buttonTextColor: colorValue
+						}),
+					label: __('Button Text Color')
+				},
+				{
+					value: buttonHoverColor,
+					onChange: colorValue =>
+						setAttributes({
+							buttonHoverColor: colorValue
+						}),
+					label: __('Button Background on Hover')
+				},
+				{
+					value: buttonTextHoverColor,
+					onChange: colorValue =>
+						setAttributes({
+							buttonTextHoverColor: colorValue
+						}),
+					label: __('Button Text Color on Hover')
+				}
+			];
+			if (!allowHover) {
+				colorSettings = JSON.parse(JSON.stringify(colorSettings)).slice(
+					0,
+					2
+				);
+				colorSettings[0].onChange = colorValue =>
+					setAttributes({
+						buttonColor: colorValue,
+						buttonHoverColor: colorValue
+					});
+				colorSettings[1].onChange = colorValue =>
+					setAttributes({
+						buttonTextColor: colorValue,
+						buttonTextHoverColor: colorValue
+					});
+			}
+
+			return colorSettings;
 		};
 
 		return [
@@ -161,45 +298,210 @@ registerBlockType('ub/button-block', {
 					<PanelColorSettings
 						title={__('Button Colors')}
 						initialOpen={true}
-						colorSettings={[
-							{
-								value: buttonColor,
-								onChange: colorValue =>
+						colorSettings={generateColorPanel()}
+					>
+						<CheckboxControl
+							label={__(
+								'Allow button to change colors when hovered upon'
+							)}
+							checked={allowHover}
+							onChange={val => {
+								if (!val) {
 									setAttributes({
-										buttonColor: colorValue
-									}),
-								label: __('Button Background')
-							},
-							{
-								value: buttonTextColor,
-								onChange: colorValue =>
-									props.setAttributes({
-										buttonTextColor: colorValue
-									}),
-								label: __('Button Text Color')
+										buttonHoverColor: buttonColor,
+										buttonTextHoverColor: buttonTextColor
+									});
+								}
+								setState({ allowHover: val });
+							}}
+						/>
+						<CheckboxControl
+							label={__('Make button background transparent')}
+							checked={buttonIsTransparent}
+							onChange={() =>
+								setAttributes({
+									buttonIsTransparent: !buttonIsTransparent
+								})
 							}
-						]}
-					/>
+						/>
+					</PanelColorSettings>
+					<PanelBody title={__('Button Icon')}>
+						<div className="ub-button-grid">
+							<p>{__('Selected icon')}</p>
+							<div className="ub-button-grid-selector">
+								<Dropdown
+									position="bottom right"
+									renderToggle={({ isOpen, onToggle }) => (
+										<IconButton
+											className="ub-button-icon-select"
+											icon={
+												chosenIcon !== '' &&
+												generateIcon(
+													allIcons[
+														`fa${dashesToCamelcase(
+															chosenIcon
+														)}`
+													],
+													35
+												)
+											}
+											label={__(
+												'Open icon selection dialog'
+											)}
+											onClick={onToggle}
+											aria-expanded={isOpen}
+										/>
+									)}
+									renderContent={() => (
+										<div>
+											<input
+												type="text"
+												value={iconSearchTerm}
+												onChange={e =>
+													setState({
+														iconSearchTerm:
+															e.target.value
+													})
+												}
+											/>
+											{iconSearchTerm === '' && (
+												<Button
+													className="ub-button-available-icon"
+													onClick={() =>
+														setAttributes({
+															chosenIcon: ''
+														})
+													}
+												>
+													{__('No icon')}
+												</Button>
+											)}
+											<br />
+											{availableIcons.length > 0 &&
+												availableIcons
+													.filter(i =>
+														i.iconName.includes(
+															iconSearchTerm
+														)
+													)
+													.map(i => (
+														<IconButton
+															className="ub-button-available-icon"
+															icon={generateIcon(
+																i,
+																35
+															)}
+															label={i.iconName}
+															onClick={() => {
+																setAttributes({
+																	chosenIcon:
+																		i.iconName
+																});
+															}}
+														/>
+													))}
+										</div>
+									)}
+								/>
+							</div>
+							<p>{__('Icon position')}</p>
+							<SelectControl
+								className="ub-button-grid-selector"
+								value={iconPosition}
+								options={[
+									{ label: __('Left'), value: 'left' },
+									{ label: __('Right'), value: 'right' }
+								]}
+								onChange={pos =>
+									setAttributes({ iconPosition: pos })
+								}
+							/>
+						</div>
+					</PanelBody>
+					<PanelBody title={__('Button link behavior')}>
+						<CheckboxControl
+							label={__('Open link in new tab')}
+							checked={openInNewTab}
+							onChange={() =>
+								setAttributes({ openInNewTab: !openInNewTab })
+							}
+						/>
+						<CheckboxControl
+							label={__('Add nofollow to link')}
+							checked={addNofollow}
+							onChange={() =>
+								setAttributes({ addNofollow: !addNofollow })
+							}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 
 			<div className={props.className}>
 				<div
-					className={'ub-button-container' + ' align-button-' + align}
+					className={`ub-button-container align-button-${align}`}
+					onMouseEnter={() => setState({ isMouseHovered: true })}
+					onMouseLeave={() => setState({ isMouseHovered: false })}
 				>
-					<RichText
-						placeholder={__('Button Text')}
+					<div
+						className={`ub-button-${size}`}
 						style={{
-							backgroundColor: buttonColor,
-							color: buttonTextColor,
-							borderRadius: buttonRounded ? '60px' : '0px'
+							backgroundColor: buttonIsTransparent
+								? 'transparent'
+								: isMouseHovered
+								? buttonHoverColor
+								: buttonColor,
+							color: isMouseHovered
+								? buttonTextHoverColor
+								: buttonTextColor,
+							borderRadius: buttonRounded ? '60px' : '0px',
+							borderStyle: buttonIsTransparent ? 'solid' : 'none',
+							borderColor: buttonIsTransparent
+								? buttonColor
+								: null,
+							display: 'flex'
 						}}
-						className={'ub-button-block-btn' + ' ub-button-' + size}
-						onChange={value => setAttributes({ buttonText: value })}
-						value={buttonText}
-						formattingControls={['bold', 'italic', 'strikethrough']}
-						keepPlaceholderOnFocus={true}
-					/>
+					>
+						<div
+							className="ub-button-content-holder"
+							style={{
+								flexDirection:
+									iconPosition === 'left'
+										? 'row'
+										: 'row-reverse'
+							}}
+						>
+							{chosenIcon !== '' &&
+								allIcons.hasOwnProperty(
+									`fa${dashesToCamelcase(chosenIcon)}`
+								) && (
+									<div className="ub-button-icon-holder">
+										{generateIcon(
+											allIcons[
+												`fa${dashesToCamelcase(
+													chosenIcon
+												)}`
+											],
+											iconSize[size]
+										)}
+									</div>
+								)}
+							<RichText
+								className="ub-button-block-btn"
+								placeholder={__('Button Text')}
+								onChange={value =>
+									setAttributes({ buttonText: value })
+								}
+								value={buttonText}
+								formattingControls={[
+									'bold',
+									'italic',
+									'strikethrough'
+								]}
+								keepPlaceholderOnFocus={true}
+							/>
+						</div>
+					</div>
 				</div>
 				<div className="ub_button_url_input">
 					{isSelected && (
@@ -208,12 +510,7 @@ registerBlockType('ub/button-block', {
 							onSubmit={event => event.preventDefault()}
 							className={`editor-format-toolbar__link-modal-line ub_button_input_box flex-container`}
 						>
-							<div
-								style={{
-									position: 'relative',
-									transform: 'translate(-25%,25%)'
-								}}
-							>
+							<div className="ub-button-confirm-url">
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
@@ -233,7 +530,7 @@ registerBlockType('ub/button-block', {
 				</div>
 			</div>
 		];
-	},
+	}),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
@@ -251,27 +548,75 @@ registerBlockType('ub/button-block', {
 			size,
 			buttonColor,
 			buttonTextColor,
-			buttonRounded
+			buttonHoverColor,
+			buttonTextHoverColor,
+			buttonRounded,
+			chosenIcon,
+			iconPosition,
+			buttonIsTransparent,
+			addNofollow,
+			openInNewTab
 		} = props.attributes;
 
 		return (
 			<div className={props.className}>
-				<div
-					className={'ub-button-container' + ' align-button-' + align}
-				>
-					<a
-						href={url}
-						target="_blank"
-						className={'ub-button-block-btn' + ' ub-button-' + size}
+				<div className={`ub-button-container align-button-${align}`}>
+					<div
+						className={`ub-button-block-main ub-button-${size}`}
+						data-defaultColor={buttonColor}
+						data-defaultTextColor={buttonTextColor}
+						data-hoverColor={buttonHoverColor}
+						data-hoverTextColor={buttonTextHoverColor}
+						data-buttonIsTransparent={buttonIsTransparent}
 						style={{
-							backgroundColor: buttonColor,
+							backgroundColor: buttonIsTransparent
+								? 'transparent'
+								: buttonColor,
 							color: buttonTextColor,
-							borderRadius: buttonRounded ? '60px' : '0px'
+							borderRadius: buttonRounded ? '60px' : '0px',
+							borderStyle: buttonIsTransparent ? 'solid' : 'none',
+							borderColor: buttonIsTransparent
+								? buttonColor
+								: null,
+							display: 'flex'
 						}}
-						rel="noopener noreferrer"
 					>
-						{buttonText}
-					</a>
+						<div
+							className="ub-button-content-holder"
+							style={{
+								flexDirection:
+									iconPosition === 'left'
+										? 'row'
+										: 'row-reverse'
+							}}
+						>
+							{chosenIcon !== '' &&
+								allIcons.hasOwnProperty(
+									`fa${dashesToCamelcase(chosenIcon)}`
+								) && (
+									<div className="ub-button-icon-holder">
+										{generateIcon(
+											allIcons[
+												`fa${dashesToCamelcase(
+													chosenIcon
+												)}`
+											],
+											iconSize[size]
+										)}
+									</div>
+								)}
+							<a
+								className={'ub-button-block-btn'}
+								href={url}
+								target={openInNewTab ? '_blank' : '_self'}
+								rel={`noopener noreferrer${
+									addNofollow ? ' nofollow' : ''
+								}`}
+							>
+								{buttonText}
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

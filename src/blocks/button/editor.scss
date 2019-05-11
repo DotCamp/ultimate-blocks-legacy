@@ -25,3 +25,33 @@
 .flex-container {
 	display: flex;
 }
+
+.ub-button-icon-select {
+	min-width: 54px;
+	min-height: 54px;
+	padding: 8px;
+	border: 1px solid #8d96a0;
+}
+
+.ub-button-available-icon {
+	display: inline;
+	min-width: 54px;
+	min-height: 51px;
+}
+
+.ub-button-grid {
+	display: grid;
+	grid-template-columns: 5fr 2fr;
+	> p {
+		align-self: center;
+	}
+}
+
+.ub-button-grid-selector {
+	justify-self: self-end;
+}
+
+.ub-button-confirm-url {
+	position: relative;
+	transform: translate(-25%, 25%);
+}

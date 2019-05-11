@@ -592,15 +592,19 @@
   max-width: 100%; }
 
 .ub-button-container {
+  max-width: 100%;
   display: -ms-flexbox;
   display: flex; }
+  .ub-button-container > div {
+    -webkit-transition: background-color 0.5s, color 0.5s;
+    -o-transition: background-color 0.5s, color 0.5s;
+    transition: background-color 0.5s, color 0.5s; }
 
-.ub-button-block-btn {
+.ub-button-block-main {
   display: inline-block;
   margin-left: auto;
   margin-right: auto;
-  cursor: pointer;
-  text-align: center; }
+  cursor: pointer; }
 
 .align-button-center {
   -ms-flex-pack: center;
@@ -633,6 +637,22 @@
   width: 512px;
   padding: 20px;
   font-size: 25px !important; }
+
+.ub-button-block-btn {
+  text-align: center;
+  color: inherit; }
+
+.ub-button-content-holder {
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto; }
+
+.ub-button-icon-holder {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  padding: 0 2px; }
 /**
  * #.# Common SCSS
  *

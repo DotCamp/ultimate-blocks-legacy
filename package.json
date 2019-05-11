@@ -9,6 +9,8 @@
         "pot": "wp-pot --src '{,!(node_modules)/**}/*.php' --dest-file 'languages/ultimate-blocks.pot' --package 'Ultimate_Blocks' --domain 'ultimate-blocks' --last-translator 'Imtiaz Rayhan <irayhan.asif@gmail.com>' --team 'Ultimate Blocks <irayhan.asif@gmail.com>' --bug-report 'https://github.com/imtiazrayhan/Ultimate-Blocks/issues'"
     },
     "dependencies": {
+        "@fortawesome/free-brands-svg-icons": "^5.8.1",
+        "@fortawesome/free-solid-svg-icons": "^5.8.1",
         "ajv": ">=6.0.0",
         "cgb-scripts": "1.13.0",
         "react": "16.2.0",
