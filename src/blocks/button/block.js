@@ -59,7 +59,8 @@ const attributes = {
 	buttonText: {
 		type: 'array',
 		source: 'children',
-		selector: '.ub-button-block-btn'
+		selector: '.ub-button-block-btn',
+		default: 'Button Text'
 	},
 	align: {
 		type: 'string',
@@ -77,11 +78,11 @@ const attributes = {
 	},
 	buttonColor: {
 		type: 'string',
-		default: '#44c767'
+		default: '#313131'
 	},
 	buttonHoverColor: {
 		type: 'string',
-		default: '#44c767'
+		default: '#313131'
 	},
 	buttonTextColor: {
 		type: 'string',
@@ -93,7 +94,7 @@ const attributes = {
 	},
 	buttonRounded: {
 		type: 'boolean',
-		default: true
+		default: false
 	},
 	chosenIcon: {
 		type: 'string',
@@ -109,7 +110,7 @@ const attributes = {
 	},
 	addNofollow: {
 		type: 'boolean',
-		default: false
+		default: true
 	},
 	openInNewTab: {
 		type: 'boolean',
@@ -284,6 +285,22 @@ registerBlockType('ub/button-block', {
 							</ButtonGroup>
 						</div>
 					</PanelBody>
+					<PanelBody title={__('Button Link Settings')}>
+						<CheckboxControl
+							label={__('Open Link in New Tab')}
+							checked={openInNewTab}
+							onChange={() =>
+								setAttributes({ openInNewTab: !openInNewTab })
+							}
+						/>
+						<CheckboxControl
+							label={__('Add Nofollow to Link')}
+							checked={addNofollow}
+							onChange={() =>
+								setAttributes({ addNofollow: !addNofollow })
+							}
+						/>
+					</PanelBody>
 					<PanelBody title={__('Button Style')}>
 						<ToggleControl
 							label={__('Rounded')}
@@ -294,29 +311,8 @@ registerBlockType('ub/button-block', {
 								})
 							}
 						/>
-					</PanelBody>
-					<PanelColorSettings
-						title={__('Button Colors')}
-						initialOpen={true}
-						colorSettings={generateColorPanel()}
-					>
-						<CheckboxControl
-							label={__(
-								'Allow button to change colors when hovered upon'
-							)}
-							checked={allowHover}
-							onChange={val => {
-								if (!val) {
-									setAttributes({
-										buttonHoverColor: buttonColor,
-										buttonTextHoverColor: buttonTextColor
-									});
-								}
-								setState({ allowHover: val });
-							}}
-						/>
-						<CheckboxControl
-							label={__('Make button background transparent')}
+						<ToggleControl
+							label={__('Transparent')}
 							checked={buttonIsTransparent}
 							onChange={() =>
 								setAttributes({
@@ -324,7 +320,7 @@ registerBlockType('ub/button-block', {
 								})
 							}
 						/>
-					</PanelColorSettings>
+					</PanelBody>
 					<PanelBody title={__('Button Icon')}>
 						<div className="ub-button-grid">
 							<p>{__('Selected icon')}</p>
@@ -338,9 +334,9 @@ registerBlockType('ub/button-block', {
 												chosenIcon !== '' &&
 												generateIcon(
 													allIcons[
-														`fa${dashesToCamelcase(
-															chosenIcon
-														)}`
+													`fa${dashesToCamelcase(
+														chosenIcon
+													)}`
 													],
 													35
 												)
@@ -418,22 +414,27 @@ registerBlockType('ub/button-block', {
 							/>
 						</div>
 					</PanelBody>
-					<PanelBody title={__('Button link behavior')}>
+					<PanelColorSettings
+						title={__('Button Colors')}
+						initialOpen={true}
+						colorSettings={generateColorPanel()}
+					>
 						<CheckboxControl
-							label={__('Open link in new tab')}
-							checked={openInNewTab}
-							onChange={() =>
-								setAttributes({ openInNewTab: !openInNewTab })
-							}
+							label={__(
+								'Allow button to change colors when hovered upon'
+							)}
+							checked={allowHover}
+							onChange={val => {
+								if (!val) {
+									setAttributes({
+										buttonHoverColor: buttonColor,
+										buttonTextHoverColor: buttonTextColor
+									});
+								}
+								setState({ allowHover: val });
+							}}
 						/>
-						<CheckboxControl
-							label={__('Add nofollow to link')}
-							checked={addNofollow}
-							onChange={() =>
-								setAttributes({ addNofollow: !addNofollow })
-							}
-						/>
-					</PanelBody>
+					</PanelColorSettings>
 				</InspectorControls>
 			),
 

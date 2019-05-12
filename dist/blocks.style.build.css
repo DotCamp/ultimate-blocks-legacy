@@ -640,7 +640,8 @@
 
 .ub-button-block-btn {
   text-align: center;
-  color: inherit; }
+  color: inherit;
+  margin: 0 10px; }
 
 .ub-button-content-holder {
   display: -ms-flexbox;
