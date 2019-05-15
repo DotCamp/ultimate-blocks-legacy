@@ -408,6 +408,9 @@
   -webkit-transform: translate(-25%, 25%);
       -ms-transform: translate(-25%, 25%);
           transform: translate(-25%, 25%); }
+
+.ub-button-block-main {
+  cursor: auto; }
 /**
  * #.# Common SCSS
  *

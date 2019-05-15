@@ -12,14 +12,12 @@
 .ub-button-container {
 	max-width: 100%;
 	display: flex;
-	> div {
-		transition: background-color 0.5s, color 0.5s;
-	}
 }
 
 .ub-button-block-main {
-	display: inline-block;
+	display: flex;
 	cursor: pointer;
+	transition: background-color 0.5s, color 0.5s;
 }
 
 .align-button-center {

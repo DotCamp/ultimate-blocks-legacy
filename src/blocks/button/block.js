@@ -155,8 +155,7 @@ registerBlockType('ub/button-block', {
 	edit: withState({
 		isMouseHovered: false,
 		availableIcons: [],
-		iconSearchTerm: '',
-		allowHover: false
+		iconSearchTerm: ''
 	})(function(props) {
 		const {
 			isSelected,
@@ -164,8 +163,7 @@ registerBlockType('ub/button-block', {
 			isMouseHovered,
 			setState,
 			availableIcons,
-			iconSearchTerm,
-			allowHover
+			iconSearchTerm
 		} = props;
 
 		const {
@@ -407,7 +405,7 @@ registerBlockType('ub/button-block', {
 					onMouseLeave={() => setState({ isMouseHovered: false })}
 				>
 					<div
-						className={`ub-button-${size}`}
+						className={`ub-button-block-main ub-button-${size}`}
 						style={{
 							backgroundColor: buttonIsTransparent
 								? 'transparent'
@@ -421,8 +419,7 @@ registerBlockType('ub/button-block', {
 							borderStyle: buttonIsTransparent ? 'solid' : 'none',
 							borderColor: buttonIsTransparent
 								? buttonColor
-								: null,
-							display: 'flex'
+								: null
 						}}
 					>
 						<div
@@ -522,65 +519,56 @@ registerBlockType('ub/button-block', {
 		} = props.attributes;
 
 		return (
-			<div className={props.className}>
-				<div className={`ub-button-container align-button-${align}`}>
+			<div
+				className={`${
+					props.className
+				} ub-button-container align-button-${align}`}
+			>
+				<a
+					href={url}
+					target={openInNewTab ? '_blank' : '_self'}
+					rel={`noopener noreferrer${addNofollow ? ' nofollow' : ''}`}
+					className={`ub-button-block-main ub-button-${size}`}
+					data-defaultColor={buttonColor}
+					data-defaultTextColor={buttonTextColor}
+					data-hoverColor={buttonHoverColor}
+					data-hoverTextColor={buttonTextHoverColor}
+					data-buttonIsTransparent={buttonIsTransparent}
+					style={{
+						backgroundColor: buttonIsTransparent
+							? 'transparent'
+							: buttonColor,
+						color: buttonTextColor,
+						borderRadius: buttonRounded ? '60px' : '0px',
+						borderStyle: buttonIsTransparent ? 'solid' : 'none',
+						borderColor: buttonIsTransparent ? buttonColor : null
+					}}
+				>
 					<div
-						className={`ub-button-block-main ub-button-${size}`}
-						data-defaultColor={buttonColor}
-						data-defaultTextColor={buttonTextColor}
-						data-hoverColor={buttonHoverColor}
-						data-hoverTextColor={buttonTextHoverColor}
-						data-buttonIsTransparent={buttonIsTransparent}
+						className="ub-button-content-holder"
 						style={{
-							backgroundColor: buttonIsTransparent
-								? 'transparent'
-								: buttonColor,
-							color: buttonTextColor,
-							borderRadius: buttonRounded ? '60px' : '0px',
-							borderStyle: buttonIsTransparent ? 'solid' : 'none',
-							borderColor: buttonIsTransparent
-								? buttonColor
-								: null,
-							display: 'flex'
+							flexDirection:
+								iconPosition === 'left' ? 'row' : 'row-reverse'
 						}}
 					>
-						<div
-							className="ub-button-content-holder"
-							style={{
-								flexDirection:
-									iconPosition === 'left'
-										? 'row'
-										: 'row-reverse'
-							}}
-						>
-							{chosenIcon !== '' &&
-								allIcons.hasOwnProperty(
-									`fa${dashesToCamelcase(chosenIcon)}`
-								) && (
-									<div className="ub-button-icon-holder">
-										{generateIcon(
-											allIcons[
-												`fa${dashesToCamelcase(
-													chosenIcon
-												)}`
-											],
-											iconSize[size]
-										)}
-									</div>
-								)}
-							<a
-								className={'ub-button-block-btn'}
-								href={url}
-								target={openInNewTab ? '_blank' : '_self'}
-								rel={`noopener noreferrer${
-									addNofollow ? ' nofollow' : ''
-								}`}
-							>
-								{buttonText}
-							</a>
-						</div>
+						{chosenIcon !== '' &&
+							allIcons.hasOwnProperty(
+								`fa${dashesToCamelcase(chosenIcon)}`
+							) && (
+								<span className="ub-button-icon-holder">
+									{generateIcon(
+										allIcons[
+											`fa${dashesToCamelcase(chosenIcon)}`
+										],
+										iconSize[size]
+									)}
+								</span>
+							)}
+						<span className={'ub-button-block-btn'}>
+							{buttonText}
+						</span>
 					</div>
-				</div>
+				</a>
 			</div>
 		);
 	},

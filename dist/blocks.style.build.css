@@ -595,14 +595,14 @@
   max-width: 100%;
   display: -ms-flexbox;
   display: flex; }
-  .ub-button-container > div {
-    -webkit-transition: background-color 0.5s, color 0.5s;
-    -o-transition: background-color 0.5s, color 0.5s;
-    transition: background-color 0.5s, color 0.5s; }
 
 .ub-button-block-main {
-  display: inline-block;
-  cursor: pointer; }
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  -webkit-transition: background-color 0.5s, color 0.5s;
+  -o-transition: background-color 0.5s, color 0.5s;
+  transition: background-color 0.5s, color 0.5s; }
 
 .align-button-center {
   -ms-flex-pack: center;
