@@ -197,61 +197,6 @@ registerBlockType('ub/button-block', {
 			setState({ availableIcons: iconList.map(name => allIcons[name]) });
 		}
 
-		const generateColorPanel = () => {
-			let colorSettings = [
-				{
-					value: buttonColor,
-					onChange: colorValue =>
-						setAttributes({
-							buttonColor: colorValue
-						}),
-					label: __('Button Background')
-				},
-				{
-					value: buttonTextColor,
-					onChange: colorValue =>
-						setAttributes({
-							buttonTextColor: colorValue
-						}),
-					label: __('Button Text Color')
-				},
-				{
-					value: buttonHoverColor,
-					onChange: colorValue =>
-						setAttributes({
-							buttonHoverColor: colorValue
-						}),
-					label: __('Button Background on Hover')
-				},
-				{
-					value: buttonTextHoverColor,
-					onChange: colorValue =>
-						setAttributes({
-							buttonTextHoverColor: colorValue
-						}),
-					label: __('Button Text Color on Hover')
-				}
-			];
-			if (!allowHover) {
-				colorSettings = JSON.parse(JSON.stringify(colorSettings)).slice(
-					0,
-					2
-				);
-				colorSettings[0].onChange = colorValue =>
-					setAttributes({
-						buttonColor: colorValue,
-						buttonHoverColor: colorValue
-					});
-				colorSettings[1].onChange = colorValue =>
-					setAttributes({
-						buttonTextColor: colorValue,
-						buttonTextHoverColor: colorValue
-					});
-			}
-
-			return colorSettings;
-		};
-
 		return [
 			isSelected && (
 				<BlockControls>
@@ -334,9 +279,9 @@ registerBlockType('ub/button-block', {
 												chosenIcon !== '' &&
 												generateIcon(
 													allIcons[
-													`fa${dashesToCamelcase(
-														chosenIcon
-													)}`
+														`fa${dashesToCamelcase(
+															chosenIcon
+														)}`
 													],
 													35
 												)
@@ -417,24 +362,41 @@ registerBlockType('ub/button-block', {
 					<PanelColorSettings
 						title={__('Button Colors')}
 						initialOpen={true}
-						colorSettings={generateColorPanel()}
-					>
-						<CheckboxControl
-							label={__(
-								'Allow button to change colors when hovered upon'
-							)}
-							checked={allowHover}
-							onChange={val => {
-								if (!val) {
+						colorSettings={[
+							{
+								value: buttonColor,
+								onChange: colorValue =>
 									setAttributes({
-										buttonHoverColor: buttonColor,
-										buttonTextHoverColor: buttonTextColor
-									});
-								}
-								setState({ allowHover: val });
-							}}
-						/>
-					</PanelColorSettings>
+										buttonColor: colorValue
+									}),
+								label: __('Button Background')
+							},
+							{
+								value: buttonTextColor,
+								onChange: colorValue =>
+									setAttributes({
+										buttonTextColor: colorValue
+									}),
+								label: __('Button Text Color')
+							},
+							{
+								value: buttonHoverColor,
+								onChange: colorValue =>
+									setAttributes({
+										buttonHoverColor: colorValue
+									}),
+								label: __('Button Background on Hover')
+							},
+							{
+								value: buttonTextHoverColor,
+								onChange: colorValue =>
+									setAttributes({
+										buttonTextHoverColor: colorValue
+									}),
+								label: __('Button Text Color on Hover')
+							}
+						]}
+					/>
 				</InspectorControls>
 			),
 
