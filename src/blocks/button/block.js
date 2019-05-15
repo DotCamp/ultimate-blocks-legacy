@@ -413,12 +413,18 @@ registerBlockType('ub/button-block', {
 								? buttonHoverColor
 								: buttonColor,
 							color: isMouseHovered
-								? buttonTextHoverColor
+								? buttonIsTransparent
+									? buttonHoverColor
+									: buttonTextHoverColor
+								: buttonIsTransparent
+								? buttonColor
 								: buttonTextColor,
 							borderRadius: buttonRounded ? '60px' : '0px',
 							borderStyle: buttonIsTransparent ? 'solid' : 'none',
 							borderColor: buttonIsTransparent
-								? buttonColor
+								? isMouseHovered
+									? buttonHoverColor
+									: buttonColor
 								: null
 						}}
 					>
@@ -538,7 +544,9 @@ registerBlockType('ub/button-block', {
 						backgroundColor: buttonIsTransparent
 							? 'transparent'
 							: buttonColor,
-						color: buttonTextColor,
+						color: buttonIsTransparent
+							? buttonColor
+							: buttonTextColor,
 						borderRadius: buttonRounded ? '60px' : '0px',
 						borderStyle: buttonIsTransparent ? 'solid' : 'none',
 						borderColor: buttonIsTransparent ? buttonColor : null

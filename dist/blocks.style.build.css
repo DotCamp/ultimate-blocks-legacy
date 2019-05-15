@@ -600,9 +600,9 @@
   display: -ms-flexbox;
   display: flex;
   cursor: pointer;
-  -webkit-transition: background-color 0.5s, color 0.5s;
-  -o-transition: background-color 0.5s, color 0.5s;
-  transition: background-color 0.5s, color 0.5s; }
+  -webkit-transition: background-color 0.5s, color 0.5s, border 0.5s;
+  -o-transition: background-color 0.5s, color 0.5s, border 0.5s;
+  transition: background-color 0.5s, color 0.5s, border 0.5s; }
 
 .align-button-center {
   -ms-flex-pack: center;
