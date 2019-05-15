@@ -485,8 +485,7 @@ class PanelContent extends Component {
 					)}
 
 				<InnerBlocks
-					template={this.getPanelTemplate()}
-					templateLock={'all'}
+					templateLock={false}
 					allowedBlocks={['ub/content-filter-entry']}
 				/>
 			</div>
