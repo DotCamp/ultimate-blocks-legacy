@@ -195,6 +195,62 @@ registerBlockType('ub/button-block', {
 			setState({ availableIcons: iconList.map(name => allIcons[name]) });
 		}
 
+		const generateColorPanel = () => {
+			return buttonIsTransparent
+				? [
+						{
+							value: buttonColor,
+							onChange: colorValue =>
+								setAttributes({
+									buttonColor: colorValue
+								}),
+							label: __('Button Color')
+						},
+						{
+							value: buttonHoverColor,
+							onChange: colorValue =>
+								setAttributes({
+									buttonHoverColor: colorValue
+								}),
+							label: __('Button Color on Hover')
+						}
+				  ]
+				: [
+						{
+							value: buttonColor,
+							onChange: colorValue =>
+								setAttributes({
+									buttonColor: colorValue
+								}),
+							label: __('Button Background')
+						},
+						{
+							value: buttonTextColor,
+							onChange: colorValue =>
+								setAttributes({
+									buttonTextColor: colorValue
+								}),
+							label: __('Button Text Color')
+						},
+						{
+							value: buttonHoverColor,
+							onChange: colorValue =>
+								setAttributes({
+									buttonHoverColor: colorValue
+								}),
+							label: __('Button Background on Hover')
+						},
+						{
+							value: buttonTextHoverColor,
+							onChange: colorValue =>
+								setAttributes({
+									buttonTextHoverColor: colorValue
+								}),
+							label: __('Button Text Color on Hover')
+						}
+				  ];
+		};
+
 		return [
 			isSelected && (
 				<BlockControls>
@@ -360,40 +416,7 @@ registerBlockType('ub/button-block', {
 					<PanelColorSettings
 						title={__('Button Colors')}
 						initialOpen={true}
-						colorSettings={[
-							{
-								value: buttonColor,
-								onChange: colorValue =>
-									setAttributes({
-										buttonColor: colorValue
-									}),
-								label: __('Button Background')
-							},
-							{
-								value: buttonTextColor,
-								onChange: colorValue =>
-									setAttributes({
-										buttonTextColor: colorValue
-									}),
-								label: __('Button Text Color')
-							},
-							{
-								value: buttonHoverColor,
-								onChange: colorValue =>
-									setAttributes({
-										buttonHoverColor: colorValue
-									}),
-								label: __('Button Background on Hover')
-							},
-							{
-								value: buttonTextHoverColor,
-								onChange: colorValue =>
-									setAttributes({
-										buttonTextHoverColor: colorValue
-									}),
-								label: __('Button Text Color on Hover')
-							}
-						]}
+						colorSettings={generateColorPanel()}
 					/>
 				</InspectorControls>
 			),
