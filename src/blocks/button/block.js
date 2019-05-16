@@ -422,13 +422,11 @@ registerBlockType('ub/button-block', {
 			),
 
 			<div className={props.className}>
-				<div
-					className={`ub-button-container align-button-${align}`}
-					onMouseEnter={() => setState({ isMouseHovered: true })}
-					onMouseLeave={() => setState({ isMouseHovered: false })}
-				>
+				<div className={`ub-button-container align-button-${align}`}>
 					<div
 						className={`ub-button-block-main ub-button-${size}`}
+						onMouseEnter={() => setState({ isMouseHovered: true })}
+						onMouseLeave={() => setState({ isMouseHovered: false })}
 						style={{
 							backgroundColor: buttonIsTransparent
 								? 'transparent'
