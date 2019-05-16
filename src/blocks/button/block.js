@@ -548,8 +548,9 @@ registerBlockType('ub/button-block', {
 							? buttonColor
 							: buttonTextColor,
 						borderRadius: buttonRounded ? '60px' : '0px',
-						borderStyle: buttonIsTransparent ? 'solid' : 'none',
-						borderColor: buttonIsTransparent ? buttonColor : null
+						border: buttonIsTransparent
+							? `3px solid ${buttonColor}`
+							: 'none'
 					}}
 				>
 					<div
