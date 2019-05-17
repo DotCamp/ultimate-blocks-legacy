@@ -405,7 +405,7 @@ export const version_1_1_3 = props => {
 	);
 };
 
-class ToggleButton extends Component {
+class ToggleButton_1_1_5 extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -535,7 +535,9 @@ export const version_1_1_5 = props => {
 			{(title.length > 1 || (title.length === 1 && title[0] !== '')) && (
 				<div className="ub_table-of-contents-header">
 					<div className="ub_table-of-contents-title">{title}</div>
-					{allowToCHiding && <ToggleButton showList={showList} />}
+					{allowToCHiding && (
+						<ToggleButton_1_1_5 showList={showList} />
+					)}
 				</div>
 			)}
 
@@ -633,7 +635,9 @@ export const version_1_1_6 = props => {
 					>
 						{title}
 					</div>
-					{allowToCHiding && <ToggleButton showList={showList} />}
+					{allowToCHiding && (
+						<ToggleButton_1_1_5 showList={showList} />
+					)}
 				</div>
 			)}
 
@@ -653,6 +657,104 @@ export const version_1_1_6 = props => {
 		</div>
 	);
 };
+
+const parseList_1_1_8 = (list, listStyle) => {
+	let items = [];
+	list.forEach(item => {
+		if (Array.isArray(item)) {
+			items.push(parseList_1_1_3(item));
+		} else {
+			items.push(
+				<li>
+					<a
+						href={`#${item.anchor}`}
+						dangerouslySetInnerHTML={{
+							__html: item.content.replace(/(<a.+?>|<\/a>)/g, '')
+						}}
+					/>
+				</li>
+			);
+		}
+	});
+	if (listStyle === 'numbered') {
+		return <ol>{items}</ol>;
+	} else {
+		return (
+			<ul
+				style={{
+					listStyle: listStyle === 'plain' ? 'none' : null
+				}}
+			>
+				{items}
+			</ul>
+		);
+	}
+};
+
+class TableOfContents_1_1_8 extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			headers: props.headers,
+			unsubscribe: null
+		};
+	}
+
+	componentDidMount() {
+		setHeaders_1_1_5();
+		const unsubscribe = subscribe(() => {
+			setHeaders_1_1_5();
+		});
+		this.setState({ unsubscribe });
+	}
+
+	componentWillUnmount() {
+		this.state.unsubscribe();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (
+			JSON.stringify(prevProps.headers) !==
+			JSON.stringify(prevState.headers)
+		) {
+			this.props.blockProp.setAttributes({
+				links: JSON.stringify(this.state.headers)
+			});
+		}
+	}
+
+	render() {
+		const {
+			allowedHeaders,
+			blockProp,
+			style,
+			numColumns,
+			listStyle
+		} = this.props;
+
+		const { headers } = this.state;
+
+		if (
+			headers.length > 0 &&
+			headers.filter(header => allowedHeaders[header.level - 1]).length >
+				0
+		) {
+			return (
+				<div
+					style={style}
+					className={`ub_table-of-contents-container ub_table-of-contents-${numColumns}-column`}
+				>
+					{parseList_1_1_8(
+						makeHeaderArray_1_1_5(headers, allowedHeaders),
+						listStyle
+					)}
+				</div>
+			);
+		} else {
+			return blockProp && ToCPlaceholder;
+		}
+	}
+}
 
 export const version_1_1_8 = props => {
 	const {
@@ -675,7 +777,72 @@ export const version_1_1_8 = props => {
 					>
 						{title}
 					</div>
-					{allowToCHiding && <ToggleButton showList={showList} />}
+					{allowToCHiding && (
+						<ToggleButton_1_1_5 showList={showList} />
+					)}
+				</div>
+			)}
+
+			<TableOfContents_1_1_8
+				listStyle={listStyle}
+				numColumns={numColumns}
+				style={{
+					display:
+						showList ||
+						title.length === 0 ||
+						(title.length === 1 && title[0] === '')
+							? 'block'
+							: 'none'
+				}}
+				allowedHeaders={allowedHeaders}
+				headers={links && JSON.parse(links)}
+			/>
+		</div>
+	);
+};
+
+class ToggleButton_2_0_0 extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
+		return (
+			<div id="ub_table-of-contents-header-toggle">
+				<div id="ub_table-of-contents-toggle">
+					[
+					<a className="ub_table-of-contents-toggle-link" href="#">
+						{this.props.showList ? __('hide') : __('show')}
+					</a>
+					]
+				</div>
+			</div>
+		);
+	}
+}
+
+export const version_2_0_0 = props => {
+	const {
+		links,
+		title,
+		allowedHeaders,
+		showList,
+		numColumns,
+		allowToCHiding,
+		listStyle
+	} = props.attributes;
+
+	return (
+		<div
+			className="ub_table-of-contents"
+			data-showText={__('show')}
+			data-hideText={__('hide')}
+		>
+			{(title.length > 1 || (title.length === 1 && title[0] !== '')) && (
+				<div className="ub_table-of-contents-header">
+					<div className="ub_table-of-contents-title">{title}</div>
+					{allowToCHiding && (
+						<ToggleButton_2_0_0 showList={showList} />
+					)}
 				</div>
 			)}
 

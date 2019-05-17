@@ -112,7 +112,7 @@ class TableOfContents extends Component {
 					<a
 						href={`#${item.anchor}`}
 						dangerouslySetInnerHTML={{
-							__html: item.content.replace(/(<a.+?>|<\/a>)/g, '')
+							__html: item.content.replace(/(<.+?>)/g, '')
 						}}
 					/>
 					{item.children &&
