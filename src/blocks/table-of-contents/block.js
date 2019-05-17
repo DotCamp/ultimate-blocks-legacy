@@ -71,10 +71,6 @@ registerBlockType('ub/table-of-contents', {
 
 	attributes,
 
-	supports: {
-		multiple: false
-	},
-
 	edit: withState({ editable: 'content' })(function(props) {
 		const { editable, setAttributes, isSelected } = props;
 		const {
@@ -228,7 +224,7 @@ registerBlockType('ub/table-of-contents', {
 							<div id="ub_table-of-contents-toggle">
 								[
 								<a
-									id="ub_table-of-contents-toggle-link"
+									className="ub_table-of-contents-toggle-link"
 									href="#"
 									onClick={() => {
 										setAttributes({ showList: !showList });
@@ -265,14 +261,15 @@ registerBlockType('ub/table-of-contents', {
 			listStyle
 		} = props.attributes;
 		return (
-			<div className="ub_table-of-contents">
+			<div
+				className="ub_table-of-contents"
+				data-showText={__('show')}
+				data-hideText={__('hide')}
+			>
 				{(title.length > 1 ||
 					(title.length === 1 && title[0] !== '')) && (
 					<div className="ub_table-of-contents-header">
-						<div
-							className="ub_table-of-contents-title"
-							id="ub_table-of-contents-title"
-						>
+						<div className="ub_table-of-contents-title">
 							{title}
 						</div>
 						{allowToCHiding && (
@@ -280,8 +277,8 @@ registerBlockType('ub/table-of-contents', {
 								<div id="ub_table-of-contents-toggle">
 									[
 									<a
-										id="ub_table-of-contents-toggle-link"
-										href="#ub_table-of-contents-title"
+										className="ub_table-of-contents-toggle-link"
+										href="#"
 									>
 										{showList ? __('hide') : __('show')}
 									</a>
