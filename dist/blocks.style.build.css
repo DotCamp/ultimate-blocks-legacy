@@ -1179,3 +1179,10 @@ https://flickity.metafizzy.co
 .ub-content-filter-category-name {
   font-size: 1.625em;
   font-weight: 800; }
+
+.ub-content-filter-category {
+  margin-bottom: 10px;
+  padding: 3px; }
+
+.ub-content-filter-tag {
+  text-align: center; }

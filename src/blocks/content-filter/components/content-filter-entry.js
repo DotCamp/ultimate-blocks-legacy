@@ -11,7 +11,6 @@ const { withDispatch, withSelect } = wp.data;
 registerBlockType('ub/content-filter-entry', {
 	title: __('Content Filter Entry'),
 	parent: __('ub/content-filter'),
-	description: __('entry in content filter'),
 	icon: icon,
 	category: 'ultimateblocks',
 	attributes: {
@@ -62,14 +61,13 @@ registerBlockType('ub/content-filter-entry', {
 
 			return { removeBlock, selectBlock };
 		}),
-		withState({ showDropdown: false, selectedCategory: -1 })
+		withState({ showDropdown: false })
 	])(function(props) {
 		const {
 			setAttributes,
 			block,
 			removeBlock,
 			showDropdown,
-			selectedCategory,
 			setState,
 			selectedBlock
 		} = props;
@@ -122,31 +120,44 @@ registerBlockType('ub/content-filter-entry', {
 				);
 		});
 
-		let defaultDropdown = [];
-
+		let dropdownContent = [];
 		availableFilters.forEach((category, i) => {
-			if (
-				category.filters.length > 0 &&
-				(selectedFilters[i] === -1 ||
-					(Array.isArray(selectedFilters[i]) &&
-						selectedFilters[i].filter(s => s == false).length > 0))
-			) {
-				defaultDropdown.push(Object.assign(category, { index: i }));
+			if (category.filters.length > 0) {
+				if (Array.isArray(selectedFilters[i])) {
+					selectedFilters[i].forEach((f, j) => {
+						if (f === false) {
+							dropdownContent.push({
+								name: availableFilters[i].filters[j],
+								category: i,
+								index: j
+							});
+						}
+					});
+				} else {
+					if (selectedFilters[i] === -1) {
+						availableFilters[i].filters.forEach((f, j) => {
+							dropdownContent.push({
+								name: f,
+								category: i,
+								index: j
+							});
+						});
+					}
+				}
 			}
 		});
 
 		if (
-			selectedBlock === null ||
-			block.clientId !== selectedBlock.clientId
+			showDropdown &&
+			(selectedBlock === null ||
+				block.clientId !== selectedBlock.clientId)
 		) {
-			if (showDropdown) {
-				setState({ showDropdown: false, selectedCategory: -1 });
-			}
+			setState({ showDropdown: false });
 		}
 
 		return (
 			<div className="ub-content-filter-panel">
-				<div style={{ display: 'inline-block', zIndex: '1' }}>
+				<div>
 					{tagList
 						.filter(
 							tag => tag != null && tag.hasOwnProperty('name')
@@ -195,133 +206,69 @@ registerBlockType('ub/content-filter-entry', {
 								{tag.name}
 							</button>
 						))}
-					<div
-						style={{
-							display: 'inline-block',
-							position: 'relative',
-							zIndex: '7'
-						}}
-					>
+					<div className="ub-content-filter-dropdown-container">
 						<button
 							style={{
-								display: 'inline-block',
 								backgroundColor: buttonColor,
-								color: buttonTextColor,
-								height: '32px',
-								width: '32px',
-								margin: '5px',
-								padding: '5px',
-								textAlign: 'center'
+								color: buttonTextColor
 							}}
 							onClick={() => {
-								setState({
-									showDropdown: !showDropdown,
-									selectedCategory: -1
-								});
+								if (dropdownContent.length > 0) {
+									setState({
+										showDropdown: !showDropdown
+									});
+								}
 							}}
 						>
 							+
 						</button>
 						{showDropdown && (
-							<div
-								style={{
-									overflowY: 'scroll',
-									maxHeight: '75px',
-									border: '1px solid black',
-									top: '45px',
-									position: 'absolute'
-								}}
-							>
-								{selectedCategory === -1
-									? defaultDropdown.map(input => (
-											<div
-												onClick={() => {
-													setState({
-														selectedCategory:
-															input.index
-													});
-												}}
-												style={{
-													cursor: 'pointer',
-													backgroundColor: '#ffffff',
-													border: '1px solid #dddddd'
-												}}
-											>
-												{input.category}
-											</div>
-									  ))
-									: availableFilters[selectedCategory].filters
-											.map((f, i) => {
-												return { name: f, index: i };
-											})
-											.filter(
-												(f, i) =>
-													!availableFilters[
-														selectedCategory
-													].canUseMultiple ||
-													(availableFilters[
-														selectedCategory
-													].canUseMultiple &&
-														!selectedFilters[
-															selectedCategory
-														][i])
-											)
-											.map(filter => (
-												<div
-													style={{
-														cursor: 'pointer',
-														backgroundColor:
-															'#ffffff',
-														border:
-															'1px solid #dddddd'
-													}}
-													onClick={() => {
-														setAttributes({
-															selectedFilters: [
-																...selectedFilters.slice(
+							<ul className="ub-content-filter-dropdown-content">
+								{dropdownContent.map(item => (
+									<li
+										onClick={() => {
+											setAttributes({
+												selectedFilters: [
+													...selectedFilters.slice(
+														0,
+														item.category
+													),
+													availableFilters[
+														item.category
+													].canUseMultiple
+														? [
+																...selectedFilters[
+																	item
+																		.category
+																].slice(
 																	0,
-																	selectedCategory
+																	item.index
 																),
-																availableFilters[
-																	selectedCategory
-																].canUseMultiple
-																	? [
-																			...selectedFilters[
-																				selectedCategory
-																			].slice(
-																				0,
-																				filter.index
-																			),
-																			!selectedFilters[
-																				selectedCategory
-																			][
-																				filter
-																					.index
-																			],
-																			...selectedFilters[
-																				selectedCategory
-																			].slice(
-																				filter.index +
-																					1
-																			)
-																	  ]
-																	: filter.index,
-																...selectedFilters.slice(
-																	selectedCategory +
+																!selectedFilters[
+																	item
+																		.category
+																][item.index],
+																...selectedFilters[
+																	item
+																		.category
+																].slice(
+																	item.index +
 																		1
 																)
-															]
-														});
-														setState({
-															showDropdown: false,
-															selectedCategory: -1
-														});
-													}}
-												>
-													{filter.name}
-												</div>
-											))}
-							</div>
+														  ]
+														: item.index,
+													...selectedFilters.slice(
+														item.category + 1
+													)
+												]
+											});
+											setState({ showDropdown: false });
+										}}
+									>
+										{item.name}
+									</li>
+								))}
+							</ul>
 						)}
 					</div>
 				</div>
@@ -353,9 +300,53 @@ registerBlockType('ub/content-filter-entry', {
 			</div>
 		);
 	}),
-	save() {
+	save(props) {
+		const {
+			availableFilters,
+			selectedFilters,
+			buttonColor,
+			buttonTextColor
+		} = props.attributes;
+
+		let tagList = [];
+
+		selectedFilters.forEach((selection, i) => {
+			if (Array.isArray(selection)) {
+				selection
+					.map((a, i) => {
+						return { val: a, index: i };
+					})
+					.filter(a => a.val === true)
+					.forEach(a =>
+						tagList.push({
+							name: availableFilters[i].filters[a.index],
+							categoryIndex: i,
+							tagIndex: a.index
+						})
+					);
+			} else if (selection > -1) {
+				tagList.push({
+					name: availableFilters[i].filters[selection],
+					categoryIndex: i,
+					tagIndex: selection
+				});
+			}
+		});
+
 		return (
-			<div>
+			<div
+				className="ub-content-filter-panel"
+				data-selectedFilters={JSON.stringify(selectedFilters)}
+				style={{ display: 'block' }} //to be turned into none when frontend script doesn't see any of the main block's selected filters on the child block's tags
+			>
+				<p>
+					Categories:{' '}
+					{tagList.map((filter, i) => (
+						<span>{`${filter.name}${
+							tagList.length - 1 > i ? ', ' : ''
+						}`}</span>
+					))}
+				</p>
 				<InnerBlocks.Content />
 			</div>
 		);

@@ -143,8 +143,11 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/countdown/block.php';
 // Image Slider Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/image-slider/block.php';
 
-// Table of Contents Block.
+// Table of Contents Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/table-of-contents/block.php';
 
 // Button Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/button/block.php';
+
+// Content Filter Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/content-filter/block.php';

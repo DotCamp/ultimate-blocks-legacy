@@ -1,94 +1,130 @@
 .ub-content-filter-parent {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
-    >div {
-        border: 1px solid black;
-    }
+	display: grid;
+	grid-template-columns: 2fr 2fr 1fr;
+	> div {
+		border: 1px solid black;
+	}
 }
 
 .ub-content-filter-top {
-    position: absolute;
-    top: -10px;
-    left: 0;
-    right: 0;
-    justify-content: center;
-    display: flex;
-    opacity: 0;
-    transition: 0.5s opacity ease-in-out;
-    >span {
-        display: inline-block;
-        margin: 0 3px;
-        cursor: pointer;
-    }
-    >span:nth-of-type(2) {
-        position: absolute;
-        right: -15px;
-    }
+	position: absolute;
+	top: -10px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		display: inline-block;
+		margin: 0 3px;
+		cursor: pointer;
+	}
+	> span:nth-of-type(2) {
+		position: absolute;
+		right: -15px;
+	}
 }
 
 .ub-content-filter-tag:hover .ub-content-filter-tag-top,
 .ub-content-filter-category:hover .ub-content-filter-category-top {
-    opacity: 1;
+	opacity: 1;
+}
+
+.ub-content-filter-category > button {
+	display: inline-block;
+	height: 38px;
+	width: 38px;
+	margin: 5px;
+	padding: 5px;
+	text-align: center;
 }
 
 .ub-content-filter-category-top {
-    position: relative;
-    top: -14px;
-    left: 0;
-    right: 0;
-    justify-content: center;
-    display: flex;
-    opacity: 0;
-    transition: 0.5s opacity ease-in-out;
-    >span {
-        position: absolute;
-        right: -14px;
-    }
+	position: relative;
+	top: -14px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		position: absolute;
+		right: -14px;
+	}
 }
 
 .ub-content-filter-tag-top {
-    position: relative;
-    top: -15px;
-    left: 0;
-    right: 0;
-    justify-content: center;
-    display: flex;
-    opacity: 0;
-    transition: 0.5s opacity ease-in-out;
-    >span {
-        position: absolute;
-        right: -10px;
-        color: #000000;
-    }
+	position: relative;
+	top: -15px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		position: absolute;
+		right: -10px;
+		color: #000000;
+	}
 }
 
 .ub-content-filter-bottom {
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    right: 0;
-    justify-content: center;
-    display: flex;
-    opacity: 0;
-    transition: 0.5s opacity ease-in-out;
-    >span {
-        display: inline-block;
-        margin: 0 3px;
-        cursor: pointer;
-    }
-}
-
-.ub-content-filter-panel:hover {
-    .ub-content-filter-top,
-    .ub-content-filter-bottom {
-        opacity: 1;
-    }
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	display: flex;
+	opacity: 0;
+	transition: 0.5s opacity ease-in-out;
+	> span {
+		display: inline-block;
+		margin: 0 3px;
+		cursor: pointer;
+	}
 }
 
 .ub-content-filter-panel {
-    border: 1px solid black;
+	&:hover {
+		.ub-content-filter-top,
+		.ub-content-filter-bottom {
+			opacity: 1;
+		}
+	}
+}
+.ub-content-filter-dropdown-container {
+	display: inline-block;
+	position: relative;
+	z-index: 7;
+	> button {
+		display: inline-block;
+		height: 32px;
+		width: 32px;
+		margin: 5px;
+		padding: 5px;
+		text-align: center;
+	}
 }
 
-.ub-content-filter-category {
-    margin-bottom: 10px;
+.ub-content-filter-dropdown-content {
+	overflow-y: scroll;
+	max-height: 75px;
+	border: 1px solid black;
+	top: 45px;
+	position: absolute;
+	width: 150px;
+	> li {
+		cursor: pointer;
+		background-color: #ffffff;
+		border: 1px solid #dddddd;
+	}
+}
+
+.ub-content-filter-main > button {
+	margin: 10px;
+	padding: 10px;
+	color: black;
 }

@@ -23,7 +23,6 @@ class PanelContent extends Component {
 		this.editFilterArray = this.editFilterArray.bind(this);
 		this.deleteFilterArrayItem = this.deleteFilterArrayItem.bind(this);
 		this.editAvailableFilters = this.editAvailableFilters.bind(this);
-		this.getPanelTemplate = this.getPanelTemplate.bind(this);
 	}
 	editFilterArray(item, pos) {
 		const { attributes, setAttributes } = this.props;
@@ -81,20 +80,6 @@ class PanelContent extends Component {
 		);
 	}
 
-	getPanelTemplate() {
-		const { itemTags } = this.props.attributes;
-
-		let result = [];
-
-		if (itemTags.length > 0) {
-			itemTags.forEach(() => {
-				result.push(['ub/content-filter-entry']);
-			});
-		}
-
-		return result;
-	}
-
 	render() {
 		const {
 			isSelected,
@@ -110,7 +95,9 @@ class PanelContent extends Component {
 			filterArray,
 			buttonColor,
 			buttonTextColor,
-			itemTags
+			activeButtonColor,
+			activeButtonTextColor,
+			ID
 		} = attributes;
 
 		const newBlockTarget = block.innerBlocks.filter(
@@ -153,14 +140,6 @@ class PanelContent extends Component {
 			setState({ oldArrangement: newArrangement });
 		}
 
-		const newSelection = JSON.stringify(
-			block.innerBlocks.map(panel => panel.attributes.selectedFilters)
-		);
-
-		if (newSelection !== JSON.stringify(itemTags)) {
-			setAttributes({ itemTags: JSON.parse(newSelection) });
-		}
-
 		const newAvailableFilters = (item, pos) => [
 			...filterArray.slice(0, pos),
 			item,
@@ -192,11 +171,15 @@ class PanelContent extends Component {
 			...selectedFilterArr.slice(filterCategoryIndex + 1)
 		];
 
+		if (ID === '') {
+			setAttributes({ ID: block.clientId });
+		}
+
 		return [
 			isSelected && (
 				<InspectorControls>
 					<PanelColorSettings
-						title={__('Button Colors')}
+						title={__('Filter Colors')}
 						initialOpen={true}
 						colorSettings={[
 							{
@@ -211,7 +194,7 @@ class PanelContent extends Component {
 										})
 									);
 								},
-								label: __('Button Background')
+								label: __('Filter Tag Color')
 							},
 							{
 								value: buttonTextColor,
@@ -225,19 +208,34 @@ class PanelContent extends Component {
 										})
 									);
 								},
-								label: __('Button Text Color')
+								label: __('Filter Tag Text Color')
+							},
+							{
+								value: activeButtonColor,
+								onChange: colorValue => {
+									setAttributes({
+										activeButtonColor: colorValue
+									});
+								},
+								label: __('Active Filter Tag Color')
+							},
+							{
+								value: activeButtonTextColor,
+								onChange: colorValue => {
+									setAttributes({
+										activeButtonTextColor: colorValue
+									});
+								},
+								label: __('Active Filter Tag Text Color')
 							}
 						]}
 					/>
 				</InspectorControls>
 			),
-			<div>
+			<div className="ub-content-filter-main">
 				{filterArray.length > 0 &&
 					filterArray.map((f, i) => (
-						<div
-							className="ub-content-filter-category"
-							style={{ padding: '3px' }}
-						>
+						<div className="ub-content-filter-category">
 							<div className="ub-content-filter-category-top">
 								<span
 									title={__('Delete This Filter Category')}
@@ -331,7 +329,6 @@ class PanelContent extends Component {
 										/>
 									</div>
 									<RichText
-										style={{ textAlign: 'center' }}
 										placeholder="filter name"
 										value={filter}
 										onChange={newVal => {
@@ -353,14 +350,8 @@ class PanelContent extends Component {
 							))}
 							<button
 								style={{
-									display: 'inline-block',
 									backgroundColor: buttonColor,
-									color: buttonTextColor,
-									height: '38px',
-									width: '38px',
-									margin: '5px',
-									padding: '5px',
-									textAlign: 'center'
+									color: buttonTextColor
 								}}
 								onClick={() => {
 									let current = Object.assign({}, f);
@@ -437,7 +428,6 @@ class PanelContent extends Component {
 						</div>
 					))}
 				<button
-					style={{ margin: '10px', padding: '10px', color: 'black' }}
 					onClick={() => {
 						setAttributes({
 							filterArray: [
@@ -467,11 +457,6 @@ class PanelContent extends Component {
 					filterArray.filter(f => f.filters.length > 0).length >
 						0 && (
 						<button
-							style={{
-								margin: '10px',
-								padding: '10px',
-								color: 'black'
-							}}
 							onClick={() =>
 								insertBlock(
 									newChildBlock,
@@ -503,10 +488,6 @@ registerBlockType('ub/content-filter', {
 			type: 'array',
 			default: [] // new objects should be { category: '', filters: [], canUseMultiple: false }
 		},
-		itemTags: {
-			type: 'array',
-			default: [] //each element should be a subarray for every child block
-		},
 		buttonColor: {
 			type: 'string',
 			default: '#aaaaaa'
@@ -514,6 +495,18 @@ registerBlockType('ub/content-filter', {
 		buttonTextColor: {
 			type: 'string',
 			default: '#000000'
+		},
+		activeButtonColor: {
+			type: 'string',
+			default: '#aaaaaa'
+		},
+		activeButtonTextColor: {
+			type: 'string',
+			default: '#000000'
+		},
+		ID: {
+			type: 'string',
+			default: ''
 		}
 	},
 
@@ -540,9 +533,56 @@ registerBlockType('ub/content-filter', {
 		withState({ oldArrangement: '' })
 	])(PanelContent),
 
-	save() {
+	save(props) {
+		const {
+			filterArray,
+			buttonColor,
+			buttonTextColor,
+			activeButtonColor,
+			activeButtonTextColor,
+			ID
+		} = props.attributes;
+
+		const currentSelection = filterArray.map(f =>
+			f.canUseMultiple ? Array(f.filters.length).fill(false) : -1
+		);
 		return (
-			<div>
+			<div
+				id={ID}
+				data-currentSelection={JSON.stringify(currentSelection)}
+			>
+				{filterArray.length > 0 &&
+					filterArray.map((f, i) => (
+						<div
+							className="ub-content-filter-category"
+							data-canUseMultiple={f.canUseMultiple}
+						>
+							<RichText.Content
+								tagName="div"
+								className="ub-content-filter-category-name"
+								value={f.category}
+							/>
+							{f.filters.map((filter, j) => (
+								<div
+									data-tagIsSelected={'false'} //can be updated
+									data-categoryNumber={i}
+									data-filterNumber={j}
+									data-normalColor={buttonColor}
+									data-normalTextColor={buttonTextColor}
+									data-activeColor={activeButtonColor}
+									data-activeTextColor={activeButtonTextColor}
+									className="ub-content-filter-tag"
+									style={{
+										backgroundColor: buttonColor,
+										color: buttonTextColor
+									}}
+								>
+									<RichText.Content value={filter} />
+								</div>
+							))}
+						</div>
+					))}
+				<button className="ub-content-filter-reset">Reset</button>
 				<InnerBlocks.Content />
 			</div>
 		);
