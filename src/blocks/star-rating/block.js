@@ -39,6 +39,10 @@ const attributes = {
 	reviewTextAlign: {
 		type: 'string',
 		default: 'text'
+	},
+	starAlign: {
+		type: 'string',
+		default: 'left'
 	}
 };
 
@@ -58,12 +62,22 @@ registerBlockType('ub/star-rating', {
 			starColor,
 			selectedStars,
 			reviewText,
-			reviewTextAlign
+			reviewTextAlign,
+			starAlign
 		} = props.attributes;
 
 		return [
 			isSelected && (
 				<BlockControls>
+					<Toolbar>
+						{['left', 'center', 'right'].map(a => (
+							<IconButton
+								icon={`align-${a}`}
+								label={__(`Align stars ${a}`)}
+								onClick={() => setAttributes({ starAlign: a })}
+							/>
+						))}
+					</Toolbar>
 					<Toolbar>
 						{['left', 'center', 'right', 'justify'].map(a => (
 							<IconButton
@@ -145,19 +159,31 @@ registerBlockType('ub/star-rating', {
 				</InspectorControls>
 			),
 			<div className="ub-star-rating">
-				<div className="ub-star-container">
-					{[...Array(starCount)].map((e, i) => (
-						<div key={i}>
-							{i < selectedStars ? (
-								<FullStar
-									size={starSize}
-									fillColor={starColor}
-								/>
-							) : (
-								<EmptyStar size={starSize} />
-							)}
-						</div>
-					))}
+				<div
+					className="ub-star-outer-container"
+					style={{
+						justifyContent:
+							starAlign === 'center'
+								? 'center'
+								: `flex-${
+										starAlign === 'left' ? 'start' : 'end'
+								  }`
+					}}
+				>
+					<div className="ub-star-inner-container">
+						{[...Array(starCount)].map((e, i) => (
+							<div key={i}>
+								{i < selectedStars ? (
+									<FullStar
+										size={starSize}
+										fillColor={starColor}
+									/>
+								) : (
+									<EmptyStar size={starSize} />
+								)}
+							</div>
+						))}
+					</div>
 				</div>
 				<div className="ub-review-text">
 					<RichText
@@ -186,23 +212,36 @@ registerBlockType('ub/star-rating', {
 			starColor,
 			selectedStars,
 			reviewText,
-			reviewTextAlign
+			reviewTextAlign,
+			starAlign
 		} = props.attributes;
 		return (
 			<div className="ub-star-rating">
-				<div className="ub-star-container">
-					{[...Array(starCount)].map((e, i) => (
-						<div key={i}>
-							{i < selectedStars ? (
-								<FullStar
-									size={starSize}
-									fillColor={starColor}
-								/>
-							) : (
-								<EmptyStar size={starSize} />
-							)}
-						</div>
-					))}
+				<div
+					className="ub-star-outer-container"
+					style={{
+						justifyContent:
+							starAlign === 'center'
+								? 'center'
+								: `flex-${
+										starAlign === 'left' ? 'start' : 'end'
+								  }`
+					}}
+				>
+					<div className="ub-star-inner-container">
+						{[...Array(starCount)].map((e, i) => (
+							<div key={i}>
+								{i < selectedStars ? (
+									<FullStar
+										size={starSize}
+										fillColor={starColor}
+									/>
+								) : (
+									<EmptyStar size={starSize} />
+								)}
+							</div>
+						))}
+					</div>
 				</div>
 				<div
 					className="ub-review-text"

@@ -468,12 +468,6 @@
 */
 .ub-hide {
   display: none !important; }
-
-.ub-star-container {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row; }
 /**
  * #.# Common SCSS
  *
