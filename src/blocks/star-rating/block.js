@@ -8,6 +8,8 @@ const {
 const { registerBlockType } = wp.blocks;
 const { PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
+const { withState } = wp.compose;
+
 import './style.scss';
 import './editor.scss';
 
@@ -53,8 +55,8 @@ registerBlockType('ub/star-rating', {
 
 	attributes,
 
-	edit(props) {
-		const { isSelected, setAttributes } = props;
+	edit: withState({ highlightedStars: 0 })(function(props) {
+		const { isSelected, setAttributes, setState, highlightedStars } = props;
 
 		const {
 			starCount,
@@ -170,10 +172,24 @@ registerBlockType('ub/star-rating', {
 								  }`
 					}}
 				>
-					<div className="ub-star-inner-container">
+					<div
+						className="ub-star-inner-container"
+						onMouseLeave={() => setState({ highlightedStars: 0 })}
+					>
 						{[...Array(starCount)].map((e, i) => (
-							<div key={i}>
-								{i < selectedStars ? (
+							<div
+								key={i}
+								onMouseEnter={() => {
+									setState({ highlightedStars: i + 1 });
+								}}
+								onClick={() =>
+									setAttributes({ selectedStars: i + 1 })
+								}
+							>
+								{i <
+								(highlightedStars
+									? highlightedStars
+									: selectedStars) ? (
 									<FullStar
 										size={starSize}
 										fillColor={starColor}
@@ -203,7 +219,7 @@ registerBlockType('ub/star-rating', {
 				</div>
 			</div>
 		];
-	},
+	}),
 
 	save(props) {
 		const {
