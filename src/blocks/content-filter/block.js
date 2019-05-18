@@ -13,6 +13,8 @@ const {
 const { withState, compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
+const { CheckboxControl, TextControl, PanelBody } = wp.components;
+
 import icon from './icon';
 import { Component } from 'react';
 
@@ -97,7 +99,9 @@ class PanelContent extends Component {
 			buttonTextColor,
 			activeButtonColor,
 			activeButtonTextColor,
-			ID
+			ID,
+			allowReset,
+			resetButtonLabel
 		} = attributes;
 
 		const newBlockTarget = block.innerBlocks.filter(
@@ -180,7 +184,7 @@ class PanelContent extends Component {
 				<InspectorControls>
 					<PanelColorSettings
 						title={__('Filter Colors')}
-						initialOpen={true}
+						initialOpen={false}
 						colorSettings={[
 							{
 								value: buttonColor,
@@ -230,6 +234,28 @@ class PanelContent extends Component {
 							}
 						]}
 					/>
+					<PanelBody
+						title="Filter selection reset button"
+						initialOpen={false}
+					>
+						<CheckboxControl
+							label={__('Allow resetting of filter selection')}
+							checked={allowReset}
+							onChange={() =>
+								setAttributes({ allowReset: !allowReset })
+							}
+						/>
+						{allowReset && (
+							<TextControl
+								label={__('Reset button text')}
+								placeholder="Reset button text"
+								value={resetButtonLabel}
+								onChange={value =>
+									setAttributes({ resetButtonLabel: value })
+								}
+							/>
+						)}
+					</PanelBody>
 				</InspectorControls>
 			),
 			<div className="ub-content-filter-main">
@@ -507,6 +533,14 @@ registerBlockType('ub/content-filter', {
 		ID: {
 			type: 'string',
 			default: ''
+		},
+		allowReset: {
+			type: 'boolean',
+			default: true
+		},
+		resetButtonLabel: {
+			type: 'string',
+			default: 'Reset'
 		}
 	},
 
@@ -540,7 +574,9 @@ registerBlockType('ub/content-filter', {
 			buttonTextColor,
 			activeButtonColor,
 			activeButtonTextColor,
-			ID
+			ID,
+			allowReset,
+			resetButtonLabel
 		} = props.attributes;
 
 		const currentSelection = filterArray.map(f =>
@@ -582,7 +618,11 @@ registerBlockType('ub/content-filter', {
 							))}
 						</div>
 					))}
-				<button className="ub-content-filter-reset">Reset</button>
+				{allowReset && (
+					<button className="ub-content-filter-reset">
+						{resetButtonLabel}
+					</button>
+				)}
 				<InnerBlocks.Content />
 			</div>
 		);
