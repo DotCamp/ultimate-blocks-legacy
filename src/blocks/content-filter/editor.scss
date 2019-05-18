@@ -64,6 +64,7 @@
 	display: flex;
 	opacity: 0;
 	transition: 0.5s opacity ease-in-out;
+	z-index: 6;
 	> span {
 		position: absolute;
 		right: -10px;
@@ -80,6 +81,7 @@
 	display: flex;
 	opacity: 0;
 	transition: 0.5s opacity ease-in-out;
+	z-index: 7;
 	> span {
 		display: inline-block;
 		margin: 0 3px;
