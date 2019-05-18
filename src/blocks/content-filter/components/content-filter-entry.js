@@ -1,12 +1,142 @@
 import icon from '../icon';
 
+import { Component } from 'react';
+
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const { InnerBlocks } = wp.editor;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
+
+class Dropdown extends Component {
+	//adapted from Ben Bud, https://stackoverflow.com/a/42234988
+	constructor(props) {
+		super(props);
+
+		this.setWrapperRef = this.setWrapperRef.bind(this);
+		this.handleClickOutside = this.handleClickOutside.bind(this);
+		this.state = { showDropdown: false };
+	}
+
+	componentDidMount() {
+		document.addEventListener('mousedown', this.handleClickOutside);
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener('mousedown', this.handleClickOutside);
+	}
+
+	setWrapperRef(node) {
+		this.wrapperRef = node;
+	}
+
+	handleClickOutside(event) {
+		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+			this.setState({ showDropdown: false });
+		}
+	}
+
+	render() {
+		const { showDropdown } = this.state;
+		const { attributes, setAttributes } = this.props;
+		const {
+			buttonColor,
+			buttonTextColor,
+			availableFilters,
+			selectedFilters
+		} = attributes;
+
+		let dropdownContent = [];
+		availableFilters.forEach((category, i) => {
+			if (category.filters.length > 0) {
+				if (Array.isArray(selectedFilters[i])) {
+					selectedFilters[i].forEach((f, j) => {
+						if (f === false) {
+							dropdownContent.push({
+								name: availableFilters[i].filters[j],
+								category: i,
+								index: j
+							});
+						}
+					});
+				} else {
+					if (selectedFilters[i] === -1) {
+						availableFilters[i].filters.forEach((f, j) => {
+							dropdownContent.push({
+								name: f,
+								category: i,
+								index: j
+							});
+						});
+					}
+				}
+			}
+		});
+
+		return (
+			<div
+				ref={this.setWrapperRef}
+				className="ub-content-filter-dropdown-container"
+			>
+				<button
+					style={{
+						backgroundColor: buttonColor,
+						color: buttonTextColor
+					}}
+					onClick={() => {
+						if (dropdownContent.length > 0) {
+							this.setState({
+								showDropdown: !showDropdown
+							});
+						}
+					}}
+				>
+					+
+				</button>
+				{showDropdown && (
+					<ul className="ub-content-filter-dropdown-content">
+						{dropdownContent.map(item => (
+							<li
+								onClick={() => {
+									setAttributes({
+										selectedFilters: [
+											...selectedFilters.slice(
+												0,
+												item.category
+											),
+											availableFilters[item.category]
+												.canUseMultiple
+												? [
+														...selectedFilters[
+															item.category
+														].slice(0, item.index),
+														!selectedFilters[
+															item.category
+														][item.index],
+														...selectedFilters[
+															item.category
+														].slice(item.index + 1)
+												  ]
+												: item.index,
+											...selectedFilters.slice(
+												item.category + 1
+											)
+										]
+									});
+									this.setState({ showDropdown: false });
+								}}
+							>
+								{item.name}
+							</li>
+						))}
+					</ul>
+				)}
+			</div>
+		);
+	}
+}
 
 registerBlockType('ub/content-filter-entry', {
 	title: __('Content Filter Entry'),
@@ -57,27 +187,19 @@ registerBlockType('ub/content-filter-entry', {
 			};
 		}),
 		withDispatch(dispatch => {
-			const { removeBlock, selectBlock } = dispatch('core/editor');
+			const { removeBlock } = dispatch('core/editor');
 
-			return { removeBlock, selectBlock };
-		}),
-		withState({ showDropdown: false })
+			return { removeBlock };
+		})
 	])(function(props) {
-		const {
-			setAttributes,
-			block,
-			removeBlock,
-			showDropdown,
-			setState,
-			selectedBlock
-		} = props;
+		const { setAttributes, block, removeBlock, attributes } = props;
 
 		const {
 			availableFilters,
 			selectedFilters,
 			buttonColor,
 			buttonTextColor
-		} = props.attributes;
+		} = attributes;
 
 		if (availableFilters.length > 0 && selectedFilters.length === 0) {
 			let newSelectedFilters = [];
@@ -120,41 +242,6 @@ registerBlockType('ub/content-filter-entry', {
 				);
 		});
 
-		let dropdownContent = [];
-		availableFilters.forEach((category, i) => {
-			if (category.filters.length > 0) {
-				if (Array.isArray(selectedFilters[i])) {
-					selectedFilters[i].forEach((f, j) => {
-						if (f === false) {
-							dropdownContent.push({
-								name: availableFilters[i].filters[j],
-								category: i,
-								index: j
-							});
-						}
-					});
-				} else {
-					if (selectedFilters[i] === -1) {
-						availableFilters[i].filters.forEach((f, j) => {
-							dropdownContent.push({
-								name: f,
-								category: i,
-								index: j
-							});
-						});
-					}
-				}
-			}
-		});
-
-		if (
-			showDropdown &&
-			(selectedBlock === null ||
-				block.clientId !== selectedBlock.clientId)
-		) {
-			setState({ showDropdown: false });
-		}
-
 		return (
 			<div className="ub-content-filter-panel">
 				<div>
@@ -163,7 +250,7 @@ registerBlockType('ub/content-filter-entry', {
 							tag => tag != null && tag.hasOwnProperty('name')
 						)
 						.map(tag => (
-							<button
+							<div
 								className="ub-content-filter-tag"
 								style={{
 									backgroundColor: buttonColor,
@@ -204,93 +291,32 @@ registerBlockType('ub/content-filter-entry', {
 									/>
 								</div>
 								{tag.name}
-							</button>
+							</div>
 						))}
-					<div className="ub-content-filter-dropdown-container">
-						<button
-							style={{
-								backgroundColor: buttonColor,
-								color: buttonTextColor
-							}}
-							onClick={() => {
-								if (dropdownContent.length > 0) {
-									setState({
-										showDropdown: !showDropdown
-									});
-								}
-							}}
-						>
-							+
-						</button>
-						{showDropdown && (
-							<ul className="ub-content-filter-dropdown-content">
-								{dropdownContent.map(item => (
-									<li
-										onClick={() => {
-											setAttributes({
-												selectedFilters: [
-													...selectedFilters.slice(
-														0,
-														item.category
-													),
-													availableFilters[
-														item.category
-													].canUseMultiple
-														? [
-																...selectedFilters[
-																	item
-																		.category
-																].slice(
-																	0,
-																	item.index
-																),
-																!selectedFilters[
-																	item
-																		.category
-																][item.index],
-																...selectedFilters[
-																	item
-																		.category
-																].slice(
-																	item.index +
-																		1
-																)
-														  ]
-														: item.index,
-													...selectedFilters.slice(
-														item.category + 1
-													)
-												]
-											});
-											setState({ showDropdown: false });
-										}}
-									>
-										{item.name}
-									</li>
-								))}
-							</ul>
-						)}
-					</div>
+					<Dropdown
+						attributes={attributes}
+						setAttributes={setAttributes}
+					/>
 				</div>
 				<InnerBlocks templateLock={false} />
 
 				<div className="ub-content-filter-top">
 					<span
-						title={__('Insert New Toggle Above')}
+						title={__('Insert New Panel Above')}
 						onClick={() => {
 							setAttributes({ newBlockPosition: 'above' });
 						}}
 						className="dashicons dashicons-plus-alt"
 					/>
 					<span
-						title={__('Delete This Toggle')}
+						title={__('Delete This Panel')}
 						onClick={() => removeBlock(block.clientId)}
 						class="dashicons dashicons-dismiss"
 					/>
 				</div>
 				<div className="ub-content-filter-bottom">
 					<span
-						title={__('Insert New Toggle Below')}
+						title={__('Insert New Panel Below')}
 						onClick={() => {
 							setAttributes({ newBlockPosition: 'below' });
 						}}
@@ -339,14 +365,14 @@ registerBlockType('ub/content-filter-entry', {
 				data-selectedFilters={JSON.stringify(selectedFilters)}
 				style={{ display: 'block' }} //to be turned into none when frontend script doesn't see any of the main block's selected filters on the child block's tags
 			>
-				<p>
+				{/*<p>
 					Categories:{' '}
 					{tagList.map((filter, i) => (
 						<span>{`${filter.name}${
 							tagList.length - 1 > i ? ', ' : ''
 						}`}</span>
 					))}
-				</p>
+				</p>*/}
 				<InnerBlocks.Content />
 			</div>
 		);
