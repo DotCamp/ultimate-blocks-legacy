@@ -1,100 +1,141 @@
-(function($) {
-	$(document).ready(function() {
-		$('.ub-content-filter-tag').click(function() {
-			const blockProper = $(this).closest('.wp-block-ub-content-filter'); //prettier-ignore
-			$(this).data('tagisselected', !$(this).data('tagisselected'));
+function getSiblings(element, criteria) {
+	const children = [...element.parentNode.children].filter(
+		child => child !== element
+	);
+	return criteria ? children.filter(criteria) : children;
+}
 
-			const categoryIndex = $(this).data('categorynumber');
-			const filterIndex = $(this).data('filternumber');
+Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
+	instance => {
+		instance.addEventListener('click', function() {
+			const blockProper = this.closest('.wp-block-ub-content-filter');
+			this.setAttribute(
+				'data-tagisselected',
+				JSON.stringify(
+					!JSON.parse(this.getAttribute('data-tagisselected'))
+				)
+			);
+			const categoryIndex = JSON.parse(
+				this.getAttribute('data-categorynumber')
+			);
+			const filterIndex = JSON.parse(
+				this.getAttribute('data-filternumber')
+			);
+			this.style.backgroundColor = this.getAttribute('data-activecolor');
+			this.style.color = this.getAttribute('data-activetextcolor');
 
-			if ($(this).data('tagisselected')) {
-				$(this)
-					.css('background-color', $(this).data('activecolor'))
-					.css('color', $(this).data('activetextcolor'));
+			if (JSON.parse(this.getAttribute('data-tagisselected'))) {
 				if (
-					!$(this).parent().data('canusemultiple') //prettier-ignore
+					!JSON.parse(
+						this.parentElement.getAttribute('data-canusemultiple')
+					)
 				) {
-					$(this)
-						.siblings('.ub-content-filter-tag')
-						.data('tagisselected', false)
-						.css('background-color', $(this).data('normalcolor'))
-						.css('color', $(this).data('normaltextcolor'));
+					getSiblings(this, elem =>
+						elem.classList.contains('ub-content-filter-tag')
+					).forEach(sibling => {
+						sibling.setAttribute('data-tagisselected', 'false');
+						sibling.style.backgroundColor = this.getAttribute(
+							'data-normalcolor'
+						);
+						sibling.style.color = this.getAttribute(
+							'data-normaltextcolor'
+						);
+					});
 				}
 			} else {
-				$(this)
-					.css('background-color', $(this).data('normalcolor'))
-					.css('color', $(this).data('normaltextcolor'));
+				this.style.backgroundColor = this.getAttribute(
+					'data-normalcolor'
+				);
+				this.style.color = this.getAttribute('data-normaltextcolor');
 			}
-
-			let newSelection = blockProper.data('currentselection');
+			let newSelection = JSON.parse(
+				blockProper.getAttribute('data-currentselection')
+			);
 			if (Array.isArray(newSelection[categoryIndex])) {
-				newSelection[categoryIndex][filterIndex] = $(this).data(
-					'tagisselected'
+				newSelection[categoryIndex][filterIndex] = JSON.parse(
+					this.getAttribute('data-tagisselected')
 				);
 			} else {
-				newSelection[categoryIndex] = $(this).data('tagisselected')
+				newSelection[categoryIndex] = JSON.parse(
+					this.getAttribute('data-tagisselected')
+				)
 					? filterIndex
 					: -1;
 			}
-			blockProper.data('currentselection', newSelection);
+			blockProper.setAttribute(
+				'data-currentselection',
+				JSON.stringify(newSelection)
+			);
 
-			$(`#${blockProper.prop('id')}`)
-				.find('.ub-content-filter-panel')
-				.each(function() {
-					const panelData = $(this).data('selectedfilters');
-					const mainData = blockProper.data('currentselection');
+			Array.from(
+				blockProper.getElementsByClassName('ub-content-filter-panel')
+			).forEach(instance => {
+				const panelData = JSON.parse(
+					instance.getAttribute('data-selectedfilters')
+				);
+				const mainData = JSON.parse(
+					blockProper.getAttribute('data-currentselection')
+				);
 
-					let isVisible = true;
+				let isVisible = true;
 
-					panelData.forEach((category, i) => {
-						if (Array.isArray(category)) {
-							if (
-								mainData[i].filter(f => f).length > 0 &&
-								category.filter(
-									(f, j) => f && f === mainData[i][j]
-								).length === 0
-							) {
-								isVisible = false;
-							}
-						} else {
-							if (
-								mainData[i] !== category &&
-								mainData[i] !== -1
-							) {
-								isVisible = false;
-							}
+				panelData.forEach((category, i) => {
+					if (Array.isArray(category)) {
+						if (
+							mainData[i].filter(f => f).length > 0 &&
+							category.filter((f, j) => f && f === mainData[i][j])
+								.length === 0
+						) {
+							isVisible = false;
 						}
-					});
-
-					$(this).css('display', isVisible ? 'block' : 'none');
+					} else {
+						if (mainData[i] !== category && mainData[i] !== -1) {
+							isVisible = false;
+						}
+					}
 				});
+
+				instance.style.display = isVisible ? 'block' : 'none';
+			});
 		});
+	}
+);
 
-		$('.ub-content-filter-reset').click(function() {
-			const blockProper = $(this).closest('.wp-block-ub-content-filter');
+Array.from(document.getElementsByClassName('ub-content-filter-reset')).forEach(
+	instance => {
+		instance.addEventListener('click', function() {
+			const blockProper = this.closest('.wp-block-ub-content-filter');
 
-			let blockSelection = blockProper.data('currentselection');
+			let blockSelection = JSON.parse(
+				blockProper.getAttribute('data-currentselection')
+			);
 
 			blockSelection = blockSelection.map(c =>
 				Array.isArray(c) ? Array(c.length).fill(false) : -1
 			);
 
-			blockProper.data('currentselection', blockSelection);
+			blockProper.setAttribute(
+				'data-currentselection',
+				JSON.stringify(blockSelection)
+			);
 
-			$(`#${blockProper.prop('id')}`)
-				.find('.ub-content-filter-panel')
-				.each(function() {
-					$(this).css('display', 'block');
-				});
+			Array.from(
+				blockProper.getElementsByClassName('ub-content-filter-panel')
+			).forEach(instance => {
+				instance.style.display = 'block';
+			});
 
-			$(`#${blockProper.prop('id')}`)
-				.find('.ub-content-filter-tag')
-				.each(function() {
-					$(this)
-						.data('tagisselected', false)
-						.css('background-color', $(this).data('normalcolor'))
-						.css('color', $(this).data('normaltextcolor'));
-				});
+			Array.from(
+				blockProper.getElementsByClassName('ub-content-filter-tag')
+			).forEach(instance => {
+				instance.setAttribute('data-tagisselected', 'false');
+				instance.style.backgroundColor = instance.getAttribute(
+					'data-normalcolor'
+				);
+				instance.style.color = instance.getAttribute(
+					'data-normaltextcolor'
+				);
+			});
 		});
-	});
-})(jQuery);
+	}
+);

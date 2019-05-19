@@ -97,7 +97,6 @@ class PanelContent extends Component {
 			buttonTextColor,
 			activeButtonColor,
 			activeButtonTextColor,
-			ID,
 			allowReset,
 			resetButtonLabel
 		} = attributes;
@@ -143,10 +142,6 @@ class PanelContent extends Component {
 				: selectedFilterArr[filterCategoryIndex],
 			...selectedFilterArr.slice(filterCategoryIndex + 1)
 		];
-
-		if (ID === '') {
-			setAttributes({ ID: block.clientId });
-		}
 
 		return [
 			isSelected && (
@@ -203,10 +198,7 @@ class PanelContent extends Component {
 							}
 						]}
 					/>
-					<PanelBody
-						title="Reset Button"
-						initialOpen={false}
-					>
+					<PanelBody title="Reset Button" initialOpen={false}>
 						<CheckboxControl
 							label={__('Allow Resetting of Filter Selection')}
 							checked={allowReset}
@@ -498,10 +490,6 @@ registerBlockType('ub/content-filter', {
 			type: 'string',
 			default: '#ffffff'
 		},
-		ID: {
-			type: 'string',
-			default: ''
-		},
 		allowReset: {
 			type: 'boolean',
 			default: false
@@ -541,7 +529,6 @@ registerBlockType('ub/content-filter', {
 			buttonTextColor,
 			activeButtonColor,
 			activeButtonTextColor,
-			ID,
 			allowReset,
 			resetButtonLabel
 		} = props.attributes;
@@ -550,10 +537,7 @@ registerBlockType('ub/content-filter', {
 			f.canUseMultiple ? Array(f.filters.length).fill(false) : -1
 		);
 		return (
-			<div
-				id={ID}
-				data-currentSelection={JSON.stringify(currentSelection)}
-			>
+			<div data-currentSelection={JSON.stringify(currentSelection)}>
 				{filterArray.length > 0 &&
 					filterArray.map((f, i) => (
 						<div
