@@ -138,10 +138,6 @@ registerBlockType('ub/content-filter-entry', {
 	icon: icon,
 	category: 'ultimateblocks',
 	attributes: {
-		index: {
-			type: 'number',
-			default: 0
-		},
 		availableFilters: {
 			type: 'array',
 			default: [] //get list of filters from parent block
@@ -222,10 +218,8 @@ registerBlockType('ub/content-filter-entry', {
 							tag => tag != null && tag.hasOwnProperty('name')
 						)
 						.map(tag => (
-							<div
-								className="ub-content-assigned-filter-tag"
-							>
-								<div className="ub-content-filter-tag-top">
+							<div className="ub-content-assigned-filter-tag">
+								<div className="ub-content-filter-tag-deselect">
 									<span
 										title={__('Deselect This Filter')}
 										onClick={() => {
