@@ -7,9 +7,6 @@ const { registerBlockType } = wp.blocks;
 
 const { InnerBlocks } = wp.editor;
 
-const { compose } = wp.compose;
-const { withDispatch, withSelect } = wp.data;
-
 class Dropdown extends Component {
 	//adapted from Ben Bud, https://stackoverflow.com/a/42234988
 	constructor(props) {
@@ -156,10 +153,6 @@ registerBlockType('ub/content-filter-entry', {
 			type: 'array',
 			default: []
 		},
-		newBlockPosition: {
-			type: 'string',
-			default: 'none' //may change to above or below
-		},
 		buttonColor: {
 			type: 'string',
 			default: '#aaaaaa'
@@ -173,26 +166,8 @@ registerBlockType('ub/content-filter-entry', {
 		inserter: false,
 		reusable: false
 	},
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId, getSelectedBlock } = select(
-				'core/editor'
-			);
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId),
-				blockParentId: getBlockRootClientId(clientId),
-				selectedBlock: getSelectedBlock()
-			};
-		}),
-		withDispatch(dispatch => {
-			const { removeBlock } = dispatch('core/editor');
-
-			return { removeBlock };
-		})
-	])(function(props) {
-		const { setAttributes, block, removeBlock, attributes } = props;
+	edit(props) {
+		const { setAttributes, attributes } = props;
 
 		const {
 			availableFilters,
@@ -299,33 +274,9 @@ registerBlockType('ub/content-filter-entry', {
 					/>
 				</div>
 				<InnerBlocks templateLock={false} />
-
-				<div className="ub-content-filter-top">
-					<span
-						title={__('Insert New Panel Above')}
-						onClick={() => {
-							setAttributes({ newBlockPosition: 'above' });
-						}}
-						className="dashicons dashicons-plus-alt"
-					/>
-					<span
-						title={__('Delete This Panel')}
-						onClick={() => removeBlock(block.clientId)}
-						class="dashicons dashicons-dismiss"
-					/>
-				</div>
-				<div className="ub-content-filter-bottom">
-					<span
-						title={__('Insert New Panel Below')}
-						onClick={() => {
-							setAttributes({ newBlockPosition: 'below' });
-						}}
-						className="dashicons dashicons-plus-alt"
-					/>
-				</div>
 			</div>
 		);
-	}),
+	},
 	save(props) {
 		const {
 			availableFilters,

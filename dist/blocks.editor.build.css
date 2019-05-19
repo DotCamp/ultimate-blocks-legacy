@@ -566,33 +566,6 @@
 .ub-hide {
   display: none !important; }
 
-.ub-content-filter-parent {
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr; }
-  .ub-content-filter-parent > div {
-    border: 1px solid black; }
-
-.ub-content-filter-top {
-  position: absolute;
-  top: -10px;
-  left: 0;
-  right: 0;
-  -ms-flex-pack: center;
-      justify-content: center;
-  display: -ms-flexbox;
-  display: flex;
-  opacity: 0;
-  -webkit-transition: 0.5s opacity ease-in-out;
-  -o-transition: 0.5s opacity ease-in-out;
-  transition: 0.5s opacity ease-in-out; }
-  .ub-content-filter-top > span {
-    display: inline-block;
-    margin: 0 3px;
-    cursor: pointer; }
-  .ub-content-filter-top > span:nth-of-type(2) {
-    position: absolute;
-    right: -15px; }
-
 .ub-content-filter-tag:hover .ub-content-filter-tag-top,
 .ub-content-filter-category:hover .ub-content-filter-category-top {
   opacity: 1; }
@@ -641,28 +614,8 @@
     right: -10px;
     color: #000000; }
 
-.ub-content-filter-bottom {
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  right: 0;
-  -ms-flex-pack: center;
-      justify-content: center;
-  display: -ms-flexbox;
-  display: flex;
-  opacity: 0;
-  -webkit-transition: 0.5s opacity ease-in-out;
-  -o-transition: 0.5s opacity ease-in-out;
-  transition: 0.5s opacity ease-in-out;
-  z-index: 7; }
-  .ub-content-filter-bottom > span {
-    display: inline-block;
-    margin: 0 3px;
-    cursor: pointer; }
-
-.ub-content-filter-panel:hover .ub-content-filter-top,
-.ub-content-filter-panel:hover .ub-content-filter-bottom {
-  opacity: 1; }
+.ub-content-filter-panel {
+  border: 1px solid black; }
 
 .ub-content-filter-dropdown-container {
   display: inline-block;
@@ -697,7 +650,9 @@
     background: #ffffff; }
   .ub-content-filter-dropdown-content > li:nth-child(even),
   .ub-content-filter-dropdown-content li.hidden:nth-child(even) ~ li:nth-of-type(odd),
-  .ub-content-filter-dropdown-content li.hidden:nth-child(even) + li.hidden:nth-child(odd) ~ li:nth-of-type(even) {
+  .ub-content-filter-dropdown-content li.hidden:nth-child(even)
++ li.hidden:nth-child(odd)
+~ li:nth-of-type(even) {
     background: #f5f5f5; }
 
 .ub-content-filter-main > button {

@@ -10,7 +10,7 @@ const {
 	PanelColorSettings
 } = wp.editor;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
 const { CheckboxControl, TextControl, PanelBody } = wp.components;
@@ -88,8 +88,6 @@ class PanelContent extends Component {
 			attributes,
 			setAttributes,
 			block,
-			setState,
-			oldArrangement,
 			updateBlockAttributes,
 			insertBlock
 		} = this.props;
@@ -104,10 +102,6 @@ class PanelContent extends Component {
 			resetButtonLabel
 		} = attributes;
 
-		const newBlockTarget = block.innerBlocks.filter(
-			panel => panel.attributes.newBlockPosition !== 'none'
-		);
-
 		const newChildBlock = createBlock('ub/content-filter-entry', {
 			availableFilters: filterArray,
 			selectedFilters: filterArray.map(category =>
@@ -118,31 +112,6 @@ class PanelContent extends Component {
 			buttonTextColor: buttonTextColor,
 			buttonColor: buttonColor
 		});
-
-		if (JSON.stringify(newBlockTarget) !== '[]') {
-			const { index, newBlockPosition } = newBlockTarget[0].attributes;
-			insertBlock(
-				newChildBlock,
-				newBlockPosition === 'below' ? index + 1 : index,
-				block.clientId
-			);
-			updateBlockAttributes(newBlockTarget[0].clientId, {
-				newBlockPosition: 'none'
-			});
-		}
-
-		const newArrangement = JSON.stringify(
-			block.innerBlocks.map(panel => panel.attributes.index)
-		);
-
-		if (newArrangement !== oldArrangement) {
-			block.innerBlocks.forEach((panel, i) =>
-				updateBlockAttributes(panel.clientId, {
-					index: i
-				})
-			);
-			setState({ oldArrangement: newArrangement });
-		}
 
 		const newAvailableFilters = (item, pos) => [
 			...filterArray.slice(0, pos),
@@ -478,7 +447,11 @@ class PanelContent extends Component {
 				>
 					Add new category
 				</button>
-
+				<br />
+				<InnerBlocks
+					templateLock={false}
+					allowedBlocks={['ub/content-filter-entry']}
+				/>
 				{filterArray.length > 0 &&
 					filterArray.filter(f => f.filters.length > 0).length >
 						0 && (
@@ -494,11 +467,6 @@ class PanelContent extends Component {
 							Add new content
 						</button>
 					)}
-
-				<InnerBlocks
-					templateLock={false}
-					allowedBlocks={['ub/content-filter-entry']}
-				/>
 			</div>
 		];
 	}
@@ -516,7 +484,7 @@ registerBlockType('ub/content-filter', {
 		},
 		buttonColor: {
 			type: 'string',
-			default: '#aaaaaa'
+			default: '#eeeeee'
 		},
 		buttonTextColor: {
 			type: 'string',
@@ -524,7 +492,7 @@ registerBlockType('ub/content-filter', {
 		},
 		activeButtonColor: {
 			type: 'string',
-			default: '#aaaaaa'
+			default: '#eeeeee'
 		},
 		activeButtonTextColor: {
 			type: 'string',
@@ -563,8 +531,7 @@ registerBlockType('ub/content-filter', {
 				updateBlockAttributes,
 				insertBlock
 			};
-		}),
-		withState({ oldArrangement: '' })
+		})
 	])(PanelContent),
 
 	save(props) {
