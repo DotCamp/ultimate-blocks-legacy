@@ -204,11 +204,11 @@ class PanelContent extends Component {
 						]}
 					/>
 					<PanelBody
-						title="Filter selection reset button"
+						title="Reset Button"
 						initialOpen={false}
 					>
 						<CheckboxControl
-							label={__('Allow resetting of filter selection')}
+							label={__('Allow Resetting of Filter Selection')}
 							checked={allowReset}
 							onChange={() =>
 								setAttributes({ allowReset: !allowReset })
@@ -445,7 +445,7 @@ class PanelContent extends Component {
 						);
 					}}
 				>
-					Add new category
+					Add New Category
 				</button>
 				<br />
 				<InnerBlocks

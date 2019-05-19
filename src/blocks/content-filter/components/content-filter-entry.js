@@ -78,10 +78,7 @@ class Dropdown extends Component {
 				className="ub-content-filter-dropdown-container"
 			>
 				<button
-					style={{
-						backgroundColor: buttonColor,
-						color: buttonTextColor
-					}}
+					className="ub-content-assigned-filter-tag"
 					onClick={() => {
 						if (dropdownContent.length > 0) {
 							this.setState({
@@ -226,11 +223,7 @@ registerBlockType('ub/content-filter-entry', {
 						)
 						.map(tag => (
 							<div
-								className="ub-content-filter-tag"
-								style={{
-									backgroundColor: buttonColor,
-									color: buttonTextColor
-								}}
+								className="ub-content-assigned-filter-tag"
 							>
 								<div className="ub-content-filter-tag-top">
 									<span
