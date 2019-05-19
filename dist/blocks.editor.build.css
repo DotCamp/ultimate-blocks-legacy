@@ -670,23 +670,35 @@
   z-index: 7; }
   .ub-content-filter-dropdown-container > button {
     display: inline-block;
-    height: 32px;
-    width: 32px;
+    height: 42px;
+    width: 41px;
     margin: 5px;
     padding: 5px;
     text-align: center; }
 
 .ub-content-filter-dropdown-content {
   overflow-y: scroll;
-  max-height: 75px;
-  border: 1px solid black;
-  top: 45px;
+  max-height: 105px;
+  border-radius: 2px;
+  top: 44px;
+  -webkit-box-shadow: 0px 0px 3px 1px #e0e0e0;
+          box-shadow: 0px 0px 3px 1px #e0e0e0;
   position: absolute;
   width: 150px; }
   .ub-content-filter-dropdown-content > li {
     cursor: pointer;
     background-color: #ffffff;
-    border: 1px solid #dddddd; }
+    padding-left: 15px;
+    padding-top: 4px;
+    padding-bottom: 4px; }
+  .ub-content-filter-dropdown-content > li,
+  .ub-content-filter-dropdown-content li.hidden:nth-child(even) + li:nth-of-type(odd) + li:nth-of-type(even),
+  .ub-content-filter-dropdown-content li.hidden:nth-child(even) + li.hidden:nth-child(odd) ~ li:nth-of-type(odd) {
+    background: #ffffff; }
+  .ub-content-filter-dropdown-content > li:nth-child(even),
+  .ub-content-filter-dropdown-content li.hidden:nth-child(even) ~ li:nth-of-type(odd),
+  .ub-content-filter-dropdown-content li.hidden:nth-child(even) + li.hidden:nth-child(odd) ~ li:nth-of-type(even) {
+    background: #f5f5f5; }
 
 .ub-content-filter-main > button {
   margin: 10px;
