@@ -137,7 +137,7 @@ class PanelContent extends Component {
 						)
 				  ]
 				: selectedFilterArr[filterCategoryIndex] === deletedFilterPos
-				? ''
+				? -1
 				: selectedFilterArr[filterCategoryIndex] > deletedFilterPos
 				? (selectedFilterArr[filterCategoryIndex] - 1).toString()
 				: selectedFilterArr[filterCategoryIndex],
