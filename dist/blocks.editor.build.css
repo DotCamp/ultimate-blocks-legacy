@@ -615,7 +615,11 @@
     color: #000000; }
 
 .ub-content-filter-panel {
-  border: 1px solid black; }
+  border: 1px dashed #909090;
+  border-right: none;
+  border-left: none;
+  padding-top: 10px;
+  margin-bottom: 40px; }
 
 .ub-content-filter-dropdown-container {
   display: inline-block;
@@ -650,12 +654,11 @@
     background: #ffffff; }
   .ub-content-filter-dropdown-content > li:nth-child(even),
   .ub-content-filter-dropdown-content li.hidden:nth-child(even) ~ li:nth-of-type(odd),
-  .ub-content-filter-dropdown-content li.hidden:nth-child(even)
-+ li.hidden:nth-child(odd)
-~ li:nth-of-type(even) {
+  .ub-content-filter-dropdown-content li.hidden:nth-child(even) + li.hidden:nth-child(odd) ~ li:nth-of-type(even) {
     background: #f5f5f5; }
 
 .ub-content-filter-main > button {
-  margin: 10px;
+  margin: 10px !important;
   padding: 10px;
-  color: black; }
+  color: black !important;
+  border: 1px solid #ccc; }

@@ -492,11 +492,11 @@ registerBlockType('ub/content-filter', {
 		},
 		activeButtonColor: {
 			type: 'string',
-			default: '#eeeeee'
+			default: '#fcb900'
 		},
 		activeButtonTextColor: {
 			type: 'string',
-			default: '#000000'
+			default: '#ffffff'
 		},
 		ID: {
 			type: 'string',
@@ -504,7 +504,7 @@ registerBlockType('ub/content-filter', {
 		},
 		allowReset: {
 			type: 'boolean',
-			default: true
+			default: false
 		},
 		resetButtonLabel: {
 			type: 'string',
