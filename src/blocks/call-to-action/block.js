@@ -3,7 +3,12 @@ import './style.scss';
 import './editor.scss';
 import icon from './icons/icon';
 
-import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
+import {
+	version_1_1_2,
+	version_1_1_4,
+	version_1_1_5,
+	version_2_0_0
+} from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -16,7 +21,14 @@ const {
 	PanelColorSettings
 } = wp.editor;
 
-const { PanelBody, Icon, IconButton, Toolbar, RangeControl } = wp.components;
+const {
+	PanelBody,
+	Icon,
+	IconButton,
+	Toolbar,
+	RangeControl,
+	CheckboxControl
+} = wp.components;
 
 const { withState } = wp.compose;
 
@@ -107,6 +119,10 @@ const attributes = {
 	contentAlign: {
 		type: 'string',
 		default: 'center'
+	},
+	addNofollow: {
+		type: 'boolean',
+		default: false
 	}
 };
 
@@ -144,7 +160,8 @@ registerBlockType('ub/call-to-action', {
 			buttonTextColor,
 			ub_call_to_action_headline_text,
 			ub_cta_content_text,
-			ub_cta_button_text
+			ub_cta_button_text,
+			addNofollow
 		} = props.attributes;
 
 		// Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
@@ -306,6 +323,15 @@ registerBlockType('ub/call-to-action', {
 							}
 						/>
 					</PanelBody>
+					<PanelBody title={__('Link Settings')} initialOpen={false}>
+						<CheckboxControl
+							label={__('Add Nofollow to Link')}
+							checked={addNofollow}
+							onChange={() =>
+								setAttributes({ addNofollow: !addNofollow })
+							}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			),
 
@@ -462,7 +488,8 @@ registerBlockType('ub/call-to-action', {
 			url,
 			buttonTextColor,
 			buttonFontSize,
-			ub_cta_button_text
+			ub_cta_button_text,
+			addNofollow
 		} = props.attributes;
 		return (
 			<div className={props.className}>
@@ -499,29 +526,28 @@ registerBlockType('ub/call-to-action', {
 						</p>
 					</div>
 					<div className="ub_call_to_action_button">
-						<span
+						<a
+							href={url}
+							target="_blank"
+							rel={`${
+								addNofollow ? 'nofollow ' : ''
+							}noopener noreferrer`}
 							className={`wp-block-button ub_cta_button`}
 							style={{
 								backgroundColor: buttonColor,
 								width: buttonWidth + 'px'
 							}}
 						>
-							<a
-								href={url}
-								target="_blank"
-								rel="noopener noreferrer"
+							<p
+								className="ub_cta_button_text"
+								style={{
+									color: buttonTextColor,
+									fontSize: buttonFontSize + 'px'
+								}}
 							>
-								<p
-									className="ub_cta_button_text"
-									style={{
-										color: buttonTextColor,
-										fontSize: buttonFontSize + 'px'
-									}}
-								>
-									{ub_cta_button_text}
-								</p>
-							</a>
-						</span>
+								{ub_cta_button_text}
+							</p>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -539,6 +565,10 @@ registerBlockType('ub/call-to-action', {
 		{
 			attributes,
 			save: version_1_1_5
+		},
+		{
+			attributes,
+			save: version_2_0_0
 		}
 	]
 });
