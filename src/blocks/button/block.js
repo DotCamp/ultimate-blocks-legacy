@@ -12,7 +12,12 @@ import icon from './icons/icons';
 import './style.scss';
 import './editor.scss';
 
-import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
+import {
+	version_1_1_2,
+	version_1_1_4,
+	version_1_1_5,
+	version_2_0_0
+} from './oldVersions';
 
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -117,6 +122,21 @@ const attributes = {
 		default: true
 	}
 };
+
+const oldAttributesAdjusted = Object.assign(attributes, {
+	buttonColor: {
+		type: 'string',
+		default: '#44c767'
+	},
+	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonRounded: {
+		type: 'boolean',
+		default: true
+	}
+});
 
 const dashesToCamelcase = str =>
 	str
@@ -604,16 +624,20 @@ registerBlockType('ub/button-block', {
 	},
 	deprecated: [
 		{
-			attributes,
+			attributes: oldAttributesAdjusted,
 			save: version_1_1_2
 		},
 		{
-			attributes,
+			attributes: oldAttributesAdjusted,
 			save: version_1_1_4
 		},
 		{
-			attributes,
+			attributes: oldAttributesAdjusted,
 			save: version_1_1_5
+		},
+		{
+			attributes,
+			save: version_2_0_0
 		}
 	]
 });
