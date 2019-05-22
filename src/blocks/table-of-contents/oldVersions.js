@@ -658,37 +658,51 @@ export const version_1_1_6 = props => {
 	);
 };
 
-const parseList_1_1_8 = (list, listStyle) => {
-	let items = [];
-	list.forEach(item => {
-		if (Array.isArray(item)) {
-			items.push(parseList_1_1_3(item));
-		} else {
-			items.push(
-				<li>
-					<a
-						href={`#${item.anchor}`}
-						dangerouslySetInnerHTML={{
-							__html: item.content.replace(/(<a.+?>|<\/a>)/g, '')
-						}}
-					/>
-				</li>
-			);
-		}
-	});
-	if (listStyle === 'numbered') {
-		return <ol>{items}</ol>;
-	} else {
-		return (
-			<ul
-				style={{
-					listStyle: listStyle === 'plain' ? 'none' : null
-				}}
-			>
-				{items}
-			</ul>
-		);
+const placeItem_1_1_8 = (arr, item) => {
+	if (arr.length === 0 || arr[0].level === item.level) {
+		arr.push(Object.assign({}, item));
+	} else if (arr[arr.length - 1].level < item.level) {
+		if (!arr[arr.length - 1].children) {
+			arr[arr.length - 1].children = [Object.assign({}, item)];
+		} else placeItem_1_1_8(arr[arr.length - 1].children, item);
 	}
+};
+
+const makeHeaderArray_1_1_8 = (origHeaders, allowedHeaders) => {
+	let array = [];
+
+	origHeaders
+		.filter(header => allowedHeaders[header.level - 1])
+		.forEach(header => {
+			placeItem_1_1_8(array, header);
+		});
+
+	return array;
+};
+
+const parseList_1_1_8 = (list, listStyle) => {
+	return list.map(item => (
+		<li>
+			<a
+				href={`#${item.anchor}`}
+				dangerouslySetInnerHTML={{
+					__html: item.content.replace(/(<a.+?>|<\/a>)/g, '')
+				}}
+			/>
+			{item.children &&
+				(listStyle === 'numbered' ? (
+					<ol>{parseList_1_1_8(item.children)}</ol>
+				) : (
+					<ul
+						style={{
+							listStyle: listStyle === 'plain' ? 'none' : null
+						}}
+					>
+						{parseList_1_1_8(item.children)}
+					</ul>
+				))}
+		</li>
+	));
 };
 
 class TableOfContents_1_1_8 extends Component {
@@ -744,9 +758,24 @@ class TableOfContents_1_1_8 extends Component {
 					style={style}
 					className={`ub_table-of-contents-container ub_table-of-contents-${numColumns}-column`}
 				>
-					{parseList_1_1_8(
-						makeHeaderArray_1_1_5(headers, allowedHeaders),
-						listStyle
+					{listStyle === 'numbered' ? (
+						<ol>
+							{parseList_1_1_8(
+								makeHeaderArray_1_1_8(headers, allowedHeaders),
+								listStyle
+							)}
+						</ol>
+					) : (
+						<ul
+							style={{
+								listStyle: listStyle === 'plain' ? 'none' : null
+							}}
+						>
+							{parseList_1_1_8(
+								makeHeaderArray_1_1_8(headers, allowedHeaders),
+								listStyle
+							)}
+						</ul>
 					)}
 				</div>
 			);
