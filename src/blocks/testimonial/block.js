@@ -267,7 +267,7 @@ registerBlockType('ub/testimonial-block', {
 								<p>Ideal Image size is Square i.e 150x150.</p>
 							</div>
 						) : (
-							<p>
+							<div>
 								<img
 									src={imgURL}
 									alt={imgAlt}
@@ -275,14 +275,11 @@ registerBlockType('ub/testimonial-block', {
 									width={100}
 								/>
 								{isSelected ? (
-									<Button
-										className="remove-image"
-										onClick={onRemoveImage}
-									>
+									<Button onClick={onRemoveImage}>
 										{icons.remove}
 									</Button>
 								) : null}
-							</p>
+							</div>
 						)}
 					</div>
 					<div className="ub_testimonial_content">
