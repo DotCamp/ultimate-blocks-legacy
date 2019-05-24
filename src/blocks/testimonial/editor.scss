@@ -12,7 +12,6 @@
 .ub_testimonial {
 	display: grid;
 	grid-template-columns: fit-content(20%) auto;
-	align-items: center;
 }
 
 .ub_testimonial_content {
@@ -28,7 +27,7 @@
 		margin-top: 10px;
 		border-radius: 50%;
 	}
-	button {
+	.ub-remove-image {
 		position: absolute;
 	}
 }

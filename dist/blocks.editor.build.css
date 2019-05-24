@@ -40,9 +40,7 @@
 
 .ub_testimonial {
   display: grid;
-  grid-template-columns: fit-content(20%) auto;
-  -ms-flex-align: center;
-      align-items: center; }
+  grid-template-columns: fit-content(20%) auto; }
 
 .ub_testimonial_content {
   padding: 5px 17px !important;
@@ -55,7 +53,7 @@
     padding: 0;
     margin-top: 10px;
     border-radius: 50%; }
-  .ub_testimonial_img button {
+  .ub_testimonial_img .ub-remove-image {
     position: absolute; }
 
 .ub_testimonial_upload_button {

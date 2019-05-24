@@ -275,7 +275,10 @@ registerBlockType('ub/testimonial-block', {
 									width={100}
 								/>
 								{isSelected ? (
-									<Button onClick={onRemoveImage}>
+									<Button
+										className="ub-remove-image"
+										onClick={onRemoveImage}
+									>
 										{icons.remove}
 									</Button>
 								) : null}
