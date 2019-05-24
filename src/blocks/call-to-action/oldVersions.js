@@ -253,7 +253,8 @@ export const version_2_0_0 = props => {
 		buttonTextColor,
 		buttonFontSize,
 		ub_cta_button_text,
-		addNofollow
+		addNofollow,
+		openInNewTab
 	} = props.attributes;
 	return (
 		<div className={props.className}>
@@ -292,7 +293,7 @@ export const version_2_0_0 = props => {
 				<div className="ub_call_to_action_button">
 					<a
 						href={url}
-						target="_blank"
+						target={openInNewTab ? '_blank' : '_self'}
 						rel={`${
 							addNofollow ? 'nofollow ' : ''
 						}noopener noreferrer`}

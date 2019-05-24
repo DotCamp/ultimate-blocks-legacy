@@ -123,6 +123,10 @@ const attributes = {
 	addNofollow: {
 		type: 'boolean',
 		default: false
+	},
+	openInNewTab: {
+		type: 'boolean',
+		default: false
 	}
 };
 
@@ -161,7 +165,8 @@ registerBlockType('ub/call-to-action', {
 			ub_call_to_action_headline_text,
 			ub_cta_content_text,
 			ub_cta_button_text,
-			addNofollow
+			addNofollow,
+			openInNewTab
 		} = props.attributes;
 
 		// Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
@@ -331,6 +336,13 @@ registerBlockType('ub/call-to-action', {
 								setAttributes({ addNofollow: !addNofollow })
 							}
 						/>
+						<CheckboxControl
+							label={__('Open Link in New Tab')}
+							checked={openInNewTab}
+							onChange={() =>
+								setAttributes({ openInNewTab: !openInNewTab })
+							}
+						/>
 					</PanelBody>
 				</InspectorControls>
 			),
@@ -489,7 +501,8 @@ registerBlockType('ub/call-to-action', {
 			buttonTextColor,
 			buttonFontSize,
 			ub_cta_button_text,
-			addNofollow
+			addNofollow,
+			openInNewTab
 		} = props.attributes;
 		return (
 			<div className={props.className}>
@@ -528,7 +541,7 @@ registerBlockType('ub/call-to-action', {
 					<div className="ub_call_to_action_button">
 						<a
 							href={url}
-							target="_blank"
+							target={openInNewTab ? '_blank' : '_self'}
 							rel={`${
 								addNofollow ? 'nofollow ' : ''
 							}noopener noreferrer`}
