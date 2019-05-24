@@ -1,13 +1,13 @@
 /* eslint-disable */
 
-function getSiblings(element, criteria) {
+function ub_getSiblings(element, criteria) {
 	const children = [...element.parentNode.children].filter(
 		child => child !== element
 	);
 	return criteria ? children.filter(criteria) : children;
 }
 
-function getNodeindex(elm) {
+function ub_getNodeindex(elm) {
 	return [...elm.parentNode.children].indexOf(elm);
 }
 
@@ -30,7 +30,7 @@ Array.from(
 			)
 			.getAttribute('style');
 
-		getSiblings(instance, elem =>
+		ub_getSiblings(instance, elem =>
 			elem.classList.contains('wp-block-ub-tabbed-content-tab-title-wrap')
 		).forEach(sibling => {
 			sibling.classList.remove('active');
@@ -46,7 +46,7 @@ Array.from(
 		});
 
 		const activeTab = parent.querySelector(
-			`.wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(${getNodeindex(
+			`.wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(${ub_getNodeindex(
 				this
 			) + 1})`
 		);

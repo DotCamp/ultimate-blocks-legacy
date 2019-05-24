@@ -1,4 +1,4 @@
-function getSiblings(element, criteria) {
+function ub_getSiblings(element, criteria) {
 	const children = [...element.parentNode.children].filter(
 		child => child !== element
 	);
@@ -30,7 +30,7 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 						this.parentElement.getAttribute('data-canusemultiple')
 					)
 				) {
-					getSiblings(this, elem =>
+					ub_etSiblings(this, elem =>
 						elem.classList.contains('ub-content-filter-tag')
 					).forEach(sibling => {
 						sibling.setAttribute('data-tagisselected', 'false');
