@@ -1,32 +1,34 @@
 {
-	"name": "ultimate-blocks-cgb-guten-block",
-	"version": "1.1.9",
-	"private": true,
-	"scripts": {
-		"start": "node makeFrontendScriptDev.js && cgb-scripts start",
-		"build": "node makeFrontendScriptProd.js && cgb-scripts build",
-		"eject": "cgb-scripts eject",
-		"pot": "wp-pot --src '{,!(node_modules)/**}/*.php' --dest-file 'languages/ultimate-blocks.pot' --package 'Ultimate_Blocks' --domain 'ultimate-blocks' --last-translator 'Imtiaz Rayhan <irayhan.asif@gmail.com>' --team 'Ultimate Blocks <irayhan.asif@gmail.com>' --bug-report 'https://github.com/imtiazrayhan/Ultimate-Blocks/issues'"
-	},
-	"dependencies": {
-		"@babel/core": "^7.5.4",
-		"@babel/preset-env": "^7.5.4",
-		"@fortawesome/free-brands-svg-icons": "^5.8.1",
-		"@fortawesome/free-solid-svg-icons": "^5.8.1",
-		"ajv": ">=6.0.0",
-		"cgb-scripts": "^1.17.0",
-		"react": "16.2.0",
-		"react-autosize-textarea": "2.0.0",
-		"react-dom": "16.2.0",
-		"react-flickity-component": "^3.2.0",
-		"react-sortable-hoc": "^0.6.8",
-		"react-structured-data": "0.0.11"
-	},
-	"devDependencies": {
-		"classnames": "^2.2.5",
-		"gulp": "^3.9.1",
-		"gulp-notify": "^3.0.0",
-		"gulp-sort": "^2.0.0",
-		"gulp-wp-pot": "^2.0.4"
-	}
+    "name": "ultimate-blocks-cgb-guten-block",
+    "version": "1.1.9",
+    "private": true,
+    "scripts": {
+        "start": "node makeFrontendScriptDev.js && cgb-scripts start",
+        "build": "node makeFrontendScriptProd.js && cgb-scripts build",
+        "eject": "cgb-scripts eject",
+        "pot": "wp-pot --src '{,!(node_modules)/**}/*.php' --dest-file 'languages/ultimate-blocks.pot' --package 'Ultimate_Blocks' --domain 'ultimate-blocks' --last-translator 'Imtiaz Rayhan <irayhan.asif@gmail.com>' --team 'Ultimate Blocks <irayhan.asif@gmail.com>' --bug-report 'https://github.com/imtiazrayhan/Ultimate-Blocks/issues'"
+    },
+    "dependencies": {
+        "@babel/core": "^7.5.4",
+        "@babel/preset-env": "^7.5.4",
+        "@fortawesome/free-brands-svg-icons": "^5.8.1",
+        "@fortawesome/free-solid-svg-icons": "^5.8.1",
+        "@fortawesome/fontawesome-svg-core": "^1.2.18",
+        "@fortawesome/react-fontawesome": "^0.1.4",
+        "ajv": ">=6.0.0",
+        "cgb-scripts": "^1.17.0",
+        "react": "16.2.0",
+        "react-autosize-textarea": "2.0.0",
+        "react-dom": "16.2.0",
+        "react-flickity-component": "^3.2.0",
+        "react-sortable-hoc": "^0.6.8",
+        "react-structured-data": "0.0.11"
+    },
+    "devDependencies": {
+        "classnames": "^2.2.5",
+        "gulp": "^3.9.1",
+        "gulp-notify": "^3.0.0",
+        "gulp-sort": "^2.0.0",
+        "gulp-wp-pot": "^2.0.4"
+    }
 }
