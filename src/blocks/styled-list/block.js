@@ -36,6 +36,16 @@ const generateIcon = (selectedIcon, size, color = 'currentColor') => (
 	</svg>
 );
 
+const placeItem = (arr, item) => {
+	if (arr.length === 0 || arr[0].indent === item.indent) {
+		arr.push(Object.assign({}, item));
+	} else if (arr[arr.length - 1].indent < item.indent) {
+		if (!arr[arr.length - 1].children) {
+			arr[arr.length - 1].children = [Object.assign({}, item)];
+		} else placeItem(arr[arr.length - 1].children, item);
+	}
+};
+
 registerBlockType('ub/styled-list', {
 	title: __('Styled List'),
 	icon: icon,
@@ -73,6 +83,56 @@ registerBlockType('ub/styled-list', {
 			setState({ availableIcons: iconList.map(name => allIcons[name]) });
 		}
 
+		let sortedList = [];
+
+		listItem.forEach(item => {
+			placeItem(sortedList, item);
+		});
+
+		const parseList = list => {
+			return list.map(item => (
+				<li>
+					<span class="fa-li">
+						<i
+							className={`${
+								Object.keys(fas)
+									.filter(
+										iconName =>
+											fas[iconName].prefix === 'fas'
+									)
+									.includes(
+										`fa${dashesToCamelcase(
+											item.selectedIcon
+										)}`
+									)
+									? 'fas'
+									: 'fab'
+							} fa-${item.selectedIcon}`}
+							style={{ color: iconColor }}
+						/>
+					</span>
+					<RichText
+						placeholder={__('Add text')}
+						keepPlaceholderOnFocus={true}
+						unstableOnFocus={() =>
+							setState({ selectedItem: item.index })
+						}
+						onChange={newValue => {
+							let newListItem = JSON.parse(
+								JSON.stringify(listItem)
+							);
+							newListItem[item.index].text = newValue;
+							setAttributes({ listItem: newListItem });
+						}}
+						value={item.text}
+					/>
+					{item.children && (
+						<ul className="fa-ul">{parseList(item.children)}</ul>
+					)}
+				</li>
+			));
+		};
+
 		return [
 			isSelected && (
 				<BlockControls>
@@ -85,7 +145,7 @@ registerBlockType('ub/styled-list', {
 									let newListItem = JSON.parse(
 										JSON.stringify(listItem)
 									);
-									if (newListItem[selectedItem] > 0) {
+									if (newListItem[selectedItem].indent > 0) {
 										newListItem[selectedItem].indent--;
 									}
 									setAttributes({ listItem: newListItem });
@@ -208,8 +268,8 @@ registerBlockType('ub/styled-list', {
 					</PanelBody>
 				</InspectorControls>
 			),
-			<div>
-				{listItem.map((item, i) => (
+			<div className="ub-styled-list">
+				{/*listItem.map((item, i) => (
 					<div
 						className="ub-styled-list-item-container"
 						style={{
@@ -280,7 +340,9 @@ registerBlockType('ub/styled-list', {
 							}}
 						/>
 					</div>
-				))}
+                        ))*/}
+
+				<ul className="fa-ul">{parseList(sortedList)}</ul>
 				<button
 					onClick={() => {
 						let newListItem = JSON.parse(JSON.stringify(listItem));
@@ -292,7 +354,8 @@ registerBlockType('ub/styled-list', {
 									? listItem[listItem.length - 1].selectedIcon
 									: recentSelection !== ''
 									? recentSelection
-									: 'circle'
+									: 'circle',
+							index: listItem.length
 						});
 						setAttributes({ listItem: newListItem });
 					}}
@@ -304,16 +367,6 @@ registerBlockType('ub/styled-list', {
 	}),
 	save(props) {
 		const { listItem, iconColor } = props.attributes;
-
-		const placeItem = (arr, item) => {
-			if (arr.length === 0 || arr[0].indent === item.indent) {
-				arr.push(Object.assign({}, item));
-			} else if (arr[arr.length - 1].indent < item.indent) {
-				if (!arr[arr.length - 1].children) {
-					arr[arr.length - 1].children = [Object.assign({}, item)];
-				} else placeItem(arr[arr.length - 1].children, item);
-			}
-		};
 
 		let sortedList = [];
 

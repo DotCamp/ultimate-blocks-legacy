@@ -5,3 +5,12 @@
 	display: grid;
 	grid-template-columns: 1.5em auto 20px;
 }
+
+.editor-styles-wrapper .ub-styled-list {
+	ul {
+		margin-left: 2.5em;
+	}
+	.fa-ul > li {
+		list-style: none;
+	}
+}
