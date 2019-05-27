@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
-const { RichText, BlockControls, InspectorControls } = wp.editor;
+const { RichText, BlockControls, InspectorControls, ColorPalette } = wp.editor;
 const { Toolbar, IconButton, Dropdown, PanelBody } = wp.components;
 const { withState } = wp.compose;
 
@@ -25,14 +25,14 @@ const dashesToCamelcase = str =>
 		.map(s => s[0].toUpperCase() + s.slice(1))
 		.join('');
 
-const generateIcon = (selectedIcon, size) => (
+const generateIcon = (selectedIcon, size, color = 'currentColor') => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		height={size}
 		width={size}
 		viewBox={`0, 0, ${selectedIcon.icon[0]}, ${selectedIcon.icon[1]}`}
 	>
-		<path fill={'currentColor'} d={selectedIcon.icon[4]} />
+		<path fill={color} d={selectedIcon.icon[4]} />
 	</svg>
 );
 
@@ -44,6 +44,10 @@ registerBlockType('ub/styled-list', {
 		listItem: {
 			type: 'array',
 			default: [] //each item is an object with text, selectedIcon, and indent properties
+		},
+		iconColor: {
+			type: 'string',
+			default: '#000000'
 		}
 	},
 	keywords: [__('List'), __('Styled List'), __('Ultimate Blocks')],
@@ -63,7 +67,7 @@ registerBlockType('ub/styled-list', {
 			recentSelection,
 			iconSearchTerm
 		} = props;
-		const { listItem } = attributes;
+		const { listItem, iconColor } = attributes;
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
 			setState({ availableIcons: iconList.map(name => allIcons[name]) });
@@ -130,7 +134,8 @@ registerBlockType('ub/styled-list', {
 														listItem[0].selectedIcon
 													)}`
 												],
-												20
+												20,
+												iconColor
 											)}
 											label={__('Select icon for list')}
 											onClick={onToggle}
@@ -193,6 +198,13 @@ registerBlockType('ub/styled-list', {
 								/>
 							)}
 						</div>
+						<p>{__('Icon color')}</p>
+						<ColorPalette
+							value={iconColor}
+							onChange={colorValue =>
+								setAttributes({ iconColor: colorValue })
+							}
+						/>
 					</PanelBody>
 				</InspectorControls>
 			),
@@ -291,7 +303,7 @@ registerBlockType('ub/styled-list', {
 		];
 	}),
 	save(props) {
-		const { listItem } = props.attributes;
+		const { listItem, iconColor } = props.attributes;
 
 		const placeItem = (arr, item) => {
 			if (arr.length === 0 || arr[0].indent === item.indent) {
@@ -328,6 +340,7 @@ registerBlockType('ub/styled-list', {
 									? 'fas'
 									: 'fab'
 							} fa-${item.selectedIcon}`}
+							style={{ color: iconColor }}
 						/>
 					</span>
 					<RichText.Content value={item.text} />
