@@ -1,8 +1,8 @@
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
-const { RichText, BlockControls } = wp.editor;
-const { Toolbar, IconButton, Dropdown } = wp.components;
+const { RichText, BlockControls, InspectorControls } = wp.editor;
+const { Toolbar, IconButton, Dropdown, PanelBody } = wp.components;
 const { withState } = wp.compose;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -50,6 +50,7 @@ registerBlockType('ub/styled-list', {
 	edit: withState({
 		selectedItem: -1,
 		availableIcons: [],
+		iconSearchTerm: '',
 		recentSelection: ''
 	})(function(props) {
 		const {
@@ -59,7 +60,8 @@ registerBlockType('ub/styled-list', {
 			setState,
 			selectedItem,
 			availableIcons,
-			recentSelection
+			recentSelection,
+			iconSearchTerm
 		} = props;
 		const { listItem } = attributes;
 		if (availableIcons.length === 0) {
@@ -103,62 +105,94 @@ registerBlockType('ub/styled-list', {
 							}}
 						/>
 					</Toolbar>
-					{listItem.length > 0 && (
-						<Toolbar>
-							<Dropdown
-								position="bottom right"
-								renderToggle={({ isOpen, onToggle }) => (
-									<IconButton
-										icon={generateIcon(
-											allIcons[
-												`fa${dashesToCamelcase(
-													listItem[0].selectedIcon
-												)}`
-											],
-											20
-										)}
-										label={__('Select icon for list')}
-										onClick={onToggle}
-										aria-expanded={isOpen}
-									/>
-								)}
-								renderContent={() => (
-									<div>
-										{availableIcons.length > 0 &&
-											availableIcons.map(i => (
-												<IconButton
-													className="ub-styled-list-available-icon"
-													icon={generateIcon(i, 20)}
-													label={i.iconName}
-													onClick={() => {
-														let newListItem = JSON.parse(
-															JSON.stringify(
-																listItem
-															)
-														);
-														newListItem.forEach(
-															item => {
-																item.selectedIcon =
-																	i.iconName;
-															}
-														);
-														setState({
-															recentSelection:
-																i.iconName
-														});
-
-														setAttributes({
-															listItem: newListItem
-														});
-													}}
-												/>
-											))}
-									</div>
-								)}
-							/>
-						</Toolbar>
-					)}
 				</BlockControls>
+			),
+			isSelected && (
+				<InspectorControls>
+					<PanelBody title={__('Icon Options')}>
+						<div
+							style={{
+								display: 'grid',
+								gridTemplateColumns: '5fr 1fr'
+							}}
+						>
+							<p>{__('Selected icon')}</p>
+							{listItem.length > 0 && (
+								<Dropdown
+									position="bottom right"
+									renderToggle={({ isOpen, onToggle }) => (
+										<IconButton
+											icon={generateIcon(
+												allIcons[
+													`fa${dashesToCamelcase(
+														listItem[0].selectedIcon
+													)}`
+												],
+												20
+											)}
+											label={__('Select icon for list')}
+											onClick={onToggle}
+											aria-expanded={isOpen}
+										/>
+									)}
+									renderContent={() => (
+										<div>
+											<input
+												type="text"
+												value={iconSearchTerm}
+												onChange={e =>
+													setState({
+														iconSearchTerm:
+															e.target.value
+													})
+												}
+											/>
+											<br />
+											{availableIcons.length > 0 &&
+												availableIcons
+													.filter(i =>
+														i.iconName.includes(
+															iconSearchTerm
+														)
+													)
+													.map(i => (
+														<IconButton
+															className="ub-styled-list-available-icon"
+															icon={generateIcon(
+																i,
+																20
+															)}
+															label={i.iconName}
+															onClick={() => {
+																let newListItem = JSON.parse(
+																	JSON.stringify(
+																		listItem
+																	)
+																);
+																newListItem.forEach(
+																	item => {
+																		item.selectedIcon =
+																			i.iconName;
+																	}
+																);
+																setState({
+																	recentSelection:
+																		i.iconName
+																});
+
+																setAttributes({
+																	listItem: newListItem
+																});
+															}}
+														/>
+													))}
+										</div>
+									)}
+								/>
+							)}
+						</div>
+					</PanelBody>
+				</InspectorControls>
 			),
 			<div>
 				{listItem.map((item, i) => (
