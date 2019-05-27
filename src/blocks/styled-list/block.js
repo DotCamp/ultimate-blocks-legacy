@@ -81,7 +81,9 @@ registerBlockType('ub/styled-list', {
 									let newListItem = JSON.parse(
 										JSON.stringify(listItem)
 									);
-									newListItem[selectedItem].indent--;
+									if (newListItem[selectedItem] > 0) {
+										newListItem[selectedItem].indent--;
+									}
 									setAttributes({ listItem: newListItem });
 								}
 							}}
