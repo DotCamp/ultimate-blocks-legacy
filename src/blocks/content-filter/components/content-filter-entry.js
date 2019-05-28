@@ -212,6 +212,7 @@ registerBlockType('ub/content-filter-entry', {
 
 		return (
 			<div className="ub-content-filter-panel">
+				<InnerBlocks templateLock={false} />
 				<div>
 					{tagList
 						.filter(
@@ -260,7 +261,6 @@ registerBlockType('ub/content-filter-entry', {
 						setAttributes={setAttributes}
 					/>
 				</div>
-				<InnerBlocks templateLock={false} />
 			</div>
 		);
 	},
