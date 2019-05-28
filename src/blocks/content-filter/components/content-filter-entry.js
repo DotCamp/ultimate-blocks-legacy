@@ -213,7 +213,7 @@ registerBlockType('ub/content-filter-entry', {
 		return (
 			<div className="ub-content-filter-panel">
 				<InnerBlocks templateLock={false} />
-				<div>
+				<div className="ub-content-assigned-filter-tag-area">
 					{tagList
 						.filter(
 							tag => tag != null && tag.hasOwnProperty('name')

@@ -379,39 +379,45 @@ class PanelContent extends Component {
 								+
 							</button>
 							<br />
-							<input
-								type="checkbox"
-								checked={f.canUseMultiple}
-								onClick={() => {
-									let current = Object.assign({}, f);
-									current.canUseMultiple = !current.canUseMultiple;
-									this.editFilterArray(current, i);
-									block.innerBlocks.forEach(panel =>
-										updateBlockAttributes(panel.clientId, {
-											availableFilters: newAvailableFilters(
-												current,
-												i
-											),
-											selectedFilters: [
-												...panel.attributes.selectedFilters.slice(
-													0,
-													i
-												),
-												current.canUseMultiple
-													? Array(
-															current.filters
-																.length
-													  ).fill(false)
-													: -1,
-												...panel.attributes.selectedFilters.slice(
-													i + 1
-												)
-											]
-										})
-									);
-								}}
-							/>
-							Allow multiple selections
+							<label className="ub-content-filter-checkbox">
+								<input
+									type="checkbox"
+									checked={f.canUseMultiple}
+									onClick={() => {
+										let current = Object.assign({}, f);
+										current.canUseMultiple = !current.canUseMultiple;
+										this.editFilterArray(current, i);
+										block.innerBlocks.forEach(panel =>
+											updateBlockAttributes(
+												panel.clientId,
+												{
+													availableFilters: newAvailableFilters(
+														current,
+														i
+													),
+													selectedFilters: [
+														...panel.attributes.selectedFilters.slice(
+															0,
+															i
+														),
+														current.canUseMultiple
+															? Array(
+																	current
+																		.filters
+																		.length
+															  ).fill(false)
+															: -1,
+														...panel.attributes.selectedFilters.slice(
+															i + 1
+														)
+													]
+												}
+											)
+										);
+									}}
+								/>
+								Allow multiple selections
+							</label>
 						</div>
 					))}
 				<button
