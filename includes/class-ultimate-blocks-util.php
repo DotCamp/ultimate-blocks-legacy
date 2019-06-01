@@ -45,7 +45,12 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Click To Tweet',
 				'name'   => 'ub/click-to-tweet',
 				'active' => true,
-			),
+            ),
+            array(
+				'label'  => 'Content Filter',
+				'name'   => 'ub/content-filter',
+				'active' => true,
+            ),
 			array(
 				'label'  => 'Content Toggle',
 				'name'   => 'ub/content-toggle',
