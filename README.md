@@ -12,22 +12,23 @@ You can download Ultimate Blocks for free from [here](https://wordpress.org/plug
 
 ## Ultimate Blocks currently includes the following blocks:
 
-* Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.com/schema-review-block-gutenberg)
-* Table of Contents - [View Demo](https://ultimateblocks.com/table-of-contents-block-for-gutenberg-editor/)
-* Tabbed Content - [View Demo](https://ultimateblocks.com/tabbed-content-block-for-gutenberg/)
-* Call to Action - [View Demo](https://ultimateblocks.com/call-to-action-block-gutenberg/)
-* Content Toggle (Accordion) - [View Demo](https://ultimateblocks.com/content-toggle-block-gutenberg/)
+* Review (Schema Markup Enabled) - [View Demo](https://demo.ultimateblocks.com/review/)
+* Table of Contents - [View Demo](https://demo.ultimateblocks.com/table-of-contents-block/)
+* Tabbed Content - [View Demo](https://demo.ultimateblocks.com/tabbed-content-block/)
+* Call to Action - [View Demo](https://demo.ultimateblocks.com/call-to-action-block/)
+* Content Toggle (Accordion) - [View Demo](https://demo.ultimateblocks.com/content-toggle-accordion-block/)
 * Feature Box - [View Demo](https://ultimateblocks.com/feature-box-block-for-gutenberg-editor/)
-* Notification Box - [View Demo](https://ultimateblocks.com/notification-box-block-for-gutenberg-editor/)
-* Number Box - [View Demo](https://ultimateblocks.com/number-box-block-for-gutenberg-editor/)
-* Testimonial - [View Demo](https://ultimateblocks.com/testimonial-block-for-gutenberg-editor/)
-* Click to Tweet - [View Demo](https://ultimateblocks.com/click-to-tweet-block-gutenberg/)
-* Social Share - [View Demo](https://ultimateblocks.com/social-share-block-for-gutenberg-editor/)
-* Countdown - [View Demo](https://ultimateblocks.com/countdown-block-gutenberg/)
-* Progress Bar - [View Demo](https://ultimateblocks.com/progress-bar-block-for-gutenberg-editor/)
-* Star Rating - [View Demo](https://ultimateblocks.com/star-rating-block/)
-* Button (Improved) - [View Demo](https://ultimateblocks.com/improved-button-block-gutenberg/)
-* Divider - [View Demo](https://ultimateblocks.com/divider-block-for-gutenberg/)
+* Notification Box - [View Demo](https://demo.ultimateblocks.com/notification-box-block/)
+* Number Box - [View Demo](https://demo.ultimateblocks.com/number-box-block/)
+* Testimonial - [View Demo](https://demo.ultimateblocks.com/testimonial-block/)
+* Click to Tweet - [View Demo](https://demo.ultimateblocks.com/click-to-tweet-block/)
+* Social Share - [View Demo](https://demo.ultimateblocks.com/social-share-block/)
+* Countdown - [View Demo](https://demo.ultimateblocks.com/countdown-block/)
+* Progress Bar - [View Demo](https://demo.ultimateblocks.com/progress-bar-block/)
+* Star Rating - [View Demo](https://demo.ultimateblocks.com/star-rating-block/)
+* Button (Improved) - [View Demo](https://demo.ultimateblocks.com/button-block/)
+* Divider - [View Demo](https://demo.ultimateblocks.com/divider-block/)
+* Image Slider [View Demo](https://demo.ultimateblocks.com/image-slider-block/)
 
 We have more exciting blocks in the making. Have a suggestion? [Let us know](https://ultimateblocks.com/contact/).
 
