@@ -7,10 +7,26 @@
 }
 
 .editor-styles-wrapper .ub-styled-list {
+	i {
+		&.fab,
+		&.fas {
+			font-style: normal;
+		}
+	}
 	ul {
 		margin-left: 2.5em;
 	}
 	.fa-ul > li {
 		list-style: none;
+	}
+	textarea {
+		border: none;
+		box-shadow: none;
+		resize: none;
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+		padding-top: 0;
+		background-color: #ffffff;
 	}
 }

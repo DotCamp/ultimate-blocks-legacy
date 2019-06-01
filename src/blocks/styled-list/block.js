@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import icon, { decreaseIndentIcon, increaseIndentIcon } from './icon';
+import TextareaAutosize from 'react-textarea-autosize';
+import { Component } from 'react';
 
 import './editor.scss';
 import './style.scss';
@@ -16,6 +18,132 @@ import './style.scss';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 library.add(fas, fab);
+
+const cloneObject = obj => JSON.parse(JSON.stringify(obj));
+
+class StyledList extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			hasNewInputBox: false
+		};
+	}
+	componentDidUpdate() {
+		const { hasNewInputBox } = this.state;
+		const { selectedItem } = this.props;
+		if (hasNewInputBox && this[`textArea${selectedItem + 1}`]) {
+			this[`textArea${selectedItem + 1}`].focus();
+			this[`textArea${selectedItem + 1}`].selectionEnd = 0;
+			this.setState({ hasNewInputBox: false });
+		}
+	}
+	render() {
+		const {
+			list,
+			updateList,
+			iconColor,
+			selectedItem,
+			updateSelectedItem,
+			increaseIndent,
+			decreaseIndent
+		} = this.props;
+
+		return (
+			<ul className="fa-ul">
+				{list.map((item, i) => (
+					<li style={{ left: `${item.indent + 0.5}em` }}>
+						<span className="fa-li">
+							<i
+								className={`${
+									Object.keys(fas)
+										.filter(
+											iconName =>
+												fas[iconName].prefix === 'fas'
+										)
+										.includes(
+											`fa${dashesToCamelcase(
+												item.selectedIcon
+											)}`
+										)
+										? 'fas'
+										: 'fab'
+								} fa-${item.selectedIcon}`}
+								style={{ color: iconColor }}
+							/>
+						</span>
+						<TextareaAutosize
+							style={{
+								width: `calc(100% - ${item.indent * 16}px)`
+							}}
+							value={item.text}
+							inputRef={ref => {
+								this[`textArea${i}`] = ref;
+							}}
+							onFocus={() => updateSelectedItem(i)}
+							onChange={e => {
+								let newList = cloneObject(list);
+								newList[i].text = e.target.value;
+								updateList(newList);
+							}}
+							onKeyDown={e => {
+								if (e.key === 'Enter' && !e.shiftKey) {
+									e.preventDefault();
+									const part1 = list[i].text.slice(
+										0,
+										this[`textArea${i}`].selectionStart
+									);
+									const part2 = list[i].text.slice(
+										this[`textArea${i}`].selectionStart
+									);
+
+									updateList([
+										...list.slice(0, i),
+										Object.assign(cloneObject(list[i]), {
+											text: part1
+										}),
+										Object.assign(cloneObject(list[i]), {
+											text: part2
+										}),
+										...list.slice(i + 1)
+									]);
+									this.setState({ hasNewInputBox: true });
+								} else if (e.key === 'Tab') {
+									e.preventDefault();
+									if (selectedItem > 0) {
+										if (e.shiftKey) {
+											decreaseIndent(selectedItem);
+										} else {
+											increaseIndent(selectedItem);
+										}
+									}
+								} else if (
+									e.key === 'Backspace' &&
+									list.length > 1 &&
+									list[i].text.length === 0
+								) {
+									let newList = cloneObject(list);
+									let j = i + 1;
+									while (
+										j < newList.length &&
+										newList[j].indent >
+											newList[j - 1].indent
+									) {
+										newList[j].indent--;
+										j++;
+									}
+									updateList([
+										...newList.slice(0, i),
+										...newList.slice(i + 1)
+									]);
+								}
+							}}
+						/>
+					</li>
+				))}
+			</ul>
+		);
+	}
+}
 
 const allIcons = Object.assign(fas, fab);
 
@@ -25,27 +153,6 @@ const dashesToCamelcase = str =>
 		.map(s => s[0].toUpperCase() + s.slice(1))
 		.join('');
 
-const generateIcon = (selectedIcon, size, color = 'currentColor') => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		height={size}
-		width={size}
-		viewBox={`0, 0, ${selectedIcon.icon[0]}, ${selectedIcon.icon[1]}`}
-	>
-		<path fill={color} d={selectedIcon.icon[4]} />
-	</svg>
-);
-
-const placeItem = (arr, item) => {
-	if (arr.length === 0 || arr[0].indent === item.indent) {
-		arr.push(Object.assign({}, item));
-	} else if (arr[arr.length - 1].indent < item.indent) {
-		if (!arr[arr.length - 1].children) {
-			arr[arr.length - 1].children = [Object.assign({}, item)];
-		} else placeItem(arr[arr.length - 1].children, item);
-	}
-};
-
 registerBlockType('ub/styled-list', {
 	title: __('Styled List'),
 	icon: icon,
@@ -53,7 +160,7 @@ registerBlockType('ub/styled-list', {
 	attributes: {
 		listItem: {
 			type: 'array',
-			default: [] //each item is an object with text, selectedIcon, and indent properties
+			default: [{ text: '', selectedIcon: 'circle', indent: 0 }] //each item is an object with text, selectedIcon, and indent properties
 		},
 		iconColor: {
 			type: 'string',
@@ -65,7 +172,8 @@ registerBlockType('ub/styled-list', {
 		selectedItem: -1,
 		availableIcons: [],
 		iconSearchTerm: '',
-		recentSelection: ''
+		recentSelection: '',
+		itemRef: []
 	})(function(props) {
 		const {
 			isSelected,
@@ -74,7 +182,6 @@ registerBlockType('ub/styled-list', {
 			setState,
 			selectedItem,
 			availableIcons,
-			recentSelection,
 			iconSearchTerm
 		} = props;
 		const { listItem, iconColor } = attributes;
@@ -83,54 +190,32 @@ registerBlockType('ub/styled-list', {
 			setState({ availableIcons: iconList.map(name => allIcons[name]) });
 		}
 
-		let sortedList = [];
+		const increaseIndent = itemNumber => {
+			let newListItem = cloneObject(listItem);
+			if (
+				newListItem[itemNumber].indent <=
+				newListItem[itemNumber - 1].indent
+			) {
+				newListItem[itemNumber].indent++;
+			}
+			setAttributes({ listItem: newListItem });
+		};
 
-		listItem.forEach(item => {
-			placeItem(sortedList, item);
-		});
+		const decreaseIndent = itemNumber => {
+			let newListItem = cloneObject(listItem);
+			if (newListItem[itemNumber].indent > 0) {
+				newListItem[itemNumber].indent--;
+				let i = itemNumber + 1;
 
-		const parseList = list => {
-			return list.map(item => (
-				<li>
-					<span class="fa-li">
-						<i
-							className={`${
-								Object.keys(fas)
-									.filter(
-										iconName =>
-											fas[iconName].prefix === 'fas'
-									)
-									.includes(
-										`fa${dashesToCamelcase(
-											item.selectedIcon
-										)}`
-									)
-									? 'fas'
-									: 'fab'
-							} fa-${item.selectedIcon}`}
-							style={{ color: iconColor }}
-						/>
-					</span>
-					<RichText
-						placeholder={__('Add text')}
-						keepPlaceholderOnFocus={true}
-						unstableOnFocus={() =>
-							setState({ selectedItem: item.index })
-						}
-						onChange={newValue => {
-							let newListItem = JSON.parse(
-								JSON.stringify(listItem)
-							);
-							newListItem[item.index].text = newValue;
-							setAttributes({ listItem: newListItem });
-						}}
-						value={item.text}
-					/>
-					{item.children && (
-						<ul className="fa-ul">{parseList(item.children)}</ul>
-					)}
-				</li>
-			));
+				while (
+					i < newListItem.length &&
+					newListItem[i - 1].indent + 1 < newListItem[i].indent
+				) {
+					newListItem[i].indent--;
+					i++;
+				}
+			}
+			setAttributes({ listItem: newListItem });
 		};
 
 		return [
@@ -142,13 +227,7 @@ registerBlockType('ub/styled-list', {
 							label={__('Decrease indent')}
 							onClick={() => {
 								if (selectedItem > 0) {
-									let newListItem = JSON.parse(
-										JSON.stringify(listItem)
-									);
-									if (newListItem[selectedItem].indent > 0) {
-										newListItem[selectedItem].indent--;
-									}
-									setAttributes({ listItem: newListItem });
+									decreaseIndent(selectedItem);
 								}
 							}}
 						/>
@@ -157,16 +236,7 @@ registerBlockType('ub/styled-list', {
 							label={__('Increase indent')}
 							onClick={() => {
 								if (selectedItem > 0) {
-									let newListItem = JSON.parse(
-										JSON.stringify(listItem)
-									);
-									if (
-										newListItem[selectedItem].indent <=
-										newListItem[selectedItem - 1].indent
-									) {
-										newListItem[selectedItem].indent++;
-									}
-									setAttributes({ listItem: newListItem });
+									increaseIndent(selectedItem);
 								}
 							}}
 						/>
@@ -188,15 +258,35 @@ registerBlockType('ub/styled-list', {
 									position="bottom right"
 									renderToggle={({ isOpen, onToggle }) => (
 										<IconButton
-											icon={generateIcon(
-												allIcons[
-													`fa${dashesToCamelcase(
-														listItem[0].selectedIcon
-													)}`
-												],
-												20,
-												iconColor
-											)}
+											icon={
+												<FontAwesomeIcon
+													icon={
+														Object.keys(fas)
+															.filter(
+																iconName =>
+																	fas[
+																		iconName
+																	].prefix ===
+																	'fas'
+															)
+															.includes(
+																`fa${dashesToCamelcase(
+																	listItem[0]
+																		.selectedIcon
+																)}`
+															)
+															? listItem[0]
+																	.selectedIcon
+															: [
+																	'fab',
+																	listItem[0]
+																		.selectedIcon
+															  ]
+													}
+													color={iconColor}
+													size="lg"
+												/>
+											}
 											label={__('Select icon for list')}
 											onClick={onToggle}
 											aria-expanded={isOpen}
@@ -225,10 +315,12 @@ registerBlockType('ub/styled-list', {
 													.map(i => (
 														<IconButton
 															className="ub-styled-list-available-icon"
-															icon={generateIcon(
-																i,
-																20
-															)}
+															icon={
+																<FontAwesomeIcon
+																	icon={i}
+																	size="lg"
+																/>
+															}
 															label={i.iconName}
 															onClick={() => {
 																let newListItem = JSON.parse(
@@ -269,99 +361,17 @@ registerBlockType('ub/styled-list', {
 				</InspectorControls>
 			),
 			<div className="ub-styled-list">
-				{/*listItem.map((item, i) => (
-					<div
-						className="ub-styled-list-item-container"
-						style={{
-							paddingLeft: `${item.indent * 30}px`
-						}}
-					>
-						<div>
-							<FontAwesomeIcon
-								icon={
-									Object.keys(fas)
-										.filter(
-											iconName =>
-												fas[iconName].prefix === 'fas'
-										)
-										.includes(
-											`fa${dashesToCamelcase(
-												item.selectedIcon
-											)}`
-										)
-										? item.selectedIcon
-										: ['fab', item.selectedIcon]
-								}
-							/>
-						</div>
-						<RichText
-							placeholder={__('Add text')}
-							keepPlaceholderOnFocus={true}
-							unstableOnFocus={() =>
-								setState({ selectedItem: i })
-							}
-							onChange={newValue => {
-								let newListItem = JSON.parse(
-									JSON.stringify(listItem)
-								);
-								newListItem[i].text = newValue;
-								setAttributes({ listItem: newListItem });
-							}}
-							value={item.text}
-						/>
-						<span
-							title={__('Delete item')}
-							className="dashicons dashicons-dismiss"
-							onClick={() => {
-								let newListItem = JSON.parse(
-									JSON.stringify(listItem)
-								);
-								for (
-									let j = i + 1;
-									j < newListItem.length;
-									j++
-								) {
-									if (j === 1) {
-										newListItem[j].indent = 0;
-									} else if (
-										newListItem[j].indent >
-										newListItem[j - 1].indent
-									) {
-										newListItem[j].indent--;
-									} else break;
-								}
-
-								setAttributes({
-									listItem: [
-										...newListItem.slice(0, i),
-										...newListItem.slice(i + 1)
-									]
-								});
-							}}
-						/>
-					</div>
-                        ))*/}
-
-				<ul className="fa-ul">{parseList(sortedList)}</ul>
-				<button
-					onClick={() => {
-						let newListItem = JSON.parse(JSON.stringify(listItem));
-						newListItem.push({
-							text: '',
-							indent: 0,
-							selectedIcon:
-								listItem.length > 0
-									? listItem[listItem.length - 1].selectedIcon
-									: recentSelection !== ''
-									? recentSelection
-									: 'circle',
-							index: listItem.length
-						});
-						setAttributes({ listItem: newListItem });
-					}}
-				>
-					Add item
-				</button>
+				<StyledList
+					list={listItem}
+					updateList={newList => setAttributes({ listItem: newList })}
+					iconColor={iconColor}
+					selectedItem={selectedItem}
+					updateSelectedItem={newSelectedItem =>
+						setState({ selectedItem: newSelectedItem })
+					}
+					increaseIndent={itemNumber => increaseIndent(itemNumber)}
+					decreaseIndent={itemNumber => decreaseIndent(itemNumber)}
+				/>
 			</div>
 		];
 	}),
@@ -369,6 +379,16 @@ registerBlockType('ub/styled-list', {
 		const { listItem, iconColor } = props.attributes;
 
 		let sortedList = [];
+
+		const placeItem = (arr, item) => {
+			if (arr.length === 0 || arr[0].indent === item.indent) {
+				arr.push(Object.assign({}, item));
+			} else if (arr[arr.length - 1].indent < item.indent) {
+				if (!arr[arr.length - 1].children) {
+					arr[arr.length - 1].children = [Object.assign({}, item)];
+				} else placeItem(arr[arr.length - 1].children, item);
+			}
+		};
 
 		listItem.forEach(item => {
 			placeItem(sortedList, item);
@@ -396,7 +416,9 @@ registerBlockType('ub/styled-list', {
 							style={{ color: iconColor }}
 						/>
 					</span>
-					<RichText.Content value={item.text} />
+					<RichText.Content
+						value={item.text.replace(/\n/g, '<br>')}
+					/>
 					{item.children && (
 						<ul className="fa-ul">{parseList(item.children)}</ul>
 					)}

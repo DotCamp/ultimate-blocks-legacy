@@ -105,6 +105,11 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Star Rating',
 				'name'   => 'ub/star-rating-block',
 				'active' => true,
+            ),
+            array(
+				'label'  => 'Styled List',
+				'name'   => 'ub/styled-list',
+				'active' => true,
 			),
 			array(
 				'label'  => 'Tabbed Content',
