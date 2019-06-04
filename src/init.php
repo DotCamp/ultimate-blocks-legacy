@@ -62,8 +62,22 @@ function ultimate_blocks_cgb_block_assets() {
             return $value['blockName'];
         }
 
-        $presentBlocks = array_map( 'ub_getNamesOfPresentBlocks',
-                                    parse_blocks( get_post()->post_content ) );
+        function ub_checkInnerBlocks($block){
+            static $currentBlocks = [];
+            array_push($currentBlocks, $block['blockName']);
+            if(count($block['innerBlocks']) > 0){
+                foreach($block['innerBlocks'] as $innerBlock){
+                    ub_checkInnerBlocks($innerBlock);
+                }
+            }
+            return $currentBlocks;
+        }
+
+        $presentBlocks = [];
+
+        foreach(parse_blocks( get_post()->post_content ) as $block){
+            $presentBlocks = ub_checkInnerBlocks($block);
+        }
 
         foreach( $presentBlocks as $blockName ){
             if( strpos($blockName, 'ub/' )===0){
