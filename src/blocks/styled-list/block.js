@@ -53,8 +53,8 @@ class StyledList extends Component {
 				{list.map((item, i) => (
 					<li style={{ left: `${item.indent + 0.5}em` }}>
 						<span className="fa-li">
-							<i
-								className={`${
+							<FontAwesomeIcon
+								icon={
 									Object.keys(fas)
 										.filter(
 											iconName =>
@@ -65,10 +65,10 @@ class StyledList extends Component {
 												item.selectedIcon
 											)}`
 										)
-										? 'fas'
-										: 'fab'
-								} fa-${item.selectedIcon}`}
-								style={{ color: iconColor }}
+										? item.selectedIcon
+										: ['fab', item.selectedIcon]
+								}
+								color={iconColor}
 							/>
 						</span>
 						<TextareaAutosize
@@ -323,10 +323,8 @@ registerBlockType('ub/styled-list', {
 															}
 															label={i.iconName}
 															onClick={() => {
-																let newListItem = JSON.parse(
-																	JSON.stringify(
-																		listItem
-																	)
+																let newListItem = cloneObject(
+																	listItem
 																);
 																newListItem.forEach(
 																	item => {
