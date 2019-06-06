@@ -789,6 +789,12 @@
      -moz-column-count: 3;
           column-count: 3; }
 
+.ub_table-of-contents-container {
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden; }
+
 @media screen and (max-width: 600px) {
   .ub_table-of-contents-1-column,
   .ub_table-of-contents-2-column,
