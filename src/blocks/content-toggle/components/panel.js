@@ -165,7 +165,9 @@ registerBlockType('ub/content-toggle-panel', {
 				</div>
 				<div
 					style={{
-						display: collapsed ? 'none' : 'block'
+						height: collapsed ? '0' : '',
+						paddingTop: collapsed ? '0' : '',
+						paddingBottom: collapsed ? '0' : ''
 					}}
 					className={`${classNamePrefix}-accordion-content-wrap`}
 				>

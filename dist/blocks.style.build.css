@@ -572,7 +572,8 @@
     opacity: 1; }
 
 .wp-block-ub-content-toggle-accordion-content-wrap {
-  padding: 13px 4%; }
+  padding: 13px 4%;
+  overflow-y: hidden; }
 /**
  * #.# Common SCSS
  *

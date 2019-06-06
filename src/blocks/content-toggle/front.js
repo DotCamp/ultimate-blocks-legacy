@@ -1,19 +1,50 @@
-/* eslint-disable */
+Array.from(
+	document.getElementsByClassName(
+		'wp-block-ub-content-toggle-accordion-title-wrap'
+	)
+).forEach(instance => {
+	const indicator = instance.querySelector(
+		'.wp-block-ub-content-toggle-accordion-state-indicator'
+	);
 
-( function( $ ) {
-	$( document ).ready( function() {
-		const titleWrap = '.wp-block-ub-content-toggle-accordion-title-wrap';
-		const indicator = '.wp-block-ub-content-toggle-accordion-state-indicator';
-		const contentWrap = '.wp-block-ub-content-toggle-accordion-content-wrap';
-		$( document )
-			.on( 'click', titleWrap, function() {
-				$( this ).find( indicator ).toggleClass( 'open' );
-				const contentWrapEl = $( this ).siblings( contentWrap );
-				if ( $( this ).find( indicator ).hasClass( 'open' ) ) {
-					contentWrapEl.slideDown( 500 );
-				} else {
-					contentWrapEl.slideUp( 500 );
-				}
-			} );
-	} );
-}( jQuery ) );
+	const panelContent = instance.nextSibling;
+
+	let heightIsChecked = false;
+	let panelHeight = 0;
+
+	if (!heightIsChecked) {
+		const initialHide = panelContent.style.height === '0px';
+		if (initialHide) {
+			panelContent.style.height = '';
+			panelContent.style.paddingTop = '';
+			panelContent.style.paddingBottom = '';
+		}
+		panelHeight = panelContent.offsetHeight;
+
+		if (initialHide) {
+			panelContent.style.height = '0px';
+			panelContent.style.paddingTop = '0';
+			panelContent.style.paddingBottom = '0';
+			panelContent.style.marginTop = '0';
+			panelContent.style.marginBottom = '0';
+		} else {
+			panelContent.style.height = `${panelHeight}px`;
+		}
+
+		heightIsChecked = true;
+	}
+
+	instance.addEventListener('click', function() {
+		panelContent.style.transition = 'all 0.5s ease-in-out';
+		indicator.classList.toggle('open');
+		panelContent.style.height = `${
+			indicator.classList.contains('open') ? panelHeight : 0
+		}px`;
+
+		const newVal = indicator.classList.contains('open') ? '' : '0';
+		panelContent.style.paddingTop = newVal;
+		panelContent.style.paddingBottom = newVal;
+		panelContent.style.marginTop = newVal;
+		panelContent.style.marginBottom = newVal;
+	});
+});
