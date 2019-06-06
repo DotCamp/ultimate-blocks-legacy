@@ -30,7 +30,7 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 						this.parentElement.getAttribute('data-canusemultiple')
 					)
 				) {
-					ub_etSiblings(this, elem =>
+					ub_getSiblings(this, elem =>
 						elem.classList.contains('ub-content-filter-tag')
 					).forEach(sibling => {
 						sibling.setAttribute('data-tagisselected', 'false');
