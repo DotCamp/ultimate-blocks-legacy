@@ -2,6 +2,8 @@ import '../style.scss';
 import '../editor.scss';
 import icon from '../icons/icon';
 
+import { panel_version_1_1_9 } from '../oldVersions';
+
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
@@ -11,37 +13,39 @@ const { withState, compose } = wp.compose;
 
 const { withDispatch, withSelect } = wp.data;
 
+const attributes = {
+	index: {
+		type: 'number',
+		default: 0
+	},
+	theme: {
+		type: 'text',
+		default: '#f63d3d'
+	},
+	collapsed: {
+		type: 'boolean',
+		default: false
+	},
+	titleColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	panelTitle: {
+		type: 'text',
+		default: ''
+	},
+	newBlockPosition: {
+		type: 'text',
+		default: 'none' //changes into above/below depending on which button is clicked
+	}
+};
+
 registerBlockType('ub/content-toggle-panel', {
 	title: __('Content Toggle Panel'),
 	parent: ['ub/content-toggle'],
 	icon: icon,
 	category: 'ultimateblocks',
-	attributes: {
-		index: {
-			type: 'number',
-			default: 0
-		},
-		theme: {
-			type: 'text',
-			default: '#f63d3d'
-		},
-		collapsed: {
-			type: 'boolean',
-			default: false
-		},
-		titleColor: {
-			type: 'string',
-			default: '#ffffff'
-		},
-		panelTitle: {
-			type: 'text',
-			default: ''
-		},
-		newBlockPosition: {
-			type: 'text',
-			default: 'none' //changes into above/below depending on which button is clicked
-		}
-	},
+	attributes,
 	supports: {
 		inserter: false,
 		reusable: false
@@ -175,5 +179,12 @@ registerBlockType('ub/content-toggle-panel', {
 				</div>
 			</div>
 		);
-	}
+	},
+
+	deprecated: [
+		{
+			attributes,
+			save: panel_version_1_1_9
+		}
+	]
 });
