@@ -1,9 +1,9 @@
 === Gutenberg Blocks Plugin - Ultimate Blocks ===
-Contributors: ultimateblocks, wpcdplugin, wpleaders1, imtiazrayhan
+Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 1.1.9
+Stable tag: 2.0.0
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -16,23 +16,24 @@ Ultimate Blocks is a Gutenberg blocks Plugin for bloggers and marketers. Our goa
 
 Ultimate Blocks currently includes the following blocks:
 
-* Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.com/schema-review-block-gutenberg)
-* Table of Contents - [View Demo](https://ultimateblocks.com/table-of-contents-block-for-gutenberg-editor/)
-* Tabbed Content - [View Demo](https://ultimateblocks.com/tabbed-content-block-for-gutenberg/)
-* Call to Action - [View Demo](https://ultimateblocks.com/call-to-action-block-gutenberg/)
-* Content Toggle (Accordion) - [View Demo](https://ultimateblocks.com/content-toggle-block-gutenberg/)
-* Feature Box - [View Demo](https://ultimateblocks.com/feature-box-block-for-gutenberg-editor/)
-* Notification Box - [View Demo](https://ultimateblocks.com/notification-box-block-for-gutenberg-editor/)
-* Number Box - [View Demo](https://ultimateblocks.com/number-box-block-for-gutenberg-editor/)
-* Testimonial - [View Demo](https://ultimateblocks.com/testimonial-block-for-gutenberg-editor/)
-* Click to Tweet - [View Demo](https://ultimateblocks.com/click-to-tweet-block-gutenberg/)
-* Social Share - [View Demo](https://ultimateblocks.com/social-share-block-for-gutenberg-editor/)
-* Countdown - [View Demo](https://ultimateblocks.com/countdown-block-gutenberg/)
-* Progress Bar - [View Demo](https://ultimateblocks.com/progress-bar-block-for-gutenberg-editor/)
+* Content Filter - [View Demo](https://ultimateblocks.com/content-filter-block/)
+* Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.com/schema-review-block/)
+* Table of Contents - [View Demo](https://ultimateblocks.com/table-of-contents-block/)
+* Tabbed Content - [View Demo](https://ultimateblocks.com/tabbed-content-block/)
+* Call to Action - [View Demo](https://ultimateblocks.com/call-to-action-block/)
+* Content Toggle (Accordion) - [View Demo](https://ultimateblocks.com/content-toggle-accordion-block/)
+* Feature Box - [View Demo](https://ultimateblocks.com/feature-box-block/)
+* Notification Box - [View Demo](https://ultimateblocks.com/notification-box-block/)
+* Number Box - [View Demo](https://ultimateblocks.com/number-box-block/)
+* Testimonial - [View Demo](https://ultimateblocks.com/testimonial-block/)
+* Click to Tweet - [View Demo](https://ultimateblocks.com/click-to-tweet-block/)
+* Social Share - [View Demo](https://ultimateblocks.com/social-share-block/)
+* Countdown - [View Demo](https://ultimateblocks.com/countdown-block/)
+* Progress Bar - [View Demo](https://ultimateblocks.com/progress-bar-block/)
 * Star Rating - [View Demo](https://ultimateblocks.com/star-rating-block/)
-* Image Slider - [View Demo](https://ultimateblocks.com/image-slider-block-for-gutenberg-editor/)
-* Button (Improved) - [View Demo](https://ultimateblocks.com/improved-button-block-gutenberg/)
-* Divider - [View Demo](https://ultimateblocks.com/divider-block-for-gutenberg/)
+* Image Slider - [View Demo](https://ultimateblocks.com/image-slider-block/)
+* Button (Improved) - [View Demo](https://ultimateblocks.com/improved-button-block/)
+* Divider - [View Demo](https://ultimateblocks.com/divider-block/)
 
 We have more exciting blocks in the making. Have a suggestion? [Let us know](https://ultimateblocks.com/contact/).
 
@@ -43,6 +44,9 @@ We have more exciting blocks in the making. Have a suggestion? [Let us know](htt
 * [Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/)
 
 ## More Info About the Blocks
+
+**Content Filter**
+Content Filter lets your visitors filter the content based on different filters. You can let your users go through your content more easily.
 
 **Review Block**
 Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.
@@ -119,12 +123,23 @@ That's it. You're done!
 
 == Changelog ==
 
-= 1.1.9 =
+= 2.0.0 =
 
-Release Date: May 10th, 2019
+Release Date: June 10th, 2019
 
-* FIX: Bug that prevented adding panels to Content Toggle in WordPress 5.2.
-* FIX: Issue with conversion of old data from Content Toggle and Tabbed Content in WordPress 5.2.
-* FIX: Countdown block refreshing issue on the front-end when in regular mode.
+* NEW: Content Filter Block 🔥
+* NEW: Button icons.
+* NEW: Ghost/Transparent Button style.
+* NEW: Button hover color settings.
+* NEW: Button link settings - open in a new tab and nofollow.
+* NEW: Option to add multiple Table of Contents in one post.
+* NEW: Star rating alignment options.
+* NEW: Select stars for star rating directly in the editor.
+* NEW: Option to add multiple Click to Tweet blocks.
+* FIX: HTML tags within heading tags from being parsed.
+* FIX: Table of Contents scrolling issue when sticky headers are present.
+* FIX: Testimonial image delete button placement.
+* FIX: Missing deprecation code for Content Toggle panel.
+* FIX: Blocks missing style inside reusable blocks.
 
 Full changelog can be found here - **[Ultimate Blocks changelog](https://ultimateblocks.com/changelog/)**
