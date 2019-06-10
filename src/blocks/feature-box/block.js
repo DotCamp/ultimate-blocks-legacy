@@ -266,7 +266,6 @@ registerBlockType('ub/feature-box', {
 		return [
 			isSelected && (
 				<BlockControls>
-					{' '}
 					<Toolbar>
 						<IconButton
 							icon={oneColumnIcon}
@@ -357,7 +356,7 @@ registerBlockType('ub/feature-box', {
 											className="components-button button button-medium"
 											onClick={open}
 										>
-											Upload Image
+											{__('Upload Image')}
 										</Button>
 									)}
 								/>
@@ -418,7 +417,7 @@ registerBlockType('ub/feature-box', {
 											className="components-button button button-medium"
 											onClick={open}
 										>
-											Upload Image
+											{__('Upload Image')}
 										</Button>
 									)}
 								/>
@@ -479,7 +478,7 @@ registerBlockType('ub/feature-box', {
 											className="components-button button button-medium"
 											onClick={open}
 										>
-											Upload Image
+											{__('Upload Image')}
 										</Button>
 									)}
 								/>

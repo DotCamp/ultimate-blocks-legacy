@@ -217,7 +217,7 @@ registerBlockType('ub/testimonial-block', {
 						]}
 					/>
 					<PanelBody title={__('Testimonial Body')}>
-						<p>Font Color</p>
+						<p>{__('Font Color')}</p>
 						<ColorPalette
 							value={textColor}
 							onChange={colorValue =>
@@ -260,11 +260,15 @@ registerBlockType('ub/testimonial-block', {
 											className="components-button button button-medium"
 											onClick={open}
 										>
-											Upload Image
+											{__('Upload Image')}
 										</Button>
 									)}
 								/>
-								<p>Ideal Image size is Square i.e 150x150.</p>
+								<p>
+									{__(
+										'Ideal Image size is Square i.e 150x150.'
+									)}
+								</p>
 							</div>
 						) : (
 							<div>

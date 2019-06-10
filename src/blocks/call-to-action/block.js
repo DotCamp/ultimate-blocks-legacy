@@ -248,7 +248,7 @@ registerBlockType('ub/call-to-action', {
 							beforeIcon="editor-textcolor"
 							allowReset
 						/>
-						<p>Color</p>
+						<p>{__('Color')}</p>
 						<ColorPalette
 							value={headColor}
 							onChange={colorValue =>
@@ -272,7 +272,7 @@ registerBlockType('ub/call-to-action', {
 							beforeIcon="editor-textcolor"
 							allowReset
 						/>
-						<p>Color</p>
+						<p>{__('Color')}</p>
 						<ColorPalette
 							value={contentColor}
 							onChange={colorValue =>
@@ -310,7 +310,7 @@ registerBlockType('ub/call-to-action', {
 							beforeIcon="editor-textcolor"
 							allowReset
 						/>
-						<p>Button Color</p>
+						<p>{__('Button Color')}</p>
 						<ColorPalette
 							value={buttonColor}
 							onChange={colorValue =>
@@ -318,7 +318,7 @@ registerBlockType('ub/call-to-action', {
 							}
 						/>
 
-						<p>Button Text Color</p>
+						<p>{__('Button Text Color')}</p>
 						<ColorPalette
 							value={buttonTextColor}
 							onChange={colorValue =>

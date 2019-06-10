@@ -151,7 +151,7 @@ registerBlockType('ub/click-to-tweet', {
 							}}
 						>
 							<i />
-							Click to Tweet
+							{__('Click to Tweet')}
 						</span>
 					</div>
 				</div>

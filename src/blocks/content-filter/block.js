@@ -13,7 +13,7 @@ const {
 const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
-const { CheckboxControl, TextControl, PanelBody } = wp.components;
+//const { CheckboxControl, TextControl, PanelBody } = wp.components;
 
 import icon from './icon';
 import { Component } from 'react';
@@ -415,7 +415,7 @@ class PanelContent extends Component {
 										);
 									}}
 								/>
-								Allow multiple selections
+								{__('Allow multiple selections')}
 							</label>
 						</div>
 					))}
@@ -442,7 +442,7 @@ class PanelContent extends Component {
 						);
 					}}
 				>
-					Add New Category
+					{__('Add New Category')}
 				</button>
 				<br />
 				<InnerBlocks
@@ -461,7 +461,7 @@ class PanelContent extends Component {
 								)
 							}
 						>
-							Add new content
+							{__('Add new content')}
 						</button>
 					)}
 			</div>
