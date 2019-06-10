@@ -568,8 +568,7 @@
 .ub-hide {
   display: none !important; }
 
-.ub-content-filter-tag:hover .ub-content-filter-category-top,
-.ub-content-filter-category:hover .ub-content-filter-category-top {
+.ub-content-filter-tag:hover .ub-content-filter-tag-top {
   opacity: 1; }
 
 .ub-content-filter-category > button {
@@ -579,6 +578,9 @@
   margin: 5px;
   padding: 5px;
   text-align: center; }
+
+.ub-content-filter-category:hover .ub-content-filter-category-top {
+  opacity: 1; }
 
 .ub-content-filter-category-top {
   position: relative;

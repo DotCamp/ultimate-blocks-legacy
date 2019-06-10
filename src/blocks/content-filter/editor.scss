@@ -1,17 +1,19 @@
-.ub-content-filter-tag:hover,
-.ub-content-filter-category:hover {
-	.ub-content-filter-category-top {
-		opacity: 1;
-	}
+.ub-content-filter-tag:hover .ub-content-filter-tag-top {
+	opacity: 1;
 }
 
-.ub-content-filter-category > button {
-	display: inline-block;
-	height: 38px;
-	width: 38px;
-	margin: 5px;
-	padding: 5px;
-	text-align: center;
+.ub-content-filter-category {
+	& > button {
+		display: inline-block;
+		height: 38px;
+		width: 38px;
+		margin: 5px;
+		padding: 5px;
+		text-align: center;
+	}
+	&:hover .ub-content-filter-category-top {
+		opacity: 1;
+	}
 }
 
 .ub-content-filter-category-top {
