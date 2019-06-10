@@ -96,9 +96,8 @@ class PanelContent extends Component {
 			buttonColor,
 			buttonTextColor,
 			activeButtonColor,
-			activeButtonTextColor,
-			allowReset,
-			resetButtonLabel
+			activeButtonTextColor
+			//,allowReset,resetButtonLabel
 		} = attributes;
 
 		const newChildBlock = createBlock('ub/content-filter-entry', {
@@ -198,7 +197,7 @@ class PanelContent extends Component {
 							}
 						]}
 					/>
-					<PanelBody title="Reset Button" initialOpen={false}>
+					{/*<PanelBody title="Reset Button" initialOpen={false}>
 						<CheckboxControl
 							label={__('Allow Resetting of Filter Selection')}
 							checked={allowReset}
@@ -216,7 +215,7 @@ class PanelContent extends Component {
 								}
 							/>
 						)}
-					</PanelBody>
+					</PanelBody>*/}
 				</InspectorControls>
 			),
 			<div className="ub-content-filter-main">
@@ -495,15 +494,15 @@ registerBlockType('ub/content-filter', {
 		activeButtonTextColor: {
 			type: 'string',
 			default: '#ffffff'
-		},
-		allowReset: {
+		}
+		/*,allowReset: {
 			type: 'boolean',
 			default: false
 		},
 		resetButtonLabel: {
 			type: 'string',
 			default: 'Reset'
-		}
+		}*/
 	},
 
 	edit: compose([
@@ -534,9 +533,8 @@ registerBlockType('ub/content-filter', {
 			buttonColor,
 			buttonTextColor,
 			activeButtonColor,
-			activeButtonTextColor,
-			allowReset,
-			resetButtonLabel
+			activeButtonTextColor
+			//,allowReset,resetButtonLabel
 		} = props.attributes;
 
 		const currentSelection = filterArray.map(f =>
@@ -575,11 +573,11 @@ registerBlockType('ub/content-filter', {
 							))}
 						</div>
 					))}
-				{allowReset && (
+				{/*allowReset && (
 					<button className="ub-content-filter-reset">
 						{resetButtonLabel}
 					</button>
-				)}
+                )*/}
 				<InnerBlocks.Content />
 			</div>
 		);

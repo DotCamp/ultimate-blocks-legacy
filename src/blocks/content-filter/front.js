@@ -101,7 +101,7 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 	}
 );
 
-Array.from(document.getElementsByClassName('ub-content-filter-reset')).forEach(
+/*Array.from(document.getElementsByClassName('ub-content-filter-reset')).forEach(
 	instance => {
 		instance.addEventListener('click', function() {
 			const blockProper = this.closest('.wp-block-ub-content-filter');
@@ -138,4 +138,4 @@ Array.from(document.getElementsByClassName('ub-content-filter-reset')).forEach(
 			});
 		});
 	}
-);
+);*/
