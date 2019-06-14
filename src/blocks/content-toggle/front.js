@@ -13,11 +13,14 @@ Array.from(
 	let panelHeight = 0;
 
 	if (!heightIsChecked) {
-		const initialHide = panelContent.style.height === '0px';
+		const initialHide =
+			panelContent.style.height === '0px' ||
+			panelContent.style.display === 'none';
 		if (initialHide) {
 			panelContent.style.height = '';
 			panelContent.style.paddingTop = '';
 			panelContent.style.paddingBottom = '';
+			panelContent.style.display = '';
 		}
 		panelHeight = panelContent.offsetHeight;
 
