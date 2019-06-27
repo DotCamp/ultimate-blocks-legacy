@@ -1,34 +1,35 @@
 /* eslint-disable */
 
-(function($) {
-	$(document).ready(function() {
-		$(document)
-			.on('mouseover', '.ub-button-block-main', function() {
-				$(this).css({
-					color: $(this).data('buttonistransparent')
-						? $(this).data('hovercolor')
-						: $(this).data('hovertextcolor'),
-					'background-color': $(this).data('buttonistransparent')
-						? 'transparent'
-						: $(this).data('hovercolor'),
-					border: $(this).data('buttonistransparent')
-						? `3px solid ${$(this).data('hovercolor')}`
-						: 'none'
-				});
-			})
-			.on('mouseleave', '.ub-button-block-main', function() {
-				$(this).css({
-					color: $(this).data('buttonistransparent')
-						? $(this).data('defaultcolor')
-						: $(this).data('defaulttextcolor'),
-					'background-color': $(this).data('buttonistransparent')
-						? 'transparent'
-						: $(this).data('defaultcolor'),
+Array.from(document.getElementsByClassName('ub-button-block-main')).forEach(
+	instance => {
+		instance.addEventListener('mouseenter', function() {
+			const buttonIsTransparent = JSON.parse(
+				instance.getAttribute('data-buttonistransparent')
+			);
+			instance.style.color = buttonIsTransparent
+				? instance.getAttribute('data-hovercolor')
+				: instance.getAttribute('data-hovertextcolor');
+			instance.style.backgroundColor = buttonIsTransparent
+				? 'transparent'
+				: instance.getAttribute('data-hovercolor');
+			instance.style.border = buttonIsTransparent
+				? `3px solid ${instance.getAttribute('data-hovercolor')}`
+				: 'none';
+		});
 
-					border: $(this).data('buttonistransparent')
-						? `3px solid ${$(this).data('defaultcolor')}`
-						: 'none'
-				});
-			});
-	});
-})(jQuery);
+		instance.addEventListener('mouseleave', function() {
+			const buttonIsTransparent = JSON.parse(
+				instance.getAttribute('data-buttonistransparent')
+			);
+			instance.style.color = buttonIsTransparent
+				? instance.getAttribute('data-defaultcolor')
+				: instance.getAttribute('data-defaulttextcolor');
+			instance.style.backgroundColor = buttonIsTransparent
+				? 'transparent'
+				: instance.getAttribute('data-defaultcolor');
+			instance.style.border = buttonIsTransparent
+				? `3px solid ${instance.getAttribute('data-defaultcolor')}`
+				: 'none';
+		});
+	}
+);
