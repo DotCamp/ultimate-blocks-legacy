@@ -38,7 +38,7 @@ class Ultimate_Blocks_Util {
 			),
 			array(
 				'label'  => 'Call To Action',
-				'name'   => 'ub/call-to-action',
+				'name'   => 'ub/call-to-action-block',
 				'active' => true,
 			),
 			array(

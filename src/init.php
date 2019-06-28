@@ -165,3 +165,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/button/block.php';
 
 // Content Filter Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/content-filter/block.php';
+
+//Call to Action Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/call-to-action/block.php';

@@ -1,3 +1,87 @@
+export const oldAttributes = {
+	ub_call_to_action_headline_text: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_call_to_action_headline_text'
+	},
+	ub_cta_content_text: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_cta_content_text'
+	},
+	ub_cta_button_text: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_cta_button_text'
+	},
+	headFontSize: {
+		type: 'number',
+		default: 30
+	},
+	headColor: {
+		type: 'string',
+		default: '#444444'
+	},
+	headAlign: {
+		type: 'string',
+		default: 'center'
+	},
+	contentFontSize: {
+		type: 'number',
+		default: 15
+	},
+	contentColor: {
+		type: 'string',
+		default: '#444444'
+	},
+	buttonFontSize: {
+		type: 'number',
+		default: 14
+	},
+	buttonColor: {
+		type: 'string',
+		default: '#E27330'
+	},
+	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonWidth: {
+		type: 'number',
+		default: 250
+	},
+	ctaBackgroundColor: {
+		type: 'string',
+		default: '#f8f8f8'
+	},
+	ctaBorderColor: {
+		type: 'string',
+		default: '#ECECEC'
+	},
+	ctaBorderSize: {
+		type: 'number',
+		default: 2
+	},
+	url: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'a',
+		attribute: 'href'
+	},
+	contentAlign: {
+		type: 'string',
+		default: 'center'
+	},
+	addNofollow: {
+		type: 'boolean',
+		default: false
+	},
+	openInNewTab: {
+		type: 'boolean',
+		default: false
+	}
+};
+
 export const version_1_1_2 = props => {
 	const {
 		ctaBackgroundColor,
@@ -317,4 +401,8 @@ export const version_2_0_0 = props => {
 			</div>
 		</div>
 	);
+};
+
+export const updateFrom = oldVersion => {
+	return { attributes: oldAttributes, save: oldVersion };
 };
