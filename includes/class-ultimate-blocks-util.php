@@ -33,7 +33,7 @@ class Ultimate_Blocks_Util {
 		return [
 			array(
 				'label'  => 'Button (Improved)',
-				'name'   => 'ub/button-block',
+				'name'   => 'ub/button',
 				'active' => true,
 			),
 			array(

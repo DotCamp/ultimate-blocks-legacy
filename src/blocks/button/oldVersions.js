@@ -1,5 +1,6 @@
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { generateIcon, dashesToCamelcase } from '../../common';
 
 export const version_1_1_2 = props => {
 	const {
@@ -113,23 +114,6 @@ export const version_2_0_0 = props => {
 		addNofollow,
 		openInNewTab
 	} = props.attributes;
-
-	const dashesToCamelcase = str =>
-		str
-			.split('-')
-			.map(s => s[0].toUpperCase() + s.slice(1))
-			.join('');
-
-	const generateIcon = (selectedIcon, size) => (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			height={size}
-			width={size}
-			viewBox={`0, 0, ${selectedIcon.icon[0]}, ${selectedIcon.icon[1]}`}
-		>
-			<path fill={'currentColor'} d={selectedIcon.icon[4]} />
-		</svg>
-	);
 
 	const iconSize = { small: 25, medium: 30, large: 35, larger: 40 };
 
