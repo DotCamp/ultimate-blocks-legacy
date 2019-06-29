@@ -68,7 +68,7 @@ class Ultimate_Blocks_Util {
 			),
 			array(
 				'label'  => 'Feature Box',
-				'name'   => 'ub/feature-box',
+				'name'   => 'ub/feature-box-block',
 				'active' => true,
             ),
             array(

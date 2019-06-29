@@ -1,3 +1,118 @@
+export const oldAttributes = {
+	column: {
+		type: 'select',
+		default: '2'
+	},
+	columnOneTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_one_title',
+		default: 'Title One'
+	},
+	title1Align: {
+		type: 'string',
+		default: 'center'
+	},
+	columnTwoTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_two_title',
+		default: 'Title Two'
+	},
+	title2Align: {
+		type: 'string',
+		default: 'center'
+	},
+	columnThreeTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_three_title',
+		default: 'Title Three'
+	},
+	title3Align: {
+		type: 'string',
+		default: 'center'
+	},
+	columnOneBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_one_body',
+		default:
+			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+	},
+	body1Align: {
+		type: 'string',
+		default: 'left'
+	},
+	columnTwoBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_two_body',
+		default:
+			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+	},
+	body2Align: {
+		type: 'string',
+		default: 'left'
+	},
+	columnThreeBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_feature_three_body',
+		default:
+			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+	},
+	body3Align: {
+		type: 'string',
+		default: 'left'
+	},
+	imgOneURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.ub_feature_one_img'
+	},
+	imgOneID: {
+		type: 'number'
+	},
+	imgOneAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.ub_feature_one_img'
+	},
+	imgTwoURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.ub_feature_two_img'
+	},
+	imgTwoID: {
+		type: 'number'
+	},
+	imgTwoAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.ub_feature_two_img'
+	},
+	imgThreeURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: '.ub_feature_three_img'
+	},
+	imgThreeID: {
+		type: 'number'
+	},
+	imgThreeAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: '.ub_feature_three_img'
+	}
+};
+
 export const version_1_1_2 = props => {
 	const {
 		column,
@@ -8,20 +123,17 @@ export const version_1_1_2 = props => {
 		columnTwoBody,
 		columnThreeBody,
 		imgOneURL,
-		imgOneID,
 		imgOneAlt,
 		imgTwoURL,
-		imgTwoID,
 		imgTwoAlt,
 		imgThreeURL,
-		imgThreeID,
 		imgThreeAlt
 	} = props.attributes;
 
 	return (
 		<div className={props.className}>
 			<div className={`ub_feature_box column_${column}`}>
-				<div class="ub_feature_1">
+				<div className="ub_feature_1">
 					<img
 						className="ub_feature_one_img"
 						src={imgOneURL}
@@ -30,7 +142,7 @@ export const version_1_1_2 = props => {
 					<p className="ub_feature_one_title">{columnOneTitle}</p>
 					<p className="ub_feature_one_body">{columnOneBody}</p>
 				</div>
-				<div class="ub_feature_2">
+				<div className="ub_feature_2">
 					<img
 						className="ub_feature_two_img"
 						src={imgTwoURL}
@@ -39,7 +151,7 @@ export const version_1_1_2 = props => {
 					<p className="ub_feature_two_title">{columnTwoTitle}</p>
 					<p className="ub_feature_two_body">{columnTwoBody}</p>
 				</div>
-				<div class="ub_feature_3">
+				<div className="ub_feature_3">
 					<img
 						className="ub_feature_three_img"
 						src={imgThreeURL}
@@ -79,7 +191,7 @@ export const version_1_1_5 = props => {
 	return (
 		<div className={props.className}>
 			<div className={`ub_feature_box column_${column}`}>
-				<div class="ub_feature_1">
+				<div className="ub_feature_1">
 					<img
 						className="ub_feature_one_img"
 						src={imgOneURL}
@@ -98,7 +210,7 @@ export const version_1_1_5 = props => {
 						{columnOneBody}
 					</p>
 				</div>
-				<div class="ub_feature_2">
+				<div className="ub_feature_2">
 					<img
 						className="ub_feature_two_img"
 						src={imgTwoURL}
@@ -117,7 +229,7 @@ export const version_1_1_5 = props => {
 						{columnTwoBody}
 					</p>
 				</div>
-				<div class="ub_feature_3">
+				<div className="ub_feature_3">
 					<img
 						className="ub_feature_three_img"
 						src={imgThreeURL}
