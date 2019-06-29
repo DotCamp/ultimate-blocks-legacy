@@ -7,31 +7,31 @@
 
 //Import Icons
 import icon from './icons/icon';
-import info from './icons/info';
-import success from './icons/success';
-import warning from './icons/warning';
-
-//Importing Classname
-import classnames from 'classnames';
 
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
 
-import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
+import {
+	version_1_1_2,
+	version_1_1_4,
+	version_1_1_5,
+	oldAttributes,
+	updateFrom
+} from './oldVersions';
+import { blockControls, editorDisplay } from './components';
 
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 
-const { RichText, BlockControls } = wp.editor;
-
-const { Toolbar, Button, IconButton } = wp.components;
+const { RichText } = wp.editor;
+const { compose } = wp.compose;
+const { withDispatch, withSelect } = wp.data;
 
 const attributes = {
 	ub_notify_info: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_notify_text'
+		type: 'string',
+		default: ''
 	},
 	ub_selected_notify: {
 		type: 'string',
@@ -61,7 +61,8 @@ registerBlockType('ub/notification-box', {
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [__('notification'), __('warning info'), __('Ultimate Blocks')],
-	attributes,
+	attributes: oldAttributes,
+	supports: { inserter: false },
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -71,97 +72,62 @@ registerBlockType('ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit(props) {
-		const { isSelected, setAttributes } = props;
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock } = select('core/editor');
 
-		const onChangeNotifyInfo = value => {
-			setAttributes({ ub_notify_info: value });
-		};
+			const { clientId } = ownProps;
 
-		const infoClassChange = () => {
-			setAttributes({ ub_selected_notify: 'ub_notify_info' });
-		};
-
-		const successClassChange = () => {
-			setAttributes({ ub_selected_notify: 'ub_notify_success' });
-		};
-
-		const warningClassChange = () => {
-			setAttributes({ ub_selected_notify: 'ub_notify_warning' });
-		};
-
-		const { align, ub_selected_notify, ub_notify_info } = props.attributes;
+			return {
+				block: getBlock(clientId)
+			};
+		}),
+		withDispatch(dispatch => {
+			const { replaceBlock } = dispatch('core/editor');
+			return { replaceBlock };
+		})
+	])(function(props) {
+		const {
+			isSelected,
+			className,
+			attributes,
+			replaceBlock,
+			block
+		} = props;
 
 		return [
-			isSelected && (
-				<BlockControls>
-					<Toolbar className="components-toolbar">
-						<Button
-							className={classnames(
-								'components-icon-button',
-								'components-toolbar-control'
-							)}
-							onClick={infoClassChange}
-						>
-							{info}
-						</Button>
-						<Button
-							className={classnames(
-								'components-icon-button',
-								'components-toolbar-control'
-							)}
-							onClick={successClassChange}
-						>
-							{success}
-						</Button>
-						<Button
-							className={classnames(
-								'components-icon-button',
-								'components-toolbar-control'
-							)}
-							onClick={warningClassChange}
-						>
-							{warning}
-						</Button>
-					</Toolbar>
-					<Toolbar>
-						{['left', 'center', 'right', 'justify'].map(a => (
-							<IconButton
-								icon={`editor-${
-									a === 'justify' ? a : 'align' + a
-								}`}
-								label={__(
-									(a !== 'justify' ? 'Align ' : '') +
-										a[0].toUpperCase() +
-										a.slice(1)
-								)}
-								isActive={align === a}
-								onClick={() => setAttributes({ align: a })}
-							/>
-						))}
-					</Toolbar>
-				</BlockControls>
-			),
+			isSelected && blockControls(props),
 
-			<div className={props.className}>
-				<RichText
-					style={{ textAlign: align }}
-					tagName="div"
-					placeholder={__('Add Your Content Here')}
-					formattingControls={[
-						'bold',
-						'italic',
-						'link',
-						'strikethrough'
-					]}
-					className={ub_selected_notify}
-					onChange={onChangeNotifyInfo}
-					value={ub_notify_info}
-					keepPlaceholderOnFocus={true}
-				/>
+			<div className={className}>
+				<button
+					onClick={() => {
+						const {
+							ub_notify_info,
+							...otherAttributes
+						} = attributes;
+						replaceBlock(
+							block.clientId,
+							createBlock(
+								'ub/notification-box-block',
+								Object.assign(otherAttributes, {
+									ub_notify_info: ub_notify_info
+										.map(item =>
+											typeof item === 'string'
+												? item
+												: richTextToHTML(item)
+										)
+										.join('')
+								})
+							)
+						);
+					}}
+				>
+					Click to upgrade
+				</button>
+				{editorDisplay(props)}
 			</div>
 		];
-	},
+	}),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
@@ -187,17 +153,25 @@ registerBlockType('ub/notification-box', {
 		);
 	},
 	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_4
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
+		updateFrom(version_1_1_2),
+		updateFrom(version_1_1_4),
+		updateFrom(version_1_1_5)
 	]
+});
+
+registerBlockType('ub/notification-box-block', {
+	title: __('Notification Box'),
+	icon: icon,
+	category: 'ultimateblocks',
+	keywords: [__('notification'), __('warning info'), __('Ultimate Blocks')],
+	attributes,
+	edit(props) {
+		const { isSelected, className } = props;
+
+		return [
+			isSelected && blockControls(props),
+			<div className={className}>{editorDisplay(props)}</div>
+		];
+	},
+	save: () => null
 });

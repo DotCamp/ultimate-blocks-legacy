@@ -78,7 +78,7 @@ class Ultimate_Blocks_Util {
             ),
 			array(
 				'label'  => 'Notification Box',
-				'name'   => 'ub/notification-box',
+				'name'   => 'ub/notification-box-block',
 				'active' => true,
 			),
 			array(

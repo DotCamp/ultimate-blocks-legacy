@@ -1,5 +1,21 @@
 const { RichText } = wp.editor;
 
+export const oldAttributes = {
+	ub_notify_info: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_notify_text'
+	},
+	ub_selected_notify: {
+		type: 'string',
+		default: 'ub_notify_info'
+	},
+	align: {
+		type: 'string',
+		default: 'left'
+	}
+};
+
 export const version_1_1_2 = props => {
 	return (
 		<div className={props.className}>
@@ -41,4 +57,8 @@ export const version_1_1_5 = props => {
 			</div>
 		</div>
 	);
+};
+
+export const updateFrom = oldVersion => {
+	return { attributes: oldAttributes, save: oldVersion };
 };
