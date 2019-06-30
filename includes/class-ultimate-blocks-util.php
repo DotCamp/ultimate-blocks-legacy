@@ -118,7 +118,7 @@ class Ultimate_Blocks_Util {
             ),
             array(
 				'label'  => 'Testimonial',
-				'name'   => 'ub/testimonial-block',
+				'name'   => 'ub/testimonial',
 				'active' => true,
 			)
 		];

@@ -1,3 +1,60 @@
+export const oldAttributes = {
+	ub_testimonial_text: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_testimonial_text'
+	},
+	textAlign: {
+		type: 'string',
+		default: 'justify'
+	},
+	ub_testimonial_author: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_testimonial_author'
+	},
+	authorAlign: {
+		type: 'string',
+		default: 'right'
+	},
+	ub_testimonial_author_role: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_testimonial_author_role'
+	},
+	authorRoleAlign: {
+		type: 'string',
+		default: 'right'
+	},
+	imgURL: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'src',
+		selector: 'img'
+	},
+	imgID: {
+		type: 'number'
+	},
+	imgAlt: {
+		type: 'string',
+		source: 'attribute',
+		attribute: 'alt',
+		selector: 'img'
+	},
+	backgroundColor: {
+		type: 'string',
+		default: '#f4f6f6'
+	},
+	textColor: {
+		type: 'string',
+		default: '#444444'
+	},
+	textSize: {
+		type: 'number',
+		default: 17
+	}
+};
+
 export const version_1_1_2 = props => {
 	const {
 		backgroundColor,
@@ -98,4 +155,8 @@ export const version_1_1_5 = props => {
 			</div>
 		</div>
 	);
+};
+
+export const updateFrom = oldVersion => {
+	return { attributes: oldAttributes, save: oldVersion };
 };

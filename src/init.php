@@ -180,3 +180,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/number-box/block.php';
 
 // Star Rating
 require_once plugin_dir_path( __FILE__ ) . 'blocks/star-rating/block.php';
+
+// Testimonial
+require_once plugin_dir_path( __FILE__ ) . 'blocks/testimonial/block.php';
