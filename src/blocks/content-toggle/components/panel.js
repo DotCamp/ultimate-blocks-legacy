@@ -3,6 +3,7 @@ import '../editor.scss';
 import icon from '../icons/icon';
 
 import { panel_version_1_1_9 } from '../oldVersions';
+import { Component } from 'react';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -31,56 +32,30 @@ const attributes = {
 		default: '#ffffff'
 	},
 	panelTitle: {
-		type: 'text',
+		type: 'string',
 		default: ''
 	},
 	newBlockPosition: {
-		type: 'text',
+		type: 'string',
 		default: 'none' //changes into above/below depending on which button is clicked
 	}
 };
 
-registerBlockType('ub/content-toggle-panel', {
-	title: __('Content Toggle Panel'),
-	parent: ['ub/content-toggle'],
-	icon: icon,
-	category: 'ultimateblocks',
-	attributes,
-	supports: {
-		inserter: false,
-		reusable: false
-	},
-
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId } = select('core/editor');
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId),
-				blockParentId: getBlockRootClientId(clientId)
-			};
-		}),
-		withDispatch(dispatch => {
-			const {
-				updateBlockAttributes,
-				removeBlock,
-				selectBlock
-			} = dispatch('core/editor');
-
-			return { updateBlockAttributes, removeBlock, selectBlock };
-		}),
-		withState({ showPanel: true })
-	])(function(props) {
+class ContentTogglePanel extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
 		const {
+			attributes,
 			setState,
 			setAttributes,
 			removeBlock,
 			showPanel,
 			blockParentId,
 			selectBlock
-		} = props;
-		const { theme, titleColor, panelTitle } = props.attributes;
+		} = this.props;
+		const { theme, titleColor, panelTitle } = attributes;
 		return (
 			<div
 				className="wp-block-ub-content-toggle-accordion"
@@ -141,7 +116,41 @@ registerBlockType('ub/content-toggle-panel', {
 				</div>
 			</div>
 		);
-	}),
+	}
+}
+
+registerBlockType('ub/content-toggle-panel', {
+	title: __('Content Toggle Panel'),
+	parent: ['ub/content-toggle'],
+	icon: icon,
+	category: 'ultimateblocks',
+	attributes,
+	supports: {
+		inserter: false,
+		reusable: false
+	},
+
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock, getBlockRootClientId } = select('core/editor');
+			const { clientId } = ownProps;
+
+			return {
+				block: getBlock(clientId),
+				blockParentId: getBlockRootClientId(clientId)
+			};
+		}),
+		withDispatch(dispatch => {
+			const {
+				updateBlockAttributes,
+				removeBlock,
+				selectBlock
+			} = dispatch('core/editor');
+
+			return { updateBlockAttributes, removeBlock, selectBlock };
+		}),
+		withState({ showPanel: true })
+	])(ContentTogglePanel),
 	save(props) {
 		const { theme, collapsed, titleColor, panelTitle } = props.attributes;
 		const classNamePrefix = 'wp-block-ub-content-toggle';
@@ -187,4 +196,39 @@ registerBlockType('ub/content-toggle-panel', {
 			save: panel_version_1_1_9
 		}
 	]
+});
+
+registerBlockType('ub/content-toggle-panel-block', {
+	title: __('Content Toggle Panel'),
+	parent: ['ub/content-toggle-block'],
+	icon: icon,
+	category: 'ultimateblocks',
+	attributes,
+	supports: {
+		inserter: false,
+		reusable: false
+	},
+
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock, getBlockRootClientId } = select('core/editor');
+			const { clientId } = ownProps;
+
+			return {
+				block: getBlock(clientId),
+				blockParentId: getBlockRootClientId(clientId)
+			};
+		}),
+		withDispatch(dispatch => {
+			const {
+				updateBlockAttributes,
+				removeBlock,
+				selectBlock
+			} = dispatch('core/editor');
+
+			return { updateBlockAttributes, removeBlock, selectBlock };
+		}),
+		withState({ showPanel: true })
+	])(ContentTogglePanel),
+	save: () => <InnerBlocks.Content />
 });

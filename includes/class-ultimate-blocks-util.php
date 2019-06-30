@@ -53,7 +53,7 @@ class Ultimate_Blocks_Util {
             ),
 			array(
 				'label'  => 'Content Toggle',
-				'name'   => 'ub/content-toggle',
+				'name'   => 'ub/content-toggle-block',
 				'active' => true,
             ),
             array(

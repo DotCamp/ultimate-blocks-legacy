@@ -98,7 +98,7 @@ function ub_button_add_frontend_assets() {
         wp_enqueue_script(
             'ultimate_blocks-button-front-script',
             plugins_url( 'button/front.js', dirname( __FILE__ ) ),
-            array( '' ),
+            array( ),
             Ultimate_Blocks_Constants::plugin_version(),
             true
         );
