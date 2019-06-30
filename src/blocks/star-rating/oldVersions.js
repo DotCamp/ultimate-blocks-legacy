@@ -1,5 +1,37 @@
 import { EmptyStar, FullStar } from './icons';
 
+export const oldAttributes = {
+	starCount: {
+		type: 'number',
+		default: 5
+	},
+	starSize: {
+		type: 'number',
+		default: 20
+	},
+	starColor: {
+		type: 'string',
+		default: '#ffff00'
+	},
+	selectedStars: {
+		type: 'number',
+		default: 0
+	},
+	reviewText: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub-review-text'
+	},
+	reviewTextAlign: {
+		type: 'string',
+		default: 'text'
+	},
+	starAlign: {
+		type: 'string',
+		default: 'left'
+	}
+};
+
 export const version_1_1_2 = props => {
 	const {
 		starCount,
@@ -102,4 +134,8 @@ export const version_2_0_0 = props => {
 			</div>
 		</div>
 	);
+};
+
+export const updateFrom = oldVersion => {
+	return { attributes: oldAttributes, save: oldVersion };
 };

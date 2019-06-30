@@ -175,5 +175,8 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/feature-box/block.php';
 // Notification Box
 require_once plugin_dir_path( __FILE__ ) . 'blocks/notification-box/block.php';
 
-// Notification Box
+// Number Box
 require_once plugin_dir_path( __FILE__ ) . 'blocks/number-box/block.php';
+
+// Star Rating
+require_once plugin_dir_path( __FILE__ ) . 'blocks/star-rating/block.php';

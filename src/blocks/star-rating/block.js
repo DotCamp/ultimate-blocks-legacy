@@ -1,20 +1,23 @@
 const { __ } = wp.i18n;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	RichText,
-	BlockControls
-} = wp.editor;
-const { registerBlockType } = wp.blocks;
-const { PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
-const { withState } = wp.compose;
+const { registerBlockType, createBlock } = wp.blocks;
+
+const { withState, compose } = wp.compose;
+const { withDispatch, withSelect } = wp.data;
 
 import './style.scss';
 import './editor.scss';
 
 import { EmptyStar, HalfStar, FullStar } from './icons';
-import { version_1_1_2, version_1_1_5, version_2_0_0 } from './oldVersions';
+import {
+	oldAttributes,
+	version_1_1_2,
+	version_1_1_5,
+	version_2_0_0,
+	updateFrom
+} from './oldVersions';
+import { blockControls, inspectorControls, editorDisplay } from './components';
+import { richTextToHTML } from '../../common';
 
 const attributes = {
 	starCount: {
@@ -34,9 +37,8 @@ const attributes = {
 		default: 0
 	},
 	reviewText: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub-review-text'
+		type: 'string',
+		default: ''
 	},
 	reviewTextAlign: {
 		type: 'string',
@@ -53,170 +55,56 @@ registerBlockType('ub/star-rating', {
 	icon: HalfStar,
 	category: 'ultimateblocks',
 
-	attributes,
+	attributes: oldAttributes,
+	supports: {
+		inserter: false
+	},
 
-	edit: withState({ highlightedStars: 0 })(function(props) {
-		const { isSelected, setAttributes, setState, highlightedStars } = props;
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock } = select('core/editor');
 
-		const {
-			starCount,
-			starSize,
-			starColor,
-			selectedStars,
-			reviewText,
-			reviewTextAlign,
-			starAlign
-		} = props.attributes;
+			const { clientId } = ownProps;
+
+			return {
+				block: getBlock(clientId)
+			};
+		}),
+		withDispatch(dispatch => {
+			const { replaceBlock } = dispatch('core/editor');
+			return { replaceBlock };
+		}),
+		withState({ highlightedStars: 0 })
+	])(function(props) {
+		const { isSelected, block, replaceBlock, attributes } = props;
 
 		return [
-			isSelected && (
-				<BlockControls>
-					<Toolbar>
-						{['left', 'center', 'right'].map(a => (
-							<IconButton
-								icon={`align-${a}`}
-								label={__(`Align stars ${a}`)}
-								onClick={() => setAttributes({ starAlign: a })}
-							/>
-						))}
-					</Toolbar>
-					<Toolbar>
-						{['left', 'center', 'right', 'justify'].map(a => (
-							<IconButton
-								icon={`editor-${
-									a === 'justify' ? a : 'align' + a
-								}`}
-								label={__(
-									(a !== 'justify' ? 'Align ' : '') +
-										a[0].toUpperCase() +
-										a.slice(1)
-								)}
-								isActive={reviewTextAlign === a}
-								onClick={() =>
-									setAttributes({ reviewTextAlign: a })
-								}
-							/>
-						))}
-					</Toolbar>
-				</BlockControls>
-			),
-			isSelected && (
-				<InspectorControls>
-					<PanelBody title={__('Star Settings')}>
-						<PanelColorSettings
-							title={__('Color')}
-							initialOpen={false}
-							colorSettings={[
-								{
-									value: starColor,
-									onChange: colorValue =>
-										setAttributes({
-											starColor: colorValue
-										}),
-									label: __('')
-								}
-							]}
-						/>
-						<RangeControl
-							label={__('Star size')}
-							value={starSize}
-							onChange={value =>
-								setAttributes({ starSize: value })
-							}
-							min={10}
-							max={30}
-							beforeIcon="editor-contract"
-							afterIcon="editor-expand"
-							allowReset
-						/>
-						<RangeControl
-							label={__('Number of stars')}
-							value={starCount}
-							onChange={value =>
-								setAttributes({
-									starCount: value,
-									selectedStars:
-										value < selectedStars
-											? value
-											: selectedStars
-								})
-							}
-							min={5}
-							max={10}
-							beforeIcon="star-empty"
-							allowReset
-						/>
-						<RangeControl
-							label={__('Number of selected stars')}
-							value={selectedStars}
-							onChange={value =>
-								setAttributes({ selectedStars: value })
-							}
-							min={0}
-							max={starCount}
-							beforeIcon="star-filled"
-							allowReset
-						/>
-					</PanelBody>
-				</InspectorControls>
-			),
+			isSelected && blockControls(props),
+			isSelected && inspectorControls(props),
 			<div className="ub-star-rating">
-				<div
-					className="ub-star-outer-container"
-					style={{
-						justifyContent:
-							starAlign === 'center'
-								? 'center'
-								: `flex-${
-										starAlign === 'left' ? 'start' : 'end'
-								  }`
+				<button
+					onClick={() => {
+						const { reviewText, ...otherAttributes } = attributes;
+						replaceBlock(
+							block.clientId,
+							createBlock(
+								'ub/star-rating-block',
+								Object.assign(otherAttributes, {
+									reviewText: reviewText
+										.map(item =>
+											typeof item === 'string'
+												? item
+												: richTextToHTML(item)
+										)
+										.join('')
+								})
+							)
+						);
 					}}
 				>
-					<div
-						className="ub-star-inner-container"
-						onMouseLeave={() => setState({ highlightedStars: 0 })}
-					>
-						{[...Array(starCount)].map((e, i) => (
-							<div
-								key={i}
-								onMouseEnter={() => {
-									setState({ highlightedStars: i + 1 });
-								}}
-								onClick={() =>
-									setAttributes({ selectedStars: i + 1 })
-								}
-							>
-								{i <
-								(highlightedStars
-									? highlightedStars
-									: selectedStars) ? (
-									<FullStar
-										size={starSize}
-										fillColor={starColor}
-									/>
-								) : (
-									<EmptyStar size={starSize} />
-								)}
-							</div>
-						))}
-					</div>
-				</div>
-				<div className="ub-review-text">
-					<RichText
-						tagName="div"
-						placeholder={__('The text of the review goes here')}
-						value={reviewText}
-						style={{ textAlign: reviewTextAlign }}
-						onChange={text => setAttributes({ reviewText: text })}
-						keepPlaceholderOnFocus={true}
-						formattingControls={[
-							'bold',
-							'italic',
-							'strikethrough',
-							'link'
-						]}
-					/>
-				</div>
+					Click me
+				</button>
+				{editorDisplay(props)}
 			</div>
 		];
 	}),
@@ -270,17 +158,27 @@ registerBlockType('ub/star-rating', {
 	},
 
 	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		},
-		{
-			attributes,
-			save: version_2_0_0
-		}
+		updateFrom(version_1_1_2),
+		updateFrom(version_1_1_5),
+		updateFrom(version_2_0_0)
 	]
+});
+
+registerBlockType('ub/star-rating-block', {
+	title: __('Star Rating'),
+	icon: HalfStar,
+	category: 'ultimateblocks',
+
+	attributes,
+
+	edit: withState({ highlightedStars: 0 })(function(props) {
+		const { isSelected } = props;
+
+		return [
+			isSelected && blockControls(props),
+			isSelected && inspectorControls(props),
+			<div className="ub-star-rating">{editorDisplay(props)}</div>
+		];
+	}),
+	save: () => null
 });

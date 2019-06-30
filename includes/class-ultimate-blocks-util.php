@@ -103,7 +103,7 @@ class Ultimate_Blocks_Util {
             ),
             array(
 				'label'  => 'Star Rating',
-				'name'   => 'ub/star-rating',
+				'name'   => 'ub/star-rating-block',
 				'active' => true,
 			),
 			array(
