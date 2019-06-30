@@ -1,3 +1,91 @@
+export const oldAttributes = {
+	column: {
+		type: 'string',
+		default: '2'
+	},
+	columnOneNumber: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_one_number'
+	},
+	columnTwoNumber: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_two_number'
+	},
+	columnThreeNumber: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_three_number'
+	},
+	columnOneTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_one_title'
+	},
+	columnTwoTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_two_title'
+	},
+	columnThreeTitle: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_three_title'
+	},
+	columnOneBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_one_body'
+	},
+	columnTwoBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_two_body'
+	},
+	columnThreeBody: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_number_three_body'
+	},
+	numberBackground: {
+		type: 'string',
+		default: '#CCCCCC'
+	},
+	numberColor: {
+		type: 'string',
+		default: '#000000'
+	},
+	borderColor: {
+		type: 'string',
+		default: '#CCCCCC'
+	},
+	title1Align: {
+		type: 'string',
+		default: 'center'
+	},
+	title2Align: {
+		type: 'string',
+		default: 'center'
+	},
+	title3Align: {
+		type: 'string',
+		default: 'center'
+	},
+	body1Align: {
+		type: 'string',
+		default: 'left'
+	},
+	body2Align: {
+		type: 'string',
+		default: 'left'
+	},
+	body3Align: {
+		type: 'string',
+		default: 'left'
+	}
+};
+
 export const version_1_1_2 = props => {
 	const {
 		column,

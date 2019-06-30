@@ -83,7 +83,7 @@ class Ultimate_Blocks_Util {
 			),
 			array(
 				'label'  => 'Number Box',
-				'name'   => 'ub/number-box',
+				'name'   => 'ub/number-box-block',
 				'active' => true,
             ),
             array(
