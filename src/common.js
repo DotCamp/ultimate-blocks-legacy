@@ -22,6 +22,11 @@ export const richTextToHTML = elem => {
 	return outputString;
 };
 
+export const mergeRichTextArray = input =>
+	input
+		.map(item => (typeof item === 'string' ? item : richTextToHTML(item)))
+		.join('');
+
 export const dashesToCamelcase = str =>
 	str
 		.split('-')

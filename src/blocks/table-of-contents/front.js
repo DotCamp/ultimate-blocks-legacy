@@ -69,18 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			const getFixedElems = selector =>
 				Array.from(document.querySelectorAll(selector)).filter(elem => {
 					const elemHeight = getComputedStyle(elem).height;
-
-					console.log(
-						`getComputedStyle(elem).top: ${
-							getComputedStyle(elem).top
-						}`
-					);
-					console.log(
-						`elemHeight difference: ${elemHeight.slice(
-							0,
-							elemHeight.length - 2
-						)}`
-					);
 					return (
 						getComputedStyle(elem).position === 'fixed' &&
 						getComputedStyle(elem).top <

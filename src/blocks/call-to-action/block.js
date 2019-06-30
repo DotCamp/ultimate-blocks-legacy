@@ -13,7 +13,7 @@ import {
 } from './oldVersions';
 
 import { blockControls, inspectorControls, editorDisplay } from './components';
-import { richTextToHTML } from '../../common';
+import { mergeRichTextArray } from '../../common';
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -171,27 +171,16 @@ registerBlockType('ub/call-to-action', {
 							createBlock(
 								'ub/call-to-action-block',
 								Object.assign(otherAttributes, {
-									ub_call_to_action_headline_text: ub_call_to_action_headline_text
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									ub_cta_content_text: ub_cta_content_text
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									ub_cta_button_text: ub_cta_button_text
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
+									ub_call_to_action_headline_text: mergeRichTextArray(
+										ub_call_to_action_headline_text
+									),
+									ub_cta_content_text: mergeRichTextArray(
+										ub_cta_content_text
+									),
+
+									ub_cta_button_text: mergeRichTextArray(
+										ub_cta_button_text
+									),
 									url: url
 								})
 							)

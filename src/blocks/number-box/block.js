@@ -11,7 +11,7 @@ import icon from './icons/icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
-import { richTextToHTML } from '../../common';
+import { mergeRichTextArray } from '../../common';
 import { version_1_1_2, version_1_1_5, oldAttributes } from './oldVersions';
 import { blockControls, inspectorControls, editorDisplay } from './components';
 
@@ -176,69 +176,34 @@ registerBlockType('ub/number-box', {
 							createBlock(
 								'ub/number-box-block',
 								Object.assign(otherAttributes, {
-									columnOneNumber: columnOneNumber
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnOneTitle: columnOneTitle
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnOneBody: columnOneBody
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnTwoNumber: columnTwoNumber
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnTwoTitle: columnTwoTitle
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnTwoBody: columnTwoBody
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnThreeNumber: columnThreeNumber
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnThreeTitle: columnThreeTitle
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnThreeBody: columnThreeBody
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join('')
+									columnOneNumber: mergeRichTextArray(
+										columnOneNumber
+									),
+									columnOneTitle: mergeRichTextArray(
+										columnOneTitle
+									),
+
+									columnOneBody: mergeRichTextArray(
+										columnOneBody
+									),
+									columnTwoNumber: mergeRichTextArray(
+										columnTwoNumber
+									),
+									columnTwoTitle: mergeRichTextArray(
+										columnTwoTitle
+									),
+									columnTwoBody: mergeRichTextArray(
+										columnTwoBody
+									),
+									columnThreeNumber: mergeRichTextArray(
+										columnThreeNumber
+									),
+									columnThreeTitle: mergeRichTextArray(
+										columnThreeTitle
+									),
+									columnThreeBody: mergeRichTextArray(
+										columnThreeBody
+									)
 								})
 							)
 						);

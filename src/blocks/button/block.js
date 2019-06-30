@@ -23,7 +23,7 @@ import {
 	generateIcon,
 	dashesToCamelcase,
 	iconSize,
-	richTextToHTML
+	mergeRichTextArray
 } from '../../common';
 import {
 	blockControls,
@@ -250,13 +250,9 @@ registerBlockType('ub/button-block', {
 							createBlock(
 								'ub/button',
 								Object.assign(otherAttributes, {
-									buttonText: attributes.buttonText
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join('')
+									buttonText: mergeRichTextArray(
+										attributes.buttonText
+									)
 								})
 							)
 						);

@@ -12,7 +12,7 @@ import icon from './icons/icon';
 import './style.scss';
 import './editor.scss';
 
-import { richTextToHTML } from '../../common';
+import { richTextToHTML, mergeRichTextArray } from '../../common';
 import { OldPanelContent, PanelContent } from './components/editorDisplay';
 
 import { version_1_1_2 } from './oldVersions';
@@ -168,13 +168,7 @@ registerBlockType('ub/content-toggle', {
 								theme: attributes.theme,
 								titleColor: attributes.titleColor,
 								collapsed: attributes.collapsed,
-								panelTitle: a.title
-									.map(aa =>
-										typeof aa == 'string'
-											? aa
-											: richTextToHTML(aa)
-									)
-									.join('')
+								panelTitle: mergeRichTextArray(a.title)
 							},
 							panelContent
 						);

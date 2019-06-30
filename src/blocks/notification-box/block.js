@@ -110,13 +110,9 @@ registerBlockType('ub/notification-box', {
 							createBlock(
 								'ub/notification-box-block',
 								Object.assign(otherAttributes, {
-									ub_notify_info: ub_notify_info
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join('')
+									ub_notify_info: mergeRichTextArray(
+										ub_notify_info
+									)
 								})
 							)
 						);

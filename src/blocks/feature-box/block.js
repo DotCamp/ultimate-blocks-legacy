@@ -13,7 +13,7 @@ import './style.scss';
 import './editor.scss';
 import { version_1_1_2, version_1_1_5, oldAttributes } from './oldVersions';
 import { blockControls, editorDisplay } from './components';
-import { richTextToHTML } from '../../common';
+import { mergeRichTextArray } from '../../common';
 
 const { __ } = wp.i18n;
 
@@ -190,48 +190,24 @@ registerBlockType('ub/feature-box', {
 							createBlock(
 								'ub/feature-box-block',
 								Object.assign(otherAttributes, {
-									columnOneTitle: columnOneTitle
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnOneBody: columnOneBody
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnTwoTitle: columnTwoTitle
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnTwoBody: columnTwoBody
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnThreeTitle: columnThreeTitle
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join(''),
-									columnThreeBody: columnThreeBody
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join('')
+									columnOneTitle: mergeRichTextArray(
+										columnOneTitle
+									),
+									columnOneBody: mergeRichTextArray(
+										columnOneBody
+									),
+									columnTwoTitle: mergeRichTextArray(
+										columnTwoTitle
+									),
+									columnTwoBody: mergeRichTextArray(
+										columnTwoBody
+									),
+									columnThreeTitle: mergeRichTextArray(
+										columnThreeTitle
+									),
+									columnThreeBody: mergeRichTextArray(
+										columnThreeBody
+									)
 								})
 							)
 						);

@@ -17,7 +17,7 @@ import {
 	updateFrom
 } from './oldVersions';
 import { blockControls, inspectorControls, editorDisplay } from './components';
-import { richTextToHTML } from '../../common';
+import { mergeRichTextArray } from '../../common';
 
 const attributes = {
 	starCount: {
@@ -90,13 +90,7 @@ registerBlockType('ub/star-rating', {
 							createBlock(
 								'ub/star-rating-block',
 								Object.assign(otherAttributes, {
-									reviewText: reviewText
-										.map(item =>
-											typeof item === 'string'
-												? item
-												: richTextToHTML(item)
-										)
-										.join('')
+									reviewText: mergeRichTextArray(reviewText)
 								})
 							)
 						);
