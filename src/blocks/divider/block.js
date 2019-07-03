@@ -105,7 +105,7 @@ registerBlockType('ub/divider', {
 							allowReset
 						/>
 
-						<p>Color</p>
+						<p>{__('Color')}</p>
 						<ColorPalette
 							value={borderColor}
 							onChange={colorValue =>
@@ -121,12 +121,7 @@ registerBlockType('ub/divider', {
 				<div
 					className="ub_divider"
 					style={{
-						borderTop:
-							borderSize +
-							'px ' +
-							borderStyle +
-							' ' +
-							borderColor,
+						borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
 						marginTop: borderHeight + 'px',
 						marginBottom: borderHeight + 'px'
 					}}
@@ -143,31 +138,8 @@ registerBlockType('ub/divider', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
-		const {
-			borderSize,
-			borderStyle,
-			borderColor,
-			borderHeight
-		} = props.attributes;
-
-		return (
-			<div className={props.className}>
-				<div
-					className="ub_divider"
-					style={{
-						borderTop:
-							borderSize +
-							'px ' +
-							borderStyle +
-							' ' +
-							borderColor,
-						marginTop: borderHeight + 'px',
-						marginBottom: borderHeight + 'px'
-					}}
-				/>
-			</div>
-		);
+	save() {
+		return null;
 	},
 
 	deprecated: [

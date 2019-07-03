@@ -11,8 +11,7 @@ export const version_1_1_2 = props => {
 			<div
 				className="ub_divider"
 				style={{
-					borderTop:
-						borderSize + 'px ' + borderStyle + ' ' + borderColor,
+					borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
 					marginTop: borderHeight + 'px',
 					marginBottom: borderHeight + 'px'
 				}}

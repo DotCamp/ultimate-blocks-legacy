@@ -186,3 +186,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/testimonial/block.php';
 
 // Review
 require_once plugin_dir_path( __FILE__ ) . 'blocks/review/block.php';
+
+// Divider
+require_once plugin_dir_path( __FILE__ ) . 'blocks/divider/block.php';
