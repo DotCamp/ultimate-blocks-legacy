@@ -2,6 +2,15 @@ const { RichText } = wp.editor;
 import { Stars } from './components';
 import { JSONLD, Generic } from 'react-structured-data';
 
+const calculateAverage = JSONItems =>
+	Math.round(
+		(JSON.parse(JSONItems)
+			.map(i => i.value)
+			.reduce((total, v) => total + v) /
+			JSON.parse(JSONItems).length) *
+			10
+	) / 10;
+
 export const version_1_1_2 = props => {
 	const {
 		ID,
@@ -19,23 +28,16 @@ export const version_1_1_2 = props => {
 		activeStarColor
 	} = props.attributes;
 
-	const average =
-		Math.round(
-			(JSON.parse(items)
-				.map(i => i.value)
-				.reduce((total, v) => total + v) /
-				JSON.parse(items).length) *
-				10
-		) / 10;
+	const average = calculateAverage(items);
 
 	return (
 		<div className="ub_review_block">
-			<p className="ub_review_item_name">
-				<RichText.Content value={itemName} />
-			</p>
-			<p>
-				<RichText.Content value={authorName} />
-			</p>
+			<RichText.Content
+				className="ub_review_item_name"
+				tagName="p"
+				value={itemName}
+			/>
+			<RichText.Content tagName="p" value={authorName} />
 			{JSON.parse(items).map((j, i) => (
 				<div className="ub_review_entry">
 					<RichText.Content key={i} value={j.label} />
@@ -57,9 +59,7 @@ export const version_1_1_2 = props => {
 					value={summaryTitle}
 				/>
 				<div className="ub_review_overall_value">
-					<p>
-						<RichText.Content value={summaryDescription} />
-					</p>
+					<RichText.Content tagName="p" value={summaryDescription} />
 					<span className="ub_review_rating">{average}</span>
 				</div>
 				<div className="ub_review_cta_panel">
@@ -144,23 +144,16 @@ export const version_1_1_4 = props => {
 		activeStarColor
 	} = props.attributes;
 
-	const average =
-		Math.round(
-			(JSON.parse(items)
-				.map(i => i.value)
-				.reduce((total, v) => total + v) /
-				JSON.parse(items).length) *
-				10
-		) / 10;
+	const average = calculateAverage(items);
 
 	return (
 		<div className="ub_review_block">
-			<p className="ub_review_item_name">
-				<RichText.Content value={itemName} />
-			</p>
-			<p>
-				<RichText.Content value={authorName} />
-			</p>
+			<RichText.Content
+				tagName="p"
+				className="ub_review_item_name"
+				value={itemName}
+			/>
+			<RichText.Content tagName="p" value={authorName} />
 			{JSON.parse(items).map((j, i) => (
 				<div className="ub_review_entry">
 					<RichText.Content key={i} value={j.label} />
@@ -182,9 +175,7 @@ export const version_1_1_4 = props => {
 					value={summaryTitle}
 				/>
 				<div className="ub_review_overall_value">
-					<p>
-						<RichText.Content value={summaryDescription} />
-					</p>
+					<RichText.Content tagName="p" value={summaryDescription} />
 					<span className="ub_review_rating">{average}</span>
 				</div>
 				<div className="ub_review_cta_panel">
@@ -271,26 +262,21 @@ export const version_1_1_5 = props => {
 		authorAlign
 	} = props.attributes;
 
-	const average =
-		Math.round(
-			(JSON.parse(items)
-				.map(i => i.value)
-				.reduce((total, v) => total + v) /
-				JSON.parse(items).length) *
-				10
-		) / 10;
+	const average = calculateAverage(items);
 
 	return (
 		<div className="ub_review_block">
-			<p
+			<RichText.Content
+				tagName="p"
 				className="ub_review_item_name"
 				style={{ textAlign: titleAlign }}
-			>
-				<RichText.Content value={itemName} />
-			</p>
-			<p style={{ textAlign: authorAlign }}>
-				<RichText.Content value={authorName} />
-			</p>
+				value={itemName}
+			/>
+			<RichText.Content
+				tagName="p"
+				style={{ textAlign: authorAlign }}
+				value={authorName}
+			/>
 			{JSON.parse(items).map((j, i) => (
 				<div className="ub_review_entry">
 					<RichText.Content key={i} value={j.label} />
@@ -312,9 +298,7 @@ export const version_1_1_5 = props => {
 					value={summaryTitle}
 				/>
 				<div className="ub_review_overall_value">
-					<p>
-						<RichText.Content value={summaryDescription} />
-					</p>
+					<RichText.Content tagName="p" value={summaryDescription} />
 					<span className="ub_review_rating">{average}</span>
 				</div>
 				<div className="ub_review_cta_panel">
