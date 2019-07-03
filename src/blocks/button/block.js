@@ -23,7 +23,8 @@ import {
 	generateIcon,
 	dashesToCamelcase,
 	iconSize,
-	mergeRichTextArray
+	mergeRichTextArray,
+	upgradeButtonLabel
 } from '../../common';
 import {
 	blockControls,
@@ -258,8 +259,7 @@ registerBlockType('ub/button-block', {
 						);
 					}}
 				>
-					Block is being phased out. Click here to replace with newest
-					version
+					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
 			</div>

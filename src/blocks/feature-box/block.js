@@ -13,7 +13,7 @@ import './style.scss';
 import './editor.scss';
 import { version_1_1_2, version_1_1_5, oldAttributes } from './oldVersions';
 import { blockControls, editorDisplay } from './components';
-import { mergeRichTextArray } from '../../common';
+import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 
 const { __ } = wp.i18n;
 
@@ -213,8 +213,7 @@ registerBlockType('ub/feature-box', {
 						);
 					}}
 				>
-					Block is being phased out. Click here to replace with newest
-					version
+					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
 			</div>

@@ -1,3 +1,5 @@
+const { __ } = wp.i18n;
+
 export const richTextToHTML = elem => {
 	let outputString = '';
 
@@ -42,4 +44,8 @@ export const generateIcon = (selectedIcon, size) => (
 	>
 		<path fill={'currentColor'} d={selectedIcon.icon[4]} />
 	</svg>
+);
+
+export const upgradeButtonLabel = __(
+	'Block is being phased out. Click here to replace with newest version.'
 );

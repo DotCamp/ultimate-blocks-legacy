@@ -13,7 +13,7 @@ import {
 } from './oldVersions';
 
 import { blockControls, inspectorControls, editorDisplay } from './components';
-import { mergeRichTextArray } from '../../common';
+import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -187,8 +187,7 @@ registerBlockType('ub/call-to-action', {
 						);
 					}}
 				>
-					Block is being phased out. Click here to replace with newest
-					version
+					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
 			</div>

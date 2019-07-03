@@ -20,7 +20,7 @@ import {
 	updateFrom
 } from './oldVersions';
 import { blockControls, editorDisplay } from './components';
-import { mergeRichTextArray } from '../../common';
+import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -119,7 +119,7 @@ registerBlockType('ub/notification-box', {
 						);
 					}}
 				>
-					Click to upgrade
+					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
 			</div>

@@ -17,7 +17,7 @@ import {
 	updateFrom
 } from './oldVersions';
 import { blockControls, inspectorControls, editorDisplay } from './components';
-import { mergeRichTextArray } from '../../common';
+import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 
 const attributes = {
 	starCount: {
@@ -96,7 +96,7 @@ registerBlockType('ub/star-rating', {
 						);
 					}}
 				>
-					Click me
+					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
 			</div>

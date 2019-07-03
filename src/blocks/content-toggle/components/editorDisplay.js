@@ -1,5 +1,6 @@
 import Inspector from './inspector';
 import { Component } from 'react';
+import { upgradeButtonLabel } from '../../../common';
 
 const { createBlock } = wp.blocks;
 
@@ -156,7 +157,7 @@ export class OldPanelContent extends Component {
 						);
 					}}
 				>
-					Click to upgrade
+					{upgradeButtonLabel}
 				</button>
 				<InnerBlocks
 					template={[['ub/content-toggle-panel']]} //initial content

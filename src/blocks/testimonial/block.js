@@ -10,7 +10,7 @@ import {
 import './style.scss';
 import './editor.scss';
 import { blockControls, inspectorControls, editorDisplay } from './components';
-import { mergeRichTextArray } from '../../common';
+import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
@@ -162,7 +162,7 @@ registerBlockType('ub/testimonial-block', {
 						);
 					}}
 				>
-					Click to upgrade
+					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
 			</div>
