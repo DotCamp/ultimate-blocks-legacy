@@ -177,12 +177,6 @@ registerBlockType('ub/feature-box', {
 							columnOneBody,
 							columnTwoBody,
 							columnThreeBody,
-							imgOneURL,
-							imgOneAlt,
-							imgTwoURL,
-							imgTwoAlt,
-							imgThreeURL,
-							imgThreeAlt,
 							...otherAttributes
 						} = props.attributes;
 						replaceBlock(
