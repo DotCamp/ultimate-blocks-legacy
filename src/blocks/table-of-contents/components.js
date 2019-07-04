@@ -1,5 +1,20 @@
+import {
+	oneColumnIcon,
+	twoColumnsIcon,
+	threeColumnsIcon,
+	plainList
+} from './icon';
+import { Component, Fragment } from 'react';
+
+const {
+	ToggleControl,
+	PanelRow,
+	PanelBody,
+	Toolbar,
+	IconButton
+} = wp.components;
+const { InspectorControls, BlockControls, RichText } = wp.editor;
 const { select, subscribe } = wp.data;
-import { Component } from 'react';
 const { __ } = wp.i18n;
 
 class TableOfContents extends Component {
@@ -168,5 +183,173 @@ class TableOfContents extends Component {
 		}
 	}
 }
+
+export const inspectorControls = props => {
+	const { attributes, setAttributes } = props;
+	const { allowedHeaders, showList, allowToCHiding } = attributes;
+	return (
+		<InspectorControls>
+			<PanelBody title={__('Allowed Headers')} initialOpen={true}>
+				{allowedHeaders.map((a, i) => (
+					<PanelRow>
+						<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i +
+							1}`}</label>
+						<ToggleControl
+							id={`ub_toggle_h${i + 1}`}
+							checked={a}
+							onChange={() =>
+								setAttributes({
+									allowedHeaders: [
+										...allowedHeaders.slice(0, i),
+										!allowedHeaders[i],
+										...allowedHeaders.slice(i + 1)
+									]
+								})
+							}
+						/>
+					</PanelRow>
+				))}
+			</PanelBody>
+			<PanelBody title={__('Additional Settings')} initialOpen={true}>
+				<PanelRow>
+					<label htmlFor="ub_toc_toggle_display">
+						{__(
+							'Allow users to toggle the visibility of the table of contents'
+						)}
+					</label>
+					<ToggleControl
+						id="ub_toc_toggle_display"
+						checked={allowToCHiding}
+						onChange={allowToCHiding => {
+							setAttributes({
+								allowToCHiding,
+								showList: allowToCHiding ? showList : true
+							});
+						}}
+					/>
+				</PanelRow>
+				{allowToCHiding && (
+					<PanelRow>
+						<label htmlFor="ub_show_toc">
+							{__('Inititally Show Table of Contents')}
+						</label>
+						<ToggleControl
+							id="ub_show_toc"
+							checked={showList}
+							onChange={() => {
+								setAttributes({
+									showList: !showList
+								});
+							}}
+						/>
+					</PanelRow>
+				)}
+			</PanelBody>
+		</InspectorControls>
+	);
+};
+
+export const blockControls = props => {
+	const { setAttributes } = props;
+	const { numColumns } = props.attributes;
+	return (
+		<BlockControls>
+			<Toolbar>
+				<IconButton
+					className={'ub_toc_column_selector'}
+					icon={oneColumnIcon}
+					label={__('One column')}
+					isPrimary={numColumns === 1}
+					onClick={() => setAttributes({ numColumns: 1 })}
+				/>
+				<IconButton
+					className={'ub_toc_column_selector'}
+					icon={twoColumnsIcon}
+					label={__('Two columns')}
+					isPrimary={numColumns === 2}
+					onClick={() => setAttributes({ numColumns: 2 })}
+				/>
+				<IconButton
+					className={'ub_toc_column_selector'}
+					icon={threeColumnsIcon}
+					label={__('Three columns')}
+					isPrimary={numColumns === 3}
+					onClick={() => setAttributes({ numColumns: 3 })}
+				/>
+			</Toolbar>
+			<Toolbar>
+				<IconButton
+					icon="editor-ul"
+					label={__('Bulleted list')}
+					onClick={() => setAttributes({ listStyle: 'bulleted' })}
+				/>
+				<IconButton
+					icon="editor-ol"
+					label={__('Numbered list')}
+					onClick={() => setAttributes({ listStyle: 'numbered' })}
+				/>
+				<IconButton
+					icon={plainList}
+					label={__('Plain list')}
+					onClick={() => setAttributes({ listStyle: 'plain' })}
+				/>
+			</Toolbar>
+		</BlockControls>
+	);
+};
+
+export const editorDisplay = props => {
+	const { setAttributes } = props;
+	const {
+		links,
+		title,
+		allowedHeaders,
+		showList,
+		allowToCHiding,
+		numColumns,
+		listStyle
+	} = props.attributes;
+	return (
+		<Fragment>
+			<div className="ub_table-of-contents-header">
+				<div className="ub_table-of-contents-title">
+					<RichText
+						placeholder={__('Optional title')}
+						className="ub_table-of-contents-title"
+						onChange={text => setAttributes({ title: text })}
+						value={title}
+						keepPlaceholderOnFocus={true}
+					/>
+				</div>
+				{allowToCHiding && (
+					<div id="ub_table-of-contents-header-toggle">
+						<div id="ub_table-of-contents-toggle">
+							[
+							<a
+								className="ub_table-of-contents-toggle-link"
+								href="#"
+								onClick={() => {
+									setAttributes({ showList: !showList });
+								}}
+							>
+								{showList ? __('hide') : __('show')}
+							</a>
+							]
+						</div>
+					</div>
+				)}
+			</div>
+			{showList && (
+				<TableOfContents
+					listStyle={listStyle}
+					numColumns={numColumns}
+					allowedHeaders={allowedHeaders}
+					headers={links && JSON.parse(links)}
+					blockProp={props}
+				/>
+			)}
+		</Fragment>
+	);
+};
 
 export default TableOfContents;

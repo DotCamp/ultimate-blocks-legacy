@@ -18,6 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
 			'.ub_table-of-contents-container'
 		);
 
+		const showButton =
+			block.getAttribute('data-showtext') === ''
+				? 'show'
+				: block.getAttribute('data-showtext');
+		const hideButton =
+			block.getAttribute('data-hidetext') === ''
+				? 'hide'
+				: block.getAttribute('data-hidetext');
+
 		if (!heightIsChecked) {
 			const initialDisplayMode = tocContainer.style.display;
 			if (initialDisplayMode === 'none') {
@@ -35,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			tocContainer.style.height = `${
 				tocContainer.style.height === '0px' ? tocHeight : '0'
 			}px`;
+			instance.innerHTML =
+				tocContainer.style.height === '0px' ? showButton : hideButton;
 		});
 	});
 });

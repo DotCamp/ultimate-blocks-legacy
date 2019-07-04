@@ -4,6 +4,42 @@ import TableOfContents from './components';
 const { select, subscribe } = wp.data;
 const { __ } = wp.i18n;
 
+export const oldAttributes = {
+	title: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_table-of-contents-title'
+	},
+	allowedHeaders: {
+		type: 'array',
+		default: Array(6).fill(true)
+	},
+	links: {
+		type: 'string',
+		default: ''
+	},
+	allowToCHiding: {
+		type: 'boolean',
+		default: false
+	},
+	showList: {
+		type: 'boolean',
+		default: true
+	},
+	numColumns: {
+		type: 'number',
+		default: 1
+	},
+	listStyle: {
+		type: 'string',
+		default: 'bulleted' //other options: numbered, plain
+	}
+};
+
+export const updateFrom = oldVersion => {
+	return { attributes: oldAttributes, save: oldVersion };
+};
+
 const getHeaderBlocks = () =>
 	select('core/editor')
 		.getBlocks()
@@ -405,28 +441,6 @@ export const version_1_1_3 = props => {
 	);
 };
 
-class ToggleButton_1_1_5 extends Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		return (
-			<div id="ub_table-of-contents-header-toggle">
-				<div id="ub_table-of-contents-toggle">
-					[
-					<a
-						id="ub_table-of-contents-toggle-link"
-						href="#ub_table-of-contents-title"
-					>
-						{this.props.showList ? __('hide') : __('show')}
-					</a>
-					]
-				</div>
-			</div>
-		);
-	}
-}
-
 const setHeaders_1_1_5 = () => {
 	const headers = getHeaderBlocks().map(header => header.attributes);
 	headers.forEach((heading, key) => {
@@ -536,7 +550,18 @@ export const version_1_1_5 = props => {
 				<div className="ub_table-of-contents-header">
 					<div className="ub_table-of-contents-title">{title}</div>
 					{allowToCHiding && (
-						<ToggleButton_1_1_5 showList={showList} />
+						<div id="ub_table-of-contents-header-toggle">
+							<div id="ub_table-of-contents-toggle">
+								[
+								<a
+									id="ub_table-of-contents-toggle-link"
+									href="#"
+								>
+									{showList ? __('hide') : __('show')}
+								</a>
+								]
+							</div>
+						</div>
 					)}
 				</div>
 			)}
@@ -557,6 +582,28 @@ export const version_1_1_5 = props => {
 		</div>
 	);
 };
+
+class ToggleButton_1_1_6 extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
+		return (
+			<div id="ub_table-of-contents-header-toggle">
+				<div id="ub_table-of-contents-toggle">
+					[
+					<a
+						id="ub_table-of-contents-toggle-link"
+						href="#ub_table-of-contents-title"
+					>
+						{this.props.showList ? __('hide') : __('show')}
+					</a>
+					]
+				</div>
+			</div>
+		);
+	}
+}
 
 class TableOfContents_1_1_6 extends Component {
 	constructor(props) {
@@ -636,7 +683,7 @@ export const version_1_1_6 = props => {
 						{title}
 					</div>
 					{allowToCHiding && (
-						<ToggleButton_1_1_5 showList={showList} />
+						<ToggleButton_1_1_6 showList={showList} />
 					)}
 				</div>
 			)}
@@ -807,7 +854,7 @@ export const version_1_1_8 = props => {
 						{title}
 					</div>
 					{allowToCHiding && (
-						<ToggleButton_1_1_5 showList={showList} />
+						<ToggleButton_1_1_6 showList={showList} />
 					)}
 				</div>
 			)}

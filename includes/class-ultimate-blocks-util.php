@@ -113,7 +113,7 @@ class Ultimate_Blocks_Util {
             ),
 			array(
 				'label'  => 'Table of Contents',
-				'name'   => 'ub/table-of-contents',
+				'name'   => 'ub/table-of-contents-block',
 				'active' => true,
             ),
             array(

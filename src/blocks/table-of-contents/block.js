@@ -1,10 +1,9 @@
-import icon, {
-	oneColumnIcon,
-	twoColumnsIcon,
-	threeColumnsIcon,
-	plainList
-} from './icon';
-import TableOfContents from './components';
+import icon from './icon';
+import TableOfContents, {
+	inspectorControls,
+	blockControls,
+	editorDisplay
+} from './components';
 import {
 	version_1_0_8,
 	version_1_0_9,
@@ -12,31 +11,28 @@ import {
 	version_1_1_5,
 	version_1_1_6,
 	version_1_1_8,
-	version_2_0_0
+	version_2_0_0,
+	oldAttributes,
+	updateFrom
 } from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 
-const {
-	ToggleControl,
-	PanelRow,
-	PanelBody,
-	Toolbar,
-	IconButton
-} = wp.components;
-const { RichText, InspectorControls, BlockControls } = wp.editor;
+const { RichText } = wp.editor;
 
-const { withState } = wp.compose;
+const { withDispatch, withSelect } = wp.data;
+
+const { compose } = wp.compose;
 
 import './editor.scss';
 import './style.scss';
+import { upgradeButtonLabel, mergeRichTextArray } from '../../common';
 
 const attributes = {
 	title: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_table-of-contents-title'
+		type: 'string',
+		default: ''
 	},
 	allowedHeaders: {
 		type: 'array',
@@ -70,183 +66,51 @@ registerBlockType('ub/table-of-contents', {
 	category: 'ultimateblocks',
 	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
 
-	attributes,
+	attributes: oldAttributes,
 
-	edit: withState({ editable: 'content' })(function(props) {
-		const { editable, setAttributes, isSelected } = props;
-		const {
-			links,
-			title,
-			allowedHeaders,
-			showList,
-			allowToCHiding,
-			numColumns,
-			listStyle
-		} = props.attributes;
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
+	supports: {
+		inserter: false
+	},
+
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock } = select('core/editor');
+
+			const { clientId } = ownProps;
+
+			return {
+				block: getBlock(clientId)
+			};
+		}),
+		withDispatch(dispatch => {
+			const { replaceBlock } = dispatch('core/editor');
+			return { replaceBlock };
+		})
+	])(function(props) {
+		const { block, replaceBlock, isSelected } = props;
 		return [
-			isSelected && (
-				<InspectorControls>
-					<PanelBody title={__('Allowed Headers')} initialOpen={true}>
-						{allowedHeaders.map((a, i) => (
-							<PanelRow>
-								<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i +
-									1}`}</label>
-								<ToggleControl
-									id={`ub_toggle_h${i + 1}`}
-									checked={a}
-									onChange={() =>
-										setAttributes({
-											allowedHeaders: [
-												...allowedHeaders.slice(0, i),
-												!allowedHeaders[i],
-												...allowedHeaders.slice(i + 1)
-											]
-										})
-									}
-								/>
-							</PanelRow>
-						))}
-					</PanelBody>
-					<PanelBody
-						title={__('Additional Settings')}
-						initialOpen={true}
-					>
-						<PanelRow>
-							<label htmlFor="ub_toc_toggle_display">
-								{__(
-									'Allow users to toggle the visibility of the table of contents'
-								)}
-							</label>
-							<ToggleControl
-								id="ub_toc_toggle_display"
-								checked={allowToCHiding}
-								onChange={allowToCHiding => {
-									setAttributes({
-										allowToCHiding,
-										showList: allowToCHiding
-											? showList
-											: true
-									});
-								}}
-							/>
-						</PanelRow>
-						{allowToCHiding && (
-							<PanelRow>
-								<label htmlFor="ub_show_toc">
-									{__('Inititally Show Table of Contents')}
-								</label>
-								<ToggleControl
-									id="ub_show_toc"
-									checked={showList}
-									onChange={() => {
-										setAttributes({
-											showList: !showList
-										});
-									}}
-								/>
-							</PanelRow>
-						)}
-					</PanelBody>
-				</InspectorControls>
-			),
-			isSelected && (
-				<BlockControls>
-					<Toolbar>
-						<IconButton
-							className={'ub_toc_column_selector'}
-							icon={oneColumnIcon}
-							label={__('One column')}
-							isPrimary={numColumns === 1}
-							onClick={() => setAttributes({ numColumns: 1 })}
-						/>
-						<IconButton
-							className={'ub_toc_column_selector'}
-							icon={twoColumnsIcon}
-							label={__('Two columns')}
-							isPrimary={numColumns === 2}
-							onClick={() => setAttributes({ numColumns: 2 })}
-						/>
-						<IconButton
-							className={'ub_toc_column_selector'}
-							icon={threeColumnsIcon}
-							label={__('Three columns')}
-							isPrimary={numColumns === 3}
-							onClick={() => setAttributes({ numColumns: 3 })}
-						/>
-					</Toolbar>
-					<Toolbar>
-						<IconButton
-							icon="editor-ul"
-							label={__('Bulleted list')}
-							onClick={() =>
-								setAttributes({ listStyle: 'bulleted' })
-							}
-						/>
-						<IconButton
-							icon="editor-ol"
-							label={__('Numbered list')}
-							onClick={() =>
-								setAttributes({ listStyle: 'numbered' })
-							}
-						/>
-						<IconButton
-							icon={plainList}
-							label={__('Plain list')}
-							onClick={() =>
-								setAttributes({ listStyle: 'plain' })
-							}
-						/>
-					</Toolbar>
-				</BlockControls>
-			),
+			isSelected && inspectorControls(props),
+			isSelected && blockControls(props),
 			<div className="ub_table-of-contents">
-				<div className="ub_table-of-contents-header">
-					<div className="ub_table-of-contents-title">
-						<RichText
-							placeholder={__('Optional title')}
-							className="ub_table-of-contents-title"
-							onChange={text => setAttributes({ title: text })}
-							value={title}
-							isSelected={
-								isSelected &&
-								editable === 'table_of_contents_title'
-							}
-							onFocus={onSetActiveEditable(
-								'table_of_contents_title'
-							)}
-							keepPlaceholderOnFocus={true}
-						/>
-					</div>
-					{allowToCHiding && (
-						<div id="ub_table-of-contents-header-toggle">
-							<div id="ub_table-of-contents-toggle">
-								[
-								<a
-									className="ub_table-of-contents-toggle-link"
-									href="#"
-									onClick={() => {
-										setAttributes({ showList: !showList });
-									}}
-								>
-									{showList ? __('hide') : __('show')}
-								</a>
-								]
-							</div>
-						</div>
-					)}
-				</div>
-				{showList && (
-					<TableOfContents
-						listStyle={listStyle}
-						numColumns={numColumns}
-						allowedHeaders={allowedHeaders}
-						headers={links && JSON.parse(links)}
-						blockProp={props}
-					/>
-				)}
+				<button
+					onClick={() => {
+						const { title, ...otherAttributes } = props.attributes;
+
+						console.log('getting replacement...');
+						replaceBlock(
+							block.clientId,
+							createBlock(
+								'ub/table-of-contents-block',
+								Object.assign(otherAttributes, {
+									title: mergeRichTextArray(title)
+								})
+							)
+						);
+					}}
+				>
+					{upgradeButtonLabel}
+				</button>
+				{editorDisplay(props)}
 			</div>
 		];
 	}),
@@ -270,9 +134,11 @@ registerBlockType('ub/table-of-contents', {
 				{(title.length > 1 ||
 					(title.length === 1 && title[0] !== '')) && (
 					<div className="ub_table-of-contents-header">
-						<div className="ub_table-of-contents-title">
-							{title}
-						</div>
+						<RichText.Content
+							tagName="div"
+							className="ub_table-of-contents-title"
+							value={title}
+						/>
 						{allowToCHiding && (
 							<div id="ub_table-of-contents-header-toggle">
 								<div id="ub_table-of-contents-toggle">
@@ -308,27 +174,29 @@ registerBlockType('ub/table-of-contents', {
 		);
 	},
 	deprecated: [
-		{ attributes, save: version_1_0_8 },
-		{ attributes, save: version_1_0_9 },
-		{
-			attributes,
-			migrate: function(attributes) {
-				function flattenArray(arr) {
-					return arr.reduce(
-						(acc, val) =>
-							acc.concat(
-								Array.isArray(val) ? flattenArray(val) : val
-							),
-						[]
-					);
-				}
-				return { links: flattenArray(attributes.links) };
-			},
-			save: version_1_1_3
-		},
-		{ attributes, save: version_1_1_5 },
-		{ attributes, save: version_1_1_6 },
-		{ attributes, save: version_1_1_8 },
-		{ attributes, save: version_2_0_0 }
+		updateFrom(version_1_0_8),
+		updateFrom(version_1_0_9),
+		updateFrom(version_1_1_3),
+		updateFrom(version_1_1_5),
+		updateFrom(version_1_1_6),
+		updateFrom(version_1_1_8),
+		updateFrom(version_2_0_0)
 	]
+});
+
+registerBlockType('ub/table-of-contents-block', {
+	title: __('Table of Contents'),
+	icon: icon,
+	category: 'ultimateblocks',
+	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
+	attributes,
+	edit(props) {
+		const { isSelected } = props;
+		return [
+			isSelected && inspectorControls(props),
+			isSelected && blockControls(props),
+			<div className="ub_table-of-contents">{editorDisplay(props)}</div>
+		];
+	},
+	save: () => null
 });
