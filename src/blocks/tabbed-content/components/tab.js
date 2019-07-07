@@ -50,3 +50,37 @@ registerBlockType('ub/tab', {
 		);
 	}
 });
+
+registerBlockType('ub/tab-block', {
+	title: __('Tab'),
+	parent: __('ub/tabbed-content-block'),
+	description: __('content of tab'),
+	icon: icon,
+	category: 'ultimateblocks',
+	attributes: {
+		index: {
+			type: 'number',
+			default: 0
+		},
+		isActive: {
+			type: 'boolean',
+			default: true
+		}
+	},
+	supports: {
+		inserter: false,
+		reusable: false
+	},
+	edit(props) {
+		return (
+			<div
+				style={{
+					display: props.attributes.isActive ? 'block' : 'none'
+				}}
+			>
+				<InnerBlocks templateLock={false} />
+			</div>
+		);
+	},
+	save: () => <InnerBlocks.Content />
+});

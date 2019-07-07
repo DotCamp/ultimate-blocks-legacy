@@ -1,10 +1,6 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const {
-	InspectorControls,
-	PanelColorSettings
-} = wp.editor;
-
+const { InspectorControls, PanelColorSettings } = wp.editor;
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -19,14 +15,16 @@ export default class Inspector extends Component {
 					colorSettings={[
 						{
 							value: this.props.attributes.theme,
-							onChange: this.props.onThemeChange,
-							label:__('Active Tab Color')
+							onChange: value =>
+								this.props.setAttributes({ theme: value }),
+							label: __('Active Tab Color')
 						},
 						{
 							value: this.props.attributes.titleColor,
-							onChange: this.props.onTitleColorChange,
-							label:__('Active Tab Title Color')
-						},	
+							onChange: value =>
+								this.props.setAttributes({ titleColor: value }),
+							label: __('Active Tab Title Color')
+						}
 					]}
 				/>
 			</InspectorControls>

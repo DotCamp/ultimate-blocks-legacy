@@ -3,13 +3,20 @@ const { RichText } = wp.editor;
 export const version_1_1_2 = props => {
 	const className = 'wp-block-ub-tabbed-content';
 
-	const { activeTab, theme, titleColor } = props.attributes;
+	const {
+		activeTab,
+		theme,
+		titleColor,
+		tabsTitle,
+		tabsContent,
+		id
+	} = props.attributes;
 
 	return (
-		<div data-id={props.attributes.id}>
+		<div data-id={id}>
 			<div className={className + '-holder'}>
 				<div className={className + '-tabs-title'}>
-					{props.attributes.tabsTitle.map((value, i) => {
+					{tabsTitle.map((value, i) => {
 						return (
 							<div
 								className={
@@ -37,7 +44,7 @@ export const version_1_1_2 = props => {
 					})}
 				</div>
 				<div className={className + '-tabs-content'}>
-					{props.attributes.tabsContent.map((value, i) => {
+					{tabsContent.map((value, i) => {
 						return (
 							<div
 								className={
