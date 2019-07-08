@@ -48,7 +48,7 @@ class Ultimate_Blocks_Util {
             ),
             array(
 				'label'  => 'Content Filter',
-				'name'   => 'ub/content-filter',
+				'name'   => 'ub/content-filter-block',
 				'active' => true,
             ),
 			array(

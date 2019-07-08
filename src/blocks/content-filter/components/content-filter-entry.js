@@ -316,3 +316,138 @@ registerBlockType('ub/content-filter-entry', {
 		);
 	}
 });
+
+registerBlockType('ub/content-filter-entry-block', {
+	title: __('Content Filter Entry'),
+	parent: __('ub/content-filter-block'),
+	icon: icon,
+	category: 'ultimateblocks',
+	attributes: {
+		availableFilters: {
+			type: 'array',
+			default: [] //get list of filters from parent block
+		},
+		selectedFilters: {
+			type: 'array',
+			default: []
+		},
+		buttonColor: {
+			type: 'string',
+			default: '#aaaaaa'
+		},
+		buttonTextColor: {
+			type: 'string',
+			default: '#000000'
+		}
+	},
+	supports: {
+		inserter: false,
+		reusable: false
+	},
+	edit(props) {
+		const { setAttributes, attributes } = props;
+
+		const {
+			availableFilters,
+			selectedFilters,
+			buttonColor,
+			buttonTextColor
+		} = attributes;
+
+		if (availableFilters.length > 0 && selectedFilters.length === 0) {
+			let newSelectedFilters = [];
+			availableFilters.forEach(category => {
+				newSelectedFilters.push(
+					category.canUseMultiple
+						? Array(category.filters.length).fill(false)
+						: -1
+				);
+			});
+
+			setAttributes({ selectedFilters: newSelectedFilters });
+		}
+
+		let tagList = [];
+
+		selectedFilters.forEach((selection, i) => {
+			if (Array.isArray(selection)) {
+				selection
+					.map((a, i) => {
+						return { val: a, index: i };
+					})
+					.filter(a => a.val === true)
+					.forEach(a =>
+						tagList.push({
+							name: availableFilters[i].filters[a.index],
+							categoryIndex: i,
+							tagIndex: a.index
+						})
+					);
+			} else
+				tagList.push(
+					selection > -1
+						? {
+								name: availableFilters[i].filters[selection],
+								categoryIndex: i,
+								tagIndex: selection
+						  }
+						: null
+				);
+		});
+
+		return (
+			<div className="ub-content-filter-panel">
+				<InnerBlocks templateLock={false} />
+				<div className="ub-content-assigned-filter-tag-area">
+					{tagList
+						.filter(
+							tag => tag != null && tag.hasOwnProperty('name')
+						)
+						.map(tag => (
+							<div className="ub-content-assigned-filter-tag">
+								<div className="ub-content-filter-tag-deselect">
+									<span
+										title={__('Deselect This Filter')}
+										onClick={() => {
+											const {
+												categoryIndex: i,
+												tagIndex: j
+											} = tag;
+											let newSelectedFilters = [
+												...selectedFilters.slice(0, i),
+												Array.isArray(
+													selectedFilters[i]
+												)
+													? [
+															...selectedFilters[
+																i
+															].slice(0, j),
+															false,
+															...selectedFilters[
+																i
+															].slice(j + 1)
+													  ]
+													: -1,
+												...selectedFilters.slice(i + 1)
+											];
+
+											setAttributes({
+												selectedFilters: newSelectedFilters
+											});
+										}}
+										class="dashicons dashicons-dismiss"
+									/>
+								</div>
+								{tag.name}
+							</div>
+						))}
+					<Dropdown
+						attributes={attributes}
+						setAttributes={setAttributes}
+					/>
+				</div>
+			</div>
+		);
+	},
+	save: () => <InnerBlocks.Content />
+});
