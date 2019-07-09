@@ -559,6 +559,9 @@
 
 .ub_image_slider .flickity-enabled .flickity-page-dots {
   bottom: 30px; }
+
+.ub_image_slider .ub_image_slider_add_images {
+  margin: 0 auto; }
 /**
  * #.# Common SCSS
  *
