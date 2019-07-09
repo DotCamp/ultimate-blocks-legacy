@@ -16,7 +16,9 @@ import {
 	version_1_1_2,
 	version_1_1_4,
 	version_1_1_5,
-	version_2_0_0
+	version_2_0_0,
+	oldAttributes,
+	updateFrom
 } from './oldVersions';
 
 import {
@@ -111,80 +113,6 @@ const attributes = {
 		default: true
 	}
 };
-
-const oldAttributes = {
-	buttonText: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub-button-block-btn',
-		default: 'Button Text'
-	},
-	align: {
-		type: 'string',
-		default: 'center'
-	},
-	url: {
-		type: 'string',
-		source: 'attribute',
-		selector: 'a',
-		attribute: 'href'
-	},
-	size: {
-		type: 'string',
-		default: 'medium'
-	},
-	buttonColor: {
-		type: 'string',
-		default: '#313131'
-	},
-	buttonHoverColor: {
-		type: 'string',
-		default: '#313131'
-	},
-	buttonTextColor: {
-		type: 'string',
-		default: '#ffffff'
-	},
-	buttonTextHoverColor: {
-		type: 'string',
-		default: '#ffffff'
-	},
-	buttonRounded: {
-		type: 'boolean',
-		default: false
-	},
-	chosenIcon: {
-		type: 'string',
-		default: ''
-	},
-	iconPosition: {
-		type: 'string',
-		default: 'left'
-	},
-	buttonIsTransparent: {
-		type: 'boolean',
-		default: false
-	},
-	addNofollow: {
-		type: 'boolean',
-		default: true
-	},
-	openInNewTab: {
-		type: 'boolean',
-		default: true
-	}
-};
-
-const oldAttributesAdjusted = Object.assign(Object.assign({}, oldAttributes), {
-	buttonColor: {
-		type: 'string',
-		default: '#44c767'
-	},
-	buttonRounded: {
-		type: 'boolean',
-		default: true
-	}
-});
 
 registerBlockType('ub/button-block', {
 	title: __('Button (Improved)'),
@@ -350,22 +278,10 @@ registerBlockType('ub/button-block', {
 		);
 	},
 	deprecated: [
-		{
-			attributes: oldAttributesAdjusted,
-			save: version_1_1_2
-		},
-		{
-			attributes: oldAttributesAdjusted,
-			save: version_1_1_4
-		},
-		{
-			attributes: oldAttributesAdjusted,
-			save: version_1_1_5
-		},
-		{
-			attributes: oldAttributesAdjusted,
-			save: version_2_0_0
-		}
+		updateFrom(version_1_1_2),
+		updateFrom(version_1_1_4),
+		updateFrom(version_1_1_5),
+		updateFrom(version_2_0_0)
 	]
 });
 

@@ -95,8 +95,6 @@ registerBlockType('ub/table-of-contents', {
 				<button
 					onClick={() => {
 						const { title, ...otherAttributes } = props.attributes;
-
-						console.log('getting replacement...');
 						replaceBlock(
 							block.clientId,
 							createBlock(

@@ -15,17 +15,6 @@ import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
 
-const {
-	RichText,
-	BlockControls,
-	MediaUpload,
-	InspectorControls,
-	ColorPalette,
-	PanelColorSettings
-} = wp.editor;
-
-const { Button, PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
-
 const { withState, compose } = wp.compose;
 
 const { withDispatch, withSelect } = wp.data;

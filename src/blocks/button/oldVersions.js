@@ -2,6 +2,80 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { generateIcon, dashesToCamelcase } from '../../common';
 
+export const oldAttributes = {
+	buttonText: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub-button-block-btn',
+		default: 'Button Text'
+	},
+	align: {
+		type: 'string',
+		default: 'center'
+	},
+	url: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'a',
+		attribute: 'href'
+	},
+	size: {
+		type: 'string',
+		default: 'medium'
+	},
+	buttonColor: {
+		type: 'string',
+		default: '#313131'
+	},
+	buttonHoverColor: {
+		type: 'string',
+		default: '#313131'
+	},
+	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonTextHoverColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonRounded: {
+		type: 'boolean',
+		default: false
+	},
+	chosenIcon: {
+		type: 'string',
+		default: ''
+	},
+	iconPosition: {
+		type: 'string',
+		default: 'left'
+	},
+	buttonIsTransparent: {
+		type: 'boolean',
+		default: false
+	},
+	addNofollow: {
+		type: 'boolean',
+		default: true
+	},
+	openInNewTab: {
+		type: 'boolean',
+		default: true
+	}
+};
+
+const oldAttributesAdjusted = Object.assign(Object.assign({}, oldAttributes), {
+	buttonColor: {
+		type: 'string',
+		default: '#44c767'
+	},
+	buttonRounded: {
+		type: 'boolean',
+		default: true
+	}
+});
+
 export const version_1_1_2 = props => {
 	const {
 		buttonText,
@@ -15,11 +89,11 @@ export const version_1_1_2 = props => {
 
 	return (
 		<div className={props.className}>
-			<div className={'ub-button-container' + ' align-button-' + align}>
+			<div className={'ub-button-container align-button-' + align}>
 				<a
 					href={url}
 					target="_blank"
-					className={'ub-button-block-btn' + ' ub-button-' + size}
+					className={'ub-button-block-btn ub-button-' + size}
 					style={{
 						backgroundColor: buttonColor,
 						color: buttonTextColor,
@@ -46,11 +120,11 @@ export const version_1_1_4 = props => {
 
 	return (
 		<div className={props.className}>
-			<div className={'ub-button-container' + ' align-button-' + align}>
+			<div className={'ub-button-container align-button-' + align}>
 				<a
 					href={url}
 					target="_blank"
-					className={'ub-button-block-btn' + ' ub-button-' + size}
+					className={'ub-button-block-btn ub-button-' + size}
 					style={{
 						backgroundColor: buttonColor,
 						color: buttonTextColor,
@@ -78,11 +152,11 @@ export const version_1_1_5 = props => {
 
 	return (
 		<div className={props.className}>
-			<div className={'ub-button-container' + ' align-button-' + align}>
+			<div className={'ub-button-container align-button-' + align}>
 				<a
 					href={url}
 					target="_blank"
-					className={'ub-button-block-btn' + ' ub-button-' + size}
+					className={'ub-button-block-btn ub-button-' + size}
 					style={{
 						backgroundColor: buttonColor,
 						color: buttonTextColor,
@@ -153,7 +227,8 @@ export const version_2_0_0 = props => {
 							iconPosition === 'left' ? 'row' : 'row-reverse'
 					}}
 				>
-					{chosenIcon !== '' &&
+					{chosenIcon &&
+						chosenIcon !== '' &&
 						allIcons.hasOwnProperty(
 							`fa${dashesToCamelcase(chosenIcon)}`
 						) && (
@@ -171,4 +246,8 @@ export const version_2_0_0 = props => {
 			</a>
 		</div>
 	);
+};
+
+export const updateFrom = oldVersion => {
+	return { attributes: oldAttributesAdjusted, save: oldVersion };
 };

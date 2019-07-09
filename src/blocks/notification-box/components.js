@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import info from './icons/info';
 import success from './icons/success';
 import warning from './icons/warning';
@@ -17,10 +16,7 @@ export const blockControls = props => {
 		<BlockControls>
 			<Toolbar className="components-toolbar">
 				<Button
-					className={classnames(
-						'components-icon-button',
-						'components-toolbar-control'
-					)}
+					className="components-icon-button components-toolbar-control"
 					onClick={() =>
 						setAttributes({
 							ub_selected_notify: 'ub_notify_info'
@@ -30,10 +26,7 @@ export const blockControls = props => {
 					{info}
 				</Button>
 				<Button
-					className={classnames(
-						'components-icon-button',
-						'components-toolbar-control'
-					)}
+					className="components-icon-button components-toolbar-control"
 					onClick={() =>
 						setAttributes({
 							ub_selected_notify: 'ub_notify_success'
@@ -43,10 +36,7 @@ export const blockControls = props => {
 					{success}
 				</Button>
 				<Button
-					className={classnames(
-						'components-icon-button',
-						'components-toolbar-control'
-					)}
+					className="components-icon-button components-toolbar-control"
 					onClick={() =>
 						setAttributes({
 							ub_selected_notify: 'ub_notify_warning'
