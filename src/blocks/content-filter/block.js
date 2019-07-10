@@ -61,13 +61,16 @@ registerBlockType('ub/content-filter', {
 			};
 		}),
 		withDispatch(dispatch => {
-			const { updateBlockAttributes, insertBlock } = dispatch(
-				'core/editor'
-			);
+			const {
+				updateBlockAttributes,
+				insertBlock,
+				replaceBlock
+			} = dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,
-				insertBlock
+				insertBlock,
+				replaceBlock
 			};
 		})
 	])(OldPanelContent),

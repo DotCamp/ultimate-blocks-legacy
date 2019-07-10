@@ -82,7 +82,8 @@ export class OldPanelContent extends Component {
 			setAttributes,
 			block,
 			updateBlockAttributes,
-			insertBlock
+			insertBlock,
+			replaceBlock
 		} = this.props;
 		const {
 			filterArray,
@@ -212,7 +213,39 @@ export class OldPanelContent extends Component {
 				</InspectorControls>
 			),
 			<div className="ub-content-filter-main">
-				<button>{upgradeButtonLabel}</button>
+				<button
+					onClick={() => {
+						replaceBlock(
+							block.clientId,
+							createBlock(
+								'ub/content-filter-block',
+								{
+									filterArray,
+									buttonColor,
+									buttonTextColor,
+									activeButtonColor,
+									activeButtonTextColor
+								},
+								block.innerBlocks.map(innerBlock =>
+									createBlock(
+										'ub/content-filter-entry-block',
+										{
+											availableFilters: filterArray,
+											selectedFilters:
+												innerBlock.attributes
+													.selectedFilters,
+											buttonColor,
+											buttonTextColor
+										},
+										innerBlock.innerBlocks
+									)
+								)
+							)
+						);
+					}}
+				>
+					{upgradeButtonLabel}
+				</button>
 				{filterArray.length > 0 &&
 					filterArray.map((f, i) => (
 						<div className="ub-content-filter-category">
