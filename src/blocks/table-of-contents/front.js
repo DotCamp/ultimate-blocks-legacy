@@ -18,14 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
 			'.ub_table-of-contents-container'
 		);
 
-		const showButton =
-			block.getAttribute('data-showtext') === ''
-				? 'show'
-				: block.getAttribute('data-showtext');
-		const hideButton =
-			block.getAttribute('data-hidetext') === ''
-				? 'hide'
-				: block.getAttribute('data-hidetext');
+		const showButton = block.getAttribute('data-showtext')
+			? block.getAttribute('data-showtext')
+			: 'show';
+		const hideButton = block.getAttribute('data-hidetext')
+			? block.getAttribute('data-hidetext')
+			: 'hide';
 
 		if (!heightIsChecked) {
 			const initialDisplayMode = tocContainer.style.display;
