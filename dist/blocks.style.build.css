@@ -5,7 +5,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -50,7 +50,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -102,7 +102,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -162,7 +162,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -188,7 +188,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -289,7 +289,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -396,7 +396,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -447,7 +447,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .wp-block-ub-social-share .social-share-icons {
   display: -ms-flexbox;
@@ -488,7 +488,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -581,7 +581,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -660,7 +660,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -703,7 +703,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub-star-outer-container {
   display: -ms-flexbox;
@@ -723,7 +723,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Common SCSS
@@ -732,7 +732,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub_table-of-contents {
   background-color: #fafafa;
@@ -811,7 +811,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub_progress-bar-line-trail {
   stroke: #d9d9d9;
@@ -847,7 +847,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub_countdown_circular_container {
   display: grid;
@@ -972,7 +972,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub_review_block {
   padding: 25px 40px 35px 40px;
@@ -1044,7 +1044,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /*Block styles*/
 .ub_image_slider .flickity-viewport .components-form-file-upload {
@@ -1179,7 +1179,7 @@ https://flickity.metafizzy.co
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub-content-filter-tag {
   display: inline-block;

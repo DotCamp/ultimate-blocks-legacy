@@ -5,7 +5,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -27,7 +27,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Styles
@@ -69,7 +69,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -109,7 +109,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -127,7 +127,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -145,7 +145,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -176,7 +176,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -217,7 +217,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .wp-block-ub-social-share .social-share-icons {
   display: -ms-flexbox;
@@ -260,7 +260,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -354,7 +354,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -420,7 +420,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Editor Styles
@@ -490,7 +490,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Common SCSS
@@ -499,7 +499,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 /**
  * #.# Common SCSS
  *
@@ -507,7 +507,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 /**
  * #.# Common SCSS
@@ -516,7 +516,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .editor-styles-wrapper .ub_table-of-contents ul {
   padding-left: 1.3em; }
@@ -539,7 +539,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub_progress_bar_value {
   padding-left: 5px;
@@ -555,7 +555,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub_image_slider .flickity-enabled .flickity-page-dots {
   bottom: 30px; }
@@ -569,7 +569,7 @@
  * that are used across the project.
 */
 .ub-hide {
-  display: none !important; }
+  display: none; }
 
 .ub-content-filter-tag:hover .ub-content-filter-tag-top {
   opacity: 1; }

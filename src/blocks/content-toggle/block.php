@@ -19,7 +19,7 @@ function ub_content_toggle_add_frontend_assets() {
 }
 
 function ub_render_content_toggle_block($attributes, $content){
-    return '<div>'.$content.'</div>';
+    return '<div class="wp-block-ub-content-toggle">'.$content.'</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){
