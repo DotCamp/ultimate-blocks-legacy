@@ -1,6 +1,7 @@
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { generateIcon, dashesToCamelcase } from '../../common';
+import { iconSize } from './components';
 
 export const oldAttributes = {
 	buttonText: {
@@ -188,8 +189,6 @@ export const version_2_0_0 = props => {
 		addNofollow,
 		openInNewTab
 	} = props.attributes;
-
-	const iconSize = { small: 25, medium: 30, large: 35, larger: 40 };
 
 	const allIcons = Object.assign(fas, fab);
 

@@ -24,7 +24,6 @@ import {
 import {
 	generateIcon,
 	dashesToCamelcase,
-	iconSize,
 	mergeRichTextArray,
 	upgradeButtonLabel
 } from '../../common';
@@ -32,6 +31,7 @@ import {
 	blockControls,
 	inspectorControls,
 	editorDisplay,
+	iconSize,
 	allIcons
 } from './components';
 
