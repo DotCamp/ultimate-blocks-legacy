@@ -4,12 +4,20 @@ Array.from(
 	let parentIsHidden = false;
 	let parentClassIsHidden = false;
 
-	if (toggleContainer.parentElement.style.display === 'none') {
-		parentIsHidden = true;
-	}
+	let targetElement = toggleContainer;
 
-	if (getComputedStyle(toggleContainer.parentElement).display === 'none') {
-		parentClassIsHidden = true;
+	while (
+		!(parentIsHidden || parentClassIsHidden) &&
+		!targetElement.parentElement.classList.contains('entry-content')
+	) {
+		targetElement = targetElement.parentElement;
+		if (targetElement.style.display === 'none') {
+			parentIsHidden = true;
+		}
+
+		if (getComputedStyle(targetElement).display === 'none') {
+			parentClassIsHidden = true;
+		}
 	}
 
 	if (parentClassIsHidden || parentIsHidden) {
