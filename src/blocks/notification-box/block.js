@@ -151,7 +151,24 @@ registerBlockType('ub/notification-box', {
 	},
 	deprecated: [
 		updateFrom(version_1_1_2),
-		updateFrom(version_1_1_4),
+		{
+			attributes: {
+				ub_notify_info: {
+					type: 'array',
+					source: 'children',
+					selector: 'p'
+				},
+				ub_selected_notify: {
+					type: 'string',
+					default: 'ub_notify_info'
+				},
+				align: {
+					type: 'string',
+					default: 'left'
+				}
+			},
+			save: version_1_1_4
+		},
 		updateFrom(version_1_1_5)
 	]
 });
