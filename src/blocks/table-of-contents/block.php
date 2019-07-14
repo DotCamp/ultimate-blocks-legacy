@@ -39,8 +39,11 @@ function ub_render_table_of_contents_block($attributes){
     $listItems = '';
 
     if (!function_exists('ub_makeListItem')) {
-        function ub_makeListItem($item, $listStyle){
+        function ub_makeListItem($num, $item, $listStyle){
             static $outputString = '';
+            if($num == 0 && $outputString != ''){
+                $outputString = '';
+            }
             if (array_key_exists("level", $item)){
                 $anchor = $item["anchor"];
                 $content = $item["content"];
@@ -53,8 +56,8 @@ function ub_render_table_of_contents_block($attributes){
                 $outputString = substr_replace($outputString, $openingTag,
                     strrpos($outputString, '</li>'), strlen('</li>'));
 
-                forEach($item as $subItem){
-                    ub_makeListItem($subItem, $listStyle);
+                forEach($item as $key => $subItem){
+                    ub_makeListItem($key+1, $subItem, $listStyle);
                 }
                 $outputString .= ($listStyle == 'numbered' ? '</ol>' : '</ul>') . '</li>';
             }
@@ -62,8 +65,8 @@ function ub_render_table_of_contents_block($attributes){
         }
     }
 
-    foreach($sortedHeaders as $item){
-        $listItems = ub_makeListItem($item, $listStyle);
+    foreach($sortedHeaders as $key => $item){
+        $listItems = ub_makeListItem($key, $item, $listStyle);
     }
 
     return '<div class="ub_table-of-contents" data-showtext="'.__('show').'" data-hidetext="'.__('hide').'">'.
