@@ -52,6 +52,7 @@ class ContentTogglePanel extends Component {
 			setAttributes,
 			removeBlock,
 			showPanel,
+			block,
 			blockParentId,
 			selectBlock
 		} = this.props;
@@ -101,7 +102,7 @@ class ContentTogglePanel extends Component {
 					/>
 					<span
 						title={__('Delete This Toggle')}
-						onClick={() => removeBlock(props.block.clientId)}
+						onClick={() => removeBlock(block.clientId)}
 						class="dashicons dashicons-dismiss"
 					/>
 				</div>
