@@ -1,5 +1,26 @@
 <?php
 
+function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
+    $activeStarColor, $customStyle='', $className=''){
+    $stars = '';
+
+    foreach(range(0, $limit-1) as $current){
+        $stars .= '<svg height="20" width="20" viewbox="0 0 150 150">
+        <defs><mask id="ub_review_star_filter-'.$id.'-'.$current
+        .'"><rect height="150" width="'.($value - $current > 0 ?
+            ($value - $current < 1 ? $value - $current : 1) : 0)*150
+        .'" y="0" x="0" fill="#fff"/></mask></defs> <path fill="'.$inactiveStarColor.'" stroke-width="1.5"
+        d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
+        stroke="#000"/><path class="star" id="star'.
+        $current.'" mask="url(#ub_review_star_filter-'.$id.'-'.$current.')" fill="'.$activeStarColor.'" strokeWidth="1.5"
+        d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
+        stroke="#000"/>
+        </svg>';
+    }
+
+    return '<div class="'.$className.'" style="'.$customStyle.'">'.$stars.'</div>';
+}
+
 function ub_render_review_block($attributes){
     extract($attributes);
     $parsedItems = json_decode($items, true);
@@ -9,33 +30,6 @@ function ub_render_review_block($attributes){
                                 }, $parsedItems);
 
     $average = round(array_sum($extractedValues)/count($extractedValues),1);
-
-    function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
-                            $activeStarColor, $customStyle='', $className=''){
-        $stars = '';
-
-        foreach(range(0, $limit-1) as $current){
-            $stars .= '<svg height="20" width="20" viewbox="0 0 150 150">
-                <defs>
-                    <mask id="ub_review_star_filter-'.$id.'-'.$current.'">
-                        <rect height="150" width="'.($value - $current > 0 ?
-                                        ($value - $current < 1 ? $value - $current : 1)
-                                    : 0)*150
-                            .'" y="0" x="0" fill="#fff"/>
-                    </mask>
-                </defs>
-                <path fill="'.$inactiveStarColor.'" stroke-width="1.5"
-                d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-                stroke="#000"/>
-                <path class="star" id="star'.$current.'" mask="url(#ub_review_star_filter-'.$id.'-'.$current.')"
-                fill="'.$activeStarColor.'" strokeWidth="1.5"
-                d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-                stroke="#000"/>
-            </svg>';
-        }
-        
-        return '<div class="'.$className.'" style="'.$customStyle.'">'.$stars.'</div>';
-    }
 
     $starRatings = '';
 
