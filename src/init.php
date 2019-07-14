@@ -64,12 +64,22 @@ function ultimate_blocks_cgb_block_assets() {
 
         function ub_checkInnerBlocks($block){
             static $currentBlocks = [];
-            array_push($currentBlocks, $block['blockName']);
-            if(count($block['innerBlocks']) > 0){
-                foreach($block['innerBlocks'] as $innerBlock){
-                    ub_checkInnerBlocks($innerBlock);
+            
+            $current = $block;
+
+            if($block['blockName'] == 'core/block'){ //reusable block
+                $current = parse_blocks(get_post_field('post_content', $block['attrs']['ref']))[0];
+            }
+
+            if($current['blockName'] != ''){
+                array_push($currentBlocks, $current['blockName']);
+                if(count($current['innerBlocks']) > 0){
+                    foreach($current['innerBlocks'] as $innerBlock){
+                        ub_checkInnerBlocks($innerBlock);
+                    }
                 }
             }
+
             return $currentBlocks;
         }
 
