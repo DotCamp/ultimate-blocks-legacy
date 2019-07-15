@@ -35,31 +35,17 @@ class TableOfContents extends Component {
 		const setHeaders = () => {
 			const headers = getHeaderBlocks().map(header => header.attributes);
 			headers.forEach((heading, key) => {
-				const headingAnchorEmpty =
-					typeof heading.anchor === 'undefined' ||
-					heading.anchor === '';
-				const headingContentEmpty =
-					typeof heading.content === 'undefined' ||
-					heading.content === '';
-				const headingDefaultAnchor =
-					!headingAnchorEmpty &&
-					heading.anchor.indexOf(key + '-') === 0;
-				if (
-					!headingContentEmpty &&
-					(headingAnchorEmpty || headingDefaultAnchor)
-				) {
-					heading.anchor =
-						key +
-						'-' +
-						heading.content
-							.toString()
-							.toLowerCase()
-							.replace(/( |<.+?>|&nbsp;)/g, '-');
-					heading.anchor = heading.anchor.replace(
-						/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
-						''
-					);
-				}
+				heading.anchor =
+					key +
+					'-' +
+					heading.content
+						.toString()
+						.toLowerCase()
+						.replace(/( |<.+?>|&nbsp;)/g, '-');
+				heading.anchor = heading.anchor.replace(
+					/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
+					''
+				);
 			});
 
 			this.setState({ headers });
