@@ -46,7 +46,7 @@ function ub_check_is_gutenberg_page() {
  * @since 1.0.0
  */
 
-function ub_load_assets(){
+function ub_load_assets() {
     wp_enqueue_style(
         'ultimate_blocks-cgb-style-css', // Handle.
         plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
@@ -58,24 +58,24 @@ function ub_load_assets(){
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
 	if ( is_singular() and has_blocks() ){
-        function ub_getNamesOfPresentBlocks($value){
+        function ub_getNamesOfPresentBlocks( $value ) {
             return $value['blockName'];
         }
 
-        function ub_checkInnerBlocks($block){
+        function ub_checkInnerBlocks( $block ) {
             static $currentBlocks = [];
             
             $current = $block;
 
-            if($block['blockName'] == 'core/block'){ //reusable block
-                $current = parse_blocks(get_post_field('post_content', $block['attrs']['ref']))[0];
+            if( $block['blockName'] == 'core/block' ) { //reusable block
+                $current = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) )[0];
             }
 
-            if($current['blockName'] != ''){
-                array_push($currentBlocks, $current['blockName']);
-                if(count($current['innerBlocks']) > 0){
-                    foreach($current['innerBlocks'] as $innerBlock){
-                        ub_checkInnerBlocks($innerBlock);
+            if( $current['blockName'] != '' ) {
+                array_push( $currentBlocks, $current['blockName'] );
+                if( count( $current['innerBlocks'] ) > 0 ){
+                    foreach( $current['innerBlocks'] as $innerBlock ) {
+                        ub_checkInnerBlocks( $innerBlock );
                     }
                 }
             }
@@ -145,6 +145,14 @@ add_action( 'enqueue_block_editor_assets', 'ultimate_blocks_cgb_editor_assets' )
 function ub_generateBlockID($length = 10) {
     return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 }
+
+/**
+ * Rank Math ToC Plugins List.
+ */
+add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
+	$toc_plugins['ultimate-blocks/ultimate-blocks.php'] = 'Ultimate Blocks';
+ 	return $toc_plugins;
+});
 
 // Click to Tweet Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/click-to-tweet/block.php';
