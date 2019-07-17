@@ -16,13 +16,7 @@ Array.from(
 ).forEach(instance => {
 	instance.addEventListener('click', function() {
 		const parent = instance.closest('.wp-block-ub-tabbed-content-holder');
-		const contentWrapEl = [
-			...parent
-				.querySelector('.wp-block-ub-tabbed-content-tabs-content')
-				.getElementsByClassName(
-					'.wp-block-ub-tabbed-content-tab-content-wrap'
-				)
-		];
+
 		const activeStyle = parent
 			.querySelector('.wp-block-ub-tabbed-content-tab-title-wrap.active')
 			.getAttribute('style');
@@ -42,16 +36,20 @@ Array.from(
 		instance.classList.add('active');
 		instance.setAttribute('style', activeStyle);
 
-		contentWrapEl.forEach(tabContent => {
-			tabContent.classList.remove('active');
-			tabContent.classList.add('ub-hide');
-		});
-
 		const activeTab = parent.querySelector(
 			`.wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(${ub_getNodeindex(
 				this
 			) + 1})`
 		);
+
+		ub_getSiblings(activeTab, elem =>
+			elem.classList.contains(
+				'wp-block-ub-tabbed-content-tab-content-wrap'
+			)
+		).forEach(inactiveTab => {
+			inactiveTab.classList.remove('active');
+			inactiveTab.classList.add('ub-hide');
+		});
 
 		activeTab.classList.add('active');
 		activeTab.classList.remove('ub-hide');

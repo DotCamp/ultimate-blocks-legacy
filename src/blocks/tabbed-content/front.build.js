@@ -24,9 +24,6 @@ function ub_getNodeindex(elm) {
 Array.from(document.getElementsByClassName('wp-block-ub-tabbed-content-tab-title-wrap')).forEach(function (instance) {
   instance.addEventListener('click', function () {
     var parent = instance.closest('.wp-block-ub-tabbed-content-holder');
-
-    var contentWrapEl = _toConsumableArray(parent.querySelector('.wp-block-ub-tabbed-content-tabs-content').getElementsByClassName('.wp-block-ub-tabbed-content-tab-content-wrap'));
-
     var activeStyle = parent.querySelector('.wp-block-ub-tabbed-content-tab-title-wrap.active').getAttribute('style');
     var defaultStyle = parent.querySelector('.wp-block-ub-tabbed-content-tab-title-wrap:not(.active)').getAttribute('style');
     ub_getSiblings(instance, function (elem) {
@@ -37,11 +34,13 @@ Array.from(document.getElementsByClassName('wp-block-ub-tabbed-content-tab-title
     });
     instance.classList.add('active');
     instance.setAttribute('style', activeStyle);
-    contentWrapEl.forEach(function (tabContent) {
-      tabContent.classList.remove('active');
-      tabContent.classList.add('ub-hide');
-    });
     var activeTab = parent.querySelector(".wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(".concat(ub_getNodeindex(this) + 1, ")"));
+    ub_getSiblings(activeTab, function (elem) {
+      return elem.classList.contains('wp-block-ub-tabbed-content-tab-content-wrap');
+    }).forEach(function (inactiveTab) {
+      inactiveTab.classList.remove('active');
+      inactiveTab.classList.add('ub-hide');
+    });
     activeTab.classList.add('active');
     activeTab.classList.remove('ub-hide');
   });
