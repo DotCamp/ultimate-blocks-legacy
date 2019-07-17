@@ -17,9 +17,11 @@ Array.from(
 	instance.addEventListener('click', function() {
 		const parent = instance.closest('.wp-block-ub-tabbed-content-holder');
 		const contentWrapEl = [
-			...parent.querySelectorAll(
-				'.wp-block-ub-tabbed-content-tab-content-wrap'
-			)
+			...parent
+				.querySelector('.wp-block-ub-tabbed-content-tabs-content')
+				.getElementsByClassName(
+					'.wp-block-ub-tabbed-content-tab-content-wrap'
+				)
 		];
 		const activeStyle = parent
 			.querySelector('.wp-block-ub-tabbed-content-tab-title-wrap.active')

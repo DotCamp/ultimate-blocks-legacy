@@ -25,7 +25,7 @@ Array.from(document.getElementsByClassName('wp-block-ub-tabbed-content-tab-title
   instance.addEventListener('click', function () {
     var parent = instance.closest('.wp-block-ub-tabbed-content-holder');
 
-    var contentWrapEl = _toConsumableArray(parent.querySelectorAll('.wp-block-ub-tabbed-content-tab-content-wrap'));
+    var contentWrapEl = _toConsumableArray(parent.querySelector('.wp-block-ub-tabbed-content-tabs-content').getElementsByClassName('.wp-block-ub-tabbed-content-tab-content-wrap'));
 
     var activeStyle = parent.querySelector('.wp-block-ub-tabbed-content-tab-title-wrap.active').getAttribute('style');
     var defaultStyle = parent.querySelector('.wp-block-ub-tabbed-content-tab-title-wrap:not(.active)').getAttribute('style');
