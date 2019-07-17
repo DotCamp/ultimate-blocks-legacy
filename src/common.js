@@ -47,5 +47,5 @@ export const generateIcon = (selectedIcon, size) => (
 );
 
 export const upgradeButtonLabel = __(
-	'Block is being phased out. Click here to replace with newest version.'
+	'We have made some improvements to this block. Click here to upgrade the block. You will not lose any content.'
 );
