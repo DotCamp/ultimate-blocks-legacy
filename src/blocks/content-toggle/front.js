@@ -61,7 +61,8 @@ Array.from(
 			panelContent.style.marginBottom = '0';
 		}
 
-		instance.addEventListener('click', function() {
+		instance.addEventListener('click', function(e) {
+			e.stopImmediatePropagation();
 			if (
 				indicator.classList.contains('open') &&
 				panelHeight !== panelContent.offsetHeight
