@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -117,29 +117,30 @@ That's it. You're done!
 
 == Screenshot ==
 
-1. Adding Call to Action Block
-2. Adding Testimonial Block
-3. Adding Notification Block
+1. Review Block (Schema Enabled).
+2. Table of Contents Block.
+3. Tabbed Content Block.
 
 == Changelog ==
 
-= 2.0.0 =
+= 2.1.0 =
 
-Release Date: June 10th, 2019
+Release Date: July 17th, 2019
 
-* NEW: Content Filter Block 🔥
-* NEW: Button icons.
-* NEW: Ghost/Transparent Button style.
-* NEW: Button hover color settings.
-* NEW: Button link settings - open in a new tab and nofollow.
-* NEW: Option to add multiple Table of Contents in one post.
-* NEW: Star rating alignment options.
-* NEW: Select stars for star rating directly in the editor.
-* NEW: Option to add multiple Click to Tweet blocks.
-* FIX: HTML tags within heading tags from being parsed.
-* FIX: Table of Contents scrolling issue when sticky headers are present.
-* FIX: Testimonial image delete button placement.
-* FIX: Missing deprecation code for Content Toggle panel.
-* FIX: Blocks missing style inside reusable blocks.
+* IMPROVE: Rendering of all blocks.
+* FIX: CSS not loading when block is used as a reusable block.
+* FIX: Display of nested Content Toggle and Tabbed Content blocks.
+* FIX: Display of multiple Table of Contents instances.
+* FIX: Frontend display of icon in button.
+* FIX: Issue with removing content toggle panels.
+* FIX: Frontend JS/CSS compatibility issues with blocks from previous versions.
+* FIX: Add Image button alignment on image slider.
+* FIX: Front-end script conflict between Table of Contents and Content Filter.
+* FIX: Issue with Table of Contents header anchors when headers are added, removed, or edited.
+* ADD: Support for Rank Math Table of Contents plugins list.
 
 Full changelog can be found here - **[Ultimate Blocks changelog](https://ultimateblocks.com/changelog/)**
+
+== Upgrade Notice ==
+
+*Important Changes Were Made in This Version" - Check [Release Notes](https://ultimateblocks.com/version-2-1-0-release-notes/)
