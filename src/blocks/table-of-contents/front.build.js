@@ -10,30 +10,44 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   instances.forEach(function (instance) {
-    var heightIsChecked = false;
     var tocHeight = 0;
     var block = instance.closest('.ub_table-of-contents');
     var tocContainer = block.querySelector('.ub_table-of-contents-container');
     var showButton = block.getAttribute('data-showtext') ? block.getAttribute('data-showtext') : 'show';
     var hideButton = block.getAttribute('data-hidetext') ? block.getAttribute('data-hidetext') : 'hide';
+    var initialDisplayMode = tocContainer.style.display;
 
-    if (!heightIsChecked) {
-      var initialDisplayMode = tocContainer.style.display;
-
-      if (initialDisplayMode === 'none') {
-        tocContainer.style.display = 'block';
-        tocContainer.style.height = '';
-      }
-
-      tocHeight = tocContainer.offsetHeight;
-      tocContainer.style.height = "".concat(initialDisplayMode === 'none' ? 0 : tocHeight, "px");
-      heightIsChecked = true;
+    if (initialDisplayMode === 'none') {
+      tocContainer.style.display = 'block';
+      tocContainer.style.height = '';
     }
 
+    tocHeight = tocContainer.offsetHeight;
+    tocContainer.style.height = "".concat(initialDisplayMode === 'none' ? 0 : tocHeight, "px");
     instance.addEventListener('click', function (event) {
       event.preventDefault();
-      tocContainer.style.height = "".concat(tocContainer.style.height === '0px' ? tocHeight : '0', "px");
-      instance.innerHTML = tocContainer.style.height === '0px' ? showButton : hideButton;
+      var tocIsHidden = tocContainer.style.height === '0px';
+
+      if (tocIsHidden) {
+        tocContainer.style.height = "".concat(tocHeight, "px");
+      } else {
+        if (tocHeight !== tocContainer.offsetHeight) {
+          tocHeight = tocContainer.offsetHeight;
+        }
+
+        tocContainer.style.height = "".concat(tocHeight, "px");
+        setTimeout(function () {
+          //delay is needed for the animation to run properly
+          tocContainer.style.height = '0px';
+        }, 1);
+      }
+
+      instance.innerHTML = tocIsHidden ? showButton : hideButton;
+    });
+    tocContainer.addEventListener('transitionend', function () {
+      if (tocContainer.style.height !== '0px') {
+        tocContainer.style.height = '';
+      }
     });
   });
 });

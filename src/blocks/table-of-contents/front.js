@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		);
 	}
 	instances.forEach(instance => {
-		let heightIsChecked = false;
 		let tocHeight = 0;
 
 		const block = instance.closest('.ub_table-of-contents');
@@ -25,25 +24,41 @@ document.addEventListener('DOMContentLoaded', function() {
 			? block.getAttribute('data-hidetext')
 			: 'hide';
 
-		if (!heightIsChecked) {
-			const initialDisplayMode = tocContainer.style.display;
-			if (initialDisplayMode === 'none') {
-				tocContainer.style.display = 'block';
-				tocContainer.style.height = '';
-			}
-			tocHeight = tocContainer.offsetHeight;
-			tocContainer.style.height = `${
-				initialDisplayMode === 'none' ? 0 : tocHeight
-			}px`;
-			heightIsChecked = true;
+		const initialDisplayMode = tocContainer.style.display;
+		if (initialDisplayMode === 'none') {
+			tocContainer.style.display = 'block';
+			tocContainer.style.height = '';
 		}
+		tocHeight = tocContainer.offsetHeight;
+		tocContainer.style.height = `${
+			initialDisplayMode === 'none' ? 0 : tocHeight
+		}px`;
+
 		instance.addEventListener('click', function(event) {
 			event.preventDefault();
-			tocContainer.style.height = `${
-				tocContainer.style.height === '0px' ? tocHeight : '0'
-			}px`;
-			instance.innerHTML =
-				tocContainer.style.height === '0px' ? showButton : hideButton;
+
+			const tocIsHidden = tocContainer.style.height === '0px';
+
+			if (tocIsHidden) {
+				tocContainer.style.height = `${tocHeight}px`;
+			} else {
+				if (tocHeight !== tocContainer.offsetHeight) {
+					tocHeight = tocContainer.offsetHeight;
+				}
+				tocContainer.style.height = `${tocHeight}px`;
+				setTimeout(() => {
+					//delay is needed for the animation to run properly
+					tocContainer.style.height = '0px';
+				}, 1);
+			}
+
+			instance.innerHTML = tocIsHidden ? showButton : hideButton;
+		});
+
+		tocContainer.addEventListener('transitionend', function() {
+			if (tocContainer.style.height !== '0px') {
+				tocContainer.style.height = '';
+			}
 		});
 	});
 });

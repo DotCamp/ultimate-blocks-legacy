@@ -5,7 +5,7 @@ Array.from(document.getElementsByClassName('wp-block-ub-content-toggle')).forEac
   var parentClassIsHidden = false;
   var targetElement = toggleContainer;
 
-  while (!(parentIsHidden || parentClassIsHidden) && !targetElement.parentElement.classList.contains('entry-content')) {
+  while (!(parentIsHidden || parentClassIsHidden) && targetElement.parentElement.tagName !== 'BODY') {
     targetElement = targetElement.parentElement;
 
     if (targetElement.style.display === 'none') {

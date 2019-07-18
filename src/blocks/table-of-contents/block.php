@@ -80,7 +80,10 @@ function ub_render_table_of_contents_block($attributes){
                             __($showList ? 'hide' : 'show')
                             .'</a>]</div></div>' :'')
                 .'</div>') : '')
-                .'<div class="ub_table-of-contents-container ub_table-of-contents-' .$numColumns. '-column">'.
+                .'<div class="ub_table-of-contents-container ub_table-of-contents-' .
+                    $numColumns. '-column" style="display: '.
+                    ($showList || strlen($title) == 0 || (strlen($title) == 1 && $title[0] == '') 
+                    ? 'block' : 'none').';">'.
                 ($listStyle == 'numbered' ? '<ol>' : '<ul'.
                     ($listStyle == 'plain' ? ' style="list-style: \'none\';"' : '').'>')
                 . $listItems .

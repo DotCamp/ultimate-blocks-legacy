@@ -104,11 +104,11 @@ function ub_register_button_block() {
                 ),
                 'addNofollow' => array(
                     'type' => 'boolean',
-                    'default'=> false
+                    'default'=> true
                 ),
                 'openInNewTab' => array(
                     'type' => 'boolean',
-                    'default'=> false
+                    'default'=> true
                 )
             ),
 			'render_callback' => 'ub_render_button_block'));

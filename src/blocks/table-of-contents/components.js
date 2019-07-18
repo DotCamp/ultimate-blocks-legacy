@@ -217,7 +217,7 @@ export const inspectorControls = props => {
 				{allowToCHiding && (
 					<PanelRow>
 						<label htmlFor="ub_show_toc">
-							{__('Inititally Show Table of Contents')}
+							{__('Initially Show Table of Contents')}
 						</label>
 						<ToggleControl
 							id="ub_show_toc"
