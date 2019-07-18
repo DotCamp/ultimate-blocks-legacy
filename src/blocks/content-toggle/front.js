@@ -8,7 +8,7 @@ Array.from(
 
 	while (
 		!(parentIsHidden || parentClassIsHidden) &&
-		!targetElement.parentElement.classList.contains('entry-content')
+		targetElement.parentElement.tagName !== 'BODY'
 	) {
 		targetElement = targetElement.parentElement;
 		if (targetElement.style.display === 'none') {
