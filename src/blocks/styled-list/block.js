@@ -25,17 +25,8 @@ class StyledList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			hasNewInputBox: false
+			edits: 0
 		};
-	}
-	componentDidUpdate() {
-		const { hasNewInputBox } = this.state;
-		const { selectedItem } = this.props;
-		if (hasNewInputBox && this[`textArea${selectedItem + 1}`]) {
-			this[`textArea${selectedItem + 1}`].focus();
-			this[`textArea${selectedItem + 1}`].selectionEnd = 0;
-			this.setState({ hasNewInputBox: false });
-		}
 	}
 	render() {
 		const {
@@ -48,10 +39,41 @@ class StyledList extends Component {
 			decreaseIndent
 		} = this.props;
 
+		const { edits } = this.state;
 		return (
-			<ul className="fa-ul">
+			<ul className="fa-ul" key={edits}>
 				{list.map((item, i) => (
-					<li style={{ left: `${item.indent + 0.5}em` }}>
+					<li
+						style={{ left: `${item.indent + 0.5}em` }}
+						onKeyDown={e => {
+							switch (e.key) {
+								case 'Tab':
+									if (e.shiftKey) {
+										console.log(
+											'increase indent not yet implemented'
+										);
+									} else {
+										console.log(
+											'decrease indent not yet implemented'
+										);
+									}
+
+									break;
+								case 'Backspace':
+								case 'Delete':
+									if (
+										item.text.length === 0 &&
+										list.length > 1
+									) {
+										deleteElement(i);
+										this.setState({ edits: edits + 1 });
+									}
+									break;
+								default:
+									break;
+							}
+						}}
+					>
 						<span className="fa-li">
 							<FontAwesomeIcon
 								icon={
@@ -71,71 +93,29 @@ class StyledList extends Component {
 								color={iconColor}
 							/>
 						</span>
-						<TextareaAutosize
-							style={{
-								width: `calc(100% - ${item.indent * 16}px)`
-							}}
+						<RichText
 							value={item.text}
-							inputRef={ref => {
-								this[`textArea${i}`] = ref;
-							}}
-							onFocus={() => updateSelectedItem(i)}
-							onChange={e => {
+							multiline={false}
+							onChange={newValue => {
 								let newList = cloneObject(list);
-								newList[i].text = e.target.value;
+								newList[i].text = newValue;
 								updateList(newList);
 							}}
-							onKeyDown={e => {
-								if (e.key === 'Enter' && !e.shiftKey) {
-									e.preventDefault();
-									const part1 = list[i].text.slice(
-										0,
-										this[`textArea${i}`].selectionStart
-									);
-									const part2 = list[i].text.slice(
-										this[`textArea${i}`].selectionStart
-									);
+							onSplit={(before, after) => {
+								updateList([
+									...list.slice(0, i),
+									Object.assign(cloneObject(list[i]), {
+										text: before
+									}),
+									Object.assign(cloneObject(list[i]), {
+										text: after
+									}),
+									...list.slice(i + 1)
+								]);
 
-									updateList([
-										...list.slice(0, i),
-										Object.assign(cloneObject(list[i]), {
-											text: part1
-										}),
-										Object.assign(cloneObject(list[i]), {
-											text: part2
-										}),
-										...list.slice(i + 1)
-									]);
-									this.setState({ hasNewInputBox: true });
-								} else if (e.key === 'Tab') {
-									e.preventDefault();
-									if (selectedItem > 0) {
-										if (e.shiftKey) {
-											decreaseIndent(selectedItem);
-										} else {
-											increaseIndent(selectedItem);
-										}
-									}
-								} else if (
-									e.key === 'Backspace' &&
-									list.length > 1 &&
-									list[i].text.length === 0
-								) {
-									let newList = cloneObject(list);
-									let j = i + 1;
-									while (
-										j < newList.length &&
-										newList[j].indent >
-											newList[j - 1].indent
-									) {
-										newList[j].indent--;
-										j++;
-									}
-									updateList([
-										...newList.slice(0, i),
-										...newList.slice(i + 1)
-									]);
-								}
+								this.setState({
+									edits: edits + 1
+								});
 							}}
 						/>
 					</li>

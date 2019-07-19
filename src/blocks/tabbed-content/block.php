@@ -68,7 +68,7 @@ function ub_tabbed_content_add_frontend_assets() {
     if ( has_block( 'ub/tabbed-content') or has_block('ub/tabbed-content-block') ) {
         wp_enqueue_script(
             'ultimate_blocks-tabbed-content-front-script',
-            plugins_url( 'tabbed-content/front.build.js', dirname( __FILE__ ) ),
+            plugins_url( 'tabbed-content/front.js', dirname( __FILE__ ) ),
             array(),
             Ultimate_Blocks_Constants::plugin_version(),
             true
