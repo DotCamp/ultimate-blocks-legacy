@@ -27,22 +27,22 @@ function ub_register_tab_block(){
 
 function ub_render_tabbed_content_block($attributes, $contents){
     extract($attributes);
-    $className = 'wp-block-ub-tabbed-content';
+    $blockName = 'wp-block-ub-tabbed-content';
 
     $tabs = '';
 
     foreach($tabsTitle as $key=>$title){
-        $tabs .= '<div class = "'.$className.'-tab-title-wrap'.($activeTab == $key ? ' active' : '').'"
+        $tabs .= '<div class = "'.$blockName.'-tab-title-wrap'.($activeTab == $key ? ' active' : '').'"
         style="background-color: '.($activeTab == $key ? $theme : 'initial')
             .'; border-color: '.($activeTab == $key ? $theme : 'lightgrey').
             '; color: '.($activeTab == $key ? $titleColor : '#000000').';">
-            <div class="'.$className.'-tab-title">'.$title.'</div></div>';
+            <div class="'.$blockName.'-tab-title">'.$title.'</div></div>';
     }
 
-    return '<div class="'.$className.' '.$className.'-holder">
-    <div class="'.$className.'-tabs-title"}>'.
+    return '<div class="'.$blockName.' '.$blockName.'-holder '.$className.'">
+    <div class="'.$blockName.'-tabs-title"}>'.
     $tabs.'</div>
-    <div class="'.$className.'-tabs-content">'.
+    <div class="'.$blockName.'-tabs-content">'.
     $contents.'</div>
 </div>';
 }
@@ -75,7 +75,7 @@ function ub_tabbed_content_add_frontend_assets() {
     if ( has_block( 'ub/tabbed-content') or has_block('ub/tabbed-content-block') ) {
         wp_enqueue_script(
             'ultimate_blocks-tabbed-content-front-script',
-            plugins_url( 'tabbed-content/front.build.js', dirname( __FILE__ ) ),
+            plugins_url( 'tabbed-content/front.js', dirname( __FILE__ ) ),
             array(),
             Ultimate_Blocks_Constants::plugin_version(),
             true

@@ -40,16 +40,11 @@ function ub_register_content_filter_entry_block(){
 function ub_render_content_filter_block($attributes, $content){
     extract($attributes);
 
-    //var_dump($attributes);
-
-    //var_dump($filterArray[0]['category']);
     $newFilterArray = json_decode(json_encode($filterArray), true);
 
     $filterList = '';
 
     foreach((array)$newFilterArray as $key1 => $filterGroup){
-        //echo 'category: ' . $filterGroup['category'] . PHP_EOL;
-        //echo 'group number: ' . $key1 . PHP_EOL;
         $filterList .= '<div class="ub-content-filter-category"
         data-canUseMultiple="'.json_encode($filterGroup['canUseMultiple']).'">
         <div class="ub-content-filter-category-name">'.$filterGroup['category'].'</div>';
@@ -71,7 +66,7 @@ $currentSelection = array_map(function($category){
                                 -1);
                     }, (array)$filterArray);
 
-return '<div class="wp-block-ub-content-filter" data-currentSelection="'.json_encode($currentSelection).'">'.
+return '<div class="wp-block-ub-content-filter '.$className.'" data-currentSelection="'.json_encode($currentSelection).'">'.
     $filterList.$content.'</div>';
 }
 
@@ -110,7 +105,7 @@ function ub_content_filter_add_frontend_assets() {
     if ( has_block( 'ub/content-filter' ) or has_block('ub/content-filter-block') ) {
         wp_enqueue_script(
             'ultimate_blocks-content-filter-front-script',
-            plugins_url( 'content-filter/front.build.js', dirname( __FILE__ ) ),
+            plugins_url( 'content-filter/front.js', dirname( __FILE__ ) ),
             array( ),
             Ultimate_Blocks_Constants::plugin_version(),
             true

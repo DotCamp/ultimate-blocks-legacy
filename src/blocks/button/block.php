@@ -13,7 +13,7 @@ function ub_render_button_block($attributes){
 
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    return '<div class="ub-button-container align-button-'.$align.'">
+    return '<div class="ub-button-container align-button-'.$align.' '.$className.'">
                 <a href="'.$url.'" target="'.($openInNewTab ? '_blank' : '_self').'"
                 rel="noopener noreferrer'.($addNofollow ? ' nofollow' : '').'"
                 class="ub-button-block-main ub-button-'.$size.'"
@@ -42,7 +42,7 @@ function ub_button_add_frontend_assets() {
     if ( has_block( 'ub/button-block' ) || has_block('ub/button')) {
         wp_enqueue_script(
             'ultimate_blocks-button-front-script',
-            plugins_url( 'button/front.build.js', dirname( __FILE__ ) ),
+            plugins_url( 'button/front.js', dirname( __FILE__ ) ),
             array( ),
             Ultimate_Blocks_Constants::plugin_version(),
             true

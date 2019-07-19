@@ -39,7 +39,7 @@ function ub_render_review_block($attributes){
         $inactiveStarColor, $activeStarColor, "margin-left: auto;").'</div>';
     }
 
-    return 	'<div class="ub_review_block">
+    return 	'<div class="ub_review_block '.$className.'">
         <p class="ub_review_item_name" style="text-align: '.$textAlign.';">'.
             $itemName.'</p>
         <p style="text-align: '.$authorAlign.';">'.$authorName.'</p>'.

@@ -23,7 +23,7 @@ function ub_render_image_slider_block($attributes){
             .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </div>';
     }
 
-    return '<div class="ub_image_slider" style="min-height: '.
+    return '<div class="ub_image_slider '.$className.'" style="min-height: '.
         (25+ (count($imageArray) > 0) ? $sliderHeight : 200 ).'px ; display: block;">
         <div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
             'wrapAround'=> $wrapsAround, 'autoPlay'=> ($autoplays ? $autoplayDuration * 1000 : $autoplays),

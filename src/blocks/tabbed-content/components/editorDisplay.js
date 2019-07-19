@@ -16,7 +16,6 @@ export class OldTabHolder extends Component {
 	}
 	render() {
 		const {
-			className,
 			setAttributes,
 			attributes,
 			isSelected,
@@ -30,6 +29,8 @@ export class OldTabHolder extends Component {
 			insertBlock,
 			replaceBlock
 		} = this.props;
+
+		const className = 'wp-block-ub-tabbed-content';
 
 		window.ubTabbedContentBlocks = window.ubTabbedContentBlocks || [];
 
@@ -103,7 +104,7 @@ export class OldTabHolder extends Component {
 				}) => (
 					<div
 						className={
-							propz.className +
+							className +
 							'-tab-title-wrap SortableItem' +
 							(propz.attributes.activeTab === i ? ' active' : '')
 						}
@@ -121,7 +122,7 @@ export class OldTabHolder extends Component {
 					>
 						<RichText
 							tagName="div"
-							className={propz.className + '-tab-title '}
+							className={className + '-tab-title '}
 							value={value.content}
 							formattingControls={['bold', 'italic']}
 							isSelected={

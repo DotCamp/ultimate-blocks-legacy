@@ -33,7 +33,7 @@ function ub_render_feature_box_block($attributes){
         $columns .= $column3;
     }
 
-    return '<div class="ub_feature_box column_'.$column.'">'.
+    return '<div class="ub_feature_box column_'.$column.' '.$className.'">'.
     $columns.'</div>';
 }
 

@@ -16,15 +16,14 @@ require_once 'icons/icons.php';
  * @param array $attributes The block attributes.
  */
 function ub_render_social_share_block( $attributes ) {
-
+    extract($attributes);
 	$icon_sizes = array(
 		'normal' => 20,
 		'medium' => 30,
 		'large'  => 40,
 	);
 
-	$icon_size  = $icon_sizes[ $attributes ['iconSize'] ];
-	$icon_shape = $attributes['iconShape'];
+	$icon_size  = $icon_sizes[ $iconSize ];
 
 	$facebook    = ub_get_facebook_icon( $attributes, $icon_size, $icon_shape );
 	$twitter     = ub_get_twitter_icon( $attributes, $icon_size, $icon_shape );
@@ -34,8 +33,8 @@ function ub_render_social_share_block( $attributes ) {
 	$google_plus = ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape );
 	$tumblr      = ub_get_tumblr_icon( $attributes, $icon_size, $icon_shape );
 
-	return '<div id="ub-social-share-block-editor" class="wp-block-ub-social-share">
-		<div class="social-share-icons align-icons-' . $attributes['align'] . '">
+	return '<div class="wp-block-ub-social-share '.$className.'">
+		<div class="social-share-icons align-icons-' . $align . '">
 			' . $facebook . '
 			' . $twitter . '
 			' . $linkedin . '
@@ -56,7 +55,8 @@ function ub_render_social_share_block( $attributes ) {
  * @return string
  */
 function ub_get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
-	if ( ! $attributes['showFacebookIcon'] ) {
+    extract($attributes);
+	if ( !$showFacebookIcon ) {
 		return '';
 	}
 
@@ -65,7 +65,7 @@ function ub_get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
 		array(
 			'width'     => $icon_size,
 			'height'    => $icon_size,
-			'fillColor' => $attributes['facebookIconTextColor'],
+			'fillColor' => $facebookIconTextColor,
 		)
 	);
 
@@ -79,7 +79,7 @@ function ub_get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
 		target="_blank"
 		href="' . $facebook_url . '"
 		class="social-share-icon ' . $icon_shape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['facebookIconBgColor'] . '">
+		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $facebookIconBgColor . '">
 		' . $facebook_icon . '
 	</a>';
 }
@@ -93,7 +93,8 @@ function ub_get_facebook_icon( $attributes, $icon_size, $icon_shape ) {
  * @return string
  */
 function ub_get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
-	if ( ! $attributes['showTwitterIcon'] ) {
+    extract($attributes);
+	if ( !$showTwitterIcon ) {
 		return '';
 	}
 
@@ -102,7 +103,7 @@ function ub_get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
 		array(
 			'width'     => $icon_size,
 			'height'    => $icon_size,
-			'fillColor' => $attributes['twitterIconTextColor'],
+			'fillColor' => $twitterIconTextColor,
 		)
 	);
 
@@ -116,7 +117,7 @@ function ub_get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
 		target="_blank"
 		href="' . $twitter_url . '"
 		class="social-share-icon ' . $icon_shape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['twitterIconBgColor'] . '">
+		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $twitterIconBgColor . '">
 		' . $twitter_icon . '
 	</a>';
 }
@@ -131,7 +132,8 @@ function ub_get_twitter_icon( $attributes, $icon_size, $icon_shape ) {
  * @return string
  */
 function ub_get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
-	if ( ! $attributes['showLinkedInIcon'] ) {
+    extract($attributes);
+	if ( ! $showLinkedInIcon ) {
 		return '';
 	}
 
@@ -140,7 +142,7 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
 		array(
 			'width'     => $icon_size,
 			'height'    => $icon_size,
-			'fillColor' => $attributes['linkedInIconTextColor'],
+			'fillColor' => $linkedInIconTextColor,
 		)
 	);
 
@@ -154,7 +156,7 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
 		target="_blank"
 		href="' . $linkedin_url . '"
 		class="social-share-icon ' . $icon_shape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['linkedInIconBgColor'] . '">
+		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $linkedInIconBgColor . '">
 		' . $linkedin_icon . '
 	</a>';
 }
@@ -170,8 +172,8 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $icon_shape ) {
  */
 function ub_get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
 	global $post;
-
-	if ( ! $attributes['showPinterestIcon'] ) {
+    extract($attributes);
+	if ( ! $showPinterestIcon ) {
 		return '';
 	}
 
@@ -188,7 +190,7 @@ function ub_get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
 		array(
 			'width'     => $icon_size,
 			'height'    => $icon_size,
-			'fillColor' => $attributes['pinterestIconTextColor'],
+			'fillColor' => $pinterestIconTextColor
 		)
 	);
 
@@ -203,7 +205,7 @@ function ub_get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
 		target="_blank"
 		href="' . $pinterest_url . '"
 		class="social-share-icon ' . $icon_shape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['pinterestIconBgColor'] . '">
+		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $pinterestIconBgColor . '">
 		' . $pinterest_icon . '
 	</a>';
 }
@@ -218,7 +220,8 @@ function ub_get_pinterest_icon( $attributes, $icon_size, $icon_shape ) {
  * @return string
  */
 function ub_get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
-	if ( ! $attributes['showRedditIcon'] ) {
+    extract($attributes);
+	if ( ! $showRedditIcon ) {
 		return '';
 	}
 
@@ -227,7 +230,7 @@ function ub_get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
 		array(
 			'width'     => $icon_size,
 			'height'    => $icon_size,
-			'fillColor' => $attributes['redditIconTextColor'],
+			'fillColor' => $redditIconTextColor,
 		)
 	);
 
@@ -241,7 +244,7 @@ function ub_get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
 		target="_blank"
 		href="' . $reddit_url . '"
 		class="social-share-icon ' . $icon_shape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['redditIconBgColor'] . '">
+		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $redditIconBgColor . '">
 		' . $reddit_icon . '
 	</a>';
 }
@@ -256,7 +259,8 @@ function ub_get_reddit_icon( $attributes, $icon_size, $icon_shape ) {
  * @return string
  */
 function ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
-	if ( ! $attributes['showGooglePlusIcon'] ) {
+    extract($attributes);
+	if ( ! $showGooglePlusIcon ) {
 		return '';
 	}
 
@@ -265,7 +269,7 @@ function ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
 		array(
 			'width'     => $icon_size,
 			'height'    => $icon_size,
-			'fillColor' => $attributes['googlePlusIconTextColor'],
+			'fillColor' => $googlePlusIconTextColor,
 		)
 	);
 
@@ -278,7 +282,7 @@ function ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
 		target="_blank"
 		href="' . $googleplus_url . '"
 		class="social-share-icon ' . $icon_shape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['googlePlusIconBgColor'] . '">
+		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $googlePlusIconBgColor . '">
 		' . $googleplus_icon . '
 	</a>';
 }
@@ -293,7 +297,8 @@ function ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape ) {
  * @return string
  */
 function ub_get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
-	if ( ! $attributes['showTumblrIcon'] ) {
+    extract($attributes);
+	if ( ! $showTumblrIcon ) {
 		return '';
 	}
 
@@ -302,7 +307,7 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
 		array(
 			'width'     => $icon_size,
 			'height'    => $icon_size,
-			'fillColor' => $attributes['tumblrIconTextColor'],
+			'fillColor' => $tumblrIconTextColor,
 		)
 	);
 
@@ -316,7 +321,7 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $icon_shape ) {
 		target="_blank"
 		href="' . $tumblr_url . '"
 		class="social-share-icon ' . $icon_shape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $attributes['tumblrIconBgColor'] . '">
+		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color:' . $tumblrIconBgColor . '">
 		' . $tumblr_icon . '
 	</a>';
 }

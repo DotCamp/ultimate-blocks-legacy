@@ -10,7 +10,7 @@ function ub_content_toggle_add_frontend_assets() {
         has_block( 'ub/content-toggle-block' ) or has_block('ub/content-toggle-panel-block') ) {
         wp_enqueue_script(
             'ultimate_blocks-content-toggle-front-script',
-            plugins_url( 'content-toggle/front.build.js', dirname( __FILE__ ) ),
+            plugins_url( 'content-toggle/front.js', dirname( __FILE__ ) ),
             array(  ),
             Ultimate_Blocks_Constants::plugin_version(),
             true
@@ -19,7 +19,7 @@ function ub_content_toggle_add_frontend_assets() {
 }
 
 function ub_render_content_toggle_block($attributes, $content){
-    return '<div class="wp-block-ub-content-toggle">'.$content.'</div>';
+    return '<div class="wp-block-ub-content-toggle '.$className.'">'.$content.'</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){

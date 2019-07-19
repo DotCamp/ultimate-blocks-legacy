@@ -2,7 +2,9 @@
 
 function ub_render_countdown_block($attributes){
     //used to display initial rendering
-    $timeLeft = $attributes['endDate'] - time();
+    extract($attributes);
+
+    $timeLeft = $endDate - time();
     $seconds = $timeLeft % 60;
     $minutes = (($timeLeft - $seconds) % 3600) / 60;
     $hours = (($timeLeft - $minutes * 60 - $seconds) % 86400) / 3600;
@@ -31,11 +33,11 @@ function ub_render_countdown_block($attributes){
 
     
     $circularFormat = '<div class="ub_countdown_circular_container">
-                        '.ub_generateCircle("week", $weeks, 52, $attributes['circleColor'])
-                        .ub_generateCircle("day", $days, 7, $attributes['circleColor'])
-                        .ub_generateCircle("hour", $hours, 24, $attributes['circleColor'])
-                        .ub_generateCircle("minute", $minutes, 60, $attributes['circleColor'])
-                        .ub_generateCircle("second", $seconds, 60, $attributes['circleColor']).'
+                        '.ub_generateCircle("week", $weeks, 52, $circleColor)
+                        .ub_generateCircle("day", $days, 7, $circleColor)
+                        .ub_generateCircle("hour", $hours, 24, $circleColor)
+                        .ub_generateCircle("minute", $minutes, 60, $circleColor)
+                        .ub_generateCircle("second", $seconds, 60, $circleColor).'
                         <p>'.__( 'Weeks', 'ultimate-blocks' ).'</p>
                         <p>'.__( 'Days', 'ultimate-blocks' ).'</p>
                         <p>'.__( 'Hours', 'ultimate-blocks' ).'</p>
@@ -74,11 +76,11 @@ function ub_render_countdown_block($attributes){
     $selctedFormat = $defaultFormat;
     $selectedUpdate = $defaultUpdate;
     
-    if($attributes['style']=='Regular'){
+    if($style=='Regular'){
         $selectedFormat = $defaultFormat;
         $selectedUpdate = $defaultUpdate;
     }
-    elseif ($attributes['style']=='Circular') {
+    elseif ($style=='Circular') {
         $selectedFormat = $circularFormat;
         $selectedUpdate = $circularUpdate;
     }
@@ -88,11 +90,11 @@ function ub_render_countdown_block($attributes){
     }
 
     if($timeLeft > 0){
-        return '<div id="ub_countdown_'.$elementID.'">
+        return '<div id="ub_countdown_'.$elementID.'" class="ub-countdown '.$className.'">
             '.$selectedFormat
             .'</div><script type="text/javascript">
                 let timer_'.$elementID.' = setInterval(function(){
-                    const timeLeft = '.$attributes['endDate'].'-Math.floor(Date.now() / 1000);
+                    const timeLeft = '.$endDate.'-Math.floor(Date.now() / 1000);
                     const seconds = timeLeft % 60;
                     const minutes = ((timeLeft - seconds) % 3600) / 60;
                     const hours = ((timeLeft - minutes * 60 - seconds) % 86400) / 3600;
@@ -107,11 +109,11 @@ function ub_render_countdown_block($attributes){
                     }
                     else{
                         clearInterval(timer_'.$elementID.');
-                        document.getElementById("ub_countdown_'.$elementID.'").innerHTML="'.$attributes['expiryMessage'].'";
+                        document.getElementById("ub_countdown_'.$elementID.'").innerHTML="'.$expiryMessage.'";
                     }
                 }, 1000);</script>';
     }
-    else return '<div style="text-align:'.$attributes['messageAlign'].';">'.$attributes['expiryMessage'].'</div>';
+    else return '<div class="ub-countdown '.$className.'" style="text-align:'.$messageAlign.';">'.$expiryMessage.'</div>';
 }
 
 function ub_register_countdown_block() {

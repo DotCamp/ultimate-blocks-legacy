@@ -2,7 +2,7 @@
 
 function ub_render_call_to_action_block($attributes){
     extract($attributes);
-    return '<div class="ub_call_to_action" style="background-color: '.$ctaBackgroundColor
+    return '<div class="ub_call_to_action '.$className.'" style="background-color: '.$ctaBackgroundColor
                 .'; border: '.$ctaBorderSize.'px solid; border-color: '.$ctaBorderColor.'">
                 <div class="ub_call_to_action_headline">
                     <p class="ub_call_to_action_headline_text" style="font-size: '.
