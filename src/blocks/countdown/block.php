@@ -90,7 +90,7 @@ function ub_render_countdown_block($attributes){
     }
 
     if($timeLeft > 0){
-        return '<div id="ub_countdown_'.$elementID.'" class="ub-countdown '.$className.'">
+        return '<div id="ub_countdown_'.$elementID.'" class="ub-countdown '.esc_attr($className).'">
             '.$selectedFormat
             .'</div><script type="text/javascript">
                 let timer_'.$elementID.' = setInterval(function(){
@@ -113,7 +113,7 @@ function ub_render_countdown_block($attributes){
                     }
                 }, 1000);</script>';
     }
-    else return '<div class="ub-countdown '.$className.'" style="text-align:'.$messageAlign.';">'.$expiryMessage.'</div>';
+    else return '<div class="ub-countdown '.esc_attr($className).'" style="text-align:'.$messageAlign.';">'.$expiryMessage.'</div>';
 }
 
 function ub_register_countdown_block() {

@@ -70,7 +70,7 @@ function ub_render_table_of_contents_block($attributes){
         $listItems = ub_makeListItem($key, $item, $listStyle);
     }
 
-    return '<div class="ub_table-of-contents '.$className.'" data-showtext="'.__('show').'" data-hidetext="'.__('hide').'">'.
+    return '<div class="ub_table-of-contents '.esc_attr($className).'" data-showtext="'.__('show').'" data-hidetext="'.__('hide').'">'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.
                         $title .'</div>'.

@@ -8,7 +8,7 @@
 
 function ub_render_content_filter_entry_block($attributes, $content){
     extract($attributes);
-    return '<div class="ub-content-filter-panel" data-selectedFilters="'.json_encode($selectedFilters)
+    return '<div class="ub-content-filter-panel '.esc_url($className).'" data-selectedFilters="'.json_encode($selectedFilters)
     .'" style="display: block;">'.$content.'</div>';
 }
 
@@ -66,7 +66,7 @@ $currentSelection = array_map(function($category){
                                 -1);
                     }, (array)$filterArray);
 
-return '<div class="wp-block-ub-content-filter '.$className.'" data-currentSelection="'.json_encode($currentSelection).'">'.
+return '<div class="wp-block-ub-content-filter '.esc_attr($className).'" data-currentSelection="'.json_encode($currentSelection).'">'.
     $filterList.$content.'</div>';
 }
 

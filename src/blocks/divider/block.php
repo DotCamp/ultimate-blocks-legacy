@@ -2,7 +2,7 @@
 
 function ub_render_divider_block($attributes){
     extract($attributes);
-    return '<div class="ub_divider '.$className.'" style="border-top: '.$borderSize.'px '.$borderStyle.' '.$borderColor
+    return '<div class="ub_divider '.esc_attr($className).'" style="border-top: '.$borderSize.'px '.$borderStyle.' '.$borderColor
         .'; margin-top: '.$borderHeight.'px; margin-bottom: '.$borderHeight.'px;"></div>';
 }
 

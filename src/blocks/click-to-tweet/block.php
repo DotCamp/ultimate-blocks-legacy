@@ -38,7 +38,7 @@ function ub_render_click_to_tweet_block( $attributes ) {
 	$url       = apply_filters( 'ub_click_to_tweet_url', "http://twitter.com/intent/tweet?&text={$tweet_url}&url={$permalink}{$via}" );
 
 	$output = '';
-	$output .= sprintf('<div class="ub_click_to_tweet" style="%1$s">', esc_attr( $borderColor ));
+	$output .= sprintf('<div class="ub_click_to_tweet %1$s" style="%2$s">', esc_attr($attributes['className']), esc_attr( $borderColor ));
     $output .= sprintf( '<div class="ub_tweet" style="%1$spx; %2$s">', esc_attr( $tweetFontSize ), esc_attr( $tweetColor ) );
     $output .= $tweet;
 	$output .= sprintf('</div>');

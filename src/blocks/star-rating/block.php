@@ -20,7 +20,7 @@ function ub_render_star_rating_block($attributes){
             ub_make_full_star($starSize, $starColor)
             : ub_make_empty_star($starSize);
     }
-    return '<div class="ub-star-rating '.$className.'">
+    return '<div class="ub-star-rating '.esc_attr($className).'">
                 <div class="ub-star-outer-container" style="justify-content:'.
                     ($starAlign == 'center' ? 'center' :
                         ('flex-'.$starAlign == 'left' ? 'start' : 'end')).';">

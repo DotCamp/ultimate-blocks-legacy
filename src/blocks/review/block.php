@@ -39,7 +39,7 @@ function ub_render_review_block($attributes){
         $inactiveStarColor, $activeStarColor, "margin-left: auto;").'</div>';
     }
 
-    return 	'<div class="ub_review_block '.$className.'">
+    return 	'<div class="ub_review_block '.esc_attr($className).'">
         <p class="ub_review_item_name" style="text-align: '.$textAlign.';">'.
             $itemName.'</p>
         <p style="text-align: '.$authorAlign.';">'.$authorName.'</p>'.
@@ -53,7 +53,7 @@ function ub_render_review_block($attributes){
         <div class="ub_review_cta_panel">
             <div class="ub_review_cta_main">
                 <a style="color: '.$callToActionForeColor.';" href="'.
-                    ($callToActionURL == '' ? '#' : $callToActionURL).'" target="_blank"
+                    ($callToActionURL == '' ? '#' : esc_url($callToActionURL)).'" target="_blank"
                     rel="nofollow noopener noreferrer">
                     <button class="ub_review_cta_btn" style="background-color: '.$callToActionBackColor
                         .'; border: 1px solid '.$callToActionForeColor.'; color: '.$callToActionForeColor.';">'.

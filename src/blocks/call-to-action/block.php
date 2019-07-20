@@ -2,7 +2,7 @@
 
 function ub_render_call_to_action_block($attributes){
     extract($attributes);
-    return '<div class="ub_call_to_action '.$className.'" style="background-color: '.$ctaBackgroundColor
+    return '<div class="ub_call_to_action '.esc_attr($className).'" style="background-color: '.$ctaBackgroundColor
                 .'; border: '.$ctaBorderSize.'px solid; border-color: '.$ctaBorderColor.'">
                 <div class="ub_call_to_action_headline">
                     <p class="ub_call_to_action_headline_text" style="font-size: '.
@@ -13,7 +13,7 @@ function ub_render_call_to_action_block($attributes){
                         $contentColor.'; text-align: '.$contentAlign.';">'.
                         $ub_cta_content_text.'</p></div>
                 <div class="ub_call_to_action_button">
-                    <a href="'.$url.'" target="_'.($openInNewTab ? 'blank' :'self' )
+                    <a href="'.esc_url($url).'" target="_'.($openInNewTab ? 'blank' :'self' )
                         .'" rel="'.($addNoFollow ? 'nofollow ' : ' ').'noopener noreferrer"
                         class="wp-block-button ub_cta_button" style="background-color: '.$buttonColor
                             .'; width: '.$buttonWidth.'px;">

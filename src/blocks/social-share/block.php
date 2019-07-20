@@ -33,7 +33,7 @@ function ub_render_social_share_block( $attributes ) {
 	$google_plus = ub_get_googleplus_icon( $attributes, $icon_size, $icon_shape );
 	$tumblr      = ub_get_tumblr_icon( $attributes, $icon_size, $icon_shape );
 
-	return '<div class="wp-block-ub-social-share '.$className.'">
+	return '<div class="wp-block-ub-social-share '.esc_attr($className).'">
 		<div class="social-share-icons align-icons-' . $align . '">
 			' . $facebook . '
 			' . $twitter . '

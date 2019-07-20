@@ -19,14 +19,14 @@ function ub_content_toggle_add_frontend_assets() {
 }
 
 function ub_render_content_toggle_block($attributes, $content){
-    return '<div class="wp-block-ub-content-toggle '.$className.'">'.$content.'</div>';
+    return '<div class="wp-block-ub-content-toggle '.esc_attr($className).'">'.$content.'</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
 
-    return '<div style="border-color: '.$theme.';" class="'.$classNamePrefix.'-accordion">
+    return '<div style="border-color: '.$theme.';" class="'.$classNamePrefix.'-accordion '.esc_url($className).'">
                 <div class="'.$classNamePrefix.'-accordion-title-wrap" style="background-color: '.
                     $theme.';">
                     <span class="'.$classNamePrefix.'-accordion-title" style="color: '.

@@ -7,7 +7,7 @@ function ub_render_progress_bar_block($attributes){
     $chosenProgressBar = '';
     $initializationCode = '';
 
-    if($attributes['barType']=='linear'){
+    if($barType=='linear'){
         $progressBarPath = 'M'.($barThickness / 2).','.($barThickness/2)
                             .'L'.(100 - $barThickness / 2).','.($barThickness/2);
         $chosenProgressBar = '<div class="'.$blockName.'-container" id="'.$elementID.'">
@@ -48,9 +48,9 @@ function ub_render_progress_bar_block($attributes){
                                 indicator.style.strokeLinecap = "round";';
     }
 
-    return '<div class="ub_progress-bar '.$className.'">
+    return '<div class="ub_progress-bar '.esc_attr($className).'">
                 <div class="ub_progress-bar-text">
-                <p  style="text-align: '. $detailAlign .';">'.$detail.'</p></div>'
+                <p style="text-align: '. $detailAlign .';">'.$detail.'</p></div>'
             . $chosenProgressBar
         . '</div>
         <script type="text/javascript">

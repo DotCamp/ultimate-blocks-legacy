@@ -18,12 +18,12 @@ function ub_render_image_slider_block($attributes){
         $gallery .= '<div style="width: 100%">
         <img src="'.$image['url'].'" style="display: block; height: '.
             $sliderHeight.'px; object-fit: contain; margin: 0 auto;">'.
-            ($captionArray[$key]['link'] == '' ? '<span' : '<a href="'.$captionArray[$key]['link'].'"')
+            ($captionArray[$key]['link'] == '' ? '<span' : '<a href="'.esc_url($captionArray[$key]['link']).'"')
             .' class="ub_image_slider_image_caption">'.$captionArray[$key]['text']
             .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </div>';
     }
 
-    return '<div class="ub_image_slider '.$className.'" style="min-height: '.
+    return '<div class="ub_image_slider '.esc_attr($className).'" style="min-height: '.
         (25+ (count($imageArray) > 0) ? $sliderHeight : 200 ).'px ; display: block;">
         <div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
             'wrapAround'=> $wrapsAround, 'autoPlay'=> ($autoplays ? $autoplayDuration * 1000 : $autoplays),

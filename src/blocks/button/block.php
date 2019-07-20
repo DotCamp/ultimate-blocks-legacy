@@ -13,8 +13,8 @@ function ub_render_button_block($attributes){
 
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    return '<div class="ub-button-container align-button-'.$align.' '.$className.'">
-                <a href="'.$url.'" target="'.($openInNewTab ? '_blank' : '_self').'"
+    return '<div class="ub-button-container align-button-'.$align.' '.esc_attr($className).'">
+                <a href="'.esc_url($url).'" target="'.($openInNewTab ? '_blank' : '_self').'"
                 rel="noopener noreferrer'.($addNofollow ? ' nofollow' : '').'"
                 class="ub-button-block-main ub-button-'.$size.'"
                 data-defaultColor="'.$buttonColor.'"

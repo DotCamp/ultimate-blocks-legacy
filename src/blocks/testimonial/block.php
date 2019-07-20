@@ -3,7 +3,7 @@
 function ub_render_testimonial_block($attributes){
     extract($attributes);
     return '<div>
-    <div class="ub_testimonial '.$className.'"
+    <div class="ub_testimonial '.esc_attr($className).'"
         style= "background-color: '.$backgroundColor.'; color: '.$textColor.';">
         <div class="ub_testimonial_img">
             <img src="'.$imgURL.'" alt="'.$imgAlt.'" height="100" width="100" />
