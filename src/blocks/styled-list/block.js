@@ -48,16 +48,12 @@ class StyledList extends Component {
 						onKeyDown={e => {
 							switch (e.key) {
 								case 'Tab':
+									e.preventDefault(); //default behavior is going to next or previous item
 									if (e.shiftKey) {
-										console.log(
-											'increase indent not yet implemented'
-										);
+										decreaseIndent(i);
 									} else {
-										console.log(
-											'decrease indent not yet implemented'
-										);
+										increaseIndent(i);
 									}
-
 									break;
 								case 'Backspace':
 								case 'Delete':
@@ -65,7 +61,20 @@ class StyledList extends Component {
 										item.text.length === 0 &&
 										list.length > 1
 									) {
-										deleteElement(i);
+										let newList = cloneObject(list);
+										let j = i + 1;
+										while (
+											j < newList.length &&
+											newList[j].indent >
+												newList[j - 1].indent
+										) {
+											newList[j].indent--;
+											j++;
+										}
+										updateList([
+											...newList.slice(0, i),
+											...newList.slice(i + 1)
+										]);
 										this.setState({ edits: edits + 1 });
 									}
 									break;
@@ -101,6 +110,7 @@ class StyledList extends Component {
 								newList[i].text = newValue;
 								updateList(newList);
 							}}
+							unstableOnFocus={() => updateSelectedItem(i)}
 							onSplit={(before, after) => {
 								updateList([
 									...list.slice(0, i),
