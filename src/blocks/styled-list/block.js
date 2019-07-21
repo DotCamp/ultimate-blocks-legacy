@@ -5,11 +5,11 @@ const { RichText, BlockControls, InspectorControls, ColorPalette } = wp.editor;
 const { Toolbar, IconButton, Dropdown, PanelBody } = wp.components;
 const { withState } = wp.compose;
 
+import { dashesToCamelcase } from '../../common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import icon, { decreaseIndentIcon, increaseIndentIcon } from './icon';
-import TextareaAutosize from 'react-textarea-autosize';
 import { Component } from 'react';
 
 import './editor.scss';
@@ -24,22 +24,18 @@ const cloneObject = obj => JSON.parse(JSON.stringify(obj));
 class StyledList extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			edits: 0
-		};
 	}
 	render() {
 		const {
 			list,
 			updateList,
 			iconColor,
-			selectedItem,
 			updateSelectedItem,
 			increaseIndent,
-			decreaseIndent
+			decreaseIndent,
+			edits
 		} = this.props;
 
-		const { edits } = this.state;
 		return (
 			<ul className="fa-ul" key={edits}>
 				{list.map((item, i) => (
@@ -48,11 +44,13 @@ class StyledList extends Component {
 						onKeyDown={e => {
 							switch (e.key) {
 								case 'Tab':
-									e.preventDefault(); //default behavior is going to next or previous item
-									if (e.shiftKey) {
-										decreaseIndent(i);
-									} else {
-										increaseIndent(i);
+									e.preventDefault();
+									if (i > 0) {
+										if (e.shiftKey) {
+											decreaseIndent(i);
+										} else {
+											increaseIndent(i);
+										}
 									}
 									break;
 								case 'Backspace':
@@ -75,7 +73,6 @@ class StyledList extends Component {
 											...newList.slice(0, i),
 											...newList.slice(i + 1)
 										]);
-										this.setState({ edits: edits + 1 });
 									}
 									break;
 								default:
@@ -122,10 +119,6 @@ class StyledList extends Component {
 									}),
 									...list.slice(i + 1)
 								]);
-
-								this.setState({
-									edits: edits + 1
-								});
 							}}
 						/>
 					</li>
@@ -137,12 +130,6 @@ class StyledList extends Component {
 
 const allIcons = Object.assign(fas, fab);
 
-const dashesToCamelcase = str =>
-	str
-		.split('-')
-		.map(s => s[0].toUpperCase() + s.slice(1))
-		.join('');
-
 registerBlockType('ub/styled-list', {
 	title: __('Styled List'),
 	icon: icon,
@@ -150,7 +137,7 @@ registerBlockType('ub/styled-list', {
 	attributes: {
 		listItem: {
 			type: 'array',
-			default: [{ text: '', selectedIcon: 'circle', indent: 0 }] //each item is an object with text, selectedIcon, and indent properties
+			default: [{ text: '', selectedIcon: 'check', indent: 0 }] //each item is an object with text, selectedIcon, and indent properties
 		},
 		iconColor: {
 			type: 'string',
@@ -163,7 +150,7 @@ registerBlockType('ub/styled-list', {
 		availableIcons: [],
 		iconSearchTerm: '',
 		recentSelection: '',
-		itemRef: []
+		edits: 0
 	})(function(props) {
 		const {
 			isSelected,
@@ -172,7 +159,8 @@ registerBlockType('ub/styled-list', {
 			setState,
 			selectedItem,
 			availableIcons,
-			iconSearchTerm
+			iconSearchTerm,
+			edits
 		} = props;
 		const { listItem, iconColor } = attributes;
 		if (availableIcons.length === 0) {
@@ -189,6 +177,7 @@ registerBlockType('ub/styled-list', {
 				newListItem[itemNumber].indent++;
 			}
 			setAttributes({ listItem: newListItem });
+			setState({ edits: edits + 1 });
 		};
 
 		const decreaseIndent = itemNumber => {
@@ -206,6 +195,7 @@ registerBlockType('ub/styled-list', {
 				}
 			}
 			setAttributes({ listItem: newListItem });
+			setState({ edits: edits + 1 });
 		};
 
 		return [
@@ -324,7 +314,10 @@ registerBlockType('ub/styled-list', {
 																);
 																setState({
 																	recentSelection:
-																		i.iconName
+																		i.iconName,
+																	edits:
+																		edits +
+																		1
 																});
 
 																setAttributes({
@@ -350,19 +343,25 @@ registerBlockType('ub/styled-list', {
 			),
 			<div className="ub-styled-list">
 				<StyledList
+					edits={edits}
 					list={listItem}
-					updateList={newList => setAttributes({ listItem: newList })}
+					updateList={newList => {
+						setAttributes({ listItem: newList });
+						if (newList.length !== listItem.length) {
+							setState({ edits: edits + 1 });
+						}
+					}}
 					iconColor={iconColor}
-					selectedItem={selectedItem}
-					updateSelectedItem={newSelectedItem =>
-						setState({ selectedItem: newSelectedItem })
-					}
+					updateSelectedItem={newSelectedItem => {
+						setState({ selectedItem: newSelectedItem });
+					}}
 					increaseIndent={itemNumber => increaseIndent(itemNumber)}
 					decreaseIndent={itemNumber => decreaseIndent(itemNumber)}
 				/>
 			</div>
 		];
 	}),
+
 	save(props) {
 		const { listItem, iconColor } = props.attributes;
 
