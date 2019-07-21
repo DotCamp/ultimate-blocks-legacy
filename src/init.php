@@ -600,3 +600,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-box/block.php';
 
 //Expand
 require_once plugin_dir_path( __FILE__ ) . 'blocks/expand/block.php';
+
+// Styled List
+require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-list/block.php';
