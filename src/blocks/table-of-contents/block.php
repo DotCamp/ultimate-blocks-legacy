@@ -51,7 +51,7 @@ function ub_render_table_of_contents_block($attributes){
             }
             else{
                 $openingTag = $listStyle == 'numbered' ? '<ol>' : '<ul'.
-                    ($listStyle == 'plain' ? ' style="list-style: \'none\';"' : '').'>';
+                    ($listStyle == 'plain' ? ' style="list-style: none;"' : '').'>';
 
                 $outputString = substr_replace($outputString, $openingTag,
                     strrpos($outputString, '</li>'), strlen('</li>'));
@@ -85,7 +85,7 @@ function ub_render_table_of_contents_block($attributes){
                     ($showList || strlen($title) == 0 || (strlen($title) == 1 && $title[0] == '') 
                     ? 'block' : 'none').';">'.
                 ($listStyle == 'numbered' ? '<ol>' : '<ul'.
-                    ($listStyle == 'plain' ? ' style="list-style: \'none\';"' : '').'>')
+                    ($listStyle == 'plain' ? ' style="list-style: none;"' : '').'>')
                 . $listItems .
                 ($listStyle == 'numbered' ? '</ol>' : '</ul>')
                 .'</div></div>';
