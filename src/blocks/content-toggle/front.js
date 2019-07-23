@@ -75,24 +75,17 @@ Array.from(
 			}
 			panelContent.style.transition = 'all 0.5s ease-in-out';
 			indicator.classList.toggle('open');
-		});
-
-		indicator.addEventListener('transitionstart', function() {
-			if (
-				!indicator.classList.contains('open') &&
-				panelHeight !== panelContent.offsetHeight
-			) {
-				panelHeight = panelContent.offsetHeight;
-			}
-
-			const newVal = indicator.classList.contains('open') ? '' : '0';
-			panelContent.style.paddingTop = newVal;
-			panelContent.style.paddingBottom = newVal;
-			panelContent.style.marginTop = newVal;
-			panelContent.style.marginBottom = newVal;
-			panelContent.style.height = `${
-				indicator.classList.contains('open') ? panelHeight : 0
-			}px`;
+			setTimeout(() => {
+				//delay is needed for the animation to run properly
+				const newVal = indicator.classList.contains('open') ? '' : '0';
+				panelContent.style.paddingTop = newVal;
+				panelContent.style.paddingBottom = newVal;
+				panelContent.style.marginTop = newVal;
+				panelContent.style.marginBottom = newVal;
+				panelContent.style.height = `${
+					indicator.classList.contains('open') ? panelHeight : 0
+				}px`;
+			}, 1);
 		});
 
 		panelContent.addEventListener('transitionend', function() {

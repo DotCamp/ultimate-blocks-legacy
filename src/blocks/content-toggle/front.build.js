@@ -60,18 +60,15 @@ Array.from(document.getElementsByClassName('wp-block-ub-content-toggle')).forEac
 
       panelContent.style.transition = 'all 0.5s ease-in-out';
       indicator.classList.toggle('open');
-    });
-    indicator.addEventListener('transitionstart', function () {
-      if (!indicator.classList.contains('open') && panelHeight !== panelContent.offsetHeight) {
-        panelHeight = panelContent.offsetHeight;
-      }
-
-      var newVal = indicator.classList.contains('open') ? '' : '0';
-      panelContent.style.paddingTop = newVal;
-      panelContent.style.paddingBottom = newVal;
-      panelContent.style.marginTop = newVal;
-      panelContent.style.marginBottom = newVal;
-      panelContent.style.height = "".concat(indicator.classList.contains('open') ? panelHeight : 0, "px");
+      setTimeout(function () {
+        //delay is needed for the animation to run properly
+        var newVal = indicator.classList.contains('open') ? '' : '0';
+        panelContent.style.paddingTop = newVal;
+        panelContent.style.paddingBottom = newVal;
+        panelContent.style.marginTop = newVal;
+        panelContent.style.marginBottom = newVal;
+        panelContent.style.height = "".concat(indicator.classList.contains('open') ? panelHeight : 0, "px");
+      }, 1);
     });
     panelContent.addEventListener('transitionend', function () {
       panelContent.style.transition = '';
