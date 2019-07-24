@@ -6,10 +6,16 @@
 	}
 	> div {
 		margin: 0 auto;
+		height: 70px;
+		width: 70px;
+		svg {
+			position: absolute;
+		}
 	}
 }
 
 .ub_countdown_circle_path {
+	stroke-linecap: round;
 	stroke-dashoffset: 0px;
 	transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s,
 		stroke 0.3s ease 0s, stroke-width 0.06s ease 0.3s;
@@ -18,6 +24,7 @@
 
 .ub_countdown_circle_trail {
 	stroke: #d9d9d9;
+	stroke-dasharray: 219.911px, 219.911px;
 	stroke-dashoffset: 0px;
 	transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s,
 		stroke 0.3s ease 0s;

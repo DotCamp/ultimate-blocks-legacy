@@ -1,5 +1,6 @@
 import icon from './icon';
 import './style.scss';
+import './editor.scss';
 
 import { ReviewBody } from './components';
 import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';

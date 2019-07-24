@@ -135,8 +135,7 @@ registerBlockType('ub/click-to-tweet', {
 					<RichText
 						style={{
 							fontSize: tweetFontSize + 'px',
-							color: tweetColor,
-							border: 'none'
+							color: tweetColor
 						}}
 						placeholder={__('Add Tweetable Content Here')}
 						className="ub_tweet"
@@ -145,11 +144,7 @@ registerBlockType('ub/click-to-tweet', {
 					/>
 
 					<div className="ub_click_tweet">
-						<span
-							style={{
-								display: 'inline-flex'
-							}}
-						>
+						<span>
 							<i />
 							{__('Click to Tweet')}
 						</span>

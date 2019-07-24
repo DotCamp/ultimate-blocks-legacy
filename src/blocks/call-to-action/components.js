@@ -232,7 +232,7 @@ export const editorDisplay = props => {
 				className="ub_call_to_action"
 				style={{
 					backgroundColor: ctaBackgroundColor,
-					border: ctaBorderSize + 'px solid',
+					borderWidth: ctaBorderSize + 'px',
 					borderColor: ctaBorderColor
 				}}
 			>

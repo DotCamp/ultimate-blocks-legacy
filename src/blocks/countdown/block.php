@@ -21,10 +21,10 @@ function ub_render_countdown_block($attributes){
         function ub_generateCircle($label, $value, $limit, $color){
             $circlePath="M 50,50 m 0,-35 a 35,35 0 1 1 0,70 a 35,35 0 1 1 0,-70";
             $prefix="ub_countdown_circle_";
-            return '<div style="height: 70px; width: 70px;" class="ub_countdown_'.$label.'">
-                        <svg height="70" width="70" viewBox="0 0 100 100" style="position: absolute;">
-                            <path class="'.$prefix.'trail" d="'.$circlePath.'" stroke-width="3" style="stroke-dasharray: 219.911px, 219.911px;"></path>
-                            <path class="'.$prefix.'path" d="'.$circlePath.'" stroke="'.$color.'" stroke-width="3" style="stroke-dasharray: '.$value*219.911/$limit.'px, 219.911px; stroke-linecap=\'round\';"></path>
+            return '<div class="ub_countdown_'.$label.'">
+                        <svg height="70" width="70" viewBox="0 0 100 100">
+                            <path class="'.$prefix.'trail" d="'.$circlePath.'" stroke-width="3" ></path>
+                            <path class="'.$prefix.'path" d="'.$circlePath.'" stroke="'.$color.'" stroke-width="3" style="stroke-dasharray: '.$value*219.911/$limit.'px, 219.911px;"></path>
                         </svg>
                         <div class="'.$prefix.'label">'.$value.'</div>
                     </div>';

@@ -6,3 +6,12 @@
 		margin: 0 auto;
 	}
 }
+
+.ub_image_slider_url_input {
+	width: 300px;
+    margin: auto;
+    >div:first-child{
+        position: relative;
+        transform: translate(-25%,25%);
+    }
+}

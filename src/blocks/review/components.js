@@ -280,17 +280,16 @@ class ReviewBody extends Component {
 					</div>
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
-							<div
+							<div //do not merge into RichText child
 								className="ub_review_cta_btn"
 								style={{
 									backgroundColor: callToActionBackColor,
-									border: `1px solid ${callToActionForeColor}`
+									borderColor: callToActionForeColor
 								}}
 							>
 								<RichText
 									style={{
-										color: callToActionForeColor,
-										textAlign: 'center'
+										color: callToActionForeColor
 									}}
 									placeholder={__('Call to action')}
 									value={callToActionText}
@@ -309,19 +308,11 @@ class ReviewBody extends Component {
 							inactiveStarColor={inactiveStarColor}
 							activeStarColor={activeStarColor}
 							selectedStarColor={selectedStarColor}
-							style={{
-								float: 'right'
-							}}
 						/>
 					</div>
 					{hasFocus && (
 						<div className="ub_review_link_input">
-							<div
-								style={{
-									position: 'relative',
-									transform: 'translate(-25%,25%)'
-								}}
-							>
+							<div>
 								<Dashicon icon={'admin-links'} />
 							</div>
 							<URLInput

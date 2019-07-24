@@ -24,3 +24,16 @@
 		stroke 0.3s ease 0s;
 	fill-opacity: 0;
 }
+
+.ub_progress-bar-circle + .ub_progress-bar-label {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	margin: auto;
+	text-align: center;
+}
+
+.ub_progress-bar-line + .ub_progress-bar-label {
+	text-align: right;
+	min-width: 24px;
+}

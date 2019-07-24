@@ -3,7 +3,7 @@
 function ub_render_call_to_action_block($attributes){
     extract($attributes);
     return '<div class="ub_call_to_action '.esc_attr($className).'" style="background-color: '.$ctaBackgroundColor
-                .'; border: '.$ctaBorderSize.'px solid; border-color: '.$ctaBorderColor.'">
+                .'; border-width: '.$ctaBorderSize.'px; border-color: '.$ctaBorderColor.'">
                 <div class="ub_call_to_action_headline">
                     <p class="ub_call_to_action_headline_text" style="font-size: '.
                         $headFontSize.'px; color: '.$headColor.'; text-align: '.$headAlign.';">'.

@@ -64,12 +64,7 @@ class Circle extends Component {
 					width: `${size}px`
 				}}
 			>
-				<svg
-					height={size}
-					width={size}
-					viewBox="0 0 100 100"
-					style={{ position: 'absolute' }}
-				>
+				<svg height={size} width={size} viewBox="0 0 100 100">
 					<path
 						className="ub_countdown_circle_trail"
 						d={progressBarPath}

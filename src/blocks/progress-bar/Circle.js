@@ -94,12 +94,7 @@ class Circle extends Component {
 				<div
 					className="ub_progress-bar-label"
 					style={{
-						visibility: isActive ? 'visible' : 'hidden',
-						position: 'relative',
-						top: '50%',
-						transform: 'translateY(-50%)',
-						margin: 'auto',
-						textAlign: 'center'
+						visibility: isActive ? 'visible' : 'hidden'
 					}}
 				>
 					{percent}%

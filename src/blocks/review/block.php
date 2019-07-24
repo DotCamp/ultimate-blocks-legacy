@@ -56,7 +56,7 @@ function ub_render_review_block($attributes){
                     ($callToActionURL == '' ? '#' : esc_url($callToActionURL)).'" target="_blank"
                     rel="nofollow noopener noreferrer">
                     <button class="ub_review_cta_btn" style="background-color: '.$callToActionBackColor
-                        .'; border: 1px solid '.$callToActionForeColor.'; color: '.$callToActionForeColor.';">'.
+                        .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';">'.
                         ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>'.
                     ub_generateStarDisplay($average,$starCount, $ID.'-average',
                     $inactiveStarColor, $activeStarColor, "", "ub_review_average_stars").'

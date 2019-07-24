@@ -254,15 +254,12 @@ registerBlockType('ub/image-slider', {
 							slides={[
 								...[
 									JSON.parse(images).map((c, i) => (
-										<div style={{ width: '100%' }}>
+										<div>
 											<img
 												key={i}
 												src={c.url}
 												style={{
-													display: 'block',
-													height: `${sliderHeight}px`,
-													objectFit: 'contain',
-													margin: '0 auto'
+													height: `${sliderHeight}px`
 												}}
 											/>
 											<RichText
@@ -289,7 +286,6 @@ registerBlockType('ub/image-slider', {
 								isSelected && (
 									<div
 										style={{
-											width: '100%',
 											height: '100%'
 										}}
 									>
@@ -344,12 +340,7 @@ registerBlockType('ub/image-slider', {
 								onSubmit={event => event.preventDefault()}
 								className={`editor-format-toolbar__link-modal-line ub_image_slider_url_input flex-container`}
 							>
-								<div
-									style={{
-										position: 'relative',
-										transform: 'translate(-25%,25%)'
-									}}
-								>
+								<div>
 									<Icon icon="admin-links" />
 								</div>
 								<URLInput

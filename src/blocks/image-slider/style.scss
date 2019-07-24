@@ -21,10 +21,6 @@
 	margin: auto;
 }
 
-.ub_image_slider_url_input {
-	width: 300px;
-	margin: auto;
-}
 /*! Flickity v2.2.0
 https://flickity.metafizzy.co
 ---------------------------------------------- */
@@ -45,7 +41,17 @@ https://flickity.metafizzy.co
 	.flickity-slider {
 		position: absolute;
 		width: 100%;
-		height: 100%;
+        height: 100%;
+        //BEGIN CUSTOM CODE
+        > div {
+            width: 100%;
+            > img {
+                display: block;
+                object-fit: contain;
+                margin: auto;
+            }
+        }
+        //END CUSTOM CODE
 	}
 
 	/* draggable */

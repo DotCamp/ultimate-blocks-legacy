@@ -79,9 +79,7 @@ class Line extends Component {
 					className="ub_progress-bar-label"
 					style={{
 						width: `${percent}%`,
-						visibility: isActive ? 'visible' : 'hidden',
-						textAlign: 'right',
-						minWidth: '24px'
+						visibility: isActive ? 'visible' : 'hidden'
 					}}
 				>
 					{percent}%

@@ -16,8 +16,7 @@ function ub_render_progress_bar_block($attributes){
             <path class="'.$blockName.'-line-path" d="'.$progressBarPath.'" stroke="'.$barColor.'"
                 stroke-width="'.$barThickness.'" style="stroke-dashoffset:100px"/>
         </svg>
-        <div class="'.$blockName.'-label" style="width:'.$percentage.'%; visibility:hidden; 
-                    text-align:right; min-width:24px;">
+        <div class="'.$blockName.'-label" style="width:'.$percentage.'%; visibility:hidden;">
             '.$percentage.'%
         </div></div>';
         $initializationCode = 'let indicator = container.getElementsByClassName("'.$blockName.'-line-path")[0];
@@ -39,8 +38,7 @@ function ub_render_progress_bar_block($attributes){
                 stroke-width="'.($barThickness+2).'" stroke-linecap="butt"
                 style="stroke-dasharray: 0px, '.$circlePathLength.'px"/>
         </svg>
-        <div class="'.$blockName.'-label" style="visibility: hidden; position: relative;
-            top: 50%; transform: translateY(-50%); margin: auto; text-align: center">
+        <div class="'.$blockName.'-label" style="visibility: hidden;">
         '.$percentage.'%
         </div>';
         $initializationCode = 'let indicator = container.getElementsByClassName("'.$blockName.'-circle-path")[0];
