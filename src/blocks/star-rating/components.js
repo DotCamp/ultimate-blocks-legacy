@@ -128,14 +128,20 @@ export const editorDisplay = props => {
 								setState({ highlightedStars: i + 1 });
 							}}
 							onClick={() => {
-								if (selectedStars === i + 1) {
+								if (selectedStars % 1 === 0) {
 									setAttributes({
 										selectedStars:
 											i +
-											(selectedStars % 1 === 0 ? 0.5 : 1)
+											(selectedStars - 1 === i ? 0.5 : 1)
 									});
 								} else {
-									setAttributes({ selectedStars: i + 1 });
+									setAttributes({
+										selectedStars:
+											i +
+											(selectedStars - 0.5 === i
+												? 1
+												: 0.5)
+									});
 								}
 							}}
 						>
@@ -144,12 +150,34 @@ export const editorDisplay = props => {
 								? highlightedStars
 								: selectedStars) ? (
 								highlightedStars ? (
-									highlightedStars === selectedStars &&
 									highlightedStars - 1 === i ? (
-										<HalfStar
-											size={starSize}
-											fillColor={starColor}
-										/>
+										selectedStars % 1 > 0 ? (
+											highlightedStars -
+												selectedStars -
+												0.5 !==
+											0 ? (
+												<HalfStar
+													size={starSize}
+													fillColor={starColor}
+												/>
+											) : (
+												<FullStar
+													size={starSize}
+													fillColor={starColor}
+												/>
+											)
+										) : highlightedStars - selectedStars !==
+										  0 ? (
+											<FullStar
+												size={starSize}
+												fillColor={starColor}
+											/>
+										) : (
+											<HalfStar
+												size={starSize}
+												fillColor={starColor}
+											/>
+										)
 									) : (
 										<FullStar
 											size={starSize}
