@@ -58,29 +58,33 @@ function ub_load_assets() {
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
 	if ( is_singular() and has_blocks() ){
-        function ub_getNamesOfPresentBlocks( $value ) {
-            return $value['blockName'];
+        if(!function_exists( 'ub_getNamesOfPresentBlocks' )){
+            function ub_getNamesOfPresentBlocks( $value ) {
+                return $value['blockName'];
+            }
         }
 
-        function ub_checkInnerBlocks( $block ) {
-            static $currentBlocks = [];
-            
-            $current = $block;
+        if(!function_exists( 'ub_checkInnerBlocks' )){
+            function ub_checkInnerBlocks( $block ) {
+                static $currentBlocks = [];
+                
+                $current = $block;
 
-            if( $block['blockName'] == 'core/block' ) { //reusable block
-                $current = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) )[0];
-            }
+                if( $block['blockName'] == 'core/block' ) { //reusable block
+                    $current = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) )[0];
+                }
 
-            if( $current['blockName'] != '' ) {
-                array_push( $currentBlocks, $current['blockName'] );
-                if( count( $current['innerBlocks'] ) > 0 ){
-                    foreach( $current['innerBlocks'] as $innerBlock ) {
-                        ub_checkInnerBlocks( $innerBlock );
+                if( $current['blockName'] != '' ) {
+                    array_push( $currentBlocks, $current['blockName'] );
+                    if( count( $current['innerBlocks'] ) > 0 ){
+                        foreach( $current['innerBlocks'] as $innerBlock ) {
+                            ub_checkInnerBlocks( $innerBlock );
+                        }
                     }
                 }
-            }
 
-            return $currentBlocks;
+                return $currentBlocks;
+            }
         }
 
         $presentBlocks = [];
