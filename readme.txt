@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -123,24 +123,19 @@ That's it. You're done!
 
 == Changelog ==
 
-= 2.1.0 =
+= 2.1.1 =
 
-Release Date: July 17th, 2019
+Release Date: July 24th, 2019
 
-* IMPROVE: Rendering of all blocks.
-* FIX: CSS not loading when block is used as a reusable block.
-* FIX: Display of nested Content Toggle and Tabbed Content blocks.
-* FIX: Display of multiple Table of Contents instances.
-* FIX: Frontend display of icon in button.
-* FIX: Issue with removing content toggle panels.
-* FIX: Frontend JS/CSS compatibility issues with blocks from previous versions.
-* FIX: Add Image button alignment on image slider.
-* FIX: Front-end script conflict between Table of Contents and Content Filter.
-* FIX: Issue with Table of Contents header anchors when headers are added, removed, or edited.
-* ADD: Support for Rank Math Table of Contents plugins list.
+* NEW: Allow star rating to accept half-star values.
+* FIX: Conflict with Table of Contents Plus plugin.
+* FIX: Table of Contents rendering of plain style.
+* FIX: Hide block contents when "Initially Show Table of Contents" is disabled.
+* FIX: Heading styles included in Table of Contents.
+* FIX: Issues with "Open link in new tab" and "Add nofollow" settings.
+* FIX: Bugs in frontend scripts of Table of Content and Button
+* FIX: Frontend script's search for hidden ancestor elements in Content Toggle.
+* FIX: Content Toggle not working on Safari.
+* FIX: Adding custom class names for all blocks.
 
 Full changelog can be found here - **[Ultimate Blocks changelog](https://ultimateblocks.com/changelog/)**
-
-== Upgrade Notice ==
-
-*Important Changes Were Made in This Version" - Check [Release Notes](https://ultimateblocks.com/version-2-1-0-release-notes/)

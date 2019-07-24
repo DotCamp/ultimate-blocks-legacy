@@ -58,13 +58,13 @@ function ub_load_assets() {
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
 	if ( is_singular() and has_blocks() ){
-        if(!function_exists( 'ub_getNamesOfPresentBlocks' )){
+        if ( !function_exists( 'ub_getNamesOfPresentBlocks' ) ) {
             function ub_getNamesOfPresentBlocks( $value ) {
                 return $value['blockName'];
             }
         }
 
-        if(!function_exists( 'ub_checkInnerBlocks' )){
+        if ( !function_exists( 'ub_checkInnerBlocks' ) ) {
             function ub_checkInnerBlocks( $block ) {
                 static $currentBlocks = [];
                 
