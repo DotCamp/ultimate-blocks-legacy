@@ -8,7 +8,7 @@ const { withDispatch, withSelect } = wp.data;
 import './style.scss';
 import './editor.scss';
 
-import { EmptyStar, HalfStar, FullStar } from './icons';
+import { EmptyStar, BlockIcon, FullStar } from './icons';
 import {
 	oldAttributes,
 	version_1_1_2,
@@ -52,7 +52,7 @@ const attributes = {
 
 registerBlockType('ub/star-rating', {
 	title: __('Star Rating'),
-	icon: HalfStar,
+	icon: BlockIcon,
 	category: 'ultimateblocks',
 
 	attributes: oldAttributes,
@@ -160,7 +160,7 @@ registerBlockType('ub/star-rating', {
 
 registerBlockType('ub/star-rating-block', {
 	title: __('Star Rating'),
-	icon: HalfStar,
+	icon: BlockIcon,
 	category: 'ultimateblocks',
 
 	attributes,

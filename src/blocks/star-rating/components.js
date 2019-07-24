@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { EmptyStar, FullStar } from './icons';
+import { EmptyStar, FullStar, HalfStar } from './icons';
 
 const { __ } = wp.i18n;
 const {
@@ -89,15 +89,6 @@ export const inspectorControls = props => {
 					beforeIcon="star-empty"
 					allowReset
 				/>
-				<RangeControl
-					label={__('Number of selected stars')}
-					value={selectedStars}
-					onChange={value => setAttributes({ selectedStars: value })}
-					min={0}
-					max={starCount}
-					beforeIcon="star-filled"
-					allowReset
-				/>
 			</PanelBody>
 		</InspectorControls>
 	);
@@ -136,18 +127,46 @@ export const editorDisplay = props => {
 							onMouseEnter={() => {
 								setState({ highlightedStars: i + 1 });
 							}}
-							onClick={() =>
-								setAttributes({ selectedStars: i + 1 })
-							}
+							onClick={() => {
+								if (selectedStars === i + 1) {
+									setAttributes({
+										selectedStars:
+											i +
+											(selectedStars % 1 === 0 ? 0.5 : 1)
+									});
+								} else {
+									setAttributes({ selectedStars: i + 1 });
+								}
+							}}
 						>
 							{i <
 							(highlightedStars
 								? highlightedStars
 								: selectedStars) ? (
-								<FullStar
-									size={starSize}
-									fillColor={starColor}
-								/>
+								highlightedStars ? (
+									highlightedStars === selectedStars &&
+									highlightedStars - 1 === i ? (
+										<HalfStar
+											size={starSize}
+											fillColor={starColor}
+										/>
+									) : (
+										<FullStar
+											size={starSize}
+											fillColor={starColor}
+										/>
+									)
+								) : selectedStars - i >= 1 ? (
+									<FullStar
+										size={starSize}
+										fillColor={starColor}
+									/>
+								) : (
+									<HalfStar
+										size={starSize}
+										fillColor={starColor}
+									/>
+								)
 							) : (
 								<EmptyStar size={starSize} />
 							)}
@@ -155,22 +174,16 @@ export const editorDisplay = props => {
 					))}
 				</div>
 			</div>
-			<div className="ub-review-text">
-				<RichText
-					tagName="div"
-					placeholder={__('The text of the review goes here')}
-					value={reviewText}
-					style={{ textAlign: reviewTextAlign }}
-					onChange={text => setAttributes({ reviewText: text })}
-					keepPlaceholderOnFocus={true}
-					formattingControls={[
-						'bold',
-						'italic',
-						'strikethrough',
-						'link'
-					]}
-				/>
-			</div>
+			<RichText
+				tagName="div"
+				className="ub-review-text"
+				placeholder={__('The text of the review goes here')}
+				value={reviewText}
+				style={{ textAlign: reviewTextAlign }}
+				onChange={text => setAttributes({ reviewText: text })}
+				keepPlaceholderOnFocus={true}
+				formattingControls={['bold', 'italic', 'strikethrough', 'link']}
+			/>
 		</Fragment>
 	);
 };

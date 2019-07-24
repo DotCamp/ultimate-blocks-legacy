@@ -2,7 +2,13 @@
 
 function ub_make_full_star($size, $color){
     return '<svg xmlns="http://www.w3.org/2000/svg" fill="'.$color.'" width="'.$size.'" height="'.$size.'" viewBox="0 0 510 510">
-    <polygon points="255,402.212 412.59,497.25 370.897,318.011 510,197.472 326.63,181.738 255,12.75 183.371,181.738 0,197.472 139.103,318.011 97.41,497.25"/>
+        <polygon points="255,402.212 412.59,497.25 370.897,318.011 510,197.472 326.63,181.738 255,12.75 183.371,181.738 0,197.472 139.103,318.011 97.41,497.25"/>
+    </svg>';
+}
+
+function ub_make_half_star($size, $color){
+    return '<svg xmlns="http://www.w3.org/2000/svg" fill="'.$color.'" width="'.$size.'" height="'.$size.'" viewBox="0 0 510 510">
+    <path d="M510,197.472l-183.37-15.734L255,12.75l-71.629,168.988L0,197.472l0,0l0,0l139.103,120.539L97.41,497.25L255,402.186l0,0 l157.59,95.039l-41.692-179.239L510,197.472z M255,354.348V117.172l43.605,102.918l111.689,9.588l-84.711,73.389l25.398,109.166 L255,354.348z" />
     </svg>';
 }
 
@@ -17,7 +23,8 @@ function ub_render_star_rating_block($attributes){
     $stars = '';
     for($i = 0; $i < $starCount; $i++){
         $stars .= $i < $selectedStars ?
-            ub_make_full_star($starSize, $starColor)
+            ($selectedStars - $i >= 1 ?
+                ub_make_full_star($starSize, $starColor) : ub_make_half_star($starSize, $starColor))
             : ub_make_empty_star($starSize);
     }
     return '<div class="ub-star-rating '.esc_attr($className).'">
