@@ -6,11 +6,13 @@
  * @return void
  */
 
+
+
 function ub_render_button_block($attributes){
     extract($attributes);
 
-    require_once  dirname(dirname(__DIR__)) . '/common.php';
-
+    require dirname(dirname(__DIR__)) . '/common.php';
+    
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
     return '<div class="ub-button-container align-button-'.$align.' '.esc_attr($className).'">
