@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
           //delay is needed for the animation to run properly
           tocContainer.style.height = '0px';
-        }, 1);
+        }, 20);
       }
 
       instance.innerHTML = tocIsHidden ? showButton : hideButton;

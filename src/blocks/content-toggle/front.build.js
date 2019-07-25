@@ -68,7 +68,7 @@ Array.from(document.getElementsByClassName('wp-block-ub-content-toggle')).forEac
         panelContent.style.marginTop = newVal;
         panelContent.style.marginBottom = newVal;
         panelContent.style.height = "".concat(indicator.classList.contains('open') ? panelHeight : 0, "px");
-      }, 1);
+      }, 20);
     });
     panelContent.addEventListener('transitionend', function () {
       panelContent.style.transition = '';

@@ -85,7 +85,7 @@ Array.from(
 				panelContent.style.height = `${
 					indicator.classList.contains('open') ? panelHeight : 0
 				}px`;
-			}, 1);
+			}, 20);
 		});
 
 		panelContent.addEventListener('transitionend', function() {
