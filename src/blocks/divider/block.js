@@ -10,7 +10,6 @@ import icon from './icons/icon';
 
 //  Import CSS.
 import './style.scss';
-import './editor.scss';
 import { version_1_1_2 } from './oldVersions';
 
 const { __ } = wp.i18n;
@@ -20,7 +19,13 @@ const { InspectorControls, ColorPalette } = wp.editor;
 
 const { PanelBody, RangeControl } = wp.components;
 
+const { withSelect } = wp.data;
+
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	borderSize: {
 		type: 'number',
 		default: 2
@@ -66,20 +71,28 @@ registerBlockType('ub/divider', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function(props) {
+	edit: withSelect((select, ownProps) => ({
+		block: select('core/editor').getBlock(ownProps.clientId)
+	}))(function(props) {
 		const {
+			blockID,
 			borderSize,
 			borderStyle,
 			borderColor,
 			borderHeight
 		} = props.attributes;
 
-		const { isSelected, setAttributes, className } = props;
+		const { isSelected, setAttributes, className, block } = props;
 
 		// Creates a <p class='wp-block-cgb-block-divider'></p>.
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
+
 		return [
 			isSelected && (
-				<InspectorControls key="inspectors">
+				<InspectorControls>
 					<PanelBody title={__('Divider Settings')}>
 						<RangeControl
 							label={__('Thickness')}
@@ -128,7 +141,7 @@ registerBlockType('ub/divider', {
 				/>
 			</div>
 		];
-	},
+	}),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined

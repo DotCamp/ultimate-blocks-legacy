@@ -312,7 +312,7 @@ class ReviewBody extends Component {
 					</div>
 					{hasFocus && (
 						<div className="ub_review_link_input">
-							<div>
+							<div className="ub-icon-holder">
 								<Dashicon icon={'admin-links'} />
 							</div>
 							<URLInput

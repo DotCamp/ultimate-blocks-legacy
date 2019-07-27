@@ -10,7 +10,6 @@ import icon from './icons/icon';
 
 //  Import CSS.
 import './style.scss';
-import './editor.scss';
 
 import {
 	version_1_1_2,
@@ -30,6 +29,10 @@ const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	ub_notify_info: {
 		type: 'string',
 		default: ''
@@ -179,13 +182,19 @@ registerBlockType('ub/notification-box-block', {
 	category: 'ultimateblocks',
 	keywords: [__('notification'), __('warning info'), __('Ultimate Blocks')],
 	attributes,
-	edit(props) {
-		const { isSelected, className } = props;
+	edit: withSelect((select, ownProps) => ({
+		block: select('core/editor').getBlock(ownProps.clientId)
+	}))(function(props) {
+		const { isSelected, className, block } = props;
+
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && blockControls(props),
 			<div className={className}>{editorDisplay(props)}</div>
 		];
-	},
+	}),
 	save: () => null
 });

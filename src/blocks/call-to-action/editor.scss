@@ -4,31 +4,26 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
+@import '../../common';
 
 .wp-block-ub-call-to-action {
-    margin: 0 auto;
-    max-width: 100%;
-}
-
-.ub_call_to_action_headline p {
-    text-align: center;
-    padding: 20px 20px 0 20px;
+	margin: 0 auto;
+	max-width: 100%;
 }
 
 .ub_call_to_action_content {
-    width: 100%;
-    padding: 0 0 40px 0;
+	padding: 0 0 40px 0;
 }
 
 .ub_call_to_action_url_input {
-    display: flex;
-    align-items: center;
-    margin-top: -20px;
+	display: flex;
+	align-items: center;
+	margin-top: -20px;
 }
 
 .ub_cta_url_input_box {
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    box-sizing: border-box;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	box-sizing: border-box;
 }

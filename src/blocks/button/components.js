@@ -361,11 +361,10 @@ export const editorDisplay = props => {
 			<div className="ub_button_url_input">
 				{isSelected && (
 					<form
-						key={'form-link'}
 						onSubmit={event => event.preventDefault()}
 						className={`editor-format-toolbar__link-modal-line ub_button_input_box flex-container`}
 					>
-						<div className="ub-button-confirm-url">
+						<div className="ub-icon-holder">
 							<Icon icon="admin-links" />
 						</div>
 						<URLInput

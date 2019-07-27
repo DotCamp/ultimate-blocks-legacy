@@ -41,6 +41,10 @@ function ub_register_feature_box_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/feature-box-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'column' => array(
                     'type' => 'string',
                     'default' => '2'

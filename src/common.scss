@@ -13,5 +13,10 @@ $green: #bada55;
 $red: orangered;
 
 .ub-hide {
-	display:none;
+	display: none;
+}
+
+.ub-icon-holder {
+	position: relative;
+	transform: translate(-25%, 25%);
 }

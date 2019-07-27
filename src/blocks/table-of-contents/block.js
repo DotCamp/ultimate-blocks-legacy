@@ -30,6 +30,10 @@ import './style.scss';
 import { upgradeButtonLabel, mergeRichTextArray } from '../../common';
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	title: {
 		type: 'string',
 		default: ''
@@ -188,13 +192,20 @@ registerBlockType('ub/table-of-contents-block', {
 	category: 'ultimateblocks',
 	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
 	attributes,
-	edit(props) {
-		const { isSelected } = props;
+	edit: withSelect((select, ownProps) => ({
+		block: select('core/editor').getBlock(ownProps.clientId)
+	}))(function(props) {
+		const { isSelected, block } = props;
+
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
+		}
+
 		return [
 			isSelected && inspectorControls(props),
 			isSelected && blockControls(props),
 			<div className="ub_table-of-contents">{editorDisplay(props)}</div>
 		];
-	},
+	}),
 	save: () => null
 });

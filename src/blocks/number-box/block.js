@@ -23,6 +23,10 @@ const { withDispatch, withSelect } = wp.data;
 const { withState, compose } = wp.compose;
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	column: {
 		type: 'string',
 		default: '2'
@@ -375,8 +379,17 @@ registerBlockType('ub/number-box-block', {
 	keywords: [__('Number box'), __('Feature'), __('Ultimate Blocks')],
 	attributes,
 
-	edit: withState({ editable: '' })(function(props) {
-		const { isSelected } = props;
+	edit: compose([
+		withState({ editable: '' }),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
+	])(function(props) {
+		const { isSelected, block } = props;
+
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && blockControls(props),

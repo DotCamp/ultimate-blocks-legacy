@@ -1,23 +1,17 @@
-/**
- * BLOCK: Click-to-block
- *
- * Registering a basic block with Gutenberg.
- * Simple block, renders and saves the same content without any interactivity.
- */
-
 //Import Icon
 import icon from './icons/icon';
 
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
-import { string } from 'prop-types';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { RichText, InspectorControls, PanelColorSettings } = wp.editor;
 
 const { TextControl, RangeControl, PanelBody } = wp.components;
+
+const { withSelect } = wp.data;
 
 /**
  * Register: aa Gutenberg Block.
@@ -38,6 +32,10 @@ registerBlockType('ub/click-to-tweet', {
 	category: 'ultimateblocks',
 	keywords: [__('Click to tweet'), __('Twitter'), __('Ultimate Blocks')],
 	attributes: {
+		blockID: {
+			type: 'string',
+			default: ''
+		},
 		ubTweet: {
 			type: 'string',
 			default: ''
@@ -67,21 +65,27 @@ registerBlockType('ub/click-to-tweet', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function(props) {
+	edit: withSelect((select, ownProps) => ({
+		block: select('core/editor').getBlock(ownProps.clientId)
+	}))(function(props) {
 		const {
 			ubTweet,
 			ubVia,
 			tweetFontSize,
 			tweetColor,
-			borderColor
+			borderColor,
+			blockID
 		} = props.attributes;
 
-		const { isSelected, setAttributes } = props;
+		const { isSelected, setAttributes, block } = props;
 
-		// Creates a <p class='wp-block-cgb-block-sample-block'></p>.
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
+
 		return [
 			isSelected && (
-				<InspectorControls key="inspectors">
+				<InspectorControls>
 					<PanelBody title={__('Click to Tweet Settings')}>
 						<TextControl
 							label={__('Twitter Username')}
@@ -152,7 +156,7 @@ registerBlockType('ub/click-to-tweet', {
 				</div>
 			</div>
 		];
-	},
+	}),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined

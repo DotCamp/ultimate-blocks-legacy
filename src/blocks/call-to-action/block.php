@@ -26,6 +26,10 @@ function ub_register_call_to_action_block() {
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/call-to-action-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'ub_call_to_action_headline_text' => array(
                     'type' => 'string',
                     'default' => ''

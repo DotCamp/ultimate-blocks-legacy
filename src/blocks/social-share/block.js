@@ -35,6 +35,7 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
 const { BlockControls, AlignmentToolbar } = wp.editor;
+const { withSelect } = wp.data;
 
 /**
  * Register: aa Gutenberg Block.
@@ -54,11 +55,66 @@ registerBlockType('ub/social-share', {
 	icon: icon,
 	category: 'ultimateblocks',
 	keywords: [__('social'), __('share'), __('Ultimate Blocks')],
+	attributes: {
+		blockID: {
+			type: 'string',
+			default: ''
+		},
+		showFacebookIcon: {
+			type: 'boolean',
+			default: true
+		},
+		showTwitterIcon: {
+			type: 'boolean',
+			default: true
+		},
+		showLinkedInIcon: {
+			type: 'boolean',
+			default: true
+		},
+		showPinterestIcon: {
+			type: 'boolean',
+			default: true
+		},
+		showRedditIcon: {
+			type: 'boolean',
+			default: true
+		},
+		showGooglePlusIcon: {
+			type: 'boolean',
+			default: true
+		},
+		showTumblrIcon: {
+			type: 'boolean',
+			default: true
+		},
+		iconSize: {
+			type: 'string',
+			default: 'normal'
+		},
+		iconShape: {
+			type: 'string',
+			default: 'circle'
+		},
+		align: {
+			type: 'string',
+			default: 'left'
+		}
+	},
 
-	edit: function(props) {
-		const { attributes, setAttributes, isSelected, className } = props;
+	edit: withSelect((select, ownProps) => ({
+		block: select('core/editor').getBlock(ownProps.clientId)
+	}))(function(props) {
+		const {
+			attributes,
+			setAttributes,
+			isSelected,
+			className,
+			block
+		} = props;
 
 		const {
+			blockID,
 			showFacebookIcon,
 			showGooglePlusIcon,
 			showLinkedInIcon,
@@ -70,74 +126,27 @@ registerBlockType('ub/social-share', {
 			iconShape
 		} = attributes;
 
-		const toggleFacebookIcon = () => {
-			setAttributes({ showFacebookIcon: !showFacebookIcon });
-		};
-
-		const toggleTwitterIcon = () => {
-			setAttributes({ showTwitterIcon: !showTwitterIcon });
-		};
-
-		const toggleLinkedInIcon = () => {
-			setAttributes({ showLinkedInIcon: !showLinkedInIcon });
-		};
-
-		const togglePinterestIcon = () => {
-			setAttributes({ showPinterestIcon: !showPinterestIcon });
-		};
-
-		const toggleRedditIcon = () => {
-			setAttributes({ showRedditIcon: !showRedditIcon });
-		};
-
-		const toggleGooglePlusIcon = () => {
-			setAttributes({ showGooglePlusIcon: !showGooglePlusIcon });
-		};
-
-		const toggleTumblrIcon = () => {
-			setAttributes({ showTumblrIcon: !showTumblrIcon });
-		};
-
-		const onSizeChange = value => {
-			setAttributes({ iconSize: value });
-		};
-
-		const onShapeChange = value => {
-			setAttributes({ iconShape: value });
-		};
-
 		const iconSize = iconSizes[attributes.iconSize];
 
-		const controls = (
-			<BlockControls key="controls">
-				<AlignmentToolbar
-					value={align}
-					onChange={newAlignment =>
-						setAttributes({ align: newAlignment })
-					}
-					controls={['left', 'center', 'right']}
-				/>
-			</BlockControls>
-		);
+		if (blockID !== block.clientId) {
+			setAttributes({
+				blockID: block.clientId
+			});
+		}
 
 		return [
-			isSelected && controls,
 			isSelected && (
-				<Inspector
-					{...{
-						onSizeChange,
-						onShapeChange,
-						toggleFacebookIcon,
-						toggleTwitterIcon,
-						toggleLinkedInIcon,
-						togglePinterestIcon,
-						toggleRedditIcon,
-						toggleGooglePlusIcon,
-						toggleTumblrIcon,
-						...props
-					}}
-				/>
+				<BlockControls>
+					<AlignmentToolbar
+						value={align}
+						onChange={newAlignment =>
+							setAttributes({ align: newAlignment })
+						}
+						controls={['left', 'center', 'right']}
+					/>
+				</BlockControls>
 			),
+			isSelected && <Inspector {...props} />,
 			<div id="ub-social-share-block-editor" className={className}>
 				<div className={'social-share-icons align-icons-' + align}>
 					{showFacebookIcon && (
@@ -147,14 +156,10 @@ registerBlockType('ub/social-share', {
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: attributes.facebookIconBgColor
+								backgroundColor: '#365899'
 							}}
 						>
-							<FacebookIcon
-								width={iconSize}
-								height={iconSize}
-								fillColor={attributes.facebookIconTextColor}
-							/>
+							<FacebookIcon width={iconSize} height={iconSize} />
 						</a>
 					)}
 					{showTwitterIcon && (
@@ -164,14 +169,10 @@ registerBlockType('ub/social-share', {
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: attributes.twitterIconBgColor
+								backgroundColor: '#1da1f2'
 							}}
 						>
-							<TwitterIcon
-								width={iconSize}
-								height={iconSize}
-								fillColor={attributes.twitterIconTextColor}
-							/>
+							<TwitterIcon width={iconSize} height={iconSize} />
 						</a>
 					)}
 					{showLinkedInIcon && (
@@ -181,14 +182,10 @@ registerBlockType('ub/social-share', {
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: attributes.linkedInIconBgColor
+								backgroundColor: '#0073b1'
 							}}
 						>
-							<LinkedInIcon
-								width={iconSize}
-								height={iconSize}
-								fillColor={attributes.linkedInIconTextColor}
-							/>
+							<LinkedInIcon width={iconSize} height={iconSize} />
 						</a>
 					)}
 					{showPinterestIcon && (
@@ -198,14 +195,10 @@ registerBlockType('ub/social-share', {
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: attributes.pinterestIconBgColor
+								backgroundColor: '#bd081c'
 							}}
 						>
-							<PinterestIcon
-								width={iconSize}
-								height={iconSize}
-								fillColor={attributes.pinterestIconTextColor}
-							/>
+							<PinterestIcon width={iconSize} height={iconSize} />
 						</a>
 					)}
 					{showRedditIcon && (
@@ -215,14 +208,10 @@ registerBlockType('ub/social-share', {
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: attributes.redditIconBgColor
+								backgroundColor: '#cee3f8'
 							}}
 						>
-							<RedditIcon
-								width={iconSize}
-								height={iconSize}
-								fillColor={attributes.redditIconTextColor}
-							/>
+							<RedditIcon width={iconSize} height={iconSize} />
 						</a>
 					)}
 					{showGooglePlusIcon && (
@@ -232,14 +221,12 @@ registerBlockType('ub/social-share', {
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor:
-									attributes.googlePlusIconBgColor
+								backgroundColor: '#db4437'
 							}}
 						>
 							<GooglePlusIcon
 								width={iconSize}
 								height={iconSize}
-								fillColor={attributes.googlePlusIconTextColor}
 							/>
 						</a>
 					)}
@@ -250,22 +237,16 @@ registerBlockType('ub/social-share', {
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: attributes.tumblrIconBgColor
+								backgroundColor: '#36465d'
 							}}
 						>
-							<TumblrIcon
-								width={iconSize}
-								height={iconSize}
-								fillColor={attributes.tumblrIconTextColor}
-							/>
+							<TumblrIcon width={iconSize} height={iconSize} />
 						</a>
 					)}
 				</div>
 			</div>
 		];
-	},
+	}),
 
-	save: function() {
-		return null;
-	}
+	save: () => null
 });

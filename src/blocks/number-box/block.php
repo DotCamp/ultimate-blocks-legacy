@@ -52,6 +52,10 @@ function ub_register_number_box_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/number-box-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' =>  'string',
+                    'default' => ''
+                ),
                 'column' => array(
                     'type' => 'string',
                     'default' => '2'

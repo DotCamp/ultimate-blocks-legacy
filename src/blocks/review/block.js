@@ -10,10 +10,11 @@ const { registerBlockType } = wp.blocks;
 const { BlockControls, InspectorControls, PanelColorSettings } = wp.editor;
 
 const { Toolbar, IconButton } = wp.components;
-const { withState } = wp.compose;
+const { withState, compose } = wp.compose;
+const { withSelect } = wp.data;
 
 const attributes = {
-	ID: {
+	blockID: {
 		type: 'string',
 		default: ''
 	},
@@ -82,10 +83,15 @@ registerBlockType('ub/review', {
 	category: 'ultimateblocks',
 	keywords: [__('Review'), __('Ultimate Blocks')],
 	attributes,
-	edit: withState({ editable: '' })(function(props) {
-		const { setAttributes, isSelected, editable, setState } = props;
+	edit: compose([
+		withState({ editable: '' }),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
+	])(function(props) {
+		const { setAttributes, isSelected, editable, setState, block } = props;
 		const {
-			ID,
+			blockID,
 			authorName,
 			itemName,
 			items,
@@ -103,12 +109,9 @@ registerBlockType('ub/review', {
 			authorAlign
 		} = props.attributes;
 
-		if (ID === '') {
+		if (blockID !== block.clientId) {
 			setAttributes({
-				ID: Math.random()
-					.toString(36)
-					.replace(/[^a-z0-9]+/g, '')
-					.substr(1, 10)
+				blockID: block.clientId
 			});
 		}
 
@@ -216,7 +219,7 @@ registerBlockType('ub/review', {
 			<ReviewBody
 				authorName={authorName}
 				itemName={itemName}
-				ID={ID}
+				ID={blockID}
 				items={JSON.parse(items)}
 				starCount={starCount}
 				summaryTitle={summaryTitle}
@@ -253,9 +256,7 @@ registerBlockType('ub/review', {
 			/>
 		];
 	}),
-	save() {
-		return null;
-	},
+	save: () => null,
 	deprecated: [
 		{
 			attributes,

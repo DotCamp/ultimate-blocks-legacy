@@ -26,6 +26,10 @@ function ub_register_testimonial_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/testimonial', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'ub_testimonial_text' => array(
                     'type' => 'string',
                     'default' => ''

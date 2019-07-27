@@ -68,7 +68,12 @@ function ub_register_content_toggle_panel_block() {
 function ub_register_content_toggle_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/content-toggle-block',
-        array('render_callback' => 'ub_render_content_toggle_block'));
+            array('attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
+            ), 'render_callback' => 'ub_render_content_toggle_block'));
 	}
 }
 

@@ -314,16 +314,10 @@ export const editorDisplay = props => {
 			<div className="ub_call_to_action_url_input">
 				{isSelected && (
 					<form
-						key={'form-link'}
 						onSubmit={event => event.preventDefault()}
 						className={`editor-format-toolbar__link-modal-line ub_cta_url_input_box flex-container`}
 					>
-						<div
-							style={{
-								position: 'relative',
-								transform: 'translate(-25%,25%)'
-							}}
-						>
+						<div className="ub-icon-holder">
 							<Icon icon="admin-links" />
 						</div>
 						<URLInput

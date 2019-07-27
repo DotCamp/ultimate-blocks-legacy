@@ -65,6 +65,10 @@ const oldAttributes = {
 };
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	activeControl: {
 		type: 'string'
 	},
@@ -268,7 +272,5 @@ registerBlockType('ub/tabbed-content-block', {
 		withState({ oldArrangement: '' })
 	])(TabHolder),
 
-	save() {
-		return <InnerBlocks.Content />;
-	}
+	save: () => <InnerBlocks.Content />
 });

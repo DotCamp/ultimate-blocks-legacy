@@ -24,6 +24,10 @@ const { withDispatch, withSelect } = wp.data;
 const { withState, compose } = wp.compose;
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	column: {
 		type: 'string',
 		default: '2'
@@ -329,22 +333,16 @@ registerBlockType('ub/feature-box-block', {
 	attributes,
 
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
-		withDispatch(dispatch => {
-			const { replaceBlock } = dispatch('core/editor');
-			return { replaceBlock };
-		}),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		})),
 		withState({ editable: '' })
 	])(function(props) {
-		const { isSelected } = props;
+		const { isSelected, block } = props;
+
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && blockControls(props),

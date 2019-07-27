@@ -17,6 +17,8 @@ const {
 	DropdownMenu
 } = wp.components;
 
+const { withSelect } = wp.data;
+
 import './editor.scss';
 import './style.scss';
 
@@ -30,6 +32,10 @@ registerBlockType('ub/progress-bar', {
 	keywords: [__('Progress Bar'), __('Ultimate Blocks')],
 
 	attributes: {
+		blockID: {
+			type: 'string',
+			default: ''
+		},
 		percentage: {
 			type: 'number',
 			default: 25
@@ -56,9 +62,12 @@ registerBlockType('ub/progress-bar', {
 		}
 	},
 
-	edit(props) {
-		const { isSelected, setAttributes } = props;
+	edit: withSelect((select, ownProps) => ({
+		block: select('core/editor').getBlock(ownProps.clientId)
+	}))(function(props) {
+		const { isSelected, setAttributes, block } = props;
 		const {
+			blockID,
 			percentage,
 			barType,
 			detail,
@@ -66,6 +75,10 @@ registerBlockType('ub/progress-bar', {
 			barColor,
 			barThickness
 		} = props.attributes;
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && (
@@ -103,15 +116,12 @@ registerBlockType('ub/progress-bar', {
 								: 'align' + detailAlign
 						}`}
 						controls={['left', 'center', 'right', 'justify'].map(
-							a => {
-								return {
-									icon: `editor-${
-										a === 'justify' ? a : 'align' + a
-									}`,
-									onClick: () =>
-										setAttributes({ detailAlign: a })
-								};
-							}
+							a => ({
+								icon: `editor-${
+									a === 'justify' ? a : 'align' + a
+								}`,
+								onClick: () => setAttributes({ detailAlign: a })
+							})
 						)}
 					/>
 				</BlockControls>
@@ -170,7 +180,7 @@ registerBlockType('ub/progress-bar', {
 				)}
 			</div>
 		];
-	},
+	}),
 
 	save() {
 		return null;

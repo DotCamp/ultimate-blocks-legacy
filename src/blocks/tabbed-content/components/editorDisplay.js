@@ -499,6 +499,10 @@ export class TabHolder extends Component {
 			}
 		}
 
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
+
 		return [
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
 			<div className={className}>

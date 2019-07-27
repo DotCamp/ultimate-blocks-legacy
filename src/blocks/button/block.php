@@ -56,6 +56,10 @@ function ub_register_button_block() {
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/button', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'buttonText' => array(
                     'type' => 'string',
                     'default' => 'Button Text'

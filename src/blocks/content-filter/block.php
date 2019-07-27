@@ -74,6 +74,10 @@ function ub_register_content_filter_block(){
     if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/content-filter-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'filterArray' => array(
                     'type' => 'array',
                     'default' => array()

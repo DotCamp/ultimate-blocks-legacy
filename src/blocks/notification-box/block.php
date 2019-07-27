@@ -3,7 +3,7 @@
 function ub_render_notification_box_block($attributes){
     extract($attributes);
     return '<div>
-    <div class="wp-block-ub-block-notification-box '.$ub_selected_notify.' '.esc_attr($className).'">
+    <div class="wp-block-ub-notification-box '.$ub_selected_notify.' '.esc_attr($className).'">
         <p class="ub_notify_text" style="text-align: '.$align.';">'.$ub_notify_info.'</p>
     </div>
 </div>';
@@ -13,6 +13,10 @@ function ub_register_notification_box_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/notification-box-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'ub_selected_notify' => array(
                     'type' => 'string',
                     'default' => 'ub_notify_info'

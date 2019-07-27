@@ -29,9 +29,15 @@ const {
 	PanelBody
 } = wp.components;
 
-const { withState } = wp.compose;
+const { withState, compose } = wp.compose;
+
+const { withSelect } = wp.data;
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	images: {
 		type: 'string',
 		default: '[]'
@@ -73,13 +79,19 @@ registerBlockType('ub/image-slider', {
 	keywords: [__('Image Slider'), __('Slideshow'), __('Ultimate Blocks')],
 	attributes,
 
-	edit: withState({ componentKey: 0, activeSlide: 0 })(function(props) {
+	edit: compose([
+		withState({ componentKey: 0, activeSlide: 0 }),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
+	])(function(props) {
 		const {
 			setAttributes,
 			isSelected,
 			setState,
 			componentKey,
-			activeSlide
+			activeSlide,
+			block
 		} = props;
 		const {
 			images,
@@ -89,10 +101,15 @@ registerBlockType('ub/image-slider', {
 			autoplays,
 			autoplayDuration,
 			sliderHeight,
-			showPageDots
+			showPageDots,
+			blockID
 		} = props.attributes;
 		const imageArray = JSON.parse(images);
 		const captionArray = JSON.parse(captions);
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && (
@@ -210,8 +227,7 @@ registerBlockType('ub/image-slider', {
 				className="ub_image_slider"
 				style={{
 					minHeight: `${20 +
-						(imageArray.length ? sliderHeight : 200)}px`,
-					display: 'block'
+						(imageArray.length ? sliderHeight : 200)}px`
 				}}
 			>
 				{imageArray.length === 0 ? (
@@ -221,13 +237,11 @@ registerBlockType('ub/image-slider', {
 							props.setAttributes({
 								images: JSON.stringify(newImages),
 								captions: JSON.stringify(
-									newImages.map(img => {
-										return {
-											id: img.id,
-											text: '',
-											link: ''
-										};
-									})
+									newImages.map(img => ({
+										id: img.id,
+										text: '',
+										link: ''
+									}))
 								)
 							});
 						}}
@@ -284,11 +298,7 @@ registerBlockType('ub/image-slider', {
 									))
 								],
 								isSelected && (
-									<div
-										style={{
-											height: '100%'
-										}}
-									>
+									<div className="ub_image_slider_extra">
 										<FormFileUpload
 											multiple
 											isLarge
@@ -297,7 +307,7 @@ registerBlockType('ub/image-slider', {
 													allowedTypes: ['image'],
 													filesList:
 														event.target.files,
-													onFileChange: images => {
+													onFileChange: images =>
 														setAttributes({
 															images: JSON.stringify(
 																imageArray.concat(
@@ -307,21 +317,18 @@ registerBlockType('ub/image-slider', {
 															captions: JSON.stringify(
 																captionArray.concat(
 																	images.map(
-																		img => {
-																			return {
-																				id:
-																					img.id,
-																				text:
-																					'',
-																				link:
-																					''
-																			};
-																		}
+																		img => ({
+																			id:
+																				img.id,
+																			text:
+																				'',
+																			link:
+																				''
+																		})
 																	)
 																)
 															)
-														});
-													}
+														})
 												});
 											}}
 											className="ub_image_slider_add_images"
@@ -336,11 +343,10 @@ registerBlockType('ub/image-slider', {
 						/>
 						{isSelected && activeSlide < captionArray.length && (
 							<form
-								key={'form-link'}
 								onSubmit={event => event.preventDefault()}
 								className={`editor-format-toolbar__link-modal-line ub_image_slider_url_input flex-container`}
 							>
-								<div>
+								<div className="ub-icon-holder">
 									<Icon icon="admin-links" />
 								</div>
 								<URLInput

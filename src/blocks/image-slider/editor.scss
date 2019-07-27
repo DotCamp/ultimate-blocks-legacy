@@ -1,4 +1,7 @@
+@import '../../common';
+
 .ub_image_slider {
+	display: block;
 	.flickity-enabled .flickity-page-dots {
 		bottom: 30px;
 	}
@@ -9,9 +12,9 @@
 
 .ub_image_slider_url_input {
 	width: 300px;
-    margin: auto;
-    >div:first-child{
-        position: relative;
-        transform: translate(-25%,25%);
-    }
+	margin: auto;
+}
+
+.ub_image_slider_extra {
+	height: 100%;
 }

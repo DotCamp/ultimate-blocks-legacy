@@ -59,6 +59,7 @@ export const version_1_1_5 = props => {
 	);
 };
 
-export const updateFrom = oldVersion => {
-	return { attributes: oldAttributes, save: oldVersion };
-};
+export const updateFrom = oldVersion => ({
+	attributes: oldAttributes,
+	save: oldVersion
+});

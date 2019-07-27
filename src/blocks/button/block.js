@@ -56,6 +56,10 @@ const { registerBlockType, createBlock } = wp.blocks;
  */
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	buttonText: {
 		type: 'string',
 		default: 'Button Text'
@@ -291,16 +295,30 @@ registerBlockType('ub/button', {
 	category: 'ultimateblocks',
 	attributes,
 	keywords: [__('Button'), __('Buttons'), __('Ultimate Blocks')],
-	edit: withState({
-		isMouseHovered: false,
-		availableIcons: [],
-		iconSearchTerm: ''
-	})(function(props) {
-		const { isSelected, setState, availableIcons } = props;
+	edit: compose([
+		withState({
+			isMouseHovered: false,
+			availableIcons: [],
+			iconSearchTerm: ''
+		}),
+		withSelect((select, ownProps) => {
+			const { getBlock } = select('core/editor');
+
+			const { clientId } = ownProps;
+
+			return {
+				block: getBlock(clientId)
+			};
+		})
+	])(function(props) {
+		const { isSelected, setState, availableIcons, block } = props;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
 			setState({ availableIcons: iconList.map(name => allIcons[name]) });
+		}
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
 		}
 
 		return [

@@ -3,41 +3,32 @@
  *
  * CSS for both Frontend+Backend.
  */
-
-.wp-block-ub-block-notification-box {
-    background: $red;
-    border: 0.2rem solid $black;
-    color: $black;
-    margin: 0 auto;
-    max-width: 100%;
-    padding: 2rem;
-}
-
 .ub_notify_info,
 .ub_notify_success,
 .ub_notify_warning {
-    margin: 10px 0px;
-    padding: 15px;
+	margin: 10px 0px;
+	padding: 15px;
+	border-left-width: 4px;
+	border-left-style: solid;
+	.ub_notify_text {
+		margin: 0 auto;
+	}
 }
 
 .ub_notify_info {
-    color: #31708F !important;
-    background-color: #D9EDF7;
-    border-left: 4px solid #31708F;
+	color: #31708f;
+	background-color: #d9edf7;
+	border-left-color: #31708f;
 }
 
 .ub_notify_success {
-    color: #3C763D !important;
-    background-color: #DFF0D8;
-    border-left: 4px solid #3C763D;
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-left-color: #3c763d;
 }
 
 .ub_notify_warning {
-    color: #D8000C !important;
-    background-color: #FFD2D2;
-    border-left: 4px solid #D8000C;
-}
-
-.ub_notify_text {
-    margin: 0 auto !important;
+	color: #d8000c;
+	background-color: #ffd2d2;
+	border-left-color: #d8000c;
 }

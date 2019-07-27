@@ -43,6 +43,10 @@ function ub_register_star_rating_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/star-rating-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'starCount' => array(
                     'type' => 'number',
                     'default' => 5

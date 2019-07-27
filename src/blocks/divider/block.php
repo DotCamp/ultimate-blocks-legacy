@@ -10,6 +10,10 @@ function ub_register_divider_block(){
     if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/divider', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'borderSize' => array(
                     'type' => 'number',
                     'default' => 2

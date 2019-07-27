@@ -34,6 +34,10 @@ function ub_register_image_slider_block(){
     if ( function_exists( 'register_block_type' ) ) {
         register_block_type('ub/image-slider', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'images' => array(
                     'type' => 'string',
                     'default' => '[]'

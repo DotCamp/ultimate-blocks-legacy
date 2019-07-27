@@ -20,6 +20,10 @@ const { withState, compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	ub_testimonial_text: {
 		type: 'string',
 		default: ''
@@ -244,8 +248,17 @@ registerBlockType('ub/testimonial', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withState({ editable: '' })(function(props) {
-		const { isSelected, className } = props;
+	edit: compose([
+		withState({ editable: '' }),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
+	])(function(props) {
+		const { isSelected, className, block } = props;
+
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && blockControls(props),

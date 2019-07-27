@@ -574,7 +574,8 @@ export class PanelContent extends Component {
 			buttonColor,
 			buttonTextColor,
 			activeButtonColor,
-			activeButtonTextColor
+			activeButtonTextColor,
+			blockID
 			//,allowReset,resetButtonLabel
 		} = attributes;
 
@@ -619,6 +620,10 @@ export class PanelContent extends Component {
 				: selectedFilterArr[filterCategoryIndex],
 			...selectedFilterArr.slice(filterCategoryIndex + 1)
 		];
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && (

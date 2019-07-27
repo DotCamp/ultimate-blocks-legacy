@@ -52,6 +52,10 @@ function ub_register_tabbed_content_block(){
     if(function_exists('register_block_type')){
         register_block_type('ub/tabbed-content-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'activeTab' => array(
                     'type' => 'number',
                     'default' => 0

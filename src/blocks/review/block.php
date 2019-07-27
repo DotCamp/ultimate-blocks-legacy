@@ -35,7 +35,7 @@ function ub_render_review_block($attributes){
 
     foreach($parsedItems as $key=>$item){
         $starRatings .= '<div class="ub_review_entry">'.$item['label'].
-        ub_generateStarDisplay($item['value'],$starCount, $ID.'-'.$key,
+        ub_generateStarDisplay($item['value'],$starCount, $blockID.'-'.$key,
         $inactiveStarColor, $activeStarColor, "margin-left: auto;").'</div>';
     }
 
@@ -58,7 +58,7 @@ function ub_render_review_block($attributes){
                     <button class="ub_review_cta_btn" style="background-color: '.$callToActionBackColor
                         .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';">'.
                         ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>'.
-                    ub_generateStarDisplay($average,$starCount, $ID.'-average',
+                    ub_generateStarDisplay($average,$starCount, $blockID.'-average',
                     $inactiveStarColor, $activeStarColor, "", "ub_review_average_stars").'
                 </div></div>
     <script type="application/ld+json">
@@ -73,7 +73,7 @@ function ub_register_review_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/review', array(           
             'attributes' => array(
-                'ID' => array(
+                'blockID' => array(
                     'type' => 'string',
                     'default' => ''
                 ),

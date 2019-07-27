@@ -187,9 +187,7 @@ registerBlockType('ub/content-filter-entry', {
 		selectedFilters.forEach((selection, i) => {
 			if (Array.isArray(selection)) {
 				selection
-					.map((a, i) => {
-						return { val: a, index: i };
-					})
+					.map((a, i) => ({ val: a, index: i }))
 					.filter(a => a.val === true)
 					.forEach(a =>
 						tagList.push({
@@ -277,9 +275,7 @@ registerBlockType('ub/content-filter-entry', {
 		selectedFilters.forEach((selection, i) => {
 			if (Array.isArray(selection)) {
 				selection
-					.map((a, i) => {
-						return { val: a, index: i };
-					})
+					.map((a, i) => ({ val: a, index: i }))
 					.filter(a => a.val === true)
 					.forEach(a =>
 						tagList.push({
@@ -372,9 +368,7 @@ registerBlockType('ub/content-filter-entry-block', {
 		selectedFilters.forEach((selection, i) => {
 			if (Array.isArray(selection)) {
 				selection
-					.map((a, i) => {
-						return { val: a, index: i };
-					})
+					.map((a, i) => ({ val: a, index: i }))
 					.filter(a => a.val === true)
 					.forEach(a =>
 						tagList.push({

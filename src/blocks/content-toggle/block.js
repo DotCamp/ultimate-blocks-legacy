@@ -24,6 +24,10 @@ const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks } = wp.editor;
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	theme: {
 		type: 'string',
 		default: '#f63d3d'

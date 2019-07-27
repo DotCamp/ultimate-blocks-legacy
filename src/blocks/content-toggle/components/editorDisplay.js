@@ -195,7 +195,7 @@ export class PanelContent extends Component {
 			block
 		} = this.props;
 
-		const { collapsed, theme, titleColor } = attributes;
+		const { collapsed, theme, titleColor, blockID } = attributes;
 
 		const panels = this.getPanels();
 
@@ -276,6 +276,10 @@ export class PanelContent extends Component {
 		} else {
 			selectBlock(parentOfSelectedBlock);
 			setState({ mainBlockSelected: true });
+		}
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return [

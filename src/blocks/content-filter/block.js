@@ -12,6 +12,10 @@ const { withDispatch, withSelect } = wp.data;
 import icon from './icon';
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	filterArray: {
 		type: 'array',
 		default: [] // new objects should be { category: '', filters: [], canUseMultiple: false }

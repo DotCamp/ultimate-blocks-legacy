@@ -4,9 +4,10 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
+@import '../../common';
+
 .wp-block-ub-button-block {
 	margin: 0 auto;
-	max-width: 100%;
 }
 
 .ub_button_url_input {
@@ -51,10 +52,6 @@
 	justify-self: self-end;
 }
 
-.ub-button-confirm-url {
-	position: relative;
-	transform: translate(-25%, 25%);
-}
 .ub-button-block-main {
 	cursor: auto;
 }

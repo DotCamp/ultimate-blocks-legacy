@@ -37,6 +37,10 @@ const { withState, compose } = wp.compose;
  */
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	ub_call_to_action_headline_text: {
 		type: 'string',
 		default: ''
@@ -300,8 +304,23 @@ registerBlockType('ub/call-to-action-block', {
 	category: 'ultimateblocks',
 	keywords: [__('call to action'), __('conversion'), __('Ultimate Blocks')],
 	attributes,
-	edit: withState({ editable: '' })(function(props) {
-		const { isSelected } = props;
+	edit: compose([
+		withState({ editable: '' }),
+		withSelect((select, ownProps) => {
+			const { getBlock } = select('core/editor');
+
+			const { clientId } = ownProps;
+
+			return {
+				block: getBlock(clientId)
+			};
+		})
+	])(function(props) {
+		const { isSelected, block } = props;
+
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && blockControls(props),

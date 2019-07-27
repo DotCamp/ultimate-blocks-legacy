@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
 import React, { Component } from 'react';
 
-class Circle extends Component {
+export default class Circle extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -70,7 +70,6 @@ class Circle extends Component {
 					height={size}
 					width={size}
 					viewBox="0 0 100 100"
-					style={{ position: 'absolute' }}
 				>
 					<path
 						className="ub_progress-bar-circle-trail"
@@ -103,5 +102,3 @@ class Circle extends Component {
 		);
 	}
 }
-
-export default Circle;

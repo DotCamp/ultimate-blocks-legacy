@@ -10,12 +10,10 @@ function ub_render_countdown_block($attributes){
     $hours = (($timeLeft - $minutes * 60 - $seconds) % 86400) / 3600;
     $days = (($timeLeft - $hours * 3600 - $minutes * 60 - $seconds) % 604800) / 86400;
     $weeks = ($timeLeft - $days * 86400 - $hours * 3600 - $minutes * 60 - $seconds) / 604800;
-    
-    $elementID = ub_generateBlockID(); 
 
     $defaultFormat = $weeks . ' ' . __( 'weeks', 'ultimate-blocks' ) . ' ' . $days . ' ' . __('days', 'ultimate-blocks') . ' ' . $hours . ' ' . __( 'hours', 'ultimate-blocks' ) . ' ' . $minutes . ' ' . __( 'minutes', 'ultimate-blocks' ) . ' ' . $seconds . ' ' . __( 'seconds', 'ultimate-blocks' );
 
-    $defaultUpdate = 'document.getElementById("ub_countdown_'.$elementID.'").innerHTML = `${weeks} ' . __( 'weeks', 'ultimate-blocks' ) . ' ${days} ' . __( 'days', 'ultimate-blocks' ) . ' ${hours} ' . __( 'hours', 'ultimate-blocks' ) . ' ${minutes} ' . __( 'minutes', 'ultimate-blocks' ) . ' ${seconds} ' . __( 'seconds', 'ultimate-blocks' ) . '`;';
+    $defaultUpdate = 'document.getElementById("ub_countdown_'.$blockID.'").innerHTML = `${weeks} ' . __( 'weeks', 'ultimate-blocks' ) . ' ${days} ' . __( 'days', 'ultimate-blocks' ) . ' ${hours} ' . __( 'hours', 'ultimate-blocks' ) . ' ${minutes} ' . __( 'minutes', 'ultimate-blocks' ) . ' ${seconds} ' . __( 'seconds', 'ultimate-blocks' ) . '`;';
 
     if(!function_exists('ub_generateCircle')){
         function ub_generateCircle($label, $value, $limit, $color){
@@ -53,7 +51,7 @@ function ub_render_countdown_block($attributes){
         }
     }
     
-    $circularUpdate = ub_circleUpdate("week", 52, $elementID) . ub_circleUpdate("day", 7, $elementID) . ub_circleUpdate("hour", 24, $elementID) . ub_circleUpdate("minute", 60, $elementID) . ub_circleUpdate("second", 60, $elementID);
+    $circularUpdate = ub_circleUpdate("week", 52, $blockID) . ub_circleUpdate("day", 7, $blockID) . ub_circleUpdate("hour", 24, $blockID) . ub_circleUpdate("minute", 60, $blockID) . ub_circleUpdate("second", 60, $blockID);
 
     $odometerSeparator = '<span class="ub-countdown-separator">:</span>';
 
@@ -67,11 +65,11 @@ function ub_render_countdown_block($attributes){
                         '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_second">' . ($seconds < 0 ? $seconds : $seconds + 100) . '</div></div>
                     <script src="'.plugin_dir_url( __FILE__ ) . 'odometer.js"></script>';
 
-    $odometerUpdate = 'document.querySelector("#ub_countdown_'.$elementID.' .ub_countdown_week").innerHTML = weeks < 0 ? weeks : weeks + 10 ** (weeks > 0 ? Math.floor(Math.log10(weeks) + 1) : 1);
-                        document.querySelector("#ub_countdown_'.$elementID.' .ub_countdown_day").innerHTML = days < 0 ? days : days + 10;
-                        document.querySelector("#ub_countdown_'.$elementID.' .ub_countdown_hour").innerHTML = hours < 0 ? hours : hours + 100;
-                        document.querySelector("#ub_countdown_'.$elementID.' .ub_countdown_minute").innerHTML = minutes < 0 ? minutes : minutes +100;
-                        document.querySelector("#ub_countdown_'.$elementID.' .ub_countdown_second").innerHTML = seconds < 0 ? seconds : seconds + 100';
+    $odometerUpdate = 'document.querySelector("#ub_countdown_'.$blockID.' .ub_countdown_week").innerHTML = weeks < 0 ? weeks : weeks + 10 ** (weeks > 0 ? Math.floor(Math.log10(weeks) + 1) : 1);
+                        document.querySelector("#ub_countdown_'.$blockID.' .ub_countdown_day").innerHTML = days < 0 ? days : days + 10;
+                        document.querySelector("#ub_countdown_'.$blockID.' .ub_countdown_hour").innerHTML = hours < 0 ? hours : hours + 100;
+                        document.querySelector("#ub_countdown_'.$blockID.' .ub_countdown_minute").innerHTML = minutes < 0 ? minutes : minutes +100;
+                        document.querySelector("#ub_countdown_'.$blockID.' .ub_countdown_second").innerHTML = seconds < 0 ? seconds : seconds + 100';
 
     $selctedFormat = $defaultFormat;
     $selectedUpdate = $defaultUpdate;
@@ -90,10 +88,10 @@ function ub_render_countdown_block($attributes){
     }
 
     if($timeLeft > 0){
-        return '<div id="ub_countdown_'.$elementID.'" class="ub-countdown '.esc_attr($className).'">
+        return '<div id="ub_countdown_'.$blockID.'" class="ub-countdown '.esc_attr($className).'">
             '.$selectedFormat
             .'</div><script type="text/javascript">
-                let timer_'.$elementID.' = setInterval(function(){
+                let timer_'.$blockID.' = setInterval(function(){
                     const timeLeft = '.$endDate.'-Math.floor(Date.now() / 1000);
                     const seconds = timeLeft % 60;
                     const minutes = ((timeLeft - seconds) % 3600) / 60;
@@ -108,8 +106,8 @@ function ub_render_countdown_block($attributes){
                         '.$selectedUpdate.'
                     }
                     else{
-                        clearInterval(timer_'.$elementID.');
-                        document.getElementById("ub_countdown_'.$elementID.'").innerHTML="'.$expiryMessage.'";
+                        clearInterval(timer_'.$blockID.');
+                        document.getElementById("ub_countdown_'.$blockID.'").innerHTML="'.$expiryMessage.'";
                     }
                 }, 1000);</script>';
     }
@@ -120,6 +118,10 @@ function ub_register_countdown_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/countdown', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'endDate' => array(
                     'type' => 'number',
                     'default' => time()+86400

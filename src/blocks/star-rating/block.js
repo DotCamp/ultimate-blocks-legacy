@@ -6,7 +6,6 @@ const { withState, compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
 import './style.scss';
-import './editor.scss';
 
 import { EmptyStar, BlockIcon, FullStar } from './icons';
 import {
@@ -20,6 +19,10 @@ import { blockControls, inspectorControls, editorDisplay } from './components';
 import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 
 const attributes = {
+	blockID: {
+		type: 'string',
+		default: ''
+	},
 	starCount: {
 		type: 'number',
 		default: 5
@@ -165,8 +168,17 @@ registerBlockType('ub/star-rating-block', {
 
 	attributes,
 
-	edit: withState({ highlightedStars: 0 })(function(props) {
-		const { isSelected } = props;
+	edit: compose([
+		withState({ highlightedStars: 0 }),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
+	])(function(props) {
+		const { isSelected, block } = props;
+
+		if (props.attributes.blockID !== block.clientId) {
+			props.setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && blockControls(props),

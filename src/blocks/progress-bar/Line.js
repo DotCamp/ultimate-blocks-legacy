@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
 import React, { Component } from 'react';
 
-class Line extends Component {
+export default class Line extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -88,5 +88,3 @@ class Line extends Component {
 		);
 	}
 }
-
-export default Line;

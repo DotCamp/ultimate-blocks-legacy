@@ -16,6 +16,7 @@ const {
 	BlockControls
 } = wp.editor;
 const { DateTimePicker, IconButton, PanelBody, Toolbar } = wp.components;
+const { withSelect } = wp.data;
 
 registerBlockType('ub/countdown', {
 	title: __('Countdown'),
@@ -23,6 +24,10 @@ registerBlockType('ub/countdown', {
 	category: 'ultimateblocks',
 	keywords: [__('Countdown'), __('Timer'), __('Ultimate Blocks')],
 	attributes: {
+		blockID: {
+			type: 'string',
+			default: ''
+		},
 		endDate: {
 			type: 'number',
 			default: 60 * (1440 + Math.ceil(Date.now() / 60000)) // 24 hours from Date.now
@@ -45,15 +50,22 @@ registerBlockType('ub/countdown', {
 		}
 	},
 
-	edit(props) {
-		const { isSelected, setAttributes } = props;
+	edit: withSelect((select, ownProps) => ({
+		block: select('core/editor').getBlock(ownProps.clientId)
+	}))(function(props) {
+		const { isSelected, setAttributes, block, attributes } = props;
 		const {
+			blockID,
 			style,
 			endDate,
 			expiryMessage,
 			circleColor,
 			messageAlign
-		} = props.attributes;
+		} = attributes;
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && (
@@ -136,25 +148,17 @@ registerBlockType('ub/countdown', {
 					deadline={endDate}
 					color={circleColor}
 				/>
-				<div>
-					<RichText
-						tagName="p"
-						placeholder={__(
-							'Text to show after the countdown is over'
-						)}
-						style={{ textAlign: messageAlign }}
-						value={expiryMessage}
-						onChange={text =>
-							setAttributes({ expiryMessage: text })
-						}
-						keepPlaceholderOnFocus={true}
-					/>
-				</div>
+				<RichText
+					tagName="div"
+					placeholder={__('Text to show after the countdown is over')}
+					style={{ textAlign: messageAlign }}
+					value={expiryMessage}
+					onChange={text => setAttributes({ expiryMessage: text })}
+					keepPlaceholderOnFocus={true}
+				/>
 			</React.Fragment>
 		];
-	},
+	}),
 
-	save() {
-		return null;
-	}
+	save: () => null
 });

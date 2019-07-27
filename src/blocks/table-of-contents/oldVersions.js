@@ -36,9 +36,10 @@ export const oldAttributes = {
 	}
 };
 
-export const updateFrom = oldVersion => {
-	return { attributes: oldAttributes, save: oldVersion };
-};
+export const updateFrom = oldVersion => ({
+	attributes: oldAttributes,
+	save: oldVersion
+});
 
 const getHeaderBlocks = () =>
 	select('core/editor')

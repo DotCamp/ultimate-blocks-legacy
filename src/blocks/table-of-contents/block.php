@@ -96,6 +96,10 @@ function ub_register_table_of_contents_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/table-of-contents-block', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'title' => array(
                     'type' => 'string',
                     'default' => ''

@@ -136,6 +136,7 @@ export const version_2_0_0 = props => {
 	);
 };
 
-export const updateFrom = oldVersion => {
-	return { attributes: oldAttributes, save: oldVersion };
-};
+export const updateFrom = oldVersion => ({
+	attributes: oldAttributes,
+	save: oldVersion
+});

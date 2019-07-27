@@ -5,31 +5,10 @@
  * which makes it higher in priority.
  */
 
-.wp-block-ub-tabbed-content-holder {
-	.blocks-rich-text__tinymce.mce-content-body {
-		font-size: 14px;
-	}
-}
-
-.wp-block-ub-tabbed-content-tabs-title {
-	display: flex;
-}
-
 .wp-block-ub-tabbed-content-tab-title-wrap {
-	border: 1px solid lightgrey;
-	border-top-right-radius: 5px;
-	border-top-left-radius: 5px;
 	padding: 15px;
-	border-bottom: 0;
-	margin-right: 5px;
-	display: flex;
-	align-items: center;
-	position: relative;
 	&:last-child {
 		cursor: pointer;
-	}
-	&.active {
-		color: white;
 	}
 	.remove-tab-icon {
 		width: 15px;
@@ -64,6 +43,5 @@
 }
 
 .wp-block-ub-tabbed-content-tabs-content {
-	border: 1px solid lightgrey;
 	padding: 20px;
 }

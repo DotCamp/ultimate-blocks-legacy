@@ -3,14 +3,13 @@
 function ub_render_progress_bar_block($attributes){
     extract($attributes);
     $blockName = 'ub_progress-bar';
-    $elementID = $blockName .'-'. ub_generateBlockID();
     $chosenProgressBar = '';
     $initializationCode = '';
 
     if($barType=='linear'){
         $progressBarPath = 'M'.($barThickness / 2).','.($barThickness/2)
                             .'L'.(100 - $barThickness / 2).','.($barThickness/2);
-        $chosenProgressBar = '<div class="'.$blockName.'-container" id="'.$elementID.'">
+        $chosenProgressBar = '<div class="'.$blockName.'-container" id="'.$blockID.'">
         <svg class="'.$blockName.'-line" viewBox="0 0 100 '.$barThickness.'" preserveAspectRatio="none">
             <path class="'.$blockName.'-line-trail" d="'.$progressBarPath.'" strokeWidth="1"/>
             <path class="'.$blockName.'-line-path" d="'.$progressBarPath.'" stroke="'.$barColor.'"
@@ -30,8 +29,8 @@ function ub_render_progress_bar_block($attributes){
                             a '.$circleRadius.','.$circleRadius.' 0 1 1 0,'.(2 * -$circleRadius);
         $strokeArcLength = $circlePathLength * $percentage / 100;
 
-        $chosenProgressBar = '<div class="'.$blockName.'-container" id="'.$elementID.'" style="height: 150px; width: 150px">
-        <svg class="'.$blockName.'-circle" height="150" width="150" viewBox = "0 0 100 100" style="position: absolute">
+        $chosenProgressBar = '<div class="'.$blockName.'-container" id="'.$blockID.'" style="height: 150px; width: 150px">
+        <svg class="'.$blockName.'-circle" height="150" width="150" viewBox = "0 0 100 100">
             <path class="'.$blockName.'-circle-trail" d="'.$progressBarPath.'" strokeWidth="3"
                 style = "stroke-dasharray: '.$circlePathLength.'px,'.$circlePathLength.'px"/>
             <path class="'.$blockName.'-circle-path" d="'.$progressBarPath.'" stroke="'.$barColor.'"
@@ -53,7 +52,7 @@ function ub_render_progress_bar_block($attributes){
         . '</div>
         <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            let container = document.getElementById("'.$elementID.'");
+            let container = document.getElementById("'.$blockID.'");
             let label = container.getElementsByClassName("ub_progress-bar-label")[0];
             '. $initializationCode
             . 'label.style.visibility = "visible";
@@ -65,6 +64,10 @@ function ub_register_progress_bar_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/progress-bar', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'percentage' => array(
                     'type' => 'number',
                     'default' => 25

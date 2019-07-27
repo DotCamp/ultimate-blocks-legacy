@@ -60,6 +60,10 @@ function ub_register_click_to_tweet_block() {
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/click-to-tweet', array(
             'attributes' => array(
+                'blockID' => array(
+                    'type' => 'string',
+                    'default' => ''
+                ),
                 'ubTweet' => array(
                     'type' => 'string',
                     'default' => ''
