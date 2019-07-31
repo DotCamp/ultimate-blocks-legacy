@@ -19,48 +19,29 @@ function ub_content_toggle_add_frontend_assets() {
 }
 
 function ub_render_content_toggle_block($attributes, $content){
-    return '<div class="wp-block-ub-content-toggle '.esc_attr($className).'">'.$content.'</div>';
+    return '<div class="wp-block-ub-content-toggle '.esc_attr($className)
+            .'" id="ub-content-toggle-'.$attributes['blockID'].'">'.$content.'</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
 
-    return '<div style="border-color: '.$theme.';" class="'.$classNamePrefix.'-accordion '.esc_url($className).'">
-                <div class="'.$classNamePrefix.'-accordion-title-wrap" style="background-color: '.
-                    $theme.';">
-                    <span class="'.$classNamePrefix.'-accordion-title" style="color: '.
-                        $titleColor.';">'.$panelTitle.'</span>
+    return '<div class="'.$classNamePrefix.'-accordion '.esc_url($className).'">
+                <div class="'.$classNamePrefix.'-accordion-title-wrap">
+                    <span class="'.$classNamePrefix.'-accordion-title">'.$panelTitle.'</span>
                     <span class="'.$classNamePrefix.
                         '-accordion-state-indicator dashicons dashicons-arrow-right-alt2 '.
                         ($collapsed ? '' : 'open').'"></span>
-                </div><div class="'.$classNamePrefix.'-accordion-content-wrap"
-                style="height: '.($collapsed ? 0 : '').'; padding-top: '.($collapsed ? 0 : '').';
-                        padding-bottom: '.($collapsed ? 0 : '').';">'. $content
+                </div><div class="'.$classNamePrefix.'-accordion-content-wrap'.
+                        ($collapsed?' ub-hide':' ').'">'. $content
                 .'</div></div>' ;
 }
 
 function ub_register_content_toggle_panel_block() {
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/content-toggle-panel-block', array(
-            'attributes' => array(
-                'theme' => array(
-                    'type' => 'string',
-                    'default' => '#f63d3d'
-                ),
-                'collapsed' => array(
-                    'type' => 'boolean',
-                    'default' => false
-                ),
-                'titleColor' => array(
-                    'type' => 'string',
-                    'default' => '#ffffff'
-                ),
-                'panelTitle' => array(
-                    'type' => 'string',
-                    'default' => ''
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/content-toggle-panel-block']['attributes'],
 			'render_callback' => 'ub_render_content_toggle_panel_block'));
 	}
 }
@@ -68,12 +49,8 @@ function ub_register_content_toggle_panel_block() {
 function ub_register_content_toggle_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/content-toggle-block',
-            array('attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-            ), 'render_callback' => 'ub_render_content_toggle_block'));
+            array('attributes' => $GLOBALS['defaultValues']['ub/content-toggle-block']['attributes'],
+             'render_callback' => 'ub_render_content_toggle_block'));
 	}
 }
 

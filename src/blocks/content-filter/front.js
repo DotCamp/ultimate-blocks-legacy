@@ -15,14 +15,13 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 					!JSON.parse(this.getAttribute('data-tagisselected'))
 				)
 			);
+			this.classList.toggle('ub-selected');
 			const categoryIndex = JSON.parse(
 				this.getAttribute('data-categorynumber')
 			);
 			const filterIndex = JSON.parse(
 				this.getAttribute('data-filternumber')
 			);
-			this.style.backgroundColor = this.getAttribute('data-activecolor');
-			this.style.color = this.getAttribute('data-activetextcolor');
 
 			if (JSON.parse(this.getAttribute('data-tagisselected'))) {
 				if (
@@ -34,19 +33,11 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 						elem.classList.contains('ub-content-filter-tag')
 					).forEach(sibling => {
 						sibling.setAttribute('data-tagisselected', 'false');
-						sibling.style.backgroundColor = this.getAttribute(
-							'data-normalcolor'
-						);
-						sibling.style.color = this.getAttribute(
-							'data-normaltextcolor'
-						);
+						sibling.classList.remove('ub-selected');
 					});
 				}
 			} else {
-				this.style.backgroundColor = this.getAttribute(
-					'data-normalcolor'
-				);
-				this.style.color = this.getAttribute('data-normaltextcolor');
+				this.classList.remove('ub-selected');
 			}
 			let newSelection = JSON.parse(
 				blockProper.getAttribute('data-currentselection')
@@ -95,7 +86,11 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 					}
 				});
 
-				instance.style.display = isVisible ? 'block' : 'none';
+				if (isVisible) {
+					instance.classList.remove('ub-hide');
+				} else {
+					instance.classList.add('ub-hide');
+				}
 			});
 		});
 	}

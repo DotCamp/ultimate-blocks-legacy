@@ -43,9 +43,11 @@ Array.from(
 
 		const initialHide =
 			panelContent.style.height === '0px' ||
-			panelContent.style.display === 'none';
+			panelContent.classList.contains('ub-hide') ||
+			getComputedStyle(panelContent).display === 'none';
 		if (initialHide) {
 			//temporarily show panel contents to enable taking panel height measurements
+			panelContent.classList.remove('ub-hide');
 			panelContent.style.height = '';
 			panelContent.style.paddingTop = '';
 			panelContent.style.paddingBottom = '';
@@ -54,44 +56,41 @@ Array.from(
 		panelHeight = panelContent.offsetHeight;
 
 		if (initialHide) {
-			panelContent.style.height = '0px';
-			panelContent.style.paddingTop = '0';
-			panelContent.style.paddingBottom = '0';
-			panelContent.style.marginTop = '0';
-			panelContent.style.marginBottom = '0';
+			panelContent.classList.add('ub-hide');
 		}
 
 		instance.addEventListener('click', function(e) {
 			e.stopImmediatePropagation();
-			if (
-				indicator.classList.contains('open') &&
-				panelHeight !== panelContent.offsetHeight
-			) {
-				panelHeight = panelContent.offsetHeight;
-			}
-
-			if (panelContent.style.height === '') {
+			if (indicator.classList.contains('open')) {
+				if (panelHeight !== panelContent.offsetHeight) {
+					panelHeight = panelContent.offsetHeight;
+				}
 				panelContent.style.height = `${panelHeight}px`;
+			} else {
+				panelContent.classList.remove('ub-hide');
+				panelContent.classList.add('ub-hiding');
 			}
-			panelContent.style.transition = 'all 0.5s ease-in-out';
+			panelContent.classList.add('ub-toggle-transition');
 			indicator.classList.toggle('open');
 			setTimeout(() => {
 				//delay is needed for the animation to run properly
-				const newVal = indicator.classList.contains('open') ? '' : '0';
-				panelContent.style.paddingTop = newVal;
-				panelContent.style.paddingBottom = newVal;
-				panelContent.style.marginTop = newVal;
-				panelContent.style.marginBottom = newVal;
-				panelContent.style.height = `${
-					indicator.classList.contains('open') ? panelHeight : 0
-				}px`;
+				if (indicator.classList.contains('open')) {
+					panelContent.classList.remove('ub-hiding');
+					panelContent.style.height = `${panelHeight}px`;
+				} else {
+					panelContent.classList.add('ub-hiding');
+					panelContent.style.height = '';
+				}
 			}, 20);
 		});
 
 		panelContent.addEventListener('transitionend', function() {
-			panelContent.style.transition = '';
-			if (panelContent.style.height !== '0px') {
+			panelContent.classList.remove('ub-toggle-transition');
+			if (indicator.classList.contains('open')) {
 				panelContent.style.height = '';
+			} else {
+				panelContent.classList.remove('ub-hiding');
+				panelContent.classList.add('ub-hide');
 			}
 		});
 	});

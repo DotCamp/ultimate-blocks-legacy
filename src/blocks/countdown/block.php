@@ -91,7 +91,7 @@ function ub_render_countdown_block($attributes){
         return '<div id="ub_countdown_'.$blockID.'" class="ub-countdown '.esc_attr($className).'">
             '.$selectedFormat
             .'</div><script type="text/javascript">
-                let timer_'.$blockID.' = setInterval(function(){
+                let timer_'.implode("", explode("-",$blockID)).' = setInterval(function(){
                     const timeLeft = '.$endDate.'-Math.floor(Date.now() / 1000);
                     const seconds = timeLeft % 60;
                     const minutes = ((timeLeft - seconds) % 3600) / 60;
@@ -106,43 +106,18 @@ function ub_render_countdown_block($attributes){
                         '.$selectedUpdate.'
                     }
                     else{
-                        clearInterval(timer_'.$blockID.');
+                        clearInterval(timer_'.implode("",explode("-",$blockID)).');
                         document.getElementById("ub_countdown_'.$blockID.'").innerHTML="'.$expiryMessage.'";
                     }
                 }, 1000);</script>';
     }
-    else return '<div class="ub-countdown '.esc_attr($className).'" style="text-align:'.$messageAlign.';">'.$expiryMessage.'</div>';
+    else return '<div class="ub-countdown '.esc_attr($className).'" id="ub_countdown_'.$blockID.'">'.$expiryMessage.'</div>';
 }
 
 function ub_register_countdown_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/countdown', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'endDate' => array(
-                    'type' => 'number',
-                    'default' => time()+86400
-                ),
-                'style'=> array(
-                    'type' => 'string',
-                    'default' => 'Odometer'
-                ),
-                'expiryMessage' => array(
-                    'type' => 'string',
-                    'default' => 'Timer expired'
-                ),
-                'messageAlign' => array(
-                    'type' => 'string',
-                    'default' => 'left'
-                ),
-                'circleColor' => array(
-                    'type' => 'string',
-                    'default' => '#2DB7F5'
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/countdown']['attributes'],
             'render_callback' => 'ub_render_countdown_block'));
     }
 }

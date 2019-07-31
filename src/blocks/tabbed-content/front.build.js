@@ -30,10 +30,13 @@ Array.from(document.getElementsByClassName('wp-block-ub-tabbed-content-tab-title
       return elem.classList.contains('wp-block-ub-tabbed-content-tab-title-wrap');
     }).forEach(function (sibling) {
       sibling.classList.remove('active');
-      sibling.setAttribute('style', defaultStyle);
+
+      if (defaultStyle) {
+        sibling.setAttribute('style', defaultStyle);
+      }
     });
     instance.classList.add('active');
-    instance.setAttribute('style', activeStyle);
+    if (activeStyle) instance.setAttribute('style', activeStyle);
     var activeTab = parent.querySelector(".wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(".concat(ub_getNodeindex(this) + 1, ")"));
     ub_getSiblings(activeTab, function (elem) {
       return elem.classList.contains('wp-block-ub-tabbed-content-tab-content-wrap');

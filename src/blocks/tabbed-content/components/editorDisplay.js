@@ -349,7 +349,8 @@ export class TabHolder extends Component {
 			selectedBlock,
 			selectBlock,
 			insertBlock,
-			block
+			block,
+			blockID
 		} = this.props;
 
 		const {

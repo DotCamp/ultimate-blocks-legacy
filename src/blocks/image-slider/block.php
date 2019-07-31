@@ -16,14 +16,13 @@ function ub_render_image_slider_block($attributes){
     
     foreach($imageArray as $key => $image){
         $gallery .= '<div>
-        <img src="'.$image['url'].'" style="height: '.$sliderHeight.'px;">'.
+        <img src="'.$image['url'].'">'.
             ($captionArray[$key]['link'] == '' ? '<span' : '<a href="'.esc_url($captionArray[$key]['link']).'"')
             .' class="ub_image_slider_image_caption">'.$captionArray[$key]['text']
             .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </div>';
     }
 
-    return '<div class="ub_image_slider '.esc_attr($className).'" style="min-height: '.
-        (25+ (count($imageArray) > 0) ? $sliderHeight : 200 ).'px;">
+    return '<div class="ub_image_slider '.esc_attr($className).'" id="ub_image_slider_'.$blockID.'">
         <div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
             'wrapAround'=> $wrapsAround, 'autoPlay'=> ($autoplays ? $autoplayDuration * 1000 : $autoplays),
             'adaptiveHeight'=>true )).'>'.$gallery
@@ -33,44 +32,7 @@ function ub_render_image_slider_block($attributes){
 function ub_register_image_slider_block(){
     if ( function_exists( 'register_block_type' ) ) {
         register_block_type('ub/image-slider', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'images' => array(
-                    'type' => 'string',
-                    'default' => '[]'
-                ),
-                'captions' => array(
-                    'type' => 'string',
-                    'default' => '[]'
-                ),
-                'wrapsAround' => array(
-                    'type' => 'boolean',
-                    'default' => true
-                ),
-                'isDraggable' => array(
-                    'type' => 'boolean',
-                    'default' => false
-                ),
-                'autoplays' => array(
-                    'type' => 'boolean',
-                    'default' => false
-                ),
-                'autoplayDuration' => array(
-                    'type' => 'number',
-                    'default' => 3
-                ),
-                'sliderHeight' => array(
-                    'type' => 'number',
-                    'default' => 250
-                ),
-                'showPageDots' => array(
-                    'type' => 'boolean',
-                    'default' => true
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/image-slider']['attributes'],
             'render_callback' => 'ub_render_image_slider_block'));
     }
 }

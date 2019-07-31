@@ -27,13 +27,11 @@ function ub_render_star_rating_block($attributes){
                 ub_make_full_star($starSize, $starColor) : ub_make_half_star($starSize, $starColor))
             : ub_make_empty_star($starSize);
     }
-    return '<div class="ub-star-rating '.esc_attr($className).'">
-                <div class="ub-star-outer-container" style="justify-content:'.
-                    ($starAlign == 'center' ? 'center' :
-                        ('flex-'.$starAlign == 'left' ? 'start' : 'end')).';">
+    return '<div class="ub-star-rating '.esc_attr($className).'" id="ub-star-rating-'.$blockID.'">
+                <div class="ub-star-outer-container">
                     <div class="ub-star-inner-container">'.$stars.'</div>
                 </div>
-                <div class="ub-review-text" style="text-align:'.$reviewTextAlign.';">'. 
+                <div class="ub-review-text">'. 
                     $reviewText
                 .'</div>
             </div>';
@@ -42,36 +40,7 @@ function ub_render_star_rating_block($attributes){
 function ub_register_star_rating_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/star-rating-block', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'starCount' => array(
-                    'type' => 'number',
-                    'default' => 5
-                ),
-                'starSize' => array(
-                    'type' => 'number',
-                    'default' => 20
-                ),
-                'starColor' => array(
-                    'type' => 'string',
-                    'default' => '#ffff00'
-                ),
-                'selectedStars' => array(
-                    'type' => 'number',
-                    'default' => 0
-                ),
-                'reviewText' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'reviewTextAlign' => array(
-                    'type' => 'string',
-                    'default' => 'left'
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/star-rating-block']['attributes'],
             'render_callback' => 'ub_render_star_rating_block'));
     }
 }

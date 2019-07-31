@@ -18,14 +18,11 @@ function ub_getSiblings(element, criteria) {
 
 Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(function (instance) {
   instance.addEventListener('click', function () {
-    var _this = this;
-
     var blockProper = this.closest('.wp-block-ub-content-filter');
     this.setAttribute('data-tagisselected', JSON.stringify(!JSON.parse(this.getAttribute('data-tagisselected'))));
+    this.classList.toggle('ub-selected');
     var categoryIndex = JSON.parse(this.getAttribute('data-categorynumber'));
     var filterIndex = JSON.parse(this.getAttribute('data-filternumber'));
-    this.style.backgroundColor = this.getAttribute('data-activecolor');
-    this.style.color = this.getAttribute('data-activetextcolor');
 
     if (JSON.parse(this.getAttribute('data-tagisselected'))) {
       if (!JSON.parse(this.parentElement.getAttribute('data-canusemultiple'))) {
@@ -33,13 +30,11 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(fun
           return elem.classList.contains('ub-content-filter-tag');
         }).forEach(function (sibling) {
           sibling.setAttribute('data-tagisselected', 'false');
-          sibling.style.backgroundColor = _this.getAttribute('data-normalcolor');
-          sibling.style.color = _this.getAttribute('data-normaltextcolor');
+          sibling.classList.remove('ub-selected');
         });
       }
     } else {
-      this.style.backgroundColor = this.getAttribute('data-normalcolor');
-      this.style.color = this.getAttribute('data-normaltextcolor');
+      this.classList.remove('ub-selected');
     }
 
     var newSelection = JSON.parse(blockProper.getAttribute('data-currentselection'));
@@ -70,7 +65,12 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(fun
           }
         }
       });
-      instance.style.display = isVisible ? 'block' : 'none';
+
+      if (isVisible) {
+        instance.classList.remove('ub-hide');
+      } else {
+        instance.classList.add('ub-hide');
+      }
     });
   });
 });

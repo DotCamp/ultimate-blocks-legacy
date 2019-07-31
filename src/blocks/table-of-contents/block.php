@@ -51,8 +51,7 @@ function ub_render_table_of_contents_block($attributes){
                     preg_replace('/(<.+?>)/', '', $content) .'</a></li>';
             }
             else{
-                $openingTag = $listStyle == 'numbered' ? '<ol>' : '<ul'.
-                    ($listStyle == 'plain' ? ' style="list-style: none;"' : '').'>';
+                $openingTag = $listStyle == 'numbered' ? '<ol>' : '<ul>';
 
                 $outputString = substr_replace($outputString, $openingTag,
                     strrpos($outputString, '</li>'), strlen('</li>'));
@@ -70,7 +69,8 @@ function ub_render_table_of_contents_block($attributes){
         $listItems = ub_makeListItem($key, $item, $listStyle);
     }
 
-    return '<div class="ub_table-of-contents '.esc_attr($className).'" data-showtext="'.__('show').'" data-hidetext="'.__('hide').'">'.
+    return '<div class="ub_table-of-contents '.esc_attr($className).'" data-showtext="'.__('show').
+            '" data-hidetext="'.__('hide').'" id="ub_table-of-contents-'.$blockID.'">'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.
                         $title .'</div>'.
@@ -82,11 +82,9 @@ function ub_render_table_of_contents_block($attributes){
                             .'</a>]</div></div>' :'')
                 .'</div>') : '')
                 .'<div class="ub_table-of-contents-container ub_table-of-contents-' .
-                    $numColumns. '-column" style="display: '.
-                    ($showList || strlen($title) == 0 || (strlen($title) == 1 && $title[0] == '') 
-                    ? 'block' : 'none').';">'.
-                ($listStyle == 'numbered' ? '<ol>' : '<ul'.
-                    ($listStyle == 'plain' ? ' style="list-style: none;"' : '').'>')
+                    $numColumns. '-column ' . ($showList || strlen($title) == 0 ||
+                    (strlen($title) == 1 && $title[0] == '') ? '' : 'ub-hide').'">'.
+                ($listStyle == 'numbered' ? '<ol>' : '<ul>')
                 . $listItems .
                 ($listStyle == 'numbered' ? '</ol>' : '</ul>')
                 .'</div></div>';
@@ -95,40 +93,7 @@ function ub_render_table_of_contents_block($attributes){
 function ub_register_table_of_contents_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/table-of-contents-block', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'title' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'allowedHeaders' => array(
-                    'type' => 'array',
-                    'default' => array_fill(0, 6, true)
-                ),
-                'links' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'allowToCHiding' => array(
-                    'type' => 'boolean',
-                    'default' => false
-                ),
-                'showList' => array(
-                    'type' => 'boolean',
-                    'default' => true
-                ),
-                'numColumns' => array(
-                    'type' => 'number',
-                    'default' => 1
-                ),
-                'listStyle' => array(
-                    'type' => 'string',
-                    'default' => 'bulleted'
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/table-of-contents-block']['attributes'],
             'render_callback' => 'ub_render_table_of_contents_block'));
     }
 }

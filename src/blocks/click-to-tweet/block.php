@@ -30,16 +30,12 @@ function ub_render_click_to_tweet_block( $attributes ) {
     $tweet = preg_replace('/<br><br>$/', '<br>', $attributes['ubTweet']);
 	$tweet_url  = ( $tweet ) ? rawurlencode( preg_replace('/<.+?>/', '', str_replace("<br>","\n",$tweet) )) : false;
 
-	$tweetFontSize = isset( $attributes['tweetFontSize'] ) ? "font-size:{$attributes['tweetFontSize']}" : "font-size: 20";
-	$tweetColor = isset( $attributes['tweetColor'] ) ? "color:{$attributes['tweetColor']}" : "color: #444444";
-	$borderColor = isset( $attributes['borderColor'] ) ? "border-color:{$attributes['borderColor']}" : "border-color: #CCCCCC";
-
 	$permalink = esc_url( get_the_permalink() );
 	$url       = apply_filters( 'ub_click_to_tweet_url', "http://twitter.com/intent/tweet?&text={$tweet_url}&url={$permalink}{$via}" );
 
 	$output = '';
-	$output .= sprintf('<div class="ub_click_to_tweet %1$s" style="%2$s">', esc_attr($attributes['className']), esc_attr( $borderColor ));
-    $output .= sprintf( '<div class="ub_tweet" style="%1$spx; %2$s">', esc_attr( $tweetFontSize ), esc_attr( $tweetColor ) );
+	$output .= sprintf('<div class="ub_click_to_tweet %1$s" id="%2$s">', esc_attr($attributes['className']), esc_attr('ub_click_to_tweet_' . $attributes['blockID'] ));
+    $output .= sprintf( '<div class="ub_tweet">');
     $output .= $tweet;
 	$output .= sprintf('</div>');
 	$output .= sprintf( '<div class="ub_click_tweet">' );
@@ -59,28 +55,7 @@ function ub_render_click_to_tweet_block( $attributes ) {
 function ub_register_click_to_tweet_block() {
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/click-to-tweet', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'ubTweet' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'tweetFontSize' => array(
-                    'type' => 'number',
-                    'default' => 20
-                ),
-                'tweetColor' => array(
-                    'type' => 'string',
-                    'default' => '#444444'
-                ),
-                'borderColor' => array(
-                    'type' => 'string',
-                    'default' => '#CCCCCC'
-                ),
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/click-to-tweet']['attributes'],
 			'render_callback' => 'ub_render_click_to_tweet_block'));
 	}
 }

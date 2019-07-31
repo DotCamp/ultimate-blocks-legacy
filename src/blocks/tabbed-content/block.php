@@ -33,15 +33,12 @@ function ub_render_tabbed_content_block($attributes, $contents){
     $tabs = '';
 
     foreach($tabsTitle as $key=>$title){
-        $tabs .= '<div class = "'.$blockName.'-tab-title-wrap'.($activeTab == $key ? ' active' : '').'"
-        style="background-color: '.($activeTab == $key ? $theme : 'initial')
-            .'; border-color: '.($activeTab == $key ? $theme : 'lightgrey').
-            '; color: '.($activeTab == $key ? $titleColor : '#000000').';">
+        $tabs .= '<div class = "'.$blockName.'-tab-title-wrap'.($activeTab == $key ? ' active' : '').'">
             <div class="'.$blockName.'-tab-title">'.$title.'</div></div>';
     }
 
-    return '<div class="'.$blockName.' '.$blockName.'-holder '.esc_attr($className).'">
-    <div class="'.$blockName.'-tabs-title"}>'.
+    return '<div class="'.$blockName.' '.$blockName.'-holder '.esc_attr($className).'" id="ub-tabbed-content-'.$blockID.'">
+    <div class="'.$blockName.'-tabs-title">'.
     $tabs.'</div>
     <div class="'.$blockName.'-tabs-content">'.
     $contents.'</div>
@@ -51,28 +48,8 @@ function ub_render_tabbed_content_block($attributes, $contents){
 function ub_register_tabbed_content_block(){
     if(function_exists('register_block_type')){
         register_block_type('ub/tabbed-content-block', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'activeTab' => array(
-                    'type' => 'number',
-                    'default' => 0
-                ),
-                'theme' => array(
-                    'type' => 'string',
-                    'default' => '#eeeeee'
-                ),
-                'titleColor' => array(
-                    'type' => 'string',
-                    'default' => '#000000'
-                ),
-                'tabsTitle' => array(
-                    'type' => 'array',
-                    'default' => array()
-                )
-            ), 'render_callback' =>  'ub_render_tabbed_content_block'));
+            'attributes' => $GLOBALS['defaultValues']['ub/tabbed-content-block']['attributes'],
+            'render_callback' =>  'ub_render_tabbed_content_block'));
     }
 }
 

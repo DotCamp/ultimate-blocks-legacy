@@ -3,8 +3,8 @@
 function ub_render_notification_box_block($attributes){
     extract($attributes);
     return '<div>
-    <div class="wp-block-ub-notification-box '.$ub_selected_notify.' '.esc_attr($className).'">
-        <p class="ub_notify_text" style="text-align: '.$align.';">'.$ub_notify_info.'</p>
+    <div class="wp-block-ub-notification-box '.$ub_selected_notify.' '.esc_attr($className).'" id="ub-notification-box-'.$blockID.'">
+        <p class="ub_notify_text">'.$ub_notify_info.'</p>
     </div>
 </div>';
 }
@@ -12,24 +12,7 @@ function ub_render_notification_box_block($attributes){
 function ub_register_notification_box_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/notification-box-block', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'ub_selected_notify' => array(
-                    'type' => 'string',
-                    'default' => 'ub_notify_info'
-                ),
-                'ub_notify_info' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'align' => array(
-                    'type' => 'string',
-                    'default' => 'left'
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/notification-box-block']['attributes'],
 			'render_callback' => 'ub_render_notification_box_block'));
 	}
 }

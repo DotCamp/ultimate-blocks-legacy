@@ -9,7 +9,7 @@
 function ub_render_content_filter_entry_block($attributes, $content){
     extract($attributes);
     return '<div class="ub-content-filter-panel '.esc_url($className).'" data-selectedFilters="'.json_encode($selectedFilters)
-    .'" style="display: block;">'.$content.'</div>';
+    .'">'.$content.'</div>';
 }
 
 function ub_register_content_filter_entry_block(){
@@ -51,10 +51,7 @@ function ub_render_content_filter_block($attributes, $content){
 
         foreach($filterGroup['filters'] as $key2 => $tag){
             $filterList .= '<div data-tagIsSelected="false" data-categoryNumber="'.$key1.'"
-            data-filterNumber="'.$key2.'" data-normalColor="'.$buttonColor.'"
-            data-normalTextColor="'.$buttonTextColor.'" data-activeColor="'.$activeButtonColor.'"
-            data-activeTextColor="'.$activeButtonTextColor.'" class="ub-content-filter-tag"
-            style="background-color: '.$buttonColor.'; color: '.$buttonTextColor.'">'.
+            data-filterNumber="'.$key2.'" class="ub-content-filter-tag">'.
             $tag.'</div>';
         }
         $filterList .= '</div>';
@@ -66,39 +63,14 @@ $currentSelection = array_map(function($category){
                                 -1);
                     }, (array)$filterArray);
 
-return '<div class="wp-block-ub-content-filter '.esc_attr($className).'" data-currentSelection="'.json_encode($currentSelection).'">'.
+return '<div class="wp-block-ub-content-filter '.esc_attr($className).'" id="ub-content-filter-'.$blockID.'" data-currentSelection="'.json_encode($currentSelection).'">'.
     $filterList.$content.'</div>';
 }
 
 function ub_register_content_filter_block(){
     if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/content-filter-block', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'filterArray' => array(
-                    'type' => 'array',
-                    'default' => array()
-                ),
-                'buttonColor' => array(
-                    'type' => 'string',
-                    'default' => '#eeeeee'
-                ),
-                'buttonTextColor' => array(
-                    'type' => 'string',
-                    'default' => '#000000'
-                ),
-                'activeButtonColor' => array(
-                    'type' => 'string',
-                    'default' => '#fcb900'
-                ),
-                'activeButtonTextColor' => array(
-                    'type' => 'string',
-                    'default' => '#ffffff'
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/content-filter-block']['attributes'],
                 'render_callback' => 'ub_render_content_filter_block'));
         
     }

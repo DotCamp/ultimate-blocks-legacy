@@ -15,21 +15,11 @@ function ub_render_button_block($attributes){
     
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    return '<div class="ub-button-container align-button-'.$align.' '.esc_attr($className).'">
+    return '<div class="ub-button-container align-button-'.$align.' '.esc_attr($className).'" id="ub-button-'.$blockID.'">
                 <a href="'.esc_url($url).'" target="'.($openInNewTab ? '_blank' : '_self').'"
                 rel="noopener noreferrer'.($addNofollow ? ' nofollow' : '').'"
-                class="ub-button-block-main ub-button-'.$size.'"
-                data-defaultColor="'.$buttonColor.'"
-                data-defaultTextColor="'.$buttonTextColor.'"
-                data-hoverColor="'.$buttonHoverColor.'"
-                data-hoverTextColor="'.$buttonTextHoverColor.'"
-                data-buttonIsTransparent="'.json_encode($buttonIsTransparent).'"
-                style="background-color: '.($buttonIsTransparent ? 'transparent' : $buttonColor).';
-                    color: '.($buttonIsTransparent ? $buttonColor : $buttonTextColor).';
-                    border-radius: '.($buttonRounded ? '60' : '0').'px;
-                    border: '.($buttonIsTransparent ? ('3px solid '.$buttonColor) : 'none').';">
-                <div class="ub-button-content-holder"
-                    style="flex-direction: '.($iconPosition === 'left' ? 'row' : 'row-reverse').';">'.
+                class="ub-button-block-main ub-button-'.$size.'">
+                <div class="ub-button-content-holder">'.
                     ($chosenIcon != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
                     height="'.$iconSize[$size].'", width="'.$iconSize[$size].'"
                     viewBox="0, 0, '.$fontAwesomeIcon[$chosenIcon][0].', '.$fontAwesomeIcon[$chosenIcon][1]
@@ -55,72 +45,11 @@ function ub_button_add_frontend_assets() {
 function ub_register_button_block() {
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/button', array(
-            'attributes' => array(
-                'blockID' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'buttonText' => array(
-                    'type' => 'string',
-                    'default' => 'Button Text'
-                ),
-                'align' => array(
-                    'type' => 'string',
-                    'default' => 'center'
-                ),
-                'url' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'size' => array(
-                    'type' => 'string',
-                    'default' => 'medium'
-                ),
-                'buttonColor' => array(
-                    'type' => 'string',
-                    'default' => '#313131'
-                ),
-                'buttonHoverColor' => array(
-                    'type' => 'string',
-                    'default' => '#313131'
-                ),
-                'buttonTextColor' => array(
-                    'type' => 'string',
-                    'default' => '#ffffff'
-                ),
-                'buttonTextHoverColor' => array(
-                    'type' => 'string',
-                    'default' => '#ffffff'
-                ),
-                'buttonRounded' => array(
-                    'type' => 'boolean',
-                    'default' => false
-                ),
-                'chosenIcon' => array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-                'iconPosition' => array(
-                    'type' => 'string',
-                    'default' => 'left'
-                ),
-                'buttonIsTransparent' => array(
-                    'type' => 'boolean',
-                    'default'=> false
-                ),
-                'addNofollow' => array(
-                    'type' => 'boolean',
-                    'default'=> true
-                ),
-                'openInNewTab' => array(
-                    'type' => 'boolean',
-                    'default'=> true
-                )
-            ),
+            'attributes' => $GLOBALS['defaultValues']['ub/button']['attributes'],
 			'render_callback' => 'ub_render_button_block'));
 	}
 }
 
 add_action('init', 'ub_register_button_block');
 
-add_action( 'wp_enqueue_scripts', 'ub_button_add_frontend_assets' );
+//add_action( 'wp_enqueue_scripts', 'ub_button_add_frontend_assets' );

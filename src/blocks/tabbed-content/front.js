@@ -30,11 +30,13 @@ Array.from(
 			elem.classList.contains('wp-block-ub-tabbed-content-tab-title-wrap')
 		).forEach(sibling => {
 			sibling.classList.remove('active');
-			sibling.setAttribute('style', defaultStyle);
+			if (defaultStyle) {
+				sibling.setAttribute('style', defaultStyle);
+			}
 		});
 
 		instance.classList.add('active');
-		instance.setAttribute('style', activeStyle);
+		if (activeStyle) instance.setAttribute('style', activeStyle);
 
 		const activeTab = parent.querySelector(
 			`.wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(${ub_getNodeindex(

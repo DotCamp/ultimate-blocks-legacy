@@ -33,7 +33,7 @@ function ub_render_social_share_block( $attributes ) {
 	$google_plus = ub_get_googleplus_icon( $attributes, $icon_size, $iconShape );
 	$tumblr      = ub_get_tumblr_icon( $attributes, $icon_size, $iconShape );
 
-	return '<div class="wp-block-ub-social-share '.esc_attr($className).'">
+	return '<div class="wp-block-ub-social-share '.esc_attr($className).'" id="ub-social-share-'.$blockID.'">
 		<div class="social-share-icons align-icons-' . $align . '">
 			' . $facebook . '
 			' . $twitter . '
@@ -69,18 +69,13 @@ function ub_get_facebook_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Facebook URL.
-	$facebook_url = '
-		https://www.facebook.com/sharer/sharer.php?
-		u=' . rawurlencode( get_the_permalink() ) . '
-		&title=' . get_the_title();
+    $facebook_url = 'https://www.facebook.com/sharer/sharer.php?u='
+        . rawurlencode( get_the_permalink() ) . '&title=' . get_the_title();
 
-	return '<a
-		target="_blank"
-		href="' . $facebook_url . '"
-		class="social-share-icon ' . $iconShape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color: #365899;">
-		' . $facebook_icon . '
-	</a>';
+	return '<a target="_blank" href="' . $facebook_url . '"
+        class="social-share-icon ub-social-share-facebook ' . $iconShape . '">'
+            . $facebook_icon .
+        '</a>';
 }
 
 /**
@@ -106,16 +101,11 @@ function ub_get_twitter_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Twitter URL.
-	$twitter_url = '
-		http://twitter.com/share?
-		text=' . get_the_title() . '
-		&url=' . rawurlencode( get_the_permalink() );
+    $twitter_url = 'http://twitter.com/share?text=' . get_the_title() .
+		'&url=' . rawurlencode( get_the_permalink() );
 
-	return '<a
-		target="_blank"
-		href="' . $twitter_url . '"
-		class="social-share-icon ' . $iconShape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color: #1da1f2;">
+	return '<a target="_blank" href="' . $twitter_url . '"
+		class="social-share-icon ub-social-share-twitter ' . $iconShape . '">
 		' . $twitter_icon . '
 	</a>';
 }
@@ -144,18 +134,15 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Linked In URL.
-	$linkedin_url = '
-		https://www.linkedin.com/shareArticle?mini=true
+	$linkedin_url = 'https://www.linkedin.com/shareArticle?mini=true
 		&url=' . rawurlencode( get_the_permalink() ) . '
 		&title=' . get_the_title();
 
-	return '<a
-		target="_blank"
+	return '<a target="_blank"
 		href="' . $linkedin_url . '"
-		class="social-share-icon ' . $iconShape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color: #0073b1;">
-		' . $linkedin_icon . '
-	</a>';
+		class="social-share-icon ub-social-share-linkedin ' . $iconShape . '">'
+		. $linkedin_icon .
+	'</a>';
 }
 
 
@@ -191,19 +178,15 @@ function ub_get_pinterest_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Pinterest URL.
-	$pinterest_url = '
-		https://pinterest.com/pin/create/button/?
-		&url=' . rawurlencode( get_the_permalink() ) . '
-		&description=' . get_the_title() . '
-		&media=' . esc_url( $thumbnail );
+    $pinterest_url = 'https://pinterest.com/pin/create/button/?&url='
+        . rawurlencode( get_the_permalink() )
+        . '&description=' . get_the_title()
+        . '&media=' . esc_url( $thumbnail );
 
-	return '<a
-		target="_blank"
-		href="' . $pinterest_url . '"
-		class="social-share-icon ' . $iconShape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color: #bd081c;">
-		' . $pinterest_icon . '
-	</a>';
+	return '<a target="_blank" href="' . $pinterest_url .
+        '"class="social-share-icon ub-social-share-pinterest ' . $iconShape . '">'
+        . $pinterest_icon .
+	'</a>';
 }
 
 
@@ -230,18 +213,14 @@ function ub_get_reddit_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Reddit URL.
-	$reddit_url = '
-		http://www.reddit.com/submit?
-		url=' . rawurlencode( get_the_permalink() ) . '
-		&title=' . get_the_title();
+    $reddit_url = 'http://www.reddit.com/submit?url='
+        . rawurlencode( get_the_permalink() ) .
+        '&title=' . get_the_title();
 
-	return '<a
-		target="_blank"
-		href="' . $reddit_url . '"
-		class="social-share-icon ' . $iconShape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color: #cee3f8;">
-		' . $reddit_icon . '
-	</a>';
+    return '<a target="_blank" href="' .
+        $reddit_url . '"class="social-share-icon ub-social-share-reddit ' .
+        $iconShape . '">' .
+		$reddit_icon . '</a>';
 }
 
 
@@ -268,17 +247,14 @@ function ub_get_googleplus_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Google Plus URL.
-	$googleplus_url = '
-		https://plus.google.com/share?
-		url=' . rawurlencode( get_the_permalink() );
+    $googleplus_url = 'https://plus.google.com/share?url=' .
+        rawurlencode( get_the_permalink() );
 
-	return '<a
-		target="_blank"
-		href="' . $googleplus_url . '"
-		class="social-share-icon ' . $iconShape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color: #db4437;">
-		' . $googleplus_icon . '
-	</a>';
+    return '<a target="_blank" href="' . $googleplus_url .
+        '" class="social-share-icon ub-social-share-google-plus '
+        . $iconShape . '">'
+		. $googleplus_icon .
+	'</a>';
 }
 
 
@@ -305,18 +281,14 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the tumblr URL.
-	$tumblr_url = '
-		https://www.tumblr.com/widgets/share/tool?
-		canonicalUrl=' . rawurlencode( get_the_permalink() ) . '
-		&title=' . get_the_title();
+    $tumblr_url = 'https://www.tumblr.com/widgets/share/tool?canonicalUrl='
+        . rawurlencode( get_the_permalink() )
+		. '&title=' . get_the_title();
 
-	return '<a
-		target="_blank"
-		href="' . $tumblr_url . '"
-		class="social-share-icon ' . $iconShape . '"
-		style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;background-color: #36465d;">
-		' . $tumblr_icon . '
-	</a>';
+	return '<a target="_blank" href="' . $tumblr_url .
+        '"class="social-share-icon ub-social-share-tumblr ' . $iconShape . '">'
+		. $tumblr_icon .
+	'</a>';
 }
 
 /**
@@ -327,52 +299,7 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $iconShape ) {
 function ub_register_social_share_block() {
 	if( function_exists( 'register_block_type' ) ) {
 		register_block_type( 'ub/social-share', array(
-			'attributes'      => array(
-                'blockID'=>array(
-                    'type' => 'string',
-                    'default' => ''
-                ),
-				'showFacebookIcon'        => array(
-					'type'    => 'boolean',
-					'default' => true,
-				),
-				'showTwitterIcon'         => array(
-					'type'    => 'boolean',
-					'default' => true,
-				),
-				'showLinkedInIcon'        => array(
-					'type'    => 'boolean',
-					'default' => true,
-				),
-				'showPinterestIcon'       => array(
-					'type'    => 'boolean',
-					'default' => true,
-				),
-				'showRedditIcon'          => array(
-					'type'    => 'boolean',
-					'default' => true,
-				),
-				'showGooglePlusIcon'      => array(
-					'type'    => 'boolean',
-					'default' => true,
-				),
-				'showTumblrIcon'          => array(
-					'type'    => 'boolean',
-					'default' => true,
-				),
-				'iconSize'                => array(
-					'type'    => 'string',
-					'default' => 'normal',
-				),
-				'iconShape'               => array(
-					'type'    => 'string',
-					'default' => 'circle',
-				),
-				'align'                   => array(
-					'type'    => 'string',
-					'default' => 'left',
-				),
-			),
+			'attributes'      => $GLOBALS['defaultValues']['ub/social-share']['attributes'],
 			'render_callback' => 'ub_render_social_share_block',
 		) );
 	}

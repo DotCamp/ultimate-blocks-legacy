@@ -24,39 +24,56 @@ document.addEventListener('DOMContentLoaded', function() {
 			? block.getAttribute('data-hidetext')
 			: 'hide';
 
-		const initialDisplayMode = tocContainer.style.display;
-		if (initialDisplayMode === 'none') {
-			tocContainer.style.display = 'block';
+		const initialHide =
+			tocContainer.style.height === '0px' ||
+			tocContainer.classList.contains('ub-hide') ||
+			getComputedStyle(tocContainer).display === 'none';
+		if (initialHide) {
+			tocContainer.classList.remove('ub-hide');
+			tocContainer.style.display = '';
 			tocContainer.style.height = '';
 		}
 		tocHeight = tocContainer.offsetHeight;
-		tocContainer.style.height = `${
-			initialDisplayMode === 'none' ? 0 : tocHeight
-		}px`;
+
+		if (initialHide) {
+			tocContainer.classList.add('ub-hide');
+		}
 
 		instance.addEventListener('click', function(event) {
 			event.preventDefault();
 
-			const tocIsHidden = tocContainer.style.height === '0px';
-
-			if (tocIsHidden) {
-				tocContainer.style.height = `${tocHeight}px`;
+			if (tocContainer.classList.contains('ub-hide')) {
+				tocContainer.classList.remove('ub-hide');
+				tocContainer.classList.add('ub-hiding');
 			} else {
 				if (tocHeight !== tocContainer.offsetHeight) {
 					tocHeight = tocContainer.offsetHeight;
 				}
 				tocContainer.style.height = `${tocHeight}px`;
-				setTimeout(() => {
-					//delay is needed for the animation to run properly
-					tocContainer.style.height = '0px';
-				}, 20);
 			}
-
-			instance.innerHTML = tocIsHidden ? showButton : hideButton;
+			setTimeout(() => {
+				//delay is needed for the animation to run properly
+				if (tocContainer.classList.contains('ub-hiding')) {
+					tocContainer.classList.remove('ub-hiding');
+					tocContainer.style.height = `${tocHeight}px`;
+				} else {
+					tocContainer.classList.add('ub-hiding');
+					tocContainer.style.height = '';
+				}
+			}, 20);
+			instance.innerHTML = tocContainer.classList.contains('ub-hiding')
+				? showButton
+				: hideButton;
 		});
 
 		tocContainer.addEventListener('transitionend', function() {
-			if (tocContainer.style.height !== '0px') {
+			if (getComputedStyle(tocContainer).height === '0px') {
+				tocContainer.classList.remove('ub-hiding');
+				tocContainer.classList.add('ub-hide');
+				if (tocContainer.style.display === 'block') {
+					tocContainer.style.display = '';
+				}
+			} else {
 				tocContainer.style.height = '';
 			}
 		});
