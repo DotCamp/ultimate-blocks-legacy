@@ -9,13 +9,21 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 	instance => {
 		instance.addEventListener('click', function() {
 			const blockProper = this.closest('.wp-block-ub-content-filter');
+			const isOldVersion = this.getAttribute('data-activecolor');
 			this.setAttribute(
 				'data-tagisselected',
 				JSON.stringify(
 					!JSON.parse(this.getAttribute('data-tagisselected'))
 				)
 			);
-			this.classList.toggle('ub-selected');
+			if (isOldVersion) {
+				this.style.backgroundColor = this.getAttribute(
+					'data-activecolor'
+				);
+				this.style.color = this.getAttribute('data-activetextcolor');
+			} else {
+				this.classList.toggle('ub-selected');
+			}
 			const categoryIndex = JSON.parse(
 				this.getAttribute('data-categorynumber')
 			);
@@ -33,11 +41,29 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 						elem.classList.contains('ub-content-filter-tag')
 					).forEach(sibling => {
 						sibling.setAttribute('data-tagisselected', 'false');
-						sibling.classList.remove('ub-selected');
+						if (isOldVersion) {
+							sibling.style.backgroundColor = this.getAttribute(
+								'data-normalcolor'
+							);
+							sibling.style.color = this.getAttribute(
+								'data-normaltextcolor'
+							);
+						} else {
+							sibling.classList.remove('ub-selected');
+						}
 					});
 				}
 			} else {
-				this.classList.remove('ub-selected');
+				if (isOldVersion) {
+					this.style.backgroundColor = this.getAttribute(
+						'data-normalcolor'
+					);
+					this.style.color = this.getAttribute(
+						'data-normaltextcolor'
+					);
+				} else {
+					this.classList.remove('ub-selected');
+				}
 			}
 			let newSelection = JSON.parse(
 				blockProper.getAttribute('data-currentselection')
@@ -86,7 +112,9 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 					}
 				});
 
-				if (isVisible) {
+				if (isOldVersion) {
+					instance.style.display = isVisible ? 'block' : 'none';
+				} else if (isVisible) {
 					instance.classList.remove('ub-hide');
 				} else {
 					instance.classList.add('ub-hide');

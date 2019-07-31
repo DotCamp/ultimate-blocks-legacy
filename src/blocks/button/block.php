@@ -31,7 +31,7 @@ function ub_render_button_block($attributes){
 }
 
 function ub_button_add_frontend_assets() {
-    if ( has_block( 'ub/button-block' ) || has_block('ub/button')) {
+    if ( has_block( 'ub/button-block' ) ) {
         wp_enqueue_script(
             'ultimate_blocks-button-front-script',
             plugins_url( 'button/front.build.js', dirname( __FILE__ ) ),
@@ -52,4 +52,4 @@ function ub_register_button_block() {
 
 add_action('init', 'ub_register_button_block');
 
-//add_action( 'wp_enqueue_scripts', 'ub_button_add_frontend_assets' );
+add_action( 'wp_enqueue_scripts', 'ub_button_add_frontend_assets' );
