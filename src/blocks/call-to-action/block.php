@@ -2,7 +2,8 @@
 
 function ub_render_call_to_action_block($attributes){
     extract($attributes);
-    return '<div class="ub_call_to_action '.esc_attr($className).'" id="ub_call_to_action_'.$blockID.'">
+    return '<div class="ub_call_to_action'.(isset($className) ? ' ' . esc_attr($className) : '').
+                '" id="ub_call_to_action_'.$blockID.'">
                 <div class="ub_call_to_action_headline">
                     <p class="ub_call_to_action_headline_text">'.
                         $ub_call_to_action_headline_text.'</p></div>

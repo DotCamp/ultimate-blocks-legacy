@@ -2,7 +2,7 @@
 
 function ub_render_divider_block($attributes){
     extract($attributes);
-    return '<div class="ub_divider '.esc_attr($className).'" id="ub_divider_'.$blockID.'"></div>';
+    return '<div class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" id="ub_divider_'.$blockID.'"></div>';
 }
 
 function ub_register_divider_block(){

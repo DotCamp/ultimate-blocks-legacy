@@ -22,7 +22,8 @@ function ub_render_image_slider_block($attributes){
             .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </div>';
     }
 
-    return '<div class="ub_image_slider '.esc_attr($className).'" id="ub_image_slider_'.$blockID.'">
+    return '<div class="ub_image_slider'.(isset($className) ? ' ' . esc_attr($className) : '').
+                '" id="ub_image_slider_'.$blockID.'">
         <div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
             'wrapAround'=> $wrapsAround, 'autoPlay'=> ($autoplays ? $autoplayDuration * 1000 : $autoplays),
             'adaptiveHeight'=>true )).'>'.$gallery

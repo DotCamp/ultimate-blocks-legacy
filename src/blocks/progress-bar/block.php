@@ -33,7 +33,7 @@ function ub_render_progress_bar_block($attributes){
         <div class="'.$blockName.'-label">'.$percentage.'%</div>';
     }
 
-    return '<div class="ub_progress-bar '.esc_attr($className).'" id="ub-progress-bar-'.$blockID.'">
+    return '<div class="ub_progress-bar'.(isset($className) ? ' ' . esc_attr($className) : '').'" id="ub-progress-bar-'.$blockID.'">
                 <div class="ub_progress-bar-text">
                 <p>'.$detail.'</p></div>'
             . $chosenProgressBar

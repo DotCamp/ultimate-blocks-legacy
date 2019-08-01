@@ -797,6 +797,7 @@ $defaultAttributeValue = array(
             ),
             'imgID' => array(
                 'type' => 'number',
+                'default' => 0
             ),
             'imgAlt' => array(
                 'type' => 'string',

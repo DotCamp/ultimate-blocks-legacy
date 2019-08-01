@@ -3,7 +3,8 @@
 function ub_render_testimonial_block($attributes){
     extract($attributes);
     return '<div>
-    <div class="ub_testimonial '.esc_attr($className).'" id="ub_testimonial_'.$blockID.'">
+    <div class="ub_testimonial'.(isset($className) ? ' ' . esc_attr($className) : '').
+            '" id="ub_testimonial_'.$blockID.'">
         <div class="ub_testimonial_img">
             <img src="'.$imgURL.'" alt="'.$imgAlt.'" height="100" width="100" />
         </div>

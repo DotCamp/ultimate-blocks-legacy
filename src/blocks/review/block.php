@@ -39,7 +39,8 @@ function ub_render_review_block($attributes){
         $inactiveStarColor, $activeStarColor, "ub_review_stars").'</div>';
     }
 
-    return 	'<div class="ub_review_block '.esc_attr($className).'" id="#ub_review_'.$blockID.'">
+    return 	'<div class="ub_review_block'.(isset($className) ? ' ' . esc_attr($className) : '').
+                '" id="#ub_review_'.$blockID.'">
         <p class="ub_review_item_name">'.
             $itemName.'</p>
         <p class="ub_review_author_name">'.$authorName.'</p>'.

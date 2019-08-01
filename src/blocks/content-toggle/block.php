@@ -19,7 +19,7 @@ function ub_content_toggle_add_frontend_assets() {
 }
 
 function ub_render_content_toggle_block($attributes, $content){
-    return '<div class="wp-block-ub-content-toggle '.esc_attr($className)
+    return '<div class="wp-block-ub-content-toggle'.(isset($className) ? ' ' . esc_attr($className) : '')
             .'" id="ub-content-toggle-'.$attributes['blockID'].'">'.$content.'</div>';
 }
 
@@ -27,7 +27,7 @@ function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
 
-    return '<div class="'.$classNamePrefix.'-accordion '.esc_url($className).'">
+    return '<div class="'.$classNamePrefix.'-accordion'.(isset($className) ? ' ' . esc_attr($className) : '').'">
                 <div class="'.$classNamePrefix.'-accordion-title-wrap">
                     <span class="'.$classNamePrefix.'-accordion-title">'.$panelTitle.'</span>
                     <span class="'.$classNamePrefix.

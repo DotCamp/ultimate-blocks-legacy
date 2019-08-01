@@ -9,7 +9,7 @@
 function ub_render_tab_block($attributes, $contents){
     extract($attributes);
     return '<div class="wp-block-ub-tabbed-content-tab-content-wrap '.
-        ($isActive ? 'active' : 'ub-hide').' '.esc_url($className).'">
+        ($isActive ? 'active' : 'ub-hide').(isset($className) ? ' ' . esc_attr($className) : '').'">
     '.$contents.'
 </div>';
 }
@@ -37,7 +37,8 @@ function ub_render_tabbed_content_block($attributes, $contents){
             <div class="'.$blockName.'-tab-title">'.$title.'</div></div>';
     }
 
-    return '<div class="'.$blockName.' '.$blockName.'-holder '.esc_attr($className).'" id="ub-tabbed-content-'.$blockID.'">
+    return '<div class="'.$blockName.' '.$blockName.'-holder'.(isset($className) ? ' ' . esc_attr($className) : '')
+        .'" id="ub-tabbed-content-'.$blockID.'">
     <div class="'.$blockName.'-tabs-title">'.
     $tabs.'</div>
     <div class="'.$blockName.'-tabs-content">'.

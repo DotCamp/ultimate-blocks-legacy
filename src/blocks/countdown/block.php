@@ -76,7 +76,7 @@ function ub_render_countdown_block($attributes){
             '.$selectedFormat
             .'</div>';
     }
-    else return '<div class="ub-countdown '.esc_attr($className).'" id="ub_countdown_'.$blockID.'">'.$expiryMessage.'</div>';
+    else return '<div class="ub-countdown'.(isset($className) ? ' ' . esc_attr($className) : '').'" id="ub_countdown_'.$blockID.'">'.$expiryMessage.'</div>';
 }
 
 function ub_register_countdown_block() {

@@ -27,7 +27,8 @@ function ub_render_star_rating_block($attributes){
                 ub_make_full_star($starSize, $starColor) : ub_make_half_star($starSize, $starColor))
             : ub_make_empty_star($starSize);
     }
-    return '<div class="ub-star-rating '.esc_attr($className).'" id="ub-star-rating-'.$blockID.'">
+    return '<div class="ub-star-rating'.(isset($className) ? ' ' . esc_attr($className) : '').
+            '" id="ub-star-rating-'.$blockID.'">
                 <div class="ub-star-outer-container">
                     <div class="ub-star-inner-container">'.$stars.'</div>
                 </div>

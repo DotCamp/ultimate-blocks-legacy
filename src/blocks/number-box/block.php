@@ -36,7 +36,8 @@ function ub_render_number_box_block($attributes){
         $columns .= $column3;
     }
 
-    return '<div class="ub_number_box column_'.$column.' '.esc_attr($className).'" id="ub-number-box-'.$blockID.'">'.$columns.'</div>';
+    return '<div class="ub_number_box column_'.$column.(isset($className) ? ' ' . esc_attr($className) : '').
+            '" id="ub-number-box-'.$blockID.'">'.$columns.'</div>';
 }
 
 function ub_register_number_box_block() {

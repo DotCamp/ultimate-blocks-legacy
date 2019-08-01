@@ -27,7 +27,7 @@ function ub_render_feature_box_block($attributes){
         $columns .= $column3;
     }
 
-    return '<div class="ub_feature_box column_'.$column.' '.esc_attr($className).'" id="ub_feature_box_'.$blockID.'">'.
+    return '<div class="ub_feature_box column_'.$column.(isset($className) ? ' ' . esc_attr($className) : '').'" id="ub_feature_box_'.$blockID.'">'.
     $columns.'</div>';
 }
 
