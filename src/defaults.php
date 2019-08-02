@@ -1,6 +1,6 @@
 <?php
 
-$defaultAttributeValue = array(
+$defaultValues = array(
     'ub/button' => array(
         'attributes' => array(
             'blockID' => array(
@@ -696,6 +696,10 @@ $defaultAttributeValue = array(
                 'default' => ''
             ),
             'reviewTextAlign' => array(
+                'type' => 'string',
+                'default' => 'left'
+            ),
+            'starAlign' => array(
                 'type' => 'string',
                 'default' => 'left'
             )

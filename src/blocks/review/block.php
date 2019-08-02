@@ -70,8 +70,9 @@ function ub_render_review_block($attributes){
 
 function ub_register_review_block() {
 	if( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
 		register_block_type( 'ub/review', array(           
-            'attributes' => $GLOBALS['defaultValues']['ub/review']['attributes'],
+            'attributes' => $defaultValues['ub/review']['attributes'],
             'render_callback' => 'ub_render_review_block'));
     }
 }

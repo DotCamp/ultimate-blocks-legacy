@@ -70,8 +70,9 @@ return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_a
 
 function ub_register_content_filter_block(){
     if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
         register_block_type( 'ub/content-filter-block', array(
-            'attributes' => $GLOBALS['defaultValues']['ub/content-filter-block']['attributes'],
+            'attributes' => $defaultValues['ub/content-filter-block']['attributes'],
                 'render_callback' => 'ub_render_content_filter_block'));
         
     }

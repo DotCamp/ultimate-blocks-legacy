@@ -81,8 +81,9 @@ function ub_render_countdown_block($attributes){
 
 function ub_register_countdown_block() {
 	if( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
 		register_block_type( 'ub/countdown', array(
-            'attributes' => $GLOBALS['defaultValues']['ub/countdown']['attributes'],
+            'attributes' => $defaultValues['ub/countdown']['attributes'],
             'render_callback' => 'ub_render_countdown_block'));
     }
 }

@@ -48,8 +48,9 @@ function ub_render_tabbed_content_block($attributes, $contents){
 
 function ub_register_tabbed_content_block(){
     if(function_exists('register_block_type')){
+        require dirname(dirname(__DIR__)) . '/defaults.php';
         register_block_type('ub/tabbed-content-block', array(
-            'attributes' => $GLOBALS['defaultValues']['ub/tabbed-content-block']['attributes'],
+            'attributes' => $defaultValues['ub/tabbed-content-block']['attributes'],
             'render_callback' =>  'ub_render_tabbed_content_block'));
     }
 }

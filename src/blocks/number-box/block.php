@@ -42,8 +42,9 @@ function ub_render_number_box_block($attributes){
 
 function ub_register_number_box_block() {
 	if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
         register_block_type( 'ub/number-box-block', array(
-            'attributes' => $GLOBALS['defaultValues']['ub/number-box-block']['attributes'],
+            'attributes' => $defaultValues['ub/number-box-block']['attributes'],
 			'render_callback' => 'ub_render_number_box_block'));
 	}
 }

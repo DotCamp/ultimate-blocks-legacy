@@ -19,8 +19,9 @@ function ub_render_call_to_action_block($attributes){
 
 function ub_register_call_to_action_block() {
 	if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
 		register_block_type( 'ub/call-to-action-block', array(
-            'attributes' =>$GLOBALS['defaultValues']['ub/call-to-action-block']['attributes'],
+            'attributes' => $defaultValues['ub/call-to-action-block']['attributes'],
 			'render_callback' => 'ub_render_call_to_action_block'));
 	}
 }

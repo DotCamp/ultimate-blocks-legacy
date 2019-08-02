@@ -40,16 +40,18 @@ function ub_render_content_toggle_panel_block($attributes, $content){
 
 function ub_register_content_toggle_panel_block() {
 	if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
 		register_block_type( 'ub/content-toggle-panel-block', array(
-            'attributes' => $GLOBALS['defaultValues']['ub/content-toggle-panel-block']['attributes'],
+            'attributes' => $defaultValues['ub/content-toggle-panel-block']['attributes'],
 			'render_callback' => 'ub_render_content_toggle_panel_block'));
 	}
 }
 
 function ub_register_content_toggle_block() {
 	if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
         register_block_type( 'ub/content-toggle-block',
-            array('attributes' => $GLOBALS['defaultValues']['ub/content-toggle-block']['attributes'],
+            array('attributes' => $defaultValues['ub/content-toggle-block']['attributes'],
              'render_callback' => 'ub_render_content_toggle_block'));
 	}
 }

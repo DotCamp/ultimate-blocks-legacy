@@ -33,8 +33,9 @@ function ub_render_feature_box_block($attributes){
 
 function ub_register_feature_box_block() {
 	if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
         register_block_type( 'ub/feature-box-block', array(
-            'attributes' => $GLOBALS['defaultValues']['ub/feature-box-block']['attributes'],
+            'attributes' => $defaultValues['ub/feature-box-block']['attributes'],
 			'render_callback' => 'ub_render_feature_box_block'));
 	}
 }
