@@ -39,6 +39,10 @@ const attributes = {
 	titleColor: {
 		type: 'string',
 		default: '#ffffff'
+	},
+	hasFAQSchema: {
+		type: 'boolean',
+		default: false
 	}
 };
 

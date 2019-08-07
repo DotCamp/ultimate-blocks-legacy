@@ -2,9 +2,11 @@ import Inspector from './inspector';
 import { Component } from 'react';
 import { upgradeButtonLabel } from '../../../common';
 
+const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
 
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks, InspectorControls, PanelColorSettings } = wp.editor;
+const { PanelBody, PanelRow, FormToggle } = wp.components;
 
 export class OldPanelContent extends Component {
 	constructor(props) {
@@ -195,7 +197,13 @@ export class PanelContent extends Component {
 			block
 		} = this.props;
 
-		const { collapsed, theme, titleColor, blockID } = attributes;
+		const {
+			collapsed,
+			theme,
+			titleColor,
+			blockID,
+			hasFAQSchema
+		} = attributes;
 
 		const panels = this.getPanels();
 
@@ -284,14 +292,54 @@ export class PanelContent extends Component {
 
 		return [
 			isSelected && (
-				<Inspector
-					{...{
-						attributes,
-						onThemeChange,
-						onCollapseChange,
-						onTitleColorChange
-					}}
-				/>
+				<InspectorControls>
+					<PanelColorSettings
+						title={__('Color Scheme')}
+						initialOpen={false}
+						colorSettings={[
+							{
+								value: theme,
+								onChange: onThemeChange,
+								label: __('Container Color')
+							},
+							{
+								value: titleColor,
+								onChange: onTitleColorChange,
+								label: __('Title Color')
+							}
+						]}
+					/>
+					<PanelBody title={__('Initial State')} initialOpen={true}>
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-state">
+								{__('Collapsed')}
+							</label>
+							<FormToggle
+								id="ub-content-toggle-state"
+								label={__('Collapsed')}
+								checked={collapsed}
+								onChange={onCollapseChange}
+							/>
+						</PanelRow>
+					</PanelBody>
+					<PanelBody title={__('FAQ Schema')} initialOpen={true}>
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-faq-schema">
+								{__('Enable FAQ Schema')}
+							</label>
+							<FormToggle
+								id="ub-content-toggle-faq-schema"
+								label={__('Enable FAQ Schema')}
+								checked={hasFAQSchema}
+								onChange={() =>
+									setAttributes({
+										hasFAQSchema: !hasFAQSchema
+									})
+								}
+							/>
+						</PanelRow>
+					</PanelBody>
+				</InspectorControls>
 			),
 			<div className={className}>
 				<InnerBlocks

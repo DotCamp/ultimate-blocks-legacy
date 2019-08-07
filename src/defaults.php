@@ -206,6 +206,10 @@ $defaultValues = array(
             'blockID' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'hasFAQSchema' => array(
+                'type' => 'boolean',
+                'default' => false
             )
         )
     ),
