@@ -406,12 +406,13 @@ function ub_include_block_attribute_css() {
                 break;
         }
     }
+    $blockStylesheets = preg_replace( '/\s+/', ' ', $blockStylesheets );
+    ob_start(); ?>
 
-    ?>
-        <style>
-            <?php echo($blockStylesheets) ?>
-        </style>
-    <?
+<style><?php echo($blockStylesheets); ?></style>
+    
+    <?php
+    ob_end_flush();
 }
 add_action('wp_head', 'ub_include_block_attribute_css');
 
