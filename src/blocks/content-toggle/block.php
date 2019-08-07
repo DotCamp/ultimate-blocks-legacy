@@ -96,18 +96,12 @@ function ub_content_toggle_filter( $block_content, $block ) {
 
         $questions = "";
 
-        foreach($block['innerBlocks'] as $key => $togglePanel){      
-            $answer = trim($panel[$key]);
-
+        foreach($block['innerBlocks'] as $key => $togglePanel){
             $answer = preg_replace_callback('/<([a-z1-6]+)[^>]*?>[^<]*?<\/(\1)>/i', function($matches){
                 return (in_array($matches[1], ['script', 'svg', 'iframe', 'applet', 'map',
                     'audio', 'button', 'table', 'datalist', 'form', 'frameset',
                     'select', 'optgroup', 'picture', 'style', 'video']) ? '' : $matches[0]);
-            }, $answer);
-
-            while(preg_match_all('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', $answer) > 0){ //remove empty tags and tags that only contain empty tags
-                $answer = preg_replace('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', '', $answer);
-            }
+            }, $panel[$key]);
 
             $answer = preg_replace_callback('/<\/?([a-z1-6]+).*?\/?>/i', function($matches){
                 if(in_array($matches[1], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'br', 'ol',
@@ -140,6 +134,10 @@ function ub_content_toggle_filter( $block_content, $block ) {
                 }
             }, $answer);
 
+            while(preg_match_all('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', $answer) > 0){ //remove empty tags and tags that only contain empty tags
+                $answer = preg_replace('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', '', $answer);
+            }
+
             //check all attributes
 
             $answer = preg_replace_callback('/<[a-z1-6]+( (?:(?:aria|data)-[^\t\n\f \/>"\'=]+|[a-z]+)=[\'"][\s\S]+?[\'"])>/i',
@@ -159,7 +157,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
                     "name": "'.$togglePanel['attrs']['panelTitle'].'",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "'.$answer.'"
+                        "text": "'.trim($answer).'"
                     }
                 }';
             }
