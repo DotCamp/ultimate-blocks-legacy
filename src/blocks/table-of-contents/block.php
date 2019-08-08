@@ -19,7 +19,7 @@ function ub_render_table_of_contents_block($attributes){
             array_push($sortedHeaders[$last], $elem);
         }
         else{
-            while($sortedHeaders[$last][0]['level'] > $elem['level']){
+            while($sortedHeaders[$last][0]['level'] > $elem['level'] && count($sortedHeaders) > 1){
                 array_push($sortedHeaders[count($sortedHeaders) - 2], array_pop($sortedHeaders));
                 $last = count($sortedHeaders) - 1;
             }
