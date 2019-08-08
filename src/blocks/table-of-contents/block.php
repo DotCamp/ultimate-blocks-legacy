@@ -11,6 +11,7 @@ function ub_render_table_of_contents_block($attributes){
     $sortedHeaders = [];
 
     foreach($filteredHeaders as $elem){
+        $elem['content'] = trim(preg_replace('/(<.+?>)/', '', $elem['content']));
         $last = count($sortedHeaders) - 1;
         if (count($sortedHeaders) == 0 || $sortedHeaders[$last][0]['level'] < $elem['level']) {
             array_push($sortedHeaders, [$elem]);
@@ -47,8 +48,7 @@ function ub_render_table_of_contents_block($attributes){
             if (array_key_exists("level", $item)){
                 $anchor = $item["anchor"];
                 $content = $item["content"];
-                $outputString .= '<li><a href="#'.$anchor.'">'.
-                    preg_replace('/(<.+?>)/', '', $content) .'</a></li>';
+                $outputString .= '<li><a href="#'.$anchor.'">'. $content .'</a></li>';
             }
             else{
                 $openingTag = $listStyle == 'numbered' ? '<ol>' : '<ul>';
