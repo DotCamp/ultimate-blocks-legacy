@@ -38,9 +38,15 @@ function ub_render_tabbed_content_block($attributes, $contents){
     }
 
     return '<div class="'.$blockName.' '.$blockName.'-holder'.(isset($className) ? ' ' . esc_attr($className) : '')
-        .'" id="ub-tabbed-content-'.$blockID.'">
+        .'" id="ub-tabbed-content-'.$blockID.'"><div class="'.$blockName.'-tab-holder">
     <div class="'.$blockName.'-tabs-title">'.
     $tabs.'</div>
+    <div class="'.$blockName.'-scroll-button-container ub-hide">
+    <button class="'.$blockName.'-scroll-button-left">
+    <span class="dashicons dashicons-arrow-left-alt2"></span></button>
+    <button class="'.$blockName.'-scroll-button-right">
+    <span class="dashicons dashicons-arrow-right-alt2"></span>
+    </button></div></div>
     <div class="'.$blockName.'-tabs-content">'.
     $contents.'</div>
 </div>';

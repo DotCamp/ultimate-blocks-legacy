@@ -14,8 +14,36 @@
 	}
 }
 
+.wp-block-ub-tabbed-content-tab-holder {
+	position: relative;
+}
+
+.wp-block-ub-tabbed-content-scroll-button-container {
+	height: 100%;
+	width: 100%;
+	top: 0;
+	position: absolute;
+	pointer-events: none;
+	> button {
+		opacity: 0.2;
+		position: absolute;
+		pointer-events: auto;
+		top: 50%;
+		transform: translateY(-50%);
+		transition: opacity 0.5s;
+		border-radius: 50%;
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+.wp-block-ub-tabbed-content-scroll-button-right {
+	right: 0;
+}
+
 .wp-block-ub-tabbed-content-tabs-title {
 	display: flex;
+	overflow-x: hidden;
 }
 
 .wp-block-ub-tabbed-content-tab-title-wrap {

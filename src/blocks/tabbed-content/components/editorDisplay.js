@@ -5,7 +5,7 @@ import {
 	arrayMove
 } from 'react-sortable-hoc';
 import Inspector from './inspector';
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 import { upgradeButtonLabel, mergeRichTextArray } from '../../../common';
 const { createBlock } = wp.blocks;
 const { RichText, InnerBlocks } = wp.editor;
@@ -335,6 +335,88 @@ export class OldTabHolder extends Component {
 export class TabHolder extends Component {
 	constructor(props) {
 		super(props);
+		this.tabBarRef = createRef();
+		this.state = {
+			showScrollButtons: false,
+			properScrollPosition: 0,
+			scrollDirection: 'none', //updates to left or right when corresponding key is pressed
+			timerIsActive: false,
+			earlyStop: false
+		};
+		this.checkWidth = this.checkWidth.bind(this);
+		this.leftPress = this.leftPress.bind(this);
+		this.rightPress = this.rightPress.bind(this);
+	}
+
+	checkWidth() {
+		this.setState({
+			showScrollButtons:
+				this.tabBarRef.current.scrollWidth >
+				this.tabBarRef.current.clientWidth
+		});
+	}
+
+	componentDidMount() {
+		if (
+			this.state.showControls !==
+			this.tabBarRef.current.scrollWidth >
+				this.tabBarRef.current.clientWidth
+		) {
+			this.checkWidth();
+		}
+		window.addEventListener('resize', this.checkWidth);
+	}
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.checkWidth);
+	}
+	leftPress = _ => {
+		const { current } = this.tabBarRef;
+		if (current.scrollLeft > 0) {
+			this.setState({ properScrollPosition: current.scrollLeft - 5 });
+			current.scrollLeft -= 5;
+		}
+	};
+	rightPress = _ => {
+		const { current } = this.tabBarRef;
+		if (current.scrollLeft < current.scrollWidth - current.clientWidth) {
+			this.setState({ properScrollPosition: current.scrollLeft + 5 });
+			current.scrollLeft += 5;
+		}
+	};
+	componentDidUpdate(prevProps, prevState) {
+		const { current } = this.tabBarRef;
+		const { scrollDirection, properScrollPosition } = this.state;
+
+		if (prevState.scrollDirection !== scrollDirection) {
+			clearInterval(this.scrollInterval);
+			if (scrollDirection === 'left') {
+				this.scrollInterval = setInterval(this.leftPress, 50);
+			} else if (scrollDirection === 'right') {
+				this.scrollInterval = setInterval(this.rightPress, 50);
+			}
+		}
+
+		if (
+			prevProps.attributes.tabsTitle.length >=
+			this.props.attributes.tabsTitle.length
+		) {
+			if (current.scrollLeft !== properScrollPosition) {
+				current.scrollLeft = properScrollPosition;
+			}
+		} else {
+			this.setState({
+				properScrollPosition: current.scrollWidth - current.clientWidth
+			});
+			current.scrollLeft = current.scrollWidth - current.clientWidth;
+		}
+		if (
+			prevProps.attributes.tabsTitle.length !==
+			this.props.attributes.tabsTitle.length
+		) {
+			this.setState({
+				showScrollButtons: current.scrollWidth > current.clientWidth
+			});
+		}
 	}
 	render() {
 		const {
@@ -378,6 +460,7 @@ export class TabHolder extends Component {
 		};
 
 		const addTab = i => {
+			const { scrollWidth, clientWidth } = this.tabBarRef.current;
 			insertBlock(createBlock('ub/tab-block', {}), i, block.clientId);
 			setAttributes({
 				tabsTitle: [...tabsTitle, 'Tab Title'],
@@ -385,6 +468,9 @@ export class TabHolder extends Component {
 			});
 
 			showControls('tab-title', i);
+			this.setState({
+				properScrollPosition: scrollWidth - clientWidth //make sure the add tab button is always visible
+			});
 		};
 
 		if (tabsTitle.length === 0) {
@@ -406,7 +492,15 @@ export class TabHolder extends Component {
 					backgroundColor: activeTab === i ? theme : 'initial',
 					color: activeTab === i ? titleColor : '#000000'
 				}}
-				onClick={() => showControls('tab-title', i)}
+				onClick={() => {
+					const { scrollLeft } = this.tabBarRef.current;
+					showControls('tab-title', i);
+					if (scrollLeft !== this.state.properScrollPosition) {
+						this.setState({
+							properScrollPosition: scrollLeft
+						});
+					}
+				}}
 			>
 				<RichText
 					tagName="div"
@@ -451,7 +545,11 @@ export class TabHolder extends Component {
 		));
 
 		const SortableList = SortableContainer(({ items }) => (
-			<div className={className + '-tabs-title SortableList'}>
+			<div
+				className={className + '-tabs-title SortableList'}
+				ref={this.tabBarRef}
+				useWindowAsScrollContainer={true}
+			>
 				{items.map((value, index) => (
 					<SortableItem
 						key={`item-${index}`}
@@ -508,34 +606,88 @@ export class TabHolder extends Component {
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
 			<div className={className}>
 				<div className={className + '-holder'}>
-					<SortableList
-						axis="x"
-						items={tabsTitle}
-						onSortEnd={({ oldIndex, newIndex }) => {
-							const titleItems = tabsTitle.slice(0);
+					<div className={className + '-tab-holder'}>
+						<SortableList
+							axis="x"
+							items={tabsTitle}
+							onSortEnd={({ oldIndex, newIndex }) => {
+								this.setState({
+									properScrollPosition: this.tabBarRef.current
+										.scrollLeft
+								});
+								const titleItems = tabsTitle.slice(0);
+								showControls('tab-title', oldIndex);
+								setAttributes({
+									tabsTitle: arrayMove(
+										titleItems,
+										oldIndex,
+										newIndex
+									),
+									activeTab: newIndex
+								});
 
-							setAttributes({
-								tabsTitle: arrayMove(
-									titleItems,
-									oldIndex,
+								moveBlockToPosition(
+									tabs.filter(
+										tab => tab.attributes.index === oldIndex
+									)[0].clientId,
+									block.clientId,
+									block.clientId,
 									newIndex
-								)
-							});
-
-							moveBlockToPosition(
-								tabs.filter(
-									tab => tab.attributes.index === oldIndex
-								)[0].clientId,
-								block.clientId,
-								block.clientId,
-								newIndex
-							);
-
-							showControls('tab-title', oldIndex);
-							setAttributes({ activeTab: newIndex });
-						}}
-						useDragHandle={true}
-					/>
+								);
+							}}
+							useDragHandle={true}
+						/>
+						{this.state.showScrollButtons && (
+							<div
+								className={
+									className + '-scroll-button-container'
+								}
+							>
+								<button
+									onMouseDown={_ => {
+										this.leftPress();
+										this.scrollTrigger = setTimeout(_ => {
+											this.setState({
+												scrollDirection: 'left'
+											});
+										}, 500);
+									}}
+									onMouseUp={_ => {
+										this.setState({
+											scrollDirection: 'none'
+										});
+										clearTimeout(this.scrollTrigger);
+									}}
+									className={
+										className + '-scroll-button-left'
+									}
+								>
+									<span className="dashicons dashicons-arrow-left-alt2" />
+								</button>
+								<button
+									className={
+										className + '-scroll-button-right'
+									}
+									onMouseDown={_ => {
+										this.rightPress();
+										this.scrollTrigger = setTimeout(_ => {
+											this.setState({
+												scrollDirection: 'right'
+											});
+										}, 500);
+									}}
+									onMouseUp={_ => {
+										this.setState({
+											scrollDirection: 'none'
+										});
+										clearTimeout(this.scrollTrigger);
+									}}
+								>
+									<span className="dashicons dashicons-arrow-right-alt2" />
+								</button>
+							</div>
+						)}
+					</div>
 					<div className={className + '-tabs-content'}>
 						<InnerBlocks
 							templateLock={false}
