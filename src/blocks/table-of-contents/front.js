@@ -17,12 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			'.ub_table-of-contents-container'
 		);
 
-		const showButton = block.getAttribute('data-showtext')
-			? block.getAttribute('data-showtext')
-			: 'show';
-		const hideButton = block.getAttribute('data-hidetext')
-			? block.getAttribute('data-hidetext')
-			: 'hide';
+		const showButton = block.getAttribute('data-showtext') || 'show';
+		const hideButton = block.getAttribute('data-hidetext') || 'hide';
 
 		const initialHide =
 			tocContainer.style.height === '0px' ||
@@ -62,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 			}, 20);
 			instance.innerHTML = tocContainer.classList.contains('ub-hiding')
-				? showButton
-				: hideButton;
+				? hideButton
+				: showButton;
 		});
 
 		tocContainer.addEventListener('transitionend', function() {

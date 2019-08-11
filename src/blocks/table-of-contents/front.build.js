@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var tocHeight = 0;
     var block = instance.closest('.ub_table-of-contents');
     var tocContainer = block.querySelector('.ub_table-of-contents-container');
-    var showButton = block.getAttribute('data-showtext') ? block.getAttribute('data-showtext') : 'show';
-    var hideButton = block.getAttribute('data-hidetext') ? block.getAttribute('data-hidetext') : 'hide';
+    var showButton = block.getAttribute('data-showtext') || 'show';
+    var hideButton = block.getAttribute('data-hidetext') || 'hide';
     var initialHide = tocContainer.style.height === '0px' || tocContainer.classList.contains('ub-hide') || getComputedStyle(tocContainer).display === 'none';
 
     if (initialHide) {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
           tocContainer.style.height = '';
         }
       }, 20);
-      instance.innerHTML = tocContainer.classList.contains('ub-hiding') ? showButton : hideButton;
+      instance.innerHTML = tocContainer.classList.contains('ub-hiding') ? hideButton : showButton;
     });
     tocContainer.addEventListener('transitionend', function () {
       if (getComputedStyle(tocContainer).height === '0px') {
