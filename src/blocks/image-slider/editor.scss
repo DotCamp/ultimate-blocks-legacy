@@ -1,10 +1,7 @@
 @import '../../common';
 
-.ub_image_slider {
+div[data-block] > .ub_image_slider {
 	display: block;
-	.flickity-enabled .flickity-page-dots {
-		bottom: 30px;
-	}
 	.ub_image_slider_add_images {
 		margin: 0 auto;
 	}
