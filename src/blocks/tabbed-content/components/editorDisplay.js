@@ -358,9 +358,10 @@ export class TabHolder extends Component {
 
 	componentDidMount() {
 		if (
+			this.tabBarRef.current &&
 			this.state.showControls !==
-			this.tabBarRef.current.scrollWidth >
-				this.tabBarRef.current.clientWidth
+				this.tabBarRef.current.scrollWidth >
+					this.tabBarRef.current.clientWidth
 		) {
 			this.checkWidth();
 		}
@@ -460,7 +461,6 @@ export class TabHolder extends Component {
 		};
 
 		const addTab = i => {
-			const { scrollWidth, clientWidth } = this.tabBarRef.current;
 			insertBlock(createBlock('ub/tab-block', {}), i, block.clientId);
 			setAttributes({
 				tabsTitle: [...tabsTitle, 'Tab Title'],
@@ -468,9 +468,12 @@ export class TabHolder extends Component {
 			});
 
 			showControls('tab-title', i);
-			this.setState({
-				properScrollPosition: scrollWidth - clientWidth //make sure the add tab button is always visible
-			});
+			if (this.tabBarRef.current) {
+				const { scrollWidth, clientWidth } = this.tabBarRef.current;
+				this.setState({
+					properScrollPosition: scrollWidth - clientWidth //make sure the add tab button is always visible
+				});
+			}
 		};
 
 		if (tabsTitle.length === 0) {
