@@ -1,5 +1,5 @@
 function ub_getSiblings(element, criteria) {
-	const children = [...element.parentNode.children].filter(
+	const children = Array.from(element.parentNode.children).filter(
 		child => child !== element
 	);
 	return criteria ? children.filter(criteria) : children;
