@@ -5,7 +5,7 @@ function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
     $stars = '';
 
     foreach(range(0, $limit-1) as $current){
-        $stars .= '<svg height="20" width="20" viewbox="0 0 150 150">
+        $stars .= '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 150 150">
         <defs><mask id="ub_review_star_filter-'.$id.'-'.$current
         .'"><rect height="150" width="'.($value - $current > 0 ?
             ($value - $current < 1 ? $value - $current : 1) : 0)*150

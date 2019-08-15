@@ -3,7 +3,12 @@ import './style.scss';
 import './editor.scss';
 
 import { ReviewBody } from './components';
-import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
+import {
+	version_1_1_2,
+	version_1_1_4,
+	version_1_1_5,
+	updateFrom
+} from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -14,6 +19,10 @@ const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
 
 const attributes = {
+	ID: {
+		type: 'string',
+		default: ''
+	},
 	blockID: {
 		type: 'string',
 		default: ''
@@ -258,17 +267,8 @@ registerBlockType('ub/review', {
 	}),
 	save: () => null,
 	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_4
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
+		updateFrom(version_1_1_2),
+		updateFrom(version_1_1_4),
+		updateFrom(version_1_1_5)
 	]
 });

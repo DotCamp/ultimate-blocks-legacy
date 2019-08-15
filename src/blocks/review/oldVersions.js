@@ -1,6 +1,70 @@
 const { RichText } = wp.editor;
-import { Stars } from './components';
+import { OldStars } from './components';
 import { JSONLD, Generic } from 'react-structured-data';
+
+const oldAttributes = {
+	ID: {
+		type: 'string',
+		default: ''
+	},
+	authorName: {
+		type: 'string',
+		default: ''
+	},
+	itemName: {
+		type: 'string'
+	},
+	items: {
+		type: 'string',
+		default: '[{"label": "", "value": 0}]'
+	},
+	starCount: {
+		type: 'number',
+		default: 5
+	},
+	summaryTitle: {
+		type: 'string',
+		default: 'Summary'
+	},
+	summaryDescription: {
+		type: 'string'
+	},
+	callToActionText: {
+		type: 'string'
+	},
+	callToActionURL: {
+		type: 'string',
+		default: ''
+	},
+	callToActionBackColor: {
+		type: 'string',
+		default: '#f63d3d'
+	},
+	callToActionForeColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	inactiveStarColor: {
+		type: 'string',
+		default: '#888888'
+	},
+	activeStarColor: {
+		type: 'string',
+		default: '#eeee00'
+	},
+	selectedStarColor: {
+		type: 'string',
+		default: '#ffff00'
+	},
+	titleAlign: {
+		type: 'string',
+		default: 'left'
+	},
+	authorAlign: {
+		type: 'string',
+		default: 'left'
+	}
+};
 
 const calculateAverage = JSONItems =>
 	Math.round(
@@ -41,7 +105,7 @@ export const version_1_1_2 = props => {
 			{JSON.parse(items).map((j, i) => (
 				<div className="ub_review_entry">
 					<RichText.Content key={i} value={j.label} />
-					<Stars
+					<OldStars
 						style={{ marginLeft: 'auto' }}
 						id={`${ID}-${i}`}
 						key={i}
@@ -88,11 +152,9 @@ export const version_1_1_2 = props => {
 							</button>
 						</a>
 					</div>
-					<Stars
+					<OldStars
 						id={`${ID}-average`}
 						className="ub_review_average_stars"
-						onHover={() => null}
-						setValue={() => null}
 						value={average}
 						limit={starCount}
 						inactiveStarColor={inactiveStarColor}
@@ -157,7 +219,7 @@ export const version_1_1_4 = props => {
 			{JSON.parse(items).map((j, i) => (
 				<div className="ub_review_entry">
 					<RichText.Content key={i} value={j.label} />
-					<Stars
+					<OldStars
 						style={{ marginLeft: 'auto' }}
 						id={`${ID}-${i}`}
 						key={i}
@@ -204,11 +266,9 @@ export const version_1_1_4 = props => {
 							</button>
 						</a>
 					</div>
-					<Stars
+					<OldStars
 						id={`${ID}-average`}
 						className="ub_review_average_stars"
-						onHover={() => null}
-						setValue={() => null}
 						value={average}
 						limit={starCount}
 						inactiveStarColor={inactiveStarColor}
@@ -280,7 +340,7 @@ export const version_1_1_5 = props => {
 			{JSON.parse(items).map((j, i) => (
 				<div className="ub_review_entry">
 					<RichText.Content key={i} value={j.label} />
-					<Stars
+					<OldStars
 						style={{ marginLeft: 'auto' }}
 						id={`${ID}-${i}`}
 						key={i}
@@ -327,11 +387,9 @@ export const version_1_1_5 = props => {
 							</button>
 						</a>
 					</div>
-					<Stars
+					<OldStars
 						id={`${ID}-average`}
 						className="ub_review_average_stars"
-						onHover={() => null}
-						setValue={() => null}
 						value={average}
 						limit={starCount}
 						inactiveStarColor={inactiveStarColor}
@@ -365,3 +423,14 @@ export const version_1_1_5 = props => {
 		</div>
 	);
 };
+
+export const updateFrom = oldVersion => ({
+	attributes: oldAttributes,
+	/*migrate: attributes => {
+		const { ID, ...otherAttributes } = attributes;
+		return Object.assign(Object.assign({}, otherAttributes), {
+			blockID: ID
+		});
+	},*/
+	save: oldVersion
+});
