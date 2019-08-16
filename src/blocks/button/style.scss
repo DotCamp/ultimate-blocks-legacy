@@ -12,7 +12,8 @@
 .ub-button-container {
 	max-width: 100%;
 	display: flex;
-	a.ub-button-block-main.ub-button-block-main {
+	a.ub-button-block-main.ub-button-block-main,
+	a.ub-button-block-btn.ub-button-block-btn {
 		text-decoration: none;
 	}
 }

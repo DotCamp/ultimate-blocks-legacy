@@ -18,7 +18,8 @@
 	.ub_call_to_action_button {
 		display: flex;
 		align-items: center;
-		.ub_cta_button {
+		.ub_cta_button a,
+		a.ub_cta_button {
 			text-decoration: none;
 		}
 	}
