@@ -26,7 +26,7 @@ export const oldAttributes = {
 	},
 	buttonColor: {
 		type: 'string',
-		default: '#313131'
+		default: '#44c767'
 	},
 	buttonHoverColor: {
 		type: 'string',
@@ -42,7 +42,7 @@ export const oldAttributes = {
 	},
 	buttonRounded: {
 		type: 'boolean',
-		default: false
+		default: true
 	},
 	chosenIcon: {
 		type: 'string',
@@ -65,17 +65,6 @@ export const oldAttributes = {
 		default: true
 	}
 };
-
-const oldAttributesAdjusted = Object.assign(Object.assign({}, oldAttributes), {
-	buttonColor: {
-		type: 'string',
-		default: '#44c767'
-	},
-	buttonRounded: {
-		type: 'boolean',
-		default: true
-	}
-});
 
 export const version_1_1_2 = props => {
 	const {
@@ -248,5 +237,5 @@ export const version_2_0_0 = props => {
 };
 
 export const updateFrom = oldVersion => {
-	return { attributes: oldAttributesAdjusted, save: oldVersion };
+	return { attributes: oldAttributes, save: oldVersion };
 };
