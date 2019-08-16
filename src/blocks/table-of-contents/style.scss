@@ -1,5 +1,6 @@
 @import '../../common';
 .ub_table-of-contents {
+	width: fit-content;
 	background-color: #fafafa;
 	border: 1px solid #dfdfdf;
 	padding: 30px;
@@ -71,4 +72,8 @@
 	.ub_table-of-contents-3-column {
 		column-count: 1;
 	}
+}
+
+html {
+	scroll-behavior: smooth;
 }
