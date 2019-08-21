@@ -30,12 +30,24 @@ function ub_render_click_to_tweet_block( $attributes ) {
     $tweet = preg_replace('/<br><br>$/', '<br>', $ubTweet);
 	$tweet_url  = ( $tweet ) ? rawurlencode( preg_replace('/<.+?>/', '', str_replace("<br>","\n",$tweet) )) : false;
 
+    /*$tweetFontSize = isset( $attributes['tweetFontSize'] ) ? "font-size:{$attributes['tweetFontSize']}" : "font-size: 20";
+	$tweetColor = isset( $attributes['tweetColor'] ) ? "color:{$attributes['tweetColor']}" : "color: #444444";
+    $borderColor = isset( $attributes['borderColor'] ) ? "border-color:{$attributes['borderColor']}" : "border-color: #CCCCCC";
+    */
+
 	$permalink = esc_url( get_the_permalink() );
 	$url       = apply_filters( 'ub_click_to_tweet_url', "http://twitter.com/intent/tweet?&text={$tweet_url}&url={$permalink}{$via}" );
 
-	$output = '';
-	$output .= sprintf('<div class="ub_click_to_tweet%1$s" id="%2$s">', (isset($className) ? ' ' . esc_attr($className) : ''), esc_attr('ub_click_to_tweet_' . $blockID ));
-    $output .= sprintf( '<div class="ub_tweet">');
+    $output = '';
+    if($blockID == ''){
+        $output .= sprintf('<div class="ub_click_to_tweet%1$s" style="border-color: %2$s;">', (isset($className) ? ' ' . esc_attr($className) : ''), $borderColor );
+        $output .= sprintf( '<div class="ub_tweet" style="font-size: %1$spx; color: %2$s">', $tweetFontSize, $tweetColor );
+    }
+    else{
+        $output .= sprintf('<div class="ub_click_to_tweet%1$s" id="%2$s">', (isset($className) ? ' ' . esc_attr($className) : ''), esc_attr('ub_click_to_tweet_' . $blockID ));
+        $output .= sprintf( '<div class="ub_tweet">');
+    }
+
     $output .= $tweet;
 	$output .= sprintf('</div>');
 	$output .= sprintf( '<div class="ub_click_tweet">' );

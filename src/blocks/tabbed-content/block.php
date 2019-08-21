@@ -33,12 +33,15 @@ function ub_render_tabbed_content_block($attributes, $contents){
     $tabs = '';
 
     foreach($tabsTitle as $key=>$title){
-        $tabs .= '<div class = "'.$blockName.'-tab-title-wrap'.($activeTab == $key ? ' active' : '').'">
+        $tabs .= '<div class = "'.$blockName.'-tab-title-wrap'.($activeTab == $key ? ' active' : '').'"'.
+            ($blockID == '' ?' style="background-color: '.($activeTab == $key ? $theme : 'initial')
+            .'; border-color: '.($activeTab == $key ? $theme : 'lightgrey').
+            '; color: '.($activeTab == $key ? $titleColor : '#000000') :'').';"'.'>
             <div class="'.$blockName.'-tab-title">'.$title.'</div></div>';
     }
 
     return '<div class="'.$blockName.' '.$blockName.'-holder'.(isset($className) ? ' ' . esc_attr($className) : '')
-        .'" id="ub-tabbed-content-'.$blockID.'"><div class="'.$blockName.'-tab-holder">
+        .'"'.($blockID==''?'':' id="ub-tabbed-content-'.$blockID.'"').'><div class="'.$blockName.'-tab-holder">
     <div class="'.$blockName.'-tabs-title">'.
     $tabs.'</div>
     <div class="'.$blockName.'-scroll-button-container ub-hide">

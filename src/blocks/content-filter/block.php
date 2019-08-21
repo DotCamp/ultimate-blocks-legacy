@@ -51,7 +51,9 @@ function ub_render_content_filter_block($attributes, $content){
 
         foreach($filterGroup['filters'] as $key2 => $tag){
             $filterList .= '<div data-tagIsSelected="false" data-categoryNumber="'.$key1.'"
-            data-filterNumber="'.$key2.'" class="ub-content-filter-tag">'.
+            data-filterNumber="'.$key2.'" '.($blockID == '' ? 'data-normalColor="'.$buttonColor.'" data-normalTextColor="'.$buttonTextColor.
+            '" data-activeColor="'.$activeButtonColor.'" data-activeTextColor="'.$activeButtonTextColor.
+            '"style="background-color: '.$buttonColor.'; color: '.$buttonTextColor.'"' :'').' class="ub-content-filter-tag">'.
             $tag.'</div>';
         }
         $filterList .= '</div>';
@@ -64,7 +66,7 @@ $currentSelection = array_map(function($category){
                     }, (array)$filterArray);
 
 return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_attr($className) : '').
-        '" id="ub-content-filter-'.$blockID.'" data-currentSelection="'.json_encode($currentSelection).'">'.
+        '"'. ($blockID =='' ? : ' id="ub-content-filter-'.$blockID.'"') .' data-currentSelection="'.json_encode($currentSelection).'">'.
     $filterList.$content.'</div>';
 }
 

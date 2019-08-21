@@ -15,10 +15,19 @@ function ub_render_button_block($attributes){
     
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    return '<div class="ub-button-container align-button-'.$align.(isset($className) ? ' ' . esc_attr($className) : '').'" id="ub-button-'.$blockID.'">
+    return '<div class="ub-button-container align-button-'.$align.(isset($className) ? ' ' . esc_attr($className) : '').'"' . (!isset($blockID) || $blockID == '' ? ' ': ' id="ub-button-'.$blockID.'"') . '>
                 <a href="'.esc_url($url).'" target="'.($openInNewTab ? '_blank' : '_self').'"
                 rel="noopener noreferrer'.($addNofollow ? ' nofollow' : '').'"
-                class="ub-button-block-main ub-button-'.$size.'">
+                class="ub-button-block-main ub-button-'.$size.'"'.
+                (isset($blockID) && $blockID != '' ? '': 'data-defaultColor="'.$buttonColor.'"
+                data-defaultTextColor="'.$buttonTextColor.'"
+                data-hoverColor="'.$buttonHoverColor.'"
+                data-hoverTextColor="'.$buttonTextHoverColor.'"
+                data-buttonIsTransparent="'.json_encode($buttonIsTransparent).'"
+                style="background-color: '.($buttonIsTransparent ? 'transparent' : $buttonColor).';'.
+                'color: '.($buttonIsTransparent ? $buttonColor : $buttonTextColor).';'.
+                'border-radius: '.($buttonRounded ? '60' : '0').'px;'.
+                'border: '.($buttonIsTransparent ? ('3px solid '.$buttonColor) : 'none').';"').'>
                 <div class="ub-button-content-holder">'.
                     ($chosenIcon != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
                     height="'.$iconSize[$size].'", width="'.$iconSize[$size].'"
@@ -31,7 +40,7 @@ function ub_render_button_block($attributes){
 }
 
 function ub_button_add_frontend_assets() {
-    if ( has_block( 'ub/button-block' ) ) {
+    if ( has_block( 'ub/button-block' ) || has_block('ub/button')) {
         wp_enqueue_script(
             'ultimate_blocks-button-front-script',
             plugins_url( 'button/front.build.js', dirname( __FILE__ ) ),

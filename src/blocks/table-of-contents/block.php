@@ -40,7 +40,7 @@ function ub_render_table_of_contents_block($attributes){
     $listItems = '';
 
     if (!function_exists('ub_makeListItem')) {
-        function ub_makeListItem($num, $item, $listStyle){
+        function ub_makeListItem($num, $item, $listStyle, $blockID){
             static $outputString = '';
             if($num == 0 && $outputString != ''){
                 $outputString = '';
@@ -51,13 +51,14 @@ function ub_render_table_of_contents_block($attributes){
                 $outputString .= '<li><a href="#'.$anchor.'">'. $content .'</a></li>';
             }
             else{
-                $openingTag = $listStyle == 'numbered' ? '<ol>' : '<ul>';
+                $openingTag = $listStyle == 'numbered' ? '<ol>' :
+                    '<ul'.($listStyle == 'plain' && $blockID == '' ? ' style="list-style: none;"' : '').'>';
 
                 $outputString = substr_replace($outputString, $openingTag,
                     strrpos($outputString, '</li>'), strlen('</li>'));
 
                 forEach($item as $key => $subItem){
-                    ub_makeListItem($key+1, $subItem, $listStyle);
+                    ub_makeListItem($key+1, $subItem, $listStyle, $blockID);
                 }
                 $outputString .= ($listStyle == 'numbered' ? '</ol>' : '</ul>') . '</li>';
             }
@@ -66,12 +67,12 @@ function ub_render_table_of_contents_block($attributes){
     }
 
     foreach($sortedHeaders as $key => $item){
-        $listItems = ub_makeListItem($key, $item, $listStyle);
+        $listItems = ub_makeListItem($key, $item, $listStyle, $blockID);
     }
 
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .'" data-showtext="'.__('show').'" data-hidetext="'.__('hide')
-                .'" id="ub_table-of-contents-'.$blockID.'">'.
+                .'"'.($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.
                         $title .'</div>'.
@@ -85,7 +86,7 @@ function ub_render_table_of_contents_block($attributes){
                 .'<div class="ub_table-of-contents-container ub_table-of-contents-' .
                     $numColumns. '-column ' . ($showList || strlen($title) == 0 ||
                     (strlen($title) == 1 && $title[0] == '') ? '' : 'ub-hide').'">'.
-                ($listStyle == 'numbered' ? '<ol>' : '<ul>')
+                ($listStyle == 'numbered' ? '<ol>' :  '<ul'.($listStyle == 'plain' && $blockID == '' ? ' style="list-style: none;"' : '').'>')
                 . $listItems .
                 ($listStyle == 'numbered' ? '</ol>' : '</ul>')
                 .'</div></div>';

@@ -16,14 +16,15 @@ function ub_render_image_slider_block($attributes){
     
     foreach($imageArray as $key => $image){
         $gallery .= '<div>
-        <img src="'.$image['url'].'">'.
+        <img src="'.$image['url'].'"'.($blockID==''?' style="height: '.$sliderHeight.'px;"':'').'>'.
             ($captionArray[$key]['link'] == '' ? '<span' : '<a href="'.esc_url($captionArray[$key]['link']).'"')
             .' class="ub_image_slider_image_caption">'.$captionArray[$key]['text']
             .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </div>';
     }
 
     return '<div class="ub_image_slider'.(isset($className) ? ' ' . esc_attr($className) : '').
-                '" id="ub_image_slider_'.$blockID.'">
+            '" '.($blockID==''?'style="min-height: '.(25+ (count($imageArray) > 0) ? $sliderHeight : 200 ).'px;"'
+                :'id="ub_image_slider_'.$blockID.'"').'>
         <div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
             'wrapAround'=> $wrapsAround, 'autoPlay'=> ($autoplays ? $autoplayDuration * 1000 : $autoplays),
             'adaptiveHeight'=>true )).'>'.$gallery

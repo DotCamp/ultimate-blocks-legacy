@@ -71,12 +71,14 @@ function ub_render_countdown_block($attributes){
     }
 
     if($timeLeft > 0){
-        return '<div id="ub_countdown_'.$blockID.'" class="ub-countdown '.esc_attr($className).
+        return '<div'.($blockID==''?'': ' id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown'.
+                (isset($className)?' '.esc_attr($className):'').
                 '" data-expirymessage="'.$expiryMessage.'" data-enddate="'.$endDate.'">
             '.$selectedFormat
             .'</div>';
     }
-    else return '<div class="ub-countdown'.(isset($className) ? ' ' . esc_attr($className) : '').'" id="ub_countdown_'.$blockID.'">'.$expiryMessage.'</div>';
+    else return '<div class="ub-countdown'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
+        ($blockID==''?'style="text-align:'.$messageAlign.';' :'id="ub_countdown_'.$blockID.'"').'>'.$expiryMessage.'</div>';
 }
 
 function ub_register_countdown_block() {

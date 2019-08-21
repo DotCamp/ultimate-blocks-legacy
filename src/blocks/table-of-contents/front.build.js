@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
       tocContainer.classList.add('ub-hide');
     }
 
+    tocContainer.removeAttribute('style');
     instance.addEventListener('click', function (event) {
       event.preventDefault();
 

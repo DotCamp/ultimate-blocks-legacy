@@ -81,6 +81,7 @@ Array.from(document.getElementsByClassName('wp-block-ub-content-toggle')).forEac
         panelContent.classList.add('ub-hide');
       }
     });
+    panelContent.removeAttribute('style');
   }); //hide the parent element again;
 
   if (parentIsHidden) {

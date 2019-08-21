@@ -4,16 +4,23 @@ function ub_render_testimonial_block($attributes){
     extract($attributes);
     return '<div>
     <div class="ub_testimonial'.(isset($className) ? ' ' . esc_attr($className) : '').
-            '" id="ub_testimonial_'.$blockID.'">
+            '"'.($blockID==''?'style= "background-color: '.$backgroundColor.'; color: '.$textColor.';"'
+                :' id="ub_testimonial_'.$blockID.'"').'>
         <div class="ub_testimonial_img">
             <img src="'.$imgURL.'" alt="'.$imgAlt.'" height="100" width="100" />
         </div>
         <div class="ub_testimonial_content">
-            <p class="ub_testimonial_text">'.$ub_testimonial_text.'</p>
+            <p class="ub_testimonial_text"'.
+                ($blockID==''?' style="font-size: '.$textSize.'px; text-align: '.$textAlign.';"':'').'>'.
+                $ub_testimonial_text.'</p>
         </div>
         <div class="ub_testimonial_sign">
-            <p class="ub_testimonial_author">'.$ub_testimonial_author.'</p>
-            <p class="ub_testimonial_author_role">'.$ub_testimonial_author_role.'</p>
+            <p class="ub_testimonial_author"'.
+                ($blockID==''?' style="font-size: '.$textSize.'px; text-align: '.$authorAlign.';"':'').'>'.
+                $ub_testimonial_author.'</p>
+            <p class="ub_testimonial_author_role"'.
+                ($blockID==''?' style="font-size: '.$textSize.'px; text-align: '.$authorRoleAlign.';"':'').'>'.
+                $ub_testimonial_author_role.'</p>
         </div>
     </div>
 </div>';

@@ -27,12 +27,23 @@ function ub_render_star_rating_block($attributes){
                 ub_make_full_star($starSize, $starColor) : ub_make_half_star($starSize, $starColor))
             : ub_make_empty_star($starSize);
     }
+    if($blockID==''){
+        $stars = preg_replace_callback('/<svg ([^>]+)>/', function($svgAttributes){
+            if(preg_match('/fill=\"([^"]+)\"/', $svgAttributes[1], $matches)){
+                return '<svg ' . $svgAttributes[1] . ' style="fill:'.$matches[1].';">';
+            }
+            return $svgAttributes[0];
+        }, $stars);
+    }
+
     return '<div class="ub-star-rating'.(isset($className) ? ' ' . esc_attr($className) : '').
-            '" id="ub-star-rating-'.$blockID.'">
-                <div class="ub-star-outer-container">
+            '"'.($blockID==''?'':' id="ub-star-rating-'.$blockID.'"').'>
+                <div class="ub-star-outer-container"'.
+                    ($blockID==''?'  style="justify-content:'.($starAlign == 'center' ? 'center' :
+                    ('flex-'.$starAlign == 'left' ? 'start' : 'end')).';"':'').'>
                     <div class="ub-star-inner-container">'.$stars.'</div>
                 </div>
-                <div class="ub-review-text">'. 
+                <div class="ub-review-text"'.($blockID==''?' style="text-align:'.$reviewTextAlign.';"':'').'>'. 
                     $reviewText
                 .'</div>
             </div>';

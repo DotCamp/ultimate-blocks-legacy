@@ -93,6 +93,8 @@ Array.from(
 				panelContent.classList.add('ub-hide');
 			}
 		});
+
+		panelContent.removeAttribute('style');
 	});
 
 	//hide the parent element again;
