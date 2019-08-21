@@ -71,7 +71,7 @@ function ub_render_countdown_block($attributes){
     }
 
     if($timeLeft > 0){
-        return '<div'.($blockID==''?'': ' id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown'.
+        return '<div '.($blockID==''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown'.
                 (isset($className)?' '.esc_attr($className):'').
                 '" data-expirymessage="'.$expiryMessage.'" data-enddate="'.$endDate.'">
             '.$selectedFormat
