@@ -121,70 +121,75 @@ function ub_content_toggle_filter( $block_content, $block ) {
         $questions = "";
 
         foreach($block['innerBlocks'] as $key => $togglePanel){
-            $answer = preg_replace_callback('/<([a-z1-6]+)[^>]*?>[^<]*?<\/(\1)>/i', function($matches){
-                return (in_array($matches[1], ['script', 'svg', 'iframe', 'applet', 'map',
-                    'audio', 'button', 'table', 'datalist', 'form', 'frameset',
-                    'select', 'optgroup', 'picture', 'style', 'video']) ? '' : $matches[0]);
-            }, $panel[$key]);
+            if(array_key_exists($key, $panel)){
+                $answer = preg_replace_callback('/<([a-z1-6]+)[^>]*?>[^<]*?<\/(\1)>/i', function($matches){
+                    return (in_array($matches[1], ['script', 'svg', 'iframe', 'applet', 'map',
+                        'audio', 'button', 'table', 'datalist', 'form', 'frameset',
+                        'select', 'optgroup', 'picture', 'style', 'video']) ? '' : $matches[0]);
+                }, $panel[$key]);
 
-            $answer = preg_replace_callback('/<\/?([a-z1-6]+).*?\/?>/i', function($matches){
-                if(in_array($matches[1], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'br', 'ol',
-                                    'ul', 'li', 'p', 'div', 'b', 'strong', 'i', 'em', 'u', 'del'])){
-                    return $matches[0];
+                $answer = preg_replace_callback('/<\/?([a-z1-6]+).*?\/?>/i', function($matches){
+                    if(in_array($matches[1], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'br', 'ol',
+                                        'ul', 'li', 'p', 'div', 'b', 'strong', 'i', 'em', 'u', 'del'])){
+                        return $matches[0];
+                    }
+                    else{
+                        $replacement = '';
+                        if ($matches[1] == 'ins'){
+                            $replacement = 'u';
+                        }
+                        elseif ($matches[1] == 'big') {
+                            $replacement = 'strong';
+                        }
+                        elseif ($matches[1] == 'q'){
+                            $replacement = 'p';
+                        }
+                        elseif ($matches[1] == 'dir'){
+                            $replacement = 'ul';
+                        }
+                        elseif ($matches[1] == 'address' || $matches[1] == 'cite'){
+                            $replacement = 'em';
+                        }
+                        elseif (in_array($matches[1], ['article', 'aside', 'blockquote', 'details', 'dialog', 'figure',
+                                                'figcaption', 'footer', 'header', 'nav', 'pre', 'section', 'textarea'])){
+                            $replacement = 'div';
+                        }
+    
+                        return ($replacement == '' ? '' : str_replace($matches[1], $replacement, $matches[0]));
+                    }
+                }, $answer);
+    
+                while(preg_match_all('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', $answer) > 0){ //remove empty tags and tags that only contain empty tags
+                    $answer = preg_replace('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', '', $answer);
                 }
-                else{
-                    $replacement = '';
-                    if ($matches[1] == 'ins'){
-                        $replacement = 'u';
+    
+                //check all attributes
+    
+                $answer = preg_replace_callback('/<[a-z1-6]+( (?:(?:aria|data)-[^\t\n\f \/>"\'=]+|[a-z]+)=[\'"][\s\S]+?[\'"])>/i',
+                    function($matches){
+                        $attributeList = preg_replace_callback('/ ([\S]+)=([\'"])[\s\S]*?(\2)/', function($matches){
+                            return $matches[1] == 'href' ? $matches[0]: '';
+                        }, $matches[1]);
+                        return str_replace($matches[1], $attributeList, $matches[0]);
+                }, $answer);
+    
+                if($answer != "" && $togglePanel['attrs']['panelTitle'] != ''){ //blank answers and questions are invalid
+                    if($questions != ""){
+                        $questions .= ',' . PHP_EOL;
                     }
-                    elseif ($matches[1] == 'big') {
-                        $replacement = 'strong';
-                    }
-                    elseif ($matches[1] == 'q'){
-                        $replacement = 'p';
-                    }
-                    elseif ($matches[1] == 'dir'){
-                        $replacement = 'ul';
-                    }
-                    elseif ($matches[1] == 'address' || $matches[1] == 'cite'){
-                        $replacement = 'em';
-                    }
-                    elseif (in_array($matches[1], ['article', 'aside', 'blockquote', 'details', 'dialog', 'figure',
-                                            'figcaption', 'footer', 'header', 'nav', 'pre', 'section', 'textarea'])){
-                        $replacement = 'div';
-                    }
-
-                    return ($replacement == '' ? '' : str_replace($matches[1], $replacement, $matches[0]));
+                    $questions .= '{
+                        "@type": "Question",
+                        "name": "'.$togglePanel['attrs']['panelTitle'].'",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "'.trim($answer).'"
+                        }
+                    }';
                 }
-            }, $answer);
 
-            while(preg_match_all('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', $answer) > 0){ //remove empty tags and tags that only contain empty tags
-                $answer = preg_replace('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', '', $answer);
+
             }
 
-            //check all attributes
-
-            $answer = preg_replace_callback('/<[a-z1-6]+( (?:(?:aria|data)-[^\t\n\f \/>"\'=]+|[a-z]+)=[\'"][\s\S]+?[\'"])>/i',
-                function($matches){
-                    $attributeList = preg_replace_callback('/ ([\S]+)=([\'"])[\s\S]*?(\2)/', function($matches){
-                        return $matches[1] == 'href' ? $matches[0]: '';
-                    }, $matches[1]);
-                    return str_replace($matches[1], $attributeList, $matches[0]);
-            }, $answer);
-
-            if($answer != "" && $togglePanel['attrs']['panelTitle'] != ''){ //blank answers and questions are invalid
-                if($questions != ""){
-                    $questions .= ',' . PHP_EOL;
-                }
-                $questions .= '{
-                    "@type": "Question",
-                    "name": "'.$togglePanel['attrs']['panelTitle'].'",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "'.trim($answer).'"
-                    }
-                }';
-            }
         }
         $output .= '<script type="application/ld+json">{
             "@context":"http://schema.org/",
