@@ -108,6 +108,8 @@ function ub_include_block_attribute_css() {
         $presentBlocks = ub_checkInnerBlocks($block);
     }
 
+    $hasNoSmoothScroll = true;
+
     foreach( $presentBlocks as $block ){
         if(array_key_exists($block['blockName'], $defaultValues)){
             $attributes = array_merge(array_map(function($attribute){
@@ -402,6 +404,12 @@ function ub_include_block_attribute_css() {
                         $blockStylesheets .= '#ub_table-of-contents-' . $attributes['blockID'] . ' ul{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;
+                    }
+                    if($attributes['enableSmoothScroll'] && $hasNoSmoothScroll){
+                        $blockStylesheets .= 'html {' . PHP_EOL .
+                            'scroll-behavior: smooth;' . PHP_EOL .
+                        '}' . PHP_EOL;
+                        $hasNoSmoothScroll = false;
                     }
                     break;
                 case 'ub/testimonial':

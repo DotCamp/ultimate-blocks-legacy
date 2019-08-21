@@ -61,6 +61,10 @@ const attributes = {
 	listStyle: {
 		type: 'string',
 		default: 'bulleted' //other options: numbered, plain
+	},
+	enableSmoothScroll: {
+		type: 'boolean',
+		default: false
 	}
 };
 

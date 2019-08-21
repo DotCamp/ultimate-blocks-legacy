@@ -766,6 +766,10 @@ $defaultValues = array(
             'listStyle' => array(
                 'type' => 'string',
                 'default' => 'bulleted'
+            ),
+            'enableSmoothScroll' => array(
+                'type' => 'boolean',
+                'default' => false
             )
         )
     ),

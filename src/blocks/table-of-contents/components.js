@@ -14,7 +14,7 @@ const {
 	IconButton
 } = wp.components;
 const { InspectorControls, BlockControls, RichText } = wp.editor;
-const { select, subscribe } = wp.data;
+const { select, dispatch, subscribe } = wp.data;
 const { __ } = wp.i18n;
 
 class TableOfContents extends Component {
@@ -172,7 +172,12 @@ class TableOfContents extends Component {
 
 export const inspectorControls = props => {
 	const { attributes, setAttributes } = props;
-	const { allowedHeaders, showList, allowToCHiding } = attributes;
+	const {
+		allowedHeaders,
+		showList,
+		allowToCHiding,
+		enableSmoothScroll
+	} = attributes;
 	return (
 		<InspectorControls>
 			<PanelBody title={__('Allowed Headers')} initialOpen={true}>
@@ -230,6 +235,30 @@ export const inspectorControls = props => {
 						/>
 					</PanelRow>
 				)}
+				<PanelRow>
+					<label htmlFor="ub_toc_smoothscroll">
+						Enable smooth scrolling
+					</label>
+					<ToggleControl
+						id="ub_toc_smoothscroll"
+						checked={enableSmoothScroll}
+						onChange={() => {
+							const tocInstances = select('core/editor')
+								.getBlocks()
+								.filter(
+									block =>
+										block.name ===
+										'ub/table-of-contents-block'
+								);
+							tocInstances.forEach(instance => {
+								dispatch('core/editor').updateBlockAttributes(
+									instance.clientId,
+									{ enableSmoothScroll: !enableSmoothScroll }
+								);
+							});
+						}}
+					/>
+				</PanelRow>
 			</PanelBody>
 		</InspectorControls>
 	);
