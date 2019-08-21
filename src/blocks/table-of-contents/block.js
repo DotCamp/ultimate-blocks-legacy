@@ -18,8 +18,9 @@ import {
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
+const { ToggleControl, PanelRow, PanelBody } = wp.components;
 
-const { RichText } = wp.editor;
+const { InspectorControls, RichText } = wp.editor;
 
 const { withDispatch, withSelect } = wp.data;
 
@@ -95,9 +96,80 @@ registerBlockType('ub/table-of-contents', {
 			return { replaceBlock };
 		})
 	])(function(props) {
-		const { block, replaceBlock, isSelected } = props;
+		const {
+			block,
+			replaceBlock,
+			isSelected,
+			attributes,
+			setAttributes
+		} = props;
+		const { allowedHeaders, showList, allowToCHiding } = attributes;
 		return [
-			isSelected && inspectorControls(props),
+			isSelected && (
+				<InspectorControls>
+					<PanelBody title={__('Allowed Headers')} initialOpen={true}>
+						{allowedHeaders.map((a, i) => (
+							<PanelRow>
+								<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i +
+									1}`}</label>
+								<ToggleControl
+									id={`ub_toggle_h${i + 1}`}
+									checked={a}
+									onChange={() =>
+										setAttributes({
+											allowedHeaders: [
+												...allowedHeaders.slice(0, i),
+												!allowedHeaders[i],
+												...allowedHeaders.slice(i + 1)
+											]
+										})
+									}
+								/>
+							</PanelRow>
+						))}
+					</PanelBody>
+					<PanelBody
+						title={__('Additional Settings')}
+						initialOpen={true}
+					>
+						<PanelRow>
+							<label htmlFor="ub_toc_toggle_display">
+								{__(
+									'Allow users to toggle the visibility of the table of contents'
+								)}
+							</label>
+							<ToggleControl
+								id="ub_toc_toggle_display"
+								checked={allowToCHiding}
+								onChange={allowToCHiding => {
+									setAttributes({
+										allowToCHiding,
+										showList: allowToCHiding
+											? showList
+											: true
+									});
+								}}
+							/>
+						</PanelRow>
+						{allowToCHiding && (
+							<PanelRow>
+								<label htmlFor="ub_show_toc">
+									{__('Initially Show Table of Contents')}
+								</label>
+								<ToggleControl
+									id="ub_show_toc"
+									checked={showList}
+									onChange={() => {
+										setAttributes({
+											showList: !showList
+										});
+									}}
+								/>
+							</PanelRow>
+						)}
+					</PanelBody>
+				</InspectorControls>
+			),
 			isSelected && blockControls(props),
 			<div className="ub_table-of-contents">
 				<button
