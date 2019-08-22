@@ -39,6 +39,7 @@ Array.from(document.getElementsByClassName('wp-block-ub-content-toggle')).forEac
     }
 
     panelHeight = panelContent.offsetHeight;
+    panelContent.removeAttribute('style');
 
     if (initialHide) {
       panelContent.classList.add('ub-hide');

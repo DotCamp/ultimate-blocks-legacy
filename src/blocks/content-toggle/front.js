@@ -55,6 +55,8 @@ Array.from(
 		}
 		panelHeight = panelContent.offsetHeight;
 
+		panelContent.removeAttribute('style');
+
 		if (initialHide) {
 			panelContent.classList.add('ub-hide');
 		}
