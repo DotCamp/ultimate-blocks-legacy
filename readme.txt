@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 Requires PHP: 5.3
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -123,19 +123,24 @@ That's it. You're done!
 
 == Changelog ==
 
-= 2.1.1 =
+= 2.1.2 =
 
-Release Date: July 24th, 2019
+Release Date: August 23rd, 2019
 
-* NEW: Allow star rating to accept half-star values.
-* FIX: Conflict with Table of Contents Plus plugin.
-* FIX: Table of Contents rendering of plain style.
-* FIX: Hide block contents when "Initially Show Table of Contents" is disabled.
-* FIX: Heading styles included in Table of Contents.
-* FIX: Issues with "Open link in new tab" and "Add nofollow" settings.
-* FIX: Bugs in frontend scripts of Table of Content and Button
-* FIX: Frontend script's search for hidden ancestor elements in Content Toggle.
-* FIX: Content Toggle not working on Safari.
-* FIX: Adding custom class names for all blocks.
+* ADD: FAQ Schema in Content Toggle (Accordion) Block 🔥
+* ADD: Smooth scrolling for Table of Contents.
+* ADD: Scroll buttons to improve tab navigation in Tabbed Content.
+* FIX: Infinite loop while parsing existing headings in Table of Contents.
+* FIX: Trim all whitespace from headings in Table of Contents..
+* FIX: Front-end toggle button caption display in Table of Contents.
+* FIX: Rendering icons when more than one Button Block has one icon set.
+* FIX: Bugs that prevented old Button and Review blocks from loading in WordPress 5.1 and older.
+* FIX: Content Toggle and Tabbed Content front-end scripts compatibility with Edge.
+* FIX: Override theme CSS for star color in Star Rating Block. 
+* FIX: Override theme CSS for button link underlines in Button and Call to Action Block.
+* FIX: Black outline in Notification Box Block.
+* IMPROVEMENT: Toggle events in Content Toggle and Table of Contents.
+* IMPROVEMENT: Move front-end Javascript to separate files for Countdown Block.
+* IMPROVEMENT: Remove most of inline CSS for new blocks.
 
 Full changelog can be found here - **[Ultimate Blocks changelog](https://ultimateblocks.com/changelog/)**
