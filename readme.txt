@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -122,6 +122,12 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.1.3 = 
+
+Release Date: August 27th, 2019
+
+* FIX: Class name conflict with another plugin that breaks the dashboard.
 
 = 2.1.2 =
 
