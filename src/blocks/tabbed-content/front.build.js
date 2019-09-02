@@ -1,18 +1,35 @@
 "use strict";
 
 /* eslint-disable */
+if (!Element.prototype.matches) {
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
+if (!Element.prototype.closest) {
+  Element.prototype.closest = function (s) {
+    var el = this;
+
+    do {
+      if (el.matches(s)) return el;
+      el = el.parentElement || el.parentNode;
+    } while (el !== null && el.nodeType === 1);
+
+    return null;
+  };
+}
+
 function ub_getSiblings(element, criteria) {
-  var children = Array.from(element.parentNode.children).filter(function (child) {
+  var children = Array.prototype.slice.call(element.parentNode.children).filter(function (child) {
     return child !== element;
   });
   return criteria ? children.filter(criteria) : children;
 }
 
 function ub_getNodeindex(elm) {
-  return Array.from(elm.parentNode.children).indexOf(elm);
+  return Array.prototype.slice.call(elm.parentNode.children).indexOf(elm);
 }
 
-Array.from(document.getElementsByClassName('wp-block-ub-tabbed-content-tab-title-wrap')).forEach(function (instance) {
+Array.prototype.slice.call(document.getElementsByClassName('wp-block-ub-tabbed-content-tab-title-wrap')).forEach(function (instance) {
   instance.addEventListener('click', function () {
     var parent = instance.closest('.wp-block-ub-tabbed-content-holder');
     var activeStyle = parent.querySelector('.wp-block-ub-tabbed-content-tab-title-wrap.active').getAttribute('style');
@@ -39,7 +56,7 @@ Array.from(document.getElementsByClassName('wp-block-ub-tabbed-content-tab-title
     activeTab.classList.remove('ub-hide');
   });
 });
-Array.from(document.getElementsByClassName('wp-block-ub-tabbed-content-scroll-button-container')).forEach(function (scrollButtonContainer) {
+Array.prototype.slice.call(document.getElementsByClassName('wp-block-ub-tabbed-content-scroll-button-container')).forEach(function (scrollButtonContainer) {
   var tabBar = scrollButtonContainer.previousElementSibling;
   var leftScroll = scrollButtonContainer.querySelector('.wp-block-ub-tabbed-content-scroll-button-left');
   var rightScroll = scrollButtonContainer.querySelector('.wp-block-ub-tabbed-content-scroll-button-right');

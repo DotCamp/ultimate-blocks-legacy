@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   var timer = [];
-  Array.from(document.getElementsByClassName('ub-countdown')).forEach(function (instance, i) {
+  Array.prototype.slice.call(document.getElementsByClassName('ub-countdown')).forEach(function (instance, i) {
     timer[i] = setInterval(function () {
       var timeLeft = parseInt(instance.getAttribute('data-enddate')) - Math.floor(Date.now() / 1000);
       var seconds = timeLeft % 60;

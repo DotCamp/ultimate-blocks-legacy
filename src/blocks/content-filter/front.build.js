@@ -1,13 +1,30 @@
 "use strict";
 
+if (!Element.prototype.matches) {
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
+if (!Element.prototype.closest) {
+  Element.prototype.closest = function (s) {
+    var el = this;
+
+    do {
+      if (el.matches(s)) return el;
+      el = el.parentElement || el.parentNode;
+    } while (el !== null && el.nodeType === 1);
+
+    return null;
+  };
+}
+
 function ub_getSiblings(element, criteria) {
-  var children = Array.from(element.parentNode.children).filter(function (child) {
+  var children = Array.prototype.slice.call(element.parentNode.children).filter(function (child) {
     return child !== element;
   });
   return criteria ? children.filter(criteria) : children;
 }
 
-Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(function (instance) {
+Array.prototype.slice.call(document.getElementsByClassName('ub-content-filter-tag')).forEach(function (instance) {
   instance.addEventListener('click', function () {
     var _this = this;
 
@@ -58,7 +75,7 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(fun
     }
 
     blockProper.setAttribute('data-currentselection', JSON.stringify(newSelection));
-    Array.from(blockProper.getElementsByClassName('ub-content-filter-panel')).forEach(function (instance) {
+    Array.prototype.slice.call(blockProper.getElementsByClassName('ub-content-filter-panel')).forEach(function (instance) {
       var panelData = JSON.parse(instance.getAttribute('data-selectedfilters'));
       var mainData = JSON.parse(blockProper.getAttribute('data-currentselection'));
       var isVisible = true;

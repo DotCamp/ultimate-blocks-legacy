@@ -1,6 +1,6 @@
 "use strict";
 
-Array.from(document.getElementsByClassName('wp-block-ub-content-toggle')).forEach(function (toggleContainer) {
+Array.prototype.slice.call(document.getElementsByClassName('wp-block-ub-content-toggle')).forEach(function (toggleContainer) {
   var parentIsHidden = false;
   var parentClassIsHidden = false;
   var targetElement = toggleContainer;
@@ -23,7 +23,7 @@ Array.from(document.getElementsByClassName('wp-block-ub-content-toggle')).forEac
     );
   }
 
-  Array.from(toggleContainer.getElementsByClassName('wp-block-ub-content-toggle-accordion-title-wrap')).forEach(function (instance) {
+  Array.prototype.slice.call(toggleContainer.getElementsByClassName('wp-block-ub-content-toggle-accordion-title-wrap')).forEach(function (instance) {
     var indicator = instance.querySelector('.wp-block-ub-content-toggle-accordion-state-indicator');
     var panelContent = instance.nextSibling;
     var panelHeight = 0;

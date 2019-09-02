@@ -1,12 +1,29 @@
 "use strict";
 
+if (!Element.prototype.matches) {
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
+if (!Element.prototype.closest) {
+  Element.prototype.closest = function (s) {
+    var el = this;
+
+    do {
+      if (el.matches(s)) return el;
+      el = el.parentElement || el.parentNode;
+    } while (el !== null && el.nodeType === 1);
+
+    return null;
+  };
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   var instances = [];
 
   if (document.getElementById('ub_table-of-contents-toggle-link')) {
     instances.push(document.getElementById('ub_table-of-contents-toggle-link'));
   } else {
-    instances = Array.from(document.getElementsByClassName('ub_table-of-contents-toggle-link'));
+    instances = Array.prototype.slice.call(document.getElementsByClassName('ub_table-of-contents-toggle-link'));
   }
 
   instances.forEach(function (instance) {

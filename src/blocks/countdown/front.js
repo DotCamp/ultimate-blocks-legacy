@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 	let timer = [];
-	Array.from(document.getElementsByClassName('ub-countdown')).forEach(
-		(instance, i) => {
+	Array.prototype.slice
+		.call(document.getElementsByClassName('ub-countdown'))
+		.forEach((instance, i) => {
 			timer[i] = setInterval(function() {
 				const timeLeft =
 					parseInt(instance.getAttribute('data-enddate')) -
@@ -111,6 +112,5 @@ document.addEventListener('DOMContentLoaded', () => {
 					);
 				}
 			}, 1000);
-		}
-	);
+		});
 });

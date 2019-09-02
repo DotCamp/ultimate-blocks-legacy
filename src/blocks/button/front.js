@@ -1,7 +1,8 @@
 /* eslint-disable */
 
-Array.from(document.getElementsByClassName('ub-button-block-main')).forEach(
-	instance => {
+Array.prototype.slice
+	.call(document.getElementsByClassName('ub-button-block-main'))
+	.forEach(instance => {
 		if (instance.hasAttribute('data-defaultcolor')) {
 			instance.addEventListener('mouseenter', function() {
 				const buttonIsTransparent = JSON.parse(
@@ -33,5 +34,4 @@ Array.from(document.getElementsByClassName('ub-button-block-main')).forEach(
 					: 'none';
 			});
 		}
-	}
-);
+	});

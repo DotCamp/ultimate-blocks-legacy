@@ -1,12 +1,31 @@
+if (!Element.prototype.matches) {
+	Element.prototype.matches =
+		Element.prototype.msMatchesSelector ||
+		Element.prototype.webkitMatchesSelector;
+}
+
+if (!Element.prototype.closest) {
+	Element.prototype.closest = function(s) {
+		let el = this;
+
+		do {
+			if (el.matches(s)) return el;
+			el = el.parentElement || el.parentNode;
+		} while (el !== null && el.nodeType === 1);
+		return null;
+	};
+}
+
 function ub_getSiblings(element, criteria) {
-	const children = Array.from(element.parentNode.children).filter(
-		child => child !== element
-	);
+	const children = Array.prototype.slice
+		.call(element.parentNode.children)
+		.filter(child => child !== element);
 	return criteria ? children.filter(criteria) : children;
 }
 
-Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
-	instance => {
+Array.prototype.slice
+	.call(document.getElementsByClassName('ub-content-filter-tag'))
+	.forEach(instance => {
 		instance.addEventListener('click', function() {
 			const blockProper = this.closest('.wp-block-ub-content-filter');
 			const isOldVersion = this.getAttribute('data-activecolor');
@@ -84,45 +103,52 @@ Array.from(document.getElementsByClassName('ub-content-filter-tag')).forEach(
 				JSON.stringify(newSelection)
 			);
 
-			Array.from(
-				blockProper.getElementsByClassName('ub-content-filter-panel')
-			).forEach(instance => {
-				const panelData = JSON.parse(
-					instance.getAttribute('data-selectedfilters')
-				);
-				const mainData = JSON.parse(
-					blockProper.getAttribute('data-currentselection')
-				);
+			Array.prototype.slice
+				.call(
+					blockProper.getElementsByClassName(
+						'ub-content-filter-panel'
+					)
+				)
+				.forEach(instance => {
+					const panelData = JSON.parse(
+						instance.getAttribute('data-selectedfilters')
+					);
+					const mainData = JSON.parse(
+						blockProper.getAttribute('data-currentselection')
+					);
 
-				let isVisible = true;
+					let isVisible = true;
 
-				panelData.forEach((category, i) => {
-					if (Array.isArray(category)) {
-						if (
-							mainData[i].filter(f => f).length > 0 &&
-							category.filter((f, j) => f && f === mainData[i][j])
-								.length === 0
-						) {
-							isVisible = false;
+					panelData.forEach((category, i) => {
+						if (Array.isArray(category)) {
+							if (
+								mainData[i].filter(f => f).length > 0 &&
+								category.filter(
+									(f, j) => f && f === mainData[i][j]
+								).length === 0
+							) {
+								isVisible = false;
+							}
+						} else {
+							if (
+								mainData[i] !== category &&
+								mainData[i] !== -1
+							) {
+								isVisible = false;
+							}
 						}
+					});
+
+					if (isOldVersion) {
+						instance.style.display = isVisible ? 'block' : 'none';
+					} else if (isVisible) {
+						instance.classList.remove('ub-hide');
 					} else {
-						if (mainData[i] !== category && mainData[i] !== -1) {
-							isVisible = false;
-						}
+						instance.classList.add('ub-hide');
 					}
 				});
-
-				if (isOldVersion) {
-					instance.style.display = isVisible ? 'block' : 'none';
-				} else if (isVisible) {
-					instance.classList.remove('ub-hide');
-				} else {
-					instance.classList.add('ub-hide');
-				}
-			});
 		});
-	}
-);
+	});
 
 /*Array.from(document.getElementsByClassName('ub-content-filter-reset')).forEach(
 	instance => {

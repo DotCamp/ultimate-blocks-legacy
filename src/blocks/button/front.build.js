@@ -1,7 +1,7 @@
 "use strict";
 
 /* eslint-disable */
-Array.from(document.getElementsByClassName('ub-button-block-main')).forEach(function (instance) {
+Array.prototype.slice.call(document.getElementsByClassName('ub-button-block-main')).forEach(function (instance) {
   if (instance.hasAttribute('data-defaultcolor')) {
     instance.addEventListener('mouseenter', function () {
       var buttonIsTransparent = JSON.parse(instance.getAttribute('data-buttonistransparent'));
