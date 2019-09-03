@@ -232,7 +232,6 @@ registerBlockType('ub/image-slider', {
 			>
 				{imageArray.length === 0 ? (
 					<MediaPlaceholder
-						value={imageArray}
 						onSelect={newImages => {
 							props.setAttributes({
 								images: JSON.stringify(newImages),
@@ -245,6 +244,7 @@ registerBlockType('ub/image-slider', {
 								)
 							});
 						}}
+						labels={{ title: 'Image Slider' }}
 						allowedTypes={['image']}
 						multiple
 					/>
