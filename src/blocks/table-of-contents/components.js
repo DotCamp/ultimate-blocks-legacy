@@ -47,8 +47,11 @@ class TableOfContents extends Component {
 					''
 				);
 			});
-
-			this.setState({ headers });
+			if (
+				JSON.stringify(headers) !== JSON.stringify(this.state.headers)
+			) {
+				this.setState({ headers });
+			}
 		};
 
 		setHeaders();
