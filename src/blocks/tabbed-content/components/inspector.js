@@ -7,6 +7,8 @@ const { InspectorControls, PanelColorSettings } = wp.editor;
  */
 export default class Inspector extends Component {
 	render() {
+		const { attributes, setAttributes } = this.props;
+		const { theme, titleColor } = attributes;
 		return (
 			<InspectorControls>
 				<PanelColorSettings
@@ -14,15 +16,14 @@ export default class Inspector extends Component {
 					initialOpen={true}
 					colorSettings={[
 						{
-							value: this.props.attributes.theme,
-							onChange: value =>
-								this.props.setAttributes({ theme: value }),
+							value: theme,
+							onChange: value => setAttributes({ theme: value }),
 							label: __('Active Tab Color')
 						},
 						{
-							value: this.props.attributes.titleColor,
+							value: titleColor,
 							onChange: value =>
-								this.props.setAttributes({ titleColor: value }),
+								setAttributes({ titleColor: value }),
 							label: __('Active Tab Title Color')
 						}
 					]}

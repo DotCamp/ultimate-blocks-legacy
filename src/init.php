@@ -398,6 +398,11 @@ function ub_include_block_attribute_css() {
                         'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL;
+                    foreach($attributes['tabsTitleAlignment'] as $key => $titleAlign){
+                        $blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap:nth-child('.($key+1).'){' . PHP_EOL .
+                            'text-align: ' . $titleAlign . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
                     break;
                 case 'ub/table-of-contents-block':
                     if($attributes['listStyle']=='plain'){

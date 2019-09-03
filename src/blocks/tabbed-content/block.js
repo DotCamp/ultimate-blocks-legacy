@@ -87,6 +87,10 @@ const attributes = {
 	tabsTitle: {
 		type: 'array',
 		default: []
+	},
+	tabsTitleAlignment: {
+		type: 'array',
+		default: []
 	}
 };
 

@@ -730,6 +730,10 @@ $defaultValues = array(
             'tabsTitle' => array(
                 'type' => 'array',
                 'default' => array()
+            ),
+            'tabsTitleAlignment' => array(
+                'type' => 'array',
+                'default' => array()
             )
         )
     ),

@@ -7,8 +7,12 @@ import {
 import Inspector from './inspector';
 import { Component, createRef } from 'react';
 import { upgradeButtonLabel, mergeRichTextArray } from '../../../common';
+
+const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
-const { RichText, InnerBlocks } = wp.editor;
+const { RichText, InnerBlocks, BlockControls } = wp.editor;
+
+const { Toolbar, IconButton } = wp.components;
 
 export class OldTabHolder extends Component {
 	constructor(props) {
@@ -357,6 +361,9 @@ export class TabHolder extends Component {
 	}
 
 	componentDidMount() {
+		const { attributes, setAttributes } = this.props;
+		const { tabsTitle, tabsTitleAlignment } = attributes;
+
 		if (
 			this.tabBarRef.current &&
 			this.state.showControls !==
@@ -366,6 +373,12 @@ export class TabHolder extends Component {
 			this.checkWidth();
 		}
 		window.addEventListener('resize', this.checkWidth);
+
+		if (tabsTitle.length !== tabsTitleAlignment.length) {
+			setAttributes({
+				tabsTitleAlignment: Array(tabsTitle.length).fill('center')
+			});
+		}
 	}
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.checkWidth);
@@ -438,6 +451,7 @@ export class TabHolder extends Component {
 
 		const {
 			tabsTitle,
+			tabsTitleAlignment,
 			activeTab,
 			theme,
 			titleColor,
@@ -464,6 +478,7 @@ export class TabHolder extends Component {
 			insertBlock(createBlock('ub/tab-block', {}), i, block.clientId);
 			setAttributes({
 				tabsTitle: [...tabsTitle, 'Tab Title'],
+				tabsTitleAlignment: [...tabsTitleAlignment, 'left'],
 				activeTab: i
 			});
 
@@ -492,6 +507,7 @@ export class TabHolder extends Component {
 					(activeTab === i ? ' active' : '')
 				}
 				style={{
+					textAlign: tabsTitleAlignment[i],
 					backgroundColor: activeTab === i ? theme : 'initial',
 					color: activeTab === i ? titleColor : '#000000'
 				}}
@@ -530,6 +546,10 @@ export class TabHolder extends Component {
 								tabsTitle: [
 									...tabsTitle.slice(0, i),
 									...tabsTitle.slice(i + 1)
+								],
+								tabsTitleAlignment: [
+									...tabsTitleAlignment.slice(0, i),
+									...tabsTitleAlignment.slice(i + 1)
 								],
 								activeTab: 0
 							});
@@ -606,6 +626,35 @@ export class TabHolder extends Component {
 		}
 
 		return [
+			isSelected && (
+				<BlockControls>
+					<Toolbar>
+						{['left', 'center', 'right'].map(a => (
+							<IconButton
+								icon={`editor-align${a}`}
+								label={__(
+									`Align ${a[0].toUpperCase() + a.slice(1)}`
+								)}
+								isActive={tabsTitleAlignment[activeTab] === a}
+								onClick={() =>
+									setAttributes({
+										tabsTitleAlignment: [
+											...tabsTitleAlignment.slice(
+												0,
+												activeTab
+											),
+											a,
+											...tabsTitleAlignment.slice(
+												activeTab + 1
+											)
+										]
+									})
+								}
+							/>
+						))}
+					</Toolbar>
+				</BlockControls>
+			),
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
 			<div className={className}>
 				<div className={className + '-holder'}>
