@@ -202,20 +202,15 @@ registerBlockType('ub/content-toggle-block', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const {
-				getBlock,
-				getSelectedBlockClientId,
-				getBlockRootClientId
-			} = select('core/editor');
+			const { getBlock, getSelectedBlockClientId } = select(
+				'core/editor'
+			);
 
 			const { clientId } = ownProps;
 
 			return {
 				block: getBlock(clientId),
-				selectedBlock: getSelectedBlockClientId(),
-				parentOfSelectedBlock: getBlockRootClientId(
-					getSelectedBlockClientId()
-				)
+				selectedBlock: getSelectedBlockClientId()
 			};
 		}),
 		withDispatch(dispatch => {

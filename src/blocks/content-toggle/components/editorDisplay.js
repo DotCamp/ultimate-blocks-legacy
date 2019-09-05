@@ -193,7 +193,6 @@ export class PanelContent extends Component {
 			insertBlock,
 			removeBlock,
 			selectedBlock,
-			parentOfSelectedBlock,
 			block
 		} = this.props;
 
@@ -240,6 +239,16 @@ export class PanelContent extends Component {
 			);
 		};
 
+		const getDescendantBlocks = rootBlock => {
+			let descendants = [];
+			rootBlock.innerBlocks.forEach(innerBlock => {
+				descendants.push(innerBlock.clientId);
+				if (innerBlock.innerBlocks.length > 0) {
+					descendants.push(...getDescendantBlocks(innerBlock));
+				}
+			});
+			return descendants;
+		};
 		//Detect if one of the child blocks has received a command to add another child block
 		if (JSON.stringify(newBlockTarget) !== '[]') {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -260,7 +269,17 @@ export class PanelContent extends Component {
 		//Fix indexes in case of rearrangments
 
 		if (newArrangement !== oldArrangement) {
-			if (oldArrangement === '[0]' && newArrangement === '[]') {
+			if (oldArrangement === '' && newArrangement === '[]') {
+				insertBlock(
+					createBlock('ub/content-toggle-panel-block', {
+						theme: theme,
+						collapsed: collapsed,
+						titleColor: titleColor
+					}),
+					0,
+					block.clientId
+				);
+			} else if (oldArrangement === '[0]' && newArrangement === '[]') {
 				removeBlock(block.clientId);
 			} else {
 				panels.forEach((panel, i) =>
@@ -272,18 +291,23 @@ export class PanelContent extends Component {
 				setState({ oldArrangement: newArrangement });
 			}
 		} else if (mainBlockSelected) {
-			const childBlocks = this.getPanels()
-				.filter(block => block.name === 'ub/content-toggle-panel-block')
-				.map(panels => panels.clientId);
+			const descendantBlocks = getDescendantBlocks(this.props.block);
 			if (
 				selectedBlock !== block.clientId &&
-				childBlocks.includes(selectedBlock)
+				descendantBlocks.includes(selectedBlock)
 			) {
 				setState({ mainBlockSelected: false });
 			}
 		} else {
-			selectBlock(parentOfSelectedBlock);
-			setState({ mainBlockSelected: true });
+			let childBlocks = this.props.block.innerBlocks
+				.filter(block => block.name === 'ub/content-toggle-panel-block')
+				.map(panels => panels.clientId);
+
+			if (childBlocks.includes(selectedBlock) && !wp.data.useDispatch) {
+				//useDispatch is only present in Gutenberg v5.9, together with clickthrough selection feature
+				setState({ mainBlockSelected: true });
+				selectBlock(this.props.block.clientId);
+			}
 		}
 
 		if (blockID !== block.clientId) {
@@ -343,7 +367,6 @@ export class PanelContent extends Component {
 			),
 			<div className={className}>
 				<InnerBlocks
-					template={[['ub/content-toggle-panel-block']]} //initial content
 					templateLock={false}
 					allowedBlocks={['ub/content-toggle-panel-block']}
 				/>
