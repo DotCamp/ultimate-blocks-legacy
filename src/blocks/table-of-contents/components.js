@@ -27,13 +27,38 @@ class TableOfContents extends Component {
 	}
 
 	componentDidMount() {
-		const getHeaderBlocks = () =>
-			select('core/editor')
-				.getBlocks()
-				.filter(block => block.name === 'core/heading');
+		const getHeadingBlocks = _ => {
+			const getDescendantBlocks = rootBlock => {
+				let descendants = [];
+				rootBlock.innerBlocks.forEach(innerBlock => {
+					descendants.push(innerBlock);
+					if (innerBlock.innerBlocks.length > 0) {
+						descendants.push(...getDescendantBlocks(innerBlock));
+					}
+				});
+				return descendants;
+			};
 
-		const setHeaders = () => {
-			const headers = getHeaderBlocks().map(header => header.attributes);
+			let headings = [];
+			const rootBlocks = select('core/editor').getBlocks();
+			rootBlocks.forEach(block => {
+				if (block.name === 'core/heading') {
+					headings.push(block);
+				} else if (block.innerBlocks.length > 0) {
+					let internalHeadings = getDescendantBlocks(block).filter(
+						block => block.name === 'core/heading'
+					);
+					if (internalHeadings.length > 0) {
+						headings.push(...internalHeadings);
+					}
+				}
+			});
+
+			return headings;
+		};
+
+		const setHeadings = _ => {
+			const headers = getHeadingBlocks().map(header => header.attributes);
 			headers.forEach((heading, key) => {
 				heading.anchor =
 					key +
@@ -42,10 +67,12 @@ class TableOfContents extends Component {
 						.toString()
 						.toLowerCase()
 						.replace(/( |<.+?>|&nbsp;)/g, '-');
-				heading.anchor = encodeURIComponent(heading.anchor.replace(
-					/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
-					''
-				));
+				heading.anchor = encodeURIComponent(
+					heading.anchor.replace(
+						/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
+						''
+					)
+				);
 			});
 			if (
 				JSON.stringify(headers) !== JSON.stringify(this.state.headers)
@@ -54,10 +81,10 @@ class TableOfContents extends Component {
 			}
 		};
 
-		setHeaders();
+		setHeadings();
 
 		const unsubscribe = subscribe(() => {
-			setHeaders();
+			setHeadings();
 		});
 		this.setState({ unsubscribe });
 	}
@@ -110,8 +137,8 @@ class TableOfContents extends Component {
 			return array;
 		};
 
-		const parseList = list => {
-			return list.map(item => (
+		const parseList = list =>
+			list.map(item => (
 				<li>
 					<a
 						href={`#${item.anchor}`}
@@ -134,7 +161,6 @@ class TableOfContents extends Component {
 						))}
 				</li>
 			));
-		};
 
 		if (
 			headers.length > 0 &&
