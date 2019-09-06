@@ -42,10 +42,10 @@ class TableOfContents extends Component {
 						.toString()
 						.toLowerCase()
 						.replace(/( |<.+?>|&nbsp;)/g, '-');
-				heading.anchor = heading.anchor.replace(
+				heading.anchor = encodeURIComponent(heading.anchor.replace(
 					/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
 					''
-				);
+				));
 			});
 			if (
 				JSON.stringify(headers) !== JSON.stringify(this.state.headers)
