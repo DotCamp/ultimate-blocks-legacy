@@ -271,16 +271,24 @@ registerBlockType('ub/table-of-contents-block', {
 	edit: withSelect((select, ownProps) => ({
 		block: select('core/editor').getBlock(ownProps.clientId)
 	}))(function(props) {
-		const { isSelected, block } = props;
+		const { isSelected, block, attributes } = props;
 
-		if (props.attributes.blockID !== block.clientId) {
+		const { blockID, showList } = attributes;
+
+		if (blockID !== block.clientId) {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
 		return [
 			isSelected && inspectorControls(props),
 			isSelected && blockControls(props),
-			<div className="ub_table-of-contents">{editorDisplay(props)}</div>
+			<div
+				className={`ub_table-of-contents${
+					showList ? '' : ' ub_table-of-contents-collapsed'
+				}`}
+			>
+				{editorDisplay(props)}
+			</div>
 		];
 	}),
 	save: () => null

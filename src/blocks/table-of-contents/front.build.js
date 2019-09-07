@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var tocContainer = block.querySelector('.ub_table-of-contents-container');
     var showButton = block.getAttribute('data-showtext') || 'show';
     var hideButton = block.getAttribute('data-hidetext') || 'hide';
-    var initialHide = tocContainer.style.height === '0px' || tocContainer.classList.contains('ub-hide') || getComputedStyle(tocContainer).display === 'none';
+    var initialHide = tocContainer.classList.contains('ub-hide') || tocContainer.style.height === '0px' || getComputedStyle(tocContainer).display === 'none';
 
     if (initialHide) {
       tocContainer.classList.remove('ub-hide');
@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (tocContainer.classList.contains('ub-hide')) {
         tocContainer.classList.remove('ub-hide');
         tocContainer.classList.add('ub-hiding');
+        tocContainer.parentNode.classList.remove('ub_table-of-contents-collapsed');
       } else {
         if (tocHeight !== tocContainer.offsetHeight) {
           tocHeight = tocContainer.offsetHeight;
@@ -81,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (tocContainer.style.display === 'block') {
           tocContainer.style.display = '';
         }
+
+        tocContainer.parentNode.classList.add('ub_table-of-contents-collapsed');
       } else {
         tocContainer.style.height = '';
       }

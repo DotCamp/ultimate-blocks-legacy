@@ -1,6 +1,5 @@
 @import '../../common';
 .ub_table-of-contents {
-	width: fit-content;
 	background-color: #fafafa;
 	border: 1px solid #dfdfdf;
 	padding: 30px;
@@ -33,6 +32,10 @@
 			content: counters(item, '.') ' ';
 		}
 	}
+}
+
+.ub_table-of-contents-collapsed {
+	width: fit-content;
 }
 
 .ub_table-of-contents-header {

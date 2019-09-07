@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		const hideButton = block.getAttribute('data-hidetext') || 'hide';
 
 		const initialHide =
-			tocContainer.style.height === '0px' ||
 			tocContainer.classList.contains('ub-hide') ||
+			tocContainer.style.height === '0px' ||
 			getComputedStyle(tocContainer).display === 'none';
 		if (initialHide) {
 			tocContainer.classList.remove('ub-hide');
@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			if (tocContainer.classList.contains('ub-hide')) {
 				tocContainer.classList.remove('ub-hide');
 				tocContainer.classList.add('ub-hiding');
+				tocContainer.parentNode.classList.remove(
+					'ub_table-of-contents-collapsed'
+				);
 			} else {
 				if (tocHeight !== tocContainer.offsetHeight) {
 					tocHeight = tocContainer.offsetHeight;
@@ -89,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
 				if (tocContainer.style.display === 'block') {
 					tocContainer.style.display = '';
 				}
+				tocContainer.parentNode.classList.add(
+					'ub_table-of-contents-collapsed'
+				);
 			} else {
 				tocContainer.style.height = '';
 			}
