@@ -31,7 +31,7 @@ function ub_render_table_of_contents_block($attributes){
     }
 
     while(count($sortedHeaders) > 1 &&
-        $sortedHeaders[count($sortedHeaders) - 1][0] > $sortedHeaders[count($sortedHeaders) - 2][0]){
+        $sortedHeaders[count($sortedHeaders) - 1][0]['level'] > $sortedHeaders[count($sortedHeaders) - 2][0]['level']){
         array_push($sortedHeaders[count($sortedHeaders) - 2], array_pop($sortedHeaders));
     }
 
