@@ -38,12 +38,15 @@ document.addEventListener('DOMContentLoaded', function () {
       tocContainer.classList.remove('ub-hide');
       tocContainer.style.display = '';
       tocContainer.style.height = '';
+      tocContainer.parentNode.classList.remove('ub_table-of-contents-collapsed');
     }
 
     tocHeight = tocContainer.offsetHeight;
+    var tocMainMinWidth = tocContainer.parentNode.querySelector('.ub_table-of-contents-header').offsetWidth + 2;
 
     if (initialHide) {
       tocContainer.classList.add('ub-hide');
+      tocContainer.parentNode.classList.add('ub_table-of-contents-collapsed');
     }
 
     tocContainer.removeAttribute('style');
@@ -54,21 +57,27 @@ document.addEventListener('DOMContentLoaded', function () {
         tocContainer.classList.remove('ub-hide');
         tocContainer.classList.add('ub-hiding');
         tocContainer.parentNode.classList.remove('ub_table-of-contents-collapsed');
+        tocContainer.parentNode.style.width = "".concat(tocMainMinWidth, "px");
       } else {
         if (tocHeight !== tocContainer.offsetHeight) {
           tocHeight = tocContainer.offsetHeight;
         }
 
         tocContainer.style.height = "".concat(tocHeight, "px");
+        tocContainer.parentNode.style.width = '100%';
       }
 
       setTimeout(function () {
         //delay is needed for the animation to run properly
         if (tocContainer.classList.contains('ub-hiding')) {
           tocContainer.classList.remove('ub-hiding');
+          tocContainer.parentNode.style.width = '100%';
           tocContainer.style.height = "".concat(tocHeight, "px");
         } else {
           tocContainer.classList.add('ub-hiding');
+          tocContainer.parentNode.style.margin = 0;
+          tocContainer.parentNode.style.padding = 0;
+          tocContainer.parentNode.style.width = "".concat(tocMainMinWidth, "px");
           tocContainer.style.height = '';
         }
       }, 20);
@@ -84,9 +93,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         tocContainer.parentNode.classList.add('ub_table-of-contents-collapsed');
+        tocContainer.parentNode.style.margin = '';
+        tocContainer.parentNode.style.padding = '';
       } else {
         tocContainer.style.height = '';
       }
+
+      tocContainer.parentNode.style.width = '';
     });
   });
 });

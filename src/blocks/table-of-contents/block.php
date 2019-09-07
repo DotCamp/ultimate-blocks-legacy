@@ -71,7 +71,7 @@ function ub_render_table_of_contents_block($attributes){
     }
 
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
-                .($showList ? '' : ' ub_table-of-contents-collapsed').
+                .(!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ).
                 '" data-showtext="'.__('show').'" data-hidetext="'.__('hide')
                 .'"'.($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
