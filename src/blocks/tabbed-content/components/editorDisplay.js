@@ -455,7 +455,8 @@ export class TabHolder extends Component {
 			activeTab,
 			theme,
 			titleColor,
-			activeControl
+			activeControl,
+			tabsAlignment
 		} = attributes;
 
 		const className = 'wp-block-ub-tabbed-content';
@@ -570,6 +571,14 @@ export class TabHolder extends Component {
 		const SortableList = SortableContainer(({ items }) => (
 			<div
 				className={className + '-tabs-title SortableList'}
+				style={{
+					justifyContent:
+						tabsAlignment === 'center'
+							? 'center'
+							: `flex-${
+									tabsAlignment === 'left' ? 'start' : 'end'
+							  }`
+				}}
 				ref={this.tabBarRef}
 				useWindowAsScrollContainer={true}
 			>
@@ -633,7 +642,8 @@ export class TabHolder extends Component {
 							<IconButton
 								icon={`editor-align${a}`}
 								label={__(
-									`Align ${a[0].toUpperCase() + a.slice(1)}`
+									`Align Tab Title ${a[0].toUpperCase() +
+										a.slice(1)}`
 								)}
 								isActive={tabsTitleAlignment[activeTab] === a}
 								onClick={() =>
@@ -649,6 +659,20 @@ export class TabHolder extends Component {
 											)
 										]
 									})
+								}
+							/>
+						))}
+					</Toolbar>
+					<Toolbar>
+						{['left', 'center', 'right'].map(a => (
+							<IconButton
+								icon={`align-${a}`}
+								label={__(
+									`Align Tabs ${a[0].toUpperCase() +
+										a.slice(1)}`
+								)}
+								onClick={_ =>
+									setAttributes({ tabsAlignment: a })
 								}
 							/>
 						))}

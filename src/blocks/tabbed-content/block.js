@@ -87,7 +87,11 @@ const attributes = {
 	tabsTitle: {
 		type: 'array',
 		default: []
-	},
+    },
+    tabsAlignment:{
+        type:'string',
+        default:'left'
+    },
 	tabsTitleAlignment: {
 		type: 'array',
 		default: []

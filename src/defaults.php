@@ -727,6 +727,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#000000'
             ),
+            'tabsAlignment' => array(
+                'type' => 'string',
+                'default'=> 'left'
+            ),
             'tabsTitle' => array(
                 'type' => 'array',
                 'default' => array()

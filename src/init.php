@@ -397,6 +397,10 @@ function ub_include_block_attribute_css() {
                         'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .wp-block-ub-tabbed-content-tabs-title{' . PHP_EOL .
+                        'justify-content: ' . ($attributes['tabsAlignment'] == 'center' ? 'center' :
+                            'flex-' . ($attributes['tabsAlignment'] == 'left' ? 'start' : 'end' )) . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     foreach($attributes['tabsTitleAlignment'] as $key => $titleAlign){
                         $blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap:nth-child('.($key+1).'){' . PHP_EOL .
