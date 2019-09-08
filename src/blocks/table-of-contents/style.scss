@@ -50,7 +50,7 @@
 	font-size: 20px;
 	font-weight: 500;
 	display: grid;
-	grid-template-columns: fit-content(90%) auto;
+	grid-template-columns: minmax(10px, 1fr) auto;
 	width: fit-content;
 }
 
