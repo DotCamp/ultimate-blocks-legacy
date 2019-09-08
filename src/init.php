@@ -358,7 +358,7 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .ub_review_cta_btn{' . PHP_EOL . 
                         'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
                         'border-color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
-                        'background-color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
+                        'background-color: ' . $attributes['callToActionBackColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
                 case 'ub/social-share':

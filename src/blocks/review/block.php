@@ -40,7 +40,7 @@ function ub_render_review_block($attributes){
     }
 
     return 	'<div class="ub_review_block'.(isset($className) ? ' ' . esc_attr($className) : '').
-                '" id="#ub_review_'.$blockID.'">
+                '" id="ub_review_'.$blockID.'">
         <p class="ub_review_item_name"'.($blockID==''?' style="text-align: '.$titleAlign.';"':'').'>'.
             $itemName.'</p>
         <p class="ub_review_author_name"'.($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
@@ -51,23 +51,22 @@ function ub_render_review_block($attributes){
             <p>'.$summaryDescription.'</p>
             <span class="ub_review_rating">'.$average.'</span>
         </div>
-        <div class="ub_review_cta_panel">
-            <div class="ub_review_cta_main">
-                <a href="'.  ($callToActionURL == '' ? '#' : esc_url($callToActionURL)).
-                    '" target="_blank" rel="nofollow noopener noreferrer"'.
-                        ($blockID==''?'  style="color: '.$callToActionForeColor.';"':'').'>
-                    <button class="ub_review_cta_btn"'.($blockID==''?' style="background-color: '.$callToActionBackColor
-                    .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
-                        ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>'.
-                    ub_generateStarDisplay($average,$starCount, $blockID.'-average',
-                    $inactiveStarColor, $activeStarColor, "ub_review_average_stars").'
-                </div></div>
+        <div class="ub_review_cta_panel">'.
+        ($callToActionURL != '' ? '<div class="ub_review_cta_main">
+            <a href="'. esc_url($callToActionURL).
+                '" target="_blank" rel="nofollow noopener noreferrer"'.
+                    ($blockID==''?'  style="color: '.$callToActionForeColor.';"':'').'>
+                <button class="ub_review_cta_btn"'.($blockID==''?' style="background-color: '.$callToActionBackColor
+                .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
+                    ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>':'').
+                ub_generateStarDisplay($average,$starCount, $blockID.'-average',
+                $inactiveStarColor, $activeStarColor, "ub_review_average_stars").'
+            </div></div>
     <script type="application/ld+json">
-        {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
-            $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.
-            '"},"reviewRating":{"@type":"Rating","ratingValue":'.$average
-            .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script>
-</div>';
+    {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
+        $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.
+        '"},"reviewRating":{"@type":"Rating","ratingValue":'.$average
+        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script></div>';
 }
 
 function ub_register_review_block() {
