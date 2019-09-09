@@ -630,6 +630,10 @@ $defaultValues = array(
             'ctaNoFollow' => array(
                 'type' => 'boolean',
                 'default' => true
+            ),
+            'ctaOpenInNewTab' => array(
+                'type' => 'boolean',
+                'default' => true
             )
         )
     ),

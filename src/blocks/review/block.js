@@ -91,6 +91,10 @@ const attributes = {
 	ctaNoFollow: {
 		type: 'boolean',
 		default: true
+	},
+	ctaOpenInNewTab: {
+		type: 'boolean',
+		default: true
 	}
 };
 
@@ -125,7 +129,8 @@ registerBlockType('ub/review', {
 			titleAlign,
 			authorAlign,
 			enableCTA,
-			ctaNoFollow
+			ctaNoFollow,
+			ctaOpenInNewTab
 		} = props.attributes;
 
 		if (blockID !== block.clientId) {
@@ -227,21 +232,38 @@ registerBlockType('ub/review', {
 							/>
 						</PanelRow>
 						{enableCTA && (
-							<PanelRow>
-								<label htmlFor="ub-review-cta-nofollow">
-									{__('Add nofollow')}
-								</label>
-								<FormToggle
-									id="ub-review-cta-nofollow"
-									label={__('Add nofollow')}
-									checked={ctaNoFollow}
-									onChange={_ =>
-										setAttributes({
-											ctaNoFollow: !ctaNoFollow
-										})
-									}
-								/>
-							</PanelRow>
+							<React.Fragment>
+								<PanelRow>
+									<label htmlFor="ub-review-cta-nofollow">
+										{__('Add nofollow')}
+									</label>
+									<FormToggle
+										id="ub-review-cta-nofollow"
+										label={__('Add nofollow')}
+										checked={ctaNoFollow}
+										onChange={_ =>
+											setAttributes({
+												ctaNoFollow: !ctaNoFollow
+											})
+										}
+									/>
+								</PanelRow>
+								<PanelRow>
+									<label htmlFor="ub-review-cta-openinnewtab">
+										{__('Open link in new tab')}
+									</label>
+									<FormToggle
+										id="ub-review-cta-openinnewtab"
+										label={__('Open link in new tab')}
+										checked={ctaOpenInNewTab}
+										onChange={_ =>
+											setAttributes({
+												ctaOpenInNewTab: !ctaOpenInNewTab
+											})
+										}
+									/>
+								</PanelRow>
+							</React.Fragment>
 						)}
 					</PanelBody>
 				</InspectorControls>

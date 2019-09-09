@@ -223,8 +223,7 @@ export class ReviewBody extends Component {
 			selectedStarColor,
 			setEditable,
 			alignments,
-			enableCTA,
-			ctaNoFollow
+			enableCTA
 		} = this.props;
 
 		const { titleAlign, authorAlign } = alignments;
