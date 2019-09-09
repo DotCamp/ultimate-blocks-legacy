@@ -741,11 +741,17 @@ $defaultValues = array(
             ),
             'tabsTitle' => array(
                 'type' => 'array',
-                'default' => array()
+                'default' => array(),
+                'items' => array(
+                    'type' => 'string'
+                )
             ),
             'tabsTitleAlignment' => array(
                 'type' => 'array',
-                'default' => array()
+                'default' => array(),
+                'items' => array(
+                    'type' => 'string'
+                )
             )
         )
     ),
@@ -761,7 +767,10 @@ $defaultValues = array(
             ),
             'allowedHeaders' => array(
                 'type' => 'array',
-                'default' => array_fill(0, 6, true)
+                'default' => array_fill(0, 6, true), 
+                'items' => array(
+                    'type' => 'boolean'
+                )
             ),
             'links' => array(
                 'type' => 'string',
