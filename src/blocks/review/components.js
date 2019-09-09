@@ -222,7 +222,9 @@ export class ReviewBody extends Component {
 			activeStarColor,
 			selectedStarColor,
 			setEditable,
-			alignments
+			alignments,
+			enableCTA,
+			ctaNoFollow
 		} = this.props;
 
 		const { titleAlign, authorAlign } = alignments;
@@ -348,23 +350,27 @@ export class ReviewBody extends Component {
 					</div>
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
-							<div //do not merge into RichText child
-								className="ub_review_cta_btn"
-								style={{
-									backgroundColor: callToActionBackColor,
-									borderColor: callToActionForeColor
-								}}
-							>
-								<RichText
+							{enableCTA && (
+								<div //do not merge into RichText child
+									className="ub_review_cta_btn"
 									style={{
-										color: callToActionForeColor
+										backgroundColor: callToActionBackColor,
+										borderColor: callToActionForeColor
 									}}
-									placeholder={__('Call to action')}
-									value={callToActionText}
-									onChange={text => setCallToActionText(text)}
-									unstableOnFocus={() => setEditable('')}
-								/>
-							</div>
+								>
+									<RichText
+										style={{
+											color: callToActionForeColor
+										}}
+										placeholder={__('Call to action')}
+										value={callToActionText}
+										onChange={text =>
+											setCallToActionText(text)
+										}
+										unstableOnFocus={() => setEditable('')}
+									/>
+								</div>
+							)}
 						</div>
 						<Stars
 							id={`${ID}-average`}
@@ -378,7 +384,7 @@ export class ReviewBody extends Component {
 							selectedStarColor={selectedStarColor}
 						/>
 					</div>
-					{hasFocus && (
+					{hasFocus && enableCTA && (
 						<div className="ub_review_link_input">
 							<div className="ub-icon-holder">
 								<Dashicon icon={'admin-links'} />

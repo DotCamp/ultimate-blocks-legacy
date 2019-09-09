@@ -622,6 +622,14 @@ $defaultValues = array(
             'authorAlign' => array(
                 'type' => 'string',
                 'default' => 'left'
+            ),
+            'enableCTA' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'ctaNoFollow' => array(
+                'type' => 'boolean',
+                'default' => true
             )
         )
     ),

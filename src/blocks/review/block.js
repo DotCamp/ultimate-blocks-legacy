@@ -14,7 +14,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { BlockControls, InspectorControls, PanelColorSettings } = wp.editor;
 
-const { Toolbar, IconButton } = wp.components;
+const { Toolbar, IconButton, FormToggle, PanelBody, PanelRow } = wp.components;
 const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
 
@@ -83,6 +83,14 @@ const attributes = {
 	authorAlign: {
 		type: 'string',
 		default: 'left'
+	},
+	enableCTA: {
+		type: 'boolean',
+		default: true
+	},
+	ctaNoFollow: {
+		type: 'boolean',
+		default: true
 	}
 };
 
@@ -115,7 +123,9 @@ registerBlockType('ub/review', {
 			activeStarColor,
 			selectedStarColor,
 			titleAlign,
-			authorAlign
+			authorAlign,
+			enableCTA,
+			ctaNoFollow
 		} = props.attributes;
 
 		if (blockID !== block.clientId) {
@@ -199,6 +209,41 @@ registerBlockType('ub/review', {
 							}
 						]}
 					/>
+					<PanelBody
+						title={__('Call to Action button')}
+						initialOpen={true}
+					>
+						<PanelRow>
+							<label htmlFor="ub-review-cta-enable">
+								{__('Enable')}
+							</label>
+							<FormToggle
+								id="ub-review-cta-enable"
+								label={__('Enable')}
+								checked={enableCTA}
+								onChange={_ =>
+									setAttributes({ enableCTA: !enableCTA })
+								}
+							/>
+						</PanelRow>
+						{enableCTA && (
+							<PanelRow>
+								<label htmlFor="ub-review-cta-nofollow">
+									{__('Add nofollow')}
+								</label>
+								<FormToggle
+									id="ub-review-cta-nofollow"
+									label={__('Add nofollow')}
+									checked={ctaNoFollow}
+									onChange={_ =>
+										setAttributes({
+											ctaNoFollow: !ctaNoFollow
+										})
+									}
+								/>
+							</PanelRow>
+						)}
+					</PanelBody>
 				</InspectorControls>
 			),
 			isSelected && (
@@ -262,6 +307,8 @@ registerBlockType('ub/review', {
 				hasFocus={isSelected}
 				setEditable={newValue => setState({ editable: newValue })}
 				alignments={{ titleAlign, authorAlign }}
+				enableCTA={enableCTA}
+				ctaNoFollow={ctaNoFollow}
 			/>
 		];
 	}),
