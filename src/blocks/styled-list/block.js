@@ -36,11 +36,27 @@ class StyledList extends Component {
 			edits
 		} = this.props;
 
+		const deleteItem = i => {
+			let newList = cloneObject(list);
+			let j = i + 1;
+			while (
+				j < newList.length &&
+				newList[j].indent > newList[j - 1].indent
+			) {
+				newList[j].indent--;
+				j++;
+			}
+			updateList([...newList.slice(0, i), ...newList.slice(i + 1)]);
+		};
+
 		return (
 			<ul className="fa-ul" key={edits}>
 				{list.map((item, i) => (
 					<li
-						style={{ left: `${item.indent + 0.5}em` }}
+						style={{
+							left: `${item.indent + 0.5}em`,
+							width: `calc(100% - ${item.indent + 0.5}em)`
+						}}
 						onKeyDown={e => {
 							switch (e.key) {
 								case 'Tab':
@@ -59,20 +75,7 @@ class StyledList extends Component {
 										item.text.length === 0 &&
 										list.length > 1
 									) {
-										let newList = cloneObject(list);
-										let j = i + 1;
-										while (
-											j < newList.length &&
-											newList[j].indent >
-												newList[j - 1].indent
-										) {
-											newList[j].indent--;
-											j++;
-										}
-										updateList([
-											...newList.slice(0, i),
-											...newList.slice(i + 1)
-										]);
+										deleteItem(i);
 									}
 									break;
 								default:
@@ -80,47 +83,58 @@ class StyledList extends Component {
 							}
 						}}
 					>
-						<span className="fa-li">
-							<FontAwesomeIcon
-								icon={
-									Object.keys(fas)
-										.filter(
-											iconName =>
-												fas[iconName].prefix === 'fas'
-										)
-										.includes(
-											`fa${dashesToCamelcase(
-												item.selectedIcon
-											)}`
-										)
-										? item.selectedIcon
-										: ['fab', item.selectedIcon]
-								}
-								color={iconColor}
+						<div>
+							<span className="fa-li">
+								<FontAwesomeIcon
+									icon={
+										Object.keys(fas)
+											.filter(
+												iconName =>
+													fas[iconName].prefix ===
+													'fas'
+											)
+											.includes(
+												`fa${dashesToCamelcase(
+													item.selectedIcon
+												)}`
+											)
+											? item.selectedIcon
+											: ['fab', item.selectedIcon]
+									}
+									color={iconColor}
+								/>
+							</span>
+							<RichText
+								className={'styled-list-item'}
+								style={{
+									width: `calc(100% - ${item.indent + 0.5}em)`
+								}}
+								value={item.text}
+								multiline={false}
+								onChange={newValue => {
+									let newList = cloneObject(list);
+									newList[i].text = newValue;
+									updateList(newList);
+								}}
+								unstableOnFocus={() => updateSelectedItem(i)}
+								onSplit={(before, after) => {
+									updateList([
+										...list.slice(0, i),
+										Object.assign(cloneObject(list[i]), {
+											text: before
+										}),
+										Object.assign(cloneObject(list[i]), {
+											text: after
+										}),
+										...list.slice(i + 1)
+									]);
+								}}
 							/>
-						</span>
-						<RichText
-							value={item.text}
-							multiline={false}
-							onChange={newValue => {
-								let newList = cloneObject(list);
-								newList[i].text = newValue;
-								updateList(newList);
-							}}
-							unstableOnFocus={() => updateSelectedItem(i)}
-							onSplit={(before, after) => {
-								updateList([
-									...list.slice(0, i),
-									Object.assign(cloneObject(list[i]), {
-										text: before
-									}),
-									Object.assign(cloneObject(list[i]), {
-										text: after
-									}),
-									...list.slice(i + 1)
-								]);
-							}}
-						/>
+							<div
+								className="dashicons dashicons-trash"
+								onClick={_ => deleteItem(i)}
+							/>
+						</div>
 					</li>
 				))}
 			</ul>
@@ -137,7 +151,7 @@ registerBlockType('ub/styled-list', {
 	attributes: {
 		listItem: {
 			type: 'array',
-			default: [{ text: '', selectedIcon: 'check', indent: 0 }] //each item is an object with text, selectedIcon, and indent properties
+			default: [{ text: '', selectedIcon: 'check', indent: 0 }]
 		},
 		iconColor: {
 			type: 'string',
@@ -358,6 +372,24 @@ registerBlockType('ub/styled-list', {
 					increaseIndent={itemNumber => increaseIndent(itemNumber)}
 					decreaseIndent={itemNumber => decreaseIndent(itemNumber)}
 				/>
+				<button
+					onClick={_ =>
+						setAttributes({
+							listItem: [
+								...listItem,
+								{
+									text: '',
+									selectedIcon:
+										listItem[listItem.length - 1]
+											.selectedIcon,
+									indent: listItem[listItem.length - 1].indent
+								}
+							]
+						})
+					}
+				>
+					Add new item
+				</button>
 			</div>
 		];
 	}),

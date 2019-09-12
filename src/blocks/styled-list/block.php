@@ -40,10 +40,10 @@ function ub_render_styled_list_block($attributes){
             if($num == 0 && $outputString != ''){
                 $outputString = '';
             }
-            if (array_key_exists("indent", $item)){
+            if (array_key_exists("indent", $item)){                
                 $outputString .= '<li><span class="fa-li"><svg xmlns="http://www.w3.org/2000/svg"
                     height="15", width="15" viewBox="0, 0, '.$fontAwesomeIcon[$item['selectedIcon']][0].', '.$fontAwesomeIcon[$item['selectedIcon']][1]
-                    .'"><path fill="'.$color.'" d="'.$fontAwesomeIcon[$item['selectedIcon']][2].'"></svg></span>'.$item['text'].'</li>';
+                    .'"><path fill="'.$color.'" d="'.$fontAwesomeIcon[$item['selectedIcon']][2].'"></svg></span>'.($item['text']==''?'<br/>':$item['text']).'</li>';
             }
             else{
                 $outputString = substr_replace($outputString, '<ul class="fa-ul">',
@@ -62,7 +62,8 @@ function ub_render_styled_list_block($attributes){
         $listItems = ub_makeList($key, $item, $iconColor);
     }
 
-    return '<div class="ub_styled_list '.esc_attr($className).'"><ul class="fa-ul">'.$listItems.'</ul></div>';
+    return '<div class="ub_styled_list '.(isset($className) ? ' ' . esc_attr($className): '')
+            .'"><ul class="fa-ul">'.$listItems.'</ul></div>';
 }
 
 function ub_register_styled_list_block() {
