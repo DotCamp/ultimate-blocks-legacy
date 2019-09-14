@@ -9,6 +9,8 @@ const {
 
 const { PanelBody, Toolbar, SelectControl, IconButton } = wp.components;
 
+const { createBlock } = wp.blocks;
+
 export const blockControls = props => {
 	const { attributes, setAttributes, editable } = props;
 
@@ -21,7 +23,7 @@ export const blockControls = props => {
 		body3Align
 	} = attributes;
 
-	const selectedTextAlignment = () => {
+	const selectedTextAlignment = _ => {
 		switch ('editable') {
 			case 'title1':
 				return title1Align;
@@ -203,7 +205,7 @@ export const editorDisplay = props => {
 							})
 						}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={() => setState({ editable: '' })}
+						unstableOnFocus={_ => setState({ editable: '' })}
 					/>
 				</div>
 				<RichText
@@ -214,7 +216,7 @@ export const editorDisplay = props => {
 					value={columnOneTitle}
 					onChange={value => setAttributes({ columnOneTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'title1' })}
+					unstableOnFocus={_ => setState({ editable: 'title1' })}
 				/>
 				<RichText
 					tagName="p"
@@ -224,7 +226,7 @@ export const editorDisplay = props => {
 					value={columnOneBody}
 					onChange={value => setAttributes({ columnOneBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'body1' })}
+					unstableOnFocus={_ => setState({ editable: 'body1' })}
 				/>
 			</div>
 			<div
@@ -253,7 +255,7 @@ export const editorDisplay = props => {
 							})
 						}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={() => setState({ editable: '' })}
+						unstableOnFocus={_ => setState({ editable: '' })}
 					/>
 				</div>
 				<RichText
@@ -264,7 +266,7 @@ export const editorDisplay = props => {
 					value={columnTwoTitle}
 					onChange={value => setAttributes({ columnTwoTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'title2' })}
+					unstableOnFocus={_ => setState({ editable: 'title2' })}
 				/>
 				<RichText
 					tagName="p"
@@ -274,7 +276,7 @@ export const editorDisplay = props => {
 					value={columnTwoBody}
 					onChange={value => setAttributes({ columnTwoBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'body2' })}
+					unstableOnFocus={_ => setState({ editable: 'body2' })}
 				/>
 			</div>
 			<div
@@ -303,7 +305,7 @@ export const editorDisplay = props => {
 							})
 						}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={() => setState({ editable: '' })}
+						unstableOnFocus={_ => setState({ editable: '' })}
 					/>
 				</div>
 				<RichText
@@ -316,7 +318,7 @@ export const editorDisplay = props => {
 						setAttributes({ columnThreeTitle: value })
 					}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'title3' })}
+					unstableOnFocus={_ => setState({ editable: 'title3' })}
 				/>
 				<RichText
 					tagName="p"
@@ -328,9 +330,44 @@ export const editorDisplay = props => {
 						setAttributes({ columnThreeBody: value })
 					}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'body3' })}
+					unstableOnFocus={_ => setState({ editable: 'body3' })}
 				/>
 			</div>
 		</div>
 	);
+};
+
+export const upgradeToStyledBox = attributes => {
+	let currentNumbers = [attributes.columnOneNumber];
+	let currentTitles = [attributes.columnOneTitle];
+	let currentTitleAligns = [attributes.title1Align];
+	let currentTexts = [attributes.columnOneBody];
+	let currentTextAligns = [attributes.body1Align];
+
+	if (parseInt(attributes.column) >= 2) {
+		currentNumbers.push(attributes.columnTwoNumber);
+		currentTitles.push(attributes.columnTwoTitle);
+		currentTitleAligns.push(attributes.title2Align);
+		currentTexts.push(attributes.columnTwoBody);
+		currentTextAligns.push(attributes.body2Align);
+	}
+	if (parseInt(attributes.column) === 3) {
+		currentNumbers.push(attributes.columnThreeNumber);
+		currentTitles.push(attributes.columnThreeTitle);
+		currentTitleAligns.push(attributes.title3Align);
+		currentTexts.push(attributes.columnThreeBody);
+		currentTextAligns.push(attributes.body3Align);
+	}
+
+	return createBlock('ub/styled-box', {
+		mode: 'number',
+		number: currentNumbers,
+		title: currentTitles,
+		titleAlign: currentTitleAligns,
+		text: currentTexts,
+		textAlign: currentTextAligns,
+		backColor: attributes.numberBackground,
+		foreColor: attributes.numberColor,
+		outlineColor: attributes.borderColor
+	});
 };

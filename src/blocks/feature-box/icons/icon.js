@@ -3,7 +3,6 @@ import { Fragment } from 'react';
 const icon = (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		id="Layer_1"
 		viewBox="0 0 512 512"
 		width="20"
 		height="20"

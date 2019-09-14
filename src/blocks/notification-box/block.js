@@ -18,7 +18,7 @@ import {
 	oldAttributes,
 	updateFrom
 } from './oldVersions';
-import { blockControls, editorDisplay } from './components';
+import { blockControls, editorDisplay, upgradeToStyledBox } from './components';
 import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 
 const { __ } = wp.i18n;
@@ -86,10 +86,9 @@ registerBlockType('ub/notification-box', {
 				block: getBlock(clientId)
 			};
 		}),
-		withDispatch(dispatch => {
-			const { replaceBlock } = dispatch('core/editor');
-			return { replaceBlock };
-		})
+		withDispatch(dispatch => ({
+			replaceBlock: dispatch('core/editor').replaceBlock
+		}))
 	])(function(props) {
 		const {
 			isSelected,
@@ -182,10 +181,28 @@ registerBlockType('ub/notification-box-block', {
 	category: 'ultimateblocks',
 	keywords: [__('notification'), __('warning info'), __('Ultimate Blocks')],
 	attributes,
-	edit: withSelect((select, ownProps) => ({
-		block: select('core/editor').getBlock(ownProps.clientId)
-	}))(function(props) {
-		const { isSelected, className, block } = props;
+	supports: {
+		inserter: false
+	},
+
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: 'ub/styled-box',
+				transform: attributes => upgradeToStyledBox(attributes)
+			}
+		]
+	},
+	edit: compose([
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		})),
+		withDispatch(dispatch => ({
+			replaceBlock: dispatch('core/editor').replaceBlock
+		}))
+	])(function(props) {
+		const { isSelected, className, block, replaceBlock } = props;
 
 		if (props.attributes.blockID !== block.clientId) {
 			props.setAttributes({ blockID: block.clientId });
@@ -193,8 +210,20 @@ registerBlockType('ub/notification-box-block', {
 
 		return [
 			isSelected && blockControls(props),
-			<div className={className}>{editorDisplay(props)}</div>
+			<div className={className}>
+				<button
+					onClick={_ =>
+						replaceBlock(
+							block.clientId,
+							upgradeToStyledBox(props.attributes)
+						)
+					}
+				>
+					{upgradeButtonLabel}
+				</button>
+				{editorDisplay(props)}
+			</div>
 		];
 	}),
-	save: () => null
+	save: _ => null
 });

@@ -8,6 +8,8 @@ const { Toolbar, Button, IconButton } = wp.components;
 
 const { __ } = wp.i18n;
 
+const { createBlock } = wp.blocks;
+
 export const blockControls = props => {
 	const { setAttributes } = props;
 
@@ -80,4 +82,29 @@ export const editorDisplay = props => {
 			keepPlaceholderOnFocus={true}
 		/>
 	);
+};
+
+export const upgradeToStyledBox = attributes => {
+	let firstColor;
+	let secondColor;
+	switch (attributes.ub_selected_notify) {
+		case 'ub_notify_success':
+			[firstColor, secondColor] = ['#3c763d', '#dff0d8'];
+			break;
+		case 'ub_notify_warning':
+			[firstColor, secondColor] = ['#d8000c', '#ffd2d2'];
+			break;
+		case 'ub_notify_info':
+		default:
+			[firstColor, secondColor] = ['#31708f', '#d9edf7'];
+			break;
+	}
+	return createBlock('ub/styled-box', {
+		mode: 'notification',
+		text: [attributes.ub_notify_info],
+		textAlign: [attributes.align],
+		backColor: secondColor,
+		foreColor: firstColor,
+		outlineColor: firstColor
+	});
 };

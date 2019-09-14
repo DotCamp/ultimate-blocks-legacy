@@ -13,7 +13,12 @@ import './style.scss';
 import './editor.scss';
 import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 import { version_1_1_2, version_1_1_5, oldAttributes } from './oldVersions';
-import { blockControls, inspectorControls, editorDisplay } from './components';
+import {
+	blockControls,
+	inspectorControls,
+	editorDisplay,
+	upgradeToStyledBox
+} from './components';
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -138,19 +143,12 @@ registerBlockType('ub/number-box', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
-		withDispatch(dispatch => {
-			const { replaceBlock } = dispatch('core/editor');
-			return { replaceBlock };
-		}),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		})),
+		withDispatch(dispatch => ({
+			replaceBlock: dispatch('core/editor').replaceBlock
+		})),
 		withState({ editable: '' })
 	])(function(props) {
 		const { isSelected, block, replaceBlock } = props;
@@ -162,7 +160,7 @@ registerBlockType('ub/number-box', {
 
 			<div className={props.className}>
 				<button
-					onClick={() => {
+					onClick={_ => {
 						const {
 							columnOneNumber,
 							columnTwoNumber,
@@ -379,15 +377,32 @@ registerBlockType('ub/number-box-block', {
 	keywords: [__('Number box'), __('Feature'), __('Ultimate Blocks')],
 	attributes,
 
+	supports: {
+		inserter: false
+	},
+
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: 'ub/styled-box',
+				transform: attributes => upgradeToStyledBox(attributes)
+			}
+		]
+	},
+
 	edit: compose([
 		withState({ editable: '' }),
 		withSelect((select, ownProps) => ({
 			block: select('core/editor').getBlock(ownProps.clientId)
+		})),
+		withDispatch(dispatch => ({
+			replaceBlock: dispatch('core/editor').replaceBlock
 		}))
 	])(function(props) {
-		const { isSelected, block } = props;
+		const { isSelected, block, replaceBlock, attributes } = props;
 
-		if (props.attributes.blockID !== block.clientId) {
+		if (attributes.blockID !== block.clientId) {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -396,8 +411,20 @@ registerBlockType('ub/number-box-block', {
 
 			isSelected && inspectorControls(props),
 
-			<div className={props.className}>{editorDisplay(props)}</div>
+			<div className={props.className}>
+				<button
+					onClick={_ =>
+						replaceBlock(
+							block.clientId,
+							upgradeToStyledBox(attributes)
+						)
+					}
+				>
+					{upgradeButtonLabel}
+				</button>
+				{editorDisplay(props)}
+			</div>
 		];
 	}),
-	save: () => null
+	save: _ => null
 });

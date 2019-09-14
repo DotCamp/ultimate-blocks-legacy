@@ -439,25 +439,35 @@ registerBlockType('ub/styled-box', {
                     }))}
                     onChange={selection => {
                         let newAttributes = { mode: selection };
-                        if (
-                            !(
-                                (foreColor === '#31708f' &&
-                                    backColor === '#d9edf7' &&
-                                    outlineColor === '#31708f') ||
-                                (foreColor === '#3c763d' &&
-                                    backColor === '#dff0d8' &&
-                                    outlineColor === '#3c763d') ||
-                                (foreColor === '#d8000c' &&
-                                    backColor === '#ffd2d2' &&
-                                    outlineColor === '#d8000c')
-                            )
-                        ) {
-                            Object.assign(newAttributes, {
-                                foreColor: '#31708f',
-                                backColor: '#d9edf7',
-                                outlineColor: '#31708f'
+                        if (selection ==='notification'){
+                            Object.assign(newAttributes, {number: [number[0]],
+                                title: [title[0]],
+                                titleAlign: [titleAlign[0]],
+                                text: [text[0]],
+                                textAlign: [textAlign[0]],
+                                image: [image[0]]
                             });
+                            if (
+                                !(
+                                    (foreColor === '#31708f' &&
+                                        backColor === '#d9edf7' &&
+                                        outlineColor === '#31708f') ||
+                                    (foreColor === '#3c763d' &&
+                                        backColor === '#dff0d8' &&
+                                        outlineColor === '#3c763d') ||
+                                    (foreColor === '#d8000c' &&
+                                        backColor === '#ffd2d2' &&
+                                        outlineColor === '#d8000c')
+                                )
+                            ) {
+                                Object.assign(newAttributes, {
+                                    foreColor: '#31708f',
+                                    backColor: '#d9edf7',
+                                    outlineColor: '#31708f'
+                                });
+                            }
                         }
+
                         setAttributes(newAttributes);
                     }}
                 />

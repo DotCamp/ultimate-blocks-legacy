@@ -5,13 +5,9 @@ export const richTextToHTML = elem => {
 
 	outputString += `<${elem.type}${
 		elem.type === 'a'
-			? ` href='${elem.props.href}' rel='${elem.props.rel}' target='${
-					elem.props.target
-			  }'`
+			? ` href='${elem.props.href}' rel='${elem.props.rel}' target='${elem.props.target}'`
 			: elem.type === 'img'
-			? ` style='${elem.props.style}' class='${elem.props.class}' src='${
-					elem.props.src
-			  }' alt='${elem.props.alt}'`
+			? ` style='${elem.props.style}' class='${elem.props.class}' src='${elem.props.src}' alt='${elem.props.alt}'`
 			: ''
 	}>`;
 

@@ -1,11 +1,14 @@
-const { __ } = wp.i18n;
 import { Fragment } from 'react';
 import { oneColumnIcon, twoColumnsIcon, threeColumnsIcon } from './icons/icon';
 import remove_icon from './icons/remove_icon';
 
+const { __ } = wp.i18n;
+
 const { BlockControls, RichText, MediaUpload } = wp.editor;
 
 const { Button, Toolbar, IconButton } = wp.components;
+
+const { createBlock } = wp.blocks;
 
 export const blockControls = props => {
 	const { editable, attributes, setAttributes } = props;
@@ -20,7 +23,7 @@ export const blockControls = props => {
 		body3Align
 	} = attributes;
 
-	const selectedTextAlignment = () => {
+	const selectedTextAlignment = _ => {
 		switch ('editable') {
 			case 'title1':
 				return title1Align;
@@ -44,19 +47,19 @@ export const blockControls = props => {
 					icon={oneColumnIcon}
 					label={__('One column')}
 					isActive={column === '1'}
-					onClick={() => setAttributes({ column: '1' })}
+					onClick={_ => setAttributes({ column: '1' })}
 				/>
 				<IconButton
 					icon={twoColumnsIcon}
 					label={__('Two columns')}
 					isActive={column === '2'}
-					onClick={() => setAttributes({ column: '2' })}
+					onClick={_ => setAttributes({ column: '2' })}
 				/>
 				<IconButton
 					icon={threeColumnsIcon}
 					label={__('Three columns')}
 					isActive={column === '3'}
-					onClick={() => setAttributes({ column: '3' })}
+					onClick={_ => setAttributes({ column: '3' })}
 				/>
 			</Toolbar>
 			<Toolbar>
@@ -71,7 +74,7 @@ export const blockControls = props => {
 									a.slice(1)
 							)}
 							isActive={selectedTextAlignment === a}
-							onClick={() => {
+							onClick={_ => {
 								switch (editable) {
 									case 'title1':
 										setAttributes({
@@ -170,7 +173,7 @@ export const editorDisplay = props => {
 						{isSelected && (
 							<Button
 								className="remove-image"
-								onClick={() =>
+								onClick={_ =>
 									setAttributes({
 										imgOneID: null,
 										imgOneURL: null,
@@ -195,7 +198,7 @@ export const editorDisplay = props => {
 					value={columnOneTitle}
 					onChange={value => setAttributes({ columnOneTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'title1' })}
+					unstableOnFocus={_ => setState({ editable: 'title1' })}
 				/>
 				<RichText
 					tagName="p"
@@ -204,7 +207,7 @@ export const editorDisplay = props => {
 					value={columnOneBody}
 					onChange={value => setAttributes({ columnOneBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'body1' })}
+					unstableOnFocus={_ => setState({ editable: 'body1' })}
 				/>
 			</div>
 			<div className="ub_feature_2">
@@ -235,7 +238,7 @@ export const editorDisplay = props => {
 						{isSelected && (
 							<Button
 								className="remove-image"
-								onClick={() =>
+								onClick={_ =>
 									setAttributes({
 										imgTwoID: null,
 										imgTwoURL: null,
@@ -269,7 +272,7 @@ export const editorDisplay = props => {
 					value={columnTwoBody}
 					onChange={value => setAttributes({ columnTwoBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'body2' })}
+					unstableOnFocus={_ => setState({ editable: 'body2' })}
 				/>
 			</div>
 			<div className="ub_feature_3">
@@ -300,7 +303,7 @@ export const editorDisplay = props => {
 						{isSelected && (
 							<Button
 								className="remove-image"
-								onClick={() =>
+								onClick={_ =>
 									setAttributes({
 										imgThreeID: null,
 										imgThreeURL: null,
@@ -327,7 +330,7 @@ export const editorDisplay = props => {
 						setAttributes({ columnThreeTitle: value })
 					}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'title3' })}
+					unstableOnFocus={_ => setState({ editable: 'title3' })}
 				/>
 				<RichText
 					tagName="p"
@@ -338,9 +341,56 @@ export const editorDisplay = props => {
 						setAttributes({ columnThreeBody: value })
 					}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'body3' })}
+					unstableOnFocus={_ => setState({ editable: 'body3' })}
 				/>
 			</div>
 		</div>
 	);
+};
+
+export const upgradeToStyledBox = attributes => {
+	let currentTitles = [attributes.columnOneTitle];
+	let currentTitleAligns = [attributes.title1Align];
+	let currentTexts = [attributes.columnOneBody];
+	let currentTextAligns = [attributes.body1Align];
+	let currentImages = [
+		{
+			id: attributes.imgOneID,
+			alt: attributes.imgOneAlt,
+			url: attributes.imgOneURL
+		}
+	];
+
+	if (parseInt(attributes.column) >= 2) {
+		currentTitles.push(attributes.columnTwoTitle);
+		currentTitleAligns.push(attributes.title2Align);
+		currentTexts.push(attributes.columnTwoBody);
+		currentTextAligns.push(attributes.body2Align);
+		currentImages.push({
+			id: attributes.imgTwoID,
+			alt: attributes.imgTwoAlt,
+			url: attributes.imgTwoURL
+		});
+	}
+
+	if (parseInt(attributes.column) === 3) {
+		currentTitles.push(attributes.columnThreeTitle);
+		currentTitleAligns.push(attributes.title3Align);
+		currentTexts.push(attributes.columnThreeBody);
+		currentTextAligns.push(attributes.body3Align);
+		currentImages.push({
+			id: attributes.imgThreeID,
+			alt: attributes.imgThreeAlt,
+			url: attributes.imgThreeURL
+		});
+	}
+
+	return createBlock('ub/styled-box', {
+		mode: 'feature',
+		title: currentTitles,
+		titleAlign: currentTitleAligns,
+		text: currentTexts,
+		textAlign: currentTextAligns,
+		image: currentImages
+	});
 };
