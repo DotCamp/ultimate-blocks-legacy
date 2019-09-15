@@ -169,8 +169,8 @@ function ub_content_toggle_filter( $block_content, $block ) {
     
                 $answer = preg_replace_callback('/<[a-z1-6]+( (?:(?:aria|data)-[^\t\n\f \/>"\'=]+|[a-z]+)=[\'"][\s\S]+?[\'"])>/i',
                     function($matches){
-                        $attributeList = preg_replace_callback('/ ([\S]+)=([\'"])[\s\S]*?(\2)/', function($matches){
-                            return $matches[1] == 'href' ? $matches[0]: '';
+                        $attributeList = preg_replace_callback('/ ([\S]+)=([\'"])([\s\S]*?)(\2)/', function($matches){
+                            return $matches[1] == 'href' ? (" href='" . $matches[3] . "'"): '';
                         }, $matches[1]);
                         return str_replace($matches[1], $attributeList, $matches[0]);
                 }, $answer);
