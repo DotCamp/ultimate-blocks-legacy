@@ -151,7 +151,7 @@ registerBlockType('ub/number-box', {
 		})),
 		withState({ editable: '' })
 	])(function(props) {
-		const { isSelected, block, replaceBlock } = props;
+		const { isSelected, block, replaceBlock, attributes } = props;
 
 		return [
 			isSelected && blockControls(props),
@@ -161,53 +161,58 @@ registerBlockType('ub/number-box', {
 			<div className={props.className}>
 				<button
 					onClick={_ => {
-						const {
-							columnOneNumber,
-							columnTwoNumber,
-							columnThreeNumber,
-							columnOneTitle,
-							columnTwoTitle,
-							columnThreeTitle,
-							columnOneBody,
-							columnTwoBody,
-							columnThreeBody,
-							...otherAttributes
-						} = props.attributes;
+						const { column, columnOneBody } = attributes;
+
+						let currentNumbers = [
+							mergeRichTextArray(attributes.columnOneNumber)
+						];
+						let currentTitles = [
+							mergeRichTextArray(attributes.columnOneTitle)
+						];
+						let currentTitleAligns = [attributes.title1Align];
+						let currentTexts = [mergeRichTextArray(columnOneBody)];
+						let currentTextAligns = [attributes.body1Align];
+
+						if (parseInt(column) >= 2) {
+							currentNumbers.push(
+								mergeRichTextArray(attributes.columnTwoNumber)
+							);
+							currentTitles.push(
+								mergeRichTextArray(attributes.columnTwoTitle)
+							);
+							currentTitleAligns.push(attributes.title2Align);
+							currentTexts.push(
+								mergeRichTextArray(attributes.columnTwoBody)
+							);
+							currentTextAligns.push(attributes.body2Align);
+						}
+						if (parseInt(column) === 3) {
+							currentNumbers.push(
+								mergeRichTextArray(attributes.columnThreeNumber)
+							);
+							currentTitles.push(
+								mergeRichTextArray(attributes.columnThreeTitle)
+							);
+							currentTitleAligns.push(attributes.title3Align);
+							currentTexts.push(
+								mergeRichTextArray(attributes.columnThreeBody)
+							);
+							currentTextAligns.push(attributes.body3Align);
+						}
+
 						replaceBlock(
 							block.clientId,
-							createBlock(
-								'ub/number-box-block',
-								Object.assign(otherAttributes, {
-									columnOneNumber: mergeRichTextArray(
-										columnOneNumber
-									),
-									columnOneTitle: mergeRichTextArray(
-										columnOneTitle
-									),
-
-									columnOneBody: mergeRichTextArray(
-										columnOneBody
-									),
-									columnTwoNumber: mergeRichTextArray(
-										columnTwoNumber
-									),
-									columnTwoTitle: mergeRichTextArray(
-										columnTwoTitle
-									),
-									columnTwoBody: mergeRichTextArray(
-										columnTwoBody
-									),
-									columnThreeNumber: mergeRichTextArray(
-										columnThreeNumber
-									),
-									columnThreeTitle: mergeRichTextArray(
-										columnThreeTitle
-									),
-									columnThreeBody: mergeRichTextArray(
-										columnThreeBody
-									)
-								})
-							)
+							createBlock('ub/styled-box', {
+								mode: 'number',
+								number: currentNumbers,
+								title: currentTitles,
+								titleAlign: currentTitleAligns,
+								text: currentTexts,
+								textAlign: currentTextAligns,
+								backColor: attributes.numberBackground,
+								foreColor: attributes.numberColor,
+								outlineColor: attributes.borderColor
+							})
 						);
 					}}
 				>

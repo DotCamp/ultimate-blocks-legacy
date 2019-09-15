@@ -159,48 +159,71 @@ registerBlockType('ub/feature-box', {
 		})),
 		withState({ editable: '' })
 	])(function(props) {
-		const { isSelected, block, replaceBlock } = props;
+		const { isSelected, block, replaceBlock, attributes } = props;
 
 		return [
 			isSelected && blockControls(props),
 
 			<div className={props.className}>
 				<button
-					onClick={() => {
-						const {
-							columnOneTitle,
-							columnTwoTitle,
-							columnThreeTitle,
-							columnOneBody,
-							columnTwoBody,
-							columnThreeBody,
-							...otherAttributes
-						} = props.attributes;
+					onClick={_ => {
+						const { column, columnOneBody } = attributes;
+						let currentTitles = [
+							mergeRichTextArray(attributes.columnOneTitle)
+						];
+						let currentTitleAligns = [attributes.title1Align];
+						let currentTexts = [mergeRichTextArray(columnOneBody)];
+						let currentTextAligns = [attributes.body1Align];
+						let currentImages = [
+							{
+								id: attributes.imgOneID,
+								alt: attributes.imgOneAlt,
+								url: attributes.imgOneURL
+							}
+						];
+
+						if (parseInt(column) >= 2) {
+							currentTitles.push(
+								mergeRichTextArray(attributes.columnTwoTitle)
+							);
+							currentTitleAligns.push(attributes.title2Align);
+							currentTexts.push(
+								mergeRichTextArray(attributes.columnTwoBody)
+							);
+							currentTextAligns.push(attributes.body2Align);
+							currentImages.push({
+								id: attributes.imgTwoID,
+								alt: attributes.imgTwoAlt,
+								url: attributes.imgTwoURL
+							});
+						}
+
+						if (parseInt(column) === 3) {
+							currentTitles.push(
+								mergeRichTextArray(attributes.columnThreeTitle)
+							);
+							currentTitleAligns.push(attributes.title3Align);
+							currentTexts.push(
+								mergeRichTextArray(attributes.columnThreeBody)
+							);
+							currentTextAligns.push(attributes.body3Align);
+							currentImages.push({
+								id: attributes.imgThreeID,
+								alt: attributes.imgThreeAlt,
+								url: attributes.imgThreeURL
+							});
+						}
+
 						replaceBlock(
 							block.clientId,
-							createBlock(
-								'ub/feature-box-block',
-								Object.assign(otherAttributes, {
-									columnOneTitle: mergeRichTextArray(
-										columnOneTitle
-									),
-									columnOneBody: mergeRichTextArray(
-										columnOneBody
-									),
-									columnTwoTitle: mergeRichTextArray(
-										columnTwoTitle
-									),
-									columnTwoBody: mergeRichTextArray(
-										columnTwoBody
-									),
-									columnThreeTitle: mergeRichTextArray(
-										columnThreeTitle
-									),
-									columnThreeBody: mergeRichTextArray(
-										columnThreeBody
-									)
-								})
-							)
+							createBlock('ub/styled-box', {
+								mode: 'feature',
+								title: currentTitles,
+								titleAlign: currentTitleAligns,
+								text: currentTexts,
+								textAlign: currentTextAligns,
+								image: currentImages
+							})
 						);
 					}}
 				>

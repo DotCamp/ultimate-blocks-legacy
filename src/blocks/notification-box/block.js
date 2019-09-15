@@ -103,21 +103,41 @@ registerBlockType('ub/notification-box', {
 
 			<div className={className}>
 				<button
-					onClick={() => {
-						const {
-							ub_notify_info,
-							...otherAttributes
-						} = attributes;
+					onClick={_ => {
+						const { ub_notify_info } = attributes;
+						let firstColor;
+						let secondColor;
+						switch (attributes.ub_selected_notify) {
+							case 'ub_notify_success':
+								[firstColor, secondColor] = [
+									'#3c763d',
+									'#dff0d8'
+								];
+								break;
+							case 'ub_notify_warning':
+								[firstColor, secondColor] = [
+									'#d8000c',
+									'#ffd2d2'
+								];
+								break;
+							case 'ub_notify_info':
+							default:
+								[firstColor, secondColor] = [
+									'#31708f',
+									'#d9edf7'
+								];
+								break;
+						}
 						replaceBlock(
 							block.clientId,
-							createBlock(
-								'ub/notification-box-block',
-								Object.assign(otherAttributes, {
-									ub_notify_info: mergeRichTextArray(
-										ub_notify_info
-									)
-								})
-							)
+							createBlock('ub/styled-box', {
+								mode: 'notification',
+								text: [mergeRichTextArray(ub_notify_info)],
+								textAlign: [attributes.align],
+								backColor: secondColor,
+								foreColor: firstColor,
+								outlineColor: firstColor
+							})
 						);
 					}}
 				>
