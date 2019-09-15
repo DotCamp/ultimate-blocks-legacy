@@ -731,6 +731,75 @@ $defaultValues = array(
             )
         )
     ),
+    'ub/styled-box' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'mode' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'title' => array(
+                'type' => 'array',
+                'default' => array(''),
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'titleAlign' => array(
+                'type' => 'array',
+                'default' => array('center'),
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'text' => array(
+                'type' => 'array',
+                'default' => array(''),
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'textAlign' => array(
+                'type' => 'array',
+                'default' => array('left'),
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'number' => array(
+                'type' => 'array',
+                'default' => array(''),
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'image' => array(
+                'type' => 'array',
+                'default' => array(
+                    array(
+                        'id' => null,
+                        'alt' => null,
+                        'url' => null
+                    )
+                )
+            ),
+            'foreColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            ),
+            'backColor' => array(
+                'type' => 'string',
+                'default' => '#CCCCCC'
+            ),
+            'outlineColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            )
+        )
+    ),
     'ub/tabbed-content-block' => array(
         'attributes' => array(
             'blockID' => array(

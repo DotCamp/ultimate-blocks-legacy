@@ -374,7 +374,7 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL;
                     break;
                 case 'ub/star-rating-block':
-                    $prefix =  '#ub-star-rating-' . $attributes['blockID'];
+                    $prefix = '#ub-star-rating-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .ub-star-outer-container{' . PHP_EOL .
                         'justify-content: '. ($attributes['starAlign'] == 'center' ? 'center' :
                             ('flex-'.$attributes['starAlign'] == 'left' ? 'start' : 'end')).';' . PHP_EOL .
@@ -385,6 +385,46 @@ function ub_include_block_attribute_css() {
                     $prefix . ' svg{' . PHP_EOL .
                         'fill: ' . $attributes['starColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL;
+                    break;
+                case 'ub/styled-box':
+                    $prefix = '#ub-styled-box-' . $attributes['blockID'];
+                    if($attributes['mode'] == 'notification'){
+                        $blockStylesheets .= $prefix . ' .ub-notification-text{'. PHP_EOL .
+                            'background-color: ' . $attributes['backColor'] . ';' . PHP_EOL .
+                            'color: ' . $attributes['foreColor'] . ';' . PHP_EOL .
+                            'border-left-color: ' . $attributes['outlineColor'] . ';' . PHP_EOL .
+                            'text-align: ' . $attributes['textAlign'][0] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
+                    else if($attributes['mode'] == 'feature'){
+                        foreach(range(1, count($attributes['text'])) as $i){
+                            $blockStylesheets .= $prefix . ' .ub-feature:nth-child('.$i.') .ub-feature-title{'. PHP_EOL .
+                                'text-align: ' . $attributes['titleAlign'][$i-1] . ';' . PHP_EOL .
+                            '}' . PHP_EOL .
+                            $prefix . ' .ub-feature:nth-child('.$i.') .ub-feature-body{'. PHP_EOL .
+                                'text-align: ' . $attributes['textAlign'][$i-1] . ';' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                    }
+                    else if($attributes['mode'] == 'number'){
+                        $blockStylesheets .= $prefix . ' .ub-number-panel{' . PHP_EOL .
+                            'border-color: ' . $attributes['outlineColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        $prefix . ' .ub-number-container{' . PHP_EOL .
+                            'background-color: ' . $attributes['backColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        $prefix . ' .ub-number-display{' . PHP_EOL .
+                            'color: ' . $attributes['foreColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                        foreach(range(1, count($attributes['text'])) as $i){
+                            $blockStylesheets .= $prefix . ' .ub-number-panel:nth-child('.$i.') .ub-number-box-title{'. PHP_EOL .
+                                'text-align: ' . $attributes['titleAlign'][$i-1] . ';' . PHP_EOL .
+                            '}' . PHP_EOL .
+                            $prefix . ' .ub-number-panel:nth-child('.$i.') .ub-number-box-body{'. PHP_EOL .
+                                'text-align: ' . $attributes['textAlign'][$i-1] . ';' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                    }
                     break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];
@@ -554,3 +594,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/review/block.php';
 
 // Divider
 require_once plugin_dir_path( __FILE__ ) . 'blocks/divider/block.php';
+
+//Styled Box
+require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-box/block.php';

@@ -12,7 +12,9 @@ const {
 
 const { Toolbar, Button, IconButton, SelectControl } = wp.components;
 
-const { withState } = wp.compose;
+const { withState, compose } = wp.compose;
+
+const { withSelect } = wp.data;
 
 import { Fragment } from 'react';
 
@@ -37,6 +39,10 @@ registerBlockType('ub/styled-box', {
 	icon: icon,
 	category: 'ultimateblocks',
 	attributes: {
+		blockID: {
+			type: 'string',
+			default: ''
+		},
 		text: {
 			type: 'array',
 			default: ['']
@@ -79,9 +85,15 @@ registerBlockType('ub/styled-box', {
 		}
 	},
 
-	edit: withState({ editable: '' })(function(props) {
+	edit: compose([
+		withState({ editable: '' }),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
+	])(function(props) {
 		const {
 			attributes,
+			block,
 			setAttributes,
 			isSelected,
 			setState,
@@ -98,7 +110,8 @@ registerBlockType('ub/styled-box', {
 			outlineColor,
 			mode,
 			titleAlign,
-			textAlign
+			textAlign,
+			blockID
 		} = attributes;
 
 		let renderedBlock;
@@ -145,6 +158,10 @@ registerBlockType('ub/styled-box', {
 				))}
 			</Toolbar>
 		);
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
 
 		if (mode === 'notification') {
 			renderedBlock = (
