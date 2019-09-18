@@ -32,3 +32,4 @@ import './blocks/image-slider/block';
 import './blocks/content-filter/block';
 import './blocks/content-filter/components/content-filter-entry';
 import './blocks/styled-box/block';
+import './blocks/expand/block';

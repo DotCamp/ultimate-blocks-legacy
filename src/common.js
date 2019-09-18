@@ -45,3 +45,14 @@ export const generateIcon = (selectedIcon, size) => (
 export const upgradeButtonLabel = __(
 	'We have made some improvements to this block. Click here to upgrade the block. You will not lose any content.'
 );
+
+export const getDescendantBlocks = rootBlock => {
+	let descendants = [];
+	rootBlock.innerBlocks.forEach(innerBlock => {
+		descendants.push(innerBlock);
+		if (innerBlock.innerBlocks.length > 0) {
+			descendants.push(...getDescendantBlocks(innerBlock));
+		}
+	});
+	return descendants;
+};

@@ -1,6 +1,6 @@
 import Inspector from './inspector';
 import { Component } from 'react';
-import { upgradeButtonLabel } from '../../../common';
+import { upgradeButtonLabel, getDescendantBlocks } from '../../../common';
 
 const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
@@ -239,16 +239,6 @@ export class PanelContent extends Component {
 			);
 		};
 
-		const getDescendantBlocks = rootBlock => {
-			let descendants = [];
-			rootBlock.innerBlocks.forEach(innerBlock => {
-				descendants.push(innerBlock.clientId);
-				if (innerBlock.innerBlocks.length > 0) {
-					descendants.push(...getDescendantBlocks(innerBlock));
-				}
-			});
-			return descendants;
-		};
 		//Detect if one of the child blocks has received a command to add another child block
 		if (JSON.stringify(newBlockTarget) !== '[]') {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -291,10 +281,11 @@ export class PanelContent extends Component {
 				setState({ oldArrangement: newArrangement });
 			}
 		} else if (mainBlockSelected) {
-			const descendantBlocks = getDescendantBlocks(this.props.block);
 			if (
 				selectedBlock !== block.clientId &&
-				descendantBlocks.includes(selectedBlock)
+				getDescendantBlocks(this.props.block)
+					.map(d => d.clientId)
+					.includes(selectedBlock)
 			) {
 				setState({ mainBlockSelected: false });
 			}

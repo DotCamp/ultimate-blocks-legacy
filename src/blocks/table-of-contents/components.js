@@ -5,6 +5,7 @@ import {
 	plainList
 } from './icon';
 import { Component, Fragment } from 'react';
+import { getDescendantBlocks } from '../../common';
 
 const {
 	ToggleControl,
@@ -28,17 +29,6 @@ class TableOfContents extends Component {
 
 	componentDidMount() {
 		const getHeadingBlocks = _ => {
-			const getDescendantBlocks = rootBlock => {
-				let descendants = [];
-				rootBlock.innerBlocks.forEach(innerBlock => {
-					descendants.push(innerBlock);
-					if (innerBlock.innerBlocks.length > 0) {
-						descendants.push(...getDescendantBlocks(innerBlock));
-					}
-				});
-				return descendants;
-			};
-
 			let headings = [];
 			const rootBlocks = select('core/editor').getBlocks();
 			rootBlocks.forEach(block => {
