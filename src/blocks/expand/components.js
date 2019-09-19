@@ -42,6 +42,7 @@ export class ExpandRoot extends Component {
 				.includes(selectedBlockID);
 
 		if (
+			block.innerBlocks[1] &&
 			block.innerBlocks[1].attributes.isVisible !== fullVersionVisibility
 		) {
 			updateBlockAttributes(block.innerBlocks[1].clientId, {
@@ -58,7 +59,8 @@ export class ExpandRoot extends Component {
 							'ub/expand-portion',
 							{
 								displayType: 'partial',
-								clickText: showPreviewText
+								clickText: showPreviewText,
+								isVisible: true
 							}
 						],
 						[
