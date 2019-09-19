@@ -27,10 +27,12 @@ Array.prototype.slice
 	.call(document.getElementsByClassName('ub-expand-toggle-button'))
 	.forEach(instance => {
 		instance.addEventListener('click', () => {
-			Array.prototype.slice
-				.call(instance.closest('.ub-expand').children)
-				.forEach(elem => {
-					elem.classList.toggle('ub-hide');
-				});
+			const blockRoot = instance.closest('.ub-expand');
+			blockRoot
+				.querySelector('.ub-expand-partial .ub-expand-toggle-button')
+				.classList.toggle('ub-hide');
+			blockRoot
+				.querySelector('.ub-expand-full')
+				.classList.toggle('ub-hide');
 		});
 	});

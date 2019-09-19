@@ -26,8 +26,8 @@ function ub_getSiblings(element, criteria) {
 
 Array.prototype.slice.call(document.getElementsByClassName('ub-expand-toggle-button')).forEach(function (instance) {
   instance.addEventListener('click', function () {
-    Array.prototype.slice.call(instance.closest('.ub-expand').children).forEach(function (elem) {
-      elem.classList.toggle('ub-hide');
-    });
+    var blockRoot = instance.closest('.ub-expand');
+    blockRoot.querySelector('.ub-expand-partial .ub-expand-toggle-button').classList.toggle('ub-hide');
+    blockRoot.querySelector('.ub-expand-full').classList.toggle('ub-hide');
   });
 });
