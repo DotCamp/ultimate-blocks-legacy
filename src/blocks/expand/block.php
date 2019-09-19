@@ -3,9 +3,9 @@
 function ub_render_expand_portion_block($attributes, $content){
     extract($attributes);
     return '<div class="ub-expand-portion ub-expand-'.$displayType.
-        ($displayType == 'full' ? ' ub-hide' : '').'">
-        <a class="ub-expand-toggle-button">'.$clickText.'</a>'.
-        $content
+        ($displayType == 'full' ? ' ub-hide' : '').'">'.
+        $content.
+        '<a class="ub-expand-toggle-button">'.$clickText.'</a>'
         .'</div>';
 }
 

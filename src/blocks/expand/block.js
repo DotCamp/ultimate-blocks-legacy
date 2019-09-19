@@ -90,8 +90,8 @@ registerBlockType('ub/expand-portion', {
 					displayType === 'full' && !isVisible ? ' ub-hide' : ''
 				}`}
 			>
+				<InnerBlocks templateLock={false} />
 				<RichText
-					tag="a"
 					value={clickText}
 					onChange={value => setAttributes({ clickText: value })}
 					placeholder={__(
@@ -100,7 +100,6 @@ registerBlockType('ub/expand-portion', {
 						} button`
 					)}
 				/>
-				<InnerBlocks templateLock={false} />
 			</div>
 		);
 	},
