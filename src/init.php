@@ -597,3 +597,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/divider/block.php';
 
 //Styled Box
 require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-box/block.php';
+
+//Expand
+require_once plugin_dir_path( __FILE__ ) . 'blocks/expand/block.php';

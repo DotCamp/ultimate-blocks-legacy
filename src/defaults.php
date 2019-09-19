@@ -285,6 +285,34 @@ $defaultValues = array(
             )
         )
     ),
+    'ub/expand' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'initialShow' => array(
+                'type' => 'boolean',
+                'default' => false
+            )
+        )
+    ),
+    'ub/expand-portion' => array(
+        'attributes' => array(
+            'clickText' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'displayType' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'isVisible' => array(
+                'type' => 'boolean',
+                'default' => false
+            )
+        )
+    ),
     'ub/feature-box-block' => array(
         'attributes' => array(
             'blockID' => array(
