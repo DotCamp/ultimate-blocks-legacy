@@ -236,7 +236,7 @@ registerBlockType('ub/styled-box', {
 				.fill('')
 				.map((_, i) => (
 					<div className="ub-feature">
-						{image[i].id ? (
+						{image[i] && image[i].id ? (
 							<Fragment>
 								{isSelected && (
 									<Button

@@ -355,9 +355,9 @@ export const upgradeToStyledBox = attributes => {
 	let currentTextAligns = [attributes.body1Align];
 	let currentImages = [
 		{
-			id: attributes.imgOneID,
-			alt: attributes.imgOneAlt,
-			url: attributes.imgOneURL
+			id: attributes.imgOneID || null,
+			alt: attributes.imgOneAlt || '',
+			url: attributes.imgOneURL || ''
 		}
 	];
 
@@ -367,9 +367,9 @@ export const upgradeToStyledBox = attributes => {
 		currentTexts.push(attributes.columnTwoBody);
 		currentTextAligns.push(attributes.body2Align);
 		currentImages.push({
-			id: attributes.imgTwoID,
-			alt: attributes.imgTwoAlt,
-			url: attributes.imgTwoURL
+			id: attributes.imgTwoID || null,
+			alt: attributes.imgTwoAlt || '',
+			url: attributes.imgTwoURL || ''
 		});
 	}
 
@@ -379,9 +379,9 @@ export const upgradeToStyledBox = attributes => {
 		currentTexts.push(attributes.columnThreeBody);
 		currentTextAligns.push(attributes.body3Align);
 		currentImages.push({
-			id: attributes.imgThreeID,
-			alt: attributes.imgThreeAlt,
-			url: attributes.imgThreeURL
+			id: attributes.imgThreeID || null,
+			alt: attributes.imgThreeAlt || '',
+			url: attributes.imgThreeURL || ''
 		});
 	}
 

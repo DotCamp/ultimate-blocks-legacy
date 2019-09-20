@@ -88,7 +88,8 @@ const attributes = {
 		default: ''
 	},
 	imgOneID: {
-		type: 'number'
+		type: 'number',
+		default: null
 	},
 	imgOneAlt: {
 		type: 'string',
@@ -99,7 +100,8 @@ const attributes = {
 		default: ''
 	},
 	imgTwoID: {
-		type: 'number'
+		type: 'number',
+		default: null
 	},
 	imgTwoAlt: {
 		type: 'string',
@@ -110,7 +112,8 @@ const attributes = {
 		default: ''
 	},
 	imgThreeID: {
-		type: 'number'
+		type: 'number',
+		default: null
 	},
 	imgThreeAlt: {
 		type: 'string',
