@@ -1,4 +1,4 @@
-<?
+<?php
 function ub_render_styled_box_block($attributes){
     extract($attributes);
     $renderedBlock = '';
@@ -6,7 +6,7 @@ function ub_render_styled_box_block($attributes){
         $renderedBlock = '<div class="ub-notification-text">'.$text[0].'</div>';
     }
     else if($mode == 'number'){
-        foreach(range(0, count($text)) as $i){
+        foreach(range(0, count($text)-1) as $i){
             $renderedBlock .= '<div class="ub-number-panel">
                 <div class="ub-number-container">
                     <p class="ub-number-display">'.$number[$i].'</p>
@@ -17,7 +17,7 @@ function ub_render_styled_box_block($attributes){
         }
     }
     else if($mode == 'feature'){
-        foreach(range(0, count($text)) as $i){
+        foreach(range(0, count($text)-1) as $i){
             $renderedBlock .= '<div class="ub-feature">'.
                 ($image[$i]['url'] == '' ? '' :
                     '<img class="ub-feature-img" src="'.$image[$i]['url'].'"/>').

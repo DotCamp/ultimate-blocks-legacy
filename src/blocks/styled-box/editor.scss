@@ -22,5 +22,11 @@
 			display: block;
 			margin: 0 auto;
 		}
+		> p {
+			text-align: center;
+			&:first-of-type {
+				font-weight: 700;
+			}
+		}
 	}
 }

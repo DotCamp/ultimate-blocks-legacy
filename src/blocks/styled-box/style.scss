@@ -50,6 +50,11 @@
 }
 
 .ub-feature-box .ub-feature {
+	img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
 	.ub-feature-title {
 		font-size: 30px;
 		text-align: center;

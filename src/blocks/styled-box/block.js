@@ -491,24 +491,18 @@ registerBlockType('ub/styled-box', {
 							}}
 						>
 							{notificationBoxIcon}
-							<br />
-							{__('Notification box')}
-							<br />
-							{__('Highlight important information')}
+							<p>{__('Notification box')}</p>
+							<p>{__('Highlight important information')}</p>
 						</div>
 						<div onClick={_ => setAttributes({ mode: 'feature' })}>
 							{featureBoxIcon}
-							<br />
-							{__('Feature box')}
-							<br />
-							{__('Add boxes with images')}
+							<p>{__('Feature box')}</p>
+							<p>{__('Add boxes with images')}</p>
 						</div>
 						<div onClick={_ => setAttributes({ mode: 'number' })}>
 							{numberBoxIcon}
-							<br />
-							{__('Number box')}
-							<br />
-							{__('Add numbered boxes')}
+							<p>{__('Number box')}</p>
+							<p>{__('Add numbered boxes')}</p>
 						</div>
 					</div>
 				</div>
