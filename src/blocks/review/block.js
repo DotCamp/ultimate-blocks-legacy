@@ -36,7 +36,11 @@ const attributes = {
 	},
 	items: {
 		type: 'string',
-		default: '[{"label": "", "value": 0}]'
+		default: '[{"label":"","value":0}]'
+	},
+	parts: {
+		type: 'array',
+		default: [{ label: '', value: 0 }]
 	},
 	starCount: {
 		type: 'number',
@@ -116,6 +120,7 @@ registerBlockType('ub/review', {
 			authorName,
 			itemName,
 			items,
+			parts,
 			starCount,
 			summaryTitle,
 			summaryDescription,
@@ -158,6 +163,19 @@ registerBlockType('ub/review', {
 					return authorAlign;
 			}
 		};
+
+		if (
+			items &&
+			items !== JSON.stringify(parts) &&
+			parts.length === 1 &&
+			parts[0].label === '' &&
+			parts[0].value === 0
+		) {
+			setAttributes({
+				parts: JSON.parse(items),
+				items: '[{"label":"","value":0}]'
+			});
+		}
 
 		return [
 			isSelected && (
@@ -296,7 +314,7 @@ registerBlockType('ub/review', {
 				authorName={authorName}
 				itemName={itemName}
 				ID={blockID}
-				items={JSON.parse(items)}
+				items={parts}
 				starCount={starCount}
 				summaryTitle={summaryTitle}
 				summaryDescription={summaryDescription}
@@ -311,9 +329,7 @@ registerBlockType('ub/review', {
 					setAttributes({ authorName: newValue })
 				}
 				setItemName={newValue => setAttributes({ itemName: newValue })}
-				setItems={newValue =>
-					setAttributes({ items: JSON.stringify(newValue) })
-				}
+				setItems={newValue => setAttributes({ parts: newValue })}
 				setSummaryTitle={newValue =>
 					setAttributes({ summaryTitle: newValue })
 				}

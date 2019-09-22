@@ -102,7 +102,7 @@ export class Stars extends Component {
 	}
 	componentWillReceiveProps(newProps) {
 		const { value, activeStarColor } = newProps;
-		if (this.props.onHover) {
+		if (this.props.onHover || this.state.displayValue !== value) {
 			this.setState({
 				displayValue: value,
 				displayColor: activeStarColor
@@ -228,6 +228,14 @@ export class ReviewBody extends Component {
 
 		const { titleAlign, authorAlign } = alignments;
 		const { average } = this.state;
+
+		const newAverage =
+			items.map(i => i.value).reduce((total, v) => total + v) /
+			items.length;
+
+		if (average !== newAverage) {
+			this.setState({ average: newAverage });
+		}
 
 		return (
 			<div className="ub_review_block">

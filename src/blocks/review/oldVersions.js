@@ -426,11 +426,12 @@ export const version_1_1_5 = props => {
 
 export const updateFrom = oldVersion => ({
 	attributes: oldAttributes,
-	/*migrate: attributes => {
-		const { ID, ...otherAttributes } = attributes;
+	migrate: attributes => {
+		const { ID, items, ...otherAttributes } = attributes;
 		return Object.assign(Object.assign({}, otherAttributes), {
-			blockID: ID
+			blockID: ID,
+			parts: JSON.parse(items)
 		});
-	},*/
+	},
 	save: oldVersion
 });

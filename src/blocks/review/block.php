@@ -23,7 +23,7 @@ function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
 
 function ub_render_review_block($attributes){
     extract($attributes);
-    $parsedItems = json_decode($items, true);
+    $parsedItems = isset($parts) ? $parts : json_decode($items, true);
 
     $extractedValues = array_map(function($item){
                                     return $item['value'];
@@ -41,6 +41,7 @@ function ub_render_review_block($attributes){
 
     return 	'<div class="ub_review_block'.(isset($className) ? ' ' . esc_attr($className) : '').
                 '" id="ub_review_'.$blockID.'">
+                <!--'.$items.'-->
         <p class="ub_review_item_name"'.($blockID==''?' style="text-align: '.$titleAlign.';"':'').'>'.
             $itemName.'</p>
         <p class="ub_review_author_name"'.($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
