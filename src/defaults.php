@@ -387,13 +387,23 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            //retained for reverse compatibility
             'images' => array(
                 'type' => 'string',
                 'default' => '[]'
             ),
+            'pics' => array(
+                'type' => 'array',
+                'default' => array()
+            ),
+            //retained for reverse compatibility
             'captions' => array(
                 'type' => 'string',
                 'default' => '[]'
+            ),
+            'descriptions' => array(
+                'type' => 'string',
+                'default' => array()
             ),
             'wrapsAround' => array(
                 'type' => 'boolean',

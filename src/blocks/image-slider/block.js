@@ -42,9 +42,17 @@ const attributes = {
 		type: 'string',
 		default: '[]'
 	},
+	pics: {
+		type: 'array',
+		default: []
+	},
 	captions: {
 		type: 'string',
 		default: '[]' //starts as empty, should take {text: '', link: '', id: -1}
+	},
+	descriptions: {
+		type: 'array',
+		default: []
 	},
 	wrapsAround: {
 		type: 'boolean',
@@ -95,7 +103,9 @@ registerBlockType('ub/image-slider', {
 		} = props;
 		const {
 			images,
+			pics,
 			captions,
+			descriptions,
 			wrapsAround,
 			isDraggable,
 			autoplays,
@@ -104,8 +114,17 @@ registerBlockType('ub/image-slider', {
 			showPageDots,
 			blockID
 		} = props.attributes;
-		const imageArray = JSON.parse(images);
-		const captionArray = JSON.parse(captions);
+
+		if (images && JSON.parse(images).length !== 0 && pics.length === 0) {
+			setAttributes({
+				pics: JSON.parse(images),
+				images: '[]',
+				descriptions: JSON.parse(captions),
+				captions: '[]'
+			});
+		}
+		const imageArray = pics;
+		const captionArray = descriptions;
 
 		if (blockID !== block.clientId) {
 			setAttributes({ blockID: block.clientId });
@@ -117,7 +136,7 @@ registerBlockType('ub/image-slider', {
 					{imageArray.length > 0 && (
 						<Toolbar>
 							<MediaUpload
-								value={JSON.parse(images).map(img => img.id)}
+								value={imageArray.map(img => img.id)}
 								allowedTypes={['image']}
 								multiple
 								gallery
@@ -129,27 +148,21 @@ registerBlockType('ub/image-slider', {
 									/>
 								)}
 								onSelect={newImages => {
-									const newCaptionArray = newImages.map(
-										(img, i) => {
-											return captionArray.find(
-												c => c.id === img.id
-											)
-												? captionArray.find(
-														c => c.id === img.id
-												  )
-												: {
-														text: '',
-														link: '',
-														id: img.id
-												  };
-										}
+									const newCaptionArray = newImages.map(img =>
+										captionArray.find(c => c.id === img.id)
+											? captionArray.find(
+													c => c.id === img.id
+											  )
+											: {
+													text: '',
+													link: '',
+													id: img.id
+											  }
 									);
 
 									setAttributes({
-										images: JSON.stringify(newImages),
-										captions: JSON.stringify(
-											newCaptionArray
-										)
+										pics: newImages,
+										descriptions: newCaptionArray
 									});
 								}}
 							/>
@@ -234,14 +247,12 @@ registerBlockType('ub/image-slider', {
 					<MediaPlaceholder
 						onSelect={newImages => {
 							props.setAttributes({
-								images: JSON.stringify(newImages),
-								captions: JSON.stringify(
-									newImages.map(img => ({
-										id: img.id,
-										text: '',
-										link: ''
-									}))
-								)
+								pics: newImages,
+								descriptions: newImages.map(img => ({
+									id: img.id,
+									text: '',
+									link: ''
+								}))
 							});
 						}}
 						labels={{ title: 'Image Slider' }}
@@ -267,7 +278,7 @@ registerBlockType('ub/image-slider', {
 							}}
 							slides={[
 								...[
-									JSON.parse(images).map((c, i) => (
+									imageArray.map((c, i) => (
 										<div>
 											<img
 												key={i}
@@ -279,18 +290,14 @@ registerBlockType('ub/image-slider', {
 											<RichText
 												formattingControls={[]}
 												className="ub_image_silder_image_caption"
-												value={
-													JSON.parse(captions)[i].text
-												}
+												value={captionArray[i].text}
 												placeholder={__(
 													'Caption goes here'
 												)}
 												onChange={text => {
 													captionArray[i].text = text;
 													setAttributes({
-														captions: JSON.stringify(
-															captionArray
-														)
+														descriptions: captionArray
 													});
 												}}
 											/>
@@ -309,23 +316,18 @@ registerBlockType('ub/image-slider', {
 														event.target.files,
 													onFileChange: images =>
 														setAttributes({
-															images: JSON.stringify(
-																imageArray.concat(
-																	images
-																)
+															pics: imageArray.concat(
+																images
 															),
-															captions: JSON.stringify(
-																captionArray.concat(
-																	images.map(
-																		img => ({
-																			id:
-																				img.id,
-																			text:
-																				'',
-																			link:
-																				''
-																		})
-																	)
+															descriptions: captionArray.concat(
+																images.map(
+																	img => ({
+																		id:
+																			img.id,
+																		text:
+																			'',
+																		link: ''
+																	})
 																)
 															)
 														})
@@ -351,15 +353,11 @@ registerBlockType('ub/image-slider', {
 								</div>
 								<URLInput
 									className="button-url"
-									value={
-										JSON.parse(captions)[activeSlide].link
-									}
+									value={captionArray[activeSlide].link}
 									onChange={url => {
 										captionArray[activeSlide].link = url;
 										setAttributes({
-											captions: JSON.stringify(
-												captionArray
-											)
+											descriptions: captionArray
 										});
 									}}
 								/>
@@ -378,5 +376,17 @@ registerBlockType('ub/image-slider', {
 	save() {
 		return null;
 	},
-	deprecated: [{ attributes, save: version_1_1_4 }]
+	deprecated: [
+		{
+			attributes,
+			save: version_1_1_4,
+			migrate: attributes => {
+				const { images, captions, ...otherAttributes } = attributes;
+				return Object.assign(Object.assign({}, otherAttributes), {
+					pics: JSON.parse(images),
+					descriptions: JSON.parse(captions)
+				});
+			}
+		}
+	]
 });
