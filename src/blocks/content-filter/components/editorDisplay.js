@@ -6,7 +6,8 @@ const {
 	InnerBlocks,
 	RichText
 } = wp.editor;
-//const { CheckboxControl, TextControl, PanelBody } = wp.components;
+
+const { PanelBody, ToggleControl } = wp.components;
 
 import { Component } from 'react';
 import { upgradeButtonLabel } from '../../../common';
@@ -575,7 +576,8 @@ export class PanelContent extends Component {
 			buttonTextColor,
 			activeButtonColor,
 			activeButtonTextColor,
-			blockID
+			blockID,
+			initiallyShowAll
 			//,allowReset,resetButtonLabel
 		} = attributes;
 
@@ -680,6 +682,26 @@ export class PanelContent extends Component {
 							}
 						]}
 					/>
+					<PanelBody
+						title={__('Panel Visibility')}
+						initialOpen={false}
+					>
+						<ToggleControl
+							label={__('Initially show all content panels')}
+							checked={initiallyShowAll}
+							onChange={_ => {
+								setAttributes({
+									initiallyShowAll: !initiallyShowAll
+								});
+
+								block.innerBlocks.forEach(panel => {
+									updateBlockAttributes(panel.clientId, {
+										initiallyShow: !initiallyShowAll
+									});
+								});
+							}}
+						/>
+					</PanelBody>
 					{/*<PanelBody title="Reset Button" initialOpen={false}>
 						<CheckboxControl
 							label={__('Allow Resetting of Filter Selection')}

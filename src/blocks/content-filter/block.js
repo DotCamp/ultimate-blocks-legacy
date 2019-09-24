@@ -35,6 +35,10 @@ const attributes = {
 	activeButtonTextColor: {
 		type: 'string',
 		default: '#ffffff'
+	},
+	initiallyShowAll: {
+		type: 'boolean',
+		default: true
 	}
 	/*,allowReset: {
         type: 'boolean',
@@ -55,15 +59,9 @@ registerBlockType('ub/content-filter', {
 	supports: { inserter: false },
 
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		})),
 		withDispatch(dispatch => {
 			const {
 				updateBlockAttributes,
@@ -144,15 +142,9 @@ registerBlockType('ub/content-filter-block', {
 	attributes,
 
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		})),
 		withDispatch(dispatch => {
 			const { updateBlockAttributes, insertBlock } = dispatch(
 				'core/editor'

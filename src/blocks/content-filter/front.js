@@ -26,8 +26,12 @@ function ub_getSiblings(element, criteria) {
 Array.prototype.slice
 	.call(document.getElementsByClassName('ub-content-filter-tag'))
 	.forEach(instance => {
+		const blockProper = instance.closest('.wp-block-ub-content-filter');
+		const initialSelection = blockProper.getAttribute(
+			'data-currentselection'
+		);
+
 		instance.addEventListener('click', function() {
-			const blockProper = this.closest('.wp-block-ub-content-filter');
 			const isOldVersion = this.getAttribute('data-activecolor');
 			this.setAttribute(
 				'data-tagisselected',
@@ -119,25 +123,33 @@ Array.prototype.slice
 
 					let isVisible = true;
 
-					panelData.forEach((category, i) => {
-						if (Array.isArray(category)) {
-							if (
-								mainData[i].filter(f => f).length > 0 &&
-								category.filter(
-									(f, j) => f && f === mainData[i][j]
-								).length === 0
-							) {
-								isVisible = false;
-							}
-						} else {
-							if (
+					if (
+						initialSelection ==
+							blockProper.getAttribute('data-currentselection') &&
+						JSON.parse(
+							blockProper.getAttribute('data-initiallyshowall')
+						) === false
+					) {
+						isVisible = false;
+					} else {
+						panelData.forEach((category, i) => {
+							if (Array.isArray(category)) {
+								if (
+									mainData[i].filter(f => f).length > 0 &&
+									category.filter(
+										(f, j) => f && f === mainData[i][j]
+									).length === 0
+								) {
+									isVisible = false;
+								}
+							} else if (
 								mainData[i] !== category &&
 								mainData[i] !== -1
 							) {
 								isVisible = false;
 							}
-						}
-					});
+						});
+					}
 
 					if (isOldVersion) {
 						instance.style.display = isVisible ? 'block' : 'none';

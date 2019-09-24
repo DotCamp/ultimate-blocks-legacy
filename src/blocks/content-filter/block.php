@@ -8,8 +8,13 @@
 
 function ub_render_content_filter_entry_block($attributes, $content){
     extract($attributes);
+
+    //var_dump($attributes);
+
     return '<div class="ub-content-filter-panel'.(isset($className) ? ' ' . esc_attr($className) : '').
-        '" data-selectedFilters="'.json_encode($selectedFilters).'">'.$content.'</div>';
+        ($initiallyShow ? '' : ' ub-hide').'" data-selectedFilters="'.json_encode($selectedFilters).
+        '" data-initiallyShow="'.json_encode($initiallyShow).'">'.
+        $content.'</div>';
 }
 
 function ub_register_content_filter_entry_block(){
@@ -31,6 +36,10 @@ function ub_register_content_filter_entry_block(){
                 'buttonTextColor' => array(
                     'type' => 'string',
                     'default' => '#000000'
+                ),
+                'initiallyShow' => array(
+                    'type' => 'boolean',
+                    'default' => true
                 )
             ),
                 'render_callback' => 'ub_render_content_filter_entry_block'));
@@ -39,6 +48,8 @@ function ub_register_content_filter_entry_block(){
 
 function ub_render_content_filter_block($attributes, $content){
     extract($attributes);
+
+    //var_dump($attributes);
 
     $newFilterArray = json_decode(json_encode($filterArray), true);
 
@@ -66,7 +77,9 @@ $currentSelection = array_map(function($category){
                     }, (array)$filterArray);
 
 return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_attr($className) : '').
-        '"'. ($blockID =='' ? : ' id="ub-content-filter-'.$blockID.'"') .' data-currentSelection="'.json_encode($currentSelection).'">'.
+        '"'. ($blockID =='' ? : ' id="ub-content-filter-'.$blockID.'"') .
+        ' data-currentSelection="'.json_encode($currentSelection).
+        '" data-initiallyShowAll="'.json_encode($initiallyShowAll).'">'. 
     $filterList.$content.'</div>';
 }
 

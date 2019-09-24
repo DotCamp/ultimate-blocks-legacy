@@ -198,6 +198,10 @@ $defaultValues = array(
             'activeButtonTextColor' => array(
                 'type' => 'string',
                 'default' => '#ffffff'
+            ),
+            'initiallyShowAll' => array(
+                'type' => 'boolean',
+                'default' => true
             )
         )
     ),

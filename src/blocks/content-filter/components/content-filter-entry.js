@@ -153,7 +153,7 @@ registerBlockType('ub/content-filter-entry', {
 		buttonTextColor: {
 			type: 'string',
 			default: '#000000'
-		}
+        }
 	},
 	supports: {
 		inserter: false,
@@ -334,7 +334,11 @@ registerBlockType('ub/content-filter-entry-block', {
 		buttonTextColor: {
 			type: 'string',
 			default: '#000000'
-		}
+        },
+        initiallyShow:{
+            type: 'boolean',
+            default: true
+        }
 	},
 	supports: {
 		inserter: false,

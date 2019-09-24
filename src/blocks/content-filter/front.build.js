@@ -25,10 +25,11 @@ function ub_getSiblings(element, criteria) {
 }
 
 Array.prototype.slice.call(document.getElementsByClassName('ub-content-filter-tag')).forEach(function (instance) {
+  var blockProper = instance.closest('.wp-block-ub-content-filter');
+  var initialSelection = blockProper.getAttribute('data-currentselection');
   instance.addEventListener('click', function () {
     var _this = this;
 
-    var blockProper = this.closest('.wp-block-ub-content-filter');
     var isOldVersion = this.getAttribute('data-activecolor');
     this.setAttribute('data-tagisselected', JSON.stringify(!JSON.parse(this.getAttribute('data-tagisselected'))));
 
@@ -79,21 +80,24 @@ Array.prototype.slice.call(document.getElementsByClassName('ub-content-filter-ta
       var panelData = JSON.parse(instance.getAttribute('data-selectedfilters'));
       var mainData = JSON.parse(blockProper.getAttribute('data-currentselection'));
       var isVisible = true;
-      panelData.forEach(function (category, i) {
-        if (Array.isArray(category)) {
-          if (mainData[i].filter(function (f) {
-            return f;
-          }).length > 0 && category.filter(function (f, j) {
-            return f && f === mainData[i][j];
-          }).length === 0) {
+
+      if (initialSelection == blockProper.getAttribute('data-currentselection') && JSON.parse(blockProper.getAttribute('data-initiallyshowall')) === false) {
+        isVisible = false;
+      } else {
+        panelData.forEach(function (category, i) {
+          if (Array.isArray(category)) {
+            if (mainData[i].filter(function (f) {
+              return f;
+            }).length > 0 && category.filter(function (f, j) {
+              return f && f === mainData[i][j];
+            }).length === 0) {
+              isVisible = false;
+            }
+          } else if (mainData[i] !== category && mainData[i] !== -1) {
             isVisible = false;
           }
-        } else {
-          if (mainData[i] !== category && mainData[i] !== -1) {
-            isVisible = false;
-          }
-        }
-      });
+        });
+      }
 
       if (isOldVersion) {
         instance.style.display = isVisible ? 'block' : 'none';
