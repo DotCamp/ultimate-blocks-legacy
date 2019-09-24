@@ -25,6 +25,10 @@ function ub_render_review_block($attributes){
     extract($attributes);
     $parsedItems = isset($parts) ? $parts : json_decode($items, true);
 
+    if($blockID == ''){
+        $blockID = $ID;
+    }
+
     $extractedValues = array_map(function($item){
                                     return $item['value'];
                                 }, $parsedItems);
