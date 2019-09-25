@@ -32,7 +32,8 @@ const attributes = {
 		default: ''
 	},
 	itemName: {
-		type: 'string'
+        type: 'string',
+        default: ''
 	},
 	items: {
 		type: 'string',
@@ -51,10 +52,12 @@ const attributes = {
 		default: 'Summary'
 	},
 	summaryDescription: {
-		type: 'string'
+        type: 'string',
+        default: ''
 	},
 	callToActionText: {
-		type: 'string'
+        type: 'string',
+        default: ''
 	},
 	callToActionURL: {
 		type: 'string',
