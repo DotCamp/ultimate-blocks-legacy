@@ -9,8 +9,6 @@
 function ub_render_image_slider_block($attributes){
     extract($attributes);
 
-    //var_dump($attributes);
-
     $imageArray = count($pics) > 0 ? $pics : json_decode($images, true);
     $captionArray = count($descriptions) > 0 ? $descriptions : json_decode($captions, true);
 
@@ -27,11 +25,11 @@ function ub_render_image_slider_block($attributes){
     return '<div class="ub_image_slider'.(isset($className) ? ' ' . esc_attr($className) : '').
             '" '.($blockID==''?'style="min-height: '.(25+ (count($imageArray) > 0) ? $sliderHeight : 200 ).'px;"'
                 :'id="ub_image_slider_'.$blockID.'"').'>
-                <!--'.$images.'-->
-        <div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
+                <!--'.$images.'-->'.
+        ($gallery == '' ? '' : '<div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
             'wrapAround'=> $wrapsAround, 'autoPlay'=> ($autoplays ? $autoplayDuration * 1000 : $autoplays),
             'adaptiveHeight'=>true )).'>'.$gallery
-            .'</div></div>';
+            .'</div>').'</div>';
 }
 
 function ub_register_image_slider_block(){
