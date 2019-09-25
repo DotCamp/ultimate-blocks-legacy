@@ -138,19 +138,12 @@ registerBlockType('ub/call-to-action', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
-		withDispatch(dispatch => {
-			const { replaceBlock } = dispatch('core/editor');
-			return { replaceBlock };
-		}),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		})),
+		withDispatch(dispatch => ({
+			replaceBlock: dispatch('core/editor').replaceBlock
+		})),
 		withState({ editable: '' })
 	])(function(props) {
 		const { isSelected, block, replaceBlock } = props;
@@ -306,15 +299,9 @@ registerBlockType('ub/call-to-action-block', {
 	attributes,
 	edit: compose([
 		withState({ editable: '' }),
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		})
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
 	])(function(props) {
 		const { isSelected, block } = props;
 

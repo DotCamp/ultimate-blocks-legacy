@@ -45,15 +45,15 @@ export const blockControls = props => {
 										? headAlign
 										: contentAlign) === a
 								}
-								onClick={() => {
+								onClick={_ =>
 									setAttributes(
 										editable === 'header'
 											? { headAlign: a }
 											: {
 													contentAlign: a
 											  }
-									);
-								}}
+									)
+								}
 							/>
 						))}
 				</Toolbar>
@@ -189,14 +189,12 @@ export const inspectorControls = props => {
 				<CheckboxControl
 					label={__('Add Nofollow to Link')}
 					checked={addNofollow}
-					onChange={() =>
-						setAttributes({ addNofollow: !addNofollow })
-					}
+					onChange={_ => setAttributes({ addNofollow: !addNofollow })}
 				/>
 				<CheckboxControl
 					label={__('Open Link in New Tab')}
 					checked={openInNewTab}
-					onChange={() =>
+					onChange={_ =>
 						setAttributes({ openInNewTab: !openInNewTab })
 					}
 				/>
@@ -275,9 +273,7 @@ export const editorDisplay = props => {
 						}
 						value={ub_cta_content_text}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={() =>
-							setState({ editable: 'content' })
-						}
+						unstableOnFocus={_ => setState({ editable: 'content' })}
 					/>
 				</div>
 
@@ -304,7 +300,7 @@ export const editorDisplay = props => {
 							}
 							value={ub_cta_button_text}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={() =>
+							unstableOnFocus={_ =>
 								setState({ editable: 'button' })
 							}
 						/>
@@ -324,7 +320,7 @@ export const editorDisplay = props => {
 							className="button-url"
 							value={props.attributes.url}
 							onChange={value => setAttributes({ url: value })}
-							unstableOnFocus={() =>
+							unstableOnFocus={_ =>
 								setState({ editable: 'URLInput' })
 							}
 						/>

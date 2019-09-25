@@ -139,7 +139,7 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'center'
             ),
-            'addNoFollow' => array(
+            'addNofollow' => array(
                 'type' => 'boolean',
                 'default' => false
             ),
