@@ -46,9 +46,14 @@ function ub_render_tabbed_content_block($attributes, $contents){
     $tabs.'</div>
     <div class="'.$blockName.'-scroll-button-container ub-hide">
     <button class="'.$blockName.'-scroll-button-left">
-    <span class="dashicons dashicons-arrow-left-alt2"></span></button>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20px" height="20px">
+        <path d="M14 5l-5 5 5 5-1 2-7-7 7-7z" fill="#ffffff"/>
+    </svg>
+    </button>
     <button class="'.$blockName.'-scroll-button-right">
-    <span class="dashicons dashicons-arrow-right-alt2"></span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20px" height="20px">
+        <path d="M6 15l5-5-5-5 1-2 7 7-7 7z" fill="#ffffff"/>
+    </svg>
     </button></div></div>
     <div class="'.$blockName.'-tabs-content">'.
     $contents.'</div>

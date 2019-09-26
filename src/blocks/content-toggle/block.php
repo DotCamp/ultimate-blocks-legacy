@@ -15,7 +15,15 @@ function ub_content_toggle_add_frontend_assets() {
             Ultimate_Blocks_Constants::plugin_version(),
             true
         );
+        //Enable Dashicon for logged-out users
+        if(!wp_style_is('dashicons', 'enqueued')){
+            add_action( 'wp_enqueue_scripts', 'ub_load_dashicons_front_end' );
+        }
     }
+}
+
+function ub_load_dashicons_front_end() {
+    wp_enqueue_style( 'dashicons' );
 }
 
 if ( !class_exists( 'simple_html_dom_node' ) ) {
