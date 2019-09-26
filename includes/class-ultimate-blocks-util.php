@@ -125,7 +125,12 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Testimonial',
 				'name'   => 'ub/testimonial',
 				'active' => true,
-			)
+			),
+            array(
+                'label'  => 'Post Grig',
+                'name'   => 'ub/post-grid',
+                'active' => true,
+            )
 		];
 	}
 

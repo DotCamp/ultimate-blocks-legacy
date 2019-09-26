@@ -22,7 +22,10 @@
         "react-flickity-component": "^3.2.0",
         "react-sortable-hoc": "^0.6.8",
         "react-structured-data": "0.0.11",
-        "react-textarea-autosize": "^7.1.0"
+        "react-textarea-autosize": "^7.1.0",
+        "classnames": "^2.2.6",
+        "lodash": "^4.17.14",
+        "moment": "^2.24.0"
     },
     "devDependencies": {
         "classnames": "^2.2.5",
