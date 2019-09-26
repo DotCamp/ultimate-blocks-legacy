@@ -4,6 +4,7 @@
  */
 
 function ub_render_post_grid_block( $attributes ) {
+
     /**
      * Global post object.
      * Used for excluding the current post from the grid.
@@ -94,10 +95,17 @@ function ub_render_post_grid_block( $attributes ) {
 
             if ( isset( $attributes['displayPostTitle'] ) && $attributes['displayPostTitle'] ) {
 
+                if ( isset( $attributes['postTitleTag'] ) ) {
+                    $post_title_tag = $attributes['postTitleTag'];
+                } else {
+                    $post_title_tag = 'h2';
+                }
+
                 $post_grid_markup .= sprintf(
-                    //'<%3$s class="ub-block-post-grid-title"><a href="%1$s" rel="bookmark">%2$s</a></%3$s>',
+                    '<%3$s class="ub-block-post-grid-title"><a href="%1$s" rel="bookmark">%2$s</a></%3$s>',
                     esc_url( get_permalink( $post_id ) ),
-                    esc_html($title)
+                    esc_html( $title ),
+                    esc_attr( $post_title_tag )
                 );
             }
 
@@ -106,7 +114,7 @@ function ub_render_post_grid_block( $attributes ) {
                 /* Get the post author */
                 if ( isset( $attributes['displayPostAuthor'] ) && $attributes['displayPostAuthor'] ) {
                     $post_grid_markup .= sprintf(
-                        '<div class="ub-block-post-grid-author" itemprop="author" itemtype="https://schema.org/Person"><a class="ub-text-link" href="%2$s" itemprop="url" rel="author"><span itemprop="name">%1$s</span></a></div>',
+                        '<div class="ub-block-post-grid-author" itemprop="author" itemtype="https://schema.org/Person"><a class="ab-text-link" href="%2$s" itemprop="url" rel="author"><span itemprop="name">%1$s</span></a></div>',
                         esc_html( get_the_author_meta( 'display_name', get_the_author_meta( 'ID' ) ) ),
                         esc_html( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
                     );
@@ -129,7 +137,7 @@ function ub_render_post_grid_block( $attributes ) {
 
             /* Wrap the excerpt content */
             $post_grid_markup .= sprintf(
-                '<div class="ub-block-post-grid-excerpt">'
+                '<div class="ab-block-post-grid-excerpt">'
             );
 
             /* Get the excerpt */
@@ -194,7 +202,7 @@ function ub_render_post_grid_block( $attributes ) {
         wp_reset_postdata();
 
         /* Build the block classes */
-        /*$class = "ub-block-post-grid";
+        $class = "ub-block-post-grid";
 
         if ( isset( $attributes['className'] ) ) {
             $class .= ' ' . $attributes['className'];
@@ -210,20 +218,25 @@ function ub_render_post_grid_block( $attributes ) {
         }
 
         /* Grid columns class */
-        /*if ( isset( $attributes['columns'] ) && 'grid' === $attributes['postLayout'] ) {
+        if ( isset( $attributes['columns'] ) && 'grid' === $attributes['postLayout'] ) {
             $grid_class .= ' columns-' . $attributes['columns'];
         }
 
+        /* Post grid section tag */
+
+        $section_tag = 'section';
+
         /* Output the post markup */
         $block_content = sprintf(
-            //'<%1$s class="%2$s">%3$s<div class="%4$s">%5$s</div></%1$s>',
+            '<%1$s class="%2$s"><div class="%3$s">%4$s</div></%1$s>',
+            $section_tag,
+            esc_attr( $class ),
             esc_attr( $grid_class ),
             $post_grid_markup
         );
-        return $post_grid_markup;
+        return $block_content;
     }
 }
-
 function ub_register_post_grid_block() {
     if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
