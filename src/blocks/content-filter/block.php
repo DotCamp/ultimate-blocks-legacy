@@ -11,8 +11,7 @@ function ub_render_content_filter_entry_block($attributes, $content){
     
     return '<div class="ub-content-filter-panel'.(isset($className) ? ' ' . esc_attr($className) : '').
         ($initiallyShow ? '' : ' ub-hide').'" data-selectedFilters="'.json_encode($selectedFilters).
-        '" data-initiallyShow="'.json_encode($initiallyShow).'">'.
-        $content.'</div>';
+        '">'.$content.'</div>';
 }
 
 function ub_register_content_filter_entry_block(){
