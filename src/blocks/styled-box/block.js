@@ -455,7 +455,7 @@ registerBlockType('ub/styled-box', {
 		} else {
 			renderedBlock = (
 				<div className="ub-styled-box-selection">
-					<h4>{__('Choose a style')}</h4>
+					<h4>{__('Select a Style')}</h4>
 					<div className="ub-styled-box-choices">
 						<div
 							onClick={_ => {
@@ -491,18 +491,18 @@ registerBlockType('ub/styled-box', {
 							}}
 						>
 							{notificationBoxIcon}
-							<p>{__('Notification box')}</p>
-							<p>{__('Highlight important information')}</p>
+							<p>{__('Notification Box')}</p>
+							<p>{__('Highlight Important Information.')}</p>
 						</div>
 						<div onClick={_ => setAttributes({ mode: 'feature' })}>
 							{featureBoxIcon}
-							<p>{__('Feature box')}</p>
-							<p>{__('Add boxes with images')}</p>
+							<p>{__('Feature Box')}</p>
+							<p>{__('Add Boxes with Images.')}</p>
 						</div>
 						<div onClick={_ => setAttributes({ mode: 'number' })}>
 							{numberBoxIcon}
-							<p>{__('Number box')}</p>
-							<p>{__('Add numbered boxes')}</p>
+							<p>{__('Number Nox')}</p>
+							<p>{__('Add Numbered Boxes.')}</p>
 						</div>
 					</div>
 				</div>
