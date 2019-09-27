@@ -45,8 +45,6 @@ class LatestPostBlock extends Component{
             posts
         } = this.props;
 
-        console.log(posts);
-
         const hasPosts = Array.isArray( posts ) && posts.length;
 
         if ( ! hasPosts ) {
