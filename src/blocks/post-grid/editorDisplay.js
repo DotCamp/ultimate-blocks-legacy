@@ -44,7 +44,8 @@ class LatestPostBlock extends Component{
             className,
             posts
         } = this.props;
-        //const { posts } = this.props;
+
+        console.log(posts);
 
         const hasPosts = Array.isArray( posts ) && posts.length;
 
@@ -157,7 +158,7 @@ class LatestPostBlock extends Component{
 }
 export default compose([
    withSelect(( select, props )=>{
-       //console.log(props);
+
        const {
            order,
            categories
