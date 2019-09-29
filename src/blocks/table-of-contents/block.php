@@ -76,11 +76,11 @@ function ub_render_table_of_contents_block($attributes){
                 .'"'.($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.
-                        $title .'</div>'.
+                        $title .'</div>'. 
                     ($allowToCHiding ?
                     '<div id="ub_table-of-contents-header-toggle">
                         <div id="ub_table-of-contents-toggle">
-                            [<a class="ub_table-of-contents-toggle-link" href="#">'.
+                        &nbsp;[<a class="ub_table-of-contents-toggle-link" href="#">'.
                             __($showList ? 'hide' : 'show')
                             .'</a>]</div></div>' :'')
                 .'</div>') : '')
