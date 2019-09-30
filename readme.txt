@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -22,9 +22,9 @@ Ultimate Blocks currently includes the following blocks:
 * Tabbed Content - [View Demo](https://ultimateblocks.com/tabbed-content-block/)
 * Call to Action - [View Demo](https://ultimateblocks.com/call-to-action-block/)
 * Content Toggle (Accordion) - [View Demo](https://ultimateblocks.com/content-toggle-accordion-block/)
-* Feature Box - [View Demo](https://ultimateblocks.com/feature-box-block/)
-* Notification Box - [View Demo](https://ultimateblocks.com/notification-box-block/)
-* Number Box - [View Demo](https://ultimateblocks.com/number-box-block/)
+* Styled Box - [View Demo](https://ultimateblocks.com/styled-box-block/)
+* Styled List - [View Demo](https://ultimateblocks.com/styled-list-block/)
+* Expand - [View Demo](https://ultimateblocks.com/expand-block/)
 * Testimonial - [View Demo](https://ultimateblocks.com/testimonial-block/)
 * Click to Tweet - [View Demo](https://ultimateblocks.com/click-to-tweet-block/)
 * Social Share - [View Demo](https://ultimateblocks.com/social-share-block/)
@@ -63,14 +63,14 @@ Add a nice call to action box with a button. Encourage users to take action, eng
 **Content Toggle**
 Add contents in accordions. Let visitors expand them and show the content.
 
-**Feature Box Block**
-Add boxes with images. Highlight the features of any product or service. 3 columns options.
+**Styled Box Block**
+Add styled box like - Notification box, Number box, Feature box in your content. Three templates now, more in the making.
 
-**Notification Box Block**
-Highlight important information in your posts/pages. Comes in three different designs.
+**Styled List Block**
+This block lets you add a styled list in your post or pages. Instead of bullets you can use various icons as your list style type. You can also choose color for icons.
 
-**Number Box Block**
-Lets you add numbered boxes. Enlist steps of any procedures or features, characteristics, benefits of products or services. 3 columns options.
+**Expand Block**
+Expand Block lets you add expandable content. You can hide some part of your content initially. Upon clicking on 'Show More' it will show. It can be hidden again.
 
 **Testimonial Block**
 Nice, simple testimonial box with option to add image, name, role of the testimonial author.
@@ -122,6 +122,22 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.1.5 =
+
+Release Date: September 30th, 2019
+
+* NEW: Styled Box Block.
+* NEW: Styled List Block.
+* NEW: Expand Block.
+* NEW: Option to hide Content Filter entries until any filter is selected.
+* FIX: Error in Content Toggle FAQSchema involving link URLs.
+* FIX: Convert JSON attribute in Image Slider and Review block to non-JSON versions.
+* FIX: Adding nofollow in Call to Action’s button.
+* FIX: Frontend icon display in Content Toggle and Tabbed Content.
+* DEPRECATE: Notification Box block, added as a template for Styled Box Block.
+* DEPRECATE: Number Box block, added as a template for Styled Box Block.
+* DEPRECATE: Feature Box block, added as a template for Styled Box Block.
 
 = 2.1.4 =
 
