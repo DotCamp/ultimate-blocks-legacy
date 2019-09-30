@@ -1,17 +1,16 @@
 @import '../../common';
-
 .editor-styles-wrapper .ub_table-of-contents {
-	ul {
-		padding-left: 1.3em;
-	}
+    ul {
+        padding-left: 1.3em !important;
+    }
 }
 
 .ub_toc_column_selector.is-primary {
-	top: 50%;
-	transform: translateY(-50%);
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .ub_toc_column_buttons {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
