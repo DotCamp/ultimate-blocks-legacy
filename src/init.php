@@ -229,6 +229,11 @@ function ub_include_block_attribute_css() {
                                         'margin-bottom: '.$attributes['borderHeight'].'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
+                case 'ub/expand':
+                    $blockStylesheets .= '#ub-expand-' . $attributes['blockID'] . ' .ub-expand-toggle-button{' . PHP_EOL .
+                        'text-align: '.$attributes['toggleAlign'].';' . PHP_EOL .
+                    '}' . PHP_EOL;
+                    break;
                 case 'ub/feature-box-block':
                     $prefix = '#ub_feature_box_' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .ub_feature_one_title{' . PHP_EOL .

@@ -50,6 +50,10 @@ export class ExpandRoot extends Component {
 			});
 		}
 
+		if (this.props.attributes.blockID !== block.clientId) {
+			this.props.setAttributes({ blockID: block.clientId });
+		}
+
 		return (
 			<div className="ub-expand">
 				<InnerBlocks

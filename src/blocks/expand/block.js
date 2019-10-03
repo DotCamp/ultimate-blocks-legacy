@@ -2,11 +2,13 @@ import { ExpandRoot } from './components';
 
 import icon from './icon';
 
+import './style.scss';
+
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
 
-const { RichText, InnerBlocks } = wp.editor;
+const { RichText, InnerBlocks, BlockControls, AlignmentToolbar } = wp.editor;
 
 const { withSelect, withDispatch } = wp.data;
 
@@ -25,21 +27,22 @@ registerBlockType('ub/expand', {
 		initialShow: {
 			type: 'boolean',
 			default: false
+		},
+		toggleAlign: {
+			type: 'string',
+			default: 'left'
 		}
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const {
-				getBlock,
-				getSelectedBlock,
-				getSelectedBlockClientId
-			} = select('core/editor');
+			const { getBlock, getSelectedBlockClientId } = select(
+				'core/editor'
+			);
 
 			const { clientId } = ownProps;
 
 			return {
 				block: getBlock(clientId),
-				getSelectedBlock,
 				getSelectedBlockClientId
 			};
 		}),
@@ -78,13 +81,62 @@ registerBlockType('ub/expand-portion', {
 		isVisible: {
 			type: 'boolean',
 			default: true
+		},
+		toggleAlign: {
+			type: 'string',
+			default: 'left'
 		}
 	},
-	edit(props) {
-		const { attributes, setAttributes } = props;
-		const { clickText, displayType, isVisible } = attributes;
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock, getBlockRootClientId } = select('core/editor');
 
-		return (
+			const { clientId } = ownProps;
+
+			return {
+				block: getBlock(clientId),
+				getBlock,
+				getBlockRootClientId
+			};
+		}),
+		withDispatch(dispatch => ({
+			updateBlockAttributes: dispatch('core/editor').updateBlockAttributes
+		}))
+	])(function(props) {
+		const {
+			attributes,
+			setAttributes,
+			isSelected,
+			block,
+			updateBlockAttributes,
+			getBlock,
+			getBlockRootClientId
+		} = props;
+		const { clickText, displayType, isVisible, toggleAlign } = attributes;
+
+		const parentBlockID = getBlockRootClientId(block.clientId);
+
+		return [
+			isSelected && (
+				<BlockControls>
+					<AlignmentToolbar
+						value={toggleAlign} //attribute from parent can't be directly used
+						onChange={newAlignment => {
+							updateBlockAttributes(parentBlockID, {
+								toggleAlign: newAlignment
+							});
+
+							getBlock(parentBlockID).innerBlocks.forEach(
+								innerBlock =>
+									updateBlockAttributes(innerBlock.clientId, {
+										toggleAlign: newAlignment
+									})
+							);
+						}}
+						controls={['left', 'center', 'right']}
+					></AlignmentToolbar>
+				</BlockControls>
+			),
 			<div
 				className={`ub-expand-portion ub-expand-${displayType}${
 					displayType === 'full' && !isVisible ? ' ub-hide' : ''
@@ -92,6 +144,7 @@ registerBlockType('ub/expand-portion', {
 			>
 				<InnerBlocks templateLock={false} />
 				<RichText
+					style={{ textAlign: toggleAlign }} //attribute from parent can't be directly used
 					value={clickText}
 					onChange={value => setAttributes({ clickText: value })}
 					placeholder={__(
@@ -101,7 +154,7 @@ registerBlockType('ub/expand-portion', {
 					)}
 				/>
 			</div>
-		);
-	},
+		];
+	}),
 	save: _ => <InnerBlocks.Content />
 });

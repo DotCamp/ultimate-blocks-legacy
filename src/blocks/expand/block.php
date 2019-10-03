@@ -20,7 +20,7 @@ function ub_register_expand_portion_block($attributes){
 
 function ub_render_expand_block($attributes, $content){
     extract($attributes);
-    return '<div class="ub-expand">'.$content.'</div>';
+    return '<div class="ub-expand" id="ub-expand-'.$blockID.'">'.$content.'</div>';
 }
 
 function ub_register_expand_block($attributes){

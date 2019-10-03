@@ -298,6 +298,10 @@ $defaultValues = array(
             'initialShow' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'toggleAlign' => array(
+                'type' => 'string',
+                'default' => 'left'
             )
         )
     ),
@@ -314,6 +318,10 @@ $defaultValues = array(
             'isVisible' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'toggleAlign' => array(
+                'type' => 'string',
+                'default' => 'left'
             )
         )
     ),
