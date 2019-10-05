@@ -19,7 +19,7 @@ const { Component } = wp.element;
 const { addQueryArgs } = wp.url;
 const { apiFetch } = wp;
 
-const MAX_POSTS_COLUMNS = 4;
+const MAX_POSTS_COLUMNS = 3;
 
 export default class Inspector extends Component{
     constructor() {
@@ -82,24 +82,24 @@ export default class Inspector extends Component{
 
         // Post type options
         const postTypeOptions = [
-            {value: 'grid', label: __('Grig', 'post-grid-blocks')},
-            {value: 'list', label: __('List', 'post-grid-blocks')}
+            {value: 'grid', label: __('Grid', 'ultimate-blocks')},
+            {value: 'list', label: __('List', 'ultimate-blocks')}
         ];
 
         return (
             <InspectorControls>
                 <PanelBody
-                    title={__('Post Grid Settings', 'post-grid-blocks')}
+                    title={__('Post Grid Settings', 'ultimate-blocks')}
                 >
                     <SelectControl
-                        label={__('Grid Type', 'post-grid-blocks')}
+                        label={__('Grid Type', 'ultimate-blocks')}
                         options={postTypeOptions}
                         value={postLayout}
                         onChange={ postLayout => setAttributes({postLayout})}
                     />
                     { 'grid' === postLayout &&
                     <RangeControl
-                        label={ __( 'Columns', 'atomic-blocks' ) }
+                        label={ __( 'Columns', 'ultimate-blocks' ) }
                         value={ columns }
                         onChange={ ( columns ) => setAttributes({ columns }) }
                         min={ 1 }
@@ -118,31 +118,31 @@ export default class Inspector extends Component{
                     />
                 </PanelBody>
                 <PanelBody
-                    title={__('Post Grid Content', 'post-grid-blocks')}
+                    title={__('Post Grid Content', 'ultimate-blocks')}
                 >
                     <ToggleControl
-                        label={__('Display Featured Image', 'post-grid-blocks')}
+                        label={__('Display Featured Image', 'ultimate-blocks')}
                         checked={displayPostImage}
                         onChange={ displayPostImage => setAttributes({displayPostImage})}
                     />
                     <ToggleControl
-                        label={__('Display Author', 'post-grid-blocks')}
+                        label={__('Display Author', 'ultimate-blocks')}
                         checked={displayPostAuthor}
                         onChange={ displayPostAuthor => setAttributes({displayPostAuthor})}
                     />
                     <ToggleControl
-                        label={__('Display Date', 'post-grid-blocks')}
+                        label={__('Display Date', 'ultimate-blocks')}
                         checked={displayPostDate}
                         onChange={ displayPostDate => setAttributes({displayPostDate})}
                     />
                     <ToggleControl
-                        label={__('Display Excerpt', 'post-grid-blocks')}
+                        label={__('Display Excerpt', 'ultimate-blocks')}
                         checked={displayPostExcerpt}
                         onChange={ displayPostExcerpt => setAttributes({displayPostExcerpt})}
                     />
                     { displayPostExcerpt &&
                         <RangeControl
-                            label={ __( 'Excerpt Length', 'post-grid-blocks' ) }
+                            label={ __( 'Excerpt Length', 'ultimate-blocks' ) }
                             value={ excerptLength }
                             onChange={ ( value ) => setAttributes({ excerptLength: value }) }
                             min={ 0 }
@@ -150,13 +150,13 @@ export default class Inspector extends Component{
                         />
                     }
                     <ToggleControl
-                        label={ __( 'Display Continue Reading Link', 'post-grid-blocks' ) }
+                        label={ __( 'Display Continue Reading Link', 'ultimate-blocks' ) }
                         checked={ displayPostLink }
                         onChange={ displayPostLink => setAttributes({ displayPostLink }) }
                     />
                     { displayPostLink &&
                     <TextControl
-                        label={ __( 'Customize Continue Reading Text', 'post-grid-blocks' ) }
+                        label={ __( 'Customize Continue Reading Text', 'ultimate-blocks' ) }
                         type="text"
                         value={ readMoreText }
                         onChange={ ( value ) => setAttributes({ readMoreText: value }) }

@@ -24,7 +24,7 @@ const {
     withSelect
 } = wp.data;
 
-class LatestPostBlock extends Component{
+class PostGridBlock extends Component{
 
     render(){
         const{
@@ -52,11 +52,11 @@ class LatestPostBlock extends Component{
                 <Fragment>
                     <Placeholder
                         icon="admin-post"
-                        label={ __( 'Ultimate Blocks Post Grid', 'post-grid-blocks' ) }
+                        label={ __( 'Ultimate Blocks Post Grid', 'ultimate-blocks' ) }
                     >
                         { ! Array.isArray( posts ) ?
                             <Spinner /> :
-                            __( 'No posts found.', 'post-grid-blocks' )
+                            __( 'No posts found.', 'ultimate-blocks' )
                         }
                     </Placeholder>
                 </Fragment>
@@ -70,13 +70,13 @@ class LatestPostBlock extends Component{
         const layoutControls = [
             {
                 icon: 'grid-view',
-                title: __( 'Grid View', 'post-grid-blocks' ),
+                title: __( 'Grid View', 'ultimate-blocks' ),
                 onClick: () => setAttributes({ postLayout: 'grid' }),
                 isActive: 'grid' === postLayout
             },
             {
                 icon: 'list-view',
-                title: __( 'List View', 'post-grid-blocks' ),
+                title: __( 'List View', 'ultimate-blocks' ),
                 onClick: () => setAttributes({ postLayout: 'list' }),
                 isActive: 'list' === postLayout
             }
@@ -125,7 +125,7 @@ class LatestPostBlock extends Component{
                                  <div className='ub_block-post-grid-text'>
                                      <header className="ub_block-post-grid-header">
                                          <PostTag className="ub-block-post-grid-title"><a href={ post.link } target="_blank" rel="bookmark">
-                                             { decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)', 'post-grid-blocks' ) }
+                                             { decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)', 'ultimate-blocks' ) }
                                              </a></PostTag>
                                          { displayPostAuthor &&
                                              <div className="ub-block-post-grid-author">
@@ -133,7 +133,7 @@ class LatestPostBlock extends Component{
                                                      {post.author_info.display_name}</a></div>}
                                          {displayPostDate &&
                                              <time dateTime={moment(post.date_gmt).utc().format()} className={'ub-block-post-grid-date'}>
-                                                 {moment(post.date_gmt).local().format('MMMM DD, Y', 'post-grid-blocks')}
+                                                 {moment(post.date_gmt).local().format('MMMM DD, Y', 'ultimate-blocks')}
                                              </time>
                                          }
                                      </header>
@@ -175,7 +175,7 @@ export default compose([
            posts: getEntityRecords( 'postType', props.attributes.postType, PostsQuery )
        };
     })
-])(LatestPostBlock)
+])(PostGridBlock)
 
 // Truncate excerpt
 function truncate( str, no_words ) {

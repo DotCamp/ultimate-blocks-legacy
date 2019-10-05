@@ -90,7 +90,7 @@ function ub_render_post_grid_block( $attributes ) {
             $title = get_the_title( $post_id );
 
             if ( ! $title ) {
-                $title = __( 'Untitled', 'post-grid-blocks' );
+                $title = __( 'Untitled', 'ultimate-blocks' );
             }
 
             if ( isset( $attributes['displayPostTitle'] ) && $attributes['displayPostTitle'] ) {
@@ -114,7 +114,7 @@ function ub_render_post_grid_block( $attributes ) {
                 /* Get the post author */
                 if ( isset( $attributes['displayPostAuthor'] ) && $attributes['displayPostAuthor'] ) {
                     $post_grid_markup .= sprintf(
-                        '<div class="ub-block-post-grid-author" itemprop="author" itemtype="https://schema.org/Person"><a class="ab-text-link" href="%2$s" itemprop="url" rel="author"><span itemprop="name">%1$s</span></a></div>',
+                        '<div class="ub-block-post-grid-author" itemprop="author" itemtype="https://schema.org/Person"><a class="ub-text-link" href="%2$s" itemprop="url" rel="author"><span itemprop="name">%1$s</span></a></div>',
                         esc_html( get_the_author_meta( 'display_name', get_the_author_meta( 'ID' ) ) ),
                         esc_html( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
                     );
@@ -137,7 +137,7 @@ function ub_render_post_grid_block( $attributes ) {
 
             /* Wrap the excerpt content */
             $post_grid_markup .= sprintf(
-                '<div class="ab-block-post-grid-excerpt">'
+                '<div class="ub-block-post-grid-excerpt">'
             );
 
             /* Get the excerpt */
@@ -239,14 +239,14 @@ function ub_render_post_grid_block( $attributes ) {
 }
 function ub_register_post_grid_block() {
     if( function_exists( 'register_block_type' ) ) {
-        require dirname(dirname(__DIR__)) . '/defaults.php';
+        require dirname( dirname(__DIR__) ) . '/defaults.php';
         register_block_type( 'ub/post-grid', array(
-            'attributes' =>$defaultValues['ub/post-grid']['attributes'],
+            'attributes' => $defaultValues['ub/post-grid']['attributes'],
             'render_callback' => 'ub_render_post_grid_block'));
     }
 }
 
-add_action('init', 'ub_register_post_grid_block');
+add_action( 'init', 'ub_register_post_grid_block' );
 
 function ub_blocks_register_rest_fields() {
     /* Add landscape featured image source */
@@ -326,4 +326,3 @@ function ub_blocks_get_author_info( $object, $field_name, $request ) {
     /* Return the author data */
     return $author_data;
 }
-?>

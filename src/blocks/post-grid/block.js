@@ -8,16 +8,16 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
 import attributes from './attributes';
-import LatestPostBlock from './editorDisplay';
+import PostGridBlock from './editorDisplay';
 
 const { Fragment } = wp.element;
 
-export default registerBlockType('ub/post-grid', {
-    title: __('Post Grid'),
-    description: __( 'Add a grid or list of customizable posts.', 'post-grid' ),
+export default registerBlockType( 'ub/post-grid', {
+    title: __( 'Post Grid', 'ultimate-blocks' ),
+    description: __( 'Add a grid or list of customizable posts.', 'ultimate-blocks' ),
     icon: icons,
     category: 'ultimateblocks',
-    keywords: [__('post grid'), __('quotes'), __('Ultimate Blocks')],
+    keywords: [ __( 'post grid', 'ultimate-blocks' ), __( 'posts', 'ultimate-blocks' ), __( 'Ultimate Blocks', 'ultimate-blocks' ) ],
     attributes,
     /**
      * The edit function describes the structure of your block in the context of the editor.
@@ -37,7 +37,7 @@ export default registerBlockType('ub/post-grid', {
         } = props;
 
         return[
-            <LatestPostBlock {...{ setAttributes, ...props }}/>
+            <PostGridBlock {...{ setAttributes, ...props }}/>
         ];
     },
     save: () => null

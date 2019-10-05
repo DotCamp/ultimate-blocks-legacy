@@ -33,7 +33,7 @@ const attributes = {
        },
        postsShow: {
            type: 'number',
-           default: 10,
+           default: 6,
        },
        postLayout: {
            type: 'string',
