@@ -95,6 +95,30 @@ const attributes = {
 	tabsTitleAlignment: {
 		type: 'array',
 		default: []
+	},
+	tabVertical:{
+        type: 'bolean',
+		default: false,
+	},
+    verticalHolderCss:{
+	    type: 'string',
+        default: ''
+    },
+	verticalTabCss:{
+		type: 'string',
+		default: ''
+	},
+	verticalWrapCss:{
+		type: 'string',
+		default: ''
+	},
+    verticalTabWidth:{
+		type: 'string',
+		default: ''
+	},
+	verticalContentWidth:{
+		type: 'string',
+		default: ''
 	}
 };
 

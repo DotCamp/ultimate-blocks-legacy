@@ -504,7 +504,7 @@ export class TabHolder extends Component {
 			<div
 				className={
 					className +
-					'-tab-title-wrap SortableItem' +
+					'-tab-title-' + attributes.verticalWrapCss + 'wrap SortableItem' +
 					(activeTab === i ? ' active' : '')
 				}
 				style={{
@@ -568,9 +568,22 @@ export class TabHolder extends Component {
 			</div>
 		));
 
+        if( attributes.tabVertical ) {
+            console.log('need change tabs vertical')
+            setAttributes({verticalHolderCss: 'vertical-holder',
+				           verticalTabCss: '-vertical-tab',
+				           verticalWrapCss: 'vertical-',
+				           verticalTabWidth: 'vertical-tab-width',
+				           verticalContentWidth: 'vertical-content-width'
+			})
+        }
+        else{
+        	setAttributes({ verticalHolderCss: '', verticalTabCss: '', verticalWrapCss: '', verticalTabWidth: '', verticalContentWidth: ''})
+        }
+
 		const SortableList = SortableContainer(({ items }) => (
 			<div
-				className={className + '-tabs-title SortableList'}
+				className={className + '-tabs-title' + attributes.verticalTabCss + ' SortableList' }
 				style={{
 					justifyContent:
 						tabsAlignment === 'center'
@@ -591,7 +604,7 @@ export class TabHolder extends Component {
 					/>
 				))}
 				<div
-					className={className + '-tab-title-wrap'}
+					className={className + '-tab-title-' + attributes.verticalWrapCss + 'wrap'}
 					key={tabsTitle.length}
 					onClick={() => addTab(tabsTitle.length)}
 				>
@@ -681,8 +694,8 @@ export class TabHolder extends Component {
 			),
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
 			<div className={className}>
-				<div className={className + '-holder'}>
-					<div className={className + '-tab-holder'}>
+				<div className={className + '-holder ' + attributes.verticalHolderCss}>
+					<div className={className + '-tab-holder ' + attributes.verticalTabWidth}>
 						<SortableList
 							axis="x"
 							items={tabsTitle}
@@ -764,7 +777,7 @@ export class TabHolder extends Component {
 							</div>
 						)}
 					</div>
-					<div className={className + '-tabs-content'}>
+					<div className={className + '-tabs-content ' + attributes.verticalContentWidth}>
 						<InnerBlocks
 							templateLock={false}
 							allowedBlocks={['ub/tab-block']}
