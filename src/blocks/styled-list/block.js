@@ -109,6 +109,7 @@ class StyledList extends Component {
 								style={{
 									width: `calc(100% - ${item.indent + 0.5}em)`
 								}}
+								placeholder={__('List item')}
 								value={item.text}
 								multiline={false}
 								onChange={newValue => {
@@ -151,7 +152,11 @@ registerBlockType('ub/styled-list', {
 	attributes: {
 		listItem: {
 			type: 'array',
-			default: [{ text: '', selectedIcon: 'check', indent: 0 }]
+			default: Array(3).fill({
+				text: '',
+				selectedIcon: 'check',
+				indent: 0
+			})
 		},
 		iconColor: {
 			type: 'string',

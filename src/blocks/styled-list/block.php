@@ -68,24 +68,10 @@ function ub_render_styled_list_block($attributes){
 
 function ub_register_styled_list_block() {
 	if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
         register_block_type( 'ub/styled-list', array(
-            'attributes' => array(
-                'listItem' => array(
-                    'type' => 'array',
-                    'default' => array(
-                        array(
-                            'text' => '',
-                            'selectedIcon' => 'check',
-                            'indent' => 0
-                        )
-                    )
-                ),
-                'iconColor' => array(
-                    'type' => 'string',
-                    'default' => '#000000'
-                )
-            ),
-			'render_callback' => 'ub_render_styled_list_block'));
+            'attributes' => $defaultValues['ub/tabbed-content-block']['attributes'],
+            'render_callback' => 'ub_render_styled_list_block'));
 	}
 }
 

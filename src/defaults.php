@@ -840,6 +840,24 @@ $defaultValues = array(
             )
         )
     ),
+    'ub/styled-list' => array(
+        'attributes' => array(
+            'listItem' => array(
+                'type' => 'array',
+                'default' => array_fill(0, 3,
+                    array(
+                        'text' => '',
+                        'selectedIcon' => 'check',
+                        'indent' => 0
+                    )
+                )
+            ),
+            'iconColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            )
+        )
+    ),
     'ub/tabbed-content-block' => array(
         'attributes' => array(
             'blockID' => array(
