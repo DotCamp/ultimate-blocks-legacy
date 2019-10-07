@@ -2,8 +2,15 @@ const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
 const { RichText, BlockControls, InspectorControls, ColorPalette } = wp.editor;
-const { Toolbar, IconButton, Dropdown, PanelBody } = wp.components;
-const { withState } = wp.compose;
+const {
+	Toolbar,
+	IconButton,
+	Dropdown,
+	PanelBody,
+	RangeControl
+} = wp.components;
+const { withState, compose } = wp.compose;
+const { withSelect } = wp.data;
 
 import { dashesToCamelcase } from '../../common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -33,7 +40,8 @@ class StyledList extends Component {
 			updateSelectedItem,
 			increaseIndent,
 			decreaseIndent,
-			edits
+			edits,
+			iconSize
 		} = this.props;
 
 		const deleteItem = i => {
@@ -84,7 +92,16 @@ class StyledList extends Component {
 						}}
 					>
 						<div>
-							<span className="fa-li">
+							<span
+								className="fa-li"
+								style={{
+									fontSize: `${0.4 + iconSize * 0.1}em`,
+									lineHeight:
+										iconSize < 5
+											? 4 - (iconSize - 1) * 0.6
+											: 2 - (iconSize - 5) * 0.2
+								}}
+							>
 								<FontAwesomeIcon
 									icon={
 										Object.keys(fas)
@@ -117,7 +134,7 @@ class StyledList extends Component {
 									newList[i].text = newValue;
 									updateList(newList);
 								}}
-								unstableOnFocus={() => updateSelectedItem(i)}
+								unstableOnFocus={_ => updateSelectedItem(i)}
 								onSplit={(before, after) => {
 									updateList([
 										...list.slice(0, i),
@@ -150,6 +167,10 @@ registerBlockType('ub/styled-list', {
 	icon: icon,
 	category: 'ultimateblocks',
 	attributes: {
+		blockID: {
+			type: 'string',
+			default: ''
+		},
 		listItem: {
 			type: 'array',
 			default: Array(3).fill({
@@ -161,17 +182,27 @@ registerBlockType('ub/styled-list', {
 		iconColor: {
 			type: 'string',
 			default: '#000000'
+		},
+		iconSize: {
+			type: 'number',
+			default: 5
 		}
 	},
 	keywords: [__('List'), __('Styled List'), __('Ultimate Blocks')],
-	edit: withState({
-		selectedItem: -1,
-		availableIcons: [],
-		iconSearchTerm: '',
-		recentSelection: '',
-		edits: 0
-	})(function(props) {
+	edit: compose([
+		withState({
+			selectedItem: -1,
+			availableIcons: [],
+			iconSearchTerm: '',
+			recentSelection: '',
+			edits: 0
+		}),
+		withSelect((select, ownProps) => ({
+			block: select('core/editor').getBlock(ownProps.clientId)
+		}))
+	])(function(props) {
 		const {
+			block,
 			isSelected,
 			attributes,
 			setAttributes,
@@ -181,7 +212,8 @@ registerBlockType('ub/styled-list', {
 			iconSearchTerm,
 			edits
 		} = props;
-		const { listItem, iconColor } = attributes;
+		const { listItem, iconColor, iconSize, blockID } = attributes;
+
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
 			setState({ availableIcons: iconList.map(name => allIcons[name]) });
@@ -216,6 +248,10 @@ registerBlockType('ub/styled-list', {
 			setAttributes({ listItem: newListItem });
 			setState({ edits: edits + 1 });
 		};
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
 
 		return [
 			isSelected && (
@@ -357,6 +393,13 @@ registerBlockType('ub/styled-list', {
 								setAttributes({ iconColor: colorValue })
 							}
 						/>
+						<p>{__('Icon size')}</p>
+						<RangeControl
+							value={iconSize}
+							onChange={iconSize => setAttributes({ iconSize })}
+							min={1}
+							max={10}
+						/>
 					</PanelBody>
 				</InspectorControls>
 			),
@@ -370,6 +413,7 @@ registerBlockType('ub/styled-list', {
 							setState({ edits: edits + 1 });
 						}
 					}}
+					iconSize={iconSize}
 					iconColor={iconColor}
 					updateSelectedItem={newSelectedItem => {
 						setState({ selectedItem: newSelectedItem });

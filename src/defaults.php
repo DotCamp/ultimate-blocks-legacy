@@ -842,6 +842,10 @@ $defaultValues = array(
     ),
     'ub/styled-list' => array(
         'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'listItem' => array(
                 'type' => 'array',
                 'default' => array_fill(0, 3,
@@ -855,6 +859,10 @@ $defaultValues = array(
             'iconColor' => array(
                 'type' => 'string',
                 'default' => '#000000'
+            ),
+            'iconSize' => array(
+                'type' => 'number',
+                'default' => 5
             )
         )
     ),

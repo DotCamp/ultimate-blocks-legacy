@@ -34,7 +34,7 @@ function ub_render_styled_list_block($attributes){
     $listItems = '';
 
     if (!function_exists('ub_makeList')) {
-        function ub_makeList($num, $item, $color){
+        function ub_makeList($num, $item, $color, $size){
             require  dirname(dirname(__DIR__)) . '/common.php';
             static $outputString = '';
             if($num == 0 && $outputString != ''){
@@ -42,7 +42,7 @@ function ub_render_styled_list_block($attributes){
             }
             if (array_key_exists("indent", $item)){                
                 $outputString .= '<li><span class="fa-li"><svg xmlns="http://www.w3.org/2000/svg"
-                    height="15", width="15" viewBox="0, 0, '.$fontAwesomeIcon[$item['selectedIcon']][0].', '.$fontAwesomeIcon[$item['selectedIcon']][1]
+                    height="'.(0.4 + $size * 0.1) . 'em", width="'.(0.4 + $size * 0.1) . 'em" viewBox="0, 0, '.$fontAwesomeIcon[$item['selectedIcon']][0].', '.$fontAwesomeIcon[$item['selectedIcon']][1]
                     .'"><path fill="'.$color.'" d="'.$fontAwesomeIcon[$item['selectedIcon']][2].'"></svg></span>'.($item['text']==''?'<br/>':$item['text']).'</li>';
             }
             else{
@@ -50,7 +50,7 @@ function ub_render_styled_list_block($attributes){
                     strrpos($outputString, '</li>'), strlen('</li>'));
 
                 forEach($item as $key => $subItem){
-                    ub_makeList($key+1, $subItem, $color);
+                    ub_makeList($key+1, $subItem, $color, $size);
                 }
                 $outputString .= '</ul>' . '</li>';
             }
@@ -59,18 +59,19 @@ function ub_render_styled_list_block($attributes){
     }
 
     foreach($sortedItems as $key => $item){
-        $listItems = ub_makeList($key, $item, $iconColor);
+        $listItems = ub_makeList($key, $item, $iconColor, $iconSize);
     }
 
-    return '<div class="ub_styled_list '.(isset($className) ? ' ' . esc_attr($className): '')
-            .'"><ul class="fa-ul">'.$listItems.'</ul></div>';
+    return '<div class="ub_styled_list '.(isset($className) ? ' ' . esc_attr($className): '') .'" '
+            .($blockID == '' ? '' : ' id="ub_styled_list-'.$blockID.'"').
+            '><ul class="fa-ul">'.$listItems.'</ul></div>';
 }
 
 function ub_register_styled_list_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
         register_block_type( 'ub/styled-list', array(
-            'attributes' => $defaultValues['ub/tabbed-content-block']['attributes'],
+            'attributes' => $defaultValues['ub/styled-list']['attributes'],
             'render_callback' => 'ub_render_styled_list_block'));
 	}
 }
