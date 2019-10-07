@@ -79,7 +79,9 @@
 	position: relative;
 	cursor: pointer;
 	&.active {
-		color: white;
+		color: #000000;
+		background-color: #eeeeee ;
+		border-color: #eeeeee;
 	}
 }
 
