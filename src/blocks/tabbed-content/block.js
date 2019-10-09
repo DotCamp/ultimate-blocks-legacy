@@ -119,6 +119,18 @@ const attributes = {
 	verticalContentWidth:{
 		type: 'string',
 		default: ''
+	},
+	orientIconFirst:{
+		type: 'string',
+		default: ''
+	},
+	orientIconSecond:{
+		type: 'string',
+		default: ''
+	},
+	orient:{
+		type: 'string',
+		default: 'x'
 	}
 };
 
