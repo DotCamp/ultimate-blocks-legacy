@@ -236,7 +236,7 @@ export const editorDisplay = props => {
 			>
 				<div className="ub_call_to_action_headline">
 					<RichText
-						tagName="p"
+						tagName="h2"
 						placeholder={__('CTA Title Goes Here')}
 						className="ub_call_to_action_headline_text"
 						style={{
