@@ -67,7 +67,7 @@ function ub_render_post_grid_block( $attributes ) {
             /* Get the featured image */
             if ( isset( $attributes['displayPostImage'] ) && $attributes['displayPostImage'] && $post_thumb_id ) {
 
-                $post_thumb_size = 'full';
+                $post_thumb_size = 'ub-block-post-grid-landscape';
 
                 /* Output the featured image */
                 $post_grid_markup .= sprintf(
@@ -248,6 +248,15 @@ function ub_register_post_grid_block() {
 
 add_action( 'init', 'ub_register_post_grid_block' );
 
+/**
+ * Add image sizes
+ */
+function post_grid_block_image_sizes() {
+    // Post Grid Block.
+    add_image_size( 'ub-block-post-grid-landscape', 600, 400, true );
+}
+add_action( 'after_setup_theme', 'post_grid_block_image_sizes' );
+
 function ub_blocks_register_rest_fields() {
     /* Add landscape featured image source */
     register_rest_field(
@@ -255,16 +264,6 @@ function ub_blocks_register_rest_fields() {
         'featured_image_src',
         array(
             'get_callback'    => 'ub_blocks_get_image_src_landscape',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
-    /* Add square featured image source */
-    register_rest_field(
-        array( 'post', 'page' ),
-        'featured_image_src_square',
-        array(
-            'get_callback'    => 'ub_blocks_get_image_src_square',
             'update_callback' => null,
             'schema'          => null,
         )
@@ -292,21 +291,6 @@ function ub_blocks_get_image_src_landscape( $object, $field_name, $request ) {
     $feat_img_array = wp_get_attachment_image_src(
         $object['featured_media'],
         'ub-block-post-grid-landscape',
-        false
-    );
-    return $feat_img_array[0];
-}
-/**
- * Get square featured image source for the rest field
- *
- * @param String $object  The object type.
- * @param String $field_name  Name of the field to retrieve.
- * @param String $request  The current request object.
- */
-function ub_blocks_get_image_src_square( $object, $field_name, $request ) {
-    $feat_img_array = wp_get_attachment_image_src(
-        $object['featured_media'],
-        'ub-block-post-grid-square',
         false
     );
     return $feat_img_array[0];

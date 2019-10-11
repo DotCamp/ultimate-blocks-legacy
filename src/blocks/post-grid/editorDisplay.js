@@ -1,3 +1,4 @@
+import PostGridImage from './image';
 import isUndefined from 'lodash/isUndefined';
 import pickBy from 'lodash/pickBy';
 import classnames from 'classnames';
@@ -116,7 +117,11 @@ class PostGridBlock extends Component{
                                  <div className='ub-block-post-grid-image'>
                                  {
                                      displayPostImage && post.featured_media ? (
-                                         <img src={post.featured_image_src}/>
+                                         <PostGridImage
+                                             { ...this.props }
+                                             imgID={ post.featured_media }
+                                             imgSizeLandscape={ post.featured_image_src }
+                                         />
                                      ) : (
                                          null
                                      )
