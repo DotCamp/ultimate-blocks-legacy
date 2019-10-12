@@ -53,14 +53,21 @@ function ub_register_progress_bar_block() {
 }
 
 function ub_progress_bar_add_frontend_assets() {
-    if ( has_block( 'ub/progress-bar' ) ) {
-        wp_enqueue_script(
-            'ultimate_blocks-progress-bar-front-script',
-            plugins_url( 'progress-bar/front.build.js', dirname( __FILE__ ) ),
-            array( ),
-            Ultimate_Blocks_Constants::plugin_version(),
-            true
-        );
+    require_once dirname(dirname(__DIR__)) . '/common.php';
+
+    $presentBlocks = ub_getPresentBlocks();
+
+    foreach( $presentBlocks as $block ){
+        if($block['blockName'] == 'ub/progress-bar'){
+            wp_enqueue_script(
+                'ultimate_blocks-progress-bar-front-script',
+                plugins_url( 'progress-bar/front.build.js', dirname( __FILE__ ) ),
+                array( ),
+                Ultimate_Blocks_Constants::plugin_version(),
+                true
+            );
+            break;
+        }
     }
 }
 

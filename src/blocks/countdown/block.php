@@ -92,49 +92,31 @@ function ub_register_countdown_block() {
 
 add_action( 'init', 'ub_register_countdown_block' );
 
-function ub_checkBlocks($block){
-    static $currentBlocks = [];
-
-    $current = $block;
-
-    if( $block['blockName'] == 'core/block' ) {
-        $current = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) )[0];
-    }
-    if( $current['blockName'] == 'ub/countdown' ) {
-        array_push( $currentBlocks, (array_key_exists('style', $current['attrs']) ?
-                                    $current['attrs']['style'] : 'Odometer'));
-        if( count( $current['innerBlocks'] ) > 0 ){
-            foreach( $current['innerBlocks'] as $innerBlock ) {
-                ub_checkBlocks( $innerBlock );
-            }
-        }
-    }
-    return $currentBlocks;
-}
-
 function ub_countdown_add_frontend_assets() {
-    if ( has_block( 'ub/countdown')) {
-        $blockList = [];
-        foreach(parse_blocks( get_post()->post_content ) as $block){
-            $blockList = ub_checkBlocks($block);
-        }
-        if(in_array('Odometer', $blockList)){
+    require_once dirname(dirname(__DIR__)) . '/common.php';
+
+    $presentBlocks = ub_getPresentBlocks();
+
+    foreach( $presentBlocks as $block ){
+        if($block['blockName'] == 'ub/countdown'){
             wp_enqueue_script(
-                'ultimate_blocks-countdown-odometer-script',
-                plugins_url( 'countdown/odometer.js', dirname( __FILE__ ) ),
+                'ultimate_blocks-countdown-script',
+                plugins_url( 'countdown/front.build.js', dirname( __FILE__ ) ),
                 array(  ),
                 Ultimate_Blocks_Constants::plugin_version(),
                 true
             );
+            if(!isset($block['attrs']['style'])){ //odometer, the default style, is selected
+                wp_enqueue_script(
+                    'ultimate_blocks-countdown-odometer-script',
+                    plugins_url( 'countdown/odometer.js', dirname( __FILE__ ) ),
+                    array(  ),
+                    Ultimate_Blocks_Constants::plugin_version(),
+                    true
+                );
+                break;
+            }
         }
-
-        wp_enqueue_script(
-            'ultimate_blocks-countdown-script',
-            plugins_url( 'countdown/front.build.js', dirname( __FILE__ ) ),
-            array(  ),
-            Ultimate_Blocks_Constants::plugin_version(),
-            true
-        );
     }
 }
 

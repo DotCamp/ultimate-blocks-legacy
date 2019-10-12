@@ -55,34 +55,12 @@ function ub_load_assets() {
     );
 }
 
-function ub_checkInnerBlocks( $block ) {
-    static $currentBlocks = [];
-    
-    $current = $block;
-
-    if( $block['blockName'] == 'core/block' ) { //reusable block
-        $current = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) )[0];
-    }
-
-    if( $current['blockName'] != '' ) {
-        array_push( $currentBlocks, $current );
-        if( count( $current['innerBlocks'] ) > 0 ){
-            foreach( $current['innerBlocks'] as $innerBlock ) {
-                ub_checkInnerBlocks( $innerBlock );
-            }
-        }
-    }
-    return $currentBlocks;
-}
-
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
 	if ( is_singular() and has_blocks() ){
-        $presentBlocks = [];
-
-        foreach(parse_blocks( get_post()->post_content ) as $block){
-            $presentBlocks = ub_checkInnerBlocks($block);
-        }
+        require_once plugin_dir_path(__FILE__) . 'common.php';
+        
+        $presentBlocks = ub_getPresentBlocks();
 
         foreach( $presentBlocks as $block ){
             if( strpos($block['blockName'], 'ub/' )===0){
@@ -101,12 +79,10 @@ add_action( 'enqueue_block_assets', 'ultimate_blocks_cgb_block_assets' );
 
 function ub_include_block_attribute_css() {
     require plugin_dir_path(__FILE__) . 'defaults.php';
-    $presentBlocks = [];
-    $blockStylesheets = "";
+    require_once plugin_dir_path(__FILE__) . 'common.php';
 
-    foreach(parse_blocks( get_post()->post_content ) as $block){
-        $presentBlocks = ub_checkInnerBlocks($block);
-    }
+    $presentBlocks = ub_getPresentBlocks();
+    $blockStylesheets = "";
 
     $hasNoSmoothScroll = true;
 

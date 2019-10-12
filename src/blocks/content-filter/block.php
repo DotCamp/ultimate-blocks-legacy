@@ -90,14 +90,21 @@ function ub_register_content_filter_block(){
 }
 
 function ub_content_filter_add_frontend_assets() {
-    if ( has_block( 'ub/content-filter' ) or has_block('ub/content-filter-block') ) {
-        wp_enqueue_script(
-            'ultimate_blocks-content-filter-front-script',
-            plugins_url( 'content-filter/front.build.js', dirname( __FILE__ ) ),
-            array( ),
-            Ultimate_Blocks_Constants::plugin_version(),
-            true
-        );
+    require_once dirname(dirname(__DIR__)) . '/common.php';
+
+    $presentBlocks = ub_getPresentBlocks();
+
+    foreach( $presentBlocks as $block ){
+        if($block['blockName'] == 'ub/content-filter' || $block['blockName'] == 'ub/content-filter-block'){
+            wp_enqueue_script(
+                'ultimate_blocks-content-filter-front-script',
+                plugins_url( 'content-filter/front.build.js', dirname( __FILE__ ) ),
+                array( ),
+                Ultimate_Blocks_Constants::plugin_version(),
+                true
+            );
+        }
+        break;
     }
 }
 

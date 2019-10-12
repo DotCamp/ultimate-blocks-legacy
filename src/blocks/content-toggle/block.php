@@ -6,20 +6,27 @@
  * @return void
  */
 function ub_content_toggle_add_frontend_assets() {
-    if ( has_block( 'ub/content-toggle' ) or has_block('ub/content-toggle-panel') or
-        has_block( 'ub/content-toggle-block' ) or has_block('ub/content-toggle-panel-block') ) {
-        wp_enqueue_script(
-            'ultimate_blocks-content-toggle-front-script',
-            plugins_url( 'content-toggle/front.build.js', dirname( __FILE__ ) ),
-            array(  ),
-            Ultimate_Blocks_Constants::plugin_version(),
-            true
-        );
-        //Enable Dashicon for logged-out users
-        if( !wp_style_is('dashicons', 'enqueued')){
-            wp_enqueue_style( 'dashicons' );
+    require_once dirname(dirname(__DIR__)) . '/common.php';
+
+    $presentBlocks = ub_getPresentBlocks();
+
+    foreach( $presentBlocks as $block ){
+        if($block['blockName'] == 'ub/content-toggle' || $block['blockName'] == 'ub/content-toggle-panel'
+            || $block['blockName'] == 'ub/content-toggle-block' || $block['blockName'] == 'ub/content-toggle-panel-block'){
+                wp_enqueue_script(
+                    'ultimate_blocks-content-toggle-front-script',
+                    plugins_url( 'content-toggle/front.build.js', dirname( __FILE__ ) ),
+                    array(  ),
+                    Ultimate_Blocks_Constants::plugin_version(),
+                    true
+                );
+                //Enable Dashicon for logged-out users
+                if( !wp_style_is('dashicons', 'enqueued')){
+                    wp_enqueue_style( 'dashicons' );
+                }
+                break;
+            }
         }
-    }
 }
 
 if ( !class_exists( 'simple_html_dom_node' ) ) {

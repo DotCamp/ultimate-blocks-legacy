@@ -70,14 +70,21 @@ function ub_register_tabbed_content_block(){
 }
 
 function ub_tabbed_content_add_frontend_assets() {
-    if ( has_block( 'ub/tabbed-content') or has_block('ub/tabbed-content-block') ) {
-        wp_enqueue_script(
-            'ultimate_blocks-tabbed-content-front-script',
-            plugins_url( 'tabbed-content/front.build.js', dirname( __FILE__ ) ),
-            array(),
-            Ultimate_Blocks_Constants::plugin_version(),
-            true
-        );
+    require_once dirname(dirname(__DIR__)) . '/common.php';
+
+    $presentBlocks = ub_getPresentBlocks();
+
+    foreach( $presentBlocks as $block ){
+        if($block['blockName'] == 'ub/tabbed-content' || $block['blockName'] == 'ub/tabbed-content-block'){
+            wp_enqueue_script(
+                'ultimate_blocks-tabbed-content-front-script',
+                plugins_url( 'tabbed-content/front.build.js', dirname( __FILE__ ) ),
+                array(),
+                Ultimate_Blocks_Constants::plugin_version(),
+                true
+            );
+            break;
+        }
     }
 }
 

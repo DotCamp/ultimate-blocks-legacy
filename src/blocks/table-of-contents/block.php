@@ -103,14 +103,20 @@ function ub_register_table_of_contents_block() {
 }
 
 function ub_table_of_contents_add_frontend_assets() {
-    if ( has_block( 'ub/table-of-contents' ) or has_block( 'ub/table-of-contents-block' ) ) {
-        wp_enqueue_script(
-            'ultimate_blocks-table-of-contents-front-script',
-            plugins_url( 'table-of-contents/front.build.js', dirname( __FILE__ ) ),
-            array( ),
-            Ultimate_Blocks_Constants::plugin_version(),
-            true
-        );
+    require_once dirname(dirname(__DIR__)) . '/common.php';
+
+    $presentBlocks = ub_getPresentBlocks();
+
+    foreach( $presentBlocks as $block ){
+        if($block['blockName'] == 'ub/table-of-contents' || $block['blockName'] == 'ub/table-of-contents-block'){
+            wp_enqueue_script(
+                'ultimate_blocks-table-of-contents-front-script',
+                plugins_url( 'table-of-contents/front.build.js', dirname( __FILE__ ) ),
+                array( ),
+                Ultimate_Blocks_Constants::plugin_version(),
+                true
+            );
+        }
     }
 }
 
