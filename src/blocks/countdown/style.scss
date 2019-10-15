@@ -126,9 +126,6 @@
 			}
 		}
 	}
-	& .ub-countdown-odometer-inside .ub-countdown-odometer-digit:first-child {
-		display: none; //workaround for displaying leading zeroes, as recommended at https://github.com/HubSpot/odometer/issues/106
-	}
 }
 
 .ub_countdown_style_selector {

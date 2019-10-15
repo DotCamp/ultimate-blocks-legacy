@@ -90,23 +90,17 @@ class Timer extends Component {
 				<span>{__('Seconds', 'ultimate-blocks')}</span>
 				<Odometer
 					value={
-						weeks < 0
-							? weeks
-							: weeks +
-							  10 **
-									(weeks > 0
-										? Math.floor(Math.log10(weeks) + 1)
-										: 1)
+						weeks
 					}
 				/>
 				{separator}
-				<Odometer value={days < 0 ? days : 10 + days} />
+				<Odometer value={days} />
 				{separator}
-				<Odometer value={hours < 0 ? hours : 100 + hours} />
+				<Odometer value={hours} />
 				{separator}
-				<Odometer value={minutes < 0 ? minutes : 100 + minutes} />
+				<Odometer value={minutes} />
 				{separator}
-				<Odometer value={seconds < 0 ? seconds : 100 + seconds} />
+				<Odometer value={seconds} />
 			</div>
 		);
 

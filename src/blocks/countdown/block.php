@@ -52,11 +52,11 @@ function ub_render_countdown_block($attributes){
     $odometerFormat = '<div class="ub-countdown-odometer-container">
                         <span>'.__( 'Weeks', 'ultimate-blocks' ).'</span>'.$emptySpan.'<span>'.__( 'Days', 'ultimate-blocks' ).'</span>'.$emptySpan.
                         '<span>'.__( 'Hours', 'ultimate-blocks' ).'</span>'.$emptySpan.'<span>'.__( 'Minutes', 'ultimate-blocks' ).'</span>'.$emptySpan.'<span>'.__( 'Seconds', 'ultimate-blocks' ).'</span>
-                        <div class="ub-countdown-odometer ub_countdown_week">' . ($weeks < 0 ? $weeks : $weeks + pow(10, ($weeks > 0 ? floor(log10($weeks) + 1) : 1))).'</div> 
-                        '. $odometerSeparator.' <div class="ub-countdown-odometer ub_countdown_day">' . ($days < 0 ? $days : $days + 10) . '</div>
-                        '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_hour">' . ($hours < 0 ? $hours : $hours + 100) . '</div>
-                        '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_minute">' . ($minutes < 0 ? $minutes : $minutes + 100) . '</div>
-                        '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_second">' . ($seconds < 0 ? $seconds : $seconds + 100) . '</div></div>';
+                        <div class="ub-countdown-odometer ub_countdown_week">' . $weeks .'</div> 
+                        '. $odometerSeparator.' <div class="ub-countdown-odometer ub_countdown_day">' . $days . '</div>
+                        '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_hour">' . ($hours < 10 ? '0' . $hours : $hours) . '</div>
+                        '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_minute">' . ($minutes < 10 ? '0' . $minutes : $minutes) . '</div>
+                        '. $odometerSeparator.'<div class="ub-countdown-odometer ub_countdown_second">' . ($seconds < 10 ? '0' . $seconds : $seconds) . '</div></div>';
 
     $selctedFormat = $defaultFormat;
     

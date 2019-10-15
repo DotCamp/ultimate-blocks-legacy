@@ -457,6 +457,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 				_ref,
 				_ref1;
 			this.digits = [];
+
+			this.options.formatFunction = function(value) {
+				return value < 10 ? '0' + value.toString() : value.toString();
+			};
+
 			if (this.options.formatFunction) {
 				valueString = this.options.formatFunction(value);
 				_ref = valueString.split('').reverse();
@@ -637,14 +642,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		};
 
 		Odometer.prototype.getDigitCount = function() {
-			var i, max, value, values, _i, _len;
+			var i, max, value, values, _i, _len, _digitCount;
 			values = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
 			for (i = _i = 0, _len = values.length; _i < _len; i = ++_i) {
 				value = values[i];
 				values[i] = Math.abs(value);
 			}
 			max = Math.max.apply(Math, values);
-			return Math.ceil(Math.log(max + 1) / Math.log(10));
+			_digitCount = Math.ceil(Math.log(max + 1) / Math.log(10));
+			return _digitCount > 2 ? _digitCount : 2;
 		};
 
 		Odometer.prototype.getFractionalDigitCount = function() {

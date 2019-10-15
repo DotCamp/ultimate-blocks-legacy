@@ -12,19 +12,11 @@ document.addEventListener('DOMContentLoaded', function () {
       var weeks = (timeLeft - days * 86400 - hours * 3600 - minutes * 60 - seconds) / 604800;
 
       if (timeLeft >= 0) {
-        if (instance.querySelector('.ub-countdown-odometer-container')) {
-          instance.querySelector('.ub_countdown_week').innerHTML = weeks < 0 ? weeks : weeks + Math.pow(10, weeks > 0 ? Math.floor(Math.log10(weeks) + 1) : 1);
-          instance.querySelector('.ub_countdown_day').innerHTML = days < 0 ? days : days + 10;
-          instance.querySelector('.ub_countdown_hour').innerHTML = hours < 0 ? hours : hours + 100;
-          instance.querySelector('.ub_countdown_minute').innerHTML = minutes < 0 ? minutes : minutes + 100;
-          instance.querySelector('.ub_countdown_second').innerHTML = seconds < 0 ? seconds : seconds + 100;
-        } else {
-          instance.querySelector('.ub_countdown_week').innerHTML = weeks;
-          instance.querySelector('.ub_countdown_day').innerHTML = days;
-          instance.querySelector('.ub_countdown_hour').innerHTML = hours;
-          instance.querySelector('.ub_countdown_minute').innerHTML = minutes;
-          instance.querySelector('.ub_countdown_second').innerHTML = seconds;
-        }
+        instance.querySelector('.ub_countdown_week').innerHTML = weeks;
+        instance.querySelector('.ub_countdown_day').innerHTML = days;
+        instance.querySelector('.ub_countdown_hour').innerHTML = hours;
+        instance.querySelector('.ub_countdown_minute').innerHTML = minutes;
+        instance.querySelector('.ub_countdown_second').innerHTML = seconds;
 
         if (instance.querySelector('.ub_countdown_circular_container')) {
           instance.querySelector('.ub_countdown_circle_week .ub_countdown_circle_path').style.strokeDasharray = "".concat(weeks * 219.911 / 52, "px, 219.911px");
