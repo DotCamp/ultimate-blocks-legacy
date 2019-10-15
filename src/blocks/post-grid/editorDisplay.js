@@ -110,8 +110,9 @@ class PostGridBlock extends Component{
                             key={ i }
                             id={ 'post-' + post.id }
                             className={ classnames(
-                                'post-' + post.id)
-                            }
+                                'post-' + post.id,
+                                post.featured_image_src && displayPostImage ? 'has-post-thumbnail' : null
+                            )}
                         >
                              <Fragment>
                                  <div className='ub-block-post-grid-image'>
