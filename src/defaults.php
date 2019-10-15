@@ -846,6 +846,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'list' => array(
+                'type' => 'text',
+                'default' => '<li>Item 1</li><li>Item 2</li><li>Item 3</li>'
+            ),
             'listItem' => array(
                 'type' => 'array',
                 'default' => array_fill(0, 3,
@@ -855,6 +859,10 @@ $defaultValues = array(
                         'indent' => 0
                     )
                 )
+            ),
+            'selectedIcon' => array(
+                'type' => 'string',
+                'default' => 'check'
             ),
             'iconColor' => array(
                 'type' => 'string',
