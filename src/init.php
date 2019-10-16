@@ -459,6 +459,9 @@ function ub_include_block_attribute_css() {
                         'text-align: '.$attributes['authorRoleAlign'].';' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
+                case 'ub/post-grid':
+                    $prefix = '#ub_post-grid-block_' . $attributes['blockID'];
+                    break;
             }
         }
     }
@@ -575,6 +578,9 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/review/block.php';
 
 // Divider
 require_once plugin_dir_path( __FILE__ ) . 'blocks/divider/block.php';
+
+//Post-Grig
+require_once plugin_dir_path( __File__ ) . 'blocks/post-grid/block.php';
 
 //Styled Box
 require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-box/block.php';

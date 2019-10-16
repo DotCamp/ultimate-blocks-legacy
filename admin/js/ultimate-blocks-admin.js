@@ -117,7 +117,12 @@
 			label: 'Testimonial',
 			name: 'ub/testimonial-block',
 			active: true
-		}
+		},
+        {
+            label: 'Post Grid',
+            name: 'ub/post-grid',
+            active: true
+        }
 	];
 
 	$(function() {

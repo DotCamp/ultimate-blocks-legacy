@@ -976,5 +976,83 @@ $defaultValues = array(
                 'default' => 17
             )
         )
+    ),
+    'ub/post-grid' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'categories'          => array(
+                'type' => 'string',
+            ),
+            'className'           => array(
+                'type' => 'string',
+            ),
+            'postsShow'         => array(
+                'type'    => 'number',
+                'default' => 6,
+            ),
+            'displayPostDate'     => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'displayPostExcerpt'  => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'displayPostAuthor'   => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'displayPostImage'    => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'displayPostLink'     => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'displayPostTitle'    => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'postLayout'          => array(
+                'type'    => 'string',
+                'default' => 'grid',
+            ),
+            'columns'             => array(
+                'type'    => 'number',
+                'default' => 2,
+            ),
+            'width'               => array(
+                'type'    => 'string',
+                'default' => 'wide',
+            ),
+            'order'               => array(
+                'type'    => 'string',
+                'default' => 'desc',
+            ),
+            'orderBy'             => array(
+                'type'    => 'string',
+                'default' => 'date',
+            ),
+            'readMoreText'        => array(
+                'type'    => 'string',
+                'default' => 'Continue Reading',
+            ),
+            'offset'              => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
+            'excerptLength'       => array(
+                'type'    => 'number',
+                'default' => 55,
+            ),
+            'postType'            => array(
+                'type'    => 'string',
+                'default' => 'post',
+            ),
+        )
     )
 );
