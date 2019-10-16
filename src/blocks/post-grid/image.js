@@ -94,7 +94,7 @@ export default class PostGridImage extends Component {
                         >
                             <Dashicon icon={'info'}/>
                             <div className="components-placeholder__label">
-                                {__('The correct size was not found for this image, so it may not display correctly. Recommended image height 400px.')}
+                                { __('The correct size was not found for this image, so it may not display correctly. Check preview to make sure. Recommended image height is 400px.', 'ultimate-blocks') }
                             </div>
                         </Placeholder>
                     </Fragment>

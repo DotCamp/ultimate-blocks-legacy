@@ -12,6 +12,7 @@
         article {
             margin-bottom: 2.5em;
             min-width: 0;
+            padding: 0;
             @media all and (-ms-high-contrast: none) {
                 padding-left: 10px;
                 padding-right: 10px;
@@ -114,6 +115,7 @@
             grid-template-columns: 30% 1fr;
             grid-template-rows: 1fr;
             grid-gap: 0 2em;
+            padding: 0;
             @media all and (-ms-high-contrast: none) {
                 display: block;
             }
@@ -172,7 +174,6 @@
 
 .ub-block-post-grid-image {
     position: relative;
-
     &:hover {
         .ub-post-grid-no-image-placeholder {
             opacity: 1;
@@ -191,7 +192,6 @@
     opacity: 0;
     background: #f3f3f4;
     transition: .2s ease;
-
     svg {
         margin-bottom: 10px;
     }
@@ -210,7 +210,7 @@
     z-index: 1;
 }
 
-.block-editor__container .components-placeholder__fieldset{
+.block-editor__container .components-placeholder__fieldset {
     display: inline-block;
     font-weight: bold;
 }
