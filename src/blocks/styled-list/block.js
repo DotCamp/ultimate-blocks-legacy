@@ -281,8 +281,8 @@ registerBlockType('ub/styled-list', {
 						__html: `#ub-styled-list-${blockID} li:before{
                 content:''; 
                 position:relative;
-                left:-1em;
-                top: ${iconSize > 6 ? 0.1 : iconSize < 3 ? -0.1 : 0}em;
+                left:-0.5em;
+                top: ${iconSize >= 5 ? 3 : iconSize < 3 ? 2 : 0}px;
                 display:inline-block; 
                 height:${(4 + iconSize) / 10}em; 
                 width:${(4 + iconSize) / 10}em; 
