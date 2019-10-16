@@ -407,6 +407,18 @@ function ub_include_block_attribute_css() {
                         }
                     }
                     break;
+                case 'ub/styled-list':
+                    $prefix = '#ub_styled_list-' . $attributes['blockID'];
+                    if($attributes['iconSize'] < 3){
+                        $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
+                            'top: -0.1em;' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    } elseif($attributes['iconSize'] > 6){
+                        $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
+                            'top: 0.1em;' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
+                    break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap{' . PHP_EOL .

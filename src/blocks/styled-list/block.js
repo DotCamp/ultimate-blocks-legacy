@@ -100,7 +100,9 @@ registerBlockType('ub/styled-list', {
 
 		if (
 			JSON.stringify(listItem) !==
-			'[{"text":"","selectedIcon":"check","indent":0},{"text":"","selectedIcon":"check","indent":0},{"text":"","selectedIcon":"check","indent":0}]'
+			`[${Array(3)
+				.fill('{"text":"","selectedIcon":"check","indent":0}')
+				.join(',')}]`
 		) {
 			let newList = '';
 
@@ -262,7 +264,7 @@ registerBlockType('ub/styled-list', {
 				</InspectorControls>
 			),
 
-			<div className="ub-styled-list">
+			<div className="ub-styled-list" id={`ub-styled-list-${blockID}`}>
 				<RichText
 					className="fa-ul"
 					multiline="li"
@@ -276,11 +278,14 @@ registerBlockType('ub/styled-list', {
 
 				<style
 					dangerouslySetInnerHTML={{
-						__html: `.ub-styled-list li:before{
+						__html: `#ub-styled-list-${blockID} li:before{
                 content:''; 
+                position:relative;
+                left:-1em;
+                top: ${iconSize > 6 ? 0.1 : iconSize < 3 ? -0.1 : 0}em;
                 display:inline-block; 
-                height:${0.4 + iconSize * 0.1}em; 
-                width:${0.4 + iconSize * 0.1}em; 
+                height:${(4 + iconSize) / 10}em; 
+                width:${(4 + iconSize) / 10}em; 
                 background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${
 					allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
 				} ${
@@ -291,11 +296,7 @@ registerBlockType('ub/styled-list', {
 						)}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
 								.icon[4]
-						}'></path></svg>"); 
-                background-size:contain; 
-                background-repeat:no-repeat;
-                padding-left: 1em;
-                }`
+						}'></path></svg>");`
 					}}
 				/>
 			</div>
