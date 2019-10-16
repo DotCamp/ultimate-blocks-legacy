@@ -413,9 +413,9 @@ function ub_include_block_attribute_css() {
                         $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
                             'top: -0.1em;' . PHP_EOL .
                         '}' . PHP_EOL;
-                    } elseif($attributes['iconSize'] > 6){
+                    } elseif($attributes['iconSize'] >= 5){
                         $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
-                            'top: 0.1em;' . PHP_EOL .
+                            'top: 3px;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
                     break;
