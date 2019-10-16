@@ -33,16 +33,16 @@ function ub_render_tabbed_content_block($attributes, $contents){
     $tabs = '';
 
     foreach($tabsTitle as $key=>$title){
-        $tabs .= '<div class = "'.$blockName.'-tab-title-wrap'.($activeTab == $key ? ' active' : '').'"'.
+        $tabs .= '<div class = "'.$blockName.'-tab-title-'.$attributes['verticalWrapCss'].'wrap'.($activeTab == $key ? ' active' : '').'"'.
             ($blockID == '' ?' style="background-color: '.($activeTab == $key ? $theme : 'initial')
             .'; border-color: '.($activeTab == $key ? $theme : 'lightgrey').
             '; color: '.($activeTab == $key ? $titleColor : '#000000').';"' :'').'>
             <div class="'.$blockName.'-tab-title">'.$title.'</div></div>';
     }
 
-    return '<div class="'.$blockName.' '.$blockName.'-holder'.(isset($className) ? ' ' . esc_attr($className) : '')
-        .'"'.($blockID==''?'':' id="ub-tabbed-content-'.$blockID.'"').'><div class="'.$blockName.'-tab-holder">
-    <div class="'.$blockName.'-tabs-title">'.
+    return '<div class="'.$blockName.' '.$blockName.'-holder '.$attributes['verticalHolderCss'].(isset($className) ? ' ' . esc_attr($className) : '')
+        .'"'.($blockID==''?'':' id="ub-tabbed-content-'.$blockID.'"').'><div class="'.$blockName.'-tab-holder '.$attributes['verticalTabWidth'].'">
+    <div class="'.$blockName.'-tabs-title'.$attributes['verticalTabCss'].'">'.
     $tabs.'</div>
     <div class="'.$blockName.'-scroll-button-container ub-hide">
     <button class="'.$blockName.'-scroll-button-left">
@@ -55,7 +55,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
         <path d="M6 15l5-5-5-5 1-2 7 7-7 7z" fill="#ffffff"/>
     </svg>
     </button></div></div>
-    <div class="'.$blockName.'-tabs-content">'.
+    <div class="'.$blockName.'-tabs-content '.$attributes['verticalContentWidth'].'">'.
     $contents.'</div>
 </div>';
 }

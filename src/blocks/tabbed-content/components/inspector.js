@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.editor;
+const { PanelBody, ToggleControl } = wp.components;
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -8,7 +9,7 @@ const { InspectorControls, PanelColorSettings } = wp.editor;
 export default class Inspector extends Component {
 	render() {
 		const { attributes, setAttributes } = this.props;
-		const { theme, titleColor } = attributes;
+		const { theme, titleColor, tabVertical } = attributes;
 		return (
 			<InspectorControls>
 				<PanelColorSettings
@@ -28,6 +29,15 @@ export default class Inspector extends Component {
 						}
 					]}
 				/>
+				<PanelBody
+                      title={__('Tab View')}
+				>
+                      <ToggleControl
+                          label={__('Vertical', 'tabbed-content-blocks')}
+                          checked={tabVertical}
+                          onChange={ tabVertical => setAttributes({tabVertical})}
+                      />
+				</PanelBody>
 			</InspectorControls>
 		);
 	}

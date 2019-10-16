@@ -340,6 +340,7 @@ export class TabHolder extends Component {
 	constructor(props) {
 		super(props);
 		this.tabBarRef = createRef();
+
 		this.state = {
 			showScrollButtons: false,
 			properScrollPosition: 0,
@@ -347,6 +348,7 @@ export class TabHolder extends Component {
 			timerIsActive: false,
 			earlyStop: false
 		};
+
 		this.checkWidth = this.checkWidth.bind(this);
 		this.leftPress = this.leftPress.bind(this);
 		this.rightPress = this.rightPress.bind(this);
@@ -373,6 +375,7 @@ export class TabHolder extends Component {
 			this.checkWidth();
 		}
 		window.addEventListener('resize', this.checkWidth);
+		//setAttributes({ clientHeight: this.tabBarRef.current.parentElement.nextElementSibling.clientHeight});
 
 		if (tabsTitle.length !== tabsTitleAlignment.length) {
 			setAttributes({
@@ -423,13 +426,14 @@ export class TabHolder extends Component {
 			});
 			current.scrollLeft = current.scrollWidth - current.clientWidth;
 		}
+
 		if (
 			prevProps.attributes.tabsTitle.length !==
 			this.props.attributes.tabsTitle.length
 		) {
-			this.setState({
-				showScrollButtons: current.scrollWidth > current.clientWidth
-			});
+            this.setState({
+                showScrollButtons: current.scrollWidth > current.clientWidth
+            });
 		}
 	}
 	render() {
@@ -463,6 +467,7 @@ export class TabHolder extends Component {
 		const tabs = block.innerBlocks;
 
 		const showControls = (type, index) => {
+
 			setAttributes({
 				activeControl: `${type}-${index}`,
 				activeTab: index
@@ -492,6 +497,29 @@ export class TabHolder extends Component {
 			}
 		};
 
+        if( attributes.tabVertical ) {
+            setAttributes({verticalHolderCss: 'vertical-holder',
+                verticalTabCss: '-vertical-tab',
+                verticalWrapCss: 'vertical-',
+                verticalTabWidth: 'vertical-tab-width',
+                verticalContentWidth: 'vertical-content-width',
+                orientIconFirst: 'top',
+                orientIconSecond: 'bottom',
+                orient: 'y'
+            })
+        }
+        else{
+            setAttributes({ verticalHolderCss: '',
+                verticalTabCss: '',
+                verticalWrapCss: '',
+                verticalTabWidth: '',
+                verticalContentWidth: '',
+                orientIconFirst: 'left',
+                orientIconSecond: 'right',
+                orient: 'x'
+            })
+        }
+
 		if (tabsTitle.length === 0) {
 			addTab(0);
 		}
@@ -504,13 +532,13 @@ export class TabHolder extends Component {
 			<div
 				className={
 					className +
-					'-tab-title-wrap SortableItem' +
+					'-tab-title-' + attributes.verticalWrapCss + 'wrap SortableItem' +
 					(activeTab === i ? ' active' : '')
 				}
 				style={{
 					textAlign: tabsTitleAlignment[i],
 					backgroundColor: activeTab === i ? theme : 'initial',
-					color: activeTab === i ? titleColor : '#000000'
+					color: activeTab === i ? titleColor : '#000000',
 				}}
 				onClick={() => {
 					const { scrollLeft } = this.tabBarRef.current;
@@ -570,7 +598,7 @@ export class TabHolder extends Component {
 
 		const SortableList = SortableContainer(({ items }) => (
 			<div
-				className={className + '-tabs-title SortableList'}
+				className={className + '-tabs-title' + attributes.verticalTabCss + ' SortableList' }
 				style={{
 					justifyContent:
 						tabsAlignment === 'center'
@@ -591,7 +619,7 @@ export class TabHolder extends Component {
 					/>
 				))}
 				<div
-					className={className + '-tab-title-wrap'}
+					className={className + '-tab-title-' + attributes.verticalWrapCss + 'wrap'}
 					key={tabsTitle.length}
 					onClick={() => addTab(tabsTitle.length)}
 				>
@@ -680,11 +708,13 @@ export class TabHolder extends Component {
 				</BlockControls>
 			),
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
+			console.log(this.state.showScrollButtons),
 			<div className={className}>
-				<div className={className + '-holder'}>
-					<div className={className + '-tab-holder'}>
+				<div className={className + '-holder ' + attributes.verticalHolderCss}>
+					<div className={className + '-tab-holder ' + attributes.verticalTabWidth}
+					>
 						<SortableList
-							axis="x"
+                            axis = {attributes.orient}
 							items={tabsTitle}
 							onSortEnd={({ oldIndex, newIndex }) => {
 								this.setState({
@@ -735,14 +765,14 @@ export class TabHolder extends Component {
 										clearTimeout(this.scrollTrigger);
 									}}
 									className={
-										className + '-scroll-button-left'
+										className + '-scroll-button-' + attributes.orientIconFirst
 									}
 								>
 									<span className="dashicons dashicons-arrow-left-alt2" />
 								</button>
 								<button
 									className={
-										className + '-scroll-button-right'
+										className + '-scroll-button-' + attributes.orientIconSecond
 									}
 									onMouseDown={_ => {
 										this.rightPress();
@@ -764,7 +794,7 @@ export class TabHolder extends Component {
 							</div>
 						)}
 					</div>
-					<div className={className + '-tabs-content'}>
+					<div className={className + '-tabs-content ' + attributes.verticalContentWidth}>
 						<InnerBlocks
 							templateLock={false}
 							allowedBlocks={['ub/tab-block']}
