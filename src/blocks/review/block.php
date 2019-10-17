@@ -66,12 +66,13 @@ function ub_render_review_block($attributes){
                     ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>':'').
                 ub_generateStarDisplay($average,$starCount, $blockID.'-average',
                 $inactiveStarColor, $activeStarColor, "ub_review_average_stars").'
-            </div></div>
-    <script type="application/ld+json">
+            </div></div>' . ($enableReviewSchema ?
+    '<script type="application/ld+json">
     {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
         $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.
         '"},"reviewRating":{"@type":"Rating","ratingValue":'.$average
-        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script></div>';
+        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script>' : '')
+        . '</div>';
 }
 
 function ub_register_review_block() {

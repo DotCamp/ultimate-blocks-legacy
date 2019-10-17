@@ -680,6 +680,10 @@ $defaultValues = array(
             'ctaOpenInNewTab' => array(
                 'type' => 'boolean',
                 'default' => true
+            ),
+            'enableReviewSchema' => array(
+                'type' => 'boolean',
+                'default' => true
             )
         )
     ),

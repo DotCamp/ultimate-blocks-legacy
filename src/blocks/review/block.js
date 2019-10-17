@@ -32,8 +32,8 @@ const attributes = {
 		default: ''
 	},
 	itemName: {
-        type: 'string',
-        default: ''
+		type: 'string',
+		default: ''
 	},
 	items: {
 		type: 'string',
@@ -52,12 +52,12 @@ const attributes = {
 		default: 'Summary'
 	},
 	summaryDescription: {
-        type: 'string',
-        default: ''
+		type: 'string',
+		default: ''
 	},
 	callToActionText: {
-        type: 'string',
-        default: ''
+		type: 'string',
+		default: ''
 	},
 	callToActionURL: {
 		type: 'string',
@@ -102,6 +102,10 @@ const attributes = {
 	ctaOpenInNewTab: {
 		type: 'boolean',
 		default: true
+	},
+	enableReviewSchema: {
+		type: 'boolean',
+		default: true
 	}
 };
 
@@ -138,7 +142,8 @@ registerBlockType('ub/review', {
 			authorAlign,
 			enableCTA,
 			ctaNoFollow,
-			ctaOpenInNewTab
+			ctaOpenInNewTab,
+			enableReviewSchema
 		} = props.attributes;
 
 		if (blockID !== block.clientId) {
@@ -286,6 +291,23 @@ registerBlockType('ub/review', {
 								</PanelRow>
 							</React.Fragment>
 						)}
+					</PanelBody>
+					<PanelBody title={__('Review schema')} initialOpen={true}>
+						<PanelRow>
+							<label htmlFor="ub-review-schema-toggle">
+								{__('Enable review schema')}
+							</label>
+							<FormToggle
+								id="ub-review-schema-toggle"
+								label={__('Enable review schema')}
+								checked={enableReviewSchema}
+								onChange={_ =>
+									setAttributes({
+										enableReviewSchema: !enableReviewSchema
+									})
+								}
+							/>
+						</PanelRow>
 					</PanelBody>
 				</InspectorControls>
 			),
