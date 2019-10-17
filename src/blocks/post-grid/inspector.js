@@ -56,18 +56,17 @@ export default class Inspector extends Component{
 
         const{
             attributes: {
-                displayPostImage,
-                displayPostAuthor,
-                displayPostDate,
-                displayPostExcerpt,
+                checkPostImage,
+                checkPostAuthor,
+                checkPostDate,
+                checkPostExcerpt,
+                checkPostLink,
                 excerptLength,
-                displayPostLink,
                 readMoreText,
-                postsShow,
+                amountPosts,
                 postLayout,
                 columns,
                 categories,
-                postType,
                 orderBy,
                 order
             },
@@ -77,8 +76,6 @@ export default class Inspector extends Component{
 
         // Check for posts
         const hasPosts = Array.isArray( posts ) && posts.length;
-        // Check the post type
-        const isPost = 'post' === postType;
 
         // Post type options
         const postTypeOptions = [
@@ -108,13 +105,13 @@ export default class Inspector extends Component{
                     }
                     <QueryControls
                         { ...{ order, orderBy } }
-                        numberOfItems={ postsShow }
+                        numberOfItems={ amountPosts }
                         categoriesList={ categoriesList }
                         selectedCategoryId={ categories }
                         onOrderChange={ ( value ) => setAttributes({ order: value }) }
                         onOrderByChange={ ( value ) => setAttributes({ orderBy: value }) }
                         onCategoryChange={ ( value ) => setAttributes({ categories: '' !== value ? value : undefined }) }
-                        onNumberOfItemsChange={ ( value ) => setAttributes({ postsShow: value }) }
+                        onNumberOfItemsChange={ ( value ) => setAttributes({ amountPosts: value }) }
                     />
                 </PanelBody>
                 <PanelBody
@@ -122,25 +119,25 @@ export default class Inspector extends Component{
                 >
                     <ToggleControl
                         label={__('Display Featured Image', 'ultimate-blocks')}
-                        checked={displayPostImage}
-                        onChange={ displayPostImage => setAttributes({displayPostImage})}
+                        checked={checkPostImage}
+                        onChange={ checkPostImage => setAttributes({checkPostImage})}
                     />
                     <ToggleControl
                         label={__('Display Author', 'ultimate-blocks')}
-                        checked={displayPostAuthor}
-                        onChange={ displayPostAuthor => setAttributes({displayPostAuthor})}
+                        checked={checkPostAuthor}
+                        onChange={ checkPostAuthor => setAttributes({checkPostAuthor})}
                     />
                     <ToggleControl
                         label={__('Display Date', 'ultimate-blocks')}
-                        checked={displayPostDate}
-                        onChange={ displayPostDate => setAttributes({displayPostDate})}
+                        checked={checkPostDate}
+                        onChange={ checkPostDate => setAttributes({checkPostDate})}
                     />
                     <ToggleControl
                         label={__('Display Excerpt', 'ultimate-blocks')}
-                        checked={displayPostExcerpt}
-                        onChange={ displayPostExcerpt => setAttributes({displayPostExcerpt})}
+                        checked={checkPostExcerpt}
+                        onChange={ checkPostExcerpt => setAttributes({checkPostExcerpt})}
                     />
-                    { displayPostExcerpt &&
+                    { checkPostExcerpt &&
                         <RangeControl
                             label={ __( 'Excerpt Length', 'ultimate-blocks' ) }
                             value={ excerptLength }
@@ -151,10 +148,10 @@ export default class Inspector extends Component{
                     }
                     <ToggleControl
                         label={ __( 'Display Continue Reading Link', 'ultimate-blocks' ) }
-                        checked={ displayPostLink }
-                        onChange={ displayPostLink => setAttributes({ displayPostLink }) }
+                        checked={ checkPostLink }
+                        onChange={ checkPostLink => setAttributes({ checkPostLink }) }
                     />
-                    { displayPostLink &&
+                    { checkPostLink &&
                     <TextControl
                         label={ __( 'Customize Continue Reading Text', 'ultimate-blocks' ) }
                         type="text"

@@ -298,10 +298,6 @@ $defaultValues = array(
             'initialShow' => array(
                 'type' => 'boolean',
                 'default' => false
-            ),
-            'toggleAlign' => array(
-                'type' => 'string',
-                'default' => 'left'
             )
         )
     ),
@@ -318,10 +314,6 @@ $defaultValues = array(
             'isVisible' => array(
                 'type' => 'boolean',
                 'default' => false
-            ),
-            'toggleAlign' => array(
-                'type' => 'string',
-                'default' => 'left'
             )
         )
     ),
@@ -840,40 +832,6 @@ $defaultValues = array(
             )
         )
     ),
-    'ub/styled-list' => array(
-        'attributes' => array(
-            'blockID' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'list' => array(
-                'type' => 'text',
-                'default' => '<li>Item 1</li><li>Item 2</li><li>Item 3</li>'
-            ),
-            'listItem' => array(
-                'type' => 'array',
-                'default' => array_fill(0, 3,
-                    array(
-                        'text' => '',
-                        'selectedIcon' => 'check',
-                        'indent' => 0
-                    )
-                )
-            ),
-            'selectedIcon' => array(
-                'type' => 'string',
-                'default' => 'check'
-            ),
-            'iconColor' => array(
-                'type' => 'string',
-                'default' => '#000000'
-            ),
-            'iconSize' => array(
-                'type' => 'number',
-                'default' => 5
-            )
-        )
-    ),
     'ub/tabbed-content-block' => array(
         'attributes' => array(
             'blockID' => array(
@@ -1023,31 +981,31 @@ $defaultValues = array(
             'className'           => array(
                 'type' => 'string',
             ),
-            'postsShow'         => array(
+            'amountPosts'         => array(
                 'type'    => 'number',
                 'default' => 6,
             ),
-            'displayPostDate'     => array(
+            'checkPostDate'     => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'displayPostExcerpt'  => array(
+            'checkPostExcerpt'  => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'displayPostAuthor'   => array(
+            'checkPostAuthor'   => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'displayPostImage'    => array(
+            'checkPostImage'    => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'displayPostLink'     => array(
+            'checkPostLink'     => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'displayPostTitle'    => array(
+            'checkPostTitle'    => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),

@@ -1,21 +1,17 @@
 const attributes = {
-       blockID: {
-           type: 'string',
-           default: ''
-       },
-       displayPostImage: {
+       checkPostImage: {
            type: 'boolean',
            default: 'true'
        },
-       displayPostAuthor: {
+       checkPostAuthor: {
            type: 'boolean',
            default: 'true'
        },
-       displayPostDate: {
+       checkPostDate: {
            type: 'boolean',
            default: 'true'
        },
-       displayPostExcerpt: {
+       checkPostExcerpt: {
            type: 'boolean',
            default: 'true'
        },
@@ -23,7 +19,7 @@ const attributes = {
            type: 'number',
            default: 55
        },
-       displayPostLink: {
+       checkPostLink: {
            type: 'bolean',
            default: 'true',
        },
@@ -31,7 +27,7 @@ const attributes = {
            type: 'string',
            default: 'Continue Reading'
        },
-       postsShow: {
+       amountPosts: {
            type: 'number',
            default: 6,
        },

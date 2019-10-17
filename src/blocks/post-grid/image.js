@@ -7,10 +7,9 @@ const { addQueryArgs } = wp.url;
 const { apiFetch } = wp;
 
 const { __ } = wp.i18n;
-const { Fragment, Component } = wp.element;
-const { Placeholder, Dashicon } = wp.components;
+const { Component } = wp.element;
 
-export default class PostGridImage extends Component {
+export default class FeaturedImage extends Component {
 
     constructor ( props ) {
         super();
@@ -78,28 +77,7 @@ export default class PostGridImage extends Component {
 
     render(){
         return(
-            <Fragment>
-                 <img src={this.state.imageUrl ? this.state.imageUrl : this.props.imgSizeLandscape} alt='img'/>
-                {
-                    (this.state.loaded) &&
-                    <Fragment>
-                        <div className={'ub-post-grid-no-image-icon'}>
-                            <Dashicon
-                                icon={'warning'}
-                            />
-                        </div>
-
-                        <Placeholder
-                            className={'ub-post-grid-no-image-placeholder'}
-                        >
-                            <Dashicon icon={'info'}/>
-                            <div className="components-placeholder__label">
-                                { __('The correct size was not found for this image, so it may not display correctly. Check preview to make sure. Recommended image height is 400px.', 'ultimate-blocks') }
-                            </div>
-                        </Placeholder>
-                    </Fragment>
-                }
-            </Fragment>
+            <img src={this.state.imageUrl ? this.state.imageUrl : this.props.imgSizeLandscape} alt='img'/>
         );
     }
 }
