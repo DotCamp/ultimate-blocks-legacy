@@ -116,6 +116,10 @@ const attributes = {
 	openInNewTab: {
 		type: 'boolean',
 		default: false
+	},
+	useHeadingTag: {
+		type: 'boolean',
+		default: false
 	}
 };
 

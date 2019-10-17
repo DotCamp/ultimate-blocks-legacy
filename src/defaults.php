@@ -146,6 +146,10 @@ $defaultValues = array(
             'openInNewTab' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'useHeadingTag' => array(
+                'type' => 'boolean',
+                'default' => false
             )
         )
     ),

@@ -77,7 +77,8 @@ export const inspectorControls = props => {
 		buttonColor,
 		buttonTextColor,
 		addNofollow,
-		openInNewTab
+		openInNewTab,
+		useHeadingTag
 	} = attributes;
 
 	return (
@@ -122,6 +123,15 @@ export const inspectorControls = props => {
 						setAttributes({ headColor: colorValue })
 					}
 				/>
+				{typeof useHeadingTag !== 'undefined' && (
+					<CheckboxControl
+						label={__('Use Heading Tag')}
+						checked={useHeadingTag}
+						onChange={_ =>
+							setAttributes({ useHeadingTag: !useHeadingTag })
+						}
+					/>
+				)}
 			</PanelBody>
 
 			<PanelBody title={__('Content Settings')} initialOpen={false}>
@@ -222,7 +232,8 @@ export const editorDisplay = props => {
 		buttonTextColor,
 		ub_call_to_action_headline_text,
 		ub_cta_content_text,
-		ub_cta_button_text
+		ub_cta_button_text,
+		useHeadingTag
 	} = attributes;
 	return (
 		<Fragment>
@@ -236,7 +247,7 @@ export const editorDisplay = props => {
 			>
 				<div className="ub_call_to_action_headline">
 					<RichText
-						tagName="h2"
+						tagName={useHeadingTag ? 'h2' : 'p'}
 						placeholder={__('CTA Title Goes Here')}
 						className="ub_call_to_action_headline_text"
 						style={{
