@@ -13,7 +13,7 @@ function ub_render_image_slider_block($attributes){
     $captionArray = count($descriptions) > 0 ? $descriptions : json_decode($captions, true);
 
     $gallery = '';
-    
+
     foreach($imageArray as $key => $image){
         $gallery .= '<div>
         <img src="'.$image['url'].'"'.($blockID==''?' style="height: '.$sliderHeight.'px;"':'').'>'.

@@ -179,7 +179,7 @@ registerBlockType('ub/image-slider', {
 						<ToggleControl
 							label={__('Wrap around')}
 							checked={wrapsAround}
-							onChange={() => {
+							onChange={_ => {
 								setAttributes({ wrapsAround: !wrapsAround });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -187,7 +187,7 @@ registerBlockType('ub/image-slider', {
 						<ToggleControl
 							label={__('Allow dragging')}
 							checked={isDraggable}
-							onChange={() => {
+							onChange={_ => {
 								setAttributes({ isDraggable: !isDraggable });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -195,7 +195,7 @@ registerBlockType('ub/image-slider', {
 						<ToggleControl
 							label={__('Show page dots')}
 							checked={showPageDots}
-							onChange={() => {
+							onChange={_ => {
 								setAttributes({ showPageDots: !showPageDots });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -203,7 +203,7 @@ registerBlockType('ub/image-slider', {
 						<ToggleControl
 							label={__('Enable autoplay')}
 							checked={autoplays}
-							onChange={() => {
+							onChange={_ => {
 								setAttributes({ autoplays: !autoplays });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -245,7 +245,7 @@ registerBlockType('ub/image-slider', {
 			>
 				{imageArray.length === 0 ? (
 					<MediaPlaceholder
-						onSelect={newImages => {
+						onSelect={newImages =>
 							props.setAttributes({
 								pics: newImages,
 								descriptions: newImages.map(img => ({
@@ -253,8 +253,8 @@ registerBlockType('ub/image-slider', {
 									text: '',
 									link: ''
 								}))
-							});
-						}}
+							})
+						}
 						labels={{ title: 'Image Slider' }}
 						allowedTypes={['image']}
 						multiple
@@ -309,7 +309,7 @@ registerBlockType('ub/image-slider', {
 										<FormFileUpload
 											multiple
 											isLarge
-											onChange={event => {
+											onChange={event =>
 												mediaUpload({
 													allowedTypes: ['image'],
 													filesList:
@@ -331,8 +331,8 @@ registerBlockType('ub/image-slider', {
 																)
 															)
 														})
-												});
-											}}
+												})
+											}
 											className="ub_image_slider_add_images"
 											accept="image/*"
 											icon="insert"

@@ -150,6 +150,10 @@ $defaultValues = array(
             'useHeadingTag' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'selectedHeadingTag' => array(
+                'type' => 'string',
+                'default' => 'h2'
             )
         )
     ),
@@ -438,7 +442,7 @@ $defaultValues = array(
                 'default' => '[]'
             ),
             'descriptions' => array(
-                'type' => 'string',
+                'type' => 'array',
                 'default' => array()
             ),
             'wrapsAround' => array(
@@ -685,6 +689,10 @@ $defaultValues = array(
             'enableReviewSchema' => array(
                 'type' => 'boolean',
                 'default' => true
+            ),
+            'starOutlineColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
             )
         )
     ),
@@ -838,6 +846,40 @@ $defaultValues = array(
             'outlineColor' => array(
                 'type' => 'string',
                 'default' => '#000000'
+            )
+        )
+    ),
+    'ub/styled-list' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'list' => array(
+                'type' => 'text',
+                'default' => '<li>Item 1</li><li>Item 2</li><li>Item 3</li>'
+            ),
+            'listItem' => array(
+                'type' => 'array',
+                'default' => array_fill(0, 3,
+                    array(
+                        'text' => '',
+                        'selectedIcon' => 'check',
+                        'indent' => 0
+                    )
+                )
+            ),
+            'selectedIcon' => array(
+                'type' => 'string',
+                'default' => 'check'
+            ),
+            'iconColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            ),
+            'iconSize' => array(
+                'type' => 'number',
+                'default' => 5
             )
         )
     ),
