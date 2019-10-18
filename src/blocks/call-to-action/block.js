@@ -120,14 +120,18 @@ const attributes = {
 	useHeadingTag: {
 		type: 'boolean',
 		default: false
+	},
+	selectedHeadingTag: {
+		type: 'string',
+		default: 'h2'
 	}
 };
 
 registerBlockType('ub/call-to-action', {
-	title: __('Call to Action'),
+	title: __('Call to Action', 'ultimate-blocks'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [__('call to action'), __('conversion'), __('Ultimate Blocks')],
+	keywords: [__('call to action', 'ultimate-blocks'), __('conversion', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
 	attributes: oldAttributes,
 	supports: {
 		inserter: false
@@ -296,10 +300,10 @@ registerBlockType('ub/call-to-action', {
 });
 
 registerBlockType('ub/call-to-action-block', {
-	title: __('Call to Action'),
+	title: __('Call to Action', 'ultimate-blocks'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [__('call to action'), __('conversion'), __('Ultimate Blocks')],
+	keywords: [__('call to action', 'ultimate-blocks'), __('conversion', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
 	attributes,
 	edit: compose([
 		withState({ editable: '' }),
