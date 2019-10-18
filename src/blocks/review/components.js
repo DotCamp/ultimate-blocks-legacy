@@ -120,7 +120,8 @@ export class Stars extends Component {
 			inactiveStarColor,
 			onHover,
 			onClick,
-			style
+			style,
+			starOutlineColor
 		} = this.props;
 		return (
 			<div
@@ -140,11 +141,9 @@ export class Stars extends Component {
 						height="20"
 						width="20"
 						viewBox="0 0 150 150"
-						onMouseOver={() =>
-							onHover ? onHover : this.mouseHover(i)
-						}
-						onMouseOut={() => this.mouseLeave()}
-						onClick={() => (onClick ? onClick : this.mouseClick(i))}
+						onMouseOver={_ => onHover || this.mouseHover(i)}
+						onMouseOut={_ => this.mouseLeave()}
+						onClick={_ => onClick || this.mouseClick(i)}
 					>
 						<defs>
 							<mask id={`ub_review_star_filter-${id}-${i}`}>
@@ -168,7 +167,7 @@ export class Stars extends Component {
 							fill={inactiveStarColor}
 							strokeWidth="1.5"
 							d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-							stroke="#000"
+							stroke={starOutlineColor}
 						/>
 						<path
 							className="star"
@@ -177,7 +176,7 @@ export class Stars extends Component {
 							fill={this.state.displayColor}
 							strokeWidth="1.5"
 							d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-							stroke="#000"
+							stroke={starOutlineColor}
 						/>
 					</svg>
 				))}
@@ -221,6 +220,7 @@ export class ReviewBody extends Component {
 			inactiveStarColor,
 			activeStarColor,
 			selectedStarColor,
+			starOutlineColor,
 			setEditable,
 			alignments,
 			enableCTA
@@ -246,7 +246,7 @@ export class ReviewBody extends Component {
 					value={itemName}
 					style={{ textAlign: titleAlign }}
 					onChange={text => setItemName(text)}
-					unstableOnFocus={() => setEditable('reviewTitle')}
+					unstableOnFocus={_ => setEditable('reviewTitle')}
 				/>
 				<RichText
 					tagName="p"
@@ -254,7 +254,7 @@ export class ReviewBody extends Component {
 					value={authorName}
 					style={{ textAlign: authorAlign }}
 					onChange={text => setAuthorName(text)}
-					unstableOnFocus={() => setEditable('reviewAuthor')}
+					unstableOnFocus={_ => setEditable('reviewAuthor')}
 				/>
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
@@ -268,7 +268,7 @@ export class ReviewBody extends Component {
 								newArray[i].label = text;
 								setItems(newArray);
 							}}
-							unstableOnFocus={() => setEditable('')}
+							unstableOnFocus={_ => setEditable('')}
 						/>
 						<div
 							key={i}
@@ -281,7 +281,7 @@ export class ReviewBody extends Component {
 								<div
 									className="dashicons dashicons-trash"
 									style={{ float: 'right' }}
-									onClick={() => {
+									onClick={_ => {
 										setEditable('');
 										let newItems = items
 											.slice(0, i)
@@ -321,6 +321,7 @@ export class ReviewBody extends Component {
 								inactiveStarColor={inactiveStarColor}
 								activeStarColor={activeStarColor}
 								selectedStarColor={selectedStarColor}
+								starOutlineColor={starOutlineColor}
 							/>
 						</div>
 					</div>
@@ -342,14 +343,14 @@ export class ReviewBody extends Component {
 						tagName="p"
 						onChange={text => setSummaryTitle(text)}
 						value={summaryTitle}
-						unstableOnFocus={() => setEditable('')}
+						unstableOnFocus={_ => setEditable('')}
 					/>
 					<div className="ub_review_overall_value">
 						<RichText
 							placeholder={__('Summary of the review goes here')}
 							onChange={text => setSummaryDescription(text)}
 							value={summaryDescription}
-							unstableOnFocus={() => setEditable('')}
+							unstableOnFocus={_ => setEditable('')}
 						/>
 						<span className="ub_review_rating">
 							{Math.round(average * 10) / 10}
@@ -374,7 +375,7 @@ export class ReviewBody extends Component {
 										onChange={text =>
 											setCallToActionText(text)
 										}
-										unstableOnFocus={() => setEditable('')}
+										unstableOnFocus={_ => setEditable('')}
 									/>
 								</div>
 							)}
@@ -382,13 +383,14 @@ export class ReviewBody extends Component {
 						<Stars
 							id={`${ID}-average`}
 							className="ub_review_average_stars"
-							onHover={() => null}
-							onClick={() => null}
+							onHover={_ => null}
+							onClick={_ => null}
 							value={average}
 							limit={starCount}
 							inactiveStarColor={inactiveStarColor}
 							activeStarColor={activeStarColor}
 							selectedStarColor={selectedStarColor}
+							starOutlineColor={starOutlineColor}
 						/>
 					</div>
 					{hasFocus && enableCTA && (

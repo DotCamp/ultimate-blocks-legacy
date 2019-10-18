@@ -1,7 +1,7 @@
 <?php
 
 function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
-    $activeStarColor, $className=''){
+    $activeStarColor, $starOutlineColor, $className=''){
     $stars = '';
 
     foreach(range(0, $limit-1) as $current){
@@ -11,10 +11,10 @@ function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
             ($value - $current < 1 ? $value - $current : 1) : 0)*150
         .'" y="0" x="0" fill="#fff"/></mask></defs> <path fill="'.$inactiveStarColor.'" stroke-width="1.5"
         d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-        stroke="#000"/><path class="star" id="star'.$current.
+        stroke="'.$starOutlineColor.'"/><path class="star" id="star'.$current.
         '" mask="url(#ub_review_star_filter-'.$id.'-'.$current.')" fill="'.$activeStarColor.'" strokeWidth="1.5"
         d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-        stroke="#000"/>
+        stroke="'.$starOutlineColor.'"/>
         </svg>';
     }
 
@@ -40,7 +40,7 @@ function ub_render_review_block($attributes){
     foreach($parsedItems as $key=>$item){
         $starRatings .= '<div class="ub_review_entry">'.$item['label'].
         ub_generateStarDisplay($item['value'],$starCount, $blockID.'-'.$key,
-        $inactiveStarColor, $activeStarColor, "ub_review_stars").'</div>';
+        $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_stars").'</div>';
     }
 
     return 	'<div class="ub_review_block'.(isset($className) ? ' ' . esc_attr($className) : '').
@@ -65,7 +65,7 @@ function ub_render_review_block($attributes){
                 .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
                     ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>':'').
                 ub_generateStarDisplay($average,$starCount, $blockID.'-average',
-                $inactiveStarColor, $activeStarColor, "ub_review_average_stars").'
+                $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").'
             </div></div>' . ($enableReviewSchema ?
     '<script type="application/ld+json">
     {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.

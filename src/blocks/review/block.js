@@ -79,10 +79,6 @@ const attributes = {
 		type: 'string',
 		default: '#eeee00'
 	},
-	selectedStarColor: {
-		type: 'string',
-		default: '#ffff00'
-	},
 	titleAlign: {
 		type: 'string',
 		default: 'left'
@@ -106,6 +102,10 @@ const attributes = {
 	enableReviewSchema: {
 		type: 'boolean',
 		default: true
+	},
+	starOutlineColor: {
+		type: 'string',
+		default: '#000000'
 	}
 };
 
@@ -137,7 +137,7 @@ registerBlockType('ub/review', {
 			callToActionForeColor,
 			inactiveStarColor,
 			activeStarColor,
-			selectedStarColor,
+			starOutlineColor,
 			titleAlign,
 			authorAlign,
 			enableCTA,
@@ -209,12 +209,12 @@ registerBlockType('ub/review', {
 								label: __('Inactive Star Color')
 							},
 							{
-								value: selectedStarColor,
+								value: starOutlineColor,
 								onChange: colorValue =>
 									setAttributes({
-										selectedStarColor: colorValue
+										starOutlineColor: colorValue
 									}),
-								label: __('Selected Star Color')
+								label: __('Star Outline Color')
 							}
 						]}
 					/>
@@ -349,7 +349,8 @@ registerBlockType('ub/review', {
 				callToActionForeColor={callToActionForeColor}
 				inactiveStarColor={inactiveStarColor}
 				activeStarColor={activeStarColor}
-				selectedStarColor={selectedStarColor}
+				selectedStarColor={activeStarColor}
+				starOutlineColor={starOutlineColor}
 				setAuthorName={newValue =>
 					setAttributes({ authorName: newValue })
 				}

@@ -657,6 +657,7 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#eeee00'
             ),
+            //retained for backwards compatibility
             'selectedStarColor' => array(
                 'type' => 'string',
                 'default' => '#ffff00'
