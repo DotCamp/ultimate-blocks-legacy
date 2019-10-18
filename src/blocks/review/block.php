@@ -70,7 +70,8 @@ function ub_render_review_block($attributes){
     '<script type="application/ld+json">
     {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
         $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.
-        '"},"reviewRating":{"@type":"Rating","ratingValue":'.$average
+        '","aggregateRating":{"@type": "AggregateRating","ratingValue":'.$average.
+            ',"ratingCount":'.count($parsedItems).'}},"reviewRating":{"@type":"Rating","ratingValue":'.$average
         .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script>' : '')
         . '</div>';
 }
