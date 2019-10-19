@@ -123,10 +123,10 @@ const attributes = {
 };
 
 registerBlockType('ub/button-block', {
-	title: __('Button (Improved)'),
+	title: __('Button (Improved)', 'ultimate-blocks'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [__('Button'), __('Buttons'), __('Ultimate Blocks')],
+	keywords: [__('Button', 'ultimate-blocks'), __('Buttons', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -292,11 +292,11 @@ registerBlockType('ub/button-block', {
 });
 
 registerBlockType('ub/button', {
-	title: __('Button (Improved)'),
+	title: __('Button (Improved)', 'ultimate-blocks'),
 	icon: icon,
 	category: 'ultimateblocks',
 	attributes,
-	keywords: [__('Button'), __('Buttons'), __('Ultimate Blocks')],
+	keywords: [__('Button', 'ultimate-blocks'), __('Buttons', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
 	edit: compose([
 		withState({
 			isMouseHovered: false,

@@ -45,11 +45,17 @@ export const blockControls = props => {
 
 export const inspectorControls = props => {
 	const BUTTON_SIZES = {
-		small: 'S',
-		medium: 'M',
-		large: 'L',
-		larger: 'XL'
+		small: __('S', 'ultimate-blocks'),
+		medium: __('M', 'ultimate-blocks'),
+		large: __('L', 'ultimate-blocks'),
+		larger: __('XL', 'ultimate-blocks')
 	};
+
+	const BUTTON_WIDTHS = {
+		fixed: __('Fixed', 'ultimate-blocks'),
+		flex: __('Flexible', 'ultimate-blocks'),
+		full: __('Full', 'ultimate-blocks')
+	}
 
 	const { setAttributes, setState, availableIcons, iconSearchTerm } = props;
 
@@ -69,9 +75,9 @@ export const inspectorControls = props => {
 	} = props.attributes;
 	return (
 		<InspectorControls>
-			<PanelBody title={__('Button Size')}>
+			<PanelBody title={__('Button Size', 'ultimate-blocks')}>
 				<div className="blocks-font-size__main">
-					<ButtonGroup aria-label={__('Button Size')}>
+					<ButtonGroup aria-label={__('Button Size', 'ultimate-blocks')}>
 						{Object.keys(BUTTON_SIZES).map(b => (
 							<Button
 								isLarge
@@ -84,43 +90,40 @@ export const inspectorControls = props => {
 						))}
 					</ButtonGroup>
 				</div>
-				<SelectControl
-					label={__('Button width', 'ultimate-blocks')}
-					options={[
-						{
-							value: 'fixed',
-							label: __('Fixed width', 'ultimate-blocks')
-						},
-						{
-							value: 'flex',
-							label: __('Flexible width', 'ultimate-blocks')
-						},
-						{
-							value: 'full',
-							label: __('Full width', 'ultimate-blocks')
-						}
-					]}
-					value={buttonWidth}
-					onChange={buttonWidth => setAttributes({ buttonWidth })}
-				/>
 			</PanelBody>
-			<PanelBody title={__('Button Link Settings')}>
+			<PanelBody title={__('Button Width', 'ultimate-blocks')}>
+				<div className="blocks-font-size__main">
+					<ButtonGroup aria-label={__('Button Width', 'ultimate-blocks')}>
+						{Object.keys(BUTTON_WIDTHS).map(b => (
+							<Button
+								isLarge
+								isPrimary={buttonWidth === b}
+								aria-pressed={buttonWidth === b}
+								onClick={() => setAttributes({ buttonWidth: b })}
+							>
+								{BUTTON_WIDTHS[b]}
+							</Button>
+						))}
+					</ButtonGroup>
+				</div>
+			</PanelBody>
+			<PanelBody title={__('Button Link Settings', 'ultimate-blocks')}>
 				<CheckboxControl
-					label={__('Open Link in New Tab')}
+					label={__('Open Link in New Tab', 'ultimate-blocks')}
 					checked={openInNewTab}
 					onChange={_ =>
 						setAttributes({ openInNewTab: !openInNewTab })
 					}
 				/>
 				<CheckboxControl
-					label={__('Add Nofollow to Link')}
+					label={__('Add Nofollow to Link', 'ultimate-blocks')}
 					checked={addNofollow}
 					onChange={_ => setAttributes({ addNofollow: !addNofollow })}
 				/>
 			</PanelBody>
-			<PanelBody title={__('Button Style')}>
+			<PanelBody title={__('Button Style', 'ultimate-blocks')}>
 				<ToggleControl
-					label={__('Rounded')}
+					label={__('Rounded', 'ultimate-blocks')}
 					checked={buttonRounded}
 					onChange={() =>
 						setAttributes({
@@ -129,7 +132,7 @@ export const inspectorControls = props => {
 					}
 				/>
 				<ToggleControl
-					label={__('Transparent')}
+					label={__('Transparent', 'ultimate-blocks')}
 					checked={buttonIsTransparent}
 					onChange={() =>
 						setAttributes({
@@ -138,9 +141,9 @@ export const inspectorControls = props => {
 					}
 				/>
 			</PanelBody>
-			<PanelBody title={__('Button Icon')}>
+			<PanelBody title={__('Button Icon', 'ultimate-blocks')}>
 				<div className="ub-button-grid">
-					<p>{__('Selected icon')}</p>
+					<p>{__('Selected icon', 'ultimate-blocks')}</p>
 					<div className="ub-button-grid-selector">
 						<Dropdown
 							position="bottom right"
@@ -158,7 +161,7 @@ export const inspectorControls = props => {
 											35
 										)
 									}
-									label={__('Open icon selection dialog')}
+									label={__('Open icon selection dialog', 'ultimate-blocks')}
 									onClick={onToggle}
 									aria-expanded={isOpen}
 								/>
@@ -183,7 +186,7 @@ export const inspectorControls = props => {
 												})
 											}
 										>
-											{__('No icon')}
+											{__('No icon', 'ultimate-blocks')}
 										</Button>
 									)}
 									<br />
@@ -211,20 +214,20 @@ export const inspectorControls = props => {
 							)}
 						/>
 					</div>
-					<p>{__('Icon position')}</p>
+					<p>{__('Icon position', 'ultimate-blocks')}</p>
 					<SelectControl
 						className="ub-button-grid-selector"
 						value={iconPosition}
 						options={[
-							{ label: __('Left'), value: 'left' },
-							{ label: __('Right'), value: 'right' }
+							{ label: __('Left', 'ultimate-blocks'), value: 'left' },
+							{ label: __('Right', 'ultimate-blocks'), value: 'right' }
 						]}
 						onChange={pos => setAttributes({ iconPosition: pos })}
 					/>
 				</div>
 			</PanelBody>
 			<PanelColorSettings
-				title={__('Button Colors')}
+				title={__('Button Colors', 'ultimate-blocks')}
 				initialOpen={true}
 				colorSettings={
 					buttonIsTransparent
@@ -235,7 +238,7 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonColor: colorValue
 										}),
-									label: __('Button Color')
+									label: __('Button Color', 'ultimate-blocks')
 								},
 								{
 									value: buttonHoverColor,
@@ -243,7 +246,7 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonHoverColor: colorValue
 										}),
-									label: __('Button Color on Hover')
+									label: __('Button Color on Hover', 'ultimate-blocks')
 								}
 						  ]
 						: [
@@ -253,7 +256,7 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonColor: colorValue
 										}),
-									label: __('Button Background')
+									label: __('Button Background', 'ultimate-blocks')
 								},
 								{
 									value: buttonTextColor,
@@ -261,7 +264,7 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonTextColor: colorValue
 										}),
-									label: __('Button Text Color')
+									label: __('Button Text Color', 'ultimate-blocks')
 								},
 								{
 									value: buttonHoverColor,
@@ -269,7 +272,7 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonHoverColor: colorValue
 										}),
-									label: __('Button Background on Hover')
+									label: __('Button Background on Hover', 'ultimate-blocks')
 								},
 								{
 									value: buttonTextHoverColor,
@@ -277,7 +280,7 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonTextHoverColor: colorValue
 										}),
-									label: __('Button Text Color on Hover')
+									label: __('Button Text Color on Hover', 'ultimate-blocks')
 								}
 						  ]
 				}
@@ -368,7 +371,7 @@ export const editorDisplay = props => {
 							)}
 						<RichText
 							className="ub-button-block-btn"
-							placeholder={__('Button Text')}
+							placeholder={__('Button Text', 'ultimate-blocks')}
 							onChange={value =>
 								setAttributes({ buttonText: value })
 							}
@@ -399,7 +402,7 @@ export const editorDisplay = props => {
 						/>
 						<IconButton
 							icon={'editor-break'}
-							label={__('Apply')}
+							label={__('Apply', 'ultimate-blocks')}
 							type={'submit'}
 						/>
 					</form>
