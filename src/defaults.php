@@ -62,6 +62,10 @@ $defaultValues = array(
             'openInNewTab' => array(
                 'type' => 'boolean',
                 'default'=> true
+            ),
+            'buttonWidth' => array(
+                'type' => 'string',
+                'default' => 'fixed'
             )
         )
     ),

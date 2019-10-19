@@ -115,6 +115,10 @@ const attributes = {
 	openInNewTab: {
 		type: 'boolean',
 		default: true
+	},
+	buttonWidth: {
+		type: 'string',
+		default: 'fixed'
 	}
 };
 
@@ -226,9 +230,7 @@ registerBlockType('ub/button-block', {
 
 		return (
 			<div
-				className={`${
-					props.className
-				} ub-button-container align-button-${align}`}
+				className={`${props.className} ub-button-container align-button-${align}`}
 			>
 				<a
 					href={url}

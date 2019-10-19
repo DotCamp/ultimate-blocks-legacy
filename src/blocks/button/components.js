@@ -64,7 +64,8 @@ export const inspectorControls = props => {
 		buttonTextHoverColor,
 		buttonIsTransparent,
 		addNofollow,
-		openInNewTab
+		openInNewTab,
+		buttonWidth
 	} = props.attributes;
 	return (
 		<InspectorControls>
@@ -83,21 +84,38 @@ export const inspectorControls = props => {
 						))}
 					</ButtonGroup>
 				</div>
+				<SelectControl
+					label={__('Button width', 'ultimate-blocks')}
+					options={[
+						{
+							value: 'fixed',
+							label: __('Fixed width', 'ultimate-blocks')
+						},
+						{
+							value: 'flex',
+							label: __('Flexible width', 'ultimate-blocks')
+						},
+						{
+							value: 'full',
+							label: __('Full width', 'ultimate-blocks')
+						}
+					]}
+					value={buttonWidth}
+					onChange={buttonWidth => setAttributes({ buttonWidth })}
+				/>
 			</PanelBody>
 			<PanelBody title={__('Button Link Settings')}>
 				<CheckboxControl
 					label={__('Open Link in New Tab')}
 					checked={openInNewTab}
-					onChange={() =>
+					onChange={_ =>
 						setAttributes({ openInNewTab: !openInNewTab })
 					}
 				/>
 				<CheckboxControl
 					label={__('Add Nofollow to Link')}
 					checked={addNofollow}
-					onChange={() =>
-						setAttributes({ addNofollow: !addNofollow })
-					}
+					onChange={_ => setAttributes({ addNofollow: !addNofollow })}
 				/>
 			</PanelBody>
 			<PanelBody title={__('Button Style')}>
@@ -145,7 +163,7 @@ export const inspectorControls = props => {
 									aria-expanded={isOpen}
 								/>
 							)}
-							renderContent={() => (
+							renderContent={_ => (
 								<div>
 									<input
 										type="text"
@@ -289,16 +307,23 @@ export const editorDisplay = props => {
 		buttonRounded,
 		chosenIcon,
 		iconPosition,
-		buttonIsTransparent
+		buttonIsTransparent,
+		buttonWidth
 	} = attributes;
 
 	return (
 		<Fragment>
 			<div className={`ub-button-container align-button-${align}`}>
 				<div
-					className={`ub-button-block-main ub-button-${size}`}
-					onMouseEnter={() => setState({ isMouseHovered: true })}
-					onMouseLeave={() => setState({ isMouseHovered: false })}
+					className={`ub-button-block-main ub-button-${size} ${
+						buttonWidth === 'full'
+							? 'ub-button-full-width'
+							: buttonWidth === 'flex'
+							? `ub-button-flex-${size}`
+							: ''
+					}`}
+					onMouseEnter={_ => setState({ isMouseHovered: true })}
+					onMouseLeave={_ => setState({ isMouseHovered: false })}
 					style={{
 						backgroundColor: buttonIsTransparent
 							? 'transparent'

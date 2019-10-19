@@ -18,7 +18,9 @@ function ub_render_button_block($attributes){
     return '<div class="ub-button-container align-button-'.$align.(isset($className) ? ' ' . esc_attr($className) : '').'"' . (!isset($blockID) || $blockID == '' ? ' ': ' id="ub-button-'.$blockID.'"') . '>
                 <a href="'.esc_url($url).'" target="'.($openInNewTab ? '_blank' : '_self').'"
                 rel="noopener noreferrer'.($addNofollow ? ' nofollow' : '').'"
-                class="ub-button-block-main ub-button-'.$size.'"'.
+                class="ub-button-block-main ub-button-' . $size .
+                ($buttonWidth == 'full' ? ' ub-button-full-width' :
+                    ($buttonWidth == 'flex' ? ' ub-button-flex-'. $size : '')) . '"' .
                 (isset($blockID) && $blockID != '' ? '': 'data-defaultColor="'.$buttonColor.'"
                 data-defaultTextColor="'.$buttonTextColor.'"
                 data-hoverColor="'.$buttonHoverColor.'"
