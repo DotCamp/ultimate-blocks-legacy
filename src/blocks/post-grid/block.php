@@ -3,7 +3,7 @@
  * Server-side rendering for the post grid block
  */
 
-function ub_render_post_grid_block( $attributes ) {
+function ub_query_post(){
 
     /**
      * Global post object.
@@ -13,26 +13,37 @@ function ub_render_post_grid_block( $attributes ) {
      */
     global $post;
 
-    $categories = isset( $attributes['categories'] ) ? $attributes['categories'] : '';
+    $categories = isset($attributes['categories']) ? $attributes['categories'] : '';
 
     /* Setup the query */
     $post_query = new WP_Query(
         array(
-            'posts_per_page'      => $attributes['amountPosts'],
-            'post_status'         => 'publish',
-            'order'               => $attributes['order'],
-            'orderby'             => $attributes['orderBy'],
-            'cat'                 => $categories,
-            'offset'              => $attributes['offset'],
-            'post_type'           => $attributes['postType'],
+            'posts_per_page' => $attributes['amountPosts'],
+            'post_status' => 'publish',
+            'order' => $attributes['order'],
+            'orderby' => $attributes['orderBy'],
+            'cat' => $categories,
+            'offset' => $attributes['offset'],
+            'post_type' => $attributes['postType'],
             'ignore_sticky_posts' => 1,
-            'post__not_in'        => array( $post->ID ), // Exclude the current post from the grid.
+            'post__not_in' => array($post->ID), // Exclude the current post from the grid.
         )
     );
 
-    $post_grid = '';
+    return $post_query;
+
+}
+
+function ub_render_post_grid_block( $attributes ){
+
+    /* get posts */
+
+    $post_query = ub_query_post( );
 
     /* Start the loop */
+
+    $post_grid = '';
+
     if ( $post_query->have_posts() ) {
 
         while ( $post_query->have_posts() ) {
@@ -46,13 +57,6 @@ function ub_render_post_grid_block( $attributes ) {
 
             /* Setup the post classes */
             $post_classes = 'ub-post-grid-item';
-
-            /* Add sticky class */
-            if ( is_sticky( $post_id ) ) {
-                $post_classes .= ' sticky';
-            } else {
-                $post_classes .= null;
-            }
 
             /* Join classes together */
             $post_classes = join( ' ', get_post_class( $post_classes, $post_id ) );
@@ -237,6 +241,7 @@ function ub_render_post_grid_block( $attributes ) {
         return $block_content;
     }
 }
+
 function ub_register_post_grid_block() {
     if( function_exists( 'register_block_type' ) ) {
         require dirname( dirname(__DIR__) ) . '/defaults.php';
@@ -255,6 +260,7 @@ function post_grid_block_image_sizes() {
     // Post Grid Block.
     add_image_size( 'ub-block-post-grid-landscape', 600, 400, true );
 }
+
 add_action( 'after_setup_theme', 'post_grid_block_image_sizes' );
 
 function ub_blocks_register_rest_fields() {
@@ -279,6 +285,7 @@ function ub_blocks_register_rest_fields() {
         )
     );
 }
+
 add_action( 'rest_api_init', 'ub_blocks_register_rest_fields' );
 
 function ub_blocks_get_image_src_landscape( $object, $field_name, $request ) {
@@ -290,7 +297,7 @@ function ub_blocks_get_image_src_landscape( $object, $field_name, $request ) {
     return $feat_img_array[0];
 }
 
-function ub_blocks_get_author_info( $object, $field_name, $request ) {
+function ub_blocks_get_author_info( $object,  $field_name, $request ) {
     /* Get the author name */
     $author_data['display_name'] = get_the_author_meta( 'display_name', $object['author'] );
     /* Get the author link */
