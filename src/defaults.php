@@ -922,6 +922,10 @@ $defaultValues = array(
                 'items' => array(
                     'type' => 'string'
                 )
+            ),
+            'tabVertical' => array(
+                'type' => 'boolean',
+                'default' => false
             )
         )
     ),

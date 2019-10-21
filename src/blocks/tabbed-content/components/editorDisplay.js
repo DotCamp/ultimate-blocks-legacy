@@ -431,9 +431,9 @@ export class TabHolder extends Component {
 			prevProps.attributes.tabsTitle.length !==
 			this.props.attributes.tabsTitle.length
 		) {
-            this.setState({
-                showScrollButtons: current.scrollWidth > current.clientWidth
-            });
+			this.setState({
+				showScrollButtons: current.scrollWidth > current.clientWidth
+			});
 		}
 	}
 	render() {
@@ -460,14 +460,14 @@ export class TabHolder extends Component {
 			theme,
 			titleColor,
 			activeControl,
-			tabsAlignment
+			tabsAlignment,
+			tabVertical
 		} = attributes;
 
 		const className = 'wp-block-ub-tabbed-content';
 		const tabs = block.innerBlocks;
 
 		const showControls = (type, index) => {
-
 			setAttributes({
 				activeControl: `${type}-${index}`,
 				activeTab: index
@@ -497,29 +497,6 @@ export class TabHolder extends Component {
 			}
 		};
 
-        if( attributes.tabVertical ) {
-            setAttributes({verticalHolderCss: 'vertical-holder',
-                verticalTabCss: '-vertical-tab',
-                verticalWrapCss: 'vertical-',
-                verticalTabWidth: 'vertical-tab-width',
-                verticalContentWidth: 'vertical-content-width',
-                orientIconFirst: 'top',
-                orientIconSecond: 'bottom',
-                orient: 'y'
-            })
-        }
-        else{
-            setAttributes({ verticalHolderCss: '',
-                verticalTabCss: '',
-                verticalWrapCss: '',
-                verticalTabWidth: '',
-                verticalContentWidth: '',
-                orientIconFirst: 'left',
-                orientIconSecond: 'right',
-                orient: 'x'
-            })
-        }
-
 		if (tabsTitle.length === 0) {
 			addTab(0);
 		}
@@ -532,13 +509,15 @@ export class TabHolder extends Component {
 			<div
 				className={
 					className +
-					'-tab-title-' + attributes.verticalWrapCss + 'wrap SortableItem' +
+					'-tab-title-' +
+					(tabVertical ? 'vertical-' : '') +
+					'wrap SortableItem' +
 					(activeTab === i ? ' active' : '')
 				}
 				style={{
 					textAlign: tabsTitleAlignment[i],
 					backgroundColor: activeTab === i ? theme : 'initial',
-					color: activeTab === i ? titleColor : '#000000',
+					color: activeTab === i ? titleColor : '#000000'
 				}}
 				onClick={() => {
 					const { scrollLeft } = this.tabBarRef.current;
@@ -570,7 +549,7 @@ export class TabHolder extends Component {
 							'dashicons dashicons-minus remove-tab-icon' +
 							(tabsTitle.length === 1 ? ' ub-hide' : '')
 						}
-						onClick={() => {
+						onClick={_ => {
 							setAttributes({
 								tabsTitle: [
 									...tabsTitle.slice(0, i),
@@ -598,7 +577,12 @@ export class TabHolder extends Component {
 
 		const SortableList = SortableContainer(({ items }) => (
 			<div
-				className={className + '-tabs-title' + attributes.verticalTabCss + ' SortableList' }
+				className={
+					className +
+					'-tabs-title' +
+					(tabVertical ? '-vertical-tab' : '') +
+					' SortableList'
+				}
 				style={{
 					justifyContent:
 						tabsAlignment === 'center'
@@ -619,9 +603,14 @@ export class TabHolder extends Component {
 					/>
 				))}
 				<div
-					className={className + '-tab-title-' + attributes.verticalWrapCss + 'wrap'}
+					className={
+						className +
+						'-tab-title-' +
+						(tabVertical ? 'vertical-' : '') +
+						'wrap'
+					}
 					key={tabsTitle.length}
-					onClick={() => addTab(tabsTitle.length)}
+					onClick={_ => addTab(tabsTitle.length)}
 				>
 					<span className="dashicons dashicons-plus-alt" />
 				</div>
@@ -708,13 +697,23 @@ export class TabHolder extends Component {
 				</BlockControls>
 			),
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
-			console.log(this.state.showScrollButtons),
 			<div className={className}>
-				<div className={className + '-holder ' + attributes.verticalHolderCss}>
-					<div className={className + '-tab-holder ' + attributes.verticalTabWidth}
+				<div
+					className={
+						className +
+						'-holder ' +
+						(tabVertical ? 'vertical-holder' : '')
+					}
+				>
+					<div
+						className={
+							className +
+							'-tab-holder ' +
+							(tabVertical ? 'vertical-tab-width' : '')
+						}
 					>
 						<SortableList
-                            axis = {attributes.orient}
+							axis={tabVertical ? 'y' : 'x'}
 							items={tabsTitle}
 							onSortEnd={({ oldIndex, newIndex }) => {
 								this.setState({
@@ -765,14 +764,18 @@ export class TabHolder extends Component {
 										clearTimeout(this.scrollTrigger);
 									}}
 									className={
-										className + '-scroll-button-' + attributes.orientIconFirst
+										className +
+										'-scroll-button-' +
+										(tabVertical ? 'top' : 'left')
 									}
 								>
 									<span className="dashicons dashicons-arrow-left-alt2" />
 								</button>
 								<button
 									className={
-										className + '-scroll-button-' + attributes.orientIconSecond
+										className +
+										'-scroll-button-' +
+										(tabVertical ? 'bottom' : 'right')
 									}
 									onMouseDown={_ => {
 										this.rightPress();
@@ -794,7 +797,13 @@ export class TabHolder extends Component {
 							</div>
 						)}
 					</div>
-					<div className={className + '-tabs-content ' + attributes.verticalContentWidth}>
+					<div
+						className={
+							className +
+							'-tabs-content ' +
+							(tabVertical ? 'vertical-content-width' : '')
+						}
+					>
 						<InnerBlocks
 							templateLock={false}
 							allowedBlocks={['ub/tab-block']}

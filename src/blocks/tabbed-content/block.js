@@ -87,50 +87,18 @@ const attributes = {
 	tabsTitle: {
 		type: 'array',
 		default: []
-    },
-    tabsAlignment:{
-        type:'string',
-        default:'left'
-    },
+	},
+	tabsAlignment: {
+		type: 'string',
+		default: 'left'
+	},
 	tabsTitleAlignment: {
 		type: 'array',
 		default: []
 	},
-	tabVertical:{
-        type: 'bolean',
-		default: false,
-	},
-    verticalHolderCss:{
-	    type: 'string',
-        default: ''
-    },
-	verticalTabCss:{
-		type: 'string',
-		default: ''
-	},
-	verticalWrapCss:{
-		type: 'string',
-		default: ''
-	},
-    verticalTabWidth:{
-		type: 'string',
-		default: ''
-	},
-	verticalContentWidth:{
-		type: 'string',
-		default: ''
-	},
-	orientIconFirst:{
-		type: 'string',
-		default: ''
-	},
-	orientIconSecond:{
-		type: 'string',
-		default: ''
-	},
-	orient:{
-		type: 'string',
-		default: 'x'
+	tabVertical: {
+		type: 'bolean',
+		default: false
 	}
 };
 
