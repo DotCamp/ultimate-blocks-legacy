@@ -33,16 +33,20 @@
 		left: 0;
 		right: 0;
 		margin: auto;
-		transition: all -0.5s ease-in-out;
-		display: none;
+		transition: all 0.5s ease-in-out;
+		display: flex;
+		opacity: 0;
 	}
 	&:hover {
 		.tab-actions {
-			display: flex;
+			opacity: 1;
 		}
 	}
 }
 
 .wp-block-ub-tabbed-content-tabs-content {
 	padding: 20px;
+	> .editor-inner-blocks {
+		margin: 20px;
+	}
 }
