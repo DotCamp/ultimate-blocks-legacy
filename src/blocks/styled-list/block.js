@@ -296,7 +296,8 @@ registerBlockType('ub/styled-list', {
 						)}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
 								.icon[4]
-						}'></path></svg>");`
+						}'></path></svg>");
+                background-repeat: no-repeat;}`
 					}}
 				/>
 			</div>
