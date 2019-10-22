@@ -18,6 +18,10 @@ if (!Element.prototype.closest) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  var getPxValue = function getPxValue(pxString) {
+    return parseInt(pxString.slice(0, -2));
+  };
+
   var instances = [];
 
   if (document.getElementById('ub_table-of-contents-toggle-link')) {
@@ -30,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var tocHeight = 0;
     var block = instance.closest('.ub_table-of-contents');
     var tocContainer = block.querySelector('.ub_table-of-contents-container');
+    var tocMain = tocContainer.parentNode;
     var showButton = block.getAttribute('data-showtext') || 'show';
     var hideButton = block.getAttribute('data-hidetext') || 'hide';
     var initialHide = tocContainer.classList.contains('ub-hide') || tocContainer.style.height === '0px' || getComputedStyle(tocContainer).display === 'none';
@@ -38,15 +43,17 @@ document.addEventListener('DOMContentLoaded', function () {
       tocContainer.classList.remove('ub-hide');
       tocContainer.style.display = '';
       tocContainer.style.height = '';
-      tocContainer.parentNode.classList.remove('ub_table-of-contents-collapsed');
+      tocMain.classList.remove('ub_table-of-contents-collapsed');
     }
 
     tocHeight = tocContainer.offsetHeight;
-    var tocMainMinWidth = tocContainer.parentNode.querySelector('.ub_table-of-contents-header').offsetWidth + 2;
+    var tocHeaderMinWidth = tocMain.querySelector('.ub_table-of-contents-header').offsetWidth;
+    var oldTotalHorizontalMargin = getPxValue(getComputedStyle(tocMain).paddingLeft) + getPxValue(getComputedStyle(tocMain).paddingRight);
+    var tocMainMinWidth = tocHeaderMinWidth + oldTotalHorizontalMargin + 9;
 
     if (initialHide) {
       tocContainer.classList.add('ub-hide');
-      tocContainer.parentNode.classList.add('ub_table-of-contents-collapsed');
+      tocMain.classList.add('ub_table-of-contents-collapsed');
     }
 
     tocContainer.removeAttribute('style');
@@ -56,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (tocContainer.classList.contains('ub-hide')) {
         tocContainer.classList.remove('ub-hide');
         tocContainer.classList.add('ub-hiding');
-        tocContainer.parentNode.classList.remove('ub_table-of-contents-collapsed');
-        tocContainer.parentNode.style.width = "".concat(tocMainMinWidth, "px");
+        tocMain.classList.remove('ub_table-of-contents-collapsed');
+        tocMain.style.width = "".concat(tocMainMinWidth, "px");
       } else {
         if (tocHeight !== tocContainer.offsetHeight) {
           tocHeight = tocContainer.offsetHeight;
@@ -71,13 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
         //delay is needed for the animation to run properly
         if (tocContainer.classList.contains('ub-hiding')) {
           tocContainer.classList.remove('ub-hiding');
-          tocContainer.parentNode.style.width = '100%';
+          tocMain.style.width = '100%';
           tocContainer.style.height = "".concat(tocHeight, "px");
         } else {
           tocContainer.classList.add('ub-hiding');
-          tocContainer.parentNode.style.margin = 0;
-          tocContainer.parentNode.style.padding = 0;
-          tocContainer.parentNode.style.width = "".concat(tocMainMinWidth, "px");
+          tocMain.style.margin = 0;
+          tocMain.style.width = "".concat(tocMainMinWidth + (getPxValue(getComputedStyle(tocMain).paddingLeft) + getPxValue(getComputedStyle(tocMain).paddingRight) - oldTotalHorizontalMargin + 1), "px");
           tocContainer.style.height = '';
         }
       }, 20);
@@ -92,14 +98,14 @@ document.addEventListener('DOMContentLoaded', function () {
           tocContainer.style.display = '';
         }
 
-        tocContainer.parentNode.classList.add('ub_table-of-contents-collapsed');
-        tocContainer.parentNode.style.margin = '';
-        tocContainer.parentNode.style.padding = '';
+        tocMain.classList.add('ub_table-of-contents-collapsed');
+        tocMain.style.margin = '';
+        tocMain.style.padding = '';
       } else {
         tocContainer.style.height = '';
       }
 
-      tocContainer.parentNode.style.width = '';
+      tocMain.style.width = '';
     });
   });
 });

@@ -17,6 +17,7 @@ if (!Element.prototype.closest) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+	const getPxValue = pxString => parseInt(pxString.slice(0, -2));
 	let instances = [];
 	if (document.getElementById('ub_table-of-contents-toggle-link')) {
 		instances.push(
@@ -35,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			'.ub_table-of-contents-container'
 		);
 
+		const tocMain = tocContainer.parentNode;
+
 		const showButton = block.getAttribute('data-showtext') || 'show';
 		const hideButton = block.getAttribute('data-hidetext') || 'hide';
 
@@ -46,23 +49,25 @@ document.addEventListener('DOMContentLoaded', function() {
 			tocContainer.classList.remove('ub-hide');
 			tocContainer.style.display = '';
 			tocContainer.style.height = '';
-			tocContainer.parentNode.classList.remove(
-				'ub_table-of-contents-collapsed'
-			);
+			tocMain.classList.remove('ub_table-of-contents-collapsed');
 		}
 
 		tocHeight = tocContainer.offsetHeight;
 
+		const tocHeaderMinWidth = tocMain.querySelector(
+			'.ub_table-of-contents-header'
+		).offsetWidth;
+
+		const oldTotalHorizontalMargin =
+			getPxValue(getComputedStyle(tocMain).paddingLeft) +
+			getPxValue(getComputedStyle(tocMain).paddingRight);
+
 		const tocMainMinWidth =
-			tocContainer.parentNode.querySelector(
-				'.ub_table-of-contents-header'
-			).offsetWidth + 2;
+			tocHeaderMinWidth + oldTotalHorizontalMargin + 9;
 
 		if (initialHide) {
 			tocContainer.classList.add('ub-hide');
-			tocContainer.parentNode.classList.add(
-				'ub_table-of-contents-collapsed'
-			);
+			tocMain.classList.add('ub_table-of-contents-collapsed');
 		}
 
 		tocContainer.removeAttribute('style');
@@ -74,10 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
 				tocContainer.classList.remove('ub-hide');
 				tocContainer.classList.add('ub-hiding');
 
-				tocContainer.parentNode.classList.remove(
-					'ub_table-of-contents-collapsed'
-				);
-				tocContainer.parentNode.style.width = `${tocMainMinWidth}px`;
+				tocMain.classList.remove('ub_table-of-contents-collapsed');
+				tocMain.style.width = `${tocMainMinWidth}px`;
 			} else {
 				if (tocHeight !== tocContainer.offsetHeight) {
 					tocHeight = tocContainer.offsetHeight;
@@ -90,13 +93,16 @@ document.addEventListener('DOMContentLoaded', function() {
 				//delay is needed for the animation to run properly
 				if (tocContainer.classList.contains('ub-hiding')) {
 					tocContainer.classList.remove('ub-hiding');
-					tocContainer.parentNode.style.width = '100%';
+					tocMain.style.width = '100%';
 					tocContainer.style.height = `${tocHeight}px`;
 				} else {
 					tocContainer.classList.add('ub-hiding');
-					tocContainer.parentNode.style.margin = 0;
-					tocContainer.parentNode.style.padding = 0;
-					tocContainer.parentNode.style.width = `${tocMainMinWidth}px`;
+					tocMain.style.margin = 0;
+					tocMain.style.width = `${tocMainMinWidth +
+						(getPxValue(getComputedStyle(tocMain).paddingLeft) +
+							getPxValue(getComputedStyle(tocMain).paddingRight) -
+							oldTotalHorizontalMargin +
+							1)}px`;
 					tocContainer.style.height = '';
 				}
 			}, 20);
@@ -113,16 +119,14 @@ document.addEventListener('DOMContentLoaded', function() {
 				if (tocContainer.style.display === 'block') {
 					tocContainer.style.display = '';
 				}
-				tocContainer.parentNode.classList.add(
-					'ub_table-of-contents-collapsed'
-				);
+				tocMain.classList.add('ub_table-of-contents-collapsed');
 
-				tocContainer.parentNode.style.margin = '';
-				tocContainer.parentNode.style.padding = '';
+				tocMain.style.margin = '';
+				tocMain.style.padding = '';
 			} else {
 				tocContainer.style.height = '';
 			}
-			tocContainer.parentNode.style.width = '';
+			tocMain.style.width = '';
 		});
 	});
 });
