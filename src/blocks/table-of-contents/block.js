@@ -20,7 +20,7 @@ const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
 const { ToggleControl, PanelRow, PanelBody } = wp.components;
 
-const { InspectorControls, RichText } = wp.editor;
+const { InspectorControls, RichText } = wp.blockEditor || wp.editor;
 
 const { withDispatch, withSelect } = wp.data;
 
@@ -82,19 +82,16 @@ registerBlockType('ub/table-of-contents', {
 	},
 
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
-		withDispatch(dispatch => {
-			const { replaceBlock } = dispatch('core/editor');
-			return { replaceBlock };
-		})
+		withSelect((select, ownProps) => ({
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
+		})),
+		withDispatch(dispatch => ({
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
+		}))
 	])(function(props) {
 		const {
 			block,
@@ -269,7 +266,9 @@ registerBlockType('ub/table-of-contents-block', {
 	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
 	attributes,
 	edit: withSelect((select, ownProps) => ({
-		block: select('core/editor').getBlock(ownProps.clientId)
+		block: (select('core/block-editor') || select('core/editor')).getBlock(
+			ownProps.clientId
+		)
 	}))(function(props) {
 		const { isSelected, block, attributes } = props;
 

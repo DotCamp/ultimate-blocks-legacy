@@ -5,7 +5,8 @@ import { upgradeButtonLabel, getDescendantBlocks } from '../../../common';
 const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
 
-const { InnerBlocks, InspectorControls, PanelColorSettings } = wp.editor;
+const { InnerBlocks, InspectorControls, PanelColorSettings } =
+	wp.blockEditor || wp.editor;
 const { PanelBody, PanelRow, FormToggle } = wp.components;
 
 export class OldPanelContent extends Component {

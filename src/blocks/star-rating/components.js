@@ -2,12 +2,8 @@ import { Fragment } from 'react';
 import { EmptyStar, FullStar, HalfStar } from './icons';
 
 const { __ } = wp.i18n;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	RichText,
-	BlockControls
-} = wp.editor;
+const { InspectorControls, PanelColorSettings, RichText, BlockControls } =
+	wp.blockEditor || wp.editor;
 const { PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
 export const blockControls = props => {

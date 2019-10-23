@@ -10,7 +10,7 @@ import { upgradeButtonLabel, mergeRichTextArray } from '../../../common';
 
 const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
-const { RichText, InnerBlocks, BlockControls } = wp.editor;
+const { RichText, InnerBlocks, BlockControls } = wp.blockEditor || wp.editor;
 
 const { Toolbar, IconButton } = wp.components;
 

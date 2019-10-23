@@ -1,11 +1,7 @@
 const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
-const {
-	InspectorControls,
-	PanelColorSettings,
-	InnerBlocks,
-	RichText
-} = wp.editor;
+const { InspectorControls, PanelColorSettings, InnerBlocks, RichText } =
+	wp.blockEditor || wp.editor;
 
 const { PanelBody, ToggleControl } = wp.components;
 

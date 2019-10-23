@@ -1,7 +1,8 @@
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, ColorPalette } = wp.editor;
+const { RichText, InspectorControls, ColorPalette } =
+	wp.blockEditor || wp.editor;
 const { IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
 const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
@@ -67,7 +68,9 @@ registerBlockType('ub/styled-list', {
 			edits: 0
 		}),
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		}))
 	])(function(props) {
 		const {

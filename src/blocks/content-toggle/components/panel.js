@@ -8,7 +8,7 @@ import { Component } from 'react';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { RichText, InnerBlocks } = wp.editor;
+const { RichText, InnerBlocks } = wp.blockEditor || wp.editor;
 
 const { withState, compose } = wp.compose;
 
@@ -133,7 +133,8 @@ registerBlockType('ub/content-toggle-panel', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId } = select('core/editor');
+			const { getBlock, getBlockRootClientId } =
+				select('core/block-editor') || select('core/editor');
 			const { clientId } = ownProps;
 
 			return {
@@ -142,11 +143,8 @@ registerBlockType('ub/content-toggle-panel', {
 			};
 		}),
 		withDispatch(dispatch => {
-			const {
-				updateBlockAttributes,
-				removeBlock,
-				selectBlock
-			} = dispatch('core/editor');
+			const { updateBlockAttributes, removeBlock, selectBlock } =
+				dispatch('core/block-editor') || dispatch('core/editor');
 
 			return { updateBlockAttributes, removeBlock, selectBlock };
 		}),
@@ -212,7 +210,8 @@ registerBlockType('ub/content-toggle-panel-block', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId } = select('core/editor');
+			const { getBlock, getBlockRootClientId } =
+				select('core/block-editor') || select('core/editor');
 			const { clientId } = ownProps;
 
 			return {
@@ -221,11 +220,8 @@ registerBlockType('ub/content-toggle-panel-block', {
 			};
 		}),
 		withDispatch(dispatch => {
-			const {
-				updateBlockAttributes,
-				removeBlock,
-				selectBlock
-			} = dispatch('core/editor');
+			const { updateBlockAttributes, removeBlock, selectBlock } =
+				dispatch('core/block-editor') || dispatch('core/editor');
 
 			return { updateBlockAttributes, removeBlock, selectBlock };
 		}),

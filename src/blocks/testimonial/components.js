@@ -7,7 +7,7 @@ const {
 	InspectorControls,
 	ColorPalette,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Button, PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 

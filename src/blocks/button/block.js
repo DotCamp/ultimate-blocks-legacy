@@ -126,7 +126,11 @@ registerBlockType('ub/button-block', {
 	title: __('Button (Improved)', 'ultimate-blocks'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [__('Button', 'ultimate-blocks'), __('Buttons', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
+	keywords: [
+		__('Button', 'ultimate-blocks'),
+		__('Buttons', 'ultimate-blocks'),
+		__('Ultimate Blocks', 'ultimate-blocks')
+	],
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -145,19 +149,16 @@ registerBlockType('ub/button-block', {
 			availableIcons: [],
 			iconSearchTerm: ''
 		}),
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
-		withDispatch(dispatch => {
-			const { replaceBlock } = dispatch('core/editor');
-			return { replaceBlock };
-		})
+		withSelect((select, ownProps) => ({
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
+		})),
+		withDispatch(dispatch => ({
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
+		}))
 	])(function(props) {
 		const {
 			isSelected,
@@ -296,22 +297,22 @@ registerBlockType('ub/button', {
 	icon: icon,
 	category: 'ultimateblocks',
 	attributes,
-	keywords: [__('Button', 'ultimate-blocks'), __('Buttons', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
+	keywords: [
+		__('Button', 'ultimate-blocks'),
+		__('Buttons', 'ultimate-blocks'),
+		__('Ultimate Blocks', 'ultimate-blocks')
+	],
 	edit: compose([
 		withState({
 			isMouseHovered: false,
 			availableIcons: [],
 			iconSearchTerm: ''
 		}),
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		})
+		withSelect((select, ownProps) => ({
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
+		}))
 	])(function(props) {
 		const { isSelected, setState, availableIcons, block } = props;
 

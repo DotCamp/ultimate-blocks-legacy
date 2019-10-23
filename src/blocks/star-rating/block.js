@@ -64,19 +64,16 @@ registerBlockType('ub/star-rating', {
 	},
 
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
-		withDispatch(dispatch => {
-			const { replaceBlock } = dispatch('core/editor');
-			return { replaceBlock };
-		}),
+		withSelect((select, ownProps) => ({
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
+		})),
+		withDispatch(dispatch => ({
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
+		})),
 		withState({ highlightedStars: 0 })
 	])(function(props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
@@ -171,7 +168,9 @@ registerBlockType('ub/star-rating-block', {
 	edit: compose([
 		withState({ highlightedStars: 0 }),
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		}))
 	])(function(props) {
 		const { isSelected, block } = props;

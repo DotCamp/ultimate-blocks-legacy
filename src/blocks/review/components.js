@@ -1,4 +1,4 @@
-const { RichText, URLInput } = wp.editor;
+const { RichText, URLInput } = wp.blockEditor || wp.editor;
 const { Dashicon } = wp.components;
 const { __ } = wp.i18n;
 import { Component } from 'react';

@@ -8,7 +8,7 @@ const {
 	MediaUpload,
 	InspectorControls,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const { Toolbar, Button, IconButton, SelectControl } = wp.components;
 
@@ -88,7 +88,9 @@ registerBlockType('ub/styled-box', {
 	edit: compose([
 		withState({ editable: '' }),
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		}))
 	])(function(props) {
 		const {

@@ -11,7 +11,7 @@ const {
 	PanelColorSettings,
 	URLInput,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	IconButton,
@@ -55,7 +55,7 @@ export const inspectorControls = props => {
 		fixed: __('Fixed', 'ultimate-blocks'),
 		flex: __('Flexible', 'ultimate-blocks'),
 		full: __('Full', 'ultimate-blocks')
-	}
+	};
 
 	const { setAttributes, setState, availableIcons, iconSearchTerm } = props;
 
@@ -77,7 +77,9 @@ export const inspectorControls = props => {
 		<InspectorControls>
 			<PanelBody title={__('Button Size', 'ultimate-blocks')}>
 				<div className="blocks-font-size__main">
-					<ButtonGroup aria-label={__('Button Size', 'ultimate-blocks')}>
+					<ButtonGroup
+						aria-label={__('Button Size', 'ultimate-blocks')}
+					>
 						{Object.keys(BUTTON_SIZES).map(b => (
 							<Button
 								isLarge
@@ -93,13 +95,17 @@ export const inspectorControls = props => {
 			</PanelBody>
 			<PanelBody title={__('Button Width', 'ultimate-blocks')}>
 				<div className="blocks-font-size__main">
-					<ButtonGroup aria-label={__('Button Width', 'ultimate-blocks')}>
+					<ButtonGroup
+						aria-label={__('Button Width', 'ultimate-blocks')}
+					>
 						{Object.keys(BUTTON_WIDTHS).map(b => (
 							<Button
 								isLarge
 								isPrimary={buttonWidth === b}
 								aria-pressed={buttonWidth === b}
-								onClick={() => setAttributes({ buttonWidth: b })}
+								onClick={() =>
+									setAttributes({ buttonWidth: b })
+								}
 							>
 								{BUTTON_WIDTHS[b]}
 							</Button>
@@ -161,7 +167,10 @@ export const inspectorControls = props => {
 											35
 										)
 									}
-									label={__('Open icon selection dialog', 'ultimate-blocks')}
+									label={__(
+										'Open icon selection dialog',
+										'ultimate-blocks'
+									)}
 									onClick={onToggle}
 									aria-expanded={isOpen}
 								/>
@@ -219,8 +228,14 @@ export const inspectorControls = props => {
 						className="ub-button-grid-selector"
 						value={iconPosition}
 						options={[
-							{ label: __('Left', 'ultimate-blocks'), value: 'left' },
-							{ label: __('Right', 'ultimate-blocks'), value: 'right' }
+							{
+								label: __('Left', 'ultimate-blocks'),
+								value: 'left'
+							},
+							{
+								label: __('Right', 'ultimate-blocks'),
+								value: 'right'
+							}
 						]}
 						onChange={pos => setAttributes({ iconPosition: pos })}
 					/>
@@ -246,7 +261,10 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonHoverColor: colorValue
 										}),
-									label: __('Button Color on Hover', 'ultimate-blocks')
+									label: __(
+										'Button Color on Hover',
+										'ultimate-blocks'
+									)
 								}
 						  ]
 						: [
@@ -256,7 +274,10 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonColor: colorValue
 										}),
-									label: __('Button Background', 'ultimate-blocks')
+									label: __(
+										'Button Background',
+										'ultimate-blocks'
+									)
 								},
 								{
 									value: buttonTextColor,
@@ -264,7 +285,10 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonTextColor: colorValue
 										}),
-									label: __('Button Text Color', 'ultimate-blocks')
+									label: __(
+										'Button Text Color',
+										'ultimate-blocks'
+									)
 								},
 								{
 									value: buttonHoverColor,
@@ -272,7 +296,10 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonHoverColor: colorValue
 										}),
-									label: __('Button Background on Hover', 'ultimate-blocks')
+									label: __(
+										'Button Background on Hover',
+										'ultimate-blocks'
+									)
 								},
 								{
 									value: buttonTextHoverColor,
@@ -280,7 +307,10 @@ export const inspectorControls = props => {
 										setAttributes({
 											buttonTextHoverColor: colorValue
 										}),
-									label: __('Button Text Color on Hover', 'ultimate-blocks')
+									label: __(
+										'Button Text Color on Hover',
+										'ultimate-blocks'
+									)
 								}
 						  ]
 				}

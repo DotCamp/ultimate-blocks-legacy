@@ -155,10 +155,14 @@ registerBlockType('ub/feature-box', {
 	 */
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: dispatch('core/editor').replaceBlock
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
 		})),
 		withState({ editable: '' })
 	])(function(props) {
@@ -366,10 +370,14 @@ registerBlockType('ub/feature-box-block', {
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: dispatch('core/editor').replaceBlock
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
 		})),
 		withState({ editable: '' })
 	])(function(props) {

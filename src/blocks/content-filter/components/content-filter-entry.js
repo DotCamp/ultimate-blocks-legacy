@@ -5,7 +5,7 @@ import { Component } from 'react';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 
 class Dropdown extends Component {
 	//adapted from Ben Bud, https://stackoverflow.com/a/42234988
@@ -153,7 +153,7 @@ registerBlockType('ub/content-filter-entry', {
 		buttonTextColor: {
 			type: 'string',
 			default: '#000000'
-        }
+		}
 	},
 	supports: {
 		inserter: false,
@@ -334,11 +334,11 @@ registerBlockType('ub/content-filter-entry-block', {
 		buttonTextColor: {
 			type: 'string',
 			default: '#000000'
-        },
-        initiallyShow:{
-            type: 'boolean',
-            default: true
-        }
+		},
+		initiallyShow: {
+			type: 'boolean',
+			default: true
+		}
 	},
 	supports: {
 		inserter: false,

@@ -18,7 +18,7 @@ const {
 	InspectorControls,
 	mediaUpload,
 	RichText
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 const {
 	Icon,
 	IconButton,
@@ -90,7 +90,9 @@ registerBlockType('ub/image-slider', {
 	edit: compose([
 		withState({ componentKey: 0, activeSlide: 0 }),
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		}))
 	])(function(props) {
 		const {

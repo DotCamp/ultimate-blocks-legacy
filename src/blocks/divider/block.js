@@ -15,7 +15,7 @@ import { version_1_1_2 } from './oldVersions';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { InspectorControls, ColorPalette } = wp.editor;
+const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
 
 const { PanelBody, RangeControl } = wp.components;
 
@@ -72,7 +72,9 @@ registerBlockType('ub/divider', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: withSelect((select, ownProps) => ({
-		block: select('core/editor').getBlock(ownProps.clientId)
+		block: (select('core/block-editor') || select('core/editor')).getBlock(
+			ownProps.clientId
+		)
 	}))(function(props) {
 		const {
 			blockID,

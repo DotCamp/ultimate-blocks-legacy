@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { PanelBody, ToggleControl } = wp.components;
 
 /**
@@ -29,14 +29,12 @@ export default class Inspector extends Component {
 						}
 					]}
 				/>
-				<PanelBody
-                      title={__('Tab View')}
-				>
-                      <ToggleControl
-                          label={__('Vertical', 'tabbed-content-blocks')}
-                          checked={tabVertical}
-                          onChange={ tabVertical => setAttributes({tabVertical})}
-                      />
+				<PanelBody title={__('Tab View')}>
+					<ToggleControl
+						label={__('Vertical', 'tabbed-content-blocks')}
+						checked={tabVertical}
+						onChange={tabVertical => setAttributes({ tabVertical })}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);

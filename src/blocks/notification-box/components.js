@@ -2,7 +2,7 @@ import info from './icons/info';
 import success from './icons/success';
 import warning from './icons/warning';
 
-const { RichText, BlockControls } = wp.editor;
+const { RichText, BlockControls } = wp.blockEditor || wp.editor;
 
 const { Toolbar, Button, IconButton } = wp.components;
 

@@ -128,7 +128,8 @@ registerBlockType('ub/tabbed-content', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getSelectedBlock } = select('core/editor');
+			const { getBlock, getSelectedBlock } =
+				select('core/block-editor') || select('core/editor');
 
 			const { clientId } = ownProps;
 
@@ -145,7 +146,7 @@ registerBlockType('ub/tabbed-content', {
 				moveBlockToPosition,
 				selectBlock,
 				replaceBlock
-			} = dispatch('core/editor');
+			} = dispatch('core/block-editor') || dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,
@@ -255,7 +256,8 @@ registerBlockType('ub/tabbed-content-block', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getSelectedBlock } = select('core/editor');
+			const { getBlock, getSelectedBlock } =
+				select('core/block-editor') || select('core/editor');
 
 			const { clientId } = ownProps;
 
@@ -271,7 +273,7 @@ registerBlockType('ub/tabbed-content-block', {
 				removeBlock,
 				moveBlockToPosition,
 				selectBlock
-			} = dispatch('core/editor');
+			} = dispatch('core/block-editor') || dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,

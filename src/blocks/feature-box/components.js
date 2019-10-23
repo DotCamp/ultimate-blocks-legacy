@@ -4,7 +4,7 @@ import remove_icon from './icons/remove_icon';
 
 const { __ } = wp.i18n;
 
-const { BlockControls, RichText, MediaUpload } = wp.editor;
+const { BlockControls, RichText, MediaUpload } = wp.blockEditor || wp.editor;
 
 const { Button, Toolbar, IconButton } = wp.components;
 

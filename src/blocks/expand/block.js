@@ -8,7 +8,8 @@ const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
 
-const { RichText, InnerBlocks, BlockControls, AlignmentToolbar } = wp.editor;
+const { RichText, InnerBlocks, BlockControls, AlignmentToolbar } =
+	wp.blockEditor || wp.editor;
 
 const { withSelect, withDispatch } = wp.data;
 
@@ -35,9 +36,8 @@ registerBlockType('ub/expand', {
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getSelectedBlockClientId } = select(
-				'core/editor'
-			);
+			const { getBlock, getSelectedBlockClientId } =
+				select('core/block-editor') || select('core/editor');
 
 			const { clientId } = ownProps;
 
@@ -47,9 +47,8 @@ registerBlockType('ub/expand', {
 			};
 		}),
 		withDispatch(dispatch => {
-			const { updateBlockAttributes, insertBlock } = dispatch(
-				'core/editor'
-			);
+			const { updateBlockAttributes, insertBlock } =
+				dispatch('core/block-editor') || dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,
@@ -89,7 +88,8 @@ registerBlockType('ub/expand-portion', {
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId } = select('core/editor');
+			const { getBlock, getBlockRootClientId } =
+				select('core/block-editor') || select('core/editor');
 
 			const { clientId } = ownProps;
 
@@ -100,7 +100,9 @@ registerBlockType('ub/expand-portion', {
 			};
 		}),
 		withDispatch(dispatch => ({
-			updateBlockAttributes: dispatch('core/editor').updateBlockAttributes
+			updateBlockAttributes: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).updateBlockAttributes
 		}))
 	])(function(props) {
 		const {

@@ -5,7 +5,7 @@ import icon from '../icons/icon';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 
 registerBlockType('ub/tab', {
 	title: __('Tab'),

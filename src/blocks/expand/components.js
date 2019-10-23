@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { getDescendantBlocks } from '../../common';
 
 const { __ } = wp.i18n;
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { select, subscribe } = wp.data;
 
 export class ExpandRoot extends Component {
@@ -16,7 +16,9 @@ export class ExpandRoot extends Component {
 	componentDidMount() {
 		const unsubscribe = subscribe(() => {
 			const { selectedBlockID } = this.state;
-			const selection = select('core/editor').getSelectedBlockClientId();
+			const selection = (
+				select('core/block-editor') || select('core/editor')
+			).getSelectedBlockClientId();
 			if (selection !== selectedBlockID) {
 				this.setState({ selectedBlockID: selection });
 			}

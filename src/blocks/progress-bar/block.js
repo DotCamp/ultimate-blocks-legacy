@@ -2,12 +2,8 @@ import icon, { CircProgressIcon, LinearProgressIcon } from './icons';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
-const {
-	BlockControls,
-	InspectorControls,
-	PanelColorSettings,
-	RichText
-} = wp.editor;
+const { BlockControls, InspectorControls, PanelColorSettings, RichText } =
+	wp.blockEditor || wp.editor;
 
 const {
 	Toolbar,
@@ -63,7 +59,9 @@ registerBlockType('ub/progress-bar', {
 	},
 
 	edit: withSelect((select, ownProps) => ({
-		block: select('core/editor').getBlock(ownProps.clientId)
+		block: (select('core/block-editor') || select('core/editor')).getBlock(
+			ownProps.clientId
+		)
 	}))(function(props) {
 		const { isSelected, setAttributes, block } = props;
 		const {

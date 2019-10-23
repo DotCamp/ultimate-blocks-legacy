@@ -7,7 +7,8 @@ import './editor.scss';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, PanelColorSettings } = wp.editor;
+const { RichText, InspectorControls, PanelColorSettings } =
+	wp.blockEditor || wp.editor;
 
 const { TextControl, RangeControl, PanelBody } = wp.components;
 
@@ -66,7 +67,9 @@ registerBlockType('ub/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: withSelect((select, ownProps) => ({
-		block: select('core/editor').getBlock(ownProps.clientId)
+		block: (select('core/block-editor') || select('core/editor')).getBlock(
+			ownProps.clientId
+		)
 	}))(function(props) {
 		const {
 			ubTweet,

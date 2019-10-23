@@ -9,12 +9,8 @@ import Timer from './components';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const {
-	InspectorControls,
-	RichText,
-	PanelColorSettings,
-	BlockControls
-} = wp.editor;
+const { InspectorControls, RichText, PanelColorSettings, BlockControls } =
+	wp.blockEditor || wp.editor;
 const { DateTimePicker, IconButton, PanelBody, Toolbar } = wp.components;
 const { withSelect } = wp.data;
 
@@ -51,7 +47,9 @@ registerBlockType('ub/countdown', {
 	},
 
 	edit: withSelect((select, ownProps) => ({
-		block: select('core/editor').getBlock(ownProps.clientId)
+		block: (select('core/block-editor') || select('core/editor')).getBlock(
+			ownProps.clientId
+		)
 	}))(function(props) {
 		const { isSelected, setAttributes, block, attributes } = props;
 		const {

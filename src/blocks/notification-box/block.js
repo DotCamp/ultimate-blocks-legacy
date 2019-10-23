@@ -24,7 +24,7 @@ import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
 
-const { RichText } = wp.editor;
+const { RichText } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
@@ -77,17 +77,15 @@ registerBlockType('ub/notification-box', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
-
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId)
-			};
-		}),
+		withSelect((select, ownProps) => ({
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
+		})),
 		withDispatch(dispatch => ({
-			replaceBlock: dispatch('core/editor').replaceBlock
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
 		}))
 	])(function(props) {
 		const {
@@ -216,10 +214,14 @@ registerBlockType('ub/notification-box-block', {
 	},
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: dispatch('core/editor').replaceBlock
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
 		}))
 	])(function(props) {
 		const { isSelected, className, block, replaceBlock } = props;

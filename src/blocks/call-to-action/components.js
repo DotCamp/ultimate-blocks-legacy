@@ -8,7 +8,7 @@ const {
 	URLInput,
 	BlockControls,
 	PanelColorSettings
-} = wp.editor;
+} = wp.blockEditor || wp.editor;
 
 const {
 	PanelBody,

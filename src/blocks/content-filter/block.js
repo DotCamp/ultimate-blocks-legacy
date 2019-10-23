@@ -4,7 +4,7 @@ import { OldPanelContent, PanelContent } from './components/editorDisplay';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InnerBlocks, RichText } = wp.editor;
+const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 
 const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
@@ -60,14 +60,13 @@ registerBlockType('ub/content-filter', {
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		})),
 		withDispatch(dispatch => {
-			const {
-				updateBlockAttributes,
-				insertBlock,
-				replaceBlock
-			} = dispatch('core/editor');
+			const { updateBlockAttributes, insertBlock, replaceBlock } =
+				dispatch('core/block-editor') || dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,
@@ -143,12 +142,13 @@ registerBlockType('ub/content-filter-block', {
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		})),
 		withDispatch(dispatch => {
-			const { updateBlockAttributes, insertBlock } = dispatch(
-				'core/editor'
-			);
+			const { updateBlockAttributes, insertBlock } =
+				dispatch('core/block-editor') || dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,

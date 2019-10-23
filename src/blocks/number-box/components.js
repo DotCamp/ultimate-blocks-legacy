@@ -1,11 +1,7 @@
 const { __ } = wp.i18n;
 
-const {
-	InspectorControls,
-	PanelColorSettings,
-	BlockControls,
-	RichText
-} = wp.editor;
+const { InspectorControls, PanelColorSettings, BlockControls, RichText } =
+	wp.blockEditor || wp.editor;
 
 const { PanelBody, Toolbar, SelectControl, IconButton } = wp.components;
 

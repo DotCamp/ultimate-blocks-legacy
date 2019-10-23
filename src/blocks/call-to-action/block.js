@@ -131,7 +131,11 @@ registerBlockType('ub/call-to-action', {
 	title: __('Call to Action', 'ultimate-blocks'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [__('call to action', 'ultimate-blocks'), __('conversion', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
+	keywords: [
+		__('call to action', 'ultimate-blocks'),
+		__('conversion', 'ultimate-blocks'),
+		__('Ultimate Blocks', 'ultimate-blocks')
+	],
 	attributes: oldAttributes,
 	supports: {
 		inserter: false
@@ -147,10 +151,14 @@ registerBlockType('ub/call-to-action', {
 	 */
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: dispatch('core/editor').replaceBlock
+			replaceBlock: (
+				dispatch('core/block-editor') || dispatch('core/editor')
+			).replaceBlock
 		})),
 		withState({ editable: '' })
 	])(function(props) {
@@ -303,12 +311,18 @@ registerBlockType('ub/call-to-action-block', {
 	title: __('Call to Action', 'ultimate-blocks'),
 	icon: icon,
 	category: 'ultimateblocks',
-	keywords: [__('call to action', 'ultimate-blocks'), __('conversion', 'ultimate-blocks'), __('Ultimate Blocks', 'ultimate-blocks')],
+	keywords: [
+		__('call to action', 'ultimate-blocks'),
+		__('conversion', 'ultimate-blocks'),
+		__('Ultimate Blocks', 'ultimate-blocks')
+	],
 	attributes,
 	edit: compose([
 		withState({ editable: '' }),
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		}))
 	])(function(props) {
 		const { isSelected, block } = props;

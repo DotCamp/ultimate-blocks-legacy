@@ -21,7 +21,7 @@ const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
 const { withState, compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
-const { InnerBlocks } = wp.editor;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 
 const attributes = {
 	blockID: {
@@ -96,11 +96,8 @@ registerBlockType('ub/content-toggle', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const {
-				getBlock,
-				getSelectedBlockClientId,
-				getBlockRootClientId
-			} = select('core/editor');
+			const { getBlock, getSelectedBlockClientId, getBlockRootClientId } =
+				select('core/block-editor') || select('core/editor');
 
 			const { clientId } = ownProps;
 
@@ -119,7 +116,7 @@ registerBlockType('ub/content-toggle', {
 				removeBlock,
 				selectBlock,
 				replaceBlock
-			} = dispatch('core/editor');
+			} = dispatch('core/block-editor') || dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,
@@ -202,9 +199,8 @@ registerBlockType('ub/content-toggle-block', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getSelectedBlockClientId } = select(
-				'core/editor'
-			);
+			const { getBlock, getSelectedBlockClientId } =
+				select('core/block-editor') || select('core/editor');
 
 			const { clientId } = ownProps;
 
@@ -219,7 +215,7 @@ registerBlockType('ub/content-toggle-block', {
 				insertBlock,
 				removeBlock,
 				selectBlock
-			} = dispatch('core/editor');
+			} = dispatch('core/block-editor') || dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,

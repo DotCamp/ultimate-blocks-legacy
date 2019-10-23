@@ -34,7 +34,7 @@ const iconSizes = {
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { BlockControls, AlignmentToolbar } = wp.editor;
+const { BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
 const { withSelect } = wp.data;
 
 /**
@@ -103,7 +103,9 @@ registerBlockType('ub/social-share', {
 	},
 
 	edit: withSelect((select, ownProps) => ({
-		block: select('core/editor').getBlock(ownProps.clientId)
+		block: (select('core/block-editor') || select('core/editor')).getBlock(
+			ownProps.clientId
+		)
 	}))(function(props) {
 		const {
 			attributes,

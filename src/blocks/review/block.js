@@ -12,7 +12,8 @@ import {
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { BlockControls, InspectorControls, PanelColorSettings } = wp.editor;
+const { BlockControls, InspectorControls, PanelColorSettings } =
+	wp.blockEditor || wp.editor;
 
 const { Toolbar, IconButton, FormToggle, PanelBody, PanelRow } = wp.components;
 const { withState, compose } = wp.compose;
@@ -118,7 +119,9 @@ registerBlockType('ub/review', {
 	edit: compose([
 		withState({ editable: '' }),
 		withSelect((select, ownProps) => ({
-			block: select('core/editor').getBlock(ownProps.clientId)
+			block: (
+				select('core/block-editor') || select('core/editor')
+			).getBlock(ownProps.clientId)
 		}))
 	])(function(props) {
 		const { setAttributes, isSelected, editable, setState, block } = props;

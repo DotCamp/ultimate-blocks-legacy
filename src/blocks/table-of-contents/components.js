@@ -14,7 +14,8 @@ const {
 	Toolbar,
 	IconButton
 } = wp.components;
-const { InspectorControls, BlockControls, RichText } = wp.editor;
+const { InspectorControls, BlockControls, RichText } =
+	wp.blockEditor || wp.editor;
 const { select, dispatch, subscribe } = wp.data;
 const { __ } = wp.i18n;
 
@@ -30,7 +31,9 @@ class TableOfContents extends Component {
 	componentDidMount() {
 		const getHeadingBlocks = _ => {
 			let headings = [];
-			const rootBlocks = select('core/editor').getBlocks();
+			const rootBlocks = (
+				select('core/block-editor') || select('core/editor')
+			).getBlocks();
 			rootBlocks.forEach(block => {
 				if (block.name === 'core/heading') {
 					headings.push(block);
@@ -262,7 +265,10 @@ export const inspectorControls = props => {
 						id="ub_toc_smoothscroll"
 						checked={enableSmoothScroll}
 						onChange={() => {
-							const tocInstances = select('core/editor')
+							const tocInstances = (
+								select('core/block-editor') ||
+								select('core/editor')
+							)
 								.getBlocks()
 								.filter(
 									block =>
@@ -270,10 +276,12 @@ export const inspectorControls = props => {
 										'ub/table-of-contents-block'
 								);
 							tocInstances.forEach(instance => {
-								dispatch('core/editor').updateBlockAttributes(
-									instance.clientId,
-									{ enableSmoothScroll: !enableSmoothScroll }
-								);
+								(
+									dispatch('core/block-editor') ||
+									dispatch('core/editor')
+								).updateBlockAttributes(instance.clientId, {
+									enableSmoothScroll: !enableSmoothScroll
+								});
 							});
 						}}
 					/>
