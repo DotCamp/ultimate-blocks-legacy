@@ -154,6 +154,10 @@ class Ultimate_Blocks {
 		// Insert blocks setting.
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'insert_blocks_settings' );
 
+		//Review Notice
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'UltimateBlocks_review_notice' );
+		$this->loader->add_action( 'wp_ajax_UltimateBlocksReviewNoticeHide', $plugin_admin, 'UltimateBlocks_hide_review_notify' );
+
 	}
 
 	/**

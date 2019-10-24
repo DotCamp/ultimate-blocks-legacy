@@ -41,6 +41,9 @@ class Ultimate_Blocks_Activator {
 			update_option( 'ultimate_blocks', Ultimate_Blocks_Util::blocks() );
 		}
 
+		add_option( 'UltimateBlocks_installDate', date( 'Y-m-d h:i:s' ) );
+		add_option( 'UltimateBlocks_review_notify', 'no' );
+
 	}
 
 }

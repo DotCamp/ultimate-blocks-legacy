@@ -299,4 +299,64 @@ class Ultimate_Blocks_Admin {
 		return Ultimate_Blocks_Util::blocks();
 	}
 
+	/**
+	 * Generating the review notice.
+	 *
+	 * @since 2.1.6
+	 */
+	public static function UltimateBlocks_review_notice() {
+        
+        $install_date = get_option( 'UltimateBlocks_installDate' );
+        $display_date = date( 'Y-m-d h:i:s' );
+        $datetime1 = new DateTime( $install_date );
+        $datetime2 = new DateTime( $display_date );
+        $diff_intrval = round( ($datetime2->format( 'U' ) - $datetime1->format( 'U' )) / (60 * 60 * 24) );
+		if ( $diff_intrval >= 14 && get_option( 'UltimateBlocks_review_notify' ) == "no" ) {
+			?>
+            <div class="UltimateBlocks-review-notice notice notice-info">
+                <p style="font-size: 14px;">
+					<?php _e( 'Hey,<br> I noticed that you have been using <strong>Ultimate Blocks Plugin</strong> for a while now - that’s awesome! Could you please do me a BIG favor and <b>give it a 5-star rating on WordPress</b>? Just to help us spread the word and boost our motivation. <br>~ Imtiaz Rayhan<br>~ Lead Developer, Ultimate Blocks.', 'ultimate-blocks' ); ?>
+                </p>
+                <ul>
+                    <li><a style="margin-right: 5px; margin-bottom: 5px;" class="button-primary"
+                           href="https://wordpress.org/support/plugin/ultimate-blocks/reviews/?filter=5#new-post"
+                           target="_blank">Sure, you deserve it.</a>
+                        <a style="margin-right: 5px;" class="UltimateBlocks_HideReview_Notice button" href="javascript:void(0);">I already did.</a>
+                        <a class="UltimateBlocks_HideReview_Notice button" href="javascript:void(0);">No, not good enough.</a>
+                    </li>
+                </ul>
+            </div>
+            <script>
+                jQuery(document).ready(function ($) {
+                    jQuery('.UltimateBlocks_HideReview_Notice').click(function () {
+                        var data = {'action': 'UltimateBlocksReviewNoticeHide'};
+                        jQuery.ajax({
+                            url: "<?php echo admin_url( 'admin-ajax.php' ); ?>",
+                            type: "post",
+                            data: data,
+                            dataType: "json",
+                            async: !0,
+                            success: function (notice_hide) {
+                                if (notice_hide == "success") {
+                                    jQuery('.UltimateBlocks-review-notice').slideUp('fast');
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
+			<?php
+		}
+	}
+	/**
+	 * Hides the review notice.
+	 *
+	 * @since 2.1.6
+	 */
+	public function UltimateBlocks_hide_review_notify() {
+		update_option( 'UltimateBlocks_review_notify', 'yes' );
+		echo json_encode( array( "success" ) );
+		exit;
+	}
+
 }
