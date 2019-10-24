@@ -54,8 +54,7 @@ export default registerBlockType('ub/post-grid', {
 		} = attributes;
 
 		const { getEntityRecords } = select('core');
-		const { getCurrentPostId } =
-			select('core/block-editor') || select('core/editor');
+		const { getCurrentPostId } = select('core/block--editor') || select('core/editor');
 
 		const getPosts = pickBy(
 			{
