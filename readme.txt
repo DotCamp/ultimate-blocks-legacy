@@ -1,9 +1,9 @@
-=== Gutenberg Blocks Plugin - Ultimate Blocks ===
+=== Ultimate Blocks - Gutenberg Blocks Plugin ===
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.2
-Stable tag: 2.1.5
+Tested up to: 5.3
+Stable tag: 2.1.6
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -30,6 +30,7 @@ Ultimate Blocks currently includes the following blocks:
 * Social Share - [View Demo](https://ultimateblocks.com/social-share-block/)
 * Countdown - [View Demo](https://ultimateblocks.com/countdown-block/)
 * Progress Bar - [View Demo](https://ultimateblocks.com/progress-bar-block/)
+* Post Grid - [View Demo](https://ultimateblocks.com/post-grid-block/)
 * Star Rating - [View Demo](https://ultimateblocks.com/star-rating-block/)
 * Image Slider - [View Demo](https://ultimateblocks.com/image-slider-block/)
 * Button (Improved) - [View Demo](https://ultimateblocks.com/improved-button-block/)
@@ -87,6 +88,9 @@ Add a countdown in your post/pages. Comes with three different styles.
 **Progress Bar Block**
 Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.
 
+**Post Grid Block**
+Add a list or grid of your posts. Comes with options to change categories, order and many more.
+
 **Star Rating Block**
 Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.
 
@@ -122,6 +126,32 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.1.6 =
+
+Release Date: October 24th, 2019
+
+* NEW: Post Grid Block.
+* NEW: Vertical Tabs in Tabbed Content Block.
+* NEW: Option to Resize Styled List Icon.
+* NEW: Option to Use Heading or Paragraph tag for Call to Action Headline.
+* NEW: Option to Disable Review Schema.
+* NEW: Option to Change Star Outline Color in Review.
+* NEW: Option to Choose Width for Button - Fixed, Flexible, Full.
+* FIX: Review Schema Error in Search Console.
+* FIX: Table of Content Collapsing Animation Issues.
+* FIX: Content Toggle Assets Not Loading.
+* FIX: Alignment of Buttons in Image Slider’s Initial Display.
+* FIX: Style of Dropdown Menu in Progress Bar Block Toolbar.
+* FIX: PHP Errors Caused By Undefined Block Attributes.
+* FIX: JavaScript not Loading for Reusable Blocks.
+* FIX: Leading Extra Preciding "1" in Countdown when JS is disabled.
+* FIX: Expand Block Style.
+* FIX: Table of Contents Indentation in Editor.
+* FIX: Issue with Reusable Blocks in WordPress 5.3 and Gutenberg Plugin.
+* FIX: Responsive issues in Call to Action, Testimonial, Click to Tweet, Content Toggle, Countdown and Tabbed Content.
+* REMOVE: Unused Data Attribute in Content Filter Block.
+* REMOVE: Some Unnecessary CSS.
 
 = 2.1.5 =
 
