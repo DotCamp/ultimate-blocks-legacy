@@ -43,6 +43,7 @@
 }
 
 .ub_review_average_stars {
+	display: flex;
 	grid-area: auto;
 	justify-self: self-end;
 	height: 50px;

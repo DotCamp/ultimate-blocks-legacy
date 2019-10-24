@@ -9,10 +9,10 @@ function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
         <defs><mask id="ub_review_star_filter-'.$id.'-'.$current
         .'"><rect height="150" width="'.($value - $current > 0 ?
             ($value - $current < 1 ? $value - $current : 1) : 0)*150
-        .'" y="0" x="0" fill="#fff"/></mask></defs> <path fill="'.$inactiveStarColor.'" stroke-width="1.5"
+        .'" y="0" x="0" fill="#fff"/></mask></defs> <path fill="'.$inactiveStarColor.'" stroke-width="2.5"
         d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
         stroke="'.$starOutlineColor.'"/><path class="star" id="star'.$current.
-        '" mask="url(#ub_review_star_filter-'.$id.'-'.$current.')" fill="'.$activeStarColor.'" strokeWidth="1.5"
+        '" mask="url(#ub_review_star_filter-'.$id.'-'.$current.')" fill="'.$activeStarColor.'" strokeWidth="2.5"
         d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
         stroke="'.$starOutlineColor.'"/>
         </svg>';

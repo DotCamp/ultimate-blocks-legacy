@@ -165,7 +165,7 @@ export class Stars extends Component {
 
 						<path
 							fill={inactiveStarColor}
-							strokeWidth="1.5"
+							strokeWidth="2.5"
 							d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
 							stroke={starOutlineColor}
 						/>
@@ -174,7 +174,7 @@ export class Stars extends Component {
 							id={`star${i}`}
 							mask={`url(#ub_review_star_filter-${id}-${i})`}
 							fill={this.state.displayColor}
-							strokeWidth="1.5"
+							strokeWidth="2.5"
 							d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
 							stroke={starOutlineColor}
 						/>
