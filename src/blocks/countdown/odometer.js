@@ -459,7 +459,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			this.digits = [];
 
 			this.options.formatFunction = function(value) {
-				return value < 10 ? '0' + value.toString() : value.toString();
+				return value >= 0 && value < 10 ? '0' + value.toString() : value.toString();
 			};
 
 			if (this.options.formatFunction) {
