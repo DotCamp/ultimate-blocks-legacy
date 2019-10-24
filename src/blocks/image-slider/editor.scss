@@ -5,6 +5,9 @@ div[data-block] > .ub_image_slider {
 	.ub_image_slider_add_images {
 		margin: 0 auto;
 	}
+	.components-placeholder__fieldset {
+		display: flex;
+	}
 }
 
 .ub_image_slider_url_input {
