@@ -591,7 +591,7 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/review/block.php';
 // Divider
 require_once plugin_dir_path( __FILE__ ) . 'blocks/divider/block.php';
 
-//Post-Grig
+//Post-Grid
 require_once plugin_dir_path( __File__ ) . 'blocks/post-grid/block.php';
 
 //Styled Box

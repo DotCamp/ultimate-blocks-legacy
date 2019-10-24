@@ -77,6 +77,11 @@ class Ultimate_Blocks_Util {
                 'active' => true,
             ),
             array(
+                'label'  => 'Post Grid',
+                'name'   => 'ub/post-grid',
+                'active' => true,
+            ),
+            array(
 				'label'  => 'Progress Bar',
 				'name'   => 'ub/progress-bar',
 				'active' => true,
@@ -120,12 +125,7 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Testimonial',
 				'name'   => 'ub/testimonial',
 				'active' => true,
-			),
-            array(
-                'label'  => 'Post Grig',
-                'name'   => 'ub/post-grid',
-                'active' => true,
-            )
+			)
 		];
 	}
 
