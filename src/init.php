@@ -237,7 +237,7 @@ function ub_include_block_attribute_css() {
                         'min-height: ' . (25+ (count(json_decode($attributes['images'], true)) > 0) ? $attributes['sliderHeight'] : 200 ) . 'px;' . PHP_EOL .
                     '}' . PHP_EOL . 
                     $prefix . ' .flickity-slider img{' . PHP_EOL .
-                        'height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
+                        'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
                 case 'ub/notification-box-block':
