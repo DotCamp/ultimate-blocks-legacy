@@ -351,6 +351,7 @@ export const editorDisplay = props => {
 		numColumns,
 		listStyle
 	} = props.attributes;
+
 	return (
 		<Fragment>
 			<div className="ub_table-of-contents-header">

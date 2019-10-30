@@ -5,6 +5,7 @@
 	border: 1px solid #dfdfdf;
 	padding: 30px;
 	margin: 20px 0 !important;
+
 	ul,
 	ol {
 		margin-bottom: 0;
@@ -36,9 +37,9 @@
 }
 
 .ub_table-of-contents-collapsed {
-	width: fit-content;
 	padding: 10px;
 	margin: 0;
+	max-width: fit-content;
 	.ub_table-of-contents-header {
 		margin-bottom: 0;
 	}
@@ -52,6 +53,7 @@
 	display: grid;
 	grid-template-columns: minmax(10px, 1fr) auto;
 	width: fit-content;
+	transition: all 0.5s ease-in-out;
 }
 
 #ub_table-of-contents-header-toggle {
