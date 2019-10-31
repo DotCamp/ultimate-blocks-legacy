@@ -231,6 +231,10 @@ $defaultValues = array(
     ),
     'ub/content-toggle-panel-block' => array(
         'attributes' => array(
+            'parentID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'theme' => array(
                 'type' => 'string',
                 'default' => '#f63d3d'

@@ -34,39 +34,23 @@ if ( !class_exists( 'simple_html_dom_node' ) ) {
 }
 
 function ub_render_content_toggle_block($attributes, $content){
-    $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
-    $rawContent = str_get_html('<div class="tempcontainer">'.$content.'</div>');
-
-    $panelSelector = '.tempcontainer>.' . $classNamePrefix . '-accordion';
-    $titleBarSelector = $panelSelector . '>.' . $classNamePrefix . '-accordion-title-wrap';
-    $titleElemSelector = $titleBarSelector . '>.' . $classNamePrefix . '-accordion-title';
-    $panel = $rawContent->find($panelSelector);
-
-    if($blockID!=''){
-        foreach($panel as $elem){
-            $elem->style=null;
-        }
-        foreach($rawContent->find($titleBarSelector) as $titleBar){
-            $titleBar->style=null;
-        }
-        foreach($rawContent->find($titleElemSelector) as $titleElem){
-            $titleElem->style=null;
-        }
-    }
 
     return '<div class="wp-block-ub-content-toggle'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .'" '. ($blockID == '' ? '' : 'id="ub-content-toggle-'.$blockID.'"').'>'
-                .$rawContent->find("div", 0)->innertext.'</div>';
+                . $content.'</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
 
-    return '<div class="'.$classNamePrefix.'-accordion'.(isset($className) ? ' ' . esc_attr($className) : '').'" style="border-color: '.$theme.';">
-                <div class="'.$classNamePrefix.'-accordion-title-wrap" style="background-color: '.$theme.';">
-                    <span class="'.$classNamePrefix.'-accordion-title" style="color:'.$titleColor.';">'.$panelTitle.'</span>
+    return '<div class="'.$classNamePrefix.'-accordion'.(isset($className) ? ' ' . esc_attr($className) : '').'"'
+                .($parentID == '' ? ' style="border-color: '.$theme.';"' : '').'>
+                <div class="'.$classNamePrefix.'-accordion-title-wrap"'
+                    .($parentID == '' ? ' style="background-color: '.$theme.';"' : '').'>
+                    <span class="'.$classNamePrefix.'-accordion-title"'
+                    .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</span>
                     <span class="'.$classNamePrefix.
                         '-accordion-state-indicator dashicons dashicons-arrow-right-alt2 '.
                         ($collapsed ? '' : 'open').'"></span>
@@ -100,8 +84,6 @@ add_action('init', 'ub_register_content_toggle_panel_block');
 add_action( 'wp_enqueue_scripts', 'ub_content_toggle_add_frontend_assets' );
 
 add_filter( 'render_block', 'ub_content_toggle_filter', 10, 3);
-
-
 
 function ub_content_toggle_filter( $block_content, $block ) {
      

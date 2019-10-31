@@ -18,7 +18,11 @@ const attributes = {
 	index: {
 		type: 'number',
 		default: 0
-	},
+    },
+    parentID:{
+        type:'string',
+        default: ''
+    },
 	theme: {
 		type: 'text',
 		default: '#f63d3d'
@@ -53,10 +57,16 @@ class ContentTogglePanel extends Component {
 			removeBlock,
 			showPanel,
 			block,
-			blockParentId,
+            blockParentId,
+            parentID,
 			selectBlock
 		} = this.props;
-		const { theme, titleColor, panelTitle } = attributes;
+        const { theme, titleColor, panelTitle } = attributes;
+        
+        if(parentID !== blockParentId){
+            setAttributes({parentID: blockParentId})
+        }
+
 		return (
 			<div
 				className="wp-block-ub-content-toggle-accordion"
