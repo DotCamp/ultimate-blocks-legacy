@@ -3,7 +3,7 @@
  * Server-side rendering for the post grid block
  */
 
-function ub_query_post(){
+function ub_query_post( $attributes ){
 
     /**
      * Global post object.
@@ -38,7 +38,7 @@ function ub_render_post_grid_block( $attributes ){
 
     /* get posts */
 
-    $post_query = ub_query_post( );
+    $post_query = ub_query_post( $attributes );
 
     /* Start the loop */
 
