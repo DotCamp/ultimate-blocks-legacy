@@ -30,12 +30,13 @@ function ub_render_table_of_contents_block($attributes){
         }
     }
 
-    while(count($sortedHeaders) > 1 &&
-        $sortedHeaders[count($sortedHeaders) - 1][0]['level'] > $sortedHeaders[count($sortedHeaders) - 2][0]['level']){
-        array_push($sortedHeaders[count($sortedHeaders) - 2], array_pop($sortedHeaders));
+    if(count($sortedHeaders) > 0){
+        while(count($sortedHeaders) > 1 &&
+            $sortedHeaders[count($sortedHeaders) - 1][0]['level'] > $sortedHeaders[count($sortedHeaders) - 2][0]['level']){
+            array_push($sortedHeaders[count($sortedHeaders) - 2], array_pop($sortedHeaders));
+        }
+        $sortedHeaders = $sortedHeaders[0];
     }
-
-    $sortedHeaders = $sortedHeaders[0];
 
     $listItems = '';
 
@@ -66,8 +67,10 @@ function ub_render_table_of_contents_block($attributes){
         }
     }
 
-    foreach($sortedHeaders as $key => $item){
-        $listItems = ub_makeListItem($key, $item, $listStyle, $blockID);
+    if(count($sortedHeaders) > 0){
+        foreach($sortedHeaders as $key => $item){
+            $listItems = ub_makeListItem($key, $item, $listStyle, $blockID);
+        }
     }
 
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
