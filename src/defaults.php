@@ -314,6 +314,10 @@ $defaultValues = array(
             'initialShow' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'toggleAlign'=> array(
+                'type' => 'string',
+                'default' => 'left'
             )
         )
     ),
