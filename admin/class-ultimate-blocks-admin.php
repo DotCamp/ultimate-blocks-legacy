@@ -144,8 +144,7 @@ class Ultimate_Blocks_Admin {
 			'manage_options',
 			'ultimate-blocks-settings',
 			array( $this, 'main_menu_template_cb' ),
-			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.png',
-			20
+			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.png'
 		);
 
 	}
