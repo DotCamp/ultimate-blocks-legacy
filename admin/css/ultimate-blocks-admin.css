@@ -3,10 +3,6 @@
  * included in this file.
  */
 
-body {
-    overflow: scroll;
-}
-
 .ub-hide {
     display: none !important;
 }
@@ -212,4 +208,11 @@ input:checked+.ub-switch-input-slider {
 .ub__settings_list a {
     color: #f64646;
     font-size: 18px;
+}
+
+#adminmenu .toplevel_page_ultimate-blocks-settings .wp-menu-image>img {
+    width: 21px !important;
+    margin: 5px 9px;
+    display: block;
+    padding: 0;
 }

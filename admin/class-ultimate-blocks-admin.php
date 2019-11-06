@@ -92,10 +92,6 @@ class Ultimate_Blocks_Admin {
 		 */
 		global $menu_page;
 
-		if ( $hook != $menu_page ) {
-			return;
-		}
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ultimate-blocks-admin.css', array(), $this->version, 'all' );
 
 	}
@@ -144,7 +140,7 @@ class Ultimate_Blocks_Admin {
 			'manage_options',
 			'ultimate-blocks-settings',
 			array( $this, 'main_menu_template_cb' ),
-			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.png'
+			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.svg'
 		);
 
 	}
