@@ -233,10 +233,7 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/image-slider':
                     $prefix = '#ub_image_slider_' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . '{' . PHP_EOL .
-                        'min-height: ' . (25+ (count(json_decode($attributes['images'], true)) > 0) ? $attributes['sliderHeight'] : 200 ) . 'px;' . PHP_EOL .
-                    '}' . PHP_EOL . 
-                    $prefix . ' .flickity-slider img{' . PHP_EOL .
+                    $blockStylesheets .= $prefix . ' .flickity-slider img{' . PHP_EOL .
                         'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
@@ -539,8 +536,6 @@ add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
 	$toc_plugins['ultimate-blocks/ultimate-blocks.php'] = 'Ultimate Blocks';
  	return $toc_plugins;
 });
-
-
 
 // Click to Tweet Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/click-to-tweet/block.php';
