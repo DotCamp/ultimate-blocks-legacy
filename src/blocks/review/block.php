@@ -70,10 +70,10 @@ function ub_render_review_block($attributes){
                 '</div></div>' . ($enableReviewSchema ?
     '<script type="application/ld+json">
     {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
-        $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.
-        '","aggregateRating":{"@type": "AggregateRating","ratingValue":'.$average.
-            ',"ratingCount":'.count($parsedItems).'}},"reviewRating":{"@type":"Rating","ratingValue":'.$average
-        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script>' : '')
+        preg_replace('/(<.+?>)/', '',$summaryDescription).'","itemReviewed":{"@type":"Product","name":"'.
+        preg_replace('/(<.+?>)/', '',$itemName).'","aggregateRating":{"@type": "AggregateRating","ratingValue":'
+        .$average.',"ratingCount":'.count($parsedItems).'}},"reviewRating":{"@type":"Rating","ratingValue":'.$average
+        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"}}</script>' : '')
         . '</div>';
 }
 
