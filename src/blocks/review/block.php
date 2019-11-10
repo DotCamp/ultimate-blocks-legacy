@@ -67,13 +67,30 @@ function ub_render_review_block($attributes){
                 <button class="ub_review_cta_btn"'.($blockID==''?' style="background-color: '.$callToActionBackColor
                 .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
                     ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>':'').
-                '</div></div>' . ($enableReviewSchema ?
-    '<script type="application/ld+json">
-    {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
-        preg_replace('/(<.+?>)/', '',$summaryDescription).'","itemReviewed":{"@type":"Product","name":"'.
-        preg_replace('/(<.+?>)/', '',$itemName).'","aggregateRating":{"@type": "AggregateRating","ratingValue":'
-        .$average.',"ratingCount":'.count($parsedItems).'}},"reviewRating":{"@type":"Rating","ratingValue":'.$average
-        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"}}</script>' : '')
+                '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
+        "@context":"http://schema.org/",
+        "@type":"Review",
+        "reviewBody":"' . preg_replace('/(<.+?>)/', '',$summaryDescription).'",
+        "itemReviewed":{
+            "@type":"Product",
+            "name":"'.preg_replace('/(<.+?>)/', '',$itemName).'",
+        "review":{
+            "author":{
+                "@type":"Person",
+                "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
+            }
+        }
+    },
+    "reviewRating":{
+        "@type":"Rating",
+        "ratingValue":'.$average.',
+        "bestRating":'.$starCount.
+    '},
+    "author":{
+        "@type":"Person",
+        "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
+    }
+}</script>')) : '')
         . '</div>';
 }
 
