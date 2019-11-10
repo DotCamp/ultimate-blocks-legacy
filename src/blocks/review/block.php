@@ -54,7 +54,10 @@ function ub_render_review_block($attributes){
         <p class="ub_review_summary_title">'.$summaryTitle.'</p>
         <div class="ub_review_overall_value">   
             <p>'.$summaryDescription.'</p>
-            <span class="ub_review_rating">'.$average.'</span>
+            <div><span class="ub_review_rating">'.$average.'</span>'.
+            ub_generateStarDisplay($average,$starCount, $blockID.'-average',
+            $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").
+            '</div>
         </div>
         <div class="ub_review_cta_panel">'.
         ($enableCTA && $callToActionURL != '' ? '<div class="ub_review_cta_main">
@@ -64,9 +67,7 @@ function ub_render_review_block($attributes){
                 <button class="ub_review_cta_btn"'.($blockID==''?' style="background-color: '.$callToActionBackColor
                 .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
                     ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>':'').
-                ub_generateStarDisplay($average,$starCount, $blockID.'-average',
-                $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").'
-            </div></div>' . ($enableReviewSchema ?
+                '</div></div>' . ($enableReviewSchema ?
     '<script type="application/ld+json">
     {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
         $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.

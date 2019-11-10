@@ -352,9 +352,23 @@ export class ReviewBody extends Component {
 							value={summaryDescription}
 							unstableOnFocus={_ => setEditable('')}
 						/>
-						<span className="ub_review_rating">
-							{Math.round(average * 10) / 10}
-						</span>
+						<div>
+							<span className="ub_review_rating">
+								{Math.round(average * 10) / 10}
+							</span>
+							<Stars
+								id={`${ID}-average`}
+								className="ub_review_average_stars"
+								onHover={_ => null}
+								onClick={_ => null}
+								value={average}
+								limit={starCount}
+								inactiveStarColor={inactiveStarColor}
+								activeStarColor={activeStarColor}
+								selectedStarColor={selectedStarColor}
+								starOutlineColor={starOutlineColor}
+							/>
+						</div>
 					</div>
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
@@ -380,18 +394,6 @@ export class ReviewBody extends Component {
 								</div>
 							)}
 						</div>
-						<Stars
-							id={`${ID}-average`}
-							className="ub_review_average_stars"
-							onHover={_ => null}
-							onClick={_ => null}
-							value={average}
-							limit={starCount}
-							inactiveStarColor={inactiveStarColor}
-							activeStarColor={activeStarColor}
-							selectedStarColor={selectedStarColor}
-							starOutlineColor={starOutlineColor}
-						/>
 					</div>
 					{hasFocus && enableCTA && (
 						<div className="ub_review_link_input">
