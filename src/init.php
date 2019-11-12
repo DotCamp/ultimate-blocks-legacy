@@ -324,11 +324,11 @@ function ub_include_block_attribute_css() {
                     $blockStylesheets .=  $prefix . ' .ub_review_item_name{' . PHP_EOL . 
                         'text-align: ' . $attributes['titleAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . $attributes['blockID'] . ' .ub_review_author_name{' . PHP_EOL . 
+                    $prefix . ' .ub_review_author_name{' . PHP_EOL . 
                         'text-align: ' . $attributes['authorAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix. $attributes['blockID'] . ' .ub_review_cta_main>a{' . PHP_EOL . 
-                        'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
+                    $prefix . ' .ub_review_description{' . PHP_EOL . 
+                        'text-align: ' . $attributes['descriptionAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_review_cta_main>a{' . PHP_EOL . 
                         'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .

@@ -1,5 +1,27 @@
-@import '../../common';
+@import "../../common";
 
 .ub_review_average_stars {
 	float: right;
+}
+
+.ub_review_entry .dashicons-trash {
+	float: right;
+}
+
+.ub_review_image_container {
+	position: relative;
+	.ub-remove-image {
+		position: absolute;
+		right: 0;
+	}
+}
+
+.ub_review_upload_button {
+	position: relative;
+	width: 125px;
+	button {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }

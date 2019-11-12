@@ -47,12 +47,17 @@ function ub_render_review_block($attributes){
                 '" id="ub_review_'.$blockID.'">
                 <!--'.$items.'-->
         <p class="ub_review_item_name"'.($blockID==''?' style="text-align: '.$titleAlign.';"':'').'>'.
-            $itemName.'</p>
-        <p class="ub_review_author_name"'.($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
+            $itemName.'</p><p class="ub_review_author_name"'.
+            ($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
+        ($imgURL != '' || $description != '' ?
+        '<div class="ub_review_description_container">'.
+            ($imgURL == '' ? '' : '<img class="ub_review_image" src="'.$imgURL.'" alt = "'.$imgAlt.'">').
+            ($description == '' ? '' : '<div class="ub_review_description">'.$description.'</div>').
+        '</div>' : '').
             $starRatings
     .'<div class="ub_review_summary">
         <p class="ub_review_summary_title">'.$summaryTitle.'</p>
-        <div class="ub_review_overall_value">   
+        <div class="ub_review_overall_value">
             <p>'.$summaryDescription.'</p>
             <div><span class="ub_review_rating">'.$average.'</span>'.
             ub_generateStarDisplay($average,$starCount, $blockID.'-average',
@@ -71,6 +76,8 @@ function ub_render_review_block($attributes){
         "@context":"http://schema.org/",
         "@type":"Review",
         "reviewBody":"' . preg_replace('/(<.+?>)/', '',$summaryDescription).'",
+        "image": "'.$imgURL.'",
+        "description": "'.preg_replace('/(<.+?>)/', '',$description).'",
         "itemReviewed":{
             "@type":"Product",
             "name":"'.preg_replace('/(<.+?>)/', '',$itemName).'",

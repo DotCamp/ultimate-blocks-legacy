@@ -633,6 +633,26 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'description' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'descriptionAlign' => array(
+                'type' => 'string',
+                'default' => 'left'
+            ),
+            'imgURL' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'imgID' => array(
+                'type' => 'number',
+                'default' => -1
+            ),
+            'imgAlt' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'items' => array(
                 'type' => 'string',
                 'default' => '[{"label": "", "value": 0}]'

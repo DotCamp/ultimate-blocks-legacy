@@ -40,6 +40,25 @@ const attributes = {
 		type: 'string',
 		default: '[{"label":"","value":0}]'
 	},
+	description: {
+		type: 'string',
+		default: ''
+	},
+	descriptionAlign: {
+		type: 'string',
+		default: 'left'
+	},
+	imgURL: {
+		type: 'string',
+		default: ''
+	},
+	imgID: {
+		type: 'number'
+	},
+	imgAlt: {
+		type: 'string',
+		default: ''
+	},
 	parts: {
 		type: 'array',
 		default: [{ label: '', value: 0 }]
@@ -129,6 +148,10 @@ registerBlockType('ub/review', {
 			blockID,
 			authorName,
 			itemName,
+			description,
+			imgID,
+			imgAlt,
+			imgURL,
 			items,
 			parts,
 			starCount,
@@ -143,6 +166,7 @@ registerBlockType('ub/review', {
 			starOutlineColor,
 			titleAlign,
 			authorAlign,
+			descriptionAlign,
 			enableCTA,
 			ctaNoFollow,
 			ctaOpenInNewTab,
@@ -163,6 +187,9 @@ registerBlockType('ub/review', {
 				case 'reviewAuthor':
 					setAttributes({ authorAlign: value });
 					break;
+				case 'reviewItemDescription':
+					setAttributes({ descriptionAlign: value });
+					break;
 			}
 		};
 
@@ -172,6 +199,8 @@ registerBlockType('ub/review', {
 					return titleAlign;
 				case 'reviewAuthor':
 					return authorAlign;
+				case 'reviewItemDescription':
+					return descriptionAlign;
 			}
 		};
 
@@ -338,10 +367,15 @@ registerBlockType('ub/review', {
 					)}
 				</BlockControls>
 			),
-			<ReviewBody
+            <ReviewBody
+                isSelected={isSelected}
 				authorName={authorName}
 				itemName={itemName}
+				description={description}
 				ID={blockID}
+				imgID={imgID}
+				imgAlt={imgAlt}
+				imgURL={imgURL}
 				items={parts}
 				starCount={starCount}
 				summaryTitle={summaryTitle}
@@ -358,6 +392,16 @@ registerBlockType('ub/review', {
 					setAttributes({ authorName: newValue })
 				}
 				setItemName={newValue => setAttributes({ itemName: newValue })}
+				setDescription={newValue =>
+					setAttributes({ description: newValue })
+				}
+				setImage={img =>
+					setAttributes({
+						imgID: img.id,
+						imgURL: img.url,
+						imgAlt: img.alt
+					})
+				}
 				setItems={newValue => setAttributes({ parts: newValue })}
 				setSummaryTitle={newValue =>
 					setAttributes({ summaryTitle: newValue })
@@ -373,9 +417,9 @@ registerBlockType('ub/review', {
 				}
 				hasFocus={isSelected}
 				setEditable={newValue => setState({ editable: newValue })}
-				alignments={{ titleAlign, authorAlign }}
+				alignments={{ titleAlign, authorAlign, descriptionAlign }}
 				enableCTA={enableCTA}
-				ctaNoFollow={ctaNoFollow}
+                ctaNoFollow={ctaNoFollow}
 			/>
 		];
 	}),
