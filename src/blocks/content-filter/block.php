@@ -103,8 +103,8 @@ function ub_content_filter_add_frontend_assets() {
                 Ultimate_Blocks_Constants::plugin_version(),
                 true
             );
+            break;
         }
-        break;
     }
 }
 
