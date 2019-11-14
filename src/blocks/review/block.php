@@ -59,7 +59,7 @@ function ub_render_review_block($attributes){
         <p class="ub_review_summary_title">'.$summaryTitle.'</p>
         <div class="ub_review_overall_value">
             <p>'.$summaryDescription.'</p>
-            <div><span class="ub_review_rating">'.$average.'</span>'.
+            <div class="ub_review_average"><span class="ub_review_rating">'.$average.'</span>'.
             ub_generateStarDisplay($average,$starCount, $blockID.'-average',
             $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").
             '</div>

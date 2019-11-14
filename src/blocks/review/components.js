@@ -389,7 +389,7 @@ export class ReviewBody extends Component {
 							value={summaryDescription}
 							unstableOnFocus={_ => setEditable("")}
 						/>
-						<div>
+						<div className="ub_review_average">
 							<span className="ub_review_rating">
 								{Math.round(average * 10) / 10}
 							</span>

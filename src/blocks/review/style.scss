@@ -32,7 +32,7 @@
 
 .ub_review_overall_value {
 	display: grid;
-	grid-template-columns: 3fr 1fr;
+	grid-template-columns: 75% 25%;
 }
 
 .ub_review_entry {
@@ -44,6 +44,11 @@
 .ub_review_rating {
 	text-align: right;
 	font-size: 40px;
+}
+
+.ub_review_average {
+	display: flex;
+	flex-direction: column;
 }
 
 .ub_review_average_stars {
