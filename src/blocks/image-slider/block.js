@@ -354,6 +354,7 @@ registerBlockType('ub/image-slider', {
 									<Icon icon="admin-links" />
 								</div>
 								<URLInput
+									autoFocus={false}
 									className="button-url"
 									value={captionArray[activeSlide].link}
 									onChange={url => {

@@ -18,7 +18,7 @@ const {
 	RangeControl,
 	CheckboxControl,
 	ToggleControl,
-    SelectControl
+	SelectControl
 } = wp.components;
 
 export const blockControls = props => {
@@ -85,11 +85,11 @@ export const inspectorControls = props => {
 	} = attributes;
 
 	const headingTagOptions = [
-		{value: 'h2', label: __('H2', 'ultimate-blocks')},
-		{value: 'h3', label: __('H3', 'ultimate-blocks')},
-		{value: 'h4', label: __('H4', 'ultimate-blocks')},
-		{value: 'h5', label: __('H5', 'ultimate-blocks')},
-		{value: 'h6', label: __('H6', 'ultimate-blocks')},
+		{ value: 'h2', label: __('H2', 'ultimate-blocks') },
+		{ value: 'h3', label: __('H3', 'ultimate-blocks') },
+		{ value: 'h4', label: __('H4', 'ultimate-blocks') },
+		{ value: 'h5', label: __('H5', 'ultimate-blocks') },
+		{ value: 'h6', label: __('H6', 'ultimate-blocks') }
 	];
 
 	return (
@@ -117,7 +117,10 @@ export const inspectorControls = props => {
 				]}
 			/>
 
-			<PanelBody title={__('Headline Settings', 'ultimate-blocks')} initialOpen={false}>
+			<PanelBody
+				title={__('Headline Settings', 'ultimate-blocks')}
+				initialOpen={false}
+			>
 				<RangeControl
 					label={__('Font Size', 'ultimate-blocks')}
 					value={headFontSize}
@@ -136,14 +139,16 @@ export const inspectorControls = props => {
 						}
 					/>
 				)}
-				{ useHeadingTag &&
+				{useHeadingTag && (
 					<SelectControl
-                        label={__('Select Heading Tag', 'ultimate-blocks')}
-                        options={headingTagOptions}
-                        value={selectedHeadingTag}
-                        onChange={ selectedHeadingTag => setAttributes({selectedHeadingTag})}
-                    />
-				}
+						label={__('Select Heading Tag', 'ultimate-blocks')}
+						options={headingTagOptions}
+						value={selectedHeadingTag}
+						onChange={selectedHeadingTag =>
+							setAttributes({ selectedHeadingTag })
+						}
+					/>
+				)}
 				<p>{__('Color', 'ultimate-blocks')}</p>
 				<ColorPalette
 					value={headColor}
@@ -153,7 +158,10 @@ export const inspectorControls = props => {
 				/>
 			</PanelBody>
 
-			<PanelBody title={__('Content Settings', 'ultimate-blocks')} initialOpen={false}>
+			<PanelBody
+				title={__('Content Settings', 'ultimate-blocks')}
+				initialOpen={false}
+			>
 				<RangeControl
 					label={__('Font Size', 'ultimate-blocks')}
 					value={contentFontSize}
@@ -176,7 +184,10 @@ export const inspectorControls = props => {
 				/>
 			</PanelBody>
 
-			<PanelBody title={__('Button Settings', 'ultimate-blocks')} initialOpen={false}>
+			<PanelBody
+				title={__('Button Settings', 'ultimate-blocks')}
+				initialOpen={false}
+			>
 				<RangeControl
 					label={__('Button Width', 'ultimate-blocks')}
 					value={buttonWidth}
@@ -214,7 +225,10 @@ export const inspectorControls = props => {
 					}
 				/>
 			</PanelBody>
-			<PanelBody title={__('Link Settings', 'ultimate-blocks')} initialOpen={false}>
+			<PanelBody
+				title={__('Link Settings', 'ultimate-blocks')}
+				initialOpen={false}
+			>
 				<CheckboxControl
 					label={__('Add Nofollow to Link', 'ultimate-blocks')}
 					checked={addNofollow}
@@ -267,7 +281,10 @@ export const editorDisplay = props => {
 				<div className="ub_call_to_action_headline">
 					<RichText
 						tagName={useHeadingTag ? 'h2' : 'p'}
-						placeholder={__('CTA Title Goes Here', 'ultimate-blocks')}
+						placeholder={__(
+							'CTA Title Goes Here',
+							'ultimate-blocks'
+						)}
 						className="ub_call_to_action_headline_text"
 						style={{
 							fontSize: headFontSize + 'px',
@@ -289,7 +306,10 @@ export const editorDisplay = props => {
 				<div className="ub_call_to_action_content">
 					<RichText
 						tagName="p"
-						placeholder={__('Add Call to Action Text Here', 'ultimate-blocks')}
+						placeholder={__(
+							'Add Call to Action Text Here',
+							'ultimate-blocks'
+						)}
 						className="ub_cta_content_text"
 						style={{
 							fontSize: contentFontSize + 'px',
@@ -347,6 +367,7 @@ export const editorDisplay = props => {
 							<Icon icon="admin-links" />
 						</div>
 						<URLInput
+							autoFocus={false}
 							className="button-url"
 							value={props.attributes.url}
 							onChange={value => setAttributes({ url: value })}
