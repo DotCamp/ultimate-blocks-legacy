@@ -42,7 +42,9 @@ Array.prototype.slice.call(document.getElementsByClassName('wp-block-ub-content-
     panelContent.removeAttribute('style');
 
     if (initialHide) {
-      panelContent.classList.add('ub-hide');
+      setTimeout(function () {
+        return panelContent.classList.add('ub-hide');
+      }, 10);
     }
 
     instance.addEventListener('click', function (e) {

@@ -60,7 +60,7 @@ Array.prototype.slice
 				panelContent.removeAttribute('style');
 
 				if (initialHide) {
-					panelContent.classList.add('ub-hide');
+					setTimeout(() => panelContent.classList.add('ub-hide'), 10);
 				}
 
 				instance.addEventListener('click', function(e) {
