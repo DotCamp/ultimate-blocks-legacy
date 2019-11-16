@@ -63,7 +63,7 @@
 .ub_review_cta_panel {
 	display: grid;
 	grid-template-columns: 2fr auto;
-	grid-template-areas: "cta . stars";
+	grid-template-areas: 'cta . stars';
 }
 
 .ub_review_add_entry {
@@ -85,6 +85,7 @@
 	border-style: solid;
 	text-align: center;
 	text-transform: none;
+	cursor: pointer;
 }
 
 .ub_review_item_name {
