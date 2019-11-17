@@ -3,7 +3,8 @@
 function ub_render_expand_portion_block($attributes, $content){
     extract($attributes);
     return '<div class="ub-expand-portion ub-expand-'.$displayType.
-        ($displayType == 'full' ? ' ub-hide' : '').'">'.
+        ($displayType == 'full' ? ' ub-hide' : '').
+        (isset($className) ? ' ' . esc_attr($className) : '').'">'.
         $content.
         '<a class="ub-expand-toggle-button">'.$clickText.'</a>'
         .'</div>';
@@ -20,7 +21,8 @@ function ub_register_expand_portion_block($attributes){
 
 function ub_render_expand_block($attributes, $content){
     extract($attributes);
-    return '<div class="ub-expand" id="ub-expand-'.$blockID.'">'.$content.'</div>';
+    return '<div class="ub-expand '.(isset($className) ? ' ' . esc_attr($className) : '')
+    .'" id="ub-expand-'.$blockID.'">'.$content.'</div>';
 }
 
 function ub_register_expand_block($attributes){
