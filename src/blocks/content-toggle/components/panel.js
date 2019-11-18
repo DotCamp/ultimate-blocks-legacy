@@ -8,26 +8,33 @@ import { Component } from 'react';
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { RichText, InnerBlocks } = wp.blockEditor || wp.editor;
+const { RichText, InnerBlocks, InspectorControls, PanelColorSettings } =
+	wp.blockEditor || wp.editor;
 
 const { withState, compose } = wp.compose;
 
 const { withDispatch, withSelect } = wp.data;
 
+const { FormToggle, PanelBody, PanelRow } = wp.components;
+
 const attributes = {
 	index: {
 		type: 'number',
 		default: 0
-    },
-    parentID:{
-        type:'string',
-        default: ''
-    },
+	},
+	parentID: {
+		type: 'string',
+		default: ''
+	},
 	theme: {
 		type: 'text',
 		default: '#f63d3d'
 	},
 	collapsed: {
+		type: 'boolean',
+		default: false
+	},
+	hasFAQSchema: {
 		type: 'boolean',
 		default: false
 	},
@@ -57,17 +64,74 @@ class ContentTogglePanel extends Component {
 			removeBlock,
 			showPanel,
 			block,
-            blockParentId,
-            parentID,
+			blockParentId,
+			parentID,
 			selectBlock
 		} = this.props;
-        const { theme, titleColor, panelTitle } = attributes;
-        
-        if(parentID !== blockParentId){
-            setAttributes({parentID: blockParentId})
-        }
+		const {
+			theme,
+			titleColor,
+			panelTitle,
+			collapsed,
+			hasFAQSchema
+		} = attributes;
 
-		return (
+		if (parentID !== blockParentId) {
+			setAttributes({ parentID: blockParentId });
+		}
+
+		return [
+			<InspectorControls>
+				<PanelColorSettings
+					title={__('Color Scheme')}
+					initialOpen={false}
+					colorSettings={[
+						{
+							value: theme,
+							onChange: value => setAttributes({ theme: value }),
+							label: __('Container Color')
+						},
+						{
+							value: titleColor,
+							onChange: value =>
+								setAttributes({ titleColor: value }),
+							label: __('Title Color')
+						}
+					]}
+				/>
+				<PanelBody title={__('Initial State')} initialOpen={true}>
+					<PanelRow>
+						<label htmlFor="ub-content-toggle-state">
+							{__('Collapsed')}
+						</label>
+						<FormToggle
+							id="ub-content-toggle-state"
+							label={__('Collapsed')}
+							checked={collapsed}
+							onChange={() =>
+								setAttributes({ collapsed: !collapsed })
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__('FAQ Schema')} initialOpen={true}>
+					<PanelRow>
+						<label htmlFor="ub-content-toggle-faq-schema">
+							{__('Enable FAQ Schema')}
+						</label>
+						<FormToggle
+							id="ub-content-toggle-faq-schema"
+							label={__('Enable FAQ Schema')}
+							checked={hasFAQSchema}
+							onChange={() =>
+								setAttributes({
+									hasFAQSchema: !hasFAQSchema
+								})
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>,
 			<div
 				className="wp-block-ub-content-toggle-accordion"
 				style={{ borderColor: theme }}
@@ -126,7 +190,7 @@ class ContentTogglePanel extends Component {
 					/>
 				</div>
 			</div>
-		);
+		];
 	}
 }
 

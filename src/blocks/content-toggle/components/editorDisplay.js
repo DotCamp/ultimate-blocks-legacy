@@ -188,6 +188,7 @@ export class PanelContent extends Component {
 			isSelected,
 			updateBlockAttributes,
 			oldArrangement,
+			oldAttributeValues,
 			mainBlockSelected,
 			setState,
 			selectBlock,
@@ -239,7 +240,6 @@ export class PanelContent extends Component {
 				})
 			);
 		};
-
 		//Detect if one of the child blocks has received a command to add another child block
 		if (JSON.stringify(newBlockTarget) !== '[]') {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -272,6 +272,7 @@ export class PanelContent extends Component {
 				);
 			} else if (oldArrangement === '[0]' && newArrangement === '[]') {
 				removeBlock(block.clientId);
+				return null; //prevent block from being rendered to prevent error
 			} else {
 				panels.forEach((panel, i) =>
 					updateBlockAttributes(panel.clientId, {
@@ -304,6 +305,89 @@ export class PanelContent extends Component {
 
 		if (blockID !== block.clientId) {
 			setAttributes({ blockID: block.clientId });
+		}
+
+		let newAttributeValues;
+		let changedPanel = -1;
+
+		if (oldArrangement === '') {
+			panels.forEach(panel =>
+				updateBlockAttributes(panel.clientId, {
+					hasFAQSchema,
+					theme,
+					titleColor,
+					collapsed
+				})
+			);
+			newAttributeValues = JSON.stringify(
+				Array(panels.length).fill({
+					hasFAQSchema,
+					theme,
+					titleColor,
+					collapsed
+				})
+			);
+
+			setState({ oldAttributeValues: newAttributeValues });
+		} else {
+			newAttributeValues = JSON.stringify(
+				panels.map(panel =>
+					((
+						{
+							panelTitle,
+							newBlockPosition,
+							index,
+							parent,
+							parentID,
+							...others
+						} = panel.attributes
+					) => others)()
+				)
+			);
+
+			if (
+				newAttributeValues !== oldAttributeValues &&
+				newAttributeValues !== '[]'
+			) {
+				let newValues = JSON.parse(newAttributeValues).map(panel =>
+					JSON.stringify(panel)
+				);
+				let oldValues = JSON.parse(oldAttributeValues).map(panel =>
+					JSON.stringify(panel)
+				);
+
+				if (
+					JSON.parse(oldArrangement).length ===
+					JSON.parse(newArrangement).length
+				) {
+					oldValues.forEach((o, i) => {
+						if (o !== newValues[i]) {
+							changedPanel = i;
+						}
+					});
+
+					if (changedPanel == -1) {
+						newAttributeValues = JSON.stringify(
+							Array(panels.length).fill({
+								collapsed,
+								hasFAQSchema,
+								theme,
+								titleColor
+							})
+						);
+					} else {
+						panels.forEach(panel => {
+							updateBlockAttributes(
+								panel.clientId,
+								JSON.parse(newAttributeValues)[changedPanel]
+							);
+						});
+						setAttributes(
+							JSON.parse(newAttributeValues)[changedPanel]
+						);
+					}
+				}
+			}
 		}
 
 		return [
