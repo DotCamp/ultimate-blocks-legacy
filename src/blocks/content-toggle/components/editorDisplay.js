@@ -308,7 +308,6 @@ export class PanelContent extends Component {
 		}
 
 		let newAttributeValues;
-		let changedPanel = -1;
 
 		if (oldArrangement === '') {
 			panels.forEach(panel =>
@@ -321,10 +320,10 @@ export class PanelContent extends Component {
 			);
 			newAttributeValues = JSON.stringify(
 				Array(panels.length).fill({
-					hasFAQSchema,
 					theme,
-					titleColor,
-					collapsed
+					collapsed,
+					hasFAQSchema,
+					titleColor
 				})
 			);
 
@@ -349,43 +348,23 @@ export class PanelContent extends Component {
 				newAttributeValues !== oldAttributeValues &&
 				newAttributeValues !== '[]'
 			) {
-				let newValues = JSON.parse(newAttributeValues).map(panel =>
-					JSON.stringify(panel)
-				);
-				let oldValues = JSON.parse(oldAttributeValues).map(panel =>
-					JSON.stringify(panel)
-				);
-
+				let newValues = JSON.parse(newAttributeValues);
 				if (
-					JSON.parse(oldArrangement).length ===
-					JSON.parse(newArrangement).length
+					JSON.parse(oldAttributeValues).length === newValues.length
 				) {
-					oldValues.forEach((o, i) => {
-						if (o !== newValues[i]) {
-							changedPanel = i;
-						}
-					});
+					const changedPanel = block.innerBlocks
+						.map(innerBlock => innerBlock.clientId)
+						.indexOf(selectedBlock);
 
-					if (changedPanel == -1) {
-						newAttributeValues = JSON.stringify(
-							Array(panels.length).fill({
-								collapsed,
-								hasFAQSchema,
-								theme,
-								titleColor
-							})
+					panels.forEach(panel => {
+						updateBlockAttributes(
+							panel.clientId,
+							newValues[changedPanel]
 						);
-					} else {
-						panels.forEach(panel => {
-							updateBlockAttributes(
-								panel.clientId,
-								JSON.parse(newAttributeValues)[changedPanel]
-							);
-						});
-						setAttributes(
-							JSON.parse(newAttributeValues)[changedPanel]
-						);
-					}
+					});
+					setAttributes(newValues[changedPanel]);
+				} else {
+					setState({ oldAttributeValues: newAttributeValues });
 				}
 			}
 		}
