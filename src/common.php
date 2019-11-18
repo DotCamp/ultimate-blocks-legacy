@@ -4118,8 +4118,11 @@ if(!function_exists('ub_getPresentBlocks')){
     function ub_getPresentBlocks(){
         $presentBlocks = [];
 
-        foreach(parse_blocks( get_post()->post_content ) as $block){
-            $presentBlocks = ub_checkInnerBlocks($block);
+        $posts_array = get_post();
+        if($posts_array){
+            foreach(parse_blocks( $posts_array->post_content ) as $block){
+                $presentBlocks = ub_checkInnerBlocks($block);
+            }
         }
 
         return $presentBlocks;
