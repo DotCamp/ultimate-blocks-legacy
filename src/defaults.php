@@ -637,6 +637,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'enableDescription' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
             'descriptionAlign' => array(
                 'type' => 'string',
                 'default' => 'left'
@@ -652,6 +656,10 @@ $defaultValues = array(
             'imgAlt' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'enableImage' => array(
+                'type' => 'boolean',
+                'default' => false
             ),
             'items' => array(
                 'type' => 'string',

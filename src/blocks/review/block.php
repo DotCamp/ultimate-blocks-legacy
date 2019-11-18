@@ -49,10 +49,10 @@ function ub_render_review_block($attributes){
         <p class="ub_review_item_name"'.($blockID==''?' style="text-align: '.$titleAlign.';"':'').'>'.
             $itemName.'</p><p class="ub_review_author_name"'.
             ($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
-        ($imgURL != '' || $description != '' ?
+        ( ($enableImage || $enableDescription) && ($imgURL != '' || $description != '') ?
         '<div class="ub_review_description_container">'.
-            ($imgURL == '' ? '' : '<img class="ub_review_image" src="'.$imgURL.'" alt = "'.$imgAlt.'">').
-            ($description == '' ? '' : '<div class="ub_review_description">'.$description.'</div>').
+            (!$enableImage || $imgURL == '' ? '' : '<img class="ub_review_image" src="'.$imgURL.'" alt = "'.$imgAlt.'">').
+            (!$enableDescription || $description == '' ? '' : '<div class="ub_review_description">'.$description.'</div>').
         '</div>' : '').
             $starRatings
     .'<div class="ub_review_summary">

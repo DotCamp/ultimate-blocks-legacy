@@ -123,6 +123,14 @@ const attributes = {
 		type: 'boolean',
 		default: true
 	},
+	enableImage: {
+		type: 'boolean',
+		default: false
+	},
+	enableDescription: {
+		type: 'boolean',
+		default: false
+	},
 	starOutlineColor: {
 		type: 'string',
 		default: '#000000'
@@ -170,7 +178,9 @@ registerBlockType('ub/review', {
 			enableCTA,
 			ctaNoFollow,
 			ctaOpenInNewTab,
-			enableReviewSchema
+			enableReviewSchema,
+			enableImage,
+			enableDescription
 		} = props.attributes;
 
 		if (blockID !== block.clientId) {
@@ -333,13 +343,55 @@ registerBlockType('ub/review', {
 								id="ub-review-schema-toggle"
 								label={__('Enable review schema')}
 								checked={enableReviewSchema}
-								onChange={_ =>
-									setAttributes({
+								onChange={_ => {
+									let newAttributes = {
 										enableReviewSchema: !enableReviewSchema
-									})
-								}
+									};
+									if (enableReviewSchema) {
+										newAttributes = Object.assign(
+											newAttributes,
+											{
+												enableImage: false,
+												enableDescription: false
+											}
+										);
+									}
+									setAttributes(newAttributes);
+								}}
 							/>
 						</PanelRow>
+						{enableReviewSchema && [
+							<PanelRow>
+								<label htmlFor="ub-review-image-toggle">
+									{__('Enable review image')}
+								</label>
+								<FormToggle
+									id="ub-review-image-toggle"
+									label={__('Enable review image')}
+									checked={enableImage}
+									onChange={_ =>
+										setAttributes({
+											enableImage: !enableImage
+										})
+									}
+								/>
+							</PanelRow>,
+							<PanelRow>
+								<label htmlFor="ub-review-description-toggle">
+									{__('Enable review description')}
+								</label>
+								<FormToggle
+									id="ub-review-description-toggle"
+									label={__('Enable review description')}
+									checked={enableDescription}
+									onChange={_ =>
+										setAttributes({
+											enableDescription: !enableDescription
+										})
+									}
+								/>
+							</PanelRow>
+						]}
 					</PanelBody>
 				</InspectorControls>
 			),
@@ -367,15 +419,17 @@ registerBlockType('ub/review', {
 					)}
 				</BlockControls>
 			),
-            <ReviewBody
-                isSelected={isSelected}
+			<ReviewBody
+				isSelected={isSelected}
 				authorName={authorName}
 				itemName={itemName}
 				description={description}
+				descriptionEnabled={enableDescription}
 				ID={blockID}
 				imgID={imgID}
 				imgAlt={imgAlt}
 				imgURL={imgURL}
+				imageEnabled={enableImage}
 				items={parts}
 				starCount={starCount}
 				summaryTitle={summaryTitle}
@@ -419,7 +473,7 @@ registerBlockType('ub/review', {
 				setEditable={newValue => setState({ editable: newValue })}
 				alignments={{ titleAlign, authorAlign, descriptionAlign }}
 				enableCTA={enableCTA}
-                ctaNoFollow={ctaNoFollow}
+				ctaNoFollow={ctaNoFollow}
 			/>
 		];
 	}),

@@ -208,8 +208,10 @@ export class ReviewBody extends Component {
 			imgID,
 			imgAlt,
 			imgURL,
+			imageEnabled,
 			setImage,
 			description,
+			descriptionEnabled,
 			setDescription,
 			ID,
 			items,
@@ -265,54 +267,63 @@ export class ReviewBody extends Component {
 					onChange={text => setAuthorName(text)}
 					unstableOnFocus={_ => setEditable('reviewAuthor')}
 				/>
-				<div className="ub_review_description_container">
-					{imgID ? (
-						<div className="ub_review_image_container">
-							<img
-								className="ub_review_image"
-								src={imgURL}
-								alt={imgAlt}
+				{(imageEnabled || descriptionEnabled) && (
+					<div className="ub_review_description_container">
+						{imageEnabled &&
+							(imgID ? (
+								<div className="ub_review_image_container">
+									<img
+										className="ub_review_image"
+										src={imgURL}
+										alt={imgAlt}
+									/>
+									{isSelected ? (
+										<Button
+											className="ub-remove-image"
+											onClick={_ =>
+												setImage({
+													id: 0,
+													url: '',
+													alt: ''
+												})
+											}
+										>
+											{removeIcon}
+										</Button>
+									) : null}
+								</div>
+							) : (
+								<div className="ub_review_upload_button">
+									<MediaUpload
+										onSelect={img => setImage(img)}
+										type="image"
+										value={imgID}
+										render={({ open }) => (
+											<Button
+												className="components-button button button-medium"
+												onClick={open}
+											>
+												{__('Upload Image')}
+											</Button>
+										)}
+									/>
+								</div>
+							))}
+						{descriptionEnabled && (
+							<RichText
+								className="ub_review_description"
+								tagName="p"
+								placeholder={__('Item description')}
+								value={description}
+								onChange={text => setDescription(text)}
+								style={{ textAlign: descriptionAlign }}
+								unstableOnFocus={_ =>
+									setEditable('reviewItemDescription')
+								}
 							/>
-							{isSelected ? (
-								<Button
-									className="ub-remove-image"
-									onClick={_ =>
-										setImage({ id: 0, url: '', alt: '' })
-									}
-								>
-									{removeIcon}
-								</Button>
-							) : null}
-						</div>
-					) : (
-						<div className="ub_review_upload_button">
-							<MediaUpload
-								onSelect={img => setImage(img)}
-								type="image"
-								value={imgID}
-								render={({ open }) => (
-									<Button
-										className="components-button button button-medium"
-										onClick={open}
-									>
-										{__('Upload Image')}
-									</Button>
-								)}
-							/>
-						</div>
-					)}
-					<RichText
-						className="ub_review_description"
-						tagName="p"
-						placeholder={__('Item description')}
-						value={description}
-						onChange={text => setDescription(text)}
-						style={{ textAlign: descriptionAlign }}
-						unstableOnFocus={_ =>
-							setEditable('reviewItemDescription')
-						}
-					/>
-				</div>
+						)}
+					</div>
+				)}
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText

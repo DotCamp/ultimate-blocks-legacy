@@ -1,4 +1,4 @@
-@import "../../common";
+@import '../../common';
 
 .ub_review_average_stars {
 	float: right;
@@ -19,9 +19,13 @@
 .ub_review_upload_button {
 	position: relative;
 	width: 125px;
+	height: 100px;
 	button {
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
+	}
+	& + div > .ub_review_description {
+		margin-left: 20px;
 	}
 }
