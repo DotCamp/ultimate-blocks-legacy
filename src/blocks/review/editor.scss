@@ -16,16 +16,9 @@
 	}
 }
 
-.ub_review_upload_button {
-	position: relative;
-	width: 125px;
-	height: 100px;
-	button {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-	& + div > .ub_review_description {
-		margin-left: 20px;
-	}
+.ub_review_description_container .ub_review_description {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
 }
