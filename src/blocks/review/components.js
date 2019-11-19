@@ -269,6 +269,19 @@ export class ReviewBody extends Component {
 				/>
 				{(imageEnabled || descriptionEnabled) && (
 					<div className="ub_review_description_container">
+						{descriptionEnabled && (
+							<RichText
+								className="ub_review_description"
+								tagName="p"
+								placeholder={__('Item description')}
+								value={description}
+								onChange={text => setDescription(text)}
+								style={{ textAlign: descriptionAlign }}
+								unstableOnFocus={_ =>
+									setEditable('reviewItemDescription')
+								}
+							/>
+						)}
 						{imageEnabled &&
 							(imgID ? (
 								<div className="ub_review_image_container">
@@ -309,19 +322,6 @@ export class ReviewBody extends Component {
 									/>
 								</div>
 							))}
-						{descriptionEnabled && (
-							<RichText
-								className="ub_review_description"
-								tagName="p"
-								placeholder={__('Item description')}
-								value={description}
-								onChange={text => setDescription(text)}
-								style={{ textAlign: descriptionAlign }}
-								unstableOnFocus={_ =>
-									setEditable('reviewItemDescription')
-								}
-							/>
-						)}
 					</div>
 				)}
 				{items.map((j, i) => (
