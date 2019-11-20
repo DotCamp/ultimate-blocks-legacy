@@ -56,3 +56,8 @@ export const getDescendantBlocks = rootBlock => {
 	});
 	return descendants;
 };
+
+export const objectsMatch = (obj, source) =>
+	Object.keys(source).every(
+		key => obj.hasOwnProperty(key) && obj[key] === source[key]
+	);
