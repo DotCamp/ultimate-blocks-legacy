@@ -125,7 +125,7 @@ export class OldTabHolder extends Component {
 							onChange={content => onChangeTitle(content, i)}
 							placeholder="Tab Title"
 						/>
-						<div className="tab-actions">
+						<div className="ub-tab-actions">
 							<DragHandle />
 							<span
 								className={
@@ -529,7 +529,7 @@ export class TabHolder extends Component {
 								onChange={newTitle => onChangeTitle(newTitle, i)}
 								placeholder="Tab Title"
 							/>
-							<div className="tab-actions">
+							<div className="ub-tab-actions">
 								<DragHandle />
 								<span
 									className={
