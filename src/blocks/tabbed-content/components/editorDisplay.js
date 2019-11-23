@@ -490,6 +490,7 @@ export class TabHolder extends Component {
 			bl.SortableItem = SortableElement(
 				({ value, i, props, onChangeTitle, onRemoveTitle, toggleTitle }) => {
 					const {
+						tabsTitle,
 						tabsTitleAlignment,
 						activeTab,
 						theme,
@@ -498,13 +499,9 @@ export class TabHolder extends Component {
 					} = props.attributes;
 					return (
 						<div
-							className={
-								blockPrefix +
-								"-tab-title-" +
-								(tabVertical ? "vertical-" : "") +
-								"wrap SortableItem" +
-								(activeTab === i ? " active" : "")
-							}
+							className={`${blockPrefix}-tab-title-${
+								tabVertical ? "vertical-" : ""
+							}wrap SortableItem${activeTab === i ? " active" : ""}`}
 							style={{
 								textAlign: tabsTitleAlignment[i],
 								backgroundColor: activeTab === i ? theme : "initial",
@@ -522,20 +519,21 @@ export class TabHolder extends Component {
 						>
 							<RichText
 								tagName="div"
-								className={blockPrefix + "-tab-title "}
+								className={`${blockPrefix}-tab-title`}
 								value={value}
 								formattingControls={["bold", "italic"]}
 								isSelected={activeControl === `tab-title-${i}` && isSelected}
 								onChange={newTitle => onChangeTitle(newTitle, i)}
 								placeholder="Tab Title"
 							/>
-							<div className="ub-tab-actions">
+							<div
+								className={`ub-tab-actions${
+									tabsTitle.length === 1 ? " ub-hide" : ""
+								}`}
+							>
 								<DragHandle />
 								<span
-									className={
-										"dashicons dashicons-minus remove-tab-icon" +
-										(tabsTitle.length === 1 ? " ub-hide" : "")
-									}
+									className={"dashicons dashicons-minus remove-tab-icon"}
 									onClick={_ => onRemoveTitle(i)}
 								/>
 							</div>
@@ -558,12 +556,9 @@ export class TabHolder extends Component {
 					const { tabsAlignment, tabVertical, tabsTitle } = props.attributes;
 					return (
 						<div
-							className={
-								blockPrefix +
-								"-tabs-title" +
-								(tabVertical ? "-vertical-tab" : "") +
-								" SortableList"
-							}
+							className={`${blockPrefix}-tabs-title${
+								tabVertical ? "-vertical-tab" : ""
+							} SortableList`}
 							style={{
 								justifyContent:
 									tabsAlignment === "center"
@@ -586,12 +581,9 @@ export class TabHolder extends Component {
 								/>
 							))}
 							<div
-								className={
-									blockPrefix +
-									"-tab-title-" +
-									(tabVertical ? "vertical-" : "") +
-									"wrap"
-								}
+								className={`${blockPrefix}-tab-title-${
+									tabVertical ? "vertical-" : ""
+								}wrap`}
 								key={tabsTitle.length}
 								onClick={_ => onAddTab(tabsTitle.length)}
 							>
@@ -671,16 +663,14 @@ export class TabHolder extends Component {
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
 			<div className={blockPrefix}>
 				<div
-					className={
-						blockPrefix + "-holder " + (tabVertical ? "vertical-holder" : "")
-					}
+					className={`${blockPrefix}-holder ${
+						tabVertical ? "vertical-holder" : ""
+					}`}
 				>
 					<div
-						className={
-							blockPrefix +
-							"-tab-holder " +
-							(tabVertical ? "vertical-tab-width" : "")
-						}
+						className={`${blockPrefix}-tab-holder ${
+							tabVertical ? "vertical-tab-width" : ""
+						}`}
 					>
 						<bl.SortableList
 							props={this.props}
@@ -732,7 +722,7 @@ export class TabHolder extends Component {
 							useDragHandle={true}
 						/>
 						{this.state.showScrollButtons && (
-							<div className={blockPrefix + "-scroll-button-container"}>
+							<div className={`${blockPrefix}-scroll-button-container`}>
 								<button
 									onMouseDown={_ => {
 										this.leftPress();
@@ -748,20 +738,16 @@ export class TabHolder extends Component {
 										});
 										clearTimeout(this.scrollTrigger);
 									}}
-									className={
-										blockPrefix +
-										"-scroll-button-" +
-										(tabVertical ? "top" : "left")
-									}
+									className={`${blockPrefix}-scroll-button-${
+										tabVertical ? "top" : "left"
+									}`}
 								>
 									<span className="dashicons dashicons-arrow-left-alt2" />
 								</button>
 								<button
-									className={
-										blockPrefix +
-										"-scroll-button-" +
-										(tabVertical ? "bottom" : "right")
-									}
+									className={`${blockPrefix}-scroll-button-${
+										tabVertical ? "bottom" : "right"
+									}`}
 									onMouseDown={_ => {
 										this.rightPress();
 										this.scrollTrigger = setTimeout(_ => {
@@ -783,11 +769,9 @@ export class TabHolder extends Component {
 						)}
 					</div>
 					<div
-						className={
-							blockPrefix +
-							"-tabs-content " +
-							(tabVertical ? "vertical-content-width" : "")
-						}
+						className={`${blockPrefix}-tabs-content ${
+							tabVertical ? "vertical-content-width" : ""
+						}`}
 					>
 						<InnerBlocks
 							templateLock={false}
