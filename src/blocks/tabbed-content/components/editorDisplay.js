@@ -595,11 +595,9 @@ export class TabHolder extends Component {
 			);
 		}
 
-		const newArrangement = JSON.stringify(
-			tabs.map(tab => tab.attributes.index)
-		);
+		const newArrangement = tabs.map(tab => tab.attributes.index);
 
-		if (newArrangement !== oldArrangement) {
+		if (!newArrangement.every((i, j) => i === oldArrangement[j])) {
 			tabs.forEach((tab, i) =>
 				updateBlockAttributes(tab.clientId, {
 					index: i,
