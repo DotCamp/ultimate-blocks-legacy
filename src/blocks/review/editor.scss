@@ -1,4 +1,4 @@
-@import '../../common';
+@import "../../common";
 
 .ub_review_average_stars {
 	float: right;
@@ -8,11 +8,15 @@
 	float: right;
 }
 
-.ub_review_image_container {
+.ub_review_block .ub_review_image_container {
 	position: relative;
 	.ub-remove-image {
 		position: absolute;
 		right: 0;
+	}
+	.ub_review_image {
+		height: auto;
+		width: auto;
 	}
 }
 
@@ -21,4 +25,8 @@
 	margin-bottom: 0;
 	padding-top: 0;
 	padding-bottom: 0;
+}
+
+.ub_review_upload_button {
+	align-self: center;
 }
