@@ -177,7 +177,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
                         "name": "'.$togglePanel['attrs']['panelTitle'].'",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "'.trim($answer).'"
+                            "text": "'.trim(str_replace('"', '\"', $answer)).'"
                         }
                     }';
                 }
