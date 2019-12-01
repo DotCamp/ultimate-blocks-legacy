@@ -504,7 +504,7 @@ function ultimate_blocks_cgb_editor_assets() {
 		'ultimate_blocks-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor'), // Dependencies, defined above.
-		Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+		Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
 	wp_enqueue_script(
