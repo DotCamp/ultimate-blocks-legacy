@@ -5,10 +5,6 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
-//  Import CSS.
-/*import "./style.scss";
-import "./editor.scss";*/
-
 import icon from "./icons/icon";
 import { version_1_1_2 } from "./oldVersions";
 import { richTextToHTML } from "../../common";
@@ -131,10 +127,8 @@ registerBlockType("ub/tabbed-content", {
 			const { getBlock, getSelectedBlock } =
 				select("core/block-editor") || select("core/editor");
 
-			const { clientId } = ownProps;
-
 			return {
-				block: getBlock(clientId),
+				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlock()
 			};
 		}),
@@ -248,10 +242,8 @@ registerBlockType("ub/tabbed-content-block", {
 			const { getBlock, getSelectedBlock } =
 				select("core/block-editor") || select("core/editor");
 
-			const { clientId } = ownProps;
-
 			return {
-				block: getBlock(clientId),
+				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlock()
 			};
 		}),

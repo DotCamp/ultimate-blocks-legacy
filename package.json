@@ -3,8 +3,8 @@
 	"version": "2.1.8",
 	"private": true,
 	"scripts": {
-		"start": "wp-scripts start",
-		"build": "wp-scripts build"
+		"start": "concurrently -k \"wp-scripts start\" \"node recompileOnChange.js\"",
+		"build": "wp-scripts build & node recompile.js"
 	},
 	"dependencies": {
 		"@babel/core": "^7.5.4",
@@ -16,7 +16,6 @@
 		"@fortawesome/free-solid-svg-icons": "^5.11.2",
 		"@fortawesome/react-fontawesome": "^0.1.7",
 		"ajv": ">=6.0.0",
-		"classnames": "^2.2.6",
 		"lodash": "^4.17.14",
 		"moment": "^2.24.0",
 		"react": "^16.8.6",
@@ -28,7 +27,8 @@
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^6.0.0",
-		"classnames": "^2.2.5",
+		"classnames": "^2.2.6",
+		"concurrently": "^5.0.0",
 		"css-loader": "^3.2.1",
 		"gulp": "^4.0.2",
 		"gulp-notify": "^3.0.0",

@@ -8,8 +8,6 @@
 //Import Icon
 import icon from "./icons/icon";
 
-//  Import CSS.
-//import './style.scss';
 import { version_1_1_2 } from "./oldVersions";
 
 const { __ } = wp.i18n;

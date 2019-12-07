@@ -31,9 +31,6 @@ import icon, {
 	notificationBoxIcon
 } from "./icon";
 
-/*import './style.scss';
-import './editor.scss';*/
-
 registerBlockType("ub/styled-box", {
 	title: __("Styled Box"),
 	icon: icon,

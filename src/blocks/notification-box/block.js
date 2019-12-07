@@ -8,9 +8,6 @@
 //Import Icons
 import icon from "./icons/icon";
 
-//  Import CSS.
-//import './style.scss';
-
 import {
 	version_1_1_2,
 	version_1_1_4,

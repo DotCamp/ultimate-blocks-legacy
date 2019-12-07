@@ -26,8 +26,6 @@ const { withDispatch, withSelect } = wp.data;
 
 const { compose } = wp.compose;
 
-/*import './editor.scss';
-import './style.scss';*/
 import { upgradeButtonLabel, mergeRichTextArray } from "../../common";
 
 const attributes = {

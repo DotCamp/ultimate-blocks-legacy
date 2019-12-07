@@ -4,7 +4,6 @@ import icon, {
 	TickingCountdownIcon
 } from "./icon";
 
-//import './style.scss';
 import Timer from "./components";
 
 const { __ } = wp.i18n;

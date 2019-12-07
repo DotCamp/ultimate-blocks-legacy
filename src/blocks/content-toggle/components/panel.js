@@ -1,5 +1,3 @@
-/*import '../style.scss';
-import '../editor.scss';*/
 import icon from "../icons/icon";
 
 import { panel_version_1_1_9 } from "../oldVersions";

@@ -1,5 +1,3 @@
-/*import '../style.scss';
-import '../editor.scss';*/
 import icon from "../icons/icon";
 
 const { __ } = wp.i18n;

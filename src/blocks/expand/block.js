@@ -2,8 +2,6 @@ import { ExpandRoot } from "./components";
 
 import icon from "./icon";
 
-//import './style.scss';
-
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;

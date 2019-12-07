@@ -9,7 +9,6 @@ export class Slider extends Component {
 		});
 	}
 	shouldComponentUpdate(newProps, newState) {
-		console.log("new props received");
 		const oldCaptions = this.props.slides
 			.filter(s => Array.isArray(s))[0]
 			.map(slide => slide.props.children[1].props.value);

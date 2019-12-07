@@ -13,9 +13,6 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import icon from "./icon";
 
-/*import './editor.scss';
-import './style.scss';*/
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(fas, fab);
@@ -63,9 +60,7 @@ registerBlockType("ub/styled-list", {
 	edit: compose([
 		withState({
 			availableIcons: [],
-			iconSearchTerm: "",
-			recentSelection: "",
-			edits: 0
+			iconSearchTerm: ""
 		}),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
@@ -80,8 +75,7 @@ registerBlockType("ub/styled-list", {
 			setAttributes,
 			setState,
 			availableIcons,
-			iconSearchTerm,
-			edits
+			iconSearchTerm
 		} = props;
 		const {
 			list,
@@ -202,11 +196,6 @@ registerBlockType("ub/styled-list", {
 															icon={<FontAwesomeIcon icon={i} size="lg" />}
 															label={i.iconName}
 															onClick={() => {
-																setState({
-																	recentSelection: i.iconName,
-																	edits: edits + 1
-																});
-
 																setAttributes({
 																	selectedIcon: i.iconName
 																});

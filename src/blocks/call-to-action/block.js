@@ -1,6 +1,3 @@
-//  Import CSS.
-/*import './style.scss';
-import './editor.scss';*/
 import icon from "./icons/icon";
 
 import {

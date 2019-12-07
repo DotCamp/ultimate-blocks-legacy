@@ -9,7 +9,7 @@ module.exports = {
 	},
 	plugins: [
 		...defaultConfig.plugins,
-		new IgnoreEmitPlugin(["blocks.build.asset.php"])
+		new IgnoreEmitPlugin(["blocks.build.asset.php", "blocks.build.js.map"])
 	],
 	output: {
 		filename: "blocks.build.js"

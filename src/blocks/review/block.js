@@ -1,6 +1,4 @@
 import icon from "./icon";
-/*import './style.scss';
-import './editor.scss';*/
 
 import { ReviewBody } from "./components";
 import {

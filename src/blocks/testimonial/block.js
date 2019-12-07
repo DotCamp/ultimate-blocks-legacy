@@ -6,9 +6,6 @@ import {
 	updateFrom
 } from "./oldVersions";
 
-//  Import CSS.
-/*import './style.scss';
-import './editor.scss';*/
 import { blockControls, inspectorControls, editorDisplay } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 

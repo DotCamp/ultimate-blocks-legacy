@@ -2,9 +2,6 @@ import icon, { editGallery } from "./icon";
 
 import { Slider } from "./components";
 
-/*import "./editor.scss";
-import "./style.scss";*/
-
 import { version_1_1_4 } from "./oldVersions";
 
 const { __ } = wp.i18n;
@@ -116,9 +113,6 @@ registerBlockType("ub/image-slider", {
 			showPageDots,
 			blockID
 		} = props.attributes;
-
-		console.log(`images: ${images}`);
-		console.log(`captions: ${captions}`);
 
 		if (images && JSON.parse(images).length !== 0 && pics.length === 0) {
 			setAttributes({

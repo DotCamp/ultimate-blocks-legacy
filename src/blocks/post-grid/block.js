@@ -3,9 +3,6 @@ import icons from "./icons";
 import pickBy from "lodash/pickBy";
 import isUndefined from "lodash/isUndefined";
 
-// Import CSS.
-//import './style.scss';
-
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
@@ -42,8 +39,6 @@ export default registerBlockType("ub/post-grid", {
 	 */
 
 	edit: withSelect((select, props) => {
-		const { attributes, className } = props;
-
 		const {
 			order,
 			categories,
@@ -51,7 +46,7 @@ export default registerBlockType("ub/post-grid", {
 			amountPosts,
 			offset,
 			postType
-		} = attributes;
+		} = props.attributes;
 
 		const { getEntityRecords } = select("core");
 		const { getCurrentPostId } =
@@ -73,9 +68,10 @@ export default registerBlockType("ub/post-grid", {
 			posts: getEntityRecords("postType", postType, getPosts)
 		};
 	})(props => {
-		const { postLayout } = props.attributes;
-		const { setAttributes } = props;
-		const emptyPosts = Array.isArray(props.posts) && props.posts.length;
+		const { attributes, setAttributes, posts } = props;
+		const { postLayout } = attributes;
+
+		const emptyPosts = Array.isArray(posts) && posts.length;
 
 		if (!emptyPosts) {
 			return (
@@ -84,7 +80,7 @@ export default registerBlockType("ub/post-grid", {
 						icon="admin-post"
 						label={__("Ultimate Blocks Post Grid", "ultimate-blocks")}
 					>
-						{!Array.isArray(props.posts) ? (
+						{!Array.isArray(posts) ? (
 							<Spinner />
 						) : (
 							__("No posts found.", "ultimate-blocks")

@@ -1,10 +1,6 @@
 //Import Icon
 import icon from "./icons/icon";
 
-//  Import CSS.
-/*import './style.scss';
-import './editor.scss';*/
-
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { RichText, InspectorControls, PanelColorSettings } =

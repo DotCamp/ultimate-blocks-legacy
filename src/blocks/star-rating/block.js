@@ -5,8 +5,6 @@ const { registerBlockType, createBlock } = wp.blocks;
 const { withState, compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
-//import './style.scss';
-
 import { EmptyStar, BlockIcon, FullStar } from "./icons";
 import {
 	oldAttributes,

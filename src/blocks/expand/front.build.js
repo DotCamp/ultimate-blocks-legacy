@@ -24,10 +24,10 @@ function ub_getSiblings(element, criteria) {
   return criteria ? children.filter(criteria) : children;
 }
 
-Array.prototype.slice.call(document.getElementsByClassName('ub-expand-toggle-button')).forEach(function (instance) {
-  instance.addEventListener('click', function () {
-    var blockRoot = instance.closest('.ub-expand');
-    blockRoot.querySelector('.ub-expand-partial .ub-expand-toggle-button').classList.toggle('ub-hide');
-    blockRoot.querySelector('.ub-expand-full').classList.toggle('ub-hide');
+Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-button")).forEach(function (instance) {
+  instance.addEventListener("click", function () {
+    var blockRoot = instance.closest(".ub-expand");
+    blockRoot.querySelector(".ub-expand-partial .ub-expand-toggle-button").classList.toggle("ub-hide");
+    blockRoot.querySelector(".ub-expand-full").classList.toggle("ub-hide");
   });
 });

@@ -24,111 +24,90 @@ function ub_getSiblings(element, criteria) {
 }
 
 Array.prototype.slice
-	.call(document.getElementsByClassName('ub-content-filter-tag'))
+	.call(document.getElementsByClassName("ub-content-filter-tag"))
 	.forEach(instance => {
-		const blockProper = instance.closest('.wp-block-ub-content-filter');
-		const initialSelection = blockProper.getAttribute(
-			'data-currentselection'
-		);
+		const blockProper = instance.closest(".wp-block-ub-content-filter");
+		const initialSelection = blockProper.getAttribute("data-currentselection");
 
-		instance.addEventListener('click', function() {
-			const isOldVersion = this.getAttribute('data-activecolor');
+		instance.addEventListener("click", function() {
+			const isOldVersion = this.getAttribute("data-activecolor");
 			this.setAttribute(
-				'data-tagisselected',
-				JSON.stringify(
-					!JSON.parse(this.getAttribute('data-tagisselected'))
-				)
+				"data-tagisselected",
+				JSON.stringify(!JSON.parse(this.getAttribute("data-tagisselected")))
 			);
 			if (isOldVersion) {
-				this.style.backgroundColor = this.getAttribute(
-					'data-activecolor'
-				);
-				this.style.color = this.getAttribute('data-activetextcolor');
+				this.style.backgroundColor = this.getAttribute("data-activecolor");
+				this.style.color = this.getAttribute("data-activetextcolor");
 			} else {
-				this.classList.toggle('ub-selected');
+				this.classList.toggle("ub-selected");
 			}
 			const categoryIndex = JSON.parse(
-				this.getAttribute('data-categorynumber')
+				this.getAttribute("data-categorynumber")
 			);
-			const filterIndex = JSON.parse(
-				this.getAttribute('data-filternumber')
-			);
+			const filterIndex = JSON.parse(this.getAttribute("data-filternumber"));
 
-			if (JSON.parse(this.getAttribute('data-tagisselected'))) {
+			if (JSON.parse(this.getAttribute("data-tagisselected"))) {
 				if (
-					!JSON.parse(
-						this.parentElement.getAttribute('data-canusemultiple')
-					)
+					!JSON.parse(this.parentElement.getAttribute("data-canusemultiple"))
 				) {
 					ub_getSiblings(this, elem =>
-						elem.classList.contains('ub-content-filter-tag')
+						elem.classList.contains("ub-content-filter-tag")
 					).forEach(sibling => {
-						sibling.setAttribute('data-tagisselected', 'false');
+						sibling.setAttribute("data-tagisselected", "false");
 						if (isOldVersion) {
 							sibling.style.backgroundColor = this.getAttribute(
-								'data-normalcolor'
+								"data-normalcolor"
 							);
-							sibling.style.color = this.getAttribute(
-								'data-normaltextcolor'
-							);
+							sibling.style.color = this.getAttribute("data-normaltextcolor");
 						} else {
-							sibling.classList.remove('ub-selected');
+							sibling.classList.remove("ub-selected");
 						}
 					});
 				}
 			} else {
 				if (isOldVersion) {
-					this.style.backgroundColor = this.getAttribute(
-						'data-normalcolor'
-					);
-					this.style.color = this.getAttribute(
-						'data-normaltextcolor'
-					);
+					this.style.backgroundColor = this.getAttribute("data-normalcolor");
+					this.style.color = this.getAttribute("data-normaltextcolor");
 				} else {
-					this.classList.remove('ub-selected');
+					this.classList.remove("ub-selected");
 				}
 			}
 			let newSelection = JSON.parse(
-				blockProper.getAttribute('data-currentselection')
+				blockProper.getAttribute("data-currentselection")
 			);
 			if (Array.isArray(newSelection[categoryIndex])) {
 				newSelection[categoryIndex][filterIndex] = JSON.parse(
-					this.getAttribute('data-tagisselected')
+					this.getAttribute("data-tagisselected")
 				);
 			} else {
 				newSelection[categoryIndex] = JSON.parse(
-					this.getAttribute('data-tagisselected')
+					this.getAttribute("data-tagisselected")
 				)
 					? filterIndex
 					: -1;
 			}
 			blockProper.setAttribute(
-				'data-currentselection',
+				"data-currentselection",
 				JSON.stringify(newSelection)
 			);
 
 			Array.prototype.slice
-				.call(
-					blockProper.getElementsByClassName(
-						'ub-content-filter-panel'
-					)
-				)
+				.call(blockProper.getElementsByClassName("ub-content-filter-panel"))
 				.forEach(instance => {
 					const panelData = JSON.parse(
-						instance.getAttribute('data-selectedfilters')
+						instance.getAttribute("data-selectedfilters")
 					);
 					const mainData = JSON.parse(
-						blockProper.getAttribute('data-currentselection')
+						blockProper.getAttribute("data-currentselection")
 					);
 
 					let isVisible = true;
 
 					if (
 						initialSelection ==
-							blockProper.getAttribute('data-currentselection') &&
-						JSON.parse(
-							blockProper.getAttribute('data-initiallyshowall')
-						) === false
+							blockProper.getAttribute("data-currentselection") &&
+						JSON.parse(blockProper.getAttribute("data-initiallyshowall")) ===
+							false
 					) {
 						isVisible = false;
 					} else {
@@ -136,27 +115,23 @@ Array.prototype.slice
 							if (Array.isArray(category)) {
 								if (
 									mainData[i].filter(f => f).length > 0 &&
-									category.filter(
-										(f, j) => f && f === mainData[i][j]
-									).length === 0
+									category.filter((f, j) => f && f === mainData[i][j])
+										.length === 0
 								) {
 									isVisible = false;
 								}
-							} else if (
-								mainData[i] !== category &&
-								mainData[i] !== -1
-							) {
+							} else if (mainData[i] !== category && mainData[i] !== -1) {
 								isVisible = false;
 							}
 						});
 					}
 
 					if (isOldVersion) {
-						instance.style.display = isVisible ? 'block' : 'none';
+						instance.style.display = isVisible ? "block" : "none";
 					} else if (isVisible) {
-						instance.classList.remove('ub-hide');
+						instance.classList.remove("ub-hide");
 					} else {
-						instance.classList.add('ub-hide');
+						instance.classList.add("ub-hide");
 					}
 				});
 		});

@@ -1,5 +1,3 @@
-/*import './editor.scss';
-import './style.scss';*/
 import { OldPanelContent, PanelContent } from "./components/editorDisplay";
 
 const { __ } = wp.i18n;

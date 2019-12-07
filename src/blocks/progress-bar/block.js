@@ -15,9 +15,6 @@ const {
 
 const { withSelect } = wp.data;
 
-/*import './editor.scss';
-import './style.scss';*/
-
 import Circle from "./Circle";
 import Line from "./Line";
 

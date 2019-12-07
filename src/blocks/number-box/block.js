@@ -8,9 +8,6 @@
 //Import Icon
 import icon from "./icons/icon";
 
-//  Import CSS.
-/*import './style.scss';
-import './editor.scss';*/
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 import { version_1_1_2, version_1_1_5, oldAttributes } from "./oldVersions";
 import {

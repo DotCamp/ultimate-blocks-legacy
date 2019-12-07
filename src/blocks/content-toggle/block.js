@@ -8,10 +8,6 @@
 //Import Icon
 import icon from "./icons/icon";
 
-//  Import CSS.
-/*import "./style.scss";
-import "./editor.scss";*/
-
 import { richTextToHTML, mergeRichTextArray } from "../../common";
 import { OldPanelContent, PanelContent } from "./components/editorDisplay";
 
@@ -99,10 +95,8 @@ registerBlockType("ub/content-toggle", {
 			const { getBlock, getSelectedBlockClientId, getBlockRootClientId } =
 				select("core/block-editor") || select("core/editor");
 
-			const { clientId } = ownProps;
-
 			return {
-				block: getBlock(clientId),
+				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlockClientId(),
 				parentOfSelectedBlock: getBlockRootClientId(getSelectedBlockClientId())
 			};
@@ -198,10 +192,8 @@ registerBlockType("ub/content-toggle-block", {
 			const { getBlock, getSelectedBlockClientId } =
 				select("core/block-editor") || select("core/editor");
 
-			const { clientId } = ownProps;
-
 			return {
-				block: getBlock(clientId),
+				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlockClientId()
 			};
 		}),
