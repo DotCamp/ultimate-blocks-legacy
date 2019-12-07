@@ -6,11 +6,11 @@
  */
 
 //Import Icon
-import icon from './icons/icon';
+import icon from "./icons/icon";
 
 //  Import CSS.
-import './style.scss';
-import { version_1_1_2 } from './oldVersions';
+//import './style.scss';
+import { version_1_1_2 } from "./oldVersions";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -23,23 +23,23 @@ const { withSelect } = wp.data;
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	borderSize: {
-		type: 'number',
+		type: "number",
 		default: 2
 	},
 	borderStyle: {
-		type: 'string',
-		default: 'solid'
+		type: "string",
+		default: "solid"
 	},
 	borderColor: {
-		type: 'string',
-		default: '#ccc'
+		type: "string",
+		default: "#ccc"
 	},
 	borderHeight: {
-		type: 'number',
+		type: "number",
 		default: 20
 	}
 };
@@ -56,11 +56,11 @@ const attributes = {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType('ub/divider', {
-	title: __('Divider'),
+registerBlockType("ub/divider", {
+	title: __("Divider"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Divider'), __('Separator'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Divider"), __("Separator"), __("Ultimate Blocks")],
 	attributes,
 
 	/**
@@ -72,7 +72,7 @@ registerBlockType('ub/divider', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: withSelect((select, ownProps) => ({
-		block: (select('core/block-editor') || select('core/editor')).getBlock(
+		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
 		)
 	}))(function(props) {
@@ -95,13 +95,11 @@ registerBlockType('ub/divider', {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__('Divider Settings')}>
+					<PanelBody title={__("Divider Settings")}>
 						<RangeControl
-							label={__('Thickness')}
+							label={__("Thickness")}
 							value={borderSize}
-							onChange={value =>
-								setAttributes({ borderSize: value })
-							}
+							onChange={value => setAttributes({ borderSize: value })}
 							min={1}
 							max={20}
 							beforeIcon="minus"
@@ -109,18 +107,16 @@ registerBlockType('ub/divider', {
 						/>
 
 						<RangeControl
-							label={__('Height')}
+							label={__("Height")}
 							value={borderHeight}
-							onChange={value =>
-								setAttributes({ borderHeight: value })
-							}
+							onChange={value => setAttributes({ borderHeight: value })}
 							min={10}
 							max={200}
 							beforeIcon="minus"
 							allowReset
 						/>
 
-						<p>{__('Color')}</p>
+						<p>{__("Color")}</p>
 						<ColorPalette
 							value={borderColor}
 							onChange={colorValue =>
@@ -137,8 +133,8 @@ registerBlockType('ub/divider', {
 					className="ub_divider"
 					style={{
 						borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
-						marginTop: borderHeight + 'px',
-						marginBottom: borderHeight + 'px'
+						marginTop: borderHeight + "px",
+						marginBottom: borderHeight + "px"
 					}}
 				/>
 			</div>

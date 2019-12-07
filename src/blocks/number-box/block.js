@@ -6,19 +6,19 @@
  */
 
 //Import Icon
-import icon from './icons/icon';
+import icon from "./icons/icon";
 
 //  Import CSS.
-import './style.scss';
-import './editor.scss';
-import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
-import { version_1_1_2, version_1_1_5, oldAttributes } from './oldVersions';
+/*import './style.scss';
+import './editor.scss';*/
+import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
+import { version_1_1_2, version_1_1_5, oldAttributes } from "./oldVersions";
 import {
 	blockControls,
 	inspectorControls,
 	editorDisplay,
 	upgradeToStyledBox
-} from './components';
+} from "./components";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -29,84 +29,84 @@ const { withState, compose } = wp.compose;
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	column: {
-		type: 'string',
-		default: '2'
+		type: "string",
+		default: "2"
 	},
 	columnOneNumber: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnTwoNumber: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnThreeNumber: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnOneTitle: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnTwoTitle: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnThreeTitle: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnOneBody: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnTwoBody: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	columnThreeBody: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	numberBackground: {
-		type: 'string',
-		default: '#CCCCCC'
+		type: "string",
+		default: "#CCCCCC"
 	},
 	numberColor: {
-		type: 'string',
-		default: '#000000'
+		type: "string",
+		default: "#000000"
 	},
 	borderColor: {
-		type: 'string',
-		default: '#CCCCCC'
+		type: "string",
+		default: "#CCCCCC"
 	},
 	title1Align: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	title2Align: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	title3Align: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	body1Align: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	body2Align: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	body3Align: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	}
 };
 
@@ -123,11 +123,11 @@ const attributes = {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType('ub/number-box', {
-	title: __('Number Box'),
+registerBlockType("ub/number-box", {
+	title: __("Number Box"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Number box'), __('Feature'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Number box"), __("Feature"), __("Ultimate Blocks")],
 	attributes: oldAttributes,
 
 	supports: {
@@ -144,16 +144,15 @@ registerBlockType('ub/number-box', {
 	 */
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		})),
-		withState({ editable: '' })
+		withState({ editable: "" })
 	])(function(props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
@@ -170,9 +169,7 @@ registerBlockType('ub/number-box', {
 						let currentNumbers = [
 							mergeRichTextArray(attributes.columnOneNumber)
 						];
-						let currentTitles = [
-							mergeRichTextArray(attributes.columnOneTitle)
-						];
+						let currentTitles = [mergeRichTextArray(attributes.columnOneTitle)];
 						let currentTitleAligns = [attributes.title1Align];
 						let currentTexts = [mergeRichTextArray(columnOneBody)];
 						let currentTextAligns = [attributes.body1Align];
@@ -181,13 +178,9 @@ registerBlockType('ub/number-box', {
 							currentNumbers.push(
 								mergeRichTextArray(attributes.columnTwoNumber)
 							);
-							currentTitles.push(
-								mergeRichTextArray(attributes.columnTwoTitle)
-							);
+							currentTitles.push(mergeRichTextArray(attributes.columnTwoTitle));
 							currentTitleAligns.push(attributes.title2Align);
-							currentTexts.push(
-								mergeRichTextArray(attributes.columnTwoBody)
-							);
+							currentTexts.push(mergeRichTextArray(attributes.columnTwoBody));
 							currentTextAligns.push(attributes.body2Align);
 						}
 						if (parseInt(column) === 3) {
@@ -198,16 +191,14 @@ registerBlockType('ub/number-box', {
 								mergeRichTextArray(attributes.columnThreeTitle)
 							);
 							currentTitleAligns.push(attributes.title3Align);
-							currentTexts.push(
-								mergeRichTextArray(attributes.columnThreeBody)
-							);
+							currentTexts.push(mergeRichTextArray(attributes.columnThreeBody));
 							currentTextAligns.push(attributes.body3Align);
 						}
 
 						replaceBlock(
 							block.clientId,
-							createBlock('ub/styled-box', {
-								mode: 'number',
+							createBlock("ub/styled-box", {
+								mode: "number",
 								number: currentNumbers,
 								title: currentTitles,
 								titleAlign: currentTitleAligns,
@@ -288,10 +279,7 @@ registerBlockType('ub/number-box', {
 						>
 							{columnOneTitle}
 						</p>
-						<p
-							className="ub_number_one_body"
-							style={{ textAlign: body1Align }}
-						>
+						<p className="ub_number_one_body" style={{ textAlign: body1Align }}>
 							{columnOneBody}
 						</p>
 					</div>
@@ -322,10 +310,7 @@ registerBlockType('ub/number-box', {
 						>
 							{columnTwoTitle}
 						</p>
-						<p
-							className="ub_number_two_body"
-							style={{ textAlign: body2Align }}
-						>
+						<p className="ub_number_two_body" style={{ textAlign: body2Align }}>
 							{columnTwoBody}
 						</p>
 					</div>
@@ -379,11 +364,11 @@ registerBlockType('ub/number-box', {
 	]
 });
 
-registerBlockType('ub/number-box-block', {
-	title: __('Number Box'),
+registerBlockType("ub/number-box-block", {
+	title: __("Number Box"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Number box'), __('Feature'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Number box"), __("Feature"), __("Ultimate Blocks")],
 	attributes,
 
 	supports: {
@@ -393,24 +378,23 @@ registerBlockType('ub/number-box-block', {
 	transforms: {
 		to: [
 			{
-				type: 'block',
-				blocks: 'ub/styled-box',
+				type: "block",
+				blocks: "ub/styled-box",
 				transform: attributes => upgradeToStyledBox(attributes)
 			}
 		]
 	},
 
 	edit: compose([
-		withState({ editable: '' }),
+		withState({ editable: "" }),
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		}))
 	])(function(props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
@@ -427,10 +411,7 @@ registerBlockType('ub/number-box-block', {
 			<div className={props.className}>
 				<button
 					onClick={_ =>
-						replaceBlock(
-							block.clientId,
-							upgradeToStyledBox(attributes)
-						)
+						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
 					}
 				>
 					{upgradeButtonLabel}

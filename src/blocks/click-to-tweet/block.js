@@ -1,9 +1,9 @@
 //Import Icon
-import icon from './icons/icon';
+import icon from "./icons/icon";
 
 //  Import CSS.
-import './style.scss';
-import './editor.scss';
+/*import './style.scss';
+import './editor.scss';*/
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -27,35 +27,35 @@ const { withSelect } = wp.data;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType('ub/click-to-tweet', {
-	title: __('Click to Tweet'),
+registerBlockType("ub/click-to-tweet", {
+	title: __("Click to Tweet"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Click to tweet'), __('Twitter'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Click to tweet"), __("Twitter"), __("Ultimate Blocks")],
 	attributes: {
 		blockID: {
-			type: 'string',
-			default: ''
+			type: "string",
+			default: ""
 		},
 		ubTweet: {
-			type: 'string',
-			default: ''
+			type: "string",
+			default: ""
 		},
 		ubVia: {
-			source: 'meta',
-			meta: 'ub_ctt_via'
+			source: "meta",
+			meta: "ub_ctt_via"
 		},
 		tweetFontSize: {
-			type: 'number',
+			type: "number",
 			default: 20
 		},
 		tweetColor: {
-			type: 'string',
-			default: '#444444'
+			type: "string",
+			default: "#444444"
 		},
 		borderColor: {
-			type: 'string',
-			default: '#CCCCCC'
+			type: "string",
+			default: "#CCCCCC"
 		}
 	},
 	/**
@@ -67,7 +67,7 @@ registerBlockType('ub/click-to-tweet', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: withSelect((select, ownProps) => ({
-		block: (select('core/block-editor') || select('core/editor')).getBlock(
+		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
 		)
 	}))(function(props) {
@@ -89,26 +89,24 @@ registerBlockType('ub/click-to-tweet', {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__('Click to Tweet Settings')}>
+					<PanelBody title={__("Click to Tweet Settings")}>
 						<TextControl
-							label={__('Twitter Username')}
+							label={__("Twitter Username")}
 							placeholder="@"
 							value={ubVia}
 							onChange={value => setAttributes({ ubVia: value })}
 						/>
 						<RangeControl
-							label={__('Font Size')}
+							label={__("Font Size")}
 							value={tweetFontSize}
-							onChange={value =>
-								setAttributes({ tweetFontSize: value })
-							}
+							onChange={value => setAttributes({ tweetFontSize: value })}
 							min={10}
 							max={200}
 							beforeIcon="editor-textcolor"
 							allowReset
 						/>
 						<PanelColorSettings
-							title={__('Color Scheme')}
+							title={__("Color Scheme")}
 							initialOpen={false}
 							colorSettings={[
 								{
@@ -117,7 +115,7 @@ registerBlockType('ub/click-to-tweet', {
 										setAttributes({
 											tweetColor: colorValue
 										}),
-									label: __('Tweet Color')
+									label: __("Tweet Color")
 								},
 								{
 									value: borderColor,
@@ -125,7 +123,7 @@ registerBlockType('ub/click-to-tweet', {
 										setAttributes({
 											borderColor: colorValue
 										}),
-									label: __('Border Color')
+									label: __("Border Color")
 								}
 							]}
 						/>
@@ -141,10 +139,10 @@ registerBlockType('ub/click-to-tweet', {
 				>
 					<RichText
 						style={{
-							fontSize: tweetFontSize + 'px',
+							fontSize: tweetFontSize + "px",
 							color: tweetColor
 						}}
-						placeholder={__('Add Tweetable Content Here')}
+						placeholder={__("Add Tweetable Content Here")}
 						className="ub_tweet"
 						value={ubTweet}
 						onChange={value => setAttributes({ ubTweet: value })}
@@ -153,7 +151,7 @@ registerBlockType('ub/click-to-tweet', {
 					<div className="ub_click_tweet">
 						<span>
 							<i />
-							{__('Click to Tweet')}
+							{__("Click to Tweet")}
 						</span>
 					</div>
 				</div>

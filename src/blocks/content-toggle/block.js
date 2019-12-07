@@ -9,8 +9,8 @@
 import icon from "./icons/icon";
 
 //  Import CSS.
-import "./style.scss";
-import "./editor.scss";
+/*import "./style.scss";
+import "./editor.scss";*/
 
 import { richTextToHTML, mergeRichTextArray } from "../../common";
 import { OldPanelContent, PanelContent } from "./components/editorDisplay";

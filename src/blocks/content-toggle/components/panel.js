@@ -1,9 +1,9 @@
-import '../style.scss';
-import '../editor.scss';
-import icon from '../icons/icon';
+/*import '../style.scss';
+import '../editor.scss';*/
+import icon from "../icons/icon";
 
-import { panel_version_1_1_9 } from '../oldVersions';
-import { Component } from 'react';
+import { panel_version_1_1_9 } from "../oldVersions";
+import { Component } from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -19,36 +19,36 @@ const { FormToggle, PanelBody, PanelRow } = wp.components;
 
 const attributes = {
 	index: {
-		type: 'number',
+		type: "number",
 		default: 0
 	},
 	parentID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	theme: {
-		type: 'text',
-		default: '#f63d3d'
+		type: "text",
+		default: "#f63d3d"
 	},
 	collapsed: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	hasFAQSchema: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	titleColor: {
-		type: 'string',
-		default: '#ffffff'
+		type: "string",
+		default: "#ffffff"
 	},
 	panelTitle: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	newBlockPosition: {
-		type: 'string',
-		default: 'none' //changes into above/below depending on which button is clicked
+		type: "string",
+		default: "none" //changes into above/below depending on which button is clicked
 	}
 };
 
@@ -83,45 +83,40 @@ class ContentTogglePanel extends Component {
 		return [
 			<InspectorControls>
 				<PanelColorSettings
-					title={__('Color Scheme')}
+					title={__("Color Scheme")}
 					initialOpen={false}
 					colorSettings={[
 						{
 							value: theme,
 							onChange: value => setAttributes({ theme: value }),
-							label: __('Container Color')
+							label: __("Container Color")
 						},
 						{
 							value: titleColor,
-							onChange: value =>
-								setAttributes({ titleColor: value }),
-							label: __('Title Color')
+							onChange: value => setAttributes({ titleColor: value }),
+							label: __("Title Color")
 						}
 					]}
 				/>
-				<PanelBody title={__('Initial State')} initialOpen={true}>
+				<PanelBody title={__("Initial State")} initialOpen={true}>
 					<PanelRow>
-						<label htmlFor="ub-content-toggle-state">
-							{__('Collapsed')}
-						</label>
+						<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
 						<FormToggle
 							id="ub-content-toggle-state"
-							label={__('Collapsed')}
+							label={__("Collapsed")}
 							checked={collapsed}
-							onChange={() =>
-								setAttributes({ collapsed: !collapsed })
-							}
+							onChange={() => setAttributes({ collapsed: !collapsed })}
 						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('FAQ Schema')} initialOpen={true}>
+				<PanelBody title={__("FAQ Schema")} initialOpen={true}>
 					<PanelRow>
 						<label htmlFor="ub-content-toggle-faq-schema">
-							{__('Enable FAQ Schema')}
+							{__("Enable FAQ Schema")}
 						</label>
 						<FormToggle
 							id="ub-content-toggle-faq-schema"
-							label={__('Enable FAQ Schema')}
+							label={__("Enable FAQ Schema")}
 							checked={hasFAQSchema}
 							onChange={() =>
 								setAttributes({
@@ -145,9 +140,9 @@ class ContentTogglePanel extends Component {
 						style={{ color: titleColor }}
 						className="wp-block-ub-content-toggle-accordion-title"
 						value={panelTitle}
-						formattingControls={['bold', 'italic']}
+						formattingControls={["bold", "italic"]}
 						onChange={value => setAttributes({ panelTitle: value })}
-						placeholder={__('Panel Title')}
+						placeholder={__("Panel Title")}
 						keepPlaceholderOnFocus={true}
 						unstableOnFocus={() => selectBlock(blockParentId)}
 					/>
@@ -156,8 +151,8 @@ class ContentTogglePanel extends Component {
 							setState({ showPanel: !showPanel });
 						}}
 						className={
-							'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' +
-							(showPanel ? 'open' : '')
+							"wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 " +
+							(showPanel ? "open" : "")
 						}
 					/>
 				</div>
@@ -168,24 +163,20 @@ class ContentTogglePanel extends Component {
 				)}
 				<div className="wp-block-ub-content-toggle-accordion-controls-top">
 					<span
-						title={__('Insert New Toggle Above')}
-						onClick={() =>
-							setAttributes({ newBlockPosition: 'above' })
-						}
+						title={__("Insert New Toggle Above")}
+						onClick={() => setAttributes({ newBlockPosition: "above" })}
 						className="dashicons dashicons-plus-alt"
 					/>
 					<span
-						title={__('Delete This Toggle')}
+						title={__("Delete This Toggle")}
 						onClick={() => removeBlock(block.clientId)}
 						class="dashicons dashicons-dismiss"
 					/>
 				</div>
 				<div className="wp-block-ub-content-toggle-accordion-controls-bottom">
 					<span
-						title={__('Insert New Toggle Below')}
-						onClick={() =>
-							setAttributes({ newBlockPosition: 'below' })
-						}
+						title={__("Insert New Toggle Below")}
+						onClick={() => setAttributes({ newBlockPosition: "below" })}
 						className="dashicons dashicons-plus-alt"
 					/>
 				</div>
@@ -194,11 +185,11 @@ class ContentTogglePanel extends Component {
 	}
 }
 
-registerBlockType('ub/content-toggle-panel', {
-	title: __('Content Toggle Panel'),
-	parent: ['ub/content-toggle'],
+registerBlockType("ub/content-toggle-panel", {
+	title: __("Content Toggle Panel"),
+	parent: ["ub/content-toggle"],
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	attributes,
 	supports: {
 		inserter: false,
@@ -208,7 +199,7 @@ registerBlockType('ub/content-toggle-panel', {
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getBlockRootClientId } =
-				select('core/block-editor') || select('core/editor');
+				select("core/block-editor") || select("core/editor");
 			const { clientId } = ownProps;
 
 			return {
@@ -218,7 +209,7 @@ registerBlockType('ub/content-toggle-panel', {
 		}),
 		withDispatch(dispatch => {
 			const { updateBlockAttributes, removeBlock, selectBlock } =
-				dispatch('core/block-editor') || dispatch('core/editor');
+				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return { updateBlockAttributes, removeBlock, selectBlock };
 		}),
@@ -226,7 +217,7 @@ registerBlockType('ub/content-toggle-panel', {
 	])(ContentTogglePanel),
 	save(props) {
 		const { theme, collapsed, titleColor, panelTitle } = props.attributes;
-		const classNamePrefix = 'wp-block-ub-content-toggle';
+		const classNamePrefix = "wp-block-ub-content-toggle";
 		return (
 			<div
 				style={{ borderColor: theme }}
@@ -245,15 +236,15 @@ registerBlockType('ub/content-toggle-panel', {
 					<span
 						className={
 							`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
-							(collapsed ? '' : 'open')
+							(collapsed ? "" : "open")
 						}
 					/>
 				</div>
 				<div
 					style={{
-						height: collapsed ? '0' : '',
-						paddingTop: collapsed ? '0' : '',
-						paddingBottom: collapsed ? '0' : ''
+						height: collapsed ? "0" : "",
+						paddingTop: collapsed ? "0" : "",
+						paddingBottom: collapsed ? "0" : ""
 					}}
 					className={`${classNamePrefix}-accordion-content-wrap`}
 				>
@@ -271,11 +262,11 @@ registerBlockType('ub/content-toggle-panel', {
 	]
 });
 
-registerBlockType('ub/content-toggle-panel-block', {
-	title: __('Content Toggle Panel'),
-	parent: ['ub/content-toggle-block'],
+registerBlockType("ub/content-toggle-panel-block", {
+	title: __("Content Toggle Panel"),
+	parent: ["ub/content-toggle-block"],
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	attributes,
 	supports: {
 		inserter: false,
@@ -285,7 +276,7 @@ registerBlockType('ub/content-toggle-panel-block', {
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getBlockRootClientId } =
-				select('core/block-editor') || select('core/editor');
+				select("core/block-editor") || select("core/editor");
 			const { clientId } = ownProps;
 
 			return {
@@ -295,7 +286,7 @@ registerBlockType('ub/content-toggle-panel-block', {
 		}),
 		withDispatch(dispatch => {
 			const { updateBlockAttributes, removeBlock, selectBlock } =
-				dispatch('core/block-editor') || dispatch('core/editor');
+				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return { updateBlockAttributes, removeBlock, selectBlock };
 		}),

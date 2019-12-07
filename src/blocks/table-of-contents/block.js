@@ -1,9 +1,9 @@
-import icon from './icon';
+import icon from "./icon";
 import TableOfContents, {
 	inspectorControls,
 	blockControls,
 	editorDisplay
-} from './components';
+} from "./components";
 import {
 	version_1_0_8,
 	version_1_0_9,
@@ -14,7 +14,7 @@ import {
 	version_2_0_0,
 	oldAttributes,
 	updateFrom
-} from './oldVersions';
+} from "./oldVersions";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
@@ -26,54 +26,54 @@ const { withDispatch, withSelect } = wp.data;
 
 const { compose } = wp.compose;
 
-import './editor.scss';
-import './style.scss';
-import { upgradeButtonLabel, mergeRichTextArray } from '../../common';
+/*import './editor.scss';
+import './style.scss';*/
+import { upgradeButtonLabel, mergeRichTextArray } from "../../common";
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	title: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	allowedHeaders: {
-		type: 'array',
+		type: "array",
 		default: Array(6).fill(true)
 	},
 	links: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	allowToCHiding: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	showList: {
-		type: 'boolean',
+		type: "boolean",
 		default: true
 	},
 	numColumns: {
-		type: 'number',
+		type: "number",
 		default: 1
 	},
 	listStyle: {
-		type: 'string',
-		default: 'bulleted' //other options: numbered, plain
+		type: "string",
+		default: "bulleted" //other options: numbered, plain
 	},
 	enableSmoothScroll: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	}
 };
 
-registerBlockType('ub/table-of-contents', {
-	title: __('Table of Contents'),
+registerBlockType("ub/table-of-contents", {
+	title: __("Table of Contents"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Table of Contents"), __("Ultimate Blocks")],
 
 	attributes: oldAttributes,
 
@@ -83,14 +83,13 @@ registerBlockType('ub/table-of-contents', {
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		}))
 	])(function(props) {
 		const {
@@ -104,11 +103,10 @@ registerBlockType('ub/table-of-contents', {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__('Allowed Headers')} initialOpen={true}>
+					<PanelBody title={__("Allowed Headers")} initialOpen={true}>
 						{allowedHeaders.map((a, i) => (
 							<PanelRow>
-								<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i +
-									1}`}</label>
+								<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i + 1}`}</label>
 								<ToggleControl
 									id={`ub_toggle_h${i + 1}`}
 									checked={a}
@@ -125,14 +123,11 @@ registerBlockType('ub/table-of-contents', {
 							</PanelRow>
 						))}
 					</PanelBody>
-					<PanelBody
-						title={__('Additional Settings')}
-						initialOpen={true}
-					>
+					<PanelBody title={__("Additional Settings")} initialOpen={true}>
 						<PanelRow>
 							<label htmlFor="ub_toc_toggle_display">
 								{__(
-									'Allow users to toggle the visibility of the table of contents'
+									"Allow users to toggle the visibility of the table of contents"
 								)}
 							</label>
 							<ToggleControl
@@ -141,9 +136,7 @@ registerBlockType('ub/table-of-contents', {
 								onChange={allowToCHiding => {
 									setAttributes({
 										allowToCHiding,
-										showList: allowToCHiding
-											? showList
-											: true
+										showList: allowToCHiding ? showList : true
 									});
 								}}
 							/>
@@ -151,7 +144,7 @@ registerBlockType('ub/table-of-contents', {
 						{allowToCHiding && (
 							<PanelRow>
 								<label htmlFor="ub_show_toc">
-									{__('Initially Show Table of Contents')}
+									{__("Initially Show Table of Contents")}
 								</label>
 								<ToggleControl
 									id="ub_show_toc"
@@ -175,7 +168,7 @@ registerBlockType('ub/table-of-contents', {
 						replaceBlock(
 							block.clientId,
 							createBlock(
-								'ub/table-of-contents-block',
+								"ub/table-of-contents-block",
 								Object.assign(otherAttributes, {
 									title: mergeRichTextArray(title)
 								})
@@ -203,11 +196,10 @@ registerBlockType('ub/table-of-contents', {
 		return (
 			<div
 				className="ub_table-of-contents"
-				data-showText={__('show')}
-				data-hideText={__('hide')}
+				data-showText={__("show")}
+				data-hideText={__("hide")}
 			>
-				{(title.length > 1 ||
-					(title.length === 1 && title[0] !== '')) && (
+				{(title.length > 1 || (title.length === 1 && title[0] !== "")) && (
 					<div className="ub_table-of-contents-header">
 						<RichText.Content
 							tagName="div"
@@ -218,11 +210,8 @@ registerBlockType('ub/table-of-contents', {
 							<div id="ub_table-of-contents-header-toggle">
 								<div id="ub_table-of-contents-toggle">
 									[
-									<a
-										className="ub_table-of-contents-toggle-link"
-										href="#"
-									>
-										{showList ? __('hide') : __('show')}
+									<a className="ub_table-of-contents-toggle-link" href="#">
+										{showList ? __("hide") : __("show")}
 									</a>
 									]
 								</div>
@@ -238,9 +227,9 @@ registerBlockType('ub/table-of-contents', {
 						display:
 							showList ||
 							title.length === 0 ||
-							(title.length === 1 && title[0] === '')
-								? 'block'
-								: 'none'
+							(title.length === 1 && title[0] === "")
+								? "block"
+								: "none"
 					}}
 					allowedHeaders={allowedHeaders}
 					headers={links && JSON.parse(links)}
@@ -259,14 +248,14 @@ registerBlockType('ub/table-of-contents', {
 	]
 });
 
-registerBlockType('ub/table-of-contents-block', {
-	title: __('Table of Contents'),
+registerBlockType("ub/table-of-contents-block", {
+	title: __("Table of Contents"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Table of Contents'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Table of Contents"), __("Ultimate Blocks")],
 	attributes,
 	edit: withSelect((select, ownProps) => ({
-		block: (select('core/block-editor') || select('core/editor')).getBlock(
+		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
 		)
 	}))(function(props) {
@@ -283,7 +272,7 @@ registerBlockType('ub/table-of-contents-block', {
 			isSelected && blockControls(props),
 			<div
 				className={`ub_table-of-contents${
-					showList ? '' : ' ub_table-of-contents-collapsed'
+					showList ? "" : " ub_table-of-contents-collapsed"
 				}`}
 			>
 				{editorDisplay(props)}

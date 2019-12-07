@@ -1,14 +1,14 @@
-import icon from './icon';
-import './style.scss';
-import './editor.scss';
+import icon from "./icon";
+/*import './style.scss';
+import './editor.scss';*/
 
-import { ReviewBody } from './components';
+import { ReviewBody } from "./components";
 import {
 	version_1_1_2,
 	version_1_1_4,
 	version_1_1_5,
 	updateFrom
-} from './oldVersions';
+} from "./oldVersions";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -21,134 +21,134 @@ const { withSelect } = wp.data;
 
 const attributes = {
 	ID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	authorName: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	itemName: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	items: {
-		type: 'string',
+		type: "string",
 		default: '[{"label":"","value":0}]'
 	},
 	description: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	descriptionAlign: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	imgURL: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	imgID: {
-		type: 'number'
+		type: "number"
 	},
 	imgAlt: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	parts: {
-		type: 'array',
-		default: [{ label: '', value: 0 }]
+		type: "array",
+		default: [{ label: "", value: 0 }]
 	},
 	starCount: {
-		type: 'number',
+		type: "number",
 		default: 5
 	},
 	summaryTitle: {
-		type: 'string',
-		default: 'Summary'
+		type: "string",
+		default: "Summary"
 	},
 	summaryDescription: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	callToActionText: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	callToActionURL: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	callToActionBackColor: {
-		type: 'string',
-		default: '#f63d3d'
+		type: "string",
+		default: "#f63d3d"
 	},
 	callToActionForeColor: {
-		type: 'string',
-		default: '#ffffff'
+		type: "string",
+		default: "#ffffff"
 	},
 	inactiveStarColor: {
-		type: 'string',
-		default: '#888888'
+		type: "string",
+		default: "#888888"
 	},
 	activeStarColor: {
-		type: 'string',
-		default: '#eeee00'
+		type: "string",
+		default: "#eeee00"
 	},
 	titleAlign: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	authorAlign: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	enableCTA: {
-		type: 'boolean',
+		type: "boolean",
 		default: true
 	},
 	ctaNoFollow: {
-		type: 'boolean',
+		type: "boolean",
 		default: true
 	},
 	ctaOpenInNewTab: {
-		type: 'boolean',
+		type: "boolean",
 		default: true
 	},
 	enableReviewSchema: {
-		type: 'boolean',
+		type: "boolean",
 		default: true
 	},
 	enableImage: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	enableDescription: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	starOutlineColor: {
-		type: 'string',
-		default: '#000000'
+		type: "string",
+		default: "#000000"
 	}
 };
 
-registerBlockType('ub/review', {
-	title: __('Review'),
+registerBlockType("ub/review", {
+	title: __("Review"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Review'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Review"), __("Ultimate Blocks")],
 	attributes,
 	edit: compose([
-		withState({ editable: '' }),
+		withState({ editable: "" }),
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		}))
 	])(function(props) {
 		const { setAttributes, isSelected, editable, setState, block } = props;
@@ -191,13 +191,13 @@ registerBlockType('ub/review', {
 
 		const setAlignment = (target, value) => {
 			switch (target) {
-				case 'reviewTitle':
+				case "reviewTitle":
 					setAttributes({ titleAlign: value });
 					break;
-				case 'reviewAuthor':
+				case "reviewAuthor":
 					setAttributes({ authorAlign: value });
 					break;
-				case 'reviewItemDescription':
+				case "reviewItemDescription":
 					setAttributes({ descriptionAlign: value });
 					break;
 			}
@@ -205,11 +205,11 @@ registerBlockType('ub/review', {
 
 		const getCurrentAlignment = target => {
 			switch (target) {
-				case 'reviewTitle':
+				case "reviewTitle":
 					return titleAlign;
-				case 'reviewAuthor':
+				case "reviewAuthor":
 					return authorAlign;
-				case 'reviewItemDescription':
+				case "reviewItemDescription":
 					return descriptionAlign;
 			}
 		};
@@ -218,7 +218,7 @@ registerBlockType('ub/review', {
 			items &&
 			items !== JSON.stringify(parts) &&
 			parts.length === 1 &&
-			parts[0].label === '' &&
+			parts[0].label === "" &&
 			parts[0].value === 0
 		) {
 			setAttributes({
@@ -231,7 +231,7 @@ registerBlockType('ub/review', {
 			isSelected && (
 				<InspectorControls>
 					<PanelColorSettings
-						title={__('Star Colors')}
+						title={__("Star Colors")}
 						initialOpen={true}
 						colorSettings={[
 							{
@@ -240,7 +240,7 @@ registerBlockType('ub/review', {
 									setAttributes({
 										activeStarColor: colorValue
 									}),
-								label: __('Active Star Color')
+								label: __("Active Star Color")
 							},
 							{
 								value: inactiveStarColor,
@@ -248,7 +248,7 @@ registerBlockType('ub/review', {
 									setAttributes({
 										inactiveStarColor: colorValue
 									}),
-								label: __('Inactive Star Color')
+								label: __("Inactive Star Color")
 							},
 							{
 								value: starOutlineColor,
@@ -256,12 +256,12 @@ registerBlockType('ub/review', {
 									setAttributes({
 										starOutlineColor: colorValue
 									}),
-								label: __('Star Outline Color')
+								label: __("Star Outline Color")
 							}
 						]}
 					/>
 					<PanelColorSettings
-						title={__('Button Colors')}
+						title={__("Button Colors")}
 						initialOpen={false}
 						colorSettings={[
 							{
@@ -270,7 +270,7 @@ registerBlockType('ub/review', {
 									setAttributes({
 										callToActionBackColor: colorValue
 									}),
-								label: __('Button Background')
+								label: __("Button Background")
 							},
 							{
 								value: callToActionForeColor,
@@ -278,36 +278,29 @@ registerBlockType('ub/review', {
 									setAttributes({
 										callToActionForeColor: colorValue
 									}),
-								label: __('Button Text Color')
+								label: __("Button Text Color")
 							}
 						]}
 					/>
-					<PanelBody
-						title={__('Call to Action button')}
-						initialOpen={true}
-					>
+					<PanelBody title={__("Call to Action button")} initialOpen={true}>
 						<PanelRow>
-							<label htmlFor="ub-review-cta-enable">
-								{__('Enable')}
-							</label>
+							<label htmlFor="ub-review-cta-enable">{__("Enable")}</label>
 							<FormToggle
 								id="ub-review-cta-enable"
-								label={__('Enable')}
+								label={__("Enable")}
 								checked={enableCTA}
-								onChange={_ =>
-									setAttributes({ enableCTA: !enableCTA })
-								}
+								onChange={_ => setAttributes({ enableCTA: !enableCTA })}
 							/>
 						</PanelRow>
 						{enableCTA && (
 							<React.Fragment>
 								<PanelRow>
 									<label htmlFor="ub-review-cta-nofollow">
-										{__('Add nofollow')}
+										{__("Add nofollow")}
 									</label>
 									<FormToggle
 										id="ub-review-cta-nofollow"
-										label={__('Add nofollow')}
+										label={__("Add nofollow")}
 										checked={ctaNoFollow}
 										onChange={_ =>
 											setAttributes({
@@ -318,11 +311,11 @@ registerBlockType('ub/review', {
 								</PanelRow>
 								<PanelRow>
 									<label htmlFor="ub-review-cta-openinnewtab">
-										{__('Open link in new tab')}
+										{__("Open link in new tab")}
 									</label>
 									<FormToggle
 										id="ub-review-cta-openinnewtab"
-										label={__('Open link in new tab')}
+										label={__("Open link in new tab")}
 										checked={ctaOpenInNewTab}
 										onChange={_ =>
 											setAttributes({
@@ -334,27 +327,24 @@ registerBlockType('ub/review', {
 							</React.Fragment>
 						)}
 					</PanelBody>
-					<PanelBody title={__('Review schema')} initialOpen={true}>
+					<PanelBody title={__("Review schema")} initialOpen={true}>
 						<PanelRow>
 							<label htmlFor="ub-review-schema-toggle">
-								{__('Enable review schema')}
+								{__("Enable review schema")}
 							</label>
 							<FormToggle
 								id="ub-review-schema-toggle"
-								label={__('Enable review schema')}
+								label={__("Enable review schema")}
 								checked={enableReviewSchema}
 								onChange={_ => {
 									let newAttributes = {
 										enableReviewSchema: !enableReviewSchema
 									};
 									if (enableReviewSchema) {
-										newAttributes = Object.assign(
-											newAttributes,
-											{
-												enableImage: false,
-												enableDescription: false
-											}
-										);
+										newAttributes = Object.assign(newAttributes, {
+											enableImage: false,
+											enableDescription: false
+										});
 									}
 									setAttributes(newAttributes);
 								}}
@@ -363,11 +353,11 @@ registerBlockType('ub/review', {
 						{enableReviewSchema && [
 							<PanelRow>
 								<label htmlFor="ub-review-image-toggle">
-									{__('Enable review image')}
+									{__("Enable review image")}
 								</label>
 								<FormToggle
 									id="ub-review-image-toggle"
-									label={__('Enable review image')}
+									label={__("Enable review image")}
 									checked={enableImage}
 									onChange={_ =>
 										setAttributes({
@@ -378,11 +368,11 @@ registerBlockType('ub/review', {
 							</PanelRow>,
 							<PanelRow>
 								<label htmlFor="ub-review-description-toggle">
-									{__('Enable review description')}
+									{__("Enable review description")}
 								</label>
 								<FormToggle
 									id="ub-review-description-toggle"
-									label={__('Enable review description')}
+									label={__("Enable review description")}
 									checked={enableDescription}
 									onChange={_ =>
 										setAttributes({
@@ -397,21 +387,17 @@ registerBlockType('ub/review', {
 			),
 			isSelected && (
 				<BlockControls>
-					{editable !== '' && (
+					{editable !== "" && (
 						<Toolbar>
-							{['left', 'center', 'right', 'justify'].map(a => (
+							{["left", "center", "right", "justify"].map(a => (
 								<IconButton
-									icon={`editor-${
-										a === 'justify' ? a : 'align' + a
-									}`}
+									icon={`editor-${a === "justify" ? a : "align" + a}`}
 									label={__(
-										(a !== 'justify' ? 'Align ' : '') +
+										(a !== "justify" ? "Align " : "") +
 											a[0].toUpperCase() +
 											a.slice(1)
 									)}
-									isActive={
-										getCurrentAlignment(editable) === a
-									}
+									isActive={getCurrentAlignment(editable) === a}
 									onClick={() => setAlignment(editable, a)}
 								/>
 							))}
@@ -442,13 +428,9 @@ registerBlockType('ub/review', {
 				activeStarColor={activeStarColor}
 				selectedStarColor={activeStarColor}
 				starOutlineColor={starOutlineColor}
-				setAuthorName={newValue =>
-					setAttributes({ authorName: newValue })
-				}
+				setAuthorName={newValue => setAttributes({ authorName: newValue })}
 				setItemName={newValue => setAttributes({ itemName: newValue })}
-				setDescription={newValue =>
-					setAttributes({ description: newValue })
-				}
+				setDescription={newValue => setAttributes({ description: newValue })}
 				setImage={img =>
 					setAttributes({
 						imgID: img.id,
@@ -457,9 +439,7 @@ registerBlockType('ub/review', {
 					})
 				}
 				setItems={newValue => setAttributes({ parts: newValue })}
-				setSummaryTitle={newValue =>
-					setAttributes({ summaryTitle: newValue })
-				}
+				setSummaryTitle={newValue => setAttributes({ summaryTitle: newValue })}
 				setSummaryDescription={newValue =>
 					setAttributes({ summaryDescription: newValue })
 				}

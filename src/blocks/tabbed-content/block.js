@@ -6,8 +6,8 @@
  */
 
 //  Import CSS.
-import "./style.scss";
-import "./editor.scss";
+/*import "./style.scss";
+import "./editor.scss";*/
 
 import icon from "./icons/icon";
 import { version_1_1_2 } from "./oldVersions";

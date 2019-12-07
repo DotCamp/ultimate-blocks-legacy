@@ -1,16 +1,16 @@
-import icons from './icons';
+import icons from "./icons";
 import {
 	version_1_1_2,
 	version_1_1_5,
 	oldAttributes,
 	updateFrom
-} from './oldVersions';
+} from "./oldVersions";
 
 //  Import CSS.
-import './style.scss';
-import './editor.scss';
-import { blockControls, inspectorControls, editorDisplay } from './components';
-import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
+/*import './style.scss';
+import './editor.scss';*/
+import { blockControls, inspectorControls, editorDisplay } from "./components";
+import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
@@ -21,54 +21,54 @@ const { withDispatch, withSelect } = wp.data;
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	ub_testimonial_text: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	textAlign: {
-		type: 'string',
-		default: 'justify'
+		type: "string",
+		default: "justify"
 	},
 	ub_testimonial_author: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	authorAlign: {
-		type: 'string',
-		default: 'right'
+		type: "string",
+		default: "right"
 	},
 	ub_testimonial_author_role: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	authorRoleAlign: {
-		type: 'string',
-		default: 'right'
+		type: "string",
+		default: "right"
 	},
 	imgURL: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	imgID: {
-		type: 'number'
+		type: "number"
 	},
 	imgAlt: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	backgroundColor: {
-		type: 'string',
-		default: '#f4f6f6'
+		type: "string",
+		default: "#f4f6f6"
 	},
 	textColor: {
-		type: 'string',
-		default: '#444444'
+		type: "string",
+		default: "#444444"
 	},
 	textSize: {
-		type: 'number',
+		type: "number",
 		default: 17
 	}
 };
@@ -86,11 +86,11 @@ const attributes = {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType('ub/testimonial-block', {
-	title: __('Testimonial'),
+registerBlockType("ub/testimonial-block", {
+	title: __("Testimonial"),
 	icon: icons.testimonial,
-	category: 'ultimateblocks',
-	keywords: [__('testimonial'), __('quotes'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("testimonial"), __("quotes"), __("Ultimate Blocks")],
 	attributes: oldAttributes,
 	supports: {
 		inserter: false
@@ -106,16 +106,15 @@ registerBlockType('ub/testimonial-block', {
 	 */
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		})),
-		withState({ editable: '' })
+		withState({ editable: "" })
 	])(function(props) {
 		const { isSelected, attributes, block, replaceBlock } = props;
 
@@ -136,7 +135,7 @@ registerBlockType('ub/testimonial-block', {
 						replaceBlock(
 							block.clientId,
 							createBlock(
-								'ub/testimonial',
+								"ub/testimonial",
 								Object.assign(otherAttributes, {
 									ub_testimonial_author: mergeRichTextArray(
 										ub_testimonial_author
@@ -144,9 +143,7 @@ registerBlockType('ub/testimonial-block', {
 									ub_testimonial_author_role: mergeRichTextArray(
 										ub_testimonial_author_role
 									),
-									ub_testimonial_text: mergeRichTextArray(
-										ub_testimonial_text
-									)
+									ub_testimonial_text: mergeRichTextArray(ub_testimonial_text)
 								})
 							)
 						);
@@ -191,12 +188,7 @@ registerBlockType('ub/testimonial-block', {
 					}}
 				>
 					<div className="ub_testimonial_img">
-						<img
-							src={imgURL}
-							alt={imgAlt}
-							height={100}
-							width={100}
-						/>
+						<img src={imgURL} alt={imgAlt} height={100} width={100} />
 					</div>
 					<div className="ub_testimonial_content">
 						<p
@@ -230,11 +222,11 @@ registerBlockType('ub/testimonial-block', {
 	deprecated: [updateFrom(version_1_1_2), updateFrom(version_1_1_5)]
 });
 
-registerBlockType('ub/testimonial', {
-	title: __('Testimonial'),
+registerBlockType("ub/testimonial", {
+	title: __("Testimonial"),
 	icon: icons.testimonial,
-	category: 'ultimateblocks',
-	keywords: [__('testimonial'), __('quotes'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("testimonial"), __("quotes"), __("Ultimate Blocks")],
 	attributes,
 
 	/**
@@ -246,11 +238,11 @@ registerBlockType('ub/testimonial', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: compose([
-		withState({ editable: '' }),
+		withState({ editable: "" }),
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		}))
 	])(function(props) {
 		const { isSelected, className, block } = props;

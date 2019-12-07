@@ -1,7 +1,7 @@
 //  Import CSS.
-import './style.scss';
-import './editor.scss';
-import icon from './icons/icon';
+/*import './style.scss';
+import './editor.scss';*/
+import icon from "./icons/icon";
 
 import {
 	version_1_1_2,
@@ -10,10 +10,10 @@ import {
 	version_2_0_0,
 	oldAttributes,
 	updateFrom
-} from './oldVersions';
+} from "./oldVersions";
 
-import { blockControls, inspectorControls, editorDisplay } from './components';
-import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
+import { blockControls, inspectorControls, editorDisplay } from "./components";
+import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -38,103 +38,103 @@ const { withState, compose } = wp.compose;
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	ub_call_to_action_headline_text: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	ub_cta_content_text: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	ub_cta_button_text: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	headFontSize: {
-		type: 'number',
+		type: "number",
 		default: 30
 	},
 	headColor: {
-		type: 'string',
-		default: '#444444'
+		type: "string",
+		default: "#444444"
 	},
 	headAlign: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	contentFontSize: {
-		type: 'number',
+		type: "number",
 		default: 15
 	},
 	contentColor: {
-		type: 'string',
-		default: '#444444'
+		type: "string",
+		default: "#444444"
 	},
 	buttonFontSize: {
-		type: 'number',
+		type: "number",
 		default: 14
 	},
 	buttonColor: {
-		type: 'string',
-		default: '#E27330'
+		type: "string",
+		default: "#E27330"
 	},
 	buttonTextColor: {
-		type: 'string',
-		default: '#ffffff'
+		type: "string",
+		default: "#ffffff"
 	},
 	buttonWidth: {
-		type: 'number',
+		type: "number",
 		default: 250
 	},
 	ctaBackgroundColor: {
-		type: 'string',
-		default: '#f8f8f8'
+		type: "string",
+		default: "#f8f8f8"
 	},
 	ctaBorderColor: {
-		type: 'string',
-		default: '#ECECEC'
+		type: "string",
+		default: "#ECECEC"
 	},
 	ctaBorderSize: {
-		type: 'number',
+		type: "number",
 		default: 2
 	},
 	url: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	contentAlign: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	addNofollow: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	openInNewTab: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	useHeadingTag: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	selectedHeadingTag: {
-		type: 'string',
-		default: 'h2'
+		type: "string",
+		default: "h2"
 	}
 };
 
-registerBlockType('ub/call-to-action', {
-	title: __('Call to Action', 'ultimate-blocks'),
+registerBlockType("ub/call-to-action", {
+	title: __("Call to Action", "ultimate-blocks"),
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	keywords: [
-		__('call to action', 'ultimate-blocks'),
-		__('conversion', 'ultimate-blocks'),
-		__('Ultimate Blocks', 'ultimate-blocks')
+		__("call to action", "ultimate-blocks"),
+		__("conversion", "ultimate-blocks"),
+		__("Ultimate Blocks", "ultimate-blocks")
 	],
 	attributes: oldAttributes,
 	supports: {
@@ -151,16 +151,15 @@ registerBlockType('ub/call-to-action', {
 	 */
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		})),
-		withState({ editable: '' })
+		withState({ editable: "" })
 	])(function(props) {
 		const { isSelected, block, replaceBlock } = props;
 
@@ -182,18 +181,14 @@ registerBlockType('ub/call-to-action', {
 						replaceBlock(
 							block.clientId,
 							createBlock(
-								'ub/call-to-action-block',
+								"ub/call-to-action-block",
 								Object.assign(otherAttributes, {
 									ub_call_to_action_headline_text: mergeRichTextArray(
 										ub_call_to_action_headline_text
 									),
-									ub_cta_content_text: mergeRichTextArray(
-										ub_cta_content_text
-									),
+									ub_cta_content_text: mergeRichTextArray(ub_cta_content_text),
 
-									ub_cta_button_text: mergeRichTextArray(
-										ub_cta_button_text
-									),
+									ub_cta_button_text: mergeRichTextArray(ub_cta_button_text),
 									url: url
 								})
 							)
@@ -243,7 +238,7 @@ registerBlockType('ub/call-to-action', {
 					className="ub_call_to_action"
 					style={{
 						backgroundColor: ctaBackgroundColor,
-						border: ctaBorderSize + 'px solid',
+						border: ctaBorderSize + "px solid",
 						borderColor: ctaBorderColor
 					}}
 				>
@@ -251,7 +246,7 @@ registerBlockType('ub/call-to-action', {
 						<p
 							className="ub_call_to_action_headline_text"
 							style={{
-								fontSize: headFontSize + 'px',
+								fontSize: headFontSize + "px",
 								color: headColor,
 								textAlign: headAlign
 							}}
@@ -263,7 +258,7 @@ registerBlockType('ub/call-to-action', {
 						<p
 							className="ub_cta_content_text"
 							style={{
-								fontSize: contentFontSize + 'px',
+								fontSize: contentFontSize + "px",
 								color: contentColor,
 								textAlign: contentAlign
 							}}
@@ -274,21 +269,19 @@ registerBlockType('ub/call-to-action', {
 					<div className="ub_call_to_action_button">
 						<a
 							href={url}
-							target={openInNewTab ? '_blank' : '_self'}
-							rel={`${
-								addNofollow ? 'nofollow ' : ''
-							}noopener noreferrer`}
+							target={openInNewTab ? "_blank" : "_self"}
+							rel={`${addNofollow ? "nofollow " : ""}noopener noreferrer`}
 							className={`wp-block-button ub_cta_button`}
 							style={{
 								backgroundColor: buttonColor,
-								width: buttonWidth + 'px'
+								width: buttonWidth + "px"
 							}}
 						>
 							<p
 								className="ub_cta_button_text"
 								style={{
 									color: buttonTextColor,
-									fontSize: buttonFontSize + 'px'
+									fontSize: buttonFontSize + "px"
 								}}
 							>
 								{ub_cta_button_text}
@@ -307,22 +300,22 @@ registerBlockType('ub/call-to-action', {
 	]
 });
 
-registerBlockType('ub/call-to-action-block', {
-	title: __('Call to Action', 'ultimate-blocks'),
+registerBlockType("ub/call-to-action-block", {
+	title: __("Call to Action", "ultimate-blocks"),
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	keywords: [
-		__('call to action', 'ultimate-blocks'),
-		__('conversion', 'ultimate-blocks'),
-		__('Ultimate Blocks', 'ultimate-blocks')
+		__("call to action", "ultimate-blocks"),
+		__("conversion", "ultimate-blocks"),
+		__("Ultimate Blocks", "ultimate-blocks")
 	],
 	attributes,
 	edit: compose([
-		withState({ editable: '' }),
+		withState({ editable: "" }),
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		}))
 	])(function(props) {
 		const { isSelected, block } = props;

@@ -2,8 +2,8 @@ import icon, { editGallery } from "./icon";
 
 import { Slider } from "./components";
 
-import "./editor.scss";
-import "./style.scss";
+/*import "./editor.scss";
+import "./style.scss";*/
 
 import { version_1_1_4 } from "./oldVersions";
 
