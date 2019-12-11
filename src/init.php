@@ -49,7 +49,9 @@ function ub_check_is_gutenberg_page() {
 function ub_load_assets() {
     wp_enqueue_style(
         'ultimate_blocks-cgb-style-css', // Handle.
-        plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+            content_url('/uploads/ultimate-blocks/blocks.style.build.css') :
+            plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
         array(), // Dependency to include the CSS after it.
         Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
     );
@@ -515,10 +517,15 @@ function ultimate_blocks_cgb_editor_assets() {
 		true
 	);
 
-	// Styles.
+    // Styles.
+    //if custom css file exists and at least one block is disabled, enqueue it
+    //else enqueue default style
+
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-block-editor-css', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
+        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+            content_url('/uploads/ultimate-blocks/blocks.editor.build.css') :
+            plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
 		Ultimate_Blocks_Constants::plugin_version() // Version: latest version number
 	);

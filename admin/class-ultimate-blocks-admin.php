@@ -177,40 +177,53 @@ class Ultimate_Blocks_Admin {
 			));
 		}
 
+		$uploadDir = dirname(dirname(dirname(__DIR__))) . '/uploads';
+		$canMakeCustomFile = is_writable($uploadDir);
+
 		$saved_blocks = get_option( 'ultimate_blocks', false );
 		if ( $saved_blocks ) {
-			$frontStyleFile = fopen(dirname(__DIR__) . '/dist/blocks.style.build.css', 'w');
-			$adminStyleFile = fopen(dirname(__DIR__) . '/dist/blocks.editor.build.css', 'w');
-			$blockDir = dirname(__DIR__) . '/src/blocks/';
-			foreach ( $saved_blocks as $key => $block ) {
-				$blockDirName = strtolower(str_replace(' ', '-', 
-									trim(preg_replace('/\(.+\)/', '', $saved_blocks[ $key ]['label']))
-										));
-				$frontStyleLocation = $blockDir . $blockDirName . '/style.css';
-				$adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
 
+			if($canMakeCustomFile){
+				if(!file_exists($uploadDir . '/ultimate-blocks')){
+					mkdir($uploadDir . '/ultimate-blocks');
+				}
+				$frontStyleFile = fopen($uploadDir . '/ultimate-blocks/blocks.style.build.css', 'w');
+				$adminStyleFile = fopen($uploadDir . '/ultimate-blocks/blocks.editor.build.css', 'w');
+				$blockDir = dirname(__DIR__) . '/src/blocks/';
+			}
+
+			foreach ( $saved_blocks as $key => $block ) {
 				if ( $block['name'] === $block_name ) {
 					$saved_blocks[ $key ]['active'] = ( $enable === 'true' );
 				}
 
-				if(file_exists($frontStyleLocation) && $saved_blocks[ $key ]['active']){ //also detect if block is enabled
-					fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
-				}
-				if(file_exists($adminStyleLocation) && $saved_blocks[ $key ]['active']){
-					fwrite($adminStyleFile, file_get_contents($adminStyleLocation));
+				if($canMakeCustomFile){
+					$blockDirName = strtolower(str_replace(' ', '-', 
+					trim(preg_replace('/\(.+\)/', '', $saved_blocks[ $key ]['label']))
+						));
+					$frontStyleLocation = $blockDir . $blockDirName . '/style.css';
+					$adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
+	
+					if(file_exists($frontStyleLocation) && $saved_blocks[ $key ]['active']){ //also detect if block is enabled
+						fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
+					}
+					if(file_exists($adminStyleLocation) && $saved_blocks[ $key ]['active']){
+						fwrite($adminStyleFile, file_get_contents($adminStyleLocation));
+					}
 				}
 			}
 			
 			//add css for phased out blocks for backward compatibility
-			fwrite($frontStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
-			fwrite($frontStyleFile, file_get_contents($blockDir . 'notification-box' . '/style.css'));
-			fwrite($frontStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
-			fclose($frontStyleFile);
-
-			fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/editor.css'));
-			fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/editor.css'));
-			fclose($adminStyleFile);
-
+			if($canMakeCustomFile){
+				fwrite($frontStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
+				fwrite($frontStyleFile, file_get_contents($blockDir . 'notification-box' . '/style.css'));
+				fwrite($frontStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
+				fclose($frontStyleFile);
+	
+				fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/editor.css'));
+				fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/editor.css'));
+				fclose($adminStyleFile);
+			}
 
 			update_option( 'ultimate_blocks', $saved_blocks );
 		} else {
