@@ -71,10 +71,7 @@ function ub_render_styled_list_block($attributes){
     }
 
     return '<div class="ub_styled_list '.(isset($className) ? ' ' . esc_attr($className): '') .'" '
-            .($blockID == '' ? '' : ' id="ub_styled_list-'.$blockID.'"').'style="justify-content:'.
-                ($attributes['aligmentlist'] === 'left' ? 'flex-start' : '').
-                ($attributes['aligmentlist'] === 'center' ? 'center' : '').
-                ($attributes['aligmentlist'] === 'right' ? 'flex-end' : '' ).
+            .($blockID == '' ? '' : ' id="ub_styled_list-'.$blockID.'"').
             '"><ul class="fa-ul">'.$listItems.'</ul></div>';
 }
 

@@ -891,6 +891,10 @@ $defaultValues = array(
     ),
     'ub/styled-list' => array(
         'attributes' => array(
+            'alignment' => array(
+                'type' => 'string',
+                'default' => 'left'
+            ),
             'blockID' => array(
                 'type' => 'string',
                 'default' => ''
@@ -912,10 +916,6 @@ $defaultValues = array(
             'selectedIcon' => array(
                 'type' => 'string',
                 'default' => 'check'
-            ),
-            'aligmentlist' => array(
-                'type' => 'string',
-                'defaylt' => '',
             ),
             'iconColor' => array(
                 'type' => 'string',
