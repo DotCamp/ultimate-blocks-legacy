@@ -210,18 +210,21 @@ class Ultimate_Blocks_Admin {
 					if(file_exists($adminStyleLocation) && $saved_blocks[ $key ]['active']){
 						fwrite($adminStyleFile, file_get_contents($adminStyleLocation));
 					}
+
+					if($block['name'] === 'ub/styled-box' && $saved_blocks[$key]['active']){
+						//add css for blocks phased out by styled box
+						fwrite($frontStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
+						fwrite($frontStyleFile, file_get_contents($blockDir . 'notification-box' . '/style.css'));
+						fwrite($frontStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
+
+						fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/editor.css'));
+						fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/editor.css'));
+					}
 				}
 			}
 			
-			//add css for phased out blocks for backward compatibility
 			if($canMakeCustomFile){
-				fwrite($frontStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
-				fwrite($frontStyleFile, file_get_contents($blockDir . 'notification-box' . '/style.css'));
-				fwrite($frontStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
 				fclose($frontStyleFile);
-	
-				fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/editor.css'));
-				fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/editor.css'));
 				fclose($adminStyleFile);
 			}
 

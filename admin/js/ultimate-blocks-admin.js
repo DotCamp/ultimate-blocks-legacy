@@ -35,8 +35,7 @@
 		{
 			label: "Button (Improved)",
 			name: "ub/button-block",
-			active: true,
-			dirName: "testdirname"
+			active: true
 		},
 		{
 			label: "Call To Action",
@@ -84,6 +83,11 @@
 			active: true
 		},
 		{
+			label: "Post Grid",
+			name: "ub/post-grid",
+			active: true
+		},
+		{
 			label: "Progress Bar",
 			name: "ub/progress-bar",
 			active: true
@@ -91,7 +95,7 @@
 		{
 			label: "Review",
 			name: "ub/review",
-			active: "true"
+			active: true
 		},
 		{
 			label: "Social Share",
@@ -103,7 +107,16 @@
 			name: "ub/star-rating",
 			active: true
 		},
-
+		{
+			label: "Styled Box",
+			name: "ub/styled-box",
+			active: true
+		},
+		{
+			label: "Styled List",
+			name: "ub/styled-list",
+			active: true
+		},
 		{
 			label: "Tabbed Content",
 			name: "ub/tabbed-content",
@@ -117,11 +130,6 @@
 		{
 			label: "Testimonial",
 			name: "ub/testimonial-block",
-			active: true
-		},
-		{
-			label: "Post Grid",
-			name: "ub/post-grid",
 			active: true
 		}
 	];
