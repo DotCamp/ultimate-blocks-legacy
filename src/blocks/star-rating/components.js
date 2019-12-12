@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
-import { EmptyStar, FullStar, HalfStar } from './icons';
+import { Fragment } from "react";
+import { EmptyStar, FullStar, HalfStar } from "./icons";
 
 const { __ } = wp.i18n;
 const { InspectorControls, PanelColorSettings, RichText, BlockControls } =
@@ -13,7 +13,7 @@ export const blockControls = props => {
 	return (
 		<BlockControls>
 			<Toolbar>
-				{['left', 'center', 'right'].map(a => (
+				{["left", "center", "right"].map(a => (
 					<IconButton
 						icon={`align-${a}`}
 						label={__(`Align stars ${a}`)}
@@ -22,11 +22,11 @@ export const blockControls = props => {
 				))}
 			</Toolbar>
 			<Toolbar>
-				{['left', 'center', 'right', 'justify'].map(a => (
+				{["left", "center", "right", "justify"].map(a => (
 					<IconButton
-						icon={`editor-${a === 'justify' ? a : 'align' + a}`}
+						icon={`editor-${a === "justify" ? a : "align" + a}`}
 						label={__(
-							(a !== 'justify' ? 'Align ' : '') +
+							(a !== "justify" ? "Align " : "") +
 								a[0].toUpperCase() +
 								a.slice(1)
 						)}
@@ -45,9 +45,9 @@ export const inspectorControls = props => {
 	const { starCount, starSize, starColor, selectedStars } = attributes;
 	return (
 		<InspectorControls>
-			<PanelBody title={__('Star Settings')}>
+			<PanelBody title={__("Star Settings")}>
 				<PanelColorSettings
-					title={__('Color')}
+					title={__("Color")}
 					initialOpen={false}
 					colorSettings={[
 						{
@@ -56,12 +56,12 @@ export const inspectorControls = props => {
 								setAttributes({
 									starColor: colorValue
 								}),
-							label: __('')
+							label: __("")
 						}
 					]}
 				/>
 				<RangeControl
-					label={__('Star size')}
+					label={__("Star size")}
 					value={starSize}
 					onChange={value => setAttributes({ starSize: value })}
 					min={10}
@@ -71,13 +71,12 @@ export const inspectorControls = props => {
 					allowReset
 				/>
 				<RangeControl
-					label={__('Number of stars')}
+					label={__("Number of stars")}
 					value={starCount}
 					onChange={value =>
 						setAttributes({
 							starCount: value,
-							selectedStars:
-								value < selectedStars ? value : selectedStars
+							selectedStars: value < selectedStars ? value : selectedStars
 						})
 					}
 					min={5}
@@ -108,9 +107,9 @@ export const editorDisplay = props => {
 				className="ub-star-outer-container"
 				style={{
 					justifyContent:
-						starAlign === 'center'
-							? 'center'
-							: `flex-${starAlign === 'left' ? 'start' : 'end'}`
+						starAlign === "center"
+							? "center"
+							: `flex-${starAlign === "left" ? "start" : "end"}`
 				}}
 			>
 				<div
@@ -126,70 +125,36 @@ export const editorDisplay = props => {
 							onClick={() => {
 								if (selectedStars % 1 === 0) {
 									setAttributes({
-										selectedStars:
-											i +
-											(selectedStars - 1 === i ? 0.5 : 1)
+										selectedStars: i + (selectedStars - 1 === i ? 0.5 : 1)
 									});
 								} else {
 									setAttributes({
-										selectedStars:
-											i +
-											(selectedStars - 0.5 === i
-												? 1
-												: 0.5)
+										selectedStars: i + (selectedStars - 0.5 === i ? 1 : 0.5)
 									});
 								}
 							}}
 						>
-							{i <
-							(highlightedStars
-								? highlightedStars
-								: selectedStars) ? (
+							{i < (highlightedStars ? highlightedStars : selectedStars) ? (
 								highlightedStars ? (
 									highlightedStars - 1 === i ? (
 										selectedStars % 1 > 0 ? (
-											highlightedStars -
-												selectedStars -
-												0.5 !==
-											0 ? (
-												<HalfStar
-													size={starSize}
-													fillColor={starColor}
-												/>
+											highlightedStars - selectedStars - 0.5 !== 0 ? (
+												<HalfStar size={starSize} fillColor={starColor} />
 											) : (
-												<FullStar
-													size={starSize}
-													fillColor={starColor}
-												/>
+												<FullStar size={starSize} fillColor={starColor} />
 											)
-										) : highlightedStars - selectedStars !==
-										  0 ? (
-											<FullStar
-												size={starSize}
-												fillColor={starColor}
-											/>
+										) : highlightedStars - selectedStars !== 0 ? (
+											<FullStar size={starSize} fillColor={starColor} />
 										) : (
-											<HalfStar
-												size={starSize}
-												fillColor={starColor}
-											/>
+											<HalfStar size={starSize} fillColor={starColor} />
 										)
 									) : (
-										<FullStar
-											size={starSize}
-											fillColor={starColor}
-										/>
+										<FullStar size={starSize} fillColor={starColor} />
 									)
 								) : selectedStars - i >= 1 ? (
-									<FullStar
-										size={starSize}
-										fillColor={starColor}
-									/>
+									<FullStar size={starSize} fillColor={starColor} />
 								) : (
-									<HalfStar
-										size={starSize}
-										fillColor={starColor}
-									/>
+									<HalfStar size={starSize} fillColor={starColor} />
 								)
 							) : (
 								<EmptyStar size={starSize} />
@@ -201,12 +166,12 @@ export const editorDisplay = props => {
 			<RichText
 				tagName="div"
 				className="ub-review-text"
-				placeholder={__('The text of the review goes here')}
+				placeholder={__("The text of the review goes here")}
 				value={reviewText}
 				style={{ textAlign: reviewTextAlign }}
 				onChange={text => setAttributes({ reviewText: text })}
 				keepPlaceholderOnFocus={true}
-				formattingControls={['bold', 'italic', 'strikethrough', 'link']}
+				formattingControls={["bold", "italic", "strikethrough", "link"]}
 			/>
 		</Fragment>
 	);

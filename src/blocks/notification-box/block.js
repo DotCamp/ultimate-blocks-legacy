@@ -6,10 +6,7 @@
  */
 
 //Import Icons
-import icon from './icons/icon';
-
-//  Import CSS.
-import './style.scss';
+import icon from "./icons/icon";
 
 import {
 	version_1_1_2,
@@ -17,9 +14,9 @@ import {
 	version_1_1_5,
 	oldAttributes,
 	updateFrom
-} from './oldVersions';
-import { blockControls, editorDisplay, upgradeToStyledBox } from './components';
-import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
+} from "./oldVersions";
+import { blockControls, editorDisplay, upgradeToStyledBox } from "./components";
+import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -30,20 +27,20 @@ const { withDispatch, withSelect } = wp.data;
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	ub_notify_info: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	ub_selected_notify: {
-		type: 'string',
-		default: 'ub_notify_info'
+		type: "string",
+		default: "ub_notify_info"
 	},
 	align: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	}
 };
 
@@ -60,11 +57,11 @@ const attributes = {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType('ub/notification-box', {
-	title: __('Notification Box'),
+registerBlockType("ub/notification-box", {
+	title: __("Notification Box"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('notification'), __('warning info'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("notification"), __("warning info"), __("Ultimate Blocks")],
 	attributes: oldAttributes,
 	supports: { inserter: false },
 
@@ -78,23 +75,16 @@ registerBlockType('ub/notification-box', {
 	 */
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		}))
 	])(function(props) {
-		const {
-			isSelected,
-			className,
-			attributes,
-			replaceBlock,
-			block
-		} = props;
+		const { isSelected, className, attributes, replaceBlock, block } = props;
 
 		return [
 			isSelected && blockControls(props),
@@ -106,30 +96,21 @@ registerBlockType('ub/notification-box', {
 						let firstColor;
 						let secondColor;
 						switch (attributes.ub_selected_notify) {
-							case 'ub_notify_success':
-								[firstColor, secondColor] = [
-									'#3c763d',
-									'#dff0d8'
-								];
+							case "ub_notify_success":
+								[firstColor, secondColor] = ["#3c763d", "#dff0d8"];
 								break;
-							case 'ub_notify_warning':
-								[firstColor, secondColor] = [
-									'#d8000c',
-									'#ffd2d2'
-								];
+							case "ub_notify_warning":
+								[firstColor, secondColor] = ["#d8000c", "#ffd2d2"];
 								break;
-							case 'ub_notify_info':
+							case "ub_notify_info":
 							default:
-								[firstColor, secondColor] = [
-									'#31708f',
-									'#d9edf7'
-								];
+								[firstColor, secondColor] = ["#31708f", "#d9edf7"];
 								break;
 						}
 						replaceBlock(
 							block.clientId,
-							createBlock('ub/styled-box', {
-								mode: 'notification',
+							createBlock("ub/styled-box", {
+								mode: "notification",
 								text: [mergeRichTextArray(ub_notify_info)],
 								textAlign: [attributes.align],
 								backColor: secondColor,
@@ -161,7 +142,7 @@ registerBlockType('ub/notification-box', {
 				<div className={ub_selected_notify}>
 					<RichText.Content
 						tagName="p"
-						className={'ub_notify_text'}
+						className={"ub_notify_text"}
 						style={{ textAlign: align }}
 						value={ub_notify_info}
 					/>
@@ -174,17 +155,17 @@ registerBlockType('ub/notification-box', {
 		{
 			attributes: {
 				ub_notify_info: {
-					type: 'array',
-					source: 'children',
-					selector: 'p'
+					type: "array",
+					source: "children",
+					selector: "p"
 				},
 				ub_selected_notify: {
-					type: 'string',
-					default: 'ub_notify_info'
+					type: "string",
+					default: "ub_notify_info"
 				},
 				align: {
-					type: 'string',
-					default: 'left'
+					type: "string",
+					default: "left"
 				}
 			},
 			save: version_1_1_4
@@ -193,11 +174,11 @@ registerBlockType('ub/notification-box', {
 	]
 });
 
-registerBlockType('ub/notification-box-block', {
-	title: __('Notification Box'),
+registerBlockType("ub/notification-box-block", {
+	title: __("Notification Box"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('notification'), __('warning info'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("notification"), __("warning info"), __("Ultimate Blocks")],
 	attributes,
 	supports: {
 		inserter: false
@@ -206,22 +187,21 @@ registerBlockType('ub/notification-box-block', {
 	transforms: {
 		to: [
 			{
-				type: 'block',
-				blocks: 'ub/styled-box',
+				type: "block",
+				blocks: "ub/styled-box",
 				transform: attributes => upgradeToStyledBox(attributes)
 			}
 		]
 	},
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		}))
 	])(function(props) {
 		const { isSelected, className, block, replaceBlock } = props;
@@ -235,10 +215,7 @@ registerBlockType('ub/notification-box-block', {
 			<div className={className}>
 				<button
 					onClick={_ =>
-						replaceBlock(
-							block.clientId,
-							upgradeToStyledBox(props.attributes)
-						)
+						replaceBlock(block.clientId, upgradeToStyledBox(props.attributes))
 					}
 				>
 					{upgradeButtonLabel}

@@ -49,7 +49,9 @@ function ub_check_is_gutenberg_page() {
 function ub_load_assets() {
     wp_enqueue_style(
         'ultimate_blocks-cgb-style-css', // Handle.
-        plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+            content_url('/uploads/ultimate-blocks/blocks.style.build.css') :
+            plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
         array(), // Dependency to include the CSS after it.
         Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
     );
@@ -233,10 +235,7 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/image-slider':
                     $prefix = '#ub_image_slider_' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . '{' . PHP_EOL .
-                        'min-height: ' . (25+ (count(json_decode($attributes['images'], true)) > 0) ? $attributes['sliderHeight'] : 200 ) . 'px;' . PHP_EOL .
-                    '}' . PHP_EOL . 
-                    $prefix . ' .flickity-slider img{' . PHP_EOL .
+                    $blockStylesheets .= $prefix . ' .flickity-slider img{' . PHP_EOL .
                         'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
@@ -327,11 +326,11 @@ function ub_include_block_attribute_css() {
                     $blockStylesheets .=  $prefix . ' .ub_review_item_name{' . PHP_EOL . 
                         'text-align: ' . $attributes['titleAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . $attributes['blockID'] . ' .ub_review_author_name{' . PHP_EOL . 
+                    $prefix . ' .ub_review_author_name{' . PHP_EOL . 
                         'text-align: ' . $attributes['authorAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix. $attributes['blockID'] . ' .ub_review_cta_main>a{' . PHP_EOL . 
-                        'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
+                    $prefix . ' .ub_review_description{' . PHP_EOL . 
+                        'text-align: ' . $attributes['descriptionAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_review_cta_main>a{' . PHP_EOL . 
                         'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
@@ -507,7 +506,7 @@ function ultimate_blocks_cgb_editor_assets() {
 		'ultimate_blocks-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor'), // Dependencies, defined above.
-		Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+		Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
 	wp_enqueue_script(
@@ -518,10 +517,15 @@ function ultimate_blocks_cgb_editor_assets() {
 		true
 	);
 
-	// Styles.
+    // Styles.
+    //if custom css file exists and at least one block is disabled, enqueue it
+    //else enqueue default style
+
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-block-editor-css', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
+        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+            content_url('/uploads/ultimate-blocks/blocks.editor.build.css') :
+            plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
 		Ultimate_Blocks_Constants::plugin_version() // Version: latest version number
 	);
@@ -539,8 +543,6 @@ add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
 	$toc_plugins['ultimate-blocks/ultimate-blocks.php'] = 'Ultimate Blocks';
  	return $toc_plugins;
 });
-
-
 
 // Click to Tweet Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/click-to-tweet/block.php';

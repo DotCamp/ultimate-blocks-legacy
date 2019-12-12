@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -126,6 +126,25 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.1.8 =
+
+Release Date: November 25th, 2019
+
+* ADD: Custom class name option in Expand block.
+* ADD: Image and Description inputs for Review block. Adding these will minimize warnings in Console for the Schema.
+* ADD: Filtering HTML tags from summary, author name and item name in generated Schema to prevent errors.
+* ADD: Editing of Content Toggle panel attributes from any of the child panels.
+* FIX: Content filter frontend script not loading correctly.
+* FIX: Compatibility issues with CodeMirror block in Content Toggle Block.
+* FIX: Double quotes from interfering with generated schema in Content Toggle Block.
+* FIX: Minimum height issue in smaller screen for Image Slider.
+* FIX: Average star value display in Review block.
+* FIX: Issue in Tabbed Content title editing. Now you can edit them easily.
+* FIX: PHP error in 404 pages.
+* FIX: URL input box from automatically getting focus when a block containing one is selected.
+* CHANGE: Removed aggregateRating and added review author property to Review Schema.
+* CHANGE: Display pointer when mouse hovers on button in Review block.
 
 = 2.1.7 = 
 

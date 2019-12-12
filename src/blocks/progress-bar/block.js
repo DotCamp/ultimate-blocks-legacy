@@ -1,4 +1,4 @@
-import icon, { CircProgressIcon, LinearProgressIcon } from './icons';
+import icon, { CircProgressIcon, LinearProgressIcon } from "./icons";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
@@ -15,51 +15,48 @@ const {
 
 const { withSelect } = wp.data;
 
-import './editor.scss';
-import './style.scss';
+import Circle from "./Circle";
+import Line from "./Line";
 
-import Circle from './Circle';
-import Line from './Line';
-
-registerBlockType('ub/progress-bar', {
-	title: __('Progress Bar'),
+registerBlockType("ub/progress-bar", {
+	title: __("Progress Bar"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Progress Bar'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Progress Bar"), __("Ultimate Blocks")],
 
 	attributes: {
 		blockID: {
-			type: 'string',
-			default: ''
+			type: "string",
+			default: ""
 		},
 		percentage: {
-			type: 'number',
+			type: "number",
 			default: 25
 		},
 		barType: {
-			type: 'string',
-			default: 'linear' //choose between linear and circular
+			type: "string",
+			default: "linear" //choose between linear and circular
 		},
 		detail: {
-			type: 'string',
-			default: ''
+			type: "string",
+			default: ""
 		},
 		detailAlign: {
-			type: 'string',
-			default: 'left'
+			type: "string",
+			default: "left"
 		},
 		barColor: {
-			type: 'string',
-			default: '#2DB7F5'
+			type: "string",
+			default: "#2DB7F5"
 		},
 		barThickness: {
-			type: 'number',
+			type: "number",
 			default: 1
 		}
 	},
 
 	edit: withSelect((select, ownProps) => ({
-		block: (select('core/block-editor') || select('core/editor')).getBlock(
+		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
 		)
 	}))(function(props) {
@@ -82,16 +79,10 @@ registerBlockType('ub/progress-bar', {
 			isSelected && (
 				<BlockControls>
 					<Toolbar>
-						<Button
-							onClick={() => setAttributes({ barType: 'linear' })}
-						>
+						<Button onClick={() => setAttributes({ barType: "linear" })}>
 							{LinearProgressIcon}
 						</Button>
-						<Button
-							onClick={() =>
-								setAttributes({ barType: 'circular' })
-							}
-						>
+						<Button onClick={() => setAttributes({ barType: "circular" })}>
 							{CircProgressIcon}
 						</Button>
 					</Toolbar>
@@ -99,9 +90,7 @@ registerBlockType('ub/progress-bar', {
 						<RangeControl
 							className="ub_progress_bar_value"
 							value={percentage}
-							onChange={value =>
-								setAttributes({ percentage: value })
-							}
+							onChange={value => setAttributes({ percentage: value })}
 							min={0}
 							max={100}
 							allowReset
@@ -109,42 +98,34 @@ registerBlockType('ub/progress-bar', {
 					</Toolbar>
 					<DropdownMenu
 						icon={`editor-${
-							detailAlign === 'justify'
-								? detailAlign
-								: 'align' + detailAlign
+							detailAlign === "justify" ? detailAlign : "align" + detailAlign
 						}`}
-						controls={['left', 'center', 'right', 'justify'].map(
-							a => ({
-								icon: `editor-${
-									a === 'justify' ? a : 'align' + a
-								}`,
-								onClick: () => setAttributes({ detailAlign: a })
-							})
-						)}
+						controls={["left", "center", "right", "justify"].map(a => ({
+							icon: `editor-${a === "justify" ? a : "align" + a}`,
+							onClick: () => setAttributes({ detailAlign: a })
+						}))}
 					/>
 				</BlockControls>
 			),
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__('Progress Bar Settings')}>
+					<PanelBody title={__("Progress Bar Settings")}>
 						<PanelColorSettings
-							title={__('Color')}
+							title={__("Color")}
 							initialOpen={false}
 							colorSettings={[
 								{
 									value: barColor,
 									onChange: colorValue =>
 										setAttributes({ barColor: colorValue }),
-									label: ''
+									label: ""
 								}
 							]}
 						/>
 						<RangeControl
-							label={__('Thickness')}
+							label={__("Thickness")}
 							value={barThickness}
-							onChange={value =>
-								setAttributes({ barThickness: value })
-							}
+							onChange={value => setAttributes({ barThickness: value })}
 							min={1}
 							max={5}
 							allowReset
@@ -157,13 +138,13 @@ registerBlockType('ub/progress-bar', {
 					<RichText
 						tagName="p"
 						style={{ textAlign: detailAlign }}
-						placeholder={__('Progress bar description')}
+						placeholder={__("Progress bar description")}
 						value={detail}
 						onChange={text => setAttributes({ detail: text })}
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
-				{barType === 'linear' ? (
+				{barType === "linear" ? (
 					<Line
 						percent={percentage}
 						barColor={barColor}

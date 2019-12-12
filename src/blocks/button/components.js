@@ -426,6 +426,7 @@ export const editorDisplay = props => {
 							<Icon icon="admin-links" />
 						</div>
 						<URLInput
+							autoFocus={false}
 							className="button-url"
 							value={url}
 							onChange={value => setAttributes({ url: value })}

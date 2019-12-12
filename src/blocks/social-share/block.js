@@ -5,10 +5,6 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
-//  Import CSS
-import './style.scss';
-import './editor.scss';
-
 // Import Icons
 import {
 	FacebookIcon,
@@ -19,10 +15,10 @@ import {
 	GooglePlusIcon,
 	TumblrIcon,
 	icon
-} from './icons/icons';
+} from "./icons/icons";
 
 // Import components
-import Inspector from './inspector';
+import Inspector from "./inspector";
 
 // variables
 const iconSizes = {
@@ -50,70 +46,64 @@ const { withSelect } = wp.data;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType('ub/social-share', {
-	title: __('Social Share'),
+registerBlockType("ub/social-share", {
+	title: __("Social Share"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('social'), __('share'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("social"), __("share"), __("Ultimate Blocks")],
 	attributes: {
 		blockID: {
-			type: 'string',
-			default: ''
+			type: "string",
+			default: ""
 		},
 		showFacebookIcon: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		},
 		showTwitterIcon: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		},
 		showLinkedInIcon: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		},
 		showPinterestIcon: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		},
 		showRedditIcon: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		},
 		showGooglePlusIcon: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		},
 		showTumblrIcon: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		},
 		iconSize: {
-			type: 'string',
-			default: 'normal'
+			type: "string",
+			default: "normal"
 		},
 		iconShape: {
-			type: 'string',
-			default: 'circle'
+			type: "string",
+			default: "circle"
 		},
 		align: {
-			type: 'string',
-			default: 'left'
+			type: "string",
+			default: "left"
 		}
 	},
 
 	edit: withSelect((select, ownProps) => ({
-		block: (select('core/block-editor') || select('core/editor')).getBlock(
+		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
 		)
 	}))(function(props) {
-		const {
-			attributes,
-			setAttributes,
-			isSelected,
-			className,
-			block
-		} = props;
+		const { attributes, setAttributes, isSelected, className, block } = props;
 
 		const {
 			blockID,
@@ -141,24 +131,22 @@ registerBlockType('ub/social-share', {
 				<BlockControls>
 					<AlignmentToolbar
 						value={align}
-						onChange={newAlignment =>
-							setAttributes({ align: newAlignment })
-						}
-						controls={['left', 'center', 'right']}
+						onChange={newAlignment => setAttributes({ align: newAlignment })}
+						controls={["left", "center", "right"]}
 					/>
 				</BlockControls>
 			),
 			isSelected && <Inspector {...props} />,
 			<div id="ub-social-share-block-editor" className={className}>
-				<div className={'social-share-icons align-icons-' + align}>
+				<div className={"social-share-icons align-icons-" + align}>
 					{showFacebookIcon && (
 						<a
 							href="#ub-social-share-block-editor"
-							className={'social-share-icon ' + iconShape}
+							className={"social-share-icon " + iconShape}
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: '#365899'
+								backgroundColor: "#365899"
 							}}
 						>
 							<FacebookIcon width={iconSize} height={iconSize} />
@@ -167,11 +155,11 @@ registerBlockType('ub/social-share', {
 					{showTwitterIcon && (
 						<a
 							href="#ub-social-share-block-editor"
-							className={'social-share-icon ' + iconShape}
+							className={"social-share-icon " + iconShape}
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: '#1da1f2'
+								backgroundColor: "#1da1f2"
 							}}
 						>
 							<TwitterIcon width={iconSize} height={iconSize} />
@@ -180,11 +168,11 @@ registerBlockType('ub/social-share', {
 					{showLinkedInIcon && (
 						<a
 							href="#ub-social-share-block-editor"
-							className={'social-share-icon ' + iconShape}
+							className={"social-share-icon " + iconShape}
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: '#0073b1'
+								backgroundColor: "#0073b1"
 							}}
 						>
 							<LinkedInIcon width={iconSize} height={iconSize} />
@@ -193,11 +181,11 @@ registerBlockType('ub/social-share', {
 					{showPinterestIcon && (
 						<a
 							href="#ub-social-share-block-editor"
-							className={'social-share-icon ' + iconShape}
+							className={"social-share-icon " + iconShape}
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: '#bd081c'
+								backgroundColor: "#bd081c"
 							}}
 						>
 							<PinterestIcon width={iconSize} height={iconSize} />
@@ -206,11 +194,11 @@ registerBlockType('ub/social-share', {
 					{showRedditIcon && (
 						<a
 							href="#ub-social-share-block-editor"
-							className={'social-share-icon ' + iconShape}
+							className={"social-share-icon " + iconShape}
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: '#cee3f8'
+								backgroundColor: "#cee3f8"
 							}}
 						>
 							<RedditIcon width={iconSize} height={iconSize} />
@@ -219,27 +207,24 @@ registerBlockType('ub/social-share', {
 					{showGooglePlusIcon && (
 						<a
 							href="#ub-social-share-block-editor"
-							className={'social-share-icon ' + iconShape}
+							className={"social-share-icon " + iconShape}
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: '#db4437'
+								backgroundColor: "#db4437"
 							}}
 						>
-							<GooglePlusIcon
-								width={iconSize}
-								height={iconSize}
-							/>
+							<GooglePlusIcon width={iconSize} height={iconSize} />
 						</a>
 					)}
 					{showTumblrIcon && (
 						<a
 							href="#ub-social-share-block-editor"
-							className={'social-share-icon ' + iconShape}
+							className={"social-share-icon " + iconShape}
 							style={{
 								width: iconSize * 1.5,
 								height: iconSize * 1.5,
-								backgroundColor: '#36465d'
+								backgroundColor: "#36465d"
 							}}
 						>
 							<TumblrIcon width={iconSize} height={iconSize} />

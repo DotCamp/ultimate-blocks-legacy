@@ -1,25 +1,23 @@
-import '../style.scss';
-import '../editor.scss';
-import icon from '../icons/icon';
+import icon from "../icons/icon";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 
-registerBlockType('ub/tab', {
-	title: __('Tab'),
-	parent: __('ub/tabbed-content'),
-	description: __('content of tab'),
+registerBlockType("ub/tab", {
+	title: __("Tab"),
+	parent: __("ub/tabbed-content"),
+	description: __("content of tab"),
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	attributes: {
 		index: {
-			type: 'number',
+			type: "number",
 			default: 0
 		},
 		isActive: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		}
 	},
@@ -31,7 +29,7 @@ registerBlockType('ub/tab', {
 		return (
 			<div
 				style={{
-					display: props.attributes.isActive ? 'block' : 'none'
+					display: props.attributes.isActive ? "block" : "none"
 				}}
 			>
 				<InnerBlocks templateLock={false} />
@@ -42,7 +40,7 @@ registerBlockType('ub/tab', {
 		return (
 			<div
 				className={`wp-block-ub-tabbed-content-tab-content-wrap ${
-					props.attributes.isActive ? 'active' : 'ub-hide'
+					props.attributes.isActive ? "active" : "ub-hide"
 				}`}
 			>
 				<InnerBlocks.Content />
@@ -51,19 +49,19 @@ registerBlockType('ub/tab', {
 	}
 });
 
-registerBlockType('ub/tab-block', {
-	title: __('Tab'),
-	parent: __('ub/tabbed-content-block'),
-	description: __('content of tab'),
+registerBlockType("ub/tab-block", {
+	title: __("Tab"),
+	parent: __("ub/tabbed-content-block"),
+	description: __("content of tab"),
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	attributes: {
 		index: {
-			type: 'number',
+			type: "number",
 			default: 0
 		},
 		isActive: {
-			type: 'boolean',
+			type: "boolean",
 			default: true
 		}
 	},
@@ -75,7 +73,7 @@ registerBlockType('ub/tab-block', {
 		return (
 			<div
 				style={{
-					display: props.attributes.isActive ? 'block' : 'none'
+					display: props.attributes.isActive ? "block" : "none"
 				}}
 			>
 				<InnerBlocks templateLock={false} />

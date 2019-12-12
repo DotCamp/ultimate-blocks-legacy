@@ -26,7 +26,7 @@
 		margin-right: 3px;
 		color: black;
 	}
-	.tab-actions {
+	.ub-tab-actions {
 		justify-content: space-between;
 		position: absolute;
 		top: 7px;
@@ -36,9 +36,13 @@
 		transition: all 0.5s ease-in-out;
 		display: flex;
 		opacity: 0;
+		pointer-events: none;
+		span {
+			pointer-events: auto;
+		}
 	}
 	&:hover {
-		.tab-actions {
+		.ub-tab-actions {
 			opacity: 1;
 		}
 	}

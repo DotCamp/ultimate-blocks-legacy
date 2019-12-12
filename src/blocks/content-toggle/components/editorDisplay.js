@@ -1,6 +1,10 @@
-import Inspector from './inspector';
-import { Component } from 'react';
-import { upgradeButtonLabel, getDescendantBlocks } from '../../../common';
+import Inspector from "./inspector";
+import { Component } from "react";
+import {
+	upgradeButtonLabel,
+	getDescendantBlocks,
+	objectsMatch
+} from "../../../common";
 
 const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
@@ -45,7 +49,7 @@ export class OldPanelContent extends Component {
 		);
 
 		const newBlockTarget = panels.filter(
-			panel => panel.attributes.newBlockPosition !== 'none'
+			panel => panel.attributes.newBlockPosition !== "none"
 		);
 
 		const onThemeChange = value => {
@@ -74,26 +78,26 @@ export class OldPanelContent extends Component {
 		};
 
 		//Detect if one of the child blocks has received a command to add another child block
-		if (JSON.stringify(newBlockTarget) !== '[]') {
+		if (newBlockTarget.length > 0) {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
 			insertBlock(
-				createBlock('ub/content-toggle-panel', {
+				createBlock("ub/content-toggle-panel", {
 					theme: theme,
 					collapsed: collapsed,
 					titleColor: titleColor
 				}),
-				newBlockPosition === 'below' ? index + 1 : index,
+				newBlockPosition === "below" ? index + 1 : index,
 				block.clientId
 			);
 			updateBlockAttributes(newBlockTarget[0].clientId, {
-				newBlockPosition: 'none'
+				newBlockPosition: "none"
 			});
 		}
 
 		//Fix indexes in case of rearrangments
 
 		if (newArrangement !== oldArrangement) {
-			if (oldArrangement === '[0]' && newArrangement === '[]') {
+			if (oldArrangement === "[0]" && newArrangement === "[]") {
 				removeBlock(block.clientId);
 			} else {
 				panels.forEach((panel, i) =>
@@ -106,7 +110,7 @@ export class OldPanelContent extends Component {
 			}
 		} else if (mainBlockSelected) {
 			const childBlocks = this.getPanels()
-				.filter(block => block.name === 'ub/content-toggle-panel')
+				.filter(block => block.name === "ub/content-toggle-panel")
 				.map(panels => panels.clientId);
 			if (
 				selectedBlock !== block.clientId &&
@@ -136,22 +140,18 @@ export class OldPanelContent extends Component {
 						replaceBlock(
 							block.clientId,
 							createBlock(
-								'ub/content-toggle-block',
+								"ub/content-toggle-block",
 								{ collapsed, theme, titleColor },
 								block.innerBlocks.map((innerBlock, i) =>
 									createBlock(
-										'ub/content-toggle-panel-block',
+										"ub/content-toggle-panel-block",
 										{
 											index: i,
 											theme,
 											collapsed,
 											titleColor,
-											panelTitle:
-												innerBlock.attributes
-													.panelTitle,
-											newBlockPosition:
-												innerBlock.attributes
-													.newBlockPosition
+											panelTitle: innerBlock.attributes.panelTitle,
+											newBlockPosition: innerBlock.attributes.newBlockPosition
 										},
 										innerBlock.innerBlocks
 									)
@@ -163,9 +163,9 @@ export class OldPanelContent extends Component {
 					{upgradeButtonLabel}
 				</button>
 				<InnerBlocks
-					template={[['ub/content-toggle-panel']]} //initial content
+					template={[["ub/content-toggle-panel"]]} //initial content
 					templateLock={false}
-					allowedBlocks={['ub/content-toggle-panel']}
+					allowedBlocks={["ub/content-toggle-panel"]}
 				/>
 			</div>
 		];
@@ -188,6 +188,7 @@ export class PanelContent extends Component {
 			isSelected,
 			updateBlockAttributes,
 			oldArrangement,
+			oldAttributeValues,
 			mainBlockSelected,
 			setState,
 			selectBlock,
@@ -197,22 +198,14 @@ export class PanelContent extends Component {
 			block
 		} = this.props;
 
-		const {
-			collapsed,
-			theme,
-			titleColor,
-			blockID,
-			hasFAQSchema
-		} = attributes;
+		const { collapsed, theme, titleColor, blockID, hasFAQSchema } = attributes;
 
 		const panels = this.getPanels();
 
-		const newArrangement = JSON.stringify(
-			panels.map(panel => panel.attributes.index)
-		);
+		const newArrangement = panels.map(panel => panel.attributes.index);
 
 		const newBlockTarget = panels.filter(
-			panel => panel.attributes.newBlockPosition !== 'none'
+			panel => panel.attributes.newBlockPosition !== "none"
 		);
 
 		const onThemeChange = value => {
@@ -231,7 +224,7 @@ export class PanelContent extends Component {
 			);
 		};
 
-		const onCollapseChange = () => {
+		const onCollapseChange = _ => {
 			setAttributes({ collapsed: !collapsed });
 			panels.forEach(panel =>
 				updateBlockAttributes(panel.clientId, {
@@ -241,46 +234,48 @@ export class PanelContent extends Component {
 		};
 
 		//Detect if one of the child blocks has received a command to add another child block
-		if (JSON.stringify(newBlockTarget) !== '[]') {
+		if (newBlockTarget.length > 0) {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
 			insertBlock(
-				createBlock('ub/content-toggle-panel-block', {
+				createBlock("ub/content-toggle-panel-block", {
 					theme: theme,
 					collapsed: collapsed,
 					titleColor: titleColor
 				}),
-				newBlockPosition === 'below' ? index + 1 : index,
+				newBlockPosition === "below" ? index + 1 : index,
 				block.clientId
 			);
 			updateBlockAttributes(newBlockTarget[0].clientId, {
-				newBlockPosition: 'none'
+				newBlockPosition: "none"
 			});
 		}
 
-		//Fix indexes in case of rearrangments
-
-		if (newArrangement !== oldArrangement) {
-			if (oldArrangement === '' && newArrangement === '[]') {
+		if (newArrangement.length === 0) {
+			if (oldArrangement.length > 0) {
+				removeBlock(block.clientId);
+				return null; //prevent block from being rendered to prevent error
+			} else {
 				insertBlock(
-					createBlock('ub/content-toggle-panel-block', {
-						theme: theme,
-						collapsed: collapsed,
-						titleColor: titleColor
+					createBlock("ub/content-toggle-panel-block", {
+						theme,
+						collapsed,
+						titleColor,
+						hasFAQSchema
 					}),
 					0,
 					block.clientId
 				);
-			} else if (oldArrangement === '[0]' && newArrangement === '[]') {
-				removeBlock(block.clientId);
-			} else {
-				panels.forEach((panel, i) =>
-					updateBlockAttributes(panel.clientId, {
-						index: i,
-						parent: block.clientId
-					})
-				);
-				setState({ oldArrangement: newArrangement });
+				setState({ oldArrangement: Array.from(Array(panels.length).keys()) });
 			}
+		} else if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
+			//Fix indexes in case of rearrangments
+			panels.forEach((panel, i) =>
+				updateBlockAttributes(panel.clientId, {
+					index: i,
+					parent: block.clientId
+				})
+			);
+			setState({ oldArrangement: newArrangement });
 		} else if (mainBlockSelected) {
 			if (
 				selectedBlock !== block.clientId &&
@@ -291,8 +286,8 @@ export class PanelContent extends Component {
 				setState({ mainBlockSelected: false });
 			}
 		} else {
-			let childBlocks = this.props.block.innerBlocks
-				.filter(block => block.name === 'ub/content-toggle-panel-block')
+			const childBlocks = this.props.block.innerBlocks
+				.filter(block => block.name === "ub/content-toggle-panel-block")
 				.map(panels => panels.clientId);
 
 			if (childBlocks.includes(selectedBlock) && !wp.data.useDispatch) {
@@ -306,46 +301,102 @@ export class PanelContent extends Component {
 			setAttributes({ blockID: block.clientId });
 		}
 
+		let newAttributeValues;
+
+		if (oldArrangement.length === 0) {
+			panels.forEach(panel =>
+				updateBlockAttributes(panel.clientId, {
+					hasFAQSchema,
+					theme,
+					titleColor,
+					collapsed
+				})
+			);
+			setState({
+				oldAttributeValues: Array(panels.length).fill({
+					theme,
+					collapsed,
+					hasFAQSchema,
+					titleColor
+				})
+			});
+		} else {
+			newAttributeValues = panels.map(panel =>
+				((
+					{
+						panelTitle,
+						newBlockPosition,
+						index,
+						parent,
+						parentID,
+						...others
+					} = panel.attributes
+				) => others)()
+			);
+
+			if (newAttributeValues.length > 0) {
+				if (newAttributeValues.length === oldAttributeValues.length) {
+					if (
+						!newAttributeValues.every((entry, i) =>
+							objectsMatch(entry, oldAttributeValues[i])
+						)
+					) {
+						const changedPanel = block.innerBlocks
+							.map(innerBlock => innerBlock.clientId)
+							.indexOf(selectedBlock);
+
+						panels.forEach(panel => {
+							updateBlockAttributes(
+								panel.clientId,
+								newAttributeValues[changedPanel]
+							);
+						});
+						setAttributes(newAttributeValues[changedPanel]);
+					}
+				} else {
+					setState({ oldAttributeValues: newAttributeValues });
+				}
+			}
+		}
+
 		return [
 			isSelected && (
 				<InspectorControls>
 					<PanelColorSettings
-						title={__('Color Scheme')}
+						title={__("Color Scheme")}
 						initialOpen={false}
 						colorSettings={[
 							{
 								value: theme,
 								onChange: onThemeChange,
-								label: __('Container Color')
+								label: __("Container Color")
 							},
 							{
 								value: titleColor,
 								onChange: onTitleColorChange,
-								label: __('Title Color')
+								label: __("Title Color")
 							}
 						]}
 					/>
-					<PanelBody title={__('Initial State')} initialOpen={true}>
+					<PanelBody title={__("Initial State")} initialOpen={true}>
 						<PanelRow>
-							<label htmlFor="ub-content-toggle-state">
-								{__('Collapsed')}
-							</label>
+							<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
 							<FormToggle
 								id="ub-content-toggle-state"
-								label={__('Collapsed')}
+								label={__("Collapsed")}
 								checked={collapsed}
 								onChange={onCollapseChange}
 							/>
 						</PanelRow>
 					</PanelBody>
-					<PanelBody title={__('FAQ Schema')} initialOpen={true}>
+					<PanelBody title={__("FAQ Schema")} initialOpen={true}>
 						<PanelRow>
 							<label htmlFor="ub-content-toggle-faq-schema">
-								{__('Enable FAQ Schema')}
+								{__("Enable FAQ Schema")}
 							</label>
 							<FormToggle
 								id="ub-content-toggle-faq-schema"
-								label={__('Enable FAQ Schema')}
+								label={__("Enable FAQ Schema")}
 								checked={hasFAQSchema}
 								onChange={() =>
 									setAttributes({
@@ -360,7 +411,7 @@ export class PanelContent extends Component {
 			<div className={className}>
 				<InnerBlocks
 					templateLock={false}
-					allowedBlocks={['ub/content-toggle-panel-block']}
+					allowedBlocks={["ub/content-toggle-panel-block"]}
 				/>
 			</div>
 		];

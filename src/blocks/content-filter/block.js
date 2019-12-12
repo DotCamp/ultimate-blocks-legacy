@@ -1,6 +1,4 @@
-import './editor.scss';
-import './style.scss';
-import { OldPanelContent, PanelContent } from './components/editorDisplay';
+import { OldPanelContent, PanelContent } from "./components/editorDisplay";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -9,35 +7,35 @@ const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
-import icon from './icon';
+import icon from "./icon";
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	filterArray: {
-		type: 'array',
+		type: "array",
 		default: [] // new objects should be { category: '', filters: [], canUseMultiple: false }
 	},
 	buttonColor: {
-		type: 'string',
-		default: '#eeeeee'
+		type: "string",
+		default: "#eeeeee"
 	},
 	buttonTextColor: {
-		type: 'string',
-		default: '#000000'
+		type: "string",
+		default: "#000000"
 	},
 	activeButtonColor: {
-		type: 'string',
-		default: '#fcb900'
+		type: "string",
+		default: "#fcb900"
 	},
 	activeButtonTextColor: {
-		type: 'string',
-		default: '#ffffff'
+		type: "string",
+		default: "#ffffff"
 	},
 	initiallyShowAll: {
-		type: 'boolean',
+		type: "boolean",
 		default: true
 	}
 	/*,allowReset: {
@@ -50,23 +48,23 @@ const attributes = {
     }*/
 };
 
-registerBlockType('ub/content-filter', {
-	title: __('Content Filter'),
+registerBlockType("ub/content-filter", {
+	title: __("Content Filter"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Filtering')],
+	category: "ultimateblocks",
+	keywords: [__("Filtering")],
 	attributes,
 	supports: { inserter: false },
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => {
 			const { updateBlockAttributes, insertBlock, replaceBlock } =
-				dispatch('core/block-editor') || dispatch('core/editor');
+				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,
@@ -104,7 +102,7 @@ registerBlockType('ub/content-filter', {
 							/>
 							{f.filters.map((filter, j) => (
 								<div
-									data-tagIsSelected={'false'} //can be updated
+									data-tagIsSelected={"false"} //can be updated
 									data-categoryNumber={i}
 									data-filterNumber={j}
 									data-normalColor={buttonColor}
@@ -133,22 +131,22 @@ registerBlockType('ub/content-filter', {
 	}
 });
 
-registerBlockType('ub/content-filter-block', {
-	title: __('Content Filter'),
+registerBlockType("ub/content-filter-block", {
+	title: __("Content Filter"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Filtering')],
+	category: "ultimateblocks",
+	keywords: [__("Filtering")],
 	attributes,
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => {
 			const { updateBlockAttributes, insertBlock } =
-				dispatch('core/block-editor') || dispatch('core/editor');
+				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,

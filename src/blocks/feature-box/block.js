@@ -6,14 +6,11 @@
  */
 
 //Import Icon
-import icon from './icons/icon';
+import icon from "./icons/icon";
 
-//  Import CSS.
-import './style.scss';
-import './editor.scss';
-import { version_1_1_2, version_1_1_5, oldAttributes } from './oldVersions';
-import { blockControls, editorDisplay, upgradeToStyledBox } from './components';
-import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
+import { version_1_1_2, version_1_1_5, oldAttributes } from "./oldVersions";
+import { blockControls, editorDisplay, upgradeToStyledBox } from "./components";
+import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 
 const { __ } = wp.i18n;
 
@@ -25,99 +22,99 @@ const { withState, compose } = wp.compose;
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	column: {
-		type: 'string',
-		default: '2'
+		type: "string",
+		default: "2"
 	},
 	columnOneTitle: {
-		type: 'string',
-		default: 'Title One'
+		type: "string",
+		default: "Title One"
 	},
 	title1Align: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	columnTwoTitle: {
-		type: 'string',
-		default: 'Title Two'
+		type: "string",
+		default: "Title Two"
 	},
 	title2Align: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	columnThreeTitle: {
-		type: 'string',
-		default: 'Title Three'
+		type: "string",
+		default: "Title Three"
 	},
 	title3Align: {
-		type: 'string',
-		default: 'center'
+		type: "string",
+		default: "center"
 	},
 	columnOneBody: {
-		type: 'string',
+		type: "string",
 		default:
-			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
 	},
 	body1Align: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	columnTwoBody: {
-		type: 'string',
+		type: "string",
 		default:
-			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
 	},
 	body2Align: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	columnThreeBody: {
-		type: 'string',
+		type: "string",
 		default:
-			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
 	},
 	body3Align: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	},
 	imgOneURL: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	imgOneID: {
-		type: 'number',
+		type: "number",
 		default: null
 	},
 	imgOneAlt: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	imgTwoURL: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	imgTwoID: {
-		type: 'number',
+		type: "number",
 		default: null
 	},
 	imgTwoAlt: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	imgThreeURL: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	imgThreeID: {
-		type: 'number',
+		type: "number",
 		default: null
 	},
 	imgThreeAlt: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	}
 };
 
@@ -134,11 +131,11 @@ const attributes = {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType('ub/feature-box', {
-	title: __('Feature Box'),
+registerBlockType("ub/feature-box", {
+	title: __("Feature Box"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Feature Box'), __('Column'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Feature Box"), __("Column"), __("Ultimate Blocks")],
 	attributes: oldAttributes,
 
 	supports: {
@@ -155,16 +152,15 @@ registerBlockType('ub/feature-box', {
 	 */
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		})),
-		withState({ editable: '' })
+		withState({ editable: "" })
 	])(function(props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
@@ -175,9 +171,7 @@ registerBlockType('ub/feature-box', {
 				<button
 					onClick={_ => {
 						const { column, columnOneBody } = attributes;
-						let currentTitles = [
-							mergeRichTextArray(attributes.columnOneTitle)
-						];
+						let currentTitles = [mergeRichTextArray(attributes.columnOneTitle)];
 						let currentTitleAligns = [attributes.title1Align];
 						let currentTexts = [mergeRichTextArray(columnOneBody)];
 						let currentTextAligns = [attributes.body1Align];
@@ -190,13 +184,9 @@ registerBlockType('ub/feature-box', {
 						];
 
 						if (parseInt(column) >= 2) {
-							currentTitles.push(
-								mergeRichTextArray(attributes.columnTwoTitle)
-							);
+							currentTitles.push(mergeRichTextArray(attributes.columnTwoTitle));
 							currentTitleAligns.push(attributes.title2Align);
-							currentTexts.push(
-								mergeRichTextArray(attributes.columnTwoBody)
-							);
+							currentTexts.push(mergeRichTextArray(attributes.columnTwoBody));
 							currentTextAligns.push(attributes.body2Align);
 							currentImages.push({
 								id: attributes.imgTwoID,
@@ -210,9 +200,7 @@ registerBlockType('ub/feature-box', {
 								mergeRichTextArray(attributes.columnThreeTitle)
 							);
 							currentTitleAligns.push(attributes.title3Align);
-							currentTexts.push(
-								mergeRichTextArray(attributes.columnThreeBody)
-							);
+							currentTexts.push(mergeRichTextArray(attributes.columnThreeBody));
 							currentTextAligns.push(attributes.body3Align);
 							currentImages.push({
 								id: attributes.imgThreeID,
@@ -223,8 +211,8 @@ registerBlockType('ub/feature-box', {
 
 						replaceBlock(
 							block.clientId,
-							createBlock('ub/styled-box', {
-								mode: 'feature',
+							createBlock("ub/styled-box", {
+								mode: "feature",
 								title: currentTitles,
 								titleAlign: currentTitleAligns,
 								text: currentTexts,
@@ -325,10 +313,7 @@ registerBlockType('ub/feature-box', {
 						>
 							{columnThreeTitle}
 						</p>
-						<p
-							className="ub_feature_three_body"
-							style={{ align: body3Align }}
-						>
+						<p className="ub_feature_three_body" style={{ align: body3Align }}>
 							{columnThreeBody}
 						</p>
 					</div>
@@ -348,17 +333,17 @@ registerBlockType('ub/feature-box', {
 	]
 });
 
-registerBlockType('ub/feature-box-block', {
-	title: __('Feature Box'),
+registerBlockType("ub/feature-box-block", {
+	title: __("Feature Box"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Feature Box'), __('Column'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Feature Box"), __("Column"), __("Ultimate Blocks")],
 	attributes,
 	transforms: {
 		to: [
 			{
-				type: 'block',
-				blocks: 'ub/styled-box',
+				type: "block",
+				blocks: "ub/styled-box",
 				transform: attributes => upgradeToStyledBox(attributes)
 			}
 		]
@@ -370,16 +355,15 @@ registerBlockType('ub/feature-box-block', {
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		})),
-		withState({ editable: '' })
+		withState({ editable: "" })
 	])(function(props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
@@ -393,10 +377,7 @@ registerBlockType('ub/feature-box-block', {
 			<div className={props.className}>
 				<button
 					onClick={_ =>
-						replaceBlock(
-							block.clientId,
-							upgradeToStyledBox(attributes)
-						)
+						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
 					}
 				>
 					{upgradeButtonLabel}

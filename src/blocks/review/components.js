@@ -1,6 +1,8 @@
-const { RichText, URLInput } = wp.blockEditor || wp.editor;
-const { Dashicon } = wp.components;
+const { RichText, MediaUpload, URLInput } = wp.blockEditor || wp.editor;
+const { Button, Dashicon } = wp.components;
 const { __ } = wp.i18n;
+
+import { removeIcon } from './icon';
 import { Component } from 'react';
 
 export class OldStars extends Component {
@@ -198,10 +200,19 @@ export class ReviewBody extends Component {
 
 	render() {
 		const {
+			isSelected,
 			authorName,
 			setAuthorName,
 			itemName,
 			setItemName,
+			imgID,
+			imgAlt,
+			imgURL,
+			imageEnabled,
+			setImage,
+			description,
+			descriptionEnabled,
+			setDescription,
 			ID,
 			items,
 			summaryTitle,
@@ -226,7 +237,7 @@ export class ReviewBody extends Component {
 			enableCTA
 		} = this.props;
 
-		const { titleAlign, authorAlign } = alignments;
+		const { titleAlign, authorAlign, descriptionAlign } = alignments;
 		const { average } = this.state;
 
 		const newAverage =
@@ -256,6 +267,63 @@ export class ReviewBody extends Component {
 					onChange={text => setAuthorName(text)}
 					unstableOnFocus={_ => setEditable('reviewAuthor')}
 				/>
+				{(imageEnabled || descriptionEnabled) && (
+					<div className="ub_review_description_container">
+						{descriptionEnabled && (
+							<RichText
+								className="ub_review_description"
+								tagName="p"
+								placeholder={__('Item description')}
+								value={description}
+								onChange={text => setDescription(text)}
+								style={{ textAlign: descriptionAlign }}
+								unstableOnFocus={_ =>
+									setEditable('reviewItemDescription')
+								}
+							/>
+						)}
+						{imageEnabled &&
+							(imgID ? (
+								<div className="ub_review_image_container">
+									<img
+										className="ub_review_image"
+										src={imgURL}
+										alt={imgAlt}
+									/>
+									{isSelected ? (
+										<Button
+											className="ub-remove-image"
+											onClick={_ =>
+												setImage({
+													id: 0,
+													url: '',
+													alt: ''
+												})
+											}
+										>
+											{removeIcon}
+										</Button>
+									) : null}
+								</div>
+							) : (
+								<div className="ub_review_upload_button">
+									<MediaUpload
+										onSelect={img => setImage(img)}
+										type="image"
+										value={imgID}
+										render={({ open }) => (
+											<Button
+												className="components-button button button-medium"
+												onClick={open}
+											>
+												{__('Upload Image')}
+											</Button>
+										)}
+									/>
+								</div>
+							))}
+					</div>
+				)}
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText
@@ -280,7 +348,7 @@ export class ReviewBody extends Component {
 							{items.length > 1 && (
 								<div
 									className="dashicons dashicons-trash"
-									style={{ float: 'right' }}
+									//style={{ float: 'right' }}
 									onClick={_ => {
 										setEditable('');
 										let newItems = items
@@ -352,9 +420,23 @@ export class ReviewBody extends Component {
 							value={summaryDescription}
 							unstableOnFocus={_ => setEditable('')}
 						/>
-						<span className="ub_review_rating">
-							{Math.round(average * 10) / 10}
-						</span>
+						<div className="ub_review_average">
+							<span className="ub_review_rating">
+								{Math.round(average * 10) / 10}
+							</span>
+							<Stars
+								id={`${ID}-average`}
+								className="ub_review_average_stars"
+								onHover={_ => null}
+								onClick={_ => null}
+								value={average}
+								limit={starCount}
+								inactiveStarColor={inactiveStarColor}
+								activeStarColor={activeStarColor}
+								selectedStarColor={selectedStarColor}
+								starOutlineColor={starOutlineColor}
+							/>
+						</div>
 					</div>
 					<div className="ub_review_cta_panel">
 						<div className="ub_review_cta_main">
@@ -380,18 +462,6 @@ export class ReviewBody extends Component {
 								</div>
 							)}
 						</div>
-						<Stars
-							id={`${ID}-average`}
-							className="ub_review_average_stars"
-							onHover={_ => null}
-							onClick={_ => null}
-							value={average}
-							limit={starCount}
-							inactiveStarColor={inactiveStarColor}
-							activeStarColor={activeStarColor}
-							selectedStarColor={selectedStarColor}
-							starOutlineColor={starOutlineColor}
-						/>
 					</div>
 					{hasFocus && enableCTA && (
 						<div className="ub_review_link_input">
@@ -399,6 +469,7 @@ export class ReviewBody extends Component {
 								<Dashicon icon={'admin-links'} />
 							</div>
 							<URLInput
+								autoFocus={false}
 								style={{ width: '200px' }} //inline style used to override gutenberg's default style
 								value={callToActionURL}
 								onChange={text => setCallToActionURL(text)}

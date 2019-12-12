@@ -5,58 +5,56 @@ const { registerBlockType, createBlock } = wp.blocks;
 const { withState, compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
-import './style.scss';
-
-import { EmptyStar, BlockIcon, FullStar } from './icons';
+import { EmptyStar, BlockIcon, FullStar } from "./icons";
 import {
 	oldAttributes,
 	version_1_1_2,
 	version_1_1_5,
 	version_2_0_0,
 	updateFrom
-} from './oldVersions';
-import { blockControls, inspectorControls, editorDisplay } from './components';
-import { mergeRichTextArray, upgradeButtonLabel } from '../../common';
+} from "./oldVersions";
+import { blockControls, inspectorControls, editorDisplay } from "./components";
+import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	starCount: {
-		type: 'number',
+		type: "number",
 		default: 5
 	},
 	starSize: {
-		type: 'number',
+		type: "number",
 		default: 20
 	},
 	starColor: {
-		type: 'string',
-		default: '#ffff00'
+		type: "string",
+		default: "#ffff00"
 	},
 	selectedStars: {
-		type: 'number',
+		type: "number",
 		default: 0
 	},
 	reviewText: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	reviewTextAlign: {
-		type: 'string',
-		default: 'text'
+		type: "string",
+		default: "text"
 	},
 	starAlign: {
-		type: 'string',
-		default: 'left'
+		type: "string",
+		default: "left"
 	}
 };
 
-registerBlockType('ub/star-rating', {
-	title: __('Star Rating'),
+registerBlockType("ub/star-rating", {
+	title: __("Star Rating"),
 	icon: BlockIcon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 
 	attributes: oldAttributes,
 	supports: {
@@ -65,14 +63,13 @@ registerBlockType('ub/star-rating', {
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		})),
 		withDispatch(dispatch => ({
-			replaceBlock: (
-				dispatch('core/block-editor') || dispatch('core/editor')
-			).replaceBlock
+			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
+				.replaceBlock
 		})),
 		withState({ highlightedStars: 0 })
 	])(function(props) {
@@ -88,7 +85,7 @@ registerBlockType('ub/star-rating', {
 						replaceBlock(
 							block.clientId,
 							createBlock(
-								'ub/star-rating-block',
+								"ub/star-rating-block",
 								Object.assign(otherAttributes, {
 									reviewText: mergeRichTextArray(reviewText)
 								})
@@ -119,21 +116,16 @@ registerBlockType('ub/star-rating', {
 					className="ub-star-outer-container"
 					style={{
 						justifyContent:
-							starAlign === 'center'
-								? 'center'
-								: `flex-${
-										starAlign === 'left' ? 'start' : 'end'
-								  }`
+							starAlign === "center"
+								? "center"
+								: `flex-${starAlign === "left" ? "start" : "end"}`
 					}}
 				>
 					<div className="ub-star-inner-container">
 						{[...Array(starCount)].map((e, i) => (
 							<div key={i}>
 								{i < selectedStars ? (
-									<FullStar
-										size={starSize}
-										fillColor={starColor}
-									/>
+									<FullStar size={starSize} fillColor={starColor} />
 								) : (
 									<EmptyStar size={starSize} />
 								)}
@@ -141,10 +133,7 @@ registerBlockType('ub/star-rating', {
 						))}
 					</div>
 				</div>
-				<div
-					className="ub-review-text"
-					style={{ textAlign: reviewTextAlign }}
-				>
+				<div className="ub-review-text" style={{ textAlign: reviewTextAlign }}>
 					{reviewText}
 				</div>
 			</div>
@@ -158,19 +147,19 @@ registerBlockType('ub/star-rating', {
 	]
 });
 
-registerBlockType('ub/star-rating-block', {
-	title: __('Star Rating'),
+registerBlockType("ub/star-rating-block", {
+	title: __("Star Rating"),
 	icon: BlockIcon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 
 	attributes,
 
 	edit: compose([
 		withState({ highlightedStars: 0 }),
 		withSelect((select, ownProps) => ({
-			block: (
-				select('core/block-editor') || select('core/editor')
-			).getBlock(ownProps.clientId)
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
 		}))
 	])(function(props) {
 		const { isSelected, block } = props;

@@ -2,10 +2,9 @@ import icon, {
 	RegularCountdownIcon,
 	CircularCountdownIcon,
 	TickingCountdownIcon
-} from './icon';
+} from "./icon";
 
-import './style.scss';
-import Timer from './components';
+import Timer from "./components";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -14,40 +13,40 @@ const { InspectorControls, RichText, PanelColorSettings, BlockControls } =
 const { DateTimePicker, IconButton, PanelBody, Toolbar } = wp.components;
 const { withSelect } = wp.data;
 
-registerBlockType('ub/countdown', {
-	title: __('Countdown'),
+registerBlockType("ub/countdown", {
+	title: __("Countdown"),
 	icon: icon,
-	category: 'ultimateblocks',
-	keywords: [__('Countdown'), __('Timer'), __('Ultimate Blocks')],
+	category: "ultimateblocks",
+	keywords: [__("Countdown"), __("Timer"), __("Ultimate Blocks")],
 	attributes: {
 		blockID: {
-			type: 'string',
-			default: ''
+			type: "string",
+			default: ""
 		},
 		endDate: {
-			type: 'number',
+			type: "number",
 			default: 60 * (1440 + Math.ceil(Date.now() / 60000)) // 24 hours from Date.now
 		},
 		style: {
-			type: 'string',
-			default: 'Odometer' //available types: Regular, Circular, Odometer
+			type: "string",
+			default: "Odometer" //available types: Regular, Circular, Odometer
 		},
 		expiryMessage: {
-			type: 'string',
-			default: ''
+			type: "string",
+			default: ""
 		},
 		messageAlign: {
-			type: 'string',
-			default: 'left'
+			type: "string",
+			default: "left"
 		},
 		circleColor: {
-			type: 'string',
-			default: '#2DB7F5'
+			type: "string",
+			default: "#2DB7F5"
 		}
 	},
 
 	edit: withSelect((select, ownProps) => ({
-		block: (select('core/block-editor') || select('core/editor')).getBlock(
+		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
 		)
 	}))(function(props) {
@@ -68,9 +67,9 @@ registerBlockType('ub/countdown', {
 		return [
 			isSelected && (
 				<InspectorControls>
-					{style === 'Circular' && (
+					{style === "Circular" && (
 						<PanelColorSettings
-							title={__('Circle Color')}
+							title={__("Circle Color")}
 							initialOpen={true}
 							colorSettings={[
 								{
@@ -79,19 +78,17 @@ registerBlockType('ub/countdown', {
 										setAttributes({
 											circleColor: colorValue
 										}),
-									label: ''
+									label: ""
 								}
 							]}
 						/>
 					)}
-					<PanelBody title={__('Timer expiration')}>
+					<PanelBody title={__("Timer expiration")}>
 						<DateTimePicker
 							currentDate={endDate * 1000}
 							onChange={value => {
 								setAttributes({
-									endDate: Math.floor(
-										Date.parse(value) / 1000
-									)
+									endDate: Math.floor(Date.parse(value) / 1000)
 								});
 							}}
 						/>
@@ -102,32 +99,30 @@ registerBlockType('ub/countdown', {
 				<BlockControls>
 					<Toolbar>
 						<IconButton
-							isPrimary={style === 'Regular'}
+							isPrimary={style === "Regular"}
 							icon={RegularCountdownIcon}
-							label={__('Regular')}
-							onClick={() => setAttributes({ style: 'Regular' })}
+							label={__("Regular")}
+							onClick={() => setAttributes({ style: "Regular" })}
 						/>
 						<IconButton
-							isPrimary={style === 'Circular'}
+							isPrimary={style === "Circular"}
 							icon={CircularCountdownIcon}
-							label={__('Circular')}
-							onClick={() => setAttributes({ style: 'Circular' })}
+							label={__("Circular")}
+							onClick={() => setAttributes({ style: "Circular" })}
 						/>
 						<IconButton
-							isPrimary={style === 'Odometer'}
+							isPrimary={style === "Odometer"}
 							icon={TickingCountdownIcon}
-							label={__('Odometer')}
-							onClick={() => setAttributes({ style: 'Odometer' })}
+							label={__("Odometer")}
+							onClick={() => setAttributes({ style: "Odometer" })}
 						/>
 					</Toolbar>
 					<Toolbar>
-						{['left', 'center', 'right', 'justify'].map(a => (
+						{["left", "center", "right", "justify"].map(a => (
 							<IconButton
-								icon={`editor-${
-									a === 'justify' ? a : 'align' + a
-								}`}
+								icon={`editor-${a === "justify" ? a : "align" + a}`}
 								label={__(
-									(a !== 'justify' ? 'Align ' : '') +
+									(a !== "justify" ? "Align " : "") +
 										a[0].toUpperCase() +
 										a.slice(1)
 								)}
@@ -141,14 +136,10 @@ registerBlockType('ub/countdown', {
 				</BlockControls>
 			),
 			<React.Fragment>
-				<Timer
-					timerStyle={style}
-					deadline={endDate}
-					color={circleColor}
-				/>
+				<Timer timerStyle={style} deadline={endDate} color={circleColor} />
 				<RichText
 					tagName="div"
-					placeholder={__('Text to show after the countdown is over')}
+					placeholder={__("Text to show after the countdown is over")}
 					style={{ textAlign: messageAlign }}
 					value={expiryMessage}
 					onChange={text => setAttributes({ expiryMessage: text })}

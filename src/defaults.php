@@ -633,6 +633,34 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'description' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'enableDescription' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'descriptionAlign' => array(
+                'type' => 'string',
+                'default' => 'left'
+            ),
+            'imgURL' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'imgID' => array(
+                'type' => 'number',
+                'default' => -1
+            ),
+            'imgAlt' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'enableImage' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'items' => array(
                 'type' => 'string',
                 'default' => '[{"label": "", "value": 0}]'

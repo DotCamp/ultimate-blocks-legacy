@@ -47,14 +47,22 @@ function ub_render_review_block($attributes){
                 '" id="ub_review_'.$blockID.'">
                 <!--'.$items.'-->
         <p class="ub_review_item_name"'.($blockID==''?' style="text-align: '.$titleAlign.';"':'').'>'.
-            $itemName.'</p>
-        <p class="ub_review_author_name"'.($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
+            $itemName.'</p><p class="ub_review_author_name"'.
+            ($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
+        ( ($enableImage || $enableDescription) && ($imgURL != '' || $description != '') ?
+        '<div class="ub_review_description_container">'.
+            (!$enableDescription || $description == '' ? '' : '<div class="ub_review_description">'.$description.'</div>').
+            (!$enableImage || $imgURL == '' ? '' : '<img class="ub_review_image" src="'.$imgURL.'" alt = "'.$imgAlt.'">').
+        '</div>' : '').
             $starRatings
     .'<div class="ub_review_summary">
         <p class="ub_review_summary_title">'.$summaryTitle.'</p>
-        <div class="ub_review_overall_value">   
+        <div class="ub_review_overall_value">
             <p>'.$summaryDescription.'</p>
-            <span class="ub_review_rating">'.$average.'</span>
+            <div class="ub_review_average"><span class="ub_review_rating">'.$average.'</span>'.
+            ub_generateStarDisplay($average,$starCount, $blockID.'-average',
+            $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").
+            '</div>
         </div>
         <div class="ub_review_cta_panel">'.
         ($enableCTA && $callToActionURL != '' ? '<div class="ub_review_cta_main">
@@ -64,15 +72,32 @@ function ub_render_review_block($attributes){
                 <button class="ub_review_cta_btn"'.($blockID==''?' style="background-color: '.$callToActionBackColor
                 .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
                     ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>':'').
-                ub_generateStarDisplay($average,$starCount, $blockID.'-average',
-                $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").'
-            </div></div>' . ($enableReviewSchema ?
-    '<script type="application/ld+json">
-    {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
-        $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.
-        '","aggregateRating":{"@type": "AggregateRating","ratingValue":'.$average.
-            ',"ratingCount":'.count($parsedItems).'}},"reviewRating":{"@type":"Rating","ratingValue":'.$average
-        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script>' : '')
+                '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
+        "@context":"http://schema.org/",
+        "@type":"Review",
+        "reviewBody":"' . preg_replace('/(<.+?>)/', '',$summaryDescription).'",
+        "image": "'.$imgURL.'",
+        "description": "'.preg_replace('/(<.+?>)/', '',$description).'",
+        "itemReviewed":{
+            "@type":"Product",
+            "name":"'.preg_replace('/(<.+?>)/', '',$itemName).'",
+        "review":{
+            "author":{
+                "@type":"Person",
+                "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
+            }
+        }
+    },
+    "reviewRating":{
+        "@type":"Rating",
+        "ratingValue":'.$average.',
+        "bestRating":'.$starCount.
+    '},
+    "author":{
+        "@type":"Person",
+        "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
+    }
+}</script>')) : '')
         . '</div>';
 }
 
