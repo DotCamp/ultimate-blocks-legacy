@@ -252,12 +252,20 @@ registerBlockType("ub/styled-list", {
 				</BlockControls>
 			),
 
-			<div className="ub-styled-list" id={`ub-styled-list-${blockID}`}>
+			<div
+				className="ub-styled-list"
+				id={`ub-styled-list-${blockID}`}
+				style={{
+					justifyContent:
+						alignment === "center"
+							? "center"
+							: `flex-${alignment === "left" ? "start" : "end"}`
+				}}
+			>
 				<RichText
 					className="fa-ul"
 					multiline="li"
 					tagName="ul"
-					style={{ textAlign: alignment }}
 					value={list}
 					onChange={newList => {
 						newList = newList.replace("<ul>", '<ul class="fa-ul">');
@@ -282,7 +290,7 @@ registerBlockType("ub/styled-list", {
 						}' color='%23${iconColor.slice(1)}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
 						}'></path></svg>");
-                background-repeat: no-repeat;}`
+				background-repeat: no-repeat;}`
 					}}
 				/>
 			</div>

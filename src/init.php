@@ -417,8 +417,9 @@ function ub_include_block_attribute_css() {
                             'top: 3px;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
-                    $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
-                        'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL .
+                    $blockStylesheets .= $prefix . '{' . PHP_EOL .
+                        'justify-content: ' . ($attributes['alignment'] == 'center' ? 'center' :
+                            'flex-' . ($attributes['alignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
                 case 'ub/tabbed-content-block':
