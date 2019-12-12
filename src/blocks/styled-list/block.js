@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, ColorPalette } =
+const { RichText, InspectorControls, ColorPalette, AlignmentToolbar } =
 	wp.blockEditor || wp.editor;
 const { IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
 const { withState, compose } = wp.compose;
@@ -50,6 +50,10 @@ registerBlockType('ub/styled-list', {
 			type: 'string',
 			default: 'check'
 		},
+		aligmentlist: {
+			type: 'string',
+			default: 'flex-start',
+		},
 		iconColor: {
 			type: 'string',
 			default: '#000000'
@@ -86,6 +90,7 @@ registerBlockType('ub/styled-list', {
 		const {
 			list,
 			listItem,
+			aligmentlist,
 			iconColor,
 			iconSize,
 			selectedIcon,
@@ -249,6 +254,13 @@ registerBlockType('ub/styled-list', {
 								/>
 							)}
 						</div>
+                        <p>{__('List aligment')}</p>
+                        <AlignmentToolbar
+							value={aligmentlist}
+							onChange={ ( value ) => {
+								setAttributes( { aligmentlist: value } );
+							}}
+						/>,
 						<p>{__('Icon color')}</p>
 						<ColorPalette
 							value={iconColor}
@@ -267,7 +279,9 @@ registerBlockType('ub/styled-list', {
 				</InspectorControls>
 			),
 
-			<div className="ub-styled-list" id={`ub-styled-list-${blockID}`}>
+			<div className="ub-styled-list" id={`ub-styled-list-${blockID}`} style={ {
+                justifyContent: ( aligmentlist === 'left' ? 'flex-start' : aligmentlist === 'center' ? 'center' : aligmentlist === 'right' ? 'flex-end' : '' ),
+			}}>
 				<RichText
 					className="fa-ul"
 					multiline="li"

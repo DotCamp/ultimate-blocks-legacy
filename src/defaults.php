@@ -885,6 +885,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'check'
             ),
+            'aligmentlist' => array(
+                'type' => 'string',
+                'defaylt' => '',
+            ),
             'iconColor' => array(
                 'type' => 'string',
                 'default' => '#000000'
