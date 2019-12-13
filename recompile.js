@@ -5,6 +5,8 @@ const { resolve } = require("path");
 const { readdir } = require("fs").promises;
 
 (async () => {
+	let newEditorStyle = "";
+	let newFrontendStyle = "";
 	for await (const f of getFiles(__dirname + "\\src")) {
 		if (f.endsWith("editor.scss") || f.endsWith("style.scss")) {
 			sass.render(
@@ -23,6 +25,11 @@ const { readdir } = require("fs").promises;
 								if (err) throw err;
 							}
 						);
+						if (f.endsWith("editor.scss")) {
+							newEditorStyle += result.css.toString();
+						} else {
+							newFrontendStyle += result.css.toString();
+						}
 					}
 				}
 			);
@@ -41,6 +48,21 @@ const { readdir } = require("fs").promises;
 			});
 		}
 	}
+
+	writeFile(
+		`${__dirname}\\dist\\blocks.editor.build.css`,
+		newEditorStyle,
+		err => {
+			if (err) throw err;
+		}
+	);
+	writeFile(
+		`${__dirname}\\dist\\blocks.style.build.css`,
+		newFrontendStyle,
+		err => {
+			if (err) throw err;
+		}
+	);
 })();
 
 //taken from qwtel at https://stackoverflow.com/a/45130990
