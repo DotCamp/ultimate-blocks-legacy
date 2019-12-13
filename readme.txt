@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.1.8
+Stable tag: 2.1.9
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -126,6 +126,16 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.1.9 =
+
+Release Date: December 12th, 2019
+
+* ADD: CSS File generation for only active only blocks.
+* ADD: Option to Change List Alignment in Styled List block.
+* FIX: Content Toggle Block issue - line breaks not preserving on the frontend.
+* FIX: Ensure boolean values for boolean Post Grid attributes.
+* UPDATE: FontAwesome to version 5.11.
 
 = 2.1.8 =
 
