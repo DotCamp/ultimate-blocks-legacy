@@ -72,7 +72,7 @@
 	}
 }
 
-.ub-content-filter-dropdown-content {
+ul.ub-content-filter-dropdown-content {
 	overflow-y: scroll;
 	max-height: 105px;
 	border-radius: 2px;
@@ -80,6 +80,9 @@
 	box-shadow: 0px 0px 3px 1px rgba(224, 224, 224, 1);
 	position: absolute;
 	width: 150px;
+	margin-top: 0;
+	padding-left: 0;
+	list-style-type: none;
 	> li {
 		cursor: pointer;
 		background-color: #ffffff;
@@ -94,9 +97,7 @@
 	}
 	> li:nth-child(even),
 	li.hidden:nth-child(even) ~ li:nth-of-type(odd),
-	li.hidden:nth-child(even)
-		+ li.hidden:nth-child(odd)
-		~ li:nth-of-type(even) {
+	li.hidden:nth-child(even) + li.hidden:nth-child(odd) ~ li:nth-of-type(even) {
 		background: #f5f5f5;
 	}
 }
