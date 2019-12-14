@@ -64,6 +64,10 @@ const attributes = {
 	enableSmoothScroll: {
 		type: "boolean",
 		default: false
+	},
+	titleAlignment: {
+		type: "string",
+		default: "left"
 	}
 };
 

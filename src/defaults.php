@@ -1021,6 +1021,10 @@ $defaultValues = array(
             'enableSmoothScroll' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'titleAlignment' => array(
+                'type' => 'string',
+                'default' => false
             )
         )
     ),
@@ -1086,25 +1090,25 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
-            'categories'          => array(
+            'categories' => array(
                 'type' => 'string',
             ),
-            'className'           => array(
+            'className' => array(
                 'type' => 'string',
             ),
-            'amountPosts'         => array(
+            'amountPosts' => array(
                 'type'    => 'number',
                 'default' => 6,
             ),
-            'checkPostDate'     => array(
+            'checkPostDate' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostExcerpt'  => array(
+            'checkPostExcerpt' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostAuthor'   => array(
+            'checkPostAuthor' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
@@ -1112,47 +1116,47 @@ $defaultValues = array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostLink'     => array(
+            'checkPostLink' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostTitle'    => array(
+            'checkPostTitle' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'postLayout'          => array(
+            'postLayout' => array(
                 'type'    => 'string',
                 'default' => 'grid',
             ),
-            'columns'             => array(
+            'columns' => array(
                 'type'    => 'number',
                 'default' => 2,
             ),
-            'width'               => array(
+            'width' => array(
                 'type'    => 'string',
                 'default' => 'wide',
             ),
-            'order'               => array(
+            'order' => array(
                 'type'    => 'string',
                 'default' => 'desc',
             ),
-            'orderBy'             => array(
+            'orderBy' => array(
                 'type'    => 'string',
                 'default' => 'date',
             ),
-            'readMoreText'        => array(
+            'readMoreText' => array(
                 'type'    => 'string',
                 'default' => 'Continue Reading',
             ),
-            'offset'              => array(
+            'offset' => array(
                 'type'    => 'number',
                 'default' => 0,
             ),
-            'excerptLength'       => array(
+            'excerptLength' => array(
                 'type'    => 'number',
                 'default' => 55,
             ),
-            'postType'            => array(
+            'postType' => array(
                 'type'    => 'string',
                 'default' => 'post',
             ),

@@ -475,8 +475,9 @@ function ub_include_block_attribute_css() {
                     }
                     break;
                 case 'ub/table-of-contents-block':
+                    $prefix = '#ub_table-of-contents-' . $attributes['blockID'];
                     if($attributes['listStyle']=='plain'){
-                        $blockStylesheets .= '#ub_table-of-contents-' . $attributes['blockID'] . ' ul{' . PHP_EOL .
+                        $blockStylesheets .= $prefix . ' ul{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
@@ -486,6 +487,10 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL;
                         $hasNoSmoothScroll = false;
                     }
+                    $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
+                        'justify-self: ' . ($attributes['titleAlignment'] == 'center' ? 'center' :
+                            'flex-' . ($attributes['titleAlignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
+                    '}' . PHP_EOL;
                     break;
                 case 'ub/testimonial':
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];
