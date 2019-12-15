@@ -47,6 +47,31 @@ function ub_check_is_gutenberg_page() {
  */
 
 function ub_load_assets() {
+    if (filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') <
+        filemtime(dirname(__DIR__) . '/dist/blocks.style.build.css')){
+        $frontStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css', 'w');
+        $blockDir = dirname(__DIR__) . '/src/blocks/';
+        $blockList = get_option( 'ultimate_blocks', false );
+
+        foreach ( $blockList as $key => $block ) {
+            $blockDirName = strtolower(str_replace(' ', '-', 
+            trim(preg_replace('/\(.+\)/', '', $blockList[ $key ]['label']))
+                ));
+            $frontStyleLocation = $blockDir . $blockDirName . '/style.css';
+
+            if(file_exists($frontStyleLocation) && $blockList[ $key ]['active']){ //also detect if block is enabled
+                fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
+            }
+            if($block['name'] === 'ub/styled-box' && $blockList[$key]['active']){
+                //add css for blocks phased out by styled box
+                fwrite($frontStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
+                fwrite($frontStyleFile, file_get_contents($blockDir . 'notification-box' . '/style.css'));
+                fwrite($frontStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
+            }
+        }
+        fclose($frontStyleFile);
+    }
+
     wp_enqueue_style(
         'ultimate_blocks-cgb-style-css', // Handle.
         file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
@@ -522,8 +547,30 @@ function ultimate_blocks_cgb_editor_assets() {
 	);
 
     // Styles.
-    //if custom css file exists and at least one block is disabled, enqueue it
-    //else enqueue default style
+
+    if (filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') <
+        filemtime(dirname(__DIR__) . '/dist/blocks.editor.build.css')){
+        $adminStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css', 'w');
+        $blockDir = dirname(__DIR__) . '/src/blocks/';
+        $blockList = get_option( 'ultimate_blocks', false );
+
+        foreach ( $blockList as $key => $block ) {
+            $blockDirName = strtolower(str_replace(' ', '-', 
+            trim(preg_replace('/\(.+\)/', '', $blockList[ $key ]['label']))
+                ));
+            $adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
+
+            if(file_exists($adminStyleLocation) && $blockList[ $key ]['active']){ //also detect if block is enabled
+                fwrite($adminStyleFile, file_get_contents($adminStyleLocation));
+            }
+            if($block['name'] === 'ub/styled-box' && $blockList[$key]['active']){
+                //add css for blocks phased out by styled box
+                fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
+                fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
+            }
+        }
+        fclose($adminStyleFile);
+    }
 
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-block-editor-css', // Handle.
