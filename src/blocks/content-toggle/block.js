@@ -39,6 +39,10 @@ const attributes = {
 	hasFAQSchema: {
 		type: "boolean",
 		default: false
+	},
+	titleTag: {
+		type: "string",
+		default: "p"
 	}
 };
 

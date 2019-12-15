@@ -49,8 +49,8 @@ function ub_render_content_toggle_panel_block($attributes, $content){
                 .($parentID == '' ? ' style="border-color: '.$theme.';"' : '').'>
                 <div class="'.$classNamePrefix.'-accordion-title-wrap"'
                     .($parentID == '' ? ' style="background-color: '.$theme.';"' : '').'>
-                    <span class="'.$classNamePrefix.'-accordion-title"'
-                    .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</span>
+                    <'.$titleTag.' class="'.$classNamePrefix.'-accordion-title"'
+                    .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</'.$titleTag.'>
                     <span class="'.$classNamePrefix.
                         '-accordion-state-indicator dashicons dashicons-arrow-right-alt2 '.
                         ($collapsed ? '' : 'open').'"></span>

@@ -11,7 +11,7 @@ const { createBlock } = wp.blocks;
 
 const { InnerBlocks, InspectorControls, PanelColorSettings } =
 	wp.blockEditor || wp.editor;
-const { PanelBody, PanelRow, FormToggle } = wp.components;
+const { PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
 
 export class OldPanelContent extends Component {
 	constructor(props) {
@@ -182,7 +182,14 @@ export class PanelContent extends Component {
 	}
 	render() {
 		const {
-			attributes,
+			attributes: {
+				collapsed,
+				theme,
+				titleColor,
+				blockID,
+				hasFAQSchema,
+				titleTag
+			},
 			setAttributes,
 			className,
 			isSelected,
@@ -197,8 +204,6 @@ export class PanelContent extends Component {
 			selectedBlock,
 			block
 		} = this.props;
-
-		const { collapsed, theme, titleColor, blockID, hasFAQSchema } = attributes;
 
 		const panels = this.getPanels();
 
@@ -238,9 +243,10 @@ export class PanelContent extends Component {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
 			insertBlock(
 				createBlock("ub/content-toggle-panel-block", {
-					theme: theme,
-					collapsed: collapsed,
-					titleColor: titleColor
+					theme,
+					collapsed,
+					titleColor,
+					titleTag
 				}),
 				newBlockPosition === "below" ? index + 1 : index,
 				block.clientId
@@ -309,7 +315,8 @@ export class PanelContent extends Component {
 					hasFAQSchema,
 					theme,
 					titleColor,
-					collapsed
+					collapsed,
+					titleTag
 				})
 			);
 			setState({
@@ -317,7 +324,8 @@ export class PanelContent extends Component {
 					theme,
 					collapsed,
 					hasFAQSchema,
-					titleColor
+					titleColor,
+					titleTag
 				})
 			});
 		} else {
@@ -398,7 +406,7 @@ export class PanelContent extends Component {
 								id="ub-content-toggle-faq-schema"
 								label={__("Enable FAQ Schema")}
 								checked={hasFAQSchema}
-								onChange={() =>
+								onChange={_ =>
 									setAttributes({
 										hasFAQSchema: !hasFAQSchema
 									})
@@ -406,6 +414,27 @@ export class PanelContent extends Component {
 							/>
 						</PanelRow>
 					</PanelBody>
+					<SelectControl
+						label={__("Select Heading Tag", "ultimate-blocks")}
+						options={[
+							{ value: "h1", label: __("H1", "ultimate-blocks") },
+							{ value: "h2", label: __("H2", "ultimate-blocks") },
+							{ value: "h3", label: __("H3", "ultimate-blocks") },
+							{ value: "h4", label: __("H4", "ultimate-blocks") },
+							{ value: "h5", label: __("H5", "ultimate-blocks") },
+							{ value: "h6", label: __("H6", "ultimate-blocks") },
+							{ value: "p", label: __("P", "ultimate-blocks") }
+						]}
+						value={titleTag}
+						onChange={titleTag => {
+							setAttributes({ titleTag });
+							panels.forEach(panel =>
+								updateBlockAttributes(panel.clientId, {
+									titleTag
+								})
+							);
+						}}
+					/>
 				</InspectorControls>
 			),
 			<div className={className}>

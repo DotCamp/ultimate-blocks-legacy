@@ -250,6 +250,10 @@ $defaultValues = array(
             'panelTitle' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'titleTag' => array(
+                'type' => 'string',
+                'default' => 'p'
             )
         )
     ),
