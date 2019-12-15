@@ -226,6 +226,10 @@ $defaultValues = array(
             'hasFAQSchema' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'preventCollapse' => array(
+                'type' => 'boolean',
+                'default' => false
             )
         )
     ),
@@ -254,6 +258,10 @@ $defaultValues = array(
             'titleTag' => array(
                 'type' => 'string',
                 'default' => 'p'
+            ),
+            'preventCollapse' => array(
+                'type' => 'boolean',
+                'default' => false
             )
         )
     ),

@@ -51,6 +51,10 @@ const attributes = {
 	titleTag: {
 		type: "string",
 		default: "p"
+	},
+	preventCollapse: {
+		type: "boolean",
+		default: false
 	}
 };
 
@@ -66,7 +70,8 @@ class ContentTogglePanel extends Component {
 				panelTitle,
 				collapsed,
 				hasFAQSchema,
-				titleTag
+				titleTag,
+				preventCollapse
 			},
 			setState,
 			setAttributes,
@@ -107,9 +112,29 @@ class ContentTogglePanel extends Component {
 							id="ub-content-toggle-state"
 							label={__("Collapsed")}
 							checked={collapsed}
-							onChange={_ => setAttributes({ collapsed: !collapsed })}
+							onChange={_ => {
+								setAttributes({ collapsed: !collapsed });
+								if (!collapsed) {
+									setAttributes({ preventCollapse: false });
+								}
+							}}
 						/>
 					</PanelRow>
+					{!collapsed && (
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-state">
+								{__("Prevent collapse")}
+							</label>
+							<FormToggle
+								id="ub-content-toggle-state"
+								label={__("Prevent collapse")}
+								checked={preventCollapse}
+								onChange={_ =>
+									setAttributes({ preventCollapse: !preventCollapse })
+								}
+							/>
+						</PanelRow>
+					)}
 				</PanelBody>
 				<PanelBody title={__("FAQ Schema")} initialOpen={true}>
 					<PanelRow>

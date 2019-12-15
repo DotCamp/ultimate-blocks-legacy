@@ -43,6 +43,10 @@ const attributes = {
 	titleTag: {
 		type: "string",
 		default: "p"
+	},
+	preventCollapse: {
+		type: "boolean",
+		default: false
 	}
 };
 

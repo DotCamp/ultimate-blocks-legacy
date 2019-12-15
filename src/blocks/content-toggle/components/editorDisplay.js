@@ -188,7 +188,8 @@ export class PanelContent extends Component {
 				titleColor,
 				blockID,
 				hasFAQSchema,
-				titleTag
+				titleTag,
+				preventCollapse
 			},
 			setAttributes,
 			className,
@@ -236,6 +237,23 @@ export class PanelContent extends Component {
 					collapsed: !panel.attributes.collapsed
 				})
 			);
+			if (!collapsed) {
+				setAttributes({ preventCollapse: false });
+				panels.forEach(panel =>
+					updateBlockAttributes(panel.clientId, {
+						preventCollapse: false
+					})
+				);
+			}
+		};
+
+		const onPreventCollapseChange = _ => {
+			setAttributes({ preventCollapse: !preventCollapse });
+			panels.forEach(panel =>
+				updateBlockAttributes(panel.clientId, {
+					preventCollapse: !panel.attributes.preventCollapse
+				})
+			);
 		};
 
 		//Detect if one of the child blocks has received a command to add another child block
@@ -246,7 +264,8 @@ export class PanelContent extends Component {
 					theme,
 					collapsed,
 					titleColor,
-					titleTag
+					titleTag,
+					preventCollapse
 				}),
 				newBlockPosition === "below" ? index + 1 : index,
 				block.clientId
@@ -316,7 +335,8 @@ export class PanelContent extends Component {
 					theme,
 					titleColor,
 					collapsed,
-					titleTag
+					titleTag,
+					preventCollapse
 				})
 			);
 			setState({
@@ -325,7 +345,8 @@ export class PanelContent extends Component {
 					collapsed,
 					hasFAQSchema,
 					titleColor,
-					titleTag
+					titleTag,
+					preventCollapse
 				})
 			});
 		} else {
@@ -396,6 +417,19 @@ export class PanelContent extends Component {
 								onChange={onCollapseChange}
 							/>
 						</PanelRow>
+						{!collapsed && (
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-state">
+									{__("Prevent collapse")}
+								</label>
+								<FormToggle
+									id="ub-content-toggle-state"
+									label={__("Prevent collapse")}
+									checked={preventCollapse}
+									onChange={onPreventCollapseChange}
+								/>
+							</PanelRow>
+						)}
 					</PanelBody>
 					<PanelBody title={__("FAQ Schema")} initialOpen={true}>
 						<PanelRow>

@@ -37,7 +37,8 @@ function ub_render_content_toggle_block($attributes, $content){
     extract($attributes);
 
     return '<div class="wp-block-ub-content-toggle'.(isset($className) ? ' ' . esc_attr($className) : '')
-                .'" '. ($blockID == '' ? '' : 'id="ub-content-toggle-'.$blockID.'"').'>'
+                .'" '. ($blockID == '' ? '' : 'id="ub-content-toggle-'.$blockID.'"') .
+                 ($preventCollapse ? ' data-preventcollapse="true"' : '') . '>'
                 . $content.'</div>';
 }
 
