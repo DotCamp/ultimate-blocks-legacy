@@ -5,8 +5,8 @@ const { InspectorControls, PanelColorSettings, InnerBlocks, RichText } =
 
 const { PanelBody, ToggleControl } = wp.components;
 
-import { Component } from 'react';
-import { upgradeButtonLabel } from '../../../common';
+import { Component } from "react";
+import { upgradeButtonLabel } from "../../../common";
 
 export class OldPanelContent extends Component {
 	constructor(props) {
@@ -91,7 +91,7 @@ export class OldPanelContent extends Component {
 			//,allowReset,resetButtonLabel
 		} = attributes;
 
-		const newChildBlock = createBlock('ub/content-filter-entry', {
+		const newChildBlock = createBlock("ub/content-filter-entry", {
 			availableFilters: filterArray,
 			selectedFilters: filterArray.map(category =>
 				category.canUseMultiple
@@ -137,7 +137,7 @@ export class OldPanelContent extends Component {
 			isSelected && (
 				<InspectorControls>
 					<PanelColorSettings
-						title={__('Filter Colors')}
+						title={__("Filter Colors")}
 						initialOpen={false}
 						colorSettings={[
 							{
@@ -152,7 +152,7 @@ export class OldPanelContent extends Component {
 										})
 									);
 								},
-								label: __('Filter Tag Color')
+								label: __("Filter Tag Color")
 							},
 							{
 								value: buttonTextColor,
@@ -166,7 +166,7 @@ export class OldPanelContent extends Component {
 										})
 									);
 								},
-								label: __('Filter Tag Text Color')
+								label: __("Filter Tag Text Color")
 							},
 							{
 								value: activeButtonColor,
@@ -175,7 +175,7 @@ export class OldPanelContent extends Component {
 										activeButtonColor: colorValue
 									});
 								},
-								label: __('Active Filter Tag Color')
+								label: __("Active Filter Tag Color")
 							},
 							{
 								value: activeButtonTextColor,
@@ -184,7 +184,7 @@ export class OldPanelContent extends Component {
 										activeButtonTextColor: colorValue
 									});
 								},
-								label: __('Active Filter Tag Text Color')
+								label: __("Active Filter Tag Text Color")
 							}
 						]}
 					/>
@@ -215,7 +215,7 @@ export class OldPanelContent extends Component {
 						replaceBlock(
 							block.clientId,
 							createBlock(
-								'ub/content-filter-block',
+								"ub/content-filter-block",
 								{
 									filterArray,
 									buttonColor,
@@ -225,12 +225,10 @@ export class OldPanelContent extends Component {
 								},
 								block.innerBlocks.map(innerBlock =>
 									createBlock(
-										'ub/content-filter-entry-block',
+										"ub/content-filter-entry-block",
 										{
 											availableFilters: filterArray,
-											selectedFilters:
-												innerBlock.attributes
-													.selectedFilters,
+											selectedFilters: innerBlock.attributes.selectedFilters,
 											buttonColor,
 											buttonTextColor
 										},
@@ -248,24 +246,16 @@ export class OldPanelContent extends Component {
 						<div className="ub-content-filter-category">
 							<div className="ub-content-filter-category-top">
 								<span
-									title={__('Delete This Filter Category')}
+									title={__("Delete This Filter Category")}
 									onClick={() => {
 										this.deleteFilterArrayItem(i);
 										block.innerBlocks.forEach(panel =>
-											updateBlockAttributes(
-												panel.clientId,
-												{
-													selectedFilters: [
-														...panel.attributes.selectedFilters.slice(
-															0,
-															i
-														),
-														...panel.attributes.selectedFilters.slice(
-															i + 1
-														)
-													]
-												}
-											)
+											updateBlockAttributes(panel.clientId, {
+												selectedFilters: [
+													...panel.attributes.selectedFilters.slice(0, i),
+													...panel.attributes.selectedFilters.slice(i + 1)
+												]
+											})
 										);
 									}}
 									class="dashicons dashicons-dismiss"
@@ -294,46 +284,25 @@ export class OldPanelContent extends Component {
 								>
 									<div className="ub-content-filter-tag-top">
 										<span
-											title={__('Delete This Filter')}
+											title={__("Delete This Filter")}
 											onClick={() => {
-												let current = Object.assign(
-													{},
-													f
-												);
+												let current = Object.assign({}, f);
 												current.filters = [
-													...current.filters.slice(
-														0,
-														j
-													),
-													...current.filters.slice(
-														j + 1
-													)
+													...current.filters.slice(0, j),
+													...current.filters.slice(j + 1)
 												];
-												this.editFilterArray(
-													current,
-													i
-												);
-												block.innerBlocks.forEach(
-													panel => {
-														updateBlockAttributes(
-															panel.clientId,
-															{
-																availableFilters: newAvailableFilters(
-																	current,
-																	i
-																),
-																selectedFilters: newSelectedFilters(
-																	panel
-																		.attributes
-																		.selectedFilters,
-																	current,
-																	i,
-																	j
-																)
-															}
-														);
-													}
-												);
+												this.editFilterArray(current, i);
+												block.innerBlocks.forEach(panel => {
+													updateBlockAttributes(panel.clientId, {
+														availableFilters: newAvailableFilters(current, i),
+														selectedFilters: newSelectedFilters(
+															panel.attributes.selectedFilters,
+															current,
+															i,
+															j
+														)
+													});
+												});
 											}}
 											class="dashicons dashicons-dismiss"
 										/>
@@ -350,10 +319,7 @@ export class OldPanelContent extends Component {
 											];
 
 											this.editFilterArray(current, i);
-											this.editAvailableFilters(
-												current,
-												i
-											);
+											this.editAvailableFilters(current, i);
 										}}
 									/>
 								</div>
@@ -365,37 +331,22 @@ export class OldPanelContent extends Component {
 								}}
 								onClick={() => {
 									let current = Object.assign({}, f);
-									current.filters.push('');
+									current.filters.push("");
 									this.editFilterArray(current, i);
 									block.innerBlocks.forEach(panel => {
 										let childBlockAttributes = {
-											availableFilters: newAvailableFilters(
-												current,
-												i
-											)
+											availableFilters: newAvailableFilters(current, i)
 										};
 
 										if (current.canUseMultiple) {
 											childBlockAttributes.selectedFilters = [
-												...panel.attributes.selectedFilters.slice(
-													0,
-													i
-												),
-												[
-													...panel.attributes
-														.selectedFilters[i],
-													false
-												],
-												...panel.attributes.selectedFilters.slice(
-													i + 1
-												)
+												...panel.attributes.selectedFilters.slice(0, i),
+												[...panel.attributes.selectedFilters[i], false],
+												...panel.attributes.selectedFilters.slice(i + 1)
 											];
 										}
 
-										updateBlockAttributes(
-											panel.clientId,
-											childBlockAttributes
-										);
+										updateBlockAttributes(panel.clientId, childBlockAttributes);
 									});
 								}}
 							>
@@ -411,35 +362,20 @@ export class OldPanelContent extends Component {
 										current.canUseMultiple = !current.canUseMultiple;
 										this.editFilterArray(current, i);
 										block.innerBlocks.forEach(panel =>
-											updateBlockAttributes(
-												panel.clientId,
-												{
-													availableFilters: newAvailableFilters(
-														current,
-														i
-													),
-													selectedFilters: [
-														...panel.attributes.selectedFilters.slice(
-															0,
-															i
-														),
-														current.canUseMultiple
-															? Array(
-																	current
-																		.filters
-																		.length
-															  ).fill(false)
-															: -1,
-														...panel.attributes.selectedFilters.slice(
-															i + 1
-														)
-													]
-												}
-											)
+											updateBlockAttributes(panel.clientId, {
+												availableFilters: newAvailableFilters(current, i),
+												selectedFilters: [
+													...panel.attributes.selectedFilters.slice(0, i),
+													current.canUseMultiple
+														? Array(current.filters.length).fill(false)
+														: -1,
+													...panel.attributes.selectedFilters.slice(i + 1)
+												]
+											})
 										);
 									}}
 								/>
-								{__('Allow multiple selections')}
+								{__("Allow multiple selections")}
 							</label>
 						</div>
 					))}
@@ -449,7 +385,7 @@ export class OldPanelContent extends Component {
 							filterArray: [
 								...filterArray,
 								{
-									category: '',
+									category: "",
 									filters: [],
 									canUseMultiple: false
 								}
@@ -458,24 +394,20 @@ export class OldPanelContent extends Component {
 
 						block.innerBlocks.forEach(panel =>
 							updateBlockAttributes(panel.clientId, {
-								selectedFilters: [
-									...panel.attributes.selectedFilters,
-									-1
-								]
+								selectedFilters: [...panel.attributes.selectedFilters, -1]
 							})
 						);
 					}}
 				>
-					{__('Add New Category')}
+					{__("Add New Category")}
 				</button>
 				<br />
 				<InnerBlocks
 					templateLock={false}
-					allowedBlocks={['ub/content-filter-entry']}
+					allowedBlocks={["ub/content-filter-entry"]}
 				/>
 				{filterArray.length > 0 &&
-					filterArray.filter(f => f.filters.length > 0).length >
-						0 && (
+					filterArray.filter(f => f.filters.length > 0).length > 0 && (
 						<button
 							onClick={() =>
 								insertBlock(
@@ -485,7 +417,7 @@ export class OldPanelContent extends Component {
 								)
 							}
 						>
-							{__('Add new content')}
+							{__("Add new content")}
 						</button>
 					)}
 			</div>
@@ -577,7 +509,7 @@ export class PanelContent extends Component {
 			//,allowReset,resetButtonLabel
 		} = attributes;
 
-		const newChildBlock = createBlock('ub/content-filter-entry-block', {
+		const newChildBlock = createBlock("ub/content-filter-entry-block", {
 			availableFilters: filterArray,
 			selectedFilters: filterArray.map(category =>
 				category.canUseMultiple
@@ -627,7 +559,7 @@ export class PanelContent extends Component {
 			isSelected && (
 				<InspectorControls>
 					<PanelColorSettings
-						title={__('Filter Colors')}
+						title={__("Filter Colors")}
 						initialOpen={false}
 						colorSettings={[
 							{
@@ -642,7 +574,7 @@ export class PanelContent extends Component {
 										})
 									);
 								},
-								label: __('Filter Tag Color')
+								label: __("Filter Tag Color")
 							},
 							{
 								value: buttonTextColor,
@@ -656,34 +588,29 @@ export class PanelContent extends Component {
 										})
 									);
 								},
-								label: __('Filter Tag Text Color')
+								label: __("Filter Tag Text Color")
 							},
 							{
 								value: activeButtonColor,
-								onChange: colorValue => {
+								onChange: colorValue =>
 									setAttributes({
 										activeButtonColor: colorValue
-									});
-								},
-								label: __('Active Filter Tag Color')
+									}),
+								label: __("Active Filter Tag Color")
 							},
 							{
 								value: activeButtonTextColor,
-								onChange: colorValue => {
+								onChange: colorValue =>
 									setAttributes({
 										activeButtonTextColor: colorValue
-									});
-								},
-								label: __('Active Filter Tag Text Color')
+									}),
+								label: __("Active Filter Tag Text Color")
 							}
 						]}
 					/>
-					<PanelBody
-						title={__('Panel Visibility')}
-						initialOpen={false}
-					>
+					<PanelBody title={__("Panel Visibility")} initialOpen={false}>
 						<ToggleControl
-							label={__('Initially show all content panels')}
+							label={__("Initially show all content panels")}
 							checked={initiallyShowAll}
 							onChange={_ => {
 								setAttributes({
@@ -725,24 +652,16 @@ export class PanelContent extends Component {
 						<div className="ub-content-filter-category">
 							<div className="ub-content-filter-category-top">
 								<span
-									title={__('Delete This Filter Category')}
-									onClick={() => {
+									title={__("Delete This Filter Category")}
+									onClick={_ => {
 										this.deleteFilterArrayItem(i);
 										block.innerBlocks.forEach(panel =>
-											updateBlockAttributes(
-												panel.clientId,
-												{
-													selectedFilters: [
-														...panel.attributes.selectedFilters.slice(
-															0,
-															i
-														),
-														...panel.attributes.selectedFilters.slice(
-															i + 1
-														)
-													]
-												}
-											)
+											updateBlockAttributes(panel.clientId, {
+												selectedFilters: [
+													...panel.attributes.selectedFilters.slice(0, i),
+													...panel.attributes.selectedFilters.slice(i + 1)
+												]
+											})
 										);
 									}}
 									class="dashicons dashicons-dismiss"
@@ -771,46 +690,25 @@ export class PanelContent extends Component {
 								>
 									<div className="ub-content-filter-tag-top">
 										<span
-											title={__('Delete This Filter')}
-											onClick={() => {
-												let current = Object.assign(
-													{},
-													f
-												);
+											title={__("Delete This Filter")}
+											onClick={_ => {
+												let current = Object.assign({}, f);
 												current.filters = [
-													...current.filters.slice(
-														0,
-														j
-													),
-													...current.filters.slice(
-														j + 1
-													)
+													...current.filters.slice(0, j),
+													...current.filters.slice(j + 1)
 												];
-												this.editFilterArray(
-													current,
-													i
-												);
-												block.innerBlocks.forEach(
-													panel => {
-														updateBlockAttributes(
-															panel.clientId,
-															{
-																availableFilters: newAvailableFilters(
-																	current,
-																	i
-																),
-																selectedFilters: newSelectedFilters(
-																	panel
-																		.attributes
-																		.selectedFilters,
-																	current,
-																	i,
-																	j
-																)
-															}
-														);
-													}
-												);
+												this.editFilterArray(current, i);
+												block.innerBlocks.forEach(panel => {
+													updateBlockAttributes(panel.clientId, {
+														availableFilters: newAvailableFilters(current, i),
+														selectedFilters: newSelectedFilters(
+															panel.attributes.selectedFilters,
+															current,
+															i,
+															j
+														)
+													});
+												});
 											}}
 											class="dashicons dashicons-dismiss"
 										/>
@@ -827,10 +725,7 @@ export class PanelContent extends Component {
 											];
 
 											this.editFilterArray(current, i);
-											this.editAvailableFilters(
-												current,
-												i
-											);
+											this.editAvailableFilters(current, i);
 										}}
 									/>
 								</div>
@@ -840,39 +735,24 @@ export class PanelContent extends Component {
 									backgroundColor: buttonColor,
 									color: buttonTextColor
 								}}
-								onClick={() => {
+								onClick={_ => {
 									let current = Object.assign({}, f);
-									current.filters.push('');
+									current.filters.push("");
 									this.editFilterArray(current, i);
 									block.innerBlocks.forEach(panel => {
 										let childBlockAttributes = {
-											availableFilters: newAvailableFilters(
-												current,
-												i
-											)
+											availableFilters: newAvailableFilters(current, i)
 										};
 
 										if (current.canUseMultiple) {
 											childBlockAttributes.selectedFilters = [
-												...panel.attributes.selectedFilters.slice(
-													0,
-													i
-												),
-												[
-													...panel.attributes
-														.selectedFilters[i],
-													false
-												],
-												...panel.attributes.selectedFilters.slice(
-													i + 1
-												)
+												...panel.attributes.selectedFilters.slice(0, i),
+												[...panel.attributes.selectedFilters[i], false],
+												...panel.attributes.selectedFilters.slice(i + 1)
 											];
 										}
 
-										updateBlockAttributes(
-											panel.clientId,
-											childBlockAttributes
-										);
+										updateBlockAttributes(panel.clientId, childBlockAttributes);
 									});
 								}}
 							>
@@ -883,50 +763,43 @@ export class PanelContent extends Component {
 								<input
 									type="checkbox"
 									checked={f.canUseMultiple}
-									onClick={() => {
+									onClick={_ => {
 										let current = Object.assign({}, f);
 										current.canUseMultiple = !current.canUseMultiple;
 										this.editFilterArray(current, i);
-										block.innerBlocks.forEach(panel =>
-											updateBlockAttributes(
-												panel.clientId,
-												{
-													availableFilters: newAvailableFilters(
-														current,
-														i
-													),
-													selectedFilters: [
-														...panel.attributes.selectedFilters.slice(
-															0,
-															i
-														),
-														current.canUseMultiple
-															? Array(
-																	current
-																		.filters
-																		.length
-															  ).fill(false)
-															: -1,
-														...panel.attributes.selectedFilters.slice(
-															i + 1
-														)
-													]
-												}
-											)
-										);
+
+										block.innerBlocks.forEach(panel => {
+											const { selectedFilters } = panel.attributes;
+
+											updateBlockAttributes(panel.clientId, {
+												availableFilters: newAvailableFilters(current, i),
+												selectedFilters: [
+													...selectedFilters.slice(0, i),
+													current.canUseMultiple
+														? Array(current.filters.length)
+																.fill(false)
+																.map((_, j) => j === selectedFilters[i])
+														: selectedFilters[i].filter(f => f === true)
+																.length > 1
+														? -1
+														: selectedFilters[i].findIndex(f => f === true),
+													...selectedFilters.slice(i + 1)
+												]
+											});
+										});
 									}}
 								/>
-								{__('Allow multiple selections')}
+								{__("Allow multiple selections")}
 							</label>
 						</div>
 					))}
 				<button
-					onClick={() => {
+					onClick={_ => {
 						setAttributes({
 							filterArray: [
 								...filterArray,
 								{
-									category: '',
+									category: "",
 									filters: [],
 									canUseMultiple: false
 								}
@@ -935,26 +808,22 @@ export class PanelContent extends Component {
 
 						block.innerBlocks.forEach(panel =>
 							updateBlockAttributes(panel.clientId, {
-								selectedFilters: [
-									...panel.attributes.selectedFilters,
-									-1
-								]
+								selectedFilters: [...panel.attributes.selectedFilters, -1]
 							})
 						);
 					}}
 				>
-					{__('Add New Category')}
+					{__("Add New Category")}
 				</button>
 				<br />
 				<InnerBlocks
 					templateLock={false}
-					allowedBlocks={['ub/content-filter-entry-block']}
+					allowedBlocks={["ub/content-filter-entry-block"]}
 				/>
 				{filterArray.length > 0 &&
-					filterArray.filter(f => f.filters.length > 0).length >
-						0 && (
+					filterArray.filter(f => f.filters.length > 0).length > 0 && (
 						<button
-							onClick={() =>
+							onClick={_ =>
 								insertBlock(
 									newChildBlock,
 									block.innerBlocks.length,
@@ -962,7 +831,7 @@ export class PanelContent extends Component {
 								)
 							}
 						>
-							{__('Add new content')}
+							{__("Add new content")}
 						</button>
 					)}
 			</div>
