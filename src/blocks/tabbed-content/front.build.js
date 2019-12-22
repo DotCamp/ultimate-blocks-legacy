@@ -45,15 +45,18 @@ function ub_handleTabEvent(tab) {
   });
   tab.classList.add("active");
   if (activeStyle) tab.setAttribute("style", activeStyle);
-  var activeTab = parent.querySelector(".wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(".concat(ub_getNodeindex(tab) + 1, ")"));
-  ub_getSiblings(activeTab, function (elem) {
-    return elem.classList.contains("wp-block-ub-tabbed-content-tab-content-wrap");
-  }).forEach(function (inactiveTab) {
-    inactiveTab.classList.remove("active");
-    inactiveTab.classList.add("ub-hide");
+  var tabContentContainer = Array.prototype.slice.call(parent.children).filter(function (elem) {
+    return elem.classList.contains("wp-block-ub-tabbed-content-tabs-content");
+  })[0];
+  Array.prototype.slice.call(tabContentContainer.children).forEach(function (tabContent, i) {
+    if (ub_getNodeindex(tab) === i) {
+      tabContent.classList.add("active");
+      tabContent.classList.remove("ub-hide");
+    } else {
+      tabContent.classList.remove("active");
+      tabContent.classList.add("ub-hide");
+    }
   });
-  activeTab.classList.add("active");
-  activeTab.classList.remove("ub-hide");
 }
 
 Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tab-title-wrap")).forEach(function (instance) {

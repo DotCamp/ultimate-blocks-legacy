@@ -65,21 +65,23 @@ function ub_handleTabEvent(tab) {
 	tab.classList.add("active");
 	if (activeStyle) tab.setAttribute("style", activeStyle);
 
-	const activeTab = parent.querySelector(
-		`.wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(${ub_getNodeindex(
-			tab
-		) + 1})`
-	);
+	const tabContentContainer = Array.prototype.slice
+		.call(parent.children)
+		.filter(elem =>
+			elem.classList.contains("wp-block-ub-tabbed-content-tabs-content")
+		)[0];
 
-	ub_getSiblings(activeTab, elem =>
-		elem.classList.contains("wp-block-ub-tabbed-content-tab-content-wrap")
-	).forEach(inactiveTab => {
-		inactiveTab.classList.remove("active");
-		inactiveTab.classList.add("ub-hide");
-	});
-
-	activeTab.classList.add("active");
-	activeTab.classList.remove("ub-hide");
+	Array.prototype.slice
+		.call(tabContentContainer.children)
+		.forEach((tabContent, i) => {
+			if (ub_getNodeindex(tab) === i) {
+				tabContent.classList.add("active");
+				tabContent.classList.remove("ub-hide");
+			} else {
+				tabContent.classList.remove("active");
+				tabContent.classList.add("ub-hide");
+			}
+		});
 }
 
 Array.prototype.slice
