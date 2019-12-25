@@ -82,6 +82,15 @@ function ub_handleTabEvent(tab) {
 				tabContent.classList.add("ub-hide");
 			}
 		});
+
+	let flickityInstances = Array.prototype.slice
+		.call(parent.children)
+		.filter(child => child.classList.contains("ub_image_slider"));
+
+	flickityInstances.forEach(instance => {
+		let slider = Flickity.data(instance.querySelector("[data-flickity]"));
+		slider.resize();
+	});
 }
 
 Array.prototype.slice

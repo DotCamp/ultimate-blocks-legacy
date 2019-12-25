@@ -106,6 +106,14 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
       } else {
         instance.classList.add("ub-hide");
       }
+
+      var flickityInstances = Array.prototype.slice.call(instance.children).filter(function (child) {
+        return child.classList.contains("ub_image_slider");
+      });
+      flickityInstances.forEach(function (instance) {
+        var slider = Flickity.data(instance.querySelector("[data-flickity]"));
+        slider.resize();
+      });
     });
   });
 });

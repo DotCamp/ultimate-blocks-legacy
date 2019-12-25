@@ -57,6 +57,13 @@ function ub_handleTabEvent(tab) {
       tabContent.classList.add("ub-hide");
     }
   });
+  var flickityInstances = Array.prototype.slice.call(parent.children).filter(function (child) {
+    return child.classList.contains("ub_image_slider");
+  });
+  flickityInstances.forEach(function (instance) {
+    var slider = Flickity.data(instance.querySelector("[data-flickity]"));
+    slider.resize();
+  });
 }
 
 Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tab-title-wrap")).forEach(function (instance) {

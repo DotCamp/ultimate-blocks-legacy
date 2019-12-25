@@ -87,6 +87,17 @@ Array.prototype.slice
 								panelContent.style.height = "";
 							}
 						}, 20);
+
+						let flickityInstances = Array.prototype.slice
+							.call(panelContent.children)
+							.filter(child => child.classList.contains("ub_image_slider"));
+
+						flickityInstances.forEach(instance => {
+							let slider = Flickity.data(
+								instance.querySelector("[data-flickity]")
+							);
+							slider.resize();
+						});
 					});
 
 					panelContent.addEventListener("transitionend", function() {

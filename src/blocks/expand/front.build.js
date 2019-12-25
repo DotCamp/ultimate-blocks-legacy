@@ -28,6 +28,16 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-but
   instance.addEventListener("click", function () {
     var blockRoot = instance.closest(".ub-expand");
     blockRoot.querySelector(".ub-expand-partial .ub-expand-toggle-button").classList.toggle("ub-hide");
-    blockRoot.querySelector(".ub-expand-full").classList.toggle("ub-hide");
+    var expandingPart = Array.prototype.slice.call(blockRoot.children).filter(function (child) {
+      return child.classList.contains("ub-expand-full");
+    })[0];
+    expandingPart.classList.toggle("ub-hide");
+    var flickityInstances = Array.prototype.slice.call(expandingPart.children).filter(function (child) {
+      return child.classList.contains("ub_image_slider");
+    });
+    flickityInstances.forEach(function (instance) {
+      var slider = Flickity.data(instance.querySelector("[data-flickity]"));
+      slider.resize();
+    });
   });
 });
