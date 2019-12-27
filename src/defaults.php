@@ -1024,7 +1024,7 @@ $defaultValues = array(
             ),
             'titleAlignment' => array(
                 'type' => 'string',
-                'default' => false
+                'default' => 'left'
             )
         )
     ),
