@@ -76,11 +76,11 @@ function ub_render_review_block($attributes){
         "@context":"http://schema.org/",
         "@type":"Review",
         "reviewBody":"' . preg_replace('/(<.+?>)/', '',$summaryDescription).'",
-        "image": "'.$imgURL.'",
-        "description": "'.preg_replace('/(<.+?>)/', '',$description).'",
         "itemReviewed":{
             "@type":"Product",
             "name":"'.preg_replace('/(<.+?>)/', '',$itemName).'",
+            "image": "'.$imgURL.'",
+            "description": "'.preg_replace('/(<.+?>)/', '',$description).'",
         "review":{
             "author":{
                 "@type":"Person",
