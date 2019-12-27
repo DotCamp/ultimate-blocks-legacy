@@ -153,20 +153,28 @@ class ContentTogglePanel extends Component {
 						/>
 					</PanelRow>
 				</PanelBody>
-				<SelectControl
-					label={__("Select Heading Tag", "ultimate-blocks")}
-					options={[
-						{ value: "h1", label: __("H1", "ultimate-blocks") },
-						{ value: "h2", label: __("H2", "ultimate-blocks") },
-						{ value: "h3", label: __("H3", "ultimate-blocks") },
-						{ value: "h4", label: __("H4", "ultimate-blocks") },
-						{ value: "h5", label: __("H5", "ultimate-blocks") },
-						{ value: "h6", label: __("H6", "ultimate-blocks") },
-						{ value: "p", label: __("P", "ultimate-blocks") }
-					]}
-					value={titleTag}
-					onChange={titleTag => setAttributes({ titleTag })}
-				/>
+				<div
+					style={{
+						display: "grid",
+						gridTemplateColumns: "5fr 1fr",
+						padding: "0 16px"
+					}}
+				>
+					<p>{__("Select Heading Tag", "ultimate-blocks")}</p>
+					<SelectControl
+						options={[
+							{ value: "h1", label: __("H1", "ultimate-blocks") },
+							{ value: "h2", label: __("H2", "ultimate-blocks") },
+							{ value: "h3", label: __("H3", "ultimate-blocks") },
+							{ value: "h4", label: __("H4", "ultimate-blocks") },
+							{ value: "h5", label: __("H5", "ultimate-blocks") },
+							{ value: "h6", label: __("H6", "ultimate-blocks") },
+							{ value: "p", label: __("P", "ultimate-blocks") }
+						]}
+						value={titleTag}
+						onChange={titleTag => setAttributes({ titleTag })}
+					/>
+				</div>
 			</InspectorControls>,
 			<div
 				className="wp-block-ub-content-toggle-accordion"
