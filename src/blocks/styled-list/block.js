@@ -54,7 +54,7 @@ registerBlockType("ub/styled-list", {
 		},
 		alignment: {
 			type: "string",
-			default: "flex-start"
+			default: "left"
 		},
 		iconColor: {
 			type: "string",
