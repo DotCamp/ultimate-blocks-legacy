@@ -1,9 +1,6 @@
 @import "../../common";
 
-.ub_review_average_stars {
-	float: right;
-}
-
+.ub_review_average_stars,
 .ub_review_entry .dashicons-trash {
 	float: right;
 }
@@ -29,4 +26,13 @@
 
 .ub_review_upload_button {
 	align-self: center;
+}
+.ub_review_summary .ub_review_overall_value {
+	display: flex;
+	> .rich-text {
+		flex-basis: 75%;
+	}
+	> .ub_review_average {
+		flex-basis: 25%;
+	}
 }

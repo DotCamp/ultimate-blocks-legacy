@@ -2,8 +2,8 @@ const { RichText, MediaUpload, URLInput } = wp.blockEditor || wp.editor;
 const { Button, Dashicon } = wp.components;
 const { __ } = wp.i18n;
 
-import { removeIcon } from './icon';
-import { Component } from 'react';
+import { removeIcon } from "./icon";
+import { Component } from "react";
 
 export class OldStars extends Component {
 	constructor(props) {
@@ -24,8 +24,8 @@ export class OldStars extends Component {
 				className={className}
 				style={Object.assign(
 					{
-						display: 'flex',
-						flexDirection: 'flex-row'
+						display: "flex",
+						flexDirection: "flex-row"
 					},
 					style
 				)}
@@ -37,11 +37,7 @@ export class OldStars extends Component {
 								<rect
 									height="150"
 									width={
-										(value - i > 0
-											? value - i < 1
-												? value - i
-												: 1
-											: 0) * 150
+										(value - i > 0 ? (value - i < 1 ? value - i : 1) : 0) * 150
 									}
 									y="0"
 									x="0"
@@ -130,8 +126,8 @@ export class Stars extends Component {
 				className={className}
 				style={Object.assign(
 					{
-						display: 'flex',
-						flexDirection: 'flex-row'
+						display: "flex",
+						flexDirection: "flex-row"
 					},
 					style
 				)}
@@ -192,9 +188,8 @@ export class ReviewBody extends Component {
 		super(props);
 		this.state = {
 			average:
-				this.props.items
-					.map(i => i.value)
-					.reduce((total, v) => total + v) / this.props.items.length
+				this.props.items.map(i => i.value).reduce((total, v) => total + v) /
+				this.props.items.length
 		};
 	}
 
@@ -241,8 +236,7 @@ export class ReviewBody extends Component {
 		const { average } = this.state;
 
 		const newAverage =
-			items.map(i => i.value).reduce((total, v) => total + v) /
-			items.length;
+			items.map(i => i.value).reduce((total, v) => total + v) / items.length;
 
 		if (average !== newAverage) {
 			this.setState({ average: newAverage });
@@ -253,19 +247,19 @@ export class ReviewBody extends Component {
 				<RichText
 					className="ub_review_item_name"
 					tagName="p"
-					placeholder={__('Title of the review')}
+					placeholder={__("Title of the review")}
 					value={itemName}
 					style={{ textAlign: titleAlign }}
 					onChange={text => setItemName(text)}
-					unstableOnFocus={_ => setEditable('reviewTitle')}
+					unstableOnFocus={_ => setEditable("reviewTitle")}
 				/>
 				<RichText
 					tagName="p"
-					placeholder={__('Review Author name')}
+					placeholder={__("Review Author name")}
 					value={authorName}
 					style={{ textAlign: authorAlign }}
 					onChange={text => setAuthorName(text)}
-					unstableOnFocus={_ => setEditable('reviewAuthor')}
+					unstableOnFocus={_ => setEditable("reviewAuthor")}
 				/>
 				{(imageEnabled || descriptionEnabled) && (
 					<div className="ub_review_description_container">
@@ -273,31 +267,25 @@ export class ReviewBody extends Component {
 							<RichText
 								className="ub_review_description"
 								tagName="p"
-								placeholder={__('Item description')}
+								placeholder={__("Item description")}
 								value={description}
 								onChange={text => setDescription(text)}
 								style={{ textAlign: descriptionAlign }}
-								unstableOnFocus={_ =>
-									setEditable('reviewItemDescription')
-								}
+								unstableOnFocus={_ => setEditable("reviewItemDescription")}
 							/>
 						)}
 						{imageEnabled &&
 							(imgID ? (
 								<div className="ub_review_image_container">
-									<img
-										className="ub_review_image"
-										src={imgURL}
-										alt={imgAlt}
-									/>
+									<img className="ub_review_image" src={imgURL} alt={imgAlt} />
 									{isSelected ? (
 										<Button
 											className="ub-remove-image"
 											onClick={_ =>
 												setImage({
 													id: 0,
-													url: '',
-													alt: ''
+													url: "",
+													alt: ""
 												})
 											}
 										>
@@ -316,7 +304,7 @@ export class ReviewBody extends Component {
 												className="components-button button button-medium"
 												onClick={open}
 											>
-												{__('Upload Image')}
+												{__("Upload Image")}
 											</Button>
 										)}
 									/>
@@ -327,43 +315,38 @@ export class ReviewBody extends Component {
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText
-							style={{ marginRight: 'auto' }}
+							style={{ marginRight: "auto" }}
 							key={i}
-							placeholder={__('Feature name')}
+							placeholder={__("Feature name")}
 							value={j.label}
 							onChange={text => {
 								let newArray = items;
 								newArray[i].label = text;
 								setItems(newArray);
 							}}
-							unstableOnFocus={_ => setEditable('')}
+							unstableOnFocus={_ => setEditable("")}
 						/>
 						<div
 							key={i}
 							style={{
-								marginLeft: 'auto',
+								marginLeft: "auto",
 								minWidth: items.length > 1 ? 120 : 100
 							}}
 						>
 							{items.length > 1 && (
 								<div
 									className="dashicons dashicons-trash"
-									//style={{ float: 'right' }}
 									onClick={_ => {
-										setEditable('');
+										setEditable("");
 										let newItems = items
 											.slice(0, i)
-											.concat(
-												items.slice(i + 1, items.length)
-											);
+											.concat(items.slice(i + 1, items.length));
 										setItems(newItems);
 										this.setState({
 											average:
 												newItems
 													.map(i => i.value)
-													.reduce(
-														(total, v) => total + v
-													) / newItems.length
+													.reduce((total, v) => total + v) / newItems.length
 										});
 									}}
 								/>
@@ -381,9 +364,7 @@ export class ReviewBody extends Component {
 										average:
 											newArray
 												.map(i => i.value)
-												.reduce(
-													(total, v) => total + v
-												) / newArray.length
+												.reduce((total, v) => total + v) / newArray.length
 									});
 								}}
 								inactiveStarColor={inactiveStarColor}
@@ -395,30 +376,30 @@ export class ReviewBody extends Component {
 					</div>
 				))}
 				<div
-					title={__('Insert new review entry')}
-					onClick={() => {
-						setItems([...items, { label: '', value: 0 }]);
+					title={__("Insert new review entry")}
+					onClick={_ => {
+						setItems([...items, { label: "", value: 0 }]);
 						this.setState({
 							average: average / (items.length + 1)
 						});
 					}}
 					className="ub_review_add_entry dashicons dashicons-plus-alt"
 				/>
-				<div clasName="ub_review_summary">
+				<div className="ub_review_summary">
 					<RichText
 						className="ub_review_summary_title"
-						placeholder={__('Title of the summary goes here')}
+						placeholder={__("Title of the summary goes here")}
 						tagName="p"
 						onChange={text => setSummaryTitle(text)}
 						value={summaryTitle}
-						unstableOnFocus={_ => setEditable('')}
+						unstableOnFocus={_ => setEditable("")}
 					/>
 					<div className="ub_review_overall_value">
 						<RichText
-							placeholder={__('Summary of the review goes here')}
+							placeholder={__("Summary of the review goes here")}
 							onChange={text => setSummaryDescription(text)}
 							value={summaryDescription}
-							unstableOnFocus={_ => setEditable('')}
+							unstableOnFocus={_ => setEditable("")}
 						/>
 						<div className="ub_review_average">
 							<span className="ub_review_rating">
@@ -452,12 +433,10 @@ export class ReviewBody extends Component {
 										style={{
 											color: callToActionForeColor
 										}}
-										placeholder={__('Call to action')}
+										placeholder={__("Call to action")}
 										value={callToActionText}
-										onChange={text =>
-											setCallToActionText(text)
-										}
-										unstableOnFocus={_ => setEditable('')}
+										onChange={text => setCallToActionText(text)}
+										unstableOnFocus={_ => setEditable("")}
 									/>
 								</div>
 							)}
@@ -466,11 +445,11 @@ export class ReviewBody extends Component {
 					{hasFocus && enableCTA && (
 						<div className="ub_review_link_input">
 							<div className="ub-icon-holder">
-								<Dashicon icon={'admin-links'} />
+								<Dashicon icon={"admin-links"} />
 							</div>
 							<URLInput
 								autoFocus={false}
-								style={{ width: '200px' }} //inline style used to override gutenberg's default style
+								style={{ width: "200px" }} //inline style used to override gutenberg's default style
 								value={callToActionURL}
 								onChange={text => setCallToActionURL(text)}
 							/>
