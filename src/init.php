@@ -47,7 +47,8 @@ function ub_check_is_gutenberg_page() {
  */
 
 function ub_load_assets() {
-    if (filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') <
+    if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') &&
+        filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') <
         filemtime(dirname(__DIR__) . '/dist/blocks.style.build.css')){
         $frontStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css', 'w');
         $blockDir = dirname(__DIR__) . '/src/blocks/';
@@ -553,7 +554,8 @@ function ultimate_blocks_cgb_editor_assets() {
 
     // Styles.
 
-    if (filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') <
+    if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') && 
+        filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') <
         filemtime(dirname(__DIR__) . '/dist/blocks.editor.build.css')){
         $adminStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css', 'w');
         $blockDir = dirname(__DIR__) . '/src/blocks/';
