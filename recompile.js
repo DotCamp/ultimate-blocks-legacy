@@ -1,6 +1,6 @@
 const sass = require("node-sass");
-const { writeFile } = require("fs");
-const { transformFile } = require("@babel/core");
+const { writeFile, writeFileSync } = require("fs");
+const { transformFileSync } = require("@babel/core");
 const { resolve } = require("path");
 const { readdir } = require("fs").promises;
 
@@ -9,43 +9,29 @@ const { readdir } = require("fs").promises;
 	let newFrontendStyle = "";
 	for await (const f of getFiles(__dirname + "\\src")) {
 		if (f.endsWith("editor.scss") || f.endsWith("style.scss")) {
-			sass.render(
-				{
+			try {
+				const result = sass.renderSync({
 					file: f,
 					outputStyle: "compressed"
-				},
-				function(error, result) {
-					if (error) {
-						console.log(error.status);
-					} else {
-						writeFile(
-							f.replace(/.scss$/, ".css"),
-							result.css.toString(),
-							err => {
-								if (err) throw err;
-							}
-						);
-						if (f.endsWith("editor.scss")) {
-							newEditorStyle += result.css.toString();
-						} else {
-							newFrontendStyle += result.css.toString();
-						}
-					}
+				});
+				writeFileSync(f.replace(/.scss$/, ".css"), result.css.toString());
+				if (f.endsWith("editor.scss")) {
+					newEditorStyle += result.css.toString();
+				} else {
+					newFrontendStyle += result.css.toString();
 				}
-			);
+			} catch (err) {
+				console.log(err);
+			}
 		} else if (f.endsWith("front.js")) {
-			transformFile(f, (err, result) => {
-				if (err) console.log(err);
-				else {
-					writeFile(
-						`${f.slice(0, f.lastIndexOf("\\"))}\\front.build.js`,
-						result.code,
-						err => {
-							if (err) throw err;
-						}
-					);
-				}
-			});
+			try {
+				writeFileSync(
+					`${f.slice(0, f.lastIndexOf("\\"))}\\front.build.js`,
+					transformFileSync(f).code
+				);
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	}
 
