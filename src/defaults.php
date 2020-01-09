@@ -745,6 +745,10 @@ $defaultValues = array(
             'starOutlineColor' => array(
                 'type' => 'string',
                 'default' => '#000000'
+            ),
+            'imageSize' => array(
+                'type' => 'number',
+                'default' => 100
             )
         )
     ),

@@ -229,7 +229,8 @@ export class ReviewBody extends Component {
 			starOutlineColor,
 			setEditable,
 			alignments,
-			enableCTA
+			enableCTA,
+			imageSize
 		} = this.props;
 
 		const { titleAlign, authorAlign, descriptionAlign } = alignments;
@@ -277,8 +278,16 @@ export class ReviewBody extends Component {
 						{imageEnabled &&
 							(imgID ? (
 								<div className="ub_review_image_container">
-									<img className="ub_review_image" src={imgURL} alt={imgAlt} />
-									{isSelected ? (
+									<img
+										className="ub_review_image"
+										src={imgURL}
+										alt={imgAlt}
+										style={{
+											maxHeight: `${imageSize}px`,
+											maxWidth: `${imageSize}px`
+										}}
+									/>
+									{isSelected && (
 										<Button
 											className="ub-remove-image"
 											onClick={_ =>
@@ -291,7 +300,7 @@ export class ReviewBody extends Component {
 										>
 											{removeIcon}
 										</Button>
-									) : null}
+									)}
 								</div>
 							) : (
 								<div className="ub_review_upload_button">

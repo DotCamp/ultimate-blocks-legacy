@@ -365,6 +365,10 @@ function ub_include_block_attribute_css() {
                         'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
                         'border-color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
                         'background-color: ' . $attributes['callToActionBackColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .ub_review_image{' . PHP_EOL .
+                        'max-height: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
+                        'max-width: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
                 case 'ub/social-share':

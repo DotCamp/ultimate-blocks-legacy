@@ -13,7 +13,14 @@ const { registerBlockType } = wp.blocks;
 const { BlockControls, InspectorControls, PanelColorSettings } =
 	wp.blockEditor || wp.editor;
 
-const { Toolbar, IconButton, FormToggle, PanelBody, PanelRow } = wp.components;
+const {
+	Toolbar,
+	IconButton,
+	FormToggle,
+	PanelBody,
+	PanelRow,
+	RangeControl
+} = wp.components;
 const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
 
@@ -132,6 +139,10 @@ const attributes = {
 	starOutlineColor: {
 		type: "string",
 		default: "#000000"
+	},
+	imageSize: {
+		type: "number",
+		default: 100 //range: 0-200
 	}
 };
 
@@ -178,7 +189,8 @@ registerBlockType("ub/review", {
 			ctaOpenInNewTab,
 			enableReviewSchema,
 			enableImage,
-			enableDescription
+			enableDescription,
+			imageSize
 		} = props.attributes;
 
 		if (blockID !== block.clientId) {
@@ -348,38 +360,49 @@ registerBlockType("ub/review", {
 								}}
 							/>
 						</PanelRow>
-						{enableReviewSchema && [
-							<PanelRow>
-								<label htmlFor="ub-review-image-toggle">
-									{__("Enable review image")}
-								</label>
-								<FormToggle
-									id="ub-review-image-toggle"
-									label={__("Enable review image")}
-									checked={enableImage}
-									onChange={_ =>
-										setAttributes({
-											enableImage: !enableImage
-										})
-									}
-								/>
-							</PanelRow>,
-							<PanelRow>
-								<label htmlFor="ub-review-description-toggle">
-									{__("Enable review description")}
-								</label>
-								<FormToggle
-									id="ub-review-description-toggle"
-									label={__("Enable review description")}
-									checked={enableDescription}
-									onChange={_ =>
-										setAttributes({
-											enableDescription: !enableDescription
-										})
-									}
-								/>
-							</PanelRow>
-						]}
+						{enableReviewSchema && (
+							<React.Fragment>
+								<PanelRow>
+									<label htmlFor="ub-review-image-toggle">
+										{__("Enable review image")}
+									</label>
+									<FormToggle
+										id="ub-review-image-toggle"
+										label={__("Enable review image")}
+										checked={enableImage}
+										onChange={_ =>
+											setAttributes({
+												enableImage: !enableImage
+											})
+										}
+									/>
+								</PanelRow>
+								<PanelRow>
+									<RangeControl
+										label="Image size"
+										value={imageSize}
+										onChange={imageSize => setAttributes({ imageSize })}
+										min={1}
+										max={200}
+									/>
+								</PanelRow>
+								<PanelRow>
+									<label htmlFor="ub-review-description-toggle">
+										{__("Enable review description")}
+									</label>
+									<FormToggle
+										id="ub-review-description-toggle"
+										label={__("Enable review description")}
+										checked={enableDescription}
+										onChange={_ =>
+											setAttributes({
+												enableDescription: !enableDescription
+											})
+										}
+									/>
+								</PanelRow>
+							</React.Fragment>
+						)}
 					</PanelBody>
 				</InspectorControls>
 			),
@@ -452,6 +475,7 @@ registerBlockType("ub/review", {
 				alignments={{ titleAlign, authorAlign, descriptionAlign }}
 				enableCTA={enableCTA}
 				ctaNoFollow={ctaNoFollow}
+				imageSize={imageSize}
 			/>
 		];
 	}),
