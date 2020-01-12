@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 const {
 	RichText,
 	InspectorControls,
@@ -64,6 +64,16 @@ registerBlockType("ub/styled-list", {
 			type: "number",
 			default: 5,
 		},
+	},
+	transforms: {
+		from: [
+			{
+				type: "block",
+				blocks: "core/list",
+				transform: attributes =>
+					createBlock("ub/styled-list", { list: attributes.values })
+			}
+		]
 	},
 	keywords: [__("List"), __("Styled List"), __("Ultimate Blocks")],
 	edit: compose([
