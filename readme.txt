@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.1.9
+Stable tag: 2.2.0
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -126,6 +126,25 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.2.0 =
+
+Release Date: January 14th, 2020
+
+ADD: Prevent Filter selection reset when only one filter is selected in Content Filter Block.
+ADD: Allow customizing tag used for toggle title in Content Toggle (Accordion) Block.
+ADD: Option for preventing panels from being toggled in Content Toggle Block.
+ADD: Allow resizing of review image in Review Block.
+FIX: Display issue when image slider is inside content filter, content toggle, expand, tabbed content.
+FIX: Display issue when selecting inline images in Review Block.
+FIX: Move image and description in review JSONLD to under itemReviewed for Review Block.
+FIX: Alignment bug in Styled List Block.
+FIX: Default Alignment in Editor for Table of Contents Block.
+FIX: Frontend script bug when nested Tabbed Content Blocks are present.
+FIX: Default frontend alignment for Table of Contents block.
+FIX: Block Manager bug.
+FIX: PHP errors when CSS files are absent in uploads folder.
+REMOVE: Unused FontAwesome CSS in Styled List Block.
 
 = 2.1.9 =
 
