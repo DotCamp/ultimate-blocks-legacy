@@ -32,9 +32,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-but
       return child.classList.contains("ub-expand-full");
     })[0];
     expandingPart.classList.toggle("ub-hide");
-    var flickityInstances = Array.prototype.slice.call(expandingPart.children).filter(function (child) {
-      return child.classList.contains("ub_image_slider");
-    });
+    var flickityInstances = Array.prototype.slice.call(expandingPart.querySelectorAll(".ub_image_slider"));
     flickityInstances.forEach(function (instance) {
       var slider = Flickity.data(instance.querySelector("[data-flickity]"));
       slider.resize();

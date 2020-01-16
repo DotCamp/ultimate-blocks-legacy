@@ -77,9 +77,9 @@ function ub_handleTabEvent(tab) {
 			if (ub_getNodeindex(tab) === i) {
 				tabContent.classList.add("active");
 				tabContent.classList.remove("ub-hide");
-				let flickityInstances = Array.prototype.slice
-					.call(tabContent.children)
-					.filter(child => child.classList.contains("ub_image_slider"));
+				let flickityInstances = Array.prototype.slice.call(
+					tabContent.querySelectorAll(".ub_image_slider")
+				);
 
 				flickityInstances.forEach(instance => {
 					let slider = Flickity.data(instance.querySelector("[data-flickity]"));

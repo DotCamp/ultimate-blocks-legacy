@@ -38,9 +38,9 @@ Array.prototype.slice
 
 			expandingPart.classList.toggle("ub-hide");
 
-			let flickityInstances = Array.prototype.slice
-				.call(expandingPart.children)
-				.filter(child => child.classList.contains("ub_image_slider"));
+			let flickityInstances = Array.prototype.slice.call(
+				expandingPart.querySelectorAll(".ub_image_slider")
+			);
 
 			flickityInstances.forEach(instance => {
 				let slider = Flickity.data(instance.querySelector("[data-flickity]"));

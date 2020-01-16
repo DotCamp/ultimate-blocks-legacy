@@ -52,9 +52,7 @@ function ub_handleTabEvent(tab) {
     if (ub_getNodeindex(tab) === i) {
       tabContent.classList.add("active");
       tabContent.classList.remove("ub-hide");
-      var flickityInstances = Array.prototype.slice.call(tabContent.children).filter(function (child) {
-        return child.classList.contains("ub_image_slider");
-      });
+      var flickityInstances = Array.prototype.slice.call(tabContent.querySelectorAll(".ub_image_slider"));
       flickityInstances.forEach(function (instance) {
         var slider = Flickity.data(instance.querySelector("[data-flickity]"));
         slider.resize();
