@@ -465,7 +465,7 @@ registerBlockType("ub/styled-box", {
 						</div>
 						<div onClick={_ => setAttributes({ mode: "number" })}>
 							{numberBoxIcon}
-							<p>{__("Number Nox")}</p>
+							<p>{__("Number Box")}</p>
 							<p>{__("Add Numbered Boxes.")}</p>
 						</div>
 					</div>

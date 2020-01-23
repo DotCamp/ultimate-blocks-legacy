@@ -1,29 +1,24 @@
-# Copyright (C) 2019 Ultimate Blocks
+# Copyright (C) 2019 - 2020 Ultimate Blocks
 # This file is distributed under the same license as the Ultimate Blocks - Custom Gutenberg Blocks plugin.
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Blocks - Custom Gutenberg Blocks 1.1.4\n"
+"Project-Id-Version: Ultimate Blocks - Custom Gutenberg Blocks 2.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ultimate-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-03-23T00:40:12+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.1.0\n"
-"X-Domain: ultimate-blocks\n"
 
-#. Plugin Name of the plugin
-msgid "Ultimate Blocks - Custom Gutenberg Blocks"
-msgstr ""
-
-#. Plugin URI of the plugin
-msgid "https://ultimateblocks.com"
-msgstr ""
-
-#. Description of the plugin
-msgid "Custom Blocks for Bloggers and Marketers. Create Better Content With Gutenberg."
+#: admin/class-ultimate-blocks-admin.php:357
+msgid ""
+"Hey,<br> I noticed that you have been using <strong>Ultimate Blocks "
+"Plugin</strong> for a while now - that’s awesome! Could you please do me a "
+"BIG favor and <b>give it a 5-star rating on WordPress</b>? Just to help us "
+"spread the word and boost our motivation. <br>~ Imtiaz Rayhan<br>~ Lead "
+"Developer, Ultimate Blocks."
 msgstr ""
 
 #. Author of the plugin
@@ -31,8 +26,53 @@ msgstr ""
 msgid "Ultimate Blocks"
 msgstr ""
 
-#. Author URI of the plugin
-msgid "https://ultimateblocks.com/"
+#: admin/templates/help/help-page.php:20
+msgid "Welcome to Ultimate Blocks!"
+msgstr ""
+
+#: admin/templates/help/help-page.php:21
+msgid "Essential Collection of Blocks for Gutenberg Editor"
+msgstr ""
+
+#: admin/templates/help/help-page.php:24
+msgid ""
+"Ultimate Blocks comes with the essential Gutenberg blocks you need to create "
+"better content with Gutenberg."
+msgstr ""
+
+#: admin/templates/help/help-page.php:25
+msgid "19 awesome blocks."
+msgstr ""
+
+#: admin/templates/help/help-page.php:25
+msgid "More in the making..."
+msgstr ""
+
+#: admin/templates/help/help-page.php:29
+msgid "Manage the Blocks"
+msgstr ""
+
+#: admin/templates/help/help-page.php:35
+msgid "Learn More"
+msgstr ""
+
+#: admin/templates/help/help-page.php:44
+msgid "Stay Connected with Us!"
+msgstr ""
+
+#: admin/templates/help/help-page.php:45
+msgid ""
+"For upcoming plugins updates, news, tips and tutorials on Gutenberg in "
+"general you can stay connected with us."
+msgstr ""
+
+#: admin/templates/help/help-page.php:49
+msgid "Follow Us On Twitter!"
+msgstr ""
+
+#: admin/templates/help/help-page.php:55
+#: admin/templates/menus/main-menu.php:61
+msgid "Join Our Facebook Group!"
 msgstr ""
 
 #: admin/templates/menus/main-menu.php:22
@@ -48,78 +88,896 @@ msgid "Disabled"
 msgstr ""
 
 #: admin/templates/menus/main-menu.php:36
+#, php-format
 msgid "%s"
 msgstr ""
 
-#: admin/templates/help/help-page.php:20
-msgid "Welcome to Ultimate Blocks!"
+#: admin/templates/menus/main-menu.php:52
+msgid "Further Actions"
 msgstr ""
 
-#: admin/templates/help/help-page.php:21
-msgid "Essential Collection of Blocks for Gutenberg Editor"
+#: admin/templates/menus/main-menu.php:54
+msgid "Create New Post"
 msgstr ""
 
-#: admin/templates/help/help-page.php:24
-msgid "Ultimate Blocks comes with the essential Gutenberg blocks you need to create better content with Gutenberg."
+#: admin/templates/menus/main-menu.php:55
+msgid "Edit Posts"
 msgstr ""
 
-#: admin/templates/help/help-page.php:25
-msgid "17 awesome blocks."
+#: admin/templates/menus/main-menu.php:59
+msgid "Stay Connected with Us"
 msgstr ""
 
-#: admin/templates/help/help-page.php:25
-msgid "More in the making..."
+#: admin/templates/menus/main-menu.php:62
+msgid "Follow Us on Twitter!"
 msgstr ""
 
-#: admin/templates/help/help-page.php:29
-msgid "Manage the Blocks"
+#: includes/class-ultimate-blocks-category.php:59
+#: src/blocks/button/block.js:128 src/blocks/button/block.js:283
+#: src/blocks/call-to-action/block.js:134
+#: src/blocks/call-to-action/block.js:307
+#: src/blocks/click-to-tweet/block.js:30 src/blocks/content-toggle/block.js:93
+#: src/blocks/content-toggle/block.js:193 src/blocks/countdown/block.js:20
+#: src/blocks/divider/block.js:61 src/blocks/feature-box/block.js:138
+#: src/blocks/feature-box/block.js:340 src/blocks/image-slider/block.js:84
+#: src/blocks/notification-box/block.js:64
+#: src/blocks/notification-box/block.js:181 src/blocks/number-box/block.js:127
+#: src/blocks/number-box/block.js:368 src/blocks/post-grid/block.js:29
+#: src/blocks/progress-bar/block.js:25 src/blocks/review/block.js:153
+#: src/blocks/social-share/block.js:53 src/blocks/styled-list/block.js:68
+#: src/blocks/tabbed-content/block.js:119
+#: src/blocks/tabbed-content/block.js:237
+#: src/blocks/table-of-contents/block.js:78
+#: src/blocks/table-of-contents/block.js:257
+#: src/blocks/testimonial/block.js:90 src/blocks/testimonial/block.js:226
+msgid "Ultimate Blocks"
+msgstr ""
+
+#: src/common.js:45
+msgid ""
+"We have made some improvements to this block. Click here to upgrade the "
+"block. You will not lose any content."
+msgstr ""
+
+#: src/blocks/button/block.js:122 src/blocks/button/block.js:276
+msgid "Button (Improved)"
+msgstr ""
+
+#: src/blocks/button/block.js:126 src/blocks/button/block.js:281
+msgid "Button"
+msgstr ""
+
+#: src/blocks/button/block.js:127 src/blocks/button/block.js:282
+msgid "Buttons"
+msgstr ""
+
+#: src/blocks/call-to-action/block.js:128
+#: src/blocks/call-to-action/block.js:301
+msgid "Call to Action"
+msgstr ""
+
+#: src/blocks/call-to-action/block.js:132
+#: src/blocks/call-to-action/block.js:305
+msgid "call to action"
+msgstr ""
+
+#: src/blocks/call-to-action/block.js:133
+#: src/blocks/call-to-action/block.js:306
+msgid "conversion"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:27
+#: src/blocks/click-to-tweet/block.js:150
+#: src/blocks/click-to-tweet/block.php:56
+msgid "Click to Tweet"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:30
+msgid "Click to tweet"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:30
+msgid "Twitter"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:88
+msgid "Click to Tweet Settings"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:90
+msgid "Twitter Username"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:96
+msgid "Font Size"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:105
+#: src/blocks/content-toggle/components/editorDisplay.js:395
+#: src/blocks/content-toggle/components/panel.js:93
+#: src/blocks/styled-box/block.js:389
+msgid "Color Scheme"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:114
+msgid "Tweet Color"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:122 src/blocks/styled-box/block.js:414
+msgid "Border Color"
+msgstr ""
+
+#: src/blocks/click-to-tweet/block.js:141
+msgid "Add Tweetable Content Here"
+msgstr ""
+
+#: src/blocks/content-filter/block.js:52
+#: src/blocks/content-filter/block.js:135
+msgid "Content Filter"
+msgstr ""
+
+#: src/blocks/content-filter/block.js:55
+#: src/blocks/content-filter/block.js:138
+msgid "Filtering"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:140
+#: src/blocks/content-filter/components/editorDisplay.js:562
+msgid "Filter Colors"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:155
+#: src/blocks/content-filter/components/editorDisplay.js:577
+msgid "Filter Tag Color"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:169
+#: src/blocks/content-filter/components/editorDisplay.js:591
+msgid "Filter Tag Text Color"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:178
+#: src/blocks/content-filter/components/editorDisplay.js:599
+msgid "Active Filter Tag Color"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:187
+#: src/blocks/content-filter/components/editorDisplay.js:607
+msgid "Active Filter Tag Text Color"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:249
+#: src/blocks/content-filter/components/editorDisplay.js:655
+msgid "Delete This Filter Category"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:287
+#: src/blocks/content-filter/components/editorDisplay.js:693
+msgid "Delete This Filter"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:378
+#: src/blocks/content-filter/components/editorDisplay.js:792
+msgid "Allow multiple selections"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:402
+#: src/blocks/content-filter/components/editorDisplay.js:816
+msgid "Add New Category"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:420
+#: src/blocks/content-filter/components/editorDisplay.js:834
+msgid "Add new content"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:611
+msgid "Panel Visibility"
+msgstr ""
+
+#: src/blocks/content-filter/components/editorDisplay.js:613
+msgid "Initially show all content panels"
+msgstr ""
+
+#: src/blocks/content-toggle/block.js:87
+#: src/blocks/content-toggle/block.js:187
+msgid "Content Toggle"
+msgstr ""
+
+#: src/blocks/content-toggle/block.js:91
+#: src/blocks/content-toggle/block.js:191
+msgid "Content Accordion"
+msgstr ""
+
+#: src/blocks/content-toggle/block.js:92
+#: src/blocks/content-toggle/block.js:192
+msgid "Toggle Collapse"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:401
+#: src/blocks/content-toggle/components/panel.js:99
+msgid "Container Color"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:406
+#: src/blocks/content-toggle/components/panel.js:104
+msgid "Title Color"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:410
+#: src/blocks/content-toggle/components/panel.js:108
+msgid "Initial State"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:412
+#: src/blocks/content-toggle/components/editorDisplay.js:415
+#: src/blocks/content-toggle/components/panel.js:110
+#: src/blocks/content-toggle/components/panel.js:113
+msgid "Collapsed"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:423
+#: src/blocks/content-toggle/components/editorDisplay.js:427
+#: src/blocks/content-toggle/components/panel.js:126
+#: src/blocks/content-toggle/components/panel.js:130
+msgid "Prevent collapse"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:434
+#: src/blocks/content-toggle/components/panel.js:139
+msgid "FAQ Schema"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:437
+#: src/blocks/content-toggle/components/editorDisplay.js:441
+#: src/blocks/content-toggle/components/panel.js:142
+#: src/blocks/content-toggle/components/panel.js:146
+msgid "Enable FAQ Schema"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:458
+#: src/blocks/content-toggle/components/panel.js:163
+msgid "Select Heading Tag"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:461
+#: src/blocks/content-toggle/components/panel.js:166
+msgid "H1"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:462
+#: src/blocks/content-toggle/components/panel.js:167
+msgid "H2"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:463
+#: src/blocks/content-toggle/components/panel.js:168
+msgid "H3"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:464
+#: src/blocks/content-toggle/components/panel.js:169
+msgid "H4"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:465
+#: src/blocks/content-toggle/components/panel.js:170
+msgid "H5"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:466
+#: src/blocks/content-toggle/components/panel.js:171
+msgid "H6"
+msgstr ""
+
+#: src/blocks/content-toggle/components/editorDisplay.js:467
+#: src/blocks/content-toggle/components/panel.js:172
+msgid "P"
+msgstr ""
+
+#: src/blocks/content-toggle/components/panel.js:194
+msgid "Panel Title"
+msgstr ""
+
+#: src/blocks/content-toggle/components/panel.js:215
+msgid "Insert New Toggle Above"
+msgstr ""
+
+#: src/blocks/content-toggle/components/panel.js:220
+msgid "Delete This Toggle"
+msgstr ""
+
+#: src/blocks/content-toggle/components/panel.js:227
+msgid "Insert New Toggle Below"
+msgstr ""
+
+#: src/blocks/content-toggle/components/panel.js:238
+#: src/blocks/content-toggle/components/panel.js:315
+msgid "Content Toggle Panel"
+msgstr ""
+
+#: src/blocks/countdown/block.js:17 src/blocks/countdown/block.js:20
+msgid "Countdown"
+msgstr ""
+
+#: src/blocks/countdown/block.js:20
+msgid "Timer"
+msgstr ""
+
+#: src/blocks/countdown/block.js:72
+msgid "Circle Color"
+msgstr ""
+
+#: src/blocks/countdown/block.js:86
+msgid "Timer expiration"
+msgstr ""
+
+#: src/blocks/countdown/block.js:104
+msgid "Regular"
+msgstr ""
+
+#: src/blocks/countdown/block.js:110
+msgid "Circular"
+msgstr ""
+
+#: src/blocks/countdown/block.js:116
+msgid "Odometer"
+msgstr ""
+
+#: src/blocks/countdown/block.js:142
+msgid "Text to show after the countdown is over"
 msgstr ""
 
 #: src/blocks/countdown/block.php:14
 msgid "weeks"
 msgstr ""
 
-#: src/blocks/countdown/block.php:14
+#: src/blocks/countdown/block.php:15
 msgid "days"
 msgstr ""
 
-#: src/blocks/countdown/block.php:14
+#: src/blocks/countdown/block.php:16
 msgid "hours"
 msgstr ""
 
-#: src/blocks/countdown/block.php:14
+#: src/blocks/countdown/block.php:17
 msgid "minutes"
 msgstr ""
 
-#: src/blocks/countdown/block.php:14
+#: src/blocks/countdown/block.php:18
 msgid "seconds"
 msgstr ""
 
-#: src/blocks/countdown/block.php:39
-#: src/blocks/countdown/block.php:59
+#: src/blocks/countdown/block.php:41 src/blocks/countdown/block.php:53
 msgid "Weeks"
 msgstr ""
 
-#: src/blocks/countdown/block.php:40
-#: src/blocks/countdown/block.php:59
+#: src/blocks/countdown/block.php:42 src/blocks/countdown/block.php:53
 msgid "Days"
 msgstr ""
 
-#: src/blocks/countdown/block.php:41
-#: src/blocks/countdown/block.php:59
+#: src/blocks/countdown/block.php:43 src/blocks/countdown/block.php:54
 msgid "Hours"
 msgstr ""
 
-#: src/blocks/countdown/block.php:42
-#: src/blocks/countdown/block.php:60
+#: src/blocks/countdown/block.php:44 src/blocks/countdown/block.php:54
 msgid "Minutes"
 msgstr ""
 
-#: src/blocks/countdown/block.php:43
-#: src/blocks/countdown/block.php:60
+#: src/blocks/countdown/block.php:45 src/blocks/countdown/block.php:54
 msgid "Seconds"
 msgstr ""
 
-#: src/blocks/click-to-tweet/block.php:48
-msgid "Click to Tweet"
+#: src/blocks/divider/block.js:58 src/blocks/divider/block.js:61
+msgid "Divider"
+msgstr ""
+
+#: src/blocks/divider/block.js:61
+msgid "Separator"
+msgstr ""
+
+#: src/blocks/divider/block.js:96
+msgid "Divider Settings"
+msgstr ""
+
+#: src/blocks/divider/block.js:98 src/blocks/progress-bar/block.js:126
+msgid "Thickness"
+msgstr ""
+
+#: src/blocks/divider/block.js:108 src/blocks/image-slider/block.js:220
+msgid "Height"
+msgstr ""
+
+#: src/blocks/divider/block.js:117 src/blocks/progress-bar/block.js:114
+#: src/blocks/star-rating/components.js:50
+msgid "Color"
+msgstr ""
+
+#: src/blocks/expand/block.js:17
+msgid "Expand"
+msgstr ""
+
+#: src/blocks/expand/block.js:20
+msgid "Preview"
+msgstr ""
+
+#: src/blocks/expand/block.js:20
+msgid "Hidden Content"
+msgstr ""
+
+#: src/blocks/expand/block.js:62
+msgid "Expand Portion"
+msgstr ""
+
+#: src/blocks/expand/block.js:150
+msgid "full"
+msgstr ""
+
+#: src/blocks/feature-box/block.js:135 src/blocks/feature-box/block.js:138
+#: src/blocks/feature-box/block.js:337 src/blocks/feature-box/block.js:340
+#: src/blocks/styled-box/block.js:463
+msgid "Feature Box"
+msgstr ""
+
+#: src/blocks/feature-box/block.js:138 src/blocks/feature-box/block.js:340
+msgid "Column"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:81 src/blocks/image-slider/block.js:84
+msgid "Image Slider"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:84
+msgid "Slideshow"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:146
+msgid "Edit selection"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:172
+msgid "Slider Settings"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:174
+msgid "Wrap around"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:182
+msgid "Allow dragging"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:190
+msgid "Show page dots"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:198
+msgid "Enable autoplay"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:207
+msgid "Autoplay duration (seconds)"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:287
+msgid "Caption goes here"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:324
+msgid "Upload an image"
+msgstr ""
+
+#: src/blocks/image-slider/block.js:351
+msgid "Apply"
+msgstr ""
+
+#: src/blocks/notification-box/block.js:61
+#: src/blocks/notification-box/block.js:178 src/blocks/styled-box/block.js:458
+msgid "Notification Box"
+msgstr ""
+
+#: src/blocks/notification-box/block.js:64
+#: src/blocks/notification-box/block.js:181
+msgid "notification"
+msgstr ""
+
+#: src/blocks/notification-box/block.js:64
+#: src/blocks/notification-box/block.js:181
+msgid "warning info"
+msgstr ""
+
+#: src/blocks/number-box/block.js:124 src/blocks/number-box/block.js:365
+msgid "Number Box"
+msgstr ""
+
+#: src/blocks/number-box/block.js:127 src/blocks/number-box/block.js:368
+msgid "Number box"
+msgstr ""
+
+#: src/blocks/number-box/block.js:127 src/blocks/number-box/block.js:368
+msgid "Feature"
+msgstr ""
+
+#: src/blocks/post-grid/block.js:19
+msgid "Post Grid"
+msgstr ""
+
+#: src/blocks/post-grid/block.js:21
+msgid "Add a grid or list of customizable posts."
+msgstr ""
+
+#: src/blocks/post-grid/block.js:27
+msgid "post grid"
+msgstr ""
+
+#: src/blocks/post-grid/block.js:28
+msgid "posts"
+msgstr ""
+
+#: src/blocks/post-grid/block.js:81
+msgid "Ultimate Blocks Post Grid"
+msgstr ""
+
+#: src/blocks/post-grid/block.js:86
+msgid "No posts found."
+msgstr ""
+
+#: src/blocks/post-grid/block.js:96
+msgid "Grid View"
+msgstr ""
+
+#: src/blocks/post-grid/block.js:102
+msgid "List View"
+msgstr ""
+
+#: src/blocks/post-grid/block.php:97
+msgid "Untitled"
+msgstr ""
+
+#: src/blocks/progress-bar/block.js:22 src/blocks/progress-bar/block.js:25
+msgid "Progress Bar"
+msgstr ""
+
+#: src/blocks/progress-bar/block.js:112
+msgid "Progress Bar Settings"
+msgstr ""
+
+#: src/blocks/progress-bar/block.js:141
+msgid "Progress bar description"
+msgstr ""
+
+#: src/blocks/review/block.js:150 src/blocks/review/block.js:153
+msgid "Review"
+msgstr ""
+
+#: src/blocks/review/block.js:244
+msgid "Star Colors"
+msgstr ""
+
+#: src/blocks/review/block.js:253
+msgid "Active Star Color"
+msgstr ""
+
+#: src/blocks/review/block.js:261
+msgid "Inactive Star Color"
+msgstr ""
+
+#: src/blocks/review/block.js:269
+msgid "Star Outline Color"
+msgstr ""
+
+#: src/blocks/review/block.js:274
+msgid "Button Colors"
+msgstr ""
+
+#: src/blocks/review/block.js:283
+msgid "Button Background"
+msgstr ""
+
+#: src/blocks/review/block.js:291
+msgid "Button Text Color"
+msgstr ""
+
+#: src/blocks/review/block.js:295
+msgid "Call to Action button"
+msgstr ""
+
+#: src/blocks/review/block.js:297 src/blocks/review/block.js:300
+msgid "Enable"
+msgstr ""
+
+#: src/blocks/review/block.js:309 src/blocks/review/block.js:313
+msgid "Add nofollow"
+msgstr ""
+
+#: src/blocks/review/block.js:324 src/blocks/review/block.js:328
+msgid "Open link in new tab"
+msgstr ""
+
+#: src/blocks/review/block.js:340
+msgid "Review schema"
+msgstr ""
+
+#: src/blocks/review/block.js:343 src/blocks/review/block.js:347
+msgid "Enable review schema"
+msgstr ""
+
+#: src/blocks/review/block.js:367 src/blocks/review/block.js:371
+msgid "Enable review image"
+msgstr ""
+
+#: src/blocks/review/block.js:391 src/blocks/review/block.js:395
+msgid "Enable review description"
+msgstr ""
+
+#: src/blocks/review/components.js:251
+msgid "Title of the review"
+msgstr ""
+
+#: src/blocks/review/components.js:259
+msgid "Review Author name"
+msgstr ""
+
+#: src/blocks/review/components.js:271
+msgid "Item description"
+msgstr ""
+
+#: src/blocks/review/components.js:316 src/blocks/styled-box/block.js:280
+msgid "Upload Image"
+msgstr ""
+
+#: src/blocks/review/components.js:329
+msgid "Feature name"
+msgstr ""
+
+#: src/blocks/review/components.js:388
+msgid "Insert new review entry"
+msgstr ""
+
+#: src/blocks/review/components.js:400
+msgid "Title of the summary goes here"
+msgstr ""
+
+#: src/blocks/review/components.js:408
+msgid "Summary of the review goes here"
+msgstr ""
+
+#: src/blocks/review/components.js:445
+msgid "Call to action"
+msgstr ""
+
+#: src/blocks/social-share/block.js:50
+msgid "Social Share"
+msgstr ""
+
+#: src/blocks/social-share/block.js:53
+msgid "social"
+msgstr ""
+
+#: src/blocks/social-share/block.js:53
+msgid "share"
+msgstr ""
+
+#: src/blocks/star-rating/block.js:55 src/blocks/star-rating/block.js:151
+msgid "Star Rating"
+msgstr ""
+
+#: src/blocks/star-rating/components.js:48
+msgid "Star Settings"
+msgstr ""
+
+#: src/blocks/star-rating/components.js:64
+msgid "Star size"
+msgstr ""
+
+#: src/blocks/star-rating/components.js:74
+msgid "Number of stars"
+msgstr ""
+
+#: src/blocks/star-rating/components.js:169
+msgid "The text of the review goes here"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:35
+msgid "Styled Box"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:136
+msgid "s"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:172
+msgid "Add Your Content Here"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:296
+msgid "Title goes here"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:310
+msgid "Text goes here"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:359
+msgid "Title"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:372
+msgid "Your content goes here."
+msgstr ""
+
+#: src/blocks/styled-box/block.js:398
+msgid "Number Background Color"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:406
+msgid "Number Color"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:422
+msgid "Select a Style"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:459
+msgid "Highlight Important Information."
+msgstr ""
+
+#: src/blocks/styled-box/block.js:464
+msgid "Add Boxes with Images."
+msgstr ""
+
+#: src/blocks/styled-box/block.js:468
+msgid "Number Box"
+msgstr ""
+
+#: src/blocks/styled-box/block.js:469
+msgid "Add Numbered Boxes."
+msgstr ""
+
+#: src/blocks/styled-list/block.js:28 src/blocks/styled-list/block.js:68
+msgid "Styled List"
+msgstr ""
+
+#: src/blocks/styled-list/block.js:68
+msgid "List"
+msgstr ""
+
+#: src/blocks/styled-list/block.js:158
+msgid "Icon Options"
+msgstr ""
+
+#: src/blocks/styled-list/block.js:165
+msgid "Selected icon"
+msgstr ""
+
+#: src/blocks/styled-list/block.js:186
+msgid "Select icon for list"
+msgstr ""
+
+#: src/blocks/styled-list/block.js:228
+msgid "Icon color"
+msgstr ""
+
+#: src/blocks/styled-list/block.js:233
+msgid "Icon size"
+msgstr ""
+
+#: src/blocks/tabbed-content/block.js:116
+#: src/blocks/tabbed-content/block.js:119
+#: src/blocks/tabbed-content/block.js:234
+#: src/blocks/tabbed-content/block.js:237
+msgid "Tabbed Content"
+msgstr ""
+
+#: src/blocks/tabbed-content/block.js:119
+#: src/blocks/tabbed-content/block.js:237
+msgid "Tabs"
+msgstr ""
+
+#: src/blocks/tabbed-content/components/tab.js:9
+#: src/blocks/tabbed-content/components/tab.js:53
+msgid "Tab"
+msgstr ""
+
+#: src/blocks/tabbed-content/components/tab.js:10
+msgid "ub/tabbed-content"
+msgstr ""
+
+#: src/blocks/tabbed-content/components/tab.js:11
+#: src/blocks/tabbed-content/components/tab.js:55
+msgid "content of tab"
+msgstr ""
+
+#: src/blocks/tabbed-content/components/tab.js:54
+msgid "ub/tabbed-content-block"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.js:75
+#: src/blocks/table-of-contents/block.js:78
+#: src/blocks/table-of-contents/block.js:254
+#: src/blocks/table-of-contents/block.js:257
+msgid "Table of Contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.js:108
+#: src/blocks/table-of-contents/components.js:199
+msgid "Allowed Headers"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.js:128
+#: src/blocks/table-of-contents/components.js:219
+msgid "Additional Settings"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.js:132
+#: src/blocks/table-of-contents/components.js:223
+msgid "Allow users to toggle the visibility of the table of contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.js:149
+#: src/blocks/table-of-contents/components.js:240
+msgid "Initially Show Table of Contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.js:201
+#: src/blocks/table-of-contents/block.js:216
+#: src/blocks/table-of-contents/block.php:78
+#: src/blocks/table-of-contents/components.js:372
+msgid "show"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.js:202
+#: src/blocks/table-of-contents/block.js:216
+#: src/blocks/table-of-contents/block.php:78
+#: src/blocks/table-of-contents/block.php:87
+#: src/blocks/table-of-contents/components.js:372
+msgid "hide"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:176
+msgid "Add a header to begin generating the table of contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:284
+msgid "One column"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:291
+msgid "Two columns"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:298
+msgid "Three columns"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:306
+msgid "Bulleted list"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:311
+msgid "Numbered list"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:316
+msgid "Plain list"
+msgstr ""
+
+#: src/blocks/table-of-contents/components.js:356
+msgid "Optional title"
+msgstr ""
+
+#: src/blocks/testimonial/block.js:87 src/blocks/testimonial/block.js:223
+msgid "Testimonial"
+msgstr ""
+
+#: src/blocks/testimonial/block.js:90 src/blocks/testimonial/block.js:226
+msgid "testimonial"
+msgstr ""
+
+#: src/blocks/testimonial/block.js:90 src/blocks/testimonial/block.js:226
+msgid "quotes"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://ultimateblocks.com/"
 msgstr ""
