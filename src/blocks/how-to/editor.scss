@@ -1,0 +1,43 @@
+.ub_howto {
+	.ub_howto_time_input {
+		display: grid;
+		grid-template-columns: auto auto 100px;
+		.ub_howto_time_value {
+			text-align: right;
+		}
+		select {
+			margin-left: 5px;
+		}
+		p {
+			margin: 0;
+		}
+	}
+	.ub_howto_cost_container {
+		display: flex;
+		p {
+			margin: 0;
+		}
+		.editor-rich-text {
+			padding: 0 5px;
+		}
+		.ub_howto_cost_display {
+			display: flex;
+			margin-left: auto;
+		}
+	}
+}
+
+.ub_howto_step {
+	display: flex;
+	.dashicons-arrow-up-alt {
+		min-width: 24px;
+	}
+	.dashicons-arrow-down-alt {
+		min-width: 28px;
+	}
+}
+
+.ub_howto_delete {
+	margin-left: auto;
+	min-width: 24px;
+}

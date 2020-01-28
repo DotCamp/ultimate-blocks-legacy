@@ -671,3 +671,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/expand/block.php';
 
 // Styled List
 require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-list/block.php';
+
+// How To
+require_once plugin_dir_path( __FILE__ ) . 'blocks/how-to/block.php';

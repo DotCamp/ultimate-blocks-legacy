@@ -445,6 +445,114 @@ $defaultValues = array(
             )
         )
     ),
+    'ub/how-to' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'title' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'introduction' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'includeToolsList' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'addToolImages' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'tools' => array(
+                'type' => 'array',
+                'default' => array(),
+            ),
+            'addSupplyImages' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'includeSuppliesList' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'supplies' => array(
+                'type' => 'array',
+                'default' => array(),
+            ),
+            'section' => array(
+                'type' => 'array',
+                'default' => array()
+            ),
+            'prepTime' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'prepTimeUnit' => array(
+                'type' => 'string',
+                'default' => 'minutes'
+            ),
+            'performTime' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'performTimeUnit' => array(
+                'type' => 'string',
+                'default' => 'minutes'
+            ),
+            'totalTime' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'totalTimeUnit' => array(
+                'type' => 'string',
+                'default' => 'minutes'
+            ),
+            'cost' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'costCurrency' => array(
+                'type' => 'string',
+                'default' => 'USD'
+            ),
+            'showUnitFirst' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'howToYield' => array(
+                'type'  => 'string',
+                'default' => ''
+            ),
+            'video' => array(
+                'type' => 'string', //videoobject
+                'default' => '' //url
+            ),
+            'useSections' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'useDetailedTime' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'finalImageID' => array(
+                'type' => 'number',
+                'default' => -1
+            ),
+            'finalImageAlt' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'finalImageURL' => array(
+                'type' => 'string',
+                'default' => ''
+            )
+        )
+    ),
     'ub/image-slider' => array(
         'attributes' => array(
             'blockID' => array(
