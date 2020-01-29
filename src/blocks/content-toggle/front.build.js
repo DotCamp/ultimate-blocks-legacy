@@ -26,7 +26,7 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
 
     Array.prototype.slice.call(toggleContainer.getElementsByClassName("wp-block-ub-content-toggle-accordion-title-wrap")).forEach(function (instance) {
       var indicator = instance.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
-      var panelContent = instance.nextSibling;
+      var panelContent = instance.nextElementSibling;
       var panelHeight = 0;
       var initialHide = panelContent.style.height === "0px" || panelContent.classList.contains("ub-hide") || getComputedStyle(panelContent).display === "none";
 

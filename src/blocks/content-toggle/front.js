@@ -40,7 +40,7 @@ Array.prototype.slice
 						".wp-block-ub-content-toggle-accordion-state-indicator"
 					);
 
-					const panelContent = instance.nextSibling;
+					const panelContent = instance.nextElementSibling;
 
 					let panelHeight = 0;
 
