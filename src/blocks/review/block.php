@@ -67,7 +67,7 @@ function ub_render_review_block($attributes){
         <div class="ub_review_cta_panel">'.
         ($enableCTA && $callToActionURL != '' ? '<div class="ub_review_cta_main">
             <a href="'. esc_url($callToActionURL).
-                '" '.($ctaOpenInNewTab ? 'target="_blank" ':'').'rel="'.($ctaNoFollow?'nofollow':'').'noopener noreferrer"'.
+                '" '.($ctaOpenInNewTab ? 'target="_blank" ':'').'rel="'.($ctaNoFollow?'nofollow ':'').'noopener noreferrer"'.
                     ($blockID==''?'  style="color: '.$callToActionForeColor.';"':'').'>
                 <button class="ub_review_cta_btn"'.($blockID==''?' style="background-color: '.$callToActionBackColor
                 .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
