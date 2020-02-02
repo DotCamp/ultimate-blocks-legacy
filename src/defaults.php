@@ -749,6 +749,54 @@ $defaultValues = array(
             'imageSize' => array(
                 'type' => 'number',
                 'default' => 100
+            ),
+            'brand' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'sku' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'identifier' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'identifierType' => array(
+                'type' => 'string',
+                'default' => 'gtin'
+            ),
+            'offerType' => array(
+                'type' => 'string',
+                'default' => 'Offer'
+            ),
+            'offerStatus' => array(
+                'type' => 'string',
+                'default' => 'InStock'
+            ),
+            'offerHighPrice' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'offerLowPrice' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'offerCount' => array(
+                'type' => 'number',
+                'default' => 1
+            ),
+            'offerPrice' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'offerCurrency' => array(
+                'type' => 'string',
+                'default' => 'USD'
+            ),
+            'offerExpiry' => array(
+                'type' => 'number',
+                'default' => time() + 10800
             )
         )
     ),

@@ -78,27 +78,49 @@ function ub_render_review_block($attributes){
         "reviewBody":"' . preg_replace('/(<.+?>)/', '',$summaryDescription).'",
         "itemReviewed":{
             "@type":"Product",
+            "brand": {
+                "@type": "Brand",
+                "name": "'.$brand.'"
+            },
             "name":"'.preg_replace('/(<.+?>)/', '',$itemName).'",
             "image": "'.$imgURL.'",
             "description": "'.preg_replace('/(<.+?>)/', '',$description).'",
-        "review":{
-            "author":{
-                "@type":"Person",
-                "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
-            }
+            "sku": "'.$sku.'",
+            "'.$identifierType.'": "'.$identifier.'",
+            "review":{
+                "author":{
+                    "@type":"Person",
+                    "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
+                }
+            },
+            "aggregateRating":  {
+                "@type": "AggregateRating",
+                "ratingValue": "'.$average.'",
+                "reviewCount": "1"
+            },
+            "offers":{
+                "@type": "'.$offerType.'",
+                "priceCurrency": "'.$offerCurrency.'",'.
+                    ($offerType == 'AggregateOffer' ? 
+                        '"lowPrice": "'.$offerLowPrice.'",
+                        "highPrice": "'.$offerHighPrice.'",
+                        "offerCount": "'.$offerCount.'"' 
+                    : '"price": "'.$offerPrice.'",
+                        "url": "'.$callToActionURL.'", 
+                        "priceValidUntil": "'.date("Y-m-d", $offerExpiry).'"').
+            '}
+        },
+        "reviewRating":{
+            "@type":"Rating",
+            "ratingValue":'.$average.',
+            "bestRating":'.$starCount.
+        '},
+        "author":{
+            "@type":"Person",
+            "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
         }
-    },
-    "reviewRating":{
-        "@type":"Rating",
-        "ratingValue":'.$average.',
-        "bestRating":'.$starCount.
-    '},
-    "author":{
-        "@type":"Person",
-        "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
-    }
-}</script>')) : '')
-        . '</div>';
+    }</script>')) : '')
+    . '</div>';
 }
 
 function ub_register_review_block() {

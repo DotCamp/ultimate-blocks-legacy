@@ -19,8 +19,14 @@ const {
 	FormToggle,
 	PanelBody,
 	PanelRow,
-	RangeControl
+	RangeControl,
+	SelectControl,
+	TextControl,
+	TextareaControl,
+	DatePicker,
+	DateTimePicker
 } = wp.components;
+
 const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
 
@@ -143,6 +149,57 @@ const attributes = {
 	imageSize: {
 		type: "number",
 		default: 100 //range: 0-200
+	},
+	brand: {
+		type: "string",
+		default: ""
+	},
+	sku: {
+		type: "string",
+		default: ""
+	},
+	identifier: {
+		type: "string",
+		default: ""
+	},
+	identifierType: {
+		type: "string",
+		default: "gtin" // nsn, mpn, gtin8, gtin12, gtin13, gtin14, gtin
+	},
+	offerType: {
+		type: "string",
+		default: "Offer" //can also be set to aggregate offer (which prevevnts calltoactionurl from being  used as offer url)
+	},
+	offerStatus: {
+		type: "string",
+		default: "InStock" //available values: Discontinued, InStock, InStoreOnly, LimitedAvailability, OnlineOnly, OutOfStock, PreOrder, PreSale, SoldOut
+	},
+	//begin aggregate offer-only attributes
+	offerHighPrice: {
+		type: "number",
+		default: 0
+	},
+	offerLowPrice: {
+		type: "number",
+		default: 0
+	},
+	offerCount: {
+		type: "number",
+		default: 0
+	},
+	//end  aggregate offer-only attributes
+	offerPrice: {
+		//only for offer
+		type: "number",
+		default: 0
+	},
+	offerCurrency: {
+		type: "string",
+		default: "USD"
+	},
+	offerExpiry: {
+		type: "number",
+		default: 60 * (10080 + Math.ceil(Date.now() / 60000)) //one week from Date.now()
 	}
 };
 
@@ -190,7 +247,19 @@ registerBlockType("ub/review", {
 			enableReviewSchema,
 			enableImage,
 			enableDescription,
-			imageSize
+			imageSize,
+			brand,
+			sku,
+			identifier,
+			identifierType,
+			offerType,
+			offerCurrency,
+			offerStatus,
+			offerHighPrice,
+			offerLowPrice,
+			offerPrice,
+			offerCount,
+			offerExpiry
 		} = props.attributes;
 
 		if (blockID !== block.clientId) {
@@ -401,9 +470,113 @@ registerBlockType("ub/review", {
 										}
 									/>
 								</PanelRow>
+								<TextControl
+									label={__("Brand")}
+									value={brand}
+									onChange={brand => setAttributes({ brand })}
+								/>
+								<TextControl
+									label={__("SKU")}
+									value={sku}
+									onChange={sku => setAttributes({ sku })}
+								/>
+								<TextControl
+									label={__("Identifier")}
+									value={identifier}
+									onChange={identifier => setAttributes({ identifier })}
+								/>
+								<SelectControl
+									label={__("Identifier type")}
+									value={identifierType}
+									options={[
+										"nsn",
+										"mpn",
+										"gtin8",
+										"gtin12",
+										"gtin13",
+										"gtin14",
+										"gtin"
+									].map(a => ({ label: __(a.toUpperCase()), value: a }))}
+									onChange={identifierType => setAttributes({ identifierType })}
+								/>
 							</React.Fragment>
 						)}
 					</PanelBody>
+					{enableReviewSchema && (
+						<PanelBody title={__("Offer")} initialOpen={true}>
+							<SelectControl
+								label={__("Offer Type")}
+								value={offerType}
+								options={["Offer", "Aggregate Offer"].map(a => ({
+									label: __(a),
+									value: a.replace(" ", "")
+								}))}
+								onChange={offerType => setAttributes({ offerType })}
+							/>
+							<TextControl
+								label={__("Offer Currency")}
+								value={offerCurrency}
+								onChange={offerCurrency => setAttributes({ offerCurrency })}
+							/>
+							{offerType == "Offer" ? (
+								<React.Fragment>
+									<TextControl
+										label={__("Offer Price")}
+										value={offerPrice}
+										onChange={offerPrice => setAttributes({ offerPrice })}
+									/>
+									<SelectControl
+										label={__("Offer Status")}
+										value={offerStatus}
+										options={[
+											"Discontinued",
+											"In Stock",
+											"In Store Only",
+											"Limited Availability",
+											"Online Only",
+											"Out Of Stock",
+											"Pre Order",
+											"Pre Sale",
+											"Sold Out"
+										].map(a => ({
+											label: __(a),
+											value: a.replace(" ", "")
+										}))}
+										onChange={offerStatus => setAttributes({ offerStatus })}
+									/>
+									<p>{__("Offer expiry date")}</p>
+									<DatePicker
+										currentDate={offerExpiry * 1000}
+										onChange={newDate =>
+											setAttributes({
+												offerExpiry: Math.floor(Date.parse(newDate) / 1000)
+											})
+										}
+									/>
+								</React.Fragment>
+							) : (
+								<React.Fragment>
+									<TextControl
+										label={__("Offer Count")}
+										value={offerCount}
+										onChange={offerCount => setAttributes({ offerCount })}
+									/>
+									<TextControl
+										label={__(`Lowest Available Price (${offerCurrency})`)}
+										value={offerLowPrice}
+										onChange={offerLowPrice => setAttributes({ offerLowPrice })}
+									/>
+									<TextControl
+										label={__(`Highest Available Price (${offerCurrency})`)}
+										value={offerHighPrice}
+										onChange={offerHighPrice =>
+											setAttributes({ offerHighPrice })
+										}
+									/>
+								</React.Fragment>
+							)}
+						</PanelBody>
+					)}
 				</InspectorControls>
 			),
 			isSelected && (
