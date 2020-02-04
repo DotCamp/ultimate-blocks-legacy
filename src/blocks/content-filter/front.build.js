@@ -76,13 +76,13 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
     }
 
     blockProper.setAttribute("data-currentselection", JSON.stringify(newSelection));
-    Array.prototype.slice.call(blockProper.getElementsByClassName("ub-content-filter-panel")).forEach(function (instance) {
+    Array.prototype.slice.call(blockProper.getElementsByClassName("ub-content-filter-panel")).forEach(function (instance, j) {
       var panelData = JSON.parse(instance.getAttribute("data-selectedfilters"));
       var mainData = JSON.parse(blockProper.getAttribute("data-currentselection"));
-      var isVisible = true;
+      var hasMatchedAll = true;
 
       if (initialSelection == blockProper.getAttribute("data-currentselection") && JSON.parse(blockProper.getAttribute("data-initiallyshowall")) === false) {
-        isVisible = false;
+        hasMatchedAll = false;
       } else {
         panelData.forEach(function (category, i) {
           if (Array.isArray(category)) {
@@ -91,13 +91,36 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
             }).length > 0 && category.filter(function (f, j) {
               return f && f === mainData[i][j];
             }).length === 0) {
-              isVisible = false;
+              hasMatchedAll = false;
             }
           } else if (mainData[i] !== category && mainData[i] !== -1) {
-            isVisible = false;
+            hasMatchedAll = false;
+          }
+        });
+      } //alternate setting
+
+
+      var hasMatchedOne = false;
+
+      if (initialSelection !== blockProper.getAttribute("data-currentselection") && JSON.parse(blockProper.getAttribute("data-initiallyshowall")) === true) {
+        hasMatchedOne = true;
+      } else {
+        panelData.forEach(function (category, i) {
+          if (Array.isArray(category)) {
+            if (mainData[i].filter(function (f) {
+              return f;
+            }).length > 0 && category.filter(function (f, j) {
+              return f && f === mainData[i][j];
+            }).length > 0) {
+              hasMatchedOne = true;
+            }
+          } else if (mainData[i] === category && mainData[i] !== -1) {
+            hasMatchedOne = true;
           }
         });
       }
+
+      var isVisible = blockProper.getAttribute("data-matchingoption") === "matchAll" ? hasMatchedAll : hasMatchedOne;
 
       if (isOldVersion) {
         instance.style.display = isVisible ? "block" : "none";

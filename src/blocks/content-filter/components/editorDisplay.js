@@ -3,7 +3,7 @@ const { createBlock } = wp.blocks;
 const { InspectorControls, PanelColorSettings, InnerBlocks, RichText } =
 	wp.blockEditor || wp.editor;
 
-const { PanelBody, ToggleControl } = wp.components;
+const { PanelBody, ToggleControl, RadioControl } = wp.components;
 
 import { Component } from "react";
 import { upgradeButtonLabel } from "../../../common";
@@ -505,7 +505,8 @@ export class PanelContent extends Component {
 			activeButtonColor,
 			activeButtonTextColor,
 			blockID,
-			initiallyShowAll
+			initiallyShowAll,
+			matchingOption
 			//,allowReset,resetButtonLabel
 		} = attributes;
 
@@ -623,6 +624,15 @@ export class PanelContent extends Component {
 									});
 								});
 							}}
+						/>
+						<RadioControl
+							label={__("Filter options")}
+							selected={matchingOption}
+							options={[
+								{ label: __("Match all filters"), value: "matchAll" },
+								{ label: __("Match any filter"), value: "matchAny" }
+							]}
+							onChange={matchingOption => setAttributes({ matchingOption })}
 						/>
 					</PanelBody>
 					{/*<PanelBody title="Reset Button" initialOpen={false}>

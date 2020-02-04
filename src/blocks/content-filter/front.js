@@ -93,7 +93,7 @@ Array.prototype.slice
 
 			Array.prototype.slice
 				.call(blockProper.getElementsByClassName("ub-content-filter-panel"))
-				.forEach(instance => {
+				.forEach((instance, j) => {
 					const panelData = JSON.parse(
 						instance.getAttribute("data-selectedfilters")
 					);
@@ -101,7 +101,7 @@ Array.prototype.slice
 						blockProper.getAttribute("data-currentselection")
 					);
 
-					let isVisible = true;
+					let hasMatchedAll = true;
 
 					if (
 						initialSelection ==
@@ -109,7 +109,7 @@ Array.prototype.slice
 						JSON.parse(blockProper.getAttribute("data-initiallyshowall")) ===
 							false
 					) {
-						isVisible = false;
+						hasMatchedAll = false;
 					} else {
 						panelData.forEach((category, i) => {
 							if (Array.isArray(category)) {
@@ -118,13 +118,44 @@ Array.prototype.slice
 									category.filter((f, j) => f && f === mainData[i][j])
 										.length === 0
 								) {
-									isVisible = false;
+									hasMatchedAll = false;
 								}
 							} else if (mainData[i] !== category && mainData[i] !== -1) {
-								isVisible = false;
+								hasMatchedAll = false;
 							}
 						});
 					}
+
+					//alternate setting
+					let hasMatchedOne = false;
+
+					if (
+						initialSelection !==
+							blockProper.getAttribute("data-currentselection") &&
+						JSON.parse(blockProper.getAttribute("data-initiallyshowall")) ===
+							true
+					) {
+						hasMatchedOne = true;
+					} else {
+						panelData.forEach((category, i) => {
+							if (Array.isArray(category)) {
+								if (
+									mainData[i].filter(f => f).length > 0 &&
+									category.filter((f, j) => f && f === mainData[i][j]).length >
+										0
+								) {
+									hasMatchedOne = true;
+								}
+							} else if (mainData[i] === category && mainData[i] !== -1) {
+								hasMatchedOne = true;
+							}
+						});
+					}
+
+					const isVisible =
+						blockProper.getAttribute("data-matchingoption") === "matchAll"
+							? hasMatchedAll
+							: hasMatchedOne;
 
 					if (isOldVersion) {
 						instance.style.display = isVisible ? "block" : "none";

@@ -74,7 +74,8 @@ $currentSelection = array_map(function($category){
 return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_attr($className) : '').
         '"'. ($blockID =='' ? : ' id="ub-content-filter-'.$blockID.'"') .
         ' data-currentSelection="'.json_encode($currentSelection).
-        '" data-initiallyShowAll="'.json_encode($initiallyShowAll).'">'. 
+        '" data-initiallyShowAll="'.json_encode($initiallyShowAll).
+        '" data-matchingOption="'.$matchingOption.'">'. 
     $filterList.$content.'</div>';
 }
 

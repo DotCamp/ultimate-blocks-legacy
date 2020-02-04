@@ -214,6 +214,10 @@ $defaultValues = array(
             'initiallyShowAll' => array(
                 'type' => 'boolean',
                 'default' => true
+            ),
+            'matchingOption' => array(
+                'type' => 'string',
+                'default' => 'matchAll'
             )
         )
     ),

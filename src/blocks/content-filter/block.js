@@ -37,6 +37,10 @@ const attributes = {
 	initiallyShowAll: {
 		type: "boolean",
 		default: true
+	},
+	matchingOption: {
+		type: "string",
+		default: "matchAll" //options: matchOne, matchAll
 	}
 	/*,allowReset: {
         type: 'boolean',
