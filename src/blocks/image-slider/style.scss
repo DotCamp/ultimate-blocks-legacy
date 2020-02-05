@@ -46,7 +46,8 @@ https://flickity.metafizzy.co
 		//BEGIN CUSTOM CODE
 		> div {
 			width: 100%;
-			> img {
+			> img,
+			> picture > img {
 				display: block;
 				object-fit: contain;
 				margin: auto;
@@ -59,9 +60,6 @@ https://flickity.metafizzy.co
 
 	.flickity-enabled.is-draggable {
 		user-select: none;
-	}
-
-	.flickity-enabled.is-draggable {
 		.flickity-viewport {
 			cursor: move;
 			cursor: grab;
