@@ -294,7 +294,7 @@ function ub_blocks_get_image_src_landscape( $object, $field_name, $request ) {
         'ub-block-post-grid-landscape',
         false
     );
-    return $feat_img_array[0];
+    return $feat_img_array ? $feat_img_array[0] : null;
 }
 
 function ub_blocks_get_author_info( $object,  $field_name, $request ) {
