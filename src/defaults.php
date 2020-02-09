@@ -1077,6 +1077,13 @@ $defaultValues = array(
             'titleAlignment' => array(
                 'type' => 'string',
                 'default' => 'left'
+            ),
+            'gaps' => array(
+                'type' => 'array',
+                'default' => array(),
+                'items' => array(
+                    'type' => 'number'
+                )
             )
         )
     ),

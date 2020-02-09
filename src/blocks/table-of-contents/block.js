@@ -45,6 +45,10 @@ const attributes = {
 		type: "string",
 		default: ""
 	},
+	gaps: {
+		type: "array",
+		default: []
+	},
 	allowToCHiding: {
 		type: "boolean",
 		default: false

@@ -41,15 +41,22 @@ function ub_render_table_of_contents_block($attributes){
     $listItems = '';
 
     if (!function_exists('ub_makeListItem')) {
-        function ub_makeListItem($num, $item, $listStyle, $blockID){
+        function ub_makeListItem($num, $item, $listStyle, $blockID, $gaps){
             static $outputString = '';
             if($num == 0 && $outputString != ''){
                 $outputString = '';
             }
             if (array_key_exists("level", $item)){
-                $anchor = $item["anchor"];
+                $anchor = '#' . $item["anchor"];
+
+                if(get_query_var('page') != $gaps[$num]){
+                    $baseURL = get_permalink();
+                    $anchor = $baseURL . (get_post_status(get_the_ID()) == 'publish' ? '' : '&page=')
+                            . $gaps[$num] . $anchor;
+                }
+
                 $content = $item["content"];
-                $outputString .= '<li><a href="#'.$anchor.'">'. $content .'</a></li>';
+                $outputString .= '<li><a href='. $anchor.'>'. $content .'</a></li>';
             }
             else{
                 $openingTag = $listStyle == 'numbered' ? '<ol>' :
@@ -59,7 +66,7 @@ function ub_render_table_of_contents_block($attributes){
                     strrpos($outputString, '</li>'), strlen('</li>'));
 
                 forEach($item as $key => $subItem){
-                    ub_makeListItem($key+1, $subItem, $listStyle, $blockID);
+                    ub_makeListItem($key+1, $subItem, $listStyle, $blockID, $gaps);
                 }
                 $outputString .= ($listStyle == 'numbered' ? '</ol>' : '</ul>') . '</li>';
             }
@@ -69,7 +76,7 @@ function ub_render_table_of_contents_block($attributes){
 
     if(count($sortedHeaders) > 0){
         foreach($sortedHeaders as $key => $item){
-            $listItems = ub_makeListItem($key, $item, $listStyle, $blockID);
+            $listItems = ub_makeListItem($key, $item, $listStyle, $blockID, $gaps);
         }
     }
 

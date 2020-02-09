@@ -24,19 +24,28 @@ class TableOfContents extends Component {
 		super(props);
 		this.state = {
 			headers: props.headers,
-			unsubscribe: null
+			unsubscribe: null,
+			breaks: []
 		};
 	}
 
 	componentDidMount() {
 		const getHeadingBlocks = _ => {
 			let headings = [];
+
+			let pageNum = 1;
+
+			let pageBreaks = [];
+
 			const rootBlocks = (
 				select("core/block-editor") || select("core/editor")
 			).getBlocks();
 			rootBlocks.forEach(block => {
 				if (block.name === "core/heading") {
 					headings.push(block);
+					pageBreaks.push(pageNum);
+				} else if (block.name === "core/nextpage") {
+					pageNum++;
 				} else if (block.innerBlocks.length > 0) {
 					let internalHeadings = getDescendantBlocks(block).filter(
 						block => block.name === "core/heading"
@@ -46,6 +55,10 @@ class TableOfContents extends Component {
 					}
 				}
 			});
+
+			if (JSON.stringify(this.state.breaks) !== JSON.stringify(pageBreaks)) {
+				this.setState({ breaks: pageBreaks });
+			}
 
 			return headings;
 		};
@@ -89,6 +102,9 @@ class TableOfContents extends Component {
 			this.props.blockProp.setAttributes({
 				links: JSON.stringify(this.state.headers)
 			});
+		}
+		if (this.state.breaks !== this.props.blockProp.attributes.gaps) {
+			this.props.blockProp.setAttributes({ gaps: this.state.breaks });
 		}
 	}
 
