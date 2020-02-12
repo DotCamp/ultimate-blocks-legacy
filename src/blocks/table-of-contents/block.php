@@ -51,8 +51,8 @@ function ub_render_table_of_contents_block($attributes){
 
                 if(get_query_var('page') != $gaps[$num]){
                     $baseURL = get_permalink();
-                    $anchor = $baseURL . (get_post_status(get_the_ID()) == 'publish' ? '' : '&page=')
-                            . $gaps[$num] . $anchor;
+                    $anchor = $baseURL . ($gaps[$num] > 1 ? (get_post_status(get_the_ID()) == 'publish' ? '' : '&page=')
+                            . $gaps[$num] : '') . $anchor;
                 }
 
                 $content = $item["content"];
