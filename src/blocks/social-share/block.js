@@ -54,30 +54,30 @@ const { withState, compose } = wp.compose;
  *                             registered; otherwise `undefined`.
  */
 
-const SortableItem = SortableElement(({ icon, iconSize, iconShape }) => {
+const SortableItem = SortableElement(({ icon, iconSize, iconShape, color }) => {
 	const iconDetails = {
 		facebook: {
-			bgColor: "#365899",
+			bgColor: color || "#365899",
 			main: <FacebookIcon width={iconSize} height={iconSize} />
 		},
 		linkedin: {
-			bgColor: "#0073b1",
+			bgColor: color || "#0073b1",
 			main: <LinkedInIcon width={iconSize} height={iconSize} />
 		},
 		pinterest: {
-			bgColor: "#bd081c",
+			bgColor: color || "#bd081c",
 			main: <PinterestIcon width={iconSize} height={iconSize} />
 		},
 		twitter: {
-			bgColor: "#1da1f2",
+			bgColor: color || "#1da1f2",
 			main: <TwitterIcon width={iconSize} height={iconSize} />
 		},
 		tumblr: {
-			bgColor: "#36465d",
+			bgColor: color || "#36465d",
 			main: <TumblrIcon width={iconSize} height={iconSize} />
 		},
 		reddit: {
-			bgColor: "#cee3f8",
+			bgColor: color || "#cee3f8",
 			main: <RedditIcon width={iconSize} height={iconSize} />
 		}
 	};
@@ -99,7 +99,7 @@ const SortableItem = SortableElement(({ icon, iconSize, iconShape }) => {
 });
 
 const SortableList = SortableContainer(
-	({ items, iconShape, iconSize, align }) => (
+	({ items, iconShape, iconSize, align, color }) => (
 		<div
 			className={"social-share-icons align-icons-" + align}
 			style={{ display: "flex", flexDirection: "row" }}
@@ -111,6 +111,7 @@ const SortableList = SortableContainer(
 					icon={value}
 					iconShape={iconShape}
 					iconSize={iconSize}
+					color={color}
 				/>
 			))}
 		</div>
@@ -173,6 +174,10 @@ registerBlockType("ub/social-share", {
 				"reddit",
 				"tumblr"
 			]
+		},
+		buttonColor: {
+			type: "string",
+			default: "" //when turned on, default value should be #cccccc
 		}
 	},
 
@@ -194,7 +199,7 @@ registerBlockType("ub/social-share", {
 			setState
 		} = props;
 
-		const { blockID, align, iconShape, iconOrder } = attributes;
+		const { blockID, align, iconShape, iconOrder, buttonColor } = attributes;
 
 		const iconSize = iconSizes[attributes.iconSize];
 
@@ -241,6 +246,7 @@ registerBlockType("ub/social-share", {
 					iconSize={iconSize}
 					iconShape={iconShape}
 					align={align}
+					color={buttonColor}
 				/>
 			</div>
 		];

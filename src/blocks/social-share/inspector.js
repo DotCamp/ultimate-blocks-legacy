@@ -3,7 +3,7 @@
  */
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { InspectorControls } = wp.blockEditor || wp.editor;
+const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
 const { PanelBody, PanelRow, RadioControl, FormToggle } = wp.components;
 
 /**
@@ -20,9 +20,9 @@ export default class Inspector extends Component {
 			showLinkedInIcon,
 			showPinterestIcon,
 			showRedditIcon,
-			showGooglePlusIcon,
 			showTumblrIcon,
-			iconOrder
+			iconOrder,
+			buttonColor
 		} = attributes;
 		return (
 			<InspectorControls>
@@ -188,6 +188,27 @@ export default class Inspector extends Component {
 							}}
 						/>
 					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__("Color")} initialOpen={false}>
+					<PanelRow>
+						<label htmlFor="ub_social_share_custom_color">
+							<b>{__("Customize color")}</b>
+						</label>
+						<FormToggle
+							id="ub_social_share_custom_color"
+							label={__("Customize color")}
+							checked={buttonColor}
+							onChange={_ =>
+								setAttributes({ buttonColor: buttonColor ? "" : "#cccccc" })
+							}
+						/>
+					</PanelRow>
+					{buttonColor && (
+						<ColorPalette
+							value={buttonColor}
+							onChange={buttonColor => setAttributes({ buttonColor })}
+						/>
+					)}
 				</PanelBody>
 			</InspectorControls>
 		);
