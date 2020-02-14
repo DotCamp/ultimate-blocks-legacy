@@ -49,7 +49,7 @@ function ub_render_table_of_contents_block($attributes){
             if (array_key_exists("level", $item)){
                 $anchor = '#' . $item["anchor"];
 
-                if(get_query_var('page') != $gaps[$num]){
+                if(count($gaps) && get_query_var('page') != $gaps[$num]){
                     $baseURL = get_permalink();
                     $anchor = $baseURL . ($gaps[$num] > 1 ? (get_post_status(get_the_ID()) == 'publish' ? '' : '&page=')
                             . $gaps[$num] : '') . $anchor;
@@ -79,7 +79,7 @@ function ub_render_table_of_contents_block($attributes){
             $listItems = ub_makeListItem($key, $item, $listStyle, $blockID, $gaps);
         }
     }
-
+    
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .(!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ).
                 '" data-showtext="'.__('show').'" data-hidetext="'.__('hide')
