@@ -846,6 +846,13 @@ $defaultValues = array(
                 'type'    => 'string',
                 'default' => 'left',
             ),
+            'iconOrder'   => array(
+                'type'    => 'array',
+                'default' => array('facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'tumblr'),
+                'items' => array(
+                    'type' => 'string'
+                )
+            )
         )
     ),
     'ub/star-rating-block' => array(

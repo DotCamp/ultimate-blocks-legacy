@@ -26,25 +26,29 @@ function ub_render_social_share_block( $attributes ) {
     $icon_size  = $icon_sizes[ $iconSize ];
     $additionalStyle =  ' style="width:' . ( $icon_size * 1.5 ) . 'px;height:' . ( $icon_size * 1.5 ) . 'px;"';
 
-	$facebook    = $blockID==''? str_replace('"><svg', '"'.$additionalStyle.'><svg', ub_get_facebook_icon( $attributes, $icon_size, $iconShape )) : ub_get_facebook_icon( $attributes, $icon_size, $iconShape );
-	$twitter     = $blockID==''? str_replace('"><svg', '"'.$additionalStyle.'><svg', ub_get_twitter_icon( $attributes, $icon_size, $iconShape )) : ub_get_twitter_icon( $attributes, $icon_size, $iconShape );
-	$linkedin    = $blockID==''? str_replace('"><svg', '"'.$additionalStyle.'><svg', ub_get_linkedin_icon( $attributes, $icon_size, $iconShape )) : ub_get_linkedin_icon( $attributes, $icon_size, $iconShape );
-	$pinterest   = $blockID==''? str_replace('"><svg', '"'.$additionalStyle.'><svg', ub_get_pinterest_icon( $attributes, $icon_size, $iconShape )) : ub_get_pinterest_icon( $attributes, $icon_size, $iconShape );
-	$reddit      = $blockID==''? str_replace('"><svg', '"'.$additionalStyle.'><svg', ub_get_reddit_icon( $attributes, $icon_size, $iconShape )) : ub_get_reddit_icon( $attributes, $icon_size, $iconShape );
-	$google_plus = $blockID==''? str_replace('"><svg', '"'.$additionalStyle.'><svg', ub_get_googleplus_icon( $attributes, $icon_size, $iconShape )) : ub_get_googleplus_icon( $attributes, $icon_size, $iconShape );
-	$tumblr      = $blockID==''? str_replace('"><svg', '"'.$additionalStyle.'><svg', ub_get_tumblr_icon( $attributes, $icon_size, $iconShape )) : ub_get_tumblr_icon( $attributes, $icon_size, $iconShape );
+	$iconDetails = array(
+		'facebook' => ub_get_facebook_icon( $attributes, $icon_size, $iconShape ),
+		'twitter' => ub_get_twitter_icon( $attributes, $icon_size, $iconShape ),
+		'linkedin' => ub_get_linkedin_icon( $attributes, $icon_size, $iconShape ),
+		'pinterest' => ub_get_pinterest_icon( $attributes, $icon_size, $iconShape ),
+		'reddit' => ub_get_reddit_icon( $attributes, $icon_size, $iconShape ),
+		'tumblr' => ub_get_tumblr_icon( $attributes, $icon_size, $iconShape )
+	);
+
+	$icons = '';
+
+	foreach($iconOrder as $icon){
+		$icons .= $iconDetails[$icon];
+	}
+
+	if($blockID==''){
+		$icons = str_replace('"><svg', '"'.$additionalStyle.'><svg',$icons);
+	}
 
     return '<div class="wp-block-ub-social-share'.(isset($className) ? ' ' . esc_attr($className) : '').
                 '"'.($blockID==''?'':' id="ub-social-share-'.$blockID.'"').'>
-		<div class="social-share-icons align-icons-' . $align . '">
-			' . $facebook . '
-			' . $twitter . '
-			' . $linkedin . '
-			' . $pinterest . '
-			' . $reddit . '
-			' . $google_plus . '
-			' . $tumblr . '
-        </div>
+		<div class="social-share-icons align-icons-' . $align . '">' . $icons .
+        '</div>
 	</div>';
 }
 
@@ -223,40 +227,6 @@ function ub_get_reddit_icon( $attributes, $icon_size, $iconShape ) {
         $reddit_url . '"class="social-share-icon ub-social-share-reddit ' .
         $iconShape . '">' .
 		$reddit_icon . '</a>';
-}
-
-
-/**
- * Generate Google Plus Icon.
- *
- * @param  array   $attributes Options of the block.
- * @param  integer $icon_size Size of Icon.
- * @param  string  $iconShape Shape of Icon.
- * @return string
- */
-function ub_get_googleplus_icon( $attributes, $icon_size, $iconShape ) {
-    extract($attributes);
-	if ( ! $showGooglePlusIcon ) {
-		return '';
-	}
-
-	// Generate the Google Plus Icon.
-	$googleplus_icon = googleplus_icon(
-		array(
-			'width'     => $icon_size,
-			'height'    => $icon_size
-		)
-	);
-
-	// Generate the Google Plus URL.
-    $googleplus_url = 'https://plus.google.com/share?url=' .
-        rawurlencode( get_the_permalink() );
-
-    return '<a target="_blank" href="' . $googleplus_url .
-        '" class="social-share-icon ub-social-share-google-plus '
-        . $iconShape . '">'
-		. $googleplus_icon .
-	'</a>';
 }
 
 

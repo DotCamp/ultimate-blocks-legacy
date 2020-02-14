@@ -6,13 +6,19 @@
  */
 
 // Import Icons
+
+import {
+	SortableContainer,
+	SortableElement,
+	arrayMove
+} from "react-sortable-hoc";
+
 import {
 	FacebookIcon,
 	TwitterIcon,
 	LinkedInIcon,
 	PinterestIcon,
 	RedditIcon,
-	GooglePlusIcon,
 	TumblrIcon,
 	icon
 } from "./icons/icons";
@@ -32,6 +38,7 @@ const { registerBlockType } = wp.blocks;
 
 const { BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
 const { withSelect } = wp.data;
+const { withState, compose } = wp.compose;
 
 /**
  * Register: aa Gutenberg Block.
@@ -46,6 +53,70 @@ const { withSelect } = wp.data;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
+
+const SortableItem = SortableElement(({ icon, iconSize, iconShape }) => {
+	const iconDetails = {
+		facebook: {
+			bgColor: "#365899",
+			main: <FacebookIcon width={iconSize} height={iconSize} />
+		},
+		linkedin: {
+			bgColor: "#0073b1",
+			main: <LinkedInIcon width={iconSize} height={iconSize} />
+		},
+		pinterest: {
+			bgColor: "#bd081c",
+			main: <PinterestIcon width={iconSize} height={iconSize} />
+		},
+		twitter: {
+			bgColor: "#1da1f2",
+			main: <TwitterIcon width={iconSize} height={iconSize} />
+		},
+		tumblr: {
+			bgColor: "#36465d",
+			main: <TumblrIcon width={iconSize} height={iconSize} />
+		},
+		reddit: {
+			bgColor: "#cee3f8",
+			main: <RedditIcon width={iconSize} height={iconSize} />
+		}
+	};
+
+	return (
+		<div
+			href="#ub-social-share-block-editor"
+			className={"ub-social-share-icon social-share-icon " + iconShape}
+			style={{
+				width: iconSize * 1.5,
+				height: iconSize * 1.5,
+				backgroundColor: iconDetails[icon].bgColor,
+				borderRadius: iconShape === "circle" ? "50%" : "0"
+			}}
+		>
+			{iconDetails[icon].main}
+		</div>
+	);
+});
+
+const SortableList = SortableContainer(
+	({ items, iconShape, iconSize, align }) => (
+		<div
+			className={"social-share-icons align-icons-" + align}
+			style={{ display: "flex", flexDirection: "row" }}
+		>
+			{items.map((value, index) => (
+				<SortableItem
+					key={`item-${value}`}
+					index={index}
+					icon={value}
+					iconShape={iconShape}
+					iconSize={iconSize}
+				/>
+			))}
+		</div>
+	)
+);
+
 registerBlockType("ub/social-share", {
 	title: __("Social Share"),
 	icon: icon,
@@ -76,10 +147,6 @@ registerBlockType("ub/social-share", {
 			type: "boolean",
 			default: true
 		},
-		showGooglePlusIcon: {
-			type: "boolean",
-			default: true
-		},
 		showTumblrIcon: {
 			type: "boolean",
 			default: true
@@ -95,35 +162,60 @@ registerBlockType("ub/social-share", {
 		align: {
 			type: "string",
 			default: "left"
+		},
+		iconOrder: {
+			type: "array",
+			default: [
+				"facebook",
+				"twitter",
+				"linkedin",
+				"pinterest",
+				"reddit",
+				"tumblr"
+			]
 		}
 	},
 
-	edit: withSelect((select, ownProps) => ({
-		block: (select("core/block-editor") || select("core/editor")).getBlock(
-			ownProps.clientId
-		)
-	}))(function(props) {
-		const { attributes, setAttributes, isSelected, className, block } = props;
-
+	edit: compose([
+		withSelect((select, ownProps) => ({
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
+		})),
+		withState({ hasTransitioned: false })
+	])(function(props) {
 		const {
-			blockID,
-			showFacebookIcon,
-			showGooglePlusIcon,
-			showLinkedInIcon,
-			showPinterestIcon,
-			showRedditIcon,
-			showTumblrIcon,
-			showTwitterIcon,
-			align,
-			iconShape
-		} = attributes;
+			attributes,
+			setAttributes,
+			isSelected,
+			className,
+			block,
+			hasTransitioned,
+			setState
+		} = props;
+
+		const { blockID, align, iconShape, iconOrder } = attributes;
 
 		const iconSize = iconSizes[attributes.iconSize];
 
 		if (blockID !== block.clientId) {
-			setAttributes({
-				blockID: block.clientId
-			});
+			setAttributes({ blockID: block.clientId });
+		}
+
+		const iconStatus = [
+			attributes.showFacebookIcon,
+			attributes.showTwitterIcon,
+			attributes.showLinkedInIcon,
+			attributes.showPinterestIcon,
+			attributes.showRedditIcon,
+			attributes.showTumblrIcon
+		];
+
+		if (!hasTransitioned) {
+			if (iconStatus.indexOf(false) > -1) {
+				setAttributes({ iconOrder: iconOrder.filter((_, i) => iconStatus[i]) });
+			}
+			setState({ hasTransitioned: true });
 		}
 
 		return [
@@ -138,99 +230,18 @@ registerBlockType("ub/social-share", {
 			),
 			isSelected && <Inspector {...props} />,
 			<div id="ub-social-share-block-editor" className={className}>
-				<div className={"social-share-icons align-icons-" + align}>
-					{showFacebookIcon && (
-						<a
-							href="#ub-social-share-block-editor"
-							className={"social-share-icon " + iconShape}
-							style={{
-								width: iconSize * 1.5,
-								height: iconSize * 1.5,
-								backgroundColor: "#365899"
-							}}
-						>
-							<FacebookIcon width={iconSize} height={iconSize} />
-						</a>
-					)}
-					{showTwitterIcon && (
-						<a
-							href="#ub-social-share-block-editor"
-							className={"social-share-icon " + iconShape}
-							style={{
-								width: iconSize * 1.5,
-								height: iconSize * 1.5,
-								backgroundColor: "#1da1f2"
-							}}
-						>
-							<TwitterIcon width={iconSize} height={iconSize} />
-						</a>
-					)}
-					{showLinkedInIcon && (
-						<a
-							href="#ub-social-share-block-editor"
-							className={"social-share-icon " + iconShape}
-							style={{
-								width: iconSize * 1.5,
-								height: iconSize * 1.5,
-								backgroundColor: "#0073b1"
-							}}
-						>
-							<LinkedInIcon width={iconSize} height={iconSize} />
-						</a>
-					)}
-					{showPinterestIcon && (
-						<a
-							href="#ub-social-share-block-editor"
-							className={"social-share-icon " + iconShape}
-							style={{
-								width: iconSize * 1.5,
-								height: iconSize * 1.5,
-								backgroundColor: "#bd081c"
-							}}
-						>
-							<PinterestIcon width={iconSize} height={iconSize} />
-						</a>
-					)}
-					{showRedditIcon && (
-						<a
-							href="#ub-social-share-block-editor"
-							className={"social-share-icon " + iconShape}
-							style={{
-								width: iconSize * 1.5,
-								height: iconSize * 1.5,
-								backgroundColor: "#cee3f8"
-							}}
-						>
-							<RedditIcon width={iconSize} height={iconSize} />
-						</a>
-					)}
-					{showGooglePlusIcon && (
-						<a
-							href="#ub-social-share-block-editor"
-							className={"social-share-icon " + iconShape}
-							style={{
-								width: iconSize * 1.5,
-								height: iconSize * 1.5,
-								backgroundColor: "#db4437"
-							}}
-						>
-							<GooglePlusIcon width={iconSize} height={iconSize} />
-						</a>
-					)}
-					{showTumblrIcon && (
-						<a
-							href="#ub-social-share-block-editor"
-							className={"social-share-icon " + iconShape}
-							style={{
-								width: iconSize * 1.5,
-								height: iconSize * 1.5,
-								backgroundColor: "#36465d"
-							}}
-						>
-							<TumblrIcon width={iconSize} height={iconSize} />
-						</a>
-					)}
-				</div>
+				<SortableList
+					axis="x"
+					items={iconOrder}
+					onSortEnd={({ oldIndex, newIndex }) =>
+						setAttributes({
+							iconOrder: arrayMove(iconOrder, oldIndex, newIndex)
+						})
+					}
+					iconSize={iconSize}
+					iconShape={iconShape}
+					align={align}
+				/>
 			</div>
 		];
 	}),
