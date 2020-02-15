@@ -6,11 +6,9 @@
  */
 
 .wp-block-ub-content-toggle-accordion {
-	.wp-block-ub-content-toggle-accordion-controls-top {
-		> span {
-			cursor: pointer;
-		}
-		> span:nth-of-type(2) {
+	.wp-block-ub-content-toggle-accordion-controls-top > span {
+		cursor: pointer;
+		&:nth-of-type(2) {
 			position: absolute;
 			right: -15px;
 		}

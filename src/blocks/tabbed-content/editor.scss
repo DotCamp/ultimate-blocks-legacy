@@ -41,10 +41,8 @@
 			pointer-events: auto;
 		}
 	}
-	&:hover {
-		.ub-tab-actions {
-			opacity: 1;
-		}
+	&:hover .ub-tab-actions {
+		opacity: 1;
 	}
 }
 

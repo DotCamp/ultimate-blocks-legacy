@@ -15,7 +15,7 @@ function ub_render_call_to_action_block($attributes){
                 <div class="ub_call_to_action_button">
                     <a href="'.esc_url($url).'" target="_'.($openInNewTab ? 'blank' :'self' )
                         .'" rel="'.($addNofollow ? 'nofollow ' : '').'noopener noreferrer"
-                        class="wp-block-button ub_cta_button"'.($blockID == '' ? ' style="background-color: '.$buttonColor.'; width: '.$buttonWidth.'px;"':'').'>
+                        class="ub_cta_button"'.($blockID == '' ? ' style="background-color: '.$buttonColor.'; width: '.$buttonWidth.'px;"':'').'>
                         <p class="ub_cta_button_text"'.($blockID==''?' style="color: '.
                         $buttonTextColor.'; font-size: '.$buttonFontSize.'px;"':'').'>'.
                             $ub_cta_button_text.'</p></a></div></div>';
