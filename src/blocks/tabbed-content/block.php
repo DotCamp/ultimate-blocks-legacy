@@ -41,7 +41,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
     }
 
     return '<div class="'.$blockName.' '.$blockName.'-holder '.($tabVertical ? 'vertical-holder' : '').(isset($className) ? ' ' . esc_attr($className) : '')
-        .'"'.($blockID==''?'':' id="ub-tabbed-content-'.$blockID.'"').'><div class="'.$blockName.'-tab-holder '.($tabVertical ? 'vertical-tab-width' : '').'">
+        .(isset($align) ? 'align'.$align : '').'"'.($blockID==''?'':' id="ub-tabbed-content-'.$blockID.'"').'><div class="'.$blockName.'-tab-holder '.($tabVertical ? 'vertical-tab-width' : '').'">
     <div class="'.$blockName.'-tabs-title'.($tabVertical ? '-vertical-tab' : '').'">'.
     $tabs.'</div>
     <div class="'.$blockName.'-scroll-button-container ub-hide">

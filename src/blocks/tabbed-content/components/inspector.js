@@ -13,25 +13,24 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelColorSettings
-					title={__('Tab Colors')}
+					title={__("Tab Colors")}
 					initialOpen={true}
 					colorSettings={[
 						{
 							value: theme,
 							onChange: value => setAttributes({ theme: value }),
-							label: __('Active Tab Color')
+							label: __("Active Tab Color")
 						},
 						{
 							value: titleColor,
-							onChange: value =>
-								setAttributes({ titleColor: value }),
-							label: __('Active Tab Title Color')
+							onChange: value => setAttributes({ titleColor: value }),
+							label: __("Active Tab Title Color")
 						}
 					]}
 				/>
-				<PanelBody title={__('Tab View')}>
+				<PanelBody title={__("Tab View")}>
 					<ToggleControl
-						label={__('Vertical', 'tabbed-content-blocks')}
+						label={__("Vertical", "tabbed-content-blocks")}
 						checked={tabVertical}
 						onChange={tabVertical => setAttributes({ tabVertical })}
 					/>

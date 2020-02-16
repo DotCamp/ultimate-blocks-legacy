@@ -93,7 +93,7 @@ const attributes = {
 		default: []
 	},
 	tabVertical: {
-		type: "bolean",
+		type: "boolean",
 		default: false
 	}
 };
@@ -236,6 +236,9 @@ registerBlockType("ub/tabbed-content-block", {
 	category: "ultimateblocks",
 	keywords: [__("Tabbed Content"), __("Tabs"), __("Ultimate Blocks")],
 	attributes,
+	supports: {
+		align: ["wide", "full"]
+	},
 
 	edit: compose([
 		withSelect((select, ownProps) => {
