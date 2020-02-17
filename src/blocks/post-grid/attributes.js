@@ -1,4 +1,8 @@
 const attributes = {
+    wrapAlignment: {
+        type: "string",
+        default: ""
+    },
 	checkPostImage: {
 		type: "boolean",
 		default: true

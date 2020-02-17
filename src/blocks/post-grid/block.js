@@ -12,7 +12,7 @@ import Inspector from "./inspector";
 
 const { Fragment } = wp.element;
 const { withSelect } = wp.data;
-const { BlockControls } = wp.blockEditor || wp.editor;
+const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 const { Placeholder, Spinner, Toolbar } = wp.components;
 
 export default registerBlockType("ub/post-grid", {
@@ -37,6 +37,16 @@ export default registerBlockType("ub/post-grid", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
+
+    getEditWrapperProps({ wrapAlignment }) {
+        if (
+            "full" === wrapAlignment ||
+            "wide" === wrapAlignment ||
+            "center" === wrapAlignment
+        ) {
+            return { "data-align": wrapAlignment };
+        }
+    },
 
 	edit: withSelect((select, props) => {
 		const {
@@ -109,6 +119,11 @@ export default registerBlockType("ub/post-grid", {
 			<Fragment>
 				<Inspector {...{ ...props }} />
 				<BlockControls>
+                    <BlockAlignmentToolbar
+                        value={ wrapAlignment }
+                        controls={ [ 'center', 'wide', 'full' ] }
+                        onChange={ value => setAttributes( { wrapAlignment: value } ) }
+                    />
 					<Toolbar controls={toolBarButton} />
 				</BlockControls>
 				<PostGridBlock {...{ ...props }} />
