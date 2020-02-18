@@ -79,7 +79,7 @@ export default registerBlockType("ub/post-grid", {
 		};
 	})(props => {
 		const { attributes, setAttributes, posts } = props;
-		const { postLayout } = attributes;
+		const { postLayout, wrapAlignment } = attributes;
 
 		const emptyPosts = Array.isArray(posts) && posts.length;
 

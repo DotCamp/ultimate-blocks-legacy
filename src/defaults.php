@@ -1370,7 +1370,7 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
-            'wrapAligment' => array(
+            'wrapAlignment' => array(
                 'type' => 'string',
                 'default' => ''
             ),
