@@ -44,14 +44,75 @@ class TableOfContents extends Component {
 				if (block.name === "core/heading") {
 					headings.push(block);
 					pageBreaks.push(pageNum);
-				} else if (block.name === "core/nextpage") {
-					pageNum++;
-				} else if (block.innerBlocks.length > 0) {
-					let internalHeadings = getDescendantBlocks(block).filter(
-						block => block.name === "core/heading"
-					);
-					if (internalHeadings.length > 0) {
-						headings.push(...internalHeadings);
+				} else {
+					let newBlock = Object.assign({}, block);
+					let blockAttributes = block.attributes;
+					if (block.name === "uagb/advanced-heading") {
+						newBlock.attributes = {
+							level: blockAttributes.level,
+							content: blockAttributes.headingTitle || ""
+						};
+						headings.push(newBlock);
+						pageBreaks.push(pageNum);
+					} else if (block.name === "themeisle-blocks/advanced-heading") {
+						if (
+							["h1", "h2", "h3", "h4", "h5", "h6"].includes(
+								block.attributes.tag
+							)
+						) {
+							newBlock.attributes = {
+								level: Number(blockAttributes.tag.charAt(1)),
+								content: blockAttributes.content
+							};
+							headings.push(newBlock);
+							pageBreaks.push(pageNum);
+						}
+					} else if (block.name === "kadence/advancedheading") {
+						if (!("content" in newBlock.attributes)) {
+							newBlock.attributes.content = "";
+						}
+						headings.push(newBlock);
+						pageBreaks.push(pageNum);
+					} else if (block.name === "core/nextpage") {
+						pageNum++;
+					} else if (block.innerBlocks.length > 0) {
+						let internalHeadings = getDescendantBlocks(block).filter(block =>
+							[
+								"core/heading",
+								"kadence/advancedheading",
+								"themeisle-blocks/advanced-heading",
+								"uagb/advanced-heading"
+							].includes(block.name)
+						);
+
+						if (internalHeadings.length > 0) {
+							internalHeadings.forEach(h => {
+								switch (h.name) {
+									case "kadence/advancedheading":
+										if (!("content" in h.attributes)) {
+											h.attributes.content = "";
+										}
+										break;
+									case "themeisle-blocks/advanced-heading":
+										h.attributes.level = [...Array(6).keys()]
+											.map(a => `h${a + 1}`)
+											.includes(h.attributes.tag)
+											? Number(h.attributes.tag.charAt(1))
+											: 0;
+										break;
+									case "uagb/advanced-heading":
+										h.attributes.content = h.attributes.headingTitle || "";
+										break;
+									default:
+										break;
+								}
+							});
+							internalHeadings.filter(h => h.attributes.level > 0);
+						}
+
+						if (internalHeadings.length > 0) {
+							headings.push(...internalHeadings);
+						}
 					}
 				}
 			});
