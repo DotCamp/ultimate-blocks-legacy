@@ -1,17 +1,41 @@
 <?php
 
+function generateISODurationCode($inputArr){
+    $newInputArr = $inputArr;
+    $tIsAbsent = true;
+    $output = 'P';
+    $unitLetters = ['Y', 'M', 'W', 'D', 'H', 'M', 'S'];
+
+    if( $newInputArr[2] > 0 && 
+        count(array_filter($newInputArr, function($item){return $item > 0;})) > 1 ){
+            $newInputArr[3] += $newInputArr[2] * 7;
+            $newInputArr[2] = 0;
+    }
+
+    foreach($newInputArr as $i => $t){
+        if($i > 3 && $tIsAbsent){
+            $output .= 'T';
+            $tIsAbsent = false;
+        }
+        if($t > 0){
+            $output .= round($t) . $unitLetters[$i]; //decimal values for time aren't recognized
+        }
+    }
+    return $output;
+}
+
 function ub_render_how_to_block($attributes){
     extract($attributes);
 
     $header = '';
 
-    $timeUnits = array( "seconds", "minutes", "hours",
-                    "days", "weeks", "months", "years");
+    $timeUnits = [__("seconds"), __("minutes"), __("hours"),
+         __("days"), __("weeks"), __("months"), __("years")];
 
     $toolsCode = '"tool": [';
 
     if($includeToolsList){
-        $header .= '<h2>Tools needed</h2>';
+        $header .= '<h2>'.__('Tools needed').'</h2>';
         if(count($tools) > 0){
             $header .= '<ul>';
             foreach($tools as $i => $t){
@@ -19,8 +43,7 @@ function ub_render_how_to_block($attributes){
                 if($i > 0){
                     $toolsCode .= ',';
                 }
-                $toolsCode .= '{"@type": "HowToTool",
-                    "name": "'.$t.'"}';
+                $toolsCode .= '{"@type": "HowToTool", "name": "'.$t.'"}';
             }
             $header .= '</ul>';
         }
@@ -29,7 +52,7 @@ function ub_render_how_to_block($attributes){
 
     $suppliesCode = '"supply": [';
     if($includeSuppliesList){
-        $header .= '<h2>Supplies needed</h2>';
+        $header .= '<h2>'.__('Supplies needed').'</h2>';
         if(count($supplies) > 0){
             $header .= '<ul>';
             foreach($supplies as $i => $s){
@@ -37,8 +60,7 @@ function ub_render_how_to_block($attributes){
                 if($i > 0){
                     $suppliesCode .= ',';
                 }
-                $suppliesCode .= '{"@type": "HowToSupply",
-                    "name": "'.$s.'"}';
+                $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s.'"}';
             }
             $header .= '</ul>';
         }
@@ -47,46 +69,42 @@ function ub_render_how_to_block($attributes){
 
     $costDisplay = $showUnitFirst ? $costCurrency . ' ' . $cost : $cost . ' ' . $costCurrency;
 
-    //check if detailedtime requires separate displays for preptime, performtime and total time
-
     $timeDisplay = '<div>';
+    $ISOPrepTime = '';
+    $ISOPerformTime = '';
 
     if($useDetailedTime){
-        $timeDisplay .= '<p>Preparation time: '.$prepTime.' '.$prepTimeUnit.
-                        '</p><p>Performance time: '.$performTime.' '.$performTimeUnit.'</p>';
+        $prepTimeDisplay = '';
+        $performTimeDisplay = '';
+        foreach($prepTime as $i => $t){
+            if($t > 0){
+                $prepTimeDisplay .= $t . ' ' . $timeUnits[6-$i] . ' ';
+            }
+        }
 
-        $ISOPrepTime = 'P';
-        if(array_search($prepTimeUnit, $timeUnits) < 3){
-            $ISOPrepTime .= 'T';
+        foreach($performTime as $i => $t){
+            if($t > 0){
+                $performTimeDisplay .= $t . ' ' . $timeUnits[6-$i] . ' ';
+            }
         }
-        $ISOPrepTime .= $prepTime . strtoupper($prepTimeUnit[0]);
-        
-        $ISOPerformTime = 'P';
-        if(array_search($performTimeUnit, $timeUnits) < 3){
-            $ISOPerformTime .= 'T';
-        }
-        $ISOPerformTime .= $performTime . strtoupper($performTimeUnit[0]);
+
+        $timeDisplay .= '<p>Preparation time: '.$prepTimeDisplay.' '.
+            '</p><p>Performance time: '.$performTimeDisplay.'</p>';
+        $ISOPrepTime = generateISODurationCode($prepTime);
+        $ISOPerformTime = generateISODurationCode($performTime);
     }
 
-    //override settings when a value of 1 or greater for next larger unit is present
+    $totalTimeDisplay = '';
 
-    /*$unitMultiplier = [1, 60, 60, 24, 7, 365, 12];
-    $currentTimeUnitIndex = array_search($totalTimeUnit, $timeUnits);
-    if($currentTimeIndex < 6){
-        $conversionFactor = $unitMultiplier[$currentTimeUnitIndex+1] / ($currentTimeUnitIndex == 4 ? 84 : 1);
-        while($totalTime / $conversionFactor > 1){
-    
+    foreach($totalTime as $i => $t){
+        if($t > 0){
+            $totalTimeDisplay .= $t . ' ' . $timeUnits[6-$i] . ' ';
         }
-    }*/
-
-
-    //$timeDisplay .= 'time unit  index: ' . json_encode($timeUnits);
-    $timeDisplay .= '<p>Total time: '.$totalTime.' '.$totalTimeUnit.'</p></div>';
-    $ISOTotalTime = 'P';
-    if(array_search($totalTimeUnit, $timeUnits) < 3){
-        $ISOTotalTime .= 'T';
     }
-    $ISOTotalTime .= $totalTime . strtoupper($totalTimeUnit[0]);
+
+    $timeDisplay .= '<p>Total time: '. $totalTimeDisplay  .'</div>';
+
+    $ISOTotalTime = generateISODurationCode($totalTime);
 
     $stepsDisplay = '';
     $stepsCode = PHP_EOL .  '"step": [';
@@ -94,7 +112,6 @@ function ub_render_how_to_block($attributes){
     if($useSections){
         $stepsDisplay = '<ol class="ub_howto_steps_display">';
         foreach($section as $i => $s){
-            //$section
             $stepsDisplay .= '<li class="ub_howto_section"><h3>' . $s['sectionName'] . '</h3>';
             $stepsCode .= '{"@type": "HowToSection",' . PHP_EOL
                         . '"name": "'. $s['sectionName'] . '",' . PHP_EOL
@@ -108,11 +125,9 @@ function ub_render_how_to_block($attributes){
                             . '"itemListElement" :[{'. PHP_EOL;
 
                 $stepsDisplay .= '<div class="ub_howto_step"><h4 id="'.$step['anchor'].'">'
-                    . $step['title'].'</h4>'
-                    .'<img src="' .$step['stepPic']['url']. '">'
+                    . $step['title'].'</h4>' .'<img src="' .$step['stepPic']['url']. '">'
                     .$step['direction'] . PHP_EOL;
 
-                //$stepsCode .= '"name" : "'.$step['title'].'",' . PHP_EOL;
                 $stepsCode .= '"@type": "HowToDirection",' . PHP_EOL
                             . '"text": "' .($step['title'] == '' ? '' : $step['title'] . ' ') .$step['direction'].'"}' . PHP_EOL;
 
@@ -171,8 +186,10 @@ function ub_render_how_to_block($attributes){
         "@context": "http://schema.org",
         "@type": "HowTo",
         "name":"'.$title.'",
-        "description": "'.$introduction.'",
-        "totalTime": "'.$ISOTotalTime.'",
+        "description": "'.$introduction.'",'. ($useDetailedTime ? '
+        "prepTime": "'.$ISOPrepTime.'",
+        "performTime": "'.$ISOPerformTime.'",': '').
+        '"totalTime": "'.$ISOTotalTime.'",
         "estimatedCost": {
             "@type": "MonetaryAmount",
             "currency": "'.$costCurrency.'",

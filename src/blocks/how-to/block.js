@@ -51,32 +51,16 @@ const attributes = {
 		default: [{ sectionName: "", steps: [] }] //contains steps, if useSections is set to false, then only use contents of the first section. minimum of two steps.
 	},
 	prepTime: {
-		type: "number",
-		default: 0
-	},
-	prepTimeUnit: {
-		type: "string",
-		default: "minutes"
+		type: "array",
+		default: Array(7).fill(0)
 	},
 	performTime: {
-		type: "number",
-		default: 0
-	},
-	performTimeUnit: {
-		type: "string",
-		default: "minutes"
+		type: "array",
+		default: Array(7).fill(0)
 	},
 	totalTime: {
-		type: "number",
-		default: 0
-	},
-	totalTimeUnit: {
-		type: "string",
-		default: "minutes"
-	},
-	autoConvertTimeUnit: {
-		type: "boolean",
-		default: false
+		type: "array",
+		default: Array(7).fill(0)
 	},
 	cost: {
 		type: "number",
@@ -349,6 +333,37 @@ class HowToSection extends Component {
 	}
 }
 
+class DurationInput extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
+		const { label, adjustDuration, timeInput } = this.props;
+
+		return (
+			<Fragment>
+				<span>{label}</span>
+				{timeInput.map((t, i) => (
+					<RichText
+						style={{ textAlign: "right" }}
+						className="ub_howto_time_value"
+						keepPlaceholderOnFocus
+						placeholder={__("0")}
+						value={String(t)}
+						onChange={newInput => {
+							adjustDuration([
+								...timeInput.slice(0, i),
+								Number(newInput),
+								...timeInput.slice(i + 1)
+							]);
+						}}
+					/>
+				))}
+			</Fragment>
+		);
+	}
+}
+
 registerBlockType("ub/how-to", {
 	title: __("How To"),
 	icon: icon,
@@ -371,12 +386,8 @@ registerBlockType("ub/how-to", {
 				costCurrency,
 				showUnitFirst,
 				prepTime,
-				prepTimeUnit,
 				performTime,
-				performTimeUnit,
 				totalTime,
-				totalTimeUnit,
-				autoConvertTimeUnit,
 				useSections,
 				useDetailedTime,
 				includeToolsList,
@@ -391,82 +402,41 @@ registerBlockType("ub/how-to", {
 		} = props;
 
 		const units = [
-			"seconds",
-			"minutes",
-			"hours",
-			"days",
-			"weeks",
+			"years",
 			"months",
-			"years"
+			"weeks",
+			"days",
+			"hours",
+			"minutes",
+			"seconds"
 		];
 
-		const calcTotalTime = (
-			prepTime,
-			performTime,
-			prepTimeUnit = props.attributes.prepTimeUnit,
-			performTimeUnit = props.attributes.performTimeUnit
-		) => {
-			let totalTime = 0;
-			let totalTimeUnit = "";
-			let unitMultiplier = [1, 60, 60, 24, 7, 365, 12];
-			if (prepTimeUnit === performTimeUnit) {
-				totalTime = prepTime + performTime;
-				totalTimeUnit = performTimeUnit;
-				/*setAttributes({
-					totalTime: prepTime + performTime,
-					totalTimeUnit: performTimeUnit
-				});*/
-			} else {
-				let smallerUnitIndex = Math.min(
-					units.indexOf(prepTimeUnit),
-					units.indexOf(performTimeUnit)
-				);
-
-				let largerUnitIndex = Math.max(
-					units.indexOf(prepTimeUnit),
-					units.indexOf(performTimeUnit)
-				);
-
-				const conversionFactor =
-					unitMultiplier
-						.slice(smallerUnitIndex + 1, largerUnitIndex + 1)
-						.reduce((prev, curr) => prev * curr) /
-					(smallerUnitIndex <= 4 && largerUnitIndex >= 5 ? 84 : 1);
-
-				totalTime =
-					Math.round(
-						(units.indexOf(prepTimeUnit) > units.indexOf(performTimeUnit)
-							? prepTime + performTime / conversionFactor
-							: prepTime / conversionFactor + performTime) * 1000
-					) / 1000;
-
-				totalTimeUnit = units[largerUnitIndex];
-			}
-
-			if (autoConvertTimeUnit) {
-				let newTotalTime = totalTime;
-
-				if (totalTime >= 1) {
-					while (newTotalTime >= 1 && totalTimeUnit !== "years") {
-						newTotalTime /=
-							unitMultiplier[units.indexOf(totalTimeUnit) + 1] /
-							(totalTimeUnit === "weeks" ? 84 : 1);
-						if (newTotalTime >= 1) {
-							totalTimeUnit = units[units.indexOf(totalTimeUnit) + 1];
-							totalTime = newTotalTime;
+		const convertTime = timeArr => {
+			const maxUnitCount = [0, 12, 4, 7, 24, 60, 60];
+			let newTimeArr = [...timeArr];
+			for (let j = 6; j > 0; j--) {
+				if (maxUnitCount[j] <= newTimeArr[j]) {
+					if (j === 3) {
+						if (newTimeArr[3] >= 365) {
+							newTimeArr[0] += ~~(newTimeArr[3] / 365);
+							newTimeArr[3] %= 365;
+						}
+						if (newTimeArr[3] >= 30) {
+							newTimeArr[1] += ~~(newTimeArr[3] / 30);
+							newTimeArr[3] %= 30;
 						}
 					}
-				} else {
-					while (newTotalTime < 1 && totalTimeUnit !== "seconds") {
-						newTotalTime *=
-							unitMultiplier[units.indexOf(totalTimeUnit)] /
-							(totalTimeUnit === "weeks" ? 84 : 1);
-						totalTimeUnit = units[units.indexOf(totalTimeUnit) - 1];
-						totalTime = newTotalTime;
+					if (j === 2) {
+						if (newTimeArr[2] >= 13) {
+							newTimeArr[1] += 3 * ~~(newTimeArr[2] / 13);
+							newTimeArr[2] %= 13;
+						}
 					}
+					newTimeArr[j - 1] += ~~(newTimeArr[j] / maxUnitCount[j]);
+					newTimeArr[j] %= maxUnitCount[j];
 				}
 			}
-			setAttributes({ totalTimeUnit, totalTime });
+			return newTimeArr;
 		};
 
 		return (
@@ -479,26 +449,14 @@ registerBlockType("ub/how-to", {
 							onChange={useDetailedTime => {
 								setAttributes({ useDetailedTime });
 								if (useDetailedTime) {
-									calcTotalTime(prepTime, performTime);
-								} else
 									setAttributes({
-										prepTime: 0,
-										performTime: 0,
-										autoConvertTimeUnit: false
+										totalTime: convertTime(
+											prepTime.map((t, i) => t + performTime[i])
+										)
 									});
+								}
 							}}
 						/>
-						{useDetailedTime && (
-							<ToggleControl
-								label={__(
-									"Convert total time to minimize use of leading/trailing zeroes"
-								)}
-								checked={autoConvertTimeUnit}
-								onChange={autoConvertTimeUnit =>
-									setAttributes({ autoConvertTimeUnit })
-								}
-							/>
-						)}
 						<ToggleControl
 							label={__("Use sections")}
 							checked={useSections}
@@ -774,87 +732,64 @@ registerBlockType("ub/how-to", {
 						</Fragment>
 					)}
 					<h2>{__("Duration")}</h2>
-					{useDetailedTime && [
-						<div className="ub_howto_time_input">
-							<p>{__("Preparation time")}</p>
-							<RichText
-								className="ub_howto_time_value"
-								keepPlaceholderOnFocus
-								placeholder={__("0")}
-								value={prepTime.toString()}
-								onChange={prepTime => {
-									if (!isNaN(Number(prepTime))) {
-										setAttributes({ prepTime: Number(prepTime) });
-										calcTotalTime(Number(prepTime), performTime);
+					<div
+						style={{
+							display: "grid",
+							gridTemplateColumns: "45% 1fr 1fr 1fr 1fr 1fr 1fr 1fr"
+						}}
+					>
+						<p></p>
+						{units.map(u => (
+							<p style={{ textAlign: "center", fontSize: "15px" }}>{__(u)}</p>
+						))}
+						{useDetailedTime && [
+							<DurationInput
+								label={__("Preparation time")}
+								timeInput={prepTime}
+								adjustDuration={prepTime => {
+									if (prepTime.filter(t => isNaN(Number(t))).length === 0) {
+										setAttributes({
+											prepTime,
+											totalTime: convertTime(
+												prepTime.map((t, i) => t + performTime[i])
+											)
+										});
+									}
+								}}
+							/>,
+							<DurationInput
+								label={__("Performance time")}
+								timeInput={performTime}
+								adjustDuration={performTime => {
+									if (performTime.filter(t => isNaN(Number(t))).length === 0) {
+										setAttributes({
+											performTime,
+											totalTime: convertTime(
+												performTime.map((t, i) => t + prepTime[i])
+											)
+										});
 									}
 								}}
 							/>
-							<SelectControl
-								value={prepTimeUnit}
-								options={units.map(t => ({ label: t, value: t }))}
-								onChange={prepTimeUnit => {
-									setAttributes({ prepTimeUnit });
-									calcTotalTime(
-										prepTime,
-										performTime,
-										prepTimeUnit,
-										performTimeUnit
-									);
-								}}
-							/>
-						</div>,
-						<div className="ub_howto_time_input">
-							<p>{__("Performance time")}</p>
-							<RichText
-								className="ub_howto_time_value"
-								keepPlaceholderOnFocus
-								value={performTime.toString()}
-								onChange={performTime => {
-									if (!isNaN(Number(performTime))) {
-										setAttributes({ performTime: Number(performTime) });
-										calcTotalTime(prepTime, Number(performTime));
-									}
-								}}
-							/>
-							<SelectControl
-								value={performTimeUnit}
-								options={units.map(u => ({ label: __(u), value: u }))}
-								onChange={performTimeUnit => {
-									setAttributes({ performTimeUnit });
-									calcTotalTime(
-										prepTime,
-										performTime,
-										prepTimeUnit,
-										performTimeUnit
-									);
-								}}
-							/>
-						</div>
-					]}
-					<div className="ub_howto_time_input">
-						<p>{__("Total time")}</p>
+						]}
 						{useDetailedTime ? (
-							<span className="ub_howto_time_value">{String(totalTime)}</span>
+							<Fragment>
+								<span>Total time</span>
+								{totalTime.map(t => (
+									<span style={{ textAlign: "right" }}>{t}</span>
+								))}
+							</Fragment>
 						) : (
-							<RichText
-								className="ub_howto_time_value"
-								keepPlaceholderOnFocus
-								placeholder={__("0")}
-								value={String(totalTime)}
-								onChange={totalTime => {
-									if (!isNaN(Number(totalTime))) {
-										setAttributes({ totalTime: Number(totalTime) });
+							<DurationInput
+								label={__("Total time")}
+								timeInput={totalTime}
+								adjustDuration={totalTime => {
+									if (totalTime.filter(t => isNaN(Number(t))).length === 0) {
+										setAttributes({ totalTime });
 									}
 								}}
 							/>
 						)}
-						<SelectControl
-							value={totalTimeUnit}
-							options={units.map(t => ({ label: __(t), value: t }))}
-							onChange={totalTimeUnit => {
-								if (!useDetailedTime) setAttributes({ totalTimeUnit });
-							}} //if performtime and preptime are enabled, peg to larger unit, else allow user to choose
-						/>
 					</div>
 					<div className="ub_howto_cost_container">
 						<p>{__("Cost: ")}</p>

@@ -488,28 +488,25 @@ $defaultValues = array(
                 'default' => array()
             ),
             'prepTime' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'prepTimeUnit' => array(
-                'type' => 'string',
-                'default' => 'minutes'
+                'type' => 'array',
+                'default' => array_fill(0, 7, 0),
+                'items' => array(
+                    'type' => 'number'
+                )
             ),
             'performTime' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'performTimeUnit' => array(
-                'type' => 'string',
-                'default' => 'minutes'
+                'type' => 'array',
+                'default' => array_fill(0, 7, 0),
+                'items' => array(
+                    'type' => 'number'
+                )
             ),
             'totalTime' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'totalTimeUnit' => array(
-                'type' => 'string',
-                'default' => 'minutes'
+                'type' => 'array',
+                'default' => array_fill(0, 7, 0),
+                'items' => array(
+                    'type' => 'number'
+                )
             ),
             'cost' => array(
                 'type' => 'number',
