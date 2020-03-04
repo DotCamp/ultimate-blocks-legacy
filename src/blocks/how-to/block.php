@@ -35,7 +35,7 @@ function ub_render_how_to_block($attributes){
     $toolsCode = '"tool": [';
 
     if($includeToolsList){
-        $header .= '<h2>'.__('Tools needed').'</h2>';
+        $header .= '<h2>'.$toolsIntro.'</h2>';
         if(count($tools) > 0){
             $header .= '<ul>';
             foreach($tools as $i => $t){
@@ -52,7 +52,7 @@ function ub_render_how_to_block($attributes){
 
     $suppliesCode = '"supply": [';
     if($includeSuppliesList){
-        $header .= '<h2>'.__('Supplies needed').'</h2>';
+        $header .= '<h2>'.$suppliesIntro.'</h2>';
         if(count($supplies) > 0){
             $header .= '<ul>';
             foreach($supplies as $i => $s){
@@ -69,7 +69,7 @@ function ub_render_how_to_block($attributes){
 
     $costDisplay = $showUnitFirst ? $costCurrency . ' ' . $cost : $cost . ' ' . $costCurrency;
 
-    $timeDisplay = '<div>';
+    $timeDisplay = '<div><h2>' . $timeIntro . '</h2>';
     $ISOPrepTime = '';
     $ISOPerformTime = '';
 
@@ -88,8 +88,8 @@ function ub_render_how_to_block($attributes){
             }
         }
 
-        $timeDisplay .= '<p>Preparation time: '.$prepTimeDisplay.' '.
-            '</p><p>Performance time: '.$performTimeDisplay.'</p>';
+        $timeDisplay .= '<p>' . __('Preparation time') . ': '.$prepTimeDisplay.' '.
+            '</p><p>' . __('Performance time') . ': '.$performTimeDisplay.'</p>';
         $ISOPrepTime = generateISODurationCode($prepTime);
         $ISOPerformTime = generateISODurationCode($performTime);
     }
@@ -102,7 +102,7 @@ function ub_render_how_to_block($attributes){
         }
     }
 
-    $timeDisplay .= '<p>Total time: '. $totalTimeDisplay  .'</div>';
+    $timeDisplay .= '<p>' . __('Total time') . ': '. $totalTimeDisplay  .'</div>';
 
     $ISOTotalTime = generateISODurationCode($totalTime);
 
@@ -202,7 +202,7 @@ function ub_render_how_to_block($attributes){
     return '<div class="ub_howto" id="ub_howto_'.$blockID.'"><h2>'
                 . $title . '</h2>' . $introduction
                 . $header . '<p>Total cost: ' . $costDisplay . '</p>'
-                . $timeDisplay . $stepsDisplay . $howToYield 
+                . $timeDisplay . $stepsDisplay . '<h2>' . $resultIntro . '</h2>' . $howToYield 
                 . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') .
             '</div>' . $JSONLD;
 }

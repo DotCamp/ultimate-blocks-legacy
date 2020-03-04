@@ -467,6 +467,10 @@ $defaultValues = array(
                 'type' => 'boolean',
                 'default' => false
             ),
+            'toolsIntro' => array(
+                'type' => 'string',
+                'default' => __('Required tools')
+            ),
             'tools' => array(
                 'type' => 'array',
                 'default' => array(),
@@ -479,6 +483,10 @@ $defaultValues = array(
                 'type' => 'boolean',
                 'default' => false
             ),
+            'suppliesIntro' => array(
+                'type' => 'string',
+                'default' => __('Required supplies')
+            ),
             'supplies' => array(
                 'type' => 'array',
                 'default' => array(),
@@ -486,6 +494,10 @@ $defaultValues = array(
             'section' => array(
                 'type' => 'array',
                 'default' => array()
+            ),
+            'timeIntro' => array(
+                'type' => 'string',
+                'default' => __('Duration')
             ),
             'prepTime' => array(
                 'type' => 'array',
@@ -535,6 +547,10 @@ $defaultValues = array(
             'useDetailedTime' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'resultIntro' => array(
+                'type' => 'string',
+                'default' => __('Result')
             ),
             'finalImageID' => array(
                 'type' => 'number',

@@ -30,6 +30,10 @@ const attributes = {
 		default: ""
 	},
 	//add option for video, tool array, and supplies array
+	toolsIntro: {
+		type: "string",
+		default: __("Required tools")
+	},
 	tools: {
 		type: "array",
 		default: [] //format: {name, imageid, imagealt, imageurl}
@@ -37,6 +41,10 @@ const attributes = {
 	addToolImages: {
 		type: "boolean",
 		default: false
+	},
+	suppliesIntro: {
+		type: "string",
+		default: __("Required supplies")
 	},
 	supplies: {
 		type: "array",
@@ -49,6 +57,10 @@ const attributes = {
 	section: {
 		type: "array",
 		default: [{ sectionName: "", steps: [] }] //contains steps, if useSections is set to false, then only use contents of the first section. minimum of two steps.
+	},
+	timeIntro: {
+		type: "string",
+		default: __("Duration")
 	},
 	prepTime: {
 		type: "array",
@@ -98,6 +110,10 @@ const attributes = {
 	includeToolsList: {
 		type: "boolean",
 		default: false
+	},
+	resultIntro: {
+		type: "string",
+		default: __("Result")
 	},
 	finalImageID: {
 		type: "number",
@@ -379,12 +395,15 @@ registerBlockType("ub/how-to", {
 				title,
 				introduction,
 				section,
+				suppliesIntro,
 				supplies,
+				toolsIntro,
 				tools,
 				howToYield,
 				cost,
 				costCurrency,
 				showUnitFirst,
+				timeIntro,
 				prepTime,
 				performTime,
 				totalTime,
@@ -394,6 +413,7 @@ registerBlockType("ub/how-to", {
 				addToolImages,
 				includeSuppliesList,
 				addSupplyImages,
+				resultIntro,
 				finalImageID,
 				finalImageAlt,
 				finalImageURL
@@ -537,7 +557,13 @@ registerBlockType("ub/how-to", {
 					/>
 					{includeSuppliesList && (
 						<Fragment>
-							<h2>{__("Required supplies")}</h2>
+							<RichText
+								tagName="h2"
+								placeholder={__("Required supplies")}
+								keepPlaceholderOnFocus={true}
+								value={suppliesIntro}
+								onChange={suppliesIntro => setAttributes({ suppliesIntro })}
+							/>
 							<ul>
 								{supplies.map((supply, i) => (
 									<li>
@@ -635,7 +661,13 @@ registerBlockType("ub/how-to", {
 					)}
 					{includeToolsList && (
 						<Fragment>
-							<h2>{__("Required tools")}</h2>
+							<RichText
+								tagName="h2"
+								placeholder={__("Required tools")}
+								keepPlaceholderOnFocus={true}
+								value={toolsIntro}
+								onChange={toolsIntro => setAttributes({ toolsIntro })}
+							/>
 							<ul>
 								{tools.map((tool, i) => (
 									<li>
@@ -731,7 +763,13 @@ registerBlockType("ub/how-to", {
 							</Button>
 						</Fragment>
 					)}
-					<h2>{__("Duration")}</h2>
+					<RichText
+						tagName="h2"
+						placeholder={__("Duration")}
+						keepPlaceholderOnFocus={true}
+						value={timeIntro}
+						onChange={timeIntro => setAttributes({ timeIntro })}
+					/>
 					<div
 						style={{
 							display: "grid",
@@ -774,7 +812,7 @@ registerBlockType("ub/how-to", {
 						]}
 						{useDetailedTime ? (
 							<Fragment>
-								<span>Total time</span>
+								<span>{__("Total time")}</span>
 								{totalTime.map(t => (
 									<span style={{ textAlign: "right" }}>{t}</span>
 								))}
@@ -971,10 +1009,16 @@ registerBlockType("ub/how-to", {
 							{__("Add section")}
 						</Button>
 					)}
-					<h2>{__("Result")}</h2>
+					<RichText
+						tagName="h2"
+						placeholder={__("Result")}
+						keepPlaceholderOnFocus={true}
+						value={resultIntro}
+						onChange={resultIntro => setAttributes({ resultIntro })}
+					/>
 					<RichText
 						keepPlaceholderOnFocus
-						placeholder={__("Result")}
+						placeholder={__("Result text")}
 						value={howToYield}
 						onChange={howToYield => setAttributes({ howToYield })}
 					/>
