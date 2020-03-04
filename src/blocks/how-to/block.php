@@ -39,11 +39,11 @@ function ub_render_how_to_block($attributes){
         if(count($tools) > 0){
             $header .= '<ul>';
             foreach($tools as $i => $t){
-                $header .= $t;
+                $header .= '<li>' . $t['name'] . '</li>';
                 if($i > 0){
                     $toolsCode .= ',';
                 }
-                $toolsCode .= '{"@type": "HowToTool", "name": "'.$t.'"}';
+                $toolsCode .= '{"@type": "HowToTool", "name": "'.$t['name'].'"}';
             }
             $header .= '</ul>';
         }
@@ -56,11 +56,11 @@ function ub_render_how_to_block($attributes){
         if(count($supplies) > 0){
             $header .= '<ul>';
             foreach($supplies as $i => $s){
-                $header .= $s;
+                $header .= '<li>' . $s['name'] . '</li>';
                 if($i > 0){
                     $suppliesCode .= ',';
                 }
-                $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s.'"}';
+                $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s['name'].'"}';
             }
             $header .= '</ul>';
         }
