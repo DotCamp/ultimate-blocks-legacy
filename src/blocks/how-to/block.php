@@ -32,6 +32,23 @@ function ub_render_how_to_block($attributes){
     $timeUnits = [__("seconds"), __("minutes"), __("hours"),
          __("days"), __("weeks"), __("months"), __("years")];
 
+    $suppliesCode = '"supply": [';
+    if($includeSuppliesList){
+        $header .= '<h2>'.$suppliesIntro.'</h2>';
+        if(count($supplies) > 0){
+            $header .= '<ul>';
+            foreach($supplies as $i => $s){
+                $header .= '<li>' . $s['name'] . '</li>';
+                if($i > 0){
+                    $suppliesCode .= ',';
+                }
+                $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s['name'].'"}';
+            }
+            $header .= '</ul>';
+        }
+    }
+    $suppliesCode .= ']';
+
     $toolsCode = '"tool": [';
 
     if($includeToolsList){
@@ -49,23 +66,6 @@ function ub_render_how_to_block($attributes){
         }
     }
     $toolsCode  .= ']'; 
-
-    $suppliesCode = '"supply": [';
-    if($includeSuppliesList){
-        $header .= '<h2>'.$suppliesIntro.'</h2>';
-        if(count($supplies) > 0){
-            $header .= '<ul>';
-            foreach($supplies as $i => $s){
-                $header .= '<li>' . $s['name'] . '</li>';
-                if($i > 0){
-                    $suppliesCode .= ',';
-                }
-                $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s['name'].'"}';
-            }
-            $header .= '</ul>';
-        }
-    }
-    $suppliesCode .= ']';
 
     $costDisplay = $showUnitFirst ? $costCurrency . ' ' . $cost : $cost . ' ' . $costCurrency;
 

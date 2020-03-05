@@ -677,7 +677,7 @@ registerBlockType("ub/how-to", {
 											placeholder={__("Enter tool name")}
 											onChange={newTool =>
 												setAttributes({
-													supplies: [
+													tools: [
 														...tools.slice(0, i),
 														Object.assign(tools[i], { name: newTool }),
 														...tools.slice(i + 1)
