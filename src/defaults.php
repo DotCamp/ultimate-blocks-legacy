@@ -499,20 +499,6 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => __('Duration')
             ),
-            'prepTime' => array(
-                'type' => 'array',
-                'default' => array_fill(0, 7, 0),
-                'items' => array(
-                    'type' => 'number'
-                )
-            ),
-            'performTime' => array(
-                'type' => 'array',
-                'default' => array_fill(0, 7, 0),
-                'items' => array(
-                    'type' => 'number'
-                )
-            ),
             'totalTime' => array(
                 'type' => 'array',
                 'default' => array_fill(0, 7, 0),
@@ -536,15 +522,35 @@ $defaultValues = array(
                 'type'  => 'string',
                 'default' => ''
             ),
-            'video' => array(
+            'videoURL' => array(
                 'type' => 'string', //videoobject
                 'default' => '' //url
             ),
-            'useSections' => array(
-                'type' => 'boolean',
-                'default' => false
+            'videoThumbnailURL' => array(
+                'type' => 'string',
+                'default' => ''
             ),
-            'useDetailedTime' => array(
+            'videoName' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'videoDescription' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'videoUploadDate' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'videoEmbedCode' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'videoDuration' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'useSections' => array(
                 'type' => 'boolean',
                 'default' => false
             ),

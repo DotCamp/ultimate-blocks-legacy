@@ -70,29 +70,6 @@ function ub_render_how_to_block($attributes){
     $costDisplay = $showUnitFirst ? $costCurrency . ' ' . $cost : $cost . ' ' . $costCurrency;
 
     $timeDisplay = '<div><h2>' . $timeIntro . '</h2>';
-    $ISOPrepTime = '';
-    $ISOPerformTime = '';
-
-    if($useDetailedTime){
-        $prepTimeDisplay = '';
-        $performTimeDisplay = '';
-        foreach($prepTime as $i => $t){
-            if($t > 0){
-                $prepTimeDisplay .= $t . ' ' . $timeUnits[6-$i] . ' ';
-            }
-        }
-
-        foreach($performTime as $i => $t){
-            if($t > 0){
-                $performTimeDisplay .= $t . ' ' . $timeUnits[6-$i] . ' ';
-            }
-        }
-
-        $timeDisplay .= '<p>' . __('Preparation time') . ': '.$prepTimeDisplay.' '.
-            '</p><p>' . __('Performance time') . ': '.$performTimeDisplay.'</p>';
-        $ISOPrepTime = generateISODurationCode($prepTime);
-        $ISOPerformTime = generateISODurationCode($performTime);
-    }
 
     $totalTimeDisplay = '';
 
@@ -161,7 +138,8 @@ function ub_render_how_to_block($attributes){
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
                             . '"name": "'.$step['title'].'",' . PHP_EOL
                             . '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
-                            . '"image": "' . $step['stepPic']['url'].'",'
+                            . '"image": "' . $step['stepPic']['url'].'",' . PHP_EOL     
+                            . ($step['hasVideoClip'] ? '"video":{"@id": "'.$step['anchor'].'"}' : '') . PHP_EOL
                             . '"itemListElement" :[{'. PHP_EOL
                             . '"@type": "HowToDirection",' . PHP_EOL
                             . '"text": "' . ($step['title'] == '' ? '' : $step['title'] . ' ') . $step['direction'].'"}' . PHP_EOL;
@@ -181,15 +159,56 @@ function ub_render_how_to_block($attributes){
     $stepsDisplay .= '</ol>';
     $stepsCode .= ']';
 
+    $parts = array_map( function($sec){ return $sec['steps'];}, $section);
+    $clips = '';
+
+    if($videoURL != ''){
+        if(strpos($videoURL,'https://www.youtube.com') === 0){
+            $videoClipArg = '?t=';
+        }
+        if(strpos($videoURL, 'https://vimeo.com') === 0){
+            $videoClipArg = '#t=';
+        }
+        if(strpos($videoURL, 'https://www.dailymotion.com') === 0){
+            $videoClipArg = '?start=';
+        }
+        if(strpos($videoURL, 'https://videopress.com') === 0){
+            $videoClipArg = '?at=';
+        }
+    }
+
+    foreach($parts as $part){
+        foreach($part as $step){
+            if($step['hasVideoClip']){
+                if($clips != ''){
+                    $clips .= ',';
+                }
+                $clips .='{"@type": "Clip",
+                            "@id": "' . $step['anchor'] . '",
+                            "name": "' . $step['title'] . '",
+                            "startOffset": "' . $step['videoClipStart'] . '",
+                            "endOffset": "' . $step['videoClipEnd'] . '",
+                            "url": "' . $videoURL . $videoClipArg . $step['videoClipStart'] . '" }';
+            }
+        }
+    }
+
     $JSONLD = '<script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "HowTo",
         "name":"'.$title.'",
-        "description": "'.$introduction.'",'. ($useDetailedTime ? '
-        "prepTime": "'.$ISOPrepTime.'",
-        "performTime": "'.$ISOPerformTime.'",': '').
-        '"totalTime": "'.$ISOTotalTime.'",
+        "description": "'.$introduction.'",'.
+        '"totalTime": "'.$ISOTotalTime.'",'.($videoURL == '' ?:
+        '"video": {
+            "@type": "VideoObject",
+            "name": "'.$videoName.'"
+            "description": "'.$videoDescription.'",
+            "thumbnailUrl": "'.$videoThumbnailURL.'",
+            "contentUrl": "'.$videoURL.'",
+            "uploadDate": "'. date('c', $videoUploadDate) .'",
+            "hasPart":['.$clips.']
+        },').'
         "estimatedCost": {
             "@type": "MonetaryAmount",
             "currency": "'.$costCurrency.'",
@@ -201,7 +220,8 @@ function ub_render_how_to_block($attributes){
 
     return '<div class="ub_howto" id="ub_howto_'.$blockID.'"><h2>'
                 . $title . '</h2>' . $introduction
-                . $header . '<p>Total cost: ' . $costDisplay . '</p>'
+                . $header . ($videoURL == '' ?: $videoEmbedCode) 
+                . '<p>Total cost: ' . $costDisplay . '</p>'
                 . $timeDisplay . $stepsDisplay . '<h2>' . $resultIntro . '</h2>' . $howToYield 
                 . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') .
             '</div>' . $JSONLD;

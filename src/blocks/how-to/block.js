@@ -4,17 +4,12 @@ import { Component, Fragment } from "react";
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { RichText, MediaUpload, InspectorControls } =
+const { RichText, MediaUpload, InspectorControls, URLInput } =
 	wp.blockEditor || wp.editor;
 
-const {
-	Button,
-	SelectControl,
-	ToggleControl,
-	Icon,
-	IconButton,
-	PanelBody
-} = wp.components;
+const { withState } = wp.compose;
+
+const { Button, ToggleControl, Icon, IconButton, PanelBody } = wp.components;
 
 const attributes = {
 	blockID: {
@@ -62,14 +57,6 @@ const attributes = {
 		type: "string",
 		default: __("Duration")
 	},
-	prepTime: {
-		type: "array",
-		default: Array(7).fill(0)
-	},
-	performTime: {
-		type: "array",
-		default: Array(7).fill(0)
-	},
 	totalTime: {
 		type: "array",
 		default: Array(7).fill(0)
@@ -80,7 +67,7 @@ const attributes = {
 	},
 	costCurrency: {
 		type: "string",
-		default: ""
+		default: "USD"
 	},
 	showUnitFirst: {
 		type: "boolean",
@@ -91,15 +78,35 @@ const attributes = {
 		type: "string",
 		default: ""
 	},
-	video: {
+	videoURL: {
 		type: "string", //videoobject
-		default: "" //url
+		default: "" //needed: video url, thumbnail url, video description, upload date
+	},
+	videoThumbnailURL: {
+		type: "string",
+		default: ""
+	},
+	videoName: {
+		type: "string",
+		default: ""
+	},
+	videoDescription: {
+		type: "string",
+		default: ""
+	},
+	videoUploadDate: {
+		type: "number", //UNIX Date
+		default: 0
+	},
+	videoEmbedCode: {
+		type: "string",
+		default: "<p>When insertion is successful, video should appear here</p>"
+	},
+	videoDuration: {
+		type: "number",
+		default: 0
 	},
 	useSections: {
-		type: "boolean",
-		default: false
-	},
-	useDetailedTime: {
 		type: "boolean",
 		default: false
 	},
@@ -129,10 +136,99 @@ const attributes = {
 	}
 };
 
+const defaultTimeDisplay = {
+	w: 0,
+	d: 0,
+	h: 0,
+	m: 0,
+	s: 0
+};
+
 class HowToStep extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			startTime: Object.assign({}, defaultTimeDisplay),
+			endTime: Object.assign({}, defaultTimeDisplay),
+			validTimeInput: true
+		};
 	}
+
+	componentDidMount() {
+		const {
+			clips,
+			hasVideoClip,
+			videoClipEnd,
+			videoClipStart,
+			sectionNum,
+			stepNum
+		} = this.props;
+
+		const convertFromSeconds = sec => ({
+			s: sec % 60,
+			m: ~~(sec / 60) % 60,
+			h: ~~(sec / 3600) % 24,
+			d: ~~(sec / 86400)
+		});
+
+		if (hasVideoClip) {
+			const start = convertFromSeconds(videoClipStart);
+			const end = convertFromSeconds(videoClipEnd);
+			const clipId =
+				sectionNum > -1
+					? `section${sectionNum}step${stepNum}`
+					: `step${stepNum}`;
+			this.setState({
+				startTime: { w: 0, d: start.d, h: start.h, m: start.m, s: start.s },
+				endTime: { w: 0, d: end.d, h: end.h, m: end.m, s: end.s },
+				validTimeInput:
+					clips.filter(
+						c =>
+							c.anchor !== clipId &&
+							((videoClipStart > c.clipStart && videoClipStart < c.clipEnd) ||
+								(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd))
+					).length === 0
+			});
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		const {
+			videoClipStart,
+			videoClipEnd,
+			sectionNum,
+			stepNum,
+			clips,
+			videoURL
+		} = this.props;
+
+		const clipId =
+			sectionNum > -1 ? `section${sectionNum}step${stepNum}` : `step${stepNum}`;
+
+		if (
+			prevProps.videoClipStart !== videoClipStart ||
+			prevProps.videoClipEnd !== videoClipEnd
+		) {
+			this.setState({
+				validTimeInput:
+					videoClipStart <= videoClipEnd &&
+					clips.filter(
+						c =>
+							c.anchor !== clipId &&
+							((videoClipStart > c.clipStart && videoClipStart < c.clipEnd) ||
+								(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd))
+					).length === 0
+			});
+		}
+
+		if (prevProps.videoURL !== videoURL) {
+			this.setState({
+				startTime: defaultTimeDisplay,
+				endTime: defaultTimeDisplay
+			});
+		}
+	}
+
 	render() {
 		const {
 			direction,
@@ -142,13 +238,16 @@ class HowToStep extends Component {
 			deleteStep,
 			moveUp,
 			moveDown,
-			stepPic
+			stepPic,
+			videoDuration,
+			hasVideoClip
 		} = this.props;
+
+		const { startTime, endTime, validTimeInput } = this.state;
 
 		return (
 			<li>
 				<div className="ub_howto_step">
-					{/* ADD NAME */}
 					<div>
 						<RichText
 							tagName="h4"
@@ -156,52 +255,6 @@ class HowToStep extends Component {
 							placeholder={__("Title goes here")}
 							value={title}
 							onChange={newVal => editStep({ title: newVal })}
-						/>
-						{stepPic.url !== "" ? (
-							<div>
-								<img src={stepPic.url} />
-								<span
-									title={__("Delete image")}
-									className="dashicons dashicons-dismiss"
-									onClick={_ =>
-										editStep({
-											stepPic: {
-												id: -1,
-												alt: "",
-												url: ""
-											}
-										})
-									}
-								/>
-							</div>
-						) : (
-							<MediaUpload
-								onSelect={img =>
-									editStep({
-										stepPic: {
-											id: img.id,
-											alt: img.alt,
-											url: img.url
-										}
-									})
-								}
-								type="image"
-								value={stepPic.id}
-								render={({ open }) => (
-									<Button
-										className="components-button button button-medium"
-										onClick={open}
-									>
-										{__("Upload Image")}
-									</Button>
-								)}
-							/>
-						)}
-						<RichText
-							keepPlaceholderOnFocus
-							placeholder={__("Direction goes here")}
-							value={direction}
-							onChange={newVal => editStep({ direction: newVal })}
 						/>
 					</div>
 					<IconButton
@@ -221,7 +274,274 @@ class HowToStep extends Component {
 						label={__("Move step down")}
 					/>
 				</div>
+				{stepPic.url !== "" ? (
+					<div>
+						<img src={stepPic.url} />
+						<span
+							title={__("Delete image")}
+							className="dashicons dashicons-dismiss"
+							onClick={_ =>
+								editStep({
+									stepPic: {
+										id: -1,
+										alt: "",
+										url: ""
+									}
+								})
+							}
+						/>
+					</div>
+				) : (
+					<MediaUpload
+						onSelect={img =>
+							editStep({
+								stepPic: {
+									id: img.id,
+									alt: img.alt,
+									url: img.url
+								}
+							})
+						}
+						type="image"
+						value={stepPic.id}
+						render={({ open }) => (
+							<React.Fragment>
+								<Button
+									className="components-button button button-medium"
+									onClick={open}
+								>
+									{__("Upload Image")}
+								</Button>
+								<p />
+							</React.Fragment>
+						)}
+					/>
+				)}
+				{videoDuration > 0 && (
+					<ToggleControl
+						checked={hasVideoClip}
+						label={__("Use part of the video in this step")}
+						onChange={hasVideoClip => {
+							editStep({ hasVideoClip });
+							if (!hasVideoClip) {
+								editStep({ videoClipEnd: 0, videoClipStart: 0 });
+								this.setState({
+									startTime: Object.assign({}, defaultTimeDisplay),
+									endTime: Object.assign({}, defaultTimeDisplay)
+								});
+							}
+						}}
+					/>
+				)}
+				{videoDuration > 0 && hasVideoClip && (
+					<React.Fragment>
+						<span style={{ color: validTimeInput ? "black" : "red" }}>
+							Start time
+						</span>
+						{videoDuration >= 86400 && (
+							<input
+								type="number"
+								value={startTime.d}
+								min={0}
+								step={1}
+								onChange={e => {
+									const { h, m, s } = this.state.startTime;
+									const d = Number(e.target.value);
+									const startPoint = d * 86400 + h * 3600 + m * 60 + s;
 
+									if (startPoint < videoDuration && d % 1 === 0 && d > -1) {
+										this.setState({
+											startTime: Object.assign(startTime, { d })
+										});
+										editStep({ videoClipStart: startPoint });
+									}
+								}}
+							/>
+						)}
+						{videoDuration >= 3600 && (
+							<input
+								type="number"
+								value={startTime.h}
+								min={0}
+								max={23}
+								step={1}
+								onChange={e => {
+									const { d, m, s } = this.state.startTime;
+									const h = Number(e.target.value);
+									const startPoint = d * 86400 + h * 3600 + m * 60 + s;
+
+									if (
+										startPoint < videoDuration &&
+										h % 1 === 0 &&
+										h > -1 &&
+										h < 24
+									) {
+										this.setState({
+											startTime: Object.assign(startTime, { h })
+										});
+										editStep({ videoClipStart: startPoint });
+									}
+								}}
+							/>
+						)}
+						{videoDuration >= 60 && (
+							<input
+								type="number"
+								value={startTime.m}
+								min={0}
+								max={59}
+								step={1}
+								onChange={e => {
+									const { d, h, s } = this.state.startTime;
+									const m = Number(e.target.value);
+									const startPoint = d * 86400 + h * 3600 + m * 60 + s;
+
+									if (
+										startPoint < videoDuration &&
+										m % 1 === 0 &&
+										m > -1 &&
+										m < 60
+									) {
+										this.setState({
+											startTime: Object.assign(startTime, { m })
+										});
+										editStep({ videoClipStart: startPoint });
+									}
+								}}
+							/>
+						)}
+						<input
+							type="number"
+							value={startTime.s}
+							min={0}
+							max={59}
+							step={1}
+							onChange={e => {
+								const { d, h, m } = this.state.startTime;
+								const s = Number(e.target.value);
+								const startPoint = d * 86400 + h * 3600 + m * 60 + s;
+
+								if (
+									startPoint < videoDuration &&
+									s % 1 === 0 &&
+									s > -1 &&
+									s < 60
+								) {
+									this.setState({
+										startTime: Object.assign(startTime, { s })
+									});
+									editStep({ videoClipStart: startPoint });
+								}
+							}}
+						/>
+						<br />
+						<span style={{ color: validTimeInput ? "black" : "red" }}>
+							End time
+						</span>
+						{videoDuration >= 86400 && (
+							<input
+								type="number"
+								value={endTime.d}
+								min={0}
+								step={1}
+								onChange={e => {
+									const { h, m, s } = this.state.endTime;
+									const d = Number(e.target.value);
+									const endPoint = d * 86400 + h * 3600 + m * 60 + s;
+
+									if (endPoint <= videoDuration && d % 1 === 0 && d > -1) {
+										this.setState({
+											endTime: Object.assign(endTime, { d })
+										});
+										editStep({ videoClipEnd: endPoint });
+									}
+								}}
+							/>
+						)}
+						{videoDuration >= 3600 && (
+							<input
+								type="number"
+								value={endTime.h}
+								min={0}
+								max={23}
+								step={1}
+								onChange={e => {
+									const { d, m, s } = this.state.endTime;
+									const h = Number(e.target.value);
+									const endPoint = d * 86400 + h * 3600 + m * 60 + s;
+
+									if (
+										endPoint <= videoDuration &&
+										h % 1 === 0 &&
+										h > -1 &&
+										h < 24
+									) {
+										this.setState({
+											endTime: Object.assign(endTime, { h })
+										});
+										editStep({ videoClipEnd: endPoint });
+									}
+								}}
+							/>
+						)}
+						{videoDuration >= 60 && (
+							<input
+								type="number"
+								value={endTime.m}
+								min={0}
+								max={59}
+								step={1}
+								onChange={e => {
+									const { d, h, s } = this.state.endTime;
+									const m = Number(e.target.value);
+									const endPoint = d * 86400 + h * 3600 + m * 60 + s;
+
+									if (
+										endPoint <= videoDuration &&
+										m % 1 === 0 &&
+										m > -1 &&
+										m < 60
+									) {
+										this.setState({
+											endTime: Object.assign(endTime, { m })
+										});
+										editStep({ videoClipEnd: endPoint });
+									}
+								}}
+							/>
+						)}
+						<input
+							type="number"
+							value={endTime.s}
+							min={0}
+							max={59}
+							step={1}
+							onChange={e => {
+								const { d, h, m } = this.state.endTime;
+								const s = Number(e.target.value);
+								const endPoint = d * 86400 + h * 3600 + m * 60 + s;
+
+								if (
+									endPoint <= videoDuration &&
+									s % 1 === 0 &&
+									s > -1 &&
+									s < 60
+								) {
+									this.setState({
+										endTime: Object.assign(endTime, { s })
+									});
+									editStep({ videoClipEnd: endPoint });
+								}
+							}}
+						/>
+					</React.Fragment>
+				)}
+				<RichText
+					keepPlaceholderOnFocus
+					placeholder={__("Direction goes here")}
+					value={direction}
+					onChange={newVal => editStep({ direction: newVal })}
+				/>
 				<RichText
 					keepPlaceholderOnFocus
 					placeholder={__("Add a tip (optional)")}
@@ -243,7 +563,10 @@ class HowToSection extends Component {
 			sectionName,
 			steps,
 			editSection,
-			deleteSection
+			deleteSection,
+			videoDuration,
+			clips,
+			videoURL
 		} = this.props;
 
 		return (
@@ -267,6 +590,11 @@ class HowToSection extends Component {
 					{steps.map((step, i) => (
 						<HowToStep
 							{...step}
+							clips={clips}
+							sectionNum={sectionNum}
+							stepNum={i}
+							videoURL={videoURL}
+							videoDuration={videoDuration}
 							editStep={newStep =>
 								editSection({
 									sectionName,
@@ -335,7 +663,10 @@ class HowToSection extends Component {
 									stepPic: { img: -1, alt: "", url: "" },
 									direction: "",
 									tip: "",
-									title: ""
+									title: "",
+									hasVideoClip: false,
+									videoClipStart: 0,
+									videoClipEnd: 0
 								}
 							]
 						});
@@ -389,7 +720,7 @@ registerBlockType("ub/how-to", {
 	supports: {
 		multiple: false
 	},
-	edit(props) {
+	edit: withState({ videoURLInput: "", notYetLoaded: true })(function(props) {
 		const {
 			attributes: {
 				title,
@@ -404,21 +735,23 @@ registerBlockType("ub/how-to", {
 				costCurrency,
 				showUnitFirst,
 				timeIntro,
-				prepTime,
-				performTime,
 				totalTime,
 				useSections,
-				useDetailedTime,
 				includeToolsList,
 				addToolImages,
 				includeSuppliesList,
 				addSupplyImages,
 				resultIntro,
 				finalImageID,
-				finalImageAlt,
-				finalImageURL
+				finalImageURL,
+				videoURL,
+				videoEmbedCode,
+				videoDuration
 			},
-			setAttributes
+			videoURLInput,
+			notYetLoaded,
+			setAttributes,
+			setState
 		} = props;
 
 		const units = [
@@ -431,52 +764,48 @@ registerBlockType("ub/how-to", {
 			"seconds"
 		];
 
-		const convertTime = timeArr => {
-			const maxUnitCount = [0, 12, 4, 7, 24, 60, 60];
-			let newTimeArr = [...timeArr];
-			for (let j = 6; j > 0; j--) {
-				if (maxUnitCount[j] <= newTimeArr[j]) {
-					if (j === 3) {
-						if (newTimeArr[3] >= 365) {
-							newTimeArr[0] += ~~(newTimeArr[3] / 365);
-							newTimeArr[3] %= 365;
-						}
-						if (newTimeArr[3] >= 30) {
-							newTimeArr[1] += ~~(newTimeArr[3] / 30);
-							newTimeArr[3] %= 30;
-						}
-					}
-					if (j === 2) {
-						if (newTimeArr[2] >= 13) {
-							newTimeArr[1] += 3 * ~~(newTimeArr[2] / 13);
-							newTimeArr[2] %= 13;
-						}
-					}
-					newTimeArr[j - 1] += ~~(newTimeArr[j] / maxUnitCount[j]);
-					newTimeArr[j] %= maxUnitCount[j];
-				}
-			}
-			return newTimeArr;
+		const resetVideoAttributes = _ => {
+			let newSection = JSON.parse(JSON.stringify(section));
+			newSection.forEach(s =>
+				s.steps.map(st =>
+					Object.assign(st, {
+						hasVideoClip: false,
+						videoClipStart: 0,
+						videoClipEnd: 0
+					})
+				)
+			);
+
+			setAttributes({
+				section: newSection,
+				videoURL: "",
+				videoDescription: "",
+				videoUploadDate: 0,
+				videoThumbnailURL: "",
+				videoEmbedCode: `<p>${__(
+					"When insertion is successful, video should appear here"
+				)}</p>`,
+				videoDuration: 0
+			});
 		};
+
+		if (notYetLoaded) {
+			setState({ videoURLInput: videoURL, notYetLoaded: false });
+		}
+
+		const clips = section
+			.reduce((stepList, section) => [...stepList, ...section.steps], [])
+			.filter(s => s.hasVideoClip)
+			.map(s => ({
+				anchor: s.anchor,
+				clipStart: s.videoClipStart,
+				clipEnd: s.videoClipEnd
+			}));
 
 		return (
 			<Fragment>
 				<InspectorControls>
 					<PanelBody title={__("How To Settings")}>
-						<ToggleControl
-							label={__("Use detailed time")}
-							checked={useDetailedTime}
-							onChange={useDetailedTime => {
-								setAttributes({ useDetailedTime });
-								if (useDetailedTime) {
-									setAttributes({
-										totalTime: convertTime(
-											prepTime.map((t, i) => t + performTime[i])
-										)
-									});
-								}
-							}}
-						/>
 						<ToggleControl
 							label={__("Use sections")}
 							checked={useSections}
@@ -554,6 +883,229 @@ registerBlockType("ub/how-to", {
 						keepPlaceholderOnFocus={true}
 						value={introduction}
 						onChange={introduction => setAttributes({ introduction })}
+					/>
+					{__("Insert video here")}
+					<div style={{ display: "flex" }}>
+						<URLInput
+							autoFocus={false}
+							disableSuggestions={true}
+							className="button-url"
+							value={videoURLInput}
+							onChange={videoURLInput =>
+								setState({
+									videoURLInput
+								})
+							}
+						/>
+						<IconButton
+							icon={"editor-break"}
+							label={__("Apply")}
+							type={"submit"}
+							onClick={_ => {
+								if (/^http(s)?:\/\//g.test(videoURLInput)) {
+									const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
+										videoURLInput
+									);
+									const vimeoMatch = /^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
+										videoURLInput
+									);
+									const dailyMotionMatch = /^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
+										videoURLInput
+									);
+									const videoPressMatch = /^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
+										videoURLInput
+									);
+									if (youtubeMatch) {
+										fetch(
+											`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
+										)
+											.then(response => {
+												response.json().then(data => {
+													if (data.items.length) {
+														let timePeriods = data.items[0].contentDetails.duration.match(
+															/(\d{1,2}(?:W|D|H|M|S))/g
+														);
+														setAttributes({
+															videoURL: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
+															videoName: data.items[0].snippet.title,
+															videoDescription:
+																data.items[0].snippet.description,
+															videoUploadDate:
+																Date.parse(data.items[0].snippet.publishedAt) /
+																1000,
+															videoThumbnailURL: `https://i.ytimg.com/vi/${youtubeMatch[1]}/default.jpg`,
+															videoEmbedCode: decodeURIComponent(
+																data.items[0].player.embedHtml
+															),
+															videoDuration: timePeriods.reduce((sum, part) => {
+																let multiplier = {
+																	W: 604800,
+																	D: 86400,
+																	H: 3600,
+																	M: 60,
+																	S: 1
+																};
+																return (
+																	sum +
+																	Number(part.slice(0, -1)) *
+																		multiplier[part.slice(-1)]
+																);
+															}, 0)
+														});
+													} else {
+														resetVideoAttributes();
+														setAttributes({
+															videoEmbedCode: `<p>${__(
+																"No video found at URL"
+															)}</p>`
+														});
+													}
+												});
+											})
+											.catch(err => {
+												console.log("youtube fetch error");
+												console.log(err);
+											});
+									} else if (vimeoMatch) {
+										fetch(
+											`https://vimeo.com/api/v2/video/${vimeoMatch[1]}.json`
+										)
+											.then(response => {
+												if (response.ok) {
+													response
+														.json()
+														.then(data => {
+															setAttributes({
+																videoURL: data[0].url,
+																videoName: data[0].title,
+																videoDescription: data[0].description,
+																videoUploadDate:
+																	Date.parse(data[0].upload_date) / 1000,
+																videoThumbnailURL: data[0].thumbnail_large,
+																videoDuration: data[0].duration
+															});
+															fetch(
+																`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
+																	data[0].url
+																)}`
+															)
+																.then(response => {
+																	response.json().then(data => {
+																		setAttributes({
+																			videoEmbedCode: data.html
+																		});
+																	});
+																})
+																.catch(err => {
+																	console.log("vimeo oembed error");
+																	console.log(err);
+																});
+														})
+														.catch(err => {
+															console.log(err);
+														});
+												} else {
+													resetVideoAttributes();
+													setAttributes({
+														videoEmbedCode: `<p>${__(
+															"No video found at URL"
+														)}</p>`
+													});
+												}
+											})
+											.catch(err => {
+												console.log("vimeo fetch error");
+												console.log(err);
+											});
+									} else if (dailyMotionMatch) {
+										fetch(
+											`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cduration`
+										)
+											.then(response => {
+												if (response.ok) {
+													response.json().then(data => {
+														setAttributes({
+															videoURL: data.url,
+															videoName: data.title,
+															videoDescription: data.description,
+															videoUploadDate: data.created_time,
+															videoThumbnailURL: data.thumbnail_1080_url,
+															videoEmbedCode: decodeURIComponent(
+																data.embed_html
+															),
+															videoDuration: data.duration
+														});
+													});
+												} else {
+													resetVideoAttributes();
+													setAttributes({
+														videoEmbedCode: `<p>${__(
+															"No video found at URL"
+														)}</p>`
+													});
+												}
+											})
+											.catch(err => {
+												console.log("dailymotion input error");
+												console.log(err);
+											});
+									} else if (videoPressMatch) {
+										fetch(
+											`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
+										)
+											.then(response => {
+												if (response.ok) {
+													response.json().then(data => {
+														setAttributes({
+															videoURL: `https://videopress.com/v/${data.guid}`,
+															videoName: data.title,
+															videoDescription: data.description,
+															videoUploadDate:
+																Date.parse(data.upload_date) / 1000,
+															videoThumbnailURL: data.poster,
+															videoEmbedCode: `<iframe width="560" height="315" src="https://videopress.com/embed/${data.guid}" frameborder="0" allowfullscreen></iframe>
+														<script src="https://videopress.com/videopress-iframe.js"></script>`,
+															videoDuration: Math.floor(data.duration / 1000)
+														});
+													});
+												} else {
+													resetVideoAttributes();
+													setAttributes({
+														videoEmbedCode: `<p>${__(
+															"No video found at URL"
+														)}</p>`
+													});
+												}
+											})
+											.catch(err => {
+												console.log("videopress input error");
+												console.log(err);
+											});
+									} else {
+										resetVideoAttributes();
+										setAttributes({
+											videoEmbedCode: "<p>Video site not supported</p>"
+										});
+									}
+								} else {
+									resetVideoAttributes();
+									console.log("input is not a url");
+								}
+							}}
+						/>
+						<IconButton
+							icon="trash"
+							label={__("Delete")}
+							onClick={_ => {
+								resetVideoAttributes();
+								setState({ videoURLInput: "" });
+							}}
+						/>
+					</div>
+					<div
+						dangerouslySetInnerHTML={{
+							__html: videoEmbedCode || "<p>Input error</p>"
+						}}
 					/>
 					{includeSuppliesList && (
 						<Fragment>
@@ -773,61 +1325,22 @@ registerBlockType("ub/how-to", {
 					<div
 						style={{
 							display: "grid",
-							gridTemplateColumns: "45% 1fr 1fr 1fr 1fr 1fr 1fr 1fr"
+							gridTemplateColumns: "35% 1fr 1fr 1fr 1fr 1fr 1fr 1fr"
 						}}
 					>
-						<p></p>
+						<span />
 						{units.map(u => (
 							<p style={{ textAlign: "center", fontSize: "15px" }}>{__(u)}</p>
 						))}
-						{useDetailedTime && [
-							<DurationInput
-								label={__("Preparation time")}
-								timeInput={prepTime}
-								adjustDuration={prepTime => {
-									if (prepTime.filter(t => isNaN(Number(t))).length === 0) {
-										setAttributes({
-											prepTime,
-											totalTime: convertTime(
-												prepTime.map((t, i) => t + performTime[i])
-											)
-										});
-									}
-								}}
-							/>,
-							<DurationInput
-								label={__("Performance time")}
-								timeInput={performTime}
-								adjustDuration={performTime => {
-									if (performTime.filter(t => isNaN(Number(t))).length === 0) {
-										setAttributes({
-											performTime,
-											totalTime: convertTime(
-												performTime.map((t, i) => t + prepTime[i])
-											)
-										});
-									}
-								}}
-							/>
-						]}
-						{useDetailedTime ? (
-							<Fragment>
-								<span>{__("Total time")}</span>
-								{totalTime.map(t => (
-									<span style={{ textAlign: "right" }}>{t}</span>
-								))}
-							</Fragment>
-						) : (
-							<DurationInput
-								label={__("Total time")}
-								timeInput={totalTime}
-								adjustDuration={totalTime => {
-									if (totalTime.filter(t => isNaN(Number(t))).length === 0) {
-										setAttributes({ totalTime });
-									}
-								}}
-							/>
-						)}
+						<DurationInput
+							label={__("Total time")}
+							timeInput={totalTime}
+							adjustDuration={totalTime => {
+								if (totalTime.filter(t => isNaN(Number(t))).length === 0) {
+									setAttributes({ totalTime });
+								}
+							}}
+						/>
 					</div>
 					<div className="ub_howto_cost_container">
 						<p>{__("Cost: ")}</p>
@@ -860,6 +1373,9 @@ registerBlockType("ub/how-to", {
 							{section.map((s, i) => (
 								<HowToSection
 									{...s}
+									clips={clips}
+									videoURL={videoURL}
+									videoDuration={videoDuration}
 									sectionNum={i}
 									editSection={newSection =>
 										setAttributes({
@@ -883,7 +1399,12 @@ registerBlockType("ub/how-to", {
 							<ol>
 								{section[0].steps.map((step, i) => (
 									<HowToStep
+										sectionNum={-1}
+										stepNum={i}
 										{...step}
+										clips={clips}
+										videoURL={videoURL}
+										videoDuration={videoDuration}
 										editStep={newStep =>
 											setAttributes({
 												section: [
@@ -970,7 +1491,10 @@ registerBlockType("ub/how-to", {
 														stepPic: { img: -1, alt: "", url: "" },
 														direction: "",
 														tip: "",
-														title: ""
+														title: "",
+														hasVideoClip: false,
+														videoClipStart: 0,
+														videoClipEnd: 0
 													}
 												]
 											})
@@ -997,7 +1521,10 @@ registerBlockType("ub/how-to", {
 													stepPic: { img: -1, alt: "", url: "" },
 													direction: "",
 													tip: "",
-													title: ""
+													title: "",
+													hasVideoClip: false,
+													videoClipStart: 0,
+													videoClipEnd: 0
 												}
 											]
 										}
@@ -1061,6 +1588,6 @@ registerBlockType("ub/how-to", {
 				</div>
 			</Fragment>
 		);
-	},
+	}),
 	save: _ => null
 });
