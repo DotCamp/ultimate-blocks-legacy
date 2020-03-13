@@ -38,11 +38,12 @@ function ub_render_how_to_block($attributes){
         if(count($supplies) > 0){
             $header .= '<ul>';
             foreach($supplies as $i => $s){
-                $header .= '<li>' . $s['name'] . '</li>';
+                $header .= '<li>' . $s['name'] . ($s['imageURL'] == '' ?: '<img src="'.$s['imageURL'].'"/>') . '</li>';
                 if($i > 0){
                     $suppliesCode .= ',';
                 }
-                $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s['name'].'"}';
+                $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s['name'].'"'.
+                                .($s['imageURL'] == ''?: '"image:" "'.$s['imageURL'].'"').'}';
             }
             $header .= '</ul>';
         }
@@ -56,11 +57,12 @@ function ub_render_how_to_block($attributes){
         if(count($tools) > 0){
             $header .= '<ul>';
             foreach($tools as $i => $t){
-                $header .= '<li>' . $t['name'] . '</li>';
+                $header .= '<li>' . $t['name'] . ($t['imageURL'] == '' ?: '<img src="'.$t['imageURL'].'"/>') . '</li>';
                 if($i > 0){
                     $toolsCode .= ',';
                 }
-                $toolsCode .= '{"@type": "HowToTool", "name": "'.$t['name'].'"}';
+                $toolsCode .= '{"@type": "HowToTool", "name": "'.$t['name'].'",'
+                                .($t['imageURL'] == ''?: '"image:" "'.$t['imageURL'].'"').'}';
             }
             $header .= '</ul>';
         }
