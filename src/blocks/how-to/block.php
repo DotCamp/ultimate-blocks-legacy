@@ -43,7 +43,7 @@ function ub_render_how_to_block($attributes){
                     $suppliesCode .= ',';
                 }
                 $suppliesCode .= '{"@type": "HowToSupply", "name": "'.$s['name'].'"'.
-                                .($s['imageURL'] == ''?: '"image:" "'.$s['imageURL'].'"').'}';
+                                ($s['imageURL'] == ''?: '"image:" "'.$s['imageURL'].'"').'}';
             }
             $header .= '</ul>';
         }
