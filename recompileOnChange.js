@@ -10,7 +10,7 @@ const { resolve, basename } = require("path");
 function convertToEs5(file) {
 	transformFileAsync(file)
 		.then(result => {
-			const target = `${file.slice(0, file.lastIndexOf("\\"))}\\front.build.js`;
+			const target = `${f.replace(/front\.js$/, "front.build.js")}`;
 
 			readFile(target, "utf-8")
 				.then(data => {
@@ -41,14 +41,14 @@ function generateWholeCSS() {
 		(async () => {
 			let newEditorStyle = "";
 			let newFrontendStyle = "";
-			for await (const f of getFiles(__dirname + "\\src")) {
+			for await (const f of getFiles(__dirname + "/src")) {
 				if (f.endsWith("editor.scss") || f.endsWith("style.scss")) {
 					try {
 						const result = renderSync({
 							file: f,
 							outputStyle: "compressed"
 						}).css.toString();
-						const target = f.replace(/.scss$/, ".css");
+						const target = f.replace(/\.scss$/, ".css");
 
 						if (f.endsWith("editor.scss")) {
 							newEditorStyle += result;
@@ -75,7 +75,7 @@ function generateWholeCSS() {
 	});
 	compileAll
 		.then(({ newEditorStyle, newFrontendStyle }) => {
-			const editorCSSLoc = `${__dirname}\\dist\\blocks.editor.build.css`;
+			const editorCSSLoc = `${__dirname}/dist/blocks.editor.build.css`;
 			readFile(editorCSSLoc, "utf-8")
 				.then(data => {
 					if (data !== newEditorStyle) {
@@ -88,7 +88,7 @@ function generateWholeCSS() {
 					throw err;
 				});
 
-			const frontendCSSLoc = `${__dirname}\\dist\\blocks.style.build.css`;
+			const frontendCSSLoc = `${__dirname}/dist/blocks.style.build.css`;
 			readFile(frontendCSSLoc, "utf-8")
 				.then(data => {
 					if (data !== newFrontendStyle) {
@@ -111,7 +111,7 @@ function checkFile(path) {
 				file: path,
 				outputStyle: "compressed"
 			}).css.toString();
-			const target = path.replace(/.scss$/, ".css");
+			const target = path.replace(/\.scss$/, ".css");
 
 			readFile(target, "utf-8")
 				.then(data => {
@@ -131,7 +131,7 @@ function checkFile(path) {
 			.then(({ path, result }) => {
 				(async () => {
 					let revisedFile = "";
-					for await (const f of getFiles(__dirname + "\\src")) {
+					for await (const f of getFiles(__dirname + "/src")) {
 						try {
 							if (basename(f) === basename(path)) {
 								revisedFile += f.includes(path)
@@ -143,7 +143,7 @@ function checkFile(path) {
 						}
 					}
 
-					const compiledFileLoc = `${__dirname}\\dist\\blocks.${basename(
+					const compiledFileLoc = `${__dirname}/dist/blocks.${basename(
 						path,
 						".css"
 					)}.build.css`;

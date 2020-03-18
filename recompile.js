@@ -7,14 +7,14 @@ const { readdir } = require("fs").promises;
 (async () => {
 	let newEditorStyle = "";
 	let newFrontendStyle = "";
-	for await (const f of getFiles(__dirname + "\\src")) {
+	for await (const f of getFiles(__dirname + "/src")) {
 		if (f.endsWith("editor.scss") || f.endsWith("style.scss")) {
 			try {
 				const result = sass.renderSync({
 					file: f,
 					outputStyle: "compressed"
 				});
-				writeFileSync(f.replace(/.scss$/, ".css"), result.css.toString());
+				writeFileSync(f.replace(/\.scss$/, ".css"), result.css.toString());
 				if (f.endsWith("editor.scss")) {
 					newEditorStyle += result.css.toString();
 				} else {
@@ -26,7 +26,7 @@ const { readdir } = require("fs").promises;
 		} else if (f.endsWith("front.js")) {
 			try {
 				writeFileSync(
-					`${f.slice(0, f.lastIndexOf("\\"))}\\front.build.js`,
+					`${f.replace(/front\.js$/, "front.build.js")}`,
 					transformFileSync(f).code
 				);
 			} catch (err) {
@@ -36,14 +36,14 @@ const { readdir } = require("fs").promises;
 	}
 
 	writeFile(
-		`${__dirname}\\dist\\blocks.editor.build.css`,
+		`${__dirname}/dist/blocks.editor.build.css`,
 		newEditorStyle,
 		err => {
 			if (err) throw err;
 		}
 	);
 	writeFile(
-		`${__dirname}\\dist\\blocks.style.build.css`,
+		`${__dirname}/dist/blocks.style.build.css`,
 		newFrontendStyle,
 		err => {
 			if (err) throw err;
