@@ -1351,7 +1351,10 @@ registerBlockType("ub/how-to", {
 								keepPlaceholderOnFocus
 								placeholder={__("Units")}
 								value={costCurrency}
-								onChange={costCurrency => setAttributes({ costCurrency })}
+								onChange={costCurrency => {
+									costCurrency = costCurrency.replace(/<br>/g, "");
+									setAttributes({ costCurrency });
+								}}
 							/>
 							<RichText
 								keepPlaceholderOnFocus
