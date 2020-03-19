@@ -259,6 +259,14 @@ function ub_include_block_attribute_css() {
                         'text-align: ' . $attributes['body3Align'] . ';' . PHP_EOL .
                     '}' ;
                     break;
+                case 'ub/how-to':
+                    $prefix = '#ub_howto_' . $attributes['blockID'];
+                    if($attributes['sectionListStyle'] == 'none'){
+                        $blockStylesheets .= $prefix . ' ul{' . PHP_EOL .
+                            'list-style: none;' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
+                    break;
                 case 'ub/image-slider':
                     $prefix = '#ub_image_slider_' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .flickity-slider img{' . PHP_EOL .

@@ -495,6 +495,10 @@ $defaultValues = array(
                 'type' => 'array',
                 'default' => array()
             ),
+            'sectionListStyle' => array(
+                'type' => 'string',
+                'default' => 'none'
+            ),
             'timeIntro' => array(
                 'type' => 'string',
                 'default' => __('Duration')

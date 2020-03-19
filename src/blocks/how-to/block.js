@@ -7,9 +7,17 @@ const { registerBlockType } = wp.blocks;
 const { RichText, MediaUpload, InspectorControls, URLInput } =
 	wp.blockEditor || wp.editor;
 
-const { withState } = wp.compose;
+const { withSelect } = wp.data;
+const { withState, compose } = wp.compose;
 
-const { Button, ToggleControl, Icon, IconButton, PanelBody } = wp.components;
+const {
+	Button,
+	ToggleControl,
+	Icon,
+	IconButton,
+	PanelBody,
+	RadioControl
+} = wp.components;
 
 const attributes = {
 	blockID: {
@@ -51,6 +59,10 @@ const attributes = {
 	section: {
 		type: "array",
 		default: [{ sectionName: "", steps: [] }] //contains steps, if useSections is set to false, then only use contents of the first section. minimum of two steps.
+	},
+	sectionListStyle: {
+		type: "string",
+		default: "none"
 	},
 	timeIntro: {
 		type: "string",
@@ -149,6 +161,23 @@ const defaultTimeDisplay = {
 	h: 0,
 	m: 0,
 	s: 0
+};
+
+const ListWrapper = props => {
+	const { children, sectionListStyle } = props;
+	if (sectionListStyle === "ordered") {
+		return <ol>{children}</ol>;
+	} else {
+		return (
+			<ul
+				style={{
+					listStyleType: sectionListStyle === "none" ? "none" : null
+				}}
+			>
+				{children}
+			</ul>
+		);
+	}
 };
 
 class HowToStep extends Component {
@@ -312,7 +341,7 @@ class HowToStep extends Component {
 						type="image"
 						value={stepPic.id}
 						render={({ open }) => (
-							<React.Fragment>
+							<Fragment>
 								<Button
 									className="components-button button button-medium"
 									onClick={open}
@@ -320,7 +349,7 @@ class HowToStep extends Component {
 									{__("Upload Image")}
 								</Button>
 								<p />
-							</React.Fragment>
+							</Fragment>
 						)}
 					/>
 				)}
@@ -341,7 +370,7 @@ class HowToStep extends Component {
 					/>
 				)}
 				{videoDuration > 0 && hasVideoClip && (
-					<React.Fragment>
+					<Fragment>
 						<span style={{ color: validTimeInput ? "black" : "red" }}>
 							Start time
 						</span>
@@ -541,7 +570,7 @@ class HowToStep extends Component {
 								}
 							}}
 						/>
-					</React.Fragment>
+					</Fragment>
 				)}
 				<RichText
 					keepPlaceholderOnFocus
@@ -566,6 +595,7 @@ class HowToSection extends Component {
 	}
 	render() {
 		const {
+			sectionListStyle,
 			sectionNum,
 			sectionName,
 			steps,
@@ -593,7 +623,7 @@ class HowToSection extends Component {
 						onClick={_ => deleteSection()}
 					/>
 				</div>
-				<ol>
+				<ListWrapper sectionListStyle={sectionListStyle}>
 					{steps.map((step, i) => (
 						<HowToStep
 							{...step}
@@ -658,7 +688,7 @@ class HowToSection extends Component {
 							}}
 						/>
 					))}
-				</ol>
+				</ListWrapper>
 				<Button
 					onClick={_ => {
 						editSection({
@@ -696,12 +726,21 @@ registerBlockType("ub/how-to", {
 	supports: {
 		multiple: false
 	},
-	edit: withState({ videoURLInput: "", notYetLoaded: true })(function(props) {
+	edit: compose([
+		withSelect((select, ownProps) => ({
+			block: (select("core/block-editor") || select("core/editor")).getBlock(
+				ownProps.clientId
+			)
+		})),
+		withState({ videoURLInput: "", notYetLoaded: true })
+	])(function(props) {
 		const {
 			attributes: {
+				blockID,
 				title,
 				introduction,
 				section,
+				sectionListStyle,
 				suppliesIntro,
 				supplies,
 				toolsIntro,
@@ -729,7 +768,8 @@ registerBlockType("ub/how-to", {
 			videoURLInput,
 			notYetLoaded,
 			setAttributes,
-			setState
+			setState,
+			block
 		} = props;
 
 		const units = [
@@ -779,6 +819,10 @@ registerBlockType("ub/how-to", {
 				clipStart: s.videoClipStart,
 				clipEnd: s.videoClipEnd
 			}));
+
+		if (blockID !== block.clientId) {
+			setAttributes({ blockID: block.clientId });
+		}
 
 		return (
 			<Fragment>
@@ -845,6 +889,15 @@ registerBlockType("ub/how-to", {
 							label={__("Display the unit first in cost")}
 							checked={showUnitFirst}
 							onChange={showUnitFirst => setAttributes({ showUnitFirst })}
+						/>
+						<RadioControl
+							label={__("Section list style")}
+							selected={sectionListStyle}
+							options={["none", "ordered", "unordered"].map(a => ({
+								label: __(a),
+								value: a
+							}))}
+							onChange={sectionListStyle => setAttributes({ sectionListStyle })}
 						/>
 					</PanelBody>
 				</InspectorControls>
@@ -1369,13 +1422,14 @@ registerBlockType("ub/how-to", {
 						</div>
 					</div>
 					{useSections ? (
-						<ol>
+						<ListWrapper sectionListStyle={sectionListStyle}>
 							{section.map((s, i) => (
 								<HowToSection
 									{...s}
 									clips={clips}
 									videoURL={videoURL}
 									videoDuration={videoDuration}
+									sectionListStyle={sectionListStyle}
 									sectionNum={i}
 									editSection={newSection =>
 										setAttributes({
@@ -1393,10 +1447,10 @@ registerBlockType("ub/how-to", {
 									}
 								/>
 							))}
-						</ol>
+						</ListWrapper>
 					) : (
 						<div>
-							<ol>
+							<ListWrapper sectionListStyle={sectionListStyle}>
 								{section[0].steps.map((step, i) => (
 									<HowToStep
 										sectionNum={-1}
@@ -1478,7 +1532,7 @@ registerBlockType("ub/how-to", {
 										}}
 									/>
 								))}
-							</ol>
+							</ListWrapper>
 							<Button
 								onClick={_ => {
 									setAttributes({
