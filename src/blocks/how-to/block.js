@@ -24,7 +24,6 @@ const attributes = {
 		type: "string",
 		default: ""
 	},
-	//add option for video, tool array, and supplies array
 	toolsIntro: {
 		type: "string",
 		default: __("Required tools")
@@ -61,6 +60,10 @@ const attributes = {
 		type: "array",
 		default: Array(7).fill(0)
 	},
+	totalTimeText: {
+		type: "string",
+		default: __("Total time: ")
+	},
 	cost: {
 		type: "number",
 		default: 0
@@ -68,6 +71,10 @@ const attributes = {
 	costCurrency: {
 		type: "string",
 		default: "USD"
+	},
+	costDisplayText: {
+		type: "string",
+		default: __("Total cost: ")
 	},
 	showUnitFirst: {
 		type: "boolean",
@@ -680,37 +687,6 @@ class HowToSection extends Component {
 	}
 }
 
-class DurationInput extends Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		const { label, adjustDuration, timeInput } = this.props;
-
-		return (
-			<Fragment>
-				<span>{label}</span>
-				{timeInput.map((t, i) => (
-					<RichText
-						style={{ textAlign: "right" }}
-						className="ub_howto_time_value"
-						keepPlaceholderOnFocus
-						placeholder={__("0")}
-						value={String(t)}
-						onChange={newInput => {
-							adjustDuration([
-								...timeInput.slice(0, i),
-								Number(newInput),
-								...timeInput.slice(i + 1)
-							]);
-						}}
-					/>
-				))}
-			</Fragment>
-		);
-	}
-}
-
 registerBlockType("ub/how-to", {
 	title: __("How To"),
 	icon: icon,
@@ -733,9 +709,11 @@ registerBlockType("ub/how-to", {
 				howToYield,
 				cost,
 				costCurrency,
+				costDisplayText,
 				showUnitFirst,
 				timeIntro,
 				totalTime,
+				totalTimeText,
 				useSections,
 				includeToolsList,
 				addToolImages,
@@ -1332,18 +1310,37 @@ registerBlockType("ub/how-to", {
 						{units.map(u => (
 							<p style={{ textAlign: "center", fontSize: "15px" }}>{__(u)}</p>
 						))}
-						<DurationInput
-							label={__("Total time")}
-							timeInput={totalTime}
-							adjustDuration={totalTime => {
-								if (totalTime.filter(t => isNaN(Number(t))).length === 0) {
-									setAttributes({ totalTime });
-								}
-							}}
+						<RichText
+							keepPlaceholderOnFocus
+							value={totalTimeText}
+							onChange={totalTimeText => setAttributes({ totalTimeText })}
 						/>
+						{totalTime.map((t, i) => (
+							<RichText
+								style={{ textAlign: "right" }}
+								className="ub_howto_time_value"
+								keepPlaceholderOnFocus
+								placeholder={__("0")}
+								value={String(t)}
+								onChange={newInput => {
+									if (!isNaN(Number(newInput))) {
+										setAttributes({
+											totalTime: [
+												...totalTime.slice(0, i),
+												Number(newInput),
+												...totalTime.slice(i + 1)
+											]
+										});
+									}
+								}}
+							/>
+						))}
 					</div>
 					<div className="ub_howto_cost_container">
-						<p>{__("Cost: ")}</p>
+						<RichText
+							value={costDisplayText}
+							onChange={costDisplayText => setAttributes({ costDisplayText })}
+						/>
 						<div
 							className="ub_howto_cost_display"
 							style={{

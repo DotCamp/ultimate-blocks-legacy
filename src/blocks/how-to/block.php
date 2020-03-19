@@ -83,7 +83,7 @@ function ub_render_how_to_block($attributes){
         }
     }
 
-    $timeDisplay .= '<p>' . __('Total time') . ': '. $totalTimeDisplay  .'</div>';
+    $timeDisplay .= '<p>' . $totalTimeText . $totalTimeDisplay  .'</div>';
 
     $ISOTotalTime = generateISODurationCode($totalTime);
 
@@ -226,7 +226,7 @@ function ub_render_how_to_block($attributes){
     return '<div class="ub_howto" id="ub_howto_'.$blockID.'"><h2>'
                 . $title . '</h2>' . $introduction
                 . $header . ($videoURL == '' ? '' : $videoEmbedCode) 
-                . '<p>Total cost: ' . $costDisplay . '</p>'
+                . '<p>' . $costDisplayText . $costDisplay . '</p>'
                 . $timeDisplay . $stepsDisplay . '<h2>' . $resultIntro . '</h2>' . $howToYield 
                 . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') .
             '</div>' . $JSONLD;

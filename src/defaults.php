@@ -506,6 +506,10 @@ $defaultValues = array(
                     'type' => 'number'
                 )
             ),
+            'totalTimeText' => array(
+                'type' => 'text',
+                'default' => __('Total time: ')
+            ),
             'cost' => array(
                 'type' => 'number',
                 'default' => 0
@@ -513,6 +517,10 @@ $defaultValues = array(
             'costCurrency' => array(
                 'type' => 'string',
                 'default' => 'USD'
+            ),
+            'costDisplayText' => array(
+                'type' => 'string',
+                'default' => __('Total cost: ')
             ),
             'showUnitFirst' => array(
                 'type' => 'boolean',
