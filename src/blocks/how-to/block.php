@@ -29,8 +29,7 @@ function ub_render_how_to_block($attributes){
 
     $header = '';
 
-    $timeUnits = [__("seconds"), __("minutes"), __("hours"),
-         __("days"), __("weeks"), __("months"), __("years")];
+    $timeUnits = ["second", "minute", "hour", "day", "week", "month", "year"];
 
     $suppliesCode = '"supply": [';
     if($includeSuppliesList){
@@ -79,7 +78,7 @@ function ub_render_how_to_block($attributes){
 
     foreach($totalTime as $i => $t){
         if($t > 0){
-            $totalTimeDisplay .= $t . ' ' . $timeUnits[6-$i] . ' ';
+            $totalTimeDisplay .= $t . ' ' . __($timeUnits[6-$i] . ($t > 1 ? 's' : '')) . ' ';
         }
     }
 
