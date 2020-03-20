@@ -1389,7 +1389,7 @@ registerBlockType("ub/how-to", {
 							/>
 						))}
 					</div>
-					<div className="ub_howto_cost_container">
+					<div className="ub_howto_cost_container" style={{ display: "flex" }}>
 						<RichText
 							value={costDisplayText}
 							onChange={costDisplayText => setAttributes({ costDisplayText })}
@@ -1397,10 +1397,17 @@ registerBlockType("ub/how-to", {
 						<div
 							className="ub_howto_cost_display"
 							style={{
-								flexDirection: showUnitFirst ? "row" : "row-reverse"
+								display: "flex",
+								flexDirection: showUnitFirst ? "row" : "row-reverse",
+								marginLeft: "auto"
 							}}
 						>
 							<RichText
+								style={
+									showUnitFirst
+										? { paddingRight: "10px" }
+										: { paddingLeft: "10px" }
+								}
 								keepPlaceholderOnFocus
 								placeholder={__("Units")}
 								value={costCurrency}
