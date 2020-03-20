@@ -101,16 +101,17 @@ function ub_render_how_to_block($attributes){
             foreach($s['steps'] as $j => $step){
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
                             . '"name": "'.$step['title'].'",' . PHP_EOL
-                            . '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
-                            . '"image": "' . $step['stepPic']['url'].'",'
+                            . ($advancedMode ? '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
+                            . '"image": "' . $step['stepPic']['url'].'",' . PHP_EOL
+                            . ($step['hasVideoClip'] ? '"video":{"@id": "'.$step['anchor'].'"}' : '') . PHP_EOL : '')
                             . '"itemListElement" :[{'. PHP_EOL;
 
                 $stepsDisplay .= '<div class="ub_howto_step"><h4 id="'.$step['anchor'].'">'
-                    . $step['title'].'</h4>' .'<img src="' .$step['stepPic']['url']. '">'
+                    . $step['title'].'</h4>' .($advancedMode ? '<img src="' .$step['stepPic']['url']. '">' : '')
                     .$step['direction'] . PHP_EOL;
 
                 $stepsCode .= '"@type": "HowToDirection",' . PHP_EOL
-                            . '"text": "' .($step['title'] == '' ? '' : $step['title'] . ' ')
+                            . '"text": "' .($step['title'] == '' || !$advancedMode ? '' : $step['title'] . ' ')
                             .$step['direction'].'"}' . PHP_EOL;
 
                 if ($step['tip'] != ''){
@@ -142,12 +143,12 @@ function ub_render_how_to_block($attributes){
                         . $step['direction'].$step['tip'].'</li>';
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
                             . '"name": "'.$step['title'].'",' . PHP_EOL
-                            . '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
+                            . ($advancedMode ? '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
                             . '"image": "' . $step['stepPic']['url'].'",' . PHP_EOL     
-                            . ($step['hasVideoClip'] ? '"video":{"@id": "'.$step['anchor'].'"}' : '') . PHP_EOL
+                            . ($step['hasVideoClip'] ? '"video":{"@id": "'.$step['anchor'].'"}' : '') . PHP_EOL : '')
                             . '"itemListElement" :[{'. PHP_EOL
                             . '"@type": "HowToDirection",' . PHP_EOL
-                            . '"text": "' . ($step['title'] == '' ? '' : $step['title'] . ' ') . $step['direction'].'"}' . PHP_EOL;
+                            . '"text": "' . ($step['title'] == '' || !$advancedMode ? '' : $step['title'] . ' ') . $step['direction'].'"}' . PHP_EOL;
     
                 if ($step['tip'] != ''){
                     $stepsCode .= ',{"@type": "HowToTip",' . PHP_EOL
@@ -204,31 +205,36 @@ function ub_render_how_to_block($attributes){
         "@type": "HowTo",
         "name":"'.$title.'",
         "description": "'.$introduction.'",'.
-        '"totalTime": "'.$ISOTotalTime.'",'.($videoURL == '' ? '':
-        '"video": {
-            "@type": "VideoObject",
-            "name": "'.$videoName.'",
-            "description": "'.$videoDescription.'",
-            "thumbnailUrl": "'.$videoThumbnailURL.'",
-            "contentUrl": "'.$videoURL.'",
-            "uploadDate": "'. date('c', $videoUploadDate) .'",
-            "hasPart":['.$clips.']
-        },').'
-        "estimatedCost": {
-            "@type": "MonetaryAmount",
-            "currency": "'.$costCurrency.'",
-            "value": "'.$cost.'"
-        },'.$suppliesCode.','
-        .$toolsCode.','.$stepsCode
-    .',"yield": "'.$howToYield.'",
-    "image": "'.$finalImageURL.'"   }</script>';
+        ($advancedMode ?
+            '"totalTime": "'.$ISOTotalTime.'",'.($videoURL == '' ? '':
+            '"video": {
+                "@type": "VideoObject",
+                "name": "'.$videoName.'",
+                "description": "'.$videoDescription.'",
+                "thumbnailUrl": "'.$videoThumbnailURL.'",
+                "contentUrl": "'.$videoURL.'",
+                "uploadDate": "'. date('c', $videoUploadDate) .'",
+                "hasPart":['.$clips.']
+            },').'
+            "estimatedCost": {
+                "@type": "MonetaryAmount",
+                "currency": "'.$costCurrency.'",
+                "value": "'.$cost.'"
+            },'.$suppliesCode.','
+            .$toolsCode.','
+        :'')
+    .$stepsCode
+    .($advancedMode ? ',"yield": "'.$howToYield.'",
+    "image": "'.$finalImageURL.'"' : '')   .'}</script>';
 
     return '<div class="ub_howto" id="ub_howto_'.$blockID.'"><h2>'
-                . $title . '</h2>' . $introduction
-                . $header . ($videoURL == '' ? '' : $videoEmbedCode) 
+                . $title . '</h2>' . $introduction. $header . 
+                ($advancedMode ? ($videoURL == '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
-                . $timeDisplay . $stepsDisplay . '<h2>' . $resultIntro . '</h2>' . $howToYield 
-                . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') .
+                . $timeDisplay : '') . 
+                $stepsDisplay .   
+                ($advancedMode ? '<h2>' . $resultIntro . '</h2>' . $howToYield 
+                . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') : '') .
             '</div>' . $JSONLD;
 }
 

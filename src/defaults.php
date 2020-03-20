@@ -459,6 +459,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'advancedMode' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'includeToolsList' => array(
                 'type' => 'boolean',
                 'default' => false
