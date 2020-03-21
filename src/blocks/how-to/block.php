@@ -32,7 +32,7 @@ function ub_render_how_to_block($attributes){
     $timeUnits = ["second", "minute", "hour", "day", "week", "month", "year"];
 
     $suppliesCode = '"supply": [';
-    if($includeSuppliesList){
+    if($advancedMode && $includeSuppliesList){
         $header .= '<h2>'.$suppliesIntro.'</h2>';
         if(count($supplies) > 0){
             $header .=  $suppliesListStyle == 'ordered' ? '<ol' : '<ul';
@@ -53,7 +53,7 @@ function ub_render_how_to_block($attributes){
 
     $toolsCode = '"tool": [';
 
-    if($includeToolsList){
+    if($advancedMode && $includeToolsList){
         $header .= '<h2>'.$toolsIntro.'</h2>';
         if(count($tools) > 0){
             $header .= $toolsListStyle == 'ordered' ? '<ol' : '<ul';
@@ -111,8 +111,8 @@ function ub_render_how_to_block($attributes){
                             . '"itemListElement" :[{'. PHP_EOL;
 
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">' 
-                    . $step['title'].'</h4>' . ($advancedMode ? '<img src="' .$step['stepPic']['url']. '">' : '')
-                    .$step['direction'] . PHP_EOL;
+                    . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' && $advancedMode ? '<img src="' .$step['stepPic']['url']. '">' : '')
+                    . $step['direction'] . PHP_EOL;
 
                 $stepsCode .= '"@type": "HowToDirection",' . PHP_EOL
                             . '"text": "' .($step['title'] == '' || !$advancedMode ? '' : $step['title'] . ' ')
@@ -145,9 +145,8 @@ function ub_render_how_to_block($attributes){
         if(count($section) > 0){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">'
-                        . $step['title'].'</h4>'
-                        . ($step['stepPic']['url'] == '' ? '' : '<img src="' .$step['stepPic']['url']. '">')
-                        . $step['direction'];
+                        . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' && $advancedMode ? 
+                        '<img src="' .$step['stepPic']['url']. '">' : '') . $step['direction'];
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
                             . '"name": "'.$step['title'].'",' . PHP_EOL
                             . ($advancedMode ? '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
@@ -240,8 +239,7 @@ function ub_render_how_to_block($attributes){
                 . $title . '</h2>' . $introduction. $header . 
                 ($advancedMode ? ($videoURL == '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
-                . $timeDisplay : '') . 
-                $stepsDisplay .   
+                . $timeDisplay : '') . $stepsDisplay .   
                 ($advancedMode ? '<h2>' . $resultIntro . '</h2>' . $howToYield 
                 . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') : '') .
             '</div>' . $JSONLD;
