@@ -6,6 +6,8 @@ import {
 } from "./icon";
 import { Component, Fragment } from "react";
 import { getDescendantBlocks } from "../../common";
+import toLatin from "./localToLatin";
+
 
 const {
 	ToggleControl,
@@ -130,8 +132,8 @@ class TableOfContents extends Component {
 				heading.anchor =
 					key +
 					"-" +
-					heading.content
-						.toString()
+					toLatin('all',heading.content
+						.toString())
 						.toLowerCase()
 						.replace(/( |<.+?>|&nbsp;)/g, "-");
 				heading.anchor = encodeURIComponent(
