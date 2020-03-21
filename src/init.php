@@ -262,9 +262,19 @@ function ub_include_block_attribute_css() {
                 case 'ub/how-to':
                     $prefix = '#ub_howto_' . $attributes['blockID'];
                     if($attributes['sectionListStyle'] == 'none'){
-                        $blockStylesheets .= $prefix . ' ul{' . PHP_EOL .
+                        $blockStylesheets .= $prefix . ' .ub_howto-section-display{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;
+                    }
+                    if($attributes['suppliesListStyle'] == 'none'){
+                        $blockStylesheets .= $prefix . ' .ub_howto-supplies-list{' . PHP_EOL .
+                            'list-style: none;' . PHP_EOL .
+                        '}' . PHP_EOL;                        
+                    }
+                    if($attributes['toolsListStyle'] == 'none'){
+                        $blockStylesheets .= $prefix . ' .ub_howto-tools-list{' . PHP_EOL .
+                            'list-style: none;' . PHP_EOL .
+                        '}' . PHP_EOL;                        
                     }
                     break;
                 case 'ub/image-slider':

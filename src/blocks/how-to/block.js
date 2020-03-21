@@ -44,6 +44,10 @@ const attributes = {
 		type: "array",
 		default: [] //format: {name, imageid, imagealt, imageurl}
 	},
+	toolsListStyle: {
+		type: "string",
+		default: "none"
+	},
 	addToolImages: {
 		type: "boolean",
 		default: false
@@ -55,6 +59,10 @@ const attributes = {
 	supplies: {
 		type: "array",
 		default: [] //format: {name, imageid, imagealt, imageurl}
+	},
+	suppliesListStyle: {
+		type: "string",
+		default: "none"
 	},
 	addSupplyImages: {
 		type: "boolean",
@@ -168,14 +176,16 @@ const defaultTimeDisplay = {
 };
 
 const ListWrapper = props => {
-	const { children, sectionListStyle } = props;
-	if (sectionListStyle === "ordered") {
-		return <ol>{children}</ol>;
+	const { className, children, listStyle } = props;
+	if (listStyle === "ordered") {
+		return <ol className={className ? className : ""}>{children}</ol>;
 	} else {
 		return (
 			<ul
+				className={className ? className : ""}
 				style={{
-					listStyleType: sectionListStyle === "none" ? "none" : null
+					listStyleType: listStyle === "none" ? "none" : null,
+					marginLeft: "2em"
 				}}
 			>
 				{children}
@@ -288,7 +298,7 @@ class HowToStep extends Component {
 
 		return (
 			<li>
-				<div className="ub_howto_step">
+				<div className="ub_howto-step">
 					<div>
 						<RichText
 							tagName="h4"
@@ -299,7 +309,7 @@ class HowToStep extends Component {
 						/>
 					</div>
 					<IconButton
-						className="ub_howto_delete"
+						className="ub_howto-delete"
 						icon="trash"
 						label={__("Delete step")}
 						onClick={_ => deleteStep()}
@@ -618,7 +628,7 @@ class HowToSection extends Component {
 
 		return (
 			<li>
-				<div className="ub_howto_step">
+				<div className="ub_howto-step">
 					<RichText
 						keepPlaceholderOnFocus
 						tagName="h3"
@@ -633,7 +643,7 @@ class HowToSection extends Component {
 						onClick={_ => deleteSection()}
 					/>
 				</div>
-				<ListWrapper sectionListStyle={sectionListStyle}>
+				<ListWrapper listStyle={sectionListStyle}>
 					{steps.map((step, i) => (
 						<HowToStep
 							{...step}
@@ -755,8 +765,10 @@ registerBlockType("ub/how-to", {
 				sectionListStyle,
 				suppliesIntro,
 				supplies,
+				suppliesListStyle,
 				toolsIntro,
 				tools,
+				toolsListStyle,
 				howToYield,
 				cost,
 				costCurrency,
@@ -885,15 +897,6 @@ registerBlockType("ub/how-to", {
 										setAttributes({ includeSuppliesList })
 									}
 								/>
-								{includeSuppliesList && (
-									<ToggleControl
-										label={__("Enable adding image for each supply")}
-										checked={addSupplyImages}
-										onChange={addSupplyImages =>
-											setAttributes({ addSupplyImages })
-										}
-									/>
-								)}
 								<ToggleControl
 									label={__("Include list of tools")}
 									checked={includeToolsList}
@@ -901,13 +904,6 @@ registerBlockType("ub/how-to", {
 										setAttributes({ includeToolsList })
 									}
 								/>
-								{includeToolsList && (
-									<ToggleControl
-										label={__("Enable adding image for each tool")}
-										checked={addToolImages}
-										onChange={addToolImages => setAttributes({ addToolImages })}
-									/>
-								)}
 								<ToggleControl
 									label={__("Display the unit first in cost")}
 									checked={showUnitFirst}
@@ -925,6 +921,44 @@ registerBlockType("ub/how-to", {
 							onChange={sectionListStyle => setAttributes({ sectionListStyle })}
 						/>
 					</PanelBody>
+					{advancedMode && includeSuppliesList && (
+						<PanelBody title={__("Supplies list settings")}>
+							<ToggleControl
+								label={__("Enable adding image for each supply")}
+								checked={addSupplyImages}
+								onChange={addSupplyImages => setAttributes({ addSupplyImages })}
+							/>
+							<RadioControl
+								label={__("Supplies list style")}
+								selected={suppliesListStyle}
+								options={["none", "ordered", "unordered"].map(a => ({
+									label: __(a),
+									value: a
+								}))}
+								onChange={suppliesListStyle =>
+									setAttributes({ suppliesListStyle })
+								}
+							/>
+						</PanelBody>
+					)}
+					{advancedMode && includeToolsList && (
+						<PanelBody title={__("Tools list settings")}>
+							<ToggleControl
+								label={__("Enable adding image for each tool")}
+								checked={addToolImages}
+								onChange={addToolImages => setAttributes({ addToolImages })}
+							/>
+							<RadioControl
+								label={__("Tools list style")}
+								selected={toolsListStyle}
+								options={["none", "ordered", "unordered"].map(a => ({
+									label: __(a),
+									value: a
+								}))}
+								onChange={toolsListStyle => setAttributes({ toolsListStyle })}
+							/>
+						</PanelBody>
+					)}
 				</InspectorControls>
 				<div className="ub_howto">
 					<RichText
@@ -1198,7 +1232,7 @@ registerBlockType("ub/how-to", {
 								{totalTime.map((t, i) => (
 									<RichText
 										style={{ textAlign: "right" }}
-										className="ub_howto_time_value"
+										className="ub_howto-time-value"
 										keepPlaceholderOnFocus
 										placeholder={__("0")}
 										value={String(t)}
@@ -1225,23 +1259,41 @@ registerBlockType("ub/how-to", {
 										value={suppliesIntro}
 										onChange={suppliesIntro => setAttributes({ suppliesIntro })}
 									/>
-									<ul>
+									<ListWrapper
+										className={"ub_howto-supplies-list"}
+										listStyle={suppliesListStyle}
+									>
 										{supplies.map((supply, i) => (
 											<li>
-												<RichText
-													keepPlaceholderOnFocus
-													value={supply.name}
-													placeholder={__("Enter supply name")}
-													onChange={newName =>
-														setAttributes({
-															supplies: [
-																...supplies.slice(0, i),
-																Object.assign(supplies[i], { name: newName }),
-																...supplies.slice(i + 1)
-															]
-														})
-													}
-												/>
+												<div style={{ display: "flex" }}>
+													<RichText
+														keepPlaceholderOnFocus
+														value={supply.name}
+														placeholder={__("Enter supply name")}
+														onChange={newName =>
+															setAttributes({
+																supplies: [
+																	...supplies.slice(0, i),
+																	Object.assign(supplies[i], { name: newName }),
+																	...supplies.slice(i + 1)
+																]
+															})
+														}
+													/>
+													<IconButton
+														style={{ marginLeft: "auto" }}
+														icon="trash"
+														label={__("Delete supply")}
+														onClick={_ =>
+															setAttributes({
+																supplies: [
+																	...supplies.slice(0, i),
+																	...supplies.slice(i + 1)
+																]
+															})
+														}
+													/>
+												</div>
 												{addSupplyImages &&
 													(supply.imageURL !== "" ? (
 														<div>
@@ -1291,21 +1343,9 @@ registerBlockType("ub/how-to", {
 															)}
 														/>
 													))}
-												<IconButton
-													icon="trash"
-													label={__("Delete step")}
-													onClick={_ =>
-														setAttributes({
-															supplies: [
-																...supplies.slice(0, i),
-																...supplies.slice(i + 1)
-															]
-														})
-													}
-												/>
 											</li>
 										))}
-									</ul>
+									</ListWrapper>
 									<Button
 										onClick={_ =>
 											setAttributes({
@@ -1329,24 +1369,41 @@ registerBlockType("ub/how-to", {
 										value={toolsIntro}
 										onChange={toolsIntro => setAttributes({ toolsIntro })}
 									/>
-									<ul>
+									<ListWrapper
+										className={"ub_howto-tools-list"}
+										listStyle={toolsListStyle}
+									>
 										{tools.map((tool, i) => (
 											<li>
-												<RichText
-													keepPlaceholderOnFocus
-													value={tool.name}
-													placeholder={__("Enter tool name")}
-													onChange={newTool =>
-														setAttributes({
-															tools: [
-																...tools.slice(0, i),
-																Object.assign(tools[i], { name: newTool }),
-																...tools.slice(i + 1)
-															]
-														})
-													}
-												/>
-
+												<div style={{ display: "flex" }}>
+													<RichText
+														keepPlaceholderOnFocus
+														value={tool.name}
+														placeholder={__("Enter tool name")}
+														onChange={newTool =>
+															setAttributes({
+																tools: [
+																	...tools.slice(0, i),
+																	Object.assign(tools[i], { name: newTool }),
+																	...tools.slice(i + 1)
+																]
+															})
+														}
+													/>
+													<IconButton
+														style={{ marginLeft: "auto" }}
+														icon="trash"
+														label={__("Delete tool")}
+														onClick={_ =>
+															setAttributes({
+																tools: [
+																	...tools.slice(0, i),
+																	...tools.slice(i + 1)
+																]
+															})
+														}
+													/>
+												</div>
 												{addToolImages &&
 													(tool.imageURL !== "" ? (
 														<div>
@@ -1396,23 +1453,9 @@ registerBlockType("ub/how-to", {
 															)}
 														/>
 													))}
-
-												<IconButton
-													className="ub_howto_delete"
-													icon="trash"
-													label={__("Delete step")}
-													onClick={_ =>
-														setAttributes({
-															tools: [
-																...tools.slice(0, i),
-																...tools.slice(i + 1)
-															]
-														})
-													}
-												/>
 											</li>
 										))}
-									</ul>
+									</ListWrapper>
 									<Button
 										onClick={_ =>
 											setAttributes({
@@ -1474,7 +1517,7 @@ registerBlockType("ub/how-to", {
 						</Fragment>
 					)}
 					{useSections ? (
-						<ListWrapper sectionListStyle={sectionListStyle}>
+						<ListWrapper listStyle={sectionListStyle}>
 							{section.map((s, i) => (
 								<HowToSection
 									{...s}
@@ -1503,7 +1546,7 @@ registerBlockType("ub/how-to", {
 						</ListWrapper>
 					) : (
 						<div>
-							<ListWrapper sectionListStyle={sectionListStyle}>
+							<ListWrapper listStyle={sectionListStyle}>
 								{section[0].steps.map((step, i) => (
 									<HowToStep
 										advancedMode={advancedMode}

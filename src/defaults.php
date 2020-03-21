@@ -479,6 +479,10 @@ $defaultValues = array(
                 'type' => 'array',
                 'default' => array(),
             ),
+            'toolsListStyle' => array(
+                'type' => 'string',
+                'default' => 'none'
+            ),
             'addSupplyImages' => array(
                 'type' => 'boolean',
                 'default' => false
@@ -494,6 +498,10 @@ $defaultValues = array(
             'supplies' => array(
                 'type' => 'array',
                 'default' => array(),
+            ),
+            'suppliesListStyle' => array(
+                'type' => 'string',
+                'default' => 'none'
             ),
             'section' => array(
                 'type' => 'array',

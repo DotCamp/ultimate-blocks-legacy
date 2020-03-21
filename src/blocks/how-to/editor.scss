@@ -2,7 +2,7 @@
 	.ub_howto_time_input {
 		display: grid;
 		grid-template-columns: auto auto 100px;
-		.ub_howto_time_value {
+		.ub_howto-time-value {
 			text-align: right;
 		}
 		select {
@@ -14,7 +14,7 @@
 	}
 }
 
-.ub_howto_step {
+.ub_howto-step {
 	display: flex;
 	.dashicons-arrow-up-alt {
 		min-width: 24px;
@@ -24,7 +24,7 @@
 	}
 }
 
-.ub_howto_delete {
+.ub_howto-delete {
 	margin-left: auto;
 	min-width: 24px;
 }
