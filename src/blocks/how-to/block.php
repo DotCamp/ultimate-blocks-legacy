@@ -111,7 +111,7 @@ function ub_render_how_to_block($attributes){
                             . '"itemListElement" :[{'. PHP_EOL;
 
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">' 
-                    . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' && $advancedMode ? '<img src="' .$step['stepPic']['url']. '">' : '')
+                    . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' && $advancedMode ? '<img class="ub_howto-step-image" src="' .$step['stepPic']['url']. '">' : '')
                     . $step['direction'] . PHP_EOL;
 
                 $stepsCode .= '"@type": "HowToDirection",' . PHP_EOL
@@ -146,7 +146,7 @@ function ub_render_how_to_block($attributes){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">'
                         . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' && $advancedMode ? 
-                        '<img src="' .$step['stepPic']['url']. '">' : '') . $step['direction'];
+                        '<img class="ub_howto-step-image" src="' .$step['stepPic']['url']. '">' : '') . $step['direction'];
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
                             . '"name": "'.$step['title'].'",' . PHP_EOL
                             . ($advancedMode ? '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
