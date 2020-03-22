@@ -1313,7 +1313,10 @@ registerBlockType("ub/how-to", {
 												{addSupplyImages &&
 													(supply.imageURL !== "" ? (
 														<div>
-															<img src={supply.imageURL} />
+															<img
+																className="ub_howto-supply-image"
+																src={supply.imageURL}
+															/>
 															<span
 																title={__("Delete image")}
 																className="dashicons dashicons-dismiss"

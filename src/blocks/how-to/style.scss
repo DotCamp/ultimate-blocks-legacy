@@ -5,3 +5,9 @@
 .ub_howto-step {
 	overflow: auto;
 }
+.ub_howto-supplies-list,
+.ub_howto-tools-list {
+	img {
+		max-width: 200px;
+	}
+}

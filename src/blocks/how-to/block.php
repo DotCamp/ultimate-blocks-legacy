@@ -39,7 +39,7 @@ function ub_render_how_to_block($attributes){
             $header .= ' class="ub_howto-supplies-list">';
             foreach($supplies as $i => $s){
                 $header .= '<li>' . $s['name'] . ($s['imageURL'] == '' ? '' :
-                            '<img src="'.$s['imageURL'].'"/>') . '</li>';
+                            '<br><img src="'.$s['imageURL'].'"/>') . '</li>';
                 if($i > 0){
                     $suppliesCode .= ',';
                 }
@@ -60,7 +60,7 @@ function ub_render_how_to_block($attributes){
             $header .= ' class="ub_howto-tools-list">';
             foreach($tools as $i => $t){
                 $header .= '<li>' . $t['name'] . ($t['imageURL'] == '' ? '' :
-                            '<img src="'.$t['imageURL'].'"/>') . '</li>';
+                            '<br><img src="'.$t['imageURL'].'"/>') . '</li>';
                 if($i > 0){
                     $toolsCode .= ',';
                 }
