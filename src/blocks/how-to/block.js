@@ -298,28 +298,29 @@ class HowToStep extends Component {
 
 		return (
 			<li>
-				<div className="ub_howto-step">
-					<div>
-						<RichText
-							tagName="h4"
-							keepPlaceholderOnFocus
-							placeholder={__("Title goes here")}
-							value={title}
-							onChange={newVal => editStep({ title: newVal })}
-						/>
-					</div>
+				<div className="ub_howto-step" style={{ display: "flex" }}>
+					<RichText
+						tagName="h4"
+						keepPlaceholderOnFocus
+						placeholder={__("Title goes here")}
+						value={title}
+						onChange={newVal => editStep({ title: newVal })}
+					/>
 					<IconButton
+						style={{ marginLeft: "auto", minWidth: "24px" }}
 						className="ub_howto-delete"
 						icon="trash"
 						label={__("Delete step")}
 						onClick={_ => deleteStep()}
 					/>
 					<IconButton
+						style={{ minWidth: "24px" }}
 						icon="arrow-up-alt"
 						onClick={_ => moveUp()}
 						label={__("Move step up")}
 					/>
 					<IconButton
+						style={{ minWidth: "24px" }}
 						icon="arrow-down-alt"
 						onClick={_ => moveDown()}
 						label={__("Move step down")}
