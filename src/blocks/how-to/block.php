@@ -24,6 +24,17 @@ function generateISODurationCode($inputArr){
     return $output;
 }
 
+function ub_convert_to_paragraphs($string){
+    if($string == ''){
+        return '';
+    }
+    else{
+        $string = explode('<br>', $string);
+        $string = array_map(function($p){return '<p>'.$p.'</p>';}, $string);
+        return implode('', $string);
+    }
+}
+
 function ub_render_how_to_block($attributes){
     extract($attributes);
 
@@ -112,14 +123,14 @@ function ub_render_how_to_block($attributes){
 
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">' 
                     . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' && $advancedMode ? '<img class="ub_howto-step-image" src="' .$step['stepPic']['url']. '">' : '')
-                    . $step['direction'] . PHP_EOL;
+                    . ub_convert_to_paragraphs($step['direction']) . PHP_EOL;
 
                 $stepsCode .= '"@type": "HowToDirection",' . PHP_EOL
                             . '"text": "' .($step['title'] == '' || !$advancedMode ? '' : $step['title'] . ' ')
                             .$step['direction'].'"}' . PHP_EOL;
 
                 if ($step['tip'] != ''){
-                    $stepsDisplay .= '<br/>' . $step['tip'];
+                    $stepsDisplay .= ub_convert_to_paragraphs($step['tip']);
                     $stepsCode .= ',{"@type": "HowToTip",' . PHP_EOL
                                 . '"text": "'.$step['tip'].'"}' . PHP_EOL;
                 }
@@ -146,7 +157,7 @@ function ub_render_how_to_block($attributes){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">'
                         . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' && $advancedMode ? 
-                        '<img class="ub_howto-step-image" src="' .$step['stepPic']['url']. '">' : '') . $step['direction'];
+                        '<img class="ub_howto-step-image" src="' .$step['stepPic']['url']. '">' : '') . ub_convert_to_paragraphs($step['direction']);
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
                             . '"name": "'.$step['title'].'",' . PHP_EOL
                             . ($advancedMode ? '"url": "'.get_permalink().'#'.$step['anchor'].'",' . PHP_EOL
@@ -157,7 +168,7 @@ function ub_render_how_to_block($attributes){
                             . '"text": "' . ($step['title'] == '' || !$advancedMode ? '' : $step['title'] . ' ') . $step['direction'].'"}' . PHP_EOL;
     
                 if ($step['tip'] != ''){
-                    $stepsDisplay .= '<br/>' . $step['tip'];
+                    $stepsDisplay .= ub_convert_to_paragraphs($step['tip']);
                     $stepsCode .= ',{"@type": "HowToTip",' . PHP_EOL
                                 . '"text": "'.$step['tip'].'"}' . PHP_EOL;
                 }
@@ -236,11 +247,11 @@ function ub_render_how_to_block($attributes){
     "image": "'.$finalImageURL.'"' : '')   .'}</script>';
 
     return '<div class="ub_howto" id="ub_howto_'.$blockID.'"><h2>'
-                . $title . '</h2>' . $introduction. $header . 
+                . $title . '</h2>' . ub_convert_to_paragraphs($introduction) . $header . 
                 ($advancedMode ? ($videoURL == '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
                 . $timeDisplay : '') . $stepsDisplay .   
-                ($advancedMode ? '<h2>' . $resultIntro . '</h2>' . $howToYield 
+                ($advancedMode ? '<h2>' . $resultIntro . '</h2>' . ub_convert_to_paragraphs($howToYield) 
                 . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') : '') .
             '</div>' . $JSONLD;
 }
