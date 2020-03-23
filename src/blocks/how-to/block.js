@@ -194,6 +194,18 @@ const ListWrapper = props => {
 	}
 };
 
+const uploadButtonStyle = {
+	marginLeft: "auto",
+	color: "#0071a1",
+	border: "1px solid #0071a1",
+	borderRadius: "3px",
+	background: "#f3f5f6",
+	height: "33px",
+	lineHeight: "32px",
+	fontSize: "13px",
+	padding: "0 12px 2px"
+};
+
 class HowToStep extends Component {
 	constructor(props) {
 		super(props);
@@ -572,51 +584,47 @@ class HowToStep extends Component {
 							</Fragment>
 						)}
 					</div>
-					{advancedMode && (
-						<Fragment>
-							{stepPic.url !== "" ? (
-								<div style={{ marginLeft: "auto" }}>
-									<img style={{ maxWidth: "200px" }} src={stepPic.url} />
-									<span
-										style={{ position: "absolute", right: "3px" }}
-										title={__("Delete image")}
-										className="dashicons dashicons-dismiss"
-										onClick={_ =>
-											editStep({
-												stepPic: {
-													id: -1,
-													alt: "",
-													url: ""
-												}
-											})
+					{advancedMode && stepPic.url !== "" ? (
+						<div style={{ marginLeft: "auto" }}>
+							<img style={{ maxWidth: "200px" }} src={stepPic.url} />
+							<span
+								style={{ position: "absolute", right: "3px" }}
+								title={__("Delete image")}
+								className="dashicons dashicons-dismiss"
+								onClick={_ =>
+									editStep({
+										stepPic: {
+											id: -1,
+											alt: "",
+											url: ""
 										}
-									/>
-								</div>
-							) : (
-								<MediaUpload
-									onSelect={img =>
-										editStep({
-											stepPic: {
-												id: img.id,
-												alt: img.alt,
-												url: img.url
-											}
-										})
+									})
+								}
+							/>
+						</div>
+					) : (
+						<MediaUpload
+							onSelect={img =>
+								editStep({
+									stepPic: {
+										id: img.id,
+										alt: img.alt,
+										url: img.url
 									}
-									type="image"
-									value={stepPic.id}
-									render={({ open }) => (
-										<Button
-											style={{ marginLeft: "auto", height: "fit-content" }}
-											className="components-button button button-medium"
-											onClick={open}
-										>
-											{__("Upload Image")}
-										</Button>
-									)}
-								/>
+								})
+							}
+							type="image"
+							value={stepPic.id}
+							render={({ open }) => (
+								<Button
+									style={uploadButtonStyle}
+									className="button is-default is-large"
+									onClick={open}
+								>
+									{__("Upload Image")}
+								</Button>
 							)}
-						</Fragment>
+						/>
 					)}
 				</div>
 			</li>
@@ -1354,7 +1362,8 @@ registerBlockType("ub/how-to", {
 															value={supply.imageID}
 															render={({ open }) => (
 																<Button
-																	className="components-button button button-medium"
+																	style={uploadButtonStyle}
+																	className="button is-default is-large"
 																	onClick={open}
 																>
 																	{__("Upload Image")}
@@ -1464,7 +1473,8 @@ registerBlockType("ub/how-to", {
 															value={tool.imageID}
 															render={({ open }) => (
 																<Button
-																	className="components-button button button-medium"
+																	style={uploadButtonStyle}
+																	className="button is-default is-large"
 																	onClick={open}
 																>
 																	{__("Upload Image")}
@@ -1749,7 +1759,8 @@ registerBlockType("ub/how-to", {
 									value={finalImageID}
 									render={({ open }) => (
 										<Button
-											className="components-button button button-medium"
+											style={uploadButtonStyle}
+											className="button is-default is-large"
 											onClick={open}
 										>
 											{__("Upload Image")}
