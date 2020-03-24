@@ -194,14 +194,13 @@ const ListWrapper = props => {
 	}
 };
 
-const uploadButtonStyle = {
+const defaultButtonStyle = {
 	marginLeft: "auto",
 	color: "#0071a1",
 	border: "1px solid #0071a1",
 	borderRadius: "3px",
 	background: "#f3f5f6",
 	height: "33px",
-	lineHeight: "32px",
 	fontSize: "13px",
 	padding: "0 12px 2px"
 };
@@ -372,7 +371,7 @@ class HowToStep extends Component {
 							value={stepPic.id}
 							render={({ open }) => (
 								<Button
-									style={uploadButtonStyle}
+									style={defaultButtonStyle}
 									className="button is-default is-large"
 									onClick={open}
 								>
@@ -734,6 +733,7 @@ class HowToSection extends Component {
 					))}
 				</ListWrapper>
 				<Button
+					style={defaultButtonStyle}
 					onClick={_ => {
 						editSection({
 							sectionName,
@@ -1361,7 +1361,7 @@ registerBlockType("ub/how-to", {
 															value={supply.imageID}
 															render={({ open }) => (
 																<Button
-																	style={uploadButtonStyle}
+																	style={defaultButtonStyle}
 																	className="button is-default is-large"
 																	onClick={open}
 																>
@@ -1374,6 +1374,7 @@ registerBlockType("ub/how-to", {
 										))}
 									</ListWrapper>
 									<Button
+										style={defaultButtonStyle}
 										onClick={_ =>
 											setAttributes({
 												supplies: [
@@ -1472,7 +1473,7 @@ registerBlockType("ub/how-to", {
 															value={tool.imageID}
 															render={({ open }) => (
 																<Button
-																	style={uploadButtonStyle}
+																	style={defaultButtonStyle}
 																	className="button is-default is-large"
 																	onClick={open}
 																>
@@ -1485,6 +1486,7 @@ registerBlockType("ub/how-to", {
 										))}
 									</ListWrapper>
 									<Button
+										style={defaultButtonStyle}
 										onClick={_ =>
 											setAttributes({
 												tools: [
@@ -1659,6 +1661,7 @@ registerBlockType("ub/how-to", {
 								))}
 							</ListWrapper>
 							<Button
+								style={defaultButtonStyle}
 								onClick={_ => {
 									setAttributes({
 										section: [
@@ -1688,6 +1691,7 @@ registerBlockType("ub/how-to", {
 					)}
 					{useSections && (
 						<Button
+							style={defaultButtonStyle}
 							onClick={_ =>
 								setAttributes({
 									section: [
@@ -1754,7 +1758,7 @@ registerBlockType("ub/how-to", {
 									value={finalImageID}
 									render={({ open }) => (
 										<Button
-											style={uploadButtonStyle}
+											style={defaultButtonStyle}
 											className="button is-default is-large"
 											onClick={open}
 										>
