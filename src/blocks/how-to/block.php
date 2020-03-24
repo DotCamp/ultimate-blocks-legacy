@@ -251,8 +251,9 @@ function ub_render_how_to_block($attributes){
                 ($advancedMode ? ($videoURL == '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
                 . $timeDisplay : '') . $stepsDisplay .   
-                ($advancedMode ? '<h2>' . $resultIntro . '</h2>' . ub_convert_to_paragraphs($howToYield) 
-                . ($finalImageURL == '' ? '' : '<img src="' .$finalImageURL. '">') : '') .
+                ($advancedMode ? '<h2>' . $resultIntro . '</h2>' . 
+                ($finalImageURL == '' ? '' : '<img class="ub_howto-yield-image" src="' .$finalImageURL. '">') : '') .
+                ub_convert_to_paragraphs($howToYield) .
             '</div>' . $JSONLD;
 }
 
