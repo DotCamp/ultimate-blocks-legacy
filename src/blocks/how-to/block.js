@@ -309,8 +309,8 @@ class HowToStep extends Component {
 		const { startTime, endTime, validTimeInput } = this.state;
 
 		return (
-			<li style={{ overflow: "auto" }}>
-				<div className="ub_howto-step" style={{ display: "flex" }}>
+			<li>
+				<div style={{ display: "flex" }}>
 					<RichText
 						tagName="h4"
 						keepPlaceholderOnFocus
@@ -664,7 +664,7 @@ class HowToSection extends Component {
 
 		return (
 			<li>
-				<div className="ub_howto-step" style={{ display: "flex" }}>
+				<div style={{ display: "flex" }}>
 					<RichText
 						keepPlaceholderOnFocus
 						tagName="h3"
