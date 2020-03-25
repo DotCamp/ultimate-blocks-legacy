@@ -10,7 +10,7 @@ const { resolve, basename } = require("path");
 function convertToEs5(file) {
 	transformFileAsync(file)
 		.then(result => {
-			const target = `${f.replace(/front\.js$/, "front.build.js")}`;
+			const target = `${file.replace(/front\.js$/, "front.build.js")}`;
 
 			readFile(target, "utf-8")
 				.then(data => {
