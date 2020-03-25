@@ -319,20 +319,33 @@ class HowToStep extends Component {
 						onChange={newVal => editStep({ title: newVal })}
 					/>
 					<IconButton
-						style={{ marginLeft: "auto", minWidth: "24px" }}
+						style={{
+							marginLeft: "auto",
+							marginTop: "auto",
+							marginBottom: "auto",
+							minWidth: "24px"
+						}}
 						className="ub_howto-delete"
 						icon="trash"
 						label={__("Delete step")}
 						onClick={_ => deleteStep()}
 					/>
 					<IconButton
-						style={{ minWidth: "24px" }}
+						style={{
+							minWidth: "24px",
+							marginTop: "auto",
+							marginBottom: "auto"
+						}}
 						icon="arrow-up-alt"
 						onClick={_ => moveUp()}
 						label={__("Move step up")}
 					/>
 					<IconButton
-						style={{ minWidth: "24px" }}
+						style={{
+							minWidth: "24px",
+							marginTop: "auto",
+							marginBottom: "auto"
+						}}
 						icon="arrow-down-alt"
 						onClick={_ => moveDown()}
 						label={__("Move step down")}
@@ -651,7 +664,7 @@ class HowToSection extends Component {
 
 		return (
 			<li>
-				<div className="ub_howto-step">
+				<div className="ub_howto-step" style={{ display: "flex" }}>
 					<RichText
 						keepPlaceholderOnFocus
 						tagName="h3"
@@ -660,7 +673,11 @@ class HowToSection extends Component {
 						onChange={sectionName => editSection({ sectionName, steps })}
 					/>
 					<IconButton
-						style={{ marginLeft: "auto" }}
+						style={{
+							marginLeft: "auto",
+							marginTop: "auto",
+							marginBottom: "auto"
+						}}
 						icon="trash"
 						label={__("Delete section")}
 						onClick={_ => deleteSection()}
