@@ -195,6 +195,7 @@ const ListWrapper = props => {
 };
 
 const defaultButtonStyle = {
+	marginTop: "20px",
 	marginLeft: "auto",
 	color: "#0071a1",
 	border: "1px solid #0071a1",
@@ -753,7 +754,6 @@ class HowToSection extends Component {
 						});
 					}}
 				>
-					<Icon icon="plus" />
 					{__("Add step")}
 				</Button>
 			</li>
@@ -999,7 +999,7 @@ registerBlockType("ub/how-to", {
 					/>
 					{advancedMode && (
 						<Fragment>
-							{__("Insert video here")}
+							<p>{__("Insert Video Here")}</p>
 							<div style={{ display: "flex" }}>
 								<URLInput
 									autoFocus={false}
@@ -1502,7 +1502,7 @@ registerBlockType("ub/how-to", {
 							)}
 							<div
 								className="ub_howto_cost_container"
-								style={{ display: "flex" }}
+								style={{ display: "flex", margin: "20px auto" }}
 							>
 								<RichText
 									value={costDisplayText}
@@ -1684,7 +1684,6 @@ registerBlockType("ub/how-to", {
 									});
 								}}
 							>
-								<Icon icon="plus" />
 								{__("Add step")}
 							</Button>
 						</div>
@@ -1715,8 +1714,7 @@ registerBlockType("ub/how-to", {
 								})
 							}
 						>
-							<Icon icon="plus" />
-							{__("Add section")}
+							{__("Add Section")}
 						</Button>
 					)}
 					{advancedMode && (
