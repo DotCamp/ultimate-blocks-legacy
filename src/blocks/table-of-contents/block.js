@@ -72,6 +72,10 @@ const attributes = {
 	titleAlignment: {
 		type: "string",
 		default: "left"
+	},
+	allowToLatin : {
+		type: "boolean",
+		default: false
 	}
 };
 
@@ -266,6 +270,7 @@ registerBlockType("ub/table-of-contents-block", {
 		)
 	}))(function(props) {
 		const { isSelected, block, attributes } = props;
+
 
 		const { blockID, showList } = attributes;
 

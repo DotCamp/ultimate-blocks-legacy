@@ -4,8 +4,8 @@ import {
 	threeColumnsIcon,
 	plainList
 } from "./icon";
-import { Component, Fragment } from "react";
-import { getDescendantBlocks } from "../../common";
+import {Component, Fragment} from "react";
+import {getDescendantBlocks} from "../../common";
 import toLatin from "./localToLatin";
 
 
@@ -16,10 +16,10 @@ const {
 	Toolbar,
 	IconButton
 } = wp.components;
-const { InspectorControls, BlockControls, RichText, AlignmentToolbar } =
-	wp.blockEditor || wp.editor;
-const { select, dispatch, subscribe } = wp.data;
-const { __ } = wp.i18n;
+const {InspectorControls, BlockControls, RichText, AlignmentToolbar} =
+wp.blockEditor || wp.editor;
+const {select, dispatch, subscribe} = wp.data;
+const {__} = wp.i18n;
 
 class TableOfContents extends Component {
 	constructor(props) {
@@ -27,7 +27,7 @@ class TableOfContents extends Component {
 		this.state = {
 			headers: props.headers,
 			unsubscribe: null,
-			breaks: []
+			breaks: [],
 		};
 	}
 
@@ -120,7 +120,7 @@ class TableOfContents extends Component {
 			});
 
 			if (JSON.stringify(this.state.breaks) !== JSON.stringify(pageBreaks)) {
-				this.setState({ breaks: pageBreaks });
+				this.setState({breaks: pageBreaks});
 			}
 
 			return headings;
@@ -132,8 +132,8 @@ class TableOfContents extends Component {
 				heading.anchor =
 					key +
 					"-" +
-					toLatin('all',heading.content
-						.toString())
+					(this.props.allowToLatin ? toLatin('all', heading.content
+						.toString()) : heading.content.toString())
 						.toLowerCase()
 						.replace(/( |<.+?>|&nbsp;)/g, "-");
 				heading.anchor = encodeURIComponent(
@@ -144,14 +144,18 @@ class TableOfContents extends Component {
 				);
 			});
 			if (JSON.stringify(headers) !== JSON.stringify(this.state.headers)) {
-				this.setState({ headers });
+				this.setState({headers});
 			}
 		};
 
 		setHeadings();
 
+
 		const unsubscribe = subscribe(_ => setHeadings());
-		this.setState({ unsubscribe });
+		this.setState({unsubscribe});
+
+		// bind setHeadings to component context
+		this.setHeadings = setHeadings.bind(this);
 	}
 
 	componentWillUnmount() {
@@ -159,6 +163,15 @@ class TableOfContents extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		// call header manipulation to trigger latin alphabet conversion of links
+		if(this.props.allowToLatin !== prevProps.allowToLatin){
+			this.setHeadings();
+			this.props.blockProp.setAttributes({
+				links: JSON.stringify(this.state.headers)
+			});
+			return;
+		}
+
 		if (
 			JSON.stringify(prevProps.headers) !== JSON.stringify(prevState.headers)
 		) {
@@ -167,8 +180,10 @@ class TableOfContents extends Component {
 			});
 		}
 		if (this.state.breaks !== this.props.blockProp.attributes.gaps) {
-			this.props.blockProp.setAttributes({ gaps: this.state.breaks });
+			this.props.blockProp.setAttributes({gaps: this.state.breaks});
 		}
+
+
 	}
 
 	render() {
@@ -177,10 +192,10 @@ class TableOfContents extends Component {
 			blockProp,
 			style,
 			numColumns,
-			listStyle
+			listStyle,
 		} = this.props;
 
-		const { headers } = this.state;
+		const {headers} = this.state;
 
 		const placeItem = (arr, item) => {
 			if (arr.length === 0 || arr[0].level === item.level) {
@@ -212,17 +227,17 @@ class TableOfContents extends Component {
 						}}
 					/>
 					{item.children &&
-						(listStyle === "numbered" ? (
-							<ol>{parseList(item.children)}</ol>
-						) : (
-							<ul
-								style={{
-									listStyle: listStyle === "plain" ? "none" : null
-								}}
-							>
-								{parseList(item.children)}
-							</ul>
-						))}
+					(listStyle === "numbered" ? (
+						<ol>{parseList(item.children)}</ol>
+					) : (
+						<ul
+							style={{
+								listStyle: listStyle === "plain" ? "none" : null
+							}}
+						>
+							{parseList(item.children)}
+						</ul>
+					))}
 				</li>
 			));
 
@@ -261,17 +276,18 @@ class TableOfContents extends Component {
 }
 
 export const inspectorControls = props => {
-	const { attributes, setAttributes } = props;
+	const {attributes, setAttributes} = props;
 	const {
 		allowedHeaders,
 		showList,
 		allowToCHiding,
-		enableSmoothScroll
+		enableSmoothScroll,
+		allowToLatin
 	} = attributes;
 
-	const { updateBlockAttributes } =
-		dispatch("core/block-editor") || dispatch("core/editor");
-	const { getBlocks } = select("core/block-editor") || select("core/editor");
+	const {updateBlockAttributes} =
+	dispatch("core/block-editor") || dispatch("core/editor");
+	const {getBlocks} = select("core/block-editor") || select("core/editor");
 
 	return (
 		<InspectorControls>
@@ -346,14 +362,25 @@ export const inspectorControls = props => {
 						}}
 					/>
 				</PanelRow>
+				<PanelRow>
+					<label htmlFor="ub_toc_enable_latin_conversion">
+						{__("Enable conversion of links to latin alphabet")}
+					</label>
+					<ToggleControl id="ub_toc_enable_latin_conversion"
+								   checked={allowToLatin}
+								   onChange={(e) => {
+									   setAttributes({allowToLatin: e});
+								   }}
+					/>
+				</PanelRow>
 			</PanelBody>
 		</InspectorControls>
 	);
 };
 
 export const blockControls = props => {
-	const { setAttributes } = props;
-	const { numColumns, titleAlignment } = props.attributes;
+	const {setAttributes} = props;
+	const {numColumns, titleAlignment} = props.attributes;
 	return (
 		<BlockControls>
 			<Toolbar>
@@ -362,44 +389,44 @@ export const blockControls = props => {
 					icon={oneColumnIcon}
 					label={__("One column")}
 					isPrimary={numColumns === 1}
-					onClick={_ => setAttributes({ numColumns: 1 })}
+					onClick={_ => setAttributes({numColumns: 1})}
 				/>
 				<IconButton
 					className={"ub_toc_column_selector"}
 					icon={twoColumnsIcon}
 					label={__("Two columns")}
 					isPrimary={numColumns === 2}
-					onClick={_ => setAttributes({ numColumns: 2 })}
+					onClick={_ => setAttributes({numColumns: 2})}
 				/>
 				<IconButton
 					className={"ub_toc_column_selector"}
 					icon={threeColumnsIcon}
 					label={__("Three columns")}
 					isPrimary={numColumns === 3}
-					onClick={_ => setAttributes({ numColumns: 3 })}
+					onClick={_ => setAttributes({numColumns: 3})}
 				/>
 			</Toolbar>
 			<Toolbar>
 				<IconButton
 					icon="editor-ul"
 					label={__("Bulleted list")}
-					onClick={_ => setAttributes({ listStyle: "bulleted" })}
+					onClick={_ => setAttributes({listStyle: "bulleted"})}
 				/>
 				<IconButton
 					icon="editor-ol"
 					label={__("Numbered list")}
-					onClick={_ => setAttributes({ listStyle: "numbered" })}
+					onClick={_ => setAttributes({listStyle: "numbered"})}
 				/>
 				<IconButton
 					icon={plainList}
 					label={__("Plain list")}
-					onClick={_ => setAttributes({ listStyle: "plain" })}
+					onClick={_ => setAttributes({listStyle: "plain"})}
 				/>
 			</Toolbar>
 			<AlignmentToolbar
 				value={titleAlignment}
 				onChange={value => {
-					setAttributes({ titleAlignment: value });
+					setAttributes({titleAlignment: value});
 				}}
 			/>
 		</BlockControls>
@@ -407,7 +434,7 @@ export const blockControls = props => {
 };
 
 export const editorDisplay = props => {
-	const { setAttributes } = props;
+	const {setAttributes} = props;
 	const {
 		links,
 		title,
@@ -416,7 +443,8 @@ export const editorDisplay = props => {
 		allowToCHiding,
 		numColumns,
 		listStyle,
-		titleAlignment
+		titleAlignment,
+		allowToLatin
 	} = props.attributes;
 
 	return (
@@ -434,7 +462,7 @@ export const editorDisplay = props => {
 					<RichText
 						placeholder={__("Optional title")}
 						className="ub_table-of-contents-title"
-						onChange={text => setAttributes({ title: text })}
+						onChange={text => setAttributes({title: text})}
 						value={title}
 						keepPlaceholderOnFocus={true}
 					/>
@@ -446,7 +474,7 @@ export const editorDisplay = props => {
 							<a
 								className="ub_table-of-contents-toggle-link"
 								href="#"
-								onClick={_ => setAttributes({ showList: !showList })}
+								onClick={_ => setAttributes({showList: !showList})}
 							>
 								{showList ? __("hide") : __("show")}
 							</a>
@@ -462,6 +490,7 @@ export const editorDisplay = props => {
 					allowedHeaders={allowedHeaders}
 					headers={links && JSON.parse(links)}
 					blockProp={props}
+					allowToLatin={allowToLatin}
 				/>
 			)}
 		</Fragment>
