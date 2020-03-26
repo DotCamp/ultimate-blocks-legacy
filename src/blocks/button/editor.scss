@@ -4,7 +4,7 @@
  * CSS for just Backend enqueued after style.scss
  * which makes it higher in priority.
  */
-@import '../../common';
+@import "../../common";
 
 .wp-block-ub-button-block {
 	margin: 0 auto;
@@ -54,4 +54,11 @@
 
 .ub-button-block-main {
 	cursor: auto;
+}
+
+.block-editor-block-inspector .ub-button-group button {
+	border: 1px solid #0075af;
+	&:hover {
+		border-color: #005d8c;
+	}
 }

@@ -1,4 +1,4 @@
-@import '../../common';
+@import "../../common";
 
 div[data-block] > .ub_image_slider {
 	display: block;
@@ -7,6 +7,14 @@ div[data-block] > .ub_image_slider {
 	}
 	.components-placeholder__fieldset {
 		display: flex;
+		justify-content: center;
+	}
+	.components-placeholder__label {
+		margin: 5px auto;
+	}
+	.components-placeholder__instructions {
+		text-align: center;
+		margin: auto;
 	}
 }
 

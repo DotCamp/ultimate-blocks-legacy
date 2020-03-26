@@ -3,9 +3,11 @@
 	padding-left: 1.3em !important;
 }
 
-.ub_toc_column_selector.is-primary {
-	top: 50%;
-	transform: translateY(-50%);
+.editor-block-toolbar {
+	.ub_toc_column_selector.is-primary {
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }
 
 .ub_toc_column_buttons {
