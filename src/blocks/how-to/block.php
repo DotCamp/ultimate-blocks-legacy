@@ -107,7 +107,7 @@ function ub_render_how_to_block($attributes){
                             ' class="ub_howto-section-display">';
         foreach($section as $i => $s){
             $stepsDisplay .= '<li class="ub_howto-section"><h3>' . $s['sectionName'] . '</h3>' . 
-            ($sectionListStyle == 'ordered' ? '<ol' : '<ul') . ' class="ub_howto-section-display">';
+            ($sectionListStyle == 'ordered' ? '<ol' : '<ul') . ' class="ub_howto-step-display">';
             $stepsCode .= '{"@type": "HowToSection",' . PHP_EOL
                         . '"name": "'. $s['sectionName'] . '",' . PHP_EOL
                         . '"itemListElement": [' . PHP_EOL;
@@ -152,7 +152,7 @@ function ub_render_how_to_block($attributes){
     }
     else{
         $stepsDisplay .=  ($sectionListStyle == 'ordered' ? '<ol' : '<ul') .
-                            ' class="ub_howto-steps-display">';
+                            ' class="ub_howto-step-display">';
         if(count($section) > 0){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">'

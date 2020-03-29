@@ -264,7 +264,10 @@ function ub_include_block_attribute_css() {
                     if($attributes['sectionListStyle'] == 'none'){
                         $blockStylesheets .= $prefix . ' .ub_howto-section-display{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
-                        '}' . PHP_EOL;
+                        '}' . PHP_EOL .
+                        $prefix . ' .ub_howto-step-display{' . PHP_EOL .
+                            'list-style: none;' . PHP_EOL .
+                        '}' . PHP_EOL ;
                     }
                     if($attributes['suppliesListStyle'] == 'none'){
                         $blockStylesheets .= $prefix . ' .ub_howto-supplies-list{' . PHP_EOL .

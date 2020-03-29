@@ -178,14 +178,19 @@ const defaultTimeDisplay = {
 const ListWrapper = props => {
 	const { className, children, listStyle } = props;
 	if (listStyle === "ordered") {
-		return <ol className={className ? className : ""}>{children}</ol>;
+		return (
+			<ol className={className ? className : null} style={{ paddingLeft: "0" }}>
+				{children}
+			</ol>
+		);
 	} else {
 		return (
 			<ul
-				className={className ? className : ""}
+				className={className ? className : null}
 				style={{
 					listStyleType: listStyle === "none" ? "none" : null,
-					marginLeft: "2em"
+					marginLeft: "1em",
+					paddingLeft: "0"
 				}}
 			>
 				{children}
