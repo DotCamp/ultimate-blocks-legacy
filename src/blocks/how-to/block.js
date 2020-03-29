@@ -351,49 +351,48 @@ class HowToStep extends Component {
 						label={__("Move step down")}
 					/>
 				</div>
-				{advancedMode &&
-					(stepPic.url !== "" ? (
-						<div>
-							<img style={{ width: "100%" }} src={stepPic.url} />
-							<span
-								style={{ position: "absolute", right: "3px" }}
-								title={__("Delete image")}
-								className="dashicons dashicons-dismiss"
-								onClick={_ =>
-									editStep({
-										stepPic: {
-											id: -1,
-											alt: "",
-											url: ""
-										}
-									})
-								}
-							/>
-						</div>
-					) : (
-						<MediaUpload
-							onSelect={img =>
+				{stepPic.url !== "" ? (
+					<div>
+						<img style={{ width: "100%" }} src={stepPic.url} />
+						<span
+							style={{ position: "absolute", right: "3px" }}
+							title={__("Delete image")}
+							className="dashicons dashicons-dismiss"
+							onClick={_ =>
 								editStep({
 									stepPic: {
-										id: img.id,
-										alt: img.alt,
-										url: img.url
+										id: -1,
+										alt: "",
+										url: ""
 									}
 								})
 							}
-							type="image"
-							value={stepPic.id}
-							render={({ open }) => (
-								<Button
-									style={defaultButtonStyle}
-									className="button is-default is-large"
-									onClick={open}
-								>
-									{__("Upload Image")}
-								</Button>
-							)}
 						/>
-					))}
+					</div>
+				) : (
+					<MediaUpload
+						onSelect={img =>
+							editStep({
+								stepPic: {
+									id: img.id,
+									alt: img.alt,
+									url: img.url
+								}
+							})
+						}
+						type="image"
+						value={stepPic.id}
+						render={({ open }) => (
+							<Button
+								style={defaultButtonStyle}
+								className="button is-default is-large"
+								onClick={open}
+							>
+								{__("Upload Image")}
+							</Button>
+						)}
+					/>
+				)}
 				<div>
 					<RichText
 						keepPlaceholderOnFocus
@@ -1016,9 +1015,9 @@ registerBlockType("ub/how-to", {
 					/>
 					{advancedMode && (
 						<Fragment>
-							<p>{__("Insert Video Here")}</p>
 							<div style={{ display: "flex" }}>
 								<URLInput
+									placeholder={"Insert video URL"}
 									autoFocus={false}
 									disableSuggestions={true}
 									className="button-url"
