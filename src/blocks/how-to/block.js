@@ -1738,62 +1738,57 @@ registerBlockType("ub/how-to", {
 							{__("Add Section")}
 						</Button>
 					)}
-					{advancedMode && (
-						<Fragment>
-							<RichText
-								tagName="h2"
-								placeholder={__("Result")}
-								keepPlaceholderOnFocus={true}
-								value={resultIntro}
-								onChange={resultIntro => setAttributes({ resultIntro })}
+					<RichText
+						tagName="h2"
+						placeholder={__("Result")}
+						keepPlaceholderOnFocus={true}
+						value={resultIntro}
+						onChange={resultIntro => setAttributes({ resultIntro })}
+					/>
+					{finalImageURL !== "" ? (
+						<div>
+							<img style={{ width: "100%" }} src={finalImageURL} />
+							<span
+								style={{ position: "absolute", right: "3px" }}
+								title={__("Delete image")}
+								className="dashicons dashicons-dismiss"
+								onClick={_ =>
+									setAttributes({
+										finalImageID: -1,
+										finalImageAlt: "",
+										finalImageURL: ""
+									})
+								}
 							/>
-
-							{finalImageURL !== "" ? (
-								<div>
-									<img style={{ width: "100%" }} src={finalImageURL} />
-									<span
-										style={{ position: "absolute", right: "3px" }}
-										title={__("Delete image")}
-										className="dashicons dashicons-dismiss"
-										onClick={_ =>
-											setAttributes({
-												finalImageID: -1,
-												finalImageAlt: "",
-												finalImageURL: ""
-											})
-										}
-									/>
-								</div>
-							) : (
-								<MediaUpload
-									onSelect={img =>
-										setAttributes({
-											finalImageID: img.id,
-											finalImageAlt: img.alt,
-											finalImageURL: img.url
-										})
-									}
-									type="image"
-									value={finalImageID}
-									render={({ open }) => (
-										<Button
-											style={defaultButtonStyle}
-											className="button is-default is-large"
-											onClick={open}
-										>
-											{__("Upload Image")}
-										</Button>
-									)}
-								/>
+						</div>
+					) : (
+						<MediaUpload
+							onSelect={img =>
+								setAttributes({
+									finalImageID: img.id,
+									finalImageAlt: img.alt,
+									finalImageURL: img.url
+								})
+							}
+							type="image"
+							value={finalImageID}
+							render={({ open }) => (
+								<Button
+									style={defaultButtonStyle}
+									className="button is-default is-large"
+									onClick={open}
+								>
+									{__("Upload Image")}
+								</Button>
 							)}
-							<RichText
-								keepPlaceholderOnFocus
-								placeholder={__("Result text")}
-								value={howToYield}
-								onChange={howToYield => setAttributes({ howToYield })}
-							/>
-						</Fragment>
+						/>
 					)}
+					<RichText
+						keepPlaceholderOnFocus
+						placeholder={__("Result text")}
+						value={howToYield}
+						onChange={howToYield => setAttributes({ howToYield })}
+					/>
 				</div>
 			</Fragment>
 		);

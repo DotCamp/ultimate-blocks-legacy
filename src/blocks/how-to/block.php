@@ -242,17 +242,16 @@ function ub_render_how_to_block($attributes){
             },'.$suppliesCode.','
             .$toolsCode.','
         :'')
-    .$stepsCode
-    .($advancedMode ? ',"yield": "'.$howToYield.'",
-    "image": "'.$finalImageURL.'"' : '')   .'}</script>';
+    .$stepsCode.',"yield": "'.$howToYield.'",
+    "image": "'.$finalImageURL.'"'   .'}</script>';
 
     return '<div class="ub_howto" id="ub_howto_'.$blockID.'"><h2>'
                 . $title . '</h2>' . ub_convert_to_paragraphs($introduction) . $header . 
                 ($advancedMode ? ($videoURL == '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
                 . $timeDisplay : '') . $stepsDisplay .   
-                ($advancedMode ? '<h2>' . $resultIntro . '</h2>' . 
-                ($finalImageURL == '' ? '' : '<img class="ub_howto-yield-image" src="' .$finalImageURL. '">') : '') .
+                '<h2>' . $resultIntro . '</h2>' . 
+                ($finalImageURL == '' ? '' : '<img class="ub_howto-yield-image" src="' .$finalImageURL. '">') .
                 ub_convert_to_paragraphs($howToYield) .
             '</div>' . $JSONLD;
 }
