@@ -71,6 +71,11 @@ class Ultimate_Blocks_Util {
 				'name'   => 'ub/expand',
 				'active' => true,
 			),
+			array(
+				'label'  => 'How To',
+				'name'   => 'ub/how-to',
+				'active' => true,
+			),
             array(
                 'label'  => 'Image Slider',
                 'name'   => 'ub/image-slider',

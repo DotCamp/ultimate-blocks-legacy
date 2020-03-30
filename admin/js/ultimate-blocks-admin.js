@@ -68,6 +68,11 @@
 			active: true
 		},
 		{
+			label: "How To",
+			name: "ub/how-to",
+			active: true
+		},
+		{
 			label: "Image Slider",
 			name: "ub/image-slider",
 			active: true
