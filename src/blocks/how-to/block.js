@@ -13,7 +13,6 @@ const { withState, compose } = wp.compose;
 const {
 	Button,
 	ToggleControl,
-	Icon,
 	IconButton,
 	PanelBody,
 	RadioControl
@@ -358,7 +357,11 @@ class HowToStep extends Component {
 				</div>
 				{stepPic.url !== "" ? (
 					<div>
-						<img style={{ width: "100%" }} src={stepPic.url} />
+						<img
+							className="ub_howto-step-image"
+							style={{ width: "100%" }}
+							src={stepPic.url}
+						/>
 						<span
 							style={{ position: "absolute", right: "3px" }}
 							title={__("Delete image")}
