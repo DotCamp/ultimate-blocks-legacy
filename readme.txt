@@ -1,9 +1,9 @@
 === Ultimate Blocks - Gutenberg Blocks Plugin ===
-Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin
+Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.3
-Stable tag: 2.2.1
+Tested up to: 5.4
+Stable tag: 2.3.0
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -18,6 +18,7 @@ Ultimate Blocks currently includes the following blocks:
 
 * Content Filter - [View Demo](https://ultimateblocks.com/content-filter-block/)
 * Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.com/schema-review-block/)
+* HowTo Schema - [View Demo](https://ultimateblocks.com/howto-schema-block/)
 * Table of Contents - [View Demo](https://ultimateblocks.com/table-of-contents-block/)
 * Tabbed Content - [View Demo](https://ultimateblocks.com/tabbed-content-block/)
 * Call to Action - [View Demo](https://ultimateblocks.com/call-to-action-block/)
@@ -51,6 +52,9 @@ Content Filter lets your visitors filter the content based on different filters.
 
 **Review Block**
 Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.
+
+**HowTo Schema Block**
+Add HowTo Schema with sections, steps and valid schema data.
 
 **Table of Contents Block**
 Generate a table of contents from your headings. 
@@ -126,6 +130,21 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.3 =
+
+Release Date: March 31st, 2020
+
+* ADD: NEW BLOCK: HowTo Schema.
+* ADD: Support for Wide and Full Width alignment in Tabbed Content Block.
+* ADD: Support for third party heading blocks in Table of Contents Block.
+* ADD: Option to enable romanization of Cyrillic headers in Table of Contents Block.
+* ADD: Allow rearranging icons in Social Share Block.
+* ADD: Allow setting of custom icon color in Social Share Block.
+* FIX: Hide bullets during content tag filter selection in Content Filter Block with WP 5.4.
+* FIX: Ensure that frontend script runs whenever an image slider is in a page.
+* FIX: Style conflicts with Twenty Twenty theme.
+* REMOVE: Google Plus icon from Social Share Block.
 
 = 2.2.1 =
 
