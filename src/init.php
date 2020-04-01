@@ -109,7 +109,7 @@ function ub_include_block_attribute_css() {
     require plugin_dir_path(__FILE__) . 'defaults.php';
     require_once plugin_dir_path(__FILE__) . 'common.php';
 
-    $presentBlocks = ub_getPresentBlocks();
+    $presentBlocks = array_unique(ub_getPresentBlocks(), SORT_REGULAR);
     $blockStylesheets = "";
 
     $hasNoSmoothScroll = true;
