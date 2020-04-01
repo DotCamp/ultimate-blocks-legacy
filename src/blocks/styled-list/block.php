@@ -70,9 +70,9 @@ function ub_render_styled_list_block($attributes){
         }
     }
 
-    return '<div class="ub_styled_list '.(isset($className) ? ' ' . esc_attr($className): '') .'" '
+    return '<div class="ub_styled_list '.(isset($className) ? ' ' . esc_attr($className): '') .'"'
             .($blockID == '' ? '' : ' id="ub_styled_list-'.$blockID.'"').
-            '"><ul class="fa-ul">'.$listItems.'</ul></div>';
+            '><ul class="fa-ul">'.$listItems.'</ul></div>';
 }
 
 function ub_register_styled_list_block() {
