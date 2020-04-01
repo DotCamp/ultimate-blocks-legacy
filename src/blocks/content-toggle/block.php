@@ -86,6 +86,25 @@ add_action( 'wp_enqueue_scripts', 'ub_content_toggle_add_frontend_assets' );
 
 add_filter( 'render_block', 'ub_content_toggle_filter', 10, 3);
 
+function ub_faq_questions($qna = ''){
+    static $parsed_qna;
+
+    if(!isset($qna)){
+        $parsed_qna = '';
+    }
+
+    if(empty($qna)){
+        return $parsed_qna;
+    }
+    else{
+        if($parsed_qna != ''){
+            $parsed_qna .= ',' . PHP_EOL;
+        }
+        $parsed_qna .= $qna;
+        return true;
+    }
+}
+
 function ub_content_toggle_filter( $block_content, $block ) {
      
     if( "ub/content-toggle-block" != $block['blockName'] ) {
@@ -187,11 +206,18 @@ function ub_content_toggle_filter( $block_content, $block ) {
             }
 
         }
-        $output .= '<script type="application/ld+json">{
-            "@context":"http://schema.org/",
-            "@type":"FAQPage",
-            "mainEntity": [' .  $questions . ']}</script>';
+        ub_faq_questions($questions);
     }
 
   return $output;
 }
+
+function ub_merge_faqpages(){
+    ?><?php echo '<script type="application/ld+json">{
+            "@context":"http://schema.org/",
+            "@type":"FAQPage",
+            "mainEntity": [' . ub_faq_questions() . ']}</script>';  ?>
+<?php
+}
+
+add_action('wp_footer', 'ub_merge_faqpages', 20);
