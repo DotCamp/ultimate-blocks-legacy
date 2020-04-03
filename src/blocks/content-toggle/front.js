@@ -98,6 +98,13 @@ Array.prototype.slice
 							);
 							slider.resize();
 						});
+
+						Array.prototype.slice
+							.call(instance.querySelectorAll(".wp-block-embed iframe"))
+							.forEach(embeddedContent => {
+								embeddedContent.style.removeProperty("width");
+								embeddedContent.style.removeProperty("height");
+							});
 					});
 
 					panelContent.addEventListener("transitionend", function() {
