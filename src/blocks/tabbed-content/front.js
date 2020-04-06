@@ -172,5 +172,30 @@ Array.prototype.slice
 		});
 		rightScroll.addEventListener("mouseup", resetTimers);
 
+		let tabBarIsBeingDragged = false;
+		let oldScrollPosition = -1;
+		let oldMousePosition = -1;
+
+		tabBar.addEventListener("mousedown", function (e) {
+			tabBarIsBeingDragged = true;
+			oldScrollPosition = tabBar.scrollLeft;
+			oldMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+		});
+		document.addEventListener("mouseup", function () {
+			if (tabBarIsBeingDragged) {
+				tabBarIsBeingDragged = false;
+				oldScrollPosition = -1;
+				oldMousePosition = -1;
+			}
+		});
+		document.addEventListener("mousemove", function (e) {
+			if (tabBarIsBeingDragged) {
+				e.preventDefault();
+				let newMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+				tabBar.scrollLeft =
+					oldScrollPosition - newMousePosition + oldMousePosition;
+			}
+		});
+
 		checkWidth();
 	});

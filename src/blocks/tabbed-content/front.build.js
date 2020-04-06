@@ -121,5 +121,27 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
     }, 500);
   });
   rightScroll.addEventListener("mouseup", resetTimers);
+  var tabBarIsBeingDragged = false;
+  var oldScrollPosition = -1;
+  var oldMousePosition = -1;
+  tabBar.addEventListener("mousedown", function (e) {
+    tabBarIsBeingDragged = true;
+    oldScrollPosition = tabBar.scrollLeft;
+    oldMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+  });
+  document.addEventListener("mouseup", function () {
+    if (tabBarIsBeingDragged) {
+      tabBarIsBeingDragged = false;
+      oldScrollPosition = -1;
+      oldMousePosition = -1;
+    }
+  });
+  document.addEventListener("mousemove", function (e) {
+    if (tabBarIsBeingDragged) {
+      e.preventDefault();
+      var newMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+      tabBar.scrollLeft = oldScrollPosition - newMousePosition + oldMousePosition;
+    }
+  });
   checkWidth();
 });
