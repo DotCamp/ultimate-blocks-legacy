@@ -189,7 +189,11 @@ export class PanelContent extends Component {
 				blockID,
 				hasFAQSchema,
 				titleTag,
-				preventCollapse
+				preventCollapse,
+				toggleLocation,
+				toggleColor,
+				toggleIcon,
+				border
 			},
 			setAttributes,
 			className,
@@ -265,7 +269,12 @@ export class PanelContent extends Component {
 					collapsed,
 					titleColor,
 					titleTag,
-					preventCollapse
+					preventCollapse,
+					toggleLocation,
+					toggleColor,
+					toggleIcon,
+					border
+
 				}),
 				newBlockPosition === "below" ? index + 1 : index,
 				block.clientId
@@ -285,7 +294,11 @@ export class PanelContent extends Component {
 						theme,
 						collapsed,
 						titleColor,
-						hasFAQSchema
+						hasFAQSchema,
+						toggleLocation,
+						toggleColor,
+						toggleIcon,
+						border
 					}),
 					0,
 					block.clientId
@@ -336,7 +349,11 @@ export class PanelContent extends Component {
 					titleColor,
 					collapsed,
 					titleTag,
-					preventCollapse
+					preventCollapse,
+					toggleLocation,
+					toggleColor,
+					toggleIcon,
+					border
 				})
 			);
 			setState({
@@ -346,7 +363,11 @@ export class PanelContent extends Component {
 					hasFAQSchema,
 					titleColor,
 					titleTag,
-					preventCollapse
+					preventCollapse,
+					toggleLocation,
+					toggleColor,
+					toggleIcon,
+					border
 				})
 			});
 		} else {

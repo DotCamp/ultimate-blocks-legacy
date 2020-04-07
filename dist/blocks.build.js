@@ -30853,7 +30853,7 @@ var attributes = {
   },
   theme: {
     type: "string",
-    "default": "#f63d3d"
+    "default": "#f1f1f1"
   },
   collapsed: {
     type: "boolean",
@@ -30861,7 +30861,7 @@ var attributes = {
   },
   titleColor: {
     type: "string",
-    "default": "#ffffff"
+    "default": "#000000"
   },
   hasFAQSchema: {
     type: "boolean",
@@ -30874,6 +30874,22 @@ var attributes = {
   preventCollapse: {
     type: "boolean",
     "default": false
+  },
+  toggleLocation: {
+    type: "string",
+    "default": "right"
+  },
+  toggleColor: {
+    type: "string",
+    "default": "#000000"
+  },
+  toggleIcon: {
+    type: "string",
+    "default": "chevron"
+  },
+  border: {
+    type: "boolean",
+    "default": true
   }
 };
 var oldAttributes = Object.assign(Object.assign({}, attributes), {
@@ -31276,6 +31292,10 @@ function (_Component2) {
           hasFAQSchema = _this$props2$attribut.hasFAQSchema,
           titleTag = _this$props2$attribut.titleTag,
           preventCollapse = _this$props2$attribut.preventCollapse,
+          toggleLocation = _this$props2$attribut.toggleLocation,
+          toggleColor = _this$props2$attribut.toggleColor,
+          toggleIcon = _this$props2$attribut.toggleIcon,
+          border = _this$props2$attribut.border,
           setAttributes = _this$props2.setAttributes,
           className = _this$props2.className,
           isSelected = _this$props2.isSelected,
@@ -31362,7 +31382,11 @@ function (_Component2) {
           collapsed: collapsed,
           titleColor: titleColor,
           titleTag: titleTag,
-          preventCollapse: preventCollapse
+          preventCollapse: preventCollapse,
+          toggleLocation: toggleLocation,
+          toggleColor: toggleColor,
+          toggleIcon: toggleIcon,
+          border: border
         }), newBlockPosition === "below" ? index + 1 : index, block.clientId);
         updateBlockAttributes(newBlockTarget[0].clientId, {
           newBlockPosition: "none"
@@ -31378,7 +31402,11 @@ function (_Component2) {
             theme: theme,
             collapsed: collapsed,
             titleColor: titleColor,
-            hasFAQSchema: hasFAQSchema
+            hasFAQSchema: hasFAQSchema,
+            toggleLocation: toggleLocation,
+            toggleColor: toggleColor,
+            toggleIcon: toggleIcon,
+            border: border
           }), 0, block.clientId);
           setState({
             oldArrangement: Array.from(Array(panels.length).keys())
@@ -31437,7 +31465,11 @@ function (_Component2) {
             titleColor: titleColor,
             collapsed: collapsed,
             titleTag: titleTag,
-            preventCollapse: preventCollapse
+            preventCollapse: preventCollapse,
+            toggleLocation: toggleLocation,
+            toggleColor: toggleColor,
+            toggleIcon: toggleIcon,
+            border: border
           });
         });
         setState({
@@ -31447,7 +31479,11 @@ function (_Component2) {
             hasFAQSchema: hasFAQSchema,
             titleColor: titleColor,
             titleTag: titleTag,
-            preventCollapse: preventCollapse
+            preventCollapse: preventCollapse,
+            toggleLocation: toggleLocation,
+            toggleColor: toggleColor,
+            toggleIcon: toggleIcon,
+            border: border
           })
         });
       } else {
@@ -31753,7 +31789,7 @@ var attributes = {
   },
   theme: {
     type: "text",
-    "default": "#f63d3d"
+    "default": "#000000"
   },
   collapsed: {
     type: "boolean",
@@ -31790,7 +31826,7 @@ var attributes = {
   },
   toggleColor: {
     type: "string",
-    "default": "#f2f2f2"
+    "default": "#000000"
   },
   toggleIcon: {
     type: "string",

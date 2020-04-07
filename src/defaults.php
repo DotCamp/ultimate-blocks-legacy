@@ -241,7 +241,7 @@ $defaultValues = array(
             ),
             'theme' => array(
                 'type' => 'string',
-                'default' => '#f63d3d'
+                'default' => '#f1f1f1'
             ),
             'collapsed' => array(
                 'type' => 'boolean',
@@ -249,7 +249,7 @@ $defaultValues = array(
             ),
             'titleColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff'
+                'default' => '#000000'
             ),
             'panelTitle' => array(
                 'type' => 'string',
@@ -269,7 +269,7 @@ $defaultValues = array(
             ),
             'toggleColor' => array(
 	            'type' => 'string',
-	            'default' => '#f2f2f2'
+	            'default' => '#000000'
             ),
             'toggleIcon' => array(
 	            'type' => 'string',

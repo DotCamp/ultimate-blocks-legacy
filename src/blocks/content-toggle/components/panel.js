@@ -27,7 +27,7 @@ const attributes = {
 	},
 	theme: {
 		type: "text",
-		default: "#f63d3d"
+		default: "#000000"
 	},
 	collapsed: {
 		type: "boolean",
@@ -63,7 +63,7 @@ const attributes = {
 	},
 	toggleColor:{
 		type: "string",
-		default: "#f2f2f2",
+		default: "#000000",
 	},
 	toggleIcon:{
 		type: "string",

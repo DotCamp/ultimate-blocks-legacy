@@ -26,7 +26,7 @@ const attributes = {
 	},
 	theme: {
 		type: "string",
-		default: "#f63d3d"
+		default: "#f1f1f1"
 	},
 	collapsed: {
 		type: "boolean",
@@ -34,7 +34,7 @@ const attributes = {
 	},
 	titleColor: {
 		type: "string",
-		default: "#ffffff"
+		default: "#000000"
 	},
 	hasFAQSchema: {
 		type: "boolean",
@@ -47,6 +47,22 @@ const attributes = {
 	preventCollapse: {
 		type: "boolean",
 		default: false
+	},
+	toggleLocation:{
+		type: "string",
+		default: "right",
+	},
+	toggleColor:{
+		type: "string",
+		default: "#000000",
+	},
+	toggleIcon:{
+		type: "string",
+		default: "chevron"
+	},
+	border: {
+		type: "boolean",
+		default: true
 	}
 };
 
