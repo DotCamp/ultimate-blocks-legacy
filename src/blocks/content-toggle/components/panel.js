@@ -1,20 +1,20 @@
 import icon from "../icons/icon";
 import icons from "../icons/icons";
 
-import { panel_version_1_1_9 } from "../oldVersions";
-import { Component } from "react";
+import {panel_version_1_1_9} from "../oldVersions";
+import {Component} from "react";
 
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
+const {__} = wp.i18n;
+const {registerBlockType} = wp.blocks;
 
-const { RichText, InnerBlocks, InspectorControls, PanelColorSettings } =
-	wp.blockEditor || wp.editor;
+const {RichText, InnerBlocks, InspectorControls, PanelColorSettings} =
+wp.blockEditor || wp.editor;
 
-const { withState, compose } = wp.compose;
+const {withState, compose} = wp.compose;
 
-const { withDispatch, withSelect } = wp.data;
+const {withDispatch, withSelect} = wp.data;
 
-const { FormToggle, PanelBody, PanelRow, SelectControl, ColorPicker} = wp.components;
+const {FormToggle, PanelBody, PanelRow, SelectControl, ButtonGroup, Button, Dropdown} = wp.components;
 
 const attributes = {
 	index: {
@@ -57,15 +57,15 @@ const attributes = {
 		type: "boolean",
 		default: false
 	},
-	toggleLocation:{
+	toggleLocation: {
 		type: "string",
 		default: "right",
 	},
-	toggleColor:{
+	toggleColor: {
 		type: "string",
 		default: "#000000",
 	},
-	toggleIcon:{
+	toggleIcon: {
 		type: "string",
 		default: "chevron"
 	},
@@ -79,6 +79,7 @@ class ContentTogglePanel extends Component {
 	constructor(props) {
 		super(props);
 	}
+
 	render() {
 		const {
 			attributes: {
@@ -104,8 +105,13 @@ class ContentTogglePanel extends Component {
 			selectBlock
 		} = this.props;
 
+		const toggleIconPositions = {
+			left: __("Left", "ultimate-blocks"),
+			right: __("Right", "ultimate-blocks"),
+		};
+
 		if (parentID !== blockParentId) {
-			setAttributes({ parentID: blockParentId });
+			setAttributes({parentID: blockParentId});
 		}
 
 		return [
@@ -116,17 +122,17 @@ class ContentTogglePanel extends Component {
 					colorSettings={[
 						{
 							value: theme,
-							onChange: value => setAttributes({ theme: value }),
+							onChange: value => setAttributes({theme: value}),
 							label: __("Container Color")
 						},
 						{
 							value: titleColor,
-							onChange: value => setAttributes({ titleColor: value }),
+							onChange: value => setAttributes({titleColor: value}),
 							label: __("Title Color")
 						},
 						{
 							value: toggleColor,
-							onChange: value => setAttributes({ toggleColor: value }),
+							onChange: value => setAttributes({toggleColor: value}),
 							label: __("Toggle Icon Color")
 						}
 					]}
@@ -139,9 +145,9 @@ class ContentTogglePanel extends Component {
 							label={__("Collapsed")}
 							checked={collapsed}
 							onChange={_ => {
-								setAttributes({ collapsed: !collapsed });
+								setAttributes({collapsed: !collapsed});
 								if (!collapsed) {
-									setAttributes({ preventCollapse: false });
+									setAttributes({preventCollapse: false});
 								}
 							}}
 						/>
@@ -156,7 +162,7 @@ class ContentTogglePanel extends Component {
 								label={__("Prevent collapse")}
 								checked={preventCollapse}
 								onChange={_ =>
-									setAttributes({ preventCollapse: !preventCollapse })
+									setAttributes({preventCollapse: !preventCollapse})
 								}
 							/>
 						</PanelRow>
@@ -170,7 +176,7 @@ class ContentTogglePanel extends Component {
 							label={__("Enable border")}
 							checked={border}
 							onChange={_ =>
-								setAttributes({ border: !border })
+								setAttributes({border: !border})
 							}
 						/>
 					</PanelRow>
@@ -202,87 +208,113 @@ class ContentTogglePanel extends Component {
 					<p>{__("Select Heading Tag", "ultimate-blocks")}</p>
 					<SelectControl
 						options={[
-							{ value: "h1", label: __("H1", "ultimate-blocks") },
-							{ value: "h2", label: __("H2", "ultimate-blocks") },
-							{ value: "h3", label: __("H3", "ultimate-blocks") },
-							{ value: "h4", label: __("H4", "ultimate-blocks") },
-							{ value: "h5", label: __("H5", "ultimate-blocks") },
-							{ value: "h6", label: __("H6", "ultimate-blocks") },
-							{ value: "p", label: __("P", "ultimate-blocks") }
+							{value: "h1", label: __("H1", "ultimate-blocks")},
+							{value: "h2", label: __("H2", "ultimate-blocks")},
+							{value: "h3", label: __("H3", "ultimate-blocks")},
+							{value: "h4", label: __("H4", "ultimate-blocks")},
+							{value: "h5", label: __("H5", "ultimate-blocks")},
+							{value: "h6", label: __("H6", "ultimate-blocks")},
+							{value: "p", label: __("P", "ultimate-blocks")}
 						]}
 						value={titleTag}
-						onChange={titleTag => setAttributes({ titleTag })}
+						onChange={titleTag => setAttributes({titleTag})}
 					/>
 				</div>
 				<PanelBody title={__("Toggle status icon", "ultimate-blocks")}>
 					<PanelRow>
 						<label htmlFor="ub-content-toggle-status-location">
-							{__("Location" , "ultimate-blocks")}
+							{__("Location", "ultimate-blocks")}
 						</label>
-						<SelectControl
-							id="ub-content-toggle-status-location"
-							options={[
-								{value: 'left', label: __("left", "ultimate-blocks")},
-								{value: 'right', label: __("right", "ultimate-blocks")},
-							]}
-							value={toggleLocation}
-							onChange={location=>{
-								setAttributes({
-									toggleLocation: location
-								})
-							}}
-						/>
+						<ButtonGroup id="ub-content-toggle-status-location"
+									 aria-label={__("toggle icon position", "ultimate-blocks")}>
+							{Object.keys(toggleIconPositions).map(p => {
+								if (Object.prototype.hasOwnProperty.call(toggleIconPositions, p)) {
+									return (
+										<Button isLarge aria-pressed={toggleLocation === p}
+												isPrimary={toggleLocation === p} onClick={_ => {
+											setAttributes({toggleLocation: p})
+										}
+										}>
+											{toggleIconPositions[p]}
+										</Button>)
+								}
+							})}
+						</ButtonGroup>
 					</PanelRow>
 					<PanelRow>
 						<label htmlFor="ub-content-toggle-status-icon">
 							{__("Icon", "ultimate-blocks")}
 						</label>
-						<SelectControl id="ub-content-toggle-status-icon"
-									   options={[
-										   {value: "chevron", label: __("chevron", "ultimate-blocks")},
-										   {value: "plus", label: __("plus", "ultimate-blocks")}
-									   ]}
-									   value={toggleIcon}
-									   onChange={icon => {
-									   	setAttributes({
-											toggleIcon: icon
-										})
-									   }}
-						/>
+						{/*<SelectControl id="ub-content-toggle-status-icon"*/}
+						{/*			   options={[*/}
+						{/*				   {value: "chevron", label: __("chevron", "ultimate-blocks")},*/}
+						{/*				   {value: "plus", label: __("plus", "ultimate-blocks")}*/}
+						{/*			   ]}*/}
+						{/*			   value={toggleIcon}*/}
+						{/*			   onChange={icon => {*/}
+						{/*				   setAttributes({*/}
+						{/*					   toggleIcon: icon*/}
+						{/*				   })*/}
+						{/*			   }}*/}
+						{/*/>*/}
+						<Dropdown position="bottom right"
+								  renderToggle={({onToggle, isOpen}) => {
+									  return (
+										  <Button isLarge onClick={onToggle} area-expanded={isOpen}>
+											  <span className={icons[toggleIcon]}/>
+										  </Button>
 
+									  )
+								  }}
+								  renderContent={_ => {
+									  return (
+										  <div className='wp-block-ub-content-toggle-customize-icons-wrap'>
+											  {Object.keys(icons).map(i => {
+												  if (Object.prototype.hasOwnProperty.call(icons, i)) {
+													  return (<Button isPrimary={toggleIcon === i} isLarge
+																	  onClick={_ => setAttributes({toggleIcon: i})}>
+														  <span className={icons[i]}/>
+													  </Button>)
+												  }
+											  })}
+										  </div>
+									  )
+								  }}
+						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>,
 			<div
-				className={`wp-block-ub-content-toggle-accordion ${border?"":"no-border"}`}
-				style={{ borderColor: theme }}
+				className={`wp-block-ub-content-toggle-accordion ${border ? "" : "no-border"}`}
+				style={{borderColor: theme}}
 			>
 				<div
 					className="wp-block-ub-content-toggle-accordion-title-wrap"
-					style={{ backgroundColor: theme }}
+					style={{backgroundColor: theme}}
 				>
 					<RichText
 						tagName={titleTag}
-						style={{ color: titleColor }}
+						style={{color: titleColor}}
 						className="wp-block-ub-content-toggle-accordion-title"
 						value={panelTitle}
 						formattingControls={["bold", "italic"]}
-						onChange={value => setAttributes({ panelTitle: value })}
+						onChange={value => setAttributes({panelTitle: value})}
 						placeholder={__("Panel Title")}
 						keepPlaceholderOnFocus={true}
 						unstableOnFocus={() => selectBlock(blockParentId)}
 					/>
-					<div className={"wp-block-ub-content-toggle-accordion-toggle-wrap " + toggleLocation } style={{color: toggleColor}}>
+					<div className={"wp-block-ub-content-toggle-accordion-toggle-wrap " + toggleLocation}
+						 style={{color: toggleColor}}>
 						<span
 							onClick={() => {
-								setState({ showPanel: !showPanel });
+								setState({showPanel: !showPanel});
 							}}
-							className={`wp-block-ub-content-toggle-accordion-state-indicator ${icons[toggleIcon]? icons[toggleIcon]:""} ${showPanel ? "open" : ""}`}
+							className={`wp-block-ub-content-toggle-accordion-state-indicator ${icons[toggleIcon] ? icons[toggleIcon] : ""} ${showPanel ? "open" : ""}`}
 						/>
 						<div className="wp-block-ub-content-toggle-accordion-toggle-location">
 							<span title={__("Switch toggle location", "ultimate-blocks")}
 								  onClick={_ => {
-								  	setAttributes({toggleLocation: toggleLocation === 'left' ? 'right' : 'left'});
+									  setAttributes({toggleLocation: toggleLocation === 'left' ? 'right' : 'left'});
 								  }}
 								  className="dashicons dashicons-leftright"/>
 						</div>
@@ -290,13 +322,13 @@ class ContentTogglePanel extends Component {
 				</div>
 				{showPanel && (
 					<div className="wp-block-ub-content-toggle-accordion-content-wrap">
-						<InnerBlocks templateLock={false} />
+						<InnerBlocks templateLock={false}/>
 					</div>
 				)}
 				<div className="wp-block-ub-content-toggle-accordion-controls-top">
 					<span
 						title={__("Insert New Toggle Above")}
-						onClick={() => setAttributes({ newBlockPosition: "above" })}
+						onClick={() => setAttributes({newBlockPosition: "above"})}
 						className="dashicons dashicons-plus-alt"
 					/>
 					<span
@@ -308,7 +340,7 @@ class ContentTogglePanel extends Component {
 				<div className="wp-block-ub-content-toggle-accordion-controls-bottom">
 					<span
 						title={__("Insert New Toggle Below")}
-						onClick={() => setAttributes({ newBlockPosition: "below" })}
+						onClick={() => setAttributes({newBlockPosition: "below"})}
 						className="dashicons dashicons-plus-alt"
 					/>
 				</div>
@@ -330,9 +362,9 @@ registerBlockType("ub/content-toggle-panel", {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId } =
-				select("core/block-editor") || select("core/editor");
-			const { clientId } = ownProps;
+			const {getBlock, getBlockRootClientId} =
+			select("core/block-editor") || select("core/editor");
+			const {clientId} = ownProps;
 
 			return {
 				block: getBlock(clientId),
@@ -340,29 +372,29 @@ registerBlockType("ub/content-toggle-panel", {
 			};
 		}),
 		withDispatch(dispatch => {
-			const { updateBlockAttributes, removeBlock, selectBlock } =
-				dispatch("core/block-editor") || dispatch("core/editor");
+			const {updateBlockAttributes, removeBlock, selectBlock} =
+			dispatch("core/block-editor") || dispatch("core/editor");
 
-			return { updateBlockAttributes, removeBlock, selectBlock };
+			return {updateBlockAttributes, removeBlock, selectBlock};
 		}),
-		withState({ showPanel: true })
+		withState({showPanel: true})
 	])(ContentTogglePanel),
 	save(props) {
-		const { theme, collapsed, titleColor, panelTitle } = props.attributes;
+		const {theme, collapsed, titleColor, panelTitle} = props.attributes;
 		const classNamePrefix = "wp-block-ub-content-toggle";
 		return (
 			<div
-				style={{ borderColor: theme }}
+				style={{borderColor: theme}}
 				className={`${classNamePrefix}-accordion`}
 			>
 				<div
 					className={`${classNamePrefix}-accordion-title-wrap`}
-					style={{ backgroundColor: theme }}
+					style={{backgroundColor: theme}}
 				>
 					<RichText.Content
 						tagName="span"
 						className={`${classNamePrefix}-accordion-title`}
-						style={{ color: titleColor }}
+						style={{color: titleColor}}
 						value={panelTitle}
 					/>
 					<span
@@ -380,7 +412,7 @@ registerBlockType("ub/content-toggle-panel", {
 					}}
 					className={`${classNamePrefix}-accordion-content-wrap`}
 				>
-					<InnerBlocks.Content />
+					<InnerBlocks.Content/>
 				</div>
 			</div>
 		);
@@ -407,9 +439,9 @@ registerBlockType("ub/content-toggle-panel-block", {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId } =
-				select("core/block-editor") || select("core/editor");
-			const { clientId } = ownProps;
+			const {getBlock, getBlockRootClientId} =
+			select("core/block-editor") || select("core/editor");
+			const {clientId} = ownProps;
 
 			return {
 				block: getBlock(clientId),
@@ -417,12 +449,12 @@ registerBlockType("ub/content-toggle-panel-block", {
 			};
 		}),
 		withDispatch(dispatch => {
-			const { updateBlockAttributes, removeBlock, selectBlock } =
-				dispatch("core/block-editor") || dispatch("core/editor");
+			const {updateBlockAttributes, removeBlock, selectBlock} =
+			dispatch("core/block-editor") || dispatch("core/editor");
 
-			return { updateBlockAttributes, removeBlock, selectBlock };
+			return {updateBlockAttributes, removeBlock, selectBlock};
 		}),
-		withState({ showPanel: true })
+		withState({showPanel: true})
 	])(ContentTogglePanel),
-	save: () => <InnerBlocks.Content />
+	save: () => <InnerBlocks.Content/>
 });

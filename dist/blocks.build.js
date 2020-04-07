@@ -31777,7 +31777,9 @@ var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     PanelRow = _wp$components.PanelRow,
     SelectControl = _wp$components.SelectControl,
-    ColorPicker = _wp$components.ColorPicker;
+    ButtonGroup = _wp$components.ButtonGroup,
+    Button = _wp$components.Button,
+    Dropdown = _wp$components.Dropdown;
 var attributes = {
   index: {
     type: "number",
@@ -31873,6 +31875,10 @@ function (_Component) {
           blockParentId = _this$props.blockParentId,
           parentID = _this$props.parentID,
           selectBlock = _this$props.selectBlock;
+      var toggleIconPositions = {
+        left: __("Left", "ultimate-blocks"),
+        right: __("Right", "ultimate-blocks")
+      };
 
       if (parentID !== blockParentId) {
         setAttributes({
@@ -32003,37 +32009,55 @@ function (_Component) {
         title: __("Toggle status icon", "ultimate-blocks")
       }, React.createElement(PanelRow, null, React.createElement("label", {
         htmlFor: "ub-content-toggle-status-location"
-      }, __("Location", "ultimate-blocks")), React.createElement(SelectControl, {
+      }, __("Location", "ultimate-blocks")), React.createElement(ButtonGroup, {
         id: "ub-content-toggle-status-location",
-        options: [{
-          value: 'left',
-          label: __("left", "ultimate-blocks")
-        }, {
-          value: 'right',
-          label: __("right", "ultimate-blocks")
-        }],
-        value: toggleLocation,
-        onChange: function onChange(location) {
-          setAttributes({
-            toggleLocation: location
-          });
+        "aria-label": __("toggle icon position", "ultimate-blocks")
+      }, Object.keys(toggleIconPositions).map(function (p) {
+        if (Object.prototype.hasOwnProperty.call(toggleIconPositions, p)) {
+          return React.createElement(Button, {
+            isLarge: true,
+            "aria-pressed": toggleLocation === p,
+            isPrimary: toggleLocation === p,
+            onClick: function onClick(_) {
+              setAttributes({
+                toggleLocation: p
+              });
+            }
+          }, toggleIconPositions[p]);
         }
-      })), React.createElement(PanelRow, null, React.createElement("label", {
+      }))), React.createElement(PanelRow, null, React.createElement("label", {
         htmlFor: "ub-content-toggle-status-icon"
-      }, __("Icon", "ultimate-blocks")), React.createElement(SelectControl, {
-        id: "ub-content-toggle-status-icon",
-        options: [{
-          value: "chevron",
-          label: __("chevron", "ultimate-blocks")
-        }, {
-          value: "plus",
-          label: __("plus", "ultimate-blocks")
-        }],
-        value: toggleIcon,
-        onChange: function onChange(icon) {
-          setAttributes({
-            toggleIcon: icon
-          });
+      }, __("Icon", "ultimate-blocks")), React.createElement(Dropdown, {
+        position: "bottom right",
+        renderToggle: function renderToggle(_ref2) {
+          var onToggle = _ref2.onToggle,
+              isOpen = _ref2.isOpen;
+          return React.createElement(Button, {
+            isLarge: true,
+            onClick: onToggle,
+            "area-expanded": isOpen
+          }, React.createElement("span", {
+            className: _icons_icons__WEBPACK_IMPORTED_MODULE_1__[toggleIcon]
+          }));
+        },
+        renderContent: function renderContent(_) {
+          return React.createElement("div", {
+            className: "wp-block-ub-content-toggle-customize-icons-wrap"
+          }, Object.keys(_icons_icons__WEBPACK_IMPORTED_MODULE_1__).map(function (i) {
+            if (Object.prototype.hasOwnProperty.call(_icons_icons__WEBPACK_IMPORTED_MODULE_1__, i)) {
+              return React.createElement(Button, {
+                isPrimary: toggleIcon === i,
+                isLarge: true,
+                onClick: function onClick(_) {
+                  return setAttributes({
+                    toggleIcon: i
+                  });
+                }
+              }, React.createElement("span", {
+                className: _icons_icons__WEBPACK_IMPORTED_MODULE_1__[i]
+              }));
+            }
+          }));
         }
       })))), React.createElement("div", {
         className: "wp-block-ub-content-toggle-accordion ".concat(border ? "" : "no-border"),
@@ -32133,9 +32157,9 @@ registerBlockType("ub/content-toggle-panel", {
     reusable: false
   },
   edit: compose([withSelect(function (select, ownProps) {
-    var _ref2 = select("core/block-editor") || select("core/editor"),
-        getBlock = _ref2.getBlock,
-        getBlockRootClientId = _ref2.getBlockRootClientId;
+    var _ref3 = select("core/block-editor") || select("core/editor"),
+        getBlock = _ref3.getBlock,
+        getBlockRootClientId = _ref3.getBlockRootClientId;
 
     var clientId = ownProps.clientId;
     return {
@@ -32143,10 +32167,10 @@ registerBlockType("ub/content-toggle-panel", {
       blockParentId: getBlockRootClientId(clientId)
     };
   }), withDispatch(function (dispatch) {
-    var _ref3 = dispatch("core/block-editor") || dispatch("core/editor"),
-        updateBlockAttributes = _ref3.updateBlockAttributes,
-        removeBlock = _ref3.removeBlock,
-        selectBlock = _ref3.selectBlock;
+    var _ref4 = dispatch("core/block-editor") || dispatch("core/editor"),
+        updateBlockAttributes = _ref4.updateBlockAttributes,
+        removeBlock = _ref4.removeBlock,
+        selectBlock = _ref4.selectBlock;
 
     return {
       updateBlockAttributes: updateBlockAttributes,
@@ -32207,9 +32231,9 @@ registerBlockType("ub/content-toggle-panel-block", {
     reusable: false
   },
   edit: compose([withSelect(function (select, ownProps) {
-    var _ref4 = select("core/block-editor") || select("core/editor"),
-        getBlock = _ref4.getBlock,
-        getBlockRootClientId = _ref4.getBlockRootClientId;
+    var _ref5 = select("core/block-editor") || select("core/editor"),
+        getBlock = _ref5.getBlock,
+        getBlockRootClientId = _ref5.getBlockRootClientId;
 
     var clientId = ownProps.clientId;
     return {
@@ -32217,10 +32241,10 @@ registerBlockType("ub/content-toggle-panel-block", {
       blockParentId: getBlockRootClientId(clientId)
     };
   }), withDispatch(function (dispatch) {
-    var _ref5 = dispatch("core/block-editor") || dispatch("core/editor"),
-        updateBlockAttributes = _ref5.updateBlockAttributes,
-        removeBlock = _ref5.removeBlock,
-        selectBlock = _ref5.selectBlock;
+    var _ref6 = dispatch("core/block-editor") || dispatch("core/editor"),
+        updateBlockAttributes = _ref6.updateBlockAttributes,
+        removeBlock = _ref6.removeBlock,
+        selectBlock = _ref6.selectBlock;
 
     return {
       updateBlockAttributes: updateBlockAttributes,
