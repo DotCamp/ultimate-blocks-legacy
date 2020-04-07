@@ -45,16 +45,21 @@ function ub_render_content_toggle_block($attributes, $content){
 function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
+    $border_class = $border ? " ":"no-border ";
+    $icons= json_decode(file_get_contents(__DIR__ . '/icons/icons.json'));
+    $icon_class = $icons->$toggleIcon;
 
-    return '<div class="'.$classNamePrefix.'-accordion'.(isset($className) ? ' ' . esc_attr($className) : '').'"'
+    return '<div class="' . $border_class . $classNamePrefix.'-accordion'.(isset($className) ? ' ' . esc_attr($className) : '').'"'
                 .($parentID == '' ? ' style="border-color: '.$theme.';"' : '').'>
                 <div class="'.$classNamePrefix.'-accordion-title-wrap"'
                     .($parentID == '' ? ' style="background-color: '.$theme.';"' : '').'>
                     <'.$titleTag.' class="'.$classNamePrefix.'-accordion-title"'
                     .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</'.$titleTag.'>
-                    <span class="'.$classNamePrefix.
-                        '-accordion-state-indicator dashicons dashicons-arrow-right-alt2 '.
-                        ($collapsed ? '' : 'open').'"></span>
+                    <div class="' . $classNamePrefix. '-accordion-toggle-wrap ' . esc_attr($toggleLocation) . '" style="color:'. esc_attr($toggleColor) .'">
+                    <span class="' . $classNamePrefix .
+           '-accordion-state-indicator '. $icon_class  .
+           ( $collapsed ? '' : ' open' ) . '"></span>
+                    </div>
                 </div><div class="'.$classNamePrefix.'-accordion-content-wrap'.
                         ($collapsed?' ub-hide':'').'">'. $content
                 .'</div></div>' ;
@@ -106,16 +111,16 @@ function ub_faq_questions($qna = ''){
 }
 
 function ub_content_toggle_filter( $block_content, $block ) {
-     
+
     if( "ub/content-toggle-block" != $block['blockName'] ) {
         return $block_content;
     }
-    
+
     $output = $block_content;
 
     if(isset($block['attrs']['hasFAQSchema'])){
         $parsedBlockContent = str_get_html(preg_replace('/^<div class="wp-block-ub-content-toggle(?: [^>]*)?" id="ub-content-toggle-.*?">/',
-        '<div class="toggleroot">', $block_content));    
+        '<div class="toggleroot">', $block_content));
 
         $panel = $parsedBlockContent->find('.toggleroot>.wp-block-ub-content-toggle-accordion>.wp-block-ub-content-toggle-accordion-content-wrap');
 
@@ -169,17 +174,17 @@ function ub_content_toggle_filter( $block_content, $block ) {
                                                 'figcaption', 'footer', 'header', 'nav', 'pre', 'section', 'textarea'])){
                             $replacement = 'div';
                         }
-    
+
                         return ($replacement == '' ? '' : str_replace($matches[1], $replacement, $matches[0]));
                     }
                 }, $answer);
-    
+
                 while(preg_match_all('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', $answer) > 0){ //remove empty tags and tags that only contain empty tags
                     $answer = preg_replace('/<([a-z1-6]+)[^>]*?><\/(\1)>/i', '', $answer);
                 }
-    
+
                 //check all attributes
-    
+
                 $answer = preg_replace_callback('/<[a-z1-6]+( (?:(?:aria|data)-[^\t\n\f \/>"\'=]+|[a-z]+)=[\'"][\s\S]+?[\'"])>/i',
                     function($matches){
                         $attributeList = preg_replace_callback('/ ([\S]+)=([\'"])([\s\S]*?)(\2)/', function($matches){
@@ -187,7 +192,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
                         }, $matches[1]);
                         return str_replace($matches[1], $attributeList, $matches[0]);
                 }, $answer);
-    
+
                 if($answer != "" && $togglePanel['attrs']['panelTitle'] != ''){ //blank answers and questions are invalid
                     if($questions != ""){
                         $questions .= ',' . PHP_EOL;

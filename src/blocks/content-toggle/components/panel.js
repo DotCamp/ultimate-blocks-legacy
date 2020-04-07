@@ -1,4 +1,5 @@
 import icon from "../icons/icon";
+import icons from "../icons/icons";
 
 import { panel_version_1_1_9 } from "../oldVersions";
 import { Component } from "react";
@@ -13,7 +14,7 @@ const { withState, compose } = wp.compose;
 
 const { withDispatch, withSelect } = wp.data;
 
-const { FormToggle, PanelBody, PanelRow, SelectControl } = wp.components;
+const { FormToggle, PanelBody, PanelRow, SelectControl, ColorPicker} = wp.components;
 
 const attributes = {
 	index: {
@@ -55,6 +56,22 @@ const attributes = {
 	preventCollapse: {
 		type: "boolean",
 		default: false
+	},
+	toggleLocation:{
+		type: "string",
+		default: "right",
+	},
+	toggleColor:{
+		type: "string",
+		default: "#f2f2f2",
+	},
+	toggleIcon:{
+		type: "string",
+		default: "chevron"
+	},
+	border: {
+		type: "boolean",
+		default: true
 	}
 };
 
@@ -71,7 +88,11 @@ class ContentTogglePanel extends Component {
 				collapsed,
 				hasFAQSchema,
 				titleTag,
-				preventCollapse
+				preventCollapse,
+				toggleLocation,
+				toggleColor,
+				toggleIcon,
+				border
 			},
 			setState,
 			setAttributes,
@@ -102,6 +123,11 @@ class ContentTogglePanel extends Component {
 							value: titleColor,
 							onChange: value => setAttributes({ titleColor: value }),
 							label: __("Title Color")
+						},
+						{
+							value: toggleColor,
+							onChange: value => setAttributes({ toggleColor: value }),
+							label: __("Toggle Icon Color")
 						}
 					]}
 				/>
@@ -135,6 +161,19 @@ class ContentTogglePanel extends Component {
 							/>
 						</PanelRow>
 					)}
+					<PanelRow>
+						<label htmlFor="ub-content-toggle-border">
+							{__("Border")}
+						</label>
+						<FormToggle
+							id="ub-content-toggle-border"
+							label={__("Enable border")}
+							checked={border}
+							onChange={_ =>
+								setAttributes({ border: !border })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__("FAQ Schema")} initialOpen={true}>
 					<PanelRow>
@@ -175,9 +214,47 @@ class ContentTogglePanel extends Component {
 						onChange={titleTag => setAttributes({ titleTag })}
 					/>
 				</div>
+				<PanelBody title={__("Toggle status icon", "ultimate-blocks")}>
+					<PanelRow>
+						<label htmlFor="ub-content-toggle-status-location">
+							{__("Location" , "ultimate-blocks")}
+						</label>
+						<SelectControl
+							id="ub-content-toggle-status-location"
+							options={[
+								{value: 'left', label: __("left", "ultimate-blocks")},
+								{value: 'right', label: __("right", "ultimate-blocks")},
+							]}
+							value={toggleLocation}
+							onChange={location=>{
+								setAttributes({
+									toggleLocation: location
+								})
+							}}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<label htmlFor="ub-content-toggle-status-icon">
+							{__("Icon", "ultimate-blocks")}
+						</label>
+						<SelectControl id="ub-content-toggle-status-icon"
+									   options={[
+										   {value: "chevron", label: __("chevron", "ultimate-blocks")},
+										   {value: "plus", label: __("plus", "ultimate-blocks")}
+									   ]}
+									   value={toggleIcon}
+									   onChange={icon => {
+									   	setAttributes({
+											toggleIcon: icon
+										})
+									   }}
+						/>
+
+					</PanelRow>
+				</PanelBody>
 			</InspectorControls>,
 			<div
-				className="wp-block-ub-content-toggle-accordion"
+				className={`wp-block-ub-content-toggle-accordion ${border?"":"no-border"}`}
 				style={{ borderColor: theme }}
 			>
 				<div
@@ -195,15 +272,21 @@ class ContentTogglePanel extends Component {
 						keepPlaceholderOnFocus={true}
 						unstableOnFocus={() => selectBlock(blockParentId)}
 					/>
-					<span
-						onClick={() => {
-							setState({ showPanel: !showPanel });
-						}}
-						className={
-							"wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 " +
-							(showPanel ? "open" : "")
-						}
-					/>
+					<div className={"wp-block-ub-content-toggle-accordion-toggle-wrap " + toggleLocation } style={{color: toggleColor}}>
+						<span
+							onClick={() => {
+								setState({ showPanel: !showPanel });
+							}}
+							className={`wp-block-ub-content-toggle-accordion-state-indicator ${icons[toggleIcon]? icons[toggleIcon]:""} ${showPanel ? "open" : ""}`}
+						/>
+						<div className="wp-block-ub-content-toggle-accordion-toggle-location">
+							<span title={__("Switch toggle location", "ultimate-blocks")}
+								  onClick={_ => {
+								  	setAttributes({toggleLocation: toggleLocation === 'left' ? 'right' : 'left'});
+								  }}
+								  className="dashicons dashicons-leftright"/>
+						</div>
+					</div>
 				</div>
 				{showPanel && (
 					<div className="wp-block-ub-content-toggle-accordion-content-wrap">

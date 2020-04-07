@@ -262,7 +262,23 @@ $defaultValues = array(
             'preventCollapse' => array(
                 'type' => 'boolean',
                 'default' => false
-            )
+            ),
+            'toggleLocation' => array(
+	            'type' => 'string',
+	            'default' => 'right'
+            ),
+            'toggleColor' => array(
+	            'type' => 'string',
+	            'default' => '#f2f2f2'
+            ),
+            'toggleIcon' => array(
+	            'type' => 'string',
+	            'default' => 'chevron'
+            ),
+            'border' => array(
+	            'type' => 'boolean',
+	            'default' => true
+            ),
         )
     ),
     'ub/countdown' => array(
@@ -767,7 +783,7 @@ $defaultValues = array(
             'detail' => array(
                 'type' => 'string',
                 'default' => ''
-            ),             
+            ),
             'detailAlign' => array(
                 'type' => 'string',
                 'default' => 'left'
@@ -854,7 +870,7 @@ $defaultValues = array(
             ),
             'callToActionForeColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff'                    
+                'default' => '#ffffff'
             ),
             'inactiveStarColor' => array(
                 'type' => 'string',
@@ -1203,7 +1219,7 @@ $defaultValues = array(
             ),
             'allowedHeaders' => array(
                 'type' => 'array',
-                'default' => array_fill(0, 6, true), 
+                'default' => array_fill(0, 6, true),
                 'items' => array(
                     'type' => 'boolean'
                 )
