@@ -44,6 +44,27 @@ function ub_handleTabEvent(tab) {
     }
   });
   tab.classList.add("active");
+
+  var _tab$parentElement$ge = tab.parentElement.getBoundingClientRect(),
+      tabContainerLocation = _tab$parentElement$ge.x,
+      tabContainerWidth = _tab$parentElement$ge.width;
+
+  var _tab$getBoundingClien = tab.getBoundingClientRect(),
+      tabLocation = _tab$getBoundingClien.x,
+      tabWidth = _tab$getBoundingClien.width;
+
+  if (tabContainerLocation > tabLocation) {
+    tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
+  }
+
+  if (tabLocation + tabWidth > tabContainerLocation + tabContainerWidth) {
+    tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
+
+    if (tabWidth <= tabContainerWidth) {
+      tab.parentElement.scrollLeft -= tabContainerWidth - tabWidth;
+    }
+  }
+
   if (activeStyle) tab.setAttribute("style", activeStyle);
   var tabContentContainer = Array.prototype.slice.call(parent.children).filter(function (elem) {
     return elem.classList.contains("wp-block-ub-tabbed-content-tabs-content");
@@ -82,16 +103,6 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
   var tabBar = scrollButtonContainer.previousElementSibling;
   var leftScroll = scrollButtonContainer.querySelector(".wp-block-ub-tabbed-content-scroll-button-left");
   var rightScroll = scrollButtonContainer.querySelector(".wp-block-ub-tabbed-content-scroll-button-right");
-  var scrollInterval;
-  var scrollCountdown;
-
-  var moveLeft = function moveLeft(_) {
-    return tabBar.scrollLeft -= 10;
-  };
-
-  var moveRight = function moveRight(_) {
-    return tabBar.scrollLeft += 10;
-  };
 
   var checkWidth = function checkWidth(_) {
     if (tabBar.scrollWidth > tabBar.clientWidth) {
@@ -101,26 +112,13 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
     }
   };
 
-  var resetTimers = function resetTimers(_) {
-    clearTimeout(scrollCountdown);
-    clearTimeout(scrollInterval);
-  };
-
   window.addEventListener("resize", checkWidth);
-  leftScroll.addEventListener("mousedown", function (_) {
-    moveLeft();
-    scrollCountdown = setTimeout(function (_) {
-      scrollInterval = setInterval(moveLeft, 50);
-    }, 500);
+  leftScroll.addEventListener("click", function () {
+    tabBar.scrollLeft -= tabBar.clientWidth;
   });
-  leftScroll.addEventListener("mouseup", resetTimers);
-  rightScroll.addEventListener("mousedown", function (_) {
-    moveRight();
-    scrollCountdown = setTimeout(function (_) {
-      scrollInterval = setInterval(moveRight, 50);
-    }, 500);
+  rightScroll.addEventListener("click", function () {
+    tabBar.scrollLeft += tabBar.clientWidth;
   });
-  rightScroll.addEventListener("mouseup", resetTimers);
   var tabBarIsBeingDragged = false;
   var oldScrollPosition = -1;
   var oldMousePosition = -1;

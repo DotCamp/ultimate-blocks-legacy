@@ -63,6 +63,23 @@ function ub_handleTabEvent(tab) {
 	});
 
 	tab.classList.add("active");
+
+	const {
+		x: tabContainerLocation,
+		width: tabContainerWidth,
+	} = tab.parentElement.getBoundingClientRect();
+	const { x: tabLocation, width: tabWidth } = tab.getBoundingClientRect();
+
+	if (tabContainerLocation > tabLocation) {
+		tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
+	}
+	if (tabLocation + tabWidth > tabContainerLocation + tabContainerWidth) {
+		tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
+		if (tabWidth <= tabContainerWidth) {
+			tab.parentElement.scrollLeft -= tabContainerWidth - tabWidth;
+		}
+	}
+
 	if (activeStyle) tab.setAttribute("style", activeStyle);
 
 	const tabContentContainer = Array.prototype.slice
@@ -135,11 +152,6 @@ Array.prototype.slice
 		const rightScroll = scrollButtonContainer.querySelector(
 			".wp-block-ub-tabbed-content-scroll-button-right"
 		);
-		let scrollInterval;
-		let scrollCountdown;
-
-		const moveLeft = (_) => (tabBar.scrollLeft -= 10);
-		const moveRight = (_) => (tabBar.scrollLeft += 10);
 
 		const checkWidth = (_) => {
 			if (tabBar.scrollWidth > tabBar.clientWidth) {
@@ -149,28 +161,15 @@ Array.prototype.slice
 			}
 		};
 
-		const resetTimers = (_) => {
-			clearTimeout(scrollCountdown);
-			clearTimeout(scrollInterval);
-		};
-
 		window.addEventListener("resize", checkWidth);
 
-		leftScroll.addEventListener("mousedown", (_) => {
-			moveLeft();
-			scrollCountdown = setTimeout((_) => {
-				scrollInterval = setInterval(moveLeft, 50);
-			}, 500);
+		leftScroll.addEventListener("click", () => {
+			tabBar.scrollLeft -= tabBar.clientWidth;
 		});
-		leftScroll.addEventListener("mouseup", resetTimers);
 
-		rightScroll.addEventListener("mousedown", (_) => {
-			moveRight();
-			scrollCountdown = setTimeout((_) => {
-				scrollInterval = setInterval(moveRight, 50);
-			}, 500);
+		rightScroll.addEventListener("click", () => {
+			tabBar.scrollLeft += tabBar.clientWidth;
 		});
-		rightScroll.addEventListener("mouseup", resetTimers);
 
 		let tabBarIsBeingDragged = false;
 		let oldScrollPosition = -1;
