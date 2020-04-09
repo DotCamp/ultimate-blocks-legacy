@@ -43,18 +43,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
     return '<div class="'.$blockName.' '.$blockName.'-holder '.($tabVertical ? 'vertical-holder' : '').(isset($className) ? ' ' . esc_attr($className) : '')
         .(isset($align) ? 'align'.$align : '').'"'.($blockID==''?'':' id="ub-tabbed-content-'.$blockID.'"').'><div class="'.$blockName.'-tab-holder '.($tabVertical ? 'vertical-tab-width' : '').'">
     <div class="'.$blockName.'-tabs-title'.($tabVertical ? '-vertical-tab' : '').'">'.
-    $tabs.'</div>
-    <div class="'.$blockName.'-scroll-button-container ub-hide">
-    <button class="'.$blockName.'-scroll-button-left">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20px" height="20px">
-        <path d="M14 5l-5 5 5 5-1 2-7-7 7-7z" fill="#ffffff"/>
-    </svg>
-    </button>
-    <button class="'.$blockName.'-scroll-button-right">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20px" height="20px">
-        <path d="M6 15l5-5-5-5 1-2 7 7-7 7z" fill="#ffffff"/>
-    </svg>
-    </button></div></div>
+    $tabs.'</div></div>
     <div class="'.$blockName.'-tabs-content '.($tabVertical ? 'vertical-content-width' : '').'">'.
     $contents.'</div>
 </div>';

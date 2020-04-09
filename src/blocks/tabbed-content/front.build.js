@@ -58,11 +58,13 @@ function ub_handleTabEvent(tab) {
   }
 
   if (tabLocation + tabWidth > tabContainerLocation + tabContainerWidth) {
-    tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
+    var scrollLeftChange = tabLocation - tabContainerLocation;
 
     if (tabWidth <= tabContainerWidth) {
-      tab.parentElement.scrollLeft -= tabContainerWidth - tabWidth;
+      scrollLeftChange += tabWidth - tabContainerWidth;
     }
+
+    tab.parentElement.scrollLeft += scrollLeftChange;
   }
 
   if (activeStyle) tab.setAttribute("style", activeStyle);
@@ -93,32 +95,7 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
   instance.addEventListener("click", function () {
     ub_handleTabEvent(instance);
   });
-});
-Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tab-title-vertical-wrap")).forEach(function (instance) {
-  instance.addEventListener("click", function () {
-    ub_handleTabEvent(instance);
-  });
-});
-Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-scroll-button-container")).forEach(function (scrollButtonContainer) {
-  var tabBar = scrollButtonContainer.previousElementSibling;
-  var leftScroll = scrollButtonContainer.querySelector(".wp-block-ub-tabbed-content-scroll-button-left");
-  var rightScroll = scrollButtonContainer.querySelector(".wp-block-ub-tabbed-content-scroll-button-right");
-
-  var checkWidth = function checkWidth(_) {
-    if (tabBar.scrollWidth > tabBar.clientWidth) {
-      scrollButtonContainer.classList.remove("ub-hide");
-    } else {
-      scrollButtonContainer.classList.add("ub-hide");
-    }
-  };
-
-  window.addEventListener("resize", checkWidth);
-  leftScroll.addEventListener("click", function () {
-    tabBar.scrollLeft -= tabBar.clientWidth;
-  });
-  rightScroll.addEventListener("click", function () {
-    tabBar.scrollLeft += tabBar.clientWidth;
-  });
+  var tabBar = instance.parentElement;
   var tabBarIsBeingDragged = false;
   var oldScrollPosition = -1;
   var oldMousePosition = -1;
@@ -141,5 +118,33 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
       tabBar.scrollLeft = oldScrollPosition - newMousePosition + oldMousePosition;
     }
   });
-  checkWidth();
+});
+Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tab-title-vertical-wrap")).forEach(function (instance) {
+  instance.addEventListener("click", function () {
+    ub_handleTabEvent(instance);
+  });
+});
+Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-holder")).forEach(function (tabBar) {
+  var tabBarIsBeingDragged = false;
+  var oldScrollPosition = -1;
+  var oldMousePosition = -1;
+  tabBar.addEventListener("mousedown", function (e) {
+    tabBarIsBeingDragged = true;
+    oldScrollPosition = tabBar.scrollLeft;
+    oldMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+  });
+  document.addEventListener("mouseup", function () {
+    if (tabBarIsBeingDragged) {
+      tabBarIsBeingDragged = false;
+      oldScrollPosition = -1;
+      oldMousePosition = -1;
+    }
+  });
+  document.addEventListener("mousemove", function (e) {
+    if (tabBarIsBeingDragged) {
+      e.preventDefault();
+      var newMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+      tabBar.scrollLeft = oldScrollPosition - newMousePosition + oldMousePosition;
+    }
+  });
 });

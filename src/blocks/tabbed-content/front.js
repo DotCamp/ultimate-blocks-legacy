@@ -74,10 +74,11 @@ function ub_handleTabEvent(tab) {
 		tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
 	}
 	if (tabLocation + tabWidth > tabContainerLocation + tabContainerWidth) {
-		tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
+		let scrollLeftChange = tabLocation - tabContainerLocation;
 		if (tabWidth <= tabContainerWidth) {
-			tab.parentElement.scrollLeft -= tabContainerWidth - tabWidth;
+			scrollLeftChange += tabWidth - tabContainerWidth;
 		}
+		tab.parentElement.scrollLeft += scrollLeftChange;
 	}
 
 	if (activeStyle) tab.setAttribute("style", activeStyle);
@@ -124,53 +125,8 @@ Array.prototype.slice
 		instance.addEventListener("click", function () {
 			ub_handleTabEvent(instance);
 		});
-	});
 
-Array.prototype.slice
-	.call(
-		document.getElementsByClassName(
-			"wp-block-ub-tabbed-content-tab-title-vertical-wrap"
-		)
-	)
-	.forEach((instance) => {
-		instance.addEventListener("click", function () {
-			ub_handleTabEvent(instance);
-		});
-	});
-
-Array.prototype.slice
-	.call(
-		document.getElementsByClassName(
-			"wp-block-ub-tabbed-content-scroll-button-container"
-		)
-	)
-	.forEach((scrollButtonContainer) => {
-		const tabBar = scrollButtonContainer.previousElementSibling;
-		const leftScroll = scrollButtonContainer.querySelector(
-			".wp-block-ub-tabbed-content-scroll-button-left"
-		);
-		const rightScroll = scrollButtonContainer.querySelector(
-			".wp-block-ub-tabbed-content-scroll-button-right"
-		);
-
-		const checkWidth = (_) => {
-			if (tabBar.scrollWidth > tabBar.clientWidth) {
-				scrollButtonContainer.classList.remove("ub-hide");
-			} else {
-				scrollButtonContainer.classList.add("ub-hide");
-			}
-		};
-
-		window.addEventListener("resize", checkWidth);
-
-		leftScroll.addEventListener("click", () => {
-			tabBar.scrollLeft -= tabBar.clientWidth;
-		});
-
-		rightScroll.addEventListener("click", () => {
-			tabBar.scrollLeft += tabBar.clientWidth;
-		});
-
+		const tabBar = instance.parentElement;
 		let tabBarIsBeingDragged = false;
 		let oldScrollPosition = -1;
 		let oldMousePosition = -1;
@@ -195,6 +151,45 @@ Array.prototype.slice
 					oldScrollPosition - newMousePosition + oldMousePosition;
 			}
 		});
+	});
 
-		checkWidth();
+Array.prototype.slice
+	.call(
+		document.getElementsByClassName(
+			"wp-block-ub-tabbed-content-tab-title-vertical-wrap"
+		)
+	)
+	.forEach((instance) => {
+		instance.addEventListener("click", function () {
+			ub_handleTabEvent(instance);
+		});
+	});
+
+Array.prototype.slice
+	.call(document.getElementsByClassName("wp-block-ub-tabbed-content-holder"))
+	.forEach((tabBar) => {
+		let tabBarIsBeingDragged = false;
+		let oldScrollPosition = -1;
+		let oldMousePosition = -1;
+
+		tabBar.addEventListener("mousedown", function (e) {
+			tabBarIsBeingDragged = true;
+			oldScrollPosition = tabBar.scrollLeft;
+			oldMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+		});
+		document.addEventListener("mouseup", function () {
+			if (tabBarIsBeingDragged) {
+				tabBarIsBeingDragged = false;
+				oldScrollPosition = -1;
+				oldMousePosition = -1;
+			}
+		});
+		document.addEventListener("mousemove", function (e) {
+			if (tabBarIsBeingDragged) {
+				e.preventDefault();
+				let newMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+				tabBar.scrollLeft =
+					oldScrollPosition - newMousePosition + oldMousePosition;
+			}
+		});
 	});
