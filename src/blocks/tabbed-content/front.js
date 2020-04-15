@@ -226,6 +226,40 @@ Array.prototype.slice
 	let transitionTo = 0;
 	let transitionFrom = 0;
 
+	document.addEventListener("DOMContentLoaded", () => {
+		let initialStyle = -1;
+		if (window.innerWidth < 700) {
+			initialStyle = 0;
+		} else if (window.innerWidth < 900) {
+			initialStyle = 1;
+		} else {
+			initialStyle = 2;
+		}
+		Array.prototype.slice
+			.call(document.getElementsByClassName("wp-block-ub-tabbed-content"))
+			.forEach((instance, i) => {
+				if (displayModes[i][initialStyle] === "horizontaltab") {
+					const { scrollWidth, clientWidth } = instance.children[0].children[0];
+					if (scrollWidth > clientWidth) {
+						Array.prototype.slice
+							.call(instance.children[0].children[0].children)
+							.forEach((tab) => {
+								if (tab.classList.contains("active")) {
+									const tabLocation =
+										tab.getBoundingClientRect().x +
+										tab.getBoundingClientRect().width -
+										instance.getBoundingClientRect().x;
+									if (tabLocation > clientWidth) {
+										instance.children[0].children[0].scrollLeft =
+											tabLocation - clientWidth;
+									}
+								}
+							});
+					}
+				}
+			});
+	});
+
 	function processTransition() {
 		if (transitionTo && transitionFrom) {
 			Array.prototype.slice

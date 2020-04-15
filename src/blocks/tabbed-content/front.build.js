@@ -166,6 +166,37 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
   });
   var transitionTo = 0;
   var transitionFrom = 0;
+  document.addEventListener("DOMContentLoaded", function () {
+    var initialStyle = -1;
+
+    if (window.innerWidth < 700) {
+      initialStyle = 0;
+    } else if (window.innerWidth < 900) {
+      initialStyle = 1;
+    } else {
+      initialStyle = 2;
+    }
+
+    Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content")).forEach(function (instance, i) {
+      if (displayModes[i][initialStyle] === "horizontaltab") {
+        var _instance$children$0$ = instance.children[0].children[0],
+            scrollWidth = _instance$children$0$.scrollWidth,
+            clientWidth = _instance$children$0$.clientWidth;
+
+        if (scrollWidth > clientWidth) {
+          Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (tab) {
+            if (tab.classList.contains("active")) {
+              var tabLocation = tab.getBoundingClientRect().x + tab.getBoundingClientRect().width - instance.getBoundingClientRect().x;
+
+              if (tabLocation > clientWidth) {
+                instance.children[0].children[0].scrollLeft = tabLocation - clientWidth;
+              }
+            }
+          });
+        }
+      }
+    });
+  });
 
   function processTransition() {
     if (transitionTo && transitionFrom) {
