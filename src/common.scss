@@ -32,3 +32,21 @@ $red: orangered;
 	position: relative;
 	transform: translate(-25%, 25%);
 }
+
+@media (max-width: 699px) {
+	.ub-mobile-hide {
+		display: none;
+	}
+	.ub-mobile-display {
+		display: block;
+	}
+}
+
+@media (min-width: 700px) and (max-width: 899px) {
+	.ub-tablet-hide {
+		display: none;
+	}
+	.ub-tablet-display {
+		display: block;
+	}
+}

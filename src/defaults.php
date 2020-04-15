@@ -1208,6 +1208,14 @@ $defaultValues = array(
             'tabVertical' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'tabletTabDisplay' => array(
+                'type' => 'string',
+                'default' => 'horizontaltab'
+            ),
+            'mobileTabDisplay' => array(
+                'type' => 'string',
+                'default' => 'horizontaltab'
             )
         )
     ),

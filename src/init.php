@@ -480,12 +480,9 @@ function ub_include_block_attribute_css() {
                         'border-color: lightgrey;' . PHP_EOL .
                         'color: #000000;' . PHP_EOL .
                     '}' . PHP_EOL . 
-                    $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap.active{' . PHP_EOL .
-                        'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                        'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
-                    $prefix . ' .wp-block-ub-tabbed-content-tab-title-vertical-wrap.active{' . PHP_EOL .
+                    $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap.active, ' .
+                    $prefix . ' .wp-block-ub-tabbed-content-tab-title-vertical-wrap.active,' .
+                    $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
                         'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .

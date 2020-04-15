@@ -19,22 +19,22 @@ const { RichText, InnerBlocks } = wp.editor;
 const oldAttributes = {
 	id: {
 		type: "number",
-		default: -1
+		default: -1,
 	},
 	activeControl: {
-		type: "string"
+		type: "string",
 	},
 	activeTab: {
 		type: "number",
-		default: 0
+		default: 0,
 	},
 	theme: {
 		type: "string",
-		default: "#eeeeee"
+		default: "#eeeeee",
 	},
 	titleColor: {
 		type: "string",
-		default: "#000000"
+		default: "#000000",
 	},
 	tabsContent: {
 		source: "query",
@@ -43,9 +43,9 @@ const oldAttributes = {
 			content: {
 				type: "array",
 				source: "children",
-				selector: ".wp-block-ub-tabbed-content-tab-content"
-			}
-		}
+				selector: ".wp-block-ub-tabbed-content-tab-content",
+			},
+		},
 	},
 	tabsTitle: {
 		source: "query",
@@ -54,48 +54,56 @@ const oldAttributes = {
 			content: {
 				type: "array",
 				source: "children",
-				selector: ".wp-block-ub-tabbed-content-tab-title"
-			}
-		}
-	}
+				selector: ".wp-block-ub-tabbed-content-tab-title",
+			},
+		},
+	},
 };
 
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	activeControl: {
-		type: "string"
+		type: "string",
 	},
 	activeTab: {
 		type: "number",
-		default: 0
+		default: 0,
 	},
 	theme: {
 		type: "string",
-		default: "#eeeeee"
+		default: "#eeeeee",
 	},
 	titleColor: {
 		type: "string",
-		default: "#000000"
+		default: "#000000",
 	},
 	tabsTitle: {
 		type: "array",
-		default: []
+		default: [],
 	},
 	tabsAlignment: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
 	tabsTitleAlignment: {
 		type: "array",
-		default: []
+		default: [],
 	},
 	tabVertical: {
 		type: "boolean",
-		default: false
-	}
+		default: false,
+	},
+	tabletTabDisplay: {
+		type: "string",
+		default: "horizontaltab",
+	},
+	mobileTabDisplay: {
+		type: "string",
+		default: "horizontaltab",
+	},
 };
 
 /**
@@ -119,7 +127,7 @@ registerBlockType("ub/tabbed-content", {
 	keywords: [__("Tabbed Content"), __("Tabs"), __("Ultimate Blocks")],
 	attributes: oldAttributes,
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	edit: compose([
@@ -129,17 +137,17 @@ registerBlockType("ub/tabbed-content", {
 
 			return {
 				block: getBlock(ownProps.clientId),
-				selectedBlock: getSelectedBlock()
+				selectedBlock: getSelectedBlock(),
 			};
 		}),
-		withDispatch(dispatch => {
+		withDispatch((dispatch) => {
 			const {
 				updateBlockAttributes,
 				insertBlock,
 				removeBlock,
 				moveBlockToPosition,
 				selectBlock,
-				replaceBlock
+				replaceBlock,
 			} = dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
@@ -148,13 +156,13 @@ registerBlockType("ub/tabbed-content", {
 				removeBlock,
 				moveBlockToPosition,
 				selectBlock,
-				replaceBlock
+				replaceBlock,
 			};
 		}),
-		withState({ oldArrangement: "" })
+		withState({ oldArrangement: "" }),
 	])(OldTabHolder),
 
-	save: function(props) {
+	save: function (props) {
 		const className = "wp-block-ub-tabbed-content";
 
 		const { activeTab, theme, titleColor, tabsTitle, id } = props.attributes;
@@ -173,7 +181,7 @@ registerBlockType("ub/tabbed-content", {
 								style={{
 									backgroundColor: activeTab === i ? theme : "initial",
 									borderColor: activeTab === i ? theme : "lightgrey",
-									color: activeTab === i ? titleColor : "#000000"
+									color: activeTab === i ? titleColor : "#000000",
 								}}
 								key={i}
 							>
@@ -195,17 +203,17 @@ registerBlockType("ub/tabbed-content", {
 	deprecated: [
 		{
 			attributes: oldAttributes,
-			migrate: attributes => {
+			migrate: (attributes) => {
 				const { tabsContent, ...otherAttributes } = attributes;
 				return [
 					otherAttributes,
-					tabsContent.map(t => {
+					tabsContent.map((t) => {
 						let tabContent = [];
 						t.content.forEach((paragraph, i) => {
 							if (typeof paragraph === "string") {
 								tabContent.push(
 									createBlock("core/paragraph", {
-										content: paragraph
+										content: paragraph,
 									})
 								);
 							} else if (paragraph.type === "br") {
@@ -215,19 +223,19 @@ registerBlockType("ub/tabbed-content", {
 							} else {
 								tabContent.push(
 									createBlock("core/paragraph", {
-										content: richTextToHTML(paragraph)
+										content: richTextToHTML(paragraph),
 									})
 								);
 							}
 						});
 
 						return createBlock("ub/tab", {}, tabContent);
-					})
+					}),
 				];
 			},
-			save: version_1_1_2
-		}
-	]
+			save: version_1_1_2,
+		},
+	],
 });
 
 registerBlockType("ub/tabbed-content-block", {
@@ -237,7 +245,7 @@ registerBlockType("ub/tabbed-content-block", {
 	keywords: [__("Tabbed Content"), __("Tabs"), __("Ultimate Blocks")],
 	attributes,
 	supports: {
-		align: ["wide", "full"]
+		align: ["wide", "full"],
 	},
 
 	edit: compose([
@@ -247,16 +255,16 @@ registerBlockType("ub/tabbed-content-block", {
 
 			return {
 				block: getBlock(ownProps.clientId),
-				selectedBlock: getSelectedBlock()
+				selectedBlock: getSelectedBlock(),
 			};
 		}),
-		withDispatch(dispatch => {
+		withDispatch((dispatch) => {
 			const {
 				updateBlockAttributes,
 				insertBlock,
 				removeBlock,
 				moveBlockToPosition,
-				selectBlock
+				selectBlock,
 			} = dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
@@ -264,11 +272,11 @@ registerBlockType("ub/tabbed-content-block", {
 				insertBlock,
 				removeBlock,
 				moveBlockToPosition,
-				selectBlock
+				selectBlock,
 			};
 		}),
-		withState({ oldArrangement: [] })
+		withState({ oldArrangement: [] }),
 	])(TabHolder),
 
-	save: () => <InnerBlocks.Content />
+	save: () => <InnerBlocks.Content />,
 });
