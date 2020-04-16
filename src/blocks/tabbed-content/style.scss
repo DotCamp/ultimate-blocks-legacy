@@ -40,8 +40,13 @@
 	}
 	&-tabs-title {
 		display: flex;
-		overflow-x: auto;
+		overflow-x: hidden;
+		&:hover,
+		&:focus {
+			overflow-x: auto;
+		}
 	}
+
 	&-tabs-content {
 		border: 1px solid lightgrey;
 		padding: 25px;
