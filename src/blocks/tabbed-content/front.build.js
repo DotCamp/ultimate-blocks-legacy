@@ -1,13 +1,5 @@
 "use strict";
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 /* eslint-disable */
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
@@ -140,6 +132,30 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
   });
 });
 
+function ub_switchFocusToTab(index, tabBar) {
+  var _tabBar$getBoundingCl = tabBar.getBoundingClientRect(),
+      tabContainerLocation = _tabBar$getBoundingCl.x,
+      tabContainerWidth = _tabBar$getBoundingCl.width;
+
+  var _tabBar$children$inde = tabBar.children[index].getBoundingClientRect(),
+      tabLocation = _tabBar$children$inde.x,
+      tabWidth = _tabBar$children$inde.width;
+
+  if (tabContainerLocation > tabLocation) {
+    tabBar.scrollLeft -= tabContainerLocation - tabLocation;
+  }
+
+  if (tabLocation + tabWidth > tabContainerLocation + tabContainerWidth) {
+    var scrollLeftChange = tabLocation - tabContainerLocation;
+
+    if (tabWidth <= tabContainerWidth) {
+      scrollLeftChange += tabWidth - tabContainerWidth;
+    }
+
+    tabBar.scrollLeft += scrollLeftChange;
+  }
+}
+
 (function () {
   var displayModes = Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content")).map(function (block) {
     var dm = [];
@@ -166,37 +182,6 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
   });
   var transitionTo = 0;
   var transitionFrom = 0;
-  document.addEventListener("DOMContentLoaded", function () {
-    var initialStyle = -1;
-
-    if (window.innerWidth < 700) {
-      initialStyle = 0;
-    } else if (window.innerWidth < 900) {
-      initialStyle = 1;
-    } else {
-      initialStyle = 2;
-    }
-
-    Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content")).forEach(function (instance, i) {
-      if (displayModes[i][initialStyle] === "horizontaltab") {
-        var _instance$children$0$ = instance.children[0].children[0],
-            scrollWidth = _instance$children$0$.scrollWidth,
-            clientWidth = _instance$children$0$.clientWidth;
-
-        if (scrollWidth > clientWidth) {
-          Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (tab) {
-            if (tab.classList.contains("active")) {
-              var tabLocation = tab.getBoundingClientRect().x + tab.getBoundingClientRect().width - instance.getBoundingClientRect().x;
-
-              if (tabLocation > clientWidth) {
-                instance.children[0].children[0].scrollLeft = tabLocation - clientWidth;
-              }
-            }
-          });
-        }
-      }
-    });
-  });
 
   function processTransition() {
     if (transitionTo && transitionFrom) {
@@ -230,6 +215,14 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
                 instance.dataset.activeTabs = JSON.stringify([j]);
               }
             });
+          }
+
+          if (displayModes[i][transitionTo - 1] === "horizontaltab") {
+            var tabBar = instance.children[0].children[0];
+            var newActiveTab = Array.prototype.slice.call(instance.children[0].children[0].children).findIndex(function (tab) {
+              return tab.classList.contains("active");
+            });
+            ub_switchFocusToTab(newActiveTab, tabBar);
           }
         }
       });
@@ -267,6 +260,106 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
   });
 })();
 
+function ub_hashTabSwitch() {
+  var targetElement = document.querySelector("[data-tab-anchor='".concat(window.location.hash.slice(1), "']"));
+  var classNamePrefix = "wp-block-ub-tabbed-content";
+
+  if (targetElement) {
+    if (targetElement.classList.contains("".concat(classNamePrefix, "-tab-content-wrap"))) {
+      var stickyHeaders = Array.prototype.slice.call(document.elementsFromPoint(window.innerWidth / 2, 0)).filter(function (e) {
+        return ["fixed", "sticky"].includes(window.getComputedStyle(e).position);
+      });
+      var stickyHeaderHeights = stickyHeaders.map(function (h) {
+        return h.offsetHeight;
+      });
+      var tabContents = Array.prototype.slice.call(targetElement.parentElement.children).filter(function (e) {
+        return e.classList.contains("".concat(classNamePrefix, "-tab-content-wrap"));
+      });
+      var tabIndex = tabContents.findIndex(function (e) {
+        return e.dataset.tabAnchor === window.location.hash.slice(1);
+      });
+      var tabContentRoot = targetElement.parentElement.parentElement;
+
+      if (targetElement.previousElementSibling.classList.contains("".concat(classNamePrefix, "-accordion-toggle")) && targetElement.previousElementSibling.offsetWidth > 0) {
+        tabContents.forEach(function (tabContent) {
+          tabContent.classList.remove("active");
+          tabContent.classList.add("ub-hide");
+          tabContent.previousElementSibling.classList.remove("active");
+        });
+        var targetAccordion = targetElement.previousElementSibling;
+        var deficit = targetAccordion.getBoundingClientRect().y;
+        setTimeout(function () {
+          targetElement.classList.add("active");
+          targetElement.classList.remove("ub-hide");
+          targetAccordion.classList.add("active");
+          window.scrollBy(0, deficit - Math.max.apply(Math, stickyHeaderHeights));
+          tabContentRoot.dataset.activeTabs = JSON.stringify([tabIndex]);
+          Array.prototype.slice.call(targetElement.querySelectorAll("iframe")).forEach(function (embed) {
+            embed.style.removeProperty("width");
+            embed.style.removeProperty("height");
+          });
+        }, 50); //timeout needed for ensure accurate calculations
+      } else {
+        var _deficit = tabContentRoot.getBoundingClientRect().y;
+        window.scrollBy(0, _deficit - Math.max.apply(Math, stickyHeaderHeights));
+        var tabBar = targetElement.parentElement.previousElementSibling.children[0];
+        Array.prototype.slice.call(tabBar.children).forEach(function (tab, i) {
+          if (i === tabIndex) {
+            tab.classList.add("active");
+            tabContents[i].classList.add("active");
+            tabContents[i].classList.remove("ub-hide");
+
+            if (tabContents[i].previousElementSibling.classList.contains("".concat(classNamePrefix, "-accordion-toggle"))) {
+              tabContents[i].previousElementSibling.classList.add("active");
+            }
+
+            Array.prototype.slice.call(tabContents[i].querySelectorAll("iframe")).forEach(function (embed) {
+              embed.style.removeProperty("width");
+              embed.style.removeProperty("height");
+            });
+          } else {
+            tab.classList.remove("active");
+            tabContents[i].classList.remove("active");
+            tabContents[i].classList.add("ub-hide");
+
+            if (tabContents[i].previousElementSibling.classList.contains("".concat(classNamePrefix, "-accordion-toggle"))) {
+              tabContents[i].previousElementSibling.classList.remove("active");
+            }
+          }
+        });
+
+        if (targetElement.parentElement.previousElementSibling.offsetWidth === targetElement.parentElement.offsetWidth) {
+          ub_switchFocusToTab(tabIndex, tabBar);
+        }
+      }
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content")).forEach(function (instance) {
+    var tabBar = instance.children[0].children[0];
+
+    if (window.getComputedStyle(tabBar).display !== "none") {
+      var scrollWidth = tabBar.scrollWidth,
+          clientWidth = tabBar.clientWidth;
+
+      if (scrollWidth > clientWidth) {
+        Array.prototype.slice.call(tabBar.children).forEach(function (tab) {
+          if (tab.classList.contains("active")) {
+            var tabLocation = tab.getBoundingClientRect().x + tab.getBoundingClientRect().width - instance.getBoundingClientRect().x;
+
+            if (tabLocation > clientWidth) {
+              tabBar.scrollLeft = tabLocation - clientWidth;
+            }
+          }
+        });
+      }
+    }
+  });
+  ub_hashTabSwitch();
+});
+window.onhashchange = ub_hashTabSwitch;
 Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tabs-content")).forEach(function (container) {
   Array.prototype.slice.call(container.getElementsByClassName("wp-block-ub-tabbed-content-accordion-toggle")).forEach(function (accordionToggle, i) {
     accordionToggle.addEventListener("click", function () {
@@ -287,7 +380,7 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
           delete root.dataset.noActiveTabs;
           root.dataset.activeTabs = JSON.stringify([i]);
         } else {
-          root.dataset.activeTabs = JSON.stringify([].concat(_toConsumableArray(JSON.parse(root.dataset.activeTabs)), [i]));
+          root.dataset.activeTabs = JSON.stringify(JSON.parse(root.dataset.activeTabs).concat(i));
         }
       }
 
@@ -297,7 +390,7 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
     });
   });
 });
-Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tab-holder")).forEach(function (tabBar, i) {
+Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tab-holder")).forEach(function (tabBar) {
   var tabBarIsBeingDragged = false;
   var oldScrollPosition = -1;
   var oldMousePosition = -1;

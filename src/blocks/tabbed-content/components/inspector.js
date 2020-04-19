@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
-const { PanelBody, ToggleControl, RadioControl } = wp.components;
+const { PanelBody, ToggleControl, RadioControl, TextControl } = wp.components;
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -10,11 +10,16 @@ export default class Inspector extends Component {
 	render() {
 		const { attributes, setAttributes } = this.props;
 		const {
+			blockID,
+			activeTab,
 			theme,
 			titleColor,
 			tabVertical,
 			tabletTabDisplay,
 			mobileTabDisplay,
+			tabsTitle,
+			tabsAnchor,
+			useAnchors,
 		} = attributes;
 		return (
 			<InspectorControls>
@@ -62,6 +67,42 @@ export default class Inspector extends Component {
 						)}
 						onChange={(mobileTabDisplay) => setAttributes({ mobileTabDisplay })}
 					/>
+				</PanelBody>
+				<PanelBody title={__("Tab Anchors")}>
+					<ToggleControl
+						label={__("Use tab anchors")}
+						checked={useAnchors}
+						onChange={(useAnchors) => {
+							setAttributes({
+								useAnchors,
+								tabsAnchor: useAnchors
+									? [...Array(tabsTitle.length).keys()].map(
+											(_, i) => `tab${i}-${blockID}`
+									  )
+									: [],
+							});
+						}}
+					/>
+					{useAnchors && (
+						<React.Fragment>
+							<TextControl
+								label={__("Anchor for current tab")}
+								value={tabsAnchor[activeTab]}
+								onChange={(newAnchor) =>
+									setAttributes({
+										tabsAnchor: [
+											...tabsAnchor.slice(0, activeTab),
+											newAnchor.replace(/\s/g, ""),
+											...tabsAnchor.slice(activeTab + 1),
+										],
+									})
+								}
+								help={__(
+									"Add an anchor text to let the contents of the active tab be accessed directly through a link"
+								)}
+							/>
+						</React.Fragment>
+					)}
 				</PanelBody>
 			</InspectorControls>
 		);

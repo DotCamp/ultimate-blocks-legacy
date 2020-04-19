@@ -41,13 +41,19 @@ function ub_render_tabbed_content_block($attributes, $contents){
     $tabContents = [];
 
     foreach ($contents as $key => $content) {
+        if($useAnchors){
+            if($tabsAnchor[$key] != ''){
+                $content->{'data-tab-anchor'} = $tabsAnchor[$key];
+            }
+        }
         $tabContent = $content->outertext;
-        if(preg_match('/^<div class="wp-block-ub-tabbed-content-tab-content-wrap active">/', $tabContent)){
+        if(preg_match('/^<div class="wp-block-ub-tabbed-content-tab-content-wrap active"/', $tabContent)){
             $accordionIsActive = true;
         }
         else{
             $accordionIsActive = false;
         }
+        
         if($tabletTabDisplay == 'accordion' || $mobileTabDisplay == 'accordion'){
             $content = '<div class="' . $blockName . '-accordion-toggle'.
             ($accordionIsActive ? ' active' : '') .

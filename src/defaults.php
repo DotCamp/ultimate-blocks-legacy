@@ -1198,6 +1198,17 @@ $defaultValues = array(
                     'type' => 'string'
                 )
             ),
+            'tabsAnchor' => array(
+                'type' => 'array',
+                'default' => array(),
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            'useAnchors' => array(
+                'type' => 'boolean',
+                'default' => false
+            ), 
             'tabsTitleAlignment' => array(
                 'type' => 'array',
                 'default' => array(),

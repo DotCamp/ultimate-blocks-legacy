@@ -92,6 +92,14 @@ const attributes = {
 		type: "array",
 		default: [],
 	},
+	tabsAnchor: {
+		type: "array",
+		default: [],
+	},
+	useAnchors: {
+		type: "boolean",
+		default: false,
+	},
 	tabVertical: {
 		type: "boolean",
 		default: false,

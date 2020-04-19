@@ -183,6 +183,27 @@ Array.prototype.slice
 		});
 	});
 
+function ub_switchFocusToTab(index, tabBar) {
+	const {
+		x: tabContainerLocation,
+		width: tabContainerWidth,
+	} = tabBar.getBoundingClientRect();
+	const { x: tabLocation, width: tabWidth } = tabBar.children[
+		index
+	].getBoundingClientRect();
+
+	if (tabContainerLocation > tabLocation) {
+		tabBar.scrollLeft -= tabContainerLocation - tabLocation;
+	}
+	if (tabLocation + tabWidth > tabContainerLocation + tabContainerWidth) {
+		let scrollLeftChange = tabLocation - tabContainerLocation;
+		if (tabWidth <= tabContainerWidth) {
+			scrollLeftChange += tabWidth - tabContainerWidth;
+		}
+		tabBar.scrollLeft += scrollLeftChange;
+	}
+}
+
 (function () {
 	const displayModes = Array.prototype.slice
 		.call(document.getElementsByClassName("wp-block-ub-tabbed-content"))
@@ -225,40 +246,6 @@ Array.prototype.slice
 
 	let transitionTo = 0;
 	let transitionFrom = 0;
-
-	document.addEventListener("DOMContentLoaded", () => {
-		let initialStyle = -1;
-		if (window.innerWidth < 700) {
-			initialStyle = 0;
-		} else if (window.innerWidth < 900) {
-			initialStyle = 1;
-		} else {
-			initialStyle = 2;
-		}
-		Array.prototype.slice
-			.call(document.getElementsByClassName("wp-block-ub-tabbed-content"))
-			.forEach((instance, i) => {
-				if (displayModes[i][initialStyle] === "horizontaltab") {
-					const { scrollWidth, clientWidth } = instance.children[0].children[0];
-					if (scrollWidth > clientWidth) {
-						Array.prototype.slice
-							.call(instance.children[0].children[0].children)
-							.forEach((tab) => {
-								if (tab.classList.contains("active")) {
-									const tabLocation =
-										tab.getBoundingClientRect().x +
-										tab.getBoundingClientRect().width -
-										instance.getBoundingClientRect().x;
-									if (tabLocation > clientWidth) {
-										instance.children[0].children[0].scrollLeft =
-											tabLocation - clientWidth;
-									}
-								}
-							});
-					}
-				}
-			});
-	});
 
 	function processTransition() {
 		if (transitionTo && transitionFrom) {
@@ -303,6 +290,14 @@ Array.prototype.slice
 									}
 								});
 						}
+
+						if (displayModes[i][transitionTo - 1] === "horizontaltab") {
+							const tabBar = instance.children[0].children[0];
+							const newActiveTab = Array.prototype.slice
+								.call(instance.children[0].children[0].children)
+								.findIndex((tab) => tab.classList.contains("active"));
+							ub_switchFocusToTab(newActiveTab, tabBar);
+						}
 					}
 				});
 			transitionTo = 0;
@@ -340,6 +335,148 @@ Array.prototype.slice
 	});
 })();
 
+function ub_hashTabSwitch() {
+	const targetElement = document.querySelector(
+		`[data-tab-anchor='${window.location.hash.slice(1)}']`
+	);
+
+	const classNamePrefix = "wp-block-ub-tabbed-content";
+
+	if (targetElement) {
+		if (
+			targetElement.classList.contains(`${classNamePrefix}-tab-content-wrap`)
+		) {
+			const stickyHeaders = Array.prototype.slice
+				.call(document.elementsFromPoint(window.innerWidth / 2, 0))
+				.filter((e) =>
+					["fixed", "sticky"].includes(window.getComputedStyle(e).position)
+				);
+
+			const stickyHeaderHeights = stickyHeaders.map((h) => h.offsetHeight);
+
+			const tabContents = Array.prototype.slice
+				.call(targetElement.parentElement.children)
+				.filter((e) =>
+					e.classList.contains(`${classNamePrefix}-tab-content-wrap`)
+				);
+
+			const tabIndex = tabContents.findIndex(
+				(e) => e.dataset.tabAnchor === window.location.hash.slice(1)
+			);
+
+			const tabContentRoot = targetElement.parentElement.parentElement;
+
+			if (
+				targetElement.previousElementSibling.classList.contains(
+					`${classNamePrefix}-accordion-toggle`
+				) &&
+				targetElement.previousElementSibling.offsetWidth > 0
+			) {
+				tabContents.forEach((tabContent) => {
+					tabContent.classList.remove("active");
+					tabContent.classList.add("ub-hide");
+					tabContent.previousElementSibling.classList.remove("active");
+				});
+
+				const targetAccordion = targetElement.previousElementSibling;
+				const deficit = targetAccordion.getBoundingClientRect().y;
+
+				setTimeout(() => {
+					targetElement.classList.add("active");
+					targetElement.classList.remove("ub-hide");
+					targetAccordion.classList.add("active");
+					window.scrollBy(
+						0,
+						deficit - Math.max.apply(Math, stickyHeaderHeights)
+					);
+					tabContentRoot.dataset.activeTabs = JSON.stringify([tabIndex]);
+					Array.prototype.slice
+						.call(targetElement.querySelectorAll("iframe"))
+						.forEach((embed) => {
+							embed.style.removeProperty("width");
+							embed.style.removeProperty("height");
+						});
+				}, 50); //timeout needed for ensure accurate calculations
+			} else {
+				const deficit = tabContentRoot.getBoundingClientRect().y;
+
+				window.scrollBy(0, deficit - Math.max.apply(Math, stickyHeaderHeights));
+
+				const tabBar =
+					targetElement.parentElement.previousElementSibling.children[0];
+
+				Array.prototype.slice.call(tabBar.children).forEach((tab, i) => {
+					if (i === tabIndex) {
+						tab.classList.add("active");
+						tabContents[i].classList.add("active");
+						tabContents[i].classList.remove("ub-hide");
+
+						if (
+							tabContents[i].previousElementSibling.classList.contains(
+								`${classNamePrefix}-accordion-toggle`
+							)
+						) {
+							tabContents[i].previousElementSibling.classList.add("active");
+						}
+
+						Array.prototype.slice
+							.call(tabContents[i].querySelectorAll("iframe"))
+							.forEach((embed) => {
+								embed.style.removeProperty("width");
+								embed.style.removeProperty("height");
+							});
+					} else {
+						tab.classList.remove("active");
+						tabContents[i].classList.remove("active");
+						tabContents[i].classList.add("ub-hide");
+						if (
+							tabContents[i].previousElementSibling.classList.contains(
+								`${classNamePrefix}-accordion-toggle`
+							)
+						) {
+							tabContents[i].previousElementSibling.classList.remove("active");
+						}
+					}
+				});
+
+				if (
+					targetElement.parentElement.previousElementSibling.offsetWidth ===
+					targetElement.parentElement.offsetWidth
+				) {
+					ub_switchFocusToTab(tabIndex, tabBar);
+				}
+			}
+		}
+	}
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+	Array.prototype.slice
+		.call(document.getElementsByClassName("wp-block-ub-tabbed-content"))
+		.forEach((instance) => {
+			const tabBar = instance.children[0].children[0];
+			if (window.getComputedStyle(tabBar).display !== "none") {
+				const { scrollWidth, clientWidth } = tabBar;
+				if (scrollWidth > clientWidth) {
+					Array.prototype.slice.call(tabBar.children).forEach((tab) => {
+						if (tab.classList.contains("active")) {
+							const tabLocation =
+								tab.getBoundingClientRect().x +
+								tab.getBoundingClientRect().width -
+								instance.getBoundingClientRect().x;
+							if (tabLocation > clientWidth) {
+								tabBar.scrollLeft = tabLocation - clientWidth;
+							}
+						}
+					});
+				}
+			}
+		});
+	ub_hashTabSwitch();
+});
+
+window.onhashchange = ub_hashTabSwitch;
+
 Array.prototype.slice
 	.call(
 		document.getElementsByClassName("wp-block-ub-tabbed-content-tabs-content")
@@ -370,10 +507,9 @@ Array.prototype.slice
 							delete root.dataset.noActiveTabs;
 							root.dataset.activeTabs = JSON.stringify([i]);
 						} else {
-							root.dataset.activeTabs = JSON.stringify([
-								...JSON.parse(root.dataset.activeTabs),
-								i,
-							]);
+							root.dataset.activeTabs = JSON.stringify(
+								JSON.parse(root.dataset.activeTabs).concat(i)
+							);
 						}
 					}
 					accordionToggle.classList.toggle("active");
@@ -387,7 +523,7 @@ Array.prototype.slice
 	.call(
 		document.getElementsByClassName("wp-block-ub-tabbed-content-tab-holder")
 	)
-	.forEach((tabBar, i) => {
+	.forEach((tabBar) => {
 		let tabBarIsBeingDragged = false;
 		let oldScrollPosition = -1;
 		let oldMousePosition = -1;
