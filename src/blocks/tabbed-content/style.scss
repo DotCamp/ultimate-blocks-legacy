@@ -120,6 +120,9 @@
 		&-holder.wp-block-ub-tabbed-content {
 			&-horizontal-holder-mobile {
 				display: block;
+				> .wp-block-ub-tabbed-content-tabs-content {
+					width: 100%;
+				}
 			}
 			&-vertical-holder-mobile {
 				display: flex;
@@ -170,6 +173,9 @@
 		&-holder.wp-block-ub-tabbed-content {
 			&-horizontal-holder-tablet {
 				display: block;
+				> .wp-block-ub-tabbed-content-tabs-content {
+					width: 100%;
+				}
 			}
 			&-vertical-holder-tablet {
 				display: flex;
