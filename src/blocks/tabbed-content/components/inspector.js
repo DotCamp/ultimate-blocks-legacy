@@ -75,11 +75,7 @@ export default class Inspector extends Component {
 						onChange={(useAnchors) => {
 							setAttributes({
 								useAnchors,
-								tabsAnchor: useAnchors
-									? [...Array(tabsTitle.length).keys()].map(
-											(_, i) => `tab${i}-${blockID}`
-									  )
-									: [],
+								tabsAnchor: useAnchors ? Array(tabsTitle.length).fill("") : [],
 							});
 						}}
 					/>
