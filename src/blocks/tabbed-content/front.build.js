@@ -57,7 +57,7 @@ function ub_handleTabEvent(tab) {
         var slider = Flickity.data(instance.querySelector("[data-flickity]"));
         slider.resize();
       });
-      Array.prototype.slice.call(instance.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
+      Array.prototype.slice.call(tabContent.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
         embeddedContent.style.removeProperty("width");
         embeddedContent.style.removeProperty("height");
       });

@@ -1,6 +1,6 @@
 Array.prototype.slice
 	.call(document.getElementsByClassName("wp-block-ub-content-toggle"))
-	.forEach(toggleContainer => {
+	.forEach((toggleContainer) => {
 		if (!toggleContainer.hasAttribute("data-preventcollapse")) {
 			let parentIsHidden = false;
 			let parentClassIsHidden = false;
@@ -35,7 +35,7 @@ Array.prototype.slice
 						"wp-block-ub-content-toggle-accordion-title-wrap"
 					)
 				)
-				.forEach(instance => {
+				.forEach((instance) => {
 					const indicator = instance.querySelector(
 						".wp-block-ub-content-toggle-accordion-state-indicator"
 					);
@@ -64,7 +64,7 @@ Array.prototype.slice
 						setTimeout(() => panelContent.classList.add("ub-hide"), 10);
 					}
 
-					instance.addEventListener("click", function(e) {
+					instance.addEventListener("click", function (e) {
 						e.stopImmediatePropagation();
 						if (indicator.classList.contains("open")) {
 							if (panelHeight !== panelContent.offsetHeight) {
@@ -92,7 +92,7 @@ Array.prototype.slice
 							panelContent.querySelectorAll(".ub_image_slider")
 						);
 
-						flickityInstances.forEach(instance => {
+						flickityInstances.forEach((instance) => {
 							let slider = Flickity.data(
 								instance.querySelector("[data-flickity]")
 							);
@@ -100,14 +100,14 @@ Array.prototype.slice
 						});
 
 						Array.prototype.slice
-							.call(instance.querySelectorAll(".wp-block-embed iframe"))
-							.forEach(embeddedContent => {
+							.call(panelContent.querySelectorAll(".wp-block-embed iframe"))
+							.forEach((embeddedContent) => {
 								embeddedContent.style.removeProperty("width");
 								embeddedContent.style.removeProperty("height");
 							});
 					});
 
-					panelContent.addEventListener("transitionend", function() {
+					panelContent.addEventListener("transitionend", function () {
 						panelContent.classList.remove("ub-toggle-transition");
 						if (indicator.classList.contains("open")) {
 							panelContent.style.height = "";

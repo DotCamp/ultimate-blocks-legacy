@@ -5,7 +5,7 @@ if (!Element.prototype.matches) {
 }
 
 if (!Element.prototype.closest) {
-	Element.prototype.closest = function(s) {
+	Element.prototype.closest = function (s) {
 		let el = this;
 
 		do {
@@ -19,13 +19,13 @@ if (!Element.prototype.closest) {
 function ub_getSiblings(element, criteria) {
 	const children = Array.prototype.slice
 		.call(element.parentNode.children)
-		.filter(child => child !== element);
+		.filter((child) => child !== element);
 	return criteria ? children.filter(criteria) : children;
 }
 
 Array.prototype.slice
 	.call(document.getElementsByClassName("ub-expand-toggle-button"))
-	.forEach(instance => {
+	.forEach((instance) => {
 		instance.addEventListener("click", () => {
 			const blockRoot = instance.closest(".ub-expand");
 			blockRoot
@@ -34,7 +34,7 @@ Array.prototype.slice
 
 			const expandingPart = Array.prototype.slice
 				.call(blockRoot.children)
-				.filter(child => child.classList.contains("ub-expand-full"))[0];
+				.filter((child) => child.classList.contains("ub-expand-full"))[0];
 
 			expandingPart.classList.toggle("ub-hide");
 
@@ -42,14 +42,14 @@ Array.prototype.slice
 				expandingPart.querySelectorAll(".ub_image_slider")
 			);
 
-			flickityInstances.forEach(instance => {
+			flickityInstances.forEach((instance) => {
 				let slider = Flickity.data(instance.querySelector("[data-flickity]"));
 				slider.resize();
 			});
 
 			Array.prototype.slice
-				.call(instance.querySelectorAll(".wp-block-embed iframe"))
-				.forEach(embeddedContent => {
+				.call(expandingPart.querySelectorAll(".wp-block-embed iframe"))
+				.forEach((embeddedContent) => {
 					embeddedContent.style.removeProperty("width");
 					embeddedContent.style.removeProperty("height");
 				});

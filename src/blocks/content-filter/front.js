@@ -5,7 +5,7 @@ if (!Element.prototype.matches) {
 }
 
 if (!Element.prototype.closest) {
-	Element.prototype.closest = function(s) {
+	Element.prototype.closest = function (s) {
 		let el = this;
 
 		do {
@@ -19,17 +19,17 @@ if (!Element.prototype.closest) {
 function ub_getSiblings(element, criteria) {
 	const children = Array.prototype.slice
 		.call(element.parentNode.children)
-		.filter(child => child !== element);
+		.filter((child) => child !== element);
 	return criteria ? children.filter(criteria) : children;
 }
 
 Array.prototype.slice
 	.call(document.getElementsByClassName("ub-content-filter-tag"))
-	.forEach(instance => {
+	.forEach((instance) => {
 		const blockProper = instance.closest(".wp-block-ub-content-filter");
 		const initialSelection = blockProper.getAttribute("data-currentselection");
 
-		instance.addEventListener("click", function() {
+		instance.addEventListener("click", function () {
 			const isOldVersion = this.getAttribute("data-activecolor");
 			this.setAttribute(
 				"data-tagisselected",
@@ -50,9 +50,9 @@ Array.prototype.slice
 				if (
 					!JSON.parse(this.parentElement.getAttribute("data-canusemultiple"))
 				) {
-					ub_getSiblings(this, elem =>
+					ub_getSiblings(this, (elem) =>
 						elem.classList.contains("ub-content-filter-tag")
-					).forEach(sibling => {
+					).forEach((sibling) => {
 						sibling.setAttribute("data-tagisselected", "false");
 						if (isOldVersion) {
 							sibling.style.backgroundColor = this.getAttribute(
@@ -93,7 +93,7 @@ Array.prototype.slice
 
 			Array.prototype.slice
 				.call(blockProper.getElementsByClassName("ub-content-filter-panel"))
-				.forEach((instance, j) => {
+				.forEach((instance) => {
 					const panelData = JSON.parse(
 						instance.getAttribute("data-selectedfilters")
 					);
@@ -114,7 +114,7 @@ Array.prototype.slice
 						panelData.forEach((category, i) => {
 							if (Array.isArray(category)) {
 								if (
-									mainData[i].filter(f => f).length > 0 &&
+									mainData[i].filter((f) => f).length > 0 &&
 									category.filter((f, j) => f && f === mainData[i][j])
 										.length === 0
 								) {
@@ -140,7 +140,7 @@ Array.prototype.slice
 						panelData.forEach((category, i) => {
 							if (Array.isArray(category)) {
 								if (
-									mainData[i].filter(f => f).length > 0 &&
+									mainData[i].filter((f) => f).length > 0 &&
 									category.filter((f, j) => f && f === mainData[i][j]).length >
 										0
 								) {
@@ -169,7 +169,7 @@ Array.prototype.slice
 						instance.querySelectorAll(".ub_image_slider")
 					);
 
-					flickityInstances.forEach(instance => {
+					flickityInstances.forEach((instance) => {
 						let slider = Flickity.data(
 							instance.querySelector("[data-flickity]")
 						);
@@ -178,7 +178,7 @@ Array.prototype.slice
 
 					Array.prototype.slice
 						.call(instance.querySelectorAll(".wp-block-embed iframe"))
-						.forEach(embeddedContent => {
+						.forEach((embeddedContent) => {
 							embeddedContent.style.removeProperty("width");
 							embeddedContent.style.removeProperty("height");
 						});
