@@ -1,16 +1,29 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
-const { PanelBody, ToggleControl, RadioControl, TextControl } = wp.components;
+const {
+	PanelBody,
+	ToggleControl,
+	RadioControl,
+	TextControl,
+	Icon,
+	ButtonGroup,
+	Button,
+	Tooltip,
+} = wp.components;
 
 /**
  * Create an Inspector Controls wrapper Component
  */
 export default class Inspector extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { displayMode: "desktop" };
+	}
 	render() {
+		const { displayMode } = this.state;
 		const { attributes, setAttributes } = this.props;
 		const {
-			blockID,
 			activeTab,
 			theme,
 			titleColor,
@@ -40,33 +53,70 @@ export default class Inspector extends Component {
 					]}
 				/>
 				<PanelBody title={__("Tab Layout")}>
-					<ToggleControl
-						label={__("Vertical", "tabbed-content-blocks")}
-						checked={tabVertical}
-						onChange={(tabVertical) => setAttributes({ tabVertical })}
-					/>
-					<RadioControl
-						label={__("Tablet Tab Display")}
-						selected={tabletTabDisplay}
-						options={["Horizontal tab", "Vertical tab", "Accordion"].map(
-							(a) => ({
-								label: __(a),
-								value: a.toLowerCase().replace(/ /g, ""),
-							})
-						)}
-						onChange={(tabletTabDisplay) => setAttributes({ tabletTabDisplay })}
-					/>
-					<RadioControl
-						label={__("Mobile Tab Display")}
-						selected={mobileTabDisplay}
-						options={["Horizontal tab", "Vertical tab", "Accordion"].map(
-							(a) => ({
-								label: __(a),
-								value: a.toLowerCase().replace(/ /g, ""),
-							})
-						)}
-						onChange={(mobileTabDisplay) => setAttributes({ mobileTabDisplay })}
-					/>
+					<ButtonGroup style={{ paddingBottom: "10px" }}>
+						<Tooltip text={__("Desktop")}>
+							<Button
+								isPrimary={displayMode === "desktop"}
+								onClick={(_) => this.setState({ displayMode: "desktop" })}
+							>
+								<Icon icon="desktop" />
+							</Button>
+						</Tooltip>
+						<Tooltip text={__("Tablet")}>
+							<Button
+								isPrimary={displayMode === "tablet"}
+								onClick={(_) => this.setState({ displayMode: "tablet" })}
+							>
+								<Icon icon="tablet" />
+							</Button>
+						</Tooltip>
+						<Tooltip text={__("Mobile")}>
+							<Button
+								isPrimary={displayMode === "mobile"}
+								onClick={(_) => this.setState({ displayMode: "mobile" })}
+							>
+								<Icon icon="smartphone" />
+							</Button>
+						</Tooltip>
+					</ButtonGroup>
+
+					{displayMode === "desktop" && (
+						<ToggleControl
+							label={__("Vertical", "tabbed-content-blocks")}
+							checked={tabVertical}
+							onChange={(tabVertical) => setAttributes({ tabVertical })}
+						/>
+					)}
+					{displayMode === "tablet" && (
+						<RadioControl
+							label={__("Tablet Tab Display")}
+							selected={tabletTabDisplay}
+							options={["Horizontal tab", "Vertical tab", "Accordion"].map(
+								(a) => ({
+									label: __(a),
+									value: a.toLowerCase().replace(/ /g, ""),
+								})
+							)}
+							onChange={(tabletTabDisplay) =>
+								setAttributes({ tabletTabDisplay })
+							}
+						/>
+					)}
+					{displayMode === "mobile" && (
+						<RadioControl
+							label={__("Mobile Tab Display")}
+							selected={mobileTabDisplay}
+							options={["Horizontal tab", "Vertical tab", "Accordion"].map(
+								(a) => ({
+									label: __(a),
+									value: a.toLowerCase().replace(/ /g, ""),
+								})
+							)}
+							onChange={(mobileTabDisplay) =>
+								setAttributes({ mobileTabDisplay })
+							}
+						/>
+					)}
 				</PanelBody>
 				<PanelBody title={__("Tab Anchors")}>
 					<ToggleControl
