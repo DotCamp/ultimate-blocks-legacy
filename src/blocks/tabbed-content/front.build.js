@@ -304,13 +304,15 @@ function ub_hashTabSwitch() {
         window.scrollBy(0, _deficit - Math.max.apply(Math, stickyHeaderHeights));
         var tabBar = targetElement.parentElement.previousElementSibling.children[0];
         Array.prototype.slice.call(tabBar.children).forEach(function (tab, i) {
+          var probableAccordionToggle = tabContents[i].previousElementSibling;
+
           if (i === tabIndex) {
             tab.classList.add("active");
             tabContents[i].classList.add("active");
             tabContents[i].classList.remove("ub-hide");
 
-            if (tabContents[i].previousElementSibling.classList.contains("".concat(classNamePrefix, "-accordion-toggle"))) {
-              tabContents[i].previousElementSibling.classList.add("active");
+            if (probableAccordionToggle && probableAccordionToggle.classList.contains("".concat(classNamePrefix, "-accordion-toggle"))) {
+              probableAccordionToggle.classList.add("active");
             }
 
             Array.prototype.slice.call(tabContents[i].querySelectorAll("iframe")).forEach(function (embed) {
@@ -322,8 +324,8 @@ function ub_hashTabSwitch() {
             tabContents[i].classList.remove("active");
             tabContents[i].classList.add("ub-hide");
 
-            if (tabContents[i].previousElementSibling.classList.contains("".concat(classNamePrefix, "-accordion-toggle"))) {
-              tabContents[i].previousElementSibling.classList.remove("active");
+            if (probableAccordionToggle && probableAccordionToggle.classList.contains("".concat(classNamePrefix, "-accordion-toggle"))) {
+              probableAccordionToggle.classList.remove("active");
             }
           }
         });

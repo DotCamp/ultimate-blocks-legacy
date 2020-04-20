@@ -406,17 +406,19 @@ function ub_hashTabSwitch() {
 					targetElement.parentElement.previousElementSibling.children[0];
 
 				Array.prototype.slice.call(tabBar.children).forEach((tab, i) => {
+					const probableAccordionToggle = tabContents[i].previousElementSibling;
 					if (i === tabIndex) {
 						tab.classList.add("active");
 						tabContents[i].classList.add("active");
 						tabContents[i].classList.remove("ub-hide");
 
 						if (
-							tabContents[i].previousElementSibling.classList.contains(
+							probableAccordionToggle &&
+							probableAccordionToggle.classList.contains(
 								`${classNamePrefix}-accordion-toggle`
 							)
 						) {
-							tabContents[i].previousElementSibling.classList.add("active");
+							probableAccordionToggle.classList.add("active");
 						}
 
 						Array.prototype.slice
@@ -430,11 +432,12 @@ function ub_hashTabSwitch() {
 						tabContents[i].classList.remove("active");
 						tabContents[i].classList.add("ub-hide");
 						if (
-							tabContents[i].previousElementSibling.classList.contains(
+							probableAccordionToggle &&
+							probableAccordionToggle.classList.contains(
 								`${classNamePrefix}-accordion-toggle`
 							)
 						) {
-							tabContents[i].previousElementSibling.classList.remove("active");
+							probableAccordionToggle.classList.remove("active");
 						}
 					}
 				});
