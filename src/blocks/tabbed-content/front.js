@@ -65,10 +65,15 @@ function ub_handleTabEvent(tab) {
 	tab.classList.add("active");
 
 	const {
-		x: tabContainerLocation,
 		width: tabContainerWidth,
 	} = tab.parentElement.getBoundingClientRect();
-	const { x: tabLocation, width: tabWidth } = tab.getBoundingClientRect();
+	const tabContainerLocation =
+		tab.parentElement.getBoundingClientRect().x ||
+		tab.parentElement.getBoundingClientRect().left;
+
+	const { width: tabWidth } = tab.getBoundingClientRect();
+	const tabLocation =
+		tab.getBoundingClientRect().x || tab.getBoundingClientRect().left;
 
 	if (tabContainerLocation > tabLocation) {
 		tab.parentElement.scrollLeft -= tabContainerLocation - tabLocation;
@@ -148,11 +153,13 @@ Array.prototype.slice
 		let tabBarIsBeingDragged = false;
 		let oldScrollPosition = -1;
 		let oldMousePosition = -1;
+		let tabBarLocation =
+			tabBar.getBoundingClientRect().x || tabBar.getBoundingClientRect().left;
 
 		tabBar.addEventListener("mousedown", function (e) {
 			tabBarIsBeingDragged = true;
 			oldScrollPosition = tabBar.scrollLeft;
-			oldMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+			oldMousePosition = e.clientX - tabBarLocation;
 		});
 		document.addEventListener("mouseup", function () {
 			if (tabBarIsBeingDragged) {
@@ -164,7 +171,7 @@ Array.prototype.slice
 		document.addEventListener("mousemove", function (e) {
 			if (tabBarIsBeingDragged) {
 				e.preventDefault();
-				let newMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+				let newMousePosition = e.clientX - tabBarLocation;
 				tabBar.scrollLeft =
 					oldScrollPosition - newMousePosition + oldMousePosition;
 			}
@@ -184,13 +191,14 @@ Array.prototype.slice
 	});
 
 function ub_switchFocusToTab(index, tabBar) {
-	const {
-		x: tabContainerLocation,
-		width: tabContainerWidth,
-	} = tabBar.getBoundingClientRect();
-	const { x: tabLocation, width: tabWidth } = tabBar.children[
-		index
-	].getBoundingClientRect();
+	const { width: tabContainerWidth } = tabBar.getBoundingClientRect();
+	const tabContainerLocation =
+		tabBar.getBoundingClientRect().x || tabBar.getBoundingClientRect().left;
+
+	const { width: tabWidth } = tabBar.children[index].getBoundingClientRect();
+	const tabLocation =
+		tabBar.children[index].getBoundingClientRect().x ||
+		tabBar.children[index].getBoundingClientRect().left;
 
 	if (tabContainerLocation > tabLocation) {
 		tabBar.scrollLeft -= tabContainerLocation - tabLocation;
@@ -346,8 +354,19 @@ function ub_hashTabSwitch() {
 		if (
 			targetElement.classList.contains(`${classNamePrefix}-tab-content-wrap`)
 		) {
+			let probableHeaders;
+
+			try {
+				probableHeaders = document.elementsFromPoint(window.innerWidth / 2, 0);
+			} catch (e) {
+				probableHeaders = document.msElementsFromPoint(
+					window.innerWidth / 2,
+					0
+				);
+			}
+
 			const stickyHeaders = Array.prototype.slice
-				.call(document.elementsFromPoint(window.innerWidth / 2, 0))
+				.call(probableHeaders)
 				.filter((e) =>
 					["fixed", "sticky"].includes(window.getComputedStyle(e).position)
 				);
@@ -379,7 +398,9 @@ function ub_hashTabSwitch() {
 				});
 
 				const targetAccordion = targetElement.previousElementSibling;
-				const deficit = targetAccordion.getBoundingClientRect().y;
+				const deficit =
+					targetAccordion.getBoundingClientRect().y ||
+					targetAccordion.getBoundingClientRect().top;
 
 				setTimeout(() => {
 					targetElement.classList.add("active");
@@ -398,7 +419,9 @@ function ub_hashTabSwitch() {
 						});
 				}, 50); //timeout needed for ensure accurate calculations
 			} else {
-				const deficit = tabContentRoot.getBoundingClientRect().y;
+				const deficit =
+					tabContentRoot.getBoundingClientRect().y ||
+					tabContentRoot.getBoundingClientRect().top;
 
 				window.scrollBy(0, deficit - Math.max.apply(Math, stickyHeaderHeights));
 
@@ -464,9 +487,11 @@ document.addEventListener("DOMContentLoaded", () => {
 					Array.prototype.slice.call(tabBar.children).forEach((tab) => {
 						if (tab.classList.contains("active")) {
 							const tabLocation =
-								tab.getBoundingClientRect().x +
+								(tab.getBoundingClientRect().x ||
+									tab.getBoundingClientRect().left) +
 								tab.getBoundingClientRect().width -
-								instance.getBoundingClientRect().x;
+								(instance.getBoundingClientRect().x ||
+									instance.getBoundingClientRect().left);
 							if (tabLocation > clientWidth) {
 								tabBar.scrollLeft = tabLocation - clientWidth;
 							}
@@ -531,10 +556,13 @@ Array.prototype.slice
 		let oldScrollPosition = -1;
 		let oldMousePosition = -1;
 
+		const tabBarLocation =
+			tabBar.getBoundingClientRect().x || tabBar.getBoundingClientRect().left;
+
 		tabBar.addEventListener("mousedown", function (e) {
 			tabBarIsBeingDragged = true;
 			oldScrollPosition = tabBar.scrollLeft;
-			oldMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+			oldMousePosition = e.clientX - tabBarLocation;
 		});
 		document.addEventListener("mouseup", function () {
 			if (tabBarIsBeingDragged) {
@@ -546,7 +574,7 @@ Array.prototype.slice
 		document.addEventListener("mousemove", function (e) {
 			if (tabBarIsBeingDragged) {
 				e.preventDefault();
-				let newMousePosition = e.clientX - tabBar.getBoundingClientRect().x;
+				let newMousePosition = e.clientX - tabBarLocation;
 				tabBar.scrollLeft =
 					oldScrollPosition - newMousePosition + oldMousePosition;
 			}
