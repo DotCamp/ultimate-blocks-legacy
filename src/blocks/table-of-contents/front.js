@@ -5,7 +5,7 @@ if (!Element.prototype.matches) {
 }
 
 if (!Element.prototype.closest) {
-	Element.prototype.closest = function(s) {
+	Element.prototype.closest = function (s) {
 		let el = this;
 
 		do {
@@ -16,7 +16,37 @@ if (!Element.prototype.closest) {
 	};
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+function ub_hashHeaderScroll() {
+	const targetHeading = document.getElementById(window.location.hash.slice(1));
+
+	let probableHeaders;
+
+	try {
+		probableHeaders = document.elementsFromPoint(window.innerWidth / 2, 0);
+	} catch (e) {
+		probableHeaders = document.msElementsFromPoint(window.innerWidth / 2, 0);
+	}
+
+	const stickyHeaders = Array.prototype.slice
+		.call(probableHeaders)
+		.filter((e) =>
+			["fixed", "sticky"].includes(window.getComputedStyle(e).position)
+		);
+
+	const stickyHeaderHeights = stickyHeaders.map((h) => h.offsetHeight);
+
+	const deficit =
+		targetHeading.getBoundingClientRect().y ||
+		targetHeading.getBoundingClientRect().top;
+
+	window.scrollBy(
+		0,
+		deficit -
+			(stickyHeaders.length ? Math.max.apply(Math, stickyHeaderHeights) : 0)
+	);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
 	let instances = [];
 	if (document.getElementById("ub_table-of-contents-toggle-link")) {
 		instances.push(document.getElementById("ub_table-of-contents-toggle-link"));
@@ -25,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			document.getElementsByClassName("ub_table-of-contents-toggle-link")
 		);
 	}
-	instances.forEach(instance => {
+	instances.forEach((instance) => {
 		let tocHeight;
 
 		const block = instance.closest(".ub_table-of-contents");
@@ -57,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		tocContainer.removeAttribute("style");
 
-		instance.addEventListener("click", function(event) {
+		instance.addEventListener("click", function (event) {
 			event.preventDefault();
 			const curWidth = tocMain.offsetWidth;
 			if (tocMain.classList.contains("ub_table-of-contents-collapsed")) {
@@ -98,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				: showButton;
 		});
 
-		tocContainer.addEventListener("transitionend", function() {
+		tocContainer.addEventListener("transitionend", function () {
 			if (tocContainer.offsetHeight === 0) {
 				//hiding is done
 				tocContainer.classList.remove("ub-hiding");
@@ -114,4 +144,19 @@ document.addEventListener("DOMContentLoaded", function() {
 			mainStyle.width = "";
 		});
 	});
+	if (window.location.hash) {
+		setTimeout((_) => ub_hashHeaderScroll(), 50);
+	}
 });
+
+window.onhashchange = ub_hashHeaderScroll;
+
+Array.prototype.slice
+	.call(document.querySelectorAll(".ub_table-of-contents-container li > a"))
+	.forEach((link) => {
+		link.addEventListener("click", (e) => {
+			e.preventDefault();
+			history.pushState(null, "", link.hash);
+			ub_hashHeaderScroll();
+		});
+	});
