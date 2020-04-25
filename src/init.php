@@ -46,10 +46,26 @@ function ub_check_is_gutenberg_page() {
  * @since 1.0.0
  */
 
+function ub_update_css_version($updated){
+    static $frontendStyleUpdated = false;
+    static $editorStyleUpdated = false;
+    if($updated == 'frontend'){
+        $frontendStyleUpdated = true;
+    }
+    else if($updated == 'editor'){
+        $editorStyleUpdated = true;
+    }
+
+    if($frontendStyleUpdated && $editorStyleUpdated){
+        update_option( 'ultimate_blocks_css_version', Ultimate_Blocks_Constants::plugin_version() );
+        $frontendStyleUpdated = false;
+        $editorStyleUpdated = false;
+    }
+}
+
 function ub_load_assets() {
     if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') &&
-        filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') <
-        filemtime(dirname(__DIR__) . '/dist/blocks.style.build.css')){
+        get_option('ultimate_blocks_css_version') != Ultimate_Blocks_Constants::plugin_version()){
         $frontStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css', 'w');
         $blockDir = dirname(__DIR__) . '/src/blocks/';
         $blockList = get_option( 'ultimate_blocks', false );
@@ -71,11 +87,12 @@ function ub_load_assets() {
             }
         }
         fclose($frontStyleFile);
+        ub_update_css_version('frontend');
     }
 
     wp_enqueue_style(
         'ultimate_blocks-cgb-style-css', // Handle.
-        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+        file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') ?
             content_url('/uploads/ultimate-blocks/blocks.style.build.css') :
             plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
         array(), // Dependency to include the CSS after it.
@@ -575,10 +592,8 @@ function ultimate_blocks_cgb_editor_assets() {
 	);
 
     // Styles.
-
     if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') && 
-        filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') <
-        filemtime(dirname(__DIR__) . '/dist/blocks.editor.build.css')){
+        get_option('ultimate_blocks_css_version') != Ultimate_Blocks_Constants::plugin_version()){
         $adminStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css', 'w');
         $blockDir = dirname(__DIR__) . '/src/blocks/';
         $blockList = get_option( 'ultimate_blocks', false );
@@ -594,16 +609,17 @@ function ultimate_blocks_cgb_editor_assets() {
             }
             if($block['name'] === 'ub/styled-box' && $blockList[$key]['active']){
                 //add css for blocks phased out by styled box
-                fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
-                fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
+                fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/editor.css'));
+                fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/editor.css'));
             }
         }
         fclose($adminStyleFile);
+        ub_update_css_version('editor');
     }
 
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-block-editor-css', // Handle.
-        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+        file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') ?
             content_url('/uploads/ultimate-blocks/blocks.editor.build.css') :
             plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
