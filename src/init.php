@@ -90,6 +90,10 @@ function ub_load_assets() {
         ub_update_css_version('frontend');
     }
 
+    if (!file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png')){
+        copy(dirname(__DIR__) . '/src/blocks/'. 'click-to-tweet/icons/sprite-twitter.png', wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png');
+    }
+
     wp_enqueue_style(
         'ultimate_blocks-cgb-style-css', // Handle.
         file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') ?

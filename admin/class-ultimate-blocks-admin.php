@@ -205,7 +205,12 @@ class Ultimate_Blocks_Admin {
 					$adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
 	
 					if(file_exists($frontStyleLocation) && $saved_blocks[ $key ]['active']){ //also detect if block is enabled
-						fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
+						if($block['name'] == 'ub/click-to-tweet'){
+							fwrite($frontStyleFile, str_replace("src/blocks/click-to-tweet/icons", "ultimate-blocks", file_get_contents($frontStyleLocation)));
+						}
+						else{
+							fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
+						}
 					}
 					if(file_exists($adminStyleLocation) && $saved_blocks[ $key ]['active']){
 						fwrite($adminStyleFile, file_get_contents($adminStyleLocation));
