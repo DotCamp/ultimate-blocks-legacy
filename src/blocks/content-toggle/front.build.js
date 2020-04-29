@@ -24,7 +24,9 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
       );
     }
 
-    Array.prototype.slice.call(toggleContainer.getElementsByClassName("wp-block-ub-content-toggle-accordion-title-wrap")).forEach(function (instance) {
+    Array.prototype.slice.call(toggleContainer.children).map(function (p) {
+      return p.children[0];
+    }).forEach(function (instance) {
       var indicator = instance.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
       var panelContent = instance.nextElementSibling;
       var panelHeight = 0;
@@ -59,7 +61,31 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
           panelContent.style.height = "".concat(panelHeight, "px");
         } else {
           panelContent.classList.remove("ub-hide");
-          panelContent.classList.add("ub-hiding");
+          panelContent.classList.add("ub-hiding"); //insert event handlers for hiding all other panels
+
+          if ("showonlyone" in toggleContainer.dataset && toggleContainer.dataset.showonlyone) {
+            var siblingToggles = Array.prototype.slice.call(toggleContainer.children).map(function (p) {
+              return p.children[0];
+            }).filter(function (p) {
+              return p !== instance;
+            });
+            siblingToggles.forEach(function (siblingToggle) {
+              var siblingContent = siblingToggle.nextElementSibling;
+              var siblingIndicator = siblingToggle.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
+
+              if (siblingIndicator.classList.contains("open")) {
+                siblingIndicator.classList.remove("open");
+                siblingContent.classList.add("ub-toggle-transition");
+                var siblingHeight = siblingContent.offsetHeight;
+                siblingContent.style.height = "".concat(siblingHeight, "px"); //calculate panelheight first
+
+                setTimeout(function () {
+                  siblingContent.classList.add("ub-hiding");
+                  siblingContent.style.height = "";
+                }, 20);
+              }
+            });
+          }
         }
 
         panelContent.classList.add("ub-toggle-transition");

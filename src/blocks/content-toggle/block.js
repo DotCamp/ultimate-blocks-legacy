@@ -22,48 +22,52 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	theme: {
 		type: "string",
-		default: "#f1f1f1"
+		default: "#f1f1f1",
 	},
 	collapsed: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	titleColor: {
 		type: "string",
-		default: "#000000"
+		default: "#000000",
 	},
 	hasFAQSchema: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	titleTag: {
 		type: "string",
-		default: "p"
+		default: "p",
 	},
 	preventCollapse: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
-	toggleLocation:{
+	toggleLocation: {
 		type: "string",
 		default: "right",
 	},
-	toggleColor:{
+	toggleColor: {
 		type: "string",
 		default: "#000000",
 	},
-	toggleIcon:{
+	toggleIcon: {
 		type: "string",
-		default: "chevron"
+		default: "chevron",
 	},
 	border: {
 		type: "boolean",
-		default: true
-	}
+		default: true,
+	},
+	showOnlyOne: {
+		type: "boolean",
+		default: false,
+	},
 };
 
 const oldAttributes = Object.assign(Object.assign({}, attributes), {
@@ -74,15 +78,15 @@ const oldAttributes = Object.assign(Object.assign({}, attributes), {
 			title: {
 				type: "array",
 				source: "children",
-				selector: ".wp-block-ub-content-toggle-accordion-title"
+				selector: ".wp-block-ub-content-toggle-accordion-title",
 			},
 			content: {
 				type: "array",
 				source: "children",
-				selector: ".wp-block-ub-content-toggle-accordion-content"
-			}
-		}
-	}
+				selector: ".wp-block-ub-content-toggle-accordion-content",
+			},
+		},
+	},
 });
 
 /**
@@ -106,11 +110,11 @@ registerBlockType("ub/content-toggle", {
 	keywords: [
 		__("Content Accordion"),
 		__("Toggle Collapse"),
-		__("Ultimate Blocks")
+		__("Ultimate Blocks"),
 	],
 
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 	attributes,
 
@@ -122,16 +126,16 @@ registerBlockType("ub/content-toggle", {
 			return {
 				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlockClientId(),
-				parentOfSelectedBlock: getBlockRootClientId(getSelectedBlockClientId())
+				parentOfSelectedBlock: getBlockRootClientId(getSelectedBlockClientId()),
 			};
 		}),
-		withDispatch(dispatch => {
+		withDispatch((dispatch) => {
 			const {
 				updateBlockAttributes,
 				insertBlock,
 				removeBlock,
 				selectBlock,
-				replaceBlock
+				replaceBlock,
 			} = dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
@@ -139,10 +143,10 @@ registerBlockType("ub/content-toggle", {
 				insertBlock,
 				removeBlock,
 				selectBlock,
-				replaceBlock
+				replaceBlock,
 			};
 		}),
-		withState({ oldArrangement: "", mainBlockSelected: true })
+		withState({ oldArrangement: "", mainBlockSelected: true }),
 	])(OldPanelContent),
 
 	save() {
@@ -155,17 +159,17 @@ registerBlockType("ub/content-toggle", {
 	deprecated: [
 		{
 			attributes: oldAttributes,
-			migrate: attributes => {
+			migrate: (attributes) => {
 				const { accordions, ...otherProps } = attributes;
 				return [
 					otherProps,
-					accordions.map(a => {
+					accordions.map((a) => {
 						let panelContent = [];
 						a.content.forEach((paragraph, i) => {
 							if (typeof paragraph === "string") {
 								panelContent.push(
 									createBlock("core/paragraph", {
-										content: paragraph
+										content: paragraph,
 									})
 								);
 							} else if (paragraph.type === "br") {
@@ -175,7 +179,7 @@ registerBlockType("ub/content-toggle", {
 							} else {
 								panelContent.push(
 									createBlock("core/paragraph", {
-										content: richTextToHTML(paragraph)
+										content: richTextToHTML(paragraph),
 									})
 								);
 							}
@@ -187,16 +191,16 @@ registerBlockType("ub/content-toggle", {
 								theme: attributes.theme,
 								titleColor: attributes.titleColor,
 								collapsed: attributes.collapsed,
-								panelTitle: mergeRichTextArray(a.title)
+								panelTitle: mergeRichTextArray(a.title),
 							},
 							panelContent
 						);
-					})
+					}),
 				];
 			},
-			save: version_1_1_2
-		}
-	]
+			save: version_1_1_2,
+		},
+	],
 });
 
 registerBlockType("ub/content-toggle-block", {
@@ -206,7 +210,7 @@ registerBlockType("ub/content-toggle-block", {
 	keywords: [
 		__("Content Accordion"),
 		__("Toggle Collapse"),
-		__("Ultimate Blocks")
+		__("Ultimate Blocks"),
 	],
 
 	attributes,
@@ -218,10 +222,10 @@ registerBlockType("ub/content-toggle-block", {
 
 			return {
 				block: getBlock(ownProps.clientId),
-				selectedBlock: getSelectedBlockClientId()
+				selectedBlock: getSelectedBlockClientId(),
 			};
 		}),
-		withDispatch(dispatch => {
+		withDispatch((dispatch) => {
 			const { updateBlockAttributes, insertBlock, removeBlock, selectBlock } =
 				dispatch("core/block-editor") || dispatch("core/editor");
 
@@ -229,15 +233,15 @@ registerBlockType("ub/content-toggle-block", {
 				updateBlockAttributes,
 				insertBlock,
 				removeBlock,
-				selectBlock
+				selectBlock,
 			};
 		}),
 		withState({
 			oldArrangement: [],
 			oldAttributeValues: [],
-			mainBlockSelected: true
-		})
+			mainBlockSelected: true,
+		}),
 	])(PanelContent),
 
-	save: () => <InnerBlocks.Content />
+	save: () => <InnerBlocks.Content />,
 });

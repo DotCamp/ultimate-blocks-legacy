@@ -38,8 +38,8 @@ function ub_render_content_toggle_block($attributes, $content){
 
     return '<div class="wp-block-ub-content-toggle'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .'" '. ($blockID == '' ? '' : 'id="ub-content-toggle-'.$blockID.'"') .
-                 ($preventCollapse ? ' data-preventcollapse="true"' : '') . '>'
-                . $content.'</div>';
+                 ($preventCollapse ? ' data-preventcollapse="true"' : '') .
+                 ($showOnlyOne ? ' data-showonlyone="true"': '') . '>' . $content.'</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){

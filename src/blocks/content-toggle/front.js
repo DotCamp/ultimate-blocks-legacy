@@ -30,11 +30,8 @@ Array.prototype.slice
 			}
 
 			Array.prototype.slice
-				.call(
-					toggleContainer.getElementsByClassName(
-						"wp-block-ub-content-toggle-accordion-title-wrap"
-					)
-				)
+				.call(toggleContainer.children)
+				.map((p) => p.children[0])
 				.forEach((instance) => {
 					const indicator = instance.querySelector(
 						".wp-block-ub-content-toggle-accordion-state-indicator"
@@ -66,6 +63,7 @@ Array.prototype.slice
 
 					instance.addEventListener("click", function (e) {
 						e.stopImmediatePropagation();
+
 						if (indicator.classList.contains("open")) {
 							if (panelHeight !== panelContent.offsetHeight) {
 								panelHeight = panelContent.offsetHeight;
@@ -74,6 +72,34 @@ Array.prototype.slice
 						} else {
 							panelContent.classList.remove("ub-hide");
 							panelContent.classList.add("ub-hiding");
+							//insert event handlers for hiding all other panels
+
+							if (
+								"showonlyone" in toggleContainer.dataset &&
+								toggleContainer.dataset.showonlyone
+							) {
+								const siblingToggles = Array.prototype.slice
+									.call(toggleContainer.children)
+									.map((p) => p.children[0])
+									.filter((p) => p !== instance);
+
+								siblingToggles.forEach((siblingToggle) => {
+									const siblingContent = siblingToggle.nextElementSibling;
+									const siblingIndicator = siblingToggle.querySelector(
+										".wp-block-ub-content-toggle-accordion-state-indicator"
+									);
+									if (siblingIndicator.classList.contains("open")) {
+										siblingIndicator.classList.remove("open");
+										siblingContent.classList.add("ub-toggle-transition");
+										const siblingHeight = siblingContent.offsetHeight;
+										siblingContent.style.height = `${siblingHeight}px`; //calculate panelheight first
+										setTimeout(() => {
+											siblingContent.classList.add("ub-hiding");
+											siblingContent.style.height = "";
+										}, 20);
+									}
+								});
+							}
 						}
 						panelContent.classList.add("ub-toggle-transition");
 						indicator.classList.toggle("open");

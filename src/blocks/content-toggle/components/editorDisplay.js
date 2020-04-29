@@ -3,8 +3,21 @@ import { Component } from "react";
 import {
 	upgradeButtonLabel,
 	getDescendantBlocks,
-	objectsMatch
+	objectsMatch,
 } from "../../../common";
+
+const objectsNewChange = (obj1, obj2) => {
+	let diff = {};
+	if (obj1 && obj2) {
+		Object.keys(obj1).forEach((key) => {
+			if (obj2.hasOwnProperty(key) && obj1[key] !== obj2[key]) {
+				diff = Object.assign(diff, { [key]: obj2[key] });
+			}
+		});
+		return diff;
+	}
+	return null;
+};
 
 const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
@@ -37,7 +50,7 @@ export class OldPanelContent extends Component {
 			selectedBlock,
 			parentOfSelectedBlock,
 			block,
-			replaceBlock
+			replaceBlock,
 		} = this.props;
 
 		const { collapsed, theme, titleColor } = attributes;
@@ -45,34 +58,34 @@ export class OldPanelContent extends Component {
 		const panels = this.getPanels();
 
 		const newArrangement = JSON.stringify(
-			panels.map(panel => panel.attributes.index)
+			panels.map((panel) => panel.attributes.index)
 		);
 
 		const newBlockTarget = panels.filter(
-			panel => panel.attributes.newBlockPosition !== "none"
+			(panel) => panel.attributes.newBlockPosition !== "none"
 		);
 
-		const onThemeChange = value => {
+		const onThemeChange = (value) => {
 			setAttributes({ theme: value });
 
-			panels.forEach(panel =>
+			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, { theme: value })
 			);
 		};
 
-		const onTitleColorChange = value => {
+		const onTitleColorChange = (value) => {
 			setAttributes({ titleColor: value });
 
-			panels.forEach(panel =>
+			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, { titleColor: value })
 			);
 		};
 
 		const onCollapseChange = () => {
 			setAttributes({ collapsed: !collapsed });
-			panels.forEach(panel =>
+			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
-					collapsed: !panel.attributes.collapsed
+					collapsed: !panel.attributes.collapsed,
 				})
 			);
 		};
@@ -84,13 +97,13 @@ export class OldPanelContent extends Component {
 				createBlock("ub/content-toggle-panel", {
 					theme: theme,
 					collapsed: collapsed,
-					titleColor: titleColor
+					titleColor: titleColor,
 				}),
 				newBlockPosition === "below" ? index + 1 : index,
 				block.clientId
 			);
 			updateBlockAttributes(newBlockTarget[0].clientId, {
-				newBlockPosition: "none"
+				newBlockPosition: "none",
 			});
 		}
 
@@ -103,15 +116,15 @@ export class OldPanelContent extends Component {
 				panels.forEach((panel, i) =>
 					updateBlockAttributes(panel.clientId, {
 						index: i,
-						parent: block.clientId
+						parent: block.clientId,
 					})
 				);
 				setState({ oldArrangement: newArrangement });
 			}
 		} else if (mainBlockSelected) {
 			const childBlocks = this.getPanels()
-				.filter(block => block.name === "ub/content-toggle-panel")
-				.map(panels => panels.clientId);
+				.filter((block) => block.name === "ub/content-toggle-panel")
+				.map((panels) => panels.clientId);
 			if (
 				selectedBlock !== block.clientId &&
 				childBlocks.includes(selectedBlock)
@@ -130,7 +143,7 @@ export class OldPanelContent extends Component {
 						attributes,
 						onThemeChange,
 						onCollapseChange,
-						onTitleColorChange
+						onTitleColorChange,
 					}}
 				/>
 			),
@@ -151,7 +164,7 @@ export class OldPanelContent extends Component {
 											collapsed,
 											titleColor,
 											panelTitle: innerBlock.attributes.panelTitle,
-											newBlockPosition: innerBlock.attributes.newBlockPosition
+											newBlockPosition: innerBlock.attributes.newBlockPosition,
 										},
 										innerBlock.innerBlocks
 									)
@@ -167,7 +180,7 @@ export class OldPanelContent extends Component {
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel"]}
 				/>
-			</div>
+			</div>,
 		];
 	}
 }
@@ -193,7 +206,8 @@ export class PanelContent extends Component {
 				toggleLocation,
 				toggleColor,
 				toggleIcon,
-				border
+				border,
+				showOnlyOne,
 			},
 			setAttributes,
 			className,
@@ -207,55 +221,55 @@ export class PanelContent extends Component {
 			insertBlock,
 			removeBlock,
 			selectedBlock,
-			block
+			block,
 		} = this.props;
 
 		const panels = this.getPanels();
 
-		const newArrangement = panels.map(panel => panel.attributes.index);
+		const newArrangement = panels.map((panel) => panel.attributes.index);
 
 		const newBlockTarget = panels.filter(
-			panel => panel.attributes.newBlockPosition !== "none"
+			(panel) => panel.attributes.newBlockPosition !== "none"
 		);
 
-		const onThemeChange = value => {
+		const onThemeChange = (value) => {
 			setAttributes({ theme: value });
 
-			panels.forEach(panel =>
+			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, { theme: value })
 			);
 		};
 
-		const onTitleColorChange = value => {
+		const onTitleColorChange = (value) => {
 			setAttributes({ titleColor: value });
 
-			panels.forEach(panel =>
+			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, { titleColor: value })
 			);
 		};
 
-		const onCollapseChange = _ => {
+		const onCollapseChange = (_) => {
 			setAttributes({ collapsed: !collapsed });
-			panels.forEach(panel =>
+			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
-					collapsed: !panel.attributes.collapsed
+					collapsed: !panel.attributes.collapsed,
 				})
 			);
 			if (!collapsed) {
 				setAttributes({ preventCollapse: false });
-				panels.forEach(panel =>
+				panels.forEach((panel) =>
 					updateBlockAttributes(panel.clientId, {
-						preventCollapse: false
+						preventCollapse: false,
 					})
 				);
 			}
 		};
 
-		const onPreventCollapseChange = _ => {
+		const onPreventCollapseChange = (_) => {
 			setAttributes({ preventCollapse: !preventCollapse });
-			panels.forEach(panel =>
+			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
-					preventCollapse: !panel.attributes.preventCollapse
+					preventCollapse: !panel.attributes.preventCollapse,
 				})
 			);
 		};
@@ -266,21 +280,21 @@ export class PanelContent extends Component {
 			insertBlock(
 				createBlock("ub/content-toggle-panel-block", {
 					theme,
-					collapsed,
+					collapsed: showOnlyOne ? true : collapsed,
 					titleColor,
 					titleTag,
 					preventCollapse,
 					toggleLocation,
 					toggleColor,
 					toggleIcon,
-					border
-
+					border,
+					showOnlyOne,
 				}),
 				newBlockPosition === "below" ? index + 1 : index,
 				block.clientId
 			);
 			updateBlockAttributes(newBlockTarget[0].clientId, {
-				newBlockPosition: "none"
+				newBlockPosition: "none",
 			});
 		}
 
@@ -298,7 +312,8 @@ export class PanelContent extends Component {
 						toggleLocation,
 						toggleColor,
 						toggleIcon,
-						border
+						border,
+						showOnlyOne,
 					}),
 					0,
 					block.clientId
@@ -307,10 +322,21 @@ export class PanelContent extends Component {
 			}
 		} else if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
 			//Fix indexes in case of rearrangments
+			if (newArrangement.length < oldArrangement.length && showOnlyOne) {
+				if (!panels.map((p) => p.attributes.collapsed).includes(false)) {
+					oldArrangement.forEach((i) => {
+						if (!newArrangement.includes(i)) {
+							updateBlockAttributes(panels[Math.max(0, i - 1)].clientId, {
+								collapsed: false,
+							});
+						}
+					});
+				}
+			}
 			panels.forEach((panel, i) =>
 				updateBlockAttributes(panel.clientId, {
 					index: i,
-					parent: block.clientId
+					parent: block.clientId,
 				})
 			);
 			setState({ oldArrangement: newArrangement });
@@ -318,15 +344,15 @@ export class PanelContent extends Component {
 			if (
 				selectedBlock !== block.clientId &&
 				getDescendantBlocks(this.props.block)
-					.map(d => d.clientId)
+					.map((d) => d.clientId)
 					.includes(selectedBlock)
 			) {
 				setState({ mainBlockSelected: false });
 			}
 		} else {
 			const childBlocks = this.props.block.innerBlocks
-				.filter(block => block.name === "ub/content-toggle-panel-block")
-				.map(panels => panels.clientId);
+				.filter((block) => block.name === "ub/content-toggle-panel-block")
+				.map((panels) => panels.clientId);
 
 			if (childBlocks.includes(selectedBlock) && !wp.data.useDispatch) {
 				//useDispatch is only present in Gutenberg v5.9, together with clickthrough selection feature
@@ -342,36 +368,38 @@ export class PanelContent extends Component {
 		let newAttributeValues;
 
 		if (oldArrangement.length === 0) {
-			panels.forEach(panel =>
+			/*panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
 					hasFAQSchema,
 					theme,
 					titleColor,
-					collapsed,
+					collapsed, //change this if showonlyone is true, else left previous value
 					titleTag,
 					preventCollapse,
 					toggleLocation,
 					toggleColor,
 					toggleIcon,
-					border
+					border,
+					showOnlyOne,
 				})
-			);
+			);*/
+			//check if new insertion or loading previously-saved instance
 			setState({
-				oldAttributeValues: Array(panels.length).fill({
-					theme,
-					collapsed,
-					hasFAQSchema,
-					titleColor,
-					titleTag,
-					preventCollapse,
-					toggleLocation,
-					toggleColor,
-					toggleIcon,
-					border
-				})
+				oldAttributeValues: panels.map((panel) =>
+					((
+						{
+							panelTitle,
+							newBlockPosition,
+							index,
+							parent,
+							parentID,
+							...others
+						} = panel.attributes
+					) => others)()
+				),
 			});
 		} else {
-			newAttributeValues = panels.map(panel =>
+			newAttributeValues = panels.map((panel) =>
 				((
 					{
 						panelTitle,
@@ -391,17 +419,37 @@ export class PanelContent extends Component {
 							objectsMatch(entry, oldAttributeValues[i])
 						)
 					) {
+						//add exception for changing collapsed to matching for index when showOnlyOne is changed to true
+						//when showOnlyOne is true and collapsed state is changed in one of the panels,
+
 						const changedPanel = block.innerBlocks
-							.map(innerBlock => innerBlock.clientId)
+							.map((innerBlock) => innerBlock.clientId)
 							.indexOf(selectedBlock);
 
-						panels.forEach(panel => {
-							updateBlockAttributes(
-								panel.clientId,
-								newAttributeValues[changedPanel]
-							);
-						});
-						setAttributes(newAttributeValues[changedPanel]);
+						const newChange = objectsNewChange(
+							oldAttributeValues[changedPanel],
+							newAttributeValues[changedPanel]
+						);
+
+						if (newAttributeValues[changedPanel].showOnlyOne) {
+							//value of collapsed should be true for changedpanel and false for parent and all otherpanels
+							panels.forEach((panel, i) => {
+								updateBlockAttributes(
+									panel.clientId,
+									Object.assign({}, newChange, {
+										collapsed: i !== changedPanel,
+									})
+								);
+							});
+							setAttributes(Object.assign({ collapsed: false }, newChange));
+						} else {
+							panels.forEach((panel) => {
+								updateBlockAttributes(panel.clientId, newChange);
+							});
+							setAttributes(newChange);
+						}
+
+						setState({ oldAttributeValues: newAttributeValues });
 					}
 				} else {
 					setState({ oldAttributeValues: newAttributeValues });
@@ -419,26 +467,64 @@ export class PanelContent extends Component {
 							{
 								value: theme,
 								onChange: onThemeChange,
-								label: __("Container Color")
+								label: __("Container Color"),
 							},
 							{
 								value: titleColor,
 								onChange: onTitleColorChange,
-								label: __("Title Color")
-							}
+								label: __("Title Color"),
+							},
 						]}
 					/>
 					<PanelBody title={__("Initial State")} initialOpen={true}>
 						<PanelRow>
-							<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
+							<label htmlFor="ub-content-toggle-amount">
+								{__("Show only one panel at a time")}
+							</label>
 							<FormToggle
-								id="ub-content-toggle-state"
-								label={__("Collapsed")}
-								checked={collapsed}
-								onChange={onCollapseChange}
+								id="ub-content-toggle-amount"
+								label={__("Show only one panel at a time")}
+								checked={showOnlyOne}
+								onChange={(_) => {
+									setAttributes({ showOnlyOne: !showOnlyOne });
+									panels.forEach((panel, i) =>
+										updateBlockAttributes(panel.clientId, {
+											showOnlyOne: !showOnlyOne,
+										})
+									);
+									if (showOnlyOne) {
+										//value before setAttributes still in use
+										setAttributes({ collapsed: false, preventCollapse: false });
+										panels.forEach((panel) =>
+											updateBlockAttributes(panel.clientId, {
+												collapsed: false,
+												preventCollapse: false,
+											})
+										);
+									} else {
+										panels.forEach((panel, i) =>
+											updateBlockAttributes(panel.clientId, {
+												collapsed: i === 0,
+											})
+										);
+									}
+								}}
 							/>
 						</PanelRow>
-						{!collapsed && (
+						{!showOnlyOne && (
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-state">
+									{__("Collapsed")}
+								</label>
+								<FormToggle
+									id="ub-content-toggle-state"
+									label={__("Collapsed")}
+									checked={collapsed}
+									onChange={onCollapseChange}
+								/>
+							</PanelRow>
+						)}
+						{!collapsed && !showOnlyOne && (
 							<PanelRow>
 								<label htmlFor="ub-content-toggle-state">
 									{__("Prevent collapse")}
@@ -461,9 +547,9 @@ export class PanelContent extends Component {
 								id="ub-content-toggle-faq-schema"
 								label={__("Enable FAQ Schema")}
 								checked={hasFAQSchema}
-								onChange={_ =>
+								onChange={(_) =>
 									setAttributes({
-										hasFAQSchema: !hasFAQSchema
+										hasFAQSchema: !hasFAQSchema,
 									})
 								}
 							/>
@@ -473,7 +559,7 @@ export class PanelContent extends Component {
 						style={{
 							display: "grid",
 							gridTemplateColumns: "5fr 1fr",
-							padding: "0 16px"
+							padding: "0 16px",
 						}}
 					>
 						<p>{__("Select Heading Tag", "ultimate-blocks")}</p>
@@ -485,14 +571,14 @@ export class PanelContent extends Component {
 								{ value: "h4", label: __("H4", "ultimate-blocks") },
 								{ value: "h5", label: __("H5", "ultimate-blocks") },
 								{ value: "h6", label: __("H6", "ultimate-blocks") },
-								{ value: "p", label: __("P", "ultimate-blocks") }
+								{ value: "p", label: __("P", "ultimate-blocks") },
 							]}
 							value={titleTag}
-							onChange={titleTag => {
+							onChange={(titleTag) => {
 								setAttributes({ titleTag });
-								panels.forEach(panel =>
+								panels.forEach((panel) =>
 									updateBlockAttributes(panel.clientId, {
-										titleTag
+										titleTag,
 									})
 								);
 							}}
@@ -505,7 +591,7 @@ export class PanelContent extends Component {
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}
 				/>
-			</div>
+			</div>,
 		];
 	}
 }

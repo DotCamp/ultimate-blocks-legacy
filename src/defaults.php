@@ -234,6 +234,10 @@ $defaultValues = array(
             'preventCollapse' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'showOnlyOne' => array(
+                'type' => 'boolean',
+                'default' => false
             )
         )
     ),
@@ -283,6 +287,10 @@ $defaultValues = array(
 	            'type' => 'boolean',
 	            'default' => true
             ),
+            'showOnlyOne' => array(
+                'type' => 'boolean',
+                'default' => false
+            )
         )
     ),
     'ub/countdown' => array(
