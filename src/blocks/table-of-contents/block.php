@@ -82,7 +82,7 @@ function ub_render_table_of_contents_block($attributes){
     
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .(!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ).
-                '" data-showtext="'.__('show').'" data-hidetext="'.__('hide')
+                '" data-showtext="'.__('show', 'ultimate-blocks').'" data-hidetext="'.__('hide', 'ultimate-blocks')
                 .'"'.($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.
@@ -91,7 +91,7 @@ function ub_render_table_of_contents_block($attributes){
                     '<div id="ub_table-of-contents-header-toggle">
                         <div id="ub_table-of-contents-toggle">
                         &nbsp;[<a class="ub_table-of-contents-toggle-link" href="#">'.
-                            __($showList ? 'hide' : 'show')
+                            __($showList ? 'hide' : 'show', 'ultimate-blocks')
                             .'</a>]</div></div>' :'')
                 .'</div>') : '')
                 .'<div class="ub_table-of-contents-container ub_table-of-contents-' .

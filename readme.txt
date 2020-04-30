@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,7 +131,32 @@ That's it. You're done!
 
 == Changelog ==
 
-= 2.3 =
+= 2.3.1 =
+
+Release Date: April 30th, 2020
+
+* ADD: Option to Display Panels That Match Either Any Filter or All Filters.
+* ADD: Allow Using FAQSchema on More than One block instance of Content Toggle.
+* ADD: Option for Customizing Content Toggle Icon, Color, and Location.
+* ADD: Option to Remove Panel Border in Content Toggle.
+* ADD: Option to Show Only One Content Toggle Tanel at a Time on Frontend. When one opens, other ones will close.
+* ADD: Option to Remove Content Toggle Collapse Icon.
+* ADD: Allow Scrolling of Tabs by Dragging.
+* ADD: Allow Switching to Different Display Modes in Different Screen Sizes for Tabbed Content.
+* ADD: Enable Adding Anchors to Tabs in Tabbed Content.
+* FIX: Display of Flexible Width Button.
+* FIX: Issue with Displaying Button Icon When Using Custom CSS in Click to Tweet Block.
+* FIX: Bug with Hidden Content Filter Panels.
+* FIX: Issue with Tabbed Content Titles in Twenty Twenty theme.
+* FIX: Prevent Refreshing When Clicking on Any Link Within the Table of Contents.
+* FIX: Adjust Scrolling to Account for Height of Fixed/Sticky Headers Whenever They're Present.
+* FIX: Ensure Visibility of Embedded Content Within Content Filter, Content Toggle, Expand, and Tabbed Content Blocks.
+* FIX: Prevent Variable Naming Conflicts Involving Simple HTML DOM Parser.
+* FIX: Ensure that the Custom CSS files and Their Parent Folder are Deleted Upon Plugin Deactivation.
+* FIX: Updating the Custom CSS Whenever the Plugin is Updated.
+* UPDATE: FontAwesome to v5.13.
+
+= 2.3.0 =
 
 Release Date: March 31st, 2020
 
