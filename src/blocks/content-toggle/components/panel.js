@@ -75,7 +75,7 @@ const attributes = {
 	},
 	toggleIcon: {
 		type: "string",
-		default: "chevron",
+		default: "chevron", //valid icons: chevron, plus, none
 	},
 	border: {
 		type: "boolean",
@@ -326,7 +326,11 @@ class ContentTogglePanel extends Component {
 							position="bottom right"
 							renderToggle={({ onToggle, isOpen }) => (
 								<Button isLarge onClick={onToggle} area-expanded={isOpen}>
-									<span className={icons[toggleIcon]} />
+									{icons[toggleIcon] === "none" ? (
+										<span>None</span>
+									) : (
+										<span className={icons[toggleIcon]} />
+									)}
 								</Button>
 							)}
 							renderContent={(_) => (
@@ -339,7 +343,11 @@ class ContentTogglePanel extends Component {
 													isLarge
 													onClick={(_) => setAttributes({ toggleIcon: i })}
 												>
-													<span className={icons[i]} />
+													{icons[i] === "none" ? (
+														"None"
+													) : (
+														<span className={icons[i]} />
+													)}
 												</Button>
 											);
 										}
@@ -374,32 +382,34 @@ class ContentTogglePanel extends Component {
 							selectBlock(blockParentId);
 						}}
 					/>
-					<div
-						className={
-							"wp-block-ub-content-toggle-accordion-toggle-wrap " +
-							toggleLocation
-						}
-						style={{ color: toggleColor }}
-					>
-						<span
-							onClick={() => this.setState({ showPanel: !showPanel })}
-							className={`wp-block-ub-content-toggle-accordion-state-indicator ${
-								icons[toggleIcon] ? icons[toggleIcon] : ""
-							} ${showPanel ? "open" : ""}`}
-						/>
-						<div className="wp-block-ub-content-toggle-accordion-toggle-location">
+					{toggleIcon !== "none" && (
+						<div
+							className={
+								"wp-block-ub-content-toggle-accordion-toggle-wrap " +
+								toggleLocation
+							}
+							style={{ color: toggleColor }}
+						>
 							<span
-								title={__("Switch toggle location", "ultimate-blocks")}
-								onClick={(_) =>
-									setAttributes({
-										toggleLocation:
-											toggleLocation === "left" ? "right" : "left",
-									})
-								}
-								className="dashicons dashicons-leftright"
+								onClick={() => this.setState({ showPanel: !showPanel })}
+								className={`wp-block-ub-content-toggle-accordion-state-indicator ${
+									icons[toggleIcon] ? icons[toggleIcon] : ""
+								} ${showPanel ? "open" : ""}`}
 							/>
+							<div className="wp-block-ub-content-toggle-accordion-toggle-location">
+								<span
+									title={__("Switch toggle location", "ultimate-blocks")}
+									onClick={(_) =>
+										setAttributes({
+											toggleLocation:
+												toggleLocation === "left" ? "right" : "left",
+										})
+									}
+									className="dashicons dashicons-leftright"
+								/>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 				{showPanel && (
 					<div className="wp-block-ub-content-toggle-accordion-content-wrap">

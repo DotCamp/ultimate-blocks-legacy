@@ -54,13 +54,12 @@ function ub_render_content_toggle_panel_block($attributes, $content){
                 <div class="'.$classNamePrefix.'-accordion-title-wrap"'
                     .($parentID == '' ? ' style="background-color: '.$theme.';"' : '').'>
                     <'.$titleTag.' class="'.$classNamePrefix.'-accordion-title"'
-                    .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</'.$titleTag.'>
-                    <div class="' . $classNamePrefix. '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
-                    '"><span class="' . $classNamePrefix .
-           '-accordion-state-indicator '. $icon_class  .
-           ( $collapsed ? '' : ' open' ) . '"></span>
-                    </div>
-                </div><div class="'.$classNamePrefix.'-accordion-content-wrap'.
+                    .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</'.$titleTag.'>'.
+                    ($toggleIcon == 'none' ? '' :'<div class="' . $classNamePrefix. '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
+                    '"><span class="' . $classNamePrefix .'-accordion-state-indicator '. $icon_class  .
+                    ( $collapsed ? '' : ' open' ) . '"></span>
+                    </div>').
+                '</div><div class="'.$classNamePrefix.'-accordion-content-wrap'.
                         ($collapsed?' ub-hide':'').'">'. $content
                 .'</div></div>' ;
 }

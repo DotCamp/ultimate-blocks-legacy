@@ -26,3 +26,12 @@
 		}
 	}
 }
+
+.wp-block-ub-content-toggle-customize-icons-wrap {
+	display: flex;
+	padding: 5px;
+	> * {
+		display: inline;
+		margin: 5px;
+	}
+}
