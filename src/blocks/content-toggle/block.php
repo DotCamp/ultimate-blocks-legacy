@@ -55,8 +55,8 @@ function ub_render_content_toggle_panel_block($attributes, $content){
                     .($parentID == '' ? ' style="background-color: '.$theme.';"' : '').'>
                     <'.$titleTag.' class="'.$classNamePrefix.'-accordion-title"'
                     .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</'.$titleTag.'>
-                    <div class="' . $classNamePrefix. '-accordion-toggle-wrap ' . esc_attr($toggleLocation) . '" style="color:'. esc_attr($toggleColor) .'">
-                    <span class="' . $classNamePrefix .
+                    <div class="' . $classNamePrefix. '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
+                    '"><span class="' . $classNamePrefix .
            '-accordion-state-indicator '. $icon_class  .
            ( $collapsed ? '' : ' open' ) . '"></span>
                     </div>

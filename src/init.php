@@ -240,7 +240,10 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL . 
                     $prefix . ' .wp-block-ub-content-toggle-accordion-title{' . PHP_EOL .
                         'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL;
+                    '}' . PHP_EOL .
+                    $prefix . ' .wp-block-ub-content-toggle-accordion-toggle-wrap{' . PHP_EOL .
+                        'color: ' . $attributes['toggleColor'] . ';' . PHP_EOL .
+                    '}';
                     break;
                 case 'ub/countdown':
                     $blockStylesheets .= '#ub_countdown_'. $attributes['blockID'] . '{' . PHP_EOL .
