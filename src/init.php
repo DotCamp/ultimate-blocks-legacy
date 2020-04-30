@@ -58,6 +58,9 @@ function ub_update_css_version($updated){
 
     if($frontendStyleUpdated && $editorStyleUpdated){
         update_option( 'ultimate_blocks_css_version', Ultimate_Blocks_Constants::plugin_version() );
+        if(!file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png')){
+            copy(dirname(__DIR__) . '/src/blocks/click-to-tweet/icons/sprite-twitter.png', wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png');
+        }
         $frontendStyleUpdated = false;
         $editorStyleUpdated = false;
     }
@@ -77,7 +80,12 @@ function ub_load_assets() {
             $frontStyleLocation = $blockDir . $blockDirName . '/style.css';
 
             if(file_exists($frontStyleLocation) && $blockList[ $key ]['active']){ //also detect if block is enabled
-                fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
+                if($block['name'] == 'ub/click-to-tweet'){
+                    fwrite($frontStyleFile, str_replace("src/blocks/click-to-tweet/icons", "ultimate-blocks", file_get_contents($frontStyleLocation)));
+                }
+                else{
+                    fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
+                }
             }
             if($block['name'] === 'ub/styled-box' && $blockList[$key]['active']){
                 //add css for blocks phased out by styled box
@@ -88,10 +96,6 @@ function ub_load_assets() {
         }
         fclose($frontStyleFile);
         ub_update_css_version('frontend');
-    }
-
-    if (!file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png')){
-        copy(dirname(__DIR__) . '/src/blocks/'. 'click-to-tweet/icons/sprite-twitter.png', wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png');
     }
 
     wp_enqueue_style(

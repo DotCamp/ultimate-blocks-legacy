@@ -231,6 +231,7 @@ class Ultimate_Blocks_Admin {
 			if($canMakeCustomFile){
 				fclose($frontStyleFile);
 				fclose($adminStyleFile);
+				copy(dirname(__DIR__) . '/src/blocks/click-to-tweet/icons/sprite-twitter.png', wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png');
 			}
 
 			update_option( 'ultimate_blocks', $saved_blocks );
