@@ -63,17 +63,9 @@ Array.prototype.slice
 
 					instance.addEventListener("click", function (e) {
 						e.stopImmediatePropagation();
-
-						if (indicator.classList.contains("open")) {
-							if (panelHeight !== panelContent.offsetHeight) {
-								panelHeight = panelContent.offsetHeight;
-							}
-							panelContent.style.height = `${panelHeight}px`;
-						} else {
+						if (panelContent.classList.contains("ub-hide")) {
 							panelContent.classList.remove("ub-hide");
 							panelContent.classList.add("ub-hiding");
-							//insert event handlers for hiding all other panels
-
 							if (
 								"showonlyone" in toggleContainer.dataset &&
 								toggleContainer.dataset.showonlyone
@@ -88,8 +80,9 @@ Array.prototype.slice
 									const siblingIndicator = siblingToggle.querySelector(
 										".wp-block-ub-content-toggle-accordion-state-indicator"
 									);
-									if (siblingIndicator.classList.contains("open")) {
-										siblingIndicator.classList.remove("open");
+									if (!siblingContent.contains("ub-hide")) {
+										if (siblingIndicator)
+											siblingIndicator.classList.remove("open");
 										siblingContent.classList.add("ub-toggle-transition");
 										const siblingHeight = siblingContent.offsetHeight;
 										siblingContent.style.height = `${siblingHeight}px`; //calculate panelheight first
@@ -100,12 +93,17 @@ Array.prototype.slice
 									}
 								});
 							}
+						} else {
+							if (panelHeight !== panelContent.offsetHeight) {
+								panelHeight = panelContent.offsetHeight;
+							}
+							panelContent.style.height = `${panelHeight}px`;
 						}
 						panelContent.classList.add("ub-toggle-transition");
-						indicator.classList.toggle("open");
+						if (indicator) indicator.classList.toggle("open");
 						setTimeout(() => {
 							//delay is needed for the animation to run properly
-							if (indicator.classList.contains("open")) {
+							if (panelContent.classList.contains("ub-hiding")) {
 								panelContent.classList.remove("ub-hiding");
 								panelContent.style.height = `${panelHeight}px`;
 							} else {
@@ -135,11 +133,11 @@ Array.prototype.slice
 
 					panelContent.addEventListener("transitionend", function () {
 						panelContent.classList.remove("ub-toggle-transition");
-						if (indicator.classList.contains("open")) {
-							panelContent.style.height = "";
-						} else {
+						if (panelContent.classList.contains("ub-hiding")) {
 							panelContent.classList.remove("ub-hiding");
 							panelContent.classList.add("ub-hide");
+						} else {
+							panelContent.style.height = "";
 						}
 					});
 

@@ -53,15 +53,9 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
       instance.addEventListener("click", function (e) {
         e.stopImmediatePropagation();
 
-        if (indicator.classList.contains("open")) {
-          if (panelHeight !== panelContent.offsetHeight) {
-            panelHeight = panelContent.offsetHeight;
-          }
-
-          panelContent.style.height = "".concat(panelHeight, "px");
-        } else {
+        if (panelContent.classList.contains("ub-hide")) {
           panelContent.classList.remove("ub-hide");
-          panelContent.classList.add("ub-hiding"); //insert event handlers for hiding all other panels
+          panelContent.classList.add("ub-hiding");
 
           if ("showonlyone" in toggleContainer.dataset && toggleContainer.dataset.showonlyone) {
             var siblingToggles = Array.prototype.slice.call(toggleContainer.children).map(function (p) {
@@ -73,8 +67,8 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
               var siblingContent = siblingToggle.nextElementSibling;
               var siblingIndicator = siblingToggle.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
 
-              if (siblingIndicator.classList.contains("open")) {
-                siblingIndicator.classList.remove("open");
+              if (!siblingContent.contains("ub-hide")) {
+                if (siblingIndicator) siblingIndicator.classList.remove("open");
                 siblingContent.classList.add("ub-toggle-transition");
                 var siblingHeight = siblingContent.offsetHeight;
                 siblingContent.style.height = "".concat(siblingHeight, "px"); //calculate panelheight first
@@ -86,13 +80,19 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
               }
             });
           }
+        } else {
+          if (panelHeight !== panelContent.offsetHeight) {
+            panelHeight = panelContent.offsetHeight;
+          }
+
+          panelContent.style.height = "".concat(panelHeight, "px");
         }
 
         panelContent.classList.add("ub-toggle-transition");
-        indicator.classList.toggle("open");
+        if (indicator) indicator.classList.toggle("open");
         setTimeout(function () {
           //delay is needed for the animation to run properly
-          if (indicator.classList.contains("open")) {
+          if (panelContent.classList.contains("ub-hiding")) {
             panelContent.classList.remove("ub-hiding");
             panelContent.style.height = "".concat(panelHeight, "px");
           } else {
@@ -113,11 +113,11 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
       panelContent.addEventListener("transitionend", function () {
         panelContent.classList.remove("ub-toggle-transition");
 
-        if (indicator.classList.contains("open")) {
-          panelContent.style.height = "";
-        } else {
+        if (panelContent.classList.contains("ub-hiding")) {
           panelContent.classList.remove("ub-hiding");
           panelContent.classList.add("ub-hide");
+        } else {
+          panelContent.style.height = "";
         }
       });
       panelContent.removeAttribute("style");
