@@ -13,7 +13,9 @@ function ub_content_toggle_add_frontend_assets() {
     foreach( $presentBlocks as $block ){
         if($block['blockName'] == 'ub/content-toggle' || $block['blockName'] == 'ub/content-toggle-panel'
             || $block['blockName'] == 'ub/content-toggle-block' || $block['blockName'] == 'ub/content-toggle-panel-block'){
-				add_action('wp_footer', 'ub_merge_faqpages', 20);
+				if( is_singular() && isset($block['attrs']['hasFAQSchema'])) {
+					add_action('wp_footer', 'ub_merge_faqpages', 20);
+				}
 				wp_enqueue_script(
                     'ultimate_blocks-content-toggle-front-script',
                     plugins_url( 'content-toggle/front.build.js', dirname( __FILE__ ) ),
