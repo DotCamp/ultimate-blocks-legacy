@@ -73,7 +73,9 @@ function ub_handleTabEvent(tab) {
   var tabContentContainer = Array.prototype.slice.call(parent.children).filter(function (elem) {
     return elem.classList.contains("wp-block-ub-tabbed-content-tabs-content");
   })[0];
-  Array.prototype.slice.call(tabContentContainer.getElementsByClassName("wp-block-ub-tabbed-content-tab-content-wrap")).forEach(function (tabContent, i) {
+  Array.prototype.slice.call(tabContentContainer.children).filter(function (child) {
+    return child.classList.contains("wp-block-ub-tabbed-content-tab-content-wrap");
+  }).forEach(function (tabContent, i) {
     if (ub_getNodeindex(tab) === i) {
       tabContent.classList.add("active");
       tabContent.classList.remove("ub-hide");
@@ -91,7 +93,9 @@ function ub_handleTabEvent(tab) {
       tabContent.classList.add("ub-hide");
     }
   });
-  Array.prototype.slice.call(tabContentContainer.getElementsByClassName("wp-block-ub-tabbed-content-accordion-toggle ")).forEach(function (accordionToggle) {
+  Array.prototype.slice.call(tabContentContainer.children).filter(function (child) {
+    return child.classList.contains("wp-block-ub-tabbed-content-accordion-toggle");
+  }).forEach(function (accordionToggle) {
     if (ub_getNodeindex(accordionToggle) / 2 === ub_getNodeindex(tab)) {
       accordionToggle.classList.add("active");
     } else {
@@ -377,7 +381,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 window.onhashchange = ub_hashTabSwitch;
 Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content-tabs-content")).forEach(function (container) {
-  Array.prototype.slice.call(container.getElementsByClassName("wp-block-ub-tabbed-content-accordion-toggle")).forEach(function (accordionToggle, i) {
+  Array.prototype.slice.call(container.children).filter(function (child) {
+    return child.classList.contains("wp-block-ub-tabbed-content-accordion-toggle");
+  }).forEach(function (accordionToggle, i) {
     accordionToggle.addEventListener("click", function () {
       var root = container.parentElement;
 

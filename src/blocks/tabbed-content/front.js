@@ -95,10 +95,9 @@ function ub_handleTabEvent(tab) {
 		)[0];
 
 	Array.prototype.slice
-		.call(
-			tabContentContainer.getElementsByClassName(
-				"wp-block-ub-tabbed-content-tab-content-wrap"
-			)
+		.call(tabContentContainer.children)
+		.filter((child) =>
+			child.classList.contains("wp-block-ub-tabbed-content-tab-content-wrap")
 		)
 		.forEach((tabContent, i) => {
 			if (ub_getNodeindex(tab) === i) {
@@ -126,10 +125,9 @@ function ub_handleTabEvent(tab) {
 		});
 
 	Array.prototype.slice
-		.call(
-			tabContentContainer.getElementsByClassName(
-				"wp-block-ub-tabbed-content-accordion-toggle "
-			)
+		.call(tabContentContainer.children)
+		.filter((child) =>
+			child.classList.contains("wp-block-ub-tabbed-content-accordion-toggle")
 		)
 		.forEach((accordionToggle) => {
 			if (ub_getNodeindex(accordionToggle) / 2 === ub_getNodeindex(tab)) {
@@ -511,10 +509,9 @@ Array.prototype.slice
 	)
 	.forEach((container) => {
 		Array.prototype.slice
-			.call(
-				container.getElementsByClassName(
-					"wp-block-ub-tabbed-content-accordion-toggle"
-				)
+			.call(container.children)
+			.filter((child) =>
+				child.classList.contains("wp-block-ub-tabbed-content-accordion-toggle")
 			)
 			.forEach((accordionToggle, i) => {
 				accordionToggle.addEventListener("click", () => {
