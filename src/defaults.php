@@ -231,6 +231,14 @@ $defaultValues = array(
                 'type' => 'boolean',
                 'default' => false
             ),
+            'theme' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'titleColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'preventCollapse' => array(
                 'type' => 'boolean',
                 'default' => false
@@ -249,7 +257,7 @@ $defaultValues = array(
             ),
             'theme' => array(
                 'type' => 'string',
-                'default' => '#f1f1f1'
+                'default' => ''
             ),
             'collapsed' => array(
                 'type' => 'boolean',
@@ -257,7 +265,7 @@ $defaultValues = array(
             ),
             'titleColor' => array(
                 'type' => 'string',
-                'default' => '#000000'
+                'default' => ''
             ),
             'panelTitle' => array(
                 'type' => 'string',

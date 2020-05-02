@@ -26,7 +26,7 @@ const attributes = {
 	},
 	theme: {
 		type: "string",
-		default: "#f1f1f1",
+		default: "",
 	},
 	collapsed: {
 		type: "boolean",
@@ -34,7 +34,7 @@ const attributes = {
 	},
 	titleColor: {
 		type: "string",
-		default: "#000000",
+		default: "",
 	},
 	hasFAQSchema: {
 		type: "boolean",

@@ -185,13 +185,14 @@ export class OldPanelContent extends Component {
 	}
 }
 
+export const oldColorDefaults = {
+	theme: "#f63d3d",
+	titleColor: "#ffffff",
+};
+
 export class PanelContent extends Component {
 	constructor(props) {
 		super(props);
-		this.getPanels = this.getPanels.bind(this);
-	}
-	getPanels() {
-		return this.props.block.innerBlocks;
 	}
 	render() {
 		const {
@@ -224,7 +225,7 @@ export class PanelContent extends Component {
 			block,
 		} = this.props;
 
-		const panels = this.getPanels();
+		const panels = this.props.block.innerBlocks;
 
 		const newArrangement = panels.map((panel) => panel.attributes.index);
 
@@ -274,6 +275,11 @@ export class PanelContent extends Component {
 			);
 		};
 
+		const newColorDefaults = {
+			theme: "#f1f1f1",
+			titleColor: "#000000",
+		};
+
 		//Detect if one of the child blocks has received a command to add another child block
 		if (newBlockTarget.length > 0) {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -305,9 +311,9 @@ export class PanelContent extends Component {
 			} else {
 				insertBlock(
 					createBlock("ub/content-toggle-panel-block", {
-						theme,
+						theme: newColorDefaults.theme,
 						collapsed,
-						titleColor,
+						titleColor: newColorDefaults.titleColor,
 						hasFAQSchema,
 						toggleLocation,
 						toggleColor,
@@ -362,28 +368,23 @@ export class PanelContent extends Component {
 		}
 
 		if (blockID !== block.clientId) {
-			setAttributes({ blockID: block.clientId });
+			let presets = { blockID: block.clientId };
+			if (blockID !== "") {
+				if (theme === "") {
+					presets = Object.assign(presets, { theme: oldColorDefaults.theme });
+				}
+				if (titleColor === "") {
+					presets = Object.assign(presets, {
+						titleColor: oldColorDefaults.titleColor,
+					});
+				}
+			}
+			setAttributes(presets);
 		}
 
 		let newAttributeValues;
 
 		if (oldArrangement.length === 0) {
-			/*panels.forEach((panel) =>
-				updateBlockAttributes(panel.clientId, {
-					hasFAQSchema,
-					theme,
-					titleColor,
-					collapsed, //change this if showonlyone is true, else left previous value
-					titleTag,
-					preventCollapse,
-					toggleLocation,
-					toggleColor,
-					toggleIcon,
-					border,
-					showOnlyOne,
-				})
-			);*/
-			//check if new insertion or loading previously-saved instance
 			setState({
 				oldAttributeValues: panels.map((panel) =>
 					((
@@ -430,8 +431,10 @@ export class PanelContent extends Component {
 							oldAttributeValues[changedPanel],
 							newAttributeValues[changedPanel]
 						);
-
-						if (newAttributeValues[changedPanel].showOnlyOne) {
+						if (
+							changedPanel > -1 && //for preventing errors in gutenberg 8
+							newAttributeValues[changedPanel].showOnlyOne
+						) {
 							//value of collapsed should be true for changedpanel and false for parent and all otherpanels
 							panels.forEach((panel, i) => {
 								updateBlockAttributes(

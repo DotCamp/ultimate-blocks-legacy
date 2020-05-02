@@ -3,6 +3,7 @@ import icons from "../icons/icons";
 
 import { panel_version_1_1_9 } from "../oldVersions";
 import { Component } from "react";
+import { oldColorDefaults } from "./editorDisplay";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -35,7 +36,7 @@ const attributes = {
 	},
 	theme: {
 		type: "text",
-		default: "#000000",
+		default: "",
 	},
 	collapsed: {
 		type: "boolean",
@@ -47,7 +48,7 @@ const attributes = {
 	},
 	titleColor: {
 		type: "string",
-		default: "#ffffff",
+		default: "",
 	},
 	panelTitle: {
 		type: "string",
@@ -138,7 +139,18 @@ class ContentTogglePanel extends Component {
 		};
 
 		if (parentID !== blockParentId) {
-			setAttributes({ parentID: blockParentId });
+			let presets = { parentID: blockParentId };
+			if (parentID !== "") {
+				if (theme === "") {
+					presets = Object.assign(presets, { theme: oldColorDefaults.theme });
+				}
+				if (titleColor === "") {
+					presets = Object.assign(presets, {
+						titleColor: oldColorDefaults.titleColor,
+					});
+				}
+			}
+			setAttributes(presets);
 		}
 
 		return [
@@ -176,25 +188,8 @@ class ContentTogglePanel extends Component {
 							onChange={() => {
 								setAttributes({ showOnlyOne: !showOnlyOne });
 								if (!showOnlyOne) {
-									//show currently selected accordion, collapse the rest
 									setAttributes({ collapsed: false, preventCollapse: false });
 								}
-								//handling of sibling block and parent block attributes already done at parent
-								/*if (showOnlyOne) {
-									panels.forEach((panel, i) =>
-										updateBlockAttributes(panel.clientId, {
-											collapsed: i === 0,
-										})
-									);
-								} else {
-									setAttributes({ collapsed: false, preventCollapse: false });
-									panels.forEach((panel) =>
-										updateBlockAttributes(panel.clientId, {
-											collapsed: false,
-											preventCollapse: false,
-										})
-									);
-								}*/
 							}}
 						/>
 					</PanelRow>
@@ -310,18 +305,6 @@ class ContentTogglePanel extends Component {
 						<label htmlFor="ub-content-toggle-status-icon">
 							{__("Icon", "ultimate-blocks")}
 						</label>
-						{/*<SelectControl id="ub-content-toggle-status-icon"*/}
-						{/*			   options={[*/}
-						{/*				   {value: "chevron", label: __("chevron", "ultimate-blocks")},*/}
-						{/*				   {value: "plus", label: __("plus", "ultimate-blocks")}*/}
-						{/*			   ]}*/}
-						{/*			   value={toggleIcon}*/}
-						{/*			   onChange={icon => {*/}
-						{/*				   setAttributes({*/}
-						{/*					   toggleIcon: icon*/}
-						{/*				   })*/}
-						{/*			   }}*/}
-						{/*/>*/}
 						<Dropdown
 							position="bottom right"
 							renderToggle={({ onToggle, isOpen }) => (
