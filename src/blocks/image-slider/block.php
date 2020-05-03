@@ -46,18 +46,18 @@ function ub_image_slider_add_frontend_assets() {
         wp_enqueue_script(
             'ultimate_blocks-image-slider-init-script',
             plugins_url( '/front.build.js', __FILE__ ),
-            array(),
+            array('ultimate_blocks-flickity'),
             Ultimate_Blocks_Constants::plugin_version(),
             true
         );
-        wp_enqueue_script(
-            'ultimate_blocks-image-slider-front-script',
-            plugins_url( '/flickity.pkgd.js', __FILE__ ),
-            array(),
-            Ultimate_Blocks_Constants::plugin_version()
-        );
     }
 }
+
+wp_register_script(
+    'ultimate_blocks-flickity',
+    plugins_url( '/flickity.pkgd.js', __FILE__ ),
+    array(),
+    Ultimate_Blocks_Constants::plugin_version());
 
 add_action('init', 'ub_register_image_slider_block');
 add_action( 'wp_enqueue_scripts', 'ub_image_slider_add_frontend_assets' );
