@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -130,6 +130,17 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.3.4 =
+
+Release Date: May 4th, 2020
+
+FIX: Frontend Animation Not Working When There's No Indicator Icon in Content Toggle Block.
+FIX: Preserve Old Color Settings For Title and Background Color in Content Toggle Block.
+FIX: Frontend Script to Handle Nested Tabbed Content Instances.
+FIX: Button Icon Position Right Not Working.
+FIX: Delay Image Slider Resizing After Page Load to Fix Image Issue.
+REMOVE: Unused Styles in Post Grid Block.
 
 = 2.3.3 =
 
