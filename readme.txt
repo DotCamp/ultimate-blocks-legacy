@@ -43,6 +43,7 @@ We have more exciting blocks in the making. Have a suggestion? [Let us know](htt
 
 * [Visit Ultimate Blocks Website](https://ultimateblocks.com?utm_medium=wp.org&utm_source=wordpressorg&utm_campaign=readme&utm_content=ultimateblocks)
 * [Follow Us on Twitter](http://twitter.com/Ultimate_Blocks)
+* [Join Our Support Community](https://community.ultimateblocks.com/)
 * [Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/)
 
 ## More Info About the Blocks
@@ -121,7 +122,7 @@ That's it. You're done!
 
 = I Need Help with Gutenberg =
 
-[Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/) and ask us. We will help you.
+[Join Our Support Community](https://community.ultimateblocks.com/) or [Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/) and ask us. We will help you.
 
 == Screenshot ==
 
