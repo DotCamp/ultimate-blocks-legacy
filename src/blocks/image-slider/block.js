@@ -243,7 +243,7 @@ registerBlockType("ub/image-slider", {
 								pics: newImages,
 								descriptions: newImages.map((img) => ({
 									id: img.id,
-									text: "",
+									text: img.caption,
 									link: "",
 								})),
 							})
