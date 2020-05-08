@@ -17,7 +17,7 @@ export class OldStars extends Component {
 			id,
 			className,
 			inactiveStarColor,
-			style
+			style,
 		} = this.props;
 		return (
 			<div
@@ -25,12 +25,12 @@ export class OldStars extends Component {
 				style={Object.assign(
 					{
 						display: "flex",
-						flexDirection: "flex-row"
+						flexDirection: "flex-row",
 					},
 					style
 				)}
 			>
-				{[...Array(limit).keys()].map(i => (
+				{[...Array(limit).keys()].map((i) => (
 					<svg key={i} height="20" width="20" viewBox="0 0 150 150">
 						<defs>
 							<mask id={`ub_review_star_filter-${id}-${i}`}>
@@ -73,7 +73,7 @@ export class Stars extends Component {
 		super(props);
 		this.state = {
 			displayValue: this.props.value,
-			displayColor: this.props.activeStarColor
+			displayColor: this.props.activeStarColor,
 		};
 		this.mouseHover = this.mouseHover.bind(this);
 		this.mouseLeave = this.mouseLeave.bind(this);
@@ -82,20 +82,20 @@ export class Stars extends Component {
 	mouseHover(i) {
 		this.setState({
 			displayValue: i + 1,
-			displayColor: this.props.selectedStarColor
+			displayColor: this.props.selectedStarColor,
 		});
 	}
 	mouseLeave() {
 		this.setState({
 			displayValue: this.props.value,
-			displayColor: this.props.activeStarColor
+			displayColor: this.props.activeStarColor,
 		});
 	}
 	mouseClick(i) {
 		const { setValue, value } = this.props;
 		setValue(value === i + 1 ? i + 0.5 : i + 1);
 		this.setState({
-			displayValue: value === i + 1 ? i + 0.5 : i + 1
+			displayValue: value === i + 1 ? i + 0.5 : i + 1,
 		});
 	}
 	componentWillReceiveProps(newProps) {
@@ -103,7 +103,7 @@ export class Stars extends Component {
 		if (this.props.onHover || this.state.displayValue !== value) {
 			this.setState({
 				displayValue: value,
-				displayColor: activeStarColor
+				displayColor: activeStarColor,
 			});
 		} else {
 			this.setState({ displayColor: activeStarColor });
@@ -119,7 +119,7 @@ export class Stars extends Component {
 			onHover,
 			onClick,
 			style,
-			starOutlineColor
+			starOutlineColor,
 		} = this.props;
 		return (
 			<div
@@ -127,21 +127,21 @@ export class Stars extends Component {
 				style={Object.assign(
 					{
 						display: "flex",
-						flexDirection: "flex-row"
+						flexDirection: "flex-row",
 					},
 					style
 				)}
 			>
-				{[...Array(limit).keys()].map(i => (
+				{[...Array(limit).keys()].map((i) => (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						key={i}
 						height="20"
 						width="20"
 						viewBox="0 0 150 150"
-						onMouseOver={_ => onHover || this.mouseHover(i)}
-						onMouseOut={_ => this.mouseLeave()}
-						onClick={_ => onClick || this.mouseClick(i)}
+						onMouseOver={(_) => onHover || this.mouseHover(i)}
+						onMouseOut={(_) => this.mouseLeave()}
+						onClick={(_) => onClick || this.mouseClick(i)}
 					>
 						<defs>
 							<mask id={`ub_review_star_filter-${id}-${i}`}>
@@ -188,8 +188,8 @@ export class ReviewBody extends Component {
 		super(props);
 		this.state = {
 			average:
-				this.props.items.map(i => i.value).reduce((total, v) => total + v) /
-				this.props.items.length
+				this.props.items.map((i) => i.value).reduce((total, v) => total + v) /
+				this.props.items.length,
 		};
 	}
 
@@ -230,14 +230,14 @@ export class ReviewBody extends Component {
 			setEditable,
 			alignments,
 			enableCTA,
-			imageSize
+			imageSize,
 		} = this.props;
 
 		const { titleAlign, authorAlign, descriptionAlign } = alignments;
 		const { average } = this.state;
 
 		const newAverage =
-			items.map(i => i.value).reduce((total, v) => total + v) / items.length;
+			items.map((i) => i.value).reduce((total, v) => total + v) / items.length;
 
 		if (average !== newAverage) {
 			this.setState({ average: newAverage });
@@ -251,16 +251,16 @@ export class ReviewBody extends Component {
 					placeholder={__("Title of the review")}
 					value={itemName}
 					style={{ textAlign: titleAlign }}
-					onChange={text => setItemName(text)}
-					unstableOnFocus={_ => setEditable("reviewTitle")}
+					onChange={(text) => setItemName(text)}
+					unstableOnFocus={(_) => setEditable("reviewTitle")}
 				/>
 				<RichText
 					tagName="p"
 					placeholder={__("Review Author name")}
 					value={authorName}
 					style={{ textAlign: authorAlign }}
-					onChange={text => setAuthorName(text)}
-					unstableOnFocus={_ => setEditable("reviewAuthor")}
+					onChange={(text) => setAuthorName(text)}
+					unstableOnFocus={(_) => setEditable("reviewAuthor")}
 				/>
 				{(imageEnabled || descriptionEnabled) && (
 					<div className="ub_review_description_container">
@@ -270,9 +270,9 @@ export class ReviewBody extends Component {
 								tagName="p"
 								placeholder={__("Item description")}
 								value={description}
-								onChange={text => setDescription(text)}
+								onChange={(text) => setDescription(text)}
 								style={{ textAlign: descriptionAlign }}
-								unstableOnFocus={_ => setEditable("reviewItemDescription")}
+								unstableOnFocus={(_) => setEditable("reviewItemDescription")}
 							/>
 						)}
 						{imageEnabled &&
@@ -284,17 +284,17 @@ export class ReviewBody extends Component {
 										alt={imgAlt}
 										style={{
 											maxHeight: `${imageSize}px`,
-											maxWidth: `${imageSize}px`
+											maxWidth: `${imageSize}px`,
 										}}
 									/>
 									{isSelected && (
 										<Button
 											className="ub-remove-image"
-											onClick={_ =>
+											onClick={(_) =>
 												setImage({
 													id: 0,
 													url: "",
-													alt: ""
+													alt: "",
 												})
 											}
 										>
@@ -305,7 +305,7 @@ export class ReviewBody extends Component {
 							) : (
 								<div className="ub_review_upload_button">
 									<MediaUpload
-										onSelect={img => setImage(img)}
+										onSelect={(img) => setImage(img)}
 										type="image"
 										value={imgID}
 										render={({ open }) => (
@@ -328,24 +328,26 @@ export class ReviewBody extends Component {
 							key={i}
 							placeholder={__("Feature name")}
 							value={j.label}
-							onChange={text => {
-								let newArray = items;
-								newArray[i].label = text;
-								setItems(newArray);
-							}}
-							unstableOnFocus={_ => setEditable("")}
+							onChange={(text) =>
+								setItems([
+									...items.slice(0, i),
+									{ label: text, value: j.value },
+									...items.slice(i + 1),
+								])
+							}
+							unstableOnFocus={(_) => setEditable("")}
 						/>
 						<div
 							key={i}
 							style={{
 								marginLeft: "auto",
-								minWidth: items.length > 1 ? 120 : 100
+								minWidth: items.length > 1 ? 120 : 100,
 							}}
 						>
 							{items.length > 1 && (
 								<div
 									className="dashicons dashicons-trash"
-									onClick={_ => {
+									onClick={(_) => {
 										setEditable("");
 										let newItems = items
 											.slice(0, i)
@@ -354,8 +356,8 @@ export class ReviewBody extends Component {
 										this.setState({
 											average:
 												newItems
-													.map(i => i.value)
-													.reduce((total, v) => total + v) / newItems.length
+													.map((i) => i.value)
+													.reduce((total, v) => total + v) / newItems.length,
 										});
 									}}
 								/>
@@ -365,15 +367,18 @@ export class ReviewBody extends Component {
 								key={i}
 								value={j.value}
 								limit={starCount}
-								setValue={newValue => {
-									let newArray = items;
-									newArray[i].value = newValue;
+								setValue={(newValue) => {
+									const newArray = [
+										...items.slice(0, i),
+										{ label: j.label, value: newValue },
+										...items.slice(i + 1),
+									];
 									setItems(newArray);
 									this.setState({
 										average:
 											newArray
-												.map(i => i.value)
-												.reduce((total, v) => total + v) / newArray.length
+												.map((i) => i.value)
+												.reduce((total, v) => total + v) / newArray.length,
 									});
 								}}
 								inactiveStarColor={inactiveStarColor}
@@ -386,10 +391,10 @@ export class ReviewBody extends Component {
 				))}
 				<div
 					title={__("Insert new review entry")}
-					onClick={_ => {
+					onClick={(_) => {
 						setItems([...items, { label: "", value: 0 }]);
 						this.setState({
-							average: average / (items.length + 1)
+							average: average / (items.length + 1),
 						});
 					}}
 					className="ub_review_add_entry dashicons dashicons-plus-alt"
@@ -399,16 +404,16 @@ export class ReviewBody extends Component {
 						className="ub_review_summary_title"
 						placeholder={__("Title of the summary goes here")}
 						tagName="p"
-						onChange={text => setSummaryTitle(text)}
+						onChange={(text) => setSummaryTitle(text)}
 						value={summaryTitle}
-						unstableOnFocus={_ => setEditable("")}
+						unstableOnFocus={(_) => setEditable("")}
 					/>
 					<div className="ub_review_overall_value">
 						<RichText
 							placeholder={__("Summary of the review goes here")}
-							onChange={text => setSummaryDescription(text)}
+							onChange={(text) => setSummaryDescription(text)}
 							value={summaryDescription}
-							unstableOnFocus={_ => setEditable("")}
+							unstableOnFocus={(_) => setEditable("")}
 						/>
 						<div className="ub_review_average">
 							<span className="ub_review_rating">
@@ -417,8 +422,8 @@ export class ReviewBody extends Component {
 							<Stars
 								id={`${ID}-average`}
 								className="ub_review_average_stars"
-								onHover={_ => null}
-								onClick={_ => null}
+								onHover={(_) => null}
+								onClick={(_) => null}
 								value={average}
 								limit={starCount}
 								inactiveStarColor={inactiveStarColor}
@@ -435,17 +440,17 @@ export class ReviewBody extends Component {
 									className="ub_review_cta_btn"
 									style={{
 										backgroundColor: callToActionBackColor,
-										borderColor: callToActionForeColor
+										borderColor: callToActionForeColor,
 									}}
 								>
 									<RichText
 										style={{
-											color: callToActionForeColor
+											color: callToActionForeColor,
 										}}
 										placeholder={__("Call to action")}
 										value={callToActionText}
-										onChange={text => setCallToActionText(text)}
-										unstableOnFocus={_ => setEditable("")}
+										onChange={(text) => setCallToActionText(text)}
+										unstableOnFocus={(_) => setEditable("")}
 									/>
 								</div>
 							)}
@@ -460,7 +465,7 @@ export class ReviewBody extends Component {
 								autoFocus={false}
 								style={{ width: "200px" }} //inline style used to override gutenberg's default style
 								value={callToActionURL}
-								onChange={text => setCallToActionURL(text)}
+								onChange={(text) => setCallToActionURL(text)}
 							/>
 						</div>
 					)}
