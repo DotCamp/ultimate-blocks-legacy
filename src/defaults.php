@@ -1144,6 +1144,14 @@ $defaultValues = array(
             'outlineColor' => array(
                 'type' => 'string',
                 'default' => '#000000'
+            ),
+            'outlineStyle' => array(
+                'type' => 'string',
+                'default' => 'solid'
+            ),
+            'outlineThickness' => array(
+                'type' => 'number',
+                'default' => 1
             )
         )
     ),

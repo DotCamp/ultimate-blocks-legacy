@@ -1,5 +1,21 @@
 <?php
-function ub_render_styled_box_block($attributes){
+
+function ub_render_styled_box_bordered_content($attributes, $content){
+    return $content;
+}
+
+function ub_register_styled_box_bordered_box_block() {
+	if( function_exists( 'register_block_type' ) ) {
+		register_block_type( 'ub/styled-box-bordered-content', array(
+            'attributes' => array(),
+            'render_callback' => 'ub_render_styled_box_bordered_content')
+        );
+    }
+}
+
+add_action('init', 'ub_register_styled_box_bordered_box_block');
+
+function ub_render_styled_box_block($attributes, $content){
     extract($attributes);
     $renderedBlock = '';
     if($mode == 'notification'){
@@ -25,6 +41,9 @@ function ub_render_styled_box_block($attributes){
                     <p class="ub-feature-body">'.$text[$i].'</p>
             </div>';
         }
+    }
+    else if ($mode == 'bordered'){
+        $renderedBlock = $content;
     }
 
     return '<div class="ub-styled-box ub-'.$mode.'-box'.(isset($className) ? ' ' . esc_attr($className) : '')

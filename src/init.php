@@ -484,6 +484,13 @@ function ub_include_block_attribute_css() {
                             '}' . PHP_EOL;
                         }
                     }
+                    else if($attributes['mode'] == 'bordered'){
+                        $blockStylesheets .= ' .ub-bordered-box{' . PHP_EOL .
+                            'border: ' . $attributes['outlineThickness'] . 'px ' .
+                                        $attributes['outlineStyle'] . ' ' .
+                                        $attributes['outlineColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
                     break;
                 case 'ub/styled-list':
                     $prefix = '#ub_styled_list-' . $attributes['blockID'];

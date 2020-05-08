@@ -7,10 +7,19 @@ const {
 	BlockControls,
 	MediaUpload,
 	InspectorControls,
+	ColorPalette,
 	PanelColorSettings,
+	InnerBlocks,
 } = wp.blockEditor || wp.editor;
 
-const { Toolbar, Button, IconButton, SelectControl } = wp.components;
+const {
+	Toolbar,
+	Button,
+	IconButton,
+	SelectControl,
+	PanelBody,
+	RangeControl,
+} = wp.components;
 
 const { withState, compose } = wp.compose;
 
@@ -29,6 +38,7 @@ import icon, {
 	numberBoxIcon,
 	featureBoxIcon,
 	notificationBoxIcon,
+	borderedBoxIcon,
 } from "./icon";
 
 registerBlockType("ub/styled-box", {
@@ -76,6 +86,14 @@ registerBlockType("ub/styled-box", {
 			type: "string",
 			default: "#000000",
 		},
+		outlineThickness: {
+			type: "number",
+			default: 1,
+		},
+		outlineStyle: {
+			type: "string",
+			default: "solid",
+		},
 		mode: {
 			type: "string",
 			default: "",
@@ -107,6 +125,8 @@ registerBlockType("ub/styled-box", {
 			foreColor,
 			backColor,
 			outlineColor,
+			outlineStyle,
+			outlineThickness,
 			mode,
 			titleAlign,
 			textAlign,
@@ -416,6 +436,49 @@ registerBlockType("ub/styled-box", {
 					]}
 				/>
 			);
+		} else if (mode === "bordered") {
+			renderedBlock = (
+				<InnerBlocks
+					templateLock={"all"}
+					template={[["ub/styled-box-bordered-content"]]}
+				/>
+			);
+
+			inspectorExtras = (
+				<PanelBody title={__("Border settings")} initialOpen={true}>
+					<RangeControl
+						label={__("Border size")}
+						value={outlineThickness}
+						onChange={(outlineThickness) => setAttributes({ outlineThickness })}
+						min={1}
+						max={30}
+					/>
+					<p>{__("Border style")}</p>
+					<SelectControl
+						label={__("Border style")}
+						value={outlineStyle}
+						options={[
+							"solid",
+							"dashed",
+							"dotted",
+							"double",
+							"groove",
+							"ridge",
+							"inset",
+							"outset",
+						].map((a) => ({
+							label: __(a),
+							value: a,
+						}))}
+						onChange={(outlineStyle) => setAttributes({ outlineStyle })}
+					/>
+					<p>{__("Border color")}</p>
+					<ColorPalette
+						value={outlineColor}
+						onChange={(outlineColor) => setAttributes({ outlineColor })}
+					/>
+				</PanelBody>
+			);
 		} else {
 			renderedBlock = (
 				<div className="ub-styled-box-selection">
@@ -468,6 +531,11 @@ registerBlockType("ub/styled-box", {
 							<p>{__("Number Box")}</p>
 							<p>{__("Add Numbered Boxes.")}</p>
 						</div>
+						<div onClick={(_) => setAttributes({ mode: "bordered" })}>
+							{borderedBoxIcon}
+							<p>{__("Bordered Box")}</p>
+							<p>{__("Add Box with Border.")}</p>
+						</div>
 					</div>
 				</div>
 			);
@@ -519,10 +587,12 @@ registerBlockType("ub/styled-box", {
 						<SelectControl
 							label="Select mode"
 							value={mode}
-							options={["number", "notification", "feature"].map((a) => ({
-								label: `${a[0].toUpperCase() + a.slice(1)} box`,
-								value: a,
-							}))}
+							options={["number", "notification", "feature", "bordered"].map(
+								(a) => ({
+									label: `${a[0].toUpperCase() + a.slice(1)} box`,
+									value: a,
+								})
+							)}
 							onChange={(selection) => {
 								let newAttributes = { mode: selection };
 								if (selection === "notification") {
@@ -554,6 +624,7 @@ registerBlockType("ub/styled-box", {
 										});
 									}
 								}
+
 								setAttributes(newAttributes);
 							}}
 						/>
@@ -562,9 +633,36 @@ registerBlockType("ub/styled-box", {
 					{inspectorExtras}
 				</InspectorControls>
 			),
-			<div className={`ub-styled-box ub-${mode}-box`}>{renderedBlock}</div>,
+			<div
+				className={`ub-styled-box ub-${mode}-box`}
+				style={
+					mode === "bordered" && {
+						border: `${outlineThickness}px ${outlineStyle} ${outlineColor}`,
+					}
+				}
+			>
+				{renderedBlock}
+			</div>,
 		];
 	}),
 
-	save: (_) => null,
+	save: (props) =>
+		props.attributes.mode === "bordered" ? <InnerBlocks.Content /> : null,
+});
+
+registerBlockType("ub/styled-box-bordered-content", {
+	title: __("Bordered Box Content"),
+	parent: ["ub/styled-box"],
+	icon: icon,
+	category: "ultimateblocks",
+	supports: {
+		inserter: false,
+		reusable: false,
+	},
+
+	edit() {
+		return <InnerBlocks templateLock={false} />; //add padding?
+	},
+
+	save: () => <InnerBlocks.Content />,
 });
