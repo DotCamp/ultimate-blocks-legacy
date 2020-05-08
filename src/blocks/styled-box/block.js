@@ -635,11 +635,12 @@ registerBlockType("ub/styled-box", {
 			),
 			<div
 				className={`ub-styled-box ub-${mode}-box`}
-				style={
-					mode === "bordered" && {
-						border: `${outlineThickness}px ${outlineStyle} ${outlineColor}`,
-					}
-				}
+				style={{
+					border:
+						mode === "bordered"
+							? `${outlineThickness}px ${outlineStyle} ${outlineColor}`
+							: null,
+				}}
 			>
 				{renderedBlock}
 			</div>,
