@@ -2,7 +2,7 @@ import icon from "./icon";
 import TableOfContents, {
 	inspectorControls,
 	blockControls,
-	editorDisplay
+	editorDisplay,
 } from "./components";
 import {
 	version_1_0_8,
@@ -13,7 +13,7 @@ import {
 	version_1_1_8,
 	version_2_0_0,
 	oldAttributes,
-	updateFrom
+	updateFrom,
 } from "./oldVersions";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
@@ -31,52 +31,52 @@ import { upgradeButtonLabel, mergeRichTextArray } from "../../common";
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	title: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	allowedHeaders: {
 		type: "array",
-		default: Array(6).fill(true)
+		default: Array(6).fill(true),
 	},
 	links: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	gaps: {
 		type: "array",
-		default: []
+		default: [],
 	},
 	allowToCHiding: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	showList: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	numColumns: {
 		type: "number",
-		default: 1
+		default: 1,
 	},
 	listStyle: {
 		type: "string",
-		default: "bulleted" //other options: numbered, plain
+		default: "bulleted", //other options: numbered, plain
 	},
 	enableSmoothScroll: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	titleAlignment: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
-	allowToLatin : {
+	allowToLatin: {
 		type: "boolean",
-		default: false
-	}
+		default: false,
+	},
 };
 
 registerBlockType("ub/table-of-contents", {
@@ -88,26 +88,26 @@ registerBlockType("ub/table-of-contents", {
 	attributes: oldAttributes,
 
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
-		}))
-	])(function(props) {
+				.replaceBlock,
+		})),
+	])(function (props) {
 		const {
 			block,
 			replaceBlock,
 			isSelected,
 			attributes,
-			setAttributes
+			setAttributes,
 		} = props;
 		const { allowedHeaders, showList, allowToCHiding } = attributes;
 		return [
@@ -125,8 +125,8 @@ registerBlockType("ub/table-of-contents", {
 											allowedHeaders: [
 												...allowedHeaders.slice(0, i),
 												!allowedHeaders[i],
-												...allowedHeaders.slice(i + 1)
-											]
+												...allowedHeaders.slice(i + 1),
+											],
 										})
 									}
 								/>
@@ -143,10 +143,10 @@ registerBlockType("ub/table-of-contents", {
 							<ToggleControl
 								id="ub_toc_toggle_display"
 								checked={allowToCHiding}
-								onChange={allowToCHiding => {
+								onChange={(allowToCHiding) => {
 									setAttributes({
 										allowToCHiding,
-										showList: allowToCHiding ? showList : true
+										showList: allowToCHiding ? showList : true,
 									});
 								}}
 							/>
@@ -161,7 +161,7 @@ registerBlockType("ub/table-of-contents", {
 									checked={showList}
 									onChange={() => {
 										setAttributes({
-											showList: !showList
+											showList: !showList,
 										});
 									}}
 								/>
@@ -180,7 +180,7 @@ registerBlockType("ub/table-of-contents", {
 							createBlock(
 								"ub/table-of-contents-block",
 								Object.assign(otherAttributes, {
-									title: mergeRichTextArray(title)
+									title: mergeRichTextArray(title),
 								})
 							)
 						);
@@ -189,7 +189,7 @@ registerBlockType("ub/table-of-contents", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -201,7 +201,7 @@ registerBlockType("ub/table-of-contents", {
 			showList,
 			numColumns,
 			allowToCHiding,
-			listStyle
+			listStyle,
 		} = props.attributes;
 		return (
 			<div
@@ -239,7 +239,7 @@ registerBlockType("ub/table-of-contents", {
 							title.length === 0 ||
 							(title.length === 1 && title[0] === "")
 								? "block"
-								: "none"
+								: "none",
 					}}
 					allowedHeaders={allowedHeaders}
 					headers={links && JSON.parse(links)}
@@ -254,8 +254,8 @@ registerBlockType("ub/table-of-contents", {
 		updateFrom(version_1_1_5),
 		updateFrom(version_1_1_6),
 		updateFrom(version_1_1_8),
-		updateFrom(version_2_0_0)
-	]
+		updateFrom(version_2_0_0),
+	],
 });
 
 registerBlockType("ub/table-of-contents-block", {
@@ -267,14 +267,13 @@ registerBlockType("ub/table-of-contents-block", {
 	edit: withSelect((select, ownProps) => ({
 		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
-		)
-	}))(function(props) {
+		),
+	}))(function (props) {
 		const { isSelected, block, attributes } = props;
-
 
 		const { blockID, showList } = attributes;
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -287,8 +286,8 @@ registerBlockType("ub/table-of-contents-block", {
 				}`}
 			>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
-	save: () => null
+	save: () => null,
 });

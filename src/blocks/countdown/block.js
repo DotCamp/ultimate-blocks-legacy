@@ -1,7 +1,7 @@
 import icon, {
 	RegularCountdownIcon,
 	CircularCountdownIcon,
-	TickingCountdownIcon
+	TickingCountdownIcon,
 } from "./icon";
 
 import Timer from "./components";
@@ -21,35 +21,35 @@ registerBlockType("ub/countdown", {
 	attributes: {
 		blockID: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		endDate: {
 			type: "number",
-			default: 60 * (1440 + Math.ceil(Date.now() / 60000)) // 24 hours from Date.now
+			default: 60 * (1440 + Math.ceil(Date.now() / 60000)), // 24 hours from Date.now
 		},
 		style: {
 			type: "string",
-			default: "Odometer" //available types: Regular, Circular, Odometer
+			default: "Odometer", //available types: Regular, Circular, Odometer
 		},
 		expiryMessage: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		messageAlign: {
 			type: "string",
-			default: "left"
+			default: "left",
 		},
 		circleColor: {
 			type: "string",
-			default: "#2DB7F5"
-		}
+			default: "#2DB7F5",
+		},
 	},
 
 	edit: withSelect((select, ownProps) => ({
 		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
-		)
-	}))(function(props) {
+		),
+	}))(function (props) {
 		const { isSelected, setAttributes, block, attributes } = props;
 		const {
 			blockID,
@@ -57,10 +57,10 @@ registerBlockType("ub/countdown", {
 			endDate,
 			expiryMessage,
 			circleColor,
-			messageAlign
+			messageAlign,
 		} = attributes;
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -74,21 +74,21 @@ registerBlockType("ub/countdown", {
 							colorSettings={[
 								{
 									value: circleColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											circleColor: colorValue
+											circleColor: colorValue,
 										}),
-									label: ""
-								}
+									label: "",
+								},
 							]}
 						/>
 					)}
 					<PanelBody title={__("Timer expiration")}>
 						<DateTimePicker
 							currentDate={endDate * 1000}
-							onChange={value => {
+							onChange={(value) => {
 								setAttributes({
-									endDate: Math.floor(Date.parse(value) / 1000)
+									endDate: Math.floor(Date.parse(value) / 1000),
 								});
 							}}
 						/>
@@ -118,7 +118,7 @@ registerBlockType("ub/countdown", {
 						/>
 					</Toolbar>
 					<Toolbar>
-						{["left", "center", "right", "justify"].map(a => (
+						{["left", "center", "right", "justify"].map((a) => (
 							<IconButton
 								icon={`editor-${a === "justify" ? a : "align" + a}`}
 								label={__(
@@ -142,12 +142,12 @@ registerBlockType("ub/countdown", {
 					placeholder={__("Text to show after the countdown is over")}
 					style={{ textAlign: messageAlign }}
 					value={expiryMessage}
-					onChange={text => setAttributes({ expiryMessage: text })}
+					onChange={(text) => setAttributes({ expiryMessage: text })}
 					keepPlaceholderOnFocus={true}
 				/>
-			</React.Fragment>
+			</React.Fragment>,
 		];
 	}),
 
-	save: () => null
+	save: () => null,
 });

@@ -7,7 +7,7 @@ const {
 	BlockControls,
 	MediaUpload,
 	InspectorControls,
-	PanelColorSettings
+	PanelColorSettings,
 } = wp.blockEditor || wp.editor;
 
 const { Toolbar, Button, IconButton, SelectControl } = wp.components;
@@ -28,7 +28,7 @@ import icon, {
 	remove_icon,
 	numberBoxIcon,
 	featureBoxIcon,
-	notificationBoxIcon
+	notificationBoxIcon,
 } from "./icon";
 
 registerBlockType("ub/styled-box", {
@@ -38,48 +38,48 @@ registerBlockType("ub/styled-box", {
 	attributes: {
 		blockID: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		text: {
 			type: "array",
-			default: [""]
+			default: [""],
 		},
 		textAlign: {
 			type: "array",
-			default: ["left"]
+			default: ["left"],
 		},
 		title: {
 			type: "array",
-			default: [""]
+			default: [""],
 		},
 		titleAlign: {
 			type: "array",
-			default: ["center"]
+			default: ["center"],
 		},
 		number: {
 			type: "array",
-			default: [""]
+			default: [""],
 		},
 		image: {
 			type: "array",
-			default: [{ id: null, alt: null, url: null }]
+			default: [{ id: null, alt: null, url: null }],
 		},
 		foreColor: {
 			type: "string",
-			default: "#000000"
+			default: "#000000",
 		},
 		backColor: {
 			type: "string",
-			default: "#CCCCCC"
+			default: "#CCCCCC",
 		},
 		outlineColor: {
 			type: "string",
-			default: "#000000"
+			default: "#000000",
 		},
 		mode: {
 			type: "string",
-			default: ""
-		}
+			default: "",
+		},
 	},
 
 	edit: compose([
@@ -87,16 +87,16 @@ registerBlockType("ub/styled-box", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
-		}))
-	])(function(props) {
+			),
+		})),
+	])(function (props) {
 		const {
 			attributes,
 			block,
 			setAttributes,
 			isSelected,
 			setState,
-			editable
+			editable,
 		} = props;
 
 		const {
@@ -110,7 +110,7 @@ registerBlockType("ub/styled-box", {
 			mode,
 			titleAlign,
 			textAlign,
-			blockID
+			blockID,
 		} = attributes;
 
 		let renderedBlock;
@@ -129,13 +129,13 @@ registerBlockType("ub/styled-box", {
 				{[
 					[oneColumnIcon, "One"],
 					[twoColumnsIcon, "Two"],
-					[threeColumnsIcon, "Three"]
+					[threeColumnsIcon, "Three"],
 				].map((num, i) => (
 					<IconButton
 						icon={num[0]}
 						label={__(`${num[1]} column${i > 0 ? "s" : ""}`)}
 						isActive={text.length === i}
-						onClick={_ =>
+						onClick={(_) =>
 							setAttributes({
 								text: newValue(text, i + 1),
 								textAlign: newValue(textAlign, i + 1, "left"),
@@ -145,8 +145,8 @@ registerBlockType("ub/styled-box", {
 								image: newValue(image, i + 1, {
 									id: null,
 									alt: null,
-									url: null
-								})
+									url: null,
+								}),
 							})
 						}
 					/>
@@ -154,7 +154,7 @@ registerBlockType("ub/styled-box", {
 			</Toolbar>
 		);
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -165,18 +165,18 @@ registerBlockType("ub/styled-box", {
 						backgroundColor: backColor,
 						color: foreColor,
 						borderLeftColor: outlineColor,
-						textAlign: textAlign[0]
+						textAlign: textAlign[0],
 					}}
 					className="ub-notification-text"
 					tag="div"
 					placeholder={__("Add Your Content Here")}
 					formattingControls={["bold", "italic", "link", "strikethrough"]}
-					onChange={newText =>
+					onChange={(newText) =>
 						setAttributes({
-							text: [newText, ...text.slice(1)]
+							text: [newText, ...text.slice(1)],
 						})
 					}
-					unstableOnFocus={_ => setState({ editable: "text0" })}
+					unstableOnFocus={(_) => setState({ editable: "text0" })}
 					value={text[0]}
 				/>
 			);
@@ -185,11 +185,11 @@ registerBlockType("ub/styled-box", {
 				<Toolbar className="components-toolbar">
 					<Button
 						className="components-icon-button components-toolbar-control"
-						onClick={_ =>
+						onClick={(_) =>
 							setAttributes({
 								foreColor: "#31708f",
 								backColor: "#d9edf7",
-								outlineColor: "#31708f"
+								outlineColor: "#31708f",
 							})
 						}
 					>
@@ -197,11 +197,11 @@ registerBlockType("ub/styled-box", {
 					</Button>
 					<Button
 						className="components-icon-button components-toolbar-control"
-						onClick={_ =>
+						onClick={(_) =>
 							setAttributes({
 								foreColor: "#3c763d",
 								backColor: "#dff0d8",
-								outlineColor: "#3c763d"
+								outlineColor: "#3c763d",
 							})
 						}
 					>
@@ -209,11 +209,11 @@ registerBlockType("ub/styled-box", {
 					</Button>
 					<Button
 						className="components-icon-button components-toolbar-control"
-						onClick={_ =>
+						onClick={(_) =>
 							setAttributes({
 								foreColor: "#d8000c",
 								backColor: "#ffd2d2",
-								outlineColor: "#d8000c"
+								outlineColor: "#d8000c",
 							})
 						}
 					>
@@ -231,17 +231,17 @@ registerBlockType("ub/styled-box", {
 								{isSelected && (
 									<Button
 										className="remove-image"
-										onClick={_ =>
+										onClick={(_) =>
 											setAttributes({
 												image: [
 													...image.slice(0, i),
 													{
 														id: null,
 														alt: null,
-														url: null
+														url: null,
 													},
-													...image.slice(i + 1)
-												]
+													...image.slice(i + 1),
+												],
 											})
 										}
 									>
@@ -257,17 +257,17 @@ registerBlockType("ub/styled-box", {
 						) : (
 							<div className="ub-feature-upload-button">
 								<MediaUpload
-									onSelect={img =>
+									onSelect={(img) =>
 										setAttributes({
 											image: [
 												...image.slice(0, i),
 												{
 													id: img.id,
 													alt: img.alt,
-													url: img.url
+													url: img.url,
 												},
-												...image.slice(i + 1)
-											]
+												...image.slice(i + 1),
+											],
 										})
 									}
 									type="image"
@@ -288,28 +288,28 @@ registerBlockType("ub/styled-box", {
 							className="ub-feature-title"
 							style={{ textAlign: titleAlign[i] }}
 							value={title[i]}
-							onChange={value =>
+							onChange={(value) =>
 								setAttributes({
-									title: [...title.slice(0, i), value, ...title.slice(i + 1)]
+									title: [...title.slice(0, i), value, ...title.slice(i + 1)],
 								})
 							}
 							placeholder={__("Title goes here")}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={_ => setState({ editable: `title${i}` })}
+							unstableOnFocus={(_) => setState({ editable: `title${i}` })}
 						/>
 						<RichText
 							tagName="p"
 							className="ub-feature-body"
 							style={{ textAlign: textAlign[i] }}
 							value={text[i]}
-							onChange={value =>
+							onChange={(value) =>
 								setAttributes({
-									text: [...text.slice(0, i), value, ...text.slice(i + 1)]
+									text: [...text.slice(0, i), value, ...text.slice(i + 1)],
 								})
 							}
 							placeholder={__("Text goes here")}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={_ => setState({ editable: `text${i}` })}
+							unstableOnFocus={(_) => setState({ editable: `text${i}` })}
 						/>
 					</div>
 				));
@@ -323,13 +323,13 @@ registerBlockType("ub/styled-box", {
 					<div
 						className="ub-number-panel"
 						style={{
-							borderColor: outlineColor
+							borderColor: outlineColor,
 						}}
 					>
 						<div
 							className="ub-number-container"
 							style={{
-								backgroundColor: backColor
+								backgroundColor: backColor,
 							}}
 						>
 							<RichText
@@ -337,20 +337,20 @@ registerBlockType("ub/styled-box", {
 								placeholder={__(i + 1)}
 								className="ub-number-display"
 								style={{
-									color: foreColor
+									color: foreColor,
 								}}
 								value={number[i]}
-								onChange={value =>
+								onChange={(value) =>
 									setAttributes({
 										number: [
 											...number.slice(0, i),
 											value,
-											...number.slice(i + 1)
-										]
+											...number.slice(i + 1),
+										],
 									})
 								}
 								keepPlaceholderOnFocus={true}
-								unstableOnFocus={_ => setState({ editable: "" })}
+								unstableOnFocus={(_) => setState({ editable: "" })}
 							/>
 						</div>
 						<RichText
@@ -359,13 +359,13 @@ registerBlockType("ub/styled-box", {
 							placeholder={__("Title")}
 							className="ub-number-box-title"
 							value={title[i]}
-							onChange={value =>
+							onChange={(value) =>
 								setAttributes({
-									title: [...title.slice(0, i), value, ...title.slice(i + 1)]
+									title: [...title.slice(0, i), value, ...title.slice(i + 1)],
 								})
 							}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={_ => setState({ editable: `title${i}` })}
+							unstableOnFocus={(_) => setState({ editable: `title${i}` })}
 						/>
 						<RichText
 							tagName="p"
@@ -373,13 +373,13 @@ registerBlockType("ub/styled-box", {
 							style={{ textAlign: textAlign[i] }}
 							className="ub-number-box-body"
 							value={text[i]}
-							onChange={value =>
+							onChange={(value) =>
 								setAttributes({
-									text: [...text.slice(0, i), value, ...text.slice(i + 1)]
+									text: [...text.slice(0, i), value, ...text.slice(i + 1)],
 								})
 							}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={_ => setState({ editable: `text${i}` })}
+							unstableOnFocus={(_) => setState({ editable: `text${i}` })}
 						/>
 					</div>
 				));
@@ -391,28 +391,28 @@ registerBlockType("ub/styled-box", {
 					colorSettings={[
 						{
 							value: backColor,
-							onChange: colorValue =>
+							onChange: (colorValue) =>
 								setAttributes({
-									backColor: colorValue
+									backColor: colorValue,
 								}),
-							label: __("Number Background Color")
+							label: __("Number Background Color"),
 						},
 						{
 							value: foreColor,
-							onChange: colorValue =>
+							onChange: (colorValue) =>
 								setAttributes({
-									foreColor: colorValue
+									foreColor: colorValue,
 								}),
-							label: __("Number Color")
+							label: __("Number Color"),
 						},
 						{
 							value: outlineColor,
-							onChange: colorValue =>
+							onChange: (colorValue) =>
 								setAttributes({
-									outlineColor: colorValue
+									outlineColor: colorValue,
 								}),
-							label: __("Border Color")
-						}
+							label: __("Border Color"),
+						},
 					]}
 				/>
 			);
@@ -422,7 +422,7 @@ registerBlockType("ub/styled-box", {
 					<h4>{__("Select a Style")}</h4>
 					<div className="ub-styled-box-choices">
 						<div
-							onClick={_ => {
+							onClick={(_) => {
 								let newAttributes = {
 									mode: "notification",
 									number: [number[0]],
@@ -430,7 +430,7 @@ registerBlockType("ub/styled-box", {
 									titleAlign: [titleAlign[0]],
 									text: [text[0]],
 									textAlign: [textAlign[0]],
-									image: [image[0]]
+									image: [image[0]],
 								};
 								if (
 									!(
@@ -448,7 +448,7 @@ registerBlockType("ub/styled-box", {
 									Object.assign(newAttributes, {
 										foreColor: "#31708f",
 										backColor: "#d9edf7",
-										outlineColor: "#31708f"
+										outlineColor: "#31708f",
 									});
 								}
 								setAttributes(newAttributes);
@@ -458,12 +458,12 @@ registerBlockType("ub/styled-box", {
 							<p>{__("Notification Box")}</p>
 							<p>{__("Highlight Important Information.")}</p>
 						</div>
-						<div onClick={_ => setAttributes({ mode: "feature" })}>
+						<div onClick={(_) => setAttributes({ mode: "feature" })}>
 							{featureBoxIcon}
 							<p>{__("Feature Box")}</p>
 							<p>{__("Add Boxes with Images.")}</p>
 						</div>
-						<div onClick={_ => setAttributes({ mode: "number" })}>
+						<div onClick={(_) => setAttributes({ mode: "number" })}>
 							{numberBoxIcon}
 							<p>{__("Number Box")}</p>
 							<p>{__("Add Numbered Boxes.")}</p>
@@ -478,7 +478,7 @@ registerBlockType("ub/styled-box", {
 				<BlockControls>
 					{blockToolbarExtras}
 					<Toolbar>
-						{["left", "center", "right", "justify"].map(a => (
+						{["left", "center", "right", "justify"].map((a) => (
 							<IconButton
 								icon={`editor-${a === "justify" ? a : "align" + a}`}
 								label={__(
@@ -486,7 +486,7 @@ registerBlockType("ub/styled-box", {
 										a[0].toUpperCase() +
 										a.slice(1)
 								)}
-								onClick={_ => {
+								onClick={(_) => {
 									const columnNum = parseInt(
 										editable.slice(editable.length - 1)
 									);
@@ -495,16 +495,16 @@ registerBlockType("ub/styled-box", {
 											titleAlign: [
 												...titleAlign.slice(0, columnNum),
 												a,
-												...titleAlign.slice(columnNum + 1)
-											]
+												...titleAlign.slice(columnNum + 1),
+											],
 										});
 									} else if (editable.includes("text")) {
 										setAttributes({
 											textAlign: [
 												...textAlign.slice(0, columnNum),
 												a,
-												...textAlign.slice(columnNum + 1)
-											]
+												...textAlign.slice(columnNum + 1),
+											],
 										});
 									}
 								}}
@@ -519,11 +519,11 @@ registerBlockType("ub/styled-box", {
 						<SelectControl
 							label="Select mode"
 							value={mode}
-							options={["number", "notification", "feature"].map(a => ({
+							options={["number", "notification", "feature"].map((a) => ({
 								label: `${a[0].toUpperCase() + a.slice(1)} box`,
-								value: a
+								value: a,
 							}))}
-							onChange={selection => {
+							onChange={(selection) => {
 								let newAttributes = { mode: selection };
 								if (selection === "notification") {
 									Object.assign(newAttributes, {
@@ -532,7 +532,7 @@ registerBlockType("ub/styled-box", {
 										titleAlign: [titleAlign[0]],
 										text: [text[0]],
 										textAlign: [textAlign[0]],
-										image: [image[0]]
+										image: [image[0]],
 									});
 									if (
 										!(
@@ -550,7 +550,7 @@ registerBlockType("ub/styled-box", {
 										Object.assign(newAttributes, {
 											foreColor: "#31708f",
 											backColor: "#d9edf7",
-											outlineColor: "#31708f"
+											outlineColor: "#31708f",
 										});
 									}
 								}
@@ -562,9 +562,9 @@ registerBlockType("ub/styled-box", {
 					{inspectorExtras}
 				</InspectorControls>
 			),
-			<div className={`ub-styled-box ub-${mode}-box`}>{renderedBlock}</div>
+			<div className={`ub-styled-box ub-${mode}-box`}>{renderedBlock}</div>,
 		];
 	}),
 
-	save: _ => null
+	save: (_) => null,
 });

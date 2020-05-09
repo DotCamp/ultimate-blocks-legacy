@@ -13,7 +13,7 @@ import {
 	version_1_1_4,
 	version_1_1_5,
 	oldAttributes,
-	updateFrom
+	updateFrom,
 } from "./oldVersions";
 import { blockControls, editorDisplay, upgradeToStyledBox } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
@@ -28,20 +28,20 @@ const { withDispatch, withSelect } = wp.data;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	ub_notify_info: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	ub_selected_notify: {
 		type: "string",
-		default: "ub_notify_info"
+		default: "ub_notify_info",
 	},
 	align: {
 		type: "string",
-		default: "left"
-	}
+		default: "left",
+	},
 };
 
 /**
@@ -77,13 +77,13 @@ registerBlockType("ub/notification-box", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
-		}))
-	])(function(props) {
+				.replaceBlock,
+		})),
+	])(function (props) {
 		const { isSelected, className, attributes, replaceBlock, block } = props;
 
 		return [
@@ -91,7 +91,7 @@ registerBlockType("ub/notification-box", {
 
 			<div className={className}>
 				<button
-					onClick={_ => {
+					onClick={(_) => {
 						const { ub_notify_info } = attributes;
 						let firstColor;
 						let secondColor;
@@ -115,7 +115,7 @@ registerBlockType("ub/notification-box", {
 								textAlign: [attributes.align],
 								backColor: secondColor,
 								foreColor: firstColor,
-								outlineColor: firstColor
+								outlineColor: firstColor,
 							})
 						);
 					}}
@@ -123,7 +123,7 @@ registerBlockType("ub/notification-box", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -135,7 +135,7 @@ registerBlockType("ub/notification-box", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
+	save: function (props) {
 		const { align, ub_notify_info, ub_selected_notify } = props.attributes;
 		return (
 			<div className={props.className}>
@@ -157,21 +157,21 @@ registerBlockType("ub/notification-box", {
 				ub_notify_info: {
 					type: "array",
 					source: "children",
-					selector: "p"
+					selector: "p",
 				},
 				ub_selected_notify: {
 					type: "string",
-					default: "ub_notify_info"
+					default: "ub_notify_info",
 				},
 				align: {
 					type: "string",
-					default: "left"
-				}
+					default: "left",
+				},
 			},
-			save: version_1_1_4
+			save: version_1_1_4,
 		},
-		updateFrom(version_1_1_5)
-	]
+		updateFrom(version_1_1_5),
+	],
 });
 
 registerBlockType("ub/notification-box-block", {
@@ -181,7 +181,7 @@ registerBlockType("ub/notification-box-block", {
 	keywords: [__("notification"), __("warning info"), __("Ultimate Blocks")],
 	attributes,
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	transforms: {
@@ -189,24 +189,24 @@ registerBlockType("ub/notification-box-block", {
 			{
 				type: "block",
 				blocks: "ub/styled-box",
-				transform: attributes => upgradeToStyledBox(attributes)
-			}
-		]
+				transform: (attributes) => upgradeToStyledBox(attributes),
+			},
+		],
 	},
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
-		}))
-	])(function(props) {
-		const { isSelected, className, block, replaceBlock } = props;
+				.replaceBlock,
+		})),
+	])(function (props) {
+		const { isSelected, className, block, replaceBlock, attributes } = props;
 
-		if (props.attributes.blockID !== block.clientId) {
+		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -214,15 +214,15 @@ registerBlockType("ub/notification-box-block", {
 			isSelected && blockControls(props),
 			<div className={className}>
 				<button
-					onClick={_ =>
-						replaceBlock(block.clientId, upgradeToStyledBox(props.attributes))
+					onClick={(_) =>
+						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
 					}
 				>
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
-	save: _ => null
+	save: (_) => null,
 });

@@ -15,155 +15,155 @@ const {
 	ToggleControl,
 	IconButton,
 	PanelBody,
-	RadioControl
+	RadioControl,
 } = wp.components;
 
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	title: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	introduction: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	advancedMode: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	toolsIntro: {
 		type: "string",
-		default: __("Required tools")
+		default: __("Required tools"),
 	},
 	tools: {
 		type: "array",
-		default: [] //format: {name, imageid, imagealt, imageurl}
+		default: [], //format: {name, imageid, imagealt, imageurl}
 	},
 	toolsListStyle: {
 		type: "string",
-		default: "none"
+		default: "none",
 	},
 	addToolImages: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	suppliesIntro: {
 		type: "string",
-		default: __("Required supplies")
+		default: __("Required supplies"),
 	},
 	supplies: {
 		type: "array",
-		default: [] //format: {name, imageid, imagealt, imageurl}
+		default: [], //format: {name, imageid, imagealt, imageurl}
 	},
 	suppliesListStyle: {
 		type: "string",
-		default: "none"
+		default: "none",
 	},
 	addSupplyImages: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	section: {
 		type: "array",
-		default: [{ sectionName: "", steps: [] }] //contains steps, if useSections is set to false, then only use contents of the first section. minimum of two steps.
+		default: [{ sectionName: "", steps: [] }], //contains steps, if useSections is set to false, then only use contents of the first section. minimum of two steps.
 	},
 	sectionListStyle: {
 		type: "string",
-		default: "none"
+		default: "none",
 	},
 	timeIntro: {
 		type: "string",
-		default: __("Duration")
+		default: __("Duration"),
 	},
 	totalTime: {
 		type: "array",
-		default: Array(7).fill(0)
+		default: Array(7).fill(0),
 	},
 	totalTimeText: {
 		type: "string",
-		default: __("Total time: ")
+		default: __("Total time: "),
 	},
 	cost: {
 		type: "number",
-		default: 0
+		default: 0,
 	},
 	costCurrency: {
 		type: "string",
-		default: "USD"
+		default: "USD",
 	},
 	costDisplayText: {
 		type: "string",
-		default: __("Total cost: ")
+		default: __("Total cost: "),
 	},
 	showUnitFirst: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	howToYield: {
 		//avoid using yield as variable name
 		type: "string",
-		default: ""
+		default: "",
 	},
 	videoURL: {
 		type: "string", //videoobject
-		default: "" //needed: video url, thumbnail url, video description, upload date
+		default: "", //needed: video url, thumbnail url, video description, upload date
 	},
 	videoThumbnailURL: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	videoName: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	videoDescription: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	videoUploadDate: {
 		type: "number", //UNIX Date
-		default: 0
+		default: 0,
 	},
 	videoEmbedCode: {
 		type: "string",
-		default: "<p>When insertion is successful, video should appear here</p>"
+		default: "<p>When insertion is successful, video should appear here</p>",
 	},
 	videoDuration: {
 		type: "number",
-		default: 0
+		default: 0,
 	},
 	useSections: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	includeSuppliesList: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	includeToolsList: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	resultIntro: {
 		type: "string",
-		default: __("Result")
+		default: __("Result"),
 	},
 	finalImageID: {
 		type: "number",
-		default: -1
+		default: -1,
 	},
 	finalImageAlt: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	finalImageURL: {
 		type: "string",
-		default: ""
-	}
+		default: "",
+	},
 };
 
 const defaultTimeDisplay = {
@@ -171,31 +171,27 @@ const defaultTimeDisplay = {
 	d: 0,
 	h: 0,
 	m: 0,
-	s: 0
+	s: 0,
 };
 
-const ListWrapper = props => {
+const ListWrapper = (props) => {
 	const { className, children, listStyle } = props;
-	if (listStyle === "ordered") {
-		return (
-			<ol className={className ? className : null} style={{ paddingLeft: "0" }}>
-				{children}
-			</ol>
-		);
-	} else {
-		return (
-			<ul
-				className={className ? className : null}
-				style={{
-					listStyleType: listStyle === "none" ? "none" : null,
-					marginLeft: "1em",
-					paddingLeft: "0"
-				}}
-			>
-				{children}
-			</ul>
-		);
-	}
+	return listStyle === "ordered" ? (
+		<ol className={className ? className : null} style={{ paddingLeft: "0" }}>
+			{children}
+		</ol>
+	) : (
+		<ul
+			className={className ? className : null}
+			style={{
+				listStyleType: listStyle === "none" ? "none" : null,
+				marginLeft: "1em",
+				paddingLeft: "0",
+			}}
+		>
+			{children}
+		</ul>
+	);
 };
 
 const defaultButtonStyle = {
@@ -207,7 +203,7 @@ const defaultButtonStyle = {
 	background: "#f3f5f6",
 	height: "33px",
 	fontSize: "13px",
-	padding: "0 12px 2px"
+	padding: "0 12px 2px",
 };
 
 class HowToStep extends Component {
@@ -216,7 +212,7 @@ class HowToStep extends Component {
 		this.state = {
 			startTime: Object.assign({}, defaultTimeDisplay),
 			endTime: Object.assign({}, defaultTimeDisplay),
-			validTimeInput: true
+			validTimeInput: true,
 		};
 	}
 
@@ -227,14 +223,14 @@ class HowToStep extends Component {
 			videoClipEnd,
 			videoClipStart,
 			sectionNum,
-			stepNum
+			stepNum,
 		} = this.props;
 
-		const convertFromSeconds = sec => ({
+		const convertFromSeconds = (sec) => ({
 			s: sec % 60,
 			m: ~~(sec / 60) % 60,
 			h: ~~(sec / 3600) % 24,
-			d: ~~(sec / 86400)
+			d: ~~(sec / 86400),
 		});
 
 		if (hasVideoClip) {
@@ -249,11 +245,11 @@ class HowToStep extends Component {
 				endTime: { w: 0, d: end.d, h: end.h, m: end.m, s: end.s },
 				validTimeInput:
 					clips.filter(
-						c =>
+						(c) =>
 							c.anchor !== clipId &&
 							((videoClipStart > c.clipStart && videoClipStart < c.clipEnd) ||
 								(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd))
-					).length === 0
+					).length === 0,
 			});
 		}
 	}
@@ -265,7 +261,7 @@ class HowToStep extends Component {
 			sectionNum,
 			stepNum,
 			clips,
-			videoURL
+			videoURL,
 		} = this.props;
 
 		const clipId =
@@ -279,18 +275,18 @@ class HowToStep extends Component {
 				validTimeInput:
 					videoClipStart <= videoClipEnd &&
 					clips.filter(
-						c =>
+						(c) =>
 							c.anchor !== clipId &&
 							((videoClipStart > c.clipStart && videoClipStart < c.clipEnd) ||
 								(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd))
-					).length === 0
+					).length === 0,
 			});
 		}
 
 		if (prevProps.videoURL !== videoURL) {
 			this.setState({
 				startTime: defaultTimeDisplay,
-				endTime: defaultTimeDisplay
+				endTime: defaultTimeDisplay,
 			});
 		}
 	}
@@ -307,7 +303,7 @@ class HowToStep extends Component {
 			stepPic,
 			videoDuration,
 			hasVideoClip,
-			advancedMode
+			advancedMode,
 		} = this.props;
 
 		const { startTime, endTime, validTimeInput } = this.state;
@@ -320,38 +316,38 @@ class HowToStep extends Component {
 						keepPlaceholderOnFocus
 						placeholder={__("Title goes here")}
 						value={title}
-						onChange={newVal => editStep({ title: newVal })}
+						onChange={(newVal) => editStep({ title: newVal })}
 					/>
 					<IconButton
 						style={{
 							marginLeft: "auto",
 							marginTop: "auto",
 							marginBottom: "auto",
-							minWidth: "24px"
+							minWidth: "24px",
 						}}
 						className="ub_howto-delete"
 						icon="trash"
 						label={__("Delete step")}
-						onClick={_ => deleteStep()}
+						onClick={(_) => deleteStep()}
 					/>
 					<IconButton
 						style={{
 							minWidth: "24px",
 							marginTop: "auto",
-							marginBottom: "auto"
+							marginBottom: "auto",
 						}}
 						icon="arrow-up-alt"
-						onClick={_ => moveUp()}
+						onClick={(_) => moveUp()}
 						label={__("Move step up")}
 					/>
 					<IconButton
 						style={{
 							minWidth: "24px",
 							marginTop: "auto",
-							marginBottom: "auto"
+							marginBottom: "auto",
 						}}
 						icon="arrow-down-alt"
-						onClick={_ => moveDown()}
+						onClick={(_) => moveDown()}
 						label={__("Move step down")}
 					/>
 				</div>
@@ -366,26 +362,26 @@ class HowToStep extends Component {
 							style={{ position: "absolute", right: "3px" }}
 							title={__("Delete image")}
 							className="dashicons dashicons-dismiss"
-							onClick={_ =>
+							onClick={(_) =>
 								editStep({
 									stepPic: {
 										id: -1,
 										alt: "",
-										url: ""
-									}
+										url: "",
+									},
 								})
 							}
 						/>
 					</div>
 				) : (
 					<MediaUpload
-						onSelect={img =>
+						onSelect={(img) =>
 							editStep({
 								stepPic: {
 									id: img.id,
 									alt: img.alt,
-									url: img.url
-								}
+									url: img.url,
+								},
 							})
 						}
 						type="image"
@@ -406,13 +402,13 @@ class HowToStep extends Component {
 						keepPlaceholderOnFocus
 						placeholder={__("Direction goes here")}
 						value={direction}
-						onChange={newVal => editStep({ direction: newVal })}
+						onChange={(newVal) => editStep({ direction: newVal })}
 					/>
 					<RichText
 						keepPlaceholderOnFocus
 						placeholder={__("Add a tip (optional)")}
 						value={tip}
-						onChange={newVal => editStep({ tip: newVal })}
+						onChange={(newVal) => editStep({ tip: newVal })}
 					/>
 					{advancedMode && (
 						<Fragment>
@@ -420,13 +416,13 @@ class HowToStep extends Component {
 								<ToggleControl
 									checked={hasVideoClip}
 									label={__("Use part of the video in this step")}
-									onChange={hasVideoClip => {
+									onChange={(hasVideoClip) => {
 										editStep({ hasVideoClip });
 										if (!hasVideoClip) {
 											editStep({ videoClipEnd: 0, videoClipStart: 0 });
 											this.setState({
 												startTime: Object.assign({}, defaultTimeDisplay),
-												endTime: Object.assign({}, defaultTimeDisplay)
+												endTime: Object.assign({}, defaultTimeDisplay),
 											});
 										}
 									}}
@@ -443,7 +439,7 @@ class HowToStep extends Component {
 											value={startTime.d}
 											min={0}
 											step={1}
-											onChange={e => {
+											onChange={(e) => {
 												const { h, m, s } = this.state.startTime;
 												const d = Number(e.target.value);
 												const startPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -454,7 +450,7 @@ class HowToStep extends Component {
 													d > -1
 												) {
 													this.setState({
-														startTime: Object.assign(startTime, { d })
+														startTime: Object.assign(startTime, { d }),
 													});
 													editStep({ videoClipStart: startPoint });
 												}
@@ -468,7 +464,7 @@ class HowToStep extends Component {
 											min={0}
 											max={23}
 											step={1}
-											onChange={e => {
+											onChange={(e) => {
 												const { d, m, s } = this.state.startTime;
 												const h = Number(e.target.value);
 												const startPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -480,7 +476,7 @@ class HowToStep extends Component {
 													h < 24
 												) {
 													this.setState({
-														startTime: Object.assign(startTime, { h })
+														startTime: Object.assign(startTime, { h }),
 													});
 													editStep({ videoClipStart: startPoint });
 												}
@@ -494,7 +490,7 @@ class HowToStep extends Component {
 											min={0}
 											max={59}
 											step={1}
-											onChange={e => {
+											onChange={(e) => {
 												const { d, h, s } = this.state.startTime;
 												const m = Number(e.target.value);
 												const startPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -506,7 +502,7 @@ class HowToStep extends Component {
 													m < 60
 												) {
 													this.setState({
-														startTime: Object.assign(startTime, { m })
+														startTime: Object.assign(startTime, { m }),
 													});
 													editStep({ videoClipStart: startPoint });
 												}
@@ -519,7 +515,7 @@ class HowToStep extends Component {
 										min={0}
 										max={59}
 										step={1}
-										onChange={e => {
+										onChange={(e) => {
 											const { d, h, m } = this.state.startTime;
 											const s = Number(e.target.value);
 											const startPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -531,7 +527,7 @@ class HowToStep extends Component {
 												s < 60
 											) {
 												this.setState({
-													startTime: Object.assign(startTime, { s })
+													startTime: Object.assign(startTime, { s }),
 												});
 												editStep({ videoClipStart: startPoint });
 											}
@@ -547,7 +543,7 @@ class HowToStep extends Component {
 											value={endTime.d}
 											min={0}
 											step={1}
-											onChange={e => {
+											onChange={(e) => {
 												const { h, m, s } = this.state.endTime;
 												const d = Number(e.target.value);
 												const endPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -558,7 +554,7 @@ class HowToStep extends Component {
 													d > -1
 												) {
 													this.setState({
-														endTime: Object.assign(endTime, { d })
+														endTime: Object.assign(endTime, { d }),
 													});
 													editStep({ videoClipEnd: endPoint });
 												}
@@ -572,7 +568,7 @@ class HowToStep extends Component {
 											min={0}
 											max={23}
 											step={1}
-											onChange={e => {
+											onChange={(e) => {
 												const { d, m, s } = this.state.endTime;
 												const h = Number(e.target.value);
 												const endPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -584,7 +580,7 @@ class HowToStep extends Component {
 													h < 24
 												) {
 													this.setState({
-														endTime: Object.assign(endTime, { h })
+														endTime: Object.assign(endTime, { h }),
 													});
 													editStep({ videoClipEnd: endPoint });
 												}
@@ -598,7 +594,7 @@ class HowToStep extends Component {
 											min={0}
 											max={59}
 											step={1}
-											onChange={e => {
+											onChange={(e) => {
 												const { d, h, s } = this.state.endTime;
 												const m = Number(e.target.value);
 												const endPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -610,7 +606,7 @@ class HowToStep extends Component {
 													m < 60
 												) {
 													this.setState({
-														endTime: Object.assign(endTime, { m })
+														endTime: Object.assign(endTime, { m }),
 													});
 													editStep({ videoClipEnd: endPoint });
 												}
@@ -623,7 +619,7 @@ class HowToStep extends Component {
 										min={0}
 										max={59}
 										step={1}
-										onChange={e => {
+										onChange={(e) => {
 											const { d, h, m } = this.state.endTime;
 											const s = Number(e.target.value);
 											const endPoint = d * 86400 + h * 3600 + m * 60 + s;
@@ -635,7 +631,7 @@ class HowToStep extends Component {
 												s < 60
 											) {
 												this.setState({
-													endTime: Object.assign(endTime, { s })
+													endTime: Object.assign(endTime, { s }),
 												});
 												editStep({ videoClipEnd: endPoint });
 											}
@@ -666,7 +662,7 @@ class HowToSection extends Component {
 			videoDuration,
 			clips,
 			videoURL,
-			advancedMode
+			advancedMode,
 		} = this.props;
 
 		return (
@@ -677,17 +673,17 @@ class HowToSection extends Component {
 						tagName="h3"
 						placeholder={__("Section name goes here")}
 						value={sectionName}
-						onChange={sectionName => editSection({ sectionName, steps })}
+						onChange={(sectionName) => editSection({ sectionName, steps })}
 					/>
 					<IconButton
 						style={{
 							marginLeft: "auto",
 							marginTop: "auto",
-							marginBottom: "auto"
+							marginBottom: "auto",
 						}}
 						icon="trash"
 						label={__("Delete section")}
-						onClick={_ => deleteSection()}
+						onClick={(_) => deleteSection()}
 					/>
 				</div>
 				<ListWrapper listStyle={sectionListStyle}>
@@ -700,57 +696,57 @@ class HowToSection extends Component {
 							stepNum={i}
 							videoURL={videoURL}
 							videoDuration={videoDuration}
-							editStep={newStep =>
+							editStep={(newStep) =>
 								editSection({
 									sectionName,
 									steps: [
 										...steps.slice(0, i),
 										Object.assign(steps[i], newStep),
-										...steps.slice(i + 1)
-									]
+										...steps.slice(i + 1),
+									],
 								})
 							}
-							deleteStep={_ => {
+							deleteStep={(_) => {
 								let newSteps = [...steps.slice(0, i), ...steps.slice(i + 1)];
 								newSteps.forEach(
 									(step, j) => (step.anchor = `section${sectionNum}step${j}`)
 								);
 								editSection({
 									sectionName,
-									steps: [...steps.slice(0, i), ...steps.slice(i + 1)]
+									steps: [...steps.slice(0, i), ...steps.slice(i + 1)],
 								});
 							}}
-							moveUp={_ => {
+							moveUp={(_) => {
 								if (i > 0) {
 									let newSteps = [
 										...steps.slice(0, i - 1),
 										steps[i],
 										steps[i - 1],
-										...steps.slice(i + 1)
+										...steps.slice(i + 1),
 									];
 									newSteps.forEach(
 										(step, j) => (step.anchor = `section${sectionNum}step${j}`)
 									);
 									editSection({
 										sectionName,
-										steps: newSteps
+										steps: newSteps,
 									});
 								}
 							}}
-							moveDown={_ => {
+							moveDown={(_) => {
 								if (i < steps.length - 1) {
 									let newSteps = [
 										...steps.slice(0, i),
 										steps[i + 1],
 										steps[i],
-										...steps.slice(i + 2)
+										...steps.slice(i + 2),
 									];
 									newSteps.forEach(
 										(step, j) => (step.anchor = `section${sectionNum}step${j}`)
 									);
 									editSection({
 										sectionName,
-										steps: newSteps
+										steps: newSteps,
 									});
 								}
 							}}
@@ -759,7 +755,7 @@ class HowToSection extends Component {
 				</ListWrapper>
 				<Button
 					style={defaultButtonStyle}
-					onClick={_ => {
+					onClick={(_) => {
 						editSection({
 							sectionName,
 							steps: [
@@ -772,9 +768,9 @@ class HowToSection extends Component {
 									title: "",
 									hasVideoClip: false,
 									videoClipStart: 0,
-									videoClipEnd: 0
-								}
-							]
+									videoClipEnd: 0,
+								},
+							],
 						});
 					}}
 				>
@@ -792,16 +788,16 @@ registerBlockType("ub/how-to", {
 	keywords: [__("Tutorial"), __("How To"), __("Ultimate Blocks")],
 	attributes,
 	supports: {
-		multiple: false
+		multiple: false,
 	},
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withState({ videoURLInput: "", notYetLoaded: true })
-	])(function(props) {
+		withState({ videoURLInput: "", notYetLoaded: true }),
+	])(function (props) {
 		const {
 			attributes: {
 				blockID,
@@ -834,13 +830,13 @@ registerBlockType("ub/how-to", {
 				finalImageURL,
 				videoURL,
 				videoEmbedCode,
-				videoDuration
+				videoDuration,
 			},
 			videoURLInput,
 			notYetLoaded,
 			setAttributes,
 			setState,
-			block
+			block,
 		} = props;
 
 		const units = [
@@ -850,17 +846,17 @@ registerBlockType("ub/how-to", {
 			"days",
 			"hours",
 			"minutes",
-			"seconds"
+			"seconds",
 		];
 
-		const resetVideoAttributes = _ => {
+		const resetVideoAttributes = (_) => {
 			let newSection = JSON.parse(JSON.stringify(section));
-			newSection.forEach(s =>
-				s.steps.map(st =>
+			newSection.forEach((s) =>
+				s.steps.map((st) =>
 					Object.assign(st, {
 						hasVideoClip: false,
 						videoClipStart: 0,
-						videoClipEnd: 0
+						videoClipEnd: 0,
 					})
 				)
 			);
@@ -874,7 +870,7 @@ registerBlockType("ub/how-to", {
 				videoEmbedCode: `<p>${__(
 					"When insertion is successful, video should appear here"
 				)}</p>`,
-				videoDuration: 0
+				videoDuration: 0,
 			});
 		};
 
@@ -884,14 +880,14 @@ registerBlockType("ub/how-to", {
 
 		const clips = section
 			.reduce((stepList, section) => [...stepList, ...section.steps], [])
-			.filter(s => s.hasVideoClip)
-			.map(s => ({
+			.filter((s) => s.hasVideoClip)
+			.map((s) => ({
 				anchor: s.anchor,
 				clipStart: s.videoClipStart,
-				clipEnd: s.videoClipEnd
+				clipEnd: s.videoClipEnd,
 			}));
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -902,7 +898,7 @@ registerBlockType("ub/how-to", {
 						<ToggleControl
 							label={__("Use sections")}
 							checked={useSections}
-							onChange={useSections => {
+							onChange={(useSections) => {
 								setAttributes({ useSections });
 								if (useSections) {
 									let newSection = JSON.parse(JSON.stringify(section));
@@ -917,9 +913,9 @@ registerBlockType("ub/how-to", {
 										section: [
 											{
 												sectionName: "",
-												steps: []
-											}
-										]
+												steps: [],
+											},
+										],
 									});
 								} else {
 									let newSection = JSON.parse(JSON.stringify(section));
@@ -933,39 +929,41 @@ registerBlockType("ub/how-to", {
 						<ToggleControl
 							label={__("Use additional recommended attributes")}
 							checked={advancedMode}
-							onChange={advancedMode => setAttributes({ advancedMode })}
+							onChange={(advancedMode) => setAttributes({ advancedMode })}
 						/>
 						{advancedMode && (
 							<Fragment>
 								<ToggleControl
 									label={__("Include list of supplies")}
 									checked={includeSuppliesList}
-									onChange={includeSuppliesList =>
+									onChange={(includeSuppliesList) =>
 										setAttributes({ includeSuppliesList })
 									}
 								/>
 								<ToggleControl
 									label={__("Include list of tools")}
 									checked={includeToolsList}
-									onChange={includeToolsList =>
+									onChange={(includeToolsList) =>
 										setAttributes({ includeToolsList })
 									}
 								/>
 								<ToggleControl
 									label={__("Display the unit first in cost")}
 									checked={showUnitFirst}
-									onChange={showUnitFirst => setAttributes({ showUnitFirst })}
+									onChange={(showUnitFirst) => setAttributes({ showUnitFirst })}
 								/>
 							</Fragment>
 						)}
 						<RadioControl
 							label={__("Section list style")}
 							selected={sectionListStyle}
-							options={["none", "ordered", "unordered"].map(a => ({
+							options={["none", "ordered", "unordered"].map((a) => ({
 								label: __(a),
-								value: a
+								value: a,
 							}))}
-							onChange={sectionListStyle => setAttributes({ sectionListStyle })}
+							onChange={(sectionListStyle) =>
+								setAttributes({ sectionListStyle })
+							}
 						/>
 					</PanelBody>
 					{advancedMode && includeSuppliesList && (
@@ -973,16 +971,18 @@ registerBlockType("ub/how-to", {
 							<ToggleControl
 								label={__("Enable adding image for each supply")}
 								checked={addSupplyImages}
-								onChange={addSupplyImages => setAttributes({ addSupplyImages })}
+								onChange={(addSupplyImages) =>
+									setAttributes({ addSupplyImages })
+								}
 							/>
 							<RadioControl
 								label={__("Supplies list style")}
 								selected={suppliesListStyle}
-								options={["none", "ordered", "unordered"].map(a => ({
+								options={["none", "ordered", "unordered"].map((a) => ({
 									label: __(a),
-									value: a
+									value: a,
 								}))}
-								onChange={suppliesListStyle =>
+								onChange={(suppliesListStyle) =>
 									setAttributes({ suppliesListStyle })
 								}
 							/>
@@ -993,16 +993,16 @@ registerBlockType("ub/how-to", {
 							<ToggleControl
 								label={__("Enable adding image for each tool")}
 								checked={addToolImages}
-								onChange={addToolImages => setAttributes({ addToolImages })}
+								onChange={(addToolImages) => setAttributes({ addToolImages })}
 							/>
 							<RadioControl
 								label={__("Tools list style")}
 								selected={toolsListStyle}
-								options={["none", "ordered", "unordered"].map(a => ({
+								options={["none", "ordered", "unordered"].map((a) => ({
 									label: __(a),
-									value: a
+									value: a,
 								}))}
-								onChange={toolsListStyle => setAttributes({ toolsListStyle })}
+								onChange={(toolsListStyle) => setAttributes({ toolsListStyle })}
 							/>
 						</PanelBody>
 					)}
@@ -1013,13 +1013,13 @@ registerBlockType("ub/how-to", {
 						placeholder={__("How to title")}
 						keepPlaceholderOnFocus={true}
 						value={title}
-						onChange={title => setAttributes({ title })}
+						onChange={(title) => setAttributes({ title })}
 					/>
 					<RichText
 						placeholder={__("How to introduction")}
 						keepPlaceholderOnFocus={true}
 						value={introduction}
-						onChange={introduction => setAttributes({ introduction })}
+						onChange={(introduction) => setAttributes({ introduction })}
 					/>
 					{advancedMode && (
 						<Fragment>
@@ -1030,9 +1030,9 @@ registerBlockType("ub/how-to", {
 									disableSuggestions={true}
 									className="button-url"
 									value={videoURLInput}
-									onChange={videoURLInput =>
+									onChange={(videoURLInput) =>
 										setState({
-											videoURLInput
+											videoURLInput,
 										})
 									}
 								/>
@@ -1040,7 +1040,7 @@ registerBlockType("ub/how-to", {
 									icon={"editor-break"}
 									label={__("Apply")}
 									type={"submit"}
-									onClick={_ => {
+									onClick={(_) => {
 										if (/^http(s)?:\/\//g.test(videoURLInput)) {
 											const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
 												videoURLInput
@@ -1058,8 +1058,8 @@ registerBlockType("ub/how-to", {
 												fetch(
 													`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
 												)
-													.then(response => {
-														response.json().then(data => {
+													.then((response) => {
+														response.json().then((data) => {
 															if (data.items.length) {
 																let timePeriods = data.items[0].contentDetails.duration.match(
 																	/(\d{1,2}(?:W|D|H|M|S))/g
@@ -1084,7 +1084,7 @@ registerBlockType("ub/how-to", {
 																				D: 86400,
 																				H: 3600,
 																				M: 60,
-																				S: 1
+																				S: 1,
 																			};
 																			return (
 																				sum +
@@ -1093,19 +1093,19 @@ registerBlockType("ub/how-to", {
 																			);
 																		},
 																		0
-																	)
+																	),
 																});
 															} else {
 																resetVideoAttributes();
 																setAttributes({
 																	videoEmbedCode: `<p>${__(
 																		"No video found at URL"
-																	)}</p>`
+																	)}</p>`,
 																});
 															}
 														});
 													})
-													.catch(err => {
+													.catch((err) => {
 														console.log("youtube fetch error");
 														console.log(err);
 													});
@@ -1113,11 +1113,11 @@ registerBlockType("ub/how-to", {
 												fetch(
 													`https://vimeo.com/api/v2/video/${vimeoMatch[1]}.json`
 												)
-													.then(response => {
+													.then((response) => {
 														if (response.ok) {
 															response
 																.json()
-																.then(data => {
+																.then((data) => {
 																	setAttributes({
 																		videoURL: data[0].url,
 																		videoName: data[0].title,
@@ -1125,26 +1125,26 @@ registerBlockType("ub/how-to", {
 																		videoUploadDate:
 																			Date.parse(data[0].upload_date) / 1000,
 																		videoThumbnailURL: data[0].thumbnail_large,
-																		videoDuration: data[0].duration
+																		videoDuration: data[0].duration,
 																	});
 																	fetch(
 																		`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
 																			data[0].url
 																		)}`
 																	)
-																		.then(response => {
-																			response.json().then(data => {
+																		.then((response) => {
+																			response.json().then((data) => {
 																				setAttributes({
-																					videoEmbedCode: data.html
+																					videoEmbedCode: data.html,
 																				});
 																			});
 																		})
-																		.catch(err => {
+																		.catch((err) => {
 																			console.log("vimeo oembed error");
 																			console.log(err);
 																		});
 																})
-																.catch(err => {
+																.catch((err) => {
 																	console.log(err);
 																});
 														} else {
@@ -1152,11 +1152,11 @@ registerBlockType("ub/how-to", {
 															setAttributes({
 																videoEmbedCode: `<p>${__(
 																	"No video found at URL"
-																)}</p>`
+																)}</p>`,
 															});
 														}
 													})
-													.catch(err => {
+													.catch((err) => {
 														console.log("vimeo fetch error");
 														console.log(err);
 													});
@@ -1164,9 +1164,9 @@ registerBlockType("ub/how-to", {
 												fetch(
 													`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cduration`
 												)
-													.then(response => {
+													.then((response) => {
 														if (response.ok) {
-															response.json().then(data => {
+															response.json().then((data) => {
 																setAttributes({
 																	videoURL: data.url,
 																	videoName: data.title,
@@ -1176,7 +1176,7 @@ registerBlockType("ub/how-to", {
 																	videoEmbedCode: decodeURIComponent(
 																		data.embed_html
 																	),
-																	videoDuration: data.duration
+																	videoDuration: data.duration,
 																});
 															});
 														} else {
@@ -1184,11 +1184,11 @@ registerBlockType("ub/how-to", {
 															setAttributes({
 																videoEmbedCode: `<p>${__(
 																	"No video found at URL"
-																)}</p>`
+																)}</p>`,
 															});
 														}
 													})
-													.catch(err => {
+													.catch((err) => {
 														console.log("dailymotion input error");
 														console.log(err);
 													});
@@ -1196,9 +1196,9 @@ registerBlockType("ub/how-to", {
 												fetch(
 													`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
 												)
-													.then(response => {
+													.then((response) => {
 														if (response.ok) {
-															response.json().then(data => {
+															response.json().then((data) => {
 																setAttributes({
 																	videoURL: `https://videopress.com/v/${data.guid}`,
 																	videoName: data.title,
@@ -1210,7 +1210,7 @@ registerBlockType("ub/how-to", {
 														<script src="https://videopress.com/videopress-iframe.js"></script>`,
 																	videoDuration: Math.floor(
 																		data.duration / 1000
-																	)
+																	),
 																});
 															});
 														} else {
@@ -1218,18 +1218,18 @@ registerBlockType("ub/how-to", {
 															setAttributes({
 																videoEmbedCode: `<p>${__(
 																	"No video found at URL"
-																)}</p>`
+																)}</p>`,
 															});
 														}
 													})
-													.catch(err => {
+													.catch((err) => {
 														console.log("videopress input error");
 														console.log(err);
 													});
 											} else {
 												resetVideoAttributes();
 												setAttributes({
-													videoEmbedCode: "<p>Video site not supported</p>"
+													videoEmbedCode: "<p>Video site not supported</p>",
 												});
 											}
 										} else {
@@ -1241,7 +1241,7 @@ registerBlockType("ub/how-to", {
 								<IconButton
 									icon="trash"
 									label={__("Delete")}
-									onClick={_ => {
+									onClick={(_) => {
 										resetVideoAttributes();
 										setState({ videoURLInput: "" });
 									}}
@@ -1249,7 +1249,7 @@ registerBlockType("ub/how-to", {
 							</div>
 							<div
 								dangerouslySetInnerHTML={{
-									__html: videoEmbedCode || "<p>Input error</p>"
+									__html: videoEmbedCode || "<p>Input error</p>",
 								}}
 							/>
 							<RichText
@@ -1257,16 +1257,16 @@ registerBlockType("ub/how-to", {
 								placeholder={__("Duration")}
 								keepPlaceholderOnFocus={true}
 								value={timeIntro}
-								onChange={timeIntro => setAttributes({ timeIntro })}
+								onChange={(timeIntro) => setAttributes({ timeIntro })}
 							/>
 							<div
 								style={{
 									display: "grid",
-									gridTemplateColumns: "35% 1fr 1fr 1fr 1fr 1fr 1fr 1fr"
+									gridTemplateColumns: "35% 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
 								}}
 							>
 								<span />
-								{units.map(u => (
+								{units.map((u) => (
 									<p style={{ textAlign: "center", fontSize: "15px" }}>
 										{__(u)}
 									</p>
@@ -1274,7 +1274,7 @@ registerBlockType("ub/how-to", {
 								<RichText
 									keepPlaceholderOnFocus
 									value={totalTimeText}
-									onChange={totalTimeText => setAttributes({ totalTimeText })}
+									onChange={(totalTimeText) => setAttributes({ totalTimeText })}
 								/>
 								{totalTime.map((t, i) => (
 									<RichText
@@ -1283,14 +1283,14 @@ registerBlockType("ub/how-to", {
 										keepPlaceholderOnFocus
 										placeholder={__("0")}
 										value={String(t)}
-										onChange={newInput => {
+										onChange={(newInput) => {
 											if (!isNaN(Number(newInput))) {
 												setAttributes({
 													totalTime: [
 														...totalTime.slice(0, i),
 														Number(newInput),
-														...totalTime.slice(i + 1)
-													]
+														...totalTime.slice(i + 1),
+													],
 												});
 											}
 										}}
@@ -1304,7 +1304,9 @@ registerBlockType("ub/how-to", {
 										placeholder={__("Required supplies")}
 										keepPlaceholderOnFocus={true}
 										value={suppliesIntro}
-										onChange={suppliesIntro => setAttributes({ suppliesIntro })}
+										onChange={(suppliesIntro) =>
+											setAttributes({ suppliesIntro })
+										}
 									/>
 									<ListWrapper
 										className={"ub_howto-supplies-list"}
@@ -1317,13 +1319,13 @@ registerBlockType("ub/how-to", {
 														keepPlaceholderOnFocus
 														value={supply.name}
 														placeholder={__("Enter supply name")}
-														onChange={newName =>
+														onChange={(newName) =>
 															setAttributes({
 																supplies: [
 																	...supplies.slice(0, i),
 																	Object.assign(supplies[i], { name: newName }),
-																	...supplies.slice(i + 1)
-																]
+																	...supplies.slice(i + 1),
+																],
 															})
 														}
 													/>
@@ -1331,12 +1333,12 @@ registerBlockType("ub/how-to", {
 														style={{ marginLeft: "auto" }}
 														icon="trash"
 														label={__("Delete supply")}
-														onClick={_ =>
+														onClick={(_) =>
 															setAttributes({
 																supplies: [
 																	...supplies.slice(0, i),
-																	...supplies.slice(i + 1)
-																]
+																	...supplies.slice(i + 1),
+																],
 															})
 														}
 													/>
@@ -1351,34 +1353,34 @@ registerBlockType("ub/how-to", {
 															<span
 																title={__("Delete image")}
 																className="dashicons dashicons-dismiss"
-																onClick={_ =>
+																onClick={(_) =>
 																	setAttributes({
 																		supplies: [
 																			...supplies.slice(0, i),
 																			Object.assign(supply, {
 																				imageID: 0,
 																				imageURL: "",
-																				imageAlt: ""
+																				imageAlt: "",
 																			}),
-																			...supplies.slice(i + 1)
-																		]
+																			...supplies.slice(i + 1),
+																		],
 																	})
 																}
 															/>
 														</div>
 													) : (
 														<MediaUpload
-															onSelect={img =>
+															onSelect={(img) =>
 																setAttributes({
 																	supplies: [
 																		...supplies.slice(0, i),
 																		Object.assign(supply, {
 																			imageID: img.id,
 																			imageURL: img.url,
-																			imageAlt: img.alt
+																			imageAlt: img.alt,
 																		}),
-																		...supplies.slice(i + 1)
-																	]
+																		...supplies.slice(i + 1),
+																	],
 																})
 															}
 															type="image"
@@ -1399,12 +1401,12 @@ registerBlockType("ub/how-to", {
 									</ListWrapper>
 									<Button
 										style={defaultButtonStyle}
-										onClick={_ =>
+										onClick={(_) =>
 											setAttributes({
 												supplies: [
 													...supplies,
-													{ name: "", imageID: 0, imageAlt: "", imageURL: "" }
-												]
+													{ name: "", imageID: 0, imageAlt: "", imageURL: "" },
+												],
 											})
 										}
 									>
@@ -1419,7 +1421,7 @@ registerBlockType("ub/how-to", {
 										placeholder={__("Required tools")}
 										keepPlaceholderOnFocus={true}
 										value={toolsIntro}
-										onChange={toolsIntro => setAttributes({ toolsIntro })}
+										onChange={(toolsIntro) => setAttributes({ toolsIntro })}
 									/>
 									<ListWrapper
 										className={"ub_howto-tools-list"}
@@ -1432,13 +1434,13 @@ registerBlockType("ub/how-to", {
 														keepPlaceholderOnFocus
 														value={tool.name}
 														placeholder={__("Enter tool name")}
-														onChange={newTool =>
+														onChange={(newTool) =>
 															setAttributes({
 																tools: [
 																	...tools.slice(0, i),
 																	Object.assign(tools[i], { name: newTool }),
-																	...tools.slice(i + 1)
-																]
+																	...tools.slice(i + 1),
+																],
 															})
 														}
 													/>
@@ -1446,12 +1448,12 @@ registerBlockType("ub/how-to", {
 														style={{ marginLeft: "auto" }}
 														icon="trash"
 														label={__("Delete tool")}
-														onClick={_ =>
+														onClick={(_) =>
 															setAttributes({
 																tools: [
 																	...tools.slice(0, i),
-																	...tools.slice(i + 1)
-																]
+																	...tools.slice(i + 1),
+																],
 															})
 														}
 													/>
@@ -1463,34 +1465,34 @@ registerBlockType("ub/how-to", {
 															<span
 																title={__("Delete image")}
 																className="dashicons dashicons-dismiss"
-																onClick={_ =>
+																onClick={(_) =>
 																	setAttributes({
 																		tools: [
 																			...tools.slice(0, i),
 																			Object.assign(tool, {
 																				imageID: 0,
 																				imageURL: "",
-																				imageAlt: ""
+																				imageAlt: "",
 																			}),
-																			...tools.slice(i + 1)
-																		]
+																			...tools.slice(i + 1),
+																		],
 																	})
 																}
 															/>
 														</div>
 													) : (
 														<MediaUpload
-															onSelect={img =>
+															onSelect={(img) =>
 																setAttributes({
 																	tools: [
 																		...tools.slice(0, i),
 																		Object.assign(tool, {
 																			imageID: img.id,
 																			imageURL: img.url,
-																			imageAlt: img.alt
+																			imageAlt: img.alt,
 																		}),
-																		...tools.slice(i + 1)
-																	]
+																		...tools.slice(i + 1),
+																	],
 																})
 															}
 															type="image"
@@ -1511,12 +1513,12 @@ registerBlockType("ub/how-to", {
 									</ListWrapper>
 									<Button
 										style={defaultButtonStyle}
-										onClick={_ =>
+										onClick={(_) =>
 											setAttributes({
 												tools: [
 													...tools,
-													{ name: "", imageID: 0, imageAlt: "", imageURL: "" }
-												]
+													{ name: "", imageID: 0, imageAlt: "", imageURL: "" },
+												],
 											})
 										}
 									>
@@ -1530,7 +1532,7 @@ registerBlockType("ub/how-to", {
 							>
 								<RichText
 									value={costDisplayText}
-									onChange={costDisplayText =>
+									onChange={(costDisplayText) =>
 										setAttributes({ costDisplayText })
 									}
 								/>
@@ -1539,7 +1541,7 @@ registerBlockType("ub/how-to", {
 									style={{
 										display: "flex",
 										flexDirection: showUnitFirst ? "row" : "row-reverse",
-										marginLeft: "auto"
+										marginLeft: "auto",
 									}}
 								>
 									<RichText
@@ -1551,7 +1553,7 @@ registerBlockType("ub/how-to", {
 										keepPlaceholderOnFocus
 										placeholder={__("Units")}
 										value={costCurrency}
-										onChange={costCurrency => {
+										onChange={(costCurrency) => {
 											costCurrency = costCurrency.replace(/<br>/g, "");
 											setAttributes({ costCurrency });
 										}}
@@ -1560,7 +1562,7 @@ registerBlockType("ub/how-to", {
 										keepPlaceholderOnFocus
 										placeholder={__("0")}
 										value={String(cost)}
-										onChange={cost => {
+										onChange={(cost) => {
 											if (!isNaN(Number(cost))) {
 												setAttributes({ cost: Number(cost) });
 											}
@@ -1581,18 +1583,21 @@ registerBlockType("ub/how-to", {
 									videoDuration={videoDuration}
 									sectionListStyle={sectionListStyle}
 									sectionNum={i}
-									editSection={newSection =>
+									editSection={(newSection) =>
 										setAttributes({
 											section: [
 												...section.slice(0, i),
 												newSection,
-												...section.slice(i + 1)
-											]
+												...section.slice(i + 1),
+											],
 										})
 									}
-									deleteSection={_ =>
+									deleteSection={(_) =>
 										setAttributes({
-											section: [...section.slice(0, i), ...section.slice(i + 1)]
+											section: [
+												...section.slice(0, i),
+												...section.slice(i + 1),
+											],
 										})
 									}
 								/>
@@ -1610,37 +1615,37 @@ registerBlockType("ub/how-to", {
 										clips={clips}
 										videoURL={videoURL}
 										videoDuration={videoDuration}
-										editStep={newStep =>
+										editStep={(newStep) =>
 											setAttributes({
 												section: [
 													Object.assign(section[0], {
 														steps: [
 															...section[0].steps.slice(0, i),
 															Object.assign(section[0].steps[i], newStep),
-															...section[0].steps.slice(i + 1)
-														]
-													})
-												]
+															...section[0].steps.slice(i + 1),
+														],
+													}),
+												],
 											})
 										}
-										deleteStep={_ => {
+										deleteStep={(_) => {
 											let newSection = [
 												Object.assign(section[0], {
 													steps: [
 														...section[0].steps.slice(0, i),
-														...section[0].steps.slice(i + 1)
-													]
-												})
+														...section[0].steps.slice(i + 1),
+													],
+												}),
 											];
 
 											section[0].steps.forEach((step, j) => {
 												step.anchor = `step${j}`;
 											});
 											setAttributes({
-												section: newSection
+												section: newSection,
 											});
 										}}
-										moveUp={_ => {
+										moveUp={(_) => {
 											if (i > 0) {
 												let newSection = [
 													Object.assign(section[0], {
@@ -1648,19 +1653,19 @@ registerBlockType("ub/how-to", {
 															...section[0].steps.slice(0, i - 1),
 															section[0].steps[i],
 															section[0].steps[i - 1],
-															...section[0].steps.slice(i + 1)
-														]
-													})
+															...section[0].steps.slice(i + 1),
+														],
+													}),
 												];
 												section[0].steps.forEach((step, j) => {
 													step.anchor = `step${j}`;
 												});
 												setAttributes({
-													section: newSection
+													section: newSection,
 												});
 											}
 										}}
-										moveDown={_ => {
+										moveDown={(_) => {
 											if (i < section[0].steps.length - 1) {
 												let newSection = [
 													Object.assign(section[0], {
@@ -1668,16 +1673,16 @@ registerBlockType("ub/how-to", {
 															...section[0].steps.slice(0, i),
 															section[0].steps[i + 1],
 															section[0].steps[i],
-															...section[0].steps.slice(i + 2)
-														]
-													})
+															...section[0].steps.slice(i + 2),
+														],
+													}),
 												];
 												section[0].steps.forEach((step, j) => {
 													step.anchor = `step${j}`;
 												});
 
 												setAttributes({
-													section: newSection
+													section: newSection,
 												});
 											}
 										}}
@@ -1686,7 +1691,7 @@ registerBlockType("ub/how-to", {
 							</ListWrapper>
 							<Button
 								style={defaultButtonStyle}
-								onClick={_ => {
+								onClick={(_) => {
 									setAttributes({
 										section: [
 											Object.assign(section[0], {
@@ -1700,11 +1705,11 @@ registerBlockType("ub/how-to", {
 														title: "",
 														hasVideoClip: false,
 														videoClipStart: 0,
-														videoClipEnd: 0
-													}
-												]
-											})
-										]
+														videoClipEnd: 0,
+													},
+												],
+											}),
+										],
 									});
 								}}
 							>
@@ -1715,7 +1720,7 @@ registerBlockType("ub/how-to", {
 					{useSections && (
 						<Button
 							style={defaultButtonStyle}
-							onClick={_ =>
+							onClick={(_) =>
 								setAttributes({
 									section: [
 										...section,
@@ -1730,11 +1735,11 @@ registerBlockType("ub/how-to", {
 													title: "",
 													hasVideoClip: false,
 													videoClipStart: 0,
-													videoClipEnd: 0
-												}
-											]
-										}
-									]
+													videoClipEnd: 0,
+												},
+											],
+										},
+									],
 								})
 							}
 						>
@@ -1746,7 +1751,7 @@ registerBlockType("ub/how-to", {
 						placeholder={__("Result")}
 						keepPlaceholderOnFocus={true}
 						value={resultIntro}
-						onChange={resultIntro => setAttributes({ resultIntro })}
+						onChange={(resultIntro) => setAttributes({ resultIntro })}
 					/>
 					{finalImageURL !== "" ? (
 						<div>
@@ -1755,22 +1760,22 @@ registerBlockType("ub/how-to", {
 								style={{ position: "absolute", right: "3px" }}
 								title={__("Delete image")}
 								className="dashicons dashicons-dismiss"
-								onClick={_ =>
+								onClick={(_) =>
 									setAttributes({
 										finalImageID: -1,
 										finalImageAlt: "",
-										finalImageURL: ""
+										finalImageURL: "",
 									})
 								}
 							/>
 						</div>
 					) : (
 						<MediaUpload
-							onSelect={img =>
+							onSelect={(img) =>
 								setAttributes({
 									finalImageID: img.id,
 									finalImageAlt: img.alt,
-									finalImageURL: img.url
+									finalImageURL: img.url,
 								})
 							}
 							type="image"
@@ -1790,11 +1795,11 @@ registerBlockType("ub/how-to", {
 						keepPlaceholderOnFocus
 						placeholder={__("Result text")}
 						value={howToYield}
-						onChange={howToYield => setAttributes({ howToYield })}
+						onChange={(howToYield) => setAttributes({ howToYield })}
 					/>
 				</div>
 			</Fragment>
 		);
 	}),
-	save: _ => null
+	save: (_) => null,
 });

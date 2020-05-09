@@ -31,28 +31,28 @@ registerBlockType("ub/click-to-tweet", {
 	attributes: {
 		blockID: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		ubTweet: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		ubVia: {
 			source: "meta",
-			meta: "ub_ctt_via"
+			meta: "ub_ctt_via",
 		},
 		tweetFontSize: {
 			type: "number",
-			default: 20
+			default: 20,
 		},
 		tweetColor: {
 			type: "string",
-			default: "#444444"
+			default: "#444444",
 		},
 		borderColor: {
 			type: "string",
-			default: "#CCCCCC"
-		}
+			default: "#CCCCCC",
+		},
 	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -65,20 +65,20 @@ registerBlockType("ub/click-to-tweet", {
 	edit: withSelect((select, ownProps) => ({
 		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
-		)
-	}))(function(props) {
+		),
+	}))(function (props) {
 		const {
 			ubTweet,
 			ubVia,
 			tweetFontSize,
 			tweetColor,
 			borderColor,
-			blockID
+			blockID,
 		} = props.attributes;
 
 		const { isSelected, setAttributes, block } = props;
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -90,12 +90,12 @@ registerBlockType("ub/click-to-tweet", {
 							label={__("Twitter Username")}
 							placeholder="@"
 							value={ubVia}
-							onChange={value => setAttributes({ ubVia: value })}
+							onChange={(value) => setAttributes({ ubVia: value })}
 						/>
 						<RangeControl
 							label={__("Font Size")}
 							value={tweetFontSize}
-							onChange={value => setAttributes({ tweetFontSize: value })}
+							onChange={(value) => setAttributes({ tweetFontSize: value })}
 							min={10}
 							max={200}
 							beforeIcon="editor-textcolor"
@@ -107,20 +107,20 @@ registerBlockType("ub/click-to-tweet", {
 							colorSettings={[
 								{
 									value: tweetColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											tweetColor: colorValue
+											tweetColor: colorValue,
 										}),
-									label: __("Tweet Color")
+									label: __("Tweet Color"),
 								},
 								{
 									value: borderColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											borderColor: colorValue
+											borderColor: colorValue,
 										}),
-									label: __("Border Color")
-								}
+									label: __("Border Color"),
+								},
 							]}
 						/>
 					</PanelBody>
@@ -130,18 +130,18 @@ registerBlockType("ub/click-to-tweet", {
 				<div
 					className="ub_click_to_tweet"
 					style={{
-						borderColor: borderColor
+						borderColor: borderColor,
 					}}
 				>
 					<RichText
 						style={{
 							fontSize: tweetFontSize + "px",
-							color: tweetColor
+							color: tweetColor,
 						}}
 						placeholder={__("Add Tweetable Content Here")}
 						className="ub_tweet"
 						value={ubTweet}
-						onChange={value => setAttributes({ ubTweet: value })}
+						onChange={(value) => setAttributes({ ubTweet: value })}
 					/>
 
 					<div className="ub_click_tweet">
@@ -151,7 +151,7 @@ registerBlockType("ub/click-to-tweet", {
 						</span>
 					</div>
 				</div>
-			</div>
+			</div>,
 		];
 	}),
 
@@ -165,5 +165,5 @@ registerBlockType("ub/click-to-tweet", {
 	 */
 	save() {
 		return null;
-	}
+	},
 });

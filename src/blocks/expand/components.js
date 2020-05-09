@@ -1,5 +1,5 @@
-import { Component } from 'react';
-import { getDescendantBlocks } from '../../common';
+import { Component } from "react";
+import { getDescendantBlocks } from "../../common";
 
 const { __ } = wp.i18n;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
@@ -9,15 +9,15 @@ export class ExpandRoot extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selectedBlockID: '',
-			unsubscribe: null
+			selectedBlockID: "",
+			unsubscribe: null,
 		};
 	}
 	componentDidMount() {
 		const unsubscribe = subscribe(() => {
 			const { selectedBlockID } = this.state;
 			const selection = (
-				select('core/block-editor') || select('core/editor')
+				select("core/block-editor") || select("core/editor")
 			).getSelectedBlockClientId();
 			if (selection !== selectedBlockID) {
 				this.setState({ selectedBlockID: selection });
@@ -29,18 +29,18 @@ export class ExpandRoot extends Component {
 		this.state.unsubscribe();
 	}
 	render() {
-		const { block, updateBlockAttributes } = this.props;
+		const { block, updateBlockAttributes, setAttributes } = this.props;
 
 		const { selectedBlockID } = this.state;
 
-		const showPreviewText = __('show more');
+		const showPreviewText = __("show more");
 
-		const hidePreviewText = __('show less');
+		const hidePreviewText = __("show less");
 
 		const fullVersionVisibility =
 			selectedBlockID === block.clientId ||
 			getDescendantBlocks(block)
-				.map(b => b.clientId)
+				.map((b) => b.clientId)
 				.includes(selectedBlockID);
 
 		if (
@@ -48,35 +48,35 @@ export class ExpandRoot extends Component {
 			block.innerBlocks[1].attributes.isVisible !== fullVersionVisibility
 		) {
 			updateBlockAttributes(block.innerBlocks[1].clientId, {
-				isVisible: fullVersionVisibility
+				isVisible: fullVersionVisibility,
 			});
 		}
 
-		if (this.props.attributes.blockID !== block.clientId) {
-			this.props.setAttributes({ blockID: block.clientId });
+		if (this.props.attributes.blockID === "") {
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return (
 			<div className="ub-expand">
 				<InnerBlocks
-					templateLock={'all'}
+					templateLock={"all"}
 					template={[
 						[
-							'ub/expand-portion',
+							"ub/expand-portion",
 							{
-								displayType: 'partial',
+								displayType: "partial",
 								clickText: showPreviewText,
-								isVisible: true
-							}
+								isVisible: true,
+							},
 						],
 						[
-							'ub/expand-portion',
+							"ub/expand-portion",
 							{
-								displayType: 'full',
+								displayType: "full",
 								clickText: hidePreviewText,
-								isVisible: false
-							}
-						]
+								isVisible: false,
+							},
+						],
 					]}
 				/>
 			</div>

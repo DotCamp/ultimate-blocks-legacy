@@ -6,7 +6,7 @@ import {
 	version_1_1_5,
 	version_2_0_0,
 	oldAttributes,
-	updateFrom
+	updateFrom,
 } from "./oldVersions";
 
 import { blockControls, inspectorControls, editorDisplay } from "./components";
@@ -36,92 +36,92 @@ const { withState, compose } = wp.compose;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	ub_call_to_action_headline_text: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	ub_cta_content_text: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	ub_cta_button_text: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	headFontSize: {
 		type: "number",
-		default: 30
+		default: 30,
 	},
 	headColor: {
 		type: "string",
-		default: "#444444"
+		default: "#444444",
 	},
 	headAlign: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	contentFontSize: {
 		type: "number",
-		default: 15
+		default: 15,
 	},
 	contentColor: {
 		type: "string",
-		default: "#444444"
+		default: "#444444",
 	},
 	buttonFontSize: {
 		type: "number",
-		default: 14
+		default: 14,
 	},
 	buttonColor: {
 		type: "string",
-		default: "#E27330"
+		default: "#E27330",
 	},
 	buttonTextColor: {
 		type: "string",
-		default: "#ffffff"
+		default: "#ffffff",
 	},
 	buttonWidth: {
 		type: "number",
-		default: 250
+		default: 250,
 	},
 	ctaBackgroundColor: {
 		type: "string",
-		default: "#f8f8f8"
+		default: "#f8f8f8",
 	},
 	ctaBorderColor: {
 		type: "string",
-		default: "#ECECEC"
+		default: "#ECECEC",
 	},
 	ctaBorderSize: {
 		type: "number",
-		default: 2
+		default: 2,
 	},
 	url: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	contentAlign: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	addNofollow: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	openInNewTab: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	useHeadingTag: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	selectedHeadingTag: {
 		type: "string",
-		default: "h2"
-	}
+		default: "h2",
+	},
 };
 
 registerBlockType("ub/call-to-action", {
@@ -131,11 +131,11 @@ registerBlockType("ub/call-to-action", {
 	keywords: [
 		__("call to action", "ultimate-blocks"),
 		__("conversion", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks")
+		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	attributes: oldAttributes,
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	/**
@@ -150,14 +150,14 @@ registerBlockType("ub/call-to-action", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
+				.replaceBlock,
 		})),
-		withState({ editable: "" })
-	])(function(props) {
+		withState({ editable: "" }),
+	])(function (props) {
 		const { isSelected, block, replaceBlock } = props;
 
 		return [
@@ -186,7 +186,7 @@ registerBlockType("ub/call-to-action", {
 									ub_cta_content_text: mergeRichTextArray(ub_cta_content_text),
 
 									ub_cta_button_text: mergeRichTextArray(ub_cta_button_text),
-									url: url
+									url: url,
 								})
 							)
 						);
@@ -195,7 +195,7 @@ registerBlockType("ub/call-to-action", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -207,7 +207,7 @@ registerBlockType("ub/call-to-action", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
+	save: function (props) {
 		const {
 			ctaBackgroundColor,
 			ctaBorderSize,
@@ -227,7 +227,7 @@ registerBlockType("ub/call-to-action", {
 			buttonFontSize,
 			ub_cta_button_text,
 			addNofollow,
-			openInNewTab
+			openInNewTab,
 		} = props.attributes;
 		return (
 			<div className={props.className}>
@@ -236,7 +236,7 @@ registerBlockType("ub/call-to-action", {
 					style={{
 						backgroundColor: ctaBackgroundColor,
 						border: ctaBorderSize + "px solid",
-						borderColor: ctaBorderColor
+						borderColor: ctaBorderColor,
 					}}
 				>
 					<div className="ub_call_to_action_headline">
@@ -245,7 +245,7 @@ registerBlockType("ub/call-to-action", {
 							style={{
 								fontSize: headFontSize + "px",
 								color: headColor,
-								textAlign: headAlign
+								textAlign: headAlign,
 							}}
 						>
 							{ub_call_to_action_headline_text}
@@ -257,7 +257,7 @@ registerBlockType("ub/call-to-action", {
 							style={{
 								fontSize: contentFontSize + "px",
 								color: contentColor,
-								textAlign: contentAlign
+								textAlign: contentAlign,
 							}}
 						>
 							{ub_cta_content_text}
@@ -271,14 +271,14 @@ registerBlockType("ub/call-to-action", {
 							className={`wp-block-button ub_cta_button`}
 							style={{
 								backgroundColor: buttonColor,
-								width: buttonWidth + "px"
+								width: buttonWidth + "px",
 							}}
 						>
 							<p
 								className="ub_cta_button_text"
 								style={{
 									color: buttonTextColor,
-									fontSize: buttonFontSize + "px"
+									fontSize: buttonFontSize + "px",
 								}}
 							>
 								{ub_cta_button_text}
@@ -293,8 +293,8 @@ registerBlockType("ub/call-to-action", {
 		updateFrom(version_1_1_2),
 		updateFrom(version_1_1_4),
 		updateFrom(version_1_1_5),
-		updateFrom(version_2_0_0)
-	]
+		updateFrom(version_2_0_0),
+	],
 });
 
 registerBlockType("ub/call-to-action-block", {
@@ -304,7 +304,7 @@ registerBlockType("ub/call-to-action-block", {
 	keywords: [
 		__("call to action", "ultimate-blocks"),
 		__("conversion", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks")
+		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	attributes,
 	edit: compose([
@@ -312,12 +312,12 @@ registerBlockType("ub/call-to-action-block", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
-		}))
-	])(function(props) {
+			),
+		})),
+	])(function (props) {
 		const { isSelected, block } = props;
 
-		if (props.attributes.blockID !== block.clientId) {
+		if (props.attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -326,8 +326,8 @@ registerBlockType("ub/call-to-action-block", {
 
 			isSelected && inspectorControls(props),
 
-			<div className={props.className}>{editorDisplay(props)}</div>
+			<div className={props.className}>{editorDisplay(props)}</div>,
 		];
 	}),
-	save: () => null
+	save: () => null,
 });

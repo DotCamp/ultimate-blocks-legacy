@@ -531,7 +531,7 @@ export class TabHolder extends Component {
 			}
 		}
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 

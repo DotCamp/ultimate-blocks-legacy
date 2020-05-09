@@ -14,21 +14,21 @@ import {
 	version_1_1_5,
 	version_2_0_0,
 	oldAttributes,
-	updateFrom
+	updateFrom,
 } from "./oldVersions";
 
 import {
 	generateIcon,
 	dashesToCamelcase,
 	mergeRichTextArray,
-	upgradeButtonLabel
+	upgradeButtonLabel,
 } from "../../common";
 import {
 	blockControls,
 	inspectorControls,
 	editorDisplay,
 	iconSize,
-	allIcons
+	allIcons,
 } from "./components";
 
 const { withDispatch, withSelect } = wp.data;
@@ -54,68 +54,68 @@ const { registerBlockType, createBlock } = wp.blocks;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	buttonText: {
 		type: "string",
-		default: "Button Text"
+		default: "Button Text",
 	},
 	align: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	url: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	size: {
 		type: "string",
-		default: "medium"
+		default: "medium",
 	},
 	buttonColor: {
 		type: "string",
-		default: "#313131"
+		default: "#313131",
 	},
 	buttonHoverColor: {
 		type: "string",
-		default: "#313131"
+		default: "#313131",
 	},
 	buttonTextColor: {
 		type: "string",
-		default: "#ffffff"
+		default: "#ffffff",
 	},
 	buttonTextHoverColor: {
 		type: "string",
-		default: "#ffffff"
+		default: "#ffffff",
 	},
 	buttonRounded: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	chosenIcon: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	iconPosition: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
 	buttonIsTransparent: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	addNofollow: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	openInNewTab: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	buttonWidth: {
 		type: "string",
-		default: "fixed"
-	}
+		default: "fixed",
+	},
 };
 
 registerBlockType("ub/button-block", {
@@ -125,7 +125,7 @@ registerBlockType("ub/button-block", {
 	keywords: [
 		__("Button", "ultimate-blocks"),
 		__("Buttons", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks")
+		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -137,36 +137,36 @@ registerBlockType("ub/button-block", {
 	 */
 	attributes: oldAttributes,
 	supports: {
-		inserter: false //this block is being phased out in favor of the PHP-rendered version
+		inserter: false, //this block is being phased out in favor of the PHP-rendered version
 	},
 	edit: compose([
 		withState({
 			isMouseHovered: false,
 			availableIcons: [],
-			iconSearchTerm: ""
+			iconSearchTerm: "",
 		}),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
-		}))
-	])(function(props) {
+				.replaceBlock,
+		})),
+	])(function (props) {
 		const {
 			isSelected,
 			setState,
 			availableIcons,
 			block,
 			replaceBlock,
-			attributes
+			attributes,
 		} = props;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
-			setState({ availableIcons: iconList.map(name => allIcons[name]) });
+			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
 		}
 
 		return [
@@ -183,7 +183,7 @@ registerBlockType("ub/button-block", {
 							createBlock(
 								"ub/button",
 								Object.assign(otherAttributes, {
-									buttonText: mergeRichTextArray(attributes.buttonText)
+									buttonText: mergeRichTextArray(attributes.buttonText),
 								})
 							)
 						);
@@ -192,7 +192,7 @@ registerBlockType("ub/button-block", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -204,7 +204,7 @@ registerBlockType("ub/button-block", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
+	save: function (props) {
 		const {
 			buttonText,
 			align,
@@ -219,7 +219,7 @@ registerBlockType("ub/button-block", {
 			iconPosition,
 			buttonIsTransparent,
 			addNofollow,
-			openInNewTab
+			openInNewTab,
 		} = props.attributes;
 
 		return (
@@ -240,13 +240,13 @@ registerBlockType("ub/button-block", {
 						backgroundColor: buttonIsTransparent ? "transparent" : buttonColor,
 						color: buttonIsTransparent ? buttonColor : buttonTextColor,
 						borderRadius: buttonRounded ? "60px" : "0px",
-						border: buttonIsTransparent ? `3px solid ${buttonColor}` : "none"
+						border: buttonIsTransparent ? `3px solid ${buttonColor}` : "none",
 					}}
 				>
 					<div
 						className="ub-button-content-holder"
 						style={{
-							flexDirection: iconPosition === "left" ? "row" : "row-reverse"
+							flexDirection: iconPosition === "left" ? "row" : "row-reverse",
 						}}
 					>
 						{chosenIcon !== "" &&
@@ -268,8 +268,8 @@ registerBlockType("ub/button-block", {
 		updateFrom(version_1_1_2),
 		updateFrom(version_1_1_4),
 		updateFrom(version_1_1_5),
-		updateFrom(version_2_0_0)
-	]
+		updateFrom(version_2_0_0),
+	],
 });
 
 registerBlockType("ub/button", {
@@ -280,27 +280,27 @@ registerBlockType("ub/button", {
 	keywords: [
 		__("Button", "ultimate-blocks"),
 		__("Buttons", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks")
+		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	edit: compose([
 		withState({
 			isMouseHovered: false,
 			availableIcons: [],
-			iconSearchTerm: ""
+			iconSearchTerm: "",
 		}),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
-		}))
-	])(function(props) {
+			),
+		})),
+	])(function (props) {
 		const { isSelected, setState, availableIcons, block } = props;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
-			setState({ availableIcons: iconList.map(name => allIcons[name]) });
+			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
 		}
-		if (props.attributes.blockID !== block.clientId) {
+		if (props.attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -309,8 +309,8 @@ registerBlockType("ub/button", {
 
 			isSelected && inspectorControls(props),
 
-			<div className={props.className}>{editorDisplay(props)}</div>
+			<div className={props.className}>{editorDisplay(props)}</div>,
 		];
 	}),
-	save: () => null
+	save: () => null,
 });

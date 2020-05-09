@@ -10,7 +10,7 @@
 import {
 	SortableContainer,
 	SortableElement,
-	arrayMove
+	arrayMove,
 } from "react-sortable-hoc";
 
 import {
@@ -20,7 +20,7 @@ import {
 	PinterestIcon,
 	RedditIcon,
 	TumblrIcon,
-	icon
+	icon,
 } from "./icons/icons";
 
 // Import components
@@ -30,7 +30,7 @@ import Inspector from "./inspector";
 const iconSizes = {
 	normal: 20,
 	medium: 30,
-	large: 40
+	large: 40,
 };
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
@@ -58,28 +58,28 @@ const SortableItem = SortableElement(({ icon, iconSize, iconShape, color }) => {
 	const iconDetails = {
 		facebook: {
 			bgColor: color || "#365899",
-			main: <FacebookIcon width={iconSize} height={iconSize} />
+			main: <FacebookIcon width={iconSize} height={iconSize} />,
 		},
 		linkedin: {
 			bgColor: color || "#0073b1",
-			main: <LinkedInIcon width={iconSize} height={iconSize} />
+			main: <LinkedInIcon width={iconSize} height={iconSize} />,
 		},
 		pinterest: {
 			bgColor: color || "#bd081c",
-			main: <PinterestIcon width={iconSize} height={iconSize} />
+			main: <PinterestIcon width={iconSize} height={iconSize} />,
 		},
 		twitter: {
 			bgColor: color || "#1da1f2",
-			main: <TwitterIcon width={iconSize} height={iconSize} />
+			main: <TwitterIcon width={iconSize} height={iconSize} />,
 		},
 		tumblr: {
 			bgColor: color || "#36465d",
-			main: <TumblrIcon width={iconSize} height={iconSize} />
+			main: <TumblrIcon width={iconSize} height={iconSize} />,
 		},
 		reddit: {
 			bgColor: color || "#cee3f8",
-			main: <RedditIcon width={iconSize} height={iconSize} />
-		}
+			main: <RedditIcon width={iconSize} height={iconSize} />,
+		},
 	};
 
 	return (
@@ -90,7 +90,7 @@ const SortableItem = SortableElement(({ icon, iconSize, iconShape, color }) => {
 				width: iconSize * 1.5,
 				height: iconSize * 1.5,
 				backgroundColor: iconDetails[icon].bgColor,
-				borderRadius: iconShape === "circle" ? "50%" : "0"
+				borderRadius: iconShape === "circle" ? "50%" : "0",
 			}}
 		>
 			{iconDetails[icon].main}
@@ -126,43 +126,43 @@ registerBlockType("ub/social-share", {
 	attributes: {
 		blockID: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		showFacebookIcon: {
 			type: "boolean",
-			default: true
+			default: true,
 		},
 		showTwitterIcon: {
 			type: "boolean",
-			default: true
+			default: true,
 		},
 		showLinkedInIcon: {
 			type: "boolean",
-			default: true
+			default: true,
 		},
 		showPinterestIcon: {
 			type: "boolean",
-			default: true
+			default: true,
 		},
 		showRedditIcon: {
 			type: "boolean",
-			default: true
+			default: true,
 		},
 		showTumblrIcon: {
 			type: "boolean",
-			default: true
+			default: true,
 		},
 		iconSize: {
 			type: "string",
-			default: "normal"
+			default: "normal",
 		},
 		iconShape: {
 			type: "string",
-			default: "circle"
+			default: "circle",
 		},
 		align: {
 			type: "string",
-			default: "left"
+			default: "left",
 		},
 		iconOrder: {
 			type: "array",
@@ -172,23 +172,23 @@ registerBlockType("ub/social-share", {
 				"linkedin",
 				"pinterest",
 				"reddit",
-				"tumblr"
-			]
+				"tumblr",
+			],
 		},
 		buttonColor: {
 			type: "string",
-			default: "" //when turned on, default value should be #cccccc
-		}
+			default: "", //when turned on, default value should be #cccccc
+		},
 	},
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withState({ hasTransitioned: false })
-	])(function(props) {
+		withState({ hasTransitioned: false }),
+	])(function (props) {
 		const {
 			attributes,
 			setAttributes,
@@ -196,14 +196,14 @@ registerBlockType("ub/social-share", {
 			className,
 			block,
 			hasTransitioned,
-			setState
+			setState,
 		} = props;
 
 		const { blockID, align, iconShape, iconOrder, buttonColor } = attributes;
 
 		const iconSize = iconSizes[attributes.iconSize];
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -213,7 +213,7 @@ registerBlockType("ub/social-share", {
 			attributes.showLinkedInIcon,
 			attributes.showPinterestIcon,
 			attributes.showRedditIcon,
-			attributes.showTumblrIcon
+			attributes.showTumblrIcon,
 		];
 
 		if (!hasTransitioned) {
@@ -228,7 +228,7 @@ registerBlockType("ub/social-share", {
 				<BlockControls>
 					<AlignmentToolbar
 						value={align}
-						onChange={newAlignment => setAttributes({ align: newAlignment })}
+						onChange={(newAlignment) => setAttributes({ align: newAlignment })}
 						controls={["left", "center", "right"]}
 					/>
 				</BlockControls>
@@ -240,7 +240,7 @@ registerBlockType("ub/social-share", {
 					items={iconOrder}
 					onSortEnd={({ oldIndex, newIndex }) =>
 						setAttributes({
-							iconOrder: arrayMove(iconOrder, oldIndex, newIndex)
+							iconOrder: arrayMove(iconOrder, oldIndex, newIndex),
 						})
 					}
 					iconSize={iconSize}
@@ -248,9 +248,9 @@ registerBlockType("ub/social-share", {
 					align={align}
 					color={buttonColor}
 				/>
-			</div>
+			</div>,
 		];
 	}),
 
-	save: () => null
+	save: () => null,
 });

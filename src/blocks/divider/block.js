@@ -22,24 +22,24 @@ const { withSelect } = wp.data;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	borderSize: {
 		type: "number",
-		default: 2
+		default: 2,
 	},
 	borderStyle: {
 		type: "string",
-		default: "solid"
+		default: "solid",
 	},
 	borderColor: {
 		type: "string",
-		default: "#ccc"
+		default: "#ccc",
 	},
 	borderHeight: {
 		type: "number",
-		default: 20
-	}
+		default: 20,
+	},
 };
 /**
  * Register: aa Gutenberg Block.
@@ -72,21 +72,21 @@ registerBlockType("ub/divider", {
 	edit: withSelect((select, ownProps) => ({
 		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
-		)
-	}))(function(props) {
+		),
+	}))(function (props) {
 		const {
 			blockID,
 			borderSize,
 			borderStyle,
 			borderColor,
-			borderHeight
+			borderHeight,
 		} = props.attributes;
 
 		const { isSelected, setAttributes, className, block } = props;
 
 		// Creates a <p class='wp-block-cgb-block-divider'></p>.
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -97,7 +97,7 @@ registerBlockType("ub/divider", {
 						<RangeControl
 							label={__("Thickness")}
 							value={borderSize}
-							onChange={value => setAttributes({ borderSize: value })}
+							onChange={(value) => setAttributes({ borderSize: value })}
 							min={1}
 							max={20}
 							beforeIcon="minus"
@@ -107,7 +107,7 @@ registerBlockType("ub/divider", {
 						<RangeControl
 							label={__("Height")}
 							value={borderHeight}
-							onChange={value => setAttributes({ borderHeight: value })}
+							onChange={(value) => setAttributes({ borderHeight: value })}
 							min={10}
 							max={200}
 							beforeIcon="minus"
@@ -117,7 +117,7 @@ registerBlockType("ub/divider", {
 						<p>{__("Color")}</p>
 						<ColorPalette
 							value={borderColor}
-							onChange={colorValue =>
+							onChange={(colorValue) =>
 								setAttributes({ borderColor: colorValue })
 							}
 							allowReset
@@ -132,10 +132,10 @@ registerBlockType("ub/divider", {
 					style={{
 						borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
 						marginTop: borderHeight + "px",
-						marginBottom: borderHeight + "px"
+						marginBottom: borderHeight + "px",
 					}}
 				/>
-			</div>
+			</div>,
 		];
 	}),
 
@@ -154,7 +154,7 @@ registerBlockType("ub/divider", {
 	deprecated: [
 		{
 			attributes,
-			save: version_1_1_2
-		}
-	]
+			save: version_1_1_2,
+		},
+	],
 });

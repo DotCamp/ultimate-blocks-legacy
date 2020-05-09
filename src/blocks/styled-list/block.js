@@ -6,7 +6,7 @@ const {
 	InspectorControls,
 	ColorPalette,
 	AlignmentToolbar,
-	BlockControls
+	BlockControls,
 } = wp.blockEditor || wp.editor;
 const { IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
 const { withState, compose } = wp.compose;
@@ -31,13 +31,13 @@ registerBlockType("ub/styled-list", {
 	attributes: {
 		blockID: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		list: {
 			type: "text",
 			default: [...Array(3).keys()]
-				.map(i => `<li>${__(`Item ${i + 1}`)}</li>`)
-				.join()
+				.map((i) => `<li>${__(`Item ${i + 1}`)}</li>`)
+				.join(),
 		},
 		//retained for reverse compatibility
 		listItem: {
@@ -45,25 +45,25 @@ registerBlockType("ub/styled-list", {
 			default: Array(3).fill({
 				text: "",
 				selectedIcon: "check",
-				indent: 0
-			})
+				indent: 0,
+			}),
 		},
 		selectedIcon: {
 			type: "string",
-			default: "check"
+			default: "check",
 		},
 		alignment: {
 			type: "string",
-			default: "left"
+			default: "left",
 		},
 		iconColor: {
 			type: "string",
-			default: "#000000"
+			default: "#000000",
 		},
 		iconSize: {
 			type: "number",
-			default: 5
-		}
+			default: 5,
+		},
 	},
 	keywords: [__("List"), __("Styled List"), __("Ultimate Blocks")],
 	edit: compose([
@@ -71,14 +71,14 @@ registerBlockType("ub/styled-list", {
 			availableIcons: [],
 			iconSearchTerm: "",
 			recentSelection: "",
-			edits: 0
+			edits: 0,
 		}),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
-		}))
-	])(function(props) {
+			),
+		})),
+	])(function (props) {
 		const {
 			block,
 			isSelected,
@@ -87,7 +87,7 @@ registerBlockType("ub/styled-list", {
 			setState,
 			availableIcons,
 			iconSearchTerm,
-			edits
+			edits,
 		} = props;
 		const {
 			list,
@@ -96,15 +96,15 @@ registerBlockType("ub/styled-list", {
 			iconColor,
 			iconSize,
 			selectedIcon,
-			blockID
+			blockID,
 		} = attributes;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
-			setState({ availableIcons: iconList.map(name => allIcons[name]) });
+			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
 		}
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -137,7 +137,7 @@ registerBlockType("ub/styled-list", {
 				newList = [
 					newList.slice(0, insertionPoint),
 					insertedItem,
-					newList.slice(insertionPoint)
+					newList.slice(insertionPoint),
 				].join("");
 			});
 
@@ -147,8 +147,8 @@ registerBlockType("ub/styled-list", {
 				listItem: Array(3).fill({
 					text: "",
 					selectedIcon: "check",
-					indent: 0
-				})
+					indent: 0,
+				}),
 			});
 		}
 
@@ -159,7 +159,7 @@ registerBlockType("ub/styled-list", {
 						<div
 							style={{
 								display: "grid",
-								gridTemplateColumns: "5fr 1fr"
+								gridTemplateColumns: "5fr 1fr",
 							}}
 						>
 							<p>{__("Selected icon")}</p>
@@ -173,7 +173,7 @@ registerBlockType("ub/styled-list", {
 													icon={
 														Object.keys(fas)
 															.filter(
-																iconName => fas[iconName].prefix === "fas"
+																(iconName) => fas[iconName].prefix === "fas"
 															)
 															.includes(`fa${dashesToCamelcase(selectedIcon)}`)
 															? selectedIcon
@@ -193,17 +193,17 @@ registerBlockType("ub/styled-list", {
 											<input
 												type="text"
 												value={iconSearchTerm}
-												onChange={e =>
+												onChange={(e) =>
 													setState({
-														iconSearchTerm: e.target.value
+														iconSearchTerm: e.target.value,
 													})
 												}
 											/>
 											<br />
 											{availableIcons.length > 0 &&
 												availableIcons
-													.filter(i => i.iconName.includes(iconSearchTerm))
-													.map(i => (
+													.filter((i) => i.iconName.includes(iconSearchTerm))
+													.map((i) => (
 														<IconButton
 															className="ub-styled-list-available-icon"
 															icon={<FontAwesomeIcon icon={i} size="lg" />}
@@ -211,11 +211,11 @@ registerBlockType("ub/styled-list", {
 															onClick={() => {
 																setState({
 																	recentSelection: i.iconName,
-																	edits: edits + 1
+																	edits: edits + 1,
 																});
 
 																setAttributes({
-																	selectedIcon: i.iconName
+																	selectedIcon: i.iconName,
 																});
 															}}
 														/>
@@ -228,12 +228,14 @@ registerBlockType("ub/styled-list", {
 						<p>{__("Icon color")}</p>
 						<ColorPalette
 							value={iconColor}
-							onChange={colorValue => setAttributes({ iconColor: colorValue })}
+							onChange={(colorValue) =>
+								setAttributes({ iconColor: colorValue })
+							}
 						/>
 						<p>{__("Icon size")}</p>
 						<RangeControl
 							value={iconSize}
-							onChange={iconSize => setAttributes({ iconSize })}
+							onChange={(iconSize) => setAttributes({ iconSize })}
 							min={1}
 							max={10}
 						/>
@@ -245,7 +247,7 @@ registerBlockType("ub/styled-list", {
 				<BlockControls>
 					<AlignmentToolbar
 						value={alignment}
-						onChange={value => {
+						onChange={(value) => {
 							setAttributes({ alignment: value });
 						}}
 					/>
@@ -259,7 +261,7 @@ registerBlockType("ub/styled-list", {
 					justifyContent:
 						alignment === "center"
 							? "center"
-							: `flex-${alignment === "left" ? "start" : "end"}`
+							: `flex-${alignment === "left" ? "start" : "end"}`,
 				}}
 			>
 				<RichText
@@ -267,7 +269,7 @@ registerBlockType("ub/styled-list", {
 					multiline="li"
 					tagName="ul"
 					value={list}
-					onChange={newList => {
+					onChange={(newList) => {
 						newList = newList.replace("<ul>", '<ul class="fa-ul">');
 						setAttributes({ list: newList });
 					}}
@@ -290,12 +292,12 @@ registerBlockType("ub/styled-list", {
 						}' color='%23${iconColor.slice(1)}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
 						}'></path></svg>");
-				background-repeat: no-repeat;}`
+				background-repeat: no-repeat;}`,
 					}}
 				/>
-			</div>
+			</div>,
 		];
 	}),
 
-	save: () => null
+	save: () => null,
 });

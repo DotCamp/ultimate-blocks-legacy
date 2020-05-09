@@ -10,7 +10,7 @@ const {
 	Button,
 	RangeControl,
 	PanelBody,
-	DropdownMenu
+	DropdownMenu,
 } = wp.components;
 
 const { withSelect } = wp.data;
@@ -27,39 +27,39 @@ registerBlockType("ub/progress-bar", {
 	attributes: {
 		blockID: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		percentage: {
 			type: "number",
-			default: 25
+			default: 25,
 		},
 		barType: {
 			type: "string",
-			default: "linear" //choose between linear and circular
+			default: "linear", //choose between linear and circular
 		},
 		detail: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		detailAlign: {
 			type: "string",
-			default: "left"
+			default: "left",
 		},
 		barColor: {
 			type: "string",
-			default: "#2DB7F5"
+			default: "#2DB7F5",
 		},
 		barThickness: {
 			type: "number",
-			default: 1
-		}
+			default: 1,
+		},
 	},
 
 	edit: withSelect((select, ownProps) => ({
 		block: (select("core/block-editor") || select("core/editor")).getBlock(
 			ownProps.clientId
-		)
-	}))(function(props) {
+		),
+	}))(function (props) {
 		const { isSelected, setAttributes, block } = props;
 		const {
 			blockID,
@@ -68,10 +68,10 @@ registerBlockType("ub/progress-bar", {
 			detail,
 			detailAlign,
 			barColor,
-			barThickness
+			barThickness,
 		} = props.attributes;
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -90,7 +90,7 @@ registerBlockType("ub/progress-bar", {
 						<RangeControl
 							className="ub_progress_bar_value"
 							value={percentage}
-							onChange={value => setAttributes({ percentage: value })}
+							onChange={(value) => setAttributes({ percentage: value })}
 							min={0}
 							max={100}
 							allowReset
@@ -100,9 +100,9 @@ registerBlockType("ub/progress-bar", {
 						icon={`editor-${
 							detailAlign === "justify" ? detailAlign : "align" + detailAlign
 						}`}
-						controls={["left", "center", "right", "justify"].map(a => ({
+						controls={["left", "center", "right", "justify"].map((a) => ({
 							icon: `editor-${a === "justify" ? a : "align" + a}`,
-							onClick: () => setAttributes({ detailAlign: a })
+							onClick: () => setAttributes({ detailAlign: a }),
 						}))}
 					/>
 				</BlockControls>
@@ -116,16 +116,16 @@ registerBlockType("ub/progress-bar", {
 							colorSettings={[
 								{
 									value: barColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({ barColor: colorValue }),
-									label: ""
-								}
+									label: "",
+								},
 							]}
 						/>
 						<RangeControl
 							label={__("Thickness")}
 							value={barThickness}
-							onChange={value => setAttributes({ barThickness: value })}
+							onChange={(value) => setAttributes({ barThickness: value })}
 							min={1}
 							max={5}
 							allowReset
@@ -140,7 +140,7 @@ registerBlockType("ub/progress-bar", {
 						style={{ textAlign: detailAlign }}
 						placeholder={__("Progress bar description")}
 						value={detail}
-						onChange={text => setAttributes({ detail: text })}
+						onChange={(text) => setAttributes({ detail: text })}
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
@@ -157,11 +157,11 @@ registerBlockType("ub/progress-bar", {
 						barThickness={barThickness}
 					/>
 				)}
-			</div>
+			</div>,
 		];
 	}),
 
 	save() {
 		return null;
-	}
+	},
 });

@@ -14,7 +14,7 @@ const {
 	URLInput,
 	InspectorControls,
 	mediaUpload,
-	RichText
+	RichText,
 } = wp.blockEditor || wp.editor;
 const {
 	Icon,
@@ -23,7 +23,7 @@ const {
 	ToggleControl,
 	FormFileUpload,
 	RangeControl,
-	PanelBody
+	PanelBody,
 } = wp.components;
 
 const { withState, compose } = wp.compose;
@@ -33,48 +33,48 @@ const { withSelect } = wp.data;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	images: {
 		type: "string",
-		default: "[]"
+		default: "[]",
 	},
 	pics: {
 		type: "array",
-		default: []
+		default: [],
 	},
 	captions: {
 		type: "string",
-		default: "[]" //starts as empty, should take {text: '', link: '', id: -1}
+		default: "[]", //starts as empty, should take {text: '', link: '', id: -1}
 	},
 	descriptions: {
 		type: "array",
-		default: []
+		default: [],
 	},
 	wrapsAround: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	isDraggable: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	autoplays: {
 		type: "boolean",
-		default: false
+		default: false,
 	},
 	autoplayDuration: {
 		type: "number",
-		default: 3
+		default: 3,
 	},
 	sliderHeight: {
 		type: "number",
-		default: 250
+		default: 250,
 	},
 	showPageDots: {
 		type: "boolean",
-		default: true
-	}
+		default: true,
+	},
 };
 
 registerBlockType("ub/image-slider", {
@@ -89,16 +89,16 @@ registerBlockType("ub/image-slider", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
-		}))
-	])(function(props) {
+			),
+		})),
+	])(function (props) {
 		const {
 			setAttributes,
 			isSelected,
 			setState,
 			componentKey,
 			activeSlide,
-			block
+			block,
 		} = props;
 		const {
 			images,
@@ -111,7 +111,7 @@ registerBlockType("ub/image-slider", {
 			autoplayDuration,
 			sliderHeight,
 			showPageDots,
-			blockID
+			blockID,
 		} = props.attributes;
 
 		if (images && JSON.parse(images).length !== 0 && pics.length === 0) {
@@ -119,13 +119,13 @@ registerBlockType("ub/image-slider", {
 				pics: JSON.parse(images),
 				images: "[]",
 				descriptions: JSON.parse(captions),
-				captions: "[]"
+				captions: "[]",
 			});
 		}
 		const imageArray = pics;
 		const captionArray = descriptions;
 
-		if (blockID !== block.clientId) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -135,7 +135,7 @@ registerBlockType("ub/image-slider", {
 					{imageArray.length > 0 && (
 						<Toolbar>
 							<MediaUpload
-								value={imageArray.map(img => img.id)}
+								value={imageArray.map((img) => img.id)}
 								allowedTypes={["image"]}
 								multiple
 								gallery
@@ -146,20 +146,20 @@ registerBlockType("ub/image-slider", {
 										label={__("Edit selection")}
 									/>
 								)}
-								onSelect={newImages => {
-									const newCaptionArray = newImages.map(img =>
-										captionArray.find(c => c.id === img.id)
-											? captionArray.find(c => c.id === img.id)
+								onSelect={(newImages) => {
+									const newCaptionArray = newImages.map((img) =>
+										captionArray.find((c) => c.id === img.id)
+											? captionArray.find((c) => c.id === img.id)
 											: {
 													text: "",
 													link: "",
-													id: img.id
+													id: img.id,
 											  }
 									);
 
 									setAttributes({
 										pics: newImages,
-										descriptions: newCaptionArray
+										descriptions: newCaptionArray,
 									});
 								}}
 							/>
@@ -173,7 +173,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Wrap around")}
 							checked={wrapsAround}
-							onChange={_ => {
+							onChange={(_) => {
 								setAttributes({ wrapsAround: !wrapsAround });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -181,7 +181,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Allow dragging")}
 							checked={isDraggable}
-							onChange={_ => {
+							onChange={(_) => {
 								setAttributes({ isDraggable: !isDraggable });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -189,7 +189,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Show page dots")}
 							checked={showPageDots}
-							onChange={_ => {
+							onChange={(_) => {
 								setAttributes({ showPageDots: !showPageDots });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -197,7 +197,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Enable autoplay")}
 							checked={autoplays}
-							onChange={_ => {
+							onChange={(_) => {
 								setAttributes({ autoplays: !autoplays });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -206,10 +206,10 @@ registerBlockType("ub/image-slider", {
 							<RangeControl
 								label={__("Autoplay duration (seconds)")}
 								value={autoplayDuration}
-								onChange={value => {
+								onChange={(value) => {
 									setAttributes({ autoplayDuration: value });
 									setState({
-										componentKey: componentKey + 1
+										componentKey: componentKey + 1,
 									});
 								}}
 								min={1}
@@ -219,7 +219,7 @@ registerBlockType("ub/image-slider", {
 						<RangeControl
 							label={__("Height")}
 							value={sliderHeight}
-							onChange={newHeight => {
+							onChange={(newHeight) => {
 								setAttributes({ sliderHeight: newHeight });
 								setState({ componentKey: componentKey + 1 }); //ensure proper placement of arrows and page dots
 							}}
@@ -233,19 +233,19 @@ registerBlockType("ub/image-slider", {
 			<div
 				className="ub_image_slider"
 				style={{
-					minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`
+					minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
 				}}
 			>
 				{imageArray.length === 0 ? (
 					<MediaPlaceholder
-						onSelect={newImages =>
+						onSelect={(newImages) =>
 							props.setAttributes({
 								pics: newImages,
-								descriptions: newImages.map(img => ({
+								descriptions: newImages.map((img) => ({
 									id: img.id,
 									text: "",
-									link: ""
-								}))
+									link: "",
+								})),
 							})
 						}
 						labels={{ title: "Image Slider" }}
@@ -256,7 +256,7 @@ registerBlockType("ub/image-slider", {
 					<React.Fragment>
 						<Slider
 							key={componentKey}
-							setActiveSlide={val => {
+							setActiveSlide={(val) => {
 								if (val !== activeSlide)
 									//needed to prevent instance of React error #185
 									setState({ activeSlide: val });
@@ -267,7 +267,7 @@ registerBlockType("ub/image-slider", {
 								wrapAround: wrapsAround,
 								draggable: isDraggable,
 								pageDots: showPageDots,
-								initialIndex: activeSlide
+								initialIndex: activeSlide,
 							}}
 							slides={[
 								...[
@@ -277,7 +277,7 @@ registerBlockType("ub/image-slider", {
 												key={i}
 												src={c.url}
 												style={{
-													height: `${sliderHeight}px`
+													height: `${sliderHeight}px`,
 												}}
 											/>
 											<RichText
@@ -285,36 +285,36 @@ registerBlockType("ub/image-slider", {
 												className="ub_image_silder_image_caption"
 												value={captionArray[i].text}
 												placeholder={__("Caption goes here")}
-												onChange={text => {
+												onChange={(text) => {
 													captionArray[i].text = text;
 													setAttributes({
-														descriptions: captionArray
+														descriptions: captionArray,
 													});
 												}}
 											/>
 										</div>
-									))
+									)),
 								],
 								isSelected && (
 									<div className="ub_image_slider_extra">
 										<FormFileUpload
 											multiple
 											isLarge
-											onChange={event =>
+											onChange={(event) =>
 												mediaUpload({
 													allowedTypes: ["image"],
 													filesList: event.target.files,
-													onFileChange: images =>
+													onFileChange: (images) =>
 														setAttributes({
 															pics: imageArray.concat(images),
 															descriptions: captionArray.concat(
-																images.map(img => ({
+																images.map((img) => ({
 																	id: img.id,
 																	text: "",
-																	link: ""
+																	link: "",
 																}))
-															)
-														})
+															),
+														}),
 												})
 											}
 											className="ub_image_slider_add_images"
@@ -324,12 +324,12 @@ registerBlockType("ub/image-slider", {
 											{__("Upload an image")}
 										</FormFileUpload>
 									</div>
-								)
+								),
 							]}
 						/>
 						{isSelected && activeSlide < captionArray.length && (
 							<form
-								onSubmit={event => event.preventDefault()}
+								onSubmit={(event) => event.preventDefault()}
 								className={`editor-format-toolbar__link-modal-line ub_image_slider_url_input flex-container`}
 							>
 								<div className="ub-icon-holder">
@@ -339,10 +339,10 @@ registerBlockType("ub/image-slider", {
 									autoFocus={false}
 									className="button-url"
 									value={captionArray[activeSlide].link}
-									onChange={url => {
+									onChange={(url) => {
 										captionArray[activeSlide].link = url;
 										setAttributes({
-											descriptions: captionArray
+											descriptions: captionArray,
 										});
 									}}
 								/>
@@ -355,7 +355,7 @@ registerBlockType("ub/image-slider", {
 						)}
 					</React.Fragment>
 				)}
-			</div>
+			</div>,
 		];
 	}),
 	save() {
@@ -365,13 +365,13 @@ registerBlockType("ub/image-slider", {
 		{
 			attributes,
 			save: version_1_1_4,
-			migrate: attributes => {
+			migrate: (attributes) => {
 				const { images, captions, ...otherAttributes } = attributes;
 				return Object.assign(Object.assign({}, otherAttributes), {
 					pics: JSON.parse(images),
-					descriptions: JSON.parse(captions)
+					descriptions: JSON.parse(captions),
 				});
-			}
-		}
-	]
+			},
+		},
+	],
 });

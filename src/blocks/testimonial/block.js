@@ -3,7 +3,7 @@ import {
 	version_1_1_2,
 	version_1_1_5,
 	oldAttributes,
-	updateFrom
+	updateFrom,
 } from "./oldVersions";
 
 import { blockControls, inspectorControls, editorDisplay } from "./components";
@@ -19,55 +19,55 @@ const { withDispatch, withSelect } = wp.data;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	ub_testimonial_text: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	textAlign: {
 		type: "string",
-		default: "justify"
+		default: "justify",
 	},
 	ub_testimonial_author: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	authorAlign: {
 		type: "string",
-		default: "right"
+		default: "right",
 	},
 	ub_testimonial_author_role: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	authorRoleAlign: {
 		type: "string",
-		default: "right"
+		default: "right",
 	},
 	imgURL: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	imgID: {
-		type: "number"
+		type: "number",
 	},
 	imgAlt: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	backgroundColor: {
 		type: "string",
-		default: "#f4f6f6"
+		default: "#f4f6f6",
 	},
 	textColor: {
 		type: "string",
-		default: "#444444"
+		default: "#444444",
 	},
 	textSize: {
 		type: "number",
-		default: 17
-	}
+		default: 17,
+	},
 };
 
 /**
@@ -90,7 +90,7 @@ registerBlockType("ub/testimonial-block", {
 	keywords: [__("testimonial"), __("quotes"), __("Ultimate Blocks")],
 	attributes: oldAttributes,
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	/**
@@ -105,14 +105,14 @@ registerBlockType("ub/testimonial-block", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
+				.replaceBlock,
 		})),
-		withState({ editable: "" })
-	])(function(props) {
+		withState({ editable: "" }),
+	])(function (props) {
 		const { isSelected, attributes, block, replaceBlock } = props;
 
 		return [
@@ -140,7 +140,7 @@ registerBlockType("ub/testimonial-block", {
 									ub_testimonial_author_role: mergeRichTextArray(
 										ub_testimonial_author_role
 									),
-									ub_testimonial_text: mergeRichTextArray(ub_testimonial_text)
+									ub_testimonial_text: mergeRichTextArray(ub_testimonial_text),
 								})
 							)
 						);
@@ -149,7 +149,7 @@ registerBlockType("ub/testimonial-block", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -161,7 +161,7 @@ registerBlockType("ub/testimonial-block", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
+	save: function (props) {
 		const {
 			backgroundColor,
 			textColor,
@@ -173,7 +173,7 @@ registerBlockType("ub/testimonial-block", {
 			ub_testimonial_text,
 			textAlign,
 			authorAlign,
-			authorRoleAlign
+			authorRoleAlign,
 		} = props.attributes;
 		return (
 			<div className={props.className}>
@@ -181,7 +181,7 @@ registerBlockType("ub/testimonial-block", {
 					className="ub_testimonial"
 					style={{
 						backgroundColor: backgroundColor,
-						color: textColor
+						color: textColor,
 					}}
 				>
 					<div className="ub_testimonial_img">
@@ -192,7 +192,7 @@ registerBlockType("ub/testimonial-block", {
 							className="ub_testimonial_text"
 							style={{
 								fontSize: textSize,
-								textAlign: textAlign
+								textAlign: textAlign,
 							}}
 						>
 							{ub_testimonial_text}
@@ -216,7 +216,7 @@ registerBlockType("ub/testimonial-block", {
 			</div>
 		);
 	},
-	deprecated: [updateFrom(version_1_1_2), updateFrom(version_1_1_5)]
+	deprecated: [updateFrom(version_1_1_2), updateFrom(version_1_1_5)],
 });
 
 registerBlockType("ub/testimonial", {
@@ -239,12 +239,12 @@ registerBlockType("ub/testimonial", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
-		}))
-	])(function(props) {
+			),
+		})),
+	])(function (props) {
 		const { isSelected, className, block } = props;
 
-		if (props.attributes.blockID !== block.clientId) {
+		if (props.attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -253,8 +253,8 @@ registerBlockType("ub/testimonial", {
 
 			isSelected && inspectorControls(props),
 
-			<div className={className}>{editorDisplay(props)}</div>
+			<div className={className}>{editorDisplay(props)}</div>,
 		];
 	}),
-	save: () => null
+	save: () => null,
 });

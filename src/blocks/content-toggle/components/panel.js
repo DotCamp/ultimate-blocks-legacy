@@ -124,12 +124,12 @@ class ContentTogglePanel extends Component {
 				toggleIcon,
 				border,
 				showOnlyOne,
+				parentID,
 			},
 			setAttributes,
 			removeBlock,
 			block,
 			blockParentId,
-			parentID,
 			selectBlock,
 		} = this.props;
 
@@ -138,19 +138,18 @@ class ContentTogglePanel extends Component {
 			right: __("Right", "ultimate-blocks"),
 		};
 
-		if (parentID !== blockParentId) {
-			let presets = { parentID: blockParentId };
-			if (parentID !== "") {
-				if (theme === "") {
-					presets = Object.assign(presets, { theme: oldColorDefaults.theme });
-				}
-				if (titleColor === "") {
-					presets = Object.assign(presets, {
-						titleColor: oldColorDefaults.titleColor,
-					});
-				}
+		if (parentID === "") {
+			setAttributes({ parentID: blockParentId });
+		} else {
+			let presets = {};
+			if (theme === "") {
+				presets = Object.assign(presets, { theme: oldColorDefaults.theme });
 			}
-			setAttributes(presets);
+			if (titleColor === "") {
+				presets = Object.assign(presets, {
+					titleColor: oldColorDefaults.titleColor,
+				});
+			}
 		}
 
 		return [

@@ -11,7 +11,7 @@ import {
 	version_1_1_2,
 	version_1_1_5,
 	version_2_0_0,
-	updateFrom
+	updateFrom,
 } from "./oldVersions";
 import { blockControls, inspectorControls, editorDisplay } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
@@ -19,36 +19,36 @@ import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	starCount: {
 		type: "number",
-		default: 5
+		default: 5,
 	},
 	starSize: {
 		type: "number",
-		default: 20
+		default: 20,
 	},
 	starColor: {
 		type: "string",
-		default: "#ffff00"
+		default: "#ffff00",
 	},
 	selectedStars: {
 		type: "number",
-		default: 0
+		default: 0,
 	},
 	reviewText: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	reviewTextAlign: {
 		type: "string",
-		default: "text"
+		default: "text",
 	},
 	starAlign: {
 		type: "string",
-		default: "left"
-	}
+		default: "left",
+	},
 };
 
 registerBlockType("ub/star-rating", {
@@ -58,21 +58,21 @@ registerBlockType("ub/star-rating", {
 
 	attributes: oldAttributes,
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
+				.replaceBlock,
 		})),
-		withState({ highlightedStars: 0 })
-	])(function(props) {
+		withState({ highlightedStars: 0 }),
+	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
 		return [
@@ -87,7 +87,7 @@ registerBlockType("ub/star-rating", {
 							createBlock(
 								"ub/star-rating-block",
 								Object.assign(otherAttributes, {
-									reviewText: mergeRichTextArray(reviewText)
+									reviewText: mergeRichTextArray(reviewText),
 								})
 							)
 						);
@@ -96,7 +96,7 @@ registerBlockType("ub/star-rating", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -108,7 +108,7 @@ registerBlockType("ub/star-rating", {
 			selectedStars,
 			reviewText,
 			reviewTextAlign,
-			starAlign
+			starAlign,
 		} = props.attributes;
 		return (
 			<div className="ub-star-rating">
@@ -118,7 +118,7 @@ registerBlockType("ub/star-rating", {
 						justifyContent:
 							starAlign === "center"
 								? "center"
-								: `flex-${starAlign === "left" ? "start" : "end"}`
+								: `flex-${starAlign === "left" ? "start" : "end"}`,
 					}}
 				>
 					<div className="ub-star-inner-container">
@@ -143,8 +143,8 @@ registerBlockType("ub/star-rating", {
 	deprecated: [
 		updateFrom(version_1_1_2),
 		updateFrom(version_1_1_5),
-		updateFrom(version_2_0_0)
-	]
+		updateFrom(version_2_0_0),
+	],
 });
 
 registerBlockType("ub/star-rating-block", {
@@ -159,20 +159,20 @@ registerBlockType("ub/star-rating-block", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
-		}))
-	])(function(props) {
+			),
+		})),
+	])(function (props) {
 		const { isSelected, block } = props;
 
-		if (props.attributes.blockID !== block.clientId) {
+		if (props.attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
 		return [
 			isSelected && blockControls(props),
 			isSelected && inspectorControls(props),
-			<div className="ub-star-rating">{editorDisplay(props)}</div>
+			<div className="ub-star-rating">{editorDisplay(props)}</div>,
 		];
 	}),
-	save: () => null
+	save: () => null,
 });

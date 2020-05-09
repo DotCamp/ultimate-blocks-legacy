@@ -23,99 +23,99 @@ const { withState, compose } = wp.compose;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	column: {
 		type: "string",
-		default: "2"
+		default: "2",
 	},
 	columnOneTitle: {
 		type: "string",
-		default: "Title One"
+		default: "Title One",
 	},
 	title1Align: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	columnTwoTitle: {
 		type: "string",
-		default: "Title Two"
+		default: "Title Two",
 	},
 	title2Align: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	columnThreeTitle: {
 		type: "string",
-		default: "Title Three"
+		default: "Title Three",
 	},
 	title3Align: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	columnOneBody: {
 		type: "string",
 		default:
-			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
+			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!",
 	},
 	body1Align: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
 	columnTwoBody: {
 		type: "string",
 		default:
-			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
+			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!",
 	},
 	body2Align: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
 	columnThreeBody: {
 		type: "string",
 		default:
-			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
+			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!",
 	},
 	body3Align: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
 	imgOneURL: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	imgOneID: {
 		type: "number",
-		default: null
+		default: null,
 	},
 	imgOneAlt: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	imgTwoURL: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	imgTwoID: {
 		type: "number",
-		default: null
+		default: null,
 	},
 	imgTwoAlt: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	imgThreeURL: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	imgThreeID: {
 		type: "number",
-		default: null
+		default: null,
 	},
 	imgThreeAlt: {
 		type: "string",
-		default: ""
-	}
+		default: "",
+	},
 };
 
 /**
@@ -139,7 +139,7 @@ registerBlockType("ub/feature-box", {
 	attributes: oldAttributes,
 
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	/**
@@ -154,14 +154,14 @@ registerBlockType("ub/feature-box", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
+				.replaceBlock,
 		})),
-		withState({ editable: "" })
-	])(function(props) {
+		withState({ editable: "" }),
+	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
 		return [
@@ -169,7 +169,7 @@ registerBlockType("ub/feature-box", {
 
 			<div className={props.className}>
 				<button
-					onClick={_ => {
+					onClick={(_) => {
 						const { column, columnOneBody } = attributes;
 						let currentTitles = [mergeRichTextArray(attributes.columnOneTitle)];
 						let currentTitleAligns = [attributes.title1Align];
@@ -179,8 +179,8 @@ registerBlockType("ub/feature-box", {
 							{
 								id: attributes.imgOneID,
 								alt: attributes.imgOneAlt,
-								url: attributes.imgOneURL
-							}
+								url: attributes.imgOneURL,
+							},
 						];
 
 						if (parseInt(column) >= 2) {
@@ -191,7 +191,7 @@ registerBlockType("ub/feature-box", {
 							currentImages.push({
 								id: attributes.imgTwoID,
 								alt: attributes.imgTwoAlt,
-								url: attributes.imgTwoURL
+								url: attributes.imgTwoURL,
 							});
 						}
 
@@ -205,7 +205,7 @@ registerBlockType("ub/feature-box", {
 							currentImages.push({
 								id: attributes.imgThreeID,
 								alt: attributes.imgThreeAlt,
-								url: attributes.imgThreeURL
+								url: attributes.imgThreeURL,
 							});
 						}
 
@@ -217,7 +217,7 @@ registerBlockType("ub/feature-box", {
 								titleAlign: currentTitleAligns,
 								text: currentTexts,
 								textAlign: currentTextAligns,
-								image: currentImages
+								image: currentImages,
 							})
 						);
 					}}
@@ -225,7 +225,7 @@ registerBlockType("ub/feature-box", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -237,7 +237,7 @@ registerBlockType("ub/feature-box", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
+	save: function (props) {
 		const {
 			column,
 			columnOneTitle,
@@ -257,7 +257,7 @@ registerBlockType("ub/feature-box", {
 			title3Align,
 			body1Align,
 			body2Align,
-			body3Align
+			body3Align,
 		} = props.attributes;
 
 		return (
@@ -324,13 +324,13 @@ registerBlockType("ub/feature-box", {
 	deprecated: [
 		{
 			attributes: oldAttributes,
-			save: version_1_1_2
+			save: version_1_1_2,
 		},
 		{
 			attributes: oldAttributes,
-			save: version_1_1_5
-		}
-	]
+			save: version_1_1_5,
+		},
+	],
 });
 
 registerBlockType("ub/feature-box-block", {
@@ -344,30 +344,30 @@ registerBlockType("ub/feature-box-block", {
 			{
 				type: "block",
 				blocks: "ub/styled-box",
-				transform: attributes => upgradeToStyledBox(attributes)
-			}
-		]
+				transform: (attributes) => upgradeToStyledBox(attributes),
+			},
+		],
 	},
 
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
+				.replaceBlock,
 		})),
-		withState({ editable: "" })
-	])(function(props) {
+		withState({ editable: "" }),
+	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
-		if (attributes.blockID !== block.clientId) {
+		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -376,15 +376,15 @@ registerBlockType("ub/feature-box-block", {
 
 			<div className={props.className}>
 				<button
-					onClick={_ =>
+					onClick={(_) =>
 						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
 					}
 				>
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
-	save: _ => null
+	save: (_) => null,
 });

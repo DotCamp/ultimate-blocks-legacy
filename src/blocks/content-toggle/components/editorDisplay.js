@@ -367,19 +367,18 @@ export class PanelContent extends Component {
 			}
 		}
 
-		if (blockID !== block.clientId) {
-			let presets = { blockID: block.clientId };
-			if (blockID !== "") {
-				if (theme === "") {
-					presets = Object.assign(presets, { theme: oldColorDefaults.theme });
-				}
-				if (titleColor === "") {
-					presets = Object.assign(presets, {
-						titleColor: oldColorDefaults.titleColor,
-					});
-				}
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId });
+		} else {
+			let presets = {};
+			if (theme === "") {
+				presets = Object.assign(presets, { theme: oldColorDefaults.theme });
 			}
-			setAttributes(presets);
+			if (titleColor === "") {
+				presets = Object.assign(presets, {
+					titleColor: oldColorDefaults.titleColor,
+				});
+			}
 		}
 
 		let newAttributeValues;

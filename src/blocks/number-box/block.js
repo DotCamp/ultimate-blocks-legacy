@@ -14,7 +14,7 @@ import {
 	blockControls,
 	inspectorControls,
 	editorDisplay,
-	upgradeToStyledBox
+	upgradeToStyledBox,
 } from "./components";
 
 const { __ } = wp.i18n;
@@ -27,84 +27,84 @@ const { withState, compose } = wp.compose;
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	column: {
 		type: "string",
-		default: "2"
+		default: "2",
 	},
 	columnOneNumber: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnTwoNumber: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnThreeNumber: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnOneTitle: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnTwoTitle: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnThreeTitle: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnOneBody: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnTwoBody: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	columnThreeBody: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	numberBackground: {
 		type: "string",
-		default: "#CCCCCC"
+		default: "#CCCCCC",
 	},
 	numberColor: {
 		type: "string",
-		default: "#000000"
+		default: "#000000",
 	},
 	borderColor: {
 		type: "string",
-		default: "#CCCCCC"
+		default: "#CCCCCC",
 	},
 	title1Align: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	title2Align: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	title3Align: {
 		type: "string",
-		default: "center"
+		default: "center",
 	},
 	body1Align: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
 	body2Align: {
 		type: "string",
-		default: "left"
+		default: "left",
 	},
 	body3Align: {
 		type: "string",
-		default: "left"
-	}
+		default: "left",
+	},
 };
 
 /**
@@ -128,7 +128,7 @@ registerBlockType("ub/number-box", {
 	attributes: oldAttributes,
 
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	/**
@@ -143,14 +143,14 @@ registerBlockType("ub/number-box", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
+				.replaceBlock,
 		})),
-		withState({ editable: "" })
-	])(function(props) {
+		withState({ editable: "" }),
+	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
 		return [
@@ -160,11 +160,11 @@ registerBlockType("ub/number-box", {
 
 			<div className={props.className}>
 				<button
-					onClick={_ => {
+					onClick={(_) => {
 						const { column, columnOneBody } = attributes;
 
 						let currentNumbers = [
-							mergeRichTextArray(attributes.columnOneNumber)
+							mergeRichTextArray(attributes.columnOneNumber),
 						];
 						let currentTitles = [mergeRichTextArray(attributes.columnOneTitle)];
 						let currentTitleAligns = [attributes.title1Align];
@@ -203,7 +203,7 @@ registerBlockType("ub/number-box", {
 								textAlign: currentTextAligns,
 								backColor: attributes.numberBackground,
 								foreColor: attributes.numberColor,
-								outlineColor: attributes.borderColor
+								outlineColor: attributes.borderColor,
 							})
 						);
 					}}
@@ -211,7 +211,7 @@ registerBlockType("ub/number-box", {
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
 
@@ -223,7 +223,7 @@ registerBlockType("ub/number-box", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
+	save: function (props) {
 		const {
 			column,
 			columnOneNumber,
@@ -243,7 +243,7 @@ registerBlockType("ub/number-box", {
 			title3Align,
 			body1Align,
 			body2Align,
-			body3Align
+			body3Align,
 		} = props.attributes;
 
 		return (
@@ -252,19 +252,19 @@ registerBlockType("ub/number-box", {
 					<div
 						className="ub_number_1"
 						style={{
-							borderColor: borderColor
+							borderColor: borderColor,
 						}}
 					>
 						<div
 							className="ub_number_box_number"
 							style={{
-								backgroundColor: numberBackground
+								backgroundColor: numberBackground,
 							}}
 						>
 							<p
 								className="ub_number_one_number"
 								style={{
-									color: numberColor
+									color: numberColor,
 								}}
 							>
 								{columnOneNumber}
@@ -283,19 +283,19 @@ registerBlockType("ub/number-box", {
 					<div
 						className="ub_number_2"
 						style={{
-							borderColor: borderColor
+							borderColor: borderColor,
 						}}
 					>
 						<div
 							className="ub_number_box_number"
 							style={{
-								backgroundColor: numberBackground
+								backgroundColor: numberBackground,
 							}}
 						>
 							<p
 								className="ub_number_two_number"
 								style={{
-									color: numberColor
+									color: numberColor,
 								}}
 							>
 								{columnTwoNumber}
@@ -314,19 +314,19 @@ registerBlockType("ub/number-box", {
 					<div
 						className="ub_number_3"
 						style={{
-							borderColor: borderColor
+							borderColor: borderColor,
 						}}
 					>
 						<div
 							className="ub_number_box_number"
 							style={{
-								backgroundColor: numberBackground
+								backgroundColor: numberBackground,
 							}}
 						>
 							<p
 								className="ub_number_three_number"
 								style={{
-									color: numberColor
+									color: numberColor,
 								}}
 							>
 								{columnThreeNumber}
@@ -352,13 +352,13 @@ registerBlockType("ub/number-box", {
 	deprecated: [
 		{
 			attributes: oldAttributes,
-			save: version_1_1_2
+			save: version_1_1_2,
 		},
 		{
 			attributes: oldAttributes,
-			save: version_1_1_5
-		}
-	]
+			save: version_1_1_5,
+		},
+	],
 });
 
 registerBlockType("ub/number-box-block", {
@@ -369,7 +369,7 @@ registerBlockType("ub/number-box-block", {
 	attributes,
 
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 
 	transforms: {
@@ -377,9 +377,9 @@ registerBlockType("ub/number-box-block", {
 			{
 				type: "block",
 				blocks: "ub/styled-box",
-				transform: attributes => upgradeToStyledBox(attributes)
-			}
-		]
+				transform: (attributes) => upgradeToStyledBox(attributes),
+			},
+		],
 	},
 
 	edit: compose([
@@ -387,16 +387,16 @@ registerBlockType("ub/number-box-block", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock
-		}))
-	])(function(props) {
+				.replaceBlock,
+		})),
+	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
-		if (attributes.blockID !== block.clientId) {
+		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
@@ -407,15 +407,15 @@ registerBlockType("ub/number-box-block", {
 
 			<div className={props.className}>
 				<button
-					onClick={_ =>
+					onClick={(_) =>
 						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
 					}
 				>
 					{upgradeButtonLabel}
 				</button>
 				{editorDisplay(props)}
-			</div>
+			</div>,
 		];
 	}),
-	save: _ => null
+	save: (_) => null,
 });
