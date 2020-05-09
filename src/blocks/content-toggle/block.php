@@ -104,10 +104,21 @@ function ub_faq_questions($qna = ''){
         return $parsed_qna;
     }
     else{
+        $current_qna = $qna;
         if($parsed_qna != ''){
+            $current = json_decode('[' . $parsed_qna . ']');
+            $newItems = json_decode('[' . $qna . ']');
+            foreach($newItems as $item){
+                if(in_array($item, $current)){
+                    $current_qna = str_replace(json_encode($item, JSON_UNESCAPED_SLASHES), '', $current_qna);
+                    $current_qna = str_replace(','.PHP_EOL.',', ',', $current_qna);
+                }
+            }
             $parsed_qna .= ',' . PHP_EOL;
         }
-        $parsed_qna .= $qna;
+        if($current_qna != ',' . PHP_EOL){
+            $parsed_qna .= $current_qna;
+        }
         return true;
     }
 }
@@ -199,14 +210,12 @@ function ub_content_toggle_filter( $block_content, $block ) {
                     if($questions != ""){
                         $questions .= ',' . PHP_EOL;
                     }
-                    $questions .= '{
-                        "@type": "Question",
-                        "name": "'.$togglePanel['attrs']['panelTitle'].'",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "'.trim(str_replace('"', '\"', $answer)).'"
-                        }
-                    }';
+                    $questions .= '{' .
+                        '"@type":"Question",' .
+                        '"name":"'.$togglePanel['attrs']['panelTitle'].
+                        '","acceptedAnswer":{' .
+                            '"@type":"Answer",' .
+                            '"text":"'.trim(str_replace('"', '\"', $answer)).'"}}';
                 }
 
 
