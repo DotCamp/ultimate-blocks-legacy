@@ -368,7 +368,9 @@ export class PanelContent extends Component {
 		}
 
 		if (blockID === "") {
-			setAttributes({ blockID: block.clientId });
+			setAttributes(
+				Object.assign({ blockID: block.clientId }, newColorDefaults)
+			);
 		} else {
 			let presets = {};
 			if (theme === "") {
