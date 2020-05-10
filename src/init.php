@@ -140,13 +140,13 @@ function ub_include_block_attribute_css() {
     $hasNoSmoothScroll = true;
 
     foreach( $presentBlocks as $block ){
-        if(array_key_exists($block['blockName'], $defaultValues)){
+        if(isset($defaultValues[$block['blockName']])){
             $attributes = array_merge(array_map(function($attribute){
                 return $attribute['default'];
             }, $defaultValues[$block['blockName']]['attributes']), $block['attrs']);
         }
 
-        if(isset($attributes) && array_key_exists('blockID', $attributes) && $attributes['blockID'] != ''){
+        if(isset($attributes) && isset($attributes['blockID']) && $attributes['blockID'] != ''){
             switch ($block['blockName']){
                 default:
                     //nothing could be done

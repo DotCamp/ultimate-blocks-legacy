@@ -143,7 +143,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
         $questions = "";
 
         foreach($block['innerBlocks'] as $key => $togglePanel){
-            if(array_key_exists($key, $panel)){
+            if(isset($panel[$key])){
                 $answer = preg_replace_callback('/<([a-z1-6]+)[^>]*?>[^<]*?<\/(\1)>/i', function($matches){
                     return (in_array($matches[1], ['script', 'svg', 'iframe', 'applet', 'map',
                         'audio', 'button', 'table', 'datalist', 'form', 'frameset',

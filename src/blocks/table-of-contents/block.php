@@ -46,7 +46,7 @@ function ub_render_table_of_contents_block($attributes){
             if($num == 0 && $outputString != ''){
                 $outputString = '';
             }
-            if (array_key_exists("level", $item)){
+            if (isset($item['level'])){
                 $anchor = '#' . $item["anchor"];
 
                 if(count($gaps) && get_query_var('page') != $gaps[$num]){

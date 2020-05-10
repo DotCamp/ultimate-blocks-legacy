@@ -47,7 +47,7 @@ function ub_render_styled_list_block($attributes){
                 if($num == 0 && $outputString != ''){
                     $outputString = '';
                 }
-                if (array_key_exists("indent", $item)){                
+                if (isset($item['indent'])){                
                     $outputString .= '<li><span class="fa-li"><svg xmlns="http://www.w3.org/2000/svg"
                         height="'.(0.4 + $size * 0.1) . 'em", width="'.(0.4 + $size * 0.1) . 'em" viewBox="0, 0, '.$fontAwesomeIcon[$item['selectedIcon']][0].', '.$fontAwesomeIcon[$item['selectedIcon']][1]
                         .'"><path fill="'.$color.'" d="'.$fontAwesomeIcon[$item['selectedIcon']][2].'"></svg></span>'.($item['text']==''?'<br/>':$item['text']).'</li>';
