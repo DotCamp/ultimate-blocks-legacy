@@ -983,7 +983,7 @@ $defaultValues = array(
             ),
             'offerExpiry' => array(
                 'type' => 'number',
-                'default' => time() + 10800
+                'default' => 0
             )
         )
     ),

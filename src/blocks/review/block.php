@@ -106,8 +106,8 @@ function ub_render_review_block($attributes){
                         "highPrice": "'.$offerHighPrice.'",
                         "offerCount": "'.$offerCount.'"' 
                     : '"price": "'.$offerPrice.'",
-                        "url": "'.$callToActionURL.'", 
-                        "priceValidUntil": "'.date("Y-m-d", $offerExpiry).'"').
+                        "url": "'.$callToActionURL.'"'.
+                        ($offerExpiry > 0 ? (', "priceValidUntil": "' . date("Y-m-d", $offerExpiry).'"') : '')).
             '}
         },
         "reviewRating":{

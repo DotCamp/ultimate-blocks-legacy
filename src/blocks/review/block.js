@@ -24,6 +24,7 @@ const {
 	SelectControl,
 	TextControl,
 	DatePicker,
+	ToggleControl,
 } = wp.components;
 
 const { withState, compose } = wp.compose;
@@ -198,7 +199,8 @@ const attributes = {
 	},
 	offerExpiry: {
 		type: "number",
-		default: 60 * (10080 + Math.ceil(Date.now() / 60000)), //one week from Date.now()
+		//default: 60 * (10080 + Math.ceil(Date.now() / 60000)),
+		default: 0,
 	},
 };
 
@@ -545,15 +547,27 @@ registerBlockType("ub/review", {
 										}))}
 										onChange={(offerStatus) => setAttributes({ offerStatus })}
 									/>
-									<p>{__("Offer expiry date")}</p>
-									<DatePicker
-										currentDate={offerExpiry * 1000}
-										onChange={(newDate) =>
+									<ToggleControl
+										label={__("Offer expiration")}
+										checked={offerExpiry > 0}
+										onChange={(_) =>
 											setAttributes({
-												offerExpiry: Math.floor(Date.parse(newDate) / 1000),
+												offerExpiry: offerExpiry
+													? 0
+													: 60 * (10080 + Math.ceil(Date.now() / 60000)), //default to one week from Date.now() when enabled
 											})
 										}
 									/>
+									{offerExpiry > 0 && (
+										<DatePicker
+											currentDate={offerExpiry * 1000}
+											onChange={(newDate) =>
+												setAttributes({
+													offerExpiry: Math.floor(Date.parse(newDate) / 1000),
+												})
+											}
+										/>
+									)}
 								</Fragment>
 							) : (
 								<Fragment>
