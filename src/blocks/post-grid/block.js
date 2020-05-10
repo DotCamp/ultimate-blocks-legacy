@@ -1,7 +1,6 @@
 // Import icon.
 import icons from "./icons";
 import pickBy from "lodash/pickBy";
-import isUndefined from "lodash/isUndefined";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
@@ -26,7 +25,7 @@ export default registerBlockType("ub/post-grid", {
 	keywords: [
 		__("post grid", "ultimate-blocks"),
 		__("posts", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks")
+		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	attributes,
 	/**
@@ -38,15 +37,11 @@ export default registerBlockType("ub/post-grid", {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 
-    getEditWrapperProps({ wrapAlignment }) {
-        if (
-            "full" === wrapAlignment ||
-            "wide" === wrapAlignment ||
-            "center" === wrapAlignment
-        ) {
-            return { "data-align": wrapAlignment };
-        }
-    },
+	getEditWrapperProps({ wrapAlignment }) {
+		if (["full", "wide", "center"].includes(wrapAlignment)) {
+			return { "data-align": wrapAlignment };
+		}
+	},
 
 	edit: withSelect((select, props) => {
 		const {
@@ -55,12 +50,12 @@ export default registerBlockType("ub/post-grid", {
 			orderBy,
 			amountPosts,
 			offset,
-			postType
+			postType,
 		} = props.attributes;
 
 		const { getEntityRecords } = select("core");
 		const { getCurrentPostId } =
-			select("core/block--editor") || select("core/editor");
+			select("core/block--editor") || select("core/editor"); //double dashes are needed
 
 		const getPosts = pickBy(
 			{
@@ -69,15 +64,15 @@ export default registerBlockType("ub/post-grid", {
 				orderby: orderBy,
 				per_page: amountPosts,
 				offset: offset,
-				exclude: [getCurrentPostId()]
+				exclude: [getCurrentPostId()],
 			},
-			value => !isUndefined(value)
+			(value) => typeof value !== "undefined"
 		);
 
 		return {
-			posts: getEntityRecords("postType", postType, getPosts)
+			posts: getEntityRecords("postType", postType, getPosts),
 		};
-	})(props => {
+	})((props) => {
 		const { attributes, setAttributes, posts } = props;
 		const { postLayout, wrapAlignment } = attributes;
 
@@ -105,30 +100,30 @@ export default registerBlockType("ub/post-grid", {
 				icon: "grid-view",
 				title: __("Grid View", "ultimate-blocks"),
 				onClick: () => setAttributes({ postLayout: "grid" }),
-				isActive: "grid" === postLayout
+				isActive: "grid" === postLayout,
 			},
 			{
 				icon: "list-view",
 				title: __("List View", "ultimate-blocks"),
 				onClick: () => setAttributes({ postLayout: "list" }),
-				isActive: "list" === postLayout
-			}
+				isActive: "list" === postLayout,
+			},
 		];
 
 		return (
 			<Fragment>
 				<Inspector {...{ ...props }} />
 				<BlockControls>
-                    <BlockAlignmentToolbar
-                        value={ wrapAlignment }
-                        controls={ [ 'center', 'wide', 'full' ] }
-                        onChange={ value => setAttributes( { wrapAlignment: value } ) }
-                    />
+					<BlockAlignmentToolbar
+						value={wrapAlignment}
+						controls={["center", "wide", "full"]}
+						onChange={(value) => setAttributes({ wrapAlignment: value })}
+					/>
 					<Toolbar controls={toolBarButton} />
 				</BlockControls>
 				<PostGridBlock {...{ ...props }} />
 			</Fragment>
 		);
 	}),
-	save: () => null
+	save: () => null,
 });

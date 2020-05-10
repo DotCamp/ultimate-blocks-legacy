@@ -1,68 +1,72 @@
 const attributes = {
-    wrapAlignment: {
-        type: "string",
-        default: ""
-    },
+	wrapAlignment: {
+		type: "string",
+		default: "",
+	},
 	checkPostImage: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	checkPostAuthor: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	checkPostDate: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	checkPostExcerpt: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	excerptLength: {
 		type: "number",
-		default: 55
+		default: 55,
 	},
 	checkPostLink: {
 		type: "bolean",
-		default: true
+		default: true,
 	},
 	readMoreText: {
 		type: "string",
-		default: "Continue Reading"
+		default: "Continue Reading",
 	},
 	amountPosts: {
 		type: "number",
-		default: 6
+		default: 6,
 	},
 	postLayout: {
 		type: "string",
-		default: "grid"
+		default: "grid",
 	},
 	columns: {
 		type: "number",
-		default: 2
+		default: 2,
 	},
 	categories: {
 		type: "string",
-		value: ""
+		value: "",
 	},
 	postType: {
 		type: "string",
-		default: "post"
+		default: "post",
 	},
 	offset: {
 		type: "number",
-		value: 0
+		default: 0,
 	},
 	order: {
 		type: "string",
-		value: "desc"
+		default: "desc",
 	},
 	orderBy: {
 		type: "string",
-		value: "date"
-	}
+		default: "date",
+	},
+	postTitleTag: {
+		type: "string",
+		default: "h2",
+	},
 };
 
 export default attributes;

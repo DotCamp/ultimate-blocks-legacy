@@ -786,6 +786,92 @@ $defaultValues = array(
             )
         )
     ),
+    'ub/post-grid' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'wrapAlignment' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'categories' => array(
+                'type' => 'string',
+            ),
+            'className' => array(
+                'type' => 'string',
+            ),
+            'amountPosts' => array(
+                'type'    => 'number',
+                'default' => 6,
+            ),
+            'checkPostDate' => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'checkPostExcerpt' => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'checkPostAuthor' => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'checkPostImage'    => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'checkPostLink' => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'checkPostTitle' => array(
+                'type'    => 'boolean',
+                'default' => true,
+            ),
+            'postLayout' => array(
+                'type'    => 'string',
+                'default' => 'grid',
+            ),
+            'columns' => array(
+                'type'    => 'number',
+                'default' => 2,
+            ),
+            'width' => array(
+                'type'    => 'string',
+                'default' => 'wide',
+            ),
+            'order' => array(
+                'type'    => 'string',
+                'default' => 'desc',
+            ),
+            'orderBy' => array(
+                'type'    => 'string',
+                'default' => 'date',
+            ),
+            'readMoreText' => array(
+                'type'    => 'string',
+                'default' => 'Continue Reading',
+            ),
+            'offset' => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
+            'excerptLength' => array(
+                'type'    => 'number',
+                'default' => 55,
+            ),
+            'postType' => array(
+                'type'    => 'string',
+                'default' => 'post',
+            ),
+            'postTitleTag' => array(
+                'type' => 'string',
+                'default' => 'h2'
+            )
+        )
+    ),
     'ub/progress-bar' => array(
         'attributes' => array(
             'blockID' => array(
@@ -1362,88 +1448,6 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 17
             )
-        )
-    ),
-    'ub/post-grid' => array(
-        'attributes' => array(
-            'blockID' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'wrapAlignment' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'categories' => array(
-                'type' => 'string',
-            ),
-            'className' => array(
-                'type' => 'string',
-            ),
-            'amountPosts' => array(
-                'type'    => 'number',
-                'default' => 6,
-            ),
-            'checkPostDate' => array(
-                'type'    => 'boolean',
-                'default' => true,
-            ),
-            'checkPostExcerpt' => array(
-                'type'    => 'boolean',
-                'default' => true,
-            ),
-            'checkPostAuthor' => array(
-                'type'    => 'boolean',
-                'default' => true,
-            ),
-            'checkPostImage'    => array(
-                'type'    => 'boolean',
-                'default' => true,
-            ),
-            'checkPostLink' => array(
-                'type'    => 'boolean',
-                'default' => true,
-            ),
-            'checkPostTitle' => array(
-                'type'    => 'boolean',
-                'default' => true,
-            ),
-            'postLayout' => array(
-                'type'    => 'string',
-                'default' => 'grid',
-            ),
-            'columns' => array(
-                'type'    => 'number',
-                'default' => 2,
-            ),
-            'width' => array(
-                'type'    => 'string',
-                'default' => 'wide',
-            ),
-            'order' => array(
-                'type'    => 'string',
-                'default' => 'desc',
-            ),
-            'orderBy' => array(
-                'type'    => 'string',
-                'default' => 'date',
-            ),
-            'readMoreText' => array(
-                'type'    => 'string',
-                'default' => 'Continue Reading',
-            ),
-            'offset' => array(
-                'type'    => 'number',
-                'default' => 0,
-            ),
-            'excerptLength' => array(
-                'type'    => 'number',
-                'default' => 55,
-            ),
-            'postType' => array(
-                'type'    => 'string',
-                'default' => 'post',
-            ),
         )
     )
 );

@@ -9,7 +9,7 @@ const {
 	ToggleControl,
 	QueryControls,
 	TextControl,
-	RangeControl
+	RangeControl,
 } = wp.components;
 const { Component } = wp.element;
 const { addQueryArgs } = wp.url;
@@ -26,9 +26,9 @@ export default class Inspector extends Component {
 	componentDidMount() {
 		this.stillMounted = true;
 		this.fetchRequest = apiFetch({
-			path: addQueryArgs('/wp/v2/categories', { per_page: -1 })
+			path: addQueryArgs("/wp/v2/categories", { per_page: -1 }),
 		})
-			.then(categoriesList => {
+			.then((categoriesList) => {
 				if (this.stillMounted) {
 					this.setState({ categoriesList });
 				}
@@ -61,10 +61,11 @@ export default class Inspector extends Component {
 				columns,
 				categories,
 				orderBy,
-				order
+				order,
+				postTitleTag,
 			},
 			setAttributes,
-			posts
+			posts,
 		} = this.props;
 
 		// Check for posts
@@ -72,24 +73,24 @@ export default class Inspector extends Component {
 
 		// Post type options
 		const postTypeOptions = [
-			{ value: 'grid', label: __('Grid', 'ultimate-blocks') },
-			{ value: 'list', label: __('List', 'ultimate-blocks') }
+			{ value: "grid", label: __("Grid", "ultimate-blocks") },
+			{ value: "list", label: __("List", "ultimate-blocks") },
 		];
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__('Post Grid Settings', 'ultimate-blocks')}>
+				<PanelBody title={__("Post Grid Settings", "ultimate-blocks")}>
 					<SelectControl
-						label={__('Grid Type', 'ultimate-blocks')}
+						label={__("Grid Type", "ultimate-blocks")}
 						options={postTypeOptions}
 						value={postLayout}
-						onChange={postLayout => setAttributes({ postLayout })}
+						onChange={(postLayout) => setAttributes({ postLayout })}
 					/>
-					{'grid' === postLayout && (
+					{"grid" === postLayout && (
 						<RangeControl
-							label={__('Columns', 'ultimate-blocks')}
+							label={__("Columns", "ultimate-blocks")}
 							value={columns}
-							onChange={columns => setAttributes({ columns })}
+							onChange={(columns) => setAttributes({ columns })}
 							min={1}
 							max={
 								!hasPosts
@@ -103,83 +104,70 @@ export default class Inspector extends Component {
 						numberOfItems={amountPosts}
 						categoriesList={categoriesList}
 						selectedCategoryId={categories}
-						onOrderChange={value => setAttributes({ order: value })}
-						onOrderByChange={value =>
-							setAttributes({ orderBy: value })
-						}
-						onCategoryChange={value =>
+						onOrderChange={(value) => setAttributes({ order: value })}
+						onOrderByChange={(value) => setAttributes({ orderBy: value })}
+						onCategoryChange={(value) =>
 							setAttributes({
-								categories: '' !== value ? value : undefined
+								categories: "" !== value ? value : undefined,
 							})
 						}
-						onNumberOfItemsChange={value =>
+						onNumberOfItemsChange={(value) =>
 							setAttributes({ amountPosts: value })
 						}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Post Grid Content', 'ultimate-blocks')}>
+				<PanelBody title={__("Post Grid Content", "ultimate-blocks")}>
 					<ToggleControl
-						label={__('Display Featured Image', 'ultimate-blocks')}
+						label={__("Display Featured Image", "ultimate-blocks")}
 						checked={checkPostImage}
-						onChange={checkPostImage =>
-							setAttributes({ checkPostImage })
-						}
+						onChange={(checkPostImage) => setAttributes({ checkPostImage })}
 					/>
 					<ToggleControl
-						label={__('Display Author', 'ultimate-blocks')}
+						label={__("Display Author", "ultimate-blocks")}
 						checked={checkPostAuthor}
-						onChange={checkPostAuthor =>
-							setAttributes({ checkPostAuthor })
-						}
+						onChange={(checkPostAuthor) => setAttributes({ checkPostAuthor })}
 					/>
 					<ToggleControl
-						label={__('Display Date', 'ultimate-blocks')}
+						label={__("Display Date", "ultimate-blocks")}
 						checked={checkPostDate}
-						onChange={checkPostDate =>
-							setAttributes({ checkPostDate })
-						}
+						onChange={(checkPostDate) => setAttributes({ checkPostDate })}
 					/>
 					<ToggleControl
-						label={__('Display Excerpt', 'ultimate-blocks')}
+						label={__("Display Excerpt", "ultimate-blocks")}
 						checked={checkPostExcerpt}
-						onChange={checkPostExcerpt =>
-							setAttributes({ checkPostExcerpt })
-						}
+						onChange={(checkPostExcerpt) => setAttributes({ checkPostExcerpt })}
 					/>
 					{checkPostExcerpt && (
 						<RangeControl
-							label={__('Excerpt Length', 'ultimate-blocks')}
+							label={__("Excerpt Length", "ultimate-blocks")}
 							value={excerptLength}
-							onChange={value =>
-								setAttributes({ excerptLength: value })
-							}
+							onChange={(value) => setAttributes({ excerptLength: value })}
 							min={0}
 							max={200}
 						/>
 					)}
 					<ToggleControl
-						label={__(
-							'Display Continue Reading Link',
-							'ultimate-blocks'
-						)}
+						label={__("Display Continue Reading Link", "ultimate-blocks")}
 						checked={checkPostLink}
-						onChange={checkPostLink =>
-							setAttributes({ checkPostLink })
-						}
+						onChange={(checkPostLink) => setAttributes({ checkPostLink })}
 					/>
 					{checkPostLink && (
 						<TextControl
-							label={__(
-								'Customize Continue Reading Text',
-								'ultimate-blocks'
-							)}
+							label={__("Customize Continue Reading Text", "ultimate-blocks")}
 							type="text"
 							value={readMoreText}
-							onChange={value =>
-								setAttributes({ readMoreText: value })
-							}
+							onChange={(value) => setAttributes({ readMoreText: value })}
 						/>
 					)}
+					<SelectControl
+						label={__("Title tag", "ultimate-blocks")}
+						options={["h2", "h3", "h4"].map((a) => ({
+							value: a,
+							label: __(a),
+						}))}
+						value={postTitleTag}
+						onChange={(postTitleTag) => setAttributes({ postTitleTag })}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		);

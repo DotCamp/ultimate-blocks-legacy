@@ -68,10 +68,9 @@
 	header .ub-block-post-grid-title {
 		margin-top: 0;
 		margin-bottom: 15px;
-		font-size: 28px;
 		line-height: 1.2;
 		a {
-			color: $black;
+			color: #292929;
 			text-decoration: none;
 			&:hover {
 				text-decoration: underline;
@@ -102,7 +101,7 @@
 		box-shadow: none;
 		transition: 0.3s ease;
 		font-weight: bold;
-		color: $black;
+		color: #292929;
 		text-decoration: none;
 		&:hover {
 			text-decoration: underline;
@@ -161,11 +160,6 @@
 			.post:not(.has-post-thumbnail) .ub-block-post-grid-text {
 				width: 100%;
 				padding-left: 0;
-			}
-		}
-		.ub-block-post-grid-title {
-			@media only screen and (min-width: 600px) {
-				font-size: 34px;
 			}
 		}
 		.no-thumb .ub-block-post-grid-text {
