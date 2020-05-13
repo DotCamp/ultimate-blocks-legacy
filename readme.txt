@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,22 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.3.5 =
+
+Release Date: May 13th, 2020
+
+* ADD: Styled box - Bordered Box.
+* ADD: Allow Omitting Offer Expiration Date in Review Schema.
+* ADD: Use Image Captions as Slider Image Captions by Default.
+* ADD: Allow Customizing Tag Used for Post Grid Titles.
+* FIX: Prevent Duplicate FAQ Items From Being Added to Schema Code in Content Toggle.
+* FIX: Assignment of New Default Content Toggle Colors.
+* FIX: Issue With Styles Used in Toggle Functionality of Expand Block.
+* FIX: PHP Error Resulting From Loading of Dependent Script for Image Slider block.
+* FIX: Preserve Line Breaks and Tabs for Content of Tabbed Content Inner Blocks.
+* FIX: Prevent Replacement of Block IDs When Loading Saved Posts.
+* IMPROVEMENT: Updating of Attribute Values in Frontend of Review Block.
 
 = 2.3.4 =
 
