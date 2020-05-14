@@ -17,33 +17,37 @@ if (!Element.prototype.closest) {
 }
 
 function ub_hashHeaderScroll() {
-	const targetHeading = document.getElementById(window.location.hash.slice(1));
-
-	let probableHeaders;
-
-	try {
-		probableHeaders = document.elementsFromPoint(window.innerWidth / 2, 0);
-	} catch (e) {
-		probableHeaders = document.msElementsFromPoint(window.innerWidth / 2, 0);
-	}
-
-	const stickyHeaders = Array.prototype.slice
-		.call(probableHeaders)
-		.filter((e) =>
-			["fixed", "sticky"].includes(window.getComputedStyle(e).position)
+	if (window.location.hash) {
+		const targetHeading = document.getElementById(
+			window.location.hash.slice(1)
 		);
 
-	const stickyHeaderHeights = stickyHeaders.map((h) => h.offsetHeight);
+		let probableHeaders;
 
-	const deficit =
-		targetHeading.getBoundingClientRect().y ||
-		targetHeading.getBoundingClientRect().top;
+		try {
+			probableHeaders = document.elementsFromPoint(window.innerWidth / 2, 0);
+		} catch (e) {
+			probableHeaders = document.msElementsFromPoint(window.innerWidth / 2, 0);
+		}
 
-	window.scrollBy(
-		0,
-		deficit -
-			(stickyHeaders.length ? Math.max.apply(Math, stickyHeaderHeights) : 0)
-	);
+		const stickyHeaders = Array.prototype.slice
+			.call(probableHeaders)
+			.filter((e) =>
+				["fixed", "sticky"].includes(window.getComputedStyle(e).position)
+			);
+
+		const stickyHeaderHeights = stickyHeaders.map((h) => h.offsetHeight);
+
+		const deficit =
+			targetHeading.getBoundingClientRect().y ||
+			targetHeading.getBoundingClientRect().top;
+
+		window.scrollBy(
+			0,
+			deficit -
+				(stickyHeaders.length ? Math.max.apply(Math, stickyHeaderHeights) : 0)
+		);
+	}
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -155,8 +159,17 @@ Array.prototype.slice
 	.call(document.querySelectorAll(".ub_table-of-contents-container li > a"))
 	.forEach((link) => {
 		link.addEventListener("click", (e) => {
-			e.preventDefault();
-			history.pushState(null, "", link.hash);
-			ub_hashHeaderScroll();
+			const hashlessLink = link.href.replace(link.hash, "");
+			const targetPageNumber = /[?&]page=\d+/g.exec(hashlessLink);
+			const currentPageNumber = /[?&]page=\d+/g.exec(window.location.search);
+			if (
+				window.location.href.includes(hashlessLink) &&
+				(currentPageNumber === null ||
+					(targetPageNumber && currentPageNumber[0] === targetPageNumber[0]))
+			) {
+				e.preventDefault();
+				history.pushState(null, "", link.hash);
+				ub_hashHeaderScroll();
+			}
 		});
 	});
