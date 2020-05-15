@@ -18,10 +18,11 @@ function ub_register_content_filter_entry_block(){
     if ( function_exists( 'register_block_type' ) ) {
         register_block_type( 'ub/content-filter-entry-block', array(
             'attributes' => array(
+                /*COMMENTED OUT TO PREVENT PHP ERRORS
                 'availableFilters' => array(
                     'type' => 'array',
                     'default' => array()//get list of filters from parent block
-                ),
+                ),*/
                 /*'selectedFilters' => array(
                     'type' => 'array',
                     'default' => array()

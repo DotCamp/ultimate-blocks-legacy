@@ -191,10 +191,11 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            /*COMMENTED OUT TO PREVENT PHP ERRORS
             'filterArray' => array(
                 'type' => 'array',
                 'default' => array()
-            ),
+            ),*/
             'buttonColor' => array(
                 'type' => 'string',
                 'default' => '#eeeeee'
@@ -511,10 +512,11 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => __('Required tools')
             ),
+            /*COMMENTED OUT TO PREVENT PHP ERRORS
             'tools' => array(
                 'type' => 'array',
                 'default' => array(),
-            ),
+            ),*/
             'toolsListStyle' => array(
                 'type' => 'string',
                 'default' => 'none'
@@ -531,18 +533,20 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => __('Required supplies')
             ),
+            /*COMMENTED OUT TO PREVENT PHP ERRORS
             'supplies' => array(
                 'type' => 'array',
                 'default' => array(),
-            ),
+            ),*/
             'suppliesListStyle' => array(
                 'type' => 'string',
                 'default' => 'none'
             ),
+            /* COMMENTED OUT TO PREVENT PHP ERRORS
             'section' => array(
                 'type' => 'array',
                 'default' => array()
-            ),
+            ),*/
             'sectionListStyle' => array(
                 'type' => 'string',
                 'default' => 'none'
@@ -643,19 +647,21 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '[]'
             ),
+            /*COMMENTED OUT TO PREVENT PHP ERRORS
             'pics' => array(
                 'type' => 'array',
                 'default' => array()
-            ),
+            ),*/
             //retained for reverse compatibility
             'captions' => array(
                 'type' => 'string',
                 'default' => '[]'
             ),
+            /*COMMENTED OUT TO PREVENT PHP ERRORS
             'descriptions' => array(
                 'type' => 'array',
                 'default' => array()
-            ),
+            ),*/
             'wrapsAround' => array(
                 'type' => 'boolean',
                 'default' => true
@@ -1209,6 +1215,7 @@ $defaultValues = array(
                     'type' => 'string'
                 )
             ),
+            /* COMMENTED OUT TO PREVENT PHP ERRORS
             'image' => array(
                 'type' => 'array',
                 'default' => array(
@@ -1218,7 +1225,7 @@ $defaultValues = array(
                         'url' => null
                     )
                 )
-            ),
+            ),*/
             'foreColor' => array(
                 'type' => 'string',
                 'default' => '#000000'
