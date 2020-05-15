@@ -113,10 +113,16 @@ function ub_faq_questions($qna = ''){
             $newItems = json_decode('[' . $qna . ']');
             foreach($newItems as $item){
                 if(in_array($item, $current)){
-                    $current_qna = str_replace(json_encode($item, JSON_UNESCAPED_SLASHES), '', $current_qna);
-                    $current_qna = str_replace(','.PHP_EOL.',', ',', $current_qna);
+                    $current_qna = str_replace(json_encode($item, JSON_UNESCAPED_SLASHES), 'false', $current_qna);
                 }
             }
+            $currentItems = json_encode(array_values(
+                                array_filter(
+                                    json_decode('['.$current_qna . ']')
+                                )
+                            ), JSON_UNESCAPED_SLASHES);
+
+            $current_qna = substr($currentItems, 1, strlen($currentItems)-2) ;
             $parsed_qna .= ',' . PHP_EOL;
         }
         if($current_qna != ',' . PHP_EOL){
