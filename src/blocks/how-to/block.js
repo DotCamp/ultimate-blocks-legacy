@@ -164,6 +164,10 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	finalImageCaption: {
+		type: "string",
+		default: "",
+	},
 };
 
 const defaultTimeDisplay = {
@@ -352,7 +356,7 @@ class HowToStep extends Component {
 					/>
 				</div>
 				{stepPic.url !== "" ? (
-					<div>
+					<figure>
 						<img
 							className="ub_howto-step-image"
 							style={{ width: "100%" }}
@@ -368,11 +372,21 @@ class HowToStep extends Component {
 										id: -1,
 										alt: "",
 										url: "",
+										caption: "",
 									},
 								})
 							}
 						/>
-					</div>
+						<RichText
+							tagName="figcaption"
+							value={stepPic.caption}
+							onChange={(newCaption) => {
+								editStep({
+									stepPic: Object.assign(stepPic, { caption: newCaption }),
+								});
+							}}
+						/>
+					</figure>
 				) : (
 					<MediaUpload
 						onSelect={(img) =>
@@ -381,6 +395,7 @@ class HowToStep extends Component {
 									id: img.id,
 									alt: img.alt,
 									url: img.url,
+									caption: img.caption,
 								},
 							})
 						}
@@ -828,6 +843,7 @@ registerBlockType("ub/how-to", {
 				resultIntro,
 				finalImageID,
 				finalImageURL,
+				finalImageCaption,
 				videoURL,
 				videoEmbedCode,
 				videoDuration,
@@ -1345,7 +1361,7 @@ registerBlockType("ub/how-to", {
 												</div>
 												{addSupplyImages &&
 													(supply.imageURL !== "" ? (
-														<div>
+														<figure>
 															<img
 																className="ub_howto-supply-image"
 																src={supply.imageURL}
@@ -1367,7 +1383,7 @@ registerBlockType("ub/how-to", {
 																	})
 																}
 															/>
-														</div>
+														</figure>
 													) : (
 														<MediaUpload
 															onSelect={(img) =>
@@ -1460,7 +1476,7 @@ registerBlockType("ub/how-to", {
 												</div>
 												{addToolImages &&
 													(tool.imageURL !== "" ? (
-														<div>
+														<figure>
 															<img src={tool.imageURL} />
 															<span
 																title={__("Delete image")}
@@ -1479,7 +1495,7 @@ registerBlockType("ub/how-to", {
 																	})
 																}
 															/>
-														</div>
+														</figure>
 													) : (
 														<MediaUpload
 															onSelect={(img) =>
@@ -1754,7 +1770,7 @@ registerBlockType("ub/how-to", {
 						onChange={(resultIntro) => setAttributes({ resultIntro })}
 					/>
 					{finalImageURL !== "" ? (
-						<div>
+						<figure>
 							<img style={{ width: "100%" }} src={finalImageURL} />
 							<span
 								style={{ position: "absolute", right: "3px" }}
@@ -1765,10 +1781,18 @@ registerBlockType("ub/how-to", {
 										finalImageID: -1,
 										finalImageAlt: "",
 										finalImageURL: "",
+										finalImageCaption: "",
 									})
 								}
 							/>
-						</div>
+							<RichText
+								tagName="figcaption"
+								value={finalImageCaption}
+								onChange={(finalImageCaption) =>
+									setAttributes({ finalImageCaption })
+								}
+							/>
+						</figure>
 					) : (
 						<MediaUpload
 							onSelect={(img) =>
@@ -1776,6 +1800,7 @@ registerBlockType("ub/how-to", {
 									finalImageID: img.id,
 									finalImageAlt: img.alt,
 									finalImageURL: img.url,
+									finalImageCaption: img.caption,
 								})
 							}
 							type="image"
