@@ -15,11 +15,11 @@ function ub_render_image_slider_block($attributes){
     $gallery = '';
 
     foreach($imageArray as $key => $image){
-        $gallery .= '<div>
+        $gallery .= '<figure>
         <img src="'.$image['url'].'"'.($blockID==''?' style="height: '.$sliderHeight.'px;"':'').'>'.
-            ($captionArray[$key]['link'] == '' ? '<span' : '<a href="'.esc_url($captionArray[$key]['link']).'"')
+            '<figcaption>' .($captionArray[$key]['link'] == '' ? '<span' : '<a href="'.esc_url($captionArray[$key]['link']).'"')
             .' class="ub_image_slider_image_caption">'.$captionArray[$key]['text']
-            .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </div>';
+            .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </figcaption></figure>';
     }
 
     return '<div class="ub_image_slider'.(isset($className) ? ' ' . esc_attr($className) : '').

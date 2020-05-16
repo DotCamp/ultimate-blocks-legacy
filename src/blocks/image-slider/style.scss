@@ -53,6 +53,15 @@ https://flickity.metafizzy.co
 				margin: auto;
 			}
 		}
+		> figure {
+			width: 100%;
+			> img,
+			picture > img {
+				display: block;
+				object-fit: contain;
+				margin: auto;
+			}
+		}
 		//END CUSTOM CODE
 	}
 

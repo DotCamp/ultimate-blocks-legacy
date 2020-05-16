@@ -93,6 +93,19 @@ registerBlockType("ub/image-slider", {
 		})),
 	])(function (props) {
 		const {
+			attributes: {
+				images,
+				pics,
+				captions,
+				descriptions,
+				wrapsAround,
+				isDraggable,
+				autoplays,
+				autoplayDuration,
+				sliderHeight,
+				showPageDots,
+				blockID,
+			},
 			setAttributes,
 			isSelected,
 			setState,
@@ -100,19 +113,6 @@ registerBlockType("ub/image-slider", {
 			activeSlide,
 			block,
 		} = props;
-		const {
-			images,
-			pics,
-			captions,
-			descriptions,
-			wrapsAround,
-			isDraggable,
-			autoplays,
-			autoplayDuration,
-			sliderHeight,
-			showPageDots,
-			blockID,
-		} = props.attributes;
 
 		if (images && JSON.parse(images).length !== 0 && pics.length === 0) {
 			setAttributes({
@@ -151,7 +151,7 @@ registerBlockType("ub/image-slider", {
 										captionArray.find((c) => c.id === img.id)
 											? captionArray.find((c) => c.id === img.id)
 											: {
-													text: "",
+													text: img.caption,
 													link: "",
 													id: img.id,
 											  }
@@ -239,7 +239,7 @@ registerBlockType("ub/image-slider", {
 				{imageArray.length === 0 ? (
 					<MediaPlaceholder
 						onSelect={(newImages) =>
-							props.setAttributes({
+							setAttributes({
 								pics: newImages,
 								descriptions: newImages.map((img) => ({
 									id: img.id,
@@ -272,7 +272,7 @@ registerBlockType("ub/image-slider", {
 							slides={[
 								...[
 									imageArray.map((c, i) => (
-										<div>
+										<figure>
 											<img
 												key={i}
 												src={c.url}
@@ -281,18 +281,26 @@ registerBlockType("ub/image-slider", {
 												}}
 											/>
 											<RichText
+												tagName="figcaption"
 												formattingControls={[]}
 												className="ub_image_silder_image_caption"
 												value={captionArray[i].text}
 												placeholder={__("Caption goes here")}
 												onChange={(text) => {
-													captionArray[i].text = text;
+													const currentItem = Object.assign(
+														{},
+														captionArray[i]
+													);
 													setAttributes({
-														descriptions: captionArray,
+														descriptions: [
+															...descriptions.slice(0, i),
+															Object.assign(currentItem, { text }),
+															...descriptions.slice(i + 1),
+														],
 													});
 												}}
 											/>
-										</div>
+										</figure>
 									)),
 								],
 								isSelected && (
@@ -310,7 +318,7 @@ registerBlockType("ub/image-slider", {
 															descriptions: captionArray.concat(
 																images.map((img) => ({
 																	id: img.id,
-																	text: "",
+																	text: img.text,
 																	link: "",
 																}))
 															),
@@ -339,10 +347,15 @@ registerBlockType("ub/image-slider", {
 									autoFocus={false}
 									className="button-url"
 									value={captionArray[activeSlide].link}
-									onChange={(url) => {
-										captionArray[activeSlide].link = url;
+									onChange={(link) => {
+										const currentItem = Object.assign({}, captionArray[i]);
+
 										setAttributes({
-											descriptions: captionArray,
+											descriptions: [
+												...descriptions.slice(0, i),
+												Object.assign(currentItem, { link }),
+												...descriptions.slice(i + 1),
+											],
 										});
 									}}
 								/>
