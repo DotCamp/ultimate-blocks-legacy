@@ -141,12 +141,8 @@ Array.prototype.slice.call(document.querySelectorAll(".ub_table-of-contents-cont
     var hashlessLink = link.href.replace(link.hash, "");
     var targetPageNumber = /[?&]page=\d+/g.exec(hashlessLink);
     var currentPageNumber = /[?&]page=\d+/g.exec(window.location.search);
-    console.log(targetPageNumber);
-    console.log(currentPageNumber); //page number detected: proceed at all times
-    //if  page number detected: proceed only if page numbers match exactly
 
     if (window.location.href.includes(hashlessLink) && (currentPageNumber === null || targetPageNumber && currentPageNumber[0] === targetPageNumber[0])) {
-      //can't handle clicks to page 1
       e.preventDefault();
       history.pushState(null, "", link.hash);
       ub_hashHeaderScroll();
