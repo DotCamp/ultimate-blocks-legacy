@@ -12,18 +12,7 @@ const { PanelBody, PanelRow, RadioControl, FormToggle } = wp.components;
 export default class Inspector extends Component {
 	render() {
 		const { attributes, setAttributes } = this.props;
-		const {
-			iconShape,
-			iconSize,
-			showFacebookIcon,
-			showTwitterIcon,
-			showLinkedInIcon,
-			showPinterestIcon,
-			showRedditIcon,
-			showTumblrIcon,
-			iconOrder,
-			buttonColor
-		} = attributes;
+		const { iconShape, iconSize, iconOrder, buttonColor } = attributes;
 		return (
 			<InspectorControls>
 				<PanelBody title={__("Size")} initialOpen={false}>
@@ -33,9 +22,9 @@ export default class Inspector extends Component {
 						options={[
 							{ label: "Normal", value: "normal" },
 							{ label: "Medium", value: "medium" },
-							{ label: "Large", value: "large" }
+							{ label: "Large", value: "large" },
 						]}
-						onChange={value => setAttributes({ iconSize: value })}
+						onChange={(value) => setAttributes({ iconSize: value })}
 					/>
 				</PanelBody>
 				<PanelBody title={__("Shape")} initialOpen={false}>
@@ -44,9 +33,9 @@ export default class Inspector extends Component {
 						selected={iconShape}
 						options={[
 							{ label: "Circle", value: "circle" },
-							{ label: "Square", value: "square" }
+							{ label: "Square", value: "square" },
 						]}
-						onChange={value => setAttributes({ iconShape: value })}
+						onChange={(value) => setAttributes({ iconShape: value })}
 					/>
 				</PanelBody>
 				<PanelBody title={__("Visibility")} initialOpen={false}>
@@ -57,7 +46,7 @@ export default class Inspector extends Component {
 						<FormToggle
 							id="facebook-icon-form-toggle"
 							label={__("Visible")}
-							checked={showFacebookIcon}
+							checked={iconOrder.indexOf("facebook") > -1}
 							onChange={() => {
 								let iconLoc = iconOrder.indexOf("facebook");
 								setAttributes({
@@ -65,10 +54,9 @@ export default class Inspector extends Component {
 										iconLoc > -1
 											? [
 													...iconOrder.slice(0, iconLoc),
-													...iconOrder.slice(iconLoc + 1)
+													...iconOrder.slice(iconLoc + 1),
 											  ]
 											: [...iconOrder, "facebook"],
-									showFacebookIcon: !showFacebookIcon
 								});
 							}}
 						/>
@@ -80,7 +68,7 @@ export default class Inspector extends Component {
 						<FormToggle
 							id="twitter-icon-form-toggle"
 							label={__("Visible")}
-							checked={showTwitterIcon}
+							checked={iconOrder.indexOf("twitter") > -1}
 							onChange={() => {
 								let iconLoc = iconOrder.indexOf("twitter");
 								setAttributes({
@@ -88,10 +76,9 @@ export default class Inspector extends Component {
 										iconLoc > -1
 											? [
 													...iconOrder.slice(0, iconLoc),
-													...iconOrder.slice(iconLoc + 1)
+													...iconOrder.slice(iconLoc + 1),
 											  ]
 											: [...iconOrder, "twitter"],
-									showTwitterIcon: !showTwitterIcon
 								});
 							}}
 						/>
@@ -103,7 +90,7 @@ export default class Inspector extends Component {
 						<FormToggle
 							id="linkedin-icon-form-toggle"
 							label={__("Visible")}
-							checked={showLinkedInIcon}
+							checked={iconOrder.indexOf("linkedin") > -1}
 							onChange={() => {
 								let iconLoc = iconOrder.indexOf("linkedin");
 								setAttributes({
@@ -111,10 +98,9 @@ export default class Inspector extends Component {
 										iconLoc > -1
 											? [
 													...iconOrder.slice(0, iconLoc),
-													...iconOrder.slice(iconLoc + 1)
+													...iconOrder.slice(iconLoc + 1),
 											  ]
 											: [...iconOrder, "linkedin"],
-									showLinkedInIcon: !showLinkedInIcon
 								});
 							}}
 						/>
@@ -126,7 +112,7 @@ export default class Inspector extends Component {
 						<FormToggle
 							id="pinterest-icon-form-toggle"
 							label={__("Visible")}
-							checked={showPinterestIcon}
+							checked={iconOrder.indexOf("pinterest") > -1}
 							onChange={() => {
 								let iconLoc = iconOrder.indexOf("pinterest");
 								setAttributes({
@@ -134,10 +120,9 @@ export default class Inspector extends Component {
 										iconLoc > -1
 											? [
 													...iconOrder.slice(0, iconLoc),
-													...iconOrder.slice(iconLoc + 1)
+													...iconOrder.slice(iconLoc + 1),
 											  ]
 											: [...iconOrder, "pinterest"],
-									showPinterestIcon: !showPinterestIcon
 								});
 							}}
 						/>
@@ -149,7 +134,7 @@ export default class Inspector extends Component {
 						<FormToggle
 							id="reddit-icon-form-toggle"
 							label={__("Visible")}
-							checked={showRedditIcon}
+							checked={iconOrder.indexOf("reddit") > -1}
 							onChange={() => {
 								let iconLoc = iconOrder.indexOf("reddit");
 								setAttributes({
@@ -157,10 +142,9 @@ export default class Inspector extends Component {
 										iconLoc > -1
 											? [
 													...iconOrder.slice(0, iconLoc),
-													...iconOrder.slice(iconLoc + 1)
+													...iconOrder.slice(iconLoc + 1),
 											  ]
 											: [...iconOrder, "reddit"],
-									showRedditIcon: !showRedditIcon
 								});
 							}}
 						/>
@@ -172,7 +156,7 @@ export default class Inspector extends Component {
 						<FormToggle
 							id="tumblr-icon-form-toggle"
 							label={__("Visible")}
-							checked={showTumblrIcon}
+							checked={iconOrder.indexOf("tumblr") > -1}
 							onChange={() => {
 								let iconLoc = iconOrder.indexOf("tumblr");
 								setAttributes({
@@ -180,10 +164,9 @@ export default class Inspector extends Component {
 										iconLoc > -1
 											? [
 													...iconOrder.slice(0, iconLoc),
-													...iconOrder.slice(iconLoc + 1)
+													...iconOrder.slice(iconLoc + 1),
 											  ]
 											: [...iconOrder, "tumblr"],
-									showTumblrIcon: !showTumblrIcon
 								});
 							}}
 						/>
@@ -198,7 +181,7 @@ export default class Inspector extends Component {
 							id="ub_social_share_custom_color"
 							label={__("Customize color")}
 							checked={buttonColor}
-							onChange={_ =>
+							onChange={(_) =>
 								setAttributes({ buttonColor: buttonColor ? "" : "#cccccc" })
 							}
 						/>
@@ -206,7 +189,7 @@ export default class Inspector extends Component {
 					{buttonColor && (
 						<ColorPalette
 							value={buttonColor}
-							onChange={buttonColor => setAttributes({ buttonColor })}
+							onChange={(buttonColor) => setAttributes({ buttonColor })}
 						/>
 					)}
 				</PanelBody>

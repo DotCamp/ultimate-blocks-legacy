@@ -207,18 +207,26 @@ registerBlockType("ub/social-share", {
 			setAttributes({ blockID: block.clientId });
 		}
 
-		const iconStatus = [
-			attributes.showFacebookIcon,
-			attributes.showTwitterIcon,
-			attributes.showLinkedInIcon,
-			attributes.showPinterestIcon,
-			attributes.showRedditIcon,
-			attributes.showTumblrIcon,
-		];
+		const enabledIcon = {
+			facebook: attributes.showFacebookIcon,
+			twitter: attributes.showTwitterIcon,
+			linkedin: attributes.showLinkedInIcon,
+			pinterest: attributes.showPinterestIcon,
+			reddit: attributes.showRedditIcon,
+			tumblr: attributes.showTumblrIcon,
+		};
 
 		if (!hasTransitioned) {
-			if (iconStatus.indexOf(false) > -1) {
-				setAttributes({ iconOrder: iconOrder.filter((_, i) => iconStatus[i]) });
+			if (Object.values(enabledIcon).includes(false)) {
+				setAttributes({
+					iconOrder: iconOrder.filter((iconName) => enabledIcon[iconName]),
+					showFacebookIcon: true,
+					showTwitterIcon: true,
+					showLinkedInIcon: true,
+					showPinterestIcon: true,
+					showRedditIcon: true,
+					showTumblrIcon: true,
+				});
 			}
 			setState({ hasTransitioned: true });
 		}
