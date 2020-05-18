@@ -49,10 +49,9 @@ class TableOfContents extends Component {
 					let newBlock = Object.assign({}, block);
 					let blockAttributes = block.attributes;
 					if (block.name === "uagb/advanced-heading") {
-						newBlock.attributes = {
-							level: blockAttributes.level,
+						newBlock.attributes = Object.assign(blockAttributes, {
 							content: blockAttributes.headingTitle || "",
-						};
+						});
 						headings.push(newBlock);
 						pageBreaks.push(pageNum);
 					} else if (block.name === "themeisle-blocks/advanced-heading") {
@@ -61,10 +60,10 @@ class TableOfContents extends Component {
 								block.attributes.tag
 							)
 						) {
-							newBlock.attributes = {
+							newBlock.attributes = Object.assign(blockAttributes, {
 								level: Number(blockAttributes.tag.charAt(1)),
-								content: blockAttributes.content,
-							};
+								anchor: `themeisle-otter ${blockAttributes.id}`,
+							});
 							headings.push(newBlock);
 							pageBreaks.push(pageNum);
 						}
@@ -100,6 +99,7 @@ class TableOfContents extends Component {
 											.includes(h.attributes.tag)
 											? Number(h.attributes.tag.charAt(1))
 											: 0;
+										h.attributes.anchor = `themeisle-otter ${h.attributes.id}`;
 										break;
 									case "uagb/advanced-heading":
 										h.attributes.content = h.attributes.headingTitle || "";
@@ -127,24 +127,36 @@ class TableOfContents extends Component {
 		};
 
 		const setHeadings = (_) => {
-			const headers = getHeadingBlocks().map((header) => header.attributes);
+			const headers = getHeadingBlocks()
+				.map((header) => header.attributes)
+				.map((header) => ({
+					content: header.content,
+					level: header.level,
+					anchor: header.anchor,
+				}));
 			headers.forEach((heading, key) => {
-				heading.anchor =
-					key +
-					"-" +
-					(this.props.allowToLatin
-						? toLatin("all", heading.content.toString())
-						: heading.content.toString()
-					)
-						.toLowerCase()
-						.replace(/( |<.+?>|&nbsp;)/g, "-");
-				heading.anchor = encodeURIComponent(
-					heading.anchor.replace(
-						/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
-						""
-					)
-				);
+				if (
+					!heading.anchor ||
+					heading.anchor.indexOf("themeisle-otter ") === -1
+				) {
+					heading.anchor =
+						key +
+						"-" +
+						(this.props.allowToLatin
+							? toLatin("all", heading.content.toString())
+							: heading.content.toString()
+						)
+							.toLowerCase()
+							.replace(/( |<.+?>|&nbsp;)/g, "-");
+					heading.anchor = encodeURIComponent(
+						heading.anchor.replace(
+							/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
+							""
+						)
+					);
+				}
 			});
+
 			if (JSON.stringify(headers) !== JSON.stringify(this.state.headers)) {
 				this.setState({ headers });
 			}
@@ -181,7 +193,6 @@ class TableOfContents extends Component {
 			});
 		}
 		if (this.state.breaks !== this.props.blockProp.attributes.gaps) {
-			console.log(this.state.breaks);
 			this.props.blockProp.setAttributes({ gaps: this.state.breaks });
 		}
 	}

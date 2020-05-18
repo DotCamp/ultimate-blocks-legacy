@@ -47,7 +47,13 @@ function ub_render_table_of_contents_block($attributes){
                 $outputString = '';
             }
             if (isset($item['level'])){
-                $anchor = '#' . $item["anchor"];
+                //intercept otter  headings here
+                if(strpos($item["anchor"], "themeisle-otter ") === 0){
+                    $anchor = '#' . str_replace("themeisle-otter ", "", $item["anchor"]);
+                }
+                else{
+                    $anchor = '#' . $item["anchor"];
+                }
 
                 if(count($gaps) && get_query_var('page') != $gaps[$num]){
                     $baseURL = get_permalink();
