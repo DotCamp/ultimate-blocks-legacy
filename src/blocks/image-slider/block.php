@@ -17,9 +17,9 @@ function ub_render_image_slider_block($attributes){
     foreach($imageArray as $key => $image){
         $gallery .= '<figure>
         <img src="'.$image['url'].'"'.($blockID==''?' style="height: '.$sliderHeight.'px;"':'').'>'.
-            '<figcaption>' .($captionArray[$key]['link'] == '' ? '<span' : '<a href="'.esc_url($captionArray[$key]['link']).'"')
-            .' class="ub_image_slider_image_caption">'.$captionArray[$key]['text']
-            .($captionArray[$key]['link'] == '' ? '</span>' : '</a>').' </figcaption></figure>';
+            '<figcaption class="ub_image_slider_image_caption">' .($captionArray[$key]['link'] == '' ? '' : '<a href="'.esc_url($captionArray[$key]['link']).'"')
+            .$captionArray[$key]['text']
+            .($captionArray[$key]['link'] == '' ? '' : '</a>').' </figcaption></figure>';
     }
 
     return '<div class="ub_image_slider'.(isset($className) ? ' ' . esc_attr($className) : '').
