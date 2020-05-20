@@ -2,13 +2,26 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   var timer = [];
+  var timeUnits = ["week", "day", "hour", "minute", "second"];
   Array.prototype.slice.call(document.getElementsByClassName("ub-countdown")).forEach(function (instance, i) {
     timer[i] = setInterval(function () {
       var timeLeft = parseInt(instance.getAttribute("data-enddate")) - Math.floor(Date.now() / 1000);
+      var largestUnit = instance.getAttribute("data-largestunit");
+      var smallestunit = instance.getAttribute("data-smallestunit");
       var seconds = timeLeft % 60;
       var minutes = (timeLeft - seconds) % 3600 / 60;
-      var hours = (timeLeft - minutes * 60 - seconds) % 86400 / 3600;
-      var days = (timeLeft - hours * 3600 - minutes * 60 - seconds) % 604800 / 86400;
+      var hours = (timeLeft - minutes * 60 - seconds) / 3600;
+
+      if (timeUnits.indexOf(largestUnit) < 2) {
+        hours %= 24;
+      }
+
+      var days = (timeLeft - hours * 3600 - minutes * 60 - seconds) / 86400;
+
+      if (largestUnit === "week") {
+        days %= 7;
+      }
+
       var weeks = (timeLeft - days * 86400 - hours * 3600 - minutes * 60 - seconds) / 604800;
 
       if (timeLeft >= 0) {

@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 	let timer = [];
+	const timeUnits = ["week", "day", "hour", "minute", "second"];
 	Array.prototype.slice
 		.call(document.getElementsByClassName("ub-countdown"))
 		.forEach((instance, i) => {
@@ -7,14 +8,26 @@ document.addEventListener("DOMContentLoaded", () => {
 				const timeLeft =
 					parseInt(instance.getAttribute("data-enddate")) -
 					Math.floor(Date.now() / 1000);
+				const largestUnit = instance.getAttribute("data-largestunit");
+				const smallestunit = instance.getAttribute("data-smallestunit");
+
 				const seconds = timeLeft % 60;
 				const minutes = ((timeLeft - seconds) % 3600) / 60;
-				const hours = ((timeLeft - minutes * 60 - seconds) % 86400) / 3600;
-				const days =
-					((timeLeft - hours * 3600 - minutes * 60 - seconds) % 604800) / 86400;
+
+				let hours = (timeLeft - minutes * 60 - seconds) / 3600;
+				if (timeUnits.indexOf(largestUnit) < 2) {
+					hours %= 24;
+				}
+
+				let days = (timeLeft - hours * 3600 - minutes * 60 - seconds) / 86400;
+				if (largestUnit === "week") {
+					days %= 7;
+				}
+
 				const weeks =
 					(timeLeft - days * 86400 - hours * 3600 - minutes * 60 - seconds) /
 					604800;
+
 				if (timeLeft >= 0) {
 					if (instance.querySelector(".ub_countdown_week"))
 						instance.querySelector(".ub_countdown_week").innerHTML = weeks;
