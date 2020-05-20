@@ -10,7 +10,13 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { InspectorControls, RichText, PanelColorSettings, BlockControls } =
 	wp.blockEditor || wp.editor;
-const { DateTimePicker, IconButton, PanelBody, Toolbar } = wp.components;
+const {
+	DateTimePicker,
+	IconButton,
+	PanelBody,
+	Toolbar,
+	SelectControl,
+} = wp.components;
 const { withSelect } = wp.data;
 
 registerBlockType("ub/countdown", {
@@ -43,6 +49,14 @@ registerBlockType("ub/countdown", {
 			type: "string",
 			default: "#2DB7F5",
 		},
+		largestUnit: {
+			type: "string",
+			default: "week",
+		},
+		smallestUnit: {
+			type: "string",
+			default: "second",
+		},
 	},
 
 	edit: withSelect((select, ownProps) => ({
@@ -58,11 +72,15 @@ registerBlockType("ub/countdown", {
 			expiryMessage,
 			circleColor,
 			messageAlign,
+			largestUnit,
+			smallestUnit,
 		} = attributes;
 
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
+
+		const timeUnits = ["week", "day", "hour", "minute", "second"];
 
 		return [
 			isSelected && (
@@ -91,6 +109,30 @@ registerBlockType("ub/countdown", {
 									endDate: Math.floor(Date.parse(value) / 1000),
 								});
 							}}
+						/>
+					</PanelBody>
+					<PanelBody title={__("Unit display")}>
+						<SelectControl
+							label={__("Largest unit")}
+							value={largestUnit}
+							options={timeUnits
+								.filter((_, i) => timeUnits.indexOf(smallestUnit) > i)
+								.map((timeUnit) => ({
+									label: __(timeUnit),
+									value: timeUnit,
+								}))}
+							onChange={(largestUnit) => setAttributes({ largestUnit })}
+						/>
+						<SelectControl
+							label={__("Smallest unit")}
+							value={smallestUnit}
+							options={timeUnits
+								.filter((_, i) => timeUnits.indexOf(largestUnit) < i)
+								.map((timeUnit) => ({
+									label: __(timeUnit),
+									value: timeUnit,
+								}))}
+							onChange={(smallestUnit) => setAttributes({ smallestUnit })}
 						/>
 					</PanelBody>
 				</InspectorControls>
@@ -136,7 +178,13 @@ registerBlockType("ub/countdown", {
 				</BlockControls>
 			),
 			<React.Fragment>
-				<Timer timerStyle={style} deadline={endDate} color={circleColor} />
+				<Timer
+					timerStyle={style}
+					deadline={endDate}
+					color={circleColor}
+					largestUnit={largestUnit}
+					smallestUnit={smallestUnit}
+				/>
 				<RichText
 					tagName="div"
 					placeholder={__("Text to show after the countdown is over")}

@@ -327,6 +327,14 @@ $defaultValues = array(
             'circleColor' => array(
                 'type' => 'string',
                 'default' => '#2DB7F5'
+            ),
+            'largestUnit' => array(
+                'type' => 'string',
+                'default' => 'week'
+            ),
+            'smallestUnit' => array(
+                'type' => 'string',
+                'default' => 'second'
             )
         )
     ),

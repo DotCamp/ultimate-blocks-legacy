@@ -1,6 +1,5 @@
 .ub_countdown_circular_container {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	p {
 		text-align: center;
 	}
@@ -46,7 +45,6 @@
 
 .ub-countdown-odometer-container {
 	display: grid;
-	grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
 	span {
 		text-align: center;
 	}
@@ -148,23 +146,25 @@
 }
 
 @media (max-width: 991.98px) {
-	.ub-countdown .ub_countdown_week,
-	.ub-countdown .ub_countdown_day,
-	.ub-countdown .ub_countdown_hour,
-	.ub-countdown .ub_countdown_minute,
-	.ub-countdown .ub_countdown_second,
-	.ub-countdown-odometer-container span {
-		font-size: 14px !important;
-	}
-}
-
-@media (max-width: 575.98px) {
 	.ub-countdown {
 		.ub_countdown_week,
 		.ub_countdown_day,
 		.ub_countdown_hour,
 		.ub_countdown_minute,
-		.ub_countdown_second {
+		.ub_countdown_second,
+		&-odometer-container span {
+			font-size: 14px !important;
+		}
+	}
+}
+
+@media (max-width: 575.98px) {
+	.ub-countdown .ub_countdown_ {
+		&week,
+		&day,
+		&hour,
+		&minute,
+		&second {
 			margin: 0 1px;
 			font-size: 16px !important;
 		}
@@ -199,13 +199,15 @@
 }
 
 @media (max-width: 374.98px) {
-	.ub_countdown_circular_container div {
-		height: 50px;
-		width: 50px;
-	}
-	.ub_countdown_circular_container > div svg {
-		width: 50px;
-		height: 50px;
+	.ub_countdown_circular_container {
+		div {
+			height: 50px;
+			width: 50px;
+		}
+		> div svg {
+			width: 50px;
+			height: 50px;
+		}
 	}
 	.ub-countdown .ub_countdown_week,
 	.ub-countdown .ub_countdown_day,
