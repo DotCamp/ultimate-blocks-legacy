@@ -127,13 +127,7 @@ class TableOfContents extends Component {
 		};
 
 		const setHeadings = (_) => {
-			const headers = getHeadingBlocks()
-				.map((header) => header.attributes)
-				.map((header) => ({
-					content: header.content,
-					level: header.level,
-					anchor: header.anchor,
-				}));
+			const headers = getHeadingBlocks().map((header) => header.attributes);
 			headers.forEach((heading, key) => {
 				if (
 					!heading.anchor ||
@@ -157,8 +151,14 @@ class TableOfContents extends Component {
 				}
 			});
 
-			if (JSON.stringify(headers) !== JSON.stringify(this.state.headers)) {
-				this.setState({ headers });
+			const newHeaders = headers.map((header) => ({
+				content: header.content,
+				level: header.level,
+				anchor: header.anchor,
+			}));
+
+			if (JSON.stringify(newHeaders) !== JSON.stringify(this.state.headers)) {
+				this.setState({ headers: newHeaders });
 			}
 		};
 
