@@ -94,7 +94,7 @@ add_action( 'wp_enqueue_scripts', 'ub_content_toggle_add_frontend_assets' );
 add_filter( 'render_block', 'ub_content_toggle_filter', 10, 3);
 
 function ub_faq_questions($qna = ''){
-    static $parsed_qna;
+    static $parsed_qna = '';
 
     if(!isset($qna)){
         $parsed_qna = '';
