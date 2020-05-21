@@ -379,6 +379,8 @@ class HowToStep extends Component {
 						/>
 						<RichText
 							tagName="figcaption"
+							keepPlaceholderOnFocus
+							placeholder={__("Step image caption")}
 							value={stepPic.caption}
 							onChange={(newCaption) => {
 								editStep({
@@ -1787,6 +1789,8 @@ registerBlockType("ub/how-to", {
 							/>
 							<RichText
 								tagName="figcaption"
+								keepPlaceholderOnFocus
+								placeholder={__("Final image caption")}
 								value={finalImageCaption}
 								onChange={(finalImageCaption) =>
 									setAttributes({ finalImageCaption })
