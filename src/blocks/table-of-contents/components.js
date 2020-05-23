@@ -143,10 +143,9 @@ class TableOfContents extends Component {
 							.toLowerCase()
 							.replace(/( |<.+?>|&nbsp;)/g, "-");
 					heading.anchor = encodeURIComponent(
-						heading.anchor.replace(
-							/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g,
-							""
-						)
+						heading.anchor
+							.replace(/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g, "")
+							.replace(/-{2,}/g, "-")
 					);
 				}
 			});
