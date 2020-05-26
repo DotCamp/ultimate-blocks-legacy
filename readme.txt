@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,20 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.3.6 =
+
+ADD: Option to Disable Some Units (Weeks, Days etc) in Countdown Block.
+ADD: Allow Adding Captions to Step and Final Images in HowTo Block.
+FIX: FAQ Schema JSON-LD Error in Content Toggle When Removing Duplicate Items.
+FIX: Turning Social Share Into a Reusable Block.
+FIX: Table of Contents Issue with Links to Headings in Other Pages.
+FIX: Table of Contents Link Generation When a Heading is Used as an Inner Block.
+FIX: Table of Contents Frontend Script Behavior When Third-party Heading Blocks are Present.
+FIX: Prevent Having More Than One Dash in a Row in the Heading Anchors of Table of Contents.
+IMPROVEMENT: Use figcaption Tag for Displaying Image Captions in Image Slider block.
+IMPROVEMENT: Adjust location of image slider dots
+REMOVE: Default Values for Block Attributes with Object Values in PHP.
 
 = 2.3.5 =
 

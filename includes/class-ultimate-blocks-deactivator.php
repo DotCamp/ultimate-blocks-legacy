@@ -39,7 +39,6 @@ class Ultimate_Blocks_Deactivator {
 		delete_option('ultimate_blocks_css_version');
 		delete_transient( '_welcome_redirect_ub' );
 		delete_option( 'UltimateBlocks_installDate', date( 'Y-m-d h:i:s' ) );
-		delete_option( 'UltimateBlocks_review_notify', 'no' );
 
 	}
 	
