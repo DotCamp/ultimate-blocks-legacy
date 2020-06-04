@@ -864,9 +864,11 @@ $defaultValues = array(
             ),
             'categories' => array(
                 'type' => 'string',
+                'default' => ''
             ),
             'className' => array(
                 'type' => 'string',
+                'default' => ''
             ),
             'amountPosts' => array(
                 'type'    => 'number',

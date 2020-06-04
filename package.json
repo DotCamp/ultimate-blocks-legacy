@@ -28,7 +28,6 @@
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^6.2.0",
-		"classnames": "^2.2.6",
 		"concurrently": "^5.2.0",
 		"css-loader": "^3.5.3",
 		"gulp": "^4.0.2",

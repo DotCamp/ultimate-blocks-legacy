@@ -1,5 +1,4 @@
 import FeaturedImage from "./image";
-import classnames from "classnames";
 import moment from "moment";
 
 // Setup the block
@@ -31,25 +30,24 @@ export default class PostGridBlock extends Component {
 
 		return [
 			<Fragment>
-				<SectionTag className={classnames(className, "ub-block-post-grid")}>
+				<SectionTag
+					className={`${className ? `${className} ` : ""}ub-block-post-grid`}
+				>
 					<div
-						className={classnames({
-							"is-grid": "grid" === postLayout,
-							"is-list": "list" === postLayout,
-							[`columns-${columns}`]: "grid" === postLayout,
-							"ub-post-grid-items": "ub-post-grid-items",
-						})}
+						className={`ub-post-grid-items ${
+							postLayout === "list" ? "is-list" : `is-grid columns-${columns}`
+						}`}
 					>
 						{posts.map((post, i) => (
 							<article
 								key={i}
-								id={"post-" + post.id}
-								className={classnames(
-									"post-" + post.id,
+								id={`post-${post.id}`}
+								className={`post-${post.id}${
 									post.featured_image_src && checkPostImage
-										? "has-post-thumbnail"
-										: null
-								)}
+										? " has-post-thumbnail"
+										: ""
+								}
+								`}
 							>
 								<Fragment>
 									<div className="ub-block-post-grid-image">
