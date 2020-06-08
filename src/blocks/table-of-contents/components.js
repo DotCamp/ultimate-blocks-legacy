@@ -8,6 +8,8 @@ import { Component, Fragment } from "react";
 import { getDescendantBlocks } from "../../common";
 import toLatin from "./localToLatin";
 
+import filterDiacritics from "./removeDiacritics";
+
 const {
 	ToggleControl,
 	PanelRow,
@@ -27,6 +29,7 @@ class TableOfContents extends Component {
 			headers: props.headers,
 			unsubscribe: null,
 			breaks: [],
+			currentlyEditedItem: -1,
 		};
 	}
 
@@ -127,7 +130,9 @@ class TableOfContents extends Component {
 		};
 
 		const setHeadings = (_) => {
+			const { removeDiacritics } = this.props;
 			const headers = getHeadingBlocks().map((header) => header.attributes);
+
 			headers.forEach((heading, key) => {
 				if (
 					!heading.anchor ||
@@ -142,11 +147,19 @@ class TableOfContents extends Component {
 						)
 							.toLowerCase()
 							.replace(/( |<.+?>|&nbsp;)/g, "-");
-					heading.anchor = encodeURIComponent(
-						heading.anchor
-							.replace(/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g, "")
-							.replace(/-{2,}/g, "-")
-					);
+
+					heading.anchor = heading.anchor
+						.replace(/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g, "")
+						.replace(/-{2,}/g, "-");
+
+					if (removeDiacritics) {
+						heading.anchor = filterDiacritics(heading.anchor).replace(
+							/[\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF]/g,
+							""
+						);
+					}
+
+					heading.anchor = encodeURIComponent(heading.anchor);
 				}
 			});
 
@@ -176,7 +189,10 @@ class TableOfContents extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		// call header manipulation to trigger latin alphabet conversion of links
-		if (this.props.allowToLatin !== prevProps.allowToLatin) {
+		if (
+			this.props.allowToLatin !== prevProps.allowToLatin ||
+			this.props.removeDiacritics !== prevProps.removeDiacritics
+		) {
 			this.setHeadings();
 			this.props.blockProp.setAttributes({
 				links: JSON.stringify(this.state.headers),
@@ -293,6 +309,7 @@ export const inspectorControls = (props) => {
 		allowToCHiding,
 		enableSmoothScroll,
 		allowToLatin,
+		removeDiacritics,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -356,7 +373,9 @@ export const inspectorControls = (props) => {
 					</PanelRow>
 				)}
 				<PanelRow>
-					<label htmlFor="ub_toc_smoothscroll">Enable smooth scrolling</label>
+					<label htmlFor="ub_toc_smoothscroll">
+						{__("Enable smooth scrolling")}
+					</label>
 					<ToggleControl
 						id="ub_toc_smoothscroll"
 						checked={enableSmoothScroll}
@@ -382,6 +401,16 @@ export const inspectorControls = (props) => {
 						onChange={(e) => {
 							setAttributes({ allowToLatin: e });
 						}}
+					/>
+				</PanelRow>
+				<PanelRow>
+					<label htmlFor="ub_toc_toggle_diacritics">
+						{__("Remove diacritics")}
+					</label>
+					<ToggleControl
+						id="ub_toc_toggle_diacritics"
+						checked={removeDiacritics}
+						onChange={(removeDiacritics) => setAttributes({ removeDiacritics })}
 					/>
 				</PanelRow>
 			</PanelBody>
@@ -456,6 +485,7 @@ export const editorDisplay = (props) => {
 		listStyle,
 		titleAlignment,
 		allowToLatin,
+		removeDiacritics,
 	} = props.attributes;
 
 	return (
@@ -502,6 +532,7 @@ export const editorDisplay = (props) => {
 					headers={links && JSON.parse(links)}
 					blockProp={props}
 					allowToLatin={allowToLatin}
+					removeDiacritics={removeDiacritics}
 				/>
 			)}
 		</Fragment>

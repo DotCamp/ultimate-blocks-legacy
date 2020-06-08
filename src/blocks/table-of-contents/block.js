@@ -77,6 +77,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	removeDiacritics: {
+		type: "boolean",
+		default: false,
+	},
 };
 
 registerBlockType("ub/table-of-contents", {

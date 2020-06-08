@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment } from "react";
 
 const icon = (
 	<svg
@@ -21,7 +21,7 @@ export const oneColumnIcon = (
 		width="20"
 		viewBox="0 0 110 110"
 	>
-		{[...Array(6).keys()].map(a => (
+		{[...Array(6).keys()].map((a) => (
 			<rect width="110" height="10" x="0" y={a * 20} />
 		))}
 	</svg>
@@ -34,7 +34,7 @@ export const twoColumnsIcon = (
 		width="20"
 		viewBox="0 0 110 110"
 	>
-		{[...Array(6).keys()].map(a => (
+		{[...Array(6).keys()].map((a) => (
 			<Fragment>
 				<rect width="50" height="10" x="0" y={a * 20} />
 				<rect width="50" height="10" x="60" y={a * 20} />
@@ -50,7 +50,7 @@ export const threeColumnsIcon = (
 		width="20"
 		viewBox="0 0 110 110"
 	>
-		{[...Array(6).keys()].map(a => (
+		{[...Array(6).keys()].map((a) => (
 			<Fragment>
 				<rect width="30" height="10" x="0" y={a * 20} />
 				<rect width="30" height="10" x="40" y={a * 20} />
