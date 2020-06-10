@@ -337,7 +337,6 @@ export class TabHolder extends Component {
 			selectBlock,
 			insertBlock,
 			block,
-			blockID,
 		} = this.props;
 
 		const {
@@ -345,6 +344,7 @@ export class TabHolder extends Component {
 			tabsTitleAlignment,
 			activeTab,
 			tabVertical,
+			blockID,
 		} = attributes;
 
 		const blockPrefix = "wp-block-ub-tabbed-content";
