@@ -527,6 +527,14 @@ function ub_include_block_attribute_css() {
                         'justify-content: ' . ($attributes['alignment'] == 'center' ? 'center' :
                             'flex-' . ($attributes['alignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
                     '}' . PHP_EOL;
+                    if($attributes['itemSpacing'] > 0){
+                        $blockStylesheets .= $prefix . ' li{
+                            margin-bottom: '. $attributes['itemSpacing'] . 'px;
+                        }' .
+                         $prefix . ' li>ul{
+                            margin-top: '. $attributes['itemSpacing'] . 'px;
+                        }';
+                    }
                     break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];

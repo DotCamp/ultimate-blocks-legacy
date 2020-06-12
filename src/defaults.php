@@ -1291,7 +1291,11 @@ $defaultValues = array(
             'iconSize' => array(
                 'type' => 'number',
                 'default' => 5
-            )
+            ),
+            'itemSpacing' => array(
+                'type' => 'number',
+                'default' => 0
+             )
         )
     ),
     'ub/tabbed-content-block' => array(

@@ -64,16 +64,20 @@ registerBlockType("ub/styled-list", {
 			type: "number",
 			default: 5,
 		},
+		itemSpacing: {
+			type: "number",
+			default: 0, //in pixels
+		},
 	},
 	transforms: {
 		from: [
 			{
 				type: "block",
 				blocks: "core/list",
-				transform: attributes =>
-					createBlock("ub/styled-list", { list: attributes.values })
-			}
-		]
+				transform: (attributes) =>
+					createBlock("ub/styled-list", { list: attributes.values }),
+			},
+		],
 	},
 	keywords: [__("List"), __("Styled List"), __("Ultimate Blocks")],
 	edit: compose([
@@ -107,6 +111,7 @@ registerBlockType("ub/styled-list", {
 			iconSize,
 			selectedIcon,
 			blockID,
+			itemSpacing,
 		} = attributes;
 
 		if (availableIcons.length === 0) {
@@ -249,6 +254,13 @@ registerBlockType("ub/styled-list", {
 							min={1}
 							max={10}
 						/>
+						<p>{__("Item spacing (pixels)")}</p>
+						<RangeControl
+							value={itemSpacing}
+							onChange={(itemSpacing) => setAttributes({ itemSpacing })}
+							min={0}
+							max={50}
+						/>
 					</PanelBody>
 				</InspectorControls>
 			),
@@ -302,7 +314,14 @@ registerBlockType("ub/styled-list", {
 						}' color='%23${iconColor.slice(1)}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
 						}'></path></svg>");
-				background-repeat: no-repeat;}`,
+				background-repeat: no-repeat;}
+				
+				#ub-styled-list-${blockID} li{
+					margin-bottom: ${itemSpacing}px;
+				}
+				#ub-styled-list-${blockID} li>ul{
+					margin-top: ${itemSpacing}px;
+				}`,
 					}}
 				/>
 			</div>,
