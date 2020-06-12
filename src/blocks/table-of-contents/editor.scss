@@ -1,6 +1,11 @@
 @import "../../common";
-.editor-styles-wrapper .ub_table-of-contents ul {
-	padding-left: 1.3em;
+.editor-styles-wrapper .ub_table-of-contents {
+	ul {
+		padding-left: 1.3em;
+	}
+	li > div {
+		justify-content: "space-between";
+	}
 }
 
 .editor-block-toolbar {

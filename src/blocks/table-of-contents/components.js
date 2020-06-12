@@ -7,8 +7,12 @@ import {
 import { Component, Fragment } from "react";
 import { getDescendantBlocks } from "../../common";
 import toLatin from "./localToLatin";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import filterDiacritics from "./removeDiacritics";
+
+library.add(faEye, faEyeSlash);
 
 const {
 	ToggleControl,
@@ -29,7 +33,9 @@ class TableOfContents extends Component {
 			headers: props.headers,
 			unsubscribe: null,
 			breaks: [],
-			currentlyEditedItem: -1,
+			currentlyEditedItem: "", //set to clientid of heading
+			hasIdMismatch: false,
+			replacementHeaders: [],
 		};
 	}
 
@@ -129,9 +135,11 @@ class TableOfContents extends Component {
 			return headings;
 		};
 
-		const setHeadings = (_) => {
+		const setHeadings = (checkIDs = true) => {
 			const { removeDiacritics } = this.props;
-			const headers = getHeadingBlocks().map((header) => header.attributes);
+			const headers = getHeadingBlocks().map((header) =>
+				Object.assign(header.attributes, { clientId: header.clientId })
+			);
 
 			headers.forEach((heading, key) => {
 				if (
@@ -163,18 +171,65 @@ class TableOfContents extends Component {
 				}
 			});
 
-			const newHeaders = headers.map((header) => ({
+			const currentIDs = this.state.headers
+				? this.state.headers.map((header) => header.clientId)
+				: [];
+
+			const newHeaders = headers.map((header, i) => ({
+				clientId: header.clientId,
 				content: header.content,
 				level: header.level,
 				anchor: header.anchor,
+				index: i,
+				disabled:
+					currentIDs.indexOf(header.clientId) > -1 &&
+					"disabled" in this.state.headers[currentIDs.indexOf(header.clientId)]
+						? this.state.headers[currentIDs.indexOf(header.clientId)].disabled
+						: null,
+				customContent:
+					currentIDs.indexOf(header.clientId) > -1 &&
+					"customContent" in
+						this.state.headers[currentIDs.indexOf(header.clientId)]
+						? this.state.headers[currentIDs.indexOf(header.clientId)]
+								.customContent
+						: null,
 			}));
 
 			if (JSON.stringify(newHeaders) !== JSON.stringify(this.state.headers)) {
-				this.setState({ headers: newHeaders });
+				if (Array.isArray(this.state.headers)) {
+					if (this.state.headers.length === newHeaders.length) {
+						let hasMismatch = false;
+
+						this.state.headers.some(
+							(h, i) => h.clientId !== newHeaders[i].clientId
+						);
+
+						if (checkIDs && hasMismatch) {
+							this.setState({
+								hasIdMismatch: true,
+								replacementHeaders: newHeaders,
+							});
+						} else {
+							this.setState({
+								headers: newHeaders.map((nh) =>
+									Object.assign(nh, {
+										disabled: nh.disabled || false,
+										customContent: nh.customContent || "",
+									})
+								),
+							});
+						}
+					} else {
+						this.setState({
+							hasIdMismatch: true,
+							replacementHeaders: newHeaders,
+						});
+					}
+				}
 			}
 		};
 
-		setHeadings();
+		setHeadings(false);
 
 		const unsubscribe = subscribe((_) => setHeadings());
 		this.setState({ unsubscribe });
@@ -189,26 +244,79 @@ class TableOfContents extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		// call header manipulation to trigger latin alphabet conversion of links
+		const { setAttributes, attributes } = this.props.blockProp;
+		const { headers, replacementHeaders, breaks } = this.state;
+
 		if (
 			this.props.allowToLatin !== prevProps.allowToLatin ||
 			this.props.removeDiacritics !== prevProps.removeDiacritics
 		) {
 			this.setHeadings();
-			this.props.blockProp.setAttributes({
-				links: JSON.stringify(this.state.headers),
-			});
+			setAttributes({ links: JSON.stringify(headers) });
 			return;
 		}
 
-		if (
-			JSON.stringify(prevProps.headers) !== JSON.stringify(prevState.headers)
-		) {
-			this.props.blockProp.setAttributes({
-				links: JSON.stringify(this.state.headers),
-			});
+		if (JSON.stringify(headers) !== JSON.stringify(prevState.headers)) {
+			setAttributes({ links: JSON.stringify(headers) });
 		}
-		if (this.state.breaks !== this.props.blockProp.attributes.gaps) {
-			this.props.blockProp.setAttributes({ gaps: this.state.breaks });
+		if (breaks !== attributes.gaps) {
+			setAttributes({ gaps: breaks });
+		}
+
+		if (this.state.hasIdMismatch) {
+			const oldIDs = Array.isArray(headers)
+				? headers.map((h) => h.clientId)
+				: [];
+			const newIDs = replacementHeaders.map((h) => h.clientId);
+
+			if (oldIDs.length === newIDs.length) {
+				let mismatchLocs = [];
+				for (let i = 0; i < replacementHeaders.length; i++) {
+					if (headers[i].clientId !== replacementHeaders[i].clientId) {
+						mismatchLocs.push(i);
+					}
+				}
+				this.setState({
+					headers: JSON.parse(JSON.stringify(replacementHeaders)).sort((a, b) =>
+						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
+					),
+				});
+			} else {
+				let diff = [];
+				let currentHeaders = JSON.parse(JSON.stringify(headers)) || [];
+				if (oldIDs.length < newIDs.length) {
+					let insertionSpots = [];
+					newIDs.forEach((nh, i) => {
+						if (oldIDs.indexOf(nh) === -1) {
+							diff.push(nh);
+							insertionSpots.push(i);
+						}
+					});
+
+					insertionSpots.forEach((index, i) => {
+						const currentHeader = replacementHeaders.filter(
+							(nh) => nh.clientId === diff[i]
+						)[0];
+						currentHeaders.splice(index, 0, currentHeader);
+					});
+				} else {
+					let deletionSpots = [];
+
+					oldIDs.forEach((nh, i) => {
+						if (newIDs.indexOf(nh) === -1) {
+							diff.push(nh);
+							deletionSpots.push(i);
+						}
+					});
+
+					deletionSpots.forEach((index) => {
+						currentHeaders.splice(index, 1);
+					});
+				}
+				this.setState({ headers: currentHeaders });
+			}
+
+			this.setState({ hasIdMismatch: false });
 		}
 	}
 
@@ -221,7 +329,9 @@ class TableOfContents extends Component {
 			listStyle,
 		} = this.props;
 
-		const { headers } = this.state;
+		const { isSelected } = blockProp;
+
+		const { headers, currentlyEditedItem } = this.state;
 
 		const placeItem = (arr, item) => {
 			if (arr.length === 0 || arr[0].level === item.level) {
@@ -238,6 +348,7 @@ class TableOfContents extends Component {
 
 			origHeaders
 				.filter((header) => allowedHeaders[header.level - 1])
+				.filter((header) => !header.disabled || isSelected)
 				.forEach((header) => placeItem(array, header));
 
 			return array;
@@ -246,12 +357,57 @@ class TableOfContents extends Component {
 		const parseList = (list) =>
 			list.map((item) => (
 				<li>
-					<a
-						href={`#${item.anchor}`}
-						dangerouslySetInnerHTML={{
-							__html: item.content.replace(/(<.+?>)/g, ""),
-						}}
-					/>
+					<div style={{ display: isSelected ? "flex" : "block" }}>
+						{isSelected && currentlyEditedItem === item.clientId ? (
+							<input
+								type="text"
+								value={item.customContent}
+								onChange={(e) => {
+									const revisedHeaders = JSON.parse(
+										JSON.stringify(this.state.headers)
+									);
+									revisedHeaders[item.index].customContent = e.target.value;
+									this.setState({ headers: revisedHeaders });
+								}}
+								onBlur={() => this.setState({ currentlyEditedItem: "" })}
+							/>
+						) : (
+							<a
+								href={`#${item.anchor}`}
+								dangerouslySetInnerHTML={{
+									__html: `${item.disabled ? "<del>" : ""}${
+										item.customContent || item.content.replace(/(<.+?>)/g, "")
+									}${item.disabled ? "</del>" : ""}`,
+								}}
+							/>
+						)}
+						{isSelected && (
+							<div className="ub_toc_button_container">
+								{!item.disabled && (
+									<button
+										onClick={(_) =>
+											this.setState({ currentlyEditedItem: item.clientId })
+										}
+									>
+										<span className="dashicons dashicons-edit-large"></span>
+									</button>
+								)}
+								<button
+									onClick={(_) => {
+										const revisedHeaders = JSON.parse(
+											JSON.stringify(this.state.headers)
+										);
+										revisedHeaders[item.index].disabled = !revisedHeaders[
+											item.index
+										].disabled;
+										this.setState({ headers: revisedHeaders });
+									}}
+								>
+									<FontAwesomeIcon icon={item.disabled ? faEye : faEyeSlash} />
+								</button>
+							</div>
+						)}
+					</div>
 					{item.children &&
 						(listStyle === "numbered" ? (
 							<ol>{parseList(item.children)}</ol>

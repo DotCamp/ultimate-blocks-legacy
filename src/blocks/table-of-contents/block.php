@@ -5,7 +5,7 @@ function ub_render_table_of_contents_block($attributes){
     $linkArray = json_decode($links, true);
 
     $filteredHeaders = array_values(array_filter($linkArray, function ($header) use ($allowedHeaders){
-        return $allowedHeaders[$header['level'] - 1];
+        return $allowedHeaders[$header['level'] - 1] && !$header['disabled'];
     }));
 
     $sortedHeaders = [];
@@ -61,7 +61,7 @@ function ub_render_table_of_contents_block($attributes){
                             . $gaps[$num] : '') . $anchor;
                 }
 
-                $content = $item["content"];
+                $content = $item["customContent"] != "" ? $item["customContent"] : $item["content"];
                 $outputString .= '<li><a href='. $anchor.'>'. $content .'</a></li>';
             }
             else{
