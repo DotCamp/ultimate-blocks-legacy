@@ -5,20 +5,26 @@ div[data-block] > .ub_image_slider {
 	.ub_image_slider_add_images {
 		margin: 0 auto;
 	}
-	.components-placeholder__fieldset {
-		display: flex;
-		justify-content: center;
-	}
-	.components-placeholder__label {
-		margin: 5px auto;
-	}
-	.components-placeholder__instructions {
-		text-align: center;
-		margin: auto;
+	.components-placeholder {
+		&__fieldset {
+			display: flex;
+			justify-content: center;
+		}
+		&__label {
+			margin: 5px auto;
+		}
+		&__instructions {
+			text-align: center;
+			margin: auto;
+		}
 	}
 }
 
-.is-selected .ub_image_slider .flickity-page-dots {
+:not(.is-selected) > .ub_image_slider {
+	margin-bottom: 50px;
+}
+
+.is-selected > .ub_image_slider .flickity-page-dots {
 	bottom: -60px;
 }
 
