@@ -348,13 +348,16 @@ registerBlockType("ub/image-slider", {
 									className="button-url"
 									value={captionArray[activeSlide].link}
 									onChange={(link) => {
-										const currentItem = Object.assign({}, captionArray[i]);
+										const currentItem = Object.assign(
+											{},
+											captionArray[activeSlide]
+										);
 
 										setAttributes({
 											descriptions: [
-												...descriptions.slice(0, i),
+												...descriptions.slice(0, activeSlide),
 												Object.assign(currentItem, { link }),
-												...descriptions.slice(i + 1),
+												...descriptions.slice(activeSlide + 1),
 											],
 										});
 									}}
