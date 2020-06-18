@@ -22,10 +22,13 @@ div[data-block] > .ub_image_slider {
 
 :not(.is-selected) > .ub_image_slider {
 	margin-bottom: 50px;
+	.flickity-page-dots {
+		bottom: -50px;
+	}
 }
 
 .is-selected > .ub_image_slider .flickity-page-dots {
-	bottom: -60px;
+	bottom: -85px;
 }
 
 .ub_image_slider_url_input {

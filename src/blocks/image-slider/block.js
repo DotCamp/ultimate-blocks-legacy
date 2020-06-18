@@ -280,26 +280,6 @@ registerBlockType("ub/image-slider", {
 													height: `${sliderHeight}px`,
 												}}
 											/>
-											<RichText
-												tagName="figcaption"
-												formattingControls={[]}
-												className="ub_image_silder_image_caption"
-												value={captionArray[i].text}
-												placeholder={__("Caption goes here")}
-												onChange={(text) => {
-													const currentItem = Object.assign(
-														{},
-														captionArray[i]
-													);
-													setAttributes({
-														descriptions: [
-															...descriptions.slice(0, i),
-															Object.assign(currentItem, { text }),
-															...descriptions.slice(i + 1),
-														],
-													});
-												}}
-											/>
 										</figure>
 									)),
 								],
@@ -335,6 +315,29 @@ registerBlockType("ub/image-slider", {
 								),
 							]}
 						/>
+						{activeSlide < captionArray.length && (
+							<RichText
+								tagName="figcaption"
+								formattingControls={[]}
+								className="ub_image_silder_image_caption"
+								value={descriptions[activeSlide].text}
+								placeholder={__("Caption goes here")}
+								onChange={(text) => {
+									const currentItem = Object.assign(
+										{},
+										descriptions[activeSlide]
+									);
+
+									setAttributes({
+										descriptions: [
+											...descriptions.slice(0, activeSlide),
+											Object.assign(currentItem, { text }),
+											...descriptions.slice(activeSlide + 1),
+										],
+									});
+								}}
+							/>
+						)}
 						{isSelected && activeSlide < captionArray.length && (
 							<form
 								onSubmit={(event) => event.preventDefault()}

@@ -9,38 +9,28 @@ export class Slider extends Component {
 		});
 	}
 	shouldComponentUpdate(newProps, newState) {
-		const oldCaptions = this.props.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[1].props.value);
-
-		const newCaptions = newProps.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[1].props.value);
-
 		const oldImages = this.props.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[0].props.src);
+			.filter((s) => Array.isArray(s))[0]
+			.map((slide) => slide.props.children)
+			.map((child) => child.props.src);
 
 		const newImages = newProps.slides
-			.filter(s => Array.isArray(s))[0]
-			.map(slide => slide.props.children[0].props.src);
+			.filter((s) => Array.isArray(s))[0]
+			.map((slide) => slide.props.children)
+			.map((child) => child.props.src);
 
 		const imagesChanged = !oldImages.every((img, i) => img === newImages[i]);
 
 		const indexUnchanged =
 			this.props.options.initialIndex === newProps.options.initialIndex;
 
-		const captionUnchanged = oldCaptions.every(
-			(caption, i) => caption === newCaptions[i]
-		);
-
-		return (indexUnchanged && captionUnchanged) || imagesChanged;
+		return indexUnchanged || imagesChanged;
 	}
 	render() {
 		return (
 			<Flickity
 				elementType={"div"}
-				flickityRef={c => (this.flkty = c)}
+				flickityRef={(c) => (this.flkty = c)}
 				options={this.props.options}
 				reloadOnUpdate={true}
 				imagesLoaded={true}
