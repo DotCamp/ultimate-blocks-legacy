@@ -210,45 +210,43 @@ function ub_switchFocusToTab(index, tabBar) {
 	}
 }
 
+function ub_getTabbedContentDisplayModes(block) {
+	let dm = [];
+	const classNamePrefix = "wp-block-ub-tabbed-content";
+
+	if (block.classList.contains(`${classNamePrefix}-vertical-holder-mobile`)) {
+		dm.push("verticaltab");
+	} else if (
+		block.classList.contains(`${classNamePrefix}-horizontal-holder-mobile`)
+	) {
+		dm.push("horizontaltab");
+	} else {
+		dm.push("accordion");
+	}
+
+	if (block.classList.contains(`${classNamePrefix}-vertical-holder-tablet`)) {
+		dm.push("verticaltab");
+	} else if (
+		block.classList.contains(`${classNamePrefix}-horizontal-holder-tablet`)
+	) {
+		dm.push("horizontaltab");
+	} else {
+		dm.push("accordion");
+	}
+
+	dm.push(
+		block.classList.contains("vertical-holder")
+			? "verticaltab"
+			: "horizontaltab"
+	);
+
+	return dm;
+}
+
 (function () {
 	const displayModes = Array.prototype.slice
 		.call(document.getElementsByClassName("wp-block-ub-tabbed-content"))
-		.map((block) => {
-			let dm = [];
-			const classNamePrefix = "wp-block-ub-tabbed-content";
-
-			if (
-				block.classList.contains(`${classNamePrefix}-vertical-holder-mobile`)
-			) {
-				dm.push("verticaltab");
-			} else if (
-				block.classList.contains(`${classNamePrefix}-horizontal-holder-mobile`)
-			) {
-				dm.push("horizontaltab");
-			} else {
-				dm.push("accordion");
-			}
-
-			if (
-				block.classList.contains(`${classNamePrefix}-vertical-holder-tablet`)
-			) {
-				dm.push("verticaltab");
-			} else if (
-				block.classList.contains(`${classNamePrefix}-horizontal-holder-tablet`)
-			) {
-				dm.push("horizontaltab");
-			} else {
-				dm.push("accordion");
-			}
-
-			dm.push(
-				block.classList.contains("vertical-holder")
-					? "verticaltab"
-					: "horizontaltab"
-			);
-
-			return dm;
-		});
+		.map((block) => ub_getTabbedContentDisplayModes(block));
 
 	let transitionTo = 0;
 	let transitionFrom = 0;
@@ -371,105 +369,152 @@ function ub_hashTabSwitch() {
 
 			const stickyHeaderHeights = stickyHeaders.map((h) => h.offsetHeight);
 
-			const tabContents = Array.prototype.slice
+			const tabIndex = Array.prototype.slice
 				.call(targetElement.parentElement.children)
 				.filter((e) =>
 					e.classList.contains(`${classNamePrefix}-tab-content-wrap`)
+				)
+				.findIndex(
+					(e) => e.dataset.tabAnchor === window.location.hash.slice(1)
 				);
-
-			const tabIndex = tabContents.findIndex(
-				(e) => e.dataset.tabAnchor === window.location.hash.slice(1)
-			);
 
 			const tabContentRoot = targetElement.parentElement.parentElement;
 
-			if (
-				targetElement.previousElementSibling.classList.contains(
-					`${classNamePrefix}-accordion-toggle`
-				) &&
-				targetElement.previousElementSibling.offsetWidth > 0
-			) {
-				tabContents.forEach((tabContent) => {
-					tabContent.classList.remove("active");
-					tabContent.classList.add("ub-hide");
-					tabContent.previousElementSibling.classList.remove("active");
-				});
+			let ancestorTabBlocks = [];
+			let ancestorTabIndexes = [];
 
-				const targetAccordion = targetElement.previousElementSibling;
-				const deficit =
-					targetAccordion.getBoundingClientRect().y ||
-					targetAccordion.getBoundingClientRect().top;
+			const findTabContentRoot = (currentBlock) => {
+				const parentTabbedContent = currentBlock.closest(
+					".wp-block-ub-tabbed-content-tabs-content"
+				);
 
-				setTimeout(() => {
-					targetElement.classList.add("active");
-					targetElement.classList.remove("ub-hide");
-					targetAccordion.classList.add("active");
-					window.scrollBy(
-						0,
-						deficit - Math.max.apply(Math, stickyHeaderHeights)
-					);
-					tabContentRoot.dataset.activeTabs = JSON.stringify([tabIndex]);
-					Array.prototype.slice
-						.call(targetElement.querySelectorAll("iframe"))
-						.forEach((embed) => {
-							embed.style.removeProperty("width");
-							embed.style.removeProperty("height");
-						});
-				}, 50); //timeout needed for ensure accurate calculations
-			} else {
-				const deficit =
-					tabContentRoot.getBoundingClientRect().y ||
-					tabContentRoot.getBoundingClientRect().top;
-
-				window.scrollBy(0, deficit - Math.max.apply(Math, stickyHeaderHeights));
-
-				const tabBar =
-					targetElement.parentElement.previousElementSibling.children[0];
-
-				Array.prototype.slice.call(tabBar.children).forEach((tab, i) => {
-					const probableAccordionToggle = tabContents[i].previousElementSibling;
-					if (i === tabIndex) {
-						tab.classList.add("active");
-						tabContents[i].classList.add("active");
-						tabContents[i].classList.remove("ub-hide");
-
-						if (
-							probableAccordionToggle &&
-							probableAccordionToggle.classList.contains(
-								`${classNamePrefix}-accordion-toggle`
-							)
-						) {
-							probableAccordionToggle.classList.add("active");
-						}
-
+				if (parentTabbedContent) {
+					ancestorTabIndexes.push(
 						Array.prototype.slice
-							.call(tabContents[i].querySelectorAll("iframe"))
-							.forEach((embed) => {
-								embed.style.removeProperty("width");
-								embed.style.removeProperty("height");
-							});
-					} else {
-						tab.classList.remove("active");
-						tabContents[i].classList.remove("active");
-						tabContents[i].classList.add("ub-hide");
-						if (
-							probableAccordionToggle &&
-							probableAccordionToggle.classList.contains(
-								`${classNamePrefix}-accordion-toggle`
+							.call(parentTabbedContent.children)
+							.filter((t) =>
+								t.classList.contains(
+									"wp-block-ub-tabbed-content-tab-content-wrap"
+								)
 							)
-						) {
-							probableAccordionToggle.classList.remove("active");
-						}
-					}
-				});
+							.indexOf(
+								currentBlock.closest(
+									".wp-block-ub-tabbed-content-tab-content-wrap"
+								)
+							)
+					);
 
-				if (
-					targetElement.parentElement.previousElementSibling.offsetWidth ===
-					targetElement.parentElement.offsetWidth
-				) {
-					ub_switchFocusToTab(tabIndex, tabBar);
+					ancestorTabBlocks.push(parentTabbedContent.parentElement);
+
+					return findTabContentRoot(parentTabbedContent.parentElement);
+				} else {
+					return currentBlock;
 				}
+			};
+
+			findTabContentRoot(targetElement);
+
+			ancestorTabBlocks.unshift(targetElement.parentElement.parentElement);
+			ancestorTabIndexes.unshift(tabIndex);
+
+			const displayModes = ancestorTabBlocks.map((a) =>
+				ub_getTabbedContentDisplayModes(a)
+			);
+
+			let displayMode = -1;
+			if (window.innerWidth < 700) {
+				displayMode = 0;
+			} else if (window.innerWidth < 900) {
+				displayMode = 1;
+			} else {
+				displayMode = 2;
 			}
+
+			ancestorTabBlocks.forEach((a, i) => {
+				const targetElement = a.children[1].children[ancestorTabIndexes[i]];
+				const tabContents = Array.prototype.slice
+					.call(targetElement.parentElement.children)
+					.filter((e) =>
+						e.classList.contains(`${classNamePrefix}-tab-content-wrap`)
+					);
+
+				if (displayModes[i][displayMode] === "accordion") {
+					tabContents.forEach((tabContent, j) => {
+						if (j === ancestorTabIndexes[i]) {
+							tabContent.classList.add("active");
+							tabContent.classList.remove("ub-hide");
+							tabContent.previousElementSibling.classList.add("active");
+						} else {
+							tabContent.classList.remove("active");
+							tabContent.classList.add("ub-hide");
+							tabContent.previousElementSibling.classList.remove("active");
+						}
+					});
+				} else {
+					const tabBar =
+						targetElement.parentElement.previousElementSibling.children[0];
+
+					Array.prototype.slice.call(tabBar.children).forEach((tab, j) => {
+						const probableAccordionToggle =
+							tabContents[ancestorTabIndexes[i]].previousElementSibling;
+						if (j === ancestorTabIndexes[i]) {
+							tab.classList.add("active");
+							tabContents[j].classList.add("active");
+							tabContents[j].classList.remove("ub-hide");
+
+							if (
+								probableAccordionToggle &&
+								probableAccordionToggle.classList.contains(
+									`${classNamePrefix}-accordion-toggle`
+								)
+							) {
+								probableAccordionToggle.classList.add("active");
+							}
+
+							Array.prototype.slice
+								.call(tabContents[j].querySelectorAll("iframe"))
+								.forEach((embed) => {
+									embed.style.removeProperty("width");
+									embed.style.removeProperty("height");
+								});
+						} else {
+							tab.classList.remove("active");
+							tabContents[j].classList.remove("active");
+							tabContents[j].classList.add("ub-hide");
+							if (
+								probableAccordionToggle &&
+								probableAccordionToggle.classList.contains(
+									`${classNamePrefix}-accordion-toggle`
+								)
+							) {
+								probableAccordionToggle.classList.remove("active");
+							}
+						}
+					});
+
+					if (
+						targetElement.parentElement.previousElementSibling.offsetWidth ===
+						targetElement.parentElement.offsetWidth
+					) {
+						ub_switchFocusToTab(ancestorTabIndexes[i], tabBar);
+					}
+				}
+			});
+
+			const targetAccordion = targetElement.previousElementSibling;
+
+			const scrollBoundingRect = (displayModes[0][displayMode] === "accordion"
+				? targetAccordion
+				: tabContentRoot
+			).getBoundingClientRect();
+
+			setTimeout(() => {
+				window.scrollBy(
+					0,
+					(scrollBoundingRect.y || scrollBoundingRect.top) -
+						Math.max.apply(Math, stickyHeaderHeights)
+				);
+			}, 50);
 		}
 	}
 }
