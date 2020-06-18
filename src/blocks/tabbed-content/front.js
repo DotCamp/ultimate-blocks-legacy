@@ -450,6 +450,9 @@ function ub_hashTabSwitch() {
 							tabContent.previousElementSibling.classList.remove("active");
 						}
 					});
+					targetElement.parentElement.parentElement.dataset.activeTabs = JSON.stringify(
+						[ancestorTabIndexes[i]]
+					);
 				} else {
 					const tabBar =
 						targetElement.parentElement.previousElementSibling.children[0];
