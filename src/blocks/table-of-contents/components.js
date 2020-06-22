@@ -225,6 +225,8 @@ class TableOfContents extends Component {
 							replacementHeaders: newHeaders,
 						});
 					}
+				} else {
+					this.setState({ headers: newHeaders });
 				}
 			}
 		};
