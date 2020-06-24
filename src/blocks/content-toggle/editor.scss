@@ -5,33 +5,37 @@
  * which makes it higher in priority.
  */
 
-.wp-block-ub-content-toggle-accordion {
-	.wp-block-ub-content-toggle-accordion-controls-top > span {
-		cursor: pointer;
-		&:nth-of-type(2) {
-			position: absolute;
-			right: -15px;
+.wp-block-ub-content-toggle {
+	&-block {
+		padding: 3px 0;
+	}
+	&-customize-icons-wrap {
+		display: flex;
+		padding: 5px;
+		> * {
+			display: inline;
+			margin: 5px;
 		}
 	}
-	.wp-block-ub-content-toggle-accordion-controls-bottom > span {
-		cursor: pointer;
-	}
-	.wp-block-ub-content-toggle-accordion-title-wrap {
-		align-items: baseline;
-		> *:first-child {
-			flex-grow: 1;
+	&-accordion {
+		&-controls-top > span {
+			cursor: pointer;
+			&:nth-of-type(2) {
+				position: absolute;
+				right: -15px;
+			}
 		}
-		.wp-block-ub-content-toggle-accordion-state-indicator {
+		&-controls-bottom > span {
+			cursor: pointer;
+		}
+		&-title-wrap {
+			align-items: baseline;
+			> *:first-child {
+				flex-grow: 1;
+			}
+		}
+		&-state-indicator {
 			margin: 10px;
 		}
-	}
-}
-
-.wp-block-ub-content-toggle-customize-icons-wrap {
-	display: flex;
-	padding: 5px;
-	> * {
-		display: inline;
-		margin: 5px;
 	}
 }
