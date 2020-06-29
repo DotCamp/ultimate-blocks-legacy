@@ -71,6 +71,21 @@ function ub_register_button_block() {
 	}
 }
 
+function ub_render_buttons_block($attributes, $content){
+    return '<div class="ub-buttons">'.$content.'</div>';
+}
+
+function ub_register_buttons_block() {
+	if ( function_exists( 'register_block_type' ) ) {
+        //require dirname(dirname(__DIR__)) . '/defaults.php';
+		register_block_type( 'ub/buttons', array(
+            'attributes' => array(),
+			'render_callback' => 'ub_render_buttons_block'));
+	}
+}
+
+
 add_action('init', 'ub_register_button_block');
+add_action('init', 'ub_register_buttons_block');
 
 add_action( 'wp_enqueue_scripts', 'ub_button_add_frontend_assets' );

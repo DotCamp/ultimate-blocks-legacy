@@ -10,7 +10,7 @@ const {
 	InspectorControls,
 	PanelColorSettings,
 	URLInput,
-	RichText
+	RichText,
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
@@ -21,7 +21,9 @@ const {
 	ToggleControl,
 	Dropdown,
 	CheckboxControl,
-	SelectControl
+	SelectControl,
+	Popover,
+	Toolbar,
 } = wp.components;
 const { __ } = wp.i18n;
 
@@ -29,30 +31,44 @@ export const allIcons = Object.assign(fas, fab);
 
 export const iconSize = { small: 25, medium: 30, large: 35, larger: 40 };
 
-export const blockControls = props => {
+export const blockControls = (props) => {
 	return (
 		<BlockControls>
 			<BlockAlignmentToolbar
 				value={props.attributes.align}
-				onChange={newAlignment => props.setAttributes({ align: newAlignment })}
+				onChange={(newAlignment) =>
+					props.setAttributes({ align: newAlignment })
+				}
 				controls={["left", "center", "right"]}
 			/>
+			{props.getBlockName(props.parentID) === "ub/buttons" && (
+				<Toolbar>
+					<IconButton
+						icon="admin-links"
+						onClick={() => {
+							props.setState({ enableLinkInput: true });
+						}}
+					/>
+				</Toolbar>
+			)}
 		</BlockControls>
 	);
 };
 
-export const inspectorControls = props => {
+export const inspectorControls = (props) => {
 	const BUTTON_SIZES = {
 		small: __("S", "ultimate-blocks"),
 		medium: __("M", "ultimate-blocks"),
 		large: __("L", "ultimate-blocks"),
-		larger: __("XL", "ultimate-blocks")
+		larger: __("XL", "ultimate-blocks"),
 	};
 
 	const BUTTON_WIDTHS = {
 		fixed: __("Fixed", "ultimate-blocks"),
 		flex: __("Flexible", "ultimate-blocks"),
-		full: __("Full", "ultimate-blocks")
+		...(props.getBlockName(props.parentID) !== "ub/buttons" && {
+			full: __("Full", "ultimate-blocks"),
+		}),
 	};
 
 	const { setAttributes, setState, availableIcons, iconSearchTerm } = props;
@@ -69,14 +85,14 @@ export const inspectorControls = props => {
 		buttonIsTransparent,
 		addNofollow,
 		openInNewTab,
-		buttonWidth
+		buttonWidth,
 	} = props.attributes;
 	return (
 		<InspectorControls>
 			<PanelBody title={__("Button Size", "ultimate-blocks")}>
 				<div className="ub-button-group">
 					<ButtonGroup aria-label={__("Button Size", "ultimate-blocks")}>
-						{Object.keys(BUTTON_SIZES).map(b => (
+						{Object.keys(BUTTON_SIZES).map((b) => (
 							<Button
 								isLarge
 								isPrimary={size === b}
@@ -92,7 +108,7 @@ export const inspectorControls = props => {
 			<PanelBody title={__("Button Width", "ultimate-blocks")}>
 				<div className="ub-button-group">
 					<ButtonGroup aria-label={__("Button Width", "ultimate-blocks")}>
-						{Object.keys(BUTTON_WIDTHS).map(b => (
+						{Object.keys(BUTTON_WIDTHS).map((b) => (
 							<Button
 								isLarge
 								isPrimary={buttonWidth === b}
@@ -105,25 +121,27 @@ export const inspectorControls = props => {
 					</ButtonGroup>
 				</div>
 			</PanelBody>
-			<PanelBody title={__("Button Link Settings", "ultimate-blocks")}>
-				<CheckboxControl
-					label={__("Open Link in New Tab", "ultimate-blocks")}
-					checked={openInNewTab}
-					onChange={_ => setAttributes({ openInNewTab: !openInNewTab })}
-				/>
-				<CheckboxControl
-					label={__("Add Nofollow to Link", "ultimate-blocks")}
-					checked={addNofollow}
-					onChange={_ => setAttributes({ addNofollow: !addNofollow })}
-				/>
-			</PanelBody>
+			{props.getBlockName(props.parentID) !== "ub/buttons" && (
+				<PanelBody title={__("Button Link Settings", "ultimate-blocks")}>
+					<CheckboxControl
+						label={__("Open Link in New Tab", "ultimate-blocks")}
+						checked={openInNewTab}
+						onChange={() => setAttributes({ openInNewTab: !openInNewTab })}
+					/>
+					<CheckboxControl
+						label={__("Add Nofollow to Link", "ultimate-blocks")}
+						checked={addNofollow}
+						onChange={() => setAttributes({ addNofollow: !addNofollow })}
+					/>
+				</PanelBody>
+			)}
 			<PanelBody title={__("Button Style", "ultimate-blocks")}>
 				<ToggleControl
 					label={__("Rounded", "ultimate-blocks")}
 					checked={buttonRounded}
 					onChange={() =>
 						setAttributes({
-							buttonRounded: !buttonRounded
+							buttonRounded: !buttonRounded,
 						})
 					}
 				/>
@@ -132,7 +150,7 @@ export const inspectorControls = props => {
 					checked={buttonIsTransparent}
 					onChange={() =>
 						setAttributes({
-							buttonIsTransparent: !buttonIsTransparent
+							buttonIsTransparent: !buttonIsTransparent,
 						})
 					}
 				/>
@@ -158,14 +176,14 @@ export const inspectorControls = props => {
 									aria-expanded={isOpen}
 								/>
 							)}
-							renderContent={_ => (
+							renderContent={() => (
 								<div>
 									<input
 										type="text"
 										value={iconSearchTerm}
-										onChange={e =>
+										onChange={(e) =>
 											setState({
-												iconSearchTerm: e.target.value
+												iconSearchTerm: e.target.value,
 											})
 										}
 									/>
@@ -174,7 +192,7 @@ export const inspectorControls = props => {
 											className="ub-button-available-icon"
 											onClick={() =>
 												setAttributes({
-													chosenIcon: ""
+													chosenIcon: "",
 												})
 											}
 										>
@@ -184,15 +202,15 @@ export const inspectorControls = props => {
 									<br />
 									{availableIcons.length > 0 &&
 										availableIcons
-											.filter(i => i.iconName.includes(iconSearchTerm))
-											.map(i => (
+											.filter((i) => i.iconName.includes(iconSearchTerm))
+											.map((i) => (
 												<IconButton
 													className="ub-button-available-icon"
 													icon={generateIcon(i, 35)}
 													label={i.iconName}
 													onClick={() => {
 														setAttributes({
-															chosenIcon: i.iconName
+															chosenIcon: i.iconName,
 														});
 													}}
 												/>
@@ -208,14 +226,14 @@ export const inspectorControls = props => {
 						options={[
 							{
 								label: __("Left", "ultimate-blocks"),
-								value: "left"
+								value: "left",
 							},
 							{
 								label: __("Right", "ultimate-blocks"),
-								value: "right"
-							}
+								value: "right",
+							},
 						]}
-						onChange={pos => setAttributes({ iconPosition: pos })}
+						onChange={(pos) => setAttributes({ iconPosition: pos })}
 					/>
 				</div>
 			</PanelBody>
@@ -227,54 +245,54 @@ export const inspectorControls = props => {
 						? [
 								{
 									value: buttonColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											buttonColor: colorValue
+											buttonColor: colorValue,
 										}),
-									label: __("Button Color", "ultimate-blocks")
+									label: __("Button Color", "ultimate-blocks"),
 								},
 								{
 									value: buttonHoverColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											buttonHoverColor: colorValue
+											buttonHoverColor: colorValue,
 										}),
-									label: __("Button Color on Hover", "ultimate-blocks")
-								}
+									label: __("Button Color on Hover", "ultimate-blocks"),
+								},
 						  ]
 						: [
 								{
 									value: buttonColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											buttonColor: colorValue
+											buttonColor: colorValue,
 										}),
-									label: __("Button Background", "ultimate-blocks")
+									label: __("Button Background", "ultimate-blocks"),
 								},
 								{
 									value: buttonTextColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											buttonTextColor: colorValue
+											buttonTextColor: colorValue,
 										}),
-									label: __("Button Text Color", "ultimate-blocks")
+									label: __("Button Text Color", "ultimate-blocks"),
 								},
 								{
 									value: buttonHoverColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											buttonHoverColor: colorValue
+											buttonHoverColor: colorValue,
 										}),
-									label: __("Button Background on Hover", "ultimate-blocks")
+									label: __("Button Background on Hover", "ultimate-blocks"),
 								},
 								{
 									value: buttonTextHoverColor,
-									onChange: colorValue =>
+									onChange: (colorValue) =>
 										setAttributes({
-											buttonTextHoverColor: colorValue
+											buttonTextHoverColor: colorValue,
 										}),
-									label: __("Button Text Color on Hover", "ultimate-blocks")
-								}
+									label: __("Button Text Color on Hover", "ultimate-blocks"),
+								},
 						  ]
 				}
 			/>
@@ -282,13 +300,14 @@ export const inspectorControls = props => {
 	);
 };
 
-export const editorDisplay = props => {
+export const editorDisplay = (props) => {
 	const {
 		isSelected,
 		isMouseHovered,
+		enableLinkInput,
 		setState,
 		setAttributes,
-		attributes
+		attributes,
 	} = props;
 
 	const {
@@ -304,7 +323,9 @@ export const editorDisplay = props => {
 		chosenIcon,
 		iconPosition,
 		buttonIsTransparent,
-		buttonWidth
+		buttonWidth,
+		openInNewTab,
+		addNofollow,
 	} = attributes;
 
 	return (
@@ -318,8 +339,8 @@ export const editorDisplay = props => {
 							? `ub-button-flex-${size}`
 							: ""
 					}`}
-					onMouseEnter={_ => setState({ isMouseHovered: true })}
-					onMouseLeave={_ => setState({ isMouseHovered: false })}
+					onMouseEnter={() => setState({ isMouseHovered: true })}
+					onMouseLeave={() => setState({ isMouseHovered: false })}
 					style={{
 						backgroundColor: buttonIsTransparent
 							? "transparent"
@@ -339,13 +360,13 @@ export const editorDisplay = props => {
 							? isMouseHovered
 								? buttonHoverColor
 								: buttonColor
-							: null
+							: null,
 					}}
 				>
 					<div
 						className="ub-button-content-holder"
 						style={{
-							flexDirection: iconPosition === "left" ? "row" : "row-reverse"
+							flexDirection: iconPosition === "left" ? "row" : "row-reverse",
 						}}
 					>
 						{chosenIcon !== "" &&
@@ -360,18 +381,52 @@ export const editorDisplay = props => {
 						<RichText
 							className="ub-button-block-btn"
 							placeholder={__("Button Text", "ultimate-blocks")}
-							onChange={value => setAttributes({ buttonText: value })}
+							onChange={(value) => setAttributes({ buttonText: value })}
 							value={buttonText}
 							formattingControls={["bold", "italic", "strikethrough"]}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
 				</div>
+				{isSelected && enableLinkInput && (
+					<Popover className="ub_popover" position="bottom">
+						<div className="ub_button_popover">
+							<div className="ub_button_url_input">
+								<form
+									onSubmit={(event) => event.preventDefault()}
+									className={`editor-format-toolbar__link-modal-line ub_button_input_box flex-container`}
+								>
+									<URLInput
+										autoFocus={false}
+										className="button-url"
+										value={url}
+										onChange={(value) => setAttributes({ url: value })}
+									/>
+									<IconButton
+										icon={"editor-break"}
+										label={__("Apply", "ultimate-blocks")}
+										type={"submit"}
+									/>
+								</form>
+							</div>
+							<CheckboxControl
+								label={__("Open Link in New Tab", "ultimate-blocks")}
+								checked={openInNewTab}
+								onChange={() => setAttributes({ openInNewTab: !openInNewTab })}
+							/>
+							<CheckboxControl
+								label={__("Add Nofollow to Link", "ultimate-blocks")}
+								checked={addNofollow}
+								onChange={() => setAttributes({ addNofollow: !addNofollow })}
+							/>
+						</div>
+					</Popover>
+				)}
 			</div>
-			<div className="ub_button_url_input">
-				{isSelected && (
+			{isSelected && props.getBlockName(props.parentID) !== "ub/buttons" && (
+				<div className="ub_button_url_input">
 					<form
-						onSubmit={event => event.preventDefault()}
+						onSubmit={(event) => event.preventDefault()}
 						className={`editor-format-toolbar__link-modal-line ub_button_input_box flex-container`}
 					>
 						<div className="ub-icon-holder">
@@ -381,7 +436,7 @@ export const editorDisplay = props => {
 							autoFocus={false}
 							className="button-url"
 							value={url}
-							onChange={value => setAttributes({ url: value })}
+							onChange={(value) => setAttributes({ url: value })}
 						/>
 						<IconButton
 							icon={"editor-break"}
@@ -389,8 +444,8 @@ export const editorDisplay = props => {
 							type={"submit"}
 						/>
 					</form>
-				)}
-			</div>
+				</div>
+			)}
 		</Fragment>
 	);
 };

@@ -6,7 +6,7 @@
  */
 
 //Import Icon
-import icon from "./icons/icons";
+import icon, { parentIcon } from "./icons/icons";
 
 import {
 	version_1_1_2,
@@ -33,6 +33,7 @@ import {
 
 const { withDispatch, withSelect } = wp.data;
 
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { withState, compose } = wp.compose;
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -287,14 +288,20 @@ registerBlockType("ub/button", {
 			isMouseHovered: false,
 			availableIcons: [],
 			iconSearchTerm: "",
+			enableLinkInput: false, //to be used only when inside a buttons block
 		}),
 		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+			const {
+				getBlock,
+				getBlockName,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+			} = select("core/block-editor") || select("core/editor");
 
 			return {
+				getBlockName,
 				block: getBlock(ownProps.clientId),
-				getBlock,
+				parentID: getBlockRootClientId(ownProps.clientId),
 				getClientIdsWithDescendants,
 			};
 		}),
@@ -326,6 +333,10 @@ registerBlockType("ub/button", {
 			setAttributes({ blockID: block.clientId });
 		}
 
+		if (!isSelected && props.enableLinkInput) {
+			setState({ enableLinkInput: false });
+		}
+
 		return [
 			isSelected && blockControls(props),
 
@@ -335,4 +346,28 @@ registerBlockType("ub/button", {
 		];
 	}),
 	save: () => null,
+});
+
+registerBlockType("ub/buttons", {
+	title: __("Buttons (Improved)", "ultimate-blocks"),
+	icon: parentIcon,
+	category: "ultimateblocks",
+	//attributes,
+	keywords: [
+		__("Button", "ultimate-blocks"),
+		__("Buttons", "ultimate-blocks"),
+		__("Ultimate Blocks", "ultimate-blocks"),
+	],
+	edit(props) {
+		return (
+			<div className="ub-buttons">
+				<InnerBlocks
+					template={[["ub/button"]]} //initial content
+					templateLock={false}
+					allowedBlocks={["ub/button"]}
+				/>
+			</div>
+		);
+	},
+	save: () => <InnerBlocks.Content />,
 });
