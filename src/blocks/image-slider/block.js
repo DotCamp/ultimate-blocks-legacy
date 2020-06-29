@@ -231,6 +231,7 @@ registerBlockType("ub/image-slider", {
 			),
 
 			<div
+				id={`ub_image_slider_${blockID}`}
 				className="ub_image_slider"
 				style={{
 					minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
@@ -319,7 +320,7 @@ registerBlockType("ub/image-slider", {
 							<RichText
 								tagName="figcaption"
 								formattingControls={[]}
-								className="ub_image_silder_image_caption"
+								className="ub_image_slider_image_caption"
 								value={descriptions[activeSlide].text}
 								placeholder={__("Caption goes here")}
 								onChange={(text) => {
@@ -371,6 +372,13 @@ registerBlockType("ub/image-slider", {
 									type={"submit"}
 								/>
 							</form>
+						)}
+						{isSelected && activeSlide === captionArray.length && (
+							<style>
+								{`#ub_image_slider_${blockID} .flickity-page-dots{
+								bottom: -10px;
+							}`}
+							</style>
 						)}
 					</React.Fragment>
 				)}
