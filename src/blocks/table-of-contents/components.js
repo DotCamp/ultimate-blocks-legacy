@@ -563,7 +563,7 @@ export const inspectorControls = (props) => {
 				</PanelRow>
 				<PanelRow>
 					<label htmlFor="ub_toc_toggle_diacritics">
-						{__("Remove diacritics")}
+						{__("Remove diacritics from generated anchor links")}
 					</label>
 					<ToggleControl
 						id="ub_toc_toggle_diacritics"
