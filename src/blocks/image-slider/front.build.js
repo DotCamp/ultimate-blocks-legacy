@@ -1,15 +1,5 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", function () {
-  setTimeout(function () {
-    if (Flickity) {
-      Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (instance) {
-        if (instance.querySelector("[data-flickity]")) {
-          Flickity.data(instance.querySelector("[data-flickity]")).resize();
-        }
-      });
-    } else {
-      window.dispatchEvent(new Event("resize"));
-    }
-  }, 5000);
+Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (instance) {
+  var swiper = new Swiper("#".concat(instance.id), JSON.parse(instance.dataset.swiperData));
 });

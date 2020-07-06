@@ -1,15 +1,8 @@
-document.addEventListener("DOMContentLoaded", function () {
-	setTimeout(() => {
-		if (Flickity) {
-			Array.prototype.slice
-				.call(document.getElementsByClassName("ub_image_slider"))
-				.forEach((instance) => {
-					if (instance.querySelector("[data-flickity]")) {
-						Flickity.data(instance.querySelector("[data-flickity]")).resize();
-					}
-				});
-		} else {
-			window.dispatchEvent(new Event("resize"));
-		}
-	}, 5000);
-});
+Array.prototype.slice
+	.call(document.getElementsByClassName("ub_image_slider"))
+	.forEach((instance) => {
+		const swiper = new Swiper(
+			`#${instance.id}`,
+			JSON.parse(instance.dataset.swiperData)
+		);
+	});

@@ -693,6 +693,14 @@ $defaultValues = array(
             'showPageDots' => array(
                 'type' => 'boolean',
                 'default' => true
+            ),
+            'usePagination' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'paginationType' => array(
+                'type' => 'string',
+                'default' => 'bullets'
             )
         )
     ),

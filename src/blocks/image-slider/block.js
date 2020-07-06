@@ -24,6 +24,7 @@ const {
 	FormFileUpload,
 	RangeControl,
 	PanelBody,
+	SelectControl,
 } = wp.components;
 
 const { withState, compose } = wp.compose;
@@ -72,8 +73,17 @@ const attributes = {
 		default: 250,
 	},
 	showPageDots: {
+		//phase out this property
 		type: "boolean",
 		default: true,
+	},
+	usePagination: {
+		type: "boolean",
+		default: true,
+	},
+	paginationType: {
+		type: "string",
+		default: "", //available types: bullets, progressbar and fraction
 	},
 };
 
@@ -109,6 +119,8 @@ registerBlockType("ub/image-slider", {
 				autoplayDuration,
 				sliderHeight,
 				showPageDots,
+				usePagination,
+				paginationType,
 				blockID,
 			},
 			setAttributes,
@@ -141,6 +153,13 @@ registerBlockType("ub/image-slider", {
 			)
 		) {
 			setAttributes({ blockID: block.clientId });
+		} else if (!showPageDots && usePagination) {
+			setAttributes({ usePagination: false });
+		}
+
+		if (paginationType === "") {
+			setAttributes({ paginationType: "bullets" });
+			setState({ componentKey: componentKey + 1 });
 		}
 
 		return [
@@ -201,13 +220,27 @@ registerBlockType("ub/image-slider", {
 							}}
 						/>
 						<ToggleControl
-							label={__("Show page dots")}
-							checked={showPageDots}
-							onChange={() => {
-								setAttributes({ showPageDots: !showPageDots });
+							label={__("Use pagination")}
+							checked={usePagination}
+							onChange={(_) => {
+								setAttributes({ usePagination: !usePagination });
 								setState({ componentKey: componentKey + 1 });
 							}}
 						/>
+						{usePagination && (
+							<SelectControl
+								label={__("Pagination type")}
+								value={paginationType}
+								options={["bullets", "fraction", "progressbar"].map((o) => ({
+									label: __(o),
+									value: o,
+								}))}
+								onChange={(paginationType) => {
+									setAttributes({ paginationType });
+									setState({ componentKey: componentKey + 1 });
+								}}
+							/>
+						)}
 						<ToggleControl
 							label={__("Enable autoplay")}
 							checked={autoplays}
@@ -273,33 +306,33 @@ registerBlockType("ub/image-slider", {
 							key={componentKey}
 							setActiveSlide={(val) => {
 								if (val !== activeSlide)
-									//needed to prevent instance of React error #185
+									//needed to prevent infinite loop
 									setState({ activeSlide: val });
 							}}
-							options={{
-								//exclude autoplay, it doesn't work properly
-								imagesLoaded: true,
-								wrapAround: wrapsAround,
-								draggable: isDraggable,
-								pageDots: showPageDots,
-								initialIndex: activeSlide,
-							}}
+							initialSlide={activeSlide}
+							draggable={isDraggable}
+							wrapAround={wrapsAround}
+							pageDots={showPageDots}
+							paginationType={usePagination ? paginationType : "none"}
+							autoplay={autoplays ? autoplayDuration : 0}
 							slides={[
-								...[
-									imageArray.map((c, i) => (
-										<figure>
-											<img
-												key={i}
-												src={c.url}
-												style={{
-													height: `${sliderHeight}px`,
-												}}
-											/>
-										</figure>
-									)),
-								],
+								...imageArray.map((c, i) => (
+									<figure>
+										<img
+											key={i}
+											src={c.url}
+											style={{
+												height: `${sliderHeight}px`,
+											}}
+										/>
+										{/* CAPTION INPUT DOESN'T WORK IF PLACED HERE */}
+									</figure>
+								)),
 								isSelected && (
-									<div className="ub_image_slider_extra">
+									<div
+										className="ub_image_slider_extra"
+										style={{ height: `${sliderHeight + 30}px` }}
+									>
 										<FormFileUpload
 											multiple
 											isLarge

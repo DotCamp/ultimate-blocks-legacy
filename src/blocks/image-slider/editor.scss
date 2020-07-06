@@ -39,3 +39,18 @@ div[data-block] > .ub_image_slider {
 .ub_image_slider_extra {
 	height: 100%;
 }
+
+.ub_image_slider {
+	.flickity-viewport .components-form-file-upload {
+		height: 100%;
+	}
+	.editor-rich-text {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+.ub_image_slider_add_images {
+	top: 50%;
+	transform: translateY(-50%);
+	margin: auto;
+}

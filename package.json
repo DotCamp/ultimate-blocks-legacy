@@ -16,15 +16,15 @@
 		"@fortawesome/free-solid-svg-icons": "^5.13.0",
 		"@fortawesome/react-fontawesome": "^0.1.9",
 		"ajv": "^6.12.2",
-		"flickity": "^2.2.1",
 		"lodash": "^4.17.14",
 		"moment": "^2.24.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"react-flickity-component": "^3.5.0",
+		"react-id-swiper": "^4.0.0",
 		"react-sortable-hoc": "^0.6.8",
 		"react-structured-data": "0.0.11",
-		"react-textarea-autosize": "^7.1.0"
+		"react-textarea-autosize": "^7.1.0",
+		"swiper": "^6.0.0-alpha.18"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^6.2.0",

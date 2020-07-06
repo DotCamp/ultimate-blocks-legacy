@@ -15,21 +15,25 @@ function ub_render_image_slider_block($attributes){
     $gallery = '';
 
     foreach($imageArray as $key => $image){
-        $gallery .= '<figure>
+        $gallery .= '<figure class="swiper-slide">
         <img src="'.$image['url'].'"'.($blockID==''?' style="height: '.$sliderHeight.'px;"':'').'>'.
             '<figcaption class="ub_image_slider_image_caption">' .($captionArray[$key]['link'] == '' ? '' : '<a href="'.esc_url($captionArray[$key]['link']).'">')
             .$captionArray[$key]['text']
             .($captionArray[$key]['link'] == '' ? '' : '</a>').' </figcaption></figure>';
     }
 
-    return '<div class="ub_image_slider'.(isset($className) ? ' ' . esc_attr($className) : '').
-            '" '.($blockID==''?'style="min-height: '.(25+ (count($imageArray) > 0) ? $sliderHeight : 200 ).'px;"'
-                :'id="ub_image_slider_'.$blockID.'"').'>
-                <!--'.$images.'-->'.
-        ($gallery == '' ? '' : '<div data-flickity='.json_encode(array('draggable'=>$isDraggable, 'pageDots'=> $showPageDots,
-            'wrapAround'=> $wrapsAround, 'autoPlay'=> ($autoplays ? $autoplayDuration * 1000 : $autoplays),
-            'adaptiveHeight'=>true )).'>'.$gallery
-            .'</div>').'</div>';
+    return '<div class="ub_image_slider swiper-container'.(isset($className) ? ' ' . esc_attr($className) : '').
+        '" '.($blockID==''?'style="min-height: '.(25+ (count($imageArray) > 0) ? $sliderHeight : 200 ).'px;"'
+        :'id="ub_image_slider_'.$blockID.'"').
+        ' data-swiper-data=\'{"loop":'.json_encode($wrapsAround).
+            ',"pagination":{"el": '.($usePagination?'".swiper-pagination"':'null').' , "type": "'.$paginationType.'"}
+            ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}'
+            .($autoplays ? ',"autoplay":{"delay": '.($autoplayDuration*1000).'}':'')
+            .(!$isDraggable ? ',"simulateTouch":false':'').'}\'>'.
+        '<div class="swiper-wrapper">'.$gallery
+        .'</div><div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div> <div class="swiper-button-next"></div>
+        </div>';
 }
 
 function ub_register_image_slider_block(){
@@ -43,15 +47,15 @@ function ub_register_image_slider_block(){
 
 function ub_image_slider_add_frontend_assets() {
     wp_register_script(
-        'ultimate_blocks-flickity',
-        plugins_url( '/flickity.pkgd.js', __FILE__ ),
+        'ultimate_blocks-swiper',
+        plugins_url( '/swiper-bundle.js', __FILE__ ),
         array(),
         Ultimate_Blocks_Constants::plugin_version());
     if ( has_block( 'ub/image-slider' ) ) {
         wp_enqueue_script(
             'ultimate_blocks-image-slider-init-script',
             plugins_url( '/front.build.js', __FILE__ ),
-            array('ultimate_blocks-flickity'),
+            array('ultimate_blocks-swiper'),
             Ultimate_Blocks_Constants::plugin_version(),
             true
         );
