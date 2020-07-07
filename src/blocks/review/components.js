@@ -81,7 +81,7 @@ export class Stars extends Component {
 	}
 	mouseHover(i) {
 		this.setState({
-			displayValue: i + 1,
+			displayValue: i + (this.props.value - i === 1 ? 0.5 : 1),
 			displayColor: this.props.selectedStarColor,
 		});
 	}
