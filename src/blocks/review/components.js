@@ -139,9 +139,9 @@ export class Stars extends Component {
 						height="20"
 						width="20"
 						viewBox="0 0 150 150"
-						onMouseOver={(_) => onHover || this.mouseHover(i)}
-						onMouseOut={(_) => this.mouseLeave()}
-						onClick={(_) => onClick || this.mouseClick(i)}
+						onMouseOver={() => onHover || this.mouseHover(i)}
+						onMouseOut={() => this.mouseLeave()}
+						onClick={() => onClick || this.mouseClick(i)}
 					>
 						<defs>
 							<mask id={`ub_review_star_filter-${id}-${i}`}>
@@ -228,6 +228,7 @@ export class ReviewBody extends Component {
 			selectedStarColor,
 			starOutlineColor,
 			setEditable,
+			setActiveStarIndex,
 			alignments,
 			enableCTA,
 			imageSize,
@@ -252,7 +253,7 @@ export class ReviewBody extends Component {
 					value={itemName}
 					style={{ textAlign: titleAlign }}
 					onChange={(text) => setItemName(text)}
-					unstableOnFocus={(_) => setEditable("reviewTitle")}
+					unstableOnFocus={() => setEditable("reviewTitle")}
 				/>
 				<RichText
 					tagName="p"
@@ -260,7 +261,7 @@ export class ReviewBody extends Component {
 					value={authorName}
 					style={{ textAlign: authorAlign }}
 					onChange={(text) => setAuthorName(text)}
-					unstableOnFocus={(_) => setEditable("reviewAuthor")}
+					unstableOnFocus={() => setEditable("reviewAuthor")}
 				/>
 				{(imageEnabled || descriptionEnabled) && (
 					<div className="ub_review_description_container">
@@ -272,7 +273,7 @@ export class ReviewBody extends Component {
 								value={description}
 								onChange={(text) => setDescription(text)}
 								style={{ textAlign: descriptionAlign }}
-								unstableOnFocus={(_) => setEditable("reviewItemDescription")}
+								unstableOnFocus={() => setEditable("reviewItemDescription")}
 							/>
 						)}
 						{imageEnabled &&
@@ -290,7 +291,7 @@ export class ReviewBody extends Component {
 									{isSelected && (
 										<Button
 											className="ub-remove-image"
-											onClick={(_) =>
+											onClick={() =>
 												setImage({
 													id: 0,
 													url: "",
@@ -335,7 +336,10 @@ export class ReviewBody extends Component {
 									...items.slice(i + 1),
 								])
 							}
-							unstableOnFocus={(_) => setEditable("")}
+							unstableOnFocus={() => {
+								setEditable("");
+								setActiveStarIndex(i);
+							}}
 						/>
 						<div
 							key={i}
@@ -347,7 +351,7 @@ export class ReviewBody extends Component {
 							{items.length > 1 && (
 								<div
 									className="dashicons dashicons-trash"
-									onClick={(_) => {
+									onClick={() => {
 										setEditable("");
 										let newItems = items
 											.slice(0, i)
@@ -374,6 +378,7 @@ export class ReviewBody extends Component {
 										...items.slice(i + 1),
 									];
 									setItems(newArray);
+									setActiveStarIndex(i);
 									this.setState({
 										average:
 											newArray
@@ -391,7 +396,7 @@ export class ReviewBody extends Component {
 				))}
 				<div
 					title={__("Insert new review entry")}
-					onClick={(_) => {
+					onClick={() => {
 						setItems([...items, { label: "", value: 0 }]);
 						this.setState({
 							average: average / (items.length + 1),
@@ -406,14 +411,14 @@ export class ReviewBody extends Component {
 						tagName="p"
 						onChange={(text) => setSummaryTitle(text)}
 						value={summaryTitle}
-						unstableOnFocus={(_) => setEditable("")}
+						unstableOnFocus={() => setEditable("")}
 					/>
 					<div className="ub_review_overall_value">
 						<RichText
 							placeholder={__("Summary of the review goes here")}
 							onChange={(text) => setSummaryDescription(text)}
 							value={summaryDescription}
-							unstableOnFocus={(_) => setEditable("")}
+							unstableOnFocus={() => setEditable("")}
 						/>
 						<div className="ub_review_average">
 							<span className="ub_review_rating">
@@ -422,8 +427,8 @@ export class ReviewBody extends Component {
 							<Stars
 								id={`${ID}-average`}
 								className="ub_review_average_stars"
-								onHover={(_) => null}
-								onClick={(_) => null}
+								onHover={() => null}
+								onClick={() => null}
 								value={average}
 								limit={starCount}
 								inactiveStarColor={inactiveStarColor}
@@ -450,7 +455,7 @@ export class ReviewBody extends Component {
 										placeholder={__("Call to action")}
 										value={callToActionText}
 										onChange={(text) => setCallToActionText(text)}
-										unstableOnFocus={(_) => setEditable("")}
+										unstableOnFocus={() => setEditable("")}
 									/>
 								</div>
 							)}

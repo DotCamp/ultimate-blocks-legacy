@@ -211,14 +211,21 @@ registerBlockType("ub/review", {
 	keywords: [__("Review"), __("Ultimate Blocks")],
 	attributes,
 	edit: compose([
-		withState({ editable: "" }),
+		withState({ editable: "", editedStar: 0 }),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
 			),
 		})),
 	])(function (props) {
-		const { setAttributes, isSelected, editable, setState, block } = props;
+		const {
+			setAttributes,
+			isSelected,
+			editable,
+			editedStar,
+			setState,
+			block,
+		} = props;
 		const {
 			blockID,
 			authorName,
@@ -310,36 +317,60 @@ registerBlockType("ub/review", {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelColorSettings
-						title={__("Star Colors")}
-						initialOpen={true}
-						colorSettings={[
-							{
-								value: activeStarColor,
-								onChange: (colorValue) =>
-									setAttributes({
-										activeStarColor: colorValue,
-									}),
-								label: __("Active Star Color"),
-							},
-							{
-								value: inactiveStarColor,
-								onChange: (colorValue) =>
-									setAttributes({
-										inactiveStarColor: colorValue,
-									}),
-								label: __("Inactive Star Color"),
-							},
-							{
-								value: starOutlineColor,
-								onChange: (colorValue) =>
-									setAttributes({
-										starOutlineColor: colorValue,
-									}),
-								label: __("Star Outline Color"),
-							},
-						]}
-					/>
+					<PanelBody title={__("Star settings")}>
+						<RangeControl
+							label={__(
+								`Star rating for ${
+									parts[editedStar].label === ""
+										? "current feature"
+										: parts[editedStar].label
+								}`
+							)}
+							value={parts[editedStar].value}
+							onChange={(newValue) => {
+								setAttributes({
+									parts: [
+										...parts.slice(0, editedStar),
+										Object.assign({}, parts[editedStar], { value: newValue }),
+										...parts.slice(editedStar + 1),
+									],
+								});
+							}}
+							min={1}
+							max={5}
+							step={0.5}
+						/>
+						<PanelColorSettings
+							title={__("Star Colors")}
+							initialOpen={true}
+							colorSettings={[
+								{
+									value: activeStarColor,
+									onChange: (colorValue) =>
+										setAttributes({
+											activeStarColor: colorValue,
+										}),
+									label: __("Active Star Color"),
+								},
+								{
+									value: inactiveStarColor,
+									onChange: (colorValue) =>
+										setAttributes({
+											inactiveStarColor: colorValue,
+										}),
+									label: __("Inactive Star Color"),
+								},
+								{
+									value: starOutlineColor,
+									onChange: (colorValue) =>
+										setAttributes({
+											starOutlineColor: colorValue,
+										}),
+									label: __("Star Outline Color"),
+								},
+							]}
+						/>
+					</PanelBody>
 					<PanelColorSettings
 						title={__("Button Colors")}
 						initialOpen={false}
@@ -449,7 +480,7 @@ registerBlockType("ub/review", {
 								</PanelRow>
 								<PanelRow>
 									<RangeControl
-										label="Image size"
+										label={__("Image size")}
 										value={imageSize}
 										onChange={(imageSize) => setAttributes({ imageSize })}
 										min={1}
@@ -664,6 +695,7 @@ registerBlockType("ub/review", {
 				}
 				hasFocus={isSelected}
 				setEditable={(newValue) => setState({ editable: newValue })}
+				setActiveStarIndex={(editedStar) => setState({ editedStar })}
 				alignments={{ titleAlign, authorAlign, descriptionAlign }}
 				enableCTA={enableCTA}
 				ctaNoFollow={ctaNoFollow}
