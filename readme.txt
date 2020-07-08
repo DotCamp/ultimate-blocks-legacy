@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 2.3.6
+Stable tag: 2.3.7
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,27 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.3.7 =
+
+NEW: Table of Contents - Add option to remove diacritics from generated anchor texts.
+NEW: Table of Contents - Allow replacing heading text with custom text.
+NEW: Table of Contents - Allow toggling visibility of individual headings.
+NEW: Review - Enhance input of review star values.
+NEW: Styled List - Allow transforming default list into Styled List.
+NEW: Styled List - Allow adjusting space between items.
+FIX: Styled List - Fix issue with Twenty Twenty theme.
+FIX: Content Toggle - Adjust panel padding in editor.
+FIX: HowTo Schema - Adjust bottom margin of images.
+FIX: Image Slider - Bug that prevented input of links.
+FIX: Image Slider - Adjust bottom margin.
+FIX: Image Slider - Issue with image caption editing.
+FIX: Styled Box - Adjust bottom margin to Bordered Box.
+FIX: Styled Box - Adjust layout of style selection screen.
+FIX: Tabbed Content - Style issue.
+FIX: Tabbed Content - Anchor links to deeply-nested tabbed content blocks.
+FIX: Table of Contents - Adjust space between title and toggle button.
+REMOVE: Styled Box - Bottom margin from last paragraph within Bordered Box.
 
 = 2.3.6 =
 
