@@ -175,6 +175,9 @@ class TableOfContents extends Component {
 				? this.state.headers.map((header) => header.clientId)
 				: [];
 
+			const hasHeadings =
+				Array.isArray(this.state.headers) && this.state.headers.length > 0;
+
 			const newHeaders = headers.map((header, i) => ({
 				clientId: header.clientId,
 				content: header.content,
@@ -182,16 +185,22 @@ class TableOfContents extends Component {
 				anchor: header.anchor,
 				index: i,
 				disabled:
-					currentIDs.indexOf(header.clientId) > -1 &&
-					"disabled" in this.state.headers[currentIDs.indexOf(header.clientId)]
-						? this.state.headers[currentIDs.indexOf(header.clientId)].disabled
+					hasHeadings && "disabled" in this.state.headers[i]
+						? checkIDs
+							? currentIDs.indexOf(header.clientId) > -1
+								? this.state.headers[currentIDs.indexOf(header.clientId)]
+										.disabled
+								: null
+							: this.state.headers[i].disabled
 						: null,
 				customContent:
-					currentIDs.indexOf(header.clientId) > -1 &&
-					"customContent" in
-						this.state.headers[currentIDs.indexOf(header.clientId)]
-						? this.state.headers[currentIDs.indexOf(header.clientId)]
-								.customContent
+					hasHeadings && "customContent" in this.state.headers[i]
+						? checkIDs
+							? currentIDs.indexOf(header.clientId) > -1
+								? this.state.headers[currentIDs.indexOf(header.clientId)]
+										.customContent
+								: null
+							: this.state.headers[i].customContent
 						: null,
 			}));
 
@@ -451,7 +460,7 @@ class TableOfContents extends Component {
 			return (
 				blockProp && (
 					<p className="ub_table-of-contents-placeholder">
-						{__("Add a header to begin generating the table of contents")}
+						{__("Add a heading to begin generating the table of contents")}
 					</p>
 				)
 			);
