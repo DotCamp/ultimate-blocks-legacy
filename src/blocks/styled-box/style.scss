@@ -1,8 +1,11 @@
-.ub-notification-text {
+.ub-notification-box {
 	margin: 10px 0px;
 	padding: 15px;
 	border-left-width: 4px;
 	border-left-style: solid;
+	> p:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .ub-feature-box,

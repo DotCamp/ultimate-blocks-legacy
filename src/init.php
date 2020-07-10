@@ -468,11 +468,11 @@ function ub_include_block_attribute_css() {
                 case 'ub/styled-box':
                     $prefix = '#ub-styled-box-' . $attributes['blockID'];
                     if($attributes['mode'] == 'notification'){
-                        $blockStylesheets .= $prefix . ' .ub-notification-text{'. PHP_EOL .
+                        $blockStylesheets .= $prefix . '.ub-notification-box{'. PHP_EOL .
                             'background-color: ' . $attributes['backColor'] . ';' . PHP_EOL .
                             'color: ' . $attributes['foreColor'] . ';' . PHP_EOL .
                             'border-left-color: ' . $attributes['outlineColor'] . ';' . PHP_EOL .
-                            'text-align: ' . $attributes['textAlign'][0] . ';' . PHP_EOL .
+                            ($attributes['text'][0] == '' ? '' : 'text-align: ' . $attributes['textAlign'][0] . ';' . PHP_EOL) .
                         '}' . PHP_EOL;
                     }
                     else if($attributes['mode'] == 'feature'){
@@ -505,7 +505,7 @@ function ub_include_block_attribute_css() {
                         }
                     }
                     else if($attributes['mode'] == 'bordered'){
-                        $blockStylesheets .= ' .ub-bordered-box{' . PHP_EOL .
+                        $blockStylesheets .= $prefix .  '.ub-bordered-box{' . PHP_EOL .
                             'border: ' . $attributes['outlineThickness'] . 'px ' .
                                         $attributes['outlineStyle'] . ' ' .
                                         $attributes['outlineColor'] . ';' . PHP_EOL .

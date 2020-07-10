@@ -18,7 +18,7 @@ add_action('init', 'ub_register_styled_box_bordered_box_block');
 function ub_render_styled_box_block($attributes, $content){
     extract($attributes);
     $renderedBlock = '';
-    if($mode == 'notification'){
+    if($mode == 'notification' && $text[0] != ''){
         $renderedBlock = '<div class="ub-notification-text">'.$text[0].'</div>';
     }
     else if($mode == 'number'){
@@ -42,7 +42,7 @@ function ub_render_styled_box_block($attributes, $content){
             </div>';
         }
     }
-    else if ($mode == 'bordered'){
+    else if ($mode == 'bordered' || $mode == 'notification'){
         $renderedBlock = $content;
     }
 

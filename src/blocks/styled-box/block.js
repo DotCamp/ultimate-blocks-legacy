@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 
 const {
 	RichText,
@@ -23,7 +23,7 @@ const {
 
 const { withState, compose } = wp.compose;
 
-const { withSelect } = wp.data;
+const { withSelect, withDispatch } = wp.data;
 
 import { Fragment } from "react";
 
@@ -112,6 +112,11 @@ registerBlockType("ub/styled-box", {
 				getClientIdsWithDescendants,
 			};
 		}),
+		withDispatch((dispatch) => {
+			const { replaceInnerBlocks } =
+				dispatch("core/block-editor") || dispatch("core/editor");
+			return { replaceInnerBlocks };
+		}),
 	])(function (props) {
 		const {
 			attributes: {
@@ -136,6 +141,7 @@ registerBlockType("ub/styled-box", {
 			isSelected,
 			setState,
 			editable,
+			replaceInnerBlocks,
 		} = props;
 
 		let renderedBlock;
@@ -192,24 +198,9 @@ registerBlockType("ub/styled-box", {
 
 		if (mode === "notification") {
 			renderedBlock = (
-				<RichText
-					style={{
-						backgroundColor: backColor,
-						color: foreColor,
-						borderLeftColor: outlineColor,
-						textAlign: textAlign[0],
-					}}
-					className="ub-notification-text"
-					tag="div"
-					placeholder={__("Add Your Content Here")}
-					formattingControls={["bold", "italic", "link", "strikethrough"]}
-					onChange={(newText) =>
-						setAttributes({
-							text: [newText, ...text.slice(1)],
-						})
-					}
-					unstableOnFocus={() => setState({ editable: "text0" })}
-					value={text[0]}
+				<InnerBlocks
+					templateLock={"all"}
+					template={[["ub/styled-box-notification-content"]]}
 				/>
 			);
 
@@ -553,6 +544,30 @@ registerBlockType("ub/styled-box", {
 			);
 		}
 
+		let extraStyles = {};
+
+		if (mode === "bordered") {
+			extraStyles = {
+				border: `${outlineThickness}px ${outlineStyle} ${outlineColor}`,
+			};
+		}
+		if (mode === "notification") {
+			extraStyles = {
+				backgroundColor: backColor,
+				color: foreColor,
+				borderLeftColor: outlineColor,
+			};
+			if (text[0] !== "" && block.innerBlocks.length === 1) {
+				replaceInnerBlocks(block.innerBlocks[0].clientId, [
+					createBlock("core/paragraph", {
+						content: text[0],
+						align: textAlign[0],
+					}),
+				]);
+				setAttributes({ text: [""], textAlign: ["left"] });
+			}
+		}
+
 		return [
 			isSelected && (
 				<BlockControls>
@@ -608,14 +623,6 @@ registerBlockType("ub/styled-box", {
 							onChange={(selection) => {
 								let newAttributes = { mode: selection };
 								if (selection === "notification") {
-									Object.assign(newAttributes, {
-										number: [number[0]],
-										title: [title[0]],
-										titleAlign: [titleAlign[0]],
-										text: [text[0]],
-										textAlign: [textAlign[0]],
-										image: [image[0]],
-									});
 									if (
 										!(
 											(foreColor === "#31708f" &&
@@ -645,22 +652,16 @@ registerBlockType("ub/styled-box", {
 					{inspectorExtras}
 				</InspectorControls>
 			),
-			<div
-				className={`ub-styled-box ub-${mode}-box`}
-				style={{
-					border:
-						mode === "bordered"
-							? `${outlineThickness}px ${outlineStyle} ${outlineColor}`
-							: null,
-				}}
-			>
+			<div className={`ub-styled-box ub-${mode}-box`} style={extraStyles}>
 				{renderedBlock}
 			</div>,
 		];
 	}),
 
 	save: (props) =>
-		props.attributes.mode === "bordered" ? <InnerBlocks.Content /> : null,
+		["bordered", "notification"].includes(props.attributes.mode) ? (
+			<InnerBlocks.Content />
+		) : null,
 });
 
 registerBlockType("ub/styled-box-bordered-content", {
@@ -674,7 +675,24 @@ registerBlockType("ub/styled-box-bordered-content", {
 	},
 
 	edit() {
-		return <InnerBlocks templateLock={false} />; //add padding?
+		return <InnerBlocks templateLock={false} />;
+	},
+
+	save: () => <InnerBlocks.Content />,
+});
+
+registerBlockType("ub/styled-box-notification-content", {
+	title: __("Notification Box Content"),
+	parent: ["ub/styled-box"],
+	icon: icon,
+	category: "ultimateblocks",
+	supports: {
+		inserter: false,
+		reusable: false,
+	},
+
+	edit() {
+		return <InnerBlocks templateLock={false} />;
 	},
 
 	save: () => <InnerBlocks.Content />,
