@@ -27,7 +27,11 @@ function ub_render_image_slider_block($attributes){
         :'id="ub_image_slider_'.$blockID.'"').
         ' data-swiper-data=\'{"loop":'.json_encode($wrapsAround).
             ',"pagination":{"el": '.($usePagination?'".swiper-pagination"':'null').' , "type": "'.$paginationType.'"}
-            ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}'
+            ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}, "effect": "'.$transition.'"'
+            .($transition=='fade' ? ',"fadeEffect":{"crossFade": true}' :'')
+            .($transition=='coverflow' ? ',"coverflowEffect":{"slideShadows":'.json_encode($slideShadows).', "rotate": '.$rotate.', "stretch": '.$stretch.', "depth": '.$depth.', "modifier": '.$modifier.'}' : '')
+            .($transition=='cube' ? ',"cubeEffect":{"slideShadows":'.json_encode($slideShadows).', "shadow":'.json_encode($shadow).', "shadowOffset":'.$shadowOffset.', "shadowScale":'.$shadowScale.'}' :'')
+            .($transition=='flip' ? ', "flipEffect":{"slideShadows":'.json_encode($slideShadows).', "limitRotation": '.json_encode($limitRotation).'}':'')
             .($autoplays ? ',"autoplay":{"delay": '.($autoplayDuration*1000).'}':'')
             .(!$isDraggable ? ',"simulateTouch":false':'').'}\'>'.
         '<div class="swiper-wrapper">'.$gallery

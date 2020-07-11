@@ -701,6 +701,50 @@ $defaultValues = array(
             'paginationType' => array(
                 'type' => 'string',
                 'default' => 'bullets'
+            ),
+            'transition' => array(
+                'type' => 'string',
+                'default' => 'slide'
+            ),
+            //for cube, coverflow and flip
+	        'slideShadows' => array(
+                'type' =>'boolean',
+                'default' => true
+            ),
+            //exclusive for coverflow
+            'rotate' => array(
+                'type' => 'number',
+                'default' => 50 //degrees
+            ),
+            'stretch' => array(
+                'type' => 'number',
+                'default' => 0 //pixels
+            ),
+            'depth' => array(
+                'type' => 'number',
+                'default' => 100 //pixels, z-axis
+            ),
+            'modifier' => array(
+                'type' => 'number',
+                'default' => 1 //effect multiplier
+            ),
+            //exclusive for flip
+            'limitRotation' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            //exclusive for cube
+            'shadow' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'shadowOffset' => array(
+                'type' => 'number',
+                'default' => 20
+            ),
+            'shadowScale' => array(
+                'type' => 'number',
+                'default' => 0.94
             )
         )
     ),

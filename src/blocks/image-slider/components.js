@@ -14,6 +14,7 @@ export class Slider extends Component {
 		const currentSlides = this.props.slides;
 
 		const customProps = {
+			initialSlide: this.props.initialSlide,
 			loop: this.props.wrapAround,
 			simulateTouch: this.props.draggable,
 			...(this.props.paginationType !== "none" && {
@@ -25,20 +26,15 @@ export class Slider extends Component {
 					disableOnInteraction: false,
 				},
 			}),
+			effect: this.props.transition,
 		};
 
 		return (
 			<Swiper
-				//shouldSwiperUpdate={true}
-				rebuildOnUpdate={true} //probably not working for rerendering after settings change
-				observer={true}
-				//cssMode={true}
-				initialSlide={this.props.initialSlide}
 				navigation
 				{...customProps}
-				onSlideChange={(_) => {
+				onSlideChange={() => {
 					if (this.swiper) {
-						console.log(`slide ${this.swiper.realIndex} is active`);
 						this.props.setActiveSlide(this.swiper.realIndex);
 					}
 				}}
