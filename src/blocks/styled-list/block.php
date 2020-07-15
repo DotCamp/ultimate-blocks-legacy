@@ -6,10 +6,10 @@ function ub_render_styled_list_block($attributes){
     $listItems = '';
 
     if(json_encode($listItem) == '[' . join(',', array_fill(0, 3,'{"text":"","selectedIcon":"check","indent":0}')) . ']'){
-        require  dirname(dirname(__DIR__)) . '/common.php';
+        require_once dirname(dirname(__DIR__)) . '/common.php';
         $listItems = str_replace('<li>', '<li><span class="fa-li"><svg xmlns="http://www.w3.org/2000/svg" height="'.(0.4 + $iconSize * 0.1) .
-             'em", width="'.(0.4 + $iconSize * 0.1) . 'em" viewBox="0, 0, '.$fontAwesomeIcon[$selectedIcon][0].', '.$fontAwesomeIcon[$selectedIcon][1]
-            .'"><path fill="'.$iconColor.'" d="'.$fontAwesomeIcon[$selectedIcon][2].'"></svg></span>', $list);
+             'em", width="'.(0.4 + $iconSize * 0.1) . 'em" viewBox="0, 0, '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($selectedIcon)[0].', '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($selectedIcon)[1]
+            .'"><path fill="'.$iconColor.'" d="'.Ultimate_Blocks_IconSet::generate_fontawesome_icon($selectedIcon)[2].'"></svg></span>', $list);
     }
     else{
         $sortedItems = [];
@@ -42,15 +42,15 @@ function ub_render_styled_list_block($attributes){
     
         if (!function_exists('ub_makeList')) {
             function ub_makeList($num, $item, $color, $size){
-                require  dirname(dirname(__DIR__)) . '/common.php';
+                require_once dirname(dirname(__DIR__)) . '/common.php';
                 static $outputString = '';
                 if($num == 0 && $outputString != ''){
                     $outputString = '';
                 }
                 if (isset($item['indent'])){                
                     $outputString .= '<li><span class="fa-li"><svg xmlns="http://www.w3.org/2000/svg"
-                        height="'.(0.4 + $size * 0.1) . 'em", width="'.(0.4 + $size * 0.1) . 'em" viewBox="0, 0, '.$fontAwesomeIcon[$item['selectedIcon']][0].', '.$fontAwesomeIcon[$item['selectedIcon']][1]
-                        .'"><path fill="'.$color.'" d="'.$fontAwesomeIcon[$item['selectedIcon']][2].'"></svg></span>'.($item['text']==''?'<br/>':$item['text']).'</li>';
+                        height="'.(0.4 + $size * 0.1) . 'em", width="'.(0.4 + $size * 0.1) . 'em" viewBox="0, 0, '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($item['selectedIcon'])[0].', '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($item['selectedIcon'])[1]
+                        .'"><path fill="'.$color.'" d="'.Ultimate_Blocks_IconSet::generate_fontawesome_icon($item['selectedIcon'])[2].'"></svg></span>'.($item['text']==''?'<br/>':$item['text']).'</li>';
                 }
                 else{
                     $outputString = substr_replace($outputString, '<ul class="fa-ul">',
