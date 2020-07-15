@@ -153,34 +153,68 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/button':
                     $prefix = '#ub-button-' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . ' a{' . PHP_EOL;
-                    if($attributes['buttonIsTransparent']){
-                        $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
-                        'color: '.$attributes['buttonColor'].';' . PHP_EOL .
-                        'border: 3px solid '.$attributes['buttonColor'].';';
+                    if( !array_key_exists('buttons', $attributes) || count($attributes['buttons'])==0 ){
+                        $blockStylesheets .= $prefix . ' a{' . PHP_EOL;
+                        if($attributes['buttonIsTransparent']){
+                            $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
+                            'color: '.$attributes['buttonColor'].';' . PHP_EOL .
+                            'border: 3px solid '.$attributes['buttonColor'].';';
+                        }
+                        else{
+                            $blockStylesheets .= 'background-color: '.$attributes['buttonColor'].';' . PHP_EOL . 
+                            'color: '.$attributes['buttonTextColor'].';' . PHP_EOL .
+                            'border: none;';
+                        }
+                        $blockStylesheets .= 'border-radius: '.($attributes['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
+                        '}' . PHP_EOL . 
+    
+                        $prefix . ' a:hover{' . PHP_EOL;
+                        if($attributes['buttonIsTransparent']){
+                            $blockStylesheets .= 'color: '.$attributes['buttonHoverColor'].';' . PHP_EOL .
+                            'border: 3px solid '.$attributes['buttonHoverColor'].';';
+                        }
+                        else{
+                            $blockStylesheets .= 'background-color: '.$attributes['buttonHoverColor'].';' . PHP_EOL . 
+                            'color: '.$attributes['buttonTextHoverColor'].';' . PHP_EOL .
+                            'border: none;';
+                        }
+                        $blockStylesheets .= '}' . PHP_EOL . 
+                        $prefix. ' ub-button-content-holder{' . PHP_EOL .
+                            'flex-direction: '.($attributes['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
+                        '}' . PHP_EOL;
                     }
                     else{
-                        $blockStylesheets .= 'background-color: '.$attributes['buttonColor'].';' . PHP_EOL . 
-                        'color: '.$attributes['buttonTextColor'].';' . PHP_EOL .
-                        'border: none;';
+                        foreach($attributes['buttons'] as $key => $button){
+                            $blockStylesheets .= $prefix . ' .ub-button-container:nth-child('.($key+1).') a{' . PHP_EOL;
+                            if($attributes['buttons'][$key]['buttonIsTransparent']){
+                                $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
+                                'color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL .
+                                'border: 3px solid '.$attributes['buttons'][$key]['buttonColor'].';';
+                            }
+                            else{
+                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL . 
+                                'color: '.$attributes['buttons'][$key]['buttonTextColor'].';' . PHP_EOL .
+                                'border: none;';
+                            }
+                            $blockStylesheets .= 'border-radius: '.($attributes['buttons'][$key]['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
+                            '}' . PHP_EOL .
+                            $prefix . ' .ub-button-container:nth-child('.($key+1).') a:hover{' . PHP_EOL;
+                            if($attributes['buttons'][$key]['buttonIsTransparent']){
+                                $blockStylesheets .= 'color: '.$attributes['buttons'][$key]['buttonHoverColor'].';' . PHP_EOL .
+                                'border: 3px solid '.$attributes['buttons'][$key]['buttonHoverColor'].';';
+                            }
+                            else{
+                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonHoverColor'].';' . PHP_EOL . 
+                                'color: '.$attributes['buttons'][$key]['buttonTextHoverColor'].';' . PHP_EOL .
+                                'border: none;';
+                            }
+                            $blockStylesheets .= '}' . PHP_EOL . 
+                            $prefix. ' .ub-button-container:nth-child('.($key+1).') ub-button-content-holder{' . PHP_EOL .
+                                'flex-direction: '.($attributes['buttons'][$key]['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
                     }
-                    $blockStylesheets .= 'border-radius: '.($attributes['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
-                    '}' . PHP_EOL . 
 
-                    $prefix . ' a:hover{' . PHP_EOL;
-                    if($attributes['buttonIsTransparent']){
-                        $blockStylesheets .= 'color: '.$attributes['buttonHoverColor'].';' . PHP_EOL .
-                        'border: 3px solid '.$attributes['buttonHoverColor'].';';
-                    }
-                    else{
-                        $blockStylesheets .= 'background-color: '.$attributes['buttonHoverColor'].';' . PHP_EOL . 
-                        'color: '.$attributes['buttonTextHoverColor'].';' . PHP_EOL .
-                        'border: none;';
-                    }
-                    $blockStylesheets .= '}' . PHP_EOL . 
-                    $prefix. ' ub-button-content-holder{' . PHP_EOL .
-                        'flex-direction: '.($attributes['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
-                    '}' . PHP_EOL;
                     break;
                 case 'ub/call-to-action-block':
                     $prefix = '#ub_call_to_action_' . $attributes['blockID'];
