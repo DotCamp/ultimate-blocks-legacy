@@ -18,6 +18,10 @@ if (!Element.prototype.closest) {
 }
 
 function ub_hashHeaderScroll() {
+  var scrollType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "auto";
+  var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
   if (window.location.hash) {
     var targetHeading = document.getElementById(window.location.hash.slice(1));
     var probableHeaders;
@@ -35,7 +39,28 @@ function ub_hashHeaderScroll() {
       return h.offsetHeight;
     });
     var deficit = targetHeading.getBoundingClientRect().y || targetHeading.getBoundingClientRect().top;
-    window.scrollBy(0, deficit - (stickyHeaders.length ? Math.max.apply(Math, stickyHeaderHeights) : 0));
+
+    switch (scrollType) {
+      default:
+        window.scrollBy(0, deficit);
+        break;
+
+      case "off":
+        window.scrollBy(0, deficit);
+        break;
+
+      case "auto":
+        window.scrollBy(0, deficit - (stickyHeaders.length ? Math.max.apply(Math, stickyHeaderHeights) : 0));
+        break;
+
+      case "fixedamount":
+        window.scrollBy(0, deficit - offset);
+        break;
+
+      case "namedelement":
+        window.scrollBy(0, deficit - document.querySelector(target) ? document.querySelector(target).offsetHeight : 0);
+        break;
+    }
   }
 }
 
@@ -130,12 +155,24 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   if (window.location.hash) {
-    setTimeout(function (_) {
-      return ub_hashHeaderScroll();
+    var sourceToC = document.querySelector(".ub_table-of-contents");
+    var type = sourceToC.dataset.scrolltype;
+    var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
+    var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
+    setTimeout(function () {
+      return ub_hashHeaderScroll(type, target, offset);
     }, 50);
   }
 });
-window.onhashchange = ub_hashHeaderScroll;
+
+window.onhashchange = function () {
+  var sourceToC = document.querySelector(".ub_table-of-contents");
+  var type = sourceToC.dataset.scrolltype;
+  var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
+  var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
+  ub_hashHeaderScroll(type, target, offset);
+};
+
 Array.prototype.slice.call(document.querySelectorAll(".ub_table-of-contents-container li > a")).forEach(function (link) {
   link.addEventListener("click", function (e) {
     var hashlessLink = link.href.replace(link.hash, "");
@@ -143,9 +180,13 @@ Array.prototype.slice.call(document.querySelectorAll(".ub_table-of-contents-cont
     var currentPageNumber = /[?&]page=\d+/g.exec(window.location.search);
 
     if (window.location.href.includes(hashlessLink) && (currentPageNumber === null || targetPageNumber && currentPageNumber[0] === targetPageNumber[0])) {
+      var sourceToC = link.closest(".ub_table-of-contents");
+      var type = sourceToC.dataset.scrolltype;
+      var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
+      var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
       e.preventDefault();
       history.pushState(null, "", link.hash);
-      ub_hashHeaderScroll();
+      ub_hashHeaderScroll(type, target, offset);
     }
   });
 });

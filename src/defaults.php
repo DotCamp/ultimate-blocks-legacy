@@ -1410,6 +1410,26 @@ $defaultValues = array(
                 'items' => array(
                     'type' => 'number'
                 )
+            ),
+            'removeDiacritics' => array (
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'smoothScrollOption' => array(
+                'type' => 'string',
+                'default' => 'auto' //other options: namedelement, fixedamount, off
+            ),
+            'smoothScrollOffset' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'smoothScrollTarget' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'smoothScrollTargetType' => array(
+                'type' => 'string',
+                'default' => 'id' //other types: class, element
             )
         )
     ),

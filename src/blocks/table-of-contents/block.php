@@ -86,11 +86,21 @@ function ub_render_table_of_contents_block($attributes){
             $listItems = ub_makeListItem($key, $item, $listStyle, $blockID, $gaps);
         }
     }
+
+    $targetType = '';
+    if ($smoothScrollTargetType == 'id'){
+        $targetType = '#';
+    }
+    else if ($smoothScrollTargetType == 'class'){
+        $targetType = '.';
+    }
     
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .(!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ).
                 '" data-showtext="'.__('show', 'ultimate-blocks').'" data-hidetext="'.__('hide', 'ultimate-blocks')
-                .'"'.($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
+                .'" data-scrolltype="'.$smoothScrollOption.'"'.($smoothScrollOption == 'fixedamount' ? ' data-scrollamount="'.$smoothScrollOffset.'"':'')
+                .($smoothScrollOption == 'namedelement' ? ' data-scrolltarget="'.$targetType.$smoothScrollTarget.'"':'')
+                .($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.
                         $title .'</div>'. 

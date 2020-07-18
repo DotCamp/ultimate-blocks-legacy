@@ -81,6 +81,22 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	smoothScrollOption: {
+		type: "string",
+		default: "auto", //other options: namedelement, fixedamount, off
+	},
+	smoothScrollOffset: {
+		type: "number",
+		default: 0,
+	},
+	smoothScrollTarget: {
+		type: "string",
+		default: "",
+	},
+	smoothScrollTargetType: {
+		type: "string",
+		default: "id", //other types: class, element
+	},
 };
 
 registerBlockType("ub/table-of-contents", {

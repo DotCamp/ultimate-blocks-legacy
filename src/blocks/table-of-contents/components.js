@@ -20,6 +20,9 @@ const {
 	PanelBody,
 	Toolbar,
 	IconButton,
+	SelectControl,
+	RangeControl,
+	TextControl,
 } = wp.components;
 const { InspectorControls, BlockControls, RichText, AlignmentToolbar } =
 	wp.blockEditor || wp.editor;
@@ -396,7 +399,7 @@ class TableOfContents extends Component {
 							<div className="ub_toc_button_container">
 								{!item.disabled && (
 									<button
-										onClick={(_) =>
+										onClick={() =>
 											this.setState({ currentlyEditedItem: item.clientId })
 										}
 									>
@@ -404,7 +407,7 @@ class TableOfContents extends Component {
 									</button>
 								)}
 								<button
-									onClick={(_) => {
+									onClick={() => {
 										const revisedHeaders = JSON.parse(
 											JSON.stringify(this.state.headers)
 										);
@@ -477,6 +480,10 @@ export const inspectorControls = (props) => {
 		enableSmoothScroll,
 		allowToLatin,
 		removeDiacritics,
+		smoothScrollOption,
+		smoothScrollOffset,
+		smoothScrollTarget,
+		smoothScrollTargetType,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -492,7 +499,7 @@ export const inspectorControls = (props) => {
 						<ToggleControl
 							id={`ub_toggle_h${i + 1}`}
 							checked={a}
-							onChange={(_) =>
+							onChange={() =>
 								setAttributes({
 									allowedHeaders: [
 										...allowedHeaders.slice(0, i),
@@ -504,6 +511,64 @@ export const inspectorControls = (props) => {
 						/>
 					</PanelRow>
 				))}
+			</PanelBody>
+			<PanelBody title={__("Smooth Scroll Offset Settings")} initialOpen={true}>
+				{/*<label>{__("Smooth scroll options")}</label>*/}
+				<SelectControl
+					label={__("Smooth scroll adjustment options")}
+					value={smoothScrollOption}
+					options={[
+						{
+							label: __(
+								"Adjust according to first available fixed/sticky element"
+							),
+							value: "auto",
+						},
+						{
+							label: __("Adjust with respect to a specific element"),
+							value: "namedelement",
+						},
+						{ label: __("Adjust by fixed amount"), value: "fixedamount" },
+						{ label: __("Make no adjustments"), value: "off" },
+					]}
+					onChange={(smoothScrollOption) =>
+						setAttributes({ smoothScrollOption })
+					}
+				/>
+				{smoothScrollOption === "namedelement" && (
+					<Fragment>
+						<SelectControl
+							label={__("Smooth scroll reference name type")}
+							value={smoothScrollTargetType}
+							options={["id", "class", "element"].map((a) => ({
+								label: __(a),
+								value: a,
+							}))}
+							onChange={(smoothScrollTargetType) =>
+								setAttributes({ smoothScrollTargetType })
+							}
+						/>
+						<TextControl
+							label={__("Reference element for smooth scroll")}
+							value={smoothScrollTarget}
+							onChange={(smoothScrollTarget) =>
+								setAttributes({ smoothScrollTarget })
+							}
+						/>
+					</Fragment>
+				)}
+				{smoothScrollOption === "fixedamount" && (
+					<RangeControl
+						label={__("Smooth scroll offset (pixels)")}
+						value={smoothScrollOffset}
+						onChange={(smoothScrollOffset) =>
+							setAttributes({ smoothScrollOffset })
+						}
+						min={0}
+						max={200}
+						allowReset
+					/>
+				)}
 			</PanelBody>
 			<PanelBody title={__("Additional Settings")} initialOpen={true}>
 				<PanelRow>
@@ -531,7 +596,7 @@ export const inspectorControls = (props) => {
 						<ToggleControl
 							id="ub_show_toc"
 							checked={showList}
-							onChange={(_) =>
+							onChange={() =>
 								setAttributes({
 									showList: !showList,
 								})
@@ -546,7 +611,7 @@ export const inspectorControls = (props) => {
 					<ToggleControl
 						id="ub_toc_smoothscroll"
 						checked={enableSmoothScroll}
-						onChange={(_) => {
+						onChange={() => {
 							const tocInstances = getBlocks().filter(
 								(block) => block.name === "ub/table-of-contents-block"
 							);
