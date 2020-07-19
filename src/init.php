@@ -481,10 +481,17 @@ function ub_include_block_attribute_css() {
                         'large'  => 40,
                     );
                     $icon_size  = $icon_sizes[$attributes['iconSize']];
-                    $blockStylesheets .= '#ub-social-share-' . $attributes['blockID'] . ' .social-share-icon{' . PHP_EOL .
+                    $prefix = '#ub-social-share-' . $attributes['blockID'];
+                    $blockStylesheets .= $prefix . ' .social-share-icon{' . PHP_EOL .
                         'width:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
                         'height:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
+                    if($attributes['buttonColor'] != ''){
+                        $blockStylesheets .= $prefix . ' a{' . PHP_EOL .
+                            'background-color: ' . $attributes['buttonColor'] . ';' .
+                        '}' ;
+                    }
+
                     break;
                 case 'ub/star-rating-block':
                     $prefix = '#ub-star-rating-' . $attributes['blockID'];
