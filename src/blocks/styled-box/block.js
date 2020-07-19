@@ -102,36 +102,41 @@ registerBlockType("ub/styled-box", {
 
 	edit: compose([
 		withState({ editable: "" }),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
 	])(function (props) {
 		const {
-			attributes,
+			attributes: {
+				text,
+				title,
+				number,
+				image,
+				foreColor,
+				backColor,
+				outlineColor,
+				outlineStyle,
+				outlineThickness,
+				mode,
+				titleAlign,
+				textAlign,
+				blockID,
+			},
 			block,
+			getBlock,
+			getClientIdsWithDescendants,
 			setAttributes,
 			isSelected,
 			setState,
 			editable,
 		} = props;
-
-		const {
-			text,
-			title,
-			number,
-			image,
-			foreColor,
-			backColor,
-			outlineColor,
-			outlineStyle,
-			outlineThickness,
-			mode,
-			titleAlign,
-			textAlign,
-			blockID,
-		} = attributes;
 
 		let renderedBlock;
 
@@ -155,7 +160,7 @@ registerBlockType("ub/styled-box", {
 						icon={num[0]}
 						label={__(`${num[1]} column${i > 0 ? "s" : ""}`)}
 						isActive={text.length === i}
-						onClick={(_) =>
+						onClick={() =>
 							setAttributes({
 								text: newValue(text, i + 1),
 								textAlign: newValue(textAlign, i + 1, "left"),
@@ -174,7 +179,14 @@ registerBlockType("ub/styled-box", {
 			</Toolbar>
 		);
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === props.attributes.blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -196,7 +208,7 @@ registerBlockType("ub/styled-box", {
 							text: [newText, ...text.slice(1)],
 						})
 					}
-					unstableOnFocus={(_) => setState({ editable: "text0" })}
+					unstableOnFocus={() => setState({ editable: "text0" })}
 					value={text[0]}
 				/>
 			);
@@ -205,7 +217,7 @@ registerBlockType("ub/styled-box", {
 				<Toolbar className="components-toolbar">
 					<Button
 						className="components-icon-button components-toolbar-control"
-						onClick={(_) =>
+						onClick={() =>
 							setAttributes({
 								foreColor: "#31708f",
 								backColor: "#d9edf7",
@@ -217,7 +229,7 @@ registerBlockType("ub/styled-box", {
 					</Button>
 					<Button
 						className="components-icon-button components-toolbar-control"
-						onClick={(_) =>
+						onClick={() =>
 							setAttributes({
 								foreColor: "#3c763d",
 								backColor: "#dff0d8",
@@ -229,7 +241,7 @@ registerBlockType("ub/styled-box", {
 					</Button>
 					<Button
 						className="components-icon-button components-toolbar-control"
-						onClick={(_) =>
+						onClick={() =>
 							setAttributes({
 								foreColor: "#d8000c",
 								backColor: "#ffd2d2",
@@ -251,7 +263,7 @@ registerBlockType("ub/styled-box", {
 								{isSelected && (
 									<Button
 										className="remove-image"
-										onClick={(_) =>
+										onClick={() =>
 											setAttributes({
 												image: [
 													...image.slice(0, i),
@@ -315,7 +327,7 @@ registerBlockType("ub/styled-box", {
 							}
 							placeholder={__("Title goes here")}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={(_) => setState({ editable: `title${i}` })}
+							unstableOnFocus={() => setState({ editable: `title${i}` })}
 						/>
 						<RichText
 							tagName="p"
@@ -329,7 +341,7 @@ registerBlockType("ub/styled-box", {
 							}
 							placeholder={__("Text goes here")}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={(_) => setState({ editable: `text${i}` })}
+							unstableOnFocus={() => setState({ editable: `text${i}` })}
 						/>
 					</div>
 				));
@@ -370,7 +382,7 @@ registerBlockType("ub/styled-box", {
 									})
 								}
 								keepPlaceholderOnFocus={true}
-								unstableOnFocus={(_) => setState({ editable: "" })}
+								unstableOnFocus={() => setState({ editable: "" })}
 							/>
 						</div>
 						<RichText
@@ -385,7 +397,7 @@ registerBlockType("ub/styled-box", {
 								})
 							}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={(_) => setState({ editable: `title${i}` })}
+							unstableOnFocus={() => setState({ editable: `title${i}` })}
 						/>
 						<RichText
 							tagName="p"
@@ -399,7 +411,7 @@ registerBlockType("ub/styled-box", {
 								})
 							}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={(_) => setState({ editable: `text${i}` })}
+							unstableOnFocus={() => setState({ editable: `text${i}` })}
 						/>
 					</div>
 				));
@@ -485,7 +497,7 @@ registerBlockType("ub/styled-box", {
 					<h4>{__("Select a Style")}</h4>
 					<div className="ub-styled-box-choices">
 						<div
-							onClick={(_) => {
+							onClick={() => {
 								let newAttributes = {
 									mode: "notification",
 									number: [number[0]],
@@ -521,17 +533,17 @@ registerBlockType("ub/styled-box", {
 							<p>{__("Notification Box")}</p>
 							<p>{__("Highlight Important Information.")}</p>
 						</div>
-						<div onClick={(_) => setAttributes({ mode: "feature" })}>
+						<div onClick={() => setAttributes({ mode: "feature" })}>
 							{featureBoxIcon}
 							<p>{__("Feature Box")}</p>
 							<p>{__("Add Boxes with Images.")}</p>
 						</div>
-						<div onClick={(_) => setAttributes({ mode: "number" })}>
+						<div onClick={() => setAttributes({ mode: "number" })}>
 							{numberBoxIcon}
 							<p>{__("Number Box")}</p>
 							<p>{__("Add Numbered Boxes.")}</p>
 						</div>
-						<div onClick={(_) => setAttributes({ mode: "bordered" })}>
+						<div onClick={() => setAttributes({ mode: "bordered" })}>
 							{borderedBoxIcon}
 							<p>{__("Bordered Box")}</p>
 							<p>{__("Add Box with Border.")}</p>
@@ -554,7 +566,7 @@ registerBlockType("ub/styled-box", {
 										a[0].toUpperCase() +
 										a.slice(1)
 								)}
-								onClick={(_) => {
+								onClick={() => {
 									const columnNum = parseInt(
 										editable.slice(editable.length - 1)
 									);

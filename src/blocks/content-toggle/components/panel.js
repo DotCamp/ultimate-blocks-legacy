@@ -138,7 +138,7 @@ class ContentTogglePanel extends Component {
 			right: __("Right", "ultimate-blocks"),
 		};
 
-		if (parentID === "") {
+		if (parentID === "" || parentID !== blockParentId) {
 			setAttributes({ parentID: blockParentId });
 		} else {
 			let presets = {};

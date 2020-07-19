@@ -87,39 +87,52 @@ registerBlockType("ub/styled-list", {
 			recentSelection: "",
 			edits: 0,
 		}),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
 	])(function (props) {
 		const {
 			block,
+			getBlock,
+			getClientIdsWithDescendants,
 			isSelected,
-			attributes,
 			setAttributes,
 			setState,
 			availableIcons,
 			iconSearchTerm,
 			edits,
+			attributes: {
+				list,
+				listItem,
+				alignment,
+				iconColor,
+				iconSize,
+				selectedIcon,
+				blockID,
+				itemSpacing,
+			},
 		} = props;
-		const {
-			list,
-			listItem,
-			alignment,
-			iconColor,
-			iconSize,
-			selectedIcon,
-			blockID,
-			itemSpacing,
-		} = attributes;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
 			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
 		}
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === props.attributes.blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

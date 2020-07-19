@@ -12,36 +12,36 @@ import icon from "./icon";
 const attributes = {
 	blockID: {
 		type: "string",
-		default: ""
+		default: "",
 	},
 	filterArray: {
 		type: "array",
-		default: [] // new objects should be { category: '', filters: [], canUseMultiple: false }
+		default: [], // new objects should be { category: '', filters: [], canUseMultiple: false }
 	},
 	buttonColor: {
 		type: "string",
-		default: "#eeeeee"
+		default: "#eeeeee",
 	},
 	buttonTextColor: {
 		type: "string",
-		default: "#000000"
+		default: "#000000",
 	},
 	activeButtonColor: {
 		type: "string",
-		default: "#fcb900"
+		default: "#fcb900",
 	},
 	activeButtonTextColor: {
 		type: "string",
-		default: "#ffffff"
+		default: "#ffffff",
 	},
 	initiallyShowAll: {
 		type: "boolean",
-		default: true
+		default: true,
 	},
 	matchingOption: {
 		type: "string",
-		default: "matchAll" //options: matchOne, matchAll
-	}
+		default: "matchAll", //options: matchOne, matchAll
+	},
 	/*,allowReset: {
         type: 'boolean',
         default: false
@@ -64,18 +64,18 @@ registerBlockType("ub/content-filter", {
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
-			)
+			),
 		})),
-		withDispatch(dispatch => {
+		withDispatch((dispatch) => {
 			const { updateBlockAttributes, insertBlock, replaceBlock } =
 				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,
 				insertBlock,
-				replaceBlock
+				replaceBlock,
 			};
-		})
+		}),
 	])(OldPanelContent),
 
 	save(props) {
@@ -84,11 +84,11 @@ registerBlockType("ub/content-filter", {
 			buttonColor,
 			buttonTextColor,
 			activeButtonColor,
-			activeButtonTextColor
+			activeButtonTextColor,
 			//,allowReset,resetButtonLabel
 		} = props.attributes;
 
-		const currentSelection = filterArray.map(f =>
+		const currentSelection = filterArray.map((f) =>
 			f.canUseMultiple ? Array(f.filters.length).fill(false) : -1
 		);
 		return (
@@ -116,7 +116,7 @@ registerBlockType("ub/content-filter", {
 									className="ub-content-filter-tag"
 									style={{
 										backgroundColor: buttonColor,
-										color: buttonTextColor
+										color: buttonTextColor,
 									}}
 								>
 									<RichText.Content value={filter} />
@@ -132,7 +132,7 @@ registerBlockType("ub/content-filter", {
 				<InnerBlocks.Content />
 			</div>
 		);
-	}
+	},
 });
 
 registerBlockType("ub/content-filter-block", {
@@ -143,21 +143,26 @@ registerBlockType("ub/content-filter-block", {
 	attributes,
 
 	edit: compose([
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			)
-		})),
-		withDispatch(dispatch => {
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
+		withDispatch((dispatch) => {
 			const { updateBlockAttributes, insertBlock } =
 				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,
-				insertBlock
+				insertBlock,
 			};
-		})
+		}),
 	])(PanelContent),
 
-	save: () => <InnerBlocks.Content />
+	save: () => <InnerBlocks.Content />,
 });

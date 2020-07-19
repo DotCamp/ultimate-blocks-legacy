@@ -3,7 +3,7 @@ import { getDescendantBlocks } from "../../common";
 
 const { __ } = wp.i18n;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
-const { select, subscribe } = wp.data;
+const { subscribe } = wp.data;
 
 export class ExpandRoot extends Component {
 	constructor(props) {
@@ -16,9 +16,7 @@ export class ExpandRoot extends Component {
 	componentDidMount() {
 		const unsubscribe = subscribe(() => {
 			const { selectedBlockID } = this.state;
-			const selection = (
-				select("core/block-editor") || select("core/editor")
-			).getSelectedBlockClientId();
+			const selection = this.props.getSelectedBlockClientId();
 			if (selection !== selectedBlockID) {
 				this.setState({ selectedBlockID: selection });
 			}
@@ -29,7 +27,13 @@ export class ExpandRoot extends Component {
 		this.state.unsubscribe();
 	}
 	render() {
-		const { block, updateBlockAttributes, setAttributes } = this.props;
+		const {
+			block,
+			updateBlockAttributes,
+			setAttributes,
+			getBlock,
+			getClientIdsWithDescendants,
+		} = this.props;
 
 		const { selectedBlockID } = this.state;
 
@@ -52,7 +56,14 @@ export class ExpandRoot extends Component {
 			});
 		}
 
-		if (this.props.attributes.blockID === "") {
+		if (
+			this.props.attributes.blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === this.props.attributes.blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

@@ -62,11 +62,16 @@ registerBlockType("ub/click-to-tweet", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withSelect((select, ownProps) => ({
-		block: (select("core/block-editor") || select("core/editor")).getBlock(
-			ownProps.clientId
-		),
-	}))(function (props) {
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(function (props) {
 		const {
 			ubTweet,
 			ubVia,
@@ -76,9 +81,22 @@ registerBlockType("ub/click-to-tweet", {
 			blockID,
 		} = props.attributes;
 
-		const { isSelected, setAttributes, block } = props;
+		const {
+			isSelected,
+			setAttributes,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+		} = props;
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

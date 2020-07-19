@@ -268,16 +268,32 @@ registerBlockType("ub/table-of-contents-block", {
 	category: "ultimateblocks",
 	keywords: [__("Table of Contents"), __("Ultimate Blocks")],
 	attributes,
-	edit: withSelect((select, ownProps) => ({
-		block: (select("core/block-editor") || select("core/editor")).getBlock(
-			ownProps.clientId
-		),
-	}))(function (props) {
-		const { isSelected, block, attributes } = props;
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-		const { blockID, showList } = attributes;
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(function (props) {
+		const {
+			isSelected,
+			block,
+			attributes: { blockID, showList },
+			getBlock,
+			getClientIdsWithDescendants,
+		} = props;
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			props.setAttributes({ blockID: block.clientId });
 		}
 

@@ -217,12 +217,17 @@ registerBlockType("ub/content-toggle-block", {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getSelectedBlockClientId } =
-				select("core/block-editor") || select("core/editor");
+			const {
+				getBlock,
+				getSelectedBlockClientId,
+				getClientIdsWithDescendants,
+			} = select("core/block-editor") || select("core/editor");
 
 			return {
 				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlockClientId(),
+				getBlock,
+				getClientIdsWithDescendants,
 			};
 		}),
 		withDispatch((dispatch) => {

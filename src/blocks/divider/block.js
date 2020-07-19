@@ -69,24 +69,42 @@ registerBlockType("ub/divider", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withSelect((select, ownProps) => ({
-		block: (select("core/block-editor") || select("core/editor")).getBlock(
-			ownProps.clientId
-		),
-	}))(function (props) {
-		const {
-			blockID,
-			borderSize,
-			borderStyle,
-			borderColor,
-			borderHeight,
-		} = props.attributes;
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-		const { isSelected, setAttributes, className, block } = props;
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(function (props) {
+		const {
+			attributes: {
+				blockID,
+				borderSize,
+				borderStyle,
+				borderColor,
+				borderHeight,
+			},
+			isSelected,
+			setAttributes,
+			className,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+		} = props;
 
 		// Creates a <p class='wp-block-cgb-block-divider'></p>.
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

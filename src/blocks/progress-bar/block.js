@@ -55,23 +55,41 @@ registerBlockType("ub/progress-bar", {
 		},
 	},
 
-	edit: withSelect((select, ownProps) => ({
-		block: (select("core/block-editor") || select("core/editor")).getBlock(
-			ownProps.clientId
-		),
-	}))(function (props) {
-		const { isSelected, setAttributes, block } = props;
-		const {
-			blockID,
-			percentage,
-			barType,
-			detail,
-			detailAlign,
-			barColor,
-			barThickness,
-		} = props.attributes;
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-		if (blockID === "") {
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(function (props) {
+		const {
+			attributes: {
+				blockID,
+				percentage,
+				barType,
+				detail,
+				detailAlign,
+				barColor,
+				barThickness,
+			},
+			isSelected,
+			setAttributes,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+		} = props;
+
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

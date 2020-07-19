@@ -212,65 +212,79 @@ registerBlockType("ub/review", {
 	attributes,
 	edit: compose([
 		withState({ editable: "", editedStar: 0 }),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
 	])(function (props) {
 		const {
+			attributes: {
+				blockID,
+				authorName,
+				itemName,
+				description,
+				imgID,
+				imgAlt,
+				imgURL,
+				items,
+				parts,
+				starCount,
+				summaryTitle,
+				summaryDescription,
+				callToActionText,
+				callToActionURL,
+				callToActionBackColor,
+				callToActionForeColor,
+				inactiveStarColor,
+				activeStarColor,
+				starOutlineColor,
+				titleAlign,
+				authorAlign,
+				descriptionAlign,
+				enableCTA,
+				ctaNoFollow,
+				ctaOpenInNewTab,
+				enableReviewSchema,
+				enableImage,
+				enableDescription,
+				imageSize,
+				brand,
+				sku,
+				identifier,
+				identifierType,
+				offerType,
+				offerCurrency,
+				offerStatus,
+				offerHighPrice,
+				offerLowPrice,
+				offerPrice,
+				offerCount,
+				offerExpiry,
+			},
 			setAttributes,
 			isSelected,
 			editable,
 			editedStar,
 			setState,
 			block,
+			getBlock,
+			getClientIdsWithDescendants,
 		} = props;
-		const {
-			blockID,
-			authorName,
-			itemName,
-			description,
-			imgID,
-			imgAlt,
-			imgURL,
-			items,
-			parts,
-			starCount,
-			summaryTitle,
-			summaryDescription,
-			callToActionText,
-			callToActionURL,
-			callToActionBackColor,
-			callToActionForeColor,
-			inactiveStarColor,
-			activeStarColor,
-			starOutlineColor,
-			titleAlign,
-			authorAlign,
-			descriptionAlign,
-			enableCTA,
-			ctaNoFollow,
-			ctaOpenInNewTab,
-			enableReviewSchema,
-			enableImage,
-			enableDescription,
-			imageSize,
-			brand,
-			sku,
-			identifier,
-			identifierType,
-			offerType,
-			offerCurrency,
-			offerStatus,
-			offerHighPrice,
-			offerLowPrice,
-			offerPrice,
-			offerCount,
-			offerExpiry,
-		} = props.attributes;
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({
 				blockID: block.clientId,
 			});

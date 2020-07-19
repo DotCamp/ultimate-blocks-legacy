@@ -236,15 +236,34 @@ registerBlockType("ub/testimonial", {
 	 */
 	edit: compose([
 		withState({ editable: "" }),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
-	])(function (props) {
-		const { isSelected, className, block } = props;
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
 
-		if (props.attributes.blockID === "") {
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
+	])(function (props) {
+		const {
+			attributes: { blockID },
+			isSelected,
+			className,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+		} = props;
+
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			props.setAttributes({ blockID: block.clientId });
 		}
 

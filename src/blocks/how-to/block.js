@@ -808,11 +808,16 @@ registerBlockType("ub/how-to", {
 		multiple: false,
 	},
 	edit: compose([
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
 		withState({ videoURLInput: "", notYetLoaded: true }),
 	])(function (props) {
 		const {
@@ -855,6 +860,8 @@ registerBlockType("ub/how-to", {
 			setAttributes,
 			setState,
 			block,
+			getBlock,
+			getClientIdsWithDescendants,
 		} = props;
 
 		const units = [
@@ -867,7 +874,7 @@ registerBlockType("ub/how-to", {
 			"seconds",
 		];
 
-		const resetVideoAttributes = (_) => {
+		const resetVideoAttributes = () => {
 			let newSection = JSON.parse(JSON.stringify(section));
 			newSection.forEach((s) =>
 				s.steps.map((st) =>
@@ -905,7 +912,14 @@ registerBlockType("ub/how-to", {
 				clipEnd: s.videoClipEnd,
 			}));
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

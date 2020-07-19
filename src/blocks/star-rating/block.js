@@ -156,15 +156,27 @@ registerBlockType("ub/star-rating-block", {
 
 	edit: compose([
 		withState({ highlightedStars: 0 }),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
-	])(function (props) {
-		const { isSelected, block } = props;
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
 
-		if (props.attributes.blockID === "") {
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
+	])(function (props) {
+		const { isSelected, block, getBlock, getClientIdsWithDescendants } = props;
+
+		if (
+			props.attributes.blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === props.attributes.blockID
+			)
+		) {
 			props.setAttributes({ blockID: block.clientId });
 		}
 

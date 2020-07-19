@@ -223,6 +223,8 @@ export class PanelContent extends Component {
 			removeBlock,
 			selectedBlock,
 			block,
+			getClientIdsWithDescendants,
+			getBlock,
 		} = this.props;
 
 		const panels = this.props.block.innerBlocks;
@@ -372,6 +374,15 @@ export class PanelContent extends Component {
 				Object.assign({ blockID: block.clientId }, newColorDefaults)
 			);
 		} else {
+			if (
+				getClientIdsWithDescendants().some(
+					(ID) =>
+						"blockID" in getBlock(ID).attributes &&
+						getBlock(ID).attributes.blockID === blockID
+				)
+			) {
+				setAttributes({ blockID: block.clientId });
+			}
 			let presets = {};
 			if (theme === "") {
 				presets = Object.assign(presets, { theme: oldColorDefaults.theme });

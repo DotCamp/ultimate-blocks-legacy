@@ -337,6 +337,8 @@ export class TabHolder extends Component {
 			selectBlock,
 			insertBlock,
 			block,
+			getBlock,
+			getClientIdsWithDescendants,
 		} = this.props;
 
 		const {
@@ -531,7 +533,14 @@ export class TabHolder extends Component {
 			}
 		}
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === attributes.blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

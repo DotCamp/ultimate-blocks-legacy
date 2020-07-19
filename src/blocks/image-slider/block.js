@@ -86,11 +86,16 @@ registerBlockType("ub/image-slider", {
 
 	edit: compose([
 		withState({ componentKey: 0, activeSlide: 0 }),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
 	])(function (props) {
 		const {
 			attributes: {
@@ -112,6 +117,8 @@ registerBlockType("ub/image-slider", {
 			componentKey,
 			activeSlide,
 			block,
+			getBlock,
+			getClientIdsWithDescendants,
 		} = props;
 
 		if (images && JSON.parse(images).length !== 0 && pics.length === 0) {
@@ -125,7 +132,14 @@ registerBlockType("ub/image-slider", {
 		const imageArray = pics;
 		const captionArray = descriptions;
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -173,7 +187,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Wrap around")}
 							checked={wrapsAround}
-							onChange={(_) => {
+							onChange={() => {
 								setAttributes({ wrapsAround: !wrapsAround });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -181,7 +195,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Allow dragging")}
 							checked={isDraggable}
-							onChange={(_) => {
+							onChange={() => {
 								setAttributes({ isDraggable: !isDraggable });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -189,7 +203,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Show page dots")}
 							checked={showPageDots}
-							onChange={(_) => {
+							onChange={() => {
 								setAttributes({ showPageDots: !showPageDots });
 								setState({ componentKey: componentKey + 1 });
 							}}
@@ -197,7 +211,7 @@ registerBlockType("ub/image-slider", {
 						<ToggleControl
 							label={__("Enable autoplay")}
 							checked={autoplays}
-							onChange={(_) => {
+							onChange={() => {
 								setAttributes({ autoplays: !autoplays });
 								setState({ componentKey: componentKey + 1 });
 							}}

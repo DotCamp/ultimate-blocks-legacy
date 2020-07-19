@@ -309,16 +309,35 @@ registerBlockType("ub/call-to-action-block", {
 	attributes,
 	edit: compose([
 		withState({ editable: "" }),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
-	])(function (props) {
-		const { isSelected, block } = props;
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
 
-		if (props.attributes.blockID === "") {
-			props.setAttributes({ blockID: block.clientId });
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
+	])(function (props) {
+		const {
+			attributes: { blockID },
+			isSelected,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+			setAttributes,
+		} = props;
+
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return [

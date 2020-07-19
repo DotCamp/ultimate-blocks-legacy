@@ -59,24 +59,42 @@ registerBlockType("ub/countdown", {
 		},
 	},
 
-	edit: withSelect((select, ownProps) => ({
-		block: (select("core/block-editor") || select("core/editor")).getBlock(
-			ownProps.clientId
-		),
-	}))(function (props) {
-		const { isSelected, setAttributes, block, attributes } = props;
-		const {
-			blockID,
-			style,
-			endDate,
-			expiryMessage,
-			circleColor,
-			messageAlign,
-			largestUnit,
-			smallestUnit,
-		} = attributes;
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-		if (blockID === "") {
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(function (props) {
+		const {
+			isSelected,
+			setAttributes,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+			attributes: {
+				blockID,
+				style,
+				endDate,
+				expiryMessage,
+				circleColor,
+				messageAlign,
+				largestUnit,
+				smallestUnit,
+			},
+		} = props;
+
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 

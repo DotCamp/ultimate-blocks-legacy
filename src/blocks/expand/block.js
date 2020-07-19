@@ -21,41 +21,46 @@ registerBlockType("ub/expand", {
 	attributes: {
 		blockID: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		initialShow: {
 			type: "boolean",
-			default: false
+			default: false,
 		},
 		toggleAlign: {
 			type: "string",
-			default: "left"
-		}
+			default: "left",
+		},
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getSelectedBlockClientId } =
-				select("core/block-editor") || select("core/editor");
+			const {
+				getBlock,
+				getSelectedBlockClientId,
+				getClientIdsWithDescendants,
+			} = select("core/block-editor") || select("core/editor");
 
 			const { clientId } = ownProps;
 
 			return {
 				block: getBlock(clientId),
-				getSelectedBlockClientId
+				getBlock,
+				getClientIdsWithDescendants,
+				getSelectedBlockClientId,
 			};
 		}),
-		withDispatch(dispatch => {
+		withDispatch((dispatch) => {
 			const { updateBlockAttributes, insertBlock } =
 				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,
-				insertBlock
+				insertBlock,
 			};
-		})
+		}),
 	])(ExpandRoot),
 
-	save: _ => <InnerBlocks.Content />
+	save: (_) => <InnerBlocks.Content />,
 });
 
 registerBlockType("ub/expand-portion", {
@@ -64,25 +69,25 @@ registerBlockType("ub/expand-portion", {
 	icon: icon,
 	category: "ultimateblocks",
 	supports: {
-		inserter: false
+		inserter: false,
 	},
 	attributes: {
 		clickText: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		displayType: {
 			type: "string",
-			default: ""
+			default: "",
 		},
 		isVisible: {
 			type: "boolean",
-			default: true
+			default: true,
 		},
 		toggleAlign: {
 			type: "string",
-			default: "left"
-		}
+			default: "left",
+		},
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
@@ -94,15 +99,15 @@ registerBlockType("ub/expand-portion", {
 			return {
 				block: getBlock(clientId),
 				getBlock,
-				getBlockRootClientId
+				getBlockRootClientId,
 			};
 		}),
-		withDispatch(dispatch => ({
+		withDispatch((dispatch) => ({
 			updateBlockAttributes: (
 				dispatch("core/block-editor") || dispatch("core/editor")
-			).updateBlockAttributes
-		}))
-	])(function(props) {
+			).updateBlockAttributes,
+		})),
+	])(function (props) {
 		const {
 			attributes,
 			setAttributes,
@@ -110,7 +115,7 @@ registerBlockType("ub/expand-portion", {
 			block,
 			updateBlockAttributes,
 			getBlock,
-			getBlockRootClientId
+			getBlockRootClientId,
 		} = props;
 		const { clickText, displayType, isVisible, toggleAlign } = attributes;
 
@@ -121,14 +126,14 @@ registerBlockType("ub/expand-portion", {
 				<BlockControls>
 					<AlignmentToolbar
 						value={toggleAlign} //attribute from parent can't be directly used
-						onChange={newAlignment => {
+						onChange={(newAlignment) => {
 							updateBlockAttributes(parentBlockID, {
-								toggleAlign: newAlignment
+								toggleAlign: newAlignment,
 							});
 
-							getBlock(parentBlockID).innerBlocks.forEach(innerBlock =>
+							getBlock(parentBlockID).innerBlocks.forEach((innerBlock) =>
 								updateBlockAttributes(innerBlock.clientId, {
-									toggleAlign: newAlignment
+									toggleAlign: newAlignment,
 								})
 							);
 						}}
@@ -145,13 +150,13 @@ registerBlockType("ub/expand-portion", {
 				<RichText
 					style={{ textAlign: toggleAlign }} //attribute from parent can't be directly used
 					value={clickText}
-					onChange={value => setAttributes({ clickText: value })}
+					onChange={(value) => setAttributes({ clickText: value })}
 					placeholder={__(
 						`Text for show ${displayType === "full" ? "less" : "more"} button`
 					)}
 				/>
-			</div>
+			</div>,
 		];
 	}),
-	save: _ => <InnerBlocks.Content />
+	save: (_) => <InnerBlocks.Content />,
 });

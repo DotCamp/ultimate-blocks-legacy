@@ -288,20 +288,42 @@ registerBlockType("ub/button", {
 			availableIcons: [],
 			iconSearchTerm: "",
 		}),
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
 	])(function (props) {
-		const { isSelected, setState, availableIcons, block } = props;
+		const {
+			attributes: { blockID },
+			isSelected,
+			setState,
+			availableIcons,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+			setAttributes,
+		} = props;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
 			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
 		}
-		if (props.attributes.blockID === "") {
-			props.setAttributes({ blockID: block.clientId });
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId });
+		} else if (
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return [

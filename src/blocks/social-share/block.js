@@ -182,11 +182,16 @@ registerBlockType("ub/social-share", {
 	},
 
 	edit: compose([
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
 		withState({ hasTransitioned: false }),
 	])(function (props) {
 		const {
@@ -197,13 +202,22 @@ registerBlockType("ub/social-share", {
 			block,
 			hasTransitioned,
 			setState,
+			getBlock,
+			getClientIdsWithDescendants,
 		} = props;
 
 		const { blockID, align, iconShape, iconOrder, buttonColor } = attributes;
 
 		const iconSize = iconSizes[attributes.iconSize];
 
-		if (blockID === "") {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
 			setAttributes({ blockID: block.clientId });
 		}
 
