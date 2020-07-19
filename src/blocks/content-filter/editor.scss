@@ -1,7 +1,11 @@
-.ub-content-filter-tag:hover .ub-content-filter-tag-top {
-	opacity: 1;
+.ub-content-filter-tag {
+	&:hover .ub-content-filter-tag-top {
+		opacity: 1;
+	}
+	> * {
+		cursor: auto;
+	}
 }
-
 .ub-content-filter-category {
 	& > button {
 		display: inline-block;
