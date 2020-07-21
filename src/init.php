@@ -497,7 +497,7 @@ function ub_include_block_attribute_css() {
                     $prefix = '#ub-star-rating-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .ub-star-outer-container{' . PHP_EOL .
                         'justify-content: '. ($attributes['starAlign'] == 'center' ? 'center' :
-                            ('flex-'.$attributes['starAlign'] == 'left' ? 'start' : 'end')).';' . PHP_EOL .
+                            ('flex-'.($attributes['starAlign'] == 'left' ? 'start' : 'end'))).';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub-review-text{' . PHP_EOL .
                         'text-align: '. $attributes['reviewTextAlign'] . ';' . PHP_EOL .
