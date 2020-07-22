@@ -567,15 +567,16 @@ function ub_include_block_attribute_css() {
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
                         'justify-content: ' . ($attributes['alignment'] == 'center' ? 'center' :
                             'flex-' . ($attributes['alignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
-                    '}' . PHP_EOL;
+                        '}' . PHP_EOL .
+                        $prefix . ' li{' . PHP_EOL .
+                            'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL;
                     if($attributes['itemSpacing'] > 0){
-                        $blockStylesheets .= $prefix . ' li{
-                            margin-bottom: '. $attributes['itemSpacing'] . 'px;
-                        }' .
-                         $prefix . ' li>ul{
-                            margin-top: '. $attributes['itemSpacing'] . 'px;
-                        }';
+                            $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
+                        }' . PHP_EOL .
+                        $prefix . ' li>ul{' . PHP_EOL .
+                            'margin-top: '. $attributes['itemSpacing'] . 'px;';
                     }
+                    $blockStylesheets .= '}';
                     break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];

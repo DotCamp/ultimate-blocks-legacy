@@ -331,6 +331,7 @@ registerBlockType("ub/styled-list", {
 				
 				#ub-styled-list-${blockID} li{
 					margin-bottom: ${itemSpacing}px;
+					text-indent: -${(4 + iconSize) / 10}em;
 				}
 				#ub-styled-list-${blockID} li>ul{
 					margin-top: ${itemSpacing}px;
