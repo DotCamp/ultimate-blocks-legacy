@@ -16,7 +16,7 @@
 		"@fortawesome/free-solid-svg-icons": "^5.13.0",
 		"@fortawesome/react-fontawesome": "^0.1.9",
 		"ajv": "^6.12.2",
-		"lodash": "^4.17.14",
+		"lodash": "^4.17.19",
 		"moment": "^2.24.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
