@@ -22,11 +22,12 @@ export default class Inspector extends Component {
 		super();
 		this.state = { categoriesList: [] };
 	}
-
 	componentDidMount() {
 		this.stillMounted = true;
 		this.fetchRequest = apiFetch({
-			path: addQueryArgs("/wp/v2/categories", { per_page: -1 }),
+			path: addQueryArgs("/wp/v2/categories", {
+				per_page: -1,
+			}),
 		})
 			.then((categoriesList) => {
 				if (this.stillMounted) {
@@ -77,6 +78,57 @@ export default class Inspector extends Component {
 			{ value: "list", label: __("List", "ultimate-blocks") },
 		];
 
+		const categorySuggestions = categoriesList.reduce(
+			(accumulator, category) => ({
+				...accumulator,
+				[category.name]: category,
+			}),
+			{}
+		);
+
+		const queryControlPanel = QueryControls.toString().includes(
+			"selectedCategories"
+		) ? (
+			<QueryControls
+				{...{ order, orderBy }}
+				numberOfItems={amountPosts}
+				categorySuggestions={categorySuggestions}
+				selectedCategories={categories}
+				onOrderChange={(value) => setAttributes({ order: value })}
+				onOrderByChange={(value) => setAttributes({ orderBy: value })}
+				onCategoryChange={(tokens) => {
+					const suggestions = categoriesList.reduce(
+						(accumulator, category) => ({
+							...accumulator,
+							[category.name]: category,
+						}),
+						{}
+					);
+					const allCategories = tokens.map((token) =>
+						typeof token === "string" ? suggestions[token] : token
+					);
+					setAttributes({ categories: allCategories });
+				}}
+				onNumberOfItemsChange={(value) => setAttributes({ amountPosts: value })}
+			/>
+		) : (
+			<QueryControls
+				{...{ order, orderBy }}
+				numberOfItems={amountPosts}
+				categoriesList={categoriesList}
+				categorySuggestions={categoriesList}
+				selectedCategories={categories}
+				onOrderChange={(value) => setAttributes({ order: value })}
+				onOrderByChange={(value) => setAttributes({ orderBy: value })}
+				onCategoryChange={(value) =>
+					setAttributes({
+						categories: "" !== value ? value : undefined,
+					})
+				}
+				onNumberOfItemsChange={(value) => setAttributes({ amountPosts: value })}
+			/>
+		);
+
 		return (
 			<InspectorControls>
 				<PanelBody title={__("Post Grid Settings", "ultimate-blocks")}>
@@ -99,22 +151,7 @@ export default class Inspector extends Component {
 							}
 						/>
 					)}
-					<QueryControls
-						{...{ order, orderBy }}
-						numberOfItems={amountPosts}
-						categoriesList={categoriesList}
-						selectedCategoryId={categories}
-						onOrderChange={(value) => setAttributes({ order: value })}
-						onOrderByChange={(value) => setAttributes({ orderBy: value })}
-						onCategoryChange={(value) =>
-							setAttributes({
-								categories: "" !== value ? value : undefined,
-							})
-						}
-						onNumberOfItemsChange={(value) =>
-							setAttributes({ amountPosts: value })
-						}
-					/>
+					{queryControlPanel}
 				</PanelBody>
 				<PanelBody title={__("Post Grid Content", "ultimate-blocks")}>
 					<ToggleControl

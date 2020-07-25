@@ -12,7 +12,7 @@ import Inspector from "./inspector";
 const { Fragment } = wp.element;
 const { withSelect } = wp.data;
 const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
-const { Placeholder, Spinner, Toolbar } = wp.components;
+const { Placeholder, Spinner, Toolbar, QueryControls } = wp.components;
 
 export default registerBlockType("ub/post-grid", {
 	title: __("Post Grid", "ultimate-blocks"),
@@ -50,7 +50,6 @@ export default registerBlockType("ub/post-grid", {
 			orderBy,
 			amountPosts,
 			offset,
-			postType,
 		} = props.attributes;
 
 		const { getEntityRecords } = select("core");
@@ -59,7 +58,11 @@ export default registerBlockType("ub/post-grid", {
 
 		const getPosts = pickBy(
 			{
-				categories,
+				categories: QueryControls.toString().includes("selectedCategories")
+					? categories && categories.length > 0
+						? categories.map((cat) => cat.id)
+						: []
+					: categories,
 				order,
 				orderby: orderBy,
 				per_page: amountPosts,
@@ -70,7 +73,7 @@ export default registerBlockType("ub/post-grid", {
 		);
 
 		return {
-			posts: getEntityRecords("postType", postType, getPosts),
+			posts: getEntityRecords("postType", "post", getPosts),
 		};
 	})((props) => {
 		const { attributes, setAttributes, posts } = props;

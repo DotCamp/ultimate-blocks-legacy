@@ -44,12 +44,8 @@ const attributes = {
 		default: 2,
 	},
 	categories: {
-		type: "string",
-		value: "",
-	},
-	postType: {
-		type: "string",
-		default: "post",
+		type: "array",
+		default: [],
 	},
 	offset: {
 		type: "number",

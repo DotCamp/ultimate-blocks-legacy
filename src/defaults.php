@@ -930,10 +930,6 @@ $defaultValues = array(
                 'type'    => 'number',
                 'default' => 55,
             ),
-            'postType' => array(
-                'type'    => 'string',
-                'default' => 'post',
-            ),
             'postTitleTag' => array(
                 'type' => 'string',
                 'default' => 'h2'
