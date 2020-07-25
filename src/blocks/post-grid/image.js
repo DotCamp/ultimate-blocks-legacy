@@ -2,7 +2,6 @@
  * Post grid featured image.
  */
 
-import get from "lodash/get";
 const { addQueryArgs } = wp.url;
 const { apiFetch } = wp;
 const { Component } = wp.element;
@@ -56,11 +55,8 @@ export default class FeaturedImage extends Component {
 	};
 
 	getImageUrl = () =>
-		get(
-			/* getMedia accepts an image id and returns an object with all the image data. */
-			this.state.image_data,
-			["media_details", "sizes", "ub-block-post-grid-landscape", "source_url"]
-		);
+		this.state.image_data?.media_details?.sizes["ub-block-post-grid-landscape"]
+			?.source_url;
 
 	render() {
 		const { imageUrl } = this.state;

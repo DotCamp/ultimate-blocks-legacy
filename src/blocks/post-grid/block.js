@@ -1,6 +1,5 @@
 // Import icon.
 import icons from "./icons";
-import pickBy from "lodash/pickBy";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
@@ -13,6 +12,10 @@ const { Fragment } = wp.element;
 const { withSelect } = wp.data;
 const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 const { Placeholder, Spinner, Toolbar, QueryControls } = wp.components;
+
+//function below taken from https://stackoverflow.com/a/37616104
+const filterObjectAttributes = (obj, condition) =>
+	Object.fromEntries(Object.entries(obj).filter(condition));
 
 export default registerBlockType("ub/post-grid", {
 	title: __("Post Grid", "ultimate-blocks"),
@@ -56,7 +59,7 @@ export default registerBlockType("ub/post-grid", {
 		const { getCurrentPostId } =
 			select("core/block--editor") || select("core/editor"); //double dashes are needed
 
-		const getPosts = pickBy(
+		const getPosts = filterObjectAttributes(
 			{
 				categories: QueryControls.toString().includes("selectedCategories")
 					? categories && categories.length > 0
