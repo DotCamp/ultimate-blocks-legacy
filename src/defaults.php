@@ -1303,6 +1303,14 @@ $defaultValues = array(
             'outlineThickness' => array(
                 'type' => 'number',
                 'default' => 1
+            ),
+            'outlineRoundingRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'outlineRadiusUnit' => array(
+                'type' => 'string',
+                'default' => 'percent'
             )
         )
     ),

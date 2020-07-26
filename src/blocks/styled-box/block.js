@@ -94,6 +94,14 @@ registerBlockType("ub/styled-box", {
 			type: "string",
 			default: "solid",
 		},
+		outlineRoundingRadius: {
+			type: "number",
+			default: 0,
+		},
+		outlineRadiusUnit: {
+			type: "string",
+			default: "percent", //other options: em, px
+		},
 		mode: {
 			type: "string",
 			default: "",
@@ -129,6 +137,8 @@ registerBlockType("ub/styled-box", {
 				outlineColor,
 				outlineStyle,
 				outlineThickness,
+				outlineRoundingRadius,
+				outlineRadiusUnit,
 				mode,
 				titleAlign,
 				textAlign,
@@ -450,13 +460,12 @@ registerBlockType("ub/styled-box", {
 			inspectorExtras = (
 				<PanelBody title={__("Border settings")} initialOpen={true}>
 					<RangeControl
-						label={__("Border size")}
+						label={__("Border size (pixels)")}
 						value={outlineThickness}
 						onChange={(outlineThickness) => setAttributes({ outlineThickness })}
 						min={1}
 						max={30}
 					/>
-					<p>{__("Border style")}</p>
 					<SelectControl
 						label={__("Border style")}
 						value={outlineStyle}
@@ -474,6 +483,26 @@ registerBlockType("ub/styled-box", {
 							value: a,
 						}))}
 						onChange={(outlineStyle) => setAttributes({ outlineStyle })}
+					/>
+					<RangeControl
+						label={__("Border radius")}
+						value={outlineRoundingRadius}
+						onChange={(outlineRoundingRadius) =>
+							setAttributes({ outlineRoundingRadius })
+						}
+						min={0}
+						max={outlineRadiusUnit === "percent" ? 50 : 200} //percent max value: 50, pixel max value: 500
+					/>
+					<SelectControl
+						label={__("Outline radius unit")}
+						value={outlineRadiusUnit}
+						options={["percent", "pixel", "em"].map((a) => ({
+							label: __(a),
+							value: a,
+						}))}
+						onChange={(outlineRadiusUnit) =>
+							setAttributes({ outlineRadiusUnit })
+						}
 					/>
 					<p>{__("Border color")}</p>
 					<ColorPalette
@@ -547,8 +576,22 @@ registerBlockType("ub/styled-box", {
 		let extraStyles = {};
 
 		if (mode === "bordered") {
+			let radiusUnit = "";
+			switch (outlineRadiusUnit) {
+				case "pixel":
+					radiusUnit = "px";
+					break;
+				case "em":
+					radiusUnit = "em";
+					break;
+				default:
+				case "percent":
+					radiusUnit = "%";
+					break;
+			}
 			extraStyles = {
 				border: `${outlineThickness}px ${outlineStyle} ${outlineColor}`,
+				borderRadius: `${outlineRoundingRadius}${radiusUnit}`,
 			};
 		}
 		if (mode === "notification") {

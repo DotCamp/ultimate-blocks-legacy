@@ -546,10 +546,21 @@ function ub_include_block_attribute_css() {
                         }
                     }
                     else if($attributes['mode'] == 'bordered'){
+                        $radiusUnit = '';
+                        if($attributes['outlineRadiusUnit'] == 'percent'){
+                            $radiusUnit = '%';
+                        }
+                        else if($attributes['outlineRadiusUnit'] == 'pixel'){
+                            $radiusUnit = 'px';
+                        }
+                        else if($attributes['outlineRadiusUnit'] == 'em'){
+                            $radiusUnit = 'em';
+                        }
                         $blockStylesheets .= $prefix .  '.ub-bordered-box{' . PHP_EOL .
                             'border: ' . $attributes['outlineThickness'] . 'px ' .
                                         $attributes['outlineStyle'] . ' ' .
                                         $attributes['outlineColor'] . ';' . PHP_EOL .
+                            'border-radius: ' . $attributes['outlineRoundingRadius'] . $radiusUnit . ';' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
                     break;
