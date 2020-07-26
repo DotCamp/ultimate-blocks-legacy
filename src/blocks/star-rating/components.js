@@ -6,14 +6,14 @@ const { InspectorControls, PanelColorSettings, RichText, BlockControls } =
 	wp.blockEditor || wp.editor;
 const { PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
-export const blockControls = props => {
+export const blockControls = (props) => {
 	const { attributes, setAttributes } = props;
 
 	const { reviewTextAlign } = attributes;
 	return (
 		<BlockControls>
 			<Toolbar>
-				{["left", "center", "right"].map(a => (
+				{["left", "center", "right"].map((a) => (
 					<IconButton
 						icon={`align-${a}`}
 						label={__(`Align stars ${a}`)}
@@ -22,7 +22,7 @@ export const blockControls = props => {
 				))}
 			</Toolbar>
 			<Toolbar>
-				{["left", "center", "right", "justify"].map(a => (
+				{["left", "center", "right", "justify"].map((a) => (
 					<IconButton
 						icon={`editor-${a === "justify" ? a : "align" + a}`}
 						label={__(
@@ -39,7 +39,7 @@ export const blockControls = props => {
 	);
 };
 
-export const inspectorControls = props => {
+export const inspectorControls = (props) => {
 	const { attributes, setAttributes } = props;
 
 	const { starCount, starSize, starColor, selectedStars } = attributes;
@@ -52,44 +52,51 @@ export const inspectorControls = props => {
 					colorSettings={[
 						{
 							value: starColor,
-							onChange: colorValue =>
+							onChange: (colorValue) =>
 								setAttributes({
-									starColor: colorValue
+									starColor: colorValue,
 								}),
-							label: __("")
-						}
+							label: __(""),
+						},
 					]}
 				/>
 				<RangeControl
 					label={__("Star size")}
 					value={starSize}
-					onChange={value => setAttributes({ starSize: value })}
+					onChange={(value) => setAttributes({ starSize: value })}
 					min={10}
 					max={30}
 					beforeIcon="editor-contract"
 					afterIcon="editor-expand"
-					allowReset
 				/>
 				<RangeControl
 					label={__("Number of stars")}
 					value={starCount}
-					onChange={value =>
+					onChange={(value) =>
 						setAttributes({
 							starCount: value,
-							selectedStars: value < selectedStars ? value : selectedStars
+							selectedStars: value < selectedStars ? value : selectedStars,
 						})
 					}
 					min={5}
 					max={10}
 					beforeIcon="star-empty"
-					allowReset
+				/>
+				<RangeControl
+					label={__("Star value")}
+					value={selectedStars}
+					onChange={(selectedStars) => setAttributes({ selectedStars })}
+					min={0.5}
+					max={starCount}
+					step={0.5}
+					beforeIcon="star-half"
 				/>
 			</PanelBody>
 		</InspectorControls>
 	);
 };
 
-export const editorDisplay = props => {
+export const editorDisplay = (props) => {
 	const { setAttributes, setState, highlightedStars } = props;
 
 	const {
@@ -99,7 +106,7 @@ export const editorDisplay = props => {
 		selectedStars,
 		reviewText,
 		reviewTextAlign,
-		starAlign
+		starAlign,
 	} = props.attributes;
 	return (
 		<Fragment>
@@ -109,7 +116,7 @@ export const editorDisplay = props => {
 					justifyContent:
 						starAlign === "center"
 							? "center"
-							: `flex-${starAlign === "left" ? "start" : "end"}`
+							: `flex-${starAlign === "left" ? "start" : "end"}`,
 				}}
 			>
 				<div
@@ -125,11 +132,11 @@ export const editorDisplay = props => {
 							onClick={() => {
 								if (selectedStars % 1 === 0) {
 									setAttributes({
-										selectedStars: i + (selectedStars - 1 === i ? 0.5 : 1)
+										selectedStars: i + (selectedStars - 1 === i ? 0.5 : 1),
 									});
 								} else {
 									setAttributes({
-										selectedStars: i + (selectedStars - 0.5 === i ? 1 : 0.5)
+										selectedStars: i + (selectedStars - 0.5 === i ? 1 : 0.5),
 									});
 								}
 							}}
@@ -169,7 +176,7 @@ export const editorDisplay = props => {
 				placeholder={__("The text of the review goes here")}
 				value={reviewText}
 				style={{ textAlign: reviewTextAlign }}
-				onChange={text => setAttributes({ reviewText: text })}
+				onChange={(text) => setAttributes({ reviewText: text })}
 				keepPlaceholderOnFocus={true}
 				formattingControls={["bold", "italic", "strikethrough", "link"]}
 			/>
