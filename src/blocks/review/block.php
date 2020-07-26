@@ -95,7 +95,7 @@ function ub_render_review_block($attributes){
             },
             "aggregateRating":  {
                 "@type": "AggregateRating",
-                "ratingValue": "'.$average.'",
+                "ratingValue": "'.number_format($average, 1, '.', '').'",
                 "reviewCount": "1"
             },
             "offers":{
@@ -112,9 +112,9 @@ function ub_render_review_block($attributes){
         },
         "reviewRating":{
             "@type":"Rating",
-            "ratingValue":'.$average.',
-            "bestRating":'.$starCount.
-        '},
+            "ratingValue":"'.number_format($average, 1, '.', '').'",
+            "bestRating":"'.$starCount.'"
+        },
         "author":{
             "@type":"Person",
             "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
