@@ -67,7 +67,7 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
               var siblingContent = siblingToggle.nextElementSibling;
               var siblingIndicator = siblingToggle.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
 
-              if (!siblingContent.contains("ub-hide")) {
+              if (!siblingContent.classList.contains("ub-hide")) {
                 if (siblingIndicator) siblingIndicator.classList.remove("open");
                 siblingContent.classList.add("ub-toggle-transition");
                 var siblingHeight = siblingContent.offsetHeight;
