@@ -627,7 +627,7 @@ function ub_include_block_attribute_css() {
                         'color: '.$attributes['textColor'].';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_testimonial_text{' . PHP_EOL .
-                        'font-size: '.$attributes['textSize'].';'. PHP_EOL .
+                        'font-size: '.$attributes['textSize'].'px;'. PHP_EOL .
                         'text-align: '.$attributes['textAlign'].';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix. ' .ub_testimonial_author{' . PHP_EOL .
