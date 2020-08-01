@@ -227,13 +227,21 @@ class TableOfContents extends Component {
 							});
 						} else {
 							this.setState({
-								headers: this.state.headers.map((h, i) =>
-									Object.assign({}, newHeaders[i], {
-										disabled: newHeaders[i].disabled || h.disabled,
+								headers: this.state.headers.map((hd, i) => {
+									const defaultReplacement =
+										this.state.headers[
+											this.state.headers
+												.map((h) => h.clientId)
+												.indexOf(newHeaders[i].clientId)
+										] || hd;
+									return Object.assign({}, newHeaders[i], {
+										disabled:
+											newHeaders[i].disabled || defaultReplacement.disabled,
 										customContent:
-											newHeaders[i].customContent || h.customContent,
-									})
-								),
+											newHeaders[i].customContent ||
+											defaultReplacement.customContent,
+									});
+								}),
 							});
 						}
 					} else {
@@ -295,11 +303,23 @@ class TableOfContents extends Component {
 						mismatchLocs.push(i);
 					}
 				}
-				this.setState({
-					headers: JSON.parse(JSON.stringify(replacementHeaders)).sort((a, b) =>
-						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
-					),
-				});
+				let replacements = JSON.parse(
+					JSON.stringify(replacementHeaders)
+				).sort((a, b) =>
+					newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
+				);
+
+				if (mismatchLocs.length < 1) {
+					replacements = replacements.map((h, i) =>
+						Object.assign({}, h, {
+							disabled: headers[newIDs.indexOf(headers[i].clientId)].disabled,
+							customContent:
+								headers[newIDs.indexOf(headers[i].clientId)].customContent,
+						})
+					);
+				}
+
+				this.setState({ headers: JSON.parse(JSON.stringify(replacements)) });
 			} else {
 				let diff = [];
 				let currentHeaders = JSON.parse(JSON.stringify(headers)) || [];
@@ -518,7 +538,6 @@ export const inspectorControls = (props) => {
 				))}
 			</PanelBody>
 			<PanelBody title={__("Smooth Scroll Offset Settings")} initialOpen={true}>
-				{/*<label>{__("Smooth scroll options")}</label>*/}
 				<SelectControl
 					label={__("Smooth scroll adjustment options")}
 					value={smoothScrollOption}
