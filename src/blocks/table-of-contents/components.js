@@ -349,6 +349,13 @@ class TableOfContents extends Component {
 					});
 
 					deletionSpots.forEach((index) => {
+						if (index !== currentHeaders[index].index) {
+							//heading split, transfer extra attributes of old heading to first of two new ones
+							Object.assign(currentHeaders[currentHeaders[index].index], {
+								disabled: currentHeaders[index].disabled,
+								customContent: currentHeaders[index].customContent,
+							});
+						}
 						currentHeaders.splice(index, 1);
 					});
 				}
