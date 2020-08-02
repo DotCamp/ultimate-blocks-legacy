@@ -38,15 +38,6 @@ Array.prototype.slice
 
 			expandingPart.classList.toggle("ub-hide");
 
-			let flickityInstances = Array.prototype.slice.call(
-				expandingPart.querySelectorAll(".ub_image_slider")
-			);
-
-			flickityInstances.forEach((instance) => {
-				let slider = Flickity.data(instance.querySelector("[data-flickity]"));
-				slider.resize();
-			});
-
 			Array.prototype.slice
 				.call(expandingPart.querySelectorAll(".wp-block-embed iframe"))
 				.forEach((embeddedContent) => {

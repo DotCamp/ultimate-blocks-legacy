@@ -112,17 +112,6 @@ Array.prototype.slice
 							}
 						}, 20);
 
-						let flickityInstances = Array.prototype.slice.call(
-							panelContent.querySelectorAll(".ub_image_slider")
-						);
-
-						flickityInstances.forEach((instance) => {
-							let slider = Flickity.data(
-								instance.querySelector("[data-flickity]")
-							);
-							slider.resize();
-						});
-
 						Array.prototype.slice
 							.call(panelContent.querySelectorAll(".wp-block-embed iframe"))
 							.forEach((embeddedContent) => {

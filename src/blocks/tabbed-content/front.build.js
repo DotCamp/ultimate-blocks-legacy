@@ -79,11 +79,6 @@ function ub_handleTabEvent(tab) {
     if (ub_getNodeindex(tab) === i) {
       tabContent.classList.add("active");
       tabContent.classList.remove("ub-hide");
-      var flickityInstances = Array.prototype.slice.call(tabContent.querySelectorAll(".ub_image_slider"));
-      flickityInstances.forEach(function (instance) {
-        var slider = Flickity.data(instance.querySelector("[data-flickity]"));
-        slider.resize();
-      });
       Array.prototype.slice.call(tabContent.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
         embeddedContent.style.removeProperty("width");
         embeddedContent.style.removeProperty("height");

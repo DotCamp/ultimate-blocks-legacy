@@ -103,14 +103,6 @@ function ub_handleTabEvent(tab) {
 			if (ub_getNodeindex(tab) === i) {
 				tabContent.classList.add("active");
 				tabContent.classList.remove("ub-hide");
-				let flickityInstances = Array.prototype.slice.call(
-					tabContent.querySelectorAll(".ub_image_slider")
-				);
-
-				flickityInstances.forEach((instance) => {
-					let slider = Flickity.data(instance.querySelector("[data-flickity]"));
-					slider.resize();
-				});
 
 				Array.prototype.slice
 					.call(tabContent.querySelectorAll(".wp-block-embed iframe"))

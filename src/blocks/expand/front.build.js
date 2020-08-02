@@ -32,11 +32,6 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-but
       return child.classList.contains("ub-expand-full");
     })[0];
     expandingPart.classList.toggle("ub-hide");
-    var flickityInstances = Array.prototype.slice.call(expandingPart.querySelectorAll(".ub_image_slider"));
-    flickityInstances.forEach(function (instance) {
-      var slider = Flickity.data(instance.querySelector("[data-flickity]"));
-      slider.resize();
-    });
     Array.prototype.slice.call(expandingPart.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
       embeddedContent.style.removeProperty("width");
       embeddedContent.style.removeProperty("height");

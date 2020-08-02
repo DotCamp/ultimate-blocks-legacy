@@ -130,11 +130,6 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
         instance.classList.add("ub-hide");
       }
 
-      var flickityInstances = Array.prototype.slice.call(instance.querySelectorAll(".ub_image_slider"));
-      flickityInstances.forEach(function (instance) {
-        var slider = Flickity.data(instance.querySelector("[data-flickity]"));
-        slider.resize();
-      });
       Array.prototype.slice.call(instance.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
         embeddedContent.style.removeProperty("width");
         embeddedContent.style.removeProperty("height");
