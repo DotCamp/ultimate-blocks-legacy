@@ -80,6 +80,18 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 		const newHeadingLevel = e.target.innerText;
 		setAttributes({ level: newHeadingLevel, fontSize: null, lineHeight: null}); 
     };
+
+	const onChangeFontFamily = newFontFamily => {
+		const head = document.head;
+		const link = document.createElement('link');
+
+		link.type = 'text/css';
+		link.rel = 'stylesheet';
+		link.href = 'https://fonts.googleapis.com/css?family=Roboto';
+		head.appendChild(link);
+		//setAttributes({ fontFamily: newFontFamily })
+		setAttributes({ fontFamily: 'Roboto' })
+	};
     
     return (
 		<>
@@ -142,7 +154,7 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 					<TextControl
 						label={__("Font Family", "ultimate-blocks")}
 						value={fontFamily}
-						onChange={newFontFamily => setAttributes({ fontFamily: newFontFamily })}
+						onChange={onChangeFontFamily}
 					/>
 					{/* Letter Spacing */}
 					<RangeControl
