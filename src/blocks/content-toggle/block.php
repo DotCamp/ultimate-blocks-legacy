@@ -238,12 +238,10 @@ function ub_content_toggle_filter( $block_content, $block ) {
 }
 
 function ub_merge_faqpages(){
-    $schema = str_replace(("},".PHP_EOL."]}</script"), "}]}</script" , '<script type="application/ld+json">{
-        "@context":"http://schema.org/",
-        "@type":"FAQPage",
-        "mainEntity": [' . ub_faq_questions() . ']}</script>');
-    
-    ?><?php echo $schema;  ?>
+    ?><?php echo '<script type="application/ld+json">{
+            "@context":"http://schema.org/",
+            "@type":"FAQPage",
+            "mainEntity": [' . ub_faq_questions() . ']}</script>';  ?>
 <?php
 }
 
