@@ -302,6 +302,7 @@ registerBlockType("ub/styled-list", {
 				<RichText
 					className="fa-ul"
 					multiline="li"
+					__unstableMultilineRootTag={"ul"}
 					tagName="ul"
 					value={list}
 					onChange={(newList) => {
