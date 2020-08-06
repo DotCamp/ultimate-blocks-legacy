@@ -39,32 +39,16 @@ Array.prototype.slice
 
 					const panelContent = instance.nextElementSibling;
 
-					let panelHeight = 0;
-
-					const initialHide =
-						panelContent.style.height === "0px" ||
-						panelContent.classList.contains("ub-hide") ||
-						getComputedStyle(panelContent).display === "none";
-					if (initialHide) {
-						//temporarily show panel contents to enable taking panel height measurements
-						panelContent.classList.remove("ub-hide");
-						panelContent.style.height = "";
-						panelContent.style.paddingTop = "";
-						panelContent.style.paddingBottom = "";
-						panelContent.style.display = "";
-					}
-					panelHeight = panelContent.offsetHeight;
-
-					panelContent.removeAttribute("style");
-
-					if (initialHide) {
-						setTimeout(() => panelContent.classList.add("ub-hide"), 10);
-					}
-
 					instance.addEventListener("click", function (e) {
 						e.stopImmediatePropagation();
+						let topPadding = 0;
+						let bottomPadding = 0;
 						if (panelContent.classList.contains("ub-hide")) {
+							const panelStyle = getComputedStyle(panelContent);
+							topPadding = parseInt(panelStyle.paddingTop.slice(0, -2));
+							bottomPadding = parseInt(panelStyle.paddingBottom.slice(0, -2));
 							panelContent.classList.remove("ub-hide");
+
 							panelContent.classList.add("ub-hiding");
 							if (
 								"showonlyone" in toggleContainer.dataset &&
@@ -84,8 +68,7 @@ Array.prototype.slice
 										if (siblingIndicator)
 											siblingIndicator.classList.remove("open");
 										siblingContent.classList.add("ub-toggle-transition");
-										const siblingHeight = siblingContent.offsetHeight;
-										siblingContent.style.height = `${siblingHeight}px`; //calculate panelheight first
+										siblingContent.style.height = `${siblingContent.scrollHeight}px`;
 										setTimeout(() => {
 											siblingContent.classList.add("ub-hiding");
 											siblingContent.style.height = "";
@@ -94,18 +77,18 @@ Array.prototype.slice
 								});
 							}
 						} else {
-							if (panelHeight !== panelContent.offsetHeight) {
-								panelHeight = panelContent.offsetHeight;
-							}
-							panelContent.style.height = `${panelHeight}px`;
+							panelContent.style.height = getComputedStyle(panelContent).height;
 						}
 						panelContent.classList.add("ub-toggle-transition");
 						if (indicator) indicator.classList.toggle("open");
 						setTimeout(() => {
 							//delay is needed for the animation to run properly
 							if (panelContent.classList.contains("ub-hiding")) {
-								panelContent.classList.remove("ub-hiding");
-								panelContent.style.height = `${panelHeight}px`;
+								panelContent.style.height = `${
+									panelContent.scrollHeight + topPadding + bottomPadding
+								}px`;
+								panelContent.style.paddingTop = `${topPadding}px`;
+								panelContent.style.paddingBottom = `${bottomPadding}px`;
 							} else {
 								panelContent.classList.add("ub-hiding");
 								panelContent.style.height = "";
@@ -122,12 +105,15 @@ Array.prototype.slice
 
 					panelContent.addEventListener("transitionend", function () {
 						panelContent.classList.remove("ub-toggle-transition");
-						if (panelContent.classList.contains("ub-hiding")) {
-							panelContent.classList.remove("ub-hiding");
+
+						if (panelContent.offsetHeight === 0) {
 							panelContent.classList.add("ub-hide");
 						} else {
 							panelContent.style.height = "";
+							panelContent.style.paddingBottom = "";
+							panelContent.style.paddingTop = "";
 						}
+						panelContent.classList.remove("ub-hiding");
 					});
 
 					panelContent.removeAttribute("style");
