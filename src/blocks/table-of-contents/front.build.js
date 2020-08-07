@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   instances.forEach(function (instance) {
-    var tocHeight;
     var block = instance.closest(".ub_table-of-contents");
     var tocContainer = block.querySelector(".ub_table-of-contents-container");
     var containerStyle = tocContainer.style;
@@ -82,20 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var mainStyle = tocMain.style;
     var showButton = block.getAttribute("data-showtext") || "show";
     var hideButton = block.getAttribute("data-hidetext") || "hide";
-    var initialHide = tocContainer.classList.contains("ub-hide") || containerStyle.height === "0px" || getComputedStyle(tocContainer).display === "none";
-
-    if (initialHide) {
-      tocContainer.classList.remove("ub-hide");
-      containerStyle.display = "";
-      containerStyle.height = "";
-      tocMain.classList.remove("ub_table-of-contents-collapsed");
-    }
-
-    if (initialHide) {
-      tocContainer.classList.add("ub-hide");
-      tocMain.classList.add("ub_table-of-contents-collapsed");
-    }
-
     tocContainer.removeAttribute("style");
     instance.addEventListener("click", function (event) {
       event.preventDefault();
@@ -104,16 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (tocMain.classList.contains("ub_table-of-contents-collapsed")) {
         //begin showing
         tocContainer.classList.remove("ub-hide");
-
-        if (tocHeight !== getComputedStyle(tocContainer).height) {
-          tocHeight = getComputedStyle(tocContainer).height;
-        }
-
+        var targetHeight = tocContainer.scrollHeight;
         tocContainer.classList.add("ub-hiding");
         mainStyle.width = "".concat(curWidth, "px");
         setTimeout(function () {
           tocMain.classList.remove("ub_table-of-contents-collapsed");
-          containerStyle.height = tocHeight;
+          containerStyle.height = "".concat(targetHeight, "px");
           containerStyle.width = "100%";
           tocContainer.classList.remove("ub-hiding");
           mainStyle.width = "100%";
@@ -124,11 +105,13 @@ document.addEventListener("DOMContentLoaded", function () {
         containerStyle.width = "".concat(tocContainer.offsetWidth, "px");
         containerStyle.height = "".concat(tocContainer.offsetHeight, "px");
         setTimeout(function () {
-          mainStyle.minWidth = "fit-content";
-          mainStyle.width = "0px";
           tocContainer.classList.add("ub-hiding");
           containerStyle.height = "0";
           containerStyle.width = "0";
+          tocMain.classList.add("ub_table-of-contents-collapsed"); //measure width of toc title + toggle button, then use it as width of tocMain
+
+          var mainComputedStyle = getComputedStyle(tocMain);
+          mainStyle.width = "".concat(parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) + parseInt(mainComputedStyle.paddingRight.slice(0, -2)) + instance.closest(".ub_table-of-contents-header").scrollWidth, "px");
         }, 50);
       }
 
@@ -144,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
           containerStyle.display = "";
         }
 
-        tocMain.classList.add("ub_table-of-contents-collapsed");
         mainStyle.minWidth = "";
       }
 
@@ -180,10 +162,10 @@ Array.prototype.slice.call(document.querySelectorAll(".ub_table-of-contents-cont
     var currentPageNumber = /[?&]page=\d+/g.exec(window.location.search);
 
     if (window.location.href.includes(hashlessLink) && (currentPageNumber === null || targetPageNumber && currentPageNumber[0] === targetPageNumber[0])) {
-      var sourceToC = link.closest(".ub_table-of-contents");
-      var type = sourceToC.dataset.scrolltype;
-      var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
-      var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
+      var tocData = link.closest(".ub_table-of-contents").dataset;
+      var type = tocData.scrolltype;
+      var offset = type === "fixedamount" ? tocData.scrollamount : 0;
+      var target = type === "namedelement" ? tocData.scrolltarget : "";
       e.preventDefault();
       history.pushState(null, "", link.hash);
       ub_hashHeaderScroll(type, target, offset);

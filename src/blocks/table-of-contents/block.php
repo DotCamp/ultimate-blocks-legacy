@@ -105,8 +105,8 @@ function ub_render_table_of_contents_block($attributes){
                     <div class="ub_table-of-contents-title">'.
                         $title .'</div>'. 
                     ($allowToCHiding ?
-                    '<div id="ub_table-of-contents-header-toggle">
-                        <div id="ub_table-of-contents-toggle">
+                    '<div class="ub_table-of-contents-header-toggle">
+                        <div class="ub_table-of-contents-toggle">
                         &nbsp;[<a class="ub_table-of-contents-toggle-link" href="#">'.
                             __($showList ? 'hide' : 'show', 'ultimate-blocks')
                             .'</a>]</div></div>' :'')
