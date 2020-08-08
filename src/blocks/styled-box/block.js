@@ -68,7 +68,7 @@ registerBlockType("ub/styled-box", {
 		},
 		number: {
 			type: "array",
-			default: [""],
+			default: ["1", "2", "3"],
 		},
 		image: {
 			type: "array",

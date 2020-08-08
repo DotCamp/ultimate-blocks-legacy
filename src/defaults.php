@@ -1268,7 +1268,7 @@ $defaultValues = array(
             ),
             'number' => array(
                 'type' => 'array',
-                'default' => array(''),
+                'default' => array('1', '2', '3'),
                 'items' => array(
                     'type' => 'string'
                 )
