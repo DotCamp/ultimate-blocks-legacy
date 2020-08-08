@@ -93,11 +93,6 @@ function ub_render_review_block($attributes){
                     "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
                 }
             },
-            "aggregateRating":  {
-                "@type": "AggregateRating",
-                "ratingValue": "'.number_format($average, 1, '.', '').'",
-                "reviewCount": "1"
-            },
             "offers":{
                 "@type": "'.$offerType.'",
                 "priceCurrency": "'.$offerCurrency.'",'.
