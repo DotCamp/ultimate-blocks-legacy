@@ -62,7 +62,7 @@ registerBlockType("ub/advanced-heading", {
 	attributes,
 	transforms,
 	edit,
-	save: ({ attributes }) => {
+	save: ({ attributes, className }) => {
 		const {
 			content,
 			level,
@@ -76,18 +76,10 @@ registerBlockType("ub/advanced-heading", {
 			fontWeight,
 			lineHeight
 		} = attributes;
-
-		/* Google Fonts 
-		const head = document.head;
-		const link = document.createElement("link");
-
-		link.type = "text/css";
-		link.rel = "stylesheet";
-		link.href = "https://fonts.googleapis.com/css?family=Roboto";
-		head.appendChild(link);*/
-
+		
 		return (
 			<RichText.Content
+				className={className}
 				tagName={level}
 				value={content}
 				style={{
