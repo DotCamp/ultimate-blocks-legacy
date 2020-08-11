@@ -88,18 +88,18 @@ function ub_render_table_of_contents_block($attributes){
     }
 
     $targetType = '';
-    if ($smoothScrollTargetType == 'id'){
+    if ($scrollTargetType == 'id'){
         $targetType = '#';
     }
-    else if ($smoothScrollTargetType == 'class'){
+    else if ($scrollTargetType == 'class'){
         $targetType = '.';
     }
     
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .(!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ).
                 '" data-showtext="'.__('show', 'ultimate-blocks').'" data-hidetext="'.__('hide', 'ultimate-blocks')
-                .'" data-scrolltype="'.$smoothScrollOption.'"'.($smoothScrollOption == 'fixedamount' ? ' data-scrollamount="'.$smoothScrollOffset.'"':'')
-                .($smoothScrollOption == 'namedelement' ? ' data-scrolltarget="'.$targetType.$smoothScrollTarget.'"':'')
+                .'" data-scrolltype="'.$scrollOption.'"'.($scrollOption == 'fixedamount' ? ' data-scrollamount="'.$scrollOffset.'"':'')
+                .($scrollOption == 'namedelement' ? ' data-scrolltarget="'.$targetType.$scrollTarget.'"':'')
                 .($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.

@@ -81,19 +81,19 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
-	smoothScrollOption: {
+	scrollOption: {
 		type: "string",
 		default: "auto", //other options: namedelement, fixedamount, off
 	},
-	smoothScrollOffset: {
+	scrollOffset: {
 		type: "number",
 		default: 0,
 	},
-	smoothScrollTarget: {
+	scrollTarget: {
 		type: "string",
 		default: "",
 	},
-	smoothScrollTargetType: {
+	scrollTargetType: {
 		type: "string",
 		default: "id", //other types: class, element
 	},
