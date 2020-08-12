@@ -5,7 +5,7 @@ import {
 	plainList,
 } from "./icon";
 import { Component, Fragment } from "react";
-import { getDescendantBlocks } from "../../common";
+import { getDescendantBlocks, mergeRichTextArray } from "../../common";
 import toLatin from "./localToLatin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -43,6 +43,10 @@ class TableOfContents extends Component {
 	}
 
 	componentDidMount() {
+		const { updateBlockAttributes } =
+			dispatch("core/block-editor") || dispatch("core/editor"); //updateBlock doesn't work properly
+		const { getBlock } = select("core/block-editor") || select("core/editor");
+
 		const getHeadingBlocks = () => {
 			let headings = [];
 
@@ -85,6 +89,23 @@ class TableOfContents extends Component {
 						}
 						headings.push(newBlock);
 						pageBreaks.push(pageNum);
+					} else if (block.name === "generateblocks/headline") {
+						if (
+							["h1", "h2", "h3", "h4", "h5", "h6"].includes(
+								newBlock.attributes.element
+							)
+						) {
+							newBlock.attributes = Object.assign(
+								{},
+								{
+									content: mergeRichTextArray(blockAttributes.content),
+									level: Number(blockAttributes.element.charAt(1)),
+									anchor: blockAttributes.elementId,
+								}
+							);
+							//also set elementID to generated anchor value
+							headings.push(newBlock);
+						}
 					} else if (block.name === "core/nextpage") {
 						pageNum++;
 					} else if (block.innerBlocks.length > 0) {
@@ -94,11 +115,12 @@ class TableOfContents extends Component {
 								"kadence/advancedheading",
 								"themeisle-blocks/advanced-heading",
 								"uagb/advanced-heading",
+								"generateblocks/headline",
 							].includes(block.name)
 						);
 
 						if (internalHeadings.length > 0) {
-							internalHeadings.forEach((h) => {
+							internalHeadings = internalHeadings.map((h) => {
 								switch (h.name) {
 									case "kadence/advancedheading":
 										if (!("content" in h.attributes)) {
@@ -116,9 +138,24 @@ class TableOfContents extends Component {
 									case "uagb/advanced-heading":
 										h.attributes.content = h.attributes.headingTitle || "";
 										break;
+									case "generateblocks/headline":
+										h.attributes = Object.assign({}, h.attributes);
+										//h = JSON.parse(JSON.stringify(h));
+										h.attributes.level = [...Array(6).keys()]
+											.map((a) => `h${a + 1}`)
+											.includes(h.attributes.element)
+											? Number(h.attributes.element.charAt(1))
+											: 0;
+										if (Array.isArray(h.attributes.content)) {
+											h.attributes.content = mergeRichTextArray(
+												h.attributes.content
+											);
+										}
+										break;
 									default:
 										break;
 								}
+								return h;
 							});
 							internalHeadings.filter((h) => h.attributes.level > 0);
 						}
@@ -141,7 +178,10 @@ class TableOfContents extends Component {
 		const setHeadings = (checkIDs = true) => {
 			const { removeDiacritics } = this.props;
 			const headers = getHeadingBlocks().map((header) =>
-				Object.assign(header.attributes, { clientId: header.clientId })
+				Object.assign(header.attributes, {
+					clientId: header.clientId,
+					blockName: header.name,
+				})
 			);
 
 			headers.forEach((heading, key) => {
@@ -171,6 +211,15 @@ class TableOfContents extends Component {
 					}
 
 					heading.anchor = encodeURIComponent(heading.anchor);
+
+					if (
+						heading.blockName === "generateblocks/headline" &&
+						heading.anchor !== getBlock(heading.clientId).attributes.elementId
+					) {
+						updateBlockAttributes(heading.clientId, {
+							elementId: heading.anchor,
+						});
+					}
 				}
 			});
 
