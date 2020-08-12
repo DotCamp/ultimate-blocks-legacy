@@ -1189,7 +1189,11 @@ $defaultValues = array(
                 'items' => array(
                     'type' => 'string'
                 )
-            )
+            ),
+            'buttonColor' => array(
+                'type' => 'string',
+                'default' => ''
+            )  
         )
     ),
     'ub/star-rating-block' => array(
