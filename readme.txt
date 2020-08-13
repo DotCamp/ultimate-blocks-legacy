@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.4
-Stable tag: 2.3.8
+Tested up to: 5.5
+Stable tag: 2.3.9
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,35 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.3.9 =
+
+NEW: Button - Enable use of multiple buttons within a single button block.
+NEW: Image Slider - Replace Flickity with Swiper.
+NEW: Image Slider - Add pagination types from Swiper: bullets (equivalent of Flickity's page dots), fraction, progress bar.
+NEW: Image Slider - Add transition modes from Swiper: slide (default), fade, cube, coverflow, flip.
+NEW: Review - Ensure that the average rating uses dots as the decimal separator in the JSONLD code regardless of the user's localization settings.
+NEW: Star Rating - Allow star rating value to be adjusted through slider input.
+NEW: Styled Box - Allow use of inner blocks in notification box mode.
+NEW: Styled Box - Provide default values to numbers in number box mode.
+NEW: Table of Contents - Allow customization of smooth scroll offset.
+NEW: Table of Contents - Add support for Headline block from GenerateBlocks.
+FIX: Content Filter - Use pointer cursor when hovering on filters in frontend.
+FIX: Content Toggle - Prevent PHP error during FAQ schema code generation.
+FIX: Content Toggle - Issues with clicking panels when "show only one panel at a time" is chosen.
+FIX: Content Toggle - Flickering during animation of content toggle panel.
+FIX: Post Grid - Issue with selecting multiple categories in newer Gutenberg versions.
+FIX: Social Share - Display of custom icon color.
+FIX: Star Rating - Star alignment.
+FIX: Styled Box - Adjust top and bottom margins for number box and feature box modes.
+FIX: Styled List - Compatibility issues with text indent functionality in new WordPress version.
+FIX: Table of Contents - Load values of custom text and toggled headings when editing a saved instance.
+FIX: Table of Contents - Animation issues.
+FIX: Testimonial - Display of testimonial body font size in frontend.
+FIX: FontAwesome icon rendering when multiple button/styled list instances are present.
+FIX: Prevent duplication of existing block IDs
+REMOVE: Review - aggregateRating from JSONLD code to give way for displaying review author when the page appears in search engines.
+REMOVE: Styled List - Left margin.
 
 = 2.3.8 =
 
