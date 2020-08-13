@@ -148,6 +148,7 @@ FIX: Content Filter - Use pointer cursor when hovering on filters in frontend.
 FIX: Content Toggle - Prevent PHP error during FAQ schema code generation.
 FIX: Content Toggle - Issues with clicking panels when "show only one panel at a time" is chosen.
 FIX: Content Toggle - Flickering during animation of content toggle panel.
+FIX: HowTo Schema - JSONLD code issue with adding list of tools
 FIX: Post Grid - Issue with selecting multiple categories in newer Gutenberg versions.
 FIX: Social Share - Display of custom icon color.
 FIX: Star Rating - Star alignment.
