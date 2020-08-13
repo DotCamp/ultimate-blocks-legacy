@@ -214,6 +214,9 @@ registerBlockType("ub/image-slider", {
 
 		if (paginationType === "") {
 			setAttributes({ paginationType: "bullets" });
+		}
+
+		if (paginationType !== "" && componentKey === 0) {
 			setState({ componentKey: componentKey + 1 });
 		}
 

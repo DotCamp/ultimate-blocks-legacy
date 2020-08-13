@@ -700,7 +700,7 @@ $defaultValues = array(
             ),
             'paginationType' => array(
                 'type' => 'string',
-                'default' => 'bullets'
+                'default' => ''
             ),
             'transition' => array(
                 'type' => 'string',
