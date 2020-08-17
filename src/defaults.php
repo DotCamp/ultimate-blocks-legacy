@@ -866,6 +866,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'categoryArray' => array(
+                'type' => 'array',
+                'default' => [],
+            ),
             'className' => array(
                 'type' => 'string',
                 'default' => ''

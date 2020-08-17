@@ -61,6 +61,7 @@ export default class Inspector extends Component {
 				postLayout,
 				columns,
 				categories,
+				categoryArray,
 				orderBy,
 				order,
 				postTitleTag,
@@ -93,7 +94,7 @@ export default class Inspector extends Component {
 				{...{ order, orderBy }}
 				numberOfItems={amountPosts}
 				categorySuggestions={categorySuggestions}
-				selectedCategories={categories}
+				selectedCategories={categoryArray}
 				onOrderChange={(value) => setAttributes({ order: value })}
 				onOrderByChange={(value) => setAttributes({ orderBy: value })}
 				onCategoryChange={(tokens) => {
@@ -107,7 +108,7 @@ export default class Inspector extends Component {
 					const allCategories = tokens.map((token) =>
 						typeof token === "string" ? suggestions[token] : token
 					);
-					setAttributes({ categories: allCategories });
+					setAttributes({ categoryArray: allCategories });
 				}}
 				onNumberOfItemsChange={(value) => setAttributes({ amountPosts: value })}
 			/>

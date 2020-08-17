@@ -44,6 +44,10 @@ const attributes = {
 		default: 2,
 	},
 	categories: {
+		type: "string",
+		default: "",
+	},
+	categoryArray: {
 		type: "array",
 		default: [],
 	},

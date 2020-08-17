@@ -12,6 +12,11 @@ const { Fragment } = wp.element;
 const { withSelect } = wp.data;
 const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 const { Placeholder, Spinner, Toolbar, QueryControls } = wp.components;
+const { addQueryArgs } = wp.url;
+const { apiFetch } = wp;
+const canSelectMultipleCategories = QueryControls.toString().includes(
+	"selectedCategories"
+);
 
 //function below taken from https://stackoverflow.com/a/37616104
 const filterObjectAttributes = (obj, condition) =>
@@ -49,6 +54,7 @@ export default registerBlockType("ub/post-grid", {
 	edit: withSelect((select, props) => {
 		const {
 			order,
+			categoryArray,
 			categories,
 			orderBy,
 			amountPosts,
@@ -61,9 +67,9 @@ export default registerBlockType("ub/post-grid", {
 
 		const getPosts = filterObjectAttributes(
 			{
-				categories: QueryControls.toString().includes("selectedCategories")
-					? categories && categories.length > 0
-						? categories.map((cat) => cat.id)
+				categories: canSelectMultipleCategories
+					? categoryArray && categoryArray.length > 0
+						? categoryArray.map((cat) => cat.id)
 						: []
 					: categories,
 				order,
@@ -80,9 +86,31 @@ export default registerBlockType("ub/post-grid", {
 		};
 	})((props) => {
 		const { attributes, setAttributes, posts } = props;
-		const { postLayout, wrapAlignment } = attributes;
+		const { postLayout, wrapAlignment, categories } = attributes;
 
 		const emptyPosts = Array.isArray(posts) && posts.length;
+
+		if (categories !== "" && canSelectMultipleCategories) {
+			apiFetch({
+				path: addQueryArgs("/wp/v2/categories", {
+					per_page: -1,
+				}),
+			})
+				.then((categoriesList) => {
+					setAttributes({
+						categoryArray: categoriesList.filter(
+							(c) => c.id === Number(categories)
+						),
+						categories: "",
+					});
+				})
+				.catch(() => {
+					setAttributes({
+						categoryArray: [],
+						categories: "",
+					});
+				});
+		}
 
 		if (!emptyPosts) {
 			return (

@@ -13,7 +13,8 @@ function ub_query_post( $attributes ){
      */
     global $post;
 
-    $categories = isset($attributes['categories']) ? $attributes['categories'] : '';
+    $categories = isset($attributes['categories']) && $attributes['categories'] != '' ? $attributes['categories'] :
+                    (isset($attributes['categoryArray']) ? join(',',array_map(function($c){return $c['id'];}, $attributes['categoryArray'])) : '');
 
     /* Setup the query */
     $post_query = new WP_Query(
