@@ -1,5 +1,6 @@
-import { createRef, useEffect } from "react";
+import "./highlight-format.js";
 import fontsList from "./fonts";
+import { createRef, useEffect } from "react";
 const { __ } = wp.i18n;
 const { InspectorControls, PanelColorSettings, RichText, AlignmentToolbar } =
 	wp.blockEditor || wp.editor;
@@ -12,8 +13,9 @@ const {
 	TextControl,
 	SelectControl
 } = wp.components;
+const { applyFormat, removeFormat } = wp.richText;
 
-const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
+const AdvancedHeadingEdit = ({ attributes, setAttributes, onChange }) => {
 	const {
 		content,
 		level,
@@ -25,7 +27,8 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 		letterSpacing,
 		fontFamily,
 		fontWeight,
-		lineHeight
+		lineHeight,
+		highlightBgColor
 	} = attributes;
 	const headingLevels = [1, 2, 3, 4, 5, 6];
 	const textTransformOptions = [
@@ -65,7 +68,6 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 		}
 
 		if (!fontFamily) {
-			console.log("inside", fontFamily);
 			let defaultFontFamily = window.getComputedStyle(elementRef.current)
 				.fontFamily;
 			setAttributes({ fontFamily: defaultFontFamily });
@@ -78,7 +80,6 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 			setAttributes({ lineHeight: defaultLineHeight });
 		}
 	}, [elementRef]);
-	console.log("out", fontFamily);
 
 	/* Methods */
 	const onChangeHeadingLevel = e => {
@@ -89,7 +90,7 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 	const onChangeFontFamily = newFontFamily => {
 		setAttributes({ fontFamily: newFontFamily });
 	};
-
+let highlightFontWeight;
 	return (
 		<>
 			<InspectorControls>
@@ -189,6 +190,27 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 						min={10}
 						max={120}
 					/>
+		{/*<SelectControl
+						label={__("Highlight Font Weight", "ultimate-blocks")}
+						options={fontWeightOptions}
+						value={highlightFontWeight}
+						onChange={newFontWeight => {
+							if (newFontWeight) {
+								highlightFontWeight = newFontWeight;
+								console.log("weight", highlightFontWeight);
+
+								onChange(
+									applyFormat(value, {
+										type: name, //"highlight-font-weight",
+										attributes: {
+											style: `font-weight:${highlightFontWeight};color:${textColor}`
+										}
+									})
+								);
+								console.log("weight", highlightFontWeight);
+							}
+						}}
+					/>*/}
 				</PanelBody>
 			</InspectorControls>
 			<RichText

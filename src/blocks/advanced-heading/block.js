@@ -47,6 +47,10 @@ const attributes = {
 	},
 	lineHeight: {
 		type: "string"
+	},
+	highlightBgColor: {
+		type: "string",
+		default: "None"
 	}
 };
 
