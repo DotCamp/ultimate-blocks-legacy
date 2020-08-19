@@ -75,7 +75,7 @@ function ub_render_how_to_block($attributes){
                 if($i > 0){
                     $toolsCode .= ',';
                 }
-                $toolsCode .= '{"@type": "HowToTool", "name": "'.$t['name']
+                $toolsCode .= '{"@type": "HowToTool", "name": "'.$t['name'].'"'
                                 .($t['imageURL'] == ''? '' : ',"image": "'.$t['imageURL'].'"').'}';
             }
             $header .= $toolsListStyle == 'ordered' ? '</ol>' : '</ul>';
