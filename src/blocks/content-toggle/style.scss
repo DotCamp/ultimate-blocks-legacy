@@ -108,6 +108,13 @@
 	box-sizing: border-box;
 	padding: 13px 4%;
 	overflow: hidden;
+	&.ub-hiding {
+		height: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 }
 
 @media (max-width: 479.98px) {
