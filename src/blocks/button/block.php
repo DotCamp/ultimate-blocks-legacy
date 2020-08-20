@@ -52,7 +52,7 @@ function ub_render_button_block($attributes){
         .'<span class="ub-button-block-btn">'.$buttonText.'</span>
     </div></a></div>' : join('',array_map('ub_buttons_parse', $buttons)));
 
-    return '<div class="ub-buttons'.(isset($buttons) && count($buttons) > 0 ? ' align-button-' . $align : '')
+    return '<div class="'. (isset($buttons) && count($buttons) > 0 ? 'ub-buttons' : 'ub-button').(isset($buttons) && count($buttons) > 0 ? ' align-button-' . $align : '')
     .(isset($className) ? ' ' . esc_attr($className) : '').'" '.(!isset($blockID) || $blockID == '' ? ' ': ' id="ub-button-'.$blockID.'"').'>'.$buttonDisplay .'</div>';
 }
 
