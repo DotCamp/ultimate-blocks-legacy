@@ -538,7 +538,11 @@ export const editorDisplay = (props) => {
 	return (
 		<div className={`ub-buttons align-button-${align}`}>
 			{buttons.map((b, i) => (
-				<div className="ub-button-container">
+				<div
+					className={`ub-button-container${
+						b.buttonWidth === "full" ? " ub-button-full-container" : ""
+					}`}
+				>
 					{buttons.length > 1 && (
 						<div className="ub-button-delete">
 							<span

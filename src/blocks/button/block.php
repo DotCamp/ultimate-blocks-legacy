@@ -12,7 +12,7 @@ function ub_buttons_parse($b){
 
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    return '<div class="ub-button-container">
+    return '<div class="ub-button-container'.($b['buttonWidth'] == 'full' ? ' ub-button-full-container' : '').'">
     <a href="'.esc_url($b['url']).'" target="'.($b['openInNewTab'] ? '_blank' : '_self').'"
     rel="noopener noreferrer'.($b['addNofollow'] ? ' nofollow' : '').'"
     class="ub-button-block-main ub-button-' . $b['size'] .
