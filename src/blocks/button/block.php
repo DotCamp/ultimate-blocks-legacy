@@ -12,15 +12,13 @@ function ub_buttons_parse($b){
 
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    $button_content_holder_style = $b['iconPosition'] === 'left'? 'row':'row-reverse';
-
     return '<div class="ub-button-container">
     <a href="'.esc_url($b['url']).'" target="'.($b['openInNewTab'] ? '_blank' : '_self').'"
     rel="noopener noreferrer'.($b['addNofollow'] ? ' nofollow' : '').'"
     class="ub-button-block-main ub-button-' . $b['size'] .
     ($b['buttonWidth'] == 'full' ? ' ub-button-full-width' :
         ($b['buttonWidth'] == 'flex' ? ' ub-button-flex-'. $b['size'] : '')) . '">
-    <div class="ub-button-content-holder" style="flex-direction:'. esc_attr($button_content_holder_style).'">'.
+    <div class="ub-button-content-holder">'.
         ($b['chosenIcon'] != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
         height="'.$iconSize[$b['size']].'", width="'.$iconSize[$b['size']].'"
         viewBox="0, 0, '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($b['chosenIcon'])[0].', '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($b['chosenIcon'])[1]
@@ -36,15 +34,13 @@ function ub_render_button_block($attributes){
 
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    $button_content_holder_style = $iconPosition === 'left'? 'row':'row-reverse';
-
     $buttonDisplay = (!isset($buttons) || count($buttons) == 0 ? '<div class="ub-button-container align-button-'.$align.(isset($className) ? ' ' . esc_attr($className) : '').'"' . (!isset($blockID) || $blockID == '' ? ' ': ' id="ub-button-'.$blockID.'"') . '>
     <a href="'.esc_url($url).'" target="'.($openInNewTab ? '_blank' : '_self').'"
     rel="noopener noreferrer'.($addNofollow ? ' nofollow' : '').'"
     class="ub-button-block-main ub-button-' . $size .
     ($buttonWidth == 'full' ? ' ub-button-full-width' :
         ($buttonWidth == 'flex' ? ' ub-button-flex-'. $size : '')) . '">
-    <div class="ub-button-content-holder" style="flex-direction:'. esc_attr($button_content_holder_style).'">'.
+    <div class="ub-button-content-holder">'.
         ($chosenIcon != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
         height="'.$iconSize[$size].'", width="'.$iconSize[$size].'"
         viewBox="0, 0, '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0].', '.Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]

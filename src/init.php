@@ -179,7 +179,7 @@ function ub_include_block_attribute_css() {
                             'border: none;';
                         }
                         $blockStylesheets .= '}' . PHP_EOL . 
-                        $prefix. ' ub-button-content-holder{' . PHP_EOL .
+                        $prefix. ' .ub-button-content-holder{' . PHP_EOL .
                             'flex-direction: '.($attributes['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
