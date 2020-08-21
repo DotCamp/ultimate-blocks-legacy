@@ -4,6 +4,9 @@
 
 .editor-styles-wrapper .ub-styled-list {
 	display: flex;
+	ul {
+		margin-left: 2.5em;
+	}
 	.fa-ul > li {
 		list-style: none;
 	}
