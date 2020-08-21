@@ -415,8 +415,6 @@ class URLInputBox extends Component {
 	//adapted from Ben Bud, https://stackoverflow.com/a/42234988
 	constructor(props) {
 		super(props);
-
-		this.setWrapperRef = this.setWrapperRef.bind(this);
 		this.handleClickOutside = this.handleClickOutside.bind(this);
 	}
 
@@ -427,10 +425,6 @@ class URLInputBox extends Component {
 
 	componentWillUnmount() {
 		document.removeEventListener("mousedown", this.handleClickOutside);
-	}
-
-	setWrapperRef(node) {
-		this.wrapperRef = node;
 	}
 
 	handleClickOutside(event) {
@@ -444,9 +438,12 @@ class URLInputBox extends Component {
 		const { buttons } = attributes;
 
 		return (
-			<div ref={this.setWrapperRef}>
+			<div>
 				<Popover className="ub_popover" position="bottom">
-					<div className="ub_button_popover">
+					<div
+						className="ub_button_popover"
+						ref={(node) => (this.wrapperRef = node)}
+					>
 						<div className="ub_button_url_input">
 							<form
 								onSubmit={(event) => event.preventDefault()}
@@ -496,11 +493,11 @@ class URLInputBox extends Component {
 							onChange={() =>
 								setAttributes({
 									buttons: [
-										...buttons.slice(0, i),
-										Object.assign({}, buttons[i], {
+										...buttons.slice(0, index),
+										Object.assign({}, buttons[index], {
 											addNofollow: !buttons[index].addNofollow,
 										}),
-										...buttons.slice(i + 1),
+										...buttons.slice(index + 1),
 									],
 								})
 							}
