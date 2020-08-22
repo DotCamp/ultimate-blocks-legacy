@@ -3,7 +3,10 @@
 	padding: 15px;
 	border-left-width: 4px;
 	border-left-style: solid;
-	> p:last-child {
+	> *:first-child {
+		margin-top: 0;
+	}
+	> *:last-child {
 		margin-bottom: 0;
 	}
 }

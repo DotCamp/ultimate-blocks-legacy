@@ -36,3 +36,16 @@
 		}
 	}
 }
+
+[data-type="ub/styled-box-notification-content"] {
+	margin-top: 0;
+	margin-bottom: 0;
+	> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block {
+		&:first-of-type {
+			margin-top: 0;
+		}
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+}
