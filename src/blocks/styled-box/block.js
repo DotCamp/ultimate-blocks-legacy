@@ -88,7 +88,7 @@ registerBlockType("ub/styled-box", {
 		},
 		outlineThickness: {
 			type: "number",
-			default: 1,
+			default: 0, //set to 3 for new inserts, but leave previously-inserted ones at 1
 		},
 		outlineStyle: {
 			type: "string",
@@ -203,7 +203,12 @@ registerBlockType("ub/styled-box", {
 					getBlock(ID).attributes.blockID === props.attributes.blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			setAttributes({
+				blockID: block.clientId,
+				outlineThickness: blockID === "" ? 3 : outlineThickness,
+			});
+		} else if (outlineThickness === 0) {
+			setAttributes({ outlineThickness: 1 });
 		}
 
 		if (mode === "notification") {
