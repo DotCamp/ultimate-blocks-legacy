@@ -212,6 +212,15 @@ registerBlockType("ub/styled-box", {
 		}
 
 		if (mode === "notification") {
+			//remove inner block from bordered box mode first
+			if (
+				block.innerBlocks.length > 0 &&
+				block.innerBlocks[0].name === "ub/styled-box-bordered-content"
+			) {
+				replaceInnerBlocks(block.innerBlocks[0].clientId, [
+					createBlock("ub/styled-box-notification-content"),
+				]);
+			}
 			renderedBlock = (
 				<InnerBlocks
 					templateLock={"all"}
@@ -455,6 +464,14 @@ registerBlockType("ub/styled-box", {
 				/>
 			);
 		} else if (mode === "bordered") {
+			if (
+				block.innerBlocks.length > 0 &&
+				block.innerBlocks[0].name === "ub/styled-box-notification-content"
+			) {
+				replaceInnerBlocks(block.innerBlocks[0].clientId, [
+					createBlock("ub/styled-box-bordered-content"),
+				]);
+			}
 			renderedBlock = (
 				<InnerBlocks
 					templateLock={"all"}
@@ -696,7 +713,6 @@ registerBlockType("ub/styled-box", {
 							}}
 						/>
 					)}
-
 					{inspectorExtras}
 				</InspectorControls>
 			),
@@ -722,9 +738,14 @@ registerBlockType("ub/styled-box-bordered-content", {
 		reusable: false,
 	},
 
-	edit() {
-		return <InnerBlocks templateLock={false} />;
-	},
+	edit: () => (
+		<InnerBlocks
+			templateLock={false}
+			template={[
+				["core/paragraph", { placeholder: "Enter content for bordered box" }],
+			]}
+		/>
+	),
 
 	save: () => <InnerBlocks.Content />,
 });
@@ -739,9 +760,17 @@ registerBlockType("ub/styled-box-notification-content", {
 		reusable: false,
 	},
 
-	edit() {
-		return <InnerBlocks templateLock={false} />;
-	},
+	edit: () => (
+		<InnerBlocks
+			templateLock={false}
+			template={[
+				[
+					"core/paragraph",
+					{ placeholder: "Enter content for notification box" },
+				],
+			]}
+		/>
+	),
 
 	save: () => <InnerBlocks.Content />,
 });
