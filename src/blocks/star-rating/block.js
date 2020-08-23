@@ -31,7 +31,7 @@ const attributes = {
 	},
 	starColor: {
 		type: "string",
-		default: "#ffff00",
+		default: "#FFB901", //previous defaut is #ffff00, new default is #ffb901, seet in uppercase to facilitate reverse compatibility
 	},
 	selectedStars: {
 		type: "number",
@@ -167,17 +167,29 @@ registerBlockType("ub/star-rating-block", {
 			};
 		}),
 	])(function (props) {
-		const { isSelected, block, getBlock, getClientIdsWithDescendants } = props;
+		const {
+			isSelected,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+			attributes: { starColor, blockID },
+			setAttributes,
+		} = props;
 
 		if (
-			props.attributes.blockID === "" ||
+			blockID === "" ||
 			getClientIdsWithDescendants().some(
 				(ID) =>
 					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === props.attributes.blockID
+					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			props.setAttributes({ blockID: block.clientId });
+			setAttributes({
+				blockID: block.clientId,
+				starColor: blockID === "" ? "#ffb901" : starColor,
+			});
+		} else if (starColor === "#FFB901") {
+			setAttributes({ starColor: "#ffff00" });
 		}
 
 		return [
