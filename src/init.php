@@ -561,6 +561,7 @@ function ub_include_block_attribute_css() {
                                         $attributes['outlineStyle'] . ' ' .
                                         $attributes['outlineColor'] . ';' . PHP_EOL .
                             'border-radius: ' . $attributes['outlineRoundingRadius'] . $radiusUnit . ';' . PHP_EOL .
+                            'background-color: ' . ($attributes['boxColor'] ?: 'inherit') . ';' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
                     break;

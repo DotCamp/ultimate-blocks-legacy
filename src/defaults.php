@@ -1300,6 +1300,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#CCCCCC'
             ),
+            'boxColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'outlineColor' => array(
                 'type' => 'string',
                 'default' => '#000000'

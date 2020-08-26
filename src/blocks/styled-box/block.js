@@ -82,6 +82,10 @@ registerBlockType("ub/styled-box", {
 			type: "string",
 			default: "#CCCCCC",
 		},
+		boxColor: {
+			type: "string",
+			default: "",
+		},
 		outlineColor: {
 			type: "string",
 			default: "#000000",
@@ -134,6 +138,7 @@ registerBlockType("ub/styled-box", {
 				image,
 				foreColor,
 				backColor,
+				boxColor,
 				outlineColor,
 				outlineStyle,
 				outlineThickness,
@@ -526,10 +531,29 @@ registerBlockType("ub/styled-box", {
 							setAttributes({ outlineRadiusUnit })
 						}
 					/>
-					<p>{__("Border color")}</p>
-					<ColorPalette
-						value={outlineColor}
-						onChange={(outlineColor) => setAttributes({ outlineColor })}
+					<PanelColorSettings
+						title={__("Color Scheme")}
+						initialOpen={true}
+						colorSettings={[
+							{
+								value: outlineColor,
+								onChange: (outlineColor) =>
+									setAttributes({
+										outlineColor,
+									}),
+								label: __("Border Color"),
+							},
+							{
+								value: boxColor,
+								onChange: (boxColor) => {
+									console.log(`new boxcolor: ${boxColor}`);
+									setAttributes({
+										boxColor,
+									});
+								},
+								label: __("Background Color"),
+							},
+						]}
 					/>
 				</PanelBody>
 			);
@@ -612,6 +636,7 @@ registerBlockType("ub/styled-box", {
 					break;
 			}
 			extraStyles = {
+				backgroundColor: boxColor || "inherit",
 				border: `${outlineThickness}px ${outlineStyle} ${outlineColor}`,
 				borderRadius: `${outlineRoundingRadius}${radiusUnit}`,
 			};
