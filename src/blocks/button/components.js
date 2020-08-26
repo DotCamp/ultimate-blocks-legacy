@@ -47,6 +47,7 @@ export const blockControls = (props) => {
 				<Toolbar>
 					<IconButton
 						icon="admin-links"
+						label={__("Add button link")}
 						onClick={() => props.setState({ enableLinkInput: true })}
 					/>
 				</Toolbar>
