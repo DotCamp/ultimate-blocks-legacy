@@ -429,7 +429,17 @@ class URLInputBox extends Component {
 	}
 
 	handleClickOutside(event) {
-		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+		const clickedElement = event.target;
+		if (
+			this.wrapperRef &&
+			!this.wrapperRef.contains(clickedElement) &&
+			!(
+				clickedElement.classList.contains(
+					"block-editor-url-input__suggestion"
+				) ||
+				clickedElement.classList.contains("block-editor-url-input__suggestions")
+			)
+		) {
 			this.props.hideLinkInput();
 		}
 	}
