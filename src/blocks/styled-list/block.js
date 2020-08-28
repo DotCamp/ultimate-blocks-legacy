@@ -290,7 +290,7 @@ registerBlockType("ub/styled-list", {
 			),
 
 			<div
-				className="ub-styled-list"
+				className="ub_styled_list"
 				id={`ub-styled-list-${blockID}`}
 				style={{
 					justifyContent:
@@ -314,11 +314,7 @@ registerBlockType("ub/styled-list", {
 				<style
 					dangerouslySetInnerHTML={{
 						__html: `#ub-styled-list-${blockID} li:before{
-                content:''; 
-                position:relative;
-                left:-0.5em;
                 top: ${iconSize >= 5 ? 3 : iconSize < 3 ? 2 : 0}px;
-                display:inline-block; 
                 height:${(4 + iconSize) / 10}em; 
                 width:${(4 + iconSize) / 10}em; 
                 background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${
@@ -327,8 +323,7 @@ registerBlockType("ub/styled-list", {
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
 						}' color='%23${iconColor.slice(1)}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
-						}'></path></svg>");
-				background-repeat: no-repeat;}
+						}'></path></svg>");}
 				
 				#ub-styled-list-${blockID} li{
 					margin-bottom: ${itemSpacing}px;

@@ -14,4 +14,11 @@
 		left: -0.5em;
 		position: relative;
 	}
+	li::before {
+		content: "";
+		position: relative;
+		left: -0.5em;
+		display: inline-block;
+		background-repeat: no-repeat;
+	}
 }

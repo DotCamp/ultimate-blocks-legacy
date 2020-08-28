@@ -576,10 +576,21 @@ function ub_include_block_attribute_css() {
                             'top: 3px;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
+
+                    $iconData = Ultimate_Blocks_IconSet::generate_fontawesome_icon($attributes['selectedIcon']);
+
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
                         'justify-content: ' . ($attributes['alignment'] == 'center' ? 'center' :
                             'flex-' . ($attributes['alignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
                         '}' . PHP_EOL .
+                        $prefix . ' li::before{' . PHP_EOL .
+                            'top: '.($attributes['iconSize'] >= 5 ? 3 : ($attributes['iconSize'] < 3 ? 2 : 0)).'px;
+                            height: '.((4 + $attributes['iconSize']) / 10).'em; 
+                            width: '.((4 + $attributes['iconSize']) / 10).'em;
+                            background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="'.((4 + $attributes['iconSize']) / 10) .
+                            'em" width="'.((4 + $attributes['iconSize']) / 10) . 'em" viewBox="0 0 '.$iconData[0].', '.$iconData[1]
+                            .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
+                        '}' .
                         $prefix . ' li{' . PHP_EOL .
                             'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL;
                     if($attributes['itemSpacing'] > 0){

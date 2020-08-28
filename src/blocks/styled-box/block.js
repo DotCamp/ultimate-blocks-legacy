@@ -545,12 +545,10 @@ registerBlockType("ub/styled-box", {
 							},
 							{
 								value: boxColor,
-								onChange: (boxColor) => {
-									console.log(`new boxcolor: ${boxColor}`);
+								onChange: (boxColor) =>
 									setAttributes({
 										boxColor,
-									});
-								},
+									}),
 								label: __("Background Color"),
 							},
 						]}
