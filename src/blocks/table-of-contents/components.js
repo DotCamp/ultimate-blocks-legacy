@@ -140,7 +140,6 @@ class TableOfContents extends Component {
 										break;
 									case "generateblocks/headline":
 										h.attributes = Object.assign({}, h.attributes);
-										//h = JSON.parse(JSON.stringify(h));
 										h.attributes.level = [...Array(6).keys()]
 											.map((a) => `h${a + 1}`)
 											.includes(h.attributes.element)
