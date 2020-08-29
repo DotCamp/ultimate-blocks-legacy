@@ -84,11 +84,13 @@ Array.prototype.slice
 						setTimeout(() => {
 							//delay is needed for the animation to run properly
 							if (panelContent.classList.contains("ub-hiding")) {
-								panelContent.style.height = `${
-									panelContent.scrollHeight + topPadding + bottomPadding
-								}px`;
-								panelContent.style.paddingTop = `${topPadding}px`;
-								panelContent.style.paddingBottom = `${bottomPadding}px`;
+								Object.assign(panelContent.style, {
+									height: `${
+										panelContent.scrollHeight + topPadding + bottomPadding
+									}px`,
+									paddingTop: `${topPadding}px`,
+									paddingBottom: `${bottomPadding}px`,
+								});
 							} else {
 								panelContent.classList.add("ub-hiding");
 								panelContent.style.height = "";
@@ -109,9 +111,11 @@ Array.prototype.slice
 						if (panelContent.offsetHeight === 0) {
 							panelContent.classList.add("ub-hide");
 						} else {
-							panelContent.style.height = "";
-							panelContent.style.paddingBottom = "";
-							panelContent.style.paddingTop = "";
+							Object.assign(panelContent.style, {
+								height: "",
+								paddingTop: "",
+								paddingBottom: "",
+							});
 						}
 						panelContent.classList.remove("ub-hiding");
 					});

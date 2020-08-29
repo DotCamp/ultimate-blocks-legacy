@@ -94,20 +94,26 @@ document.addEventListener("DOMContentLoaded", function () {
         mainStyle.width = "".concat(curWidth, "px");
         setTimeout(function () {
           tocMain.classList.remove("ub_table-of-contents-collapsed");
-          containerStyle.height = "".concat(targetHeight, "px");
-          containerStyle.width = "100%";
+          Object.assign(containerStyle, {
+            height: "".concat(targetHeight, "px"),
+            width: "100px"
+          });
           tocContainer.classList.remove("ub-hiding");
           mainStyle.width = "100%";
         }, 50);
       } else {
         //begin hiding
         mainStyle.width = "".concat(tocMain.offsetWidth, "px");
-        containerStyle.width = "".concat(tocContainer.offsetWidth, "px");
-        containerStyle.height = "".concat(tocContainer.offsetHeight, "px");
+        Object.assign(containerStyle, {
+          height: "".concat(tocContainer.offsetWidth, "px"),
+          width: "".concat(tocContainer.offsetHeight, "px")
+        });
         setTimeout(function () {
           tocContainer.classList.add("ub-hiding");
-          containerStyle.height = "0";
-          containerStyle.width = "0";
+          Object.assign(containerStyle, {
+            height: "0",
+            width: "0"
+          });
           tocMain.classList.add("ub_table-of-contents-collapsed"); //measure width of toc title + toggle button, then use it as width of tocMain
 
           var mainComputedStyle = getComputedStyle(tocMain);
@@ -130,8 +136,10 @@ document.addEventListener("DOMContentLoaded", function () {
         mainStyle.minWidth = "";
       }
 
-      containerStyle.width = "";
-      containerStyle.height = "";
+      Object.assign(containerStyle, {
+        height: "",
+        width: ""
+      });
       mainStyle.width = "";
     });
   });

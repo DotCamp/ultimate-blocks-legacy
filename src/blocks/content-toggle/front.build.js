@@ -71,9 +71,11 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
         setTimeout(function () {
           //delay is needed for the animation to run properly
           if (panelContent.classList.contains("ub-hiding")) {
-            panelContent.style.height = "".concat(panelContent.scrollHeight + topPadding + bottomPadding, "px");
-            panelContent.style.paddingTop = "".concat(topPadding, "px");
-            panelContent.style.paddingBottom = "".concat(bottomPadding, "px");
+            Object.assign(panelContent.style, {
+              height: "".concat(panelContent.scrollHeight + topPadding + bottomPadding, "px"),
+              paddingTop: "".concat(topPadding, "px"),
+              paddingBottom: "".concat(bottomPadding, "px")
+            });
           } else {
             panelContent.classList.add("ub-hiding");
             panelContent.style.height = "";
@@ -90,9 +92,11 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
         if (panelContent.offsetHeight === 0) {
           panelContent.classList.add("ub-hide");
         } else {
-          panelContent.style.height = "";
-          panelContent.style.paddingBottom = "";
-          panelContent.style.paddingTop = "";
+          Object.assign(panelContent.style, {
+            height: "",
+            paddingTop: "",
+            paddingBottom: ""
+          });
         }
 
         panelContent.classList.remove("ub-hiding");

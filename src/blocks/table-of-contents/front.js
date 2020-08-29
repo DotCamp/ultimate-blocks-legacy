@@ -108,20 +108,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 				setTimeout(() => {
 					tocMain.classList.remove("ub_table-of-contents-collapsed");
-					containerStyle.height = `${targetHeight}px`;
-					containerStyle.width = "100%";
+					Object.assign(containerStyle, {
+						height: `${targetHeight}px`,
+						width: "100px",
+					});
 					tocContainer.classList.remove("ub-hiding");
 					mainStyle.width = "100%";
 				}, 50);
 			} else {
 				//begin hiding
 				mainStyle.width = `${tocMain.offsetWidth}px`;
-				containerStyle.width = `${tocContainer.offsetWidth}px`;
-				containerStyle.height = `${tocContainer.offsetHeight}px`;
+				Object.assign(containerStyle, {
+					height: `${tocContainer.offsetWidth}px`,
+					width: `${tocContainer.offsetHeight}px`,
+				});
 				setTimeout(() => {
 					tocContainer.classList.add("ub-hiding");
-					containerStyle.height = "0";
-					containerStyle.width = "0";
+					Object.assign(containerStyle, {
+						height: "0",
+						width: "0",
+					});
 					tocMain.classList.add("ub_table-of-contents-collapsed");
 
 					//measure width of toc title + toggle button, then use it as width of tocMain
@@ -149,8 +155,10 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 				mainStyle.minWidth = "";
 			}
-			containerStyle.width = "";
-			containerStyle.height = "";
+			Object.assign(containerStyle, {
+				height: "",
+				width: "",
+			});
 			mainStyle.width = "";
 		});
 	});

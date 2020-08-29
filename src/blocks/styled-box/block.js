@@ -537,18 +537,12 @@ registerBlockType("ub/styled-box", {
 						colorSettings={[
 							{
 								value: outlineColor,
-								onChange: (outlineColor) =>
-									setAttributes({
-										outlineColor,
-									}),
+								onChange: (outlineColor) => setAttributes({ outlineColor }),
 								label: __("Border Color"),
 							},
 							{
 								value: boxColor,
-								onChange: (boxColor) =>
-									setAttributes({
-										boxColor,
-									}),
+								onChange: (boxColor) => setAttributes({ boxColor }),
 								label: __("Background Color"),
 							},
 						]}
