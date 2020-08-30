@@ -107,7 +107,7 @@ function ub_render_review_block($attributes){
         },
         "reviewRating":{
             "@type":"Rating",
-            "ratingValue":"'.number_format($average, 1, '.', '').'",
+            "ratingValue":"'. ($average % 1 == 0 ? $average : number_format($average, 1, '.', '')) .'",
             "bestRating":"'.$starCount.'"
         },
         "author":{
