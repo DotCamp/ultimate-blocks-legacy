@@ -19,6 +19,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'ub_fs' ) ) {
+    // Create a helper function for easy SDK access.
+    function ub_fs() {
+        global $ub_fs;
+
+        if ( ! isset( $ub_fs ) ) {
+            // Include Freemius SDK.
+            require_once dirname(__FILE__) . '/includes/freemius/start.php';
+
+            $ub_fs = fs_dynamic_init( array(
+                'id'                  => '1798',
+                'slug'                => 'ultimate-blocks',
+                'type'                => 'plugin',
+                'public_key'          => 'pk_bd3d3c8e255543256632fd4bb9842',
+                'is_premium'          => false,
+                'has_addons'          => false,
+                'has_paid_plans'      => false,
+                'menu'                => array(
+                    'slug'           => 'ultimate-blocks-settings',
+                    'first-path'     => 'admin.php?page=ultimate-blocks-help',
+                    'account'        => false,
+                    'support'        => false,
+                ),
+            ) );
+        }
+
+        return $ub_fs;
+    }
+
+    // Init Freemius.
+    ub_fs();
+    // Signal that SDK was initiated.
+    do_action( 'ub_fs_loaded' );
+}
+
 require_once 'includes/class-ultimate-blocks-constants.php';
 
 /**
