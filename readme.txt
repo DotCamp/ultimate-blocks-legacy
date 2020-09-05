@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.5
-Stable tag: 2.3.9
+Stable tag: 2.4.0
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,23 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.0 =
+
+NEW: Styled Box - Allow setting Bordered Box background color.
+NEW: Star Rating - Set default star color to #ffb901.
+NEW: Styled Box - Increase Bordered Box default border thickness to 3.
+NEW: Freemius SDK.
+FIX: Button - Style reverse compatibility issue.
+FIX: Button - Link inserter popover issue.
+FIX: Button - Restore full-width button rendering.
+FIX: Button - Restore top and bottom margins for the new version.
+FIX: Content Toggle - Animation issue when only content toggle is active.
+FIX: Styled Box - Reduce Notification Box margins.
+FIX: Styled Box - Issue with adding text to Notification and Bordered box.
+FIX: Styled List - Restore left margin.
+FIX: Table of Contents - Animation issue caused by style conflict with GeneratePress.
+FIX: Table of Contents - Prevent theme CSS from adding content to list items within Table of Contents.
 
 = 2.3.9 =
 
