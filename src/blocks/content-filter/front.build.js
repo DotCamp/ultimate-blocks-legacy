@@ -88,9 +88,9 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
           if (Array.isArray(category)) {
             if (mainData[i].filter(function (f) {
               return f;
-            }).length > 0 && category.filter(function (f, j) {
-              return f && f === mainData[i][j];
-            }).length === 0) {
+            }).length > 0 && category.some(function (f, j) {
+              return f !== mainData[i][j];
+            })) {
               hasMatchedAll = false;
             }
           } else if (mainData[i] !== category && mainData[i] !== -1) {

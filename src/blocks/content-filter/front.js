@@ -115,8 +115,7 @@ Array.prototype.slice
 							if (Array.isArray(category)) {
 								if (
 									mainData[i].filter((f) => f).length > 0 &&
-									category.filter((f, j) => f && f === mainData[i][j])
-										.length === 0
+									category.some((f, j) => f !== mainData[i][j])
 								) {
 									hasMatchedAll = false;
 								}
@@ -127,8 +126,8 @@ Array.prototype.slice
 					}
 
 					//alternate setting
-					let hasMatchedOne = false;	
-					
+					let hasMatchedOne = false;
+
 					if (
 						initialSelection ===
 							blockProper.getAttribute("data-currentselection") &&
