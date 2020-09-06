@@ -127,10 +127,10 @@ Array.prototype.slice
 					}
 
 					//alternate setting
-					let hasMatchedOne = false;
-
+					let hasMatchedOne = false;	
+					
 					if (
-						initialSelection !==
+						initialSelection ===
 							blockProper.getAttribute("data-currentselection") &&
 						JSON.parse(blockProper.getAttribute("data-initiallyshowall")) ===
 							true
@@ -147,8 +147,8 @@ Array.prototype.slice
 									hasMatchedOne = true;
 								}
 							} else if (mainData[i] === category && mainData[i] !== -1) {
-								hasMatchedOne = true;
-							}
+									hasMatchedOne = true;
+								}
 						});
 					}
 

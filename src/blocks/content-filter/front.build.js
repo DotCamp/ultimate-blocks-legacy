@@ -102,7 +102,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
 
       var hasMatchedOne = false;
 
-      if (initialSelection !== blockProper.getAttribute("data-currentselection") && JSON.parse(blockProper.getAttribute("data-initiallyshowall")) === true) {
+      if (initialSelection === blockProper.getAttribute("data-currentselection") && JSON.parse(blockProper.getAttribute("data-initiallyshowall")) === true) {
         hasMatchedOne = true;
       } else {
         panelData.forEach(function (category, i) {
