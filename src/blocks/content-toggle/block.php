@@ -219,9 +219,11 @@ function ub_content_toggle_filter( $block_content, $block ) {
                     if($questions != ""){
                         $questions .= ',' . PHP_EOL;
                     }
+                    $question = preg_replace('/<\/?.+?>/i', '', $togglePanel['attrs']['panelTitle']);
+                    
                     $questions .= '{' .
                         '"@type":"Question",' .
-                        '"name":"'.$togglePanel['attrs']['panelTitle'].
+                        '"name":"'.$question.
                         '","acceptedAnswer":{' .
                             '"@type":"Answer",' .
                             '"text":"'.trim(str_replace('"', '\"', $answer)).'"}}';

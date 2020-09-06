@@ -355,7 +355,7 @@ class ContentTogglePanel extends Component {
 						style={{ color: titleColor }}
 						className="wp-block-ub-content-toggle-accordion-title"
 						value={panelTitle}
-						formattingControls={["bold", "italic"]}
+						formattingControls={["bold", "italic", "link"]}
 						onChange={(value) => setAttributes({ panelTitle: value })}
 						placeholder={__("Panel Title")}
 						keepPlaceholderOnFocus={true}
