@@ -344,10 +344,8 @@ function ub_include_block_attribute_css() {
                 case 'ub/how-to':
                     $prefix = '#ub_howto_' . $attributes['blockID'];
                     if($attributes['sectionListStyle'] == 'none'){
-                        $blockStylesheets .= $prefix . ' .ub_howto-section-display{' . PHP_EOL .
-                            'list-style: none;' . PHP_EOL .
-                        '}' . PHP_EOL .
-                        $prefix . ' .ub_howto-step-display{' . PHP_EOL .
+                        $blockStylesheets .= $prefix . ' .ub_howto-section-display,' . $prefix . ' .ub_howto-step-display,' .
+                        $prefix . ' .ub_howto-step-display .ub_howto-step{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL ;
                     }
