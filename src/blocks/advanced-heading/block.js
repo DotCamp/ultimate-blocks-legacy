@@ -1,8 +1,5 @@
-//Import Icon
 import icon from "./icons/icons";
-// Import Components
 import edit from "./components";
-// Import transforms
 import transforms from "./transforms";
 
 const { __ } = wp.i18n;
@@ -11,47 +8,47 @@ const { RichText } = wp.blockEditor || wp.editor;
 
 const attributes = {
 	content: {
-		type: "string"
+		type: "string",
 	},
 	level: {
 		type: "string",
-		default: "h1"
+		default: "h1",
 	},
 	alignment: {
 		type: "string",
-		default: "none"
+		default: "none",
 	},
 	textColor: {
-		type: "string"
+		type: "string",
 	},
 	backgroundColor: {
-		type: "string"
+		type: "string",
 	},
 	fontSize: {
-		type: "string"
+		type: "string",
 	},
 	letterSpacing: {
 		type: "string",
-		default: "0"
+		default: "0",
 	},
 	textTransform: {
 		type: "string",
-		default: "None"
+		default: "None",
 	},
 	fontFamily: {
-		type: "string"
+		type: "string",
 	},
 	fontWeight: {
 		type: "string",
-		default: "Bold"
+		default: "Bold",
 	},
 	lineHeight: {
-		type: "string"
+		type: "string",
 	},
 	highlightBgColor: {
 		type: "string",
-		default: "None"
-	}
+		default: "None",
+	},
 };
 
 registerBlockType("ub/advanced-heading", {
@@ -61,7 +58,7 @@ registerBlockType("ub/advanced-heading", {
 	keywords: [
 		__("Heading", "ultimate-blocks"),
 		__("Advanced Heading", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks")
+		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	attributes,
 	transforms,
@@ -78,26 +75,28 @@ registerBlockType("ub/advanced-heading", {
 			textTransform,
 			fontFamily,
 			fontWeight,
-			lineHeight
+			lineHeight,
 		} = attributes;
-		
+
 		return (
-			<RichText.Content
-				className={className}
-				tagName={level}
-				value={content}
-				style={{
-					textAlign: alignment,
-					color: textColor,
-					backgroundColor,
-					fontSize,
-					letterSpacing,
-					textTransform,
-					fontFamily,
-					fontWeight,
-					lineHeight
-				}}
-			/>
+			<>
+				<RichText.Content
+					className={className}
+					tagName={level}
+					value={content}
+					style={{
+						textAlign: alignment,
+						color: textColor,
+						backgroundColor,
+						fontSize,
+						letterSpacing,
+						textTransform,
+						fontFamily,
+						fontWeight,
+						lineHeight,
+					}}
+				/>
+			</>
 		);
-	}
+	},
 });

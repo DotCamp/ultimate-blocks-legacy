@@ -1,6 +1,12 @@
-import "./highlight-format.js";
+import "./formats/register-formats";
 import fontsList from "./fonts";
-import { createRef, useEffect } from "react";
+import {
+	headingLevels,
+	textTransformOptions,
+	fontWeightOptions,
+	fontFamilyOptions,
+} from "./settings-options";
+
 const { __ } = wp.i18n;
 const { InspectorControls, PanelColorSettings, RichText, AlignmentToolbar } =
 	wp.blockEditor || wp.editor;
@@ -9,13 +15,11 @@ const {
 	Button,
 	ButtonGroup,
 	RangeControl,
-	Dropdown,
-	TextControl,
-	SelectControl
+	SelectControl,
 } = wp.components;
-const { applyFormat, removeFormat } = wp.richText;
+const { createRef, useEffect } = wp.element;
 
-const AdvancedHeadingEdit = ({ attributes, setAttributes, onChange }) => {
+const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 	const {
 		content,
 		level,
@@ -28,35 +32,9 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes, onChange }) => {
 		fontFamily,
 		fontWeight,
 		lineHeight,
-		highlightBgColor
 	} = attributes;
-	const headingLevels = [1, 2, 3, 4, 5, 6];
-	const textTransformOptions = [
-		{ value: "none", label: __("None", "ultimate-blocks") },
-		{ value: "uppercase", label: __("Uppercase", "ultimate-blocks") },
-		{ value: "lowercase", label: __("Lowercase", "ultimate-blocks") },
-		{ value: "capitalize", label: __("Capitalize", "ultimate-blocks") }
-	];
-	const fontWeightOptions = [
-		{ value: "Normal", label: __("Normal", "ultimate-blocks") },
-		{ value: "Bold", label: __("Bold", "ultimate-blocks") },
-		{ value: "100", label: __("100", "ultimate-blocks") },
-		{ value: "200", label: __("200", "ultimate-blocks") },
-		{ value: "300", label: __("300", "ultimate-blocks") },
-		{ value: "400", label: __("400", "ultimate-blocks") },
-		{ value: "500", label: __("500", "ultimate-blocks") },
-		{ value: "600", label: __("600", "ultimate-blocks") },
-		{ value: "700", label: __("700", "ultimate-blocks") },
-		{ value: "800", label: __("800", "ultimate-blocks") },
-		{ value: "900", label: __("900", "ultimate-blocks") }
-	];
-	const fontFamilyOptions = fontsList.sort().map(fontFamilyOption => {
-		return {
-			value: fontFamilyOption,
-			label: __(fontFamilyOption, "ultimate-blocks")
-		};
-	});
 
+	/* set default values for the style attributes */
 	const elementRef = createRef();
 	useEffect(() => {
 		if (!fontSize) {
@@ -82,23 +60,22 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes, onChange }) => {
 	}, [elementRef]);
 
 	/* Methods */
-	const onChangeHeadingLevel = e => {
+	const onChangeHeadingLevel = (e) => {
 		const newHeadingLevel = e.target.innerText;
 		setAttributes({ level: newHeadingLevel, fontSize: null, lineHeight: null });
 	};
 
-	const onChangeFontFamily = newFontFamily => {
-		setAttributes({ fontFamily: newFontFamily });
-	};
-let highlightFontWeight;
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Heading Settings", "ultimate-blocks")}>
+				<PanelBody
+					title={__("Heading Settings", "ultimate-blocks")}
+					intialOpen={false}
+				>
 					{/* Heading Level */}
 					<p>{__("Heading Level", "ultimate-blocks")}</p>
 					<ButtonGroup aria-label={__("Heading Level", "ultimate-blocks")}>
-						{headingLevels.map(headingLevel => (
+						{headingLevels.map((headingLevel) => (
 							<Button
 								onClick={onChangeHeadingLevel}
 								key={headingLevel}
@@ -112,7 +89,7 @@ let highlightFontWeight;
 					<p>{__("Heading Alignment", "ultimate-blocks")}</p>
 					<AlignmentToolbar
 						value={alignment}
-						onChange={newAlignment =>
+						onChange={(newAlignment) =>
 							setAttributes({ alignment: newAlignment })
 						}
 						isCollapsed={false}
@@ -123,34 +100,37 @@ let highlightFontWeight;
 						colorSettings={[
 							{
 								value: textColor,
-								onChange: newTextColor =>
+								onChange: (newTextColor) =>
 									setAttributes({ textColor: newTextColor }),
-								label: __("Heading Text Color", "ultimate-blocks")
+								label: __("Heading Text Color", "ultimate-blocks"),
 							},
 							{
 								value: backgroundColor,
-								onChange: newBackgroundColor =>
+								onChange: (newBackgroundColor) =>
 									setAttributes({ backgroundColor: newBackgroundColor }),
-								label: __("Heading Background Color", "ultimate-blocks")
-							}
+								label: __("Heading Background Color", "ultimate-blocks"),
+							},
 						]}
 					/>
 					{/* Font Size */}
 					<RangeControl
 						label={__("Font Size", "ultimate-blocks")}
 						value={fontSize ? parseInt(fontSize) : 0}
-						onChange={newFontSize => setAttributes({ fontSize: newFontSize })}
+						onChange={(newFontSize) => setAttributes({ fontSize: newFontSize })}
 						min={12}
 						max={100}
 					/>
 				</PanelBody>
-				<PanelBody title={__("Typography Settings", "ultimate-blocks")}>
+				<PanelBody
+					title={__("Typography Settings", "ultimate-blocks")}
+					intialOpen={false}
+				>
 					{/* Text Transform */}
 					<SelectControl
-						label={__("Text transform", "ultimate-blocks")}
+						label={__("Text Transform", "ultimate-blocks")}
 						options={textTransformOptions}
 						value={textTransform}
-						onChange={newTextTransform =>
+						onChange={(newTextTransform) =>
 							setAttributes({ textTransform: newTextTransform })
 						}
 					/>
@@ -159,13 +139,15 @@ let highlightFontWeight;
 						label={__("Font Family", "ultimate-blocks")}
 						options={fontFamilyOptions}
 						value={fontsList.includes(fontFamily) ? fontFamily : "Default"}
-						onChange={onChangeFontFamily}
+						onChange={(newFontFamily) =>
+							setAttributes({ fontFamily: newFontFamily })
+						}
 					/>
 					{/* Letter Spacing */}
 					<RangeControl
 						label={__("Letter Spacing", "ultimate-blocks")}
 						value={letterSpacing}
-						onChange={newLetterSpacing =>
+						onChange={(newLetterSpacing) =>
 							setAttributes({ letterSpacing: newLetterSpacing })
 						}
 						min={-2}
@@ -176,7 +158,7 @@ let highlightFontWeight;
 						label={__("Font Weight", "ultimate-blocks")}
 						options={fontWeightOptions}
 						value={fontWeight}
-						onChange={newFontWeight =>
+						onChange={(newFontWeight) =>
 							setAttributes({ fontWeight: newFontWeight })
 						}
 					/>
@@ -184,40 +166,19 @@ let highlightFontWeight;
 					<RangeControl
 						label={__("Line Height", "ultimate-blocks")}
 						value={lineHeight ? parseInt(lineHeight) : 0}
-						onChange={newLineHeight =>
+						onChange={(newLineHeight) =>
 							setAttributes({ lineHeight: newLineHeight + "px" })
 						}
 						min={10}
 						max={120}
 					/>
-		{/*<SelectControl
-						label={__("Highlight Font Weight", "ultimate-blocks")}
-						options={fontWeightOptions}
-						value={highlightFontWeight}
-						onChange={newFontWeight => {
-							if (newFontWeight) {
-								highlightFontWeight = newFontWeight;
-								console.log("weight", highlightFontWeight);
-
-								onChange(
-									applyFormat(value, {
-										type: name, //"highlight-font-weight",
-										attributes: {
-											style: `font-weight:${highlightFontWeight};color:${textColor}`
-										}
-									})
-								);
-								console.log("weight", highlightFontWeight);
-							}
-						}}
-					/>*/}
 				</PanelBody>
 			</InspectorControls>
 			<RichText
 				ref={elementRef}
 				tagName={level}
 				value={content}
-				onChange={value => setAttributes({ content: value })}
+				onChange={(value) => setAttributes({ content: value })}
 				style={{
 					textAlign: alignment,
 					color: textColor,
@@ -227,7 +188,7 @@ let highlightFontWeight;
 					textTransform,
 					fontFamily,
 					fontWeight,
-					lineHeight
+					lineHeight,
 				}}
 			/>
 		</>
