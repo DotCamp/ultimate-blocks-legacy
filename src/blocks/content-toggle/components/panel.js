@@ -274,32 +274,34 @@ class ContentTogglePanel extends Component {
 					/>
 				</div>
 				<PanelBody title={__("Toggle status icon", "ultimate-blocks")}>
-					<PanelRow>
-						<label htmlFor="ub-content-toggle-status-location">
-							{__("Location", "ultimate-blocks")}
-						</label>
-						<ButtonGroup
-							id="ub-content-toggle-status-location"
-							aria-label={__("toggle icon position", "ultimate-blocks")}
-						>
-							{Object.keys(toggleIconPositions).map((p) => {
-								if (
-									Object.prototype.hasOwnProperty.call(toggleIconPositions, p)
-								) {
-									return (
-										<Button
-											isLarge
-											aria-pressed={toggleLocation === p}
-											isPrimary={toggleLocation === p}
-											onClick={(_) => setAttributes({ toggleLocation: p })}
-										>
-											{toggleIconPositions[p]}
-										</Button>
-									);
-								}
-							})}
-						</ButtonGroup>
-					</PanelRow>
+					{toggleIcon !== "none" && (
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-status-location">
+								{__("Location", "ultimate-blocks")}
+							</label>
+							<ButtonGroup
+								id="ub-content-toggle-status-location"
+								aria-label={__("toggle icon position", "ultimate-blocks")}
+							>
+								{Object.keys(toggleIconPositions).map((p) => {
+									if (
+										Object.prototype.hasOwnProperty.call(toggleIconPositions, p)
+									) {
+										return (
+											<Button
+												isLarge
+												aria-pressed={toggleLocation === p}
+												isPrimary={toggleLocation === p}
+												onClick={() => setAttributes({ toggleLocation: p })}
+											>
+												{toggleIconPositions[p]}
+											</Button>
+										);
+									}
+								})}
+							</ButtonGroup>
+						</PanelRow>
+					)}
 					<PanelRow>
 						<label htmlFor="ub-content-toggle-status-icon">
 							{__("Icon", "ultimate-blocks")}
