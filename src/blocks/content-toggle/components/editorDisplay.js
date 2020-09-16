@@ -200,6 +200,7 @@ export class PanelContent extends Component {
 				collapsed,
 				theme,
 				titleColor,
+				titleLinkColor,
 				blockID,
 				hasFAQSchema,
 				titleTag,
@@ -251,7 +252,14 @@ export class PanelContent extends Component {
 			);
 		};
 
-		const onCollapseChange = (_) => {
+		const onLinkColorChange = (value) => {
+			setAttributes({ titleLinkColor: value });
+			panels.forEach((panel) =>
+				updateBlockAttributes(panel.clientId, { titleLinkColor: value })
+			);
+		};
+
+		const onCollapseChange = () => {
 			setAttributes({ collapsed: !collapsed });
 			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
@@ -316,6 +324,7 @@ export class PanelContent extends Component {
 						theme: newColorDefaults.theme,
 						collapsed,
 						titleColor: newColorDefaults.titleColor,
+						titleLinkColor,
 						hasFAQSchema,
 						toggleLocation,
 						toggleColor,
@@ -489,6 +498,11 @@ export class PanelContent extends Component {
 								onChange: onTitleColorChange,
 								label: __("Title Color"),
 							},
+							{
+								value: titleLinkColor,
+								onChange: onLinkColorChange,
+								label: __("Title link Color"),
+							},
 						]}
 					/>
 					<PanelBody title={__("Initial State")} initialOpen={true}>
@@ -500,9 +514,9 @@ export class PanelContent extends Component {
 								id="ub-content-toggle-amount"
 								label={__("Show only one panel at a time")}
 								checked={showOnlyOne}
-								onChange={(_) => {
+								onChange={() => {
 									setAttributes({ showOnlyOne: !showOnlyOne });
-									panels.forEach((panel, i) =>
+									panels.forEach((panel) =>
 										updateBlockAttributes(panel.clientId, {
 											showOnlyOne: !showOnlyOne,
 										})
@@ -592,19 +606,24 @@ export class PanelContent extends Component {
 							onChange={(titleTag) => {
 								setAttributes({ titleTag });
 								panels.forEach((panel) =>
-									updateBlockAttributes(panel.clientId, {
-										titleTag,
-									})
+									updateBlockAttributes(panel.clientId, { titleTag })
 								);
 							}}
 						/>
 					</div>
 				</InspectorControls>
 			),
-			<div className={className}>
+			<div className={className} id={`ub-content-toggle-${blockID}`}>
 				<InnerBlocks
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}
+				/>
+				<style
+					dangerouslySetInnerHTML={{
+						__html: `.ub-accordion-title-${blockID} a{
+					color: ${titleLinkColor}
+				}`,
+					}}
 				/>
 			</div>,
 		];

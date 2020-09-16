@@ -36,6 +36,10 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	titleLinkColor: {
+		type: "string",
+		default: "#000000", //should match titleColor by default
+	},
 	hasFAQSchema: {
 		type: "boolean",
 		default: false,

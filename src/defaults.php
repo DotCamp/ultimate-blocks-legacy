@@ -240,6 +240,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'titleLinkColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            ),
             'preventCollapse' => array(
                 'type' => 'boolean',
                 'default' => false
@@ -267,6 +271,10 @@ $defaultValues = array(
             'titleColor' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'titleLinkColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
             ),
             'panelTitle' => array(
                 'type' => 'string',

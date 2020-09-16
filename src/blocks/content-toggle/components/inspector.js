@@ -14,35 +14,39 @@ export default class Inspector extends Component {
 		const {
 			onThemeChange,
 			onTitleColorChange,
-			onCollapseChange
+			onCollapseChange,
+			onLinkColorChange,
 		} = this.props;
-		const { theme, titleColor, collapsed } = this.props.attributes;
+		const { theme, titleColor, titleLinkColor, collapsed } = this.props.attributes;
 		return (
 			<InspectorControls>
 				<PanelColorSettings
-					title={__('Color Scheme')}
+					title={__("Color Scheme")}
 					initialOpen={false}
 					colorSettings={[
 						{
 							value: theme,
 							onChange: onThemeChange,
-							label: __('Container Color')
+							label: __("Container Color"),
 						},
 						{
 							value: titleColor,
 							onChange: onTitleColorChange,
-							label: __('Title Color')
-						}
+							label: __("Title Color"),
+						},
+						{
+							value: titleLinkColor,
+							onChange: onLinkColorChange,
+							label: __("Title link Color"),
+						},
 					]}
 				/>
-				<PanelBody title={__('Initial State')} initialOpen={true}>
+				<PanelBody title={__("Initial State")} initialOpen={true}>
 					<PanelRow>
-						<label htmlFor="ub-content-toggle-state">
-							{__('Collapsed')}
-						</label>
+						<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
 						<FormToggle
 							id="ub-content-toggle-state"
-							label={__('Collapsed')}
+							label={__("Collapsed")}
 							checked={collapsed}
 							onChange={onCollapseChange}
 						/>

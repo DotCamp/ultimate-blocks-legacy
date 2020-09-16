@@ -50,6 +50,10 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	titleLinkColor: {
+		type: "string",
+		default: "#000000",
+	},
 	panelTitle: {
 		type: "string",
 		default: "",
@@ -114,6 +118,7 @@ class ContentTogglePanel extends Component {
 			attributes: {
 				theme,
 				titleColor,
+				titleLinkColor,
 				panelTitle,
 				collapsed,
 				hasFAQSchema,
@@ -169,6 +174,11 @@ class ContentTogglePanel extends Component {
 							label: __("Title Color"),
 						},
 						{
+							value: titleLinkColor,
+							onChange: (value) => setAttributes({ titleLinkColor: value }),
+							label: __("Title link Color"),
+						},
+						{
 							value: toggleColor,
 							onChange: (value) => setAttributes({ toggleColor: value }),
 							label: __("Toggle Icon Color"),
@@ -198,7 +208,7 @@ class ContentTogglePanel extends Component {
 							id="ub-content-toggle-state"
 							label={__("Collapsed")}
 							checked={collapsed}
-							onChange={(_) => {
+							onChange={() => {
 								setAttributes({ collapsed: !collapsed });
 								if (showOnlyOne) {
 									this.setState({ showPanel: collapsed });
@@ -218,7 +228,7 @@ class ContentTogglePanel extends Component {
 								id="ub-content-toggle-state"
 								label={__("Prevent collapse")}
 								checked={preventCollapse}
-								onChange={(_) =>
+								onChange={() =>
 									setAttributes({ preventCollapse: !preventCollapse })
 								}
 							/>
@@ -230,7 +240,7 @@ class ContentTogglePanel extends Component {
 							id="ub-content-toggle-border"
 							label={__("Enable border")}
 							checked={border}
-							onChange={(_) => setAttributes({ border: !border })}
+							onChange={() => setAttributes({ border: !border })}
 						/>
 					</PanelRow>
 				</PanelBody>
@@ -243,11 +253,7 @@ class ContentTogglePanel extends Component {
 							id="ub-content-toggle-faq-schema"
 							label={__("Enable FAQ Schema")}
 							checked={hasFAQSchema}
-							onChange={(_) =>
-								setAttributes({
-									hasFAQSchema: !hasFAQSchema,
-								})
-							}
+							onChange={() => setAttributes({ hasFAQSchema: !hasFAQSchema })}
 						/>
 					</PanelRow>
 				</PanelBody>
@@ -317,7 +323,7 @@ class ContentTogglePanel extends Component {
 									)}
 								</Button>
 							)}
-							renderContent={(_) => (
+							renderContent={() => (
 								<div className="wp-block-ub-content-toggle-customize-icons-wrap">
 									{Object.keys(icons).map((i) => {
 										if (Object.prototype.hasOwnProperty.call(icons, i)) {
@@ -325,7 +331,7 @@ class ContentTogglePanel extends Component {
 												<Button
 													isPrimary={toggleIcon === i}
 													isLarge
-													onClick={(_) => setAttributes({ toggleIcon: i })}
+													onClick={() => setAttributes({ toggleIcon: i })}
 												>
 													{icons[i] === "none" ? (
 														"None"
@@ -355,7 +361,7 @@ class ContentTogglePanel extends Component {
 					<RichText
 						tagName={titleTag}
 						style={{ color: titleColor }}
-						className="wp-block-ub-content-toggle-accordion-title"
+						className={`wp-block-ub-content-toggle-accordion-title ub-accordion-title-${parentID}`}
 						value={panelTitle}
 						formattingControls={["bold", "italic", "link"]}
 						onChange={(value) => setAttributes({ panelTitle: value })}
@@ -383,7 +389,7 @@ class ContentTogglePanel extends Component {
 							<div className="wp-block-ub-content-toggle-accordion-toggle-location">
 								<span
 									title={__("Switch toggle location", "ultimate-blocks")}
-									onClick={(_) =>
+									onClick={() =>
 										setAttributes({
 											toggleLocation:
 												toggleLocation === "left" ? "right" : "left",

@@ -281,6 +281,9 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL .
                     $prefix . ' .wp-block-ub-content-toggle-accordion-toggle-wrap{' . PHP_EOL .
                         'color: ' . $attributes['toggleColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    '.ub-content-toggle-title-'. $attributes['blockID'] . ' > a{' . PHP_EOL .
+                        'color: ' . $attributes['titleLinkColor'] . ';' . PHP_EOL .
                     '}';
                     break;
                 case 'ub/countdown':

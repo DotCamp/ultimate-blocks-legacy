@@ -56,7 +56,7 @@ function ub_render_content_toggle_panel_block($attributes, $content){
                 .($parentID == '' ? ' style="border-color: '.$theme.';"' : '').'>
                 <div class="'.$classNamePrefix.'-accordion-title-wrap"'
                     .($parentID == '' ? ' style="background-color: '.$theme.';"' : '').'>
-                    <'.$titleTag.' class="'.$classNamePrefix.'-accordion-title"'
+                    <'.$titleTag.' class="'.$classNamePrefix.'-accordion-title ub-content-toggle-title-' .$parentID. '"'
                     .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</'.$titleTag.'>'.
                     ($toggleIcon == 'none' ? '' :'<div class="' . $classNamePrefix. '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
                     '"><span class="' . $classNamePrefix .'-accordion-state-indicator '. $icon_class  .
