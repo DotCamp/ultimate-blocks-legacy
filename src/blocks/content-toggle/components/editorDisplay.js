@@ -456,13 +456,16 @@ export class PanelContent extends Component {
 							changedPanel > -1 && //for preventing errors in gutenberg 8
 							newAttributeValues[changedPanel].showOnlyOne
 						) {
-							//value of collapsed should be true for changedpanel and false for parent and all otherpanels
+							//if value of collapsed is changed for a panel via inspector panel and showonlyone is active,
+							//value of collapsed in all other panels should be automatically set to true
 							panels.forEach((panel, i) => {
 								updateBlockAttributes(
 									panel.clientId,
-									Object.assign({}, newChange, {
-										collapsed: i !== changedPanel,
-									})
+									Object.assign(
+										{},
+										newChange,
+										i !== changedPanel ? { collapsed: true } : null
+									)
 								);
 							});
 							setAttributes(Object.assign({ collapsed: false }, newChange));
@@ -472,7 +475,6 @@ export class PanelContent extends Component {
 							});
 							setAttributes(newChange);
 						}
-
 						setState({ oldAttributeValues: newAttributeValues });
 					}
 				} else {
