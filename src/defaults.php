@@ -256,6 +256,10 @@ $defaultValues = array(
     ),
     'ub/content-toggle-panel-block' => array(
         'attributes' => array(
+            'index' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
             'parentID' => array(
                 'type' => 'string',
                 'default' => ''

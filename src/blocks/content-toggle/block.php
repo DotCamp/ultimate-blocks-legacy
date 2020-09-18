@@ -39,8 +39,8 @@ if ( !class_exists( 'simple_html_dom_node' ) ) {
 function ub_render_content_toggle_block($attributes, $content){
     extract($attributes);
 
-    return '<div class="wp-block-ub-content-toggle'.(isset($className) ? ' ' . esc_attr($className) : '')
-                .'" '. ($blockID == '' ? '' : 'id="ub-content-toggle-'.$blockID.'"') .
+    return '<div class="wp-block-ub-content-toggle' . (isset($className) ? ' ' . esc_attr($className) : '')
+                .'" '. ($blockID == '' ? '' : 'id="ub-content-toggle-' . $blockID . '"') .
                  ($preventCollapse ? ' data-preventcollapse="true"' : '') .
                  ($showOnlyOne ? ' data-showonlyone="true"': '') . '>' . $content.'</div>';
 }
@@ -48,23 +48,24 @@ function ub_render_content_toggle_block($attributes, $content){
 function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
-    $border_class = $border ? " ":"no-border ";
+    $border_class = $border ? " " : "no-border ";
     $icons= json_decode(file_get_contents(__DIR__ . '/icons/icons.json'));
     $icon_class = $icons->$toggleIcon;
 
-    return '<div class="' . $border_class . $classNamePrefix.'-accordion'.(isset($className) ? ' ' . esc_attr($className) : '').'"'
-                .($parentID == '' ? ' style="border-color: '.$theme.';"' : '').'>
-                <div class="'.$classNamePrefix.'-accordion-title-wrap"'
-                    .($parentID == '' ? ' style="background-color: '.$theme.';"' : '').'>
-                    <'.$titleTag.' class="'.$classNamePrefix.'-accordion-title ub-content-toggle-title-' .$parentID. '"'
-                    .($parentID == '' ? ' style="color:'.$titleColor.';"' : '').'>'.$panelTitle.'</'.$titleTag.'>'.
-                    ($toggleIcon == 'none' ? '' :'<div class="' . $classNamePrefix. '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
-                    '"><span class="' . $classNamePrefix .'-accordion-state-indicator '. $icon_class  .
+    return '<div class="' . $border_class . $classNamePrefix.'-accordion' . (isset($className) ? ' ' . esc_attr($className) : '') . '"'
+                . ($parentID == '' ? ' style="border-color: ' . $theme . ';"' : '') . '>
+                <div class="' . $classNamePrefix . '-accordion-title-wrap"'
+                    . ($parentID == '' ? ' style="background-color: ' . $theme . ';"' : '') . ($preventCollapse ? ' aria-disabled="true"' : '')
+                    .' aria-expanded="' . (json_encode(!$collapsed)) . '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '">
+                    <' . $titleTag . ' class="' . $classNamePrefix . '-accordion-title ub-content-toggle-title-' . $parentID . '"'
+                    . ($parentID == '' ? ' style="color:' . $titleColor . ';"' : '') . '>' . $panelTitle . '</' . $titleTag . '>' .
+                    ($toggleIcon == 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
+                    '"><span class="' . $classNamePrefix . '-accordion-state-indicator ' . $icon_class  .
                     ( $collapsed ? '' : ' open' ) . '"></span>
                     </div>').
-                '</div><div class="'.$classNamePrefix.'-accordion-content-wrap'.
-                        ($collapsed?' ub-hide':'').'">'. $content
-                .'</div></div>' ;
+                '</div><div class="' . $classNamePrefix . '-accordion-content-wrap'.
+                        ($collapsed ? ' ub-hide' : '') . '" id="ub-content-toggle-panel-' . $index. '-' . $parentID . '">' . $content
+                . '</div></div>' ;
 }
 
 function ub_register_content_toggle_panel_block() {
@@ -223,10 +224,10 @@ function ub_content_toggle_filter( $block_content, $block ) {
                     
                     $questions .= '{' .
                         '"@type":"Question",' .
-                        '"name":"'.$question.
+                        '"name":"' . $question .
                         '","acceptedAnswer":{' .
                             '"@type":"Answer",' .
-                            '"text":"'.trim(str_replace('"', '\"', $answer)).'"}}';
+                            '"text":"' . trim(str_replace('"', '\"', $answer)) . '"}}';
                 }
 
 
