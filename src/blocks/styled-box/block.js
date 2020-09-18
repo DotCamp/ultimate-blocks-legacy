@@ -39,6 +39,7 @@ import icon, {
 	featureBoxIcon,
 	notificationBoxIcon,
 	borderedBoxIcon,
+	error,
 } from "./icon";
 
 registerBlockType("ub/styled-box", {
@@ -263,15 +264,54 @@ registerBlockType("ub/styled-box", {
 						className="components-icon-button components-toolbar-control"
 						onClick={() =>
 							setAttributes({
+								foreColor: "#eaac00",
+								backColor: "#ffdd80",
+								outlineColor: "#eaac00",
+							})
+						}
+					>
+						{warning}
+					</Button>
+					<Button
+						className="components-icon-button components-toolbar-control"
+						onClick={() =>
+							setAttributes({
 								foreColor: "#d8000c",
 								backColor: "#ffd2d2",
 								outlineColor: "#d8000c",
 							})
 						}
 					>
-						{warning}
+						{error}
 					</Button>
 				</Toolbar>
+			);
+
+			inspectorExtras = (
+				<PanelColorSettings
+					title={__("Advanced Color Scheme")}
+					initialOpen={false}
+					colorSettings={[
+						{
+							value: backColor,
+							onChange: (colorValue) =>
+								setAttributes({ backColor: colorValue }),
+							label: __("Background Color"),
+						},
+						{
+							value: foreColor,
+							onChange: (colorValue) =>
+								setAttributes({ foreColor: colorValue }),
+							label: __("Foreground Color"),
+						},
+						{
+							value: outlineColor,
+							onChange: (colorValue) =>
+								setAttributes({ outlineColor: colorValue }),
+							label: __("Border Color"),
+						},
+					]}
+				/>
 			);
 		} else if (mode === "feature") {
 			renderedBlock = Array(text.length)
@@ -380,17 +420,13 @@ registerBlockType("ub/styled-box", {
 					>
 						<div
 							className="ub-number-container"
-							style={{
-								backgroundColor: backColor,
-							}}
+							style={{ backgroundColor: backColor }}
 						>
 							<RichText
 								tagName="p"
 								placeholder={__(i + 1)}
 								className="ub-number-display"
-								style={{
-									color: foreColor,
-								}}
+								style={{ color: foreColor }}
 								value={number[i]}
 								onChange={(value) =>
 									setAttributes({
@@ -444,25 +480,19 @@ registerBlockType("ub/styled-box", {
 						{
 							value: backColor,
 							onChange: (colorValue) =>
-								setAttributes({
-									backColor: colorValue,
-								}),
+								setAttributes({ backColor: colorValue }),
 							label: __("Number Background Color"),
 						},
 						{
 							value: foreColor,
 							onChange: (colorValue) =>
-								setAttributes({
-									foreColor: colorValue,
-								}),
+								setAttributes({ foreColor: colorValue }),
 							label: __("Number Color"),
 						},
 						{
 							value: outlineColor,
 							onChange: (colorValue) =>
-								setAttributes({
-									outlineColor: colorValue,
-								}),
+								setAttributes({ outlineColor: colorValue }),
 							label: __("Border Color"),
 						},
 					]}
