@@ -723,42 +723,19 @@ registerBlockType("ub/styled-box", {
 			isSelected && (
 				<InspectorControls>
 					{mode !== "" && (
-						<SelectControl
-							label="Select mode"
-							value={mode}
-							options={["number", "notification", "feature", "bordered"].map(
-								(a) => ({
-									label: `${a[0].toUpperCase() + a.slice(1)} box`,
-									value: a,
-								})
-							)}
-							onChange={(selection) => {
-								let newAttributes = { mode: selection };
-								if (selection === "notification") {
-									if (
-										!(
-											(foreColor === "#31708f" &&
-												backColor === "#d9edf7" &&
-												outlineColor === "#31708f") ||
-											(foreColor === "#3c763d" &&
-												backColor === "#dff0d8" &&
-												outlineColor === "#3c763d") ||
-											(foreColor === "#d8000c" &&
-												backColor === "#ffd2d2" &&
-												outlineColor === "#d8000c")
-										)
-									) {
-										Object.assign(newAttributes, {
-											foreColor: "#31708f",
-											backColor: "#d9edf7",
-											outlineColor: "#31708f",
-										});
-									}
-								}
-
-								setAttributes(newAttributes);
-							}}
-						/>
+						<PanelBody>
+							<SelectControl
+								label="Select mode"
+								value={mode}
+								options={["number", "notification", "feature", "bordered"].map(
+									(a) => ({
+										label: `${a[0].toUpperCase() + a.slice(1)} box`,
+										value: a,
+									})
+								)}
+								onChange={(selection) => setAttributes({ mode: selection })}
+							/>
+						</PanelBody>
 					)}
 					{inspectorExtras}
 				</InspectorControls>
