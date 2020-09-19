@@ -114,8 +114,9 @@ Array.prototype.slice
 						panelData.forEach((category, i) => {
 							if (Array.isArray(category)) {
 								if (
-									mainData[i].filter((f) => f).length > 0 &&
-									category.some((f, j) => f !== mainData[i][j])
+									category.every((f) => !f) ||
+									(mainData[i].filter((f) => f).length > 0 &&
+										category.some((f, j) => f !== mainData[i][j]))
 								) {
 									hasMatchedAll = false;
 								}
@@ -146,8 +147,8 @@ Array.prototype.slice
 									hasMatchedOne = true;
 								}
 							} else if (mainData[i] === category && mainData[i] !== -1) {
-									hasMatchedOne = true;
-								}
+								hasMatchedOne = true;
+							}
 						});
 					}
 

@@ -86,7 +86,9 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
       } else {
         panelData.forEach(function (category, i) {
           if (Array.isArray(category)) {
-            if (mainData[i].filter(function (f) {
+            if (category.every(function (f) {
+              return !f;
+            }) || mainData[i].filter(function (f) {
               return f;
             }).length > 0 && category.some(function (f, j) {
               return f !== mainData[i][j];
