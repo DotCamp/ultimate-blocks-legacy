@@ -68,9 +68,7 @@ export class OldTabHolder extends Component {
 			setAttributes({ activeTab: index });
 
 			tabs.forEach((tab, i) => {
-				updateBlockAttributes(tab.clientId, {
-					isActive: index === i,
-				});
+				updateBlockAttributes(tab.clientId, { isActive: index === i });
 			});
 		};
 
@@ -381,9 +379,7 @@ export class TabHolder extends Component {
 			});
 
 			tabs.forEach((tab, i) => {
-				updateBlockAttributes(tab.clientId, {
-					isActive: index === i,
-				});
+				updateBlockAttributes(tab.clientId, { isActive: index === i });
 			});
 		};
 
@@ -446,7 +442,7 @@ export class TabHolder extends Component {
 								<DragHandle />
 								<span
 									className={"dashicons dashicons-minus remove-tab-icon"}
-									onClick={(_) => onRemoveTitle(i)}
+									onClick={() => onRemoveTitle(i)}
 								/>
 							</div>
 						</div>

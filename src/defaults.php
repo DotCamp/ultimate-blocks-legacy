@@ -1368,6 +1368,22 @@ $defaultValues = array(
              )
         )
     ),
+    'ub/tab-block' => array(
+        'attributes' => array(
+            'index' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'isActive' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'parentID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+        )
+    ),
     'ub/tabbed-content-block' => array(
         'attributes' => array(
             'blockID' => array(

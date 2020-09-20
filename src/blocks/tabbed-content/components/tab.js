@@ -4,6 +4,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const { InnerBlocks } = wp.blockEditor || wp.editor;
+const { withSelect } = wp.data;
 
 registerBlockType("ub/tab", {
 	title: __("Tab"),
@@ -14,22 +15,22 @@ registerBlockType("ub/tab", {
 	attributes: {
 		index: {
 			type: "number",
-			default: 0
+			default: 0,
 		},
 		isActive: {
 			type: "boolean",
-			default: true
-		}
+			default: true,
+		},
 	},
 	supports: {
 		inserter: false,
-		reusable: false
+		reusable: false,
 	},
 	edit(props) {
 		return (
 			<div
 				style={{
-					display: props.attributes.isActive ? "block" : "none"
+					display: props.attributes.isActive ? "block" : "none",
 				}}
 			>
 				<InnerBlocks templateLock={false} />
@@ -46,7 +47,7 @@ registerBlockType("ub/tab", {
 				<InnerBlocks.Content />
 			</div>
 		);
-	}
+	},
 });
 
 registerBlockType("ub/tab-block", {
@@ -58,27 +59,37 @@ registerBlockType("ub/tab-block", {
 	attributes: {
 		index: {
 			type: "number",
-			default: 0
+			default: 0,
 		},
 		isActive: {
 			type: "boolean",
-			default: true
-		}
+			default: true,
+		},
+		parentID: {
+			type: "string",
+			default: "",
+		},
 	},
 	supports: {
 		inserter: false,
-		reusable: false
+		reusable: false,
 	},
-	edit(props) {
+	edit: withSelect((select, ownProps) => ({
+		blockParentId: (
+			select("core/block-editor") || select("core/editor")
+		).getBlockRootClientId(ownProps.clientId),
+	}))(function (props) {
+		const { blockParentId, setAttributes } = props;
+		const { parentID, isActive } = props.attributes;
+
+		if (parentID === "" || parentID !== blockParentId) {
+			setAttributes({ parentID: blockParentId });
+		}
 		return (
-			<div
-				style={{
-					display: props.attributes.isActive ? "block" : "none"
-				}}
-			>
+			<div style={{ display: isActive ? "block" : "none" }}>
 				<InnerBlocks templateLock={false} />
 			</div>
 		);
-	},
-	save: () => <InnerBlocks.Content />
+	}),
+	save: () => <InnerBlocks.Content />,
 });
