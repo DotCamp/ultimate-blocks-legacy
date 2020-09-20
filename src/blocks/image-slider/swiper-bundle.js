@@ -1,5 +1,5 @@
 /**
- * Swiper 6.0.0-alpha.18
+ * Swiper 6.2.0
  * Most modern mobile touch slider and framework with hardware accelerated transitions
  * http://swiperjs.com
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 3, 2020
+ * Released on: September 4, 2020
  */
 
 (function (global, factory) {
@@ -205,7 +205,7 @@
   }
 
   /**
-   * Dom7 3.0.0-alpha.5
+   * Dom7 3.0.0-alpha.7
    * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
    * https://framework7.io/docs/dom7.html
    *
@@ -213,7 +213,7 @@
    *
    * Licensed under MIT
    *
-   * Released on: June 22, 2020
+   * Released on: July 14, 2020
    */
 
   function _inheritsLoose(subClass, superClass) {
@@ -306,11 +306,37 @@
     return _wrapNativeSuper(Class);
   }
 
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return self;
+  }
+  /* eslint-disable no-proto */
+
+
+  function makeReactive(obj) {
+    var proto = obj.__proto__;
+    Object.defineProperty(obj, '__proto__', {
+      get: function get() {
+        return proto;
+      },
+      set: function set(value) {
+        proto.__proto__ = value;
+      }
+    });
+  }
+
   var Dom7 = /*#__PURE__*/function (_Array) {
     _inheritsLoose(Dom7, _Array);
 
     function Dom7(items) {
-      return _Array.call.apply(_Array, [this].concat(items)) || this;
+      var _this;
+
+      _this = _Array.call.apply(_Array, [this].concat(items)) || this;
+      makeReactive(_assertThisInitialized(_this));
+      return _this;
     }
 
     return Dom7;
@@ -1406,6 +1432,129 @@
     return browser;
   }
 
+  var Resize = {
+    name: 'resize',
+    create: function create() {
+      var swiper = this;
+      extend$1(swiper, {
+        resize: {
+          resizeHandler: function resizeHandler() {
+            if (!swiper || swiper.destroyed || !swiper.initialized) return;
+            swiper.emit('beforeResize');
+            swiper.emit('resize');
+          },
+          orientationChangeHandler: function orientationChangeHandler() {
+            if (!swiper || swiper.destroyed || !swiper.initialized) return;
+            swiper.emit('orientationchange');
+          }
+        }
+      });
+    },
+    on: {
+      init: function init(swiper) {
+        var window = getWindow(); // Emit resize
+
+        window.addEventListener('resize', swiper.resize.resizeHandler); // Emit orientationchange
+
+        window.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+      },
+      destroy: function destroy(swiper) {
+        var window = getWindow();
+        window.removeEventListener('resize', swiper.resize.resizeHandler);
+        window.removeEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+      }
+    }
+  };
+
+  var Observer = {
+    attach: function attach(target, options) {
+      if (options === void 0) {
+        options = {};
+      }
+
+      var window = getWindow();
+      var swiper = this;
+      var ObserverFunc = window.MutationObserver || window.WebkitMutationObserver;
+      var observer = new ObserverFunc(function (mutations) {
+        // The observerUpdate event should only be triggered
+        // once despite the number of mutations.  Additional
+        // triggers are redundant and are very costly
+        if (mutations.length === 1) {
+          swiper.emit('observerUpdate', mutations[0]);
+          return;
+        }
+
+        var observerUpdate = function observerUpdate() {
+          swiper.emit('observerUpdate', mutations[0]);
+        };
+
+        if (window.requestAnimationFrame) {
+          window.requestAnimationFrame(observerUpdate);
+        } else {
+          window.setTimeout(observerUpdate, 0);
+        }
+      });
+      observer.observe(target, {
+        attributes: typeof options.attributes === 'undefined' ? true : options.attributes,
+        childList: typeof options.childList === 'undefined' ? true : options.childList,
+        characterData: typeof options.characterData === 'undefined' ? true : options.characterData
+      });
+      swiper.observer.observers.push(observer);
+    },
+    init: function init() {
+      var swiper = this;
+      if (!swiper.support.observer || !swiper.params.observer) return;
+
+      if (swiper.params.observeParents) {
+        var containerParents = swiper.$el.parents();
+
+        for (var i = 0; i < containerParents.length; i += 1) {
+          swiper.observer.attach(containerParents[i]);
+        }
+      } // Observe container
+
+
+      swiper.observer.attach(swiper.$el[0], {
+        childList: swiper.params.observeSlideChildren
+      }); // Observe wrapper
+
+      swiper.observer.attach(swiper.$wrapperEl[0], {
+        attributes: false
+      });
+    },
+    destroy: function destroy() {
+      var swiper = this;
+      swiper.observer.observers.forEach(function (observer) {
+        observer.disconnect();
+      });
+      swiper.observer.observers = [];
+    }
+  };
+  var Observer$1 = {
+    name: 'observer',
+    params: {
+      observer: false,
+      observeParents: false,
+      observeSlideChildren: false
+    },
+    create: function create() {
+      var swiper = this;
+      bindModuleMethods(swiper, {
+        observer: _extends(_extends({}, Observer), {}, {
+          observers: []
+        })
+      });
+    },
+    on: {
+      init: function init(swiper) {
+        swiper.observer.init();
+      },
+      destroy: function destroy(swiper) {
+        swiper.observer.destroy();
+      }
+    }
+  };
+
   var modular = {
     useParams: function useParams(instanceParams) {
       var instance = this;
@@ -1538,6 +1687,12 @@
       data.unshift(context);
       var eventsArray = Array.isArray(events) ? events : events.split(' ');
       eventsArray.forEach(function (event) {
+        if (self.eventsAnyListeners && self.eventsAnyListeners.length) {
+          self.eventsAnyListeners.forEach(function (eventHandler) {
+            eventHandler.apply(context, [event].concat(data));
+          });
+        }
+
         if (self.eventsListeners && self.eventsListeners[event]) {
           var handlers = [];
           self.eventsListeners[event].forEach(function (eventHandler) {
@@ -4103,6 +4258,7 @@
         allowSlidePrev: swiper.params.allowSlidePrev
       });
       swiper.currentBreakpoint = breakpoint;
+      swiper.emit('_beforeBreakpoint', breakpointParams);
 
       if (needsReLoop && initialized) {
         swiper.loopDestroy();
@@ -4480,13 +4636,6 @@
       swiper.browser = getBrowser();
       swiper.eventsListeners = {};
       swiper.eventsAnyListeners = [];
-      Object.keys(prototypes).forEach(function (prototypeGroup) {
-        Object.keys(prototypes[prototypeGroup]).forEach(function (protoMethod) {
-          if (!Swiper.prototype[protoMethod]) {
-            Swiper.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
-          }
-        });
-      });
 
       if (typeof swiper.modules === 'undefined') {
         swiper.modules = {};
@@ -4528,6 +4677,10 @@
         Object.keys(swiper.params.on).forEach(function (eventName) {
           swiper.on(eventName, swiper.params.on[eventName]);
         });
+      }
+
+      if (swiper.params && swiper.params.onAny) {
+        swiper.onAny(swiper.params.onAny);
       } // Save Dom lib
 
 
@@ -4957,128 +5110,12 @@
     return Swiper;
   }();
 
-  var Resize = {
-    name: 'resize',
-    create: function create() {
-      var swiper = this;
-      extend$1(swiper, {
-        resize: {
-          resizeHandler: function resizeHandler() {
-            if (!swiper || swiper.destroyed || !swiper.initialized) return;
-            swiper.emit('beforeResize');
-            swiper.emit('resize');
-          },
-          orientationChangeHandler: function orientationChangeHandler() {
-            if (!swiper || swiper.destroyed || !swiper.initialized) return;
-            swiper.emit('orientationchange');
-          }
-        }
-      });
-    },
-    on: {
-      init: function init(swiper) {
-        var window = getWindow(); // Emit resize
-
-        window.addEventListener('resize', swiper.resize.resizeHandler); // Emit orientationchange
-
-        window.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
-      },
-      destroy: function destroy(swiper) {
-        var window = getWindow();
-        window.removeEventListener('resize', swiper.resize.resizeHandler);
-        window.removeEventListener('orientationchange', swiper.resize.orientationChangeHandler);
-      }
-    }
-  };
-
-  var Observer = {
-    attach: function attach(target, options) {
-      if (options === void 0) {
-        options = {};
-      }
-
-      var window = getWindow();
-      var swiper = this;
-      var ObserverFunc = window.MutationObserver || window.WebkitMutationObserver;
-      var observer = new ObserverFunc(function (mutations) {
-        // The observerUpdate event should only be triggered
-        // once despite the number of mutations.  Additional
-        // triggers are redundant and are very costly
-        if (mutations.length === 1) {
-          swiper.emit('observerUpdate', mutations[0]);
-          return;
-        }
-
-        var observerUpdate = function observerUpdate() {
-          swiper.emit('observerUpdate', mutations[0]);
-        };
-
-        if (window.requestAnimationFrame) {
-          window.requestAnimationFrame(observerUpdate);
-        } else {
-          window.setTimeout(observerUpdate, 0);
-        }
-      });
-      observer.observe(target, {
-        attributes: typeof options.attributes === 'undefined' ? true : options.attributes,
-        childList: typeof options.childList === 'undefined' ? true : options.childList,
-        characterData: typeof options.characterData === 'undefined' ? true : options.characterData
-      });
-      swiper.observer.observers.push(observer);
-    },
-    init: function init() {
-      var swiper = this;
-      if (!swiper.support.observer || !swiper.params.observer) return;
-
-      if (swiper.params.observeParents) {
-        var containerParents = swiper.$el.parents();
-
-        for (var i = 0; i < containerParents.length; i += 1) {
-          swiper.observer.attach(containerParents[i]);
-        }
-      } // Observe container
-
-
-      swiper.observer.attach(swiper.$el[0], {
-        childList: swiper.params.observeSlideChildren
-      }); // Observe wrapper
-
-      swiper.observer.attach(swiper.$wrapperEl[0], {
-        attributes: false
-      });
-    },
-    destroy: function destroy() {
-      var swiper = this;
-      swiper.observer.observers.forEach(function (observer) {
-        observer.disconnect();
-      });
-      swiper.observer.observers = [];
-    }
-  };
-  var Observer$1 = {
-    name: 'observer',
-    params: {
-      observer: false,
-      observeParents: false,
-      observeSlideChildren: false
-    },
-    create: function create() {
-      var swiper = this;
-      bindModuleMethods(swiper, {
-        observer: _extends(_extends({}, Observer), {}, {
-          observers: []
-        })
-      });
-    },
-    on: {
-      init: function init(swiper) {
-        swiper.observer.init();
-      },
-      destroy: function destroy(swiper) {
-        swiper.observer.destroy();
-      }
-    }
-  };
+  Object.keys(prototypes).forEach(function (prototypeGroup) {
+    Object.keys(prototypes[prototypeGroup]).forEach(function (protoMethod) {
+      Swiper.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
+    });
+  });
+  Swiper.use([Resize, Observer$1]);
 
   var Virtual = {
     update: function update(force) {
@@ -5768,9 +5805,20 @@
     },
     animateSlider: function animateSlider(newEvent) {
       var swiper = this;
-      var window = getWindow(); // If the movement is NOT big enough and
+      var window = getWindow();
+
+      if (this.params.mousewheel.thresholdDelta && newEvent.delta < this.params.mousewheel.thresholdDelta) {
+        // Prevent if delta of wheel scroll delta is below configured threshold
+        return false;
+      }
+
+      if (this.params.mousewheel.thresholdTime && now() - swiper.mousewheel.lastScrollTime < this.params.mousewheel.thresholdTime) {
+        // Prevent if time between scrolls is below configured threshold
+        return false;
+      } // If the movement is NOT big enough and
       // if the last time the user scrolled was too close to the current one (avoid continuously triggering the slider):
       //   Don't go any further (avoid insignificant scroll movement).
+
 
       if (newEvent.delta >= 6 && now() - swiper.mousewheel.lastScrollTime < 60) {
         // Return false as a default
@@ -5874,7 +5922,9 @@
         invert: false,
         forceToAxis: false,
         sensitivity: 1,
-        eventsTarget: 'container'
+        eventsTarget: 'container',
+        thresholdDelta: null,
+        thresholdTime: null
       }
     },
     create: function create() {
@@ -7999,8 +8049,11 @@
         swiper.pagination.bullets.each(function (bulletEl) {
           var $bulletEl = $(bulletEl);
           swiper.a11y.makeElFocusable($bulletEl);
-          swiper.a11y.addElRole($bulletEl, 'button');
-          swiper.a11y.addElLabel($bulletEl, params.paginationBulletMessage.replace(/\{\{index\}\}/, $bulletEl.index() + 1));
+
+          if (!swiper.params.pagination.renderBullet) {
+            swiper.a11y.addElRole($bulletEl, 'button');
+            swiper.a11y.addElLabel($bulletEl, params.paginationBulletMessage.replace(/\{\{index\}\}/, $bulletEl.index() + 1));
+          }
         });
       }
     },
@@ -9242,10 +9295,9 @@
   };
 
   // Swiper Class
-  var components = [Resize, Observer$1, Virtual$1, Keyboard$1, Mousewheel$1, Navigation$1, Pagination$1, Scrollbar$1, Parallax$1, Zoom$1, Lazy$1, Controller$1, A11y$1, History$1, HashNavigation$1, Autoplay$1, EffectFade, EffectCube, EffectFlip, EffectCoverflow, Thumbs$1];
+  var components = [Virtual$1, Keyboard$1, Mousewheel$1, Navigation$1, Pagination$1, Scrollbar$1, Parallax$1, Zoom$1, Lazy$1, Controller$1, A11y$1, History$1, HashNavigation$1, Autoplay$1, EffectFade, EffectCube, EffectFlip, EffectCoverflow, Thumbs$1];
   Swiper.use(components);
 
   return Swiper;
 
 })));
-//# sourceMappingURL=swiper-bundle.js.map
