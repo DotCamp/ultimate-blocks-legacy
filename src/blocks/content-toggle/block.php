@@ -63,7 +63,7 @@ function ub_render_content_toggle_panel_block($attributes, $content){
                     '"><span class="' . $classNamePrefix . '-accordion-state-indicator ' . $icon_class  .
                     ( $collapsed ? '' : ' open' ) . '"></span>
                     </div>').
-                '</div><div class="' . $classNamePrefix . '-accordion-content-wrap'.
+                '</div><div role="region" class="' . $classNamePrefix . '-accordion-content-wrap'.
                         ($collapsed ? ' ub-hide' : '') . '" id="ub-content-toggle-panel-' . $index. '-' . $parentID . '">' . $content
                 . '</div></div>' ;
 }
