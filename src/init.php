@@ -209,7 +209,7 @@ function ub_include_block_attribute_css() {
                                 'border: none;';
                             }
                             $blockStylesheets .= '}' . PHP_EOL . 
-                            $prefix. ' .ub-button-container:nth-child('.($key+1).') ub-button-content-holder{' . PHP_EOL .
+                            $prefix. ' .ub-button-container:nth-child('.($key+1).') .ub-button-content-holder{' . PHP_EOL .
                                 'flex-direction: '.($attributes['buttons'][$key]['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
                             '}' . PHP_EOL;
                         }
