@@ -321,7 +321,9 @@ registerBlockType("ub/styled-list", {
 									allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
 								} ${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
-						}' color='%23${iconColor.slice(1)}'><path fill='currentColor' d='${
+						}' color='${
+							iconColor ? `%23${iconColor.slice(1)}` : "inherit"
+						}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
 						}'></path></svg>");}
 				
