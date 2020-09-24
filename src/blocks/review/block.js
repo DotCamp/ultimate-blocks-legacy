@@ -285,9 +285,7 @@ registerBlockType("ub/review", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({
-				blockID: block.clientId,
-			});
+			setAttributes({ blockID: block.clientId });
 		}
 
 		const setAlignment = (target, value) => {
@@ -361,25 +359,19 @@ registerBlockType("ub/review", {
 								{
 									value: activeStarColor,
 									onChange: (colorValue) =>
-										setAttributes({
-											activeStarColor: colorValue,
-										}),
+										setAttributes({ activeStarColor: colorValue }),
 									label: __("Active Star Color"),
 								},
 								{
 									value: inactiveStarColor,
 									onChange: (colorValue) =>
-										setAttributes({
-											inactiveStarColor: colorValue,
-										}),
+										setAttributes({ inactiveStarColor: colorValue }),
 									label: __("Inactive Star Color"),
 								},
 								{
 									value: starOutlineColor,
 									onChange: (colorValue) =>
-										setAttributes({
-											starOutlineColor: colorValue,
-										}),
+										setAttributes({ starOutlineColor: colorValue }),
 									label: __("Star Outline Color"),
 								},
 							]}
@@ -392,17 +384,13 @@ registerBlockType("ub/review", {
 							{
 								value: callToActionBackColor,
 								onChange: (colorValue) =>
-									setAttributes({
-										callToActionBackColor: colorValue,
-									}),
+									setAttributes({ callToActionBackColor: colorValue }),
 								label: __("Button Background"),
 							},
 							{
 								value: callToActionForeColor,
 								onChange: (colorValue) =>
-									setAttributes({
-										callToActionForeColor: colorValue,
-									}),
+									setAttributes({ callToActionForeColor: colorValue }),
 								label: __("Button Text Color"),
 							},
 						]}
@@ -414,7 +402,7 @@ registerBlockType("ub/review", {
 								id="ub-review-cta-enable"
 								label={__("Enable")}
 								checked={enableCTA}
-								onChange={(_) => setAttributes({ enableCTA: !enableCTA })}
+								onChange={() => setAttributes({ enableCTA: !enableCTA })}
 							/>
 						</PanelRow>
 						{enableCTA && (
@@ -427,10 +415,8 @@ registerBlockType("ub/review", {
 										id="ub-review-cta-nofollow"
 										label={__("Add nofollow")}
 										checked={ctaNoFollow}
-										onChange={(_) =>
-											setAttributes({
-												ctaNoFollow: !ctaNoFollow,
-											})
+										onChange={() =>
+											setAttributes({ ctaNoFollow: !ctaNoFollow })
 										}
 									/>
 								</PanelRow>
@@ -442,10 +428,8 @@ registerBlockType("ub/review", {
 										id="ub-review-cta-openinnewtab"
 										label={__("Open link in new tab")}
 										checked={ctaOpenInNewTab}
-										onChange={(_) =>
-											setAttributes({
-												ctaOpenInNewTab: !ctaOpenInNewTab,
-											})
+										onChange={() =>
+											setAttributes({ ctaOpenInNewTab: !ctaOpenInNewTab })
 										}
 									/>
 								</PanelRow>
@@ -461,7 +445,7 @@ registerBlockType("ub/review", {
 								id="ub-review-schema-toggle"
 								label={__("Enable review schema")}
 								checked={enableReviewSchema}
-								onChange={(_) => {
+								onChange={() => {
 									let newAttributes = {
 										enableReviewSchema: !enableReviewSchema,
 									};
@@ -485,14 +469,13 @@ registerBlockType("ub/review", {
 										id="ub-review-image-toggle"
 										label={__("Enable review image")}
 										checked={enableImage}
-										onChange={(_) =>
-											setAttributes({
-												enableImage: !enableImage,
-											})
+										onChange={() =>
+											setAttributes({ enableImage: !enableImage })
 										}
 									/>
 								</PanelRow>
-								<PanelRow>
+
+								{enableImage && (
 									<RangeControl
 										label={__("Image size")}
 										value={imageSize}
@@ -500,7 +483,7 @@ registerBlockType("ub/review", {
 										min={1}
 										max={200}
 									/>
-								</PanelRow>
+								)}
 								<PanelRow>
 									<label htmlFor="ub-review-description-toggle">
 										{__("Enable review description")}
@@ -509,10 +492,8 @@ registerBlockType("ub/review", {
 										id="ub-review-description-toggle"
 										label={__("Enable review description")}
 										checked={enableDescription}
-										onChange={(_) =>
-											setAttributes({
-												enableDescription: !enableDescription,
-											})
+										onChange={() =>
+											setAttributes({ enableDescription: !enableDescription })
 										}
 									/>
 								</PanelRow>
@@ -571,7 +552,9 @@ registerBlockType("ub/review", {
 									<TextControl
 										label={__("Offer Price")}
 										value={offerPrice}
-										onChange={(offerPrice) => setAttributes({ offerPrice })}
+										onChange={(val) =>
+											setAttributes({ offerPrice: Number(val) })
+										}
 									/>
 									<SelectControl
 										label={__("Offer Status")}
@@ -595,7 +578,7 @@ registerBlockType("ub/review", {
 									<ToggleControl
 										label={__("Offer expiration")}
 										checked={offerExpiry > 0}
-										onChange={(_) =>
+										onChange={() =>
 											setAttributes({
 												offerExpiry: offerExpiry
 													? 0
@@ -619,20 +602,22 @@ registerBlockType("ub/review", {
 									<TextControl
 										label={__("Offer Count")}
 										value={offerCount}
-										onChange={(offerCount) => setAttributes({ offerCount })}
+										onChange={(val) =>
+											setAttributes({ offerCount: Number(val) })
+										}
 									/>
 									<TextControl
 										label={__(`Lowest Available Price (${offerCurrency})`)}
 										value={offerLowPrice}
-										onChange={(offerLowPrice) =>
-											setAttributes({ offerLowPrice })
+										onChange={(val) =>
+											setAttributes({ offerLowPrice: Number(val) })
 										}
 									/>
 									<TextControl
 										label={__(`Highest Available Price (${offerCurrency})`)}
 										value={offerHighPrice}
-										onChange={(offerHighPrice) =>
-											setAttributes({ offerHighPrice })
+										onChange={(val) =>
+											setAttributes({ offerHighPrice: Number(val) })
 										}
 									/>
 								</Fragment>
