@@ -32,10 +32,14 @@ class Ultimate_Blocks_Deactivator {
 	public static function deactivate() {
 
 		delete_option( 'ultimate_blocks' );
-		unlink(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css');
-		unlink(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css');
-		unlink(wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png');
-		rmdir(wp_upload_dir()['basedir'] . '/ultimate-blocks');
+
+		if(file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks')){
+			unlink(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css');
+			unlink(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css');
+			unlink(wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png');
+			rmdir(wp_upload_dir()['basedir'] . '/ultimate-blocks');
+		}
+
 		delete_option('ultimate_blocks_css_version');
 		delete_transient( '_welcome_redirect_ub' );
 		delete_option( 'UltimateBlocks_installDate', date( 'Y-m-d h:i:s' ) );
