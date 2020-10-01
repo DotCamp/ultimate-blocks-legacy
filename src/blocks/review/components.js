@@ -228,6 +228,7 @@ export class ReviewBody extends Component {
 			selectedStarColor,
 			starOutlineColor,
 			setEditable,
+			activeStarIndex,
 			setActiveStarIndex,
 			alignments,
 			enableCTA,
@@ -363,6 +364,9 @@ export class ReviewBody extends Component {
 													.map((i) => i.value)
 													.reduce((total, v) => total + v) / newItems.length,
 										});
+										if (i <= activeStarIndex) {
+											setActiveStarIndex(activeStarIndex - 1);
+										}
 									}}
 								/>
 							)}

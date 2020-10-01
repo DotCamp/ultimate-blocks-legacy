@@ -986,6 +986,18 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'itemType' => array(
+                'type' => 'string',
+                'default' => 'Product'
+            ),
+            'itemSubtype' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'itemSubsubtype' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'description' => array(
                 'type' => 'string',
                 'default' => ''
@@ -1138,7 +1150,96 @@ $defaultValues = array(
             'offerExpiry' => array(
                 'type' => 'number',
                 'default' => 0
+            ),
+            //BEGIN SOFTWAREAPPLICATION ATTRIBUTES
+            'appCategory' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'operatingSystem' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            //END SOFTWAREAPPLICATION ATTRIBUTES
+            'servesCuisine' => array( //FOR RESTAURANT ONLY
+                'type' => 'array',
+                'default' => array(),
+                'items' => array(
+                    'type' => 'string'
+                )
+            ),
+            //BEGIN LOCALBUSINESS/RESTAURANT/ORGANIZATION ATTRIIBUTES
+            'telephone' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'addressName' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'address' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'priceRange' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            //END LOCALBUSINESS/RESTAURANT/ORGANIZATION ATTRIBUTES
+            //BEGIN BOOK ATTRIBUTES
+            'bookAuthorName' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'isbn' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'reviewPublisher' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'publicationDate' => array(
+                'type' => 'number',
+                'default' => time()
+            ),
+            //END BOOK ATTRIBUTES
+            //BEGIN EVENT ATTRIBUTES
+            'eventStartDate' => array(
+                'type' => 'number',
+                'default' => time() + 86400
+            ),
+            'eventEndDate' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'usePhysicalAddress' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'eventPage' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'organizer' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'performer' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            //END EVENT ATTRIBUTES
+            //BEGIN VIDEO OBJECT ATTRIBUTES
+            'videoUploadDate' => array(
+                'type' => 'number',
+                'default' => time()
+            ),
+            'videoURL' => array(
+                'type' => 'string',
+                'default' => ''
             )
+            //END VIDEO OBJECT ATTRIBUTES
         )
     ),
     'ub/social-share' => array(

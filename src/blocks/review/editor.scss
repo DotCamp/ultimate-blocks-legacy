@@ -7,6 +7,7 @@
 
 .ub_review_block .ub_review_image_container {
 	position: relative;
+	margin-left: auto;
 	.ub-remove-image {
 		position: absolute;
 		right: 0;
@@ -25,7 +26,7 @@
 }
 
 .ub_review_upload_button {
-	align-self: center;
+	margin-left: auto;
 }
 .ub_review_summary .ub_review_overall_value {
 	display: flex;
@@ -35,5 +36,22 @@
 	> .ub_review_average {
 		flex-basis: 25%;
 		margin-left: auto;
+	}
+}
+
+.ub_review_cuisine_list {
+	list-style: none;
+	li {
+		display: inline;
+		border: 1px solid black;
+		border-radius: 5px;
+		padding: 3px;
+	}
+}
+
+#ub_review_event_page_input,
+#ub_review_video_url_input {
+	input {
+		width: 200px;
 	}
 }

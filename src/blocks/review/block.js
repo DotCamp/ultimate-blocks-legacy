@@ -11,11 +11,12 @@ import {
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { BlockControls, InspectorControls, PanelColorSettings } =
+const { BlockControls, InspectorControls, PanelColorSettings, URLInput } =
 	wp.blockEditor || wp.editor;
 
 const {
 	Toolbar,
+	Button,
 	IconButton,
 	FormToggle,
 	PanelBody,
@@ -44,6 +45,18 @@ const attributes = {
 		default: "",
 	},
 	itemName: {
+		type: "string",
+		default: "",
+	},
+	itemType: {
+		type: "string",
+		default: "Product",
+	},
+	itemSubtype: {
+		type: "string",
+		default: "",
+	},
+	itemSubsubtype: {
 		type: "string",
 		default: "",
 	},
@@ -187,7 +200,7 @@ const attributes = {
 		type: "number",
 		default: 0,
 	},
-	//end  aggregate offer-only attributes
+	//end aggregate offer-only attributes
 	offerPrice: {
 		//only for offer
 		type: "number",
@@ -202,6 +215,102 @@ const attributes = {
 		//default: 60 * (10080 + Math.ceil(Date.now() / 60000)),
 		default: 0,
 	},
+	usePhysicalAddress: {
+		type: "boolean",
+		default: true, //can be set to false when using event itemType
+	},
+	address: {
+		//for restaurant address, organiztion location and event location
+		type: "string",
+		default: "",
+	},
+	addressName: {
+		//for event location
+		type: "string",
+		default: "",
+	},
+	url: {
+		//for event and organization virtual location
+		type: "string",
+		default: "",
+	},
+	//beginning of book-only attributes
+	bookAuthorName: {
+		type: "string",
+		default: "",
+	},
+	isbn: {
+		type: "string",
+		default: "",
+	},
+	reviewPublisher: {
+		type: "string",
+		default: "",
+	},
+	reviewPublicationDate: {
+		type: "number",
+		default: Math.ceil(Date.now() / 1000),
+	},
+	//end of book-only attributes
+	cuisines: {
+		//for restaurant
+		type: "array",
+		default: [], //should be an array of strings
+	},
+	phoneNumber: {
+		type: "string",
+		default: "",
+	},
+	priceRange: {
+		type: "string",
+		default: "",
+	},
+	appCategory: {
+		//softwareapplication only
+		type: "string",
+		default: "",
+	},
+	operatingSystem: {
+		//softwareapplication only
+		type: "string",
+		default: "",
+	},
+	provider: {
+		//for course
+		type: "string",
+		default: "",
+	},
+	//beginning of event-only attributes
+	eventStartDate: {
+		type: "number",
+		default: 60 * (1440 + Math.ceil(Date.now() / 60000)), // 24 hours from Date.now
+	},
+	eventEndDate: {
+		type: "number",
+		default: 0, //toggling an option should set this to 48 hours from Date.now
+	},
+	eventPage: {
+		type: "string",
+		default: "",
+	},
+	organizer: {
+		type: "string",
+		default: "",
+	},
+	performer: {
+		type: "string",
+		default: "",
+	},
+	//end event only attributes
+	//begin video object attributes
+	videoUploadDate: {
+		type: "number",
+		default: Math.ceil(Date.now() / 1000),
+	},
+	videoURL: {
+		type: "string",
+		default: "",
+	},
 };
 
 registerBlockType("ub/review", {
@@ -211,7 +320,12 @@ registerBlockType("ub/review", {
 	keywords: [__("Review"), __("Ultimate Blocks")],
 	attributes,
 	edit: compose([
-		withState({ editable: "", editedStar: 0 }),
+		withState({
+			editable: "",
+			editedStar: 0,
+			lastCuisine: "",
+			setEventEndDate: false,
+		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
 				select("core/block-editor") || select("core/editor");
@@ -228,6 +342,9 @@ registerBlockType("ub/review", {
 				blockID,
 				authorName,
 				itemName,
+				itemType,
+				itemSubtype,
+				itemSubsubtype,
 				description,
 				imgID,
 				imgAlt,
@@ -266,11 +383,33 @@ registerBlockType("ub/review", {
 				offerPrice,
 				offerCount,
 				offerExpiry,
+				cuisines,
+				appCategory,
+				operatingSystem,
+				provider,
+				isbn,
+				bookAuthorName,
+				reviewPublisher,
+				reviewPublicationDate,
+				address,
+				addressName,
+				priceRange,
+				phoneNumber,
+				eventStartDate,
+				eventEndDate,
+				usePhysicalAddress,
+				eventPage,
+				organizer,
+				performer,
+				videoUploadDate,
+				videoURL,
 			},
 			setAttributes,
 			isSelected,
 			editable,
 			editedStar,
+			lastCuisine,
+			setEventEndDate,
 			setState,
 			block,
 			getBlock,
@@ -326,16 +465,599 @@ registerBlockType("ub/review", {
 			});
 		}
 
+		let itemTypeExtras;
+
+		const subtypeCategories = {
+			Book: ["Audiobook"],
+			Event: [
+				"BusinessEvent",
+				"ChildrensEvent",
+				"ComedyEvent",
+				"CourseInstance",
+				"DanceEvent",
+				"DeliveryEvent",
+				"EducationEvent",
+				"EventSeries", //pending
+				"Festival",
+				"FoodEvent",
+				"Hackathon", //pending
+				"LiteraryEvent",
+				"MusicEvent",
+				"PublicationEvent",
+				"SaleEvent",
+				"ScreeningEvent",
+				"SocialEvent",
+				"SportsEvent",
+				"TheaterEvent",
+				"VisualArtsEvent",
+			],
+			Game: ["VideoGame"],
+			LocalBusiness: [
+				"AnimalShelter",
+				"ArchiveOrganization", //pending
+				"AutomotiveBusiness",
+				"ChildCare",
+				"Dentist",
+				"DryCleaningOrLaundry",
+				"EmergencyService",
+				"EmploymentAgency",
+				"EntertainmentBusiness",
+				"FinancialService",
+				"FoodEstablishment",
+				"GovernmentOffice",
+				"HealthAndBeautyBusiness",
+				"HomeAndConstructionBusiness",
+				"InternetCafe",
+				"LegalService",
+				"Library",
+				"LodgingBusiness",
+				"MedicalBusiness",
+				"ProfessionalService",
+				"RadioStation",
+				"RealEstateAgent",
+				"RecyclingCenter",
+				"SelfStorage",
+				"ShoppingCenter",
+				"SportsActivityLocation",
+				"TelevisionStation",
+				"TouristInformationCenter",
+				"TravelAgency",
+			],
+			MediaObject: [
+				"3DModel", //pending
+				"AudioObject",
+				"DataDownload",
+				"ImageObject",
+				"LegislationObject", //pending
+				"MusicVideoObject",
+				"VideoObject",
+			],
+			MusicPlaylist: ["MusicAlbum", "MusicRelease"],
+			Organization: [
+				"Airline",
+				"Consortium", //pending
+				"Corporation",
+				"EducationalOrganization",
+				"FundingScheme", //pending
+				"GovernmentOrganization",
+				"LibrarySystem", //pending
+				"MedicalOrganization",
+				"NewsMediaOrganization", //pending
+				"NGO",
+				"PerformingGroup",
+				"Project", //pending
+				"SportsOrganization",
+				"WorkersUnion",
+			],
+			Product: [
+				"IndividualProduct",
+				"ProductCollection",
+				"ProductGroup",
+				"ProductModel",
+				"SomeProducts",
+				"Vehicle",
+			],
+			SoftwareApplication: ["MobileApplication", "VideoGame", "WebApplication"],
+		};
+
+		const subsubtypes = {
+			PublicationEvent: ["BroadcastEvent", "OnDemandEvent"],
+			EducationalOrganization: [
+				"CollegeOrUniversity",
+				"ElementarySchool",
+				"HighSchool",
+				"MiddleSchool",
+				"Preschool",
+				"School",
+			],
+			MedicalOrganization: [
+				"Dentist",
+				"DiagnosticLab",
+				"Hospital",
+				"MedicalClinic",
+				"Pharmacy",
+				"Physician",
+				"VeterinaryCare",
+			],
+			PerformingGroup: ["DanceGroup", "MusicGroup", "TheaterGroup"],
+			Project: ["FundingAgency", "ResearchProject"],
+			SportsOrganization: ["SportsTeam"],
+			AutomotiveBusiness: [
+				"AutoBodyShop",
+				"AutoDealer",
+				"AutoPartsStore",
+				"AutoRental",
+				"AutoRepair",
+				"AutoWash",
+				"GasStation",
+				"MotorcycleDealer",
+				"MotorcycleRepair",
+			],
+			EmergencyService: ["FireStation", "Hospital", "PoliceStation"],
+			EntertainmentBusiness: [
+				"AdultEntertainment",
+				"AmusementPark",
+				"ArtGallery",
+				"Casino",
+				"ComedyClub",
+				"MovieTheater",
+				"NightClub",
+			],
+			FinancialService: [
+				"AccountingService",
+				"AutomatedTeller",
+				"BankOrCreditUnion",
+				"InsuranceAgency",
+			],
+			FoodEstablishment: [
+				"Bakery",
+				"BarOrPub",
+				"Brewery",
+				"CafeOrCoffeeShop",
+				"Distillery",
+				"FastFoodRestaurant",
+				"IceCreamShop",
+				"Restaurant",
+				"Winery",
+			],
+			GovernmentOffice: ["PostOffice"],
+			HealthAndBeautyBusiness: [
+				"BeautySalon",
+				"DaySpa",
+				"HairSalon",
+				"HealthClub",
+				"NailSalon",
+				"TattooParlor",
+			],
+			HomeAndConstructionBusiness: [
+				"Electrician",
+				"GeneralContractor",
+				"HVACBusiness",
+				"HousePainter",
+				"Locksmith",
+				"MovingCompany",
+				"Plumber",
+				"RoofingContractor",
+			],
+			LegalService: ["Attorney", "Notary"],
+			LodgingBusiness: [
+				"BedAndBreakfast",
+				"Campground",
+				"Hostel",
+				"Hotel",
+				"Motel",
+				"Resort",
+			],
+			MedicalBusiness: [
+				//only subtypes that support reviews are included
+				"Dentist",
+				"MedicalClinic",
+				"Optician",
+				"Pharmacy",
+				"Physician",
+			],
+			SportsActivityLocation: [
+				"BowlingAlley",
+				"ExerciseGym",
+				"GolfCourse",
+				"HealthClub",
+				"PublicSwimmingPool",
+				"SkiResort",
+				"SportsClub",
+				"StadiumOrArena",
+				"TennisComplex",
+			],
+			Store: [
+				"AutoPartsStore",
+				"BikeStore",
+				"BookStore",
+				"ClothingStore",
+				"ComputerStore",
+				"ConvenienceStore",
+				"DepartmentStore",
+				"ElectronicsStore",
+				"Florist",
+				"FurnitureStore",
+				"GardenStore",
+				"GroceryStore",
+				"HardwareStore",
+				"HobbyShop",
+				"HomeGoodsStore",
+				"JewelryStore",
+				"LiquorStore",
+				"MensClothingStore",
+				"MobilePhoneStore",
+				"MovieRentalStore",
+				"MusicStore",
+				"OfficeEquipmentStore",
+				"OutletStore",
+				"PawnShop",
+				"PetStore",
+				"ShoeStore",
+				"SportingGoodsStore",
+				"TireShop",
+				"ToyStore",
+				"WholesaleStore",
+			],
+		};
+
+		const addressInput = (
+			<TextControl
+				label={__("Address")}
+				value={address}
+				onChange={(address) => setAttributes({ address })}
+			/>
+		);
+		const cuisineInput = (
+			<Fragment>
+				<p>{__("Serves cuisine")}</p>
+				<ul className="ub_review_cuisine_list">
+					{cuisines.length > 0 ? (
+						cuisines.map((c, i) => (
+							<li>
+								{c}
+								<span
+									class="dashicons dashicons-dismiss"
+									onClick={() =>
+										setAttributes({
+											cuisines: [
+												...cuisines.slice(0, i),
+												...cuisines.slice(i + 1),
+											],
+										})
+									}
+								/>
+							</li>
+						))
+					) : (
+						<span>{__("Cuisine list empty")}</span>
+					)}
+				</ul>
+				<label>{__("Add a cuisine to the list")}</label>
+				<input
+					type="text"
+					value={lastCuisine}
+					onKeyUp={(e) => {
+						if (e.key === "Enter" && e.target.value !== "") {
+							setAttributes({ cuisines: [...cuisines, e.target.value] });
+							setState({ lastCuisine: "" });
+						}
+					}}
+					onChange={(e) => {
+						if (e.target.value.includes(",")) {
+							const latestItemArray = e.target.value.split(",");
+
+							if (latestItemArray[0] !== "") {
+								setAttributes({
+									cuisines: [
+										...(cuisines.length > 1 || cuisines[0] !== ""
+											? cuisines
+											: []),
+										...latestItemArray.slice(0, latestItemArray.length - 1),
+									],
+								});
+								setState({
+									lastCuisine: latestItemArray[latestItemArray.length - 1],
+								});
+							}
+						} else {
+							setState({ lastCuisine: e.target.value });
+						}
+					}}
+					onBlur={() => {
+						if (lastCuisine !== "") {
+							setAttributes({
+								cuisines: [
+									...(cuisines.length > 1 || cuisines[0] !== ""
+										? cuisines
+										: []),
+									lastCuisine,
+								],
+							});
+							setState({ lastCuisine: "" });
+						}
+					}}
+				/>
+			</Fragment>
+		);
+
+		switch (itemType) {
+			//default:
+			case "Book":
+				itemTypeExtras = (
+					<Fragment>
+						<TextControl
+							label={__("ISBN")}
+							value={isbn}
+							onChange={(isbn) => setAttributes({ isbn })}
+						/>
+						<TextControl
+							label={__("Book author name")}
+							value={bookAuthorName}
+							onChange={(bookAuthorName) => setAttributes({ bookAuthorName })}
+						/>
+						<TextControl
+							label={__("Review publisher")}
+							value={reviewPublisher}
+							onChange={(reviewPublisher) => setAttributes({ reviewPublisher })}
+						/>
+						<p>{__("Review publication date")}</p>
+						<DatePicker
+							currentDate={reviewPublicationDate * 1000}
+							onChange={(newDate) =>
+								setAttributes({
+									reviewPublicationDate: Math.floor(Date.parse(newDate) / 1000),
+								})
+							}
+						/>
+					</Fragment>
+				);
+				break;
+			case "Course":
+				itemTypeExtras = (
+					<TextControl
+						label={__("Provider")}
+						value={provider}
+						onChange={(provider) => setAttributes({ provider })}
+					/>
+				);
+				break;
+			case "Event":
+				itemTypeExtras = (
+					<Fragment>
+						<h3>{__("Event start date")}</h3>
+						<DatePicker
+							currentDate={eventStartDate * 1000}
+							onChange={(newDate) => {
+								const newDateVal = Math.floor(Date.parse(newDate) / 1000);
+								setAttributes({ eventStartDate: newDateVal });
+								if (setEventEndDate && eventEndDate <= newDateVal) {
+									setAttributes({ eventEndDate: 86400 + newDateVal });
+								}
+							}}
+						/>
+						<label htmlFor="ub-review-event-date-toggle">
+							{__("Use event end date")}
+						</label>
+						<FormToggle
+							id="ub-review-event-date-toggle"
+							label={__("Set event end date")}
+							checked={setEventEndDate}
+							onChange={() => {
+								setState({ setEventEndDate: !setEventEndDate });
+								setAttributes({
+									eventEndDate: setEventEndDate ? 0 : 86400 + eventStartDate,
+								});
+							}}
+						/>
+						{setEventEndDate && [
+							<h3>{__("Event end date")}</h3>,
+							<DatePicker
+								currentDate={eventEndDate * 1000}
+								onChange={(newDate) =>
+									setAttributes({
+										eventStartDate: Math.floor(Date.parse(newDate) / 1000),
+									})
+								}
+							/>,
+						]}
+						<PanelBody title={__("Event venue")} initialOpen>
+							<Button
+								icon="admin-home"
+								isPrimary={usePhysicalAddress}
+								onClick={() => setAttributes({ usePhysicalAddress: true })}
+								showTooltip={true}
+								label={"Use physical location"}
+							/>
+							<Button
+								icon="admin-site-alt3"
+								isPrimary={!usePhysicalAddress}
+								onClick={() => setAttributes({ usePhysicalAddress: false })}
+								showTooltip={true}
+								label={"Use virtual location"}
+							/>
+							{usePhysicalAddress ? (
+								<Fragment>
+									<TextControl
+										label={__("Address Name")}
+										value={addressName}
+										onChange={(addressName) => setAttributes({ addressName })}
+									/>
+									{addressInput}
+								</Fragment>
+							) : (
+								<div id="ub_review_event_page_input">
+									<URLInput
+										label={__("Event Page")}
+										autoFocus={false}
+										value={eventPage}
+										onChange={(eventPage) => setAttributes({ eventPage })}
+									/>
+								</div>
+							)}
+						</PanelBody>
+						<TextControl
+							label={__("Performer")}
+							value={performer}
+							onChange={(performer) => setAttributes({ performer })}
+						/>
+						<TextControl
+							label={__("Organizer")}
+							value={organizer}
+							onChange={(organizer) => setAttributes({ organizer })}
+						/>
+					</Fragment>
+				);
+				break;
+			case "Product":
+				itemTypeExtras = (
+					<Fragment>
+						<TextControl
+							label={__("Brand")}
+							value={brand}
+							onChange={(brand) => setAttributes({ brand })}
+						/>
+						<TextControl
+							label={__("SKU")}
+							value={sku}
+							onChange={(sku) => setAttributes({ sku })}
+						/>
+						<TextControl
+							label={__("Identifier")}
+							value={identifier}
+							onChange={(identifier) => setAttributes({ identifier })}
+						/>
+						<SelectControl
+							label={__("Identifier type")}
+							value={identifierType}
+							options={[
+								"nsn",
+								"mpn",
+								"gtin8",
+								"gtin12",
+								"gtin13",
+								"gtin14",
+								"gtin",
+							].map((a) => ({ label: __(a.toUpperCase()), value: a }))}
+							onChange={(identifierType) => setAttributes({ identifierType })}
+						/>
+					</Fragment>
+				);
+				break;
+			case "Restaurant":
+				itemTypeExtras = (
+					<Fragment>
+						{cuisineInput}
+						<TextControl
+							label={__("Price Range")}
+							value={priceRange}
+							onChange={(priceRange) => setAttributes({ priceRange })}
+						/>
+						{addressInput}
+						<TextControl
+							label={__("Telephone Number")}
+							type="tel"
+							value={phoneNumber}
+							onChange={(phoneNumber) => setAttributes({ phoneNumber })}
+						/>
+					</Fragment>
+				);
+				break;
+			case "LocalBusiness":
+				itemTypeExtras = (
+					<Fragment>
+						{itemSubtype === "FoodEstablishment" &&
+							itemSubsubtype !== "Distillery" &&
+							cuisineInput}
+						{!(
+							["AnimalShelter", "ArchiveOrganization"].includes(itemSubtype) ||
+							["FireStation", "PoliceStation"].includes(itemSubsubtype)
+						) && (
+							<TextControl
+								label={__("Price Range")}
+								value={priceRange}
+								onChange={(priceRange) => setAttributes({ priceRange })}
+							/>
+						)}
+						{addressInput}
+						<TextControl
+							label={__("Telephone Number")}
+							type="tel"
+							value={phoneNumber}
+							onChange={(phoneNumber) => setAttributes({ phoneNumber })}
+						/>
+					</Fragment>
+				);
+				break;
+			case "Organization":
+				itemTypeExtras = (
+					<Fragment>
+						{(itemSubsubtype === "Hospital" ||
+							subsubtypes.MedicalBusiness.includes(itemSubsubtype)) && (
+							<TextControl
+								label={__("Price Range")}
+								value={priceRange}
+								onChange={(priceRange) => setAttributes({ priceRange })}
+							/>
+						)}
+						{addressInput}
+						<TextControl
+							label={__("Telephone Number")}
+							type="tel"
+							value={phoneNumber}
+							onChange={(phoneNumber) => setAttributes({ phoneNumber })}
+						/>
+					</Fragment>
+				);
+				break;
+			case "SoftwareApplication":
+				itemTypeExtras = (
+					<Fragment>
+						<TextControl
+							label={__("Application Category")}
+							value={appCategory}
+							onChange={(appCategory) => setAttributes({ appCategory })}
+						/>
+						<TextControl
+							label={__("Operating System")}
+							value={operatingSystem}
+							onChange={(operatingSystem) => setAttributes({ operatingSystem })}
+						/>
+					</Fragment>
+				);
+				break;
+			case "MediaObject":
+				itemTypeExtras = itemSubtype === "VideoObject" && (
+					<Fragment>
+						<h3>{__("Video upload date")}</h3>,
+						<DatePicker
+							currentDate={videoUploadDate * 1000}
+							onChange={(newDate) =>
+								setAttributes({
+									videoUploadDate: Math.floor(Date.parse(newDate) / 1000),
+								})
+							}
+						/>
+						<div id="ub_review_video_url_input">
+							<URLInput
+								label={__("Video URL")}
+								autoFocus={false}
+								value={videoURL}
+								onChange={(videoURL) => setAttributes({ videoURL })}
+							/>
+						</div>
+					</Fragment>
+				);
+		}
+
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__("Star settings")}>
+					<PanelBody title={__("Star settings")} initialOpen={false}>
 						<RangeControl
 							label={__(
 								`Star rating for ${
-									parts[editedStar].label === ""
-										? "current feature"
-										: parts[editedStar].label
+									parts[editedStar].label || "current feature"
 								}`
 							)}
 							value={parts[editedStar].value}
@@ -437,6 +1159,77 @@ registerBlockType("ub/review", {
 						)}
 					</PanelBody>
 					<PanelBody title={__("Review schema")} initialOpen={true}>
+						<SelectControl
+							label={__("Item type")}
+							value={itemType}
+							onChange={(itemType) => {
+								setAttributes({ itemType });
+								if (["Movie", "Recipe", "Restaurant"].includes(itemType)) {
+									setAttributes({ enableImage: true });
+								}
+								if (itemType === "Course") {
+									setAttributes({ enableDescription: true });
+								}
+								if (
+									!subtypeCategories.hasOwnProperty(itemType) ||
+									!subtypeCategories[itemType].includes(itemSubtype)
+								) {
+									setAttributes({ itemSubtype: "", itemSubsubtype: "" });
+								}
+							}}
+							options={[
+								"Book",
+								"Course",
+								"CreativeWorkSeason",
+								"CreativeWorkSeries",
+								"Episode",
+								"Event",
+								"Game",
+								"LocalBusiness",
+								"MediaObject",
+								"Movie",
+								"MusicPlaylist",
+								"MusicRecording",
+								"Organization",
+								"Product",
+								"Recipe",
+								"Restaurant",
+								"SoftwareApplication",
+							].map((a) => ({ label: a, value: a }))}
+						/>
+						{subtypeCategories.hasOwnProperty(itemType) && (
+							<SelectControl
+								label={__("Item subtype")}
+								value={itemSubtype}
+								onChange={(itemSubtype) => {
+									setAttributes({ itemSubtype });
+									if (itemSubtype === "VideoObject") {
+										setAttributes({ enableImage: true });
+									}
+									if (
+										!subsubtypes.hasOwnProperty(itemSubtype) ||
+										!subsubtypes[itemSubtype].includes(itemSubsubtype)
+									) {
+										setAttributes({ itemSubsubtype: "" });
+									}
+								}}
+								options={["", ...subtypeCategories[itemType]].map((a) => ({
+									label: a,
+									value: a,
+								}))}
+							/>
+						)}
+						{subsubtypes.hasOwnProperty(itemSubtype) && (
+							<SelectControl
+								label={__("Item subsubtype")}
+								value={itemSubsubtype}
+								onChange={(itemSubsubtype) => setAttributes({ itemSubsubtype })}
+								options={["", ...subsubtypes[itemSubtype]].map((a) => ({
+									label: a,
+									value: a,
+								}))}
+							/>
+						)}
 						<PanelRow>
 							<label htmlFor="ub-review-schema-toggle">
 								{__("Enable review schema")}
@@ -461,20 +1254,25 @@ registerBlockType("ub/review", {
 						</PanelRow>
 						{enableReviewSchema && (
 							<Fragment>
-								<PanelRow>
-									<label htmlFor="ub-review-image-toggle">
-										{__("Enable review image")}
-									</label>
-									<FormToggle
-										id="ub-review-image-toggle"
-										label={__("Enable review image")}
-										checked={enableImage}
-										onChange={() =>
-											setAttributes({ enableImage: !enableImage })
-										}
-									/>
-								</PanelRow>
-
+								{!(
+									["Movie", "Recipe", "Restaurant"].includes(itemType) ||
+									itemSubtype === "VideoObject"
+								) && (
+									//images are required for these item types and optional for the rest
+									<PanelRow>
+										<label htmlFor="ub-review-image-toggle">
+											{__("Enable review image")}
+										</label>
+										<FormToggle
+											id="ub-review-image-toggle"
+											label={__("Enable review image")}
+											checked={enableImage}
+											onChange={() =>
+												setAttributes({ enableImage: !enableImage })
+											}
+										/>
+									</PanelRow>
+								)}
 								{enableImage && (
 									<RangeControl
 										label={__("Image size")}
@@ -484,146 +1282,131 @@ registerBlockType("ub/review", {
 										max={200}
 									/>
 								)}
-								<PanelRow>
-									<label htmlFor="ub-review-description-toggle">
-										{__("Enable review description")}
-									</label>
-									<FormToggle
-										id="ub-review-description-toggle"
-										label={__("Enable review description")}
-										checked={enableDescription}
-										onChange={() =>
-											setAttributes({ enableDescription: !enableDescription })
-										}
-									/>
-								</PanelRow>
-								<TextControl
-									label={__("Brand")}
-									value={brand}
-									onChange={(brand) => setAttributes({ brand })}
-								/>
-								<TextControl
-									label={__("SKU")}
-									value={sku}
-									onChange={(sku) => setAttributes({ sku })}
-								/>
-								<TextControl
-									label={__("Identifier")}
-									value={identifier}
-									onChange={(identifier) => setAttributes({ identifier })}
-								/>
-								<SelectControl
-									label={__("Identifier type")}
-									value={identifierType}
-									options={[
-										"nsn",
-										"mpn",
-										"gtin8",
-										"gtin12",
-										"gtin13",
-										"gtin14",
-										"gtin",
-									].map((a) => ({ label: __(a.toUpperCase()), value: a }))}
-									onChange={(identifierType) =>
-										setAttributes({ identifierType })
-									}
-								/>
+								{itemType !== "Course" && (
+									<PanelRow>
+										<label htmlFor="ub-review-description-toggle">
+											{__("Enable review description")}
+										</label>
+										<FormToggle
+											id="ub-review-description-toggle"
+											label={__("Enable review description")}
+											checked={enableDescription}
+											onChange={() =>
+												setAttributes({ enableDescription: !enableDescription })
+											}
+										/>
+									</PanelRow>
+								)}
+								{itemTypeExtras}
+								{["Event", "Product", "SoftwareApplication"].includes(
+									itemType
+								) && (
+									<PanelBody title={__("Offer")}>
+										<SelectControl
+											label={__("Offer Type")}
+											value={offerType}
+											options={["Offer", "Aggregate Offer"].map((a) => ({
+												label: __(a),
+												value: a.replace(" ", ""),
+											}))}
+											onChange={(offerType) => setAttributes({ offerType })}
+										/>
+										<TextControl
+											label={__("Offer Currency")}
+											value={offerCurrency}
+											onChange={(offerCurrency) =>
+												setAttributes({ offerCurrency })
+											}
+										/>
+										{offerType == "Offer" ? (
+											<Fragment>
+												<TextControl
+													label={__("Offer Price")}
+													value={offerPrice}
+													onChange={(val) =>
+														setAttributes({ offerPrice: Number(val) })
+													}
+												/>
+												<SelectControl
+													label={__("Offer Status")}
+													value={offerStatus}
+													options={[
+														"Discontinued",
+														"In Stock",
+														"In Store Only",
+														"Limited Availability",
+														"Online Only",
+														"Out Of Stock",
+														"Pre Order",
+														"Pre Sale",
+														"Sold Out",
+													].map((a) => ({
+														label: __(a),
+														value: a.replace(" ", ""),
+													}))}
+													onChange={(offerStatus) =>
+														setAttributes({ offerStatus })
+													}
+												/>
+												<ToggleControl
+													label={__("Offer expiration")}
+													checked={offerExpiry > 0}
+													onChange={() =>
+														setAttributes({
+															offerExpiry: offerExpiry
+																? 0
+																: 60 * (10080 + Math.ceil(Date.now() / 60000)), //default to one week from Date.now() when enabled
+														})
+													}
+												/>
+												{offerExpiry > 0 && (
+													<DatePicker
+														currentDate={offerExpiry * 1000}
+														onChange={(newDate) =>
+															setAttributes({
+																offerExpiry: Math.floor(
+																	Date.parse(newDate) / 1000
+																),
+															})
+														}
+													/>
+												)}
+											</Fragment>
+										) : (
+											<Fragment>
+												<TextControl
+													label={__("Offer Count")}
+													value={offerCount}
+													onChange={(val) =>
+														setAttributes({ offerCount: Number(val) })
+													}
+												/>
+												<TextControl
+													label={__(
+														`Lowest Available Price (${offerCurrency})`
+													)}
+													value={offerLowPrice}
+													onChange={(val) =>
+														setAttributes({ offerLowPrice: Number(val) })
+													}
+												/>
+												<TextControl
+													label={__(
+														`Highest Available Price (${offerCurrency})`
+													)}
+													value={offerHighPrice}
+													onChange={(val) =>
+														setAttributes({ offerHighPrice: Number(val) })
+													}
+												/>
+											</Fragment>
+										)}
+									</PanelBody>
+								)}
 							</Fragment>
 						)}
 					</PanelBody>
-					{enableReviewSchema && (
-						<PanelBody title={__("Offer")} initialOpen={true}>
-							<SelectControl
-								label={__("Offer Type")}
-								value={offerType}
-								options={["Offer", "Aggregate Offer"].map((a) => ({
-									label: __(a),
-									value: a.replace(" ", ""),
-								}))}
-								onChange={(offerType) => setAttributes({ offerType })}
-							/>
-							<TextControl
-								label={__("Offer Currency")}
-								value={offerCurrency}
-								onChange={(offerCurrency) => setAttributes({ offerCurrency })}
-							/>
-							{offerType == "Offer" ? (
-								<Fragment>
-									<TextControl
-										label={__("Offer Price")}
-										value={offerPrice}
-										onChange={(val) =>
-											setAttributes({ offerPrice: Number(val) })
-										}
-									/>
-									<SelectControl
-										label={__("Offer Status")}
-										value={offerStatus}
-										options={[
-											"Discontinued",
-											"In Stock",
-											"In Store Only",
-											"Limited Availability",
-											"Online Only",
-											"Out Of Stock",
-											"Pre Order",
-											"Pre Sale",
-											"Sold Out",
-										].map((a) => ({
-											label: __(a),
-											value: a.replace(" ", ""),
-										}))}
-										onChange={(offerStatus) => setAttributes({ offerStatus })}
-									/>
-									<ToggleControl
-										label={__("Offer expiration")}
-										checked={offerExpiry > 0}
-										onChange={() =>
-											setAttributes({
-												offerExpiry: offerExpiry
-													? 0
-													: 60 * (10080 + Math.ceil(Date.now() / 60000)), //default to one week from Date.now() when enabled
-											})
-										}
-									/>
-									{offerExpiry > 0 && (
-										<DatePicker
-											currentDate={offerExpiry * 1000}
-											onChange={(newDate) =>
-												setAttributes({
-													offerExpiry: Math.floor(Date.parse(newDate) / 1000),
-												})
-											}
-										/>
-									)}
-								</Fragment>
-							) : (
-								<Fragment>
-									<TextControl
-										label={__("Offer Count")}
-										value={offerCount}
-										onChange={(val) =>
-											setAttributes({ offerCount: Number(val) })
-										}
-									/>
-									<TextControl
-										label={__(`Lowest Available Price (${offerCurrency})`)}
-										value={offerLowPrice}
-										onChange={(val) =>
-											setAttributes({ offerLowPrice: Number(val) })
-										}
-									/>
-									<TextControl
-										label={__(`Highest Available Price (${offerCurrency})`)}
-										value={offerHighPrice}
-										onChange={(val) =>
-											setAttributes({ offerHighPrice: Number(val) })
-										}
-									/>
-								</Fragment>
-							)}
-						</PanelBody>
-					)}
+					{/*enableReviewSchema &&*/}
 				</InspectorControls>
 			),
 			isSelected && (
@@ -695,6 +1478,7 @@ registerBlockType("ub/review", {
 				hasFocus={isSelected}
 				setEditable={(newValue) => setState({ editable: newValue })}
 				setActiveStarIndex={(editedStar) => setState({ editedStar })}
+				activeStarIndex={editedStar}
 				alignments={{ titleAlign, authorAlign, descriptionAlign }}
 				enableCTA={enableCTA}
 				ctaNoFollow={ctaNoFollow}
