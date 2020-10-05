@@ -1173,14 +1173,14 @@ $defaultValues = array(
                 'default' => ''
             ),
             //END SOFTWAREAPPLICATION ATTRIBUTES
-            'servesCuisine' => array( //FOR RESTAURANT ONLY
+            'servesCuisine' => array( //FOR FOODESTABLISHMENT AND SUBTYPES ONLY
                 'type' => 'array',
                 'default' => array(),
                 'items' => array(
                     'type' => 'string'
                 )
             ),
-            //BEGIN LOCALBUSINESS/RESTAURANT/ORGANIZATION ATTRIIBUTES
+            //BEGIN LOCALBUSINESS/ORGANIZATION ATTRIIBUTES
             'telephone' => array(
                 'type' => 'string',
                 'default' => ''
@@ -1197,7 +1197,7 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
-            //END LOCALBUSINESS/RESTAURANT/ORGANIZATION ATTRIBUTES
+            //END LOCALBUSINESS/ORGANIZATION ATTRIBUTES
             //BEGIN BOOK ATTRIBUTES
             'bookAuthorName' => array(
                 'type' => 'string',

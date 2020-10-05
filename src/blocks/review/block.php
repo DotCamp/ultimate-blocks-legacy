@@ -88,10 +88,9 @@ function ub_render_review_block($attributes){
                             "sku": "'. $sku .'",
                             "' . $identifierType . '": "' . $identifier . '",' . $offerCode;
         break;
-        case 'Restaurant':
-            $itemExtras = isset($cuisines) ? ( '"servesCuisine":' . json_encode($cuisines) . ',') : '';
-        case 'LocalBusiness': //fallthrough, several LocalBusiness properties are also shared with Restaurant
-            $itemExtras .=  '"address": "' . $address . '",
+        case 'LocalBusiness':
+            $itemExtras =  isset($cuisines) ? ( '"servesCuisine":' . json_encode($cuisines) . ',') : '' .
+                            '"address": "' . $address . '",
                             "telephone": "' . $telephone . '",
                             "priceRange": "' . $priceRange . '"';
         break;

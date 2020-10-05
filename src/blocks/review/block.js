@@ -220,7 +220,7 @@ const attributes = {
 		default: true, //can be set to false when using event itemType
 	},
 	address: {
-		//for restaurant address, organiztion location and event location
+		//for localbusiness location, organiztion location, and event location
 		type: "string",
 		default: "",
 	},
@@ -944,25 +944,6 @@ registerBlockType("ub/review", {
 					</Fragment>
 				);
 				break;
-			case "Restaurant":
-				itemTypeExtras = (
-					<Fragment>
-						{cuisineInput}
-						<TextControl
-							label={__("Price Range")}
-							value={priceRange}
-							onChange={(priceRange) => setAttributes({ priceRange })}
-						/>
-						{addressInput}
-						<TextControl
-							label={__("Telephone Number")}
-							type="tel"
-							value={phoneNumber}
-							onChange={(phoneNumber) => setAttributes({ phoneNumber })}
-						/>
-					</Fragment>
-				);
-				break;
 			case "LocalBusiness":
 				itemTypeExtras = (
 					<Fragment>
@@ -1164,7 +1145,7 @@ registerBlockType("ub/review", {
 							value={itemType}
 							onChange={(itemType) => {
 								setAttributes({ itemType });
-								if (["Movie", "Recipe", "Restaurant"].includes(itemType)) {
+								if (itemType === "Movie") {
 									setAttributes({ enableImage: true });
 								}
 								if (itemType === "Course") {
@@ -1192,8 +1173,6 @@ registerBlockType("ub/review", {
 								"MusicRecording",
 								"Organization",
 								"Product",
-								"Recipe",
-								"Restaurant",
 								"SoftwareApplication",
 							].map((a) => ({ label: a, value: a }))}
 						/>
@@ -1254,10 +1233,7 @@ registerBlockType("ub/review", {
 						</PanelRow>
 						{enableReviewSchema && (
 							<Fragment>
-								{!(
-									["Movie", "Recipe", "Restaurant"].includes(itemType) ||
-									itemSubtype === "VideoObject"
-								) && (
+								{!(itemType === "Movie" || itemSubtype === "VideoObject") && (
 									//images are required for these item types and optional for the rest
 									<PanelRow>
 										<label htmlFor="ub-review-image-toggle">
