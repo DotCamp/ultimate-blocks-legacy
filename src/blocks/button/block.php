@@ -14,7 +14,7 @@ function ub_buttons_parse($b){
 
     return '<div class="ub-button-container' . ($b['buttonWidth'] == 'full' ? ' ub-button-full-container' : '') . '">
     <a href="' . esc_url($b['url']) . '" target="' . ($b['openInNewTab'] ? '_blank' : '_self') . '"
-    rel="noopener noreferrer' . ($b['addNofollow'] ? ' nofollow' : '') . '"
+    rel="noopener noreferrer' . ($b['addNofollow'] ? ' nofollow' : '') . ($b['addSponsored'] ? ' sponsored' : '') . '"
     class="ub-button-block-main ub-button-' . $b['size'] .
     ($b['buttonWidth'] == 'full' ? ' ub-button-full-width' :
         ($b['buttonWidth'] == 'flex' ? ' ub-button-flex-'. $b['size'] : '')) . '" role="button">

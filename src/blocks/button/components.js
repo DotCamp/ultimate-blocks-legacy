@@ -165,6 +165,21 @@ export const inspectorControls = (props) => {
 							})
 						}
 					/>
+					<CheckboxControl
+						label={__("Mark link as sponsored", "ultimate-blocks")}
+						checked={buttons[activeButtonIndex].addSponsored}
+						onChange={() =>
+							setAttributes({
+								buttons: [
+									...buttons.slice(0, activeButtonIndex),
+									Object.assign({}, buttons[activeButtonIndex], {
+										addSponsored: !buttons[activeButtonIndex].addSponsored,
+									}),
+									...buttons.slice(activeButtonIndex + 1),
+								],
+							})
+						}
+					/>
 				</PanelBody>
 
 				<PanelBody title={__("Button Style", "ultimate-blocks")}>
@@ -543,6 +558,7 @@ export const editorDisplay = (props) => {
 		buttonIsTransparent: false,
 		addNofollow: true,
 		openInNewTab: true,
+		addSponsored: false,
 		buttonWidth: "fixed",
 	};
 
