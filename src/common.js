@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 
-export const richTextToHTML = elem => {
+export const richTextToHTML = (elem) => {
 	let outputString = "";
 
 	outputString += `<${elem.type}${
@@ -11,7 +11,7 @@ export const richTextToHTML = elem => {
 			: ""
 	}>`;
 
-	elem.props.children.forEach(child => {
+	elem.props.children.forEach((child) => {
 		outputString += typeof child === "string" ? child : richTextToHTML(child);
 	});
 	if (!["br", "img"].includes(elem.type)) outputString += `</${elem.type}>`;
@@ -19,15 +19,15 @@ export const richTextToHTML = elem => {
 	return outputString;
 };
 
-export const mergeRichTextArray = input =>
+export const mergeRichTextArray = (input) =>
 	input
-		.map(item => (typeof item === "string" ? item : richTextToHTML(item)))
+		.map((item) => (typeof item === "string" ? item : richTextToHTML(item)))
 		.join("");
 
-export const dashesToCamelcase = str =>
+export const dashesToCamelcase = (str) =>
 	str
 		.split("-")
-		.map(s => s[0].toUpperCase() + s.slice(1))
+		.map((s) => s[0].toUpperCase() + s.slice(1))
 		.join("");
 
 export const generateIcon = (selectedIcon, size) => (
@@ -45,9 +45,9 @@ export const upgradeButtonLabel = __(
 	"We have made some improvements to this block. Click here to upgrade the block. You will not lose any content."
 );
 
-export const getDescendantBlocks = rootBlock => {
+export const getDescendantBlocks = (rootBlock) => {
 	let descendants = [];
-	rootBlock.innerBlocks.forEach(innerBlock => {
+	rootBlock.innerBlocks.forEach((innerBlock) => {
 		descendants.push(innerBlock);
 		if (innerBlock.innerBlocks.length > 0) {
 			descendants.push(...getDescendantBlocks(innerBlock));
@@ -58,5 +58,10 @@ export const getDescendantBlocks = rootBlock => {
 
 export const objectsMatch = (obj, source) =>
 	Object.keys(source).every(
-		key => obj.hasOwnProperty(key) && obj[key] === source[key]
+		(key) => obj.hasOwnProperty(key) && obj[key] === source[key]
+	);
+
+export const removeFromArray = (arr, removedElems) =>
+	arr.filter((a) =>
+		Array.isArray(removedElems) ? !removedElems.includes(a) : a !== removedElems
 	);

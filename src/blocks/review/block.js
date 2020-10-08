@@ -8,6 +8,7 @@ import {
 	version_1_1_5,
 	updateFrom,
 } from "./oldVersions";
+import { removeFromArray } from "../../common";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -234,6 +235,14 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	reviewPublisher: {
+		type: "string",
+		default: "",
+	},
+	reviewPublicationDate: {
+		type: "number",
+		default: Math.ceil(Date.now() / 1000),
+	},
 	//beginning of book-only attributes
 	bookAuthorName: {
 		type: "string",
@@ -243,14 +252,7 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
-	reviewPublisher: {
-		type: "string",
-		default: "",
-	},
-	reviewPublicationDate: {
-		type: "number",
-		default: Math.ceil(Date.now() / 1000),
-	},
+
 	//end of book-only attributes
 	cuisines: {
 		//for restaurant
@@ -781,8 +783,47 @@ registerBlockType("ub/review", {
 			</Fragment>
 		);
 
+		const offerAttributes = [
+			"offerType",
+			"offerStatus",
+			"offerHighPrice",
+			"offerLowPrice",
+			"offerCount",
+			"offerPrice",
+			"offerCurrency",
+			"offerExpiry",
+		];
+
+		let unusedDefaults = [
+			"bookAuthorName",
+			"isbn",
+			"provider",
+			...offerAttributes,
+			"startDate",
+			"endDate",
+			"usePhysicalAddress",
+			"addressName",
+			"address",
+			"eventPage",
+			"organizer",
+			"performer",
+			"brand",
+			"sku",
+			"identifierType",
+			"identifier",
+			"cuisines",
+			"telephone",
+			"priceRange",
+			"appCategory",
+			"operatingSystem",
+			"videoUploadDate",
+			"videoURL",
+		];
+
 		switch (itemType) {
-			//default:
+			default:
+				//there's nothing to add
+				break;
 			case "Book":
 				itemTypeExtras = (
 					<Fragment>
@@ -796,22 +837,12 @@ registerBlockType("ub/review", {
 							value={bookAuthorName}
 							onChange={(bookAuthorName) => setAttributes({ bookAuthorName })}
 						/>
-						<TextControl
-							label={__("Review publisher")}
-							value={reviewPublisher}
-							onChange={(reviewPublisher) => setAttributes({ reviewPublisher })}
-						/>
-						<p>{__("Review publication date")}</p>
-						<DatePicker
-							currentDate={reviewPublicationDate * 1000}
-							onChange={(newDate) =>
-								setAttributes({
-									reviewPublicationDate: Math.floor(Date.parse(newDate) / 1000),
-								})
-							}
-						/>
 					</Fragment>
 				);
+				unusedDefaults = removeFromArray(unusedDefaults, [
+					"isbn",
+					"bookAuthorName",
+				]);
 				break;
 			case "Course":
 				itemTypeExtras = (
@@ -821,6 +852,7 @@ registerBlockType("ub/review", {
 						onChange={(provider) => setAttributes({ provider })}
 					/>
 				);
+				unusedDefaults = removeFromArray(unusedDefaults, "provider");
 				break;
 			case "Event":
 				itemTypeExtras = (
@@ -908,6 +940,17 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
+				unusedDefaults = removeFromArray([
+					...offerAttributes,
+					"startDate",
+					"endDate",
+					"usePhysicalAddress",
+					"addressName",
+					"address",
+					"eventPage",
+					"organizer",
+					"performer",
+				]);
 				break;
 			case "Product":
 				itemTypeExtras = (
@@ -943,6 +986,14 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
+				unusedDefaults = removeFromArray(unusedDefaults, [
+					"brand",
+					"sku",
+					"identifiertype",
+					"identifier",
+					...offerAttributes,
+				]);
+
 				break;
 			case "LocalBusiness":
 				itemTypeExtras = (
@@ -969,6 +1020,17 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
+				if (
+					itemSubtype === "FoodEstablishment" &&
+					itemSubsubtype !== "Distillery"
+				) {
+					unusedDefaults = removeFromArray("cuisines");
+				}
+				unusedDefaults = removeFromArray([
+					"address",
+					"telephone",
+					"priceRange",
+				]);
 				break;
 			case "Organization":
 				itemTypeExtras = (
@@ -990,6 +1052,11 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
+				unusedDefaults = removeFromArray([
+					"address",
+					"telephone",
+					"priceRange",
+				]);
 				break;
 			case "SoftwareApplication":
 				itemTypeExtras = (
@@ -1006,29 +1073,61 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
+				unusedDefaults = removeFromArray(["appCategory", "operatingSystem"]);
 				break;
 			case "MediaObject":
-				itemTypeExtras = itemSubtype === "VideoObject" && (
-					<Fragment>
-						<h3>{__("Video upload date")}</h3>,
-						<DatePicker
-							currentDate={videoUploadDate * 1000}
-							onChange={(newDate) =>
-								setAttributes({
-									videoUploadDate: Math.floor(Date.parse(newDate) / 1000),
-								})
-							}
-						/>
-						<div id="ub_review_video_url_input">
-							<URLInput
-								label={__("Video URL")}
-								autoFocus={false}
-								value={videoURL}
-								onChange={(videoURL) => setAttributes({ videoURL })}
+				if (itemSubtype === "VideoObject") {
+					itemTypeExtras = (
+						<Fragment>
+							<h3>{__("Video upload date")}</h3>,
+							<DatePicker
+								currentDate={videoUploadDate * 1000}
+								onChange={(newDate) =>
+									setAttributes({
+										videoUploadDate: Math.floor(Date.parse(newDate) / 1000),
+									})
+								}
 							/>
-						</div>
-					</Fragment>
-				);
+							<div id="ub_review_video_url_input">
+								<URLInput
+									label={__("Video URL")}
+									autoFocus={false}
+									value={videoURL}
+									onChange={(videoURL) => setAttributes({ videoURL })}
+								/>
+							</div>
+						</Fragment>
+					);
+					unusedDefaults = removeFromArray(["videoUploadDate", "videoURL"]);
+				}
+				break;
+		}
+
+		const schemaDefaults = Object.keys(Object.assign({}, attributes)).reduce(
+			(defaults, attr) => {
+				if (unusedDefaults.includes(attr)) {
+					defaults[attr] = attributes[attr].default;
+				}
+				return defaults;
+			},
+			{}
+		);
+
+		const unusedAttributes = Object.keys(props.attributes).reduce(
+			(defaults, attr) => {
+				if (
+					unusedDefaults.includes(attr) &&
+					props.attributes[attr] !== schemaDefaults[attr]
+				) {
+					defaults[attr] = attributes[attr].default;
+				}
+				return defaults;
+			},
+			{}
+		);
+
+		if (Object.keys(unusedAttributes).length) {
+			setAttributes(unusedAttributes);
 		}
 
 		return [
@@ -1274,6 +1373,24 @@ registerBlockType("ub/review", {
 									</PanelRow>
 								)}
 								{itemTypeExtras}
+								<TextControl
+									label={__("Review publisher")}
+									value={reviewPublisher}
+									onChange={(reviewPublisher) =>
+										setAttributes({ reviewPublisher })
+									}
+								/>
+								<p>{__("Review publication date")}</p>
+								<DatePicker
+									currentDate={reviewPublicationDate * 1000}
+									onChange={(newDate) =>
+										setAttributes({
+											reviewPublicationDate: Math.floor(
+												Date.parse(newDate) / 1000
+											),
+										})
+									}
+								/>
 								{["Event", "Product", "SoftwareApplication"].includes(
 									itemType
 								) && (
