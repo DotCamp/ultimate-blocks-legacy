@@ -87,7 +87,15 @@ registerBlockType("ub/tab-block", {
 		}
 		return (
 			<div style={{ display: isActive ? "block" : "none" }}>
-				<InnerBlocks templateLock={false} />
+				<InnerBlocks
+					templateLock={false}
+					template={[
+						[
+							"core/paragraph",
+							{ placeholder: __("Enter content for this tab") },
+						],
+					]}
+				/>
 			</div>
 		);
 	}),

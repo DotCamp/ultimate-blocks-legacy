@@ -790,7 +790,7 @@ registerBlockType("ub/styled-box-notification-content", {
 			template={[
 				[
 					"core/paragraph",
-					{ placeholder: "Enter content for notification box" },
+					{ placeholder: __("Enter content for notification box") },
 				],
 			]}
 		/>
