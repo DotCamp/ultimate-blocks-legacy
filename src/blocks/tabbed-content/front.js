@@ -57,11 +57,13 @@ function ub_handleTabEvent(tab) {
 		)
 	).forEach((sibling) => {
 		sibling.classList.remove("active");
+		sibling.setAttribute("aria-selected", false);
 		if (defaultStyle) {
 			sibling.setAttribute("style", defaultStyle);
 		}
 	});
 
+	tab.setAttribute("aria-selected", true);
 	tab.classList.add("active");
 
 	const {
@@ -452,6 +454,7 @@ function ub_hashTabSwitch() {
 					Array.prototype.slice.call(tabBar.children).forEach((tab, j) => {
 						const probableAccordionToggle =
 							tabContents[ancestorTabIndexes[i]].previousElementSibling;
+						tab.setAttribute("aria-selected", j === ancestorTabIndexes[i]);
 						if (j === ancestorTabIndexes[i]) {
 							tab.classList.add("active");
 							tabContents[j].classList.add("active");

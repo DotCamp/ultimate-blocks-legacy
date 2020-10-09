@@ -38,11 +38,13 @@ function ub_handleTabEvent(tab) {
     return elem.classList.contains("wp-block-ub-tabbed-content-tab-title-".concat(isVertical ? "vertical-" : "", "wrap"));
   }).forEach(function (sibling) {
     sibling.classList.remove("active");
+    sibling.setAttribute("aria-selected", false);
 
     if (defaultStyle) {
       sibling.setAttribute("style", defaultStyle);
     }
   });
+  tab.setAttribute("aria-selected", true);
   tab.classList.add("active");
 
   var _tab$parentElement$ge = tab.parentElement.getBoundingClientRect(),
@@ -350,6 +352,7 @@ function ub_hashTabSwitch() {
           var tabBar = targetElement.parentElement.previousElementSibling.children[0];
           Array.prototype.slice.call(tabBar.children).forEach(function (tab, j) {
             var probableAccordionToggle = tabContents[ancestorTabIndexes[i]].previousElementSibling;
+            tab.setAttribute("aria-selected", j === ancestorTabIndexes[i]);
 
             if (j === ancestorTabIndexes[i]) {
               tab.classList.add("active");
