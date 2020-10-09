@@ -36,7 +36,7 @@ function ub_convert_to_paragraphs($string){
 }
 
 function ub_strip_html_tags($string){
-    return preg_replace('/<\/?[a-zA-Z0-9]+( .+=\".+\")*\/?>/', '', $string);
+    return preg_replace('/<\/?[a-zA-Z0-9]+( .+(=\".+?\")?)*\/?>/', '', $string);
 }
 
 function ub_render_how_to_block($attributes){
