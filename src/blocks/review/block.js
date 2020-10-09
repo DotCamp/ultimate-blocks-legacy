@@ -812,7 +812,7 @@ registerBlockType("ub/review", {
 			"identifierType",
 			"identifier",
 			"cuisines",
-			"telephone",
+			"phoneNumber",
 			"priceRange",
 			"appCategory",
 			"operatingSystem",
@@ -940,7 +940,7 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
-				unusedDefaults = removeFromArray([
+				unusedDefaults = removeFromArray(unusedDefaults, [
 					...offerAttributes,
 					"startDate",
 					"endDate",
@@ -1024,11 +1024,11 @@ registerBlockType("ub/review", {
 					itemSubtype === "FoodEstablishment" &&
 					itemSubsubtype !== "Distillery"
 				) {
-					unusedDefaults = removeFromArray("cuisines");
+					unusedDefaults = removeFromArray(unusedDefaults, "cuisines");
 				}
-				unusedDefaults = removeFromArray([
+				unusedDefaults = removeFromArray(unusedDefaults, [
 					"address",
-					"telephone",
+					"phoneNumber",
 					"priceRange",
 				]);
 				break;
@@ -1052,9 +1052,9 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
-				unusedDefaults = removeFromArray([
+				unusedDefaults = removeFromArray(unusedDefaults, [
 					"address",
-					"telephone",
+					"phoneNumber",
 					"priceRange",
 				]);
 				break;
@@ -1073,7 +1073,10 @@ registerBlockType("ub/review", {
 						/>
 					</Fragment>
 				);
-				unusedDefaults = removeFromArray(["appCategory", "operatingSystem"]);
+				unusedDefaults = removeFromArray(unusedDefaults, [
+					"appCategory",
+					"operatingSystem",
+				]);
 				break;
 			case "MediaObject":
 				if (itemSubtype === "VideoObject") {
@@ -1098,7 +1101,10 @@ registerBlockType("ub/review", {
 							</div>
 						</Fragment>
 					);
-					unusedDefaults = removeFromArray(["videoUploadDate", "videoURL"]);
+					unusedDefaults = removeFromArray(unusedDefaults, [
+						"videoUploadDate",
+						"videoURL",
+					]);
 				}
 				break;
 		}
