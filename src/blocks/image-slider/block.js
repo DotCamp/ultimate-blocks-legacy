@@ -547,27 +547,44 @@ registerBlockType("ub/image-slider", {
 							]}
 						/>
 						{activeSlide < captionArray.length && (
-							<RichText
-								tagName="figcaption"
-								formattingControls={[]}
-								className="ub_image_slider_image_caption"
-								value={descriptions[activeSlide].text}
-								placeholder={__("Caption goes here")}
-								onChange={(text) => {
-									const currentItem = Object.assign(
-										{},
-										descriptions[activeSlide]
-									);
+							<Fragment>
+								<RichText
+									tagName="figcaption"
+									formattingControls={[]}
+									className="ub_image_slider_image_caption"
+									value={descriptions[activeSlide].text}
+									placeholder={__("Caption goes here")}
+									onChange={(text) => {
+										const currentItem = Object.assign(
+											{},
+											descriptions[activeSlide]
+										);
 
-									setAttributes({
-										descriptions: [
-											...descriptions.slice(0, activeSlide),
-											Object.assign(currentItem, { text }),
-											...descriptions.slice(activeSlide + 1),
-										],
-									});
-								}}
-							/>
+										setAttributes({
+											descriptions: [
+												...descriptions.slice(0, activeSlide),
+												Object.assign(currentItem, { text }),
+												...descriptions.slice(activeSlide + 1),
+											],
+										});
+									}}
+								/>
+								<RichText
+									formattingControls={[]}
+									className="ub_image_slider_image_caption ub_image_slider_image_alt"
+									value={pics[activeSlide].alt}
+									placeholder={__("Image alt text")}
+									onChange={(alt) =>
+										setAttributes({
+											pics: [
+												...pics.slice(0, activeSlide),
+												Object.assign(pics[activeSlide], { alt }),
+												...pics.slice(activeSlide + 1),
+											],
+										})
+									}
+								/>
+							</Fragment>
 						)}
 						{isSelected && activeSlide < captionArray.length && (
 							<form
@@ -602,13 +619,6 @@ registerBlockType("ub/image-slider", {
 									type={"submit"}
 								/>
 							</form>
-						)}
-						{isSelected && activeSlide === captionArray.length && (
-							<style>
-								{`#ub_image_slider_${blockID} .flickity-page-dots{
-								bottom: -10px;
-							}`}
-							</style>
 						)}
 					</React.Fragment>
 				)}
