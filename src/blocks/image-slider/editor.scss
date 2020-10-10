@@ -2,9 +2,6 @@
 
 div[data-block] > .ub_image_slider {
 	display: block;
-	.ub_image_slider_add_images {
-		margin: 0 auto;
-	}
 	.components-placeholder {
 		&__fieldset {
 			display: flex;
@@ -22,9 +19,6 @@ div[data-block] > .ub_image_slider {
 
 :not(.is-selected) > .ub_image_slider {
 	margin-bottom: 50px;
-	.flickity-page-dots {
-		bottom: -50px;
-	}
 }
 
 .ub_image_slider_url_input {
@@ -37,16 +31,15 @@ div[data-block] > .ub_image_slider {
 }
 
 .ub_image_slider {
-	.flickity-viewport .components-form-file-upload {
-		height: 100%;
-	}
 	.editor-rich-text {
 		padding-left: 10px;
 		padding-right: 10px;
 	}
 }
 .ub_image_slider_add_images {
+	display: block;
 	top: 50%;
-	transform: translateY(-50%);
-	margin: auto;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
 }
