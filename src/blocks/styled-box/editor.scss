@@ -10,9 +10,12 @@
 }
 
 .ub-styled-box-choices {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-items: center;
 	text-align: center;
 	> div {
-		max-width: 120px;
+		width: 100%;
 		vertical-align: top;
 		display: inline-block;
 		transition: all 0.5s ease-in-out;
@@ -30,8 +33,12 @@
 		}
 		> p {
 			text-align: center;
+			margin-bottom: 0;
 			&:first-of-type {
 				font-weight: 700;
+			}
+			&:not(:first-of-type) {
+				margin-top: 0;
 			}
 		}
 	}
