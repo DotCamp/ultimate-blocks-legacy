@@ -254,6 +254,7 @@ function ub_getTabbedContentDisplayModes(block) {
 						displayModes[i][transitionFrom - 1] !==
 						displayModes[i][transitionTo - 1]
 					) {
+						const tabContents = instance.children[1];
 						if (displayModes[i][transitionFrom - 1] === "accordion") {
 							const activeTabs = JSON.parse(instance.dataset.activeTabs);
 							Array.prototype.slice
@@ -279,12 +280,43 @@ function ub_getTabbedContentDisplayModes(block) {
 									}
 								});
 							delete instance.dataset.activeTabs;
+
+							Array.prototype.slice
+								.call(tabContents.children)
+								.forEach((child, j) => {
+									if (j % 2 === 1) {
+										child.setAttribute("role", "tabpanel");
+										child.setAttribute(
+											"aria-labelledby",
+											child.id.replace("panel", "tab")
+										);
+									}
+								});
 						} else if (displayModes[i][transitionTo - 1] === "accordion") {
 							Array.prototype.slice
 								.call(instance.children[0].children[0].children)
 								.forEach((child, j) => {
 									if (child.classList.contains("active")) {
 										instance.dataset.activeTabs = JSON.stringify([j]);
+									}
+								});
+							Array.prototype.slice
+								.call(tabContents.children)
+								.forEach((child, j) => {
+									if (j % 2 === 1) {
+										child.setAttribute("role", "region");
+										child.removeAttribute("aria-labelledby");
+									} else {
+										child.setAttribute(
+											"aria-expanded",
+											!child.nextElementSibling.classList.contains("ub-hide")
+										);
+										if (!child.hasAttribute("aria-controls")) {
+											child.setAttribute(
+												"aria-controls",
+												child.nextElementSibling.id
+											);
+										}
 									}
 								});
 						}
@@ -539,6 +571,34 @@ document.addEventListener("DOMContentLoaded", () => {
 						}
 					});
 				}
+			}
+
+			//add condition for checking if block format is acordion or tabbed content and load appropriate aria and aria-related attributes
+			const displayModes = ub_getTabbedContentDisplayModes(instance);
+
+			let currentDisplay = -1;
+			if (window.innerWidth < 700) {
+				currentDisplay = 0;
+			} else if (window.innerWidth < 900) {
+				currentDisplay = 1;
+			} else {
+				currentDisplay = 2;
+			}
+
+			if (displayModes[currentDisplay] === "accordion") {
+				const tabContents = instance.children[1];
+				Array.prototype.slice.call(tabContents.children).forEach((child, i) => {
+					if (i % 2 === 1) {
+						child.setAttribute("role", "region");
+						child.removeAttribute("aria-labelledby");
+					} else {
+						child.setAttribute(
+							"aria-expanded",
+							!child.nextElementSibling.classList.contains("ub-hide")
+						);
+						child.setAttribute("aria-controls", child.nextElementSibling.id);
+					}
+				});
 			}
 		});
 	ub_hashTabSwitch();
