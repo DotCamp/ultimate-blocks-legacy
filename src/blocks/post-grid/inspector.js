@@ -25,9 +25,7 @@ export default class Inspector extends Component {
 	componentDidMount() {
 		this.stillMounted = true;
 		this.fetchRequest = apiFetch({
-			path: addQueryArgs("/wp/v2/categories", {
-				per_page: -1,
-			}),
+			path: addQueryArgs("/wp/v2/categories", { per_page: -1 }),
 		})
 			.then((categoriesList) => {
 				if (this.stillMounted) {
@@ -51,6 +49,9 @@ export default class Inspector extends Component {
 		const {
 			attributes: {
 				checkPostImage,
+				postImageWidth,
+				preservePostImageAspectRatio,
+				postImageHeight,
 				checkPostAuthor,
 				checkPostDate,
 				checkPostExcerpt,
@@ -122,9 +123,7 @@ export default class Inspector extends Component {
 				onOrderChange={(value) => setAttributes({ order: value })}
 				onOrderByChange={(value) => setAttributes({ orderBy: value })}
 				onCategoryChange={(value) =>
-					setAttributes({
-						categories: "" !== value ? value : undefined,
-					})
+					setAttributes({ categories: "" !== value ? value : undefined })
 				}
 				onNumberOfItemsChange={(value) => setAttributes({ amountPosts: value })}
 			/>
@@ -160,6 +159,31 @@ export default class Inspector extends Component {
 						checked={checkPostImage}
 						onChange={(checkPostImage) => setAttributes({ checkPostImage })}
 					/>
+					<TextControl
+						label={__("Post Image Width", "ultimate-blocks")}
+						type="number"
+						min={1}
+						value={postImageWidth}
+						onChange={(val) => setAttributes({ postImageWidth: Number(val) })}
+					/>
+					<ToggleControl
+						label={__("Preserve Aspect Ratio", "ultimate-blocks")}
+						checked={preservePostImageAspectRatio}
+						onChange={(preservePostImageAspectRatio) =>
+							setAttributes({ preservePostImageAspectRatio })
+						}
+					/>
+					{!preservePostImageAspectRatio && (
+						<TextControl
+							label={__("Post Image Height", "ultimate-blocks")}
+							type="number"
+							min={1}
+							value={postImageHeight}
+							onChange={(val) =>
+								setAttributes({ postImageHeight: Number(val) })
+							}
+						/>
+					)}
 					<ToggleControl
 						label={__("Display Author", "ultimate-blocks")}
 						checked={checkPostAuthor}

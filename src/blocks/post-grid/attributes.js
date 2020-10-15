@@ -7,6 +7,18 @@ const attributes = {
 		type: "boolean",
 		default: true,
 	},
+	postImageWidth: {
+		type: "number",
+		default: 600,
+	},
+	presevePostImageAspectRatio: {
+		type: "boolean",
+		default: true,
+	},
+	postImageHeight: {
+		type: "number",
+		default: 400,
+	},
 	checkPostAuthor: {
 		type: "boolean",
 		default: true,

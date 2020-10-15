@@ -72,13 +72,11 @@ function ub_render_post_grid_block( $attributes ){
             /* Get the featured image */
             if ( isset( $attributes['checkPostImage'] ) && $attributes['checkPostImage'] && $post_thumb_id ) {
 
-                $post_thumb_size = 'ub-block-post-grid-landscape';
-
                 /* Output the featured image */
                 $post_grid .= sprintf(
                     '<div class="ub-block-post-grid-image"><a href="%1$s" rel="bookmark" aria-hidden="true" tabindex="-1">%2$s</a></div>',
                     esc_url( get_permalink( $post_id ) ),
-                    wp_get_attachment_image( $post_thumb_id, $post_thumb_size )
+                    wp_get_attachment_image( $post_thumb_id, array($attributes['postImageWidth'], $attributes['preservePostImageAspectRatio'] ? 0 : $attributes['postImageHeight']) )//use array 
                 );
             }
 
@@ -257,12 +255,6 @@ add_action( 'init', 'ub_register_post_grid_block' );
 /**
  * Add image sizes
  */
-function post_grid_block_image_sizes() {
-    // Post Grid Block.
-    add_image_size( 'ub-block-post-grid-landscape', 600, 400, true );
-}
-
-add_action( 'after_setup_theme', 'post_grid_block_image_sizes' );
 
 function ub_blocks_register_rest_fields() {
     /* Add landscape featured image source */
@@ -292,7 +284,7 @@ add_action( 'rest_api_init', 'ub_blocks_register_rest_fields' );
 function ub_blocks_get_image_src_landscape( $object, $field_name, $request ) {
     $feat_img_array = wp_get_attachment_image_src(
         $object['featured_media'],
-        'ub-block-post-grid-landscape',
+        'full',
         false
     );
     return $feat_img_array ? $feat_img_array[0] : null;

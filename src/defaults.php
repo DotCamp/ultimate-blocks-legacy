@@ -902,9 +902,21 @@ $defaultValues = array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostImage'    => array(
+            'checkPostImage' => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'postImageWidth' => array(
+                'type'    => 'number',
+                'default' => 600,
+            ),
+            'preservePostImageAspectRatio' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'postImageHeight' => array(
+                'type'=> 'number',
+                'default' => 400
             ),
             'checkPostLink' => array(
                 'type'    => 'boolean',

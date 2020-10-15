@@ -42,26 +42,32 @@ export default class FeaturedImage extends Component {
 		let imageUrl = this.getImageUrl();
 
 		if (!imageUrl) {
-			this.setState({
-				loaded: true,
-			});
-		}
-
-		if (imageUrl) {
-			this.setState({
-				imageUrl,
-			});
+			this.setState({ loaded: true });
+		} else {
+			this.setState({ imageUrl });
 		}
 	};
 
 	getImageUrl = () =>
-		this.state.image_data?.media_details?.sizes["ub-block-post-grid-landscape"]
-			?.source_url;
+		this.state.image_data?.media_details?.sizes["full"]?.source_url;
 
 	render() {
 		const { imageUrl } = this.state;
+		const {
+			postImageWidth,
+			preservePostImageAspectRatio,
+			postImageHeight,
+		} = this.props.attributes;
+
 		return (
-			<img src={imageUrl ? imageUrl : this.props.imgSizeLandscape} alt="img" />
+			<img
+				style={{
+					width: postImageWidth,
+					...(!preservePostImageAspectRatio && { height: postImageHeight }),
+				}}
+				src={imageUrl || this.props.imgSizeLandscape}
+				alt="img"
+			/>
 		);
 	}
 }
