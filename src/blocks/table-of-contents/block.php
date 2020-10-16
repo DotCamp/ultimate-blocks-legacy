@@ -9,6 +9,10 @@ function ub_render_table_of_contents_block($attributes){
            (!array_key_exists("disabled",  $header) || (array_key_exists("disabled",  $header) && !$header['disabled']));
     }));
 
+    $currentGaps = array_values(array_filter($gaps, function($gap, $index) use($allowedHeaders, $linkArray){
+        return $allowedHeaders[$linkArray[$index]['level'] - 1] && (!array_key_exists("disabled",  $linkArray[$index]) || (array_key_exists("disabled", $linkArray[$index]) && !$linkArray[$index]['disabled']));
+    }, ARRAY_FILTER_USE_BOTH));
+
     $sortedHeaders = [];
 
     foreach($filteredHeaders as $elem){
@@ -42,7 +46,7 @@ function ub_render_table_of_contents_block($attributes){
     $listItems = '';
 
     if (!function_exists('ub_makeListItem')) {
-        function ub_makeListItem($num, $item, $listStyle, $blockID, $gaps){
+        function ub_makeListItem($num, $item, $listStyle, $blockID, $currentGaps){
             static $outputString = '';
             if($num == 0 && $outputString != ''){
                 $outputString = '';
@@ -56,10 +60,10 @@ function ub_render_table_of_contents_block($attributes){
                     $anchor = '#' . $item["anchor"];
                 }
 
-                if(count($gaps) && get_query_var('page') != $gaps[$num]){
+                if(count($currentGaps) && get_query_var('page') != $currentGaps[$num]){
                     $baseURL = get_permalink();
-                    $anchor = $baseURL . ($gaps[$num] > 1 ? (get_post_status(get_the_ID()) == 'publish' ? '' : '&page=')
-                            . $gaps[$num] : '') . $anchor;
+                    $anchor = $baseURL . ($currentGaps[$num] > 1 ? (get_post_status(get_the_ID()) == 'publish' ? '' : '&page=')
+                            . $currentGaps[$num] : '') . $anchor;
                 }
 
                 $content = array_key_exists("customContent", $item) && $item["customContent"] != "" ? $item["customContent"] : $item["content"];
@@ -73,7 +77,7 @@ function ub_render_table_of_contents_block($attributes){
                     strrpos($outputString, '</li>'), strlen('</li>'));
 
                 forEach($item as $key => $subItem){
-                    ub_makeListItem($key+1, $subItem, $listStyle, $blockID, $gaps);
+                    ub_makeListItem($key+1, $subItem, $listStyle, $blockID, $currentGaps);
                 }
                 $outputString .= ($listStyle == 'numbered' ? '</ol>' : '</ul>') . '</li>';
             }
@@ -83,7 +87,7 @@ function ub_render_table_of_contents_block($attributes){
 
     if(count($sortedHeaders) > 0){
         foreach($sortedHeaders as $key => $item){
-            $listItems = ub_makeListItem($key, $item, $listStyle, $blockID, $gaps);
+            $listItems = ub_makeListItem($key, $item, $listStyle, $blockID, $currentGaps);
         }
     }
 
