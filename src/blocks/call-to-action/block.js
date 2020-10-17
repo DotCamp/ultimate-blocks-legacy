@@ -114,6 +114,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	linkIsSponsored: {
+		type: "boolean",
+		default: false,
+	},
 	useHeadingTag: {
 		type: "boolean",
 		default: false,

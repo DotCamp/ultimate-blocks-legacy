@@ -144,6 +144,10 @@ const attributes = {
 		type: "boolean",
 		default: true,
 	},
+	ctaIsSponsored: {
+		type: "boolean",
+		default: false,
+	},
 	enableReviewSchema: {
 		type: "boolean",
 		default: true,
@@ -369,6 +373,7 @@ registerBlockType("ub/review", {
 				enableCTA,
 				ctaNoFollow,
 				ctaOpenInNewTab,
+				ctaIsSponsored,
 				enableReviewSchema,
 				enableImage,
 				enableDescription,
@@ -1238,6 +1243,19 @@ registerBlockType("ub/review", {
 										checked={ctaOpenInNewTab}
 										onChange={() =>
 											setAttributes({ ctaOpenInNewTab: !ctaOpenInNewTab })
+										}
+									/>
+								</PanelRow>
+								<PanelRow>
+									<label htmlFor="ub-review-cta-issponsored">
+										{__("Mark link as sponsored")}
+									</label>
+									<FormToggle
+										id="ub-review-cta-issponsored"
+										label={__("Mark link as sponsored")}
+										checked={ctaIsSponsored}
+										onChange={() =>
+											setAttributes({ ctaIsSponsored: !ctaIsSponsored })
 										}
 									/>
 								</PanelRow>

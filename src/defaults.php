@@ -151,6 +151,10 @@ $defaultValues = array(
                 'type' => 'boolean',
                 'default' => false
             ),
+            'linkIsSponsored' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'useHeadingTag' => array(
                 'type' => 'boolean',
                 'default' => false
@@ -1114,6 +1118,10 @@ $defaultValues = array(
             'ctaOpenInNewTab' => array(
                 'type' => 'boolean',
                 'default' => true
+            ),
+            'ctaIsSponsored' => array(
+                'type' => 'boolean',
+                'default' => false
             ),
             'enableReviewSchema' => array(
                 'type' => 'boolean',
