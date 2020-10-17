@@ -112,25 +112,22 @@ function ub_render_post_grid_block( $attributes ){
                 );
             }
 
-            if ( isset( $attributes['postType'] ) && $attributes['postType'] === 'post' ) {
+            /* Get the post author */
+            if ( isset( $attributes['checkPostAuthor'] ) && $attributes['checkPostAuthor'] ) {
+                $post_grid .= sprintf(
+                    '<div class="ub-block-post-grid-author" itemprop="author"><a class="ub-text-link" href="%2$s" itemprop="url" rel="author"><span itemprop="name">%1$s</span></a></div>',
+                    esc_html( get_the_author_meta( 'display_name', get_the_author_meta( 'ID' ) ) ),
+                    esc_html( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
+                );
+            }
 
-                /* Get the post author */
-                if ( isset( $attributes['checkPostAuthor'] ) && $attributes['checkPostAuthor'] ) {
-                    $post_grid .= sprintf(
-                        '<div class="ub-block-post-grid-author" itemprop="author"><a class="ub-text-link" href="%2$s" itemprop="url" rel="author"><span itemprop="name">%1$s</span></a></div>',
-                        esc_html( get_the_author_meta( 'display_name', get_the_author_meta( 'ID' ) ) ),
-                        esc_html( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
-                    );
-                }
-
-                /* Get the post date */
-                if ( isset( $attributes['checkPostDate'] ) && $attributes['checkPostDate'] ) {
-                    $post_grid .= sprintf(
-                        '<time datetime="%1$s" class="ub-block-post-grid-date" itemprop="datePublished">%2$s</time>',
-                        esc_attr( get_the_date( 'c', $post_id ) ),
-                        esc_html( get_the_date( '', $post_id ) )
-                    );
-                }
+            /* Get the post date */
+            if ( isset( $attributes['checkPostDate'] ) && $attributes['checkPostDate'] ) {
+                $post_grid .= sprintf(
+                    '<time datetime="%1$s" class="ub-block-post-grid-date" itemprop="datePublished">%2$s</time>',
+                    esc_attr( get_the_date( 'c', $post_id ) ),
+                    esc_html( get_the_date( '', $post_id ) )
+                );
             }
 
             /* Close the header content */
