@@ -22,7 +22,7 @@
 		"react-sortable-hoc": "^0.6.8",
 		"react-structured-data": "0.0.11",
 		"react-textarea-autosize": "^7.1.0",
-		"swiper": "^6.2.0"
+		"swiper": "^6.3.3"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^6.2.0",
