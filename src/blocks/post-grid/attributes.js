@@ -11,7 +11,7 @@ const attributes = {
 		type: "number",
 		default: 600,
 	},
-	presevePostImageAspectRatio: {
+	preservePostImageAspectRatio: {
 		type: "boolean",
 		default: true,
 	},

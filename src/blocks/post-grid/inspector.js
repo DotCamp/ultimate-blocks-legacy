@@ -159,30 +159,36 @@ export default class Inspector extends Component {
 						checked={checkPostImage}
 						onChange={(checkPostImage) => setAttributes({ checkPostImage })}
 					/>
-					<TextControl
-						label={__("Post Image Width", "ultimate-blocks")}
-						type="number"
-						min={1}
-						value={postImageWidth}
-						onChange={(val) => setAttributes({ postImageWidth: Number(val) })}
-					/>
-					<ToggleControl
-						label={__("Preserve Aspect Ratio", "ultimate-blocks")}
-						checked={preservePostImageAspectRatio}
-						onChange={(preservePostImageAspectRatio) =>
-							setAttributes({ preservePostImageAspectRatio })
-						}
-					/>
-					{!preservePostImageAspectRatio && (
-						<TextControl
-							label={__("Post Image Height", "ultimate-blocks")}
-							type="number"
-							min={1}
-							value={postImageHeight}
-							onChange={(val) =>
-								setAttributes({ postImageHeight: Number(val) })
-							}
-						/>
+					{checkPostImage && (
+						<>
+							<TextControl
+								label={__("Post Image Width", "ultimate-blocks")}
+								type="number"
+								min={1}
+								value={postImageWidth}
+								onChange={(val) =>
+									setAttributes({ postImageWidth: Number(val) })
+								}
+							/>
+							<ToggleControl
+								label={__("Preserve Aspect Ratio", "ultimate-blocks")}
+								checked={preservePostImageAspectRatio}
+								onChange={(preservePostImageAspectRatio) =>
+									setAttributes({ preservePostImageAspectRatio })
+								}
+							/>
+							{!preservePostImageAspectRatio && (
+								<TextControl
+									label={__("Post Image Height", "ultimate-blocks")}
+									type="number"
+									min={1}
+									value={postImageHeight}
+									onChange={(val) =>
+										setAttributes({ postImageHeight: Number(val) })
+									}
+								/>
+							)}
+						</>
 					)}
 					<ToggleControl
 						label={__("Display Author", "ultimate-blocks")}
