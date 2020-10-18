@@ -893,7 +893,7 @@ registerBlockType("ub/review", {
 								currentDate={eventEndDate * 1000}
 								onChange={(newDate) =>
 									setAttributes({
-										eventStartDate: Math.floor(Date.parse(newDate) / 1000),
+										eventEndDate: Math.floor(Date.parse(newDate) / 1000),
 									})
 								}
 							/>,
