@@ -10,20 +10,32 @@
 function ub_buttons_parse($b){
     require_once dirname(dirname(__DIR__)) . '/common.php';
 
+    //defaults
+    $buttonWidth = 'fixed' ;
+    $url = '';
+    $openInNewTab = true;
+    $addNofollow = true;
+    $addSponsored = false;
+    $size = 'medium';
+    $chosenIcon = '';
+    $buttonText = 'Button Text';
+
+    extract($b); //should overwrite the values above if they exist in the array
+
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    return '<div class="ub-button-container' . ($b['buttonWidth'] == 'full' ? ' ub-button-full-container' : '') . '">
-    <a href="' . esc_url($b['url']) . '" target="' . ($b['openInNewTab'] ? '_blank' : '_self') . '"
-    rel="noopener noreferrer' . ($b['addNofollow'] ? ' nofollow' : '') . ($b['addSponsored'] ? ' sponsored' : '') . '"
-    class="ub-button-block-main ub-button-' . $b['size'] .
-    ($b['buttonWidth'] == 'full' ? ' ub-button-full-width' :
-        ($b['buttonWidth'] == 'flex' ? ' ub-button-flex-'. $b['size'] : '')) . '" role="button">
+    return '<div class="ub-button-container' . ($buttonWidth == 'full' ? ' ub-button-full-container' : '') . '">
+    <a href="' . esc_url($url) . '" target="' . ($openInNewTab ? '_blank' : '_self') . '"
+    rel="noopener noreferrer' . ($addNofollow ? ' nofollow' : '') . ($addSponsored ? ' sponsored' : '') . '"
+    class="ub-button-block-main ub-button-' . $size .
+    ($buttonWidth == 'full' ? ' ub-button-full-width' :
+        ($buttonWidth == 'flex' ? ' ub-button-flex-'. $size : '')) . '" role="button">
     <div class="ub-button-content-holder">'.
-        ($b['chosenIcon'] != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
-        height="' . $iconSize[$b['size']] . '", width="' . $iconSize[$b['size']] . '"
-        viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($b['chosenIcon'])[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($b['chosenIcon'])[1]
-        . '"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($b['chosenIcon'])[2] . '"></svg></span>': '')
-        .'<span class="ub-button-block-btn">' . $b['buttonText'] . '</span>
+        ($chosenIcon != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
+        height="' . $iconSize[$size] . '", width="' . $iconSize[$size] . '"
+        viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
+        . '"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg></span>': '')
+        .'<span class="ub-button-block-btn">' . $buttonText . '</span>
     </div></a></div>';
 }
 

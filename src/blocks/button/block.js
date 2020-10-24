@@ -369,6 +369,7 @@ registerBlockType("ub/button", {
 			addNofollow: true,
 			openInNewTab: true,
 			buttonWidth: "fixed",
+			addSponsored: false,
 		};
 
 		if (buttons.length === 0) {
