@@ -10,13 +10,13 @@ function ub_content_toggle_add_frontend_assets() {
 
     $presentBlocks = ub_getPresentBlocks();
 
+    $firstInstanceDetected = false;
+
     foreach( $presentBlocks as $block ){
         if($block['blockName'] == 'ub/content-toggle' || $block['blockName'] == 'ub/content-toggle-panel'
             || $block['blockName'] == 'ub/content-toggle-block' || $block['blockName'] == 'ub/content-toggle-panel-block'){
-				if( is_singular() && isset($block['attrs']['hasFAQSchema'])) {
-					add_action('wp_footer', 'ub_merge_faqpages', 20);
-				}
-				wp_enqueue_script(
+            if(!$firstInstanceDetected){
+                wp_enqueue_script(
                     'ultimate_blocks-content-toggle-front-script',
                     plugins_url( 'content-toggle/front.build.js', dirname( __FILE__ ) ),
                     array(  ),
@@ -27,9 +27,15 @@ function ub_content_toggle_add_frontend_assets() {
                 if( !wp_style_is('dashicons', 'enqueued')){
                     wp_enqueue_style( 'dashicons' );
                 }
+                $firstInstanceDetected = true;
+            }
+
+            if( is_singular() && isset($block['attrs']['hasFAQSchema'])) {
+                add_action('wp_footer', 'ub_merge_faqpages', 20);
                 break;
             }
         }
+    }
 }
 
 if ( !class_exists( 'simple_html_dom_node' ) ) {
