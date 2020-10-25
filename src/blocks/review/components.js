@@ -453,9 +453,7 @@ export class ReviewBody extends Component {
 									}}
 								>
 									<RichText
-										style={{
-											color: callToActionForeColor,
-										}}
+										style={{ color: callToActionForeColor }}
 										placeholder={__("Call to action")}
 										value={callToActionText}
 										onChange={(text) => setCallToActionText(text)}

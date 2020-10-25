@@ -1,7 +1,6 @@
 import icon from "./icon";
 
 import { ReviewBody } from "./components";
-import { Fragment } from "react";
 import {
 	version_1_1_2,
 	version_1_1_4,
@@ -716,7 +715,7 @@ registerBlockType("ub/review", {
 			/>
 		);
 		const cuisineInput = (
-			<Fragment>
+			<>
 				<p>{__("Serves cuisine")}</p>
 				<ul className="ub_review_cuisine_list">
 					{cuisines.length > 0 ? (
@@ -785,7 +784,7 @@ registerBlockType("ub/review", {
 						}
 					}}
 				/>
-			</Fragment>
+			</>
 		);
 
 		const offerAttributes = [
@@ -831,7 +830,7 @@ registerBlockType("ub/review", {
 				break;
 			case "Book":
 				itemTypeExtras = (
-					<Fragment>
+					<>
 						<TextControl
 							label={__("ISBN")}
 							value={isbn}
@@ -842,7 +841,7 @@ registerBlockType("ub/review", {
 							value={bookAuthorName}
 							onChange={(bookAuthorName) => setAttributes({ bookAuthorName })}
 						/>
-					</Fragment>
+					</>
 				);
 				unusedDefaults = removeFromArray(unusedDefaults, [
 					"isbn",
@@ -861,7 +860,7 @@ registerBlockType("ub/review", {
 				break;
 			case "Event":
 				itemTypeExtras = (
-					<Fragment>
+					<>
 						<h3>{__("Event start date")}</h3>
 						<DatePicker
 							currentDate={eventStartDate * 1000}
@@ -914,14 +913,14 @@ registerBlockType("ub/review", {
 								label={"Use virtual location"}
 							/>
 							{usePhysicalAddress ? (
-								<Fragment>
+								<>
 									<TextControl
 										label={__("Address Name")}
 										value={addressName}
 										onChange={(addressName) => setAttributes({ addressName })}
 									/>
 									{addressInput}
-								</Fragment>
+								</>
 							) : (
 								<div id="ub_review_event_page_input">
 									<URLInput
@@ -943,7 +942,7 @@ registerBlockType("ub/review", {
 							value={organizer}
 							onChange={(organizer) => setAttributes({ organizer })}
 						/>
-					</Fragment>
+					</>
 				);
 				unusedDefaults = removeFromArray(unusedDefaults, [
 					...offerAttributes,
@@ -959,7 +958,7 @@ registerBlockType("ub/review", {
 				break;
 			case "Product":
 				itemTypeExtras = (
-					<Fragment>
+					<>
 						<TextControl
 							label={__("Brand")}
 							value={brand}
@@ -989,7 +988,7 @@ registerBlockType("ub/review", {
 							].map((a) => ({ label: __(a.toUpperCase()), value: a }))}
 							onChange={(identifierType) => setAttributes({ identifierType })}
 						/>
-					</Fragment>
+					</>
 				);
 				unusedDefaults = removeFromArray(unusedDefaults, [
 					"brand",
@@ -1002,7 +1001,7 @@ registerBlockType("ub/review", {
 				break;
 			case "LocalBusiness":
 				itemTypeExtras = (
-					<Fragment>
+					<>
 						{itemSubtype === "FoodEstablishment" &&
 							itemSubsubtype !== "Distillery" &&
 							cuisineInput}
@@ -1023,7 +1022,7 @@ registerBlockType("ub/review", {
 							value={phoneNumber}
 							onChange={(phoneNumber) => setAttributes({ phoneNumber })}
 						/>
-					</Fragment>
+					</>
 				);
 				if (
 					itemSubtype === "FoodEstablishment" &&
@@ -1039,7 +1038,7 @@ registerBlockType("ub/review", {
 				break;
 			case "Organization":
 				itemTypeExtras = (
-					<Fragment>
+					<>
 						{(itemSubsubtype === "Hospital" ||
 							subsubtypes.MedicalBusiness.includes(itemSubsubtype)) && (
 							<TextControl
@@ -1055,7 +1054,7 @@ registerBlockType("ub/review", {
 							value={phoneNumber}
 							onChange={(phoneNumber) => setAttributes({ phoneNumber })}
 						/>
-					</Fragment>
+					</>
 				);
 				unusedDefaults = removeFromArray(unusedDefaults, [
 					"address",
@@ -1065,7 +1064,7 @@ registerBlockType("ub/review", {
 				break;
 			case "SoftwareApplication":
 				itemTypeExtras = (
-					<Fragment>
+					<>
 						<TextControl
 							label={__("Application Category")}
 							value={appCategory}
@@ -1076,7 +1075,7 @@ registerBlockType("ub/review", {
 							value={operatingSystem}
 							onChange={(operatingSystem) => setAttributes({ operatingSystem })}
 						/>
-					</Fragment>
+					</>
 				);
 				unusedDefaults = removeFromArray(unusedDefaults, [
 					"appCategory",
@@ -1086,7 +1085,7 @@ registerBlockType("ub/review", {
 			case "MediaObject":
 				if (itemSubtype === "VideoObject") {
 					itemTypeExtras = (
-						<Fragment>
+						<>
 							<h3>{__("Video upload date")}</h3>,
 							<DatePicker
 								currentDate={videoUploadDate * 1000}
@@ -1104,7 +1103,7 @@ registerBlockType("ub/review", {
 									onChange={(videoURL) => setAttributes({ videoURL })}
 								/>
 							</div>
-						</Fragment>
+						</>
 					);
 					unusedDefaults = removeFromArray(unusedDefaults, [
 						"videoUploadDate",
@@ -1219,7 +1218,7 @@ registerBlockType("ub/review", {
 							/>
 						</PanelRow>
 						{enableCTA && (
-							<Fragment>
+							<>
 								<PanelRow>
 									<label htmlFor="ub-review-cta-nofollow">
 										{__("Add nofollow")}
@@ -1259,79 +1258,10 @@ registerBlockType("ub/review", {
 										}
 									/>
 								</PanelRow>
-							</Fragment>
+							</>
 						)}
 					</PanelBody>
 					<PanelBody title={__("Review schema")} initialOpen={true}>
-						<SelectControl
-							label={__("Item type")}
-							value={itemType}
-							onChange={(itemType) => {
-								setAttributes({ itemType });
-								if (itemType === "Movie") {
-									setAttributes({ enableImage: true });
-								}
-								if (itemType === "Course") {
-									setAttributes({ enableDescription: true });
-								}
-								if (
-									!subtypeCategories.hasOwnProperty(itemType) ||
-									!subtypeCategories[itemType].includes(itemSubtype)
-								) {
-									setAttributes({ itemSubtype: "", itemSubsubtype: "" });
-								}
-							}}
-							options={[
-								"Book",
-								"Course",
-								"CreativeWorkSeason",
-								"CreativeWorkSeries",
-								"Episode",
-								"Event",
-								"Game",
-								"LocalBusiness",
-								"MediaObject",
-								"Movie",
-								"MusicPlaylist",
-								"MusicRecording",
-								"Organization",
-								"Product",
-								"SoftwareApplication",
-							].map((a) => ({ label: a, value: a }))}
-						/>
-						{subtypeCategories.hasOwnProperty(itemType) && (
-							<SelectControl
-								label={__("Item subtype")}
-								value={itemSubtype}
-								onChange={(itemSubtype) => {
-									setAttributes({ itemSubtype });
-									if (itemSubtype === "VideoObject") {
-										setAttributes({ enableImage: true });
-									}
-									if (
-										!subsubtypes.hasOwnProperty(itemSubtype) ||
-										!subsubtypes[itemSubtype].includes(itemSubsubtype)
-									) {
-										setAttributes({ itemSubsubtype: "" });
-									}
-								}}
-								options={["", ...subtypeCategories[itemType]].map((a) => ({
-									label: a,
-									value: a,
-								}))}
-							/>
-						)}
-						{subsubtypes.hasOwnProperty(itemSubtype) && (
-							<SelectControl
-								label={__("Item subsubtype")}
-								value={itemSubsubtype}
-								onChange={(itemSubsubtype) => setAttributes({ itemSubsubtype })}
-								options={["", ...subsubtypes[itemSubtype]].map((a) => ({
-									label: a,
-									value: a,
-								}))}
-							/>
-						)}
 						<PanelRow>
 							<label htmlFor="ub-review-schema-toggle">
 								{__("Enable review schema")}
@@ -1355,47 +1285,127 @@ registerBlockType("ub/review", {
 							/>
 						</PanelRow>
 						{enableReviewSchema && (
-							<Fragment>
-								{!(itemType === "Movie" || itemSubtype === "VideoObject") && (
-									//images are required for these item types and optional for the rest
-									<PanelRow>
-										<label htmlFor="ub-review-image-toggle">
-											{__("Enable review image")}
-										</label>
-										<FormToggle
-											id="ub-review-image-toggle"
-											label={__("Enable review image")}
-											checked={enableImage}
-											onChange={() =>
-												setAttributes({ enableImage: !enableImage })
+							<>
+								<SelectControl
+									label={__("Item type")}
+									value={itemType}
+									onChange={(itemType) => {
+										setAttributes({ itemType });
+										if (itemType === "Movie") {
+											setAttributes({ enableImage: true });
+										}
+										if (itemType === "Course") {
+											setAttributes({ enableDescription: true });
+										}
+										if (
+											!subtypeCategories.hasOwnProperty(itemType) ||
+											!subtypeCategories[itemType].includes(itemSubtype)
+										) {
+											setAttributes({ itemSubtype: "", itemSubsubtype: "" });
+										}
+									}}
+									options={[
+										"Book",
+										"Course",
+										"CreativeWorkSeason",
+										"CreativeWorkSeries",
+										"Episode",
+										"Event",
+										"Game",
+										"LocalBusiness",
+										"MediaObject",
+										"Movie",
+										"MusicPlaylist",
+										"MusicRecording",
+										"Organization",
+										"Product",
+										"SoftwareApplication",
+									].map((a) => ({ label: a, value: a }))}
+								/>
+								{subtypeCategories.hasOwnProperty(itemType) && (
+									<SelectControl
+										label={__("Item subtype")}
+										value={itemSubtype}
+										onChange={(itemSubtype) => {
+											setAttributes({ itemSubtype });
+											if (itemSubtype === "VideoObject") {
+												setAttributes({ enableImage: true });
 											}
-										/>
-									</PanelRow>
-								)}
-								{enableImage && (
-									<RangeControl
-										label={__("Image size")}
-										value={imageSize}
-										onChange={(imageSize) => setAttributes({ imageSize })}
-										min={1}
-										max={200}
+											if (
+												!subsubtypes.hasOwnProperty(itemSubtype) ||
+												!subsubtypes[itemSubtype].includes(itemSubsubtype)
+											) {
+												setAttributes({ itemSubsubtype: "" });
+											}
+										}}
+										options={["", ...subtypeCategories[itemType]].map((a) => ({
+											label: a,
+											value: a,
+										}))}
 									/>
 								)}
-								{itemType !== "Course" && (
-									<PanelRow>
-										<label htmlFor="ub-review-description-toggle">
-											{__("Enable review description")}
-										</label>
-										<FormToggle
-											id="ub-review-description-toggle"
-											label={__("Enable review description")}
-											checked={enableDescription}
-											onChange={() =>
-												setAttributes({ enableDescription: !enableDescription })
-											}
-										/>
-									</PanelRow>
+								{subsubtypes.hasOwnProperty(itemSubtype) && (
+									<SelectControl
+										label={__("Item subsubtype")}
+										value={itemSubsubtype}
+										onChange={(itemSubsubtype) =>
+											setAttributes({ itemSubsubtype })
+										}
+										options={["", ...subsubtypes[itemSubtype]].map((a) => ({
+											label: a,
+											value: a,
+										}))}
+									/>
 								)}
+							</>
+						)}
+						<>
+							{!(
+								enableReviewSchema &&
+								(itemType === "Movie" || itemSubtype === "VideoObject")
+							) && (
+								//images are required for these item types and optional for the rest
+								<PanelRow>
+									<label htmlFor="ub-review-image-toggle">
+										{__("Enable review image")}
+									</label>
+									<FormToggle
+										id="ub-review-image-toggle"
+										label={__("Enable review image")}
+										checked={enableImage}
+										onChange={() =>
+											setAttributes({ enableImage: !enableImage })
+										}
+									/>
+								</PanelRow>
+							)}
+							{enableImage && (
+								<RangeControl
+									label={__("Image size")}
+									value={imageSize}
+									onChange={(imageSize) => setAttributes({ imageSize })}
+									min={1}
+									max={200}
+								/>
+							)}
+							{(!enableReviewSchema || itemType !== "Course") && (
+								<PanelRow>
+									<label htmlFor="ub-review-description-toggle">
+										{__("Enable review description")}
+									</label>
+									<FormToggle
+										id="ub-review-description-toggle"
+										label={__("Enable review description")}
+										checked={enableDescription}
+										onChange={() =>
+											setAttributes({ enableDescription: !enableDescription })
+										}
+									/>
+								</PanelRow>
+							)}
+						</>
+						{enableReviewSchema && (
+							<>
 								{itemTypeExtras}
 								<TextControl
 									label={__("Review publisher")}
@@ -1435,8 +1445,8 @@ registerBlockType("ub/review", {
 												setAttributes({ offerCurrency })
 											}
 										/>
-										{offerType == "Offer" ? (
-											<Fragment>
+										{offerType === "Offer" ? (
+											<>
 												<TextControl
 													label={__("Offer Price")}
 													value={offerPrice}
@@ -1488,9 +1498,9 @@ registerBlockType("ub/review", {
 														}
 													/>
 												)}
-											</Fragment>
+											</>
 										) : (
-											<Fragment>
+											<>
 												<TextControl
 													label={__("Offer Count")}
 													value={offerCount}
@@ -1516,14 +1526,13 @@ registerBlockType("ub/review", {
 														setAttributes({ offerHighPrice: Number(val) })
 													}
 												/>
-											</Fragment>
+											</>
 										)}
 									</PanelBody>
 								)}
-							</Fragment>
+							</>
 						)}
 					</PanelBody>
-					{/*enableReviewSchema &&*/}
 				</InspectorControls>
 			),
 			isSelected && (
