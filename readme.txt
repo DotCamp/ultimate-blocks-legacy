@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.5
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -132,52 +132,81 @@ That's it. You're done!
 
 == Changelog ==
 
+= 2.4.1 =
+
+* ADD: Review - enable using review schema with other itemTypes.
+* ADD: Tabbed Content - ARIA attributes.
+* ADD: Button - proper role as per ARIA specifications.
+* ADD: Button - enable marking Button block links as Sponsored.
+* ADD: Call to Action - enable marking button link as Sponsored.
+* ADD: Content Toggle - allow adding links to titles and customizing its color.
+* ADD: Content Toggle - ARIA attributes and ARIA-compatible roles.
+* ADD: Content Toggle - allow setting all content toggle panels as hidden in showOnlyOne mode.
+* ADD: Image Slider - update Swiper to version 6.3.
+* ADD: Image Slider - support for alt text in images.
+* ADD: Post Grid - allow customization of featured image size.
+* ADD: Styled Box - option to set custom colors to notification box.
+* FIX: Button - alignment issue.
+* FIX: Content Filter - issue with "match all" mode on multi-selection categories.
+* FIX: Content Filter - issue with "match any" mode on single-selection categories.
+* FIX: Content Filter - prevent untagged panels from showing up in multi-select mode.
+* FIX: How To - style issue.
+* FIX: How To - prevent HTML tags from messing up how-to schema code.
+* FIX: Post Grid - display of author name and publication date.
+* FIX: Review - offerPrice input.
+* FIX: Styled List - display of list icons in Safari.
+* FIX: Styled List - issue with resetting icon color.
+* FIX: Styled List - conflict with NewsMag theme.
+* FIX: Tabbed Content - issue with align width when it's set.
+* FIX: Table of Contents - multipage links to headings when some of them are hidden or excluded
+* FIX: Other - detect if the plugin's custom CSS file exists before deleting them
+
 = 2.4.0 =
 
-NEW: Styled Box - Allow setting Bordered Box background color.
-NEW: Star Rating - Set default star color to #ffb901.
-NEW: Styled Box - Increase Bordered Box default border thickness to 3.
-NEW: Freemius SDK.
-FIX: Button - Style reverse compatibility issue.
-FIX: Button - Link inserter popover issue.
-FIX: Button - Restore full-width button rendering.
-FIX: Button - Restore top and bottom margins for the new version.
-FIX: Content Toggle - Animation issue when only content toggle is active.
-FIX: Styled Box - Reduce Notification Box margins.
-FIX: Styled Box - Issue with adding text to Notification and Bordered box.
-FIX: Styled List - Restore left margin.
-FIX: Table of Contents - Animation issue caused by style conflict with GeneratePress.
-FIX: Table of Contents - Prevent theme CSS from adding content to list items within Table of Contents.
+* NEW: Styled Box - Allow setting Bordered Box background color.
+* NEW: Star Rating - Set default star color to #ffb901.
+* NEW: Styled Box - Increase Bordered Box default border thickness to 3.
+* NEW: Freemius SDK.
+* FIX: Button - Style reverse compatibility issue.
+* FIX: Button - Link inserter popover issue.
+* FIX: Button - Restore full-width button rendering.
+* FIX: Button - Restore top and bottom margins for the new version.
+* FIX: Content Toggle - Animation issue when only content toggle is active.
+* FIX: Styled Box - Reduce Notification Box margins.
+* FIX: Styled Box - Issue with adding text to Notification and Bordered box.
+* FIX: Styled List - Restore left margin.
+* FIX: Table of Contents - Animation issue caused by style conflict with GeneratePress.
+* FIX: Table of Contents - Prevent theme CSS from adding content to list items within Table of Contents.
 
 = 2.3.9 =
 
-NEW: Button - Enable use of multiple buttons within a single button block.
-NEW: Image Slider - Replace Flickity with Swiper.
-NEW: Image Slider - Add pagination types from Swiper: bullets (equivalent of Flickity's page dots), fraction, progress bar.
-NEW: Image Slider - Add transition modes from Swiper: slide (default), fade, cube, coverflow, flip.
-NEW: Review - Ensure that the average rating uses dots as the decimal separator in the JSONLD code regardless of the user's localization settings.
-NEW: Star Rating - Allow star rating value to be adjusted through slider input.
-NEW: Styled Box - Allow use of inner blocks in notification box mode.
-NEW: Styled Box - Provide default values to numbers in number box mode.
-NEW: Table of Contents - Allow customization of smooth scroll offset.
-NEW: Table of Contents - Add support for Headline block from GenerateBlocks.
-FIX: Content Filter - Use pointer cursor when hovering on filters in frontend.
-FIX: Content Toggle - Prevent PHP error during FAQ schema code generation.
-FIX: Content Toggle - Issues with clicking panels when "show only one panel at a time" is chosen.
-FIX: Content Toggle - Flickering during animation of content toggle panel.
-FIX: HowTo Schema - JSONLD code issue with adding list of tools
-FIX: Post Grid - Issue with selecting multiple categories in newer Gutenberg versions.
-FIX: Social Share - Display of custom icon color.
-FIX: Star Rating - Star alignment.
-FIX: Styled Box - Adjust top and bottom margins for number box and feature box modes.
-FIX: Styled List - Compatibility issues with text indent functionality in new WordPress version.
-FIX: Table of Contents - Load values of custom text and toggled headings when editing a saved instance.
-FIX: Table of Contents - Animation issues.
-FIX: Testimonial - Display of testimonial body font size in frontend.
-FIX: FontAwesome icon rendering when multiple button/styled list instances are present.
-FIX: Prevent duplication of existing block IDs
-REMOVE: Review - aggregateRating from JSONLD code to give way for displaying review author when the page appears in search engines.
-REMOVE: Styled List - Left margin.
+* NEW: Button - Enable use of multiple buttons within a single button block.
+* NEW: Image Slider - Replace Flickity with Swiper.
+* NEW: Image Slider - Add pagination types from Swiper: bullets (equivalent of Flickity's page dots), fraction, progress bar.
+* NEW: Image Slider - Add transition modes from Swiper: slide (default), fade, cube, coverflow, flip.
+* NEW: Review - Ensure that the average rating uses dots as the decimal separator in the JSONLD code regardless of the user's localization settings.
+* NEW: Star Rating - Allow star rating value to be adjusted through slider input.
+* NEW: Styled Box - Allow use of inner blocks in notification box mode.
+* NEW: Styled Box - Provide default values to numbers in number box mode.
+* NEW: Table of Contents - Allow customization of smooth scroll offset.
+* NEW: Table of Contents - Add support for Headline block from GenerateBlocks.
+* FIX: Content Filter - Use pointer cursor when hovering on filters in frontend.
+* FIX: Content Toggle - Prevent PHP error during FAQ schema code generation.
+* FIX: Content Toggle - Issues with clicking panels when "show only one panel at a time" is chosen.
+* FIX: Content Toggle - Flickering during animation of content toggle panel.
+* FIX: HowTo Schema - JSONLD code issue with adding list of tools
+* FIX: Post Grid - Issue with selecting multiple categories in newer Gutenberg versions.
+* FIX: Social Share - Display of custom icon color.
+* FIX: Star Rating - Star alignment.
+* FIX: Styled Box - Adjust top and bottom margins for number box and feature box modes.
+* FIX: Styled List - Compatibility issues with text indent functionality in new WordPress version.
+* FIX: Table of Contents - Load values of custom text and toggled headings when editing a saved instance.
+* FIX: Table of Contents - Animation issues.
+* FIX: Testimonial - Display of testimonial body font size in frontend.
+* FIX: FontAwesome icon rendering when multiple button/styled list instances are present.
+* FIX: Prevent duplication of existing block IDs
+* REMOVE: Review - aggregateRating from JSONLD code to give way for displaying review author when the page appears in search engines.
+* REMOVE: Styled List - Left margin.
 
 = 2.3.8 =
 
@@ -185,38 +214,38 @@ REMOVE: Styled List - Left margin.
 
 = 2.3.7 =
 
-NEW: Table of Contents - Add option to remove diacritics from generated anchor texts.
-NEW: Table of Contents - Allow replacing heading text with custom text.
-NEW: Table of Contents - Allow toggling visibility of individual headings.
-NEW: Review - Enhance input of review star values.
-NEW: Styled List - Allow transforming default list into Styled List.
-NEW: Styled List - Allow adjusting space between items.
-FIX: Styled List - Fix issue with Twenty Twenty theme.
-FIX: Content Toggle - Adjust panel padding in editor.
-FIX: HowTo Schema - Adjust bottom margin of images.
-FIX: Image Slider - Bug that prevented input of links.
-FIX: Image Slider - Adjust bottom margin.
-FIX: Image Slider - Issue with image caption editing.
-FIX: Styled Box - Adjust bottom margin to Bordered Box.
-FIX: Styled Box - Adjust layout of style selection screen.
-FIX: Tabbed Content - Style issue.
-FIX: Tabbed Content - Anchor links to deeply-nested tabbed content blocks.
-FIX: Table of Contents - Adjust space between title and toggle button.
-REMOVE: Styled Box - Bottom margin from last paragraph within Bordered Box.
+* NEW: Table of Contents - Add option to remove diacritics from generated anchor texts.
+* NEW: Table of Contents - Allow replacing heading text with custom text.
+* NEW: Table of Contents - Allow toggling visibility of individual headings.
+* NEW: Review - Enhance input of review star values.
+* NEW: Styled List - Allow transforming default list into Styled List.
+* NEW: Styled List - Allow adjusting space between items.
+* FIX: Styled List - Fix issue with Twenty Twenty theme.
+* FIX: Content Toggle - Adjust panel padding in editor.
+* FIX: HowTo Schema - Adjust bottom margin of images.
+* FIX: Image Slider - Bug that prevented input of links.
+* FIX: Image Slider - Adjust bottom margin.
+* FIX: Image Slider - Issue with image caption editing.
+* FIX: Styled Box - Adjust bottom margin to Bordered Box.
+* FIX: Styled Box - Adjust layout of style selection screen.
+* FIX: Tabbed Content - Style issue.
+* FIX: Tabbed Content - Anchor links to deeply-nested tabbed content blocks.
+* FIX: Table of Contents - Adjust space between title and toggle button.
+* REMOVE: Styled Box - Bottom margin from last paragraph within Bordered Box.
 
 = 2.3.6 =
 
-ADD: Option to Disable Some Units (Weeks, Days etc) in Countdown Block.
-ADD: Allow Adding Captions to Step and Final Images in HowTo Block.
-FIX: FAQ Schema JSON-LD Error in Content Toggle When Removing Duplicate Items.
-FIX: Turning Social Share Into a Reusable Block.
-FIX: Table of Contents Issue with Links to Headings in Other Pages.
-FIX: Table of Contents Link Generation When a Heading is Used as an Inner Block.
-FIX: Table of Contents Frontend Script Behavior When Third-party Heading Blocks are Present.
-FIX: Prevent Having More Than One Dash in a Row in the Heading Anchors of Table of Contents.
-IMPROVEMENT: Use figcaption Tag for Displaying Image Captions in Image Slider block.
-IMPROVEMENT: Adjust location of image slider dots
-REMOVE: Default Values for Block Attributes with Object Values in PHP.
+* ADD: Option to Disable Some Units (Weeks, Days etc) in Countdown Block.
+* ADD: Allow Adding Captions to Step and Final Images in HowTo Block.
+* FIX: FAQ Schema JSON-LD Error in Content Toggle When Removing Duplicate Items.
+* FIX: Turning Social Share Into a Reusable Block.
+* FIX: Table of Contents Issue with Links to Headings in Other Pages.
+* FIX: Table of Contents Link Generation When a Heading is Used as an Inner Block.
+* FIX: Table of Contents Frontend Script Behavior When Third-party Heading Blocks are Present.
+* FIX: Prevent Having More Than One Dash in a Row in the Heading Anchors of Table of Contents.
+* IMPROVEMENT: Use figcaption Tag for Displaying Image Captions in Image Slider block.
+* IMPROVEMENT: Adjust location of image slider dots
+* REMOVE: Default Values for Block Attributes with Object Values in PHP.
 
 = 2.3.5 =
 
@@ -238,12 +267,12 @@ Release Date: May 13th, 2020
 
 Release Date: May 4th, 2020
 
-FIX: Frontend Animation Not Working When There's No Indicator Icon in Content Toggle Block.
-FIX: Preserve Old Color Settings For Title and Background Color in Content Toggle Block.
-FIX: Frontend Script to Handle Nested Tabbed Content Instances.
-FIX: Button Icon Position Right Not Working.
-FIX: Delay Image Slider Resizing After Page Load to Fix Image Issue.
-REMOVE: Unused Styles in Post Grid Block.
+* FIX: Frontend Animation Not Working When There's No Indicator Icon in Content Toggle Block.
+* FIX: Preserve Old Color Settings For Title and Background Color in Content Toggle Block.
+* FIX: Frontend Script to Handle Nested Tabbed Content Instances.
+* FIX: Button Icon Position Right Not Working.
+* FIX: Delay Image Slider Resizing After Page Load to Fix Image Issue.
+* REMOVE: Unused Styles in Post Grid Block.
 
 = 2.3.3 =
 
