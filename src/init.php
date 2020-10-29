@@ -695,13 +695,13 @@ function ultimate_blocks_cgb_editor_assets() {
 		Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
-	/*wp_enqueue_script(
+	wp_enqueue_script(
 		'ultimate_blocks-cgb-deactivator-js', // Handle.
 		plugins_url( '/dist/deactivator.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-editor', 'wp-blocks', 'wp-i18n', 'wp-element' ), // Dependencies, defined above.
 		Ultimate_Blocks_Constants::plugin_version(), // Version: latest version number.
 		true
-	);*/
+	);
 
     // Styles.
     if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') && 
