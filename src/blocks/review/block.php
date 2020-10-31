@@ -45,13 +45,13 @@ function ub_render_review_block($attributes){
 
     $offerCode = '"offers":{
         "@type": "' . $offerType . '",
-        "priceCurrency": "' . $offerCurrency . '",' .
+        "priceCurrency": "' . esc_html($offerCurrency) . '",' .
             ($offerType == 'AggregateOffer' ? 
                 '"lowPrice": "' . $offerLowPrice . '",
                 "highPrice": "' . $offerHighPrice . '",
                 "offerCount": "' . $offerCount . '"' 
             : '"price": "' . $offerPrice . '",
-                "url": "' . $callToActionURL . '"' .
+                "url": "' . esc_url($callToActionURL) . '"' .
                 ($offerExpiry > 0 ? (', "priceValidUntil": "' . date("Y-m-d", $offerExpiry) . '"') : '')).
     '}';
 
@@ -59,11 +59,11 @@ function ub_render_review_block($attributes){
 
     switch ($itemType){
         case 'Book':
-            $itemExtras = '"author": "'.$bookAuthorName.'",
-                            "isbn": "'. $isbn.'"';
+            $itemExtras = '"author": "'. esc_html($bookAuthorName) . '",
+                            "isbn": "'. esc_html($isbn) . '"';
         break;
         case 'Course':
-            $itemExtras = '"provider": "'.$provider.'"';
+            $itemExtras = '"provider": "' . esc_html($provider) . '"';
         break;
         case 'Event':
             $itemExtras = $offerCode . ',
@@ -72,41 +72,41 @@ function ub_render_review_block($attributes){
             '"location":{
                 "@type":'. ($usePhysicalAddress ?
                             '"Place",
-                "name": "' . $addressName . '",
-                "address": "' . $address . '"' :
+                "name": "' . esc_html($addressName) . '",
+                "address": "' . esc_html($address) . '"' :
                             '"VirtualLocation",
-                "url": "' . $eventPage . '"').
+                "url": "' . esc_url($eventPage) . '"').
             '},
-            "organizer": "' . $organizer . '",
-            "performer": "' . $performer . '"';
+            "organizer": "' . esc_html($organizer) . '",
+            "performer": "' . esc_html($performer) . '"';
         break;
         case 'Product':
             $itemExtras = '"brand": {
                                 "@type": "Brand",
-                                "name": "' . $brand . '"
+                                "name": "' . esc_html($brand) . '"
                             },
-                            "sku": "'. $sku .'",
-                            "' . $identifierType . '": "' . $identifier . '",' . $offerCode;
+                            "sku": "'. esc_html($sku) .'",
+                            "' . esc_html($identifierType) . '": "' . esc_html($identifier) . '",' . $offerCode;
         break;
         case 'LocalBusiness':
             $itemExtras =  isset($cuisines) ? ( '"servesCuisine":' . json_encode($cuisines) . ',') : '' .
-                            '"address": "' . $address . '",
-                            "telephone": "' . $telephone . '",
-                            "priceRange": "' . $priceRange . '"';
+                            '"address": "' . esc_html($address) . '",
+                            "telephone": "' . esc_html($telephone) . '",
+                            "priceRange": "' . esc_html($priceRange) . '"';
         break;
         case 'Organization':
-            $itemExtras = (in_array($itemSubsubtype, array('Dentist', 'Hospital', 'MedicalClinic', 'Pharmacy', 'Physician')) ? ('"priceRange":"' . $priceRange . '",'): '').
-            '"address": "' . $address . '",
+            $itemExtras = (in_array($itemSubsubtype, array('Dentist', 'Hospital', 'MedicalClinic', 'Pharmacy', 'Physician')) ? ('"priceRange":"' . esc_html($priceRange) . '",'): '').
+            '"address": "' . esc_html($address) . '",
             "telephone": "' . $telephone . '"';
         break;
         case 'SoftwareApplication':
-            $itemExtras = '"applicationCategory": "' . $appCategory . '",
-                            "operatingSystem": "' . $operatingSystem . '",' . $offerCode;
+            $itemExtras = '"applicationCategory": "' . esc_html($appCategory) . '",
+                            "operatingSystem": "' . esc_html($operatingSystem) . '",' . $offerCode;
         break;
         case 'MediaObject':
             $itemExtras = $itemSubtype == 'VideoObject' ? 
                     ('"uploadDate": "'.date("Y-m-d", $videoUploadDate) . '", 
-                    "contentUrl": "'.$videoURL.'"') : '';
+                    "contentUrl": "' . esc_url($videoURL) . '"') : '';
         break;
         default:
             $itemExtras = '';
@@ -144,23 +144,23 @@ function ub_render_review_block($attributes){
                 '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
         "@context": "http://schema.org/",
         "@type": "Review",
-        "reviewBody": "' . preg_replace('/(<.+?>)/', '', $summaryDescription) . '",
-        "description": "' . preg_replace('/(<.+?>)/', '', $description) . '",
-        "itemReviewed":{
+        "reviewBody": "' . esc_html(preg_replace('/(<.+?>)/', '', $summaryDescription)) . '",
+        "description": "' . esc_html(preg_replace('/(<.+?>)/', '', $description)) . '",
+        "itemReviewed": {
             "@type":"' . ($itemSubsubtype ?: $itemSubtype ?: $itemType) . '",' .
-            ($itemName ? ('"name":"' . preg_replace('/(<.+?>)/', '', $itemName) . '",') : '') .
-            ($imgURL ? (($itemSubtype == 'VideoObject' ? '"thumbnailUrl' : '"image') . '": "' . $imgURL. '",') : '') .
-            '"description": "'.preg_replace('/(<.+?>)/', '', $description) .'"'
+            ($itemName ? ('"name":"' . esc_html(preg_replace('/(<.+?>)/', '', $itemName)) . '",') : '') .
+            ($imgURL ? (($itemSubtype == 'VideoObject' ? '"thumbnailUrl' : '"image') . '": "' . esc_url($imgURL) . '",') : '') .
+            '"description": "' . esc_html(preg_replace('/(<.+?>)/', '', $description)) .'"'
                 . ($itemExtras == '' ? '' : ',' . $itemExtras ) .
         '},
         "reviewRating":{
-            "@type":"Rating",
+            "@type": "Rating",
             "ratingValue": "' . ($average % 1 == 0 ? $average : number_format($average, 1, '.', '')) . '",
             "bestRating": "' . $starCount . '"
         },
         "author":{
-            "@type":"Person",
-            "name":"'.preg_replace('/(<.+?>)/', '', $authorName).'"
+            "@type": "Person",
+            "name": "'. esc_html(preg_replace('/(<.+?>)/', '', $authorName)) .'"
         },
         "publisher": "'.$reviewPublisher.'",
         "datePublished": "'. date("Y-m-d", $publicationDate) . '",
