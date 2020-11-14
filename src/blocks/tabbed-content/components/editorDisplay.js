@@ -94,11 +94,9 @@ export class OldTabHolder extends Component {
 			block.SortableItem = SortableElement(
 				({ value, i, propz, onChangeTitle, onRemoveTitle, toggleTitle }) => (
 					<div
-						className={
-							className +
-							"-tab-title-wrap SortableItem" +
-							(propz.attributes.activeTab === i ? " active" : "")
-						}
+						className={`${className}-tab-title-wrap SortableItem${
+							propz.attributes.activeTab === i ? " active" : ""
+						}`}
 						style={{
 							backgroundColor:
 								propz.attributes.activeTab === i
@@ -148,7 +146,7 @@ export class OldTabHolder extends Component {
 					toggleTitle,
 					onAddTab,
 				}) => (
-					<div className={className + "-tabs-title SortableList"}>
+					<div className={`${className}-tabs-title SortableList`}>
 						{items.map((value, index) => (
 							<block.SortableItem
 								propz={propz}
@@ -162,7 +160,7 @@ export class OldTabHolder extends Component {
 							/>
 						))}
 						<div
-							className={className + "-tab-title-wrap"}
+							className={`${className}-tab-title-wrap`}
 							key={propz.attributes.tabsTitle.length}
 							onClick={() => onAddTab(propz.attributes.tabsTitle.length)}
 						>
@@ -245,7 +243,7 @@ export class OldTabHolder extends Component {
 				>
 					{upgradeButtonLabel}
 				</button>
-				<div className={className + "-holder"}>
+				<div className={`${className}-holder`}>
 					<block.SortableList
 						axis="x"
 						propz={this.props}
@@ -291,7 +289,7 @@ export class OldTabHolder extends Component {
 						onAddTab={addTab}
 					/>
 
-					<div className={className + "-tabs-content"}>
+					<div className={`${className}-tabs-content`}>
 						<InnerBlocks templateLock={false} allowedBlocks={["ub/tab"]} />
 					</div>
 				</div>
@@ -334,43 +332,47 @@ export class TabHolder extends Component {
 			selectedBlock,
 			selectBlock,
 			insertBlock,
-			block,
+			//block,
 			getBlock,
 			getClientIdsWithDescendants,
 		} = this.props;
+
+		let className = "wp-block-ub-tabbed-content";
+
+		window.ubTabbedContentBlocks = window.ubTabbedContentBlocks || [];
 
 		const {
 			tabsTitle,
 			tabsTitleAlignment,
 			activeTab,
+			tabsAlignment,
 			tabVertical,
 			blockID,
 		} = attributes;
+		let block = null;
 
-		const blockPrefix = "wp-block-ub-tabbed-content";
-
-		window.ubTabbedContentBlocks = window.ubTabbedContentBlocks || [];
-
-		let bl = null;
-
-		for (const b of window.ubTabbedContentBlocks) {
-			if (b.id === this.state.index) {
-				bl = b;
+		for (const bl of window.ubTabbedContentBlocks) {
+			if (bl.id === attributes.id) {
+				block = bl;
 				break;
 			}
 		}
 
-		if (!bl) {
-			bl = {
-				id: window.ubTabbedContentBlocks.length,
+		if (!block) {
+			block = {
+				id: this.props.block.clientId,
 				SortableItem: null,
 				SortableList: null,
 			};
-			window.ubTabbedContentBlocks.push(bl);
-			this.setState({ index: bl.id });
+			window.ubTabbedContentBlocks.push(block);
+			setAttributes({ id: block.id });
 		}
 
-		const tabs = block.innerBlocks;
+		if (!attributes.tabsTitle) {
+			attributes.tabsTitle = [];
+		}
+
+		const tabs = this.props.block.innerBlocks;
 
 		const showControls = (type, index) => {
 			setAttributes({
@@ -384,7 +386,11 @@ export class TabHolder extends Component {
 		};
 
 		const addTab = (i) => {
-			insertBlock(createBlock("ub/tab-block", {}), i, block.clientId);
+			insertBlock(
+				createBlock("ub/tab-block", {}),
+				i,
+				this.props.block.clientId
+			);
 			setAttributes({
 				tabsTitle: [...tabsTitle, "Tab Title"],
 				tabsTitleAlignment: [...tabsTitleAlignment, "left"],
@@ -394,7 +400,7 @@ export class TabHolder extends Component {
 			showControls("tab-title", i);
 		};
 
-		if (tabsTitle.length === 0) {
+		if (attributes.tabsTitle.length === 0) {
 			addTab(0);
 		}
 
@@ -402,103 +408,101 @@ export class TabHolder extends Component {
 			<span className="dashicons dashicons-move drag-handle" />
 		));
 
-		if (!bl.SortableItem) {
-			bl.SortableItem = SortableElement(
-				({ value, i, props, onChangeTitle, onRemoveTitle, toggleTitle }) => {
-					const {
-						tabsTitle,
-						tabsTitleAlignment,
-						activeTab,
-						theme,
-						titleColor,
-						activeControl,
-					} = props.attributes;
-					return (
+		if (!block.SortableItem) {
+			block.SortableItem = SortableElement(
+				({ value, i, propz, onChangeTitle, onRemoveTitle, toggleTitle }) => (
+					<div
+						className={`${className}-tab-title-${
+							tabVertical ? "vertical-" : ""
+						}wrap SortableItem${
+							propz.attributes.activeTab === i ? " active" : ""
+						}`}
+						style={{
+							textAlign: propz.attributes.tabsTitleAlignment[i],
+							backgroundColor:
+								propz.attributes.activeTab === i
+									? propz.attributes.theme
+									: "initial",
+							color:
+								propz.attributes.activeTab === i
+									? propz.attributes.titleColor
+									: "#000000",
+						}}
+						onClick={() => toggleTitle("tab-title", i)}
+					>
+						<RichText
+							tagName="div"
+							className={`${className}-tab-title`}
+							value={value}
+							formattingControls={["bold", "italic"]}
+							isSelected={
+								propz.attributes.activeControl === "tab-title-" + i &&
+								propz.isSelected
+							}
+							onChange={(content) => onChangeTitle(content, i)}
+							placeholder="Tab Title"
+						/>
 						<div
-							className={`${blockPrefix}-tab-title-${
-								tabVertical ? "vertical-" : ""
-							}wrap SortableItem${activeTab === i ? " active" : ""}`}
-							style={{
-								textAlign: tabsTitleAlignment[i],
-								backgroundColor: activeTab === i ? theme : "initial",
-								color: activeTab === i ? titleColor : "#000000",
-							}}
-							onClick={() => toggleTitle("tab-title", i)}
+							className={`ub-tab-actions${
+								propz.attributes.tabsTitle.length === 1 ? " ub-hide" : ""
+							}`}
 						>
-							<RichText
-								tagName="div"
-								className={`${blockPrefix}-tab-title`}
-								value={value}
-								formattingControls={["bold", "italic"]}
-								isSelected={activeControl === `tab-title-${i}` && isSelected}
-								onChange={(newTitle) => onChangeTitle(newTitle, i)}
-								placeholder="Tab Title"
+							<DragHandle />
+							<span
+								className={"dashicons dashicons-minus remove-tab-icon"}
+								onClick={() => onRemoveTitle(i)}
 							/>
-							<div
-								className={`ub-tab-actions${
-									tabsTitle.length === 1 ? " ub-hide" : ""
-								}`}
-							>
-								<DragHandle />
-								<span
-									className={"dashicons dashicons-minus remove-tab-icon"}
-									onClick={() => onRemoveTitle(i)}
-								/>
-							</div>
 						</div>
-					);
-				}
+					</div>
+				)
 			);
 		}
 
-		if (!bl.SortableList) {
-			bl.SortableList = SortableContainer(
+		if (!block.SortableList) {
+			block.SortableList = SortableContainer(
 				({
 					items,
-					props,
+					propz,
 					onChangeTitle,
 					onRemoveTitle,
-					onAddTab,
 					toggleTitle,
-				}) => {
-					const { tabsAlignment, tabVertical, tabsTitle } = props.attributes;
-					return (
+					onAddTab,
+				}) => (
+					<div
+						className={`${className}-tabs-title${
+							propz.attributes.tabVertical ? "-vertical-tab" : ""
+						} SortableList`}
+						style={{
+							justifyContent:
+								tabsAlignment === "center"
+									? "center"
+									: `flex-${tabsAlignment === "left" ? "start" : "end"}`,
+						}}
+						useWindowAsScrollContainer={true}
+					>
+						{items.map((value, index) => (
+							<block.SortableItem
+								propz={propz}
+								key={`item-${index}`}
+								i={index}
+								index={index}
+								value={value}
+								onChangeTitle={onChangeTitle}
+								onRemoveTitle={onRemoveTitle}
+								toggleTitle={toggleTitle}
+							/>
+						))}
 						<div
-							className={`${blockPrefix}-tabs-title${
-								tabVertical ? "-vertical-tab" : ""
-							} SortableList`}
-							style={{
-								justifyContent:
-									tabsAlignment === "center"
-										? "center"
-										: `flex-${tabsAlignment === "left" ? "start" : "end"}`,
-							}}
-							useWindowAsScrollContainer={true}
+							className={`${className}-tab-title-${
+								attributes.tabVertical ? "vertical-" : ""
+							}wrap`}
+							key={propz.attributes.tabsTitle.length}
+							onClick={() => onAddTab(propz.attributes.tabsTitle.length)}
 						>
-							{items.map((value, index) => (
-								<bl.SortableItem
-									key={`item-${index}`}
-									i={index}
-									index={index}
-									value={value}
-									props={props}
-									onChangeTitle={onChangeTitle}
-									onRemoveTitle={onRemoveTitle}
-									toggleTitle={toggleTitle}
-								/>
-							))}
-							<div
-								className={`${blockPrefix}-tab-title-${
-									tabVertical ? "vertical-" : ""
-								}wrap`}
-								key={tabsTitle.length}
-								onClick={() => onAddTab(tabsTitle.length)}
-							>
-								<span className="dashicons dashicons-plus-alt" />
-							</div>
+							<span className="dashicons dashicons-plus-alt" />
 						</div>
-					);
-				}
+					</div>
+				)
 			);
 		}
 
@@ -508,13 +512,13 @@ export class TabHolder extends Component {
 			tabs.forEach((tab, i) =>
 				updateBlockAttributes(tab.clientId, {
 					index: i,
-					isActive: activeTab === i,
+					isActive: attributes.activeTab === i,
 				})
 			);
 			setState({ oldArrangement: newArrangement });
 		}
 
-		if (selectedBlock && selectedBlock.clientId !== block.clientId) {
+		if (selectedBlock && selectedBlock.clientId !== this.props.block.clientId) {
 			if (
 				tabs.filter((innerblock) => innerblock.attributes.isActive).length === 0
 			) {
@@ -525,7 +529,7 @@ export class TabHolder extends Component {
 					0 &&
 				!selectedBlock.attributes.isActive
 			) {
-				selectBlock(block.clientId);
+				selectBlock(this.props.block.clientId);
 			}
 		}
 
@@ -573,24 +577,23 @@ export class TabHolder extends Component {
 				</BlockControls>
 			),
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
-			<div className={blockPrefix}>
+			<div className={className}>
 				<div
-					className={`${blockPrefix}-holder ${
-						tabVertical ? "vertical-holder" : ""
+					className={`${className}-holder ${
+						attributes.tabVertical ? "vertical-holder" : ""
 					}`}
 				>
 					<div
-						className={`${blockPrefix}-tab-holder ${
-							tabVertical ? "vertical-tab-width" : ""
+						className={`${className}-tab-holder ${
+							attributes.tabVertical ? "vertical-tab-width" : ""
 						}`}
 					>
-						<bl.SortableList
-							props={this.props}
-							axis={tabVertical ? "y" : "x"}
-							items={tabsTitle}
+						<block.SortableList
+							axis={attributes.tabVertical ? "y" : "x"}
+							propz={this.props}
+							items={attributes.tabsTitle}
 							onSortEnd={({ oldIndex, newIndex }) => {
-								const titleItems = tabsTitle.slice(0);
-								showControls("tab-title", oldIndex);
+								const titleItems = attributes.tabsTitle.slice(0);
 								setAttributes({
 									tabsTitle: arrayMove(titleItems, oldIndex, newIndex),
 									activeTab: newIndex,
@@ -599,10 +602,11 @@ export class TabHolder extends Component {
 								moveBlockToPosition(
 									tabs.filter((tab) => tab.attributes.index === oldIndex)[0]
 										.clientId,
-									block.clientId,
-									block.clientId,
+									this.props.block.clientId,
+									this.props.block.clientId,
 									newIndex
 								);
+								showControls("tab-title", oldIndex);
 							}}
 							onChangeTitle={(content, i) => {
 								attributes.tabsTitle[i] = content;
@@ -629,11 +633,38 @@ export class TabHolder extends Component {
 							onAddTab={addTab}
 							toggleTitle={showControls}
 							useDragHandle={true}
+							onChangeTitle={(content, i) => {
+								setAttributes({
+									tabsTitle: [
+										...attributes.tabsTitle.slice(0, i),
+										content,
+										...attributes.tabsTitle.slice(i + 1),
+									],
+								});
+							}}
+							onRemoveTitle={(i) => {
+								setAttributes({
+									tabsTitle: [
+										...attributes.tabsTitle.slice(0, i),
+										...attributes.tabsTitle.slice(i + 1),
+									],
+								});
+								removeBlock(
+									this.props.block.innerBlocks.filter(
+										(tab) => tab.attributes.index === i
+									)[0].clientId
+								);
+
+								setAttributes({ activeTab: 0 });
+								showControls("tab-title", 0);
+							}}
+							toggleTitle={showControls}
+							onAddTab={addTab}
 						/>
 					</div>
 					<div
-						className={`${blockPrefix}-tabs-content ${
-							tabVertical ? "vertical-content-width" : ""
+						className={`${className}-tabs-content ${
+							this.props.attributes.tabVertical ? "vertical-content-width" : ""
 						}`}
 					>
 						<InnerBlocks
