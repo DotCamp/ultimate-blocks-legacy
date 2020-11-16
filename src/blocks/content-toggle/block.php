@@ -23,10 +23,6 @@ function ub_content_toggle_add_frontend_assets() {
                     Ultimate_Blocks_Constants::plugin_version(),
                     true
                 );
-                //Enable Dashicon for logged-out users
-                if( !wp_style_is('dashicons', 'enqueued')){
-                    wp_enqueue_style( 'dashicons' );
-                }
                 $firstInstanceDetected = true;
             }
 
