@@ -65,6 +65,9 @@
 
 .ub_button_popover {
 	padding: 10px;
+	.components-base-control:not(:last-of-type) {
+		margin-bottom: 0;
+	}
 }
 .ub-buttons > * {
 	display: inline-block;

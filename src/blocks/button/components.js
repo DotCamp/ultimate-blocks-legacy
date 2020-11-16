@@ -528,6 +528,21 @@ class URLInputBox extends Component {
 								})
 							}
 						/>
+						<CheckboxControl
+							label={__("Mark link as sponsored", "ultimate-blocks")}
+							checked={buttons[index].addSponsored}
+							onChange={() =>
+								setAttributes({
+									buttons: [
+										...buttons.slice(0, index),
+										Object.assign({}, buttons[index], {
+											addSponsored: !buttons[index].addSponsored,
+										}),
+										...buttons.slice(index + 1),
+									],
+								})
+							}
+						/>
 					</div>
 				</Popover>
 			</div>
