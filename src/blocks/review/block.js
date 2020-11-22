@@ -91,6 +91,10 @@ const attributes = {
 		type: "number",
 		default: 5,
 	},
+	useSummary: {
+		type: "boolean",
+		default: true,
+	},
 	summaryTitle: {
 		type: "string",
 		default: "Summary",
@@ -357,6 +361,7 @@ registerBlockType("ub/review", {
 				items,
 				parts,
 				starCount,
+				useSummary,
 				summaryTitle,
 				summaryDescription,
 				callToActionText,
@@ -1284,6 +1289,17 @@ registerBlockType("ub/review", {
 								}}
 							/>
 						</PanelRow>
+						<PanelRow>
+							<label htmlFor="ub-review-summary-toggle">
+								{__("Use review summary")}
+							</label>
+							<FormToggle
+								id="ub-review-summary-toggle"
+								label={__("Use review summary")}
+								checked={useSummary}
+								onChange={() => setAttributes({ useSummary: !useSummary })}
+							/>
+						</PanelRow>
 						{enableReviewSchema && (
 							<>
 								<SelectControl
@@ -1568,6 +1584,7 @@ registerBlockType("ub/review", {
 				imageEnabled={enableImage}
 				items={parts}
 				starCount={starCount}
+				enableSummary={useSummary}
 				summaryTitle={summaryTitle}
 				summaryDescription={summaryDescription}
 				callToActionText={callToActionText}

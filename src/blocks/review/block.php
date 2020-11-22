@@ -124,11 +124,11 @@ function ub_render_review_block($attributes){
             (!$enableImage || $imgURL == '' ? '' : '<img class="ub_review_image" src="' . $imgURL . '" alt = "' . $imgAlt . '">') .
         '</div>' : '').
             $starRatings
-    .'<div class="ub_review_summary">
-        <p class="ub_review_summary_title">' . $summaryTitle . '</p>
-        <div class="ub_review_overall_value">
-            <p>' . $summaryDescription . '</p>
-            <div class="ub_review_average"><span class="ub_review_rating">' . $average . '</span>' .
+    .'<div class="ub_review_summary">' .
+        ($useSummary ? '<p class="ub_review_summary_title">' . $summaryTitle . '</p>' : '') .
+        '<div class="ub_review_overall_value">' .
+            ($useSummary ? '<p>' . $summaryDescription . '</p>' : '') .
+            '<div class="ub_review_average"><span class="ub_review_rating">' . $average . '</span>' .
             ub_generateStarDisplay($average, $starCount, $blockID . '-average',
             $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").
             '</div>
@@ -143,9 +143,9 @@ function ub_render_review_block($attributes){
                     ($callToActionText== '' ? 'Click here' : $callToActionText) . '</button></a></div>' : '') .
                 '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
         "@context": "http://schema.org/",
-        "@type": "Review",
-        "reviewBody": "' . esc_html(preg_replace('/(<.+?>)/', '', $summaryDescription)) . '",
-        "description": "' . esc_html(preg_replace('/(<.+?>)/', '', $description)) . '",
+        "@type": "Review",' .
+        ($useSummary ? '"reviewBody": "' . esc_html(preg_replace('/(<.+?>)/', '', $summaryDescription)) . '",' : '') .
+        '"description": "' . esc_html(preg_replace('/(<.+?>)/', '', $description)) . '",
         "itemReviewed": {
             "@type":"' . ($itemSubsubtype ?: $itemSubtype ?: $itemType) . '",' .
             ($itemName ? ('"name":"' . esc_html(preg_replace('/(<.+?>)/', '', $itemName)) . '",') : '') .

@@ -474,6 +474,11 @@ function ub_include_block_attribute_css() {
                         'max-height: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
                         'max-width: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
+                    if(!$attributes['useSummary']){
+                        $blockStylesheets .= $prefix . ' .ub_review_overall_value{' . PHP_EOL .
+                            'display: block;' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
                     break;
                 case 'ub/social-share':
                     $icon_sizes = array(

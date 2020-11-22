@@ -210,6 +210,7 @@ export class ReviewBody extends Component {
 			setDescription,
 			ID,
 			items,
+			enableSummary,
 			summaryTitle,
 			summaryDescription,
 			starCount,
@@ -409,21 +410,25 @@ export class ReviewBody extends Component {
 					className="ub_review_add_entry dashicons dashicons-plus-alt"
 				/>
 				<div className="ub_review_summary">
-					<RichText
-						className="ub_review_summary_title"
-						placeholder={__("Title of the summary goes here")}
-						tagName="p"
-						onChange={(text) => setSummaryTitle(text)}
-						value={summaryTitle}
-						unstableOnFocus={() => setEditable("")}
-					/>
-					<div className="ub_review_overall_value">
+					{enableSummary && (
 						<RichText
-							placeholder={__("Summary of the review goes here")}
-							onChange={(text) => setSummaryDescription(text)}
-							value={summaryDescription}
+							className="ub_review_summary_title"
+							placeholder={__("Title of the summary goes here")}
+							tagName="p"
+							onChange={(text) => setSummaryTitle(text)}
+							value={summaryTitle}
 							unstableOnFocus={() => setEditable("")}
 						/>
+					)}
+					<div className="ub_review_overall_value">
+						{enableSummary && (
+							<RichText
+								placeholder={__("Summary of the review goes here")}
+								onChange={(text) => setSummaryDescription(text)}
+								value={summaryDescription}
+								unstableOnFocus={() => setEditable("")}
+							/>
+						)}
 						<div className="ub_review_average">
 							<span className="ub_review_rating">
 								{Math.round(average * 10) / 10}

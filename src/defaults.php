@@ -1062,6 +1062,10 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 5
             ),
+            'useSummary' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
             'summaryTitle' => array(
                 'type' => 'string',
                 'default' => 'Summary'
