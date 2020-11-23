@@ -1,3 +1,7 @@
+function convertToPixels(amount, unit) {
+	return unit === "%" ? (amount / 100) * window.innerWidth : amount;
+}
+
 Array.prototype.slice
 	.call(document.getElementsByClassName("wp-block-ub-content-toggle"))
 	.forEach((toggleContainer) => {
@@ -42,11 +46,29 @@ Array.prototype.slice
 					instance.addEventListener("click", function (e) {
 						e.stopImmediatePropagation();
 						let topPadding = 0;
+						let topPaddingUnit = "";
 						let bottomPadding = 0;
+						let bottomPaddingUnit = "";
+
 						if (panelContent.classList.contains("ub-hide")) {
 							const panelStyle = getComputedStyle(panelContent);
-							topPadding = parseInt(panelStyle.paddingTop.slice(0, -2));
-							bottomPadding = parseInt(panelStyle.paddingBottom.slice(0, -2));
+
+							let topUnitMatch = /[^\d.]/g.exec(panelStyle.paddingTop);
+							let bottomUnitMatch = /[^\d.]/g.exec(panelStyle.paddingBottom);
+
+							topPadding = Number(
+								panelStyle.paddingTop.slice(0, topUnitMatch.index)
+							);
+
+							topPaddingUnit = panelStyle.paddingTop.slice(topUnitMatch.index);
+
+							bottomPadding = Number(
+								panelStyle.paddingBottom.slice(0, bottomUnitMatch.index)
+							);
+
+							bottomPaddingUnit = panelStyle.paddingBottom.slice(
+								bottomUnitMatch.index
+							);
 							panelContent.classList.remove("ub-hide");
 
 							panelContent.classList.add("ub-hiding");
@@ -84,12 +106,24 @@ Array.prototype.slice
 						setTimeout(() => {
 							//delay is needed for the animation to run properly
 							if (panelContent.classList.contains("ub-hiding")) {
+								let convertedTop = convertToPixels(topPadding, topPaddingUnit);
+
+								let convertedBottom = convertToPixels(
+									bottomPadding,
+									bottomPaddingUnit
+								);
+
 								Object.assign(panelContent.style, {
 									height: `${
-										panelContent.scrollHeight + topPadding + bottomPadding
+										panelContent.scrollHeight +
+										convertedTop +
+										convertedBottom -
+										(topPaddingUnit === "%" || bottomPaddingUnit === "%"
+											? panelContent.parentElement.scrollHeight
+											: 0)
 									}px`,
-									paddingTop: `${topPadding}px`,
-									paddingBottom: `${bottomPadding}px`,
+									paddingTop: `${convertedTop}px`,
+									paddingBottom: `${convertedBottom}px`,
 								});
 							} else {
 								panelContent.classList.add("ub-hiding");
