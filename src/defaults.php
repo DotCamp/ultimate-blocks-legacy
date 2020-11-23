@@ -1363,6 +1363,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'left'
             ),
+            'reviewTextColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            ),
             'starAlign' => array(
                 'type' => 'string',
                 'default' => 'left'

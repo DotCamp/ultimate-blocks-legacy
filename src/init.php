@@ -502,6 +502,7 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL .
                     $prefix . ' .ub-review-text{' . PHP_EOL .
                         'text-align: '. $attributes['reviewTextAlign'] . ';' . PHP_EOL .
+                        'color: ' . $attributes['reviewTextColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' svg{' . PHP_EOL .
                         'fill: ' . $attributes['starColor'] . ';' . PHP_EOL .

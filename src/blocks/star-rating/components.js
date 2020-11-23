@@ -42,20 +42,24 @@ export const blockControls = (props) => {
 export const inspectorControls = (props) => {
 	const { attributes, setAttributes } = props;
 
-	const { starCount, starSize, starColor, selectedStars } = attributes;
+	const {
+		starCount,
+		starSize,
+		starColor,
+		selectedStars,
+		reviewTextColor,
+	} = attributes;
 	return (
 		<InspectorControls>
 			<PanelBody title={__("Star Settings")}>
 				<PanelColorSettings
-					title={__("Color")}
+					title={__("Star Color")}
 					initialOpen={false}
 					colorSettings={[
 						{
 							value: starColor,
 							onChange: (colorValue) =>
-								setAttributes({
-									starColor: colorValue,
-								}),
+								setAttributes({ starColor: colorValue }),
 							label: __(""),
 						},
 					]}
@@ -92,6 +96,18 @@ export const inspectorControls = (props) => {
 					beforeIcon="star-half"
 				/>
 			</PanelBody>
+			<PanelColorSettings
+				title={__("Text Color")}
+				initialOpen={false}
+				colorSettings={[
+					{
+						value: reviewTextColor,
+						onChange: (colorValue) =>
+							setAttributes({ reviewTextColor: colorValue }),
+						label: __(""),
+					},
+				]}
+			/>
 		</InspectorControls>
 	);
 };
@@ -105,6 +121,7 @@ export const editorDisplay = (props) => {
 		starColor,
 		selectedStars,
 		reviewText,
+		reviewTextColor,
 		reviewTextAlign,
 		starAlign,
 	} = props.attributes;
@@ -175,7 +192,7 @@ export const editorDisplay = (props) => {
 				className="ub-review-text"
 				placeholder={__("The text of the review goes here")}
 				value={reviewText}
-				style={{ textAlign: reviewTextAlign }}
+				style={{ textAlign: reviewTextAlign, color: reviewTextColor }}
 				onChange={(text) => setAttributes({ reviewText: text })}
 				keepPlaceholderOnFocus={true}
 				formattingControls={["bold", "italic", "strikethrough", "link"]}

@@ -45,6 +45,10 @@ const attributes = {
 		type: "string",
 		default: "text",
 	},
+	reviewTextColor: {
+		type: "string",
+		default: "",
+	},
 	starAlign: {
 		type: "string",
 		default: "left",
