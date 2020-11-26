@@ -657,6 +657,10 @@ $defaultValues = array(
             'finalImageURL' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'finalImageCaption' => array(
+                'type' => 'string',
+                'default' => ''
             )
         )
     ),

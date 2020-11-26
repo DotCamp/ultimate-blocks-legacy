@@ -332,7 +332,7 @@ class HowToStep extends Component {
 						className="ub_howto-delete"
 						icon="trash"
 						label={__("Delete step")}
-						onClick={(_) => deleteStep()}
+						onClick={() => deleteStep()}
 					/>
 					<IconButton
 						style={{
@@ -341,7 +341,7 @@ class HowToStep extends Component {
 							marginBottom: "auto",
 						}}
 						icon="arrow-up-alt"
-						onClick={(_) => moveUp()}
+						onClick={() => moveUp()}
 						label={__("Move step up")}
 					/>
 					<IconButton
@@ -351,7 +351,7 @@ class HowToStep extends Component {
 							marginBottom: "auto",
 						}}
 						icon="arrow-down-alt"
-						onClick={(_) => moveDown()}
+						onClick={() => moveDown()}
 						label={__("Move step down")}
 					/>
 				</div>
@@ -366,7 +366,7 @@ class HowToStep extends Component {
 							style={{ position: "absolute", right: "3px" }}
 							title={__("Delete image")}
 							className="dashicons dashicons-dismiss"
-							onClick={(_) =>
+							onClick={() =>
 								editStep({
 									stepPic: {
 										id: -1,
@@ -700,7 +700,7 @@ class HowToSection extends Component {
 						}}
 						icon="trash"
 						label={__("Delete section")}
-						onClick={(_) => deleteSection()}
+						onClick={() => deleteSection()}
 					/>
 				</div>
 				<ListWrapper listStyle={sectionListStyle}>
@@ -723,7 +723,7 @@ class HowToSection extends Component {
 									],
 								})
 							}
-							deleteStep={(_) => {
+							deleteStep={() => {
 								let newSteps = [...steps.slice(0, i), ...steps.slice(i + 1)];
 								newSteps.forEach(
 									(step, j) => (step.anchor = `section${sectionNum}step${j}`)
@@ -733,7 +733,7 @@ class HowToSection extends Component {
 									steps: [...steps.slice(0, i), ...steps.slice(i + 1)],
 								});
 							}}
-							moveUp={(_) => {
+							moveUp={() => {
 								if (i > 0) {
 									let newSteps = [
 										...steps.slice(0, i - 1),
@@ -750,7 +750,7 @@ class HowToSection extends Component {
 									});
 								}
 							}}
-							moveDown={(_) => {
+							moveDown={() => {
 								if (i < steps.length - 1) {
 									let newSteps = [
 										...steps.slice(0, i),
@@ -772,7 +772,7 @@ class HowToSection extends Component {
 				</ListWrapper>
 				<Button
 					style={defaultButtonStyle}
-					onClick={(_) => {
+					onClick={() => {
 						editSection({
 							sectionName,
 							steps: [
@@ -1072,7 +1072,7 @@ registerBlockType("ub/how-to", {
 									icon={"editor-break"}
 									label={__("Apply")}
 									type={"submit"}
-									onClick={(_) => {
+									onClick={() => {
 										if (/^http(s)?:\/\//g.test(videoURLInput)) {
 											const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
 												videoURLInput
@@ -1273,7 +1273,7 @@ registerBlockType("ub/how-to", {
 								<IconButton
 									icon="trash"
 									label={__("Delete")}
-									onClick={(_) => {
+									onClick={() => {
 										resetVideoAttributes();
 										setState({ videoURLInput: "" });
 									}}
@@ -1365,7 +1365,7 @@ registerBlockType("ub/how-to", {
 														style={{ marginLeft: "auto" }}
 														icon="trash"
 														label={__("Delete supply")}
-														onClick={(_) =>
+														onClick={() =>
 															setAttributes({
 																supplies: [
 																	...supplies.slice(0, i),
@@ -1385,7 +1385,7 @@ registerBlockType("ub/how-to", {
 															<span
 																title={__("Delete image")}
 																className="dashicons dashicons-dismiss"
-																onClick={(_) =>
+																onClick={() =>
 																	setAttributes({
 																		supplies: [
 																			...supplies.slice(0, i),
@@ -1433,7 +1433,7 @@ registerBlockType("ub/how-to", {
 									</ListWrapper>
 									<Button
 										style={defaultButtonStyle}
-										onClick={(_) =>
+										onClick={() =>
 											setAttributes({
 												supplies: [
 													...supplies,
@@ -1480,7 +1480,7 @@ registerBlockType("ub/how-to", {
 														style={{ marginLeft: "auto" }}
 														icon="trash"
 														label={__("Delete tool")}
-														onClick={(_) =>
+														onClick={() =>
 															setAttributes({
 																tools: [
 																	...tools.slice(0, i),
@@ -1497,7 +1497,7 @@ registerBlockType("ub/how-to", {
 															<span
 																title={__("Delete image")}
 																className="dashicons dashicons-dismiss"
-																onClick={(_) =>
+																onClick={() =>
 																	setAttributes({
 																		tools: [
 																			...tools.slice(0, i),
@@ -1545,7 +1545,7 @@ registerBlockType("ub/how-to", {
 									</ListWrapper>
 									<Button
 										style={defaultButtonStyle}
-										onClick={(_) =>
+										onClick={() =>
 											setAttributes({
 												tools: [
 													...tools,
@@ -1624,7 +1624,7 @@ registerBlockType("ub/how-to", {
 											],
 										})
 									}
-									deleteSection={(_) =>
+									deleteSection={() =>
 										setAttributes({
 											section: [
 												...section.slice(0, i),
@@ -1660,7 +1660,7 @@ registerBlockType("ub/how-to", {
 												],
 											})
 										}
-										deleteStep={(_) => {
+										deleteStep={() => {
 											let newSection = [
 												Object.assign(section[0], {
 													steps: [
@@ -1677,7 +1677,7 @@ registerBlockType("ub/how-to", {
 												section: newSection,
 											});
 										}}
-										moveUp={(_) => {
+										moveUp={() => {
 											if (i > 0) {
 												let newSection = [
 													Object.assign(section[0], {
@@ -1697,7 +1697,7 @@ registerBlockType("ub/how-to", {
 												});
 											}
 										}}
-										moveDown={(_) => {
+										moveDown={() => {
 											if (i < section[0].steps.length - 1) {
 												let newSection = [
 													Object.assign(section[0], {
@@ -1713,9 +1713,7 @@ registerBlockType("ub/how-to", {
 													step.anchor = `step${j}`;
 												});
 
-												setAttributes({
-													section: newSection,
-												});
+												setAttributes({ section: newSection });
 											}
 										}}
 									/>
@@ -1723,7 +1721,7 @@ registerBlockType("ub/how-to", {
 							</ListWrapper>
 							<Button
 								style={defaultButtonStyle}
-								onClick={(_) => {
+								onClick={() => {
 									setAttributes({
 										section: [
 											Object.assign(section[0], {
@@ -1752,7 +1750,7 @@ registerBlockType("ub/how-to", {
 					{useSections && (
 						<Button
 							style={defaultButtonStyle}
-							onClick={(_) =>
+							onClick={() =>
 								setAttributes({
 									section: [
 										...section,
@@ -1792,7 +1790,7 @@ registerBlockType("ub/how-to", {
 								style={{ position: "absolute", right: "3px" }}
 								title={__("Delete image")}
 								className="dashicons dashicons-dismiss"
-								onClick={(_) =>
+								onClick={() =>
 									setAttributes({
 										finalImageID: -1,
 										finalImageAlt: "",
@@ -1844,5 +1842,5 @@ registerBlockType("ub/how-to", {
 			</Fragment>
 		);
 	}),
-	save: (_) => null,
+	save: () => null,
 });
