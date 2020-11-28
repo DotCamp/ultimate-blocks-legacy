@@ -403,9 +403,7 @@ export class ReviewBody extends Component {
 					title={__("Insert new review entry")}
 					onClick={() => {
 						setItems([...items, { label: "", value: 0 }]);
-						this.setState({
-							average: average / (items.length + 1),
-						});
+						this.setState({ average: average / (items.length + 1) });
 					}}
 					className="ub_review_add_entry dashicons dashicons-plus-alt"
 				/>

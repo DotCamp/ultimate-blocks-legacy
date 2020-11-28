@@ -334,6 +334,9 @@ registerBlockType("ub/review", {
 			editedStar: 0,
 			lastCuisine: "",
 			setEventEndDate: false,
+			offerPriceRaw: "0",
+			offerHighPriceRaw: "0",
+			offerLowPriceRaw: "0",
 		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
@@ -389,9 +392,6 @@ registerBlockType("ub/review", {
 				offerType,
 				offerCurrency,
 				offerStatus,
-				offerHighPrice,
-				offerLowPrice,
-				offerPrice,
 				offerCount,
 				offerExpiry,
 				cuisines,
@@ -420,6 +420,9 @@ registerBlockType("ub/review", {
 			editable,
 			editedStar,
 			lastCuisine,
+			offerPriceRaw,
+			offerHighPriceRaw,
+			offerLowPriceRaw,
 			setEventEndDate,
 			setState,
 			block,
@@ -1465,10 +1468,13 @@ registerBlockType("ub/review", {
 											<>
 												<TextControl
 													label={__("Offer Price")}
-													value={offerPrice}
-													onChange={(val) =>
-														setAttributes({ offerPrice: Number(val) })
-													}
+													value={offerPriceRaw}
+													onChange={(val) => {
+														if (!isNaN(Number(val))) {
+															setAttributes({ offerPrice: Number(val) });
+															setState({ offerPriceRaw: val });
+														}
+													}}
 												/>
 												<SelectControl
 													label={__("Offer Status")}
@@ -1528,19 +1534,25 @@ registerBlockType("ub/review", {
 													label={__(
 														`Lowest Available Price (${offerCurrency})`
 													)}
-													value={offerLowPrice}
-													onChange={(val) =>
-														setAttributes({ offerLowPrice: Number(val) })
-													}
+													value={offerLowPriceRaw}
+													onChange={(val) => {
+														if (!isNaN(val)) {
+															setState({ offerLowPriceRaw: val });
+															setAttributes({ offerLowPrice: Number(val) });
+														}
+													}}
 												/>
 												<TextControl
 													label={__(
 														`Highest Available Price (${offerCurrency})`
 													)}
-													value={offerHighPrice}
-													onChange={(val) =>
-														setAttributes({ offerHighPrice: Number(val) })
-													}
+													value={offerHighPriceRaw}
+													onChange={(val) => {
+														if (!isNaN(val)) {
+															setState({ offerHighPriceRaw: val });
+															setAttributes({ offerHighPrice: Number(val) });
+														}
+													}}
 												/>
 											</>
 										)}
