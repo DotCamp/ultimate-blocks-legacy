@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { EmptyStar, FullStar, HalfStar } from "./icons";
 
 const { __ } = wp.i18n;
-const { InspectorControls, PanelColorSettings, RichText, BlockControls } =
+const { InspectorControls, RichText, BlockControls, ColorPalette } =
 	wp.blockEditor || wp.editor;
 const { PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
@@ -52,17 +52,10 @@ export const inspectorControls = (props) => {
 	return (
 		<InspectorControls>
 			<PanelBody title={__("Star Settings")}>
-				<PanelColorSettings
-					title={__("Star Color")}
-					initialOpen={false}
-					colorSettings={[
-						{
-							value: starColor,
-							onChange: (colorValue) =>
-								setAttributes({ starColor: colorValue }),
-							label: __(""),
-						},
-					]}
+				<p>{__("Star Color")}</p>
+				<ColorPalette
+					value={starColor}
+					onChange={(colorValue) => setAttributes({ starColor: colorValue })}
 				/>
 				<RangeControl
 					label={__("Star size")}
@@ -96,18 +89,15 @@ export const inspectorControls = (props) => {
 					beforeIcon="star-half"
 				/>
 			</PanelBody>
-			<PanelColorSettings
-				title={__("Text Color")}
-				initialOpen={false}
-				colorSettings={[
-					{
-						value: reviewTextColor,
-						onChange: (colorValue) =>
-							setAttributes({ reviewTextColor: colorValue }),
-						label: __(""),
-					},
-				]}
-			/>
+			<PanelBody>
+				<p>{__("Text Color")}</p>
+				<ColorPalette
+					value={reviewTextColor}
+					onChange={(colorValue) =>
+						setAttributes({ reviewTextColor: colorValue })
+					}
+				/>
+			</PanelBody>
 		</InspectorControls>
 	);
 };
