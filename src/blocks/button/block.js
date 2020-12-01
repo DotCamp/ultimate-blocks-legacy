@@ -288,7 +288,7 @@ registerBlockType("ub/button", {
 	],
 	edit: compose([
 		withState({
-			isMouseHovered: false,
+			hoveredButton: -1,
 			availableIcons: [],
 			iconSearchTerm: "",
 			enableLinkInput: false,

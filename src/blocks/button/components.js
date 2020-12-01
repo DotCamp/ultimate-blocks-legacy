@@ -556,6 +556,7 @@ export const editorDisplay = (props) => {
 		setState,
 		setAttributes,
 		attributes: { buttons, align },
+		hoveredButton,
 		activeButtonIndex,
 	} = props;
 
@@ -612,25 +613,26 @@ export const editorDisplay = (props) => {
 								? `ub-button-flex-${b.size}`
 								: ""
 						}`}
-						onMouseEnter={() => setState({ isMouseHovered: true })}
-						onMouseLeave={() => setState({ isMouseHovered: false })}
+						onMouseEnter={() => setState({ hoveredButton: i })}
+						onMouseLeave={() => setState({ hoveredButton: -1 })}
 						style={{
 							backgroundColor: b.buttonIsTransparent
 								? "transparent"
-								: b.isMouseHovered
+								: hoveredButton === i
 								? b.buttonHoverColor
 								: b.buttonColor,
-							color: b.isMouseHovered
-								? b.buttonIsTransparent
-									? b.buttonHoverColor
-									: b.buttonTextHoverColor
-								: b.buttonIsTransparent
-								? b.buttonColor
-								: b.buttonTextColor,
+							color:
+								hoveredButton === i
+									? b.buttonIsTransparent
+										? b.buttonHoverColor
+										: b.buttonTextHoverColor
+									: b.buttonIsTransparent
+									? b.buttonColor
+									: b.buttonTextColor,
 							borderRadius: b.buttonRounded ? "60px" : "0px",
 							borderStyle: b.buttonIsTransparent ? "solid" : "none",
 							borderColor: b.buttonIsTransparent
-								? b.isMouseHovered
+								? hoveredButton === i
 									? b.buttonHoverColor
 									: b.buttonColor
 								: null,
