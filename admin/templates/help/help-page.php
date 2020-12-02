@@ -13,8 +13,6 @@
 
 ?>
 
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-
 <div class="ub-container">
     <div class="ultimate-blocks">
         <h1><?php esc_html_e( 'Welcome to Ultimate Blocks!', 'ultimate-blocks' ); ?></h1>
@@ -57,4 +55,16 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="ub-container">
+	<div class="ub-social-intro" style="min-height: 250px;">
+		<h2><?php esc_html_e( 'Other Plugins From Us', 'ultimate-blocks' ); ?></h2>
+		<div class="left">
+			<p style="text-align: left;"><a href="https://wordpress.org/plugins/wp-table-builder/" target="_blank"><?php esc_html_e( 'WP Table Builder', 'ultimate-blocks' ); ?></a> - Drag & drop responsive table builder.</p>		
+		</div>
+		<div class="right">
+			<p style="text-align: left;"><a href="https://wordpress.org/plugins/wp-coupons-and-deals/" target="_blank""><?php esc_html_e( 'WP Coupons and Deals', 'ultimate-blocks' ); ?></a> Coupons & deals plugin for affiliate marketers.</p>
+		</div>
+	</div>
 </div>

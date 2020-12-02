@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.5
-Stable tag: 2.4.1
+Tested up to: 5.6
+Stable tag: 2.4.2
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,21 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.2 =
+
+* ADD: Button - missing checkbox.
+* ADD: Content toggle - allow using percentage paddings.
+* FIX: HowTo - error with default values.
+* FIX: Review - prevent schema errors caused by unescaped inputs.
+* ADD: Review - option to toggle review summary visibility.
+* ADD: Review - option to enter decimal values in review offer price.
+* ADD: Star Rating - option to customize text color.
+* FIX: Star Rating - star alignment when used with Twenty Twenty-One theme.
+* FIX: Styled List - list icon display issue.
+* FIX: Tabbed Content - issue with pasting tab titles.
+* FIX: restore block deactivation script.
+* REMOVE: unused dashicon style import.
 
 = 2.4.1 =
 
