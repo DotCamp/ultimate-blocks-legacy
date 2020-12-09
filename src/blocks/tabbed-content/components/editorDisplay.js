@@ -541,7 +541,7 @@ export class TabHolder extends Component {
 					getBlock(ID).attributes.blockID === attributes.blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			setAttributes({ blockID: this.props.block.clientId });
 		}
 
 		return [
