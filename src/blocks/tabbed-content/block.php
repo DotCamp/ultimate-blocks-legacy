@@ -73,7 +73,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
             .($activeTab == $key ? ' active' : '') . '"'.
             ($blockID == '' ? ' style="background-color: ' . ($activeTab == $key ? $theme : 'initial')
             . '; border-color: ' . ($activeTab == $key ? $theme : 'lightgrey') .
-            '; color: ' . ($activeTab == $key ? $titleColor : '#000000') . ';"' : '' ). '>
+            '; color: ' . ($activeTab == $key ? $titleColor : '#000000') . ';"' : '' ). ' tabindex="0">
             <div class="' . $blockName . '-tab-title">' . $title . '</div></div>';
     }
 

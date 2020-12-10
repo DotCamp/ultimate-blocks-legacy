@@ -132,15 +132,67 @@ function ub_handleTabEvent(tab) {
 		});
 }
 
+function ub_checkPrevTab(event) {
+	event.preventDefault();
+	if (event.target.previousElementSibling) {
+		event.target.previousElementSibling.focus();
+	} else {
+		ub_focusOnLastTab(event);
+	}
+}
+
+function ub_checkNextTab(event) {
+	event.preventDefault();
+	if (event.target.nextElementSibling) {
+		event.target.nextElementSibling.focus();
+	} else {
+		ub_focusOnFirstTab(event);
+	}
+}
+
+function ub_focusOnFirstTab(event) {
+	event.preventDefault();
+	event.target.parentElement.children[0].focus();
+}
+
+function ub_focusOnLastTab(event) {
+	event.preventDefault();
+	const tabs = event.target.parentElement.children;
+	tabs[tabs.length - 1].focus();
+}
+
+function ub_upDownPress(event) {
+	if (event.key === "ArrowUp") {
+		ub_checkPrevTab(event);
+	} else if (event.key === "ArrowDown") {
+		ub_checkNextTab(event);
+	} else if (event.key === "Home") {
+		ub_focusOnFirstTab(event);
+	} else if (event.key === "End") {
+		ub_focusOnLastTab(event);
+	}
+}
+
+function ub_leftRightPress(event) {
+	if (event.key === "ArrowLeft") {
+		ub_checkPrevTab(event);
+	} else if (event.key === "ArrowRight") {
+		ub_checkNextTab(event);
+	} else if (event.key === "Home") {
+		ub_focusOnFirstTab(event);
+	} else if (event.key === "End") {
+		ub_focusOnLastTab(event);
+	}
+}
+
 Array.prototype.slice
 	.call(
 		document.getElementsByClassName("wp-block-ub-tabbed-content-tab-title-wrap")
 	)
 	.forEach((instance) => {
-		instance.addEventListener("click", function () {
+		instance.addEventListener("focus", function () {
 			ub_handleTabEvent(instance);
 		});
-
 		const tabBar = instance.parentElement;
 		let tabBarIsBeingDragged = false;
 		let oldScrollPosition = -1;
@@ -177,7 +229,7 @@ Array.prototype.slice
 		)
 	)
 	.forEach((instance) => {
-		instance.addEventListener("click", function () {
+		instance.addEventListener("focus", function () {
 			ub_handleTabEvent(instance);
 		});
 	});
@@ -254,79 +306,119 @@ function ub_getTabbedContentDisplayModes(block) {
 						displayModes[i][transitionFrom - 1] !==
 						displayModes[i][transitionTo - 1]
 					) {
-						const tabContents = instance.children[1];
-						if (displayModes[i][transitionFrom - 1] === "accordion") {
-							const activeTabs = JSON.parse(instance.dataset.activeTabs);
-							Array.prototype.slice
-								.call(instance.children[0].children[0].children)
-								.forEach((child, j) => {
-									if (j === activeTabs[activeTabs.length - 1]) {
-										child.classList.add("active");
-									} else {
-										child.classList.remove("active");
-									}
-								});
-							Array.prototype.slice
-								.call(instance.children[1].children)
-								.forEach((child, j) => {
-									if (Math.floor(j / 2) === activeTabs[activeTabs.length - 1]) {
-										child.classList.add("active");
-										child.classList.remove("ub-hide");
-									} else {
-										child.classList.remove("active");
-										if (j % 2 === 1) {
-											child.classList.add("ub-hide");
-										}
-									}
-								});
-							delete instance.dataset.activeTabs;
+						const tabContents = instance.children[0].children[1];
 
-							Array.prototype.slice
-								.call(tabContents.children)
-								.forEach((child, j) => {
-									if (j % 2 === 1) {
-										child.setAttribute("role", "tabpanel");
-										child.setAttribute(
-											"aria-labelledby",
-											child.id.replace("panel", "tab")
-										);
-									}
-								});
-						} else if (displayModes[i][transitionTo - 1] === "accordion") {
-							Array.prototype.slice
-								.call(instance.children[0].children[0].children)
-								.forEach((child, j) => {
-									if (child.classList.contains("active")) {
-										instance.dataset.activeTabs = JSON.stringify([j]);
-									}
-								});
-							Array.prototype.slice
-								.call(tabContents.children)
-								.forEach((child, j) => {
-									if (j % 2 === 1) {
-										child.setAttribute("role", "region");
-										child.removeAttribute("aria-labelledby");
-									} else {
-										child.setAttribute(
-											"aria-expanded",
-											!child.nextElementSibling.classList.contains("ub-hide")
-										);
-										if (!child.hasAttribute("aria-controls")) {
+						switch (displayModes[i][transitionFrom - 1]) {
+							case "accordion":
+								const activeTabs = JSON.parse(instance.dataset.activeTabs);
+								if (activeTabs) {
+									Array.prototype.slice
+										.call(instance.children[0].children[0].children)
+										.forEach((child, j) => {
+											if (j === activeTabs[activeTabs.length - 1]) {
+												child.classList.add("active");
+											} else {
+												child.classList.remove("active");
+											}
+										});
+									Array.prototype.slice
+										.call(instance.children[1].children)
+										.forEach((child, j) => {
+											if (
+												Math.floor(j / 2) === activeTabs[activeTabs.length - 1]
+											) {
+												child.classList.add("active");
+												child.classList.remove("ub-hide");
+											} else {
+												child.classList.remove("active");
+												if (j % 2 === 1) {
+													child.classList.add("ub-hide");
+												}
+											}
+										});
+								}
+
+								delete instance.dataset.activeTabs;
+
+								Array.prototype.slice
+									.call(tabContents.children)
+									.forEach((child, j) => {
+										if (j % 2 === 1) {
+											child.setAttribute("role", "tabpanel");
 											child.setAttribute(
-												"aria-controls",
-												child.nextElementSibling.id
+												"aria-labelledby",
+												child.id.replace("panel", "tab")
 											);
 										}
-									}
-								});
+									});
+								break;
+							case "verticaltab":
+								Array.prototype.slice
+									.call(instance.children[0].children[0].children)
+									.forEach((tab) => {
+										tab.removeEventListener("keydown", ub_upDownPress);
+									});
+
+								break;
+							case "horizontaltab":
+							default:
+								Array.prototype.slice
+									.call(instance.children[0].children[0].children)
+									.forEach((tab) => {
+										tab.removeEventListener("keydown", ub_leftRightPress);
+									});
+								break;
 						}
 
-						if (displayModes[i][transitionTo - 1] === "horizontaltab") {
-							const tabBar = instance.children[0].children[0];
-							const newActiveTab = Array.prototype.slice
-								.call(instance.children[0].children[0].children)
-								.findIndex((tab) => tab.classList.contains("active"));
-							ub_switchFocusToTab(newActiveTab, tabBar);
+						switch (displayModes[i][transitionTo - 1]) {
+							case "accordion":
+								Array.prototype.slice
+									.call(instance.children[0].children[0].children)
+									.forEach((child, j) => {
+										if (child.classList.contains("active")) {
+											instance.dataset.activeTabs = JSON.stringify([j]);
+										}
+									});
+								Array.prototype.slice
+									.call(tabContents.children)
+									.forEach((child, j) => {
+										if (j % 2 === 1) {
+											child.setAttribute("role", "region");
+											child.removeAttribute("aria-labelledby");
+										} else {
+											child.setAttribute(
+												"aria-expanded",
+												!child.nextElementSibling.classList.contains("ub-hide")
+											);
+											if (!child.hasAttribute("aria-controls")) {
+												child.setAttribute(
+													"aria-controls",
+													child.nextElementSibling.id
+												);
+											}
+										}
+									});
+								break;
+							case "verticaltab":
+								Array.prototype.slice
+									.call(instance.children[0].children[0].children)
+									.forEach((tab) => {
+										tab.addEventListener("keydown", ub_upDownPress);
+									});
+								break;
+							case "horizontaltab":
+							default:
+								const tabBar = instance.children[0].children[0];
+								const newActiveTab = Array.prototype.slice
+									.call(instance.children[0].children[0].children)
+									.findIndex((tab) => tab.classList.contains("active"));
+								ub_switchFocusToTab(newActiveTab, tabBar);
+								Array.prototype.slice
+									.call(instance.children[0].children[0].children)
+									.forEach((tab) => {
+										tab.addEventListener("keydown", ub_leftRightPress);
+									});
+								break;
 						}
 					}
 				});
@@ -599,6 +691,17 @@ document.addEventListener("DOMContentLoaded", () => {
 						child.setAttribute("aria-controls", child.nextElementSibling.id);
 					}
 				});
+			} else {
+				Array.prototype.slice
+					.call(instance.children[0].children[0].children)
+					.forEach((tab) => {
+						tab.addEventListener(
+							"keydown",
+							displayModes[currentDisplay] === "verticaltab"
+								? ub_upDownPress
+								: ub_leftRightPress
+						);
+					});
 			}
 		});
 	ub_hashTabSwitch();
