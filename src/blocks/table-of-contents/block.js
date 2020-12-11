@@ -284,6 +284,9 @@ registerBlockType("ub/table-of-contents-block", {
 	category: "ultimateblocks",
 	keywords: [__("Table of Contents"), __("Ultimate Blocks")],
 	attributes,
+	supports: {
+		reusable: false,
+	},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
