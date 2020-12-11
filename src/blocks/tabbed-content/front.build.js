@@ -252,14 +252,14 @@ function ub_getTabbedContentDisplayModes(block) {
     if (transitionTo && transitionFrom) {
       Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-content")).forEach(function (instance, i) {
         if (displayModes[i][transitionFrom - 1] !== displayModes[i][transitionTo - 1]) {
-          var tabContents = instance.children[0].children[1];
+          var tabBar = instance.children[0].children[0];
 
           switch (displayModes[i][transitionFrom - 1]) {
             case "accordion":
               var activeTabs = JSON.parse(instance.dataset.activeTabs);
 
               if (activeTabs) {
-                Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (child, j) {
+                Array.prototype.slice.call(tabBar.children).forEach(function (child, j) {
                   if (j === activeTabs[activeTabs.length - 1]) {
                     child.classList.add("active");
                   } else {
@@ -281,7 +281,7 @@ function ub_getTabbedContentDisplayModes(block) {
               }
 
               delete instance.dataset.activeTabs;
-              Array.prototype.slice.call(tabContents.children).forEach(function (child, j) {
+              Array.prototype.slice.call(instance.children[1]).forEach(function (child, j) {
                 if (j % 2 === 1) {
                   child.setAttribute("role", "tabpanel");
                   child.setAttribute("aria-labelledby", child.id.replace("panel", "tab"));
@@ -290,14 +290,14 @@ function ub_getTabbedContentDisplayModes(block) {
               break;
 
             case "verticaltab":
-              Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (tab) {
+              Array.prototype.slice.call(tabBar.children).forEach(function (tab) {
                 tab.removeEventListener("keydown", ub_upDownPress);
               });
               break;
 
             case "horizontaltab":
             default:
-              Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (tab) {
+              Array.prototype.slice.call(tabBar.children).forEach(function (tab) {
                 tab.removeEventListener("keydown", ub_leftRightPress);
               });
               break;
@@ -305,12 +305,12 @@ function ub_getTabbedContentDisplayModes(block) {
 
           switch (displayModes[i][transitionTo - 1]) {
             case "accordion":
-              Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (child, j) {
+              Array.prototype.slice.call(tabBar.children).forEach(function (child, j) {
                 if (child.classList.contains("active")) {
                   instance.dataset.activeTabs = JSON.stringify([j]);
                 }
               });
-              Array.prototype.slice.call(tabContents.children).forEach(function (child, j) {
+              Array.prototype.slice.call(instance.children[1]).forEach(function (child, j) {
                 if (j % 2 === 1) {
                   child.setAttribute("role", "region");
                   child.removeAttribute("aria-labelledby");
@@ -322,24 +322,26 @@ function ub_getTabbedContentDisplayModes(block) {
                   }
                 }
               });
+              tabBar.removeAttribute("aria-orientation");
               break;
 
             case "verticaltab":
-              Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (tab) {
+              Array.prototype.slice.call(tabBar.children).forEach(function (tab) {
                 tab.addEventListener("keydown", ub_upDownPress);
               });
+              tabBar.setAttribute("aria-orientation", "vertical");
               break;
 
             case "horizontaltab":
             default:
-              var tabBar = instance.children[0].children[0];
-              var newActiveTab = Array.prototype.slice.call(instance.children[0].children[0].children).findIndex(function (tab) {
+              var newActiveTab = Array.prototype.slice.call(tabBar.children).findIndex(function (tab) {
                 return tab.classList.contains("active");
               });
               ub_switchFocusToTab(newActiveTab, tabBar);
-              Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (tab) {
+              Array.prototype.slice.call(tabBar.children).forEach(function (tab) {
                 tab.addEventListener("keydown", ub_leftRightPress);
               });
+              tabBar.setAttribute("aria-orientation", "horizontal");
               break;
           }
         }
@@ -347,7 +349,8 @@ function ub_getTabbedContentDisplayModes(block) {
       transitionTo = 0;
       transitionFrom = 0;
     }
-  }
+  } //Keep addListener for these three. addEventListener won't work with safari versions older than 14.
+
 
   window.matchMedia("(max-width: 699px)").addListener(function (mql) {
     if (mql.matches) {
@@ -519,8 +522,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
       }
-    } //add condition for checking if block format is acordion or tabbed content and load appropriate aria and aria-related attributes
-
+    }
 
     var displayModes = ub_getTabbedContentDisplayModes(instance);
     var currentDisplay = -1;
@@ -545,9 +547,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     } else {
-      Array.prototype.slice.call(instance.children[0].children[0].children).forEach(function (tab) {
+      var _tabBar = instance.children[0].children[0];
+      Array.prototype.slice.call(_tabBar.children).forEach(function (tab) {
         tab.addEventListener("keydown", displayModes[currentDisplay] === "verticaltab" ? ub_upDownPress : ub_leftRightPress);
       });
+
+      _tabBar.setAttribute("aria-orientation", displayModes[currentDisplay].slice(0, -3));
     }
   });
   ub_hashTabSwitch();

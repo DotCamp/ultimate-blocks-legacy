@@ -86,10 +86,10 @@ function ub_render_tabbed_content_block($attributes, $contents){
             . ($tabletTabDisplay != 'accordion' ? ' ' . $blockName . '-' . $tabletTabStyle . '-holder-tablet' : '')
             . '"' .($blockID == '' ? '' : ' id="ub-tabbed-content-' . $blockID . '"')
              . ($mobileTabDisplay == 'accordion' || $tabletTabDisplay == 'accordion' ? ' data-active-tabs="[' . $activeTab . ']"' : '') . '>
-                <div role="tablist" class="' . $blockName . '-tab-holder ' . ($tabVertical ? 'vertical-tab-width' : '')
+                <div class="' . $blockName . '-tab-holder ' . ($tabVertical ? 'vertical-tab-width' : '')
                 . ($mobileTabDisplay != 'accordion' ? ' ' . $mobileTabStyle. '-tab-width-mobile' : '')
                 . ($tabletTabDisplay != 'accordion' ? ' ' . $tabletTabStyle . '-tab-width-tablet' : '') . '">
-                    <div class="' . $blockName . '-tabs-title' . ($tabVertical ? '-vertical-tab' : '')
+                    <div role="tablist" class="' . $blockName . '-tabs-title' . ($tabVertical ? '-vertical-tab' : '')
                     . ($mobileTabDisplay == 'accordion' ? ' ub-mobile-hide' : ' ' . $blockName . '-tabs-title-mobile-' . $mobileTabStyle . '-tab' ) 
                     . ($tabletTabDisplay == 'accordion' ? ' ub-tablet-hide' : ' ' . $blockName . '-tabs-title-tablet-' . $tabletTabStyle . '-tab') . '">' .
                     $tabs . '</div></div>
