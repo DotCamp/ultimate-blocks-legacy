@@ -202,6 +202,7 @@ registerBlockType("ub/countdown", {
 					color={circleColor}
 					largestUnit={largestUnit}
 					smallestUnit={smallestUnit}
+					isAnimated={true}
 				/>
 				<RichText
 					tagName="div"

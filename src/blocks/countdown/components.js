@@ -2,13 +2,17 @@ import { Component } from "react";
 
 import Circle from "./CircularCountdown";
 import Odometer from "./React-Odometer";
+import { DigitDisplay } from "./newOdometer";
 
 const { __ } = wp.i18n;
 
 class Timer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { timeLeft: this.remainingTime() };
+		this.state = {
+			timeLeft: this.remainingTime(),
+			numberChange: Array(5).fill("none"), //one for each of the following: week, day, hour, minute, second
+		};
 	}
 	remainingTime = () => {
 		return this.props.deadline - Math.floor(Date.now() / 1000);
@@ -19,9 +23,7 @@ class Timer extends Component {
 		}
 	}
 	ticker = () => {
-		this.setState({
-			timeLeft: this.remainingTime(),
-		});
+		this.setState({ timeLeft: this.remainingTime() });
 	};
 	componentWillReceiveProps(newProps) {
 		if (newProps.deadline !== this.props.deadline) {
@@ -35,16 +37,82 @@ class Timer extends Component {
 			}
 		}
 	}
-	componentDidUpdate() {
-		if (this.state.timeLeft <= -1) {
+	componentDidUpdate(prevProps, prevState) {
+		const { timeLeft, numberChange } = this.state;
+		const { deadline, largestUnit } = this.props;
+		if (timeLeft <= -1) {
 			clearInterval(this.tick);
+		}
+
+		if (timeLeft !== prevState.timeLeft) {
+			const timeUnits = ["week", "day", "hour", "minute", "second"];
+			//begin old values
+			const oldSeconds = prevState.timeLeft % 60;
+			const oldMinutes = ((prevState.timeLeft - oldSeconds) % 3600) / 60;
+
+			let oldHours = (prevState.timeLeft - oldMinutes * 60 - oldSeconds) / 3600;
+			if (timeUnits.indexOf(largestUnit) < 2) {
+				oldHours %= 24;
+			}
+
+			let oldDays =
+				(prevState.timeLeft - oldHours * 3600 - oldMinutes * 60 - oldSeconds) /
+				86400;
+			if (largestUnit === "week") {
+				oldDays %= 7;
+			}
+
+			const oldWeeks =
+				(prevState.timeLeft -
+					oldDays * 86400 -
+					oldHours * 3600 -
+					oldMinutes * 60 -
+					oldSeconds) /
+				604800;
+
+			const oldValues = [oldWeeks, oldDays, oldHours, oldMinutes, oldSeconds];
+
+			//begin new values
+			const seconds = timeLeft % 60;
+			const minutes = ((timeLeft - seconds) % 3600) / 60;
+
+			let hours = (timeLeft - minutes * 60 - seconds) / 3600;
+			if (timeUnits.indexOf(largestUnit) < 2) {
+				hours %= 24;
+			}
+
+			let days = (timeLeft - hours * 3600 - minutes * 60 - seconds) / 86400;
+			if (largestUnit === "week") {
+				days %= 7;
+			}
+
+			const weeks =
+				(timeLeft - days * 86400 - hours * 3600 - minutes * 60 - seconds) /
+				604800;
+
+			const newValues = [weeks, days, hours, minutes, seconds];
+
+			//let newNumberChange = numberChange
+
+			this.setState({
+				numberChange: numberChange.map((_, i) => {
+					if (newValues[i] === oldValues[i]) {
+						return "none";
+					} else if (timeLeft > prevState.timeLeft) {
+						//increase/decrease should be based on timestamp value instead of value of individual units
+						return "increase";
+					} else {
+						return "decrease";
+					}
+				}),
+			});
 		}
 	}
 	componentWillUnmount() {
 		clearInterval(this.tick);
 	}
 	render() {
-		const { timeLeft } = this.state;
+		const { timeLeft, numberChange } = this.state;
 		const { color, largestUnit, smallestUnit } = this.props;
 		const timeUnits = ["week", "day", "hour", "minute", "second"];
 
@@ -147,17 +215,89 @@ class Timer extends Component {
 			timeUnits.indexOf(smallestUnit) + 1
 		);
 
+		const newOdometerDisplays = [
+			<DigitDisplay
+				value={weeks}
+				numberChange={numberChange[0]}
+				stopAnimation={() => {
+					this.setState({
+						numberChange: ["none", ...numberChange.slice(1)],
+					});
+				}}
+			/>,
+			<DigitDisplay
+				//force rerender when  largestUnit is changed
+				value={days}
+				maxDisplay={largestUnit === "weeks" ? 6 : 0}
+				numberChange={numberChange[1]}
+				stopAnimation={() => {
+					this.setState({
+						numberChange: [numberChange[0], "none", ...numberChange.slice(2)],
+					});
+				}}
+			/>,
+			<DigitDisplay
+				value={hours}
+				maxDisplay={23}
+				numberChange={numberChange[2]}
+				stopAnimation={() => {
+					this.setState({
+						numberChange: [
+							...numberChange.slice(0, 2),
+							"none",
+							...numberChange.slice(3),
+						],
+					});
+				}}
+			/>,
+			<DigitDisplay
+				value={minutes}
+				maxDisplay={59}
+				numberChange={numberChange[3]}
+				stopAnimation={() => {
+					this.setState({
+						numberChange: [
+							...numberChange.slice(0, 3),
+							"none",
+							numberChange[4],
+						],
+					});
+				}}
+			/>,
+			<DigitDisplay
+				value={seconds}
+				maxDisplay={59}
+				numberChange={numberChange[4]}
+				stopAnimation={() => {
+					this.setState({
+						numberChange: [...numberChange.slice(0, 4), "none"],
+					});
+				}}
+			/>,
+		].slice(
+			timeUnits.indexOf(largestUnit),
+			timeUnits.indexOf(smallestUnit) + 1
+		);
+
 		const odometerFormat = (
-			<div
-				className="ub-countdown-odometer-container"
-				style={{ gridTemplateColumns: Array(diff).fill("1fr").join(" auto ") }}
-			>
-				{odometerLabels
-					.map((e, i) => (i < odometerLabels.length - 1 ? [e, <span />] : [e]))
-					.reduce((a, b) => a.concat(b))}
-				{odometerValues
-					.map((e, i) => (i < odometerValues.length - 1 ? [e, separator] : [e]))
-					.reduce((a, b) => a.concat(b))}
+			<div>
+				<div
+					className="ub-countdown-odometer-container"
+					style={{
+						gridTemplateColumns: Array(diff).fill("1fr").join(" auto "),
+					}}
+				>
+					{odometerLabels
+						.map((e, i) =>
+							i < odometerLabels.length - 1 ? [e, <span />] : [e]
+						)
+						.reduce((a, b) => a.concat(b))}
+					{newOdometerDisplays
+						.map((e, i) =>
+							i < odometerValues.length - 1 ? [e, separator] : [e]
+						)
+						.reduce((a, b) => a.concat(b))}
+				</div>
 			</div>
 		);
 

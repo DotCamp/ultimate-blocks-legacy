@@ -51,6 +51,7 @@
 }
 
 .ub-countdown-odometer {
+	//OLD ODOMETER CODE BELOW
 	margin: 0 auto;
 	font-size: 35px;
 	&.ub-countdown-odometer-auto-theme,
@@ -119,7 +120,21 @@
 			}
 		}
 	}
+	//OLD ODOMETER CODE ABOVE
 }
+
+//NEW ODOMETER CODE BELOW
+.ub-countdown-digit-container {
+	height: 1.5em;
+	overflow-y: hidden;
+	margin: 0 auto;
+	font-size: 35px;
+	& > .digit,
+	& > .moving-digit {
+		float: left;
+	}
+}
+//NEW ODOMETER CODE ABOVE
 
 .ub_countdown_style_selector {
 	display: flex;
