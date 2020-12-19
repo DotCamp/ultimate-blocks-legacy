@@ -226,7 +226,7 @@ class Timer extends Component {
 				}}
 			/>,
 			<DigitDisplay
-				//force rerender when  largestUnit is changed
+				//force rerender when largestUnit is changed
 				value={days}
 				maxDisplay={largestUnit === "weeks" ? 6 : 0}
 				numberChange={numberChange[1]}

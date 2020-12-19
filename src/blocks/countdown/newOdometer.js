@@ -312,7 +312,7 @@ export class DigitDisplay extends Component {
 									replacementDigits.length > 1
 								) {
 									replacementDigits = replacementDigits.slice(
-										replacementDigits.length - Math.ceil(Math.log10(value))
+										replacementDigits.length - Math.floor(Math.log10(value) + 1)
 									);
 								}
 
