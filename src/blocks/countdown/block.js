@@ -18,6 +18,7 @@ const {
 	SelectControl,
 } = wp.components;
 const { withSelect } = wp.data;
+const { withState, compose } = wp.compose;
 
 registerBlockType("ub/countdown", {
 	title: __("Countdown"),
@@ -59,22 +60,27 @@ registerBlockType("ub/countdown", {
 		},
 	},
 
-	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
 
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
-		};
-	})(function (props) {
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
+		withState({ forceUpdate: false }),
+	])(function (props) {
 		const {
 			isSelected,
 			setAttributes,
 			block,
 			getBlock,
 			getClientIdsWithDescendants,
+			setState,
+			forceUpdate,
 			attributes: {
 				blockID,
 				style,
@@ -111,9 +117,7 @@ registerBlockType("ub/countdown", {
 								{
 									value: circleColor,
 									onChange: (colorValue) =>
-										setAttributes({
-											circleColor: colorValue,
-										}),
+										setAttributes({ circleColor: colorValue }),
 									label: "",
 								},
 							]}
@@ -139,7 +143,10 @@ registerBlockType("ub/countdown", {
 									label: __(timeUnit),
 									value: timeUnit,
 								}))}
-							onChange={(largestUnit) => setAttributes({ largestUnit })}
+							onChange={(largestUnit) => {
+								setAttributes({ largestUnit });
+								setState({ forceUpdate: true });
+							}}
 						/>
 						<SelectControl
 							label={__("Smallest unit")}
@@ -150,7 +157,10 @@ registerBlockType("ub/countdown", {
 									label: __(timeUnit),
 									value: timeUnit,
 								}))}
-							onChange={(smallestUnit) => setAttributes({ smallestUnit })}
+							onChange={(smallestUnit) => {
+								setAttributes({ smallestUnit });
+								setState({ forceUpdate: true });
+							}}
 						/>
 					</PanelBody>
 				</InspectorControls>
@@ -187,9 +197,7 @@ registerBlockType("ub/countdown", {
 										a.slice(1)
 								)}
 								isActive={a}
-								onClick={() => {
-									setAttributes({ messageAlign: a });
-								}}
+								onClick={() => setAttributes({ messageAlign: a })}
 							/>
 						))}
 					</Toolbar>
@@ -203,6 +211,8 @@ registerBlockType("ub/countdown", {
 					largestUnit={largestUnit}
 					smallestUnit={smallestUnit}
 					isAnimated={true}
+					forceUpdate={forceUpdate}
+					finishForcedUpdate={() => setState({ forceUpdate: false })}
 				/>
 				<RichText
 					tagName="div"

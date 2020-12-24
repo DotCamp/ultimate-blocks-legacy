@@ -129,9 +129,15 @@ export class DigitDisplay extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { displayValue, digits, incomingDigits, digitChange } = this.state;
+		const { displayValue } = this.state;
 
-		const { maxDisplay, minDisplay, value, numberChange } = this.props;
+		const {
+			maxDisplay,
+			value,
+			numberChange,
+			forceRefresh,
+			finishForceRefresh,
+		} = this.props;
 
 		if (prevProps.numberChange !== numberChange) {
 			//begin animation
@@ -272,12 +278,30 @@ export class DigitDisplay extends Component {
 				this.setState({ incomingDigits: newDigits });
 			}
 		}
+
+		if (forceRefresh && !prevProps.forceRefresh) {
+			const maxDigitCount = Math.floor(
+				Math.log10(maxDisplay || value || 1) + 1
+			);
+			let newDigits = breakIntoDigits(value);
+			const missingDigits = maxDigitCount - newDigits.length;
+
+			if (missingDigits > 0) {
+				newDigits = [...Array(missingDigits).fill(0), ...newDigits];
+			}
+
+			this.setState({
+				displayValue: value,
+				digits: newDigits,
+			});
+			finishForceRefresh();
+		}
 	}
 
 	render() {
-		const { digits, incomingDigits, displayValue, digitChange } = this.state;
+		const { digits, incomingDigits } = this.state;
 
-		const { value, maxDisplay, minDisplay, numberChange } = this.props;
+		const { value, maxDisplay, numberChange } = this.props;
 
 		return (
 			<div className="ub-countdown-digit-container">

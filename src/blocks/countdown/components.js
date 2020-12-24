@@ -12,6 +12,7 @@ class Timer extends Component {
 		this.state = {
 			timeLeft: this.remainingTime(),
 			numberChange: Array(5).fill("none"), //one for each of the following: week, day, hour, minute, second
+			forceRefresh: false,
 		};
 	}
 	remainingTime = () => {
@@ -29,9 +30,7 @@ class Timer extends Component {
 		if (newProps.deadline !== this.props.deadline) {
 			clearInterval(this.tick);
 			let timeLeft = newProps.deadline - Math.floor(Date.now() / 1000);
-			this.setState({
-				timeLeft: timeLeft,
-			});
+			this.setState({ timeLeft: timeLeft });
 			if (timeLeft > 0) {
 				this.tick = setInterval(this.ticker, 1000);
 			}
@@ -39,7 +38,12 @@ class Timer extends Component {
 	}
 	componentDidUpdate(prevProps, prevState) {
 		const { timeLeft, numberChange } = this.state;
-		const { deadline, largestUnit } = this.props;
+		const {
+			largestUnit,
+			smallestUnit,
+			forceUpdate,
+			finishForcedUpdate,
+		} = this.props;
 		if (timeLeft <= -1) {
 			clearInterval(this.tick);
 		}
@@ -107,12 +111,20 @@ class Timer extends Component {
 				}),
 			});
 		}
+
+		if (forceUpdate !== prevProps.forceUpdate) {
+			if (forceUpdate) {
+				this.setState({ forceRefresh: true });
+
+				finishForcedUpdate();
+			}
+		}
 	}
 	componentWillUnmount() {
 		clearInterval(this.tick);
 	}
 	render() {
-		const { timeLeft, numberChange } = this.state;
+		const { timeLeft, numberChange, forceRefresh } = this.state;
 		const { color, largestUnit, smallestUnit } = this.props;
 		const timeUnits = ["week", "day", "hour", "minute", "second"];
 
@@ -224,9 +236,15 @@ class Timer extends Component {
 						numberChange: ["none", ...numberChange.slice(1)],
 					});
 				}}
+				forceRefresh={forceRefresh}
+				finishForceRefresh={() => {
+					this.setState({
+						forceRefresh: false,
+						numberChange: ["none", ...numberChange.slice(1)],
+					});
+				}}
 			/>,
 			<DigitDisplay
-				//force rerender when largestUnit is changed
 				value={days}
 				maxDisplay={largestUnit === "weeks" ? 6 : 0}
 				numberChange={numberChange[1]}
@@ -235,13 +253,31 @@ class Timer extends Component {
 						numberChange: [numberChange[0], "none", ...numberChange.slice(2)],
 					});
 				}}
+				forceRefresh={forceRefresh}
+				finishForceRefresh={() => {
+					this.setState({
+						forceRefresh: false,
+						numberChange: [numberChange[0], "none", ...numberChange.slice(2)],
+					});
+				}}
 			/>,
 			<DigitDisplay
 				value={hours}
-				maxDisplay={23}
+				maxDisplay={largestUnit === "hours" ? 0 : 23}
 				numberChange={numberChange[2]}
 				stopAnimation={() => {
 					this.setState({
+						numberChange: [
+							...numberChange.slice(0, 2),
+							"none",
+							...numberChange.slice(3),
+						],
+					});
+				}}
+				forceRefresh={forceRefresh}
+				finishForceRefresh={() => {
+					this.setState({
+						forceRefresh: false,
 						numberChange: [
 							...numberChange.slice(0, 2),
 							"none",
@@ -263,6 +299,17 @@ class Timer extends Component {
 						],
 					});
 				}}
+				forceRefresh={forceRefresh}
+				finishForceRefresh={() => {
+					this.setState({
+						forceRefresh: false,
+						numberChange: [
+							...numberChange.slice(0, 3),
+							"none",
+							numberChange[4],
+						],
+					});
+				}}
 			/>,
 			<DigitDisplay
 				value={seconds}
@@ -270,6 +317,13 @@ class Timer extends Component {
 				numberChange={numberChange[4]}
 				stopAnimation={() => {
 					this.setState({
+						numberChange: [...numberChange.slice(0, 4), "none"],
+					});
+				}}
+				forceRefresh={forceRefresh}
+				finishForceRefresh={() => {
+					this.setState({
+						forceRefresh: false,
 						numberChange: [...numberChange.slice(0, 4), "none"],
 					});
 				}}
@@ -304,17 +358,16 @@ class Timer extends Component {
 		let selectedFormat;
 
 		switch (this.props.timerStyle) {
-			case "Regular":
-				selectedFormat = defaultFormat;
-				break;
 			case "Circular":
 				selectedFormat = circularFormat;
 				break;
 			case "Odometer":
 				selectedFormat = odometerFormat;
 				break;
+			case "Regular":
 			default:
 				selectedFormat = defaultFormat;
+				break;
 		}
 
 		return selectedFormat;
