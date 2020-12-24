@@ -98,18 +98,20 @@ class Timer extends Component {
 
 			//let newNumberChange = numberChange
 
-			this.setState({
-				numberChange: numberChange.map((_, i) => {
-					if (newValues[i] === oldValues[i]) {
-						return "none";
-					} else if (timeLeft > prevState.timeLeft) {
-						//increase/decrease should be based on timestamp value instead of value of individual units
-						return "increase";
-					} else {
-						return "decrease";
-					}
-				}),
-			});
+			if (this.props.timerStyle === "Odometer") {
+				this.setState({
+					numberChange: numberChange.map((_, i) => {
+						if (newValues[i] === oldValues[i]) {
+							return "none";
+						} else if (timeLeft > prevState.timeLeft) {
+							//increase/decrease should be based on timestamp value instead of value of individual units
+							return "increase";
+						} else {
+							return "decrease";
+						}
+					}),
+				});
+			}
 		}
 
 		if (forceUpdate !== prevProps.forceUpdate) {
