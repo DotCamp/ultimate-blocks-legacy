@@ -194,7 +194,7 @@ class Timer extends Component {
 		const circularFormat = (
 			<div
 				className="ub_countdown_circular_container"
-				style={{ gridTemplateColums: Array(diff).fill("1fr").join(" ") }}
+				style={{ gridTemplateColumns: Array(diff).fill("1fr").join(" ") }}
 			>
 				{circularFormatValues}
 				{circularFormatLabels}
