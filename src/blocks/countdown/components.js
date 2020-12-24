@@ -194,9 +194,7 @@ class Timer extends Component {
 		const circularFormat = (
 			<div
 				className="ub_countdown_circular_container"
-				style={{
-					gridTemplateColumns: Array(diff).fill("1fr").join(" "),
-				}}
+				style={{ gridTemplateColums: Array(diff).fill("1fr").join(" ") }}
 			>
 				{circularFormatValues}
 				{circularFormatLabels}
@@ -232,9 +230,7 @@ class Timer extends Component {
 				value={weeks}
 				numberChange={numberChange[0]}
 				stopAnimation={() => {
-					this.setState({
-						numberChange: ["none", ...numberChange.slice(1)],
-					});
+					this.setState({ numberChange: ["none", ...numberChange.slice(1)] });
 				}}
 				forceRefresh={forceRefresh}
 				finishForceRefresh={() => {
@@ -246,7 +242,7 @@ class Timer extends Component {
 			/>,
 			<DigitDisplay
 				value={days}
-				maxDisplay={largestUnit === "weeks" ? 6 : 0}
+				maxDisplay={largestUnit === "week" ? 6 : 0}
 				numberChange={numberChange[1]}
 				stopAnimation={() => {
 					this.setState({
@@ -263,7 +259,7 @@ class Timer extends Component {
 			/>,
 			<DigitDisplay
 				value={hours}
-				maxDisplay={largestUnit === "hours" ? 0 : 23}
+				maxDisplay={largestUnit === "hour" ? 0 : 23}
 				numberChange={numberChange[2]}
 				stopAnimation={() => {
 					this.setState({
