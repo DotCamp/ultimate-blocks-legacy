@@ -129,7 +129,7 @@ export class DigitDisplay extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { displayValue } = this.state;
+		const { displayValue, digits } = this.state;
 
 		const {
 			maxDisplay,
@@ -332,8 +332,9 @@ export class DigitDisplay extends Component {
 
 								if (
 									maxDisplay === 0 &&
-									numberChange === "decrease" &&
-									replacementDigits.length > 1
+									numberChange !== "increase" &&
+									replacementDigits.length > 1 &&
+									replacementDigits[0] === 0
 								) {
 									replacementDigits = replacementDigits.slice(
 										replacementDigits.length - Math.floor(Math.log10(value) + 1)
