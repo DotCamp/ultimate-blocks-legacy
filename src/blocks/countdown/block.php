@@ -24,7 +24,7 @@ function ub_render_countdown_block($attributes){
 
     $days = ($timeLeft - $hours * 3600 - $minutes * 60 - $seconds) / 86400;
 
-    if($largestUnit == 'week'){
+    if($largestUnit === 'week'){
         $days %= 7;
     }
 
@@ -70,11 +70,40 @@ function ub_render_countdown_block($attributes){
                 implode('', ub_filter_time_display($circularFormatLabels, $largestUnit, $smallestUnit)  ).
                     '</div>';
 
-    $odometerValues = ['<div class="ub-countdown-odometer ub_countdown_week">' . $weeks .'</div>', 
-        '<div class="ub-countdown-odometer ub_countdown_day">' . $days . '</div>',
-        '<div class="ub-countdown-odometer ub_countdown_hour">' . ($hours < 10 ? '0' . $hours : $hours) . '</div>',
-        '<div class="ub-countdown-odometer ub_countdown_minute">' . ($minutes < 10 ? '0' . $minutes : $minutes) . '</div>',
-        '<div class="ub-countdown-odometer ub_countdown_second">' . ($seconds < 10 ? '0' . $seconds : $seconds) . '</div>'];
+    if(!function_exists('ub_generateDigitArray')){
+        function ub_generateDigitArray($value, $maxValue = 0){
+            $digits = [];
+
+            while($value > 0){
+                $digits[] = $value % 10;
+                $value  = ((int) ($value/10));
+            }
+
+            $missingDigits = ($maxValue ? floor(log10($maxValue)) + 1 : 1) - count($digits);
+
+            //echo 'digit array length: ' . count($digits);
+            //echo 'digits in max value: ' . $maxArrayLength;
+
+            $digits = array_merge( ( $missingDigits > 0 ?  array_fill(0, $missingDigits, 0) : []),
+                                 array_reverse($digits));
+
+            //echo 'return value: ' . json_encode($digits);
+
+            return array_map(function($digit){
+                return '<div class="ub-countdown-odometer-digit">' . $digit . '</div>';
+            }, $digits);
+        }
+    }
+    
+    //ub_generateDigitArray(56, 9999);
+
+    //echo 'largest unit: ' . $largestUnit;
+
+    $odometerValues = ['<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_week">' . implode(ub_generateDigitArray($weeks)) .'</div>', 
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_day">' . implode(ub_generateDigitArray($days, $largestUnit === 'day' ? 0 : 6) ) . '</div>',
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_hour">' . implode(ub_generateDigitArray($hours, $largestUnit === 'hour' ? 0 : 23) )  . '</div>',
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_minute">' . implode(ub_generateDigitArray($minutes, 59) ) . '</div>',
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_second">' . implode(ub_generateDigitArray($seconds, 59) ). '</div>'];
 
     $odometerLabels = ['<span>'.__( 'Weeks', 'ultimate-blocks' ).'</span>',
         '<span>'.__( 'Days', 'ultimate-blocks' ).'</span>',
@@ -89,10 +118,10 @@ function ub_render_countdown_block($attributes){
 
     $selctedFormat = $defaultFormat;
     
-    if($style=='Regular'){
+    if($style === 'Regular'){
         $selectedFormat = $defaultFormat;
     }
-    elseif ($style=='Circular') {
+    elseif ($style === 'Circular') {
         $selectedFormat = $circularFormat;
     }
     else{
@@ -100,7 +129,7 @@ function ub_render_countdown_block($attributes){
     }
 
     if($timeLeft > 0){
-        return '<div '.($blockID==''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown'.
+        return '<div '.($blockID === ''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown'.
                 (isset($className)?' '.esc_attr($className):'').
                 '" data-expirymessage="'.$expiryMessage.'" data-enddate="'.$endDate
                 .'" data-largestUnit="'.$largestUnit.'" data-smallestunit="'.$smallestUnit.'">
@@ -108,7 +137,7 @@ function ub_render_countdown_block($attributes){
             .'</div>';
     }
     else return '<div class="ub-countdown'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
-        ($blockID==''?'style="text-align:'.$messageAlign.';' :'id="ub_countdown_'.$blockID.'"').'>'.$expiryMessage.'</div>';
+        ($blockID === ''?'style="text-align:'.$messageAlign.';' :'id="ub_countdown_'.$blockID.'"').'>'.$expiryMessage.'</div>';
 }
 
 function ub_register_countdown_block() {
@@ -128,7 +157,7 @@ function ub_countdown_add_frontend_assets() {
     $presentBlocks = ub_getPresentBlocks();
 
     foreach( $presentBlocks as $block ){
-        if($block['blockName'] == 'ub/countdown'){
+        if($block['blockName'] === 'ub/countdown'){
             wp_enqueue_script(
                 'ultimate_blocks-countdown-script',
                 plugins_url( 'countdown/front.build.js', dirname( __FILE__ ) ),
@@ -136,7 +165,8 @@ function ub_countdown_add_frontend_assets() {
                 Ultimate_Blocks_Constants::plugin_version(),
                 true
             );
-            if(!isset($block['attrs']['style'])){ //odometer, the default style, is selected
+
+            /*if(!isset($block['attrs']['style'])){ //odometer, the default style, is selected
                 wp_enqueue_script(
                     'ultimate_blocks-countdown-odometer-script',
                     plugins_url( 'countdown/odometer.js', dirname( __FILE__ ) ),
@@ -145,7 +175,7 @@ function ub_countdown_add_frontend_assets() {
                     true
                 );
                 break;
-            }
+            }*/
         }
     }
 }

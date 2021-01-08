@@ -50,7 +50,7 @@
 	}
 }
 
-.ub-countdown-odometer {
+/*.ub-countdown-odometer {
 	//OLD ODOMETER CODE BELOW
 	margin: 0 auto;
 	font-size: 35px;
@@ -121,7 +121,7 @@
 		}
 	}
 	//OLD ODOMETER CODE ABOVE
-}
+}*/
 
 //NEW ODOMETER CODE BELOW
 .ub-countdown-digit-container {
@@ -134,6 +134,16 @@
 		float: left;
 	}
 }
+
+.ub-countdown-odometer {
+	margin: 0 auto;
+	font-size: 35px;
+	&-digit,
+	&-digits {
+		float: left;
+	}
+}
+
 //NEW ODOMETER CODE ABOVE
 
 .ub_countdown_style_selector {
@@ -146,19 +156,19 @@
 	> div {
 		text-align: initial;
 	}
-	.ub_countdown_week,
+	/*.ub_countdown_week,
 	.ub_countdown_day,
 	.ub_countdown_hour,
 	.ub_countdown_minute,
 	.ub_countdown_second {
 		margin: 0 5px;
-	}
+	}*/
 }
 
-.ub-countdown-odometer {
+/*.ub-countdown-odometer {
 	margin: 0;
 	text-align: center;
-}
+}*/
 
 @media (max-width: 991.98px) {
 	.ub-countdown {
