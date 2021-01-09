@@ -126,3 +126,20 @@
 		margin: 0 10px;
 	}
 }
+
+@media (max-width: 599px) {
+	.ub-button-flex- {
+		&small {
+			min-width: 70%;
+		}
+		&medium {
+			min-width: 80%;
+		}
+		&large {
+			min-width: 90%;
+		}
+		&larger {
+			min-width: 100%;
+		}
+	}
+}
