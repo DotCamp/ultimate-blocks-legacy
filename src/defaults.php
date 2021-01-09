@@ -1510,7 +1510,11 @@ $defaultValues = array(
             'itemSpacing' => array(
                 'type' => 'number',
                 'default' => 0
-             )
+            ),
+            'columns' => array(
+                'type' => 'number',
+                'default' => 1
+            )
         )
     ),
     'ub/tab-block' => array(

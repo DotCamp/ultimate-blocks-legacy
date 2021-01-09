@@ -587,9 +587,11 @@ function ub_include_block_attribute_css() {
                     $iconData = Ultimate_Blocks_IconSet::generate_fontawesome_icon($attributes['selectedIcon']);
 
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
-                        'justify-content: ' . ($attributes['alignment'] == 'center' ? 'center' :
-                            'flex-' . ($attributes['alignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
+                        'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL .
                         '}' . PHP_EOL .
+                        $prefix . '>ul{' . PHP_EOL .
+                            'column-count: ' . $attributes['columns'] . ';' . PHP_EOL .
+                            '}' . PHP_EOL .
                         $prefix . ' li::before{' . PHP_EOL .
                             'top: ' . ($attributes['iconSize'] >= 5 ? 3 : ($attributes['iconSize'] < 3 ? 2 : 0)) . 'px;
                             font-size: 1em;

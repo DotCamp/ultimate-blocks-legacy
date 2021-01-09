@@ -68,6 +68,10 @@ registerBlockType("ub/styled-list", {
 			type: "number",
 			default: 0, //in pixels
 		},
+		columns: {
+			type: "number",
+			default: 1,
+		},
 	},
 	transforms: {
 		from: [
@@ -117,6 +121,7 @@ registerBlockType("ub/styled-list", {
 				selectedIcon,
 				blockID,
 				itemSpacing,
+				columns,
 			},
 		} = props;
 
@@ -274,6 +279,13 @@ registerBlockType("ub/styled-list", {
 							min={0}
 							max={50}
 						/>
+						<p>{__("Number of columns")}</p>
+						<RangeControl
+							value={columns}
+							onChange={(columns) => setAttributes({ columns })}
+							min={1}
+							max={4}
+						/>
 					</PanelBody>
 				</InspectorControls>
 			),
@@ -292,15 +304,11 @@ registerBlockType("ub/styled-list", {
 			<div
 				className="ub_styled_list"
 				id={`ub-styled-list-${blockID}`}
-				style={{
-					justifyContent:
-						alignment === "center"
-							? "center"
-							: `flex-${alignment === "left" ? "start" : "end"}`,
-				}}
+				style={{ textAlign: alignment }}
 			>
 				<RichText
 					className="fa-ul"
+					style={{ columnCount: columns }}
 					multiline="li"
 					__unstableMultilineRootTag={"ul"}
 					tagName="ul"
