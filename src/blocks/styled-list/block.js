@@ -8,7 +8,7 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor || wp.editor;
-const { IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
+const { Button, IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
 const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
 
@@ -200,26 +200,32 @@ registerBlockType("ub/styled-list", {
 								<Dropdown
 									position="bottom right"
 									renderToggle={({ isOpen, onToggle }) => (
-										<IconButton
-											icon={
-												<FontAwesomeIcon
-													icon={
-														Object.keys(fas)
-															.filter(
-																(iconName) => fas[iconName].prefix === "fas"
-															)
-															.includes(`fa${dashesToCamelcase(selectedIcon)}`)
-															? selectedIcon
-															: ["fab", selectedIcon]
-													}
-													color={iconColor}
-													size="lg"
-												/>
-											}
+										<Button
 											label={__("Select icon for list")}
 											onClick={onToggle}
 											aria-expanded={isOpen}
-										/>
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												height="30"
+												width="30"
+												viewBox={`0, 0, ${
+													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+														.icon[0]
+												},  ${
+													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+														.icon[1]
+												}`}
+											>
+												<path
+													fill={iconColor}
+													d={
+														allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+															.icon[4]
+													}
+												/>
+											</svg>
+										</Button>
 									)}
 									renderContent={() => (
 										<div>
@@ -261,9 +267,7 @@ registerBlockType("ub/styled-list", {
 						<p>{__("Icon color")}</p>
 						<ColorPalette
 							value={iconColor}
-							onChange={(colorValue) =>
-								setAttributes({ iconColor: colorValue })
-							}
+							onChange={(iconColor) => setAttributes({ iconColor })}
 						/>
 						<p>{__("Icon size")}</p>
 						<RangeControl
@@ -294,9 +298,7 @@ registerBlockType("ub/styled-list", {
 				<BlockControls>
 					<AlignmentToolbar
 						value={alignment}
-						onChange={(value) => {
-							setAttributes({ alignment: value });
-						}}
+						onChange={(value) => setAttributes({ alignment: value })}
 					/>
 				</BlockControls>
 			),
