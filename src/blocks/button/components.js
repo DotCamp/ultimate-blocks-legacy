@@ -1,5 +1,9 @@
 import { Component } from "react";
-import { generateIcon, dashesToCamelcase } from "../../common";
+import {
+	generateIcon,
+	dashesToCamelcase,
+	splitArrayIntoChunks,
+} from "../../common";
 
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -76,8 +80,14 @@ export const inspectorControls = (props) => {
 		setState,
 		availableIcons,
 		iconSearchTerm,
+		iconSearchResultsPage,
 		activeButtonIndex,
 	} = props;
+
+	const iconListPage = splitArrayIntoChunks(
+		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
+		20
+	);
 
 	return (
 		buttons.length > 0 && (
@@ -248,6 +258,7 @@ export const inspectorControls = (props) => {
 											onChange={(e) =>
 												setState({
 													iconSearchTerm: e.target.value,
+													iconSearchResultsPage: 0,
 												})
 											}
 										/>
@@ -270,31 +281,59 @@ export const inspectorControls = (props) => {
 											</Button>
 										)}
 										<br />
-										{availableIcons.length > 0 &&
-											availableIcons
-												.filter((i) => i.iconName.includes(iconSearchTerm))
-												.map((i) => (
-													<IconButton
-														className="ub-button-available-icon"
-														icon={generateIcon(i, 35)}
-														label={i.iconName}
-														onClick={() =>
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			chosenIcon: i.iconName,
-																		}
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															})
+										{iconListPage.length > 0 && (
+											<div>
+												<button
+													onClick={() => {
+														if (iconSearchResultsPage > 0) {
+															setState({
+																iconSearchResultsPage:
+																	iconSearchResultsPage - 1,
+															});
 														}
-													/>
-												))}
+													}}
+												>
+													&lt;
+												</button>
+												<span>
+													{iconSearchResultsPage + 1}/{iconListPage.length}
+												</span>
+												<button
+													onClick={() => {
+														if (
+															iconSearchResultsPage <
+															iconListPage.length - 1
+														) {
+															setState({
+																iconSearchResultsPage:
+																	iconSearchResultsPage + 1,
+															});
+														}
+													}}
+												>
+													&gt;
+												</button>
+											</div>
+										)}
+										{availableIcons.length > 0 &&
+											iconListPage[iconSearchResultsPage].map((i) => (
+												<IconButton
+													className="ub-button-available-icon"
+													icon={generateIcon(i, 35)}
+													label={i.iconName}
+													onClick={() =>
+														setAttributes({
+															buttons: [
+																...buttons.slice(0, activeButtonIndex),
+																Object.assign({}, buttons[activeButtonIndex], {
+																	chosenIcon: i.iconName,
+																}),
+																...buttons.slice(activeButtonIndex + 1),
+															],
+														})
+													}
+												/>
+											))}
 									</div>
 								)}
 							/>

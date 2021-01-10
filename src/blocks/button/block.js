@@ -293,6 +293,7 @@ registerBlockType("ub/button", {
 			iconSearchTerm: "",
 			enableLinkInput: false,
 			activeButtonIndex: 0,
+			iconSearchResultsPage: 0,
 		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
