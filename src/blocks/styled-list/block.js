@@ -12,7 +12,7 @@ const { Button, IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
 const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
 
-import { dashesToCamelcase } from "../../common";
+import { dashesToCamelcase, splitArrayIntoChunks } from "../../common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -88,6 +88,7 @@ registerBlockType("ub/styled-list", {
 		withState({
 			availableIcons: [],
 			iconSearchTerm: "",
+			iconSearchResultsPage: 0,
 			recentSelection: "",
 			edits: 0,
 		}),
@@ -111,6 +112,7 @@ registerBlockType("ub/styled-list", {
 			setState,
 			availableIcons,
 			iconSearchTerm,
+			iconSearchResultsPage,
 			edits,
 			attributes: {
 				list,
@@ -185,6 +187,11 @@ registerBlockType("ub/styled-list", {
 			});
 		}
 
+		const iconListPage = splitArrayIntoChunks(
+			availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
+			24
+		);
+
 		return [
 			isSelected && (
 				<InspectorControls>
@@ -235,30 +242,64 @@ registerBlockType("ub/styled-list", {
 												onChange={(e) =>
 													setState({
 														iconSearchTerm: e.target.value,
+														iconSearchResultsPage: 0,
 													})
 												}
 											/>
 											<br />
-											{availableIcons.length > 0 &&
-												availableIcons
-													.filter((i) => i.iconName.includes(iconSearchTerm))
-													.map((i) => (
-														<IconButton
-															className="ub-styled-list-available-icon"
-															icon={<FontAwesomeIcon icon={i} size="lg" />}
-															label={i.iconName}
-															onClick={() => {
+											{iconListPage.length > 0 && (
+												<div>
+													<button
+														onClick={() => {
+															if (iconSearchResultsPage > 0) {
 																setState({
-																	recentSelection: i.iconName,
-																	edits: edits + 1,
+																	iconSearchResultsPage:
+																		iconSearchResultsPage - 1,
 																});
+															}
+														}}
+													>
+														&lt;
+													</button>
+													<span>
+														{iconSearchResultsPage + 1}/{iconListPage.length}
+													</span>
+													<button
+														onClick={() => {
+															if (
+																iconSearchResultsPage <
+																iconListPage.length - 1
+															) {
+																setState({
+																	iconSearchResultsPage:
+																		iconSearchResultsPage + 1,
+																});
+															}
+														}}
+													>
+														&gt;
+													</button>
+												</div>
+											)}
 
-																setAttributes({
-																	selectedIcon: i.iconName,
-																});
-															}}
-														/>
-													))}
+											{iconListPage.length > 0 &&
+												iconListPage[iconSearchResultsPage].map((i) => (
+													<IconButton
+														className="ub-styled-list-available-icon"
+														icon={<FontAwesomeIcon icon={i} size="lg" />}
+														label={i.iconName}
+														onClick={() => {
+															setState({
+																recentSelection: i.iconName,
+																edits: edits + 1,
+															});
+
+															setAttributes({
+																selectedIcon: i.iconName,
+															});
+														}}
+													/>
+												))}
 										</div>
 									)}
 								/>
