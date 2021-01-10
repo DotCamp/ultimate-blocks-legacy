@@ -144,54 +144,6 @@ export const inspectorControls = (props) => {
 						</ButtonGroup>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Button Link Settings", "ultimate-blocks")}>
-					<CheckboxControl
-						label={__("Open Link in New Tab", "ultimate-blocks")}
-						checked={buttons[activeButtonIndex].openInNewTab}
-						onChange={() =>
-							setAttributes({
-								buttons: [
-									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										openInNewTab: !buttons[activeButtonIndex].openInNewTab,
-									}),
-									...buttons.slice(activeButtonIndex + 1),
-								],
-							})
-						}
-					/>
-					<CheckboxControl
-						label={__("Add Nofollow to Link", "ultimate-blocks")}
-						checked={buttons[activeButtonIndex].addNofollow}
-						onChange={() =>
-							setAttributes({
-								buttons: [
-									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										addNofollow: !buttons[activeButtonIndex].addNofollow,
-									}),
-									...buttons.slice(activeButtonIndex + 1),
-								],
-							})
-						}
-					/>
-					<CheckboxControl
-						label={__("Mark link as sponsored", "ultimate-blocks")}
-						checked={buttons[activeButtonIndex].addSponsored}
-						onChange={() =>
-							setAttributes({
-								buttons: [
-									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										addSponsored: !buttons[activeButtonIndex].addSponsored,
-									}),
-									...buttons.slice(activeButtonIndex + 1),
-								],
-							})
-						}
-					/>
-				</PanelBody>
-
 				<PanelBody title={__("Button Style", "ultimate-blocks")}>
 					<ToggleControl
 						label={__("Rounded", "ultimate-blocks")}
