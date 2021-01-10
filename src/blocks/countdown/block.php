@@ -165,17 +165,6 @@ function ub_countdown_add_frontend_assets() {
                 Ultimate_Blocks_Constants::plugin_version(),
                 true
             );
-
-            /*if(!isset($block['attrs']['style'])){ //odometer, the default style, is selected
-                wp_enqueue_script(
-                    'ultimate_blocks-countdown-odometer-script',
-                    plugins_url( 'countdown/odometer.js', dirname( __FILE__ ) ),
-                    array(  ),
-                    Ultimate_Blocks_Constants::plugin_version(),
-                    true
-                );
-                break;
-            }*/
         }
     }
 }

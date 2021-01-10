@@ -1,8 +1,7 @@
 import { Component } from "react";
 
 import Circle from "./CircularCountdown";
-import Odometer from "./React-Odometer";
-import { DigitDisplay } from "./newOdometer";
+import { DigitDisplay } from "./odometer";
 
 const { __ } = wp.i18n;
 
@@ -95,8 +94,6 @@ class Timer extends Component {
 				604800;
 
 			const newValues = [weeks, days, hours, minutes, seconds];
-
-			//let newNumberChange = numberChange
 
 			if (this.props.timerStyle === "Odometer") {
 				this.setState({
@@ -217,17 +214,6 @@ class Timer extends Component {
 		);
 
 		const odometerValues = [
-			<Odometer value={weeks} />,
-			<Odometer value={days} />,
-			<Odometer value={hours} />,
-			<Odometer value={minutes} />,
-			<Odometer value={seconds} />,
-		].slice(
-			timeUnits.indexOf(largestUnit),
-			timeUnits.indexOf(smallestUnit) + 1
-		);
-
-		const newOdometerDisplays = [
 			<DigitDisplay
 				value={weeks}
 				numberChange={numberChange[0]}
@@ -344,7 +330,7 @@ class Timer extends Component {
 							i < odometerLabels.length - 1 ? [e, <span />] : [e]
 						)
 						.reduce((a, b) => a.concat(b))}
-					{newOdometerDisplays
+					{odometerValues
 						.map((e, i) =>
 							i < odometerValues.length - 1 ? [e, separator] : [e]
 						)

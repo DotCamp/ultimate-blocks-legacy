@@ -1,893 +1,357 @@
-/* Odometer.js, adapted from Hubspot's Odometer script
- Copyright (c) 2013 HubSpot, Inc.
+import { Component } from "react";
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to use, 
-copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
-Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+function delay(ms) {
+	//adapted from from https://stackoverflow.com/a/39496056
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+function breakIntoDigits(num) {
+	//taken from https://stackoverflow.com/a/7784664
+	let digits = [];
+	while (num > 0) {
+		digits.push(num % 10);
+		num = parseInt(num / 10);
+	}
+	return digits.reverse();
+}
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+function integerArray(limit1, limit2) {
+	if (limit1 === limit2) {
+		return [limit1];
+	} else if (limit1 < limit2) {
+		return [...Array(limit2 - limit1 + 1).keys()].map((a) => a + limit1);
+	} else {
+		return [...Array(limit1 - limit2 + 1).keys()].map((a) => limit1 - a);
+	}
+}
 
-*/
-
-(function() {
-	var COUNT_FRAMERATE,
-		COUNT_MS_PER_FRAME,
-		DIGIT_FORMAT,
-		DIGIT_HTML,
-		DIGIT_SPEEDBOOST,
-		DURATION,
-		FORMAT_MARK_HTML,
-		FORMAT_PARSER,
-		FRAMERATE,
-		FRAMES_PER_VALUE,
-		MS_PER_FRAME,
-		MutationObserver,
-		Odometer,
-		RIBBON_HTML,
-		TRANSITION_END_EVENTS,
-		TRANSITION_SUPPORT,
-		VALUE_HTML,
-		addClass,
-		createFromHTML,
-		fractionalPart,
-		now,
-		removeClass,
-		requestAnimationFrame,
-		round,
-		transitionCheckStyles,
-		trigger,
-		truncate,
-		wrapJQuery,
-		_jQueryWrapped,
-		_old,
-		_ref,
-		_ref1,
-		__slice = [].slice;
-
-	VALUE_HTML = '<span class="ub-countdown-odometer-value"></span>';
-
-	RIBBON_HTML =
-		'<span class="ub-countdown-odometer-ribbon"><span class="ub-countdown-odometer-ribbon-inner">' +
-		VALUE_HTML +
-		'</span></span>';
-
-	DIGIT_HTML =
-		'<span class="ub-countdown-odometer-digit"><span class="ub-countdown-odometer-digit-spacer">8</span><span class="ub-countdown-odometer-digit-inner">' +
-		RIBBON_HTML +
-		'</span></span>';
-
-	FORMAT_MARK_HTML =
-		'<span class="ub-countdown-odometer-formatting-mark"></span>';
-
-	DIGIT_FORMAT = '(,ddd).dd';
-
-	FORMAT_PARSER = /^\(?([^)]*)\)?(?:(.)(d+))?$/;
-
-	FRAMERATE = 30;
-
-	DURATION = 2000;
-
-	COUNT_FRAMERATE = 20;
-
-	FRAMES_PER_VALUE = 2;
-
-	DIGIT_SPEEDBOOST = 0.5;
-
-	MS_PER_FRAME = 1000 / FRAMERATE;
-
-	COUNT_MS_PER_FRAME = 1000 / COUNT_FRAMERATE;
-
-	TRANSITION_END_EVENTS =
-		'transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd';
-
-	transitionCheckStyles = document.createElement('div').style;
-
-	TRANSITION_SUPPORT =
-		transitionCheckStyles.transition != null ||
-		transitionCheckStyles.webkitTransition != null ||
-		transitionCheckStyles.mozTransition != null ||
-		transitionCheckStyles.oTransition != null;
-
-	requestAnimationFrame =
-		window.requestAnimationFrame ||
-		window.mozRequestAnimationFrame ||
-		window.webkitRequestAnimationFrame ||
-		window.msRequestAnimationFrame;
-
-	MutationObserver =
-		window.MutationObserver ||
-		window.WebKitMutationObserver ||
-		window.MozMutationObserver;
-
-	createFromHTML = function(html) {
-		var el;
-		el = document.createElement('div');
-		el.innerHTML = html;
-		return el.children[0];
-	};
-
-	removeClass = function(el, name) {
-		return (el.className = el.className.replace(
-			new RegExp('(^| )' + name.split(' ').join('|') + '( |$)', 'gi'),
-			' '
-		));
-	};
-
-	addClass = function(el, name) {
-		removeClass(el, name);
-		return (el.className += ' ' + name);
-	};
-
-	trigger = function(el, name) {
-		var evt;
-		if (document.createEvent != null) {
-			evt = document.createEvent('HTMLEvents');
-			evt.initEvent(name, true, true);
-			return el.dispatchEvent(evt);
-		}
-	};
-
-	now = function() {
-		var _ref, _ref1;
-		return (_ref =
-			(_ref1 = window.performance) != null
-				? typeof _ref1.now === 'function'
-					? _ref1.now()
-					: void 0
-				: void 0) != null
-			? _ref
-			: +new Date();
-	};
-
-	round = function(val, precision) {
-		if (precision == null) {
-			precision = 0;
-		}
-		if (!precision) {
-			return Math.round(val);
-		}
-		val *= Math.pow(10, precision);
-		val += 0.5;
-		val = Math.floor(val);
-		return (val /= Math.pow(10, precision));
-	};
-
-	truncate = function(val) {
-		if (val < 0) {
-			return Math.ceil(val);
-		} else {
-			return Math.floor(val);
-		}
-	};
-
-	fractionalPart = function(val) {
-		return val - round(val);
-	};
-
-	_jQueryWrapped = false;
-
-	(wrapJQuery = function() {
-		var property, _i, _len, _ref, _results;
-		if (_jQueryWrapped) {
-			return;
-		}
-		if (window.jQuery != null) {
-			_jQueryWrapped = true;
-			_ref = ['html', 'text'];
-			_results = [];
-			for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-				property = _ref[_i];
-				_results.push(
-					(function(property) {
-						var old;
-						old = window.jQuery.fn[property];
-						return (window.jQuery.fn[property] = function(val) {
-							var _ref1;
-							if (
-								val == null ||
-								((_ref1 = this[0]) != null
-									? _ref1.odometer
-									: void 0) == null
-							) {
-								return old.apply(this, arguments);
-							}
-							return this[0].odometer.update(val);
-						});
-					})(property)
-				);
-			}
-			return _results;
-		}
-	})();
-
-	setTimeout(wrapJQuery, 0);
-
-	Odometer = (function() {
-		function Odometer(options) {
-			var e,
-				k,
-				property,
-				v,
-				_base,
-				_i,
-				_len,
-				_ref,
-				_ref1,
-				_ref2,
-				_this = this;
-			this.options = options;
-			this.el = this.options.el;
-			if (this.el.odometer != null) {
-				return this.el.odometer;
-			}
-			this.el.odometer = this;
-			_ref = Odometer.options;
-			for (k in _ref) {
-				v = _ref[k];
-				if (this.options[k] == null) {
-					this.options[k] = v;
-				}
-			}
-			if ((_base = this.options).duration == null) {
-				_base.duration = DURATION;
-			}
-			this.MAX_VALUES =
-				(this.options.duration / MS_PER_FRAME / FRAMES_PER_VALUE) | 0;
-			this.resetFormat();
-			this.value = this.cleanValue(
-				(_ref1 = this.options.value) != null ? _ref1 : ''
-			);
-			this.renderInside();
-			this.render();
-			try {
-				_ref2 = ['innerHTML', 'innerText', 'textContent'];
-				for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-					property = _ref2[_i];
-					if (this.el[property] != null) {
-						(function(property) {
-							return Object.defineProperty(_this.el, property, {
-								get: function() {
-									var _ref3;
-									if (property === 'innerHTML') {
-										return _this.inside.outerHTML;
-									} else {
-										return (_ref3 =
-											_this.inside.innerText) != null
-											? _ref3
-											: _this.inside.textContent;
-									}
-								},
-								set: function(val) {
-									return _this.update(val);
-								}
-							});
-						})(property);
-					}
-				}
-			} catch (_error) {
-				e = _error;
-				this.watchForMutations();
-			}
-			this;
-		}
-
-		Odometer.prototype.renderInside = function() {
-			this.inside = document.createElement('div');
-			this.inside.className = 'ub-countdown-odometer-inside';
-			this.el.innerHTML = '';
-			return this.el.appendChild(this.inside);
+class MovingDigits extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isAnimating: false,
+			currentAnimation: null,
 		};
+	}
+	componentDidMount() {
+		//display the lowest number to prepare for downward movement
 
-		Odometer.prototype.watchForMutations = function() {
-			var e,
-				_this = this;
-			if (MutationObserver == null) {
-				return;
-			}
-			try {
-				if (this.observer == null) {
-					this.observer = new MutationObserver(function(mutations) {
-						var newVal;
-						newVal = _this.el.innerText;
-						_this.renderInside();
-						_this.render(_this.value);
-						return _this.update(newVal);
-					});
-				}
-				this.watchMutations = true;
-				return this.startWatchingMutations();
-			} catch (_error) {
-				e = _error;
-			}
-		};
-
-		Odometer.prototype.startWatchingMutations = function() {
-			if (this.watchMutations) {
-				return this.observer.observe(this.el, {
-					childList: true
-				});
-			}
-		};
-
-		Odometer.prototype.stopWatchingMutations = function() {
-			var _ref;
-			return (_ref = this.observer) != null ? _ref.disconnect() : void 0;
-		};
-
-		Odometer.prototype.cleanValue = function(val) {
-			var _ref;
-			if (typeof val === 'string') {
-				val = val.replace(
-					(_ref = this.format.radix) != null ? _ref : '.',
-					'<radix>'
-				);
-				val = val.replace(/[.,]/g, '');
-				val = val.replace('<radix>', '.');
-				val = parseFloat(val, 10) || 0;
-			}
-			return round(val, this.format.precision);
-		};
-
-		Odometer.prototype.bindTransitionEnd = function() {
-			var event,
-				renderEnqueued,
-				_i,
-				_len,
-				_ref,
-				_results,
-				_this = this;
-			if (this.transitionEndBound) {
-				return;
-			}
-			this.transitionEndBound = true;
-			renderEnqueued = false;
-			_ref = TRANSITION_END_EVENTS.split(' ');
-			_results = [];
-			for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-				event = _ref[_i];
-				_results.push(
-					this.el.addEventListener(
-						event,
-						function() {
-							if (renderEnqueued) {
-								return true;
-							}
-							renderEnqueued = true;
-							setTimeout(function() {
-								_this.render();
-								renderEnqueued = false;
-								return trigger(_this.el, 'odometerdone');
-							}, 0);
-							return true;
-						},
-						false
-					)
-				);
-			}
-			return _results;
-		};
-
-		Odometer.prototype.resetFormat = function() {
-			var format,
-				fractional,
-				parsed,
-				precision,
-				radix,
-				repeating,
-				_ref,
-				_ref1;
-			format = (_ref = this.options.format) != null ? _ref : DIGIT_FORMAT;
-			format || (format = 'd');
-			parsed = FORMAT_PARSER.exec(format);
-			if (!parsed) {
-				throw new Error('Odometer: Unparsable digit format');
-			}
-			(_ref1 = parsed.slice(1, 4)),
-				(repeating = _ref1[0]),
-				(radix = _ref1[1]),
-				(fractional = _ref1[2]);
-			precision = (fractional != null ? fractional.length : void 0) || 0;
-			return (this.format = {
-				repeating: repeating,
-				radix: radix,
-				precision: precision
+		if (this.props.dir === "decrease") {
+			this.setState({
+				currentAnimation: `translateY(${
+					100 * (1 / this.props.digits.length - 1)
+				}%)`,
 			});
-		};
-
-		Odometer.prototype.render = function(value) {
-			var classes, cls, match, newClasses, theme, _i, _len;
-			if (value == null) {
-				value = this.value;
-			}
-			this.stopWatchingMutations();
-			this.resetFormat();
-			this.inside.innerHTML = '';
-			theme = this.options.theme;
-			classes = this.el.className.split(' ');
-			newClasses = [];
-			for (_i = 0, _len = classes.length; _i < _len; _i++) {
-				cls = classes[_i];
-				if (!cls.length) {
-					continue;
-				}
-				if ((match = /^ub-countdown-odometer-theme-(.+)$/.exec(cls))) {
-					theme = match[1];
-					continue;
-				}
-				if (/^ub-countdown-odometer(-|$)/.test(cls)) {
-					continue;
-				}
-				newClasses.push(cls);
-			}
-			newClasses.push('ub-countdown-odometer');
-			if (!TRANSITION_SUPPORT) {
-				newClasses.push('ub-countdown-odometer-no-transitions');
-			}
-			if (theme) {
-				newClasses.push('ub-countdown-odometer-theme-' + theme);
-			} else {
-				newClasses.push('ub-countdown-odometer-auto-theme');
-			}
-			this.el.className = newClasses.join(' ');
-			this.ribbons = {};
-			this.formatDigits(value);
-			return this.startWatchingMutations();
-		};
-
-		Odometer.prototype.formatDigits = function(value) {
-			var digit,
-				valueDigit,
-				valueString,
-				wholePart,
-				_i,
-				_j,
-				_len,
-				_len1,
-				_ref,
-				_ref1;
-			this.digits = [];
-
-			this.options.formatFunction = function(value) {
-				return value >= 0 && value < 10 ? '0' + value.toString() : value.toString();
-			};
-
-			if (this.options.formatFunction) {
-				valueString = this.options.formatFunction(value);
-				_ref = valueString.split('').reverse();
-				for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-					valueDigit = _ref[_i];
-					if (valueDigit.match(/0-9/)) {
-						digit = this.renderDigit();
-						digit.querySelector(
-							'.ub-countdown-odometer-value'
-						).innerHTML = valueDigit;
-						this.digits.push(digit);
-						this.insertDigit(digit);
-					} else {
-						this.addSpacer(valueDigit);
-					}
-				}
-			} else {
-				wholePart =
-					!this.format.precision || !fractionalPart(value) || false;
-				_ref1 = value
-					.toString()
-					.split('')
-					.reverse();
-				for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-					digit = _ref1[_j];
-					if (digit === '.') {
-						wholePart = true;
-					}
-					this.addDigit(digit, wholePart);
-				}
-			}
-		};
-
-		Odometer.prototype.update = function(newValue) {
-			var diff,
-				_this = this;
-			newValue = this.cleanValue(newValue);
-			if (!(diff = newValue - this.value)) {
-				return;
-			}
-			removeClass(
-				this.el,
-				'ub-countdown-odometer-animating-up ub-countdown-odometer-animating-down ub-countdown-odometer-animating'
-			);
-			if (diff > 0) {
-				addClass(this.el, 'ub-countdown-odometer-animating-up');
-			} else {
-				addClass(this.el, 'ub-countdown-odometer-animating-down');
-			}
-			this.stopWatchingMutations();
-			this.animate(newValue);
-			this.startWatchingMutations();
-			setTimeout(function() {
-				_this.el.offsetHeight;
-				return addClass(_this.el, 'ub-countdown-odometer-animating');
-			}, 0);
-			return (this.value = newValue);
-		};
-
-		Odometer.prototype.renderDigit = function() {
-			return createFromHTML(DIGIT_HTML);
-		};
-
-		Odometer.prototype.insertDigit = function(digit, before) {
-			if (before != null) {
-				return this.inside.insertBefore(digit, before);
-			} else if (!this.inside.children.length) {
-				return this.inside.appendChild(digit);
-			} else {
-				return this.inside.insertBefore(digit, this.inside.children[0]);
-			}
-		};
-
-		Odometer.prototype.addSpacer = function(chr, before, extraClasses) {
-			var spacer;
-			spacer = createFromHTML(FORMAT_MARK_HTML);
-			spacer.innerHTML = chr;
-			if (extraClasses) {
-				addClass(spacer, extraClasses);
-			}
-			return this.insertDigit(spacer, before);
-		};
-
-		Odometer.prototype.addDigit = function(value, repeating) {
-			var chr, digit, resetted, _ref;
-			if (repeating == null) {
-				repeating = true;
-			}
-			if (value === '-') {
-				return this.addSpacer(
-					value,
-					null,
-					'ub-countdown-odometer-negation-mark'
-				);
-			}
-			if (value === '.') {
-				return this.addSpacer(
-					(_ref = this.format.radix) != null ? _ref : '.',
-					null,
-					'ub-countdown-odometer-radix-mark'
-				);
-			}
-			if (repeating) {
-				resetted = false;
-				while (true) {
-					if (!this.format.repeating.length) {
-						if (resetted) {
-							throw new Error(
-								'Bad odometer format without digits'
-							);
-						}
-						this.resetFormat();
-						resetted = true;
-					}
-					chr = this.format.repeating[
-						this.format.repeating.length - 1
-					];
-					this.format.repeating = this.format.repeating.substring(
-						0,
-						this.format.repeating.length - 1
-					);
-					if (chr === 'd') {
-						break;
-					}
-					this.addSpacer(chr);
-				}
-			}
-			digit = this.renderDigit();
-			digit.querySelector(
-				'.ub-countdown-odometer-value'
-			).innerHTML = value;
-			this.digits.push(digit);
-			return this.insertDigit(digit);
-		};
-
-		Odometer.prototype.animate = function(newValue) {
-			if (!TRANSITION_SUPPORT || this.options.animation === 'count') {
-				return this.animateCount(newValue);
-			} else {
-				return this.animateSlide(newValue);
-			}
-		};
-
-		Odometer.prototype.animateCount = function(newValue) {
-			var cur,
-				diff,
-				last,
-				start,
-				tick,
-				_this = this;
-			if (!(diff = +newValue - this.value)) {
-				return;
-			}
-			start = last = now();
-			cur = this.value;
-			return (tick = function() {
-				var delta, dist, fraction;
-				if (now() - start > _this.options.duration) {
-					_this.value = newValue;
-					_this.render();
-					trigger(_this.el, 'odometerdone');
-					return;
-				}
-				delta = now() - last;
-				if (delta > COUNT_MS_PER_FRAME) {
-					last = now();
-					fraction = delta / _this.options.duration;
-					dist = diff * fraction;
-					cur += dist;
-					_this.render(Math.round(cur));
-				}
-				if (requestAnimationFrame != null) {
-					return requestAnimationFrame(tick);
-				} else {
-					return setTimeout(tick, COUNT_MS_PER_FRAME);
-				}
-			})();
-		};
-
-		Odometer.prototype.getDigitCount = function() {
-			var i, max, value, values, _i, _len, _digitCount;
-			values = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-			for (i = _i = 0, _len = values.length; _i < _len; i = ++_i) {
-				value = values[i];
-				values[i] = Math.abs(value);
-			}
-			max = Math.max.apply(Math, values);
-			_digitCount = Math.ceil(Math.log(max + 1) / Math.log(10));
-			return _digitCount > 2 ? _digitCount : 2;
-		};
-
-		Odometer.prototype.getFractionalDigitCount = function() {
-			var i, parser, parts, value, values, _i, _len;
-			values = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-			parser = /^\-?\d*\.(\d*?)0*$/;
-			for (i = _i = 0, _len = values.length; _i < _len; i = ++_i) {
-				value = values[i];
-				values[i] = value.toString();
-				parts = parser.exec(values[i]);
-				if (parts == null) {
-					values[i] = 0;
-				} else {
-					values[i] = parts[1].length;
-				}
-			}
-			return Math.max.apply(Math, values);
-		};
-
-		Odometer.prototype.resetDigits = function() {
-			this.digits = [];
-			this.ribbons = [];
-			this.inside.innerHTML = '';
-			return this.resetFormat();
-		};
-
-		Odometer.prototype.animateSlide = function(newValue) {
-			var boosted,
-				cur,
-				diff,
-				digitCount,
-				digits,
-				dist,
-				end,
-				fractionalCount,
-				frame,
-				frames,
-				i,
-				incr,
-				j,
-				mark,
-				numEl,
-				oldValue,
-				start,
-				_base,
-				_i,
-				_j,
-				_k,
-				_l,
-				_len,
-				_len1,
-				_len2,
-				_m,
-				_ref,
-				_results;
-			oldValue = this.value;
-			fractionalCount = this.getFractionalDigitCount(oldValue, newValue);
-			if (fractionalCount) {
-				newValue = newValue * Math.pow(10, fractionalCount);
-				oldValue = oldValue * Math.pow(10, fractionalCount);
-			}
-			if (!(diff = newValue - oldValue)) {
-				return;
-			}
-			this.bindTransitionEnd();
-			digitCount = this.getDigitCount(oldValue, newValue);
-			digits = [];
-			boosted = 0;
-			for (
-				i = _i = 0;
-				0 <= digitCount ? _i < digitCount : _i > digitCount;
-				i = 0 <= digitCount ? ++_i : --_i
-			) {
-				start = truncate(oldValue / Math.pow(10, digitCount - i - 1));
-				end = truncate(newValue / Math.pow(10, digitCount - i - 1));
-				dist = end - start;
-				if (Math.abs(dist) > this.MAX_VALUES) {
-					frames = [];
-					incr =
-						dist /
-						(this.MAX_VALUES +
-							this.MAX_VALUES * boosted * DIGIT_SPEEDBOOST);
-					cur = start;
-					while ((dist > 0 && cur < end) || (dist < 0 && cur > end)) {
-						frames.push(Math.round(cur));
-						cur += incr;
-					}
-					if (frames[frames.length - 1] !== end) {
-						frames.push(end);
-					}
-					boosted++;
-				} else {
-					frames = function() {
-						_results = [];
-						for (
-							var _j = start;
-							start <= end ? _j <= end : _j >= end;
-							start <= end ? _j++ : _j--
-						) {
-							_results.push(_j);
-						}
-						return _results;
-					}.apply(this);
-				}
-				for (i = _k = 0, _len = frames.length; _k < _len; i = ++_k) {
-					frame = frames[i];
-					frames[i] = Math.abs(frame % 10);
-				}
-				digits.push(frames);
-			}
-			this.resetDigits();
-			_ref = digits.reverse();
-			for (i = _l = 0, _len1 = _ref.length; _l < _len1; i = ++_l) {
-				frames = _ref[i];
-				if (!this.digits[i]) {
-					this.addDigit(' ', i >= fractionalCount);
-				}
-				if ((_base = this.ribbons)[i] == null) {
-					_base[i] = this.digits[i].querySelector(
-						'.ub-countdown-odometer-ribbon-inner'
-					);
-				}
-				this.ribbons[i].innerHTML = '';
-				if (diff < 0) {
-					frames = frames.reverse();
-				}
-				for (j = _m = 0, _len2 = frames.length; _m < _len2; j = ++_m) {
-					frame = frames[j];
-					numEl = document.createElement('div');
-					numEl.className = 'ub-countdown-odometer-value';
-					numEl.innerHTML = frame;
-					this.ribbons[i].appendChild(numEl);
-					if (j === frames.length - 1) {
-						addClass(numEl, 'ub-countdown-odometer-last-value');
-					}
-					if (j === 0) {
-						addClass(numEl, 'ub-countdown-odometer-first-value');
-					}
-				}
-			}
-			if (start < 0) {
-				this.addDigit('-');
-			}
-			mark = this.inside.querySelector(
-				'.ub-countdown-odometer-radix-mark'
-			);
-			if (mark != null) {
-				mark.parent.removeChild(mark);
-			}
-			if (fractionalCount) {
-				return this.addSpacer(
-					this.format.radix,
-					this.digits[fractionalCount - 1],
-					'ub-countdown-odometer-radix-mark'
-				);
-			}
-		};
-
-		return Odometer;
-	})();
-
-	Odometer.options = (_ref = window.odometerOptions) != null ? _ref : {};
-
-	setTimeout(function() {
-		var k, v, _base, _ref1, _results;
-		if (window.odometerOptions) {
-			_ref1 = window.odometerOptions;
-			_results = [];
-			for (k in _ref1) {
-				v = _ref1[k];
-				_results.push(
-					(_base = Odometer.options)[k] != null
-						? (_base = Odometer.options)[k]
-						: (_base[k] = v)
-				);
-			}
-			return _results;
 		}
-	}, 0);
 
-	Odometer.init = function() {
-		var el, elements, _i, _len, _ref1, _results;
-		if (document.querySelectorAll == null) {
-			return;
+		this.setState({ isAnimating: true });
+	}
+	componentDidUpdate() {
+		const setNewTransform = (newTransform) => {
+			if (this.state.currentAnimation !== newTransform) {
+				delay(40)
+					.then(() => {
+						this.setState({
+							currentAnimation: newTransform,
+						});
+						return delay(300);
+					})
+					.then(() => {
+						this.props.dismountEvent();
+					});
+			}
+		};
+		if (this.state.isAnimating) {
+			if (this.props.dir === "decrease") {
+				//animate scrolling to top number
+				setNewTransform("translateY(0)");
+			}
+			if (this.props.dir === "increase") {
+				//animate scrolling to bottom number
+				setNewTransform(
+					`translateY(${100 * (1 / this.props.digits.length - 1)}%)`
+				);
+			}
 		}
-		elements = document.querySelectorAll(
-			Odometer.options.selector || '.ub-countdown-odometer'
+	}
+	render() {
+		return (
+			<div
+				className="moving-digit"
+				style={{
+					transform: this.state.currentAnimation,
+					transition: this.state.isAnimating ? "all 0.3s" : null,
+				}}
+			>
+				{this.props.digits.map((d, j) => (
+					<div key={j} className="digit">
+						{d}
+					</div>
+				))}
+			</div>
 		);
-		_results = [];
-		for (_i = 0, _len = elements.length; _i < _len; _i++) {
-			el = elements[_i];
-			_results.push(
-				(el.odometer = new Odometer({
-					el: el,
-					value:
-						(_ref1 = el.innerText) != null ? _ref1 : el.textContent
-				}))
-			);
-		}
-		return _results;
+	}
+}
+
+export class DigitDisplay extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			displayValue: 0,
+			digits: [0, 0],
+			incomingDigits: [],
+			digitChange: "none",
+		};
+	}
+	static defaultProps = {
+		value: 0,
+		minDisplay: 0,
+		maxDisplay: 0,
+		numberChange: "none",
 	};
 
-	if (
-		((_ref1 = document.documentElement) != null
-			? _ref1.doScroll
-			: void 0) != null &&
-		document.createEventObject != null
-	) {
-		_old = document.onreadystatechange;
-		document.onreadystatechange = function() {
-			if (
-				document.readyState === 'complete' &&
-				Odometer.options.auto !== false
-			) {
-				Odometer.init();
-			}
-			return _old != null ? _old.apply(this, arguments) : void 0;
-		};
-	} else {
-		document.addEventListener(
-			'DOMContentLoaded',
-			function() {
-				if (Odometer.options.auto !== false) {
-					return Odometer.init();
-				}
-			},
-			false
-		);
+	componentDidMount() {
+		const { value, maxDisplay } = this.props;
+
+		const digitCount = maxDisplay
+			? Math.floor(Math.log10(maxDisplay)) + 1
+			: value === 0
+			? 1
+			: Math.floor(Math.log10(value)) + 1;
+		let currentDigits = breakIntoDigits(value);
+		if (currentDigits.length < digitCount) {
+			currentDigits.unshift(
+				...Array(digitCount - currentDigits.length).fill(0)
+			);
+		}
+		this.setState({ digits: currentDigits, displayValue: value });
 	}
 
-	if (typeof define === 'function' && define.amd) {
-		define([], function() {
-			return Odometer;
-		});
-	} else if (typeof exports !== 'undefined' && exports !== null) {
-		module.exports = Odometer;
-	} else {
-		window.Odometer = Odometer;
+	componentDidUpdate(prevProps, prevState) {
+		const { displayValue, digits } = this.state;
+
+		const {
+			maxDisplay,
+			value,
+			numberChange,
+			forceRefresh,
+			finishForceRefresh,
+		} = this.props;
+
+		if (prevProps.numberChange !== numberChange) {
+			//begin animation
+			const digitCount = maxDisplay
+				? Math.floor(Math.log10(maxDisplay)) + 1
+				: value === 0 && displayValue === 0
+				? 1
+				: Math.floor(Math.log10(Math.max(value, displayValue))) + 1;
+
+			//currently displayed digits
+			let currentDigits = breakIntoDigits(displayValue);
+			if (currentDigits.length < digitCount) {
+				currentDigits.unshift(
+					...Array(digitCount - currentDigits.length).fill(0)
+				);
+			}
+
+			//replacement digits
+			let newDigits = breakIntoDigits(value);
+			if (newDigits.length < digitCount) {
+				newDigits.unshift(...Array(digitCount - newDigits.length).fill(0));
+			}
+
+			if (numberChange === "increase") {
+				let maxDigits = breakIntoDigits(maxDisplay || value);
+				if (maxDigits.length === 0) {
+					maxDigits = [0];
+				}
+
+				let extraDigits = [];
+				let prevDigits = [];
+
+				newDigits = newDigits.map((d, i) => {
+					let currentMax =
+						currentDigits[i - 1] === maxDigits[i - 1] ? maxDigits[i] : 9;
+
+					if (prevDigits.length > 1) {
+						let prevDigits2 = prevDigits.slice(1, prevDigits.length - 1);
+						let cycle = prevDigits2.map((p) =>
+							integerArray(0, maxDigits[i - 1] === p ? maxDigits[i] : 9)
+						);
+						extraDigits = cycle.reduce((prev, curr) => prev.concat(curr), []);
+					}
+
+					if (d === currentDigits[i]) {
+						if (value > displayValue) {
+							prevDigits =
+								prevDigits.length > 0
+									? [
+											...integerArray(d, currentMax),
+											...extraDigits,
+											...integerArray(0, d),
+									  ]
+									: [d];
+						} else {
+							prevDigits = [...extraDigits, ...integerArray(0, d)];
+						}
+					} else if (currentDigits[i] < d) {
+						if (prevDigits.length > 1) {
+							prevDigits = [
+								...integerArray(currentDigits[i], currentMax),
+								...extraDigits,
+								...integerArray(0, d),
+							];
+						} else {
+							prevDigits = integerArray(currentDigits[i], d);
+						}
+					} else {
+						prevDigits = [
+							...integerArray(currentDigits[i], currentMax),
+							...extraDigits,
+							...integerArray(0, d),
+						];
+					}
+					return prevDigits.length > 1 ? prevDigits : d;
+				});
+
+				this.setState({ incomingDigits: newDigits });
+			} else if (numberChange === "decrease") {
+				let maxDigits = breakIntoDigits(maxDisplay || displayValue);
+
+				if (maxDigits.length === 0) {
+					maxDigits = [0];
+				}
+
+				let extraDigits = [];
+				let prevDigits = [];
+
+				newDigits = newDigits.map((d, i) => {
+					let currentMax =
+						newDigits[i - 1] === maxDigits[i - 1] ? maxDigits[i] : 9;
+
+					if (prevDigits.length > 1) {
+						let prevDigits2 = prevDigits.slice(1, prevDigits.length - 1);
+						let cycle = prevDigits2.map((p) =>
+							integerArray(0, maxDigits[i - 1] === p ? maxDigits[i] : 9)
+						);
+						extraDigits = cycle.reduce((prev, curr) => prev.concat(curr), []);
+					}
+
+					if (d === currentDigits[i]) {
+						if (value < displayValue) {
+							prevDigits =
+								prevDigits.length > 0
+									? [
+											...integerArray(d, currentMax),
+											...extraDigits,
+											...integerArray(0, d),
+									  ]
+									: [d];
+						} else {
+							prevDigits = [
+								...integerArray(d, currentMax),
+								...extraDigits,
+								...integerArray(0, d),
+							];
+						}
+					} else if (currentDigits[i] > d) {
+						if (prevDigits.length > 1) {
+							prevDigits = [
+								...integerArray(d, currentMax),
+								...extraDigits,
+								...integerArray(0, currentDigits[i]),
+							];
+						} else {
+							prevDigits = integerArray(d, currentDigits[i]);
+						}
+					} else {
+						prevDigits = [
+							...integerArray(d, currentMax),
+							...extraDigits,
+							...integerArray(0, currentDigits[i]),
+						];
+					}
+					return prevDigits.length > 1 ? prevDigits : d;
+				});
+
+				this.setState({ incomingDigits: newDigits });
+			}
+		}
+
+		if (forceRefresh && !prevProps.forceRefresh) {
+			const maxDigitCount = Math.floor(
+				Math.log10(maxDisplay || value || 1) + 1
+			);
+			let newDigits = breakIntoDigits(value);
+			const missingDigits = maxDigitCount - newDigits.length;
+
+			if (missingDigits > 0) {
+				newDigits = [...Array(missingDigits).fill(0), ...newDigits];
+			}
+
+			this.setState({
+				displayValue: value,
+				digits: newDigits,
+			});
+			finishForceRefresh();
+		}
 	}
-}.call(this));
+
+	render() {
+		const { digits, incomingDigits } = this.state;
+
+		const { value, maxDisplay, numberChange } = this.props;
+
+		return (
+			<div className="ub-countdown-digit-container">
+				{incomingDigits.length === 0 &&
+					digits.map((d, i) => (
+						<div key={i} className="digit">
+							{d}
+						</div>
+					))}
+				{incomingDigits.map((d, i) =>
+					!Array.isArray(d) ? (
+						<div key={i} className="digit">
+							{d}
+						</div>
+					) : (
+						<MovingDigits
+							digits={d}
+							key={i}
+							dir={numberChange}
+							dismountEvent={() => {
+								let replacementDigits = incomingDigits.map((d) => {
+									if (Array.isArray(d)) {
+										return numberChange === "increase" ? d[d.length - 1] : d[0];
+									} else {
+										return d;
+									}
+								});
+
+								if (
+									maxDisplay === 0 &&
+									numberChange !== "increase" &&
+									replacementDigits.length > 1 &&
+									replacementDigits[0] === 0
+								) {
+									replacementDigits = replacementDigits.slice(
+										replacementDigits.length - Math.floor(Math.log10(value) + 1)
+									);
+								}
+
+								this.setState({
+									incomingDigits: [],
+									digits: replacementDigits,
+									displayValue: value,
+								});
+								this.props.stopAnimation();
+							}}
+						/>
+					)
+				)}
+			</div>
+		);
+	}
+}

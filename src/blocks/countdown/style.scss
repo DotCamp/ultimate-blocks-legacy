@@ -50,79 +50,6 @@
 	}
 }
 
-/*.ub-countdown-odometer {
-	//OLD ODOMETER CODE BELOW
-	margin: 0 auto;
-	font-size: 35px;
-	&.ub-countdown-odometer-auto-theme,
-	&.ub-countdown-odometer-theme-minimal {
-		display: inline-block;
-		vertical-align: middle;
-		*vertical-align: auto;
-		*zoom: 1;
-		*display: inline;
-		position: relative;
-		.ub-countdown-odometer-digit {
-			display: inline-block;
-			vertical-align: middle;
-			*vertical-align: auto;
-			*zoom: 1;
-			*display: inline;
-			position: relative;
-			.ub-countdown-odometer-digit-spacer {
-				display: inline-block;
-				vertical-align: middle;
-				*vertical-align: auto;
-				*zoom: 1;
-				*display: inline;
-				visibility: hidden;
-			}
-			.ub-countdown-odometer-digit-inner {
-				text-align: left;
-				display: block;
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				overflow: hidden;
-			}
-			.ub-countdown-odometer-ribbon {
-				display: block;
-			}
-			.ub-countdown-odometer-ribbon-inner {
-				display: block;
-				-webkit-backface-visibility: hidden;
-			}
-			.ub-countdown-odometer-value {
-				display: block;
-				-webkit-transform: translateZ(0);
-				&.ub-countdown-odometer-last-value {
-					position: absolute;
-				}
-			}
-		}
-		&.ub-countdown-odometer-animating-up {
-			.ub-countdown-odometer-ribbon-inner {
-				transition: transform 0.25s;
-			}
-			&.ub-countdown-odometer-animating .ub-countdown-odometer-ribbon-inner {
-				transform: translateY(-100%);
-			}
-		}
-		&.ub-countdown-odometer-animating-down {
-			.ub-countdown-odometer-ribbon-inner {
-				transform: translateY(-100%);
-			}
-			&.ub-countdown-odometer-animating .ub-countdown-odometer-ribbon-inner {
-				transition: transform 0.25s;
-				transform: translateY(0);
-			}
-		}
-	}
-	//OLD ODOMETER CODE ABOVE
-}*/
-
 //NEW ODOMETER CODE BELOW
 .ub-countdown-digit-container {
 	height: 1.5em;
@@ -156,19 +83,8 @@
 	> div {
 		text-align: initial;
 	}
-	/*.ub_countdown_week,
-	.ub_countdown_day,
-	.ub_countdown_hour,
-	.ub_countdown_minute,
-	.ub_countdown_second {
-		margin: 0 5px;
-	}*/
 }
 
-/*.ub-countdown-odometer {
-	margin: 0;
-	text-align: center;
-}*/
 
 @media (max-width: 991.98px) {
 	.ub-countdown {
