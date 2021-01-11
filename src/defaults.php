@@ -13,7 +13,7 @@ $defaultValues = array(
             ),
             'align' => array(
                 'type' => 'string',
-                'default' => 'center'
+                'default' => 'left'
             ),
             'url' => array(
                 'type' => 'string',

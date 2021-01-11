@@ -62,7 +62,7 @@ const attributes = {
 	},
 	align: {
 		type: "string",
-		default: "center",
+		default: "",
 	},
 	url: {
 		type: "string",
@@ -330,6 +330,7 @@ registerBlockType("ub/button", {
 				iconPosition,
 				addNofollow,
 				openInNewTab,
+				align,
 			},
 			getBlock,
 			getClientIdsWithDescendants,
@@ -340,15 +341,20 @@ registerBlockType("ub/button", {
 			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
 		}
 		if (blockID === "") {
-			setAttributes({ blockID: block.clientId });
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
+			setAttributes({ blockID: block.clientId, align: "left" });
+		} else {
+			if (align === "") {
+				setAttributes({ align: "center" });
+			}
+			if (
+				getClientIdsWithDescendants().some(
+					(ID) =>
+						"blockID" in getBlock(ID).attributes &&
+						getBlock(ID).attributes.blockID === blockID
+				)
+			) {
+				setAttributes({ blockID: block.clientId });
+			}
 		}
 
 		if (!isSelected && props.enableLinkInput) {
