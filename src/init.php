@@ -30,7 +30,7 @@ function ub_check_is_gutenberg_page() {
 	
 	// Gutenberg page on WordPress 5+.
 	$current_screen = get_current_screen();
-	if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+	if ( $current_screen !== NULL && method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
         return true;
 	}
 	
