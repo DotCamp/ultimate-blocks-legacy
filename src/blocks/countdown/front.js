@@ -40,17 +40,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 				if (!initialValue[i]) {
 					//use queryselector only once, then use saved value in future iterations of the loop
-					initialValue[i] = [
-						...instance.querySelectorAll(".ub-countdown-odometer"),
-					].map((unit) => [...unit.children].map((c) => parseInt(c.innerHTML)));
+					initialValue[i] = Array.prototype.slice
+						.call(instance.querySelectorAll(".ub-countdown-odometer"))
+						.map((unit) =>
+							Array.prototype.slice
+								.call(unit.children)
+								.map((c) => parseInt(c.innerHTML))
+						);
 
 					const conversionFactor = [7, 24, 60, 60, 1];
 
-					const amounts = [
-						...Array(timeUnits.indexOf(largestUnit)).fill(0),
-						...initialValue[i].map((arr) => generateValue(arr)),
-						...Array(4 - timeUnits.indexOf(smallestUnit)).fill(0),
-					];
+					const amounts = Array(timeUnits.indexOf(largestUnit))
+						.fill(0)
+						.concat(
+							initialValue[i].map((arr) => generateValue(arr)),
+							Array(4 - timeUnits.indexOf(smallestUnit)).fill(0)
+						);
 
 					if (
 						timeLeft >
@@ -79,23 +84,23 @@ document.addEventListener("DOMContentLoaded", () => {
 							}
 
 							const missingDigits = minDigits - digits.length;
-							return [
-								...(missingDigits > 0 ? Array(missingDigits).fill(0) : []),
-								...digits.reverse(),
-							];
+							return (missingDigits > 0
+								? Array(missingDigits).fill(0)
+								: []
+							).concat(digits.reverse());
 						};
 
 						const integerArray = (limit1, limit2) => {
 							if (limit1 === limit2) {
 								return [limit1];
 							} else if (limit1 < limit2) {
-								return [...Array(limit2 - limit1 + 1).keys()].map(
-									(a) => a + limit1
-								);
+								return Array.apply(null, Array(limit2 - limit1 + 1))
+									.map((_, i) => i)
+									.map((a) => a + limit1);
 							} else {
-								return [...Array(limit1 - limit2 + 1).keys()].map(
-									(a) => limit1 - a
-								);
+								return Array.apply(null, Array(limit1 - limit2 + 1))
+									.map((_, i) => i)
+									.map((a) => limit1 - a);
 							}
 						};
 
@@ -145,10 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
 									: Math.floor(Math.log10(Math.max(currentValue, newValue))) +
 									  1;
 
-								const addExtraZeroes = (arr, targetLength) => [
-									...Array(targetLength - arr.length).fill(0),
-									...arr,
-								];
+								const addExtraZeroes = (arr, targetLength) =>
+									[].concat(Array(targetLength - arr.length).fill(0), arr);
 
 								if (display.length < digitCount) {
 									addExtraZeroes(display, digitCount);
@@ -193,31 +196,28 @@ document.addEventListener("DOMContentLoaded", () => {
 												if (newValue > currentValue) {
 													prevDigits =
 														prevDigits.length > 0
-															? [
-																	...integerArray(d, currentMax),
-																	...extraDigits,
-																	...integerArray(0, d),
-															  ]
+															? integerArray(d, currentMax).concat(
+																	extraDigits,
+																	integerArray(0, d)
+															  )
 															: [d];
 												} else {
-													prevDigits = [...extraDigits, ...integerArray(0, d)];
+													prevDigits = extraDigits.concat(integerArray(0, d));
 												}
 											} else if (display[k] < d) {
 												if (prevDigits.length > 1) {
-													prevDigits = [
-														...integerArray(display[k], currentMax),
-														...extraDigits,
-														...integerArray(0, d),
-													];
+													prevDigits = integerArray(
+														display[k],
+														currentMax
+													).concat(extraDigits, integerArray(0, d));
 												} else {
 													prevDigits = integerArray(display[k], d);
 												}
 											} else {
-												prevDigits = [
-													...integerArray(display[k], currentMax),
-													...extraDigits,
-													...integerArray(0, d),
-												];
+												prevDigits = integerArray(
+													display[k],
+													currentMax
+												).concat(extraDigits, integerArray(0, d));
 											}
 											return prevDigits.length > 1 ? prevDigits : d;
 										})
@@ -260,35 +260,31 @@ document.addEventListener("DOMContentLoaded", () => {
 												if (newValue < currentValue) {
 													prevDigits =
 														prevDigits.length > 0
-															? [
-																	...integerArray(d, currentMax),
-																	...extraDigits,
-																	...integerArray(0, d),
-															  ]
+															? integerArray(d, currentMax).concat(
+																	extraDigits,
+																	integerArray(0, d)
+															  )
 															: [d];
 												} else {
-													prevDigits = [
-														...integerArray(d, currentMax),
-														...extraDigits,
-														...integerArray(0, d),
-													];
+													prevDigits = integerArray(d, currentMax).concat(
+														extraDigits,
+														integerArray(0, d)
+													);
 												}
 											} else if (display[k] > d) {
 												if (prevDigits.length > 1) {
-													prevDigits = [
-														...integerArray(d, currentMax),
-														...extraDigits,
-														...integerArray(0, display[k]),
-													];
+													prevDigits = integerArray(d, currentMax).concat(
+														extraDigits,
+														integerArray(0, display[k])
+													);
 												} else {
 													prevDigits = integerArray(d, display[k]);
 												}
 											} else {
-												prevDigits = [
-													...integerArray(d, currentMax),
-													...extraDigits,
-													...integerArray(0, display[k]),
-												];
+												prevDigits = integerArray(d, currentMax).concat(
+													extraDigits,
+													integerArray(0, display[k])
+												);
 											}
 											return prevDigits.length > 1 ? prevDigits : d;
 										})
@@ -297,15 +293,15 @@ document.addEventListener("DOMContentLoaded", () => {
 							}
 						});
 
-						let odometerSlot = [
-							...instance.querySelectorAll(".ub-countdown-odometer"),
-						].map((a) => [...a.children]);
+						let odometerSlot = Array.prototype.slice
+							.call(instance.querySelectorAll(".ub-countdown-odometer"))
+							.map((a) => Array.prototype.slice.call(a.children));
 
 						let finishedTransitions = 0;
 
 						const transitionCount = incomingDigits
 							.reduce(
-								(collection, currentArray) => [...collection, ...currentArray],
+								(collection, currentArray) => collection.concat(currentArray),
 								[]
 							)
 							.filter((a) => Array.isArray(a)).length;

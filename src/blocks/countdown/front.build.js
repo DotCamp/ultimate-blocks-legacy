@@ -1,17 +1,5 @@
 "use strict";
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 document.addEventListener("DOMContentLoaded", function () {
   var timer = [];
   var initialValue = [];
@@ -46,15 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (!initialValue[i]) {
         //use queryselector only once, then use saved value in future iterations of the loop
-        initialValue[i] = _toConsumableArray(instance.querySelectorAll(".ub-countdown-odometer")).map(function (unit) {
-          return _toConsumableArray(unit.children).map(function (c) {
+        initialValue[i] = Array.prototype.slice.call(instance.querySelectorAll(".ub-countdown-odometer")).map(function (unit) {
+          return Array.prototype.slice.call(unit.children).map(function (c) {
             return parseInt(c.innerHTML);
           });
         });
         var conversionFactor = [7, 24, 60, 60, 1];
-        var amounts = [].concat(_toConsumableArray(Array(timeUnits.indexOf(largestUnit)).fill(0)), _toConsumableArray(initialValue[i].map(function (arr) {
+        var amounts = Array(timeUnits.indexOf(largestUnit)).fill(0).concat(initialValue[i].map(function (arr) {
           return generateValue(arr);
-        })), _toConsumableArray(Array(4 - timeUnits.indexOf(smallestUnit)).fill(0)));
+        }), Array(4 - timeUnits.indexOf(smallestUnit)).fill(0));
 
         if (timeLeft > amounts.reduce(function (total, current, j) {
           return total + current * conversionFactor.slice(j, 4).reduce(function (curFactor, current) {
@@ -77,18 +65,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             var missingDigits = minDigits - digits.length;
-            return [].concat(_toConsumableArray(missingDigits > 0 ? Array(missingDigits).fill(0) : []), _toConsumableArray(digits.reverse()));
+            return (missingDigits > 0 ? Array(missingDigits).fill(0) : []).concat(digits.reverse());
           };
 
           var integerArray = function integerArray(limit1, limit2) {
             if (limit1 === limit2) {
               return [limit1];
             } else if (limit1 < limit2) {
-              return _toConsumableArray(Array(limit2 - limit1 + 1).keys()).map(function (a) {
+              return Array.apply(null, Array(limit2 - limit1 + 1)).map(function (_, i) {
+                return i;
+              }).map(function (a) {
                 return a + limit1;
               });
             } else {
-              return _toConsumableArray(Array(limit1 - limit2 + 1).keys()).map(function (a) {
+              return Array.apply(null, Array(limit1 - limit2 + 1)).map(function (_, i) {
+                return i;
+              }).map(function (a) {
                 return limit1 - a;
               });
             }
@@ -118,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
               var digitCount = maxValues[j] ? Math.floor(Math.log10(maxValues[j])) + 1 : currentValue === 0 && newValue === 0 ? 1 : Math.floor(Math.log10(Math.max(currentValue, newValue))) + 1;
 
               var addExtraZeroes = function addExtraZeroes(arr, targetLength) {
-                return [].concat(_toConsumableArray(Array(targetLength - arr.length).fill(0)), _toConsumableArray(arr));
+                return [].concat(Array(targetLength - arr.length).fill(0), arr);
               };
 
               if (display.length < digitCount) {
@@ -153,18 +145,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
                   if (d === display[k]) {
                     if (newValue > currentValue) {
-                      prevDigits = prevDigits.length > 0 ? [].concat(_toConsumableArray(integerArray(d, currentMax)), _toConsumableArray(extraDigits), _toConsumableArray(integerArray(0, d))) : [d];
+                      prevDigits = prevDigits.length > 0 ? integerArray(d, currentMax).concat(extraDigits, integerArray(0, d)) : [d];
                     } else {
-                      prevDigits = [].concat(_toConsumableArray(extraDigits), _toConsumableArray(integerArray(0, d)));
+                      prevDigits = extraDigits.concat(integerArray(0, d));
                     }
                   } else if (display[k] < d) {
                     if (prevDigits.length > 1) {
-                      prevDigits = [].concat(_toConsumableArray(integerArray(display[k], currentMax)), _toConsumableArray(extraDigits), _toConsumableArray(integerArray(0, d)));
+                      prevDigits = integerArray(display[k], currentMax).concat(extraDigits, integerArray(0, d));
                     } else {
                       prevDigits = integerArray(display[k], d);
                     }
                   } else {
-                    prevDigits = [].concat(_toConsumableArray(integerArray(display[k], currentMax)), _toConsumableArray(extraDigits), _toConsumableArray(integerArray(0, d)));
+                    prevDigits = integerArray(display[k], currentMax).concat(extraDigits, integerArray(0, d));
                   }
 
                   return prevDigits.length > 1 ? prevDigits : d;
@@ -194,18 +186,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
                   if (d === display[k]) {
                     if (newValue < currentValue) {
-                      _prevDigits = _prevDigits.length > 0 ? [].concat(_toConsumableArray(integerArray(d, currentMax)), _toConsumableArray(_extraDigits), _toConsumableArray(integerArray(0, d))) : [d];
+                      _prevDigits = _prevDigits.length > 0 ? integerArray(d, currentMax).concat(_extraDigits, integerArray(0, d)) : [d];
                     } else {
-                      _prevDigits = [].concat(_toConsumableArray(integerArray(d, currentMax)), _toConsumableArray(_extraDigits), _toConsumableArray(integerArray(0, d)));
+                      _prevDigits = integerArray(d, currentMax).concat(_extraDigits, integerArray(0, d));
                     }
                   } else if (display[k] > d) {
                     if (_prevDigits.length > 1) {
-                      _prevDigits = [].concat(_toConsumableArray(integerArray(d, currentMax)), _toConsumableArray(_extraDigits), _toConsumableArray(integerArray(0, display[k])));
+                      _prevDigits = integerArray(d, currentMax).concat(_extraDigits, integerArray(0, display[k]));
                     } else {
                       _prevDigits = integerArray(d, display[k]);
                     }
                   } else {
-                    _prevDigits = [].concat(_toConsumableArray(integerArray(d, currentMax)), _toConsumableArray(_extraDigits), _toConsumableArray(integerArray(0, display[k])));
+                    _prevDigits = integerArray(d, currentMax).concat(_extraDigits, integerArray(0, display[k]));
                   }
 
                   return _prevDigits.length > 1 ? _prevDigits : d;
@@ -213,14 +205,12 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             }
           });
-
-          var odometerSlot = _toConsumableArray(instance.querySelectorAll(".ub-countdown-odometer")).map(function (a) {
-            return _toConsumableArray(a.children);
+          var odometerSlot = Array.prototype.slice.call(instance.querySelectorAll(".ub-countdown-odometer")).map(function (a) {
+            return Array.prototype.slice.call(a.children);
           });
-
           var finishedTransitions = 0;
           var transitionCount = incomingDigits.reduce(function (collection, currentArray) {
-            return [].concat(_toConsumableArray(collection), _toConsumableArray(currentArray));
+            return collection.concat(currentArray);
           }, []).filter(function (a) {
             return Array.isArray(a);
           }).length;
