@@ -335,6 +335,7 @@ export const inspectorControls = (props) => {
 						{(tab) =>
 							tab.name === "buttoncolor" ? (
 								<>
+									<p>{__("Button Color")}</p>
 									<ColorPalette
 										value={buttons[activeButtonIndex].buttonColor}
 										onChange={(colorValue) =>
@@ -350,24 +351,28 @@ export const inspectorControls = (props) => {
 										}
 									/>
 									{!buttons[activeButtonIndex].buttonIsTransparent && (
-										<ColorPalette
-											value={buttons[activeButtonIndex].buttonTextColor}
-											onChange={(colorValue) =>
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, activeButtonIndex),
-														Object.assign({}, buttons[activeButtonIndex], {
-															buttonTextColor: colorValue,
-														}),
-														...buttons.slice(activeButtonIndex + 1),
-													],
-												})
-											}
-										/>
+										<>
+											<p>{__("Button Text Color")}</p>
+											<ColorPalette
+												value={buttons[activeButtonIndex].buttonTextColor}
+												onChange={(colorValue) =>
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																buttonTextColor: colorValue,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													})
+												}
+											/>
+										</>
 									)}
 								</>
 							) : (
 								<>
+									<p>{__("Button Color")}</p>
 									<ColorPalette
 										value={buttons[activeButtonIndex].buttonHoverColor}
 										onChange={(colorValue) =>
@@ -383,20 +388,23 @@ export const inspectorControls = (props) => {
 										}
 									/>
 									{!buttons[activeButtonIndex].buttonIsTransparent && (
-										<ColorPalette
-											value={buttons[activeButtonIndex].buttonTextHoverColor}
-											onChange={(colorValue) =>
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, activeButtonIndex),
-														Object.assign({}, buttons[activeButtonIndex], {
-															buttonTextHoverColor: colorValue,
-														}),
-														...buttons.slice(activeButtonIndex + 1),
-													],
-												})
-											}
-										/>
+										<>
+											<p>{__("Button Text Color")}</p>
+											<ColorPalette
+												value={buttons[activeButtonIndex].buttonTextHoverColor}
+												onChange={(colorValue) =>
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																buttonTextHoverColor: colorValue,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													})
+												}
+											/>
+										</>
 									)}
 								</>
 							)
