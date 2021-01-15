@@ -105,8 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
         //begin hiding
         mainStyle.width = "".concat(tocMain.offsetWidth, "px");
         Object.assign(containerStyle, {
-          height: "".concat(tocContainer.offsetWidth, "px"),
-          width: "".concat(tocContainer.offsetHeight, "px")
+          height: "".concat(tocContainer.offsetHeight, "px"),
+          width: "".concat(tocContainer.offsetWidth, "px")
         });
         setTimeout(function () {
           tocContainer.classList.add("ub-hiding");
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
           tocMain.classList.add("ub_table-of-contents-collapsed"); //measure width of toc title + toggle button, then use it as width of tocMain
 
           var mainComputedStyle = getComputedStyle(tocMain);
-          mainStyle.width = "".concat(parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) + parseInt(mainComputedStyle.paddingRight.slice(0, -2)) + instance.closest(".ub_table-of-contents-header").scrollWidth, "px");
+          mainStyle.width = "".concat(5 + parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) + parseInt(mainComputedStyle.paddingRight.slice(0, -2)) + instance.closest(".ub_table-of-contents-header").scrollWidth, "px");
         }, 50);
       }
 

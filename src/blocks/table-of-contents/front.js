@@ -119,9 +119,10 @@ document.addEventListener("DOMContentLoaded", function () {
 				//begin hiding
 				mainStyle.width = `${tocMain.offsetWidth}px`;
 				Object.assign(containerStyle, {
-					height: `${tocContainer.offsetWidth}px`,
-					width: `${tocContainer.offsetHeight}px`,
+					height: `${tocContainer.offsetHeight}px`,
+					width: `${tocContainer.offsetWidth}px`,
 				});
+
 				setTimeout(() => {
 					tocContainer.classList.add("ub-hiding");
 					Object.assign(containerStyle, {
@@ -133,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					//measure width of toc title + toggle button, then use it as width of tocMain
 					const mainComputedStyle = getComputedStyle(tocMain);
 					mainStyle.width = `${
+						5 +
 						parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) +
 						parseInt(mainComputedStyle.paddingRight.slice(0, -2)) +
 						instance.closest(".ub_table-of-contents-header").scrollWidth
