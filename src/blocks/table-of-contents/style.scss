@@ -36,15 +36,6 @@
 			content: counters(item, ".") " ";
 		}
 	}
-	&-collapsed {
-		padding: 10px;
-		margin: 0;
-		max-width: fit-content;
-		max-width: -moz-fit-content;
-		.ub_table-of-contents-header {
-			margin-bottom: 0;
-		}
-	}
 	&-header {
 		text-align: center;
 		margin-bottom: 13px;

@@ -647,6 +647,16 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL;
                         $hasNoSmoothScroll = false;
                     }
+                    if($attributes['allowToCHiding']){
+                        $blockStylesheets .= $prefix . '.ub_table-of-contents-collapsed {' . PHP_EOL .
+                            'padding: 10px;' . PHP_EOL .
+                            'max-width: fit-content;' . PHP_EOL .
+                            'max-width: -moz-fit-content;' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        $prefix . '.ub_table-of-contents-collapsed .ub_table-of-contents-header {' . PHP_EOL .
+                            'margin-bottom: 0;' . PHP_EOL . 
+                        '}' . PHP_EOL;
+                    }
                     $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
                         'justify-self: ' . ($attributes['titleAlignment'] == 'center' ? 'center' :
                             'flex-' . ($attributes['titleAlignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
