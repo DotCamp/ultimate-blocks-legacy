@@ -268,7 +268,7 @@ export const inspectorControls = (props) => {
 												</button>
 											</div>
 										)}
-										{availableIcons.length > 0 &&
+										{iconListPage.length > 0 &&
 											iconListPage[iconSearchResultsPage].map((i) => (
 												<IconButton
 													className="ub-button-available-icon"
