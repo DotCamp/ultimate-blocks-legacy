@@ -298,7 +298,7 @@ export const editorDisplay = (props) => {
 						className="ub_call_to_action_headline_text"
 						style={{
 							fontSize: headFontSize + "px",
-							color: headColor,
+							color: headColor || "inherit",
 							textAlign: headAlign,
 						}}
 						onChange={(value) =>
@@ -318,7 +318,7 @@ export const editorDisplay = (props) => {
 						className="ub_cta_content_text"
 						style={{
 							fontSize: contentFontSize + "px",
-							color: contentColor,
+							color: contentColor || "inherit",
 							textAlign: contentAlign,
 						}}
 						onChange={(value) => setAttributes({ ub_cta_content_text: value })}
@@ -341,7 +341,7 @@ export const editorDisplay = (props) => {
 							placeholder={__("Button Text", "ultimate-blocks")}
 							className="ub_cta_button_text"
 							style={{
-								color: buttonTextColor,
+								color: buttonTextColor || "inherit",
 								fontSize: buttonFontSize + "px",
 							}}
 							onChange={(value) => setAttributes({ ub_cta_button_text: value })}

@@ -509,14 +509,13 @@ class URLInputBox extends Component {
 
 	handleClickOutside(event) {
 		const clickedElement = event.target;
+		const { classList } = clickedElement;
 		if (
 			this.wrapperRef &&
 			!this.wrapperRef.contains(clickedElement) &&
 			!(
-				clickedElement.classList.contains(
-					"block-editor-url-input__suggestion"
-				) ||
-				clickedElement.classList.contains("block-editor-url-input__suggestions")
+				classList.contains("block-editor-url-input__suggestion") ||
+				classList.contains("block-editor-url-input__suggestions")
 			)
 		) {
 			this.props.hideLinkInput();
@@ -673,10 +672,10 @@ export const editorDisplay = (props) => {
 								hoveredButton === i
 									? b.buttonIsTransparent
 										? b.buttonHoverColor
-										: b.buttonTextHoverColor
+										: b.buttonTextHoverColor || "inherit"
 									: b.buttonIsTransparent
 									? b.buttonColor
-									: b.buttonTextColor,
+									: b.buttonTextColor || "inherit",
 							borderRadius: b.buttonRounded
 								? `${b.buttonRadius}${b.buttonRadiusUnit}`
 								: "0",

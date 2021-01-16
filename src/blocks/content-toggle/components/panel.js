@@ -52,7 +52,7 @@ const attributes = {
 	},
 	titleLinkColor: {
 		type: "string",
-		default: "#000000",
+		default: "",
 	},
 	panelTitle: {
 		type: "string",
@@ -464,7 +464,7 @@ registerBlockType("ub/content-toggle-panel", {
 					<RichText.Content
 						tagName="span"
 						className={`${classNamePrefix}-accordion-title`}
-						style={{ color: titleColor }}
+						style={{ color: titleColor || "inherit" }}
 						value={panelTitle}
 					/>
 					<span

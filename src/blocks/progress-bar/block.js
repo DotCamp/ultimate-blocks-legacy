@@ -53,6 +53,10 @@ registerBlockType("ub/progress-bar", {
 			type: "number",
 			default: 1,
 		},
+		labelColor: {
+			type: "string",
+			default: "",
+		},
 	},
 
 	edit: withSelect((select, ownProps) => {
@@ -74,6 +78,7 @@ registerBlockType("ub/progress-bar", {
 				detailAlign,
 				barColor,
 				barThickness,
+				labelColor,
 			},
 			isSelected,
 			setAttributes,
@@ -92,6 +97,13 @@ registerBlockType("ub/progress-bar", {
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
+
+		const progressBarAttributes = {
+			percent: percentage,
+			barColor: barColor,
+			barThickness: barThickness,
+			labelColor: labelColor,
+		};
 
 		return [
 			isSelected && (
@@ -136,7 +148,13 @@ registerBlockType("ub/progress-bar", {
 									value: barColor,
 									onChange: (colorValue) =>
 										setAttributes({ barColor: colorValue }),
-									label: "",
+									label: "Progress Bar Color",
+								},
+								{
+									value: labelColor,
+									onChange: (colorValue) =>
+										setAttributes({ labelColor: colorValue }),
+									label: "Label Color",
 								},
 							]}
 						/>
@@ -163,23 +181,13 @@ registerBlockType("ub/progress-bar", {
 					/>
 				</div>
 				{barType === "linear" ? (
-					<Line
-						percent={percentage}
-						barColor={barColor}
-						barThickness={barThickness}
-					/>
+					<Line {...progressBarAttributes} />
 				) : (
-					<Circle
-						percent={percentage}
-						barColor={barColor}
-						barThickness={barThickness}
-					/>
+					<Circle {...progressBarAttributes} />
 				)}
 			</div>,
 		];
 	}),
 
-	save() {
-		return null;
-	},
+	save: () => null,
 });

@@ -444,9 +444,7 @@ export class PanelContent extends Component {
 			...filterArray.slice(pos + 1),
 		];
 
-		setAttributes({
-			filterArray: newFilterArray,
-		});
+		setAttributes({ filterArray: newFilterArray });
 	}
 
 	editAvailableFilters(item, pos) {
@@ -478,9 +476,7 @@ export class PanelContent extends Component {
 			...filterArray.slice(0, pos),
 			...filterArray.slice(pos + 1),
 		];
-		setAttributes({
-			filterArray: newFilterArray,
-		});
+		setAttributes({ filterArray: newFilterArray });
 
 		block.innerBlocks.forEach((panel) =>
 			updateBlockAttributes(panel.clientId, {
@@ -588,9 +584,7 @@ export class PanelContent extends Component {
 							{
 								value: buttonTextColor,
 								onChange: (colorValue) => {
-									setAttributes({
-										buttonTextColor: colorValue,
-									});
+									setAttributes({ buttonTextColor: colorValue });
 									block.innerBlocks.forEach((panel) =>
 										updateBlockAttributes(panel.clientId, {
 											buttonTextColor: colorValue,
@@ -602,17 +596,13 @@ export class PanelContent extends Component {
 							{
 								value: activeButtonColor,
 								onChange: (colorValue) =>
-									setAttributes({
-										activeButtonColor: colorValue,
-									}),
+									setAttributes({ activeButtonColor: colorValue }),
 								label: __("Active Filter Tag Color"),
 							},
 							{
 								value: activeButtonTextColor,
 								onChange: (colorValue) =>
-									setAttributes({
-										activeButtonTextColor: colorValue,
-									}),
+									setAttributes({ activeButtonTextColor: colorValue }),
 								label: __("Active Filter Tag Text Color"),
 							},
 						]}
@@ -622,9 +612,7 @@ export class PanelContent extends Component {
 							label={__("Initially show all content panels")}
 							checked={initiallyShowAll}
 							onChange={() => {
-								setAttributes({
-									initiallyShowAll: !initiallyShowAll,
-								});
+								setAttributes({ initiallyShowAll: !initiallyShowAll });
 
 								block.innerBlocks.forEach((panel) => {
 									updateBlockAttributes(panel.clientId, {
@@ -703,7 +691,7 @@ export class PanelContent extends Component {
 									className="ub-content-filter-tag"
 									style={{
 										backgroundColor: buttonColor,
-										color: buttonTextColor,
+										color: buttonTextColor || "inherit",
 									}}
 								>
 									<div className="ub-content-filter-tag-top">
@@ -751,7 +739,7 @@ export class PanelContent extends Component {
 							<button
 								style={{
 									backgroundColor: buttonColor,
-									color: buttonTextColor,
+									color: buttonTextColor || "inherit",
 								}}
 								onClick={() => {
 									let current = Object.assign({}, f);

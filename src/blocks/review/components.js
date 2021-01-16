@@ -223,6 +223,7 @@ export class ReviewBody extends Component {
 			setCallToActionURL,
 			hasFocus,
 			callToActionBackColor,
+			callToActionBorderColor,
 			callToActionForeColor,
 			inactiveStarColor,
 			activeStarColor,
@@ -452,11 +453,11 @@ export class ReviewBody extends Component {
 									className="ub_review_cta_btn"
 									style={{
 										backgroundColor: callToActionBackColor,
-										borderColor: callToActionForeColor,
+										borderColor: callToActionBorderColor,
 									}}
 								>
 									<RichText
-										style={{ color: callToActionForeColor }}
+										style={{ color: callToActionForeColor || 'inherit' }}
 										placeholder={__("Call to action")}
 										value={callToActionText}
 										onChange={(text) => setCallToActionText(text)}

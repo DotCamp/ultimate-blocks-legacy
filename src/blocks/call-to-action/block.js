@@ -56,7 +56,7 @@ const attributes = {
 	},
 	headColor: {
 		type: "string",
-		default: "#444444",
+		default: "",
 	},
 	headAlign: {
 		type: "string",
@@ -68,7 +68,7 @@ const attributes = {
 	},
 	contentColor: {
 		type: "string",
-		default: "#444444",
+		default: "",
 	},
 	buttonFontSize: {
 		type: "number",
@@ -80,7 +80,7 @@ const attributes = {
 	},
 	buttonTextColor: {
 		type: "string",
-		default: "#ffffff",
+		default: "",
 	},
 	buttonWidth: {
 		type: "number",

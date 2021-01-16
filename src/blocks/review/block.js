@@ -120,6 +120,10 @@ const attributes = {
 		type: "string",
 		default: "#f63d3d",
 	},
+	callToActionBorderColor: {
+		type: "string",
+		default: "#ffffff",
+	},
 	callToActionForeColor: {
 		type: "string",
 		default: "#ffffff",
@@ -376,6 +380,7 @@ registerBlockType("ub/review", {
 				callToActionText,
 				callToActionURL,
 				callToActionBackColor,
+				callToActionBorderColor,
 				callToActionForeColor,
 				inactiveStarColor,
 				activeStarColor,
@@ -1235,6 +1240,12 @@ registerBlockType("ub/review", {
 								label: __("Button Background"),
 							},
 							{
+								value: callToActionBorderColor,
+								onChange: (colorValue) =>
+									setAttributes({ callToActionBorderColor: colorValue }),
+								label: __("Button Border Color"),
+							},
+							{
 								value: callToActionForeColor,
 								onChange: (colorValue) =>
 									setAttributes({ callToActionForeColor: colorValue }),
@@ -1629,6 +1640,7 @@ registerBlockType("ub/review", {
 				callToActionText={callToActionText}
 				callToActionURL={callToActionURL}
 				callToActionBackColor={callToActionBackColor}
+				callToActionBorderColor={callToActionBorderColor}
 				callToActionForeColor={callToActionForeColor}
 				inactiveStarColor={inactiveStarColor}
 				activeStarColor={activeStarColor}

@@ -1,6 +1,5 @@
 /*Circle.js, derived from React-Component Progress Bar
 
-
 The MIT License (MIT)
 
 Copyright (c) 2014-present yiminghe
@@ -22,14 +21,14 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class Circle extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			indicator: 0,
-			isActive: false
+			isActive: false,
 		};
 	}
 	componentDidMount() {
@@ -37,7 +36,7 @@ export default class Circle extends Component {
 			() =>
 				this.setState({
 					indicator: this.props.percent,
-					isActive: true
+					isActive: true,
 				}),
 			1000
 		);
@@ -49,20 +48,21 @@ export default class Circle extends Component {
 		}
 	}
 	render() {
-		const { barColor, barThickness, percent } = this.props;
+		const { barColor, barThickness, percent, labelColor } = this.props;
 		const { indicator, isActive } = this.state;
 		const circleRadius = 50 - (barThickness + 3) / 2;
 		const circlePathLength = circleRadius * Math.PI * 2;
 		const strokeArcLength = (circlePathLength * indicator) / 100;
-		const progressBarPath = `M 50,50 m 0,${-circleRadius} a ${circleRadius},${circleRadius} 0 1 1 0,${circleRadius *
-			2} a ${circleRadius},${circleRadius} 0 1 1 0,${-circleRadius * 2}`;
+		const progressBarPath = `M 50,50 m 0,${-circleRadius} a ${circleRadius},${circleRadius} 0 1 1 0,${
+			circleRadius * 2
+		} a ${circleRadius},${circleRadius} 0 1 1 0,${-circleRadius * 2}`;
 		const size = 150;
 		return (
 			<div
 				className="ub_progress-bar-container"
 				style={{
 					height: `${size}px`,
-					width: `${size}px`
+					width: `${size}px`,
 				}}
 			>
 				<svg
@@ -76,7 +76,7 @@ export default class Circle extends Component {
 						d={progressBarPath}
 						strokeWidth={3}
 						style={{
-							strokeDasharray: `${circlePathLength}px, ${circlePathLength}px`
+							strokeDasharray: `${circlePathLength}px, ${circlePathLength}px`,
 						}}
 					/>
 					<path
@@ -84,16 +84,17 @@ export default class Circle extends Component {
 						d={progressBarPath}
 						stroke={barColor}
 						strokeWidth={barThickness + 2}
-						strokeLinecap={indicator === 0 ? 'butt' : 'round'}
+						strokeLinecap={indicator === 0 ? "butt" : "round"}
 						style={{
-							strokeDasharray: `${strokeArcLength}px, ${circlePathLength}px`
+							strokeDasharray: `${strokeArcLength}px, ${circlePathLength}px`,
 						}}
 					/>
 				</svg>
 				<div
 					className="ub_progress-bar-label"
 					style={{
-						visibility: isActive ? 'visible' : 'hidden'
+						visibility: isActive ? "visible" : "hidden",
+						color: labelColor || "inherit",
 					}}
 				>
 					{percent}%

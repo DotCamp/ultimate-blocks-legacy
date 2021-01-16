@@ -126,12 +126,13 @@ export const editorDisplay = (props) => {
 		authorAlign,
 		authorRoleAlign,
 	} = attributes;
+
 	return (
 		<div
 			className="ub_testimonial"
 			style={{
 				backgroundColor: backgroundColor,
-				color: textColor,
+				color: textColor || "inherit",
 			}}
 		>
 			<div className="ub_testimonial_img">
