@@ -93,13 +93,18 @@ document.addEventListener("DOMContentLoaded", function () {
         tocContainer.classList.add("ub-hiding");
         mainStyle.width = "".concat(curWidth, "px");
         setTimeout(function () {
+          mainStyle.width = "auto";
           tocMain.classList.remove("ub_table-of-contents-collapsed");
-          Object.assign(containerStyle, {
-            height: "".concat(targetHeight, "px"),
-            width: "100px"
-          });
-          tocContainer.classList.remove("ub-hiding");
-          mainStyle.width = "100%";
+          var fullWidth = getComputedStyle(tocMain).width;
+          mainStyle.width = "".concat(curWidth, "px");
+          setTimeout(function () {
+            Object.assign(containerStyle, {
+              height: "".concat(targetHeight, "px"),
+              width: "100px"
+            });
+            tocContainer.classList.remove("ub-hiding");
+            mainStyle.width = fullWidth;
+          }, 50);
         }, 50);
       } else {
         //begin hiding
