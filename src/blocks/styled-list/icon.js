@@ -1,12 +1,10 @@
-import { Fragment } from 'react';
-
 const commonPaths = (
-	<Fragment>
+	<>
 		<path d="M0 0h16v3h-16v-3z" />
 		<path d="M6 4h10v3h-10v-3z" />
 		<path d="M6 8h10v3h-10v-3z" />
 		<path d="M0 12h16v3h-16v-3z" />
-	</Fragment>
+	</>
 );
 
 export const decreaseIndentIcon = (

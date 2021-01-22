@@ -181,7 +181,7 @@ export default class Inspector extends Component {
 							id="ub_social_share_custom_color"
 							label={__("Customize color")}
 							checked={buttonColor}
-							onChange={(_) =>
+							onChange={() =>
 								setAttributes({ buttonColor: buttonColor ? "" : "#cccccc" })
 							}
 						/>

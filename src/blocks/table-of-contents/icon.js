@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-
 const icon = (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -35,10 +33,10 @@ export const twoColumnsIcon = (
 		viewBox="0 0 110 110"
 	>
 		{[...Array(6).keys()].map((a) => (
-			<Fragment>
+			<>
 				<rect width="50" height="10" x="0" y={a * 20} />
 				<rect width="50" height="10" x="60" y={a * 20} />
-			</Fragment>
+			</>
 		))}
 	</svg>
 );
@@ -51,11 +49,11 @@ export const threeColumnsIcon = (
 		viewBox="0 0 110 110"
 	>
 		{[...Array(6).keys()].map((a) => (
-			<Fragment>
+			<>
 				<rect width="30" height="10" x="0" y={a * 20} />
 				<rect width="30" height="10" x="40" y={a * 20} />
 				<rect width="30" height="10" x="80" y={a * 20} />
-			</Fragment>
+			</>
 		))}
 	</svg>
 );

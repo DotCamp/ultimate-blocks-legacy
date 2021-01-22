@@ -91,7 +91,7 @@ registerBlockType("ub/notification-box", {
 
 			<div className={className}>
 				<button
-					onClick={(_) => {
+					onClick={() => {
 						const { ub_notify_info } = attributes;
 						let firstColor;
 						let secondColor;
@@ -214,7 +214,7 @@ registerBlockType("ub/notification-box-block", {
 			isSelected && blockControls(props),
 			<div className={className}>
 				<button
-					onClick={(_) =>
+					onClick={() =>
 						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
 					}
 				>
@@ -224,5 +224,5 @@ registerBlockType("ub/notification-box-block", {
 			</div>,
 		];
 	}),
-	save: (_) => null,
+	save: () => null,
 });

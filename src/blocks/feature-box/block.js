@@ -169,7 +169,7 @@ registerBlockType("ub/feature-box", {
 
 			<div className={props.className}>
 				<button
-					onClick={(_) => {
+					onClick={() => {
 						const { column, columnOneBody } = attributes;
 						let currentTitles = [mergeRichTextArray(attributes.columnOneTitle)];
 						let currentTitleAligns = [attributes.title1Align];
@@ -376,7 +376,7 @@ registerBlockType("ub/feature-box-block", {
 
 			<div className={props.className}>
 				<button
-					onClick={(_) =>
+					onClick={() =>
 						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
 					}
 				>
@@ -386,5 +386,5 @@ registerBlockType("ub/feature-box-block", {
 			</div>,
 		];
 	}),
-	save: (_) => null,
+	save: () => null,
 });

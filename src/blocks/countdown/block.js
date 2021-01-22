@@ -101,7 +101,7 @@ registerBlockType("ub/countdown", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			props.attributes.blockID = block.clientId;
 		}
 
 		const timeUnits = ["week", "day", "hour", "minute", "second"];
@@ -203,7 +203,7 @@ registerBlockType("ub/countdown", {
 					</Toolbar>
 				</BlockControls>
 			),
-			<React.Fragment>
+			<>
 				<Timer
 					timerStyle={style}
 					deadline={endDate}
@@ -222,7 +222,7 @@ registerBlockType("ub/countdown", {
 					onChange={(text) => setAttributes({ expiryMessage: text })}
 					keepPlaceholderOnFocus={true}
 				/>
-			</React.Fragment>,
+			</>,
 		];
 	}),
 

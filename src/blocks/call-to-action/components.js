@@ -1,5 +1,4 @@
 const { __ } = wp.i18n;
-import { Fragment } from "react";
 
 const {
 	RichText,
@@ -249,7 +248,7 @@ export const editorDisplay = (props) => {
 		useHeadingTag,
 	} = attributes;
 	return (
-		<Fragment>
+		<>
 			<div
 				className="ub_call_to_action"
 				style={{
@@ -345,6 +344,6 @@ export const editorDisplay = (props) => {
 					</form>
 				)}
 			</div>
-		</Fragment>
+		</>
 	);
 };

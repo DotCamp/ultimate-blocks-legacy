@@ -3,7 +3,7 @@ import moment from "moment";
 
 // Setup the block
 const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
+const { Component } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 
 export default class PostGridBlock extends Component {
@@ -29,7 +29,7 @@ export default class PostGridBlock extends Component {
 		const PostTag = postTitleTag;
 
 		return [
-			<Fragment>
+			<>
 				<SectionTag
 					className={`${className ? `${className} ` : ""}ub-block-post-grid`}
 				>
@@ -49,7 +49,7 @@ export default class PostGridBlock extends Component {
 								}
 								`}
 							>
-								<Fragment>
+								<>
 									<div className="ub-block-post-grid-image">
 										{checkPostImage && post.featured_media ? (
 											<FeaturedImage
@@ -114,12 +114,12 @@ export default class PostGridBlock extends Component {
 											)}
 										</div>
 									</div>
-								</Fragment>
+								</>
 							</article>
 						))}
 					</div>
 				</SectionTag>
-			</Fragment>,
+			</>,
 		];
 	}
 }

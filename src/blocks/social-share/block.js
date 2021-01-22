@@ -218,7 +218,7 @@ registerBlockType("ub/social-share", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			props.attributes.blockID = block.clientId;
 		}
 
 		const enabledIcon = {

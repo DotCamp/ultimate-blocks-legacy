@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { EmptyStar, FullStar, HalfStar } from "./icons";
 
 const { __ } = wp.i18n;
@@ -116,7 +115,7 @@ export const editorDisplay = (props) => {
 		starAlign,
 	} = props.attributes;
 	return (
-		<Fragment>
+		<>
 			<div
 				className="ub-star-outer-container"
 				style={{
@@ -187,6 +186,6 @@ export const editorDisplay = (props) => {
 				keepPlaceholderOnFocus={true}
 				formattingControls={["bold", "italic", "strikethrough", "link"]}
 			/>
-		</Fragment>
+		</>
 	);
 };

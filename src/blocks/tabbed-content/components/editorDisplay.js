@@ -332,7 +332,6 @@ export class TabHolder extends Component {
 			selectedBlock,
 			selectBlock,
 			insertBlock,
-			//block,
 			getBlock,
 			getClientIdsWithDescendants,
 		} = this.props;
@@ -365,7 +364,7 @@ export class TabHolder extends Component {
 				SortableList: null,
 			};
 			window.ubTabbedContentBlocks.push(block);
-			setAttributes({ id: block.id });
+			this.props.attributes.id = block.id;
 		}
 
 		if (!attributes.tabsTitle) {
@@ -436,7 +435,7 @@ export class TabHolder extends Component {
 							value={value}
 							formattingControls={["bold", "italic"]}
 							isSelected={
-								propz.attributes.activeControl === "tab-title-" + i &&
+								propz.attributes.activeControl === `tab-title-${i}` &&
 								propz.isSelected
 							}
 							onChange={(content) => onChangeTitle(content, i)}
@@ -541,7 +540,7 @@ export class TabHolder extends Component {
 					getBlock(ID).attributes.blockID === attributes.blockID
 			)
 		) {
-			setAttributes({ blockID: this.props.block.clientId });
+			this.props.attributes.blockID = this.props.block.clientId;
 		}
 
 		return [

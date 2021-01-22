@@ -140,7 +140,7 @@ registerBlockType("ub/styled-list", {
 					getBlock(ID).attributes.blockID === props.attributes.blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			props.attributes.blockID = block.clientId;
 		}
 
 		if (

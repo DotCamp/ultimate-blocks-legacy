@@ -25,8 +25,6 @@ const { withState, compose } = wp.compose;
 
 const { withSelect, withDispatch } = wp.data;
 
-import { Fragment } from "react";
-
 import icon, {
 	info,
 	success,
@@ -209,10 +207,8 @@ registerBlockType("ub/styled-box", {
 					getBlock(ID).attributes.blockID === props.attributes.blockID
 			)
 		) {
-			setAttributes({
-				blockID: block.clientId,
-				outlineThickness: blockID === "" ? 3 : outlineThickness,
-			});
+			props.attributes.outlineThickness = blockID === "" ? 3 : outlineThickness;
+			props.attributes.blockID = block.clientId;
 		} else if (outlineThickness === 0) {
 			setAttributes({ outlineThickness: 1 });
 		}
@@ -319,7 +315,7 @@ registerBlockType("ub/styled-box", {
 				.map((_, i) => (
 					<div className="ub-feature">
 						{image[i] && image[i].id ? (
-							<Fragment>
+							<>
 								{isSelected && (
 									<Button
 										className="remove-image"
@@ -345,7 +341,7 @@ registerBlockType("ub/styled-box", {
 									src={image[i].url}
 									alt={image[i].alt}
 								/>
-							</Fragment>
+							</>
 						) : (
 							<div className="ub-feature-upload-button">
 								<MediaUpload

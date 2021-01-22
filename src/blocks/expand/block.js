@@ -60,7 +60,7 @@ registerBlockType("ub/expand", {
 		}),
 	])(ExpandRoot),
 
-	save: (_) => <InnerBlocks.Content />,
+	save: () => <InnerBlocks.Content />,
 });
 
 registerBlockType("ub/expand-portion", {
@@ -158,5 +158,5 @@ registerBlockType("ub/expand-portion", {
 			</div>,
 		];
 	}),
-	save: (_) => <InnerBlocks.Content />,
+	save: () => <InnerBlocks.Content />,
 });

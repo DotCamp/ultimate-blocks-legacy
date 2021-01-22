@@ -105,7 +105,7 @@ registerBlockType("ub/divider", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			props.attributes.blockID = block.clientId;
 		}
 
 		return [

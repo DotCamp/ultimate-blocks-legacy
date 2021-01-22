@@ -28,11 +28,7 @@ registerBlockType("ub/tab", {
 	},
 	edit(props) {
 		return (
-			<div
-				style={{
-					display: props.attributes.isActive ? "block" : "none",
-				}}
-			>
+			<div style={{ display: props.attributes.isActive ? "block" : "none" }}>
 				<InnerBlocks templateLock={false} />
 			</div>
 		);
@@ -79,11 +75,11 @@ registerBlockType("ub/tab-block", {
 			select("core/block-editor") || select("core/editor")
 		).getBlockRootClientId(ownProps.clientId),
 	}))(function (props) {
-		const { blockParentId, setAttributes } = props;
+		const { blockParentId } = props;
 		const { parentID, isActive } = props.attributes;
 
 		if (parentID === "" || parentID !== blockParentId) {
-			setAttributes({ parentID: blockParentId });
+			props.attributes.parentID = blockParentId;
 		}
 		return (
 			<div style={{ display: isActive ? "block" : "none" }}>

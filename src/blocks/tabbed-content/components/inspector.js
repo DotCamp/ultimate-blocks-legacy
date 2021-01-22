@@ -57,7 +57,7 @@ export default class Inspector extends Component {
 						<Tooltip text={__("Desktop")}>
 							<Button
 								isPrimary={displayMode === "desktop"}
-								onClick={(_) => this.setState({ displayMode: "desktop" })}
+								onClick={() => this.setState({ displayMode: "desktop" })}
 							>
 								<Icon icon="desktop" />
 							</Button>
@@ -65,7 +65,7 @@ export default class Inspector extends Component {
 						<Tooltip text={__("Tablet")}>
 							<Button
 								isPrimary={displayMode === "tablet"}
-								onClick={(_) => this.setState({ displayMode: "tablet" })}
+								onClick={() => this.setState({ displayMode: "tablet" })}
 							>
 								<Icon icon="tablet" />
 							</Button>
@@ -73,7 +73,7 @@ export default class Inspector extends Component {
 						<Tooltip text={__("Mobile")}>
 							<Button
 								isPrimary={displayMode === "mobile"}
-								onClick={(_) => this.setState({ displayMode: "mobile" })}
+								onClick={() => this.setState({ displayMode: "mobile" })}
 							>
 								<Icon icon="smartphone" />
 							</Button>
@@ -130,24 +130,22 @@ export default class Inspector extends Component {
 						}}
 					/>
 					{useAnchors && (
-						<React.Fragment>
-							<TextControl
-								label={__("Anchor for current tab")}
-								value={tabsAnchor[activeTab]}
-								onChange={(newAnchor) =>
-									setAttributes({
-										tabsAnchor: [
-											...tabsAnchor.slice(0, activeTab),
-											newAnchor.replace(/\s/g, ""),
-											...tabsAnchor.slice(activeTab + 1),
-										],
-									})
-								}
-								help={__(
-									"Add an anchor text to let the contents of the active tab be accessed directly through a link"
-								)}
-							/>
-						</React.Fragment>
+						<TextControl
+							label={__("Anchor for current tab")}
+							value={tabsAnchor[activeTab]}
+							onChange={(newAnchor) =>
+								setAttributes({
+									tabsAnchor: [
+										...tabsAnchor.slice(0, activeTab),
+										newAnchor.replace(/\s/g, ""),
+										...tabsAnchor.slice(activeTab + 1),
+									],
+								})
+							}
+							help={__(
+								"Add an anchor text to let the contents of the active tab be accessed directly through a link"
+							)}
+						/>
 					)}
 				</PanelBody>
 			</InspectorControls>

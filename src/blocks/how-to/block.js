@@ -1,5 +1,5 @@
 import icon from "./icon";
-import { Component, Fragment } from "react";
+import { Component } from "react";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
@@ -428,7 +428,7 @@ class HowToStep extends Component {
 						onChange={(newVal) => editStep({ tip: newVal })}
 					/>
 					{advancedMode && (
-						<Fragment>
+						<>
 							{videoDuration > 0 && (
 								<ToggleControl
 									checked={hasVideoClip}
@@ -446,7 +446,7 @@ class HowToStep extends Component {
 								/>
 							)}
 							{videoDuration > 0 && hasVideoClip && (
-								<Fragment>
+								<>
 									<span style={{ color: validTimeInput ? "black" : "red" }}>
 										{__("Start time")}
 									</span>
@@ -654,9 +654,9 @@ class HowToStep extends Component {
 											}
 										}}
 									/>
-								</Fragment>
+								</>
 							)}
-						</Fragment>
+						</>
 					)}
 				</div>
 			</li>
@@ -920,11 +920,11 @@ registerBlockType("ub/how-to", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			props.attributes.blockID = block.clientId;
 		}
 
 		return (
-			<Fragment>
+			<>
 				<InspectorControls>
 					<PanelBody title={__("How To Settings")}>
 						<ToggleControl
@@ -964,7 +964,7 @@ registerBlockType("ub/how-to", {
 							onChange={(advancedMode) => setAttributes({ advancedMode })}
 						/>
 						{advancedMode && (
-							<Fragment>
+							<>
 								<ToggleControl
 									label={__("Include list of supplies")}
 									checked={includeSuppliesList}
@@ -984,7 +984,7 @@ registerBlockType("ub/how-to", {
 									checked={showUnitFirst}
 									onChange={(showUnitFirst) => setAttributes({ showUnitFirst })}
 								/>
-							</Fragment>
+							</>
 						)}
 						<RadioControl
 							label={__("Section list style")}
@@ -1054,7 +1054,7 @@ registerBlockType("ub/how-to", {
 						onChange={(introduction) => setAttributes({ introduction })}
 					/>
 					{advancedMode && (
-						<Fragment>
+						<>
 							<div style={{ display: "flex" }}>
 								<URLInput
 									placeholder={"Insert video URL"}
@@ -1330,7 +1330,7 @@ registerBlockType("ub/how-to", {
 								))}
 							</div>
 							{includeSuppliesList && (
-								<Fragment>
+								<>
 									<RichText
 										tagName="h2"
 										placeholder={__("Required supplies")}
@@ -1444,10 +1444,10 @@ registerBlockType("ub/how-to", {
 									>
 										{__("Add new supplies")}
 									</Button>
-								</Fragment>
+								</>
 							)}
 							{includeToolsList && (
-								<Fragment>
+								<>
 									<RichText
 										tagName="h2"
 										placeholder={__("Required tools")}
@@ -1556,7 +1556,7 @@ registerBlockType("ub/how-to", {
 									>
 										{__("Add new tools")}
 									</Button>
-								</Fragment>
+								</>
 							)}
 							<div
 								className="ub_howto_cost_container"
@@ -1602,7 +1602,7 @@ registerBlockType("ub/how-to", {
 									/>
 								</div>
 							</div>
-						</Fragment>
+						</>
 					)}
 					{useSections ? (
 						<ListWrapper listStyle={sectionListStyle}>
@@ -1839,7 +1839,7 @@ registerBlockType("ub/how-to", {
 						onChange={(howToYield) => setAttributes({ howToYield })}
 					/>
 				</div>
-			</Fragment>
+			</>
 		);
 	}),
 	save: () => null,

@@ -8,7 +8,6 @@ import attributes from "./attributes";
 import PostGridBlock from "./editor";
 import Inspector from "./inspector";
 
-const { Fragment } = wp.element;
 const { withSelect } = wp.data;
 const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 const { Placeholder, Spinner, Toolbar, QueryControls } = wp.components;
@@ -114,18 +113,16 @@ export default registerBlockType("ub/post-grid", {
 
 		if (!emptyPosts) {
 			return (
-				<Fragment>
-					<Placeholder
-						icon="admin-post"
-						label={__("Ultimate Blocks Post Grid", "ultimate-blocks")}
-					>
-						{!Array.isArray(posts) ? (
-							<Spinner />
-						) : (
-							__("No posts found.", "ultimate-blocks")
-						)}
-					</Placeholder>
-				</Fragment>
+				<Placeholder
+					icon="admin-post"
+					label={__("Ultimate Blocks Post Grid", "ultimate-blocks")}
+				>
+					{!Array.isArray(posts) ? (
+						<Spinner />
+					) : (
+						__("No posts found.", "ultimate-blocks")
+					)}
+				</Placeholder>
 			);
 		}
 
@@ -145,7 +142,7 @@ export default registerBlockType("ub/post-grid", {
 		];
 
 		return (
-			<Fragment>
+			<>
 				<Inspector {...{ ...props }} />
 				<BlockControls>
 					<BlockAlignmentToolbar
@@ -156,7 +153,7 @@ export default registerBlockType("ub/post-grid", {
 					<Toolbar controls={toolBarButton} />
 				</BlockControls>
 				<PostGridBlock {...{ ...props }} />
-			</Fragment>
+			</>
 		);
 	}),
 	save: () => null,

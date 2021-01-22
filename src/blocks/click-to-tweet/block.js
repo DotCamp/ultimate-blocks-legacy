@@ -97,7 +97,7 @@ registerBlockType("ub/click-to-tweet", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			props.attributes.blockID = block.clientId;
 		}
 
 		return [

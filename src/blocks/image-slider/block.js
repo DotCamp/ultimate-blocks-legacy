@@ -3,7 +3,6 @@ import icon, { editGallery } from "./icon";
 import { Slider } from "./components";
 
 import { version_1_1_4 } from "./oldVersions";
-import { Fragment } from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -207,7 +206,7 @@ registerBlockType("ub/image-slider", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			props.attributes.blockID = block.clientId;
 		} else if (!showPageDots && usePagination) {
 			setAttributes({ usePagination: false });
 		}
@@ -324,7 +323,7 @@ registerBlockType("ub/image-slider", {
 							/>
 						)}
 						{transition === "coverflow" && (
-							<Fragment>
+							<>
 								<RangeControl
 									label={__("Slide rotation")}
 									value={rotate}
@@ -374,10 +373,10 @@ registerBlockType("ub/image-slider", {
 									max={3} //change if this proves to be excessive
 									step={0.05}
 								/>
-							</Fragment>
+							</>
 						)}
 						{transition === "cube" && (
-							<Fragment>
+							<>
 								<ToggleControl
 									label={__("Enable main slider shadow")}
 									checked={shadow}
@@ -411,7 +410,7 @@ registerBlockType("ub/image-slider", {
 									max={2}
 									scale={0.01}
 								/>
-							</Fragment>
+							</>
 						)}
 						{transition === "flip" && (
 							<ToggleControl
@@ -483,7 +482,7 @@ registerBlockType("ub/image-slider", {
 						multiple
 					/>
 				) : (
-					<React.Fragment>
+					<>
 						<Slider
 							key={componentKey}
 							setActiveSlide={(val) => {
@@ -547,7 +546,7 @@ registerBlockType("ub/image-slider", {
 							]}
 						/>
 						{activeSlide < captionArray.length && (
-							<Fragment>
+							<>
 								<RichText
 									tagName="figcaption"
 									formattingControls={[]}
@@ -584,7 +583,7 @@ registerBlockType("ub/image-slider", {
 										})
 									}
 								/>
-							</Fragment>
+							</>
 						)}
 						{isSelected && activeSlide < captionArray.length && (
 							<form
@@ -620,7 +619,7 @@ registerBlockType("ub/image-slider", {
 								/>
 							</form>
 						)}
-					</React.Fragment>
+					</>
 				)}
 			</div>,
 		];

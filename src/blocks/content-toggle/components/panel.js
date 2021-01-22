@@ -144,17 +144,7 @@ class ContentTogglePanel extends Component {
 		};
 
 		if (parentID === "" || parentID !== blockParentId) {
-			setAttributes({ parentID: blockParentId });
-		} else {
-			let presets = {};
-			if (theme === "") {
-				presets = Object.assign(presets, { theme: oldColorDefaults.theme });
-			}
-			if (titleColor === "") {
-				presets = Object.assign(presets, {
-					titleColor: oldColorDefaults.titleColor,
-				});
-			}
+			this.props.attributes.parentID = blockParentId;
 		}
 
 		return [

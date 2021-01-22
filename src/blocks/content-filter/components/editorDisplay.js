@@ -562,7 +562,7 @@ export class PanelContent extends Component {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			this.props.attributes.blockID = block.clientId;
 		}
 
 		return [
@@ -622,7 +622,7 @@ export class PanelContent extends Component {
 						<ToggleControl
 							label={__("Initially show all content panels")}
 							checked={initiallyShowAll}
-							onChange={(_) => {
+							onChange={() => {
 								setAttributes({
 									initiallyShowAll: !initiallyShowAll,
 								});
@@ -672,7 +672,7 @@ export class PanelContent extends Component {
 							<div className="ub-content-filter-category-top">
 								<span
 									title={__("Delete This Filter Category")}
-									onClick={(_) => {
+									onClick={() => {
 										this.deleteFilterArrayItem(i);
 										block.innerBlocks.forEach((panel) =>
 											updateBlockAttributes(panel.clientId, {
@@ -710,7 +710,7 @@ export class PanelContent extends Component {
 									<div className="ub-content-filter-tag-top">
 										<span
 											title={__("Delete This Filter")}
-											onClick={(_) => {
+											onClick={() => {
 												let current = Object.assign({}, f);
 												current.filters = [
 													...current.filters.slice(0, j),
@@ -754,7 +754,7 @@ export class PanelContent extends Component {
 									backgroundColor: buttonColor,
 									color: buttonTextColor,
 								}}
-								onClick={(_) => {
+								onClick={() => {
 									let current = Object.assign({}, f);
 									current.filters.push("");
 									this.editFilterArray(current, i);
@@ -782,7 +782,7 @@ export class PanelContent extends Component {
 								<input
 									type="checkbox"
 									checked={f.canUseMultiple}
-									onClick={(_) => {
+									onClick={() => {
 										let current = Object.assign({}, f);
 										current.canUseMultiple = !current.canUseMultiple;
 										this.editFilterArray(current, i);
@@ -813,7 +813,7 @@ export class PanelContent extends Component {
 						</div>
 					))}
 				<button
-					onClick={(_) => {
+					onClick={() => {
 						setAttributes({
 							filterArray: [
 								...filterArray,
@@ -842,7 +842,7 @@ export class PanelContent extends Component {
 				{filterArray.length > 0 &&
 					filterArray.filter((f) => f.filters.length > 0).length > 0 && (
 						<button
-							onClick={(_) =>
+							onClick={() =>
 								insertBlock(
 									newChildBlock,
 									block.innerBlocks.length,

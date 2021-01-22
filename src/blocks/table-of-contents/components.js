@@ -4,7 +4,7 @@ import {
 	threeColumnsIcon,
 	plainList,
 } from "./icon";
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import { getDescendantBlocks, mergeRichTextArray } from "../../common";
 import toLatin from "./localToLatin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -327,15 +327,15 @@ class TableOfContents extends Component {
 			this.props.removeDiacritics !== prevProps.removeDiacritics
 		) {
 			this.setHeadings();
-			setAttributes({ links: JSON.stringify(headers) });
+			attributes.links = JSON.stringify(headers);
 			return;
 		}
 
 		if (JSON.stringify(headers) !== JSON.stringify(prevState.headers)) {
-			setAttributes({ links: JSON.stringify(headers) });
+			attributes.links = JSON.stringify(headers);
 		}
 		if (breaks !== attributes.gaps) {
-			setAttributes({ gaps: breaks });
+			attributes.gaps = breaks;
 		}
 
 		if (this.state.hasIdMismatch) {
@@ -669,7 +669,7 @@ export const inspectorControls = (props) => {
 						onChange={(scrollOption) => setAttributes({ scrollOption })}
 					/>
 					{scrollOption === "namedelement" && (
-						<Fragment>
+						<>
 							<SelectControl
 								label={__("Scroll reference name type")}
 								value={scrollTargetType}
@@ -686,7 +686,7 @@ export const inspectorControls = (props) => {
 								value={scrollTarget}
 								onChange={(scrollTarget) => setAttributes({ scrollTarget })}
 							/>
-						</Fragment>
+						</>
 					)}
 					{scrollOption === "fixedamount" && (
 						<RangeControl
@@ -794,7 +794,7 @@ export const editorDisplay = (props) => {
 	} = props.attributes;
 
 	return (
-		<Fragment>
+		<>
 			<div
 				className="ub_table-of-contents-header"
 				style={{
@@ -840,7 +840,7 @@ export const editorDisplay = (props) => {
 					removeDiacritics={removeDiacritics}
 				/>
 			)}
-		</Fragment>
+		</>
 	);
 };
 

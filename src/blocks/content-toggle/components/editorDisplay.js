@@ -276,7 +276,7 @@ export class PanelContent extends Component {
 			}
 		};
 
-		const onPreventCollapseChange = (_) => {
+		const onPreventCollapseChange = () => {
 			setAttributes({ preventCollapse: !preventCollapse });
 			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
@@ -337,7 +337,8 @@ export class PanelContent extends Component {
 				);
 				setState({ oldArrangement: Array.from(Array(panels.length).keys()) });
 			}
-		} else if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
+		} //no bugs above
+		else if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
 			//Fix indexes in case of rearrangments
 			if (newArrangement.length < oldArrangement.length && showOnlyOne) {
 				if (!panels.map((p) => p.attributes.collapsed).includes(false)) {
@@ -351,7 +352,7 @@ export class PanelContent extends Component {
 				}
 			}
 			panels.forEach((panel, i) =>
-				updateBlockAttributes(panel.clientId, {
+				Object.assign(panel.attributes, {
 					index: i,
 					parent: block.clientId,
 				})
@@ -378,9 +379,12 @@ export class PanelContent extends Component {
 			}
 		}
 
+		//total rewrite needed
+
 		if (blockID === "") {
-			setAttributes(
-				Object.assign({ blockID: block.clientId }, newColorDefaults)
+			this.props.attributes = Object.assign(
+				{ blockID: block.clientId },
+				newColorDefaults
 			);
 		} else {
 			if (
@@ -390,16 +394,19 @@ export class PanelContent extends Component {
 						getBlock(ID).attributes.blockID === blockID
 				)
 			) {
-				setAttributes({ blockID: block.clientId });
+				this.props.attributes.blockID = block.clientId;
 			}
 			let presets = {};
 			if (theme === "") {
-				presets = Object.assign(presets, { theme: oldColorDefaults.theme });
+				presets = Object.assign({}, { theme: oldColorDefaults.theme });
 			}
 			if (titleColor === "") {
-				presets = Object.assign(presets, {
-					titleColor: oldColorDefaults.titleColor,
-				});
+				presets = Object.assign(
+					{},
+					{
+						titleColor: oldColorDefaults.titleColor,
+					}
+				);
 			}
 		}
 
@@ -459,21 +466,22 @@ export class PanelContent extends Component {
 							//if value of collapsed is changed for a panel via inspector panel and showonlyone is active,
 							//value of collapsed in all other panels should be automatically set to true
 							panels.forEach((panel, i) => {
-								updateBlockAttributes(
-									panel.clientId,
-									Object.assign(
-										{},
-										newChange,
-										i !== changedPanel ? { collapsed: true } : null
-									)
+								Object.assign(
+									panel.attributes,
+									newChange,
+									i !== changedPanel ? { collapsed: true } : null
 								);
 							});
-							setAttributes(Object.assign({ collapsed: false }, newChange));
+							Object.assign(
+								this.props.attributes,
+								{ collapsed: false },
+								newChange
+							);
 						} else {
 							panels.forEach((panel) => {
-								updateBlockAttributes(panel.clientId, newChange);
+								Object.assign(panel.attributes, newChange);
 							});
-							setAttributes(newChange);
+							Object.assign(this.props.attributes, newChange);
 						}
 						setState({ oldAttributeValues: newAttributeValues });
 					}
@@ -578,7 +586,7 @@ export class PanelContent extends Component {
 								id="ub-content-toggle-faq-schema"
 								label={__("Enable FAQ Schema")}
 								checked={hasFAQSchema}
-								onChange={(_) =>
+								onChange={() =>
 									setAttributes({
 										hasFAQSchema: !hasFAQSchema,
 									})
