@@ -98,7 +98,9 @@ class TableOfContents extends Component {
 							newBlock.attributes = Object.assign(
 								{},
 								{
-									content: mergeRichTextArray(blockAttributes.content),
+									content: Array.isArray(blockAttributes.content)
+										? mergeRichTextArray(blockAttributes.content)
+										: blockAttributes.content,
 									level: Number(blockAttributes.element.charAt(1)),
 									anchor: blockAttributes.elementId,
 								}
@@ -188,15 +190,16 @@ class TableOfContents extends Component {
 					!heading.anchor ||
 					heading.anchor.indexOf("themeisle-otter ") === -1
 				) {
-					heading.anchor =
-						key +
-						"-" +
-						(this.props.allowToLatin
-							? toLatin("all", heading.content.toString())
-							: heading.content.toString()
-						)
-							.toLowerCase()
-							.replace(/( |<.+?>|&nbsp;)/g, "-");
+					heading.anchor = `${key}-${
+						typeof heading.content === "undefined"
+							? ""
+							: (this.props.allowToLatin
+									? toLatin("all", heading.content.toString())
+									: heading.content.toString()
+							  )
+									.toLowerCase()
+									.replace(/( |<.+?>|&nbsp;)/g, "-")
+					}`;
 
 					heading.anchor = heading.anchor
 						.replace(/[^\w\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s-]/g, "")
@@ -470,7 +473,10 @@ class TableOfContents extends Component {
 								href={`#${item.anchor}`}
 								dangerouslySetInnerHTML={{
 									__html: `${item.disabled ? "<del>" : ""}${
-										item.customContent || item.content.replace(/(<.+?>)/g, "")
+										item.customContent ||
+										(typeof item.content === "undefined"
+											? ""
+											: item.content.replace(/(<.+?>)/g, ""))
 									}${item.disabled ? "</del>" : ""}`,
 								}}
 							/>
