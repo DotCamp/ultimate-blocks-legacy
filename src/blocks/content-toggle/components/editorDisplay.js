@@ -337,8 +337,7 @@ export class PanelContent extends Component {
 				);
 				setState({ oldArrangement: Array.from(Array(panels.length).keys()) });
 			}
-		} //no bugs above
-		else if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
+		} else if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
 			//Fix indexes in case of rearrangments
 			if (newArrangement.length < oldArrangement.length && showOnlyOne) {
 				if (!panels.map((p) => p.attributes.collapsed).includes(false)) {
@@ -379,10 +378,8 @@ export class PanelContent extends Component {
 			}
 		}
 
-		//total rewrite needed
-
 		if (blockID === "") {
-			this.props.attributes = Object.assign(
+			this.props.block.attributes = Object.assign(
 				{ blockID: block.clientId },
 				newColorDefaults
 			);
