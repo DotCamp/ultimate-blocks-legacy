@@ -1086,6 +1086,7 @@ registerBlockType("ub/review", {
 					</>
 				);
 				unusedDefaults = removeFromArray(unusedDefaults, [
+					...offerAttributes,
 					"appCategory",
 					"operatingSystem",
 				]);
