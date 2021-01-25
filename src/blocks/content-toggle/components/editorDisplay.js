@@ -194,6 +194,27 @@ export class PanelContent extends Component {
 	constructor(props) {
 		super(props);
 	}
+	componentDidMount() {
+		const { theme, titleColor } = this.props.attributes;
+		const { block, setAttributes } = this.props;
+
+		if (!this.props.attributes.blockID) {
+			let initialColors = {};
+			if (!theme) {
+				initialColors.theme = "#f1f1f1";
+			}
+			if (!titleColor) {
+				initialColors.titleColor = "#000000";
+			}
+
+			setAttributes(initialColors);
+		} else {
+			Object.assign(this.props.attributes, {
+				theme: block.innerBlocks[0].attributes.theme,
+				titleColor: block.innerBlocks[0].attributes.titleColor,
+			});
+		}
+	}
 	render() {
 		const {
 			attributes: {
@@ -291,13 +312,18 @@ export class PanelContent extends Component {
 		};
 
 		//Detect if one of the child blocks has received a command to add another child block
+		let presets = Object.assign(
+			{},
+			blockID ? oldColorDefaults : newColorDefaults
+		);
+
 		if (newBlockTarget.length > 0) {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
 			insertBlock(
 				createBlock("ub/content-toggle-panel-block", {
-					theme,
+					theme: theme || presets.theme,
 					collapsed: showOnlyOne ? true : collapsed,
-					titleColor,
+					titleColor: titleColor || presets.titleColor,
 					titleTag,
 					preventCollapse,
 					toggleLocation,
@@ -392,18 +418,6 @@ export class PanelContent extends Component {
 				)
 			) {
 				this.props.attributes.blockID = block.clientId;
-			}
-			let presets = {};
-			if (theme === "") {
-				presets = Object.assign({}, { theme: oldColorDefaults.theme });
-			}
-			if (titleColor === "") {
-				presets = Object.assign(
-					{},
-					{
-						titleColor: oldColorDefaults.titleColor,
-					}
-				);
 			}
 		}
 
