@@ -669,6 +669,7 @@ export class TabHolder extends Component {
 						<InnerBlocks
 							templateLock={false}
 							allowedBlocks={["ub/tab-block"]}
+							template={[["ub/tab-block"]]}
 						/>
 					</div>
 				</div>
