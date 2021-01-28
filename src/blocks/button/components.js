@@ -605,6 +605,7 @@ export const editorDisplay = (props) => {
 						}`}
 						onMouseEnter={() => setState({ hoveredButton: i })}
 						onMouseLeave={() => setState({ hoveredButton: -1 })}
+						onClick={() => setState({ activeButtonIndex: i })}
 						style={{
 							backgroundColor: b.buttonIsTransparent
 								? "transparent"
