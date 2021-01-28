@@ -683,9 +683,10 @@ export const editorDisplay = (props) => {
 				</div>
 			))}
 			<button
-				onClick={() =>
-					setAttributes({ buttons: [...buttons, defaultButtonProps] })
-				}
+				onClick={() => {
+					setAttributes({ buttons: [...buttons, defaultButtonProps] });
+					setState({ activeButtonIndex: buttons.length });
+				}}
 			>
 				+
 			</button>
