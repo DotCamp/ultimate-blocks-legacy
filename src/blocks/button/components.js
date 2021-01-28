@@ -541,6 +541,7 @@ class URLInputBox extends Component {
 
 export const editorDisplay = (props) => {
 	const {
+		isSelected,
 		enableLinkInput,
 		setState,
 		setAttributes,
@@ -625,6 +626,10 @@ export const editorDisplay = (props) => {
 									? b.buttonHoverColor
 									: b.buttonColor
 								: null,
+							boxShadow:
+								isSelected && activeButtonIndex === i
+									? "0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 -10px 8px 0 rgba(0, 0, 0, 0.2)"
+									: null,
 						}}
 					>
 						<div
