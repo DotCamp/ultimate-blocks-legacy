@@ -91,6 +91,7 @@ registerBlockType("ub/tab-block", {
 							{ placeholder: __("Enter content for this tab") },
 						],
 					]}
+					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
 				/>
 			</div>
 		);
