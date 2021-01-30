@@ -14,7 +14,7 @@ const {
 	InspectorControls,
 	URLInput,
 	RichText,
-	ColorPalette,
+	PanelColorSettings,
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
@@ -89,6 +89,79 @@ export const inspectorControls = (props) => {
 		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
 		20
 	);
+
+	const normalColorPanels = [
+		{
+			value: buttons[activeButtonIndex].buttonColor,
+			onChange: (colorValue) =>
+				setAttributes({
+					buttons: [
+						...buttons.slice(0, activeButtonIndex),
+						Object.assign({}, buttons[activeButtonIndex], {
+							buttonColor: colorValue,
+						}),
+						...buttons.slice(activeButtonIndex + 1),
+					],
+				}),
+
+			label: __("Button Color"),
+		},
+		...[
+			buttons[activeButtonIndex].buttonIsTransparent
+				? []
+				: {
+						value: buttons[activeButtonIndex].buttonTextColor,
+						onChange: (colorValue) =>
+							setAttributes({
+								buttons: [
+									...buttons.slice(0, activeButtonIndex),
+									Object.assign({}, buttons[activeButtonIndex], {
+										buttonTextColor: colorValue,
+									}),
+									...buttons.slice(activeButtonIndex + 1),
+								],
+							}),
+
+						label: __("Button Text Color"),
+				  },
+		],
+	];
+	const hoverColorPanels = [
+		{
+			value: buttons[activeButtonIndex].buttonHoverColor,
+			onChange: (colorValue) =>
+				setAttributes({
+					buttons: [
+						...buttons.slice(0, activeButtonIndex),
+						Object.assign({}, buttons[activeButtonIndex], {
+							buttonHoverColor: colorValue,
+						}),
+						...buttons.slice(activeButtonIndex + 1),
+					],
+				}),
+
+			label: __("Button Color"),
+		},
+		...[
+			buttons[activeButtonIndex].buttonIsTransparent
+				? []
+				: {
+						value: buttons[activeButtonIndex].buttonTextHoverColor,
+						onChange: (colorValue) =>
+							setAttributes({
+								buttons: [
+									...buttons.slice(0, activeButtonIndex),
+									Object.assign({}, buttons[activeButtonIndex], {
+										buttonTextHoverColor: colorValue,
+									}),
+									...buttons.slice(activeButtonIndex + 1),
+								],
+							}),
+
+						label: __("Button Text Color"),
+				  },
+		],
+	];
 
 	return (
 		buttons.length > 0 && (
@@ -319,98 +392,30 @@ export const inspectorControls = (props) => {
 						/>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Button Colors", "ultimate-blocks")}>
-					<TabPanel
-						tabs={[
-							{
-								name: "buttoncolor",
-								title: __("Normal"),
-							},
-							{
-								name: "buttonhovercolor",
-								title: __("Hover"),
-							},
-						]}
-					>
-						{(tab) =>
-							tab.name === "buttoncolor" ? (
-								<>
-									<p>{__("Button Color")}</p>
-									<ColorPalette
-										value={buttons[activeButtonIndex].buttonColor}
-										onChange={(colorValue) =>
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, activeButtonIndex),
-													Object.assign({}, buttons[activeButtonIndex], {
-														buttonColor: colorValue,
-													}),
-													...buttons.slice(activeButtonIndex + 1),
-												],
-											})
-										}
-									/>
-									{!buttons[activeButtonIndex].buttonIsTransparent && (
-										<>
-											<p>{__("Button Text Color")}</p>
-											<ColorPalette
-												value={buttons[activeButtonIndex].buttonTextColor}
-												onChange={(colorValue) =>
-													setAttributes({
-														buttons: [
-															...buttons.slice(0, activeButtonIndex),
-															Object.assign({}, buttons[activeButtonIndex], {
-																buttonTextColor: colorValue,
-															}),
-															...buttons.slice(activeButtonIndex + 1),
-														],
-													})
-												}
-											/>
-										</>
-									)}
-								</>
-							) : (
-								<>
-									<p>{__("Button Color")}</p>
-									<ColorPalette
-										value={buttons[activeButtonIndex].buttonHoverColor}
-										onChange={(colorValue) =>
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, activeButtonIndex),
-													Object.assign({}, buttons[activeButtonIndex], {
-														buttonHoverColor: colorValue,
-													}),
-													...buttons.slice(activeButtonIndex + 1),
-												],
-											})
-										}
-									/>
-									{!buttons[activeButtonIndex].buttonIsTransparent && (
-										<>
-											<p>{__("Button Text Color")}</p>
-											<ColorPalette
-												value={buttons[activeButtonIndex].buttonTextHoverColor}
-												onChange={(colorValue) =>
-													setAttributes({
-														buttons: [
-															...buttons.slice(0, activeButtonIndex),
-															Object.assign({}, buttons[activeButtonIndex], {
-																buttonTextHoverColor: colorValue,
-															}),
-															...buttons.slice(activeButtonIndex + 1),
-														],
-													})
-												}
-											/>
-										</>
-									)}
-								</>
-							)
-						}
-					</TabPanel>
-				</PanelBody>
+				<TabPanel
+					tabs={[
+						{
+							name: "buttoncolor",
+							title: __("Normal"),
+						},
+						{
+							name: "buttonhovercolor",
+							title: __("Hover"),
+						},
+					]}
+				>
+					{(tab) => (
+						<PanelColorSettings
+							title={__("Button Colors", "ultimate-blocks")}
+							initialOpen={true}
+							colorSettings={
+								tab.name === "buttoncolor"
+									? normalColorPanels
+									: hoverColorPanels
+							}
+						/>
+					)}
+				</TabPanel>
 			</InspectorControls>
 		)
 	);
