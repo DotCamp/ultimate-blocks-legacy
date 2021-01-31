@@ -39,7 +39,7 @@ function ub_render_click_to_tweet_block( $attributes ) {
 	$url       = apply_filters( 'ub_click_to_tweet_url', "http://twitter.com/intent/tweet?&text={$tweet_url}&url={$permalink}{$via}" );
 
     $output = '';
-    if($blockID == ''){
+    if($blockID === ''){
         $output .= sprintf('<div class="ub_click_to_tweet%1$s" style="border-color: %2$s;">', (isset($className) ? ' ' . esc_attr($className) : ''), $borderColor );
         $output .= sprintf( '<div class="ub_tweet" style="font-size: %1$spx; color: %2$s">', $tweetFontSize, $tweetColor );
     }

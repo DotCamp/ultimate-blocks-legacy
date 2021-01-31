@@ -73,24 +73,26 @@ registerBlockType("ub/click-to-tweet", {
 		};
 	})(function (props) {
 		const {
+			isSelected,
+			setAttributes,
+			block,
+			getBlock,
+			getClientIdsWithDescendants,
+			attributes,
+		} = props;
+
+		const {
 			ubTweet,
 			ubVia,
 			tweetFontSize,
 			tweetColor,
 			borderColor,
 			blockID,
-		} = props.attributes;
+		} = attributes;
 
-		const {
-			isSelected,
-			setAttributes,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-		} = props;
-
-		if (
-			blockID === "" ||
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
+		} else if (
 			getClientIdsWithDescendants().some(
 				(ID) =>
 					"blockID" in getBlock(ID).attributes &&
@@ -125,18 +127,12 @@ registerBlockType("ub/click-to-tweet", {
 							colorSettings={[
 								{
 									value: tweetColor,
-									onChange: (colorValue) =>
-										setAttributes({
-											tweetColor: colorValue,
-										}),
+									onChange: (tweetColor) => setAttributes({ tweetColor }),
 									label: __("Tweet Color"),
 								},
 								{
 									value: borderColor,
-									onChange: (colorValue) =>
-										setAttributes({
-											borderColor: colorValue,
-										}),
+									onChange: (borderColor) => setAttributes({ borderColor }),
 									label: __("Border Color"),
 								},
 							]}
@@ -145,12 +141,7 @@ registerBlockType("ub/click-to-tweet", {
 				</InspectorControls>
 			),
 			<div className={props.className}>
-				<div
-					className="ub_click_to_tweet"
-					style={{
-						borderColor: borderColor,
-					}}
-				>
+				<div className="ub_click_to_tweet" style={{ borderColor: borderColor }}>
 					<RichText
 						style={{
 							fontSize: tweetFontSize + "px",
