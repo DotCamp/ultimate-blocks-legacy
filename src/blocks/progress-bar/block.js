@@ -146,14 +146,12 @@ registerBlockType("ub/progress-bar", {
 							colorSettings={[
 								{
 									value: barColor,
-									onChange: (colorValue) =>
-										setAttributes({ barColor: colorValue }),
+									onChange: (barColor) => setAttributes({ barColor }),
 									label: "Progress Bar Color",
 								},
 								{
 									value: labelColor,
-									onChange: (colorValue) =>
-										setAttributes({ labelColor: colorValue }),
+									onChange: (labelColor) => setAttributes({ labelColor }),
 									label: "Label Color",
 								},
 							]}
