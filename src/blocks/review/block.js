@@ -52,6 +52,11 @@ const attributes = {
 		type: "string",
 		default: "Product",
 	},
+	//for book, movie, and local business link
+	itemPage: {
+		type: "string",
+		default: "",
+	},
 	itemSubtype: {
 		type: "string",
 		default: "",
@@ -354,6 +359,7 @@ registerBlockType("ub/review", {
 				blockID,
 				authorName,
 				itemName,
+				itemPage,
 				itemType,
 				itemSubtype,
 				itemSubsubtype,
@@ -795,6 +801,17 @@ registerBlockType("ub/review", {
 			</>
 		);
 
+		const itemURLInput = (
+			<div id="ub_review_item_page_input">
+				<URLInput
+					label={__(`${itemType} Page`)}
+					autoFocus={false}
+					value={itemPage}
+					onChange={(itemPage) => setAttributes({ itemPage })}
+				/>
+			</div>
+		);
+
 		const offerAttributes = [
 			"offerType",
 			"offerStatus",
@@ -817,6 +834,7 @@ registerBlockType("ub/review", {
 			"addressName",
 			"address",
 			"eventPage",
+			"itemPage",
 			"organizer",
 			"performer",
 			"brand",
@@ -849,11 +867,13 @@ registerBlockType("ub/review", {
 							value={bookAuthorName}
 							onChange={(bookAuthorName) => setAttributes({ bookAuthorName })}
 						/>
+						{itemURLInput}
 					</>
 				);
 				unusedDefaults = removeFromArray(unusedDefaults, [
 					"isbn",
 					"bookAuthorName",
+					"itemPage",
 				]);
 				break;
 			case "Course":
@@ -1030,6 +1050,7 @@ registerBlockType("ub/review", {
 							value={phoneNumber}
 							onChange={(phoneNumber) => setAttributes({ phoneNumber })}
 						/>
+						{itemURLInput}
 					</>
 				);
 				if (
@@ -1040,9 +1061,14 @@ registerBlockType("ub/review", {
 				}
 				unusedDefaults = removeFromArray(unusedDefaults, [
 					"address",
+					"itemPage",
 					"phoneNumber",
 					"priceRange",
 				]);
+				break;
+			case "Movie":
+				itemTypeExtras = itemURLInput;
+				unusedDefaults = removeFromArray(unusedDefaults, ["itemPage"]);
 				break;
 			case "Organization":
 				itemTypeExtras = (

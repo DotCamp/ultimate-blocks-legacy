@@ -1022,6 +1022,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'itemPage' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'itemType' => array(
                 'type' => 'string',
                 'default' => 'Product'

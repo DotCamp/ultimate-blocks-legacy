@@ -60,7 +60,8 @@ function ub_render_review_block($attributes){
     switch ($itemType){
         case 'Book':
             $itemExtras = '"author": "'. esc_html($bookAuthorName) . '",
-                            "isbn": "'. esc_html($isbn) . '"';
+                            "isbn": "'. esc_html($isbn) . '",
+                            "saveAs": "' . esc_html($itemPage) . '"';
         break;
         case 'Course':
             $itemExtras = '"provider": "' . esc_html($provider) . '"';
@@ -92,7 +93,11 @@ function ub_render_review_block($attributes){
             $itemExtras =  isset($cuisines) ? ( '"servesCuisine":' . json_encode($cuisines) . ',') : '' .
                             '"address": "' . esc_html($address) . '",
                             "telephone": "' . esc_html($telephone) . '",
-                            "priceRange": "' . esc_html($priceRange) . '"';
+                            "priceRange": "' . esc_html($priceRange) . '",
+                            "saveAs": "' . esc_html($itemPage) . '"';
+        break;
+        case 'Movie':
+            $itemExtras = '"saveAs": "' . esc_html($itemPage) . '"';
         break;
         case 'Organization':
             $itemExtras = (in_array($itemSubsubtype, array('Dentist', 'Hospital', 'MedicalClinic', 'Pharmacy', 'Physician')) ? ('"priceRange":"' . esc_html($priceRange) . '",'): '').
