@@ -77,7 +77,7 @@ const SortableItem = SortableElement(({ icon, iconSize, iconShape, color }) => {
 			main: <TumblrIcon width={iconSize} height={iconSize} />,
 		},
 		reddit: {
-			bgColor: color || "#cee3f8",
+			bgColor: color || "#ff4500",
 			main: <RedditIcon width={iconSize} height={iconSize} />,
 		},
 	};
