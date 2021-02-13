@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.6
-Stable tag: 2.4.2
+Stable tag: 2.4.3
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,30 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.3 =
+
+* Button - Fix editor display of hover colors.
+* Button - Make flex buttons resize for smaller screen sizes.
+* Button -  Paginate icon selection panel.
+* Button - Remove button link settings panel from inspector.
+* Button - Split button color selection panel into tabs.
+* Button - Set default button alignment to left.
+* Content Toggle - Ensure that the color settings for the block is always set according to the color values in the panels.
+* Countdown - Replace Hubspot's odometer library with custom-made script.
+* Review - Ensure that edits to offer attributes are saved when itemType is set to SoftwareApplication.
+* Star Rating - Prevent container div for star rating review text from rendering when it's empty.
+* Styled List - Add option to set number of columns.
+* Styled List - Fix icon selection display.
+* Styled List - Paginate icon selection panel.
+* Tabbed Content - Fix getting blockID value.
+* Tabbed Content - Enable keyboard navigation.
+* Tabbed Content - Fix issue where the first tab in new tabbed content instances tends to be empty.
+* Table of Contents - Prevent Table of Contents from being turned into a reusable block.
+* Table of Contents - Fix animation issue when visibility is being toggled.
+* Table of Contents - Fix compatibility issue with the Headline block from GenerateBlocks, versions 1.2 onwards.
+* Other - Fix compatibility issue with PHP8.0.
+* Other - Fix error during conversion of reusable blocks into regular blocks when a block from Ultimate Blocks is included.
 
 = 2.4.2 =
 
