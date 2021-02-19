@@ -40,7 +40,7 @@ const attributes = {
 	},
 	matchingOption: {
 		type: "string",
-		default: "matchAll", //options: matchOne, matchAll
+		default: "", //options: matchAny (default), matchAll
 	},
 	/*,allowReset: {
         type: 'boolean',

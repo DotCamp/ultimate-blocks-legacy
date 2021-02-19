@@ -554,12 +554,13 @@ export class PanelContent extends Component {
 			...selectedFilterArr.slice(filterCategoryIndex + 1),
 		];
 
-		if (
-			blockID === "" ||
+		if (this.props.attributes.blockID === "") {
+			setAttributes({ blockID: block.clientId, matchingOption: "matchAny" });
+		} else if (
 			getClientIdsWithDescendants().some(
 				(ID) =>
 					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
+					getBlock(ID).attributes.blockID === this.props.attributes.blockID
 			)
 		) {
 			setAttributes({ blockID: block.clientId });
@@ -575,9 +576,7 @@ export class PanelContent extends Component {
 							{
 								value: buttonColor,
 								onChange: (colorValue) => {
-									setAttributes({
-										buttonColor: colorValue,
-									});
+									setAttributes({ buttonColor: colorValue });
 									block.innerBlocks.forEach((panel) =>
 										updateBlockAttributes(panel.clientId, {
 											buttonColor: colorValue,

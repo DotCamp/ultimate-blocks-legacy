@@ -222,7 +222,7 @@ $defaultValues = array(
             ),
             'matchingOption' => array(
                 'type' => 'string',
-                'default' => 'matchAll'
+                'default' => ''
             )
         )
     ),
