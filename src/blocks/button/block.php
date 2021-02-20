@@ -31,7 +31,7 @@ function ub_buttons_parse($b){
     ($buttonWidth === 'full' ? ' ub-button-full-width' :
         ($buttonWidth === 'flex' ? ' ub-button-flex-'. $size : '')) . '" role="button">
     <div class="ub-button-content-holder">'.
-        ($chosenIcon != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
+        ($chosenIcon !== '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
         height="' . $iconSize[$size] . '", width="' . $iconSize[$size] . '"
         viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
         . '"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg></span>': '')
@@ -53,15 +53,15 @@ function ub_render_button_block($attributes){
     ($buttonWidth === 'full' ? ' ub-button-full-width' :
         ($buttonWidth === 'flex' ? ' ub-button-flex-' . $size : '')) . '">
     <div class="ub-button-content-holder">' .
-        ($chosenIcon != '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
+        ($chosenIcon !== '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
         height="' . $iconSize[$size] . '", width="' . $iconSize[$size] . '"
         viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
         .'"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg></span>': '')
         .'<span class="ub-button-block-btn">' . $buttonText . '</span>
     </div></a></div>' : join('', array_map('ub_buttons_parse', $buttons)));
 
-    return '<div class="' . (isset($buttons) && count($buttons) > 0 ? 'ub-buttons' : 'ub-button').(isset($buttons) && count($buttons) > 0 ? ' align-button-' . $align : '')
-    .(isset($className) ? ' ' . esc_attr($className) : '').'" '.(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>' .$buttonDisplay . '</div>';
+    return '<div class="' . (isset($buttons) && count($buttons) > 0 ? 'ub-buttons' : 'ub-button') . (isset($buttons) && count($buttons) > 0 ? ' align-button-' . ($align === '' ? 'center' : $align) : '')
+    .(isset($className) ? ' ' . esc_attr($className) : '') . '" ' .(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>' .$buttonDisplay . '</div>';
 }
 
 function ub_button_add_frontend_assets() {
