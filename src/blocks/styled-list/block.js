@@ -294,9 +294,7 @@ registerBlockType("ub/styled-list", {
 																edits: edits + 1,
 															});
 
-															setAttributes({
-																selectedIcon: i.iconName,
-															});
+															setAttributes({ selectedIcon: i.iconName });
 														}}
 													/>
 												))}
@@ -351,7 +349,7 @@ registerBlockType("ub/styled-list", {
 			>
 				<RichText
 					className="fa-ul"
-					style={{ columnCount: columns }}
+					style={{ gridTemplateColumns: "auto ".repeat(columns - 1) + "auto" }}
 					multiline="li"
 					__unstableMultilineRootTag={"ul"}
 					tagName="ul"

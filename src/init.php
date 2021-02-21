@@ -589,9 +589,6 @@ function ub_include_block_attribute_css() {
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
                         'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL .
                         '}' . PHP_EOL .
-                        $prefix . '>ul{' . PHP_EOL .
-                            'column-count: ' . $attributes['columns'] . ';' . PHP_EOL .
-                            '}' . PHP_EOL .
                         $prefix . ' li::before{' . PHP_EOL .
                             'top: ' . ($attributes['iconSize'] >= 5 ? 3 : ($attributes['iconSize'] < 3 ? 2 : 0)) . 'px;
                             font-size: 1em;
@@ -609,6 +606,13 @@ function ub_include_block_attribute_css() {
                             'margin-top: '. $attributes['itemSpacing'] . 'px;';
                     }
                     $blockStylesheets .= '}';
+
+                    if($attributes['columns'] > 1){
+                        $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
+                            'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
+                        '}';
+                    }
+
                     break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];
