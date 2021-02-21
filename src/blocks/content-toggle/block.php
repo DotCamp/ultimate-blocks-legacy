@@ -58,7 +58,7 @@ function ub_render_content_toggle_panel_block($attributes, $content){
                 . ($parentID === '' ? ' style="border-color: ' . $theme . ';"' : '') . '>
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'
                     . ($parentID === '' ? ' style="background-color: ' . $theme . ';"' : '') . ($preventCollapse ? ' aria-disabled="true"' : '')
-                    .' aria-expanded="' . (json_encode(!$collapsed)) . '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '">
+                    .' aria-expanded="' . (json_encode(!$collapsed)) . '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '" tabindex="0">
                     <' . $titleTag . ' class="' . $classNamePrefix . '-accordion-title ub-content-toggle-title-' . $parentID . '"'
                     . ($parentID === '' ? ' style="color:' . $titleColor . ';"' : '') . '>' . $panelTitle . '</' . $titleTag . '>' .
                     ($toggleIcon === 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
@@ -137,7 +137,7 @@ function ub_faq_questions($qna = ''){
 
 function ub_content_toggle_filter( $block_content, $block ) {
 
-    if( "ub/content-toggle-block" != $block['blockName'] ) {
+    if( "ub/content-toggle-block" !== $block['blockName'] ) {
         return $block_content;
     }
 
@@ -218,8 +218,8 @@ function ub_content_toggle_filter( $block_content, $block ) {
                         return str_replace($matches[1], $attributeList, $matches[0]);
                 }, $answer);
 
-                if($answer != "" && $togglePanel['attrs']['panelTitle'] != ''){ //blank answers and questions are invalid
-                    if($questions != ""){
+                if($answer !== "" && $togglePanel['attrs']['panelTitle'] !== ''){ //blank answers and questions are invalid
+                    if($questions !== ""){
                         $questions .= ',' . PHP_EOL;
                     }
                     $question = preg_replace('/<\/?.+?>/i', '', $togglePanel['attrs']['panelTitle']);
@@ -249,4 +249,3 @@ function ub_merge_faqpages(){
             "mainEntity": [' . ub_faq_questions() . ']}</script>';  ?>
 <?php
 }
-
