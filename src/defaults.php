@@ -1518,6 +1518,10 @@ $defaultValues = array(
             'columns' => array(
                 'type' => 'number',
                 'default' => 1
+            ),
+            'maxMobileColumns' => array(
+                'type' => 'number',
+                'default' => 2
             )
         )
     ),

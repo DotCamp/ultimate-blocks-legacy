@@ -72,6 +72,10 @@ registerBlockType("ub/styled-list", {
 			type: "number",
 			default: 1,
 		},
+		maxMobileColumns: {
+			type: "number",
+			default: 2,
+		},
 	},
 	transforms: {
 		from: [
@@ -124,6 +128,7 @@ registerBlockType("ub/styled-list", {
 				blockID,
 				itemSpacing,
 				columns,
+				maxMobileColumns,
 			},
 		} = props;
 
@@ -326,6 +331,15 @@ registerBlockType("ub/styled-list", {
 						<RangeControl
 							value={columns}
 							onChange={(columns) => setAttributes({ columns })}
+							min={1}
+							max={4}
+						/>
+						<p>{__("Number of columns in mobile")}</p>
+						<RangeControl
+							value={maxMobileColumns}
+							onChange={(maxMobileColumns) =>
+								setAttributes({ maxMobileColumns })
+							}
 							min={1}
 							max={4}
 						/>

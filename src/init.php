@@ -612,6 +612,13 @@ function ub_include_block_attribute_css() {
                             'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
                         '}';
                     }
+                    if($attributes['columns'] > $attributes['maxMobileColumns']){
+                        $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
+                            $prefix . '>ul{' . PHP_EOL .
+                                'grid-template-columns: ' . str_repeat('auto ', $attributes['maxMobileColumns'] - 1) . 'auto;' . PHP_EOL .
+                            '}' . PHP_EOL .
+                        '}';
+                    }
 
                     break;
                 case 'ub/tabbed-content-block':
