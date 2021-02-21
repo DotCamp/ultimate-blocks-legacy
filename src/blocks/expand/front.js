@@ -26,6 +26,15 @@ function ub_getSiblings(element, criteria) {
 Array.prototype.slice
 	.call(document.getElementsByClassName("ub-expand-toggle-button"))
 	.forEach((instance) => {
+		if (instance.getAttribute("aria-controls") === "") {
+			const blockID = instance.parentElement.parentElement.id.slice(10);
+
+			instance.setAttribute("aria-controls", `ub-expand-full-${blockID}`);
+			if (instance.parentElement.classList.contains("ub-expand-full")) {
+				instance.parentElement.setAttribute("id", `ub-expand-full-${blockID}`);
+			}
+		}
+
 		instance.addEventListener("click", () => {
 			const blockRoot = instance.closest(".ub-expand");
 			blockRoot

@@ -88,6 +88,10 @@ registerBlockType("ub/expand-portion", {
 			type: "string",
 			default: "left",
 		},
+		parentID: {
+			type: "string",
+			default: "",
+		},
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
@@ -120,6 +124,13 @@ registerBlockType("ub/expand-portion", {
 		const { clickText, displayType, isVisible, toggleAlign } = attributes;
 
 		const parentBlockID = getBlockRootClientId(block.clientId);
+
+		if (
+			props.attributes.parentID === "" ||
+			props.attributes.parentID !== getBlock(parentBlockID).attributes.blockID
+		) {
+			props.attributes.parentID = getBlock(parentBlockID).attributes.blockID;
+		}
 
 		return [
 			isSelected && (

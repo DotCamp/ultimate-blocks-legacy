@@ -61,6 +61,7 @@ export class ExpandRoot extends Component {
 			getClientIdsWithDescendants().some(
 				(ID) =>
 					"blockID" in getBlock(ID).attributes &&
+					ID !== block.clientId &&
 					getBlock(ID).attributes.blockID === this.props.attributes.blockID
 			)
 		) {

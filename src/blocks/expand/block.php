@@ -2,12 +2,13 @@
 
 function ub_render_expand_portion_block($attributes, $content){
     extract($attributes);
-    return '<div class="ub-expand-portion ub-expand-'.$displayType.
-        ($displayType == 'full' ? ' ub-hide' : '').
-        (isset($className) ? ' ' . esc_attr($className) : '').'">'.
+    return '<div class="ub-expand-portion ub-expand-' . $displayType .
+        ($displayType === 'full' ? ' ub-hide' : '').
+        (isset($className) ? ' ' . esc_attr($className) : '') . '">' .
         $content.
-        '<a class="ub-expand-toggle-button">'.$clickText.'</a>'
-        .'</div>';
+        '<a class="ub-expand-toggle-button" role="button" aria-expanded="false" aria-controls="'.
+            ($parentID === '' ? '' : "ub-expand-full-" . $parentID).'">' . $clickText . '</a>'
+        . '</div>';
 }
 
 function ub_register_expand_portion_block($attributes){

@@ -407,6 +407,10 @@ $defaultValues = array(
             'isVisible' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'parentID' => array(
+                'type' => 'string',
+                'default' => ''
             )
         )
     ),

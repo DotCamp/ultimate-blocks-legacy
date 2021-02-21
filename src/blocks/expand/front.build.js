@@ -25,6 +25,15 @@ function ub_getSiblings(element, criteria) {
 }
 
 Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-button")).forEach(function (instance) {
+  if (instance.getAttribute("aria-controls") === "") {
+    var blockID = instance.parentElement.parentElement.id.slice(10);
+    instance.setAttribute("aria-controls", "ub-expand-full-".concat(blockID));
+
+    if (instance.parentElement.classList.contains("ub-expand-full")) {
+      instance.parentElement.setAttribute("id", "ub-expand-full-".concat(blockID));
+    }
+  }
+
   instance.addEventListener("click", function () {
     var blockRoot = instance.closest(".ub-expand");
     blockRoot.querySelector(".ub-expand-partial .ub-expand-toggle-button").classList.toggle("ub-hide");
