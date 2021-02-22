@@ -7,7 +7,7 @@ function ub_render_expand_portion_block($attributes, $content){
         (isset($className) ? ' ' . esc_attr($className) : '') . '">' .
         $content.
         '<a class="ub-expand-toggle-button" role="button" aria-expanded="false" aria-controls="'.
-            ($parentID === '' ? '' : "ub-expand-full-" . $parentID).'">' . $clickText . '</a>'
+            ($parentID === '' ? '' : "ub-expand-full-" . $parentID).'" tabindex="0">' . $clickText . '</a>'
         . '</div>';
 }
 

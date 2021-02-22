@@ -35,7 +35,7 @@ Array.prototype.slice
 			}
 		}
 
-		instance.addEventListener("click", () => {
+		const togglePanel = () => {
 			const blockRoot = instance.closest(".ub-expand");
 			blockRoot
 				.querySelector(".ub-expand-partial .ub-expand-toggle-button")
@@ -53,5 +53,21 @@ Array.prototype.slice
 					embeddedContent.style.removeProperty("width");
 					embeddedContent.style.removeProperty("height");
 				});
+		};
+
+		instance.addEventListener("click", togglePanel);
+
+		instance.addEventListener("keydown", (e) => {
+			if ([" ", "Enter"].indexOf(e.key) > -1) {
+				e.preventDefault();
+				togglePanel();
+				Array.prototype.slice
+					.call(instance.parentElement.parentElement.children)
+					.filter((a) => a !== instance.parentElement)[0]
+					.querySelector(
+						`[aria-controls="${instance.getAttribute("aria-controls")}"]`
+					)
+					.focus();
+			}
 		});
 	});

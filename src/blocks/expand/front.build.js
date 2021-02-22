@@ -34,7 +34,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-but
     }
   }
 
-  instance.addEventListener("click", function () {
+  var togglePanel = function togglePanel() {
     var blockRoot = instance.closest(".ub-expand");
     blockRoot.querySelector(".ub-expand-partial .ub-expand-toggle-button").classList.toggle("ub-hide");
     var expandingPart = Array.prototype.slice.call(blockRoot.children).filter(function (child) {
@@ -45,5 +45,16 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-but
       embeddedContent.style.removeProperty("width");
       embeddedContent.style.removeProperty("height");
     });
+  };
+
+  instance.addEventListener("click", togglePanel);
+  instance.addEventListener("keydown", function (e) {
+    if ([" ", "Enter"].indexOf(e.key) > -1) {
+      e.preventDefault();
+      togglePanel();
+      Array.prototype.slice.call(instance.parentElement.parentElement.children).filter(function (a) {
+        return a !== instance.parentElement;
+      })[0].querySelector("[aria-controls=\"".concat(instance.getAttribute("aria-controls"), "\"]")).focus();
+    }
   });
 });
