@@ -104,7 +104,7 @@ function ub_faq_questions($qna = ''){
     }
 
     if(empty($qna)){
-        return $parsed_qna;
+        return rtrim($parsed_qna, " ,\n\r\t\v\0");
     }
     else{
         $uniqueItems = json_encode(array_values(array_unique(json_decode('[' . $qna . ']'), SORT_REGULAR)), JSON_UNESCAPED_SLASHES);
