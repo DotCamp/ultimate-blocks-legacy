@@ -90,8 +90,8 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
               return !f;
             }) || mainData[i].filter(function (f) {
               return f;
-            }).length > 0 && category.some(function (f, j) {
-              return f !== mainData[i][j];
+            }).length > 0 && !category.some(function (f, j) {
+              return f && f === mainData[i][j];
             })) {
               hasMatchedAll = false;
             }

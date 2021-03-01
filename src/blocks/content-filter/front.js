@@ -116,7 +116,7 @@ Array.prototype.slice
 								if (
 									category.every((f) => !f) ||
 									(mainData[i].filter((f) => f).length > 0 &&
-										category.some((f, j) => f !== mainData[i][j]))
+										!category.some((f, j) => f && f === mainData[i][j]))
 								) {
 									hasMatchedAll = false;
 								}
