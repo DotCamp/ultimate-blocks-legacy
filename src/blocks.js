@@ -37,3 +37,4 @@ import "./blocks/styled-list/block";
 import "./blocks/post-grid/block";
 import "./blocks/how-to/block";
 import "./blocks/advanced-heading/block";
+import "./blocks/advanced-video/block";

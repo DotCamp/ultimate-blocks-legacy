@@ -57,6 +57,79 @@ $defaultValues = array(
             ),
         )
     ),
+    'ub/advanced-video' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'videoId' => array(
+                'type' => 'integer',
+                'default' => -1,
+            ),
+            'url' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'playerStyle' => array(
+                //custom border styles placed outside embedded player
+                'type' => 'string',
+                'default' => '',
+            ),
+            'vimeoShowDetails' => array(
+                //vimeo only
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'vimeoShowLogo' => array(
+                //vimeo only
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'enableYoutubeCookies' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'autoplay' => array(
+                //applies to: videopress, vimeo, dailymotion, youtube
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'loop' => array(
+                //applies to youtube, vimeo, videopress
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'mute' => array(
+                //applies to youtube, dailymotion, vimeo
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'showPlayerControls' => array(
+                //applies to dailymotion, youtube
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'playInline' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'thumbnail' => array(
+                //replaces embed code, click through thumbnail before seeing embedded player in youtube
+                'type' => 'string',
+                'default' => '',
+            ),
+            'videoEmbedCode' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'startTime' => array(
+                //applies to youtube, dailymotion, videopress, vimeo
+                'type' => 'number',
+                'default' => 0,
+            ),
+        )
+    ),
     'ub/button' => array(
         'attributes' => array(
             'blockID' => array(
