@@ -90,7 +90,7 @@ export const inspectorControls = (props) => {
 		20
 	);
 
-	const normalColorPanels = [
+	const makeNormalColorPanels = () => [
 		{
 			value: buttons[activeButtonIndex].buttonColor,
 			onChange: (colorValue) =>
@@ -126,7 +126,7 @@ export const inspectorControls = (props) => {
 				  },
 		],
 	];
-	const hoverColorPanels = [
+	const makeHoverColorPanels = ()=>[
 		{
 			value: buttons[activeButtonIndex].buttonHoverColor,
 			onChange: (colorValue) =>
@@ -410,8 +410,8 @@ export const inspectorControls = (props) => {
 							initialOpen={true}
 							colorSettings={
 								tab.name === "buttoncolor"
-									? normalColorPanels
-									: hoverColorPanels
+									? makeNormalColorPanels()
+									: makeHoverColorPanels()
 							}
 						/>
 					)}
