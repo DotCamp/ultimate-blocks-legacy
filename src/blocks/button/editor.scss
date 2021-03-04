@@ -82,3 +82,20 @@
 		right: -9px;
 	}
 }
+
+#ub-button-radius-panel {
+	display: flex;
+	.components {
+		&-range-control {
+			width: 180px;
+		}
+		&-button {
+			height: 30px;
+			font-size: 11px;
+		}
+		&-button-group {
+			display: flex;
+			transform: translateY(30%);
+		}
+	}
+}

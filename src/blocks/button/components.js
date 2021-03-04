@@ -22,6 +22,7 @@ const {
 	Button,
 	ButtonGroup,
 	ToggleControl,
+	RangeControl,
 	Dropdown,
 	CheckboxControl,
 	SelectControl,
@@ -34,6 +35,26 @@ const { __ } = wp.i18n;
 export const allIcons = Object.assign(fas, fab);
 
 export const iconSize = { small: 25, medium: 30, large: 35, larger: 40 };
+
+export const defaultButtonProps = {
+	buttonText: "Button Text",
+	url: "",
+	size: "medium",
+	buttonColor: "#313131",
+	buttonHoverColor: "#313131",
+	buttonTextColor: "#ffffff",
+	buttonTextHoverColor: "#ffffff",
+	buttonRounded: false,
+	buttonRadius: 60,
+	buttonRadiusUnit: "px",
+	chosenIcon: "",
+	iconPosition: "left",
+	buttonIsTransparent: false,
+	addNofollow: true,
+	openInNewTab: true,
+	addSponsored: false,
+	buttonWidth: "fixed",
+};
 
 export const blockControls = (props) => {
 	const {
@@ -126,7 +147,7 @@ export const inspectorControls = (props) => {
 				  },
 		],
 	];
-	const makeHoverColorPanels = ()=>[
+	const makeHoverColorPanels = () => [
 		{
 			value: buttons[activeButtonIndex].buttonHoverColor,
 			onChange: (colorValue) =>
@@ -234,6 +255,55 @@ export const inspectorControls = (props) => {
 							})
 						}
 					/>
+					{buttons[activeButtonIndex].buttonRounded && (
+						<div id="ub-button-radius-panel">
+							<RangeControl
+								label={__("Button Radius")}
+								value={buttons[activeButtonIndex].buttonRadius}
+								onChange={(value) =>
+									setAttributes({
+										buttons: [
+											...buttons.slice(0, activeButtonIndex),
+											Object.assign({}, buttons[activeButtonIndex], {
+												buttonRadius: value,
+											}),
+											...buttons.slice(activeButtonIndex + 1),
+										],
+									})
+								}
+								min={1}
+								max={100}
+							/>
+							<ButtonGroup
+								aria-label={__("Button Radius Unit", "ultimate-blocks")}
+							>
+								{["px", "%"].map((b) => (
+									<Button
+										isLarge
+										isPrimary={
+											buttons[activeButtonIndex].buttonRadiusUnit === b
+										}
+										aria-pressed={
+											buttons[activeButtonIndex].buttonRadiusUnit === b
+										}
+										onClick={() =>
+											setAttributes({
+												buttons: [
+													...buttons.slice(0, activeButtonIndex),
+													Object.assign({}, buttons[activeButtonIndex], {
+														buttonRadiusUnit: b,
+													}),
+													...buttons.slice(activeButtonIndex + 1),
+												],
+											})
+										}
+									>
+										{b}
+									</Button>
+								))}
+							</ButtonGroup>
+						</div>
+					)}
 					<ToggleControl
 						label={__("Transparent", "ultimate-blocks")}
 						checked={buttons[activeButtonIndex].buttonIsTransparent}
@@ -555,24 +625,6 @@ export const editorDisplay = (props) => {
 		activeButtonIndex,
 	} = props;
 
-	const defaultButtonProps = {
-		buttonText: "Button Text",
-		url: "",
-		size: "medium",
-		buttonColor: "#313131",
-		buttonHoverColor: "#313131",
-		buttonTextColor: "#ffffff",
-		buttonTextHoverColor: "#ffffff",
-		buttonRounded: false,
-		chosenIcon: "",
-		iconPosition: "left",
-		buttonIsTransparent: false,
-		addNofollow: true,
-		openInNewTab: true,
-		addSponsored: false,
-		buttonWidth: "fixed",
-	};
-
 	return (
 		<div className={`ub-buttons align-button-${align}`}>
 			{buttons.map((b, i) => (
@@ -625,7 +677,9 @@ export const editorDisplay = (props) => {
 									: b.buttonIsTransparent
 									? b.buttonColor
 									: b.buttonTextColor,
-							borderRadius: b.buttonRounded ? "60px" : "0px",
+							borderRadius: b.buttonRounded
+								? `${b.buttonRadius}${b.buttonRadiusUnit}`
+								: "0",
 							borderStyle: b.buttonIsTransparent ? "solid" : "none",
 							borderColor: b.buttonIsTransparent
 								? hoveredButton === i

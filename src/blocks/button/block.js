@@ -29,6 +29,7 @@ import {
 	editorDisplay,
 	iconSize,
 	allIcons,
+	defaultButtonProps,
 } from "./components";
 
 const { withDispatch, withSelect } = wp.data;
@@ -360,24 +361,6 @@ registerBlockType("ub/button", {
 		if (!isSelected && props.enableLinkInput) {
 			setState({ enableLinkInput: false });
 		}
-
-		const defaultButtonProps = {
-			buttonText: "Button Text",
-			url: "",
-			size: "medium",
-			buttonColor: "#313131",
-			buttonHoverColor: "#313131",
-			buttonTextColor: "#ffffff",
-			buttonTextHoverColor: "#ffffff",
-			buttonRounded: false,
-			chosenIcon: "",
-			iconPosition: "left",
-			buttonIsTransparent: false,
-			addNofollow: true,
-			openInNewTab: true,
-			buttonWidth: "fixed",
-			addSponsored: false,
-		};
 
 		if (buttons.length === 0) {
 			setAttributes({
