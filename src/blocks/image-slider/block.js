@@ -206,7 +206,7 @@ registerBlockType("ub/image-slider", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			props.attributes.blockID = block.clientId;
+			setAttributes({ blockID: block.clientId });
 		} else if (!showPageDots && usePagination) {
 			setAttributes({ usePagination: false });
 		}

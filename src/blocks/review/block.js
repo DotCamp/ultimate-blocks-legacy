@@ -438,7 +438,7 @@ registerBlockType("ub/review", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			props.attributes.blockID = block.clientId;
+			setAttributes({ blockID: block.clientId });
 		}
 
 		const setAlignment = (target, value) => {

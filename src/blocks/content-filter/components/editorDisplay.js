@@ -562,7 +562,7 @@ export class PanelContent extends Component {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			this.props.attributes.blockID = block.clientId;
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return [

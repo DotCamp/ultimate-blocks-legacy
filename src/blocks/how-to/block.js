@@ -920,7 +920,7 @@ registerBlockType("ub/how-to", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			props.attributes.blockID = block.clientId;
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return (

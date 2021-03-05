@@ -75,11 +75,11 @@ registerBlockType("ub/tab-block", {
 			select("core/block-editor") || select("core/editor")
 		).getBlockRootClientId(ownProps.clientId),
 	}))(function (props) {
-		const { blockParentId } = props;
+		const { blockParentId, setAttributes } = props;
 		const { parentID, isActive } = props.attributes;
 
 		if (parentID === "" || parentID !== blockParentId) {
-			props.attributes.parentID = blockParentId;
+			setAttributes({ parentID: blockParentId });
 		}
 		return (
 			<div style={{ display: isActive ? "block" : "none" }}>

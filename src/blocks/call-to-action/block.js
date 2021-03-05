@@ -341,7 +341,7 @@ registerBlockType("ub/call-to-action-block", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			props.attributes.blockID = block.clientId;
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return [

@@ -144,7 +144,7 @@ class ContentTogglePanel extends Component {
 		};
 
 		if (parentID === "" || parentID !== blockParentId) {
-			this.props.attributes.parentID = blockParentId;
+			setAttributes({ parentID: blockParentId });
 		}
 
 		return [

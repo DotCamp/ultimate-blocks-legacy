@@ -64,7 +64,7 @@ export class ExpandRoot extends Component {
 					getBlock(ID).attributes.blockID === this.props.attributes.blockID
 			)
 		) {
-			this.props.attributes.blockID = block.clientId;
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return (

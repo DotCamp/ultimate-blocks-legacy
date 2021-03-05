@@ -364,7 +364,7 @@ export class TabHolder extends Component {
 				SortableList: null,
 			};
 			window.ubTabbedContentBlocks.push(block);
-			this.props.attributes.id = block.id;
+			setAttributes({ id: block.id });
 		}
 
 		if (!attributes.tabsTitle) {
@@ -540,7 +540,7 @@ export class TabHolder extends Component {
 					getBlock(ID).attributes.blockID === attributes.blockID
 			)
 		) {
-			this.props.attributes.blockID = this.props.block.clientId;
+			setAttributes({ blockID: this.props.block.clientId });
 		}
 
 		return [

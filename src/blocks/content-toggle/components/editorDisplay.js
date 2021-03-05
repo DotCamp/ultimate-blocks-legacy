@@ -377,7 +377,7 @@ export class PanelContent extends Component {
 				}
 			}
 			panels.forEach((panel, i) =>
-				Object.assign(panel.attributes, {
+				updateBlockAttributes(panel.clientId, {
 					index: i,
 					parent: block.clientId,
 				})
@@ -405,9 +405,8 @@ export class PanelContent extends Component {
 		}
 
 		if (blockID === "") {
-			this.props.block.attributes = Object.assign(
-				{ blockID: block.clientId },
-				newColorDefaults
+			setAttributes(
+				Object.assign({ blockID: block.clientId }, newColorDefaults)
 			);
 		} else {
 			if (
@@ -417,7 +416,7 @@ export class PanelContent extends Component {
 						getBlock(ID).attributes.blockID === blockID
 				)
 			) {
-				this.props.attributes.blockID = block.clientId;
+				setAttributes({ blockID: block.clientId });
 			}
 		}
 
@@ -477,22 +476,21 @@ export class PanelContent extends Component {
 							//if value of collapsed is changed for a panel via inspector panel and showonlyone is active,
 							//value of collapsed in all other panels should be automatically set to true
 							panels.forEach((panel, i) => {
-								Object.assign(
-									panel.attributes,
-									newChange,
-									i !== changedPanel ? { collapsed: true } : null
+								updateBlockAttributes(
+									panel.clientId,
+									Object.assign(
+										{},
+										newChange,
+										i !== changedPanel ? { collapsed: true } : null
+									)
 								);
 							});
-							Object.assign(
-								this.props.attributes,
-								{ collapsed: false },
-								newChange
-							);
+							setAttributes(Object.assign({ collapsed: false }, newChange));
 						} else {
 							panels.forEach((panel) => {
-								Object.assign(panel.attributes, newChange);
+								updateBlockAttributes(panel.clientId, newChange);
 							});
-							Object.assign(this.props.attributes, newChange);
+							setAttributes(newChange);
 						}
 						setState({ oldAttributeValues: newAttributeValues });
 					}

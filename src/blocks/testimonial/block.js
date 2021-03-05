@@ -264,7 +264,7 @@ registerBlockType("ub/testimonial", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			props.attributes.blockID = block.clientId;
+			props.setAttributes({ blockID: block.clientId });
 		}
 
 		return [

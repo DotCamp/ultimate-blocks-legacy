@@ -207,8 +207,10 @@ registerBlockType("ub/styled-box", {
 					getBlock(ID).attributes.blockID === props.attributes.blockID
 			)
 		) {
-			props.attributes.outlineThickness = blockID === "" ? 3 : outlineThickness;
-			props.attributes.blockID = block.clientId;
+			setAttributes({
+				blockID: block.clientId,
+				outlineThickness: blockID === "" ? 3 : outlineThickness,
+			});
 		} else if (outlineThickness === 0) {
 			setAttributes({ outlineThickness: 1 });
 		}

@@ -188,8 +188,10 @@ registerBlockType("ub/star-rating-block", {
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			props.attributes.starColor = blockID === "" ? "#ffb901" : starColor;
-			props.attributes.blockID = block.clientId;
+			setAttributes({
+				blockID: block.clientId,
+				starColor: blockID === "" ? "#ffb901" : starColor,
+			});
 		} else if (starColor === "#FFB901") {
 			setAttributes({ starColor: "#ffff00" });
 		}

@@ -330,15 +330,15 @@ class TableOfContents extends Component {
 			this.props.removeDiacritics !== prevProps.removeDiacritics
 		) {
 			this.setHeadings();
-			attributes.links = JSON.stringify(headers);
+			setAttributes({ links: JSON.stringify(headers) });
 			return;
 		}
 
 		if (JSON.stringify(headers) !== JSON.stringify(prevState.headers)) {
-			attributes.links = JSON.stringify(headers);
+			setAttributes({ links: JSON.stringify(headers) });
 		}
 		if (breaks !== attributes.gaps) {
-			attributes.gaps = breaks;
+			setAttributes({ gaps: breaks });
 		}
 
 		if (this.state.hasIdMismatch) {

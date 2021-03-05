@@ -353,7 +353,7 @@ registerBlockType("ub/button", {
 						getBlock(ID).attributes.blockID === blockID
 				)
 			) {
-				props.attributes.blockID = block.clientId;
+				setAttributes({ blockID: block.clientId });
 			}
 		}
 
