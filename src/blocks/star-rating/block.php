@@ -27,7 +27,7 @@ function ub_render_star_rating_block($attributes){
                 ub_make_full_star($starSize, $starColor) : ub_make_half_star($starSize, $starColor))
             : ub_make_empty_star($starSize);
     }
-    if($blockID==''){
+    if($blockID === ''){
         $stars = preg_replace_callback('/<svg ([^>]+)>/', function($svgAttributes){
             if(preg_match('/fill=\"([^"]+)\"/', $svgAttributes[1], $matches)){
                 return '<svg ' . $svgAttributes[1] . ' style="fill:' . $matches[1] . ';">';

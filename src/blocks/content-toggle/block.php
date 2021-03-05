@@ -13,8 +13,8 @@ function ub_content_toggle_add_frontend_assets() {
     $firstInstanceDetected = false;
 
     foreach( $presentBlocks as $block ){
-        if($block['blockName'] == 'ub/content-toggle' || $block['blockName'] == 'ub/content-toggle-panel'
-            || $block['blockName'] == 'ub/content-toggle-block' || $block['blockName'] == 'ub/content-toggle-panel-block'){
+        if($block['blockName'] === 'ub/content-toggle' || $block['blockName'] === 'ub/content-toggle-panel'
+            || $block['blockName'] === 'ub/content-toggle-block' || $block['blockName'] === 'ub/content-toggle-panel-block'){
             if(!$firstInstanceDetected){
                 wp_enqueue_script(
                     'ultimate_blocks-content-toggle-front-script',
@@ -42,7 +42,7 @@ function ub_render_content_toggle_block($attributes, $content){
     extract($attributes);
 
     return '<div class="wp-block-ub-content-toggle' . (isset($className) ? ' ' . esc_attr($className) : '')
-                .'" '. ($blockID == '' ? '' : 'id="ub-content-toggle-' . $blockID . '"') .
+                .'" '. ($blockID === '' ? '' : 'id="ub-content-toggle-' . $blockID . '"') .
                  ($preventCollapse ? ' data-preventcollapse="true"' : '') .
                  ($showOnlyOne ? ' data-showonlyone="true"': '') . '>' . $content.'</div>';
 }
@@ -55,13 +55,13 @@ function ub_render_content_toggle_panel_block($attributes, $content){
     $icon_class = $icons->$toggleIcon;
 
     return '<div class="' . $border_class . $classNamePrefix.'-accordion' . (isset($className) ? ' ' . esc_attr($className) : '') . '"'
-                . ($parentID == '' ? ' style="border-color: ' . $theme . ';"' : '') . '>
+                . ($parentID === '' ? ' style="border-color: ' . $theme . ';"' : '') . '>
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'
-                    . ($parentID == '' ? ' style="background-color: ' . $theme . ';"' : '') . ($preventCollapse ? ' aria-disabled="true"' : '')
+                    . ($parentID === '' ? ' style="background-color: ' . $theme . ';"' : '') . ($preventCollapse ? ' aria-disabled="true"' : '')
                     .' aria-expanded="' . (json_encode(!$collapsed)) . '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '">
                     <' . $titleTag . ' class="' . $classNamePrefix . '-accordion-title ub-content-toggle-title-' . $parentID . '"'
-                    . ($parentID == '' ? ' style="color:' . $titleColor . ';"' : '') . '>' . $panelTitle . '</' . $titleTag . '>' .
-                    ($toggleIcon == 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
+                    . ($parentID === '' ? ' style="color:' . $titleColor . ';"' : '') . '>' . $panelTitle . '</' . $titleTag . '>' .
+                    ($toggleIcon === 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' . esc_attr($toggleLocation) .
                     '"><span class="' . $classNamePrefix . '-accordion-state-indicator ' . $icon_class  .
                     ( $collapsed ? '' : ' open' ) . '"></span>
                     </div>').
@@ -180,19 +180,19 @@ function ub_content_toggle_filter( $block_content, $block ) {
                     }
                     else{
                         $replacement = '';
-                        if ($matches[1] == 'ins'){
+                        if ($matches[1] === 'ins'){
                             $replacement = 'u';
                         }
-                        elseif ($matches[1] == 'big') {
+                        elseif ($matches[1] === 'big') {
                             $replacement = 'strong';
                         }
-                        elseif ($matches[1] == 'q'){
+                        elseif ($matches[1] === 'q'){
                             $replacement = 'p';
                         }
-                        elseif ($matches[1] == 'dir'){
+                        elseif ($matches[1] === 'dir'){
                             $replacement = 'ul';
                         }
-                        elseif ($matches[1] == 'address' || $matches[1] == 'cite'){
+                        elseif ($matches[1] === 'address' || $matches[1] === 'cite'){
                             $replacement = 'em';
                         }
                         elseif (in_array($matches[1], ['article', 'aside', 'blockquote', 'details', 'dialog', 'figure',
@@ -200,7 +200,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
                             $replacement = 'div';
                         }
 
-                        return ($replacement == '' ? '' : str_replace($matches[1], $replacement, $matches[0]));
+                        return ($replacement === '' ? '' : str_replace($matches[1], $replacement, $matches[0]));
                     }
                 }, $answer);
 
@@ -213,7 +213,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
                 $answer = preg_replace_callback('/<[a-z1-6]+( (?:(?:aria|data)-[^\t\n\f \/>"\'=]+|[a-z]+)=[\'"][\s\S]+?[\'"])>/i',
                     function($matches){
                         $attributeList = preg_replace_callback('/ ([\S]+)=([\'"])([\s\S]*?)(\2)/', function($matches){
-                            return $matches[1] == 'href' ? (" href='" . $matches[3] . "'"): '';
+                            return $matches[1] === 'href' ? (" href='" . $matches[3] . "'"): '';
                         }, $matches[1]);
                         return str_replace($matches[1], $attributeList, $matches[0]);
                 }, $answer);

@@ -53,14 +53,14 @@ function ub_render_content_filter_block($attributes, $content){
 
     foreach((array)$newFilterArray as $key1 => $filterGroup){
         $filterList .= '<div class="ub-content-filter-category"
-        data-canUseMultiple="'.json_encode($filterGroup['canUseMultiple']).'">
-        <div class="ub-content-filter-category-name">'.$filterGroup['category'].'</div>';
+        data-canUseMultiple="' . json_encode($filterGroup['canUseMultiple']) . '">
+        <div class="ub-content-filter-category-name">' . $filterGroup['category'] . '</div>';
 
         foreach($filterGroup['filters'] as $key2 => $tag){
-            $filterList .= '<div data-tagIsSelected="false" data-categoryNumber="'.$key1.'"
-            data-filterNumber="'.$key2.'" '.($blockID == '' ? 'data-normalColor="'.$buttonColor.'" data-normalTextColor="'.$buttonTextColor.
-            '" data-activeColor="'.$activeButtonColor.'" data-activeTextColor="'.$activeButtonTextColor.
-            '"style="background-color: '.$buttonColor.'; color: '.$buttonTextColor.'"' :'').' class="ub-content-filter-tag">'.
+            $filterList .= '<div data-tagIsSelected="false" data-categoryNumber="' . $key1 . '"
+            data-filterNumber="' . $key2 . '" ' . ($blockID === '' ? 'data-normalColor="' . $buttonColor . '" data-normalTextColor="' . $buttonTextColor .
+            '" data-activeColor="' . $activeButtonColor . '" data-activeTextColor="' . $activeButtonTextColor .
+            '"style="background-color: ' . $buttonColor.'; color: ' . $buttonTextColor . '"' : '') . ' class="ub-content-filter-tag">' .
             $tag.'</div>';
         }
         $filterList .= '</div>';
@@ -73,7 +73,7 @@ $currentSelection = array_map(function($category){
                     }, (array)$filterArray);
 
 return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_attr($className) : '').
-        '"'. ($blockID =='' ? : ' id="ub-content-filter-'.$blockID.'"') .
+        '"'. ($blockID === '' ? : ' id="ub-content-filter-' . $blockID . '"') .
         ' data-currentSelection="'.json_encode($currentSelection).
         '" data-initiallyShowAll="'.json_encode($initiallyShowAll).
         '" data-matchingOption="'.$matchingOption.'">'. 
@@ -97,7 +97,7 @@ function ub_content_filter_add_frontend_assets() {
     $presentBlocks = ub_getPresentBlocks();
 
     foreach( $presentBlocks as $block ){
-        if($block['blockName'] == 'ub/content-filter' || $block['blockName'] == 'ub/content-filter-block'){
+        if($block['blockName'] === 'ub/content-filter' || $block['blockName'] === 'ub/content-filter-block'){
             wp_enqueue_script(
                 'ultimate_blocks-content-filter-front-script',
                 plugins_url( 'content-filter/front.build.js', dirname( __FILE__ ) ),

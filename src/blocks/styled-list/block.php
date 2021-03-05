@@ -5,7 +5,7 @@ function ub_render_styled_list_block($attributes){
 
     $listItems = '';
 
-    if(json_encode($listItem) == '[' . join(',', array_fill(0, 3,'{"text":"","selectedIcon":"check","indent":0}')) . ']'){
+    if(json_encode($listItem) === '[' . join(',', array_fill(0, 3,'{"text":"","selectedIcon":"check","indent":0}')) . ']'){
         $listItems = $list;
     }
     else{
@@ -13,10 +13,10 @@ function ub_render_styled_list_block($attributes){
 
         foreach($listItem as $elem){
             $last = count($sortedItems) - 1;
-            if (count($sortedItems) == 0 || $sortedItems[$last][0]['indent'] < $elem['indent']) {
+            if (count($sortedItems) === 0 || $sortedItems[$last][0]['indent'] < $elem['indent']) {
                 array_push($sortedItems, array($elem));
             }
-            else if ($sortedItems[$last][0]['indent'] == $elem['indent']){
+            else if ($sortedItems[$last][0]['indent'] === $elem['indent']){
                 array_push($sortedItems[$last], $elem);
             }
             else{
@@ -24,7 +24,7 @@ function ub_render_styled_list_block($attributes){
                     array_push($sortedItems[count($sortedItems) - 2], array_pop($sortedItems));
                     $last = count($sortedItems) - 1;
                 }
-                if($sortedItems[$last][0]['indent'] == $elem['indent']){
+                if($sortedItems[$last][0]['indent'] === $elem['indent']){
                     array_push($sortedItems[$last], $elem);
                 }
             }
@@ -40,11 +40,11 @@ function ub_render_styled_list_block($attributes){
         if (!function_exists('ub_makeList')) {
             function ub_makeList($num, $item, $color, $size){
                 static $outputString = '';
-                if($num == 0 && $outputString != ''){
+                if($num === 0 && $outputString != ''){
                     $outputString = '';
                 }
                 if (isset($item['indent'])){                
-                    $outputString .= '<li>'.($item['text']==''?'<br/>':$item['text']).'</li>';
+                    $outputString .= '<li>'.($item['text'] === '' ? '<br/>' : $item['text']) . '</li>';
                 }
                 else{
                     $outputString = substr_replace($outputString, '<ul class="fa-ul">',
@@ -65,7 +65,7 @@ function ub_render_styled_list_block($attributes){
     }
 
     return '<div class="ub_styled_list '.(isset($className) ? ' ' . esc_attr($className): '') .'"'
-            .($blockID == '' ? '' : ' id="ub_styled_list-'.$blockID.'"').
+            .($blockID === '' ? '' : ' id="ub_styled_list-'.$blockID.'"').
             '><ul class="fa-ul">'.$listItems.'</ul></div>';
 }
 

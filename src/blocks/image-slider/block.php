@@ -17,22 +17,22 @@ function ub_render_image_slider_block($attributes){
     foreach($imageArray as $key => $image){
         $gallery .= '<figure class="swiper-slide">
         <img src="' . $image['url'] . '" alt="' . esc_html($image['alt']) . '"' .
-            ($blockID == '' ? ' style="height: ' . $sliderHeight . 'px;"' : '') . '>' .
-            '<figcaption class="ub_image_slider_image_caption">' . ($captionArray[$key]['link'] == '' ? '' : '<a href="' . esc_url($captionArray[$key]['link']) . '">')
+            ($blockID === '' ? ' style="height: ' . $sliderHeight . 'px;"' : '') . '>' .
+            '<figcaption class="ub_image_slider_image_caption">' . ($captionArray[$key]['link'] === '' ? '' : '<a href="' . esc_url($captionArray[$key]['link']) . '">')
             . $captionArray[$key]['text']
-            . ($captionArray[$key]['link'] == '' ? '' : '</a>') . ' </figcaption></figure>';
+            . ($captionArray[$key]['link'] === '' ? '' : '</a>') . ' </figcaption></figure>';
     }
 
     return '<div class="ub_image_slider swiper-container' . (isset($className) ? ' ' . esc_attr($className) : '') .
-        '" ' . ($blockID == '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? $sliderHeight : 200) . 'px;"'
+        '" ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? $sliderHeight : 200) . 'px;"'
         : 'id="ub_image_slider_' . $blockID . '"').
         ' data-swiper-data=\'{"loop":' . json_encode($wrapsAround) .
             ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . $paginationType . '"}
             ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}, "effect": "' . $transition . '"'
-            . ($transition == 'fade' ? ',"fadeEffect":{"crossFade": true}' : '')
-            . ($transition == 'coverflow' ? ',"coverflowEffect":{"slideShadows":' . json_encode($slideShadows) . ', "rotate": ' . $rotate . ', "stretch": ' . $stretch . ', "depth": ' . $depth . ', "modifier": ' . $modifier . '}' : '')
-            . ($transition == 'cube' ? ',"cubeEffect":{"slideShadows":' . json_encode($slideShadows) . ', "shadow":' . json_encode($shadow) . ', "shadowOffset":' . $shadowOffset . ', "shadowScale":' . $shadowScale . '}' : '')
-            . ($transition == 'flip' ? ', "flipEffect":{"slideShadows":' . json_encode($slideShadows) . ', "limitRotation": ' . json_encode($limitRotation) . '}' : '')
+            . ($transition === 'fade' ? ',"fadeEffect":{"crossFade": true}' : '')
+            . ($transition === 'coverflow' ? ',"coverflowEffect":{"slideShadows":' . json_encode($slideShadows) . ', "rotate": ' . $rotate . ', "stretch": ' . $stretch . ', "depth": ' . $depth . ', "modifier": ' . $modifier . '}' : '')
+            . ($transition === 'cube' ? ',"cubeEffect":{"slideShadows":' . json_encode($slideShadows) . ', "shadow":' . json_encode($shadow) . ', "shadowOffset":' . $shadowOffset . ', "shadowScale":' . $shadowScale . '}' : '')
+            . ($transition === 'flip' ? ', "flipEffect":{"slideShadows":' . json_encode($slideShadows) . ', "limitRotation": ' . json_encode($limitRotation) . '}' : '')
             . ($autoplays ? ',"autoplay":{"delay": '. ($autoplayDuration * 1000) . '}' : '')
             . (!$isDraggable ? ',"simulateTouch":false' : '') . '}\'>' .
         '<div class="swiper-wrapper">' . $gallery

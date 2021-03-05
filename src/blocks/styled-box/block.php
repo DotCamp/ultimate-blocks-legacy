@@ -18,10 +18,10 @@ add_action('init', 'ub_register_styled_box_bordered_box_block');
 function ub_render_styled_box_block($attributes, $content){
     extract($attributes);
     $renderedBlock = '';
-    if($mode == 'notification' && $text[0] != ''){
+    if($mode === 'notification' && $text[0] != ''){
         $renderedBlock = '<div class="ub-notification-text">'.$text[0].'</div>';
     }
-    else if($mode == 'number'){
+    else if($mode === 'number'){
         foreach(range(0, count($text)-1) as $i){
             $renderedBlock .= '<div class="ub-number-panel">
                 <div class="ub-number-container">
@@ -32,17 +32,17 @@ function ub_render_styled_box_block($attributes, $content){
             </div>';
         }
     }
-    else if($mode == 'feature'){
+    else if($mode === 'feature'){
         foreach(range(0, count($text)-1) as $i){
             $renderedBlock .= '<div class="ub-feature">'.
-                ($image[$i]['url'] == '' ? '' :
+                ($image[$i]['url'] === '' ? '' :
                     '<img class="ub-feature-img" src="'.$image[$i]['url'].'"/>').
                     '<p class="ub-feature-title">'.$title[$i].'</p>
                     <p class="ub-feature-body">'.$text[$i].'</p>
             </div>';
         }
     }
-    else if ($mode == 'bordered' || $mode == 'notification'){
+    else if ($mode === 'bordered' || $mode === 'notification'){
         $renderedBlock = $content;
     }
 

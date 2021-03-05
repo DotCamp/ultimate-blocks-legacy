@@ -25,7 +25,7 @@ function generateISODurationCode($inputArr){
 }
 
 function ub_convert_to_paragraphs($string){
-    if($string == ''){
+    if($string === ''){
         return '';
     }
     else{
@@ -50,18 +50,18 @@ function ub_render_how_to_block($attributes){
     if($advancedMode && $includeSuppliesList){
         $header .= '<h2>'.$suppliesIntro.'</h2>';
         if(count($supplies) > 0){
-            $header .=  $suppliesListStyle == 'ordered' ? '<ol' : '<ul';
+            $header .=  $suppliesListStyle === 'ordered' ? '<ol' : '<ul';
             $header .= ' class="ub_howto-supplies-list">';
             foreach($supplies as $i => $s){
-                $header .= '<li>' . $s['name'] . ($s['imageURL'] == '' ? '' :
+                $header .= '<li>' . $s['name'] . ($s['imageURL'] === '' ? '' :
                             '<br><img src="'.$s['imageURL'].'"/>') . '</li>';
                 if($i > 0){
                     $suppliesCode .= ',';
                 }
                 $suppliesCode .= '{"@type": "HowToSupply", "name": "'.ub_strip_html_tags($s['name']).'"'.
-                            ($s['imageURL'] == ''? '' : ',"image": "'.$s['imageURL'].'"').'}';
+                            ($s['imageURL'] === ''? '' : ',"image": "'.$s['imageURL'].'"').'}';
             }
-            $header .= $suppliesListStyle == 'ordered' ? '</ol>' : '</ul>';
+            $header .= $suppliesListStyle === 'ordered' ? '</ol>' : '</ul>';
         }
     }
     $suppliesCode .= ']';
@@ -71,18 +71,18 @@ function ub_render_how_to_block($attributes){
     if($advancedMode && $includeToolsList){
         $header .= '<h2>'.$toolsIntro.'</h2>';
         if(count($tools) > 0){
-            $header .= $toolsListStyle == 'ordered' ? '<ol' : '<ul';
+            $header .= $toolsListStyle === 'ordered' ? '<ol' : '<ul';
             $header .= ' class="ub_howto-tools-list">';
             foreach($tools as $i => $t){
-                $header .= '<li>' . $t['name'] . ($t['imageURL'] == '' ? '' :
+                $header .= '<li>' . $t['name'] . ($t['imageURL'] === '' ? '' :
                             '<br><img src="'.$t['imageURL'].'"/>') . '</li>';
                 if($i > 0){
                     $toolsCode .= ',';
                 }
                 $toolsCode .= '{"@type": "HowToTool", "name": "'.ub_strip_html_tags($t['name']).'"'
-                                .($t['imageURL'] == ''? '' : ',"image": "'.$t['imageURL'].'"').'}';
+                                .($t['imageURL'] === ''? '' : ',"image": "'.$t['imageURL'].'"').'}';
             }
-            $header .= $toolsListStyle == 'ordered' ? '</ol>' : '</ul>';
+            $header .= $toolsListStyle === 'ordered' ? '</ol>' : '</ul>';
         }
     }
     $toolsCode  .= ']'; 
@@ -107,11 +107,11 @@ function ub_render_how_to_block($attributes){
     $stepsCode = PHP_EOL .  '"step": [';
 
     if($useSections){
-        $stepsDisplay =  ($sectionListStyle == 'ordered' ? '<ol' : '<ul') .
+        $stepsDisplay =  ($sectionListStyle === 'ordered' ? '<ol' : '<ul') .
                             ' class="ub_howto-section-display">';
         foreach($section as $i => $s){
             $stepsDisplay .= '<li class="ub_howto-section"><h3>' . $s['sectionName'] . '</h3>' . 
-            ($sectionListStyle == 'ordered' ? '<ol' : '<ul') . ' class="ub_howto-step-display">';
+            ($sectionListStyle === 'ordered' ? '<ol' : '<ul') . ' class="ub_howto-step-display">';
             $stepsCode .= '{"@type": "HowToSection",' . PHP_EOL
                         . '"name": "'. ub_strip_html_tags($s['sectionName']) . '",' . PHP_EOL
                         . '"itemListElement": [' . PHP_EOL;
@@ -127,14 +127,14 @@ function ub_render_how_to_block($attributes){
 
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">' 
                     . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' ? 
-                    ($step['stepPic']['caption'] == '' ? '' : '<figure>') .
+                    ($step['stepPic']['caption'] === '' ? '' : '<figure>') .
                         '<img class="ub_howto-step-image" src="' .$step['stepPic']['url']. '">' 
-                    . ($step['stepPic']['caption'] == '' ? '' : '<figcaption>'.$step['stepPic']['caption'].'</figcaption></figure>')
+                    . ($step['stepPic']['caption'] === '' ? '' : '<figcaption>'.$step['stepPic']['caption'].'</figcaption></figure>')
                         : '')
                     . ub_convert_to_paragraphs($step['direction']) . PHP_EOL;
 
                 $stepsCode .= '"@type": "HowToDirection",' . PHP_EOL
-                            . '"text": "' .($step['title'] == '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
+                            . '"text": "' .($step['title'] === '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
                             . ub_strip_html_tags($step['direction']) .'"}' . PHP_EOL;
 
                 if ($step['tip'] != ''){
@@ -150,7 +150,7 @@ function ub_render_how_to_block($attributes){
                 }
             }
 
-            $stepsDisplay .=  ($sectionListStyle == 'ordered' ? '</ol>' : '</ul>')
+            $stepsDisplay .=  ($sectionListStyle === 'ordered' ? '</ol>' : '</ul>')
                         . '</li>'; //close section div
             $stepsCode .= ']}';
             if($i < count($section)-1){
@@ -159,15 +159,15 @@ function ub_render_how_to_block($attributes){
         }
     }
     else{
-        $stepsDisplay .=  ($sectionListStyle == 'ordered' ? '<ol' : '<ul') .
+        $stepsDisplay .=  ($sectionListStyle === 'ordered' ? '<ol' : '<ul') .
                             ' class="ub_howto-step-display">';
         if(count($section) > 0){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">'
                         . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' ? 
-                            ($step['stepPic']['caption'] == '' ? '' : '<figure>') . 
+                            ($step['stepPic']['caption'] === '' ? '' : '<figure>') . 
                                 '<img class="ub_howto-step-image" src="' .$step['stepPic']['url'] . '">' . 
-                            ($step['stepPic']['caption'] == '' ? '' : '<figcaption>'.$step['stepPic']['caption'].'</figcaption></figure>') : '') .
+                            ($step['stepPic']['caption'] === '' ? '' : '<figcaption>'.$step['stepPic']['caption'].'</figcaption></figure>') : '') .
                         ub_convert_to_paragraphs($step['direction']);
 
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
@@ -177,7 +177,7 @@ function ub_render_how_to_block($attributes){
                             . '"image": "' . $step['stepPic']['url'].'",' . PHP_EOL     
                             . '"itemListElement" :[{'. PHP_EOL
                             . '"@type": "HowToDirection",' . PHP_EOL
-                            . '"text": "' . ($step['title'] == '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
+                            . '"text": "' . ($step['title'] === '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
                                         . ub_strip_html_tags($step['direction']).'"}' . PHP_EOL;
     
                 if ($step['tip'] != ''){
@@ -194,7 +194,7 @@ function ub_render_how_to_block($attributes){
             }
         }
     }
-    $stepsDisplay .=  $sectionListStyle == 'ordered' ? '</ol>' : '</ul>';
+    $stepsDisplay .=  $sectionListStyle === 'ordered' ? '</ol>' : '</ul>';
     $stepsCode .= ']';
 
     $parts = array_map( function($sec){ return $sec['steps'];}, $section);
@@ -238,7 +238,7 @@ function ub_render_how_to_block($attributes){
         "name":"'. ub_strip_html_tags($title) .'",
         "description": "'.ub_strip_html_tags($introduction).'",'.
         ($advancedMode ?
-            '"totalTime": "'.$ISOTotalTime.'",'.($videoURL == '' ? '':
+            '"totalTime": "'.$ISOTotalTime.'",'.($videoURL === '' ? '':
             '"video": {
                 "@type": "VideoObject",
                 "name": "'.$videoName.'",
@@ -260,13 +260,13 @@ function ub_render_how_to_block($attributes){
 
     return '<div class="ub_howto" id="ub_howto_'.$blockID.'"><h2>'
                 . $title . '</h2>' . ub_convert_to_paragraphs($introduction) . $header . 
-                ($advancedMode ? ($videoURL == '' ? '' : $videoEmbedCode) 
+                ($advancedMode ? ($videoURL === '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
                 . $timeDisplay : '') . $stepsDisplay .   
                 '<h2>' . $resultIntro . '</h2>' . 
-                ($finalImageURL == '' ? '' : ($finalImageCaption == '' ? '' : '<figure>') .
+                ($finalImageURL === '' ? '' : ($finalImageCaption === '' ? '' : '<figure>') .
                     '<img class="ub_howto-yield-image" src="' .$finalImageURL. '">' . 
-                    ($finalImageCaption == '' ? '' : '<figcaption>'. $finalImageCaption .'</figcaption></figure>')) .
+                    ($finalImageCaption === '' ? '' : '<figcaption>'. $finalImageCaption .'</figcaption></figure>')) .
                 ub_convert_to_paragraphs($howToYield) .
             '</div>' . $JSONLD;
 }

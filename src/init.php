@@ -49,10 +49,10 @@ function ub_check_is_gutenberg_page() {
 function ub_update_css_version($updated){
     static $frontendStyleUpdated = false;
     static $editorStyleUpdated = false;
-    if($updated == 'frontend'){
+    if($updated === 'frontend'){
         $frontendStyleUpdated = true;
     }
-    else if($updated == 'editor'){
+    else if($updated === 'editor'){
         $editorStyleUpdated = true;
     }
 
@@ -80,7 +80,7 @@ function ub_load_assets() {
             $frontStyleLocation = $blockDir . $blockDirName . '/style.css';
 
             if(file_exists($frontStyleLocation) && $blockList[ $key ]['active']){ //also detect if block is enabled
-                if($block['name'] == 'ub/click-to-tweet'){
+                if($block['name'] === 'ub/click-to-tweet'){
                     fwrite($frontStyleFile, str_replace("src/blocks/click-to-tweet/icons", "ultimate-blocks", file_get_contents($frontStyleLocation)));
                 }
                 else{
@@ -116,7 +116,7 @@ function ultimate_blocks_cgb_block_assets() {
         $presentBlocks = ub_getPresentBlocks();
 
         foreach( $presentBlocks as $block ){
-            if( strpos($block['blockName'], 'ub/' )===0){
+            if( strpos($block['blockName'], 'ub/' ) === 0){
                 ub_load_assets();
                 break;
             }
@@ -153,7 +153,7 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/button':
                     $prefix = '#ub-button-' . $attributes['blockID'];
-                    if( !array_key_exists('buttons', $attributes) || count($attributes['buttons'])==0 ){
+                    if( !array_key_exists('buttons', $attributes) || count($attributes['buttons']) === 0 ){
                         $blockStylesheets .= $prefix . ' a{' . PHP_EOL;
                         if($attributes['buttonIsTransparent']){
                             $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
@@ -180,7 +180,7 @@ function ub_include_block_attribute_css() {
                         }
                         $blockStylesheets .= '}' . PHP_EOL . 
                         $prefix. ' .ub-button-content-holder{' . PHP_EOL .
-                            'flex-direction: '.($attributes['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
+                            'flex-direction: '.($attributes['iconPosition'] === 'left'?'row':'row-reverse').';' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
                     else{
@@ -210,7 +210,7 @@ function ub_include_block_attribute_css() {
                             }
                             $blockStylesheets .= '}' . PHP_EOL . 
                             $prefix. ' .ub-button-container:nth-child('.($key+1).') .ub-button-content-holder{' . PHP_EOL .
-                                'flex-direction: '.($attributes['buttons'][$key]['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
+                                'flex-direction: '.($attributes['buttons'][$key]['iconPosition'] === 'left'?'row':'row-reverse').';' . PHP_EOL .
                             '}' . PHP_EOL;
                         }
                     }
@@ -346,18 +346,18 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/how-to':
                     $prefix = '#ub_howto_' . $attributes['blockID'];
-                    if($attributes['sectionListStyle'] == 'none'){
+                    if($attributes['sectionListStyle'] === 'none'){
                         $blockStylesheets .= $prefix . ' .ub_howto-section-display,' . $prefix . ' .ub_howto-step-display,' .
                         $prefix . ' .ub_howto-step-display .ub_howto-step{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL ;
                     }
-                    if($attributes['suppliesListStyle'] == 'none'){
+                    if($attributes['suppliesListStyle'] === 'none'){
                         $blockStylesheets .= $prefix . ' .ub_howto-supplies-list{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;                        
                     }
-                    if($attributes['toolsListStyle'] == 'none'){
+                    if($attributes['toolsListStyle'] === 'none'){
                         $blockStylesheets .= $prefix . ' .ub_howto-tools-list{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;                        
@@ -413,7 +413,7 @@ function ub_include_block_attribute_css() {
                         'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL;
 
-                    if($attributes['barType']=='linear'){
+                    if($attributes['barType'] === 'linear'){
                         $blockStylesheets .= $prefix . ' .ub_progress-bar-line-path{' . PHP_EOL .
                             'stroke-dashoffset: 100px;' . PHP_EOL .
                         '}' . PHP_EOL .
@@ -439,7 +439,7 @@ function ub_include_block_attribute_css() {
                     $prefix . '.ub_progress-bar-filled .ub_progress-bar-label{' . PHP_EOL . 
                         'visibility: visible;' . PHP_EOL .
                     '}' . PHP_EOL;
-                    if($attributes['barType']=='linear'){
+                    if($attributes['barType'] === 'linear'){
                         $blockStylesheets .= $prefix. '.ub_progress-bar-filled .ub_progress-bar-line-path{' . PHP_EOL .
                             'stroke-dashoffset: ' . (100-$attributes['percentage']) . 'px';
                     }
@@ -502,8 +502,8 @@ function ub_include_block_attribute_css() {
                 case 'ub/star-rating-block':
                     $prefix = '#ub-star-rating-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .ub-star-outer-container{' . PHP_EOL .
-                        'justify-content: '. ($attributes['starAlign'] == 'center' ? 'center' :
-                            ('flex-'.($attributes['starAlign'] == 'left' ? 'start' : 'end'))).';' . PHP_EOL .
+                        'justify-content: '. ($attributes['starAlign'] === 'center' ? 'center' :
+                            ('flex-'.($attributes['starAlign'] === 'left' ? 'start' : 'end'))).';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub-review-text{' . PHP_EOL .
                         'text-align: '. $attributes['reviewTextAlign'] . ';' . PHP_EOL .
@@ -515,15 +515,15 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/styled-box':
                     $prefix = '#ub-styled-box-' . $attributes['blockID'];
-                    if($attributes['mode'] == 'notification'){
+                    if($attributes['mode'] === 'notification'){
                         $blockStylesheets .= $prefix . '.ub-notification-box{'. PHP_EOL .
                             'background-color: ' . $attributes['backColor'] . ';' . PHP_EOL .
                             'color: ' . $attributes['foreColor'] . ';' . PHP_EOL .
                             'border-left-color: ' . $attributes['outlineColor'] . ';' . PHP_EOL .
-                            ($attributes['text'][0] == '' ? '' : 'text-align: ' . $attributes['textAlign'][0] . ';' . PHP_EOL) .
+                            ($attributes['text'][0] === '' ? '' : 'text-align: ' . $attributes['textAlign'][0] . ';' . PHP_EOL) .
                         '}' . PHP_EOL;
                     }
-                    else if($attributes['mode'] == 'feature'){
+                    else if($attributes['mode'] === 'feature'){
                         foreach(range(1, count($attributes['text'])) as $i){
                             $blockStylesheets .= $prefix . ' .ub-feature:nth-child('.$i.') .ub-feature-title{'. PHP_EOL .
                                 'text-align: ' . $attributes['titleAlign'][$i-1] . ';' . PHP_EOL .
@@ -533,7 +533,7 @@ function ub_include_block_attribute_css() {
                             '}' . PHP_EOL;
                         }
                     }
-                    else if($attributes['mode'] == 'number'){
+                    else if($attributes['mode'] === 'number'){
                         $blockStylesheets .= $prefix . ' .ub-number-panel{' . PHP_EOL .
                             'border-color: ' . $attributes['outlineColor'] . ';' . PHP_EOL .
                         '}' . PHP_EOL .
@@ -552,15 +552,15 @@ function ub_include_block_attribute_css() {
                             '}' . PHP_EOL;
                         }
                     }
-                    else if($attributes['mode'] == 'bordered'){
+                    else if($attributes['mode'] === 'bordered'){
                         $radiusUnit = '';
-                        if($attributes['outlineRadiusUnit'] == 'percent'){
+                        if($attributes['outlineRadiusUnit'] === 'percent'){
                             $radiusUnit = '%';
                         }
-                        else if($attributes['outlineRadiusUnit'] == 'pixel'){
+                        else if($attributes['outlineRadiusUnit'] === 'pixel'){
                             $radiusUnit = 'px';
                         }
-                        else if($attributes['outlineRadiusUnit'] == 'em'){
+                        else if($attributes['outlineRadiusUnit'] === 'em'){
                             $radiusUnit = 'em';
                         }
                         $blockStylesheets .= $prefix .  '.ub-bordered-box{' . PHP_EOL .
@@ -625,8 +625,8 @@ function ub_include_block_attribute_css() {
                         'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
                     '}' .
                     $prefix . ' .wp-block-ub-tabbed-content-tabs-title{' . PHP_EOL .
-                        'justify-content: ' . ($attributes['tabsAlignment'] == 'center' ? 'center' :
-                            'flex-' . ($attributes['tabsAlignment'] == 'left' ? 'start' : 'end' )) . ';' . PHP_EOL .
+                        'justify-content: ' . ($attributes['tabsAlignment'] === 'center' ? 'center' :
+                            'flex-' . ($attributes['tabsAlignment'] === 'left' ? 'start' : 'end' )) . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     foreach($attributes['tabsTitleAlignment'] as $key => $titleAlign){
                         $blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap:nth-child('.($key+1).'){' . PHP_EOL .
@@ -636,7 +636,7 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/table-of-contents-block':
                     $prefix = '#ub_table-of-contents-' . $attributes['blockID'];
-                    if($attributes['listStyle']=='plain'){
+                    if($attributes['listStyle'] === 'plain'){
                         $blockStylesheets .= $prefix . ' ul{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;
@@ -658,8 +658,8 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL;
                     }
                     $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
-                        'justify-self: ' . ($attributes['titleAlignment'] == 'center' ? 'center' :
-                            'flex-' . ($attributes['titleAlignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
+                        'justify-self: ' . ($attributes['titleAlignment'] === 'center' ? 'center' :
+                            'flex-' . ($attributes['titleAlignment'] === 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
                 case 'ub/testimonial':

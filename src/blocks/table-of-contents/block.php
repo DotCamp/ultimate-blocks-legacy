@@ -18,10 +18,10 @@ function ub_render_table_of_contents_block($attributes){
     foreach($filteredHeaders as $elem){
         $elem['content'] = trim(preg_replace('/(<.+?>)/', '', $elem['content']));
         $last = count($sortedHeaders) - 1;
-        if (count($sortedHeaders) == 0 || $sortedHeaders[$last][0]['level'] < $elem['level']) {
+        if (count($sortedHeaders) === 0 || $sortedHeaders[$last][0]['level'] < $elem['level']) {
             array_push($sortedHeaders, [$elem]);
         }
-        else if ($sortedHeaders[$last][0]['level'] == $elem['level']){
+        else if ($sortedHeaders[$last][0]['level'] === $elem['level']){
             array_push($sortedHeaders[$last], $elem);
         }
         else{
@@ -29,7 +29,7 @@ function ub_render_table_of_contents_block($attributes){
                 array_push($sortedHeaders[count($sortedHeaders) - 2], array_pop($sortedHeaders));
                 $last = count($sortedHeaders) - 1;
             }
-            if($sortedHeaders[$last][0]['level'] == $elem['level']){
+            if($sortedHeaders[$last][0]['level'] === $elem['level']){
                 array_push($sortedHeaders[$last], $elem);
             }
         }
@@ -48,7 +48,7 @@ function ub_render_table_of_contents_block($attributes){
     if (!function_exists('ub_makeListItem')) {
         function ub_makeListItem($num, $item, $listStyle, $blockID, $currentGaps){
             static $outputString = '';
-            if($num == 0 && $outputString != ''){
+            if($num === 0 && $outputString !== ''){
                 $outputString = '';
             }
             if (isset($item['level'])){
@@ -60,18 +60,18 @@ function ub_render_table_of_contents_block($attributes){
                     $anchor = '#' . $item["anchor"];
                 }
 
-                if(count($currentGaps) && get_query_var('page') != $currentGaps[$num]){
+                if(count($currentGaps) && get_query_var('page') !== $currentGaps[$num]){
                     $baseURL = get_permalink();
-                    $anchor = $baseURL . ($currentGaps[$num] > 1 ? (get_post_status(get_the_ID()) == 'publish' ? '' : '&page=')
+                    $anchor = $baseURL . ($currentGaps[$num] > 1 ? (get_post_status(get_the_ID()) === 'publish' ? '' : '&page=')
                             . $currentGaps[$num] : '') . $anchor;
                 }
 
-                $content = array_key_exists("customContent", $item) && $item["customContent"] != "" ? $item["customContent"] : $item["content"];
+                $content = array_key_exists("customContent", $item) && $item["customContent"] !== "" ? $item["customContent"] : $item["content"];
                 $outputString .= '<li><a href='. $anchor.'>'. $content .'</a></li>';
             }
             else{
-                $openingTag = $listStyle == 'numbered' ? '<ol>' :
-                    '<ul'.($listStyle == 'plain' && $blockID == '' ? ' style="list-style: none;"' : '').'>';
+                $openingTag = $listStyle === 'numbered' ? '<ol>' :
+                    '<ul'.($listStyle === 'plain' && $blockID === '' ? ' style="list-style: none;"' : '').'>';
 
                 $outputString = substr_replace($outputString, $openingTag,
                     strrpos($outputString, '</li>'), strlen('</li>'));
@@ -79,7 +79,7 @@ function ub_render_table_of_contents_block($attributes){
                 forEach($item as $key => $subItem){
                     ub_makeListItem($key+1, $subItem, $listStyle, $blockID, $currentGaps);
                 }
-                $outputString .= ($listStyle == 'numbered' ? '</ol>' : '</ul>') . '</li>';
+                $outputString .= ($listStyle === 'numbered' ? '</ol>' : '</ul>') . '</li>';
             }
             return $outputString;
         }
@@ -92,19 +92,19 @@ function ub_render_table_of_contents_block($attributes){
     }
 
     $targetType = '';
-    if ($scrollTargetType == 'id'){
+    if ($scrollTargetType === 'id'){
         $targetType = '#';
     }
-    else if ($scrollTargetType == 'class'){
+    else if ($scrollTargetType === 'class'){
         $targetType = '.';
     }
     
     return '<div class="ub_table-of-contents'.(isset($className) ? ' ' . esc_attr($className) : '')
                 .(!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ).
                 '" data-showtext="'.__('show', 'ultimate-blocks').'" data-hidetext="'.__('hide', 'ultimate-blocks')
-                .'" data-scrolltype="'.$scrollOption.'"'.($scrollOption == 'fixedamount' ? ' data-scrollamount="'.$scrollOffset.'"':'')
-                .($scrollOption == 'namedelement' ? ' data-scrolltarget="'.$targetType.$scrollTarget.'"':'')
-                .($blockID==''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
+                .'" data-scrolltype="'.$scrollOption.'"'.($scrollOption === 'fixedamount' ? ' data-scrollamount="'.$scrollOffset.'"':'')
+                .($scrollOption === 'namedelement' ? ' data-scrolltarget="'.$targetType.$scrollTarget.'"':'')
+                .($blockID === ''?'':' id="ub_table-of-contents-'.$blockID.'"').'>'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'.
                         $title .'</div>'. 
@@ -116,11 +116,11 @@ function ub_render_table_of_contents_block($attributes){
                             .'</a>]</div></div>' :'')
                 .'</div>') : '')
                 .'<div class="ub_table-of-contents-container ub_table-of-contents-' .
-                    $numColumns. '-column ' . ($showList || strlen($title) == 0 ||
-                    (strlen($title) == 1 && $title[0] == '') ? '' : 'ub-hide').'">'.
-                ($listStyle == 'numbered' ? '<ol>' :  '<ul'.($listStyle == 'plain' && $blockID == '' ? ' style="list-style: none;"' : '').'>')
+                    $numColumns. '-column ' . ($showList || strlen($title) === 0 ||
+                    (strlen($title) === 1 && $title[0] === '') ? '' : 'ub-hide').'">'.
+                ($listStyle === 'numbered' ? '<ol>' :  '<ul'.($listStyle === 'plain' && $blockID === '' ? ' style="list-style: none;"' : '').'>')
                 . $listItems .
-                ($listStyle == 'numbered' ? '</ol>' : '</ul>')
+                ($listStyle === 'numbered' ? '</ol>' : '</ul>')
                 .'</div></div>';
 }
 
@@ -139,7 +139,7 @@ function ub_table_of_contents_add_frontend_assets() {
     $presentBlocks = ub_getPresentBlocks();
 
     foreach( $presentBlocks as $block ){
-        if($block['blockName'] == 'ub/table-of-contents' || $block['blockName'] == 'ub/table-of-contents-block'){
+        if($block['blockName'] === 'ub/table-of-contents' || $block['blockName'] === 'ub/table-of-contents-block'){
             wp_enqueue_script(
                 'ultimate_blocks-table-of-contents-front-script',
                 plugins_url( 'table-of-contents/front.build.js', dirname( __FILE__ ) ),

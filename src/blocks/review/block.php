@@ -25,7 +25,7 @@ function ub_render_review_block($attributes){
     extract($attributes);
     $parsedItems = isset($parts) ? $parts : json_decode($items, true);
 
-    if($blockID == ''){
+    if($blockID === ''){
         $blockID = $ID;
     }
 
@@ -46,7 +46,7 @@ function ub_render_review_block($attributes){
     $offerCode = '"offers":{
         "@type": "' . $offerType . '",
         "priceCurrency": "' . esc_html($offerCurrency) . '",' .
-            ($offerType == 'AggregateOffer' ? 
+            ($offerType === 'AggregateOffer' ? 
                 '"lowPrice": "' . $offerLowPrice . '",
                 "highPrice": "' . $offerHighPrice . '",
                 "offerCount": "' . $offerCount . '"' 
@@ -104,7 +104,7 @@ function ub_render_review_block($attributes){
                             "operatingSystem": "' . esc_html($operatingSystem) . '",' . $offerCode;
         break;
         case 'MediaObject':
-            $itemExtras = $itemSubtype == 'VideoObject' ? 
+            $itemExtras = $itemSubtype === 'VideoObject' ? 
                     ('"uploadDate": "'.date("Y-m-d", $videoUploadDate) . '", 
                     "contentUrl": "' . esc_url($videoURL) . '"') : '';
         break;
@@ -115,13 +115,13 @@ function ub_render_review_block($attributes){
 
     return '<div class="ub_review_block' . (isset($className) ? ' ' . esc_attr($className) : '') .
                 '" id="ub_review_' . $blockID . '">
-        <p class="ub_review_item_name"' . ($blockID == '' ? ' style="text-align: ' . $titleAlign . ';"' : '') . '>' .
+        <p class="ub_review_item_name"' . ($blockID === '' ? ' style="text-align: ' . $titleAlign . ';"' : '') . '>' .
             $itemName . '</p><p class="ub_review_author_name"' .
-            ($blockID == '' ? ' style="text-align: ' . $authorAlign . ';"' : '') . '>' . $authorName . '</p>' .
+            ($blockID === '' ? ' style="text-align: ' . $authorAlign . ';"' : '') . '>' . $authorName . '</p>' .
         (($enableImage || $enableDescription) && ($imgURL != '' || $description != '') ?
         '<div class="ub_review_description_container">' .
-            (!$enableDescription || $description == '' ? '' : '<div class="ub_review_description">' . $description . '</div>') .
-            (!$enableImage || $imgURL == '' ? '' : '<img class="ub_review_image" src="' . $imgURL . '" alt = "' . $imgAlt . '">') .
+            (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . $description . '</div>') .
+            (!$enableImage || $imgURL === '' ? '' : '<img class="ub_review_image" src="' . $imgURL . '" alt = "' . $imgAlt . '">') .
         '</div>' : '').
             $starRatings
     .'<div class="ub_review_summary">' .
@@ -137,10 +137,10 @@ function ub_render_review_block($attributes){
         ($enableCTA && $callToActionURL != '' ? '<div class="ub_review_cta_main">
             <a href="' . esc_url($callToActionURL) .
                 '" ' . ($ctaOpenInNewTab ? 'target="_blank" ' : '') . 'rel="' . ($ctaNoFollow ? 'nofollow ' : '') . ($ctaIsSponsored ? 'sponsored ': '') . 'noopener noreferrer"' .
-                    ($blockID == '' ? '  style="color: ' . $callToActionForeColor . ';"' : '') . '>
-                <button class="ub_review_cta_btn"' . ($blockID == '' ? ' style="background-color: ' . $callToActionBackColor
+                    ($blockID === '' ? '  style="color: ' . $callToActionForeColor . ';"' : '') . '>
+                <button class="ub_review_cta_btn"' . ($blockID === '' ? ' style="background-color: ' . $callToActionBackColor
                 . '; border-color: ' . $callToActionForeColor . '; color: ' . $callToActionForeColor . ';"' : '') . '>' .
-                    ($callToActionText== '' ? 'Click here' : $callToActionText) . '</button></a></div>' : '') .
+                    ($callToActionText === '' ? 'Click here' : $callToActionText) . '</button></a></div>' : '') .
                 '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
         "@context": "http://schema.org/",
         "@type": "Review",' .
@@ -149,13 +149,13 @@ function ub_render_review_block($attributes){
         "itemReviewed": {
             "@type":"' . ($itemSubsubtype ?: $itemSubtype ?: $itemType) . '",' .
             ($itemName ? ('"name":"' . esc_html(preg_replace('/(<.+?>)/', '', $itemName)) . '",') : '') .
-            ($imgURL ? (($itemSubtype == 'VideoObject' ? '"thumbnailUrl' : '"image') . '": "' . esc_url($imgURL) . '",') : '') .
+            ($imgURL ? (($itemSubtype === 'VideoObject' ? '"thumbnailUrl' : '"image') . '": "' . esc_url($imgURL) . '",') : '') .
             '"description": "' . esc_html(preg_replace('/(<.+?>)/', '', $description)) .'"'
-                . ($itemExtras == '' ? '' : ',' . $itemExtras ) .
+                . ($itemExtras === '' ? '' : ',' . $itemExtras ) .
         '},
         "reviewRating":{
             "@type": "Rating",
-            "ratingValue": "' . ($average % 1 == 0 ? $average : number_format($average, 1, '.', '')) . '",
+            "ratingValue": "' . ($average % 1 === 0 ? $average : number_format($average, 1, '.', '')) . '",
             "bestRating": "' . $starCount . '"
         },
         "author":{
