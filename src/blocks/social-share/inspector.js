@@ -187,10 +187,17 @@ export default class Inspector extends Component {
 						/>
 					</PanelRow>
 					{buttonColor && (
-						<ColorPalette
-							value={buttonColor}
-							onChange={(buttonColor) => setAttributes({ buttonColor })}
-						/>
+						<>
+							<span
+								class="component-color-indicator"
+								aria-label={`(Color: ${buttonColor})`}
+								style={{ background: buttonColor }}
+							/>
+							<ColorPalette
+								value={buttonColor}
+								onChange={(buttonColor) => setAttributes({ buttonColor })}
+							/>
+						</>
 					)}
 				</PanelBody>
 			</InspectorControls>

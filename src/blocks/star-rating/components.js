@@ -51,7 +51,14 @@ export const inspectorControls = (props) => {
 	return (
 		<InspectorControls>
 			<PanelBody title={__("Star Settings")}>
-				<p>{__("Star Color")}</p>
+				<p>
+					{__("Star Color")}
+					<span
+						class="component-color-indicator"
+						aria-label={`(Color: ${starColor})`}
+						style={{ background: starColor }}
+					/>
+				</p>
 				<ColorPalette
 					value={starColor}
 					onChange={(colorValue) => setAttributes({ starColor: colorValue })}
@@ -89,12 +96,17 @@ export const inspectorControls = (props) => {
 				/>
 			</PanelBody>
 			<PanelBody>
-				<p>{__("Text Color")}</p>
+				<p>
+					{__("Text Color")}
+					<span
+						class="component-color-indicator"
+						aria-label={`(Color: ${reviewTextColor})`}
+						style={{ background: reviewTextColor }}
+					/>
+				</p>
 				<ColorPalette
 					value={reviewTextColor}
-					onChange={(colorValue) =>
-						setAttributes({ reviewTextColor: colorValue })
-					}
+					onChange={(reviewTextColor) => setAttributes({ reviewTextColor })}
 				/>
 			</PanelBody>
 		</InspectorControls>

@@ -6,53 +6,53 @@ const {
 	MediaUpload,
 	InspectorControls,
 	ColorPalette,
-	PanelColorSettings
+	PanelColorSettings,
 } = wp.blockEditor || wp.editor;
 
 const { Button, PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 
-import icons from './icons';
+import icons from "./icons";
 
-export const blockControls = props => {
+export const blockControls = (props) => {
 	const { editable, attributes, setAttributes } = props;
 
 	const { textAlign, authorAlign, authorRoleAlign } = attributes;
 	return (
 		<BlockControls>
 			<Toolbar>
-				{['left', 'center', 'right', 'justify']
-					.slice(0, editable.indexOf('text') > 0 ? 4 : 3)
-					.map(a => (
+				{["left", "center", "right", "justify"]
+					.slice(0, editable.indexOf("text") > 0 ? 4 : 3)
+					.map((a) => (
 						<IconButton
-							icon={`editor-${a === 'justify' ? a : 'align' + a}`}
+							icon={`editor-${a === "justify" ? a : "align" + a}`}
 							label={__(
-								(a !== 'justify' ? 'Align ' : '') +
+								(a !== "justify" ? "Align " : "") +
 									a[0].toUpperCase() +
 									a.slice(1)
 							)}
 							isActive={() => {
 								switch (editable) {
-									case 'testimonial_text':
+									case "testimonial_text":
 										return textAlign === a;
-									case 'author':
+									case "author":
 										return authorAlign === a;
-									case 'author_role':
+									case "author_role":
 										return authorRoleAlign === a;
 								}
 							}}
 							onClick={() => {
 								switch (editable) {
-									case 'testimonial_text':
+									case "testimonial_text":
 										setAttributes({ textAlign: a });
 										break;
-									case 'author':
+									case "author":
 										setAttributes({
-											authorAlign: a
+											authorAlign: a,
 										});
 										break;
-									case 'author_role':
+									case "author_role":
 										setAttributes({
-											authorRoleAlign: a
+											authorRoleAlign: a,
 										});
 										break;
 								}
@@ -64,39 +64,41 @@ export const blockControls = props => {
 	);
 };
 
-export const inspectorControls = props => {
+export const inspectorControls = (props) => {
 	const { attributes, setAttributes } = props;
 
 	const { backgroundColor, textColor, textSize } = attributes;
 	return (
 		<InspectorControls>
 			<PanelColorSettings
-				title={__('Background Color')}
+				title={__("Background Color")}
 				initialOpen={true}
 				colorSettings={[
 					{
 						value: backgroundColor,
-						onChange: colorValue =>
-							setAttributes({
-								backgroundColor: colorValue
-							}),
-						label: ''
-					}
+						onChange: (backgroundColor) => setAttributes({ backgroundColor }),
+						label: "",
+					},
 				]}
 			/>
-			<PanelBody title={__('Testimonial Body')}>
-				<p>{__('Font Color')}</p>
+			<PanelBody title={__("Testimonial Body")}>
+				<p>
+					{__("Font Color")}
+					<span
+						class="component-color-indicator"
+						aria-label={`(Color: ${textColor})`}
+						style={{ background: textColor }}
+					/>
+				</p>
 				<ColorPalette
 					value={textColor}
-					onChange={colorValue =>
-						setAttributes({ textColor: colorValue })
-					}
+					onChange={(textColor) => setAttributes({ textColor })}
 					allowReset
 				/>
 				<RangeControl
-					label={__('Font Size')}
+					label={__("Font Size")}
 					value={textSize}
-					onChange={value => setAttributes({ textSize: value })}
+					onChange={(value) => setAttributes({ textSize: value })}
 					min={14}
 					max={200}
 					beforeIcon="editor-textcolor"
@@ -107,7 +109,7 @@ export const inspectorControls = props => {
 	);
 };
 
-export const editorDisplay = props => {
+export const editorDisplay = (props) => {
 	const { isSelected, setState, attributes, setAttributes } = props;
 
 	const {
@@ -122,25 +124,25 @@ export const editorDisplay = props => {
 		ub_testimonial_text,
 		textAlign,
 		authorAlign,
-		authorRoleAlign
+		authorRoleAlign,
 	} = attributes;
 	return (
 		<div
 			className="ub_testimonial"
 			style={{
 				backgroundColor: backgroundColor,
-				color: textColor
+				color: textColor,
 			}}
 		>
 			<div className="ub_testimonial_img">
 				{!imgID ? (
 					<div className="ub_testimonial_upload_button">
 						<MediaUpload
-							onSelect={img =>
+							onSelect={(img) =>
 								setAttributes({
 									imgID: img.id,
 									imgURL: img.url,
-									imgAlt: img.alt
+									imgAlt: img.alt,
 								})
 							}
 							type="image"
@@ -150,20 +152,15 @@ export const editorDisplay = props => {
 									className="components-button button button-medium"
 									onClick={open}
 								>
-									{__('Upload Image')}
+									{__("Upload Image")}
 								</Button>
 							)}
 						/>
-						<p>{__('Ideal Image size is Square i.e 150x150.')}</p>
+						<p>{__("Ideal Image size is Square i.e 150x150.")}</p>
 					</div>
 				) : (
 					<div>
-						<img
-							src={imgURL}
-							alt={imgAlt}
-							height={100}
-							width={100}
-						/>
+						<img src={imgURL} alt={imgAlt} height={100} width={100} />
 						{isSelected ? (
 							<Button
 								className="ub-remove-image"
@@ -171,7 +168,7 @@ export const editorDisplay = props => {
 									setAttributes({
 										imgID: null,
 										imgURL: null,
-										imgAlt: null
+										imgAlt: null,
 									})
 								}
 							>
@@ -185,51 +182,43 @@ export const editorDisplay = props => {
 				<RichText
 					tagName="p"
 					placeholder={__(
-						'This is the testimonial body. Add the testimonial text you want to add here.'
+						"This is the testimonial body. Add the testimonial text you want to add here."
 					)}
 					className="ub_testimonial_text"
 					style={{
 						fontSize: textSize,
-						textAlign: textAlign
+						textAlign: textAlign,
 					}}
-					onChange={value =>
-						setAttributes({ ub_testimonial_text: value })
-					}
+					onChange={(value) => setAttributes({ ub_testimonial_text: value })}
 					value={ub_testimonial_text}
 					keepPlaceholderOnFocus={true}
-					formattingControls={['bold', 'strikethrough', 'link']}
-					unstableOnFocus={() =>
-						setState({ editable: 'testimonial_text' })
-					}
+					formattingControls={["bold", "strikethrough", "link"]}
+					unstableOnFocus={() => setState({ editable: "testimonial_text" })}
 				/>
 			</div>
 			<div className="ub_testimonial_sign">
 				<RichText
 					tagName="p"
-					placeholder={__('John Doe')}
+					placeholder={__("John Doe")}
 					style={{ textAlign: authorAlign }}
 					className="ub_testimonial_author"
-					onChange={value =>
-						setAttributes({ ub_testimonial_author: value })
-					}
+					onChange={(value) => setAttributes({ ub_testimonial_author: value })}
 					value={ub_testimonial_author}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: 'author' })}
+					unstableOnFocus={() => setState({ editable: "author" })}
 				/>
 				<RichText
 					tagName="p"
-					placeholder={__('Founder, Company X')}
+					placeholder={__("Founder, Company X")}
 					style={{ textAlign: authorRoleAlign }}
 					className="ub_testimonial_author_role"
-					onChange={value =>
+					onChange={(value) =>
 						setAttributes({ ub_testimonial_author_role: value })
 					}
 					value={ub_testimonial_author_role}
 					keepPlaceholderOnFocus={true}
-					formattingControls={['bold', 'strikethrough', 'link']}
-					unstableOnFocus={() =>
-						setState({ editable: 'author_role' })
-					}
+					formattingControls={["bold", "strikethrough", "link"]}
+					unstableOnFocus={() => setState({ editable: "author_role" })}
 				/>
 			</div>
 		</div>

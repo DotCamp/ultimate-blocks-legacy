@@ -94,14 +94,13 @@ export const inspectorControls = (props) => {
 				colorSettings={[
 					{
 						value: ctaBackgroundColor,
-						onChange: (colorValue) =>
-							setAttributes({ ctaBackgroundColor: colorValue }),
+						onChange: (ctaBackgroundColor) =>
+							setAttributes({ ctaBackgroundColor }),
 						label: __("Background Color", "ultimate-blocks"),
 					},
 					{
 						value: ctaBorderColor,
-						onChange: (colorValue) =>
-							setAttributes({ ctaBorderColor: colorValue }),
+						onChange: (ctaBorderColor) => setAttributes({ ctaBorderColor }),
 						label: __("Border Color", "ultimate-blocks"),
 					},
 				]}
@@ -137,10 +136,19 @@ export const inspectorControls = (props) => {
 						}
 					/>
 				)}
-				<p>{__("Color", "ultimate-blocks")}</p>
+				<p>
+					{__("Color", "ultimate-blocks")}
+					{headColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${headColor})`}
+							style={{ background: headColor }}
+						/>
+					)}
+				</p>
 				<ColorPalette
 					value={headColor}
-					onChange={(colorValue) => setAttributes({ headColor: colorValue })}
+					onChange={(headColor) => setAttributes({ headColor })}
 				/>
 			</PanelBody>
 
@@ -157,10 +165,20 @@ export const inspectorControls = (props) => {
 					beforeIcon="editor-textcolor"
 					allowReset
 				/>
-				<p>{__("Color", "ultimate-blocks")}</p>
+				<p>
+					{__("Color", "ultimate-blocks")}
+					{contentColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${contentColor})`}
+							style={{ background: contentColor }}
+						/>
+					)}
+				</p>
+
 				<ColorPalette
 					value={contentColor}
-					onChange={(colorValue) => setAttributes({ contentColor: colorValue })}
+					onChange={(contentColor) => setAttributes({ contentColor })}
 				/>
 			</PanelBody>
 
@@ -187,18 +205,34 @@ export const inspectorControls = (props) => {
 					beforeIcon="editor-textcolor"
 					allowReset
 				/>
-				<p>{__("Button Color", "ultimate-blocks")}</p>
+				<p>
+					{__("Button Color", "ultimate-blocks")}
+					{buttonColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${buttonColor})`}
+							style={{ background: buttonColor }}
+						/>
+					)}
+				</p>
 				<ColorPalette
 					value={buttonColor}
-					onChange={(colorValue) => setAttributes({ buttonColor: colorValue })}
+					onChange={(buttonColor) => setAttributes({ buttonColor })}
 				/>
 
-				<p>{__("Button Text Color", "ultimate-blocks")}</p>
+				<p>
+					{__("Button Text Color", "ultimate-blocks")}
+					{buttonTextColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${buttonTextColor})`}
+							style={{ background: buttonTextColor }}
+						/>
+					)}
+				</p>
 				<ColorPalette
 					value={buttonTextColor}
-					onChange={(colorValue) =>
-						setAttributes({ buttonTextColor: colorValue })
-					}
+					onChange={(buttonTextColor) => setAttributes({ buttonTextColor })}
 				/>
 			</PanelBody>
 			<PanelBody
@@ -268,9 +302,7 @@ export const editorDisplay = (props) => {
 							textAlign: headAlign,
 						}}
 						onChange={(value) =>
-							setAttributes({
-								ub_call_to_action_headline_text: value,
-							})
+							setAttributes({ ub_call_to_action_headline_text: value })
 						}
 						value={ub_call_to_action_headline_text}
 						formattingControls={["bold", "italic", "strikethrough"]}

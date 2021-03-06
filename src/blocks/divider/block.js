@@ -132,12 +132,17 @@ registerBlockType("ub/divider", {
 							allowReset
 						/>
 
-						<p>{__("Color")}</p>
+						<p>
+							{__("Color")}
+							<span
+								class="component-color-indicator"
+								aria-label={`(Color: ${borderColor})`}
+								style={{ background: borderColor }}
+							/>
+						</p>
 						<ColorPalette
 							value={borderColor}
-							onChange={(colorValue) =>
-								setAttributes({ borderColor: colorValue })
-							}
+							onChange={(borderColor) => setAttributes({ borderColor })}
 							allowReset
 						/>
 
