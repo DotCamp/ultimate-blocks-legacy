@@ -163,8 +163,10 @@ registerBlockType("ub/advanced-video", {
 											const dailyMotionMatch = /^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
 												videoURLInput
 											);
-
 											const videoPressMatch = /^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
+												videoURLInput
+											);
+											const facebookVideoMatch = /^https?:\/\/(?:www|web|mobile|(ar|bg|de|fi|hr|hu|id|pl|ro|ru|th)-\1|bs-ba|cs-cz|da-dk|el-gk|en-gb|es(?:-(?:es|la))?|et-ee|fa-ir|fb-lt|fr-(?:ca|fr)|fr|he-il|(it|nl|tr)(-\2)?|ja-jp|ko-kr|ms-my|nb-no|pt-(?:br|pt)|sr-rs|sv-se|tl-ph|vi-vn|zh-(?:cn|hk|tw))?\.?facebook\.com\/(?:[A-Za-z0-9.]+\/videos\/)?[0-9]+/g.exec(
 												videoURLInput
 											);
 
@@ -281,6 +283,13 @@ registerBlockType("ub/advanced-video", {
 														console.log("videopress input error");
 														console.log(err);
 													});
+											} else if (facebookVideoMatch) {
+												setAttributes({
+													url: videoURLInput,
+													videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
+														videoURLInput
+													)}&width=500&show_text=false&height=500&appId" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
+												});
 											} else {
 												console.log(
 													"site not supported. presume it's a direct link to a video"
