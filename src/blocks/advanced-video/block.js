@@ -1,8 +1,15 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { MediaUpload, MediaUploadCheck, URLInput } = wp.blockEditor || wp.editor;
+const { MediaUpload, MediaUploadCheck, URLInput, InspectorControls } =
+	wp.blockEditor || wp.editor;
 const { withState } = wp.compose;
-const { Button, IconButton } = wp.components;
+const {
+	Button,
+	IconButton,
+	RangeControl,
+	ToggleControl,
+	PanelBody,
+} = wp.components;
 
 import icon from "./icon";
 
@@ -22,6 +29,11 @@ registerBlockType("ub/advanced-video", {
 			default: -1,
 		},
 		url: {
+			type: "string",
+			default: "",
+		},
+		videoSource: {
+			//store name of source site when regex finds a valid match
 			type: "string",
 			default: "",
 		},
@@ -82,10 +94,35 @@ registerBlockType("ub/advanced-video", {
 			type: "number",
 			default: 0,
 		},
+		width: {
+			type: "number",
+			default: 600,
+		},
+		origWidth: {
+			type: "number",
+			default: 0,
+		},
+		preserveAspectRatio: {
+			type: "boolean",
+			default: true,
+		},
+		height: {
+			type: "number",
+			default: 450,
+		},
+		origHeight: {
+			type: "number",
+			default: 0,
+		},
 	},
-	edit: withState({ enterExternalURL: false, videoURLInput: "" })(function (
-		props
-	) {
+	edit: withState({
+		enterExternalURL: false,
+		videoURLInput: "",
+		youtubeCache: {},
+		vimeoCache: {},
+		dailyMotionCache: {},
+		videoPressCache: {},
+	})(function (props) {
 		//select video source
 		//then enter url or upload from local
 
@@ -96,12 +133,115 @@ registerBlockType("ub/advanced-video", {
 			enterExternalURL,
 			videoURLInput,
 		} = props;
-		const { videoId, url, videoEmbedCode } = attributes;
-
-		console.log(`current url: ${url}`);
+		const {
+			videoId,
+			url,
+			videoSource,
+			videoEmbedCode,
+			width,
+			preserveAspectRatio,
+			height,
+			origWidth,
+			origHeight,
+		} = attributes;
 
 		return (
 			<>
+				<InspectorControls>
+					<PanelBody title={__("Embedded video player settings")}>
+						<RangeControl
+							label={__("Video width")}
+							value={width}
+							onChange={(newWidth) => {
+								setAttributes({ width: newWidth });
+
+								let newVideoEmbedCode = videoEmbedCode;
+
+								newVideoEmbedCode = newVideoEmbedCode.replace(
+									/width="[0-9]+"/,
+									`width="${newWidth}"`
+								);
+								if (videoSource === "facebook") {
+									newVideoEmbedCode = newVideoEmbedCode.replace(
+										/&width=[0-9]+/,
+										`width="${newWidth}"`
+									);
+								}
+
+								if (preserveAspectRatio) {
+									//get ratio between current width and current height, then recalculate height according to ratio
+									const newHeight = Math.round((height * newWidth) / width);
+									setAttributes({
+										height: newHeight,
+									});
+									newVideoEmbedCode = newVideoEmbedCode.replace(
+										/height="[0-9]+"/,
+										`height="${newHeight}"`
+									);
+									if (videoSource === "facebook") {
+										newVideoEmbedCode = newVideoEmbedCode.replace(
+											/&height=[0-9]+/,
+											`height="${newHeight}"`
+										);
+									}
+								}
+								setAttributes({ videoEmbedCode: newVideoEmbedCode });
+							}}
+							min={200}
+							max={1600}
+						/>
+						<p>{__("Preserve aspect ratio")}</p>
+						<ToggleControl
+							checked={preserveAspectRatio}
+							onChange={() => {
+								setAttributes({
+									preserveAspectRatio: !preserveAspectRatio,
+								});
+								if (!preserveAspectRatio) {
+									const newHeight = Math.round((height * newWidth) / width);
+
+									let newVideoEmbedCode = videoEmbedCode.replace(
+										/height="[0-9]+"/,
+										`height="${newHeight}"`
+									);
+									if (videoSource === "facebook") {
+										newVideoEmbedCode = newVideoEmbedCode.replace(
+											/&height=[0-9]+/,
+											`height="${newHeight}"`
+										);
+									}
+									setAttributes({
+										height: newHeight,
+										videoEmbedCode: newVideoEmbedCode,
+									});
+								}
+							}}
+						/>
+						{!preserveAspectRatio && (
+							<RangeControl
+								label={__("Video height")}
+								value={height}
+								onChange={(height) => {
+									setAttributes({ height });
+									let newVideoEmbedCode = videoEmbedCode;
+
+									newVideoEmbedCode = newVideoEmbedCode.replace(
+										/height="[0-9]+"/,
+										`height="${height}"`
+									);
+									if (videoSource === "facebook") {
+										newVideoEmbedCode = newVideoEmbedCode.replace(
+											/&height=[0-9]+/,
+											`height="${height}"`
+										);
+									}
+								}}
+								min={200}
+								max={1600}
+							/>
+						)}
+					</PanelBody>
+				</InspectorControls>
 				{url === "" && (
 					<>
 						<div>{__("Select video source")}</div>
@@ -110,11 +250,18 @@ registerBlockType("ub/advanced-video", {
 							<MediaUploadCheck>
 								<MediaUpload
 									onSelect={(media) => {
-										console.log(JSON.stringify(media));
+										const newWidth = Math.min(600, media.width);
+										const newHeight = Math.round(
+											(media.height * newWidth) / media.width
+										);
+
 										setAttributes({
 											videoId: media.id,
 											url: media.url,
-											videoEmbedCode: `<video controls><source src="${media.url}"></video>`,
+											width: newWidth,
+											height: newHeight,
+											videoEmbedCode: `<video controls width="${newWidth}" height="${newHeight}"><source src="${media.url}"></video>`,
+											videoSource: "local",
 										});
 									}}
 									allowedTypes={["video"]}
@@ -144,7 +291,6 @@ registerBlockType("ub/advanced-video", {
 									autoFocus={false}
 									value={videoURLInput}
 									onChange={(videoURLInput) => {
-										console.log(`new video url input value: ${videoURLInput}`);
 										setState({ videoURLInput });
 									}}
 								/>
@@ -152,7 +298,6 @@ registerBlockType("ub/advanced-video", {
 									icon={"editor-break"}
 									label={__("Apply", "ultimate-blocks")}
 									onClick={() => {
-										console.log("check site in url");
 										if (/^http(s)?:\/\//g.test(videoURLInput)) {
 											const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
 												videoURLInput
@@ -170,8 +315,6 @@ registerBlockType("ub/advanced-video", {
 												videoURLInput
 											);
 
-											console.log("checking if url belongs to a valid site");
-
 											if (youtubeMatch) {
 												fetch(
 													`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
@@ -179,10 +322,21 @@ registerBlockType("ub/advanced-video", {
 													.then((response) => {
 														response.json().then((data) => {
 															if (data.items.length) {
+																const thumbHeight =
+																	data.items[0].snippet.thumbnails.high.height;
+																const thumbWidth =
+																	data.items[0].snippet.thumbnails.high.width;
 																setAttributes({
 																	url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
+																	videoSource: "youtube",
 																	videoEmbedCode:
 																		data.items[0].player.embedHtml,
+																	origWidth: thumbWidth,
+																	origHeight: thumbHeight,
+																	width: Math.min(600, thumbWidth),
+																	height:
+																		(thumbHeight * Math.min(600, thumbWidth)) /
+																		thumbWidth,
 																});
 															} else {
 																setAttributes({
@@ -206,16 +360,28 @@ registerBlockType("ub/advanced-video", {
 															response
 																.json()
 																.then((data) => {
-																	setAttributes({ url: data[0].url });
+																	const newWidth = Math.min(600, data[0].width);
+																	const newHeight = Math.round(
+																		(data[0].height * newWidth) / data[0].width
+																	);
+
+																	setAttributes({
+																		url: data[0].url,
+																		origHeight: data[0].height,
+																		origWidth: data[0].width,
+																		width: newWidth,
+																		height: newHeight,
+																	});
 																	fetch(
 																		`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
 																			data[0].url
-																		)}`
+																		)}&width=${newWidth}&height=${newHeight}`
 																	)
 																		.then((response) => {
 																			response.json().then((data) => {
 																				setAttributes({
 																					videoEmbedCode: data.html,
+																					videoSource: "vimeo",
 																				});
 																			});
 																		})
@@ -237,16 +403,23 @@ registerBlockType("ub/advanced-video", {
 													});
 											} else if (dailyMotionMatch) {
 												fetch(
-													`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cduration`
+													`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cheight%2Cwidth%2Cduration`
 												)
 													.then((response) => {
 														if (response.ok) {
 															response.json().then((data) => {
+																const newWidth = Math.min(600, data.width);
+																const newHeight = Math.round(
+																	(data.height * newWidth) / data.width
+																);
 																setAttributes({
 																	url: data.url,
 																	videoEmbedCode: decodeURIComponent(
 																		data.embed_html
 																	),
+																	videoSource: "dailymotion",
+																	height: newHeight,
+																	width: newWidth,
 																});
 															});
 														} else {
@@ -264,11 +437,17 @@ registerBlockType("ub/advanced-video", {
 													.then((response) => {
 														if (response.ok) {
 															response.json().then((data) => {
+																const newWidth = Math.min(600, data.width);
+																const newHeight = Math.round(
+																	(data.height * newWidth) / data.width
+																);
 																setAttributes({
 																	url: `https://videopress.com/v/${data.guid}`,
-
-																	videoEmbedCode: `<iframe width="560" height="315" src="https://videopress.com/embed/${data.guid}" frameborder="0" allowfullscreen></iframe>
+																	videoEmbedCode: `<iframe width="${newWidth}" height="${newHeight}" src="https://videopress.com/embed/${data.guid}" frameborder="0" allowfullscreen></iframe>
 														<script src="https://videopress.com/videopress-iframe.js"></script>`,
+																	videoSource: "videopress",
+																	height: newHeight,
+																	width: newWidth,
 																});
 															});
 														} else {
@@ -288,7 +467,10 @@ registerBlockType("ub/advanced-video", {
 													url: videoURLInput,
 													videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
 														videoURLInput
-													)}&width=500&show_text=false&height=500&appId" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
+													)}&width=600&show_text=false&height=600&appId" width="600" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
+													width: 600,
+													height: 600,
+													videoSource: "facebook",
 												});
 											} else {
 												console.log(
@@ -297,7 +479,10 @@ registerBlockType("ub/advanced-video", {
 
 												setAttributes({
 													url: videoURLInput,
-													videoEmbedCode: `<video controls><source src="${videoURLInput}"></video>`,
+													videoEmbedCode: `<video controls width="500" height="500"><source src="${videoURLInput}"></video>`,
+													videoSource: "unknown",
+													width: 500,
+													height: 500,
 												});
 												setState({ videoURLInput: "" });
 											}
@@ -323,7 +508,12 @@ registerBlockType("ub/advanced-video", {
 						<p>{`${__("Video URL: ")}${url}`}</p>
 						<button
 							onClick={() => {
-								setAttributes({ url: "", videoEmbedCode: "", videoId: -1 });
+								setAttributes({
+									url: "",
+									videoEmbedCode: "",
+									videoId: -1,
+									videoSource: "",
+								});
 								setState({ videoURLInput: "" });
 							}}
 						>
