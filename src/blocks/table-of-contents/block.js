@@ -24,7 +24,7 @@ const { InspectorControls, RichText } = wp.blockEditor || wp.editor;
 
 const { withDispatch, withSelect } = wp.data;
 
-const { compose } = wp.compose;
+const { withState, compose } = wp.compose;
 
 import { upgradeButtonLabel, mergeRichTextArray } from "../../common";
 
@@ -287,16 +287,19 @@ registerBlockType("ub/table-of-contents-block", {
 	supports: {
 		reusable: false,
 	},
-	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
 
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
-		};
-	})(function (props) {
+			return {
+				block: getBlock(ownProps.clientId),
+				getBlock,
+				getClientIdsWithDescendants,
+			};
+		}),
+		withState({ canRemoveItemFocus: false }),
+	])(function (props) {
 		const {
 			isSelected,
 			block,

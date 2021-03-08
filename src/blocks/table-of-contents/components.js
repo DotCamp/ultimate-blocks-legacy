@@ -44,7 +44,7 @@ class TableOfContents extends Component {
 
 	componentDidMount() {
 		const { updateBlockAttributes } =
-			dispatch("core/block-editor") || dispatch("core/editor"); //updateBlock doesn't work properly
+			dispatch("core/block-editor") || dispatch("core/editor");
 		const { getBlock } = select("core/block-editor") || select("core/editor");
 
 		const getHeadingBlocks = () => {
@@ -323,7 +323,12 @@ class TableOfContents extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		// call header manipulation to trigger latin alphabet conversion of links
 		const { setAttributes, attributes } = this.props.blockProp;
-		const { headers, replacementHeaders, breaks } = this.state;
+		const {
+			headers,
+			replacementHeaders,
+			breaks,
+			currentlyEditedItem,
+		} = this.state;
 
 		if (
 			this.props.allowToLatin !== prevProps.allowToLatin ||
@@ -415,6 +420,13 @@ class TableOfContents extends Component {
 
 			this.setState({ hasIdMismatch: false });
 		}
+
+		if (this.props.canRemoveItemFocus) {
+			if (currentlyEditedItem) {
+				this.setState({ currentlyEditedItem: "" });
+			}
+			this.props.itemFocusRemoved();
+		}
 	}
 
 	render() {
@@ -451,6 +463,23 @@ class TableOfContents extends Component {
 			return array;
 		};
 
+		const readCustomHeadingInput = () => {
+			const revisedHeaders = JSON.parse(JSON.stringify(this.state.headers));
+
+			const currentlyEditedHeader = revisedHeaders.filter(
+				(h) => h.clientId === currentlyEditedItem
+			)[0];
+
+			if (
+				currentlyEditedHeader.customContent === currentlyEditedHeader.content
+			) {
+				//no changes detected
+				revisedHeaders[currentlyEditedHeader.index].customContent = "";
+				this.setState({ headers: revisedHeaders });
+			}
+			this.setState({ currentlyEditedItem: "" });
+		};
+
 		const parseList = (list) =>
 			list.map((item) => (
 				<li>
@@ -466,7 +495,7 @@ class TableOfContents extends Component {
 									revisedHeaders[item.index].customContent = e.target.value;
 									this.setState({ headers: revisedHeaders });
 								}}
-								onBlur={() => this.setState({ currentlyEditedItem: "" })}
+								onBlur={readCustomHeadingInput}
 							/>
 						) : (
 							<a
@@ -485,9 +514,17 @@ class TableOfContents extends Component {
 							<div className="ub_toc_button_container">
 								{!item.disabled && (
 									<button
-										onClick={() =>
-											this.setState({ currentlyEditedItem: item.clientId })
-										}
+										onClick={() => {
+											const revisedHeaders = JSON.parse(
+												JSON.stringify(this.state.headers)
+											);
+											if (!revisedHeaders[item.index].customContent) {
+												revisedHeaders[item.index].customContent =
+													revisedHeaders[item.index].content;
+												this.setState({ headers: revisedHeaders });
+											}
+											this.setState({ currentlyEditedItem: item.clientId });
+										}}
 									>
 										<span className="dashicons dashicons-edit-large"></span>
 									</button>
@@ -522,6 +559,12 @@ class TableOfContents extends Component {
 						))}
 				</li>
 			));
+
+		if (!isSelected) {
+			if (currentlyEditedItem) {
+				readCustomHeadingInput();
+			}
+		}
 
 		if (
 			headers.length > 0 &&
@@ -775,7 +818,7 @@ export const blockControls = (props) => {
 };
 
 export const editorDisplay = (props) => {
-	const { setAttributes } = props;
+	const { setAttributes, setState, canRemoveItemFocus } = props;
 	const {
 		links,
 		title,
@@ -804,6 +847,7 @@ export const editorDisplay = (props) => {
 					<RichText
 						placeholder={__("Optional title")}
 						className="ub_table-of-contents-title"
+						onFocus={() => setState({ canRemoveItemFocus: true })}
 						onChange={(text) => setAttributes({ title: text })}
 						value={title}
 						keepPlaceholderOnFocus={true}
@@ -834,6 +878,8 @@ export const editorDisplay = (props) => {
 					blockProp={props}
 					allowToLatin={allowToLatin}
 					removeDiacritics={removeDiacritics}
+					canRemoveItemFocus={canRemoveItemFocus}
+					itemFocusRemoved={() => setState({ canRemoveItemFocus: false })}
 				/>
 			)}
 		</>
