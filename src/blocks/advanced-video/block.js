@@ -208,6 +208,7 @@ registerBlockType("ub/advanced-video", {
 											`height="${height}"`
 										);
 									}
+									setAttributes({ videoEmbedCode: newVideoEmbedCode });
 								}}
 								min={200}
 								max={1600}
@@ -220,8 +221,13 @@ registerBlockType("ub/advanced-video", {
 								setAttributes({
 									preserveAspectRatio: !preserveAspectRatio,
 								});
-								if (!preserveAspectRatio) {
-									const newHeight = Math.round((height * newWidth) / width);
+								if (
+									!preserveAspectRatio &&
+									!["facebook", "unknown"].includes(videoSource)
+								) {
+									const newHeight = Math.round(
+										(origHeight * width) / origWidth
+									);
 
 									let newVideoEmbedCode = videoEmbedCode.replace(
 										/height="[0-9]+"/,
