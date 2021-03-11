@@ -15,7 +15,7 @@ const { registerBlockType } = wp.blocks;
 
 const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
 
-const { PanelBody, RangeControl } = wp.components;
+const { PanelBody, RangeControl, SelectControl } = wp.components;
 
 const { withSelect } = wp.data;
 
@@ -106,7 +106,6 @@ registerBlockType("ub/divider", {
 			)
 		) {
 			setAttributes({ blockID: block.clientId });
-
 		}
 
 		return [
@@ -140,6 +139,18 @@ registerBlockType("ub/divider", {
 								setAttributes({ borderColor: colorValue })
 							}
 							allowReset
+						/>
+
+						<p>{__("Style")}</p>
+						<SelectControl
+							options={["solid", "dotted", "dashed"].map((o) => ({
+								value: o,
+								label: __(o),
+							}))}
+							value={borderStyle}
+							onChange={(borderStyle) => {
+								setAttributes({ borderStyle });
+							}}
 						/>
 					</PanelBody>
 				</InspectorControls>
