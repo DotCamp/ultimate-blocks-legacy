@@ -150,7 +150,7 @@ registerBlockType("ub/advanced-video", {
 				<InspectorControls>
 					<PanelBody title={__("Embedded video player settings")}>
 						<RangeControl
-							label={__("Video width")}
+							label={__("Video width (pixels)")}
 							value={width}
 							onChange={(newWidth) => {
 								setAttributes({ width: newWidth });
@@ -190,6 +190,29 @@ registerBlockType("ub/advanced-video", {
 							min={200}
 							max={1600}
 						/>
+						{!preserveAspectRatio && (
+							<RangeControl
+								label={__("Video height (pixels)")}
+								value={height}
+								onChange={(height) => {
+									setAttributes({ height });
+									let newVideoEmbedCode = videoEmbedCode;
+
+									newVideoEmbedCode = newVideoEmbedCode.replace(
+										/height="[0-9]+"/,
+										`height="${height}"`
+									);
+									if (videoSource === "facebook") {
+										newVideoEmbedCode = newVideoEmbedCode.replace(
+											/&height=[0-9]+/,
+											`height="${height}"`
+										);
+									}
+								}}
+								min={200}
+								max={1600}
+							/>
+						)}
 						<p>{__("Preserve aspect ratio")}</p>
 						<ToggleControl
 							checked={preserveAspectRatio}
@@ -217,29 +240,6 @@ registerBlockType("ub/advanced-video", {
 								}
 							}}
 						/>
-						{!preserveAspectRatio && (
-							<RangeControl
-								label={__("Video height")}
-								value={height}
-								onChange={(height) => {
-									setAttributes({ height });
-									let newVideoEmbedCode = videoEmbedCode;
-
-									newVideoEmbedCode = newVideoEmbedCode.replace(
-										/height="[0-9]+"/,
-										`height="${height}"`
-									);
-									if (videoSource === "facebook") {
-										newVideoEmbedCode = newVideoEmbedCode.replace(
-											/&height=[0-9]+/,
-											`height="${height}"`
-										);
-									}
-								}}
-								min={200}
-								max={1600}
-							/>
-						)}
 					</PanelBody>
 				</InspectorControls>
 				{url === "" && (
@@ -311,7 +311,18 @@ registerBlockType("ub/advanced-video", {
 											const videoPressMatch = /^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
 												videoURLInput
 											);
-											const facebookVideoMatch = /^https?:\/\/(?:www|web|mobile|(ar|bg|de|fi|hr|hu|id|pl|ro|ru|th)-\1|bs-ba|cs-cz|da-dk|el-gk|en-gb|es(?:-(?:es|la))?|et-ee|fa-ir|fb-lt|fr-(?:ca|fr)|fr|he-il|(it|nl|tr)(-\2)?|ja-jp|ko-kr|ms-my|nb-no|pt-(?:br|pt)|sr-rs|sv-se|tl-ph|vi-vn|zh-(?:cn|hk|tw))?\.?facebook\.com\/(?:[A-Za-z0-9.]+\/videos\/)?[0-9]+/g.exec(
+
+											const facebookVideoRegex = new RegExp(
+												[
+													"^https?:\\/\\/(?:",
+													"(?:(?:www|web|mobile|(ar|bg|de|fi|hr|hu|id|pl|ro|ru|th)-\\1|bs-ba|cs-cz|da-dk|el-gk|en-gb|es(?:-(?:es|la))?|et-ee|fa-ir|fb-lt|fr-(?:ca|fr)|fr|he-il|(it|nl|tr)(-\\2)?|ja-jp|ko-kr|ms-my|nb-no|pt-(?:br|pt)|sr-rs|sv-se|tl-ph|vi-vn|zh-(?:cn|hk|tw))", //main fb video url, first part, includes known subdomains
+													"?\\.?facebook\\.com\\/(?:(?:watch\\/\\?v=)|(?:[A-Za-z0-9.]+\\/videos\\/))[0-9]+)", //main fb video url, second part (both watch/?v=[postid] and [userid/pageid]/videos/[postid] variants)
+													"|fb\\.watch\\/[A-Za-z0-9_]+)\\/?", //fb.watch variant
+												].join(""),
+												"g"
+											);
+
+											const facebookVideoMatch = facebookVideoRegex.exec(
 												videoURLInput
 											);
 
@@ -463,6 +474,7 @@ registerBlockType("ub/advanced-video", {
 														console.log(err);
 													});
 											} else if (facebookVideoMatch) {
+												console.log("facebook url detected");
 												setAttributes({
 													url: videoURLInput,
 													videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
@@ -471,6 +483,7 @@ registerBlockType("ub/advanced-video", {
 													width: 600,
 													height: 600,
 													videoSource: "facebook",
+													preserveAspectRatio: false,
 												});
 											} else {
 												console.log(
@@ -483,6 +496,7 @@ registerBlockType("ub/advanced-video", {
 													videoSource: "unknown",
 													width: 500,
 													height: 500,
+													preserveAspectRatio: false,
 												});
 												setState({ videoURLInput: "" });
 											}
