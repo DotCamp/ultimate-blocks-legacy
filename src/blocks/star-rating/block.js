@@ -180,20 +180,19 @@ registerBlockType("ub/star-rating-block", {
 			setAttributes,
 		} = props;
 
-		if (
-			blockID === "" ||
+		if (blockID === "") {
+			setAttributes({
+				blockID: block.clientId,
+				starColor: "#ffb901",
+			});
+		} else if (
 			getClientIdsWithDescendants().some(
 				(ID) =>
 					"blockID" in getBlock(ID).attributes &&
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
-			setAttributes({
-				blockID: block.clientId,
-				starColor: blockID === "" ? "#ffb901" : starColor,
-			});
-		} else if (starColor === "#FFB901") {
-			setAttributes({ starColor: "#ffff00" });
+			setAttributes({ blockID: block.clientId });
 		}
 
 		return [
