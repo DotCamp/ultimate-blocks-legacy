@@ -13,6 +13,90 @@ const {
 
 import icon from "./icon";
 
+function editEmbedArgs(source, embedCode, mode, arg) {
+	let newEmbedCode = embedCode;
+	let regexPart = "";
+
+	if (mode === "add") {
+		if (source === "youtube") {
+			regexPart = "www\\.youtube\\.com\\/embed\\/[A-Za-z0-9-_]+";
+		} else if (source === "dailymotion") {
+			regexPart =
+				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9]+";
+		} else if (source === "vimeo") {
+			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+";
+		} else if (source === "videopress") {
+			regexPart = "https:\\/\\/videopress\\.com\\/embed\\/[A-Za-z0-9]+";
+		}
+
+		const embedRegex = new RegExp(
+			[
+				regexPart,
+				'(\\?[A-Za-z_]+=[^&"\\s]+(?:(?:&[A-Za-z_]+=[^&"\\s]+)*))?',
+			].join("")
+		);
+
+		const embedArgs = embedRegex.exec(embedCode);
+		if (embedArgs[1]) {
+			if (!embedArgs[1].includes(arg)) {
+				newEmbedCode = embedCode.replace(
+					embedArgs[0],
+					`${embedArgs[0]}&${arg}`
+				);
+			}
+		} else {
+			newEmbedCode = embedCode.replace(embedArgs[0], `${embedArgs[0]}?${arg}`);
+		}
+	} else if (mode === "remove") {
+		if (source === "youtube") {
+			regexPart = "www\\.youtube\\.com\\/embed\\/[A-Za-z0-9-_]+\\?(";
+		} else if (source === "dailymotion") {
+			regexPart =
+				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9-_]+\\?(";
+		} else if (source === "vimeo") {
+			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+\\?(";
+		} else if (source === "videopress") {
+			regexPart = "https:\\/\\/videopress\\.com\\/embed\\/[A-Za-z0-9]+\\?(";
+		}
+
+		const embedRegex = new RegExp(
+			[
+				regexPart,
+				arg,
+				'(?:&[A-Za-z_]+=[^&"\\s]+)?|[A-Za-z_]+=[^&"\\s]+?(?:(?:&[A-Za-z_]+=[^&"\\s]+?)*&',
+				arg,
+				"))",
+			].join(""),
+			"g"
+		);
+
+		const embedArgs = embedRegex.exec(newEmbedCode);
+		if (embedArgs[1].includes(arg)) {
+			if (arg.length < embedArgs[1].length) {
+				let fullArg = arg;
+
+				if (embedArgs[1].indexOf(arg)) {
+					fullArg = "&" + arg;
+				} else {
+					fullArg = arg + "&";
+				}
+
+				newEmbedCode = embedCode.replace(
+					embedArgs[1],
+					embedArgs[1].replace(fullArg, "")
+				);
+			} else {
+				newEmbedCode = embedCode.replace(
+					embedArgs[0],
+					embedArgs[0].replace(`?${arg}`, "")
+				);
+			}
+		}
+	}
+
+	return newEmbedCode;
+}
+
 registerBlockType("ub/advanced-video", {
 	title: __("Advanced Video"),
 	icon,
@@ -46,6 +130,10 @@ registerBlockType("ub/advanced-video", {
 			//vimeo only
 			type: "boolean",
 			default: true,
+		},
+		vimeoUploaderNotBasic: {
+			type: "boolean",
+			default: false,
 		},
 		vimeoShowLogo: {
 			//vimeo only
@@ -118,6 +206,7 @@ registerBlockType("ub/advanced-video", {
 	edit: withState({
 		enterExternalURL: false,
 		videoURLInput: "",
+		//include in each cache entry: url, embedCode, time. if entry is at least 1 hour old, replace. else, reuse old result
 		youtubeCache: {},
 		vimeoCache: {},
 		dailyMotionCache: {},
@@ -138,115 +227,266 @@ registerBlockType("ub/advanced-video", {
 			url,
 			videoSource,
 			videoEmbedCode,
+			showPlayerControls,
+			autoplay,
 			width,
 			preserveAspectRatio,
 			height,
 			origWidth,
 			origHeight,
+			vimeoUploaderNotBasic,
 		} = attributes;
 
 		return (
 			<>
 				<InspectorControls>
-					<PanelBody title={__("Embedded video player settings")}>
-						<RangeControl
-							label={__("Video width (pixels)")}
-							value={width}
-							onChange={(newWidth) => {
-								setAttributes({ width: newWidth });
-
-								let newVideoEmbedCode = videoEmbedCode;
-
-								newVideoEmbedCode = newVideoEmbedCode.replace(
-									/width="[0-9]+"/,
-									`width="${newWidth}"`
-								);
-								if (videoSource === "facebook") {
-									newVideoEmbedCode = newVideoEmbedCode.replace(
-										/&width=[0-9]+/,
-										`width="${newWidth}"`
-									);
-								}
-
-								if (preserveAspectRatio) {
-									//get ratio between current width and current height, then recalculate height according to ratio
-									const newHeight = Math.round((height * newWidth) / width);
-									setAttributes({
-										height: newHeight,
-									});
-									newVideoEmbedCode = newVideoEmbedCode.replace(
-										/height="[0-9]+"/,
-										`height="${newHeight}"`
-									);
-									if (videoSource === "facebook") {
-										newVideoEmbedCode = newVideoEmbedCode.replace(
-											/&height=[0-9]+/,
-											`height="${newHeight}"`
-										);
-									}
-								}
-								setAttributes({ videoEmbedCode: newVideoEmbedCode });
-							}}
-							min={200}
-							max={1600}
-						/>
-						{!preserveAspectRatio && (
+					{url !== "" && (
+						<PanelBody title={__("Embedded video player settings")}>
 							<RangeControl
-								label={__("Video height (pixels)")}
-								value={height}
-								onChange={(height) => {
-									setAttributes({ height });
+								label={__("Video width (pixels)")}
+								value={width}
+								onChange={(newWidth) => {
+									setAttributes({ width: newWidth });
+
 									let newVideoEmbedCode = videoEmbedCode;
 
 									newVideoEmbedCode = newVideoEmbedCode.replace(
-										/height="[0-9]+"/,
-										`height="${height}"`
+										/width="[0-9]+"/,
+										`width="${newWidth}"`
 									);
 									if (videoSource === "facebook") {
 										newVideoEmbedCode = newVideoEmbedCode.replace(
-											/&height=[0-9]+/,
-											`height="${height}"`
+											/&width=[0-9]+/,
+											`width="${newWidth}"`
 										);
+									}
+
+									if (preserveAspectRatio) {
+										//get ratio between current width and current height, then recalculate height according to ratio
+										const newHeight = Math.round((height * newWidth) / width);
+										setAttributes({
+											height: newHeight,
+										});
+										newVideoEmbedCode = newVideoEmbedCode.replace(
+											/height="[0-9]+"/,
+											`height="${newHeight}"`
+										);
+										if (videoSource === "facebook") {
+											newVideoEmbedCode = newVideoEmbedCode.replace(
+												/&height=[0-9]+/,
+												`height="${newHeight}"`
+											);
+										}
 									}
 									setAttributes({ videoEmbedCode: newVideoEmbedCode });
 								}}
 								min={200}
 								max={1600}
 							/>
-						)}
-						<p>{__("Preserve aspect ratio")}</p>
-						<ToggleControl
-							checked={preserveAspectRatio}
-							onChange={() => {
-								setAttributes({
-									preserveAspectRatio: !preserveAspectRatio,
-								});
-								if (
-									!preserveAspectRatio &&
-									!["facebook", "unknown"].includes(videoSource)
-								) {
-									const newHeight = Math.round(
-										(origHeight * width) / origWidth
-									);
+							{!preserveAspectRatio && (
+								<RangeControl
+									label={__("Video height (pixels)")}
+									value={height}
+									onChange={(height) => {
+										setAttributes({ height });
+										let newVideoEmbedCode = videoEmbedCode;
 
-									let newVideoEmbedCode = videoEmbedCode.replace(
-										/height="[0-9]+"/,
-										`height="${newHeight}"`
-									);
-									if (videoSource === "facebook") {
 										newVideoEmbedCode = newVideoEmbedCode.replace(
-											/&height=[0-9]+/,
+											/height="[0-9]+"/,
+											`height="${height}"`
+										);
+										if (videoSource === "facebook") {
+											newVideoEmbedCode = newVideoEmbedCode.replace(
+												/&height=[0-9]+/,
+												`height="${height}"`
+											);
+										}
+										setAttributes({ videoEmbedCode: newVideoEmbedCode });
+									}}
+									min={200}
+									max={1600}
+								/>
+							)}
+							<p>{__("Preserve aspect ratio")}</p>
+							<ToggleControl
+								checked={preserveAspectRatio}
+								onChange={() => {
+									setAttributes({
+										preserveAspectRatio: !preserveAspectRatio,
+									});
+									if (
+										!preserveAspectRatio &&
+										!["facebook", "unknown"].includes(videoSource)
+									) {
+										const newHeight = Math.round(
+											(origHeight * width) / origWidth
+										);
+
+										let newVideoEmbedCode = videoEmbedCode.replace(
+											/height="[0-9]+"/,
 											`height="${newHeight}"`
 										);
+										if (videoSource === "facebook") {
+											newVideoEmbedCode = newVideoEmbedCode.replace(
+												/&height=[0-9]+/,
+												`height="${newHeight}"`
+											);
+										}
+										setAttributes({
+											height: newHeight,
+											videoEmbedCode: newVideoEmbedCode,
+										});
 									}
-									setAttributes({
-										height: newHeight,
-										videoEmbedCode: newVideoEmbedCode,
-									});
-								}
-							}}
-						/>
-					</PanelBody>
+								}}
+							/>
+							{/* SUPPORTED IN DAILYMOTION, YOUTUBE, LOCAL, DIRECT */}
+							{(["local", "unknown", "youtube", "dailymotion"].includes(
+								videoSource
+							) ||
+								(videoSource === "vimeo" && vimeoUploaderNotBasic)) && (
+								<>
+									<p>{__("Show player controls")}</p>
+									<ToggleControl
+										checked={showPlayerControls}
+										onChange={() => {
+											setAttributes({
+												showPlayerControls: !showPlayerControls,
+											});
+											switch (videoSource) {
+												case "local":
+												case "unknown":
+													if (showPlayerControls) {
+														//opposite of incoming value is still stored
+														const videoControlsMatch = /<video(?: .+)* controls(?: .+?)*?>/g.exec(
+															videoEmbedCode
+														);
+
+														setAttributes({
+															videoEmbedCode: videoEmbedCode.replace(
+																videoControlsMatch[0],
+																videoControlsMatch[0].replace(" controls", "")
+															),
+														});
+														//remove controls from it, then replace video tag in video embed code with the one with controls attribute removed
+													} else {
+														const videoTag = /<video(?: .+?)*>/.exec(
+															videoEmbedCode
+														);
+
+														setAttributes({
+															videoEmbedCode: videoEmbedCode.replace(
+																videoTag[0],
+																videoTag[0].replace("<video", "<video controls")
+															),
+														});
+													}
+													break;
+												case "youtube":
+												case "vimeo":
+													setAttributes({
+														videoEmbedCode: editEmbedArgs(
+															videoSource,
+															videoEmbedCode,
+															showPlayerControls ? "add" : "remove",
+															"controls=0"
+														),
+													});
+													break;
+												case "dailymotion":
+													setAttributes({
+														videoEmbedCode: editEmbedArgs(
+															"dailymotion",
+															videoEmbedCode,
+															showPlayerControls ? "add" : "remove",
+															"controls=false"
+														),
+													});
+													break;
+												case "facebook":
+												default:
+													console.log("there's nothing to change here");
+													break;
+											}
+										}}
+									/>
+								</>
+							)}
+							{/*SUPPORTED IN DIRECT, LOCAL, YOUTUBE, DAILYMOTION, VIMEO, VIDEOPRESS */}
+							<p>{__("Autoplay")}</p>
+							<ToggleControl
+								checked={autoplay}
+								onChange={() => {
+									setAttributes({ autoplay: !autoplay });
+									switch (videoSource) {
+										case "local":
+										case "unknown":
+											if (autoplay) {
+												const videoControlsMatch = /<video(?: .+)* autplay(?: .+?)*?>/g.exec(
+													videoEmbedCode
+												);
+
+												setAttributes({
+													videoEmbedCode: videoEmbedCode.replace(
+														videoControlsMatch[0],
+														videoControlsMatch[0].replace(" autoplay", "")
+													),
+												});
+											} else {
+												const videoTag = /<video(?: .+?)*>/.exec(
+													videoEmbedCode
+												);
+
+												setAttributes({
+													videoEmbedCode: videoEmbedCode.replace(
+														videoTag[0],
+														videoTag[0].replace("<video", "<video autoplay")
+													),
+												});
+											}
+											break;
+
+										case "youtube":
+										case "vimeo":
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													videoSource,
+													videoEmbedCode,
+													autoplay ? "remove" : "add",
+													"autoplay=1"
+												),
+											});
+											break;
+										case "videopress":
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													"videopress",
+													videoEmbedCode,
+													autoplay ? "remove" : "add",
+													"autoPlay=1"
+												),
+											});
+											break;
+
+										case "dailymotion":
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													"dailymotion",
+													videoEmbedCode,
+													autoplay ? "remove" : "add",
+													"autoplay=true"
+												),
+											});
+											break;
+
+										case "facebook":
+										default:
+											console.log("there's nothing to change here");
+											break;
+									}
+								}}
+							/>
+						</PanelBody>
+					)}
 				</InspectorControls>
 				{url === "" && (
 					<>
@@ -266,7 +506,11 @@ registerBlockType("ub/advanced-video", {
 											url: media.url,
 											width: newWidth,
 											height: newHeight,
-											videoEmbedCode: `<video controls width="${newWidth}" height="${newHeight}"><source src="${media.url}"></video>`,
+											videoEmbedCode: `<video ${
+												showPlayerControls ? "controls" : ""
+											} width="${newWidth}" height="${newHeight}"><source src="${
+												media.url
+											}"></video>`,
 											videoSource: "local",
 										});
 									}}
@@ -296,9 +540,7 @@ registerBlockType("ub/advanced-video", {
 									disableSuggestions
 									autoFocus={false}
 									value={videoURLInput}
-									onChange={(videoURLInput) => {
-										setState({ videoURLInput });
-									}}
+									onChange={(videoURLInput) => setState({ videoURLInput })}
 								/>
 								<IconButton
 									icon={"editor-break"}
@@ -399,6 +641,8 @@ registerBlockType("ub/advanced-video", {
 																				setAttributes({
 																					videoEmbedCode: data.html,
 																					videoSource: "vimeo",
+																					vimeoUploaderNotBasic:
+																						data.account_type !== "basic",
 																				});
 																			});
 																		})
@@ -480,7 +724,6 @@ registerBlockType("ub/advanced-video", {
 														console.log(err);
 													});
 											} else if (facebookVideoMatch) {
-												console.log("facebook url detected");
 												setAttributes({
 													url: videoURLInput,
 													videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
@@ -533,6 +776,9 @@ registerBlockType("ub/advanced-video", {
 									videoEmbedCode: "",
 									videoId: -1,
 									videoSource: "",
+									preserveAspectRatio: true,
+									autoplay: false,
+									showPlayerControls: true,
 								});
 								setState({ videoURLInput: "" });
 							}}

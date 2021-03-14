@@ -128,6 +128,14 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0,
             ),
+            'height' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'width' => array(
+                'type' => 'number',
+                'default' => 0,
+            )
         )
     ),
     'ub/button' => array(
