@@ -84,11 +84,13 @@ export const inspectorControls = (props) => {
 			<PanelBody title={__("Testimonial Body")}>
 				<p>
 					{__("Font Color")}
-					<span
-						class="component-color-indicator"
-						aria-label={`(Color: ${textColor})`}
-						style={{ background: textColor }}
-					/>
+					{textColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${textColor})`}
+							style={{ background: textColor }}
+						/>
+					)}
 				</p>
 				<ColorPalette
 					value={textColor}
