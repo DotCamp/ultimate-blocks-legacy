@@ -12,8 +12,9 @@ const {
 } = wp.components;
 
 import icon from "./icon";
+import { convertFromSeconds } from "../../common";
 
-function editEmbedArgs(source, embedCode, mode, arg) {
+function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 	let newEmbedCode = embedCode;
 	let regexPart = "";
 
@@ -25,9 +26,9 @@ function editEmbedArgs(source, embedCode, mode, arg) {
 				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9]+";
 		} else if (source === "vimeo") {
 			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+";
-		} else if (source === "videopress") {
-			regexPart = "https:\\/\\/videopress\\.com\\/embed\\/[A-Za-z0-9]+";
-		}
+		} /*else if (source === "videopress") {
+			regexPart = "https:\\/\\/videopress\\.com\\/v\\/[A-Za-z0-9]+";
+		}*/
 
 		const embedRegex = new RegExp(
 			[
@@ -37,7 +38,23 @@ function editEmbedArgs(source, embedCode, mode, arg) {
 		);
 
 		const embedArgs = embedRegex.exec(embedCode);
-		if (embedArgs[1]) {
+
+		if (isTimeCode) {
+			//currently only for vimeo
+			const timecodeCanBeRemoved = /([^#]+)#.+/.exec(embedArgs[0]);
+
+			if (timecodeCanBeRemoved) {
+				newEmbedCode = embedCode.replace(
+					embedArgs[0],
+					`${timecodeCanBeRemoved[1]}#${arg}`
+				);
+			} else {
+				newEmbedCode = embedCode.replace(
+					embedArgs[0],
+					`${embedArgs[0]}#${arg}`
+				);
+			}
+		} else if (embedArgs && embedArgs[1]) {
 			if (!embedArgs[1].includes(arg)) {
 				newEmbedCode = embedCode.replace(
 					embedArgs[0],
@@ -55,9 +72,16 @@ function editEmbedArgs(source, embedCode, mode, arg) {
 				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9-_]+\\?(";
 		} else if (source === "vimeo") {
 			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+\\?(";
-		} else if (source === "videopress") {
-			regexPart = "https:\\/\\/videopress\\.com\\/embed\\/[A-Za-z0-9]+\\?(";
+		} /*else if (source === "videopress") {
+			regexPart = "https:\\/\\/videopress\\.com\\/v\\/[A-Za-z0-9]+\\?(";
+		}*/ else {
+			//check if this part is reachable
+			console.log("source is either local or unknown");
 		}
+
+		console.log("implementing removal");
+
+		console.log(arg);
 
 		const embedRegex = new RegExp(
 			[
@@ -71,26 +95,127 @@ function editEmbedArgs(source, embedCode, mode, arg) {
 		);
 
 		const embedArgs = embedRegex.exec(newEmbedCode);
-		if (embedArgs[1].includes(arg)) {
-			if (arg.length < embedArgs[1].length) {
-				let fullArg = arg;
+		if (isTimeCode) {
+			//embedargs cannot be used. use another regex code. vimeo scenario
+			const vimeoTimeCode = /https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
+				newEmbedCode
+			);
 
-				if (embedArgs[1].indexOf(arg)) {
-					fullArg = "&" + arg;
+			newEmbedCode = newEmbedCode.replace(
+				vimeoTimeCode[1],
+				vimeoTimeCode[1].replace(/#t=.+/, "")
+			);
+		} else {
+			if (embedArgs[1].includes(arg)) {
+				if (arg.length < embedArgs[1].length) {
+					let fullArg = arg;
+
+					if (embedArgs[1].indexOf(arg)) {
+						fullArg = "&" + arg;
+					} else {
+						fullArg = arg + "&";
+					}
+
+					newEmbedCode = embedCode.replace(
+						embedArgs[1],
+						embedArgs[1].replace(fullArg, "")
+					);
 				} else {
-					fullArg = arg + "&";
+					newEmbedCode = embedCode.replace(
+						embedArgs[0],
+						embedArgs[0].replace(`?${arg}`, "")
+					);
 				}
-
-				newEmbedCode = embedCode.replace(
-					embedArgs[1],
-					embedArgs[1].replace(fullArg, "")
-				);
-			} else {
-				newEmbedCode = embedCode.replace(
-					embedArgs[0],
-					embedArgs[0].replace(`?${arg}`, "")
-				);
 			}
+		}
+	}
+
+	return newEmbedCode;
+}
+
+function makeTimeCode(seconds) {
+	let timeCode = "";
+	const time = convertFromSeconds(seconds);
+	if (time.d) {
+		timeCode += `${time.d}d`;
+	}
+	if (time.h) {
+		timeCode += `${time.h}h`;
+	}
+	if (time.m) {
+		timeCode += `${time.m}m`;
+	}
+	if (time.s) {
+		timeCode += `${time.s}s`;
+	}
+	return `t=${timeCode}`;
+}
+
+function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
+	let newEmbedCode = embedCode;
+
+	let startCode = "";
+
+	switch (source) {
+		case "youtube":
+		case "dailymotion":
+			startCode = `start=${startTime}`;
+			break;
+		case "videopress":
+			startCode = `at=${startTime}`;
+			break;
+		case "vimeo":
+			//specify hours minutes and seconds, can skip units with zero value
+			//use #t=xhxmxs
+			startCode = makeTimeCode(startTime);
+			break;
+		case "local":
+		//use #t=s
+		default:
+			console.log("no case handler yet");
+			break;
+	}
+
+	if (source === "vimeo") {
+		newEmbedCode = editEmbedArgs(
+			source,
+			embedCode,
+			startTime > 0 ? "add" : "remove",
+			startTime > 0 ? startCode : makeTimeCode(prevStartTime),
+			true
+		);
+	} else if (["youtube", "dailymotion"].includes(source)) {
+		if (prevStartTime > 0) {
+			newEmbedCode = editEmbedArgs(
+				source,
+				embedCode,
+				"remove",
+				`start=${prevStartTime}`
+			);
+		}
+
+		if (startTime > 0) {
+			newEmbedCode = editEmbedArgs(source, newEmbedCode, "add", startCode);
+		}
+	} else {
+		console.log("check local embed code");
+		const embedArgs = /<source (?:[^"=\s]+=".+?" )*(src="[^#"]+(#t=[0-9]+)?")/.exec(
+			newEmbedCode
+		);
+
+		if (embedArgs[2]) {
+			newEmbedCode = newEmbedCode.replace(
+				embedArgs[1],
+				embedArgs[1].replace(
+					embedArgs[2],
+					startTime > 0 ? `#t=${startTime}` : ""
+				)
+			);
+		} else {
+			newEmbedCode = newEmbedCode.replace(
+				embedArgs[1],
+				embedArgs[1].replace(/"$/g, `#t=${startTime}"`)
+			);
 		}
 	}
 
@@ -145,7 +270,7 @@ registerBlockType("ub/advanced-video", {
 			default: false,
 		},
 		autoplay: {
-			//applies to: videopress, vimeo, dailymotion, youtube
+			//applies to: vimeo, dailymotion, youtube
 			type: "boolean",
 			default: false,
 		},
@@ -178,7 +303,12 @@ registerBlockType("ub/advanced-video", {
 			default: "",
 		},
 		startTime: {
-			//applies to youtube, dailymotion, videopress, vimeo
+			//applies to youtube, dailymotion, vimeo, local, custom
+			type: "number",
+			default: 0,
+		},
+		videoLength: {
+			//starttime will never be larger than this
 			type: "number",
 			default: 0,
 		},
@@ -206,6 +336,11 @@ registerBlockType("ub/advanced-video", {
 	edit: withState({
 		enterExternalURL: false,
 		videoURLInput: "",
+		allowCustomStartTime: false,
+		startTime_d: 0,
+		startTime_h: 0,
+		startTime_m: 0,
+		startTime_s: 0,
 		//include in each cache entry: url, embedCode, time. if entry is at least 1 hour old, replace. else, reuse old result
 		youtubeCache: {},
 		vimeoCache: {},
@@ -221,12 +356,19 @@ registerBlockType("ub/advanced-video", {
 			setState,
 			enterExternalURL,
 			videoURLInput,
+			allowCustomStartTime,
+			startTime_d,
+			startTime_h,
+			startTime_m,
+			startTime_s,
 		} = props;
 		const {
 			videoId,
 			url,
 			videoSource,
 			videoEmbedCode,
+			videoLength,
+			startTime,
 			showPlayerControls,
 			autoplay,
 			width,
@@ -236,6 +378,20 @@ registerBlockType("ub/advanced-video", {
 			origHeight,
 			vimeoUploaderNotBasic,
 		} = attributes;
+
+		if (
+			startTime !== 0 &&
+			[startTime_d, startTime_h, startTime_m, startTime_s].every((t) => t === 0)
+		) {
+			let st = convertFromSeconds(startTime);
+			setState({
+				allowCustomStartTime: true,
+				startTime_d: st.d,
+				startTime_h: st.h,
+				startTime_m: st.m,
+				startTime_s: st.s,
+			});
+		}
 
 		return (
 			<>
@@ -412,79 +568,245 @@ registerBlockType("ub/advanced-video", {
 								</>
 							)}
 							{/*SUPPORTED IN DIRECT, LOCAL, YOUTUBE, DAILYMOTION, VIMEO, VIDEOPRESS */}
-							<p>{__("Autoplay")}</p>
-							<ToggleControl
-								checked={autoplay}
-								onChange={() => {
-									setAttributes({ autoplay: !autoplay });
-									switch (videoSource) {
-										case "local":
-										case "unknown":
-											if (autoplay) {
-												const videoControlsMatch = /<video(?: .+)* autplay(?: .+?)*?>/g.exec(
-													videoEmbedCode
-												);
+							{!["facebook", "unknown", "videopress"].includes(videoSource) && (
+								<>
+									<p>{__("Autoplay")}</p>
+									<ToggleControl
+										checked={autoplay}
+										onChange={() => {
+											setAttributes({ autoplay: !autoplay });
+											switch (videoSource) {
+												case "local":
+												case "unknown":
+													if (autoplay) {
+														const videoControlsMatch = /<video(?: .+)* autoplay(?: .+?)*?>/g.exec(
+															videoEmbedCode
+														);
 
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoControlsMatch[0],
-														videoControlsMatch[0].replace(" autoplay", "")
-													),
-												});
-											} else {
-												const videoTag = /<video(?: .+?)*>/.exec(
-													videoEmbedCode
-												);
+														setAttributes({
+															videoEmbedCode: videoEmbedCode.replace(
+																videoControlsMatch[0],
+																videoControlsMatch[0].replace(" autoplay", "")
+															),
+														});
+													} else {
+														const videoTag = /<video(?: .+?)*>/.exec(
+															videoEmbedCode
+														);
 
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoTag[0],
-														videoTag[0].replace("<video", "<video autoplay")
-													),
-												});
+														setAttributes({
+															videoEmbedCode: videoEmbedCode.replace(
+																videoTag[0],
+																videoTag[0].replace("<video", "<video autoplay")
+															),
+														});
+													}
+													break;
+
+												case "youtube":
+												case "vimeo":
+													setAttributes({
+														videoEmbedCode: editEmbedArgs(
+															videoSource,
+															videoEmbedCode,
+															autoplay ? "remove" : "add",
+															"autoplay=1"
+														),
+													});
+													break;
+
+												case "dailymotion":
+													setAttributes({
+														videoEmbedCode: editEmbedArgs(
+															"dailymotion",
+															videoEmbedCode,
+															autoplay ? "remove" : "add",
+															"autoplay=true"
+														),
+													});
+													break;
+
+												case "facebook":
+												default:
+													console.log("there's nothing to change here");
+													break;
 											}
-											break;
+										}}
+									/>
 
-										case "youtube":
-										case "vimeo":
-											setAttributes({
-												videoEmbedCode: editEmbedArgs(
-													videoSource,
-													videoEmbedCode,
-													autoplay ? "remove" : "add",
-													"autoplay=1"
-												),
-											});
-											break;
-										case "videopress":
-											setAttributes({
-												videoEmbedCode: editEmbedArgs(
-													"videopress",
-													videoEmbedCode,
-													autoplay ? "remove" : "add",
-													"autoPlay=1"
-												),
-											});
-											break;
+									<p>{__("Allow custom start time")}</p>
+									<ToggleControl
+										checked={allowCustomStartTime}
+										onChange={() => {
+											setState({ allowCustomStartTime: !allowCustomStartTime });
+											if (allowCustomStartTime) {
+												setAttributes({
+													startTime: 0,
+													videoEmbedCode: adjustVideoStart(
+														videoSource,
+														videoEmbedCode,
+														0,
+														startTime
+													),
+												});
+												setState({
+													startTime_d: 0,
+													startTime_h: 0,
+													startTime_m: 0,
+													startTime_s: 0,
+												});
 
-										case "dailymotion":
-											setAttributes({
-												videoEmbedCode: editEmbedArgs(
-													"dailymotion",
-													videoEmbedCode,
-													autoplay ? "remove" : "add",
-													"autoplay=true"
-												),
-											});
-											break;
+												//also remove custom start time from embed code
+											}
+										}}
+									/>
+								</>
+							)}
+							{allowCustomStartTime && (
+								<>
+									<p>{__("Start time")}</p>
+									<div>
+										{videoLength >= 86400 && (
+											<input
+												type="number"
+												value={startTime_d}
+												min={0}
+												step={1}
+												onChange={(e) => {
+													const d = Number(e.target.value);
+													const startPoint =
+														d * 86400 +
+														startTime_h * 3600 +
+														startTime_m * 60 +
+														startTime_s;
 
-										case "facebook":
-										default:
-											console.log("there's nothing to change here");
-											break;
-									}
-								}}
-							/>
+													if (
+														startPoint < videoLength &&
+														d % 1 === 0 &&
+														d > -1
+													) {
+														setState({ startTime_d: d });
+														setAttributes({
+															startTime: startPoint,
+															videoEmbedCode: adjustVideoStart(
+																videoSource,
+																videoEmbedCode,
+																startPoint,
+																startTime
+															),
+														});
+													}
+												}}
+											/>
+										)}
+										{videoLength >= 3600 && (
+											<input
+												type="number"
+												value={startTime_h}
+												min={0}
+												max={23}
+												step={1}
+												onChange={(e) => {
+													const h = Number(e.target.value);
+													const startPoint =
+														startTime_d * 86400 +
+														h * 3600 +
+														startTime_m * 60 +
+														startTime_s;
+
+													if (
+														startPoint < videoLength &&
+														h % 1 === 0 &&
+														h > -1 &&
+														h < 24
+													) {
+														setState({ startTime_h: h });
+														setAttributes({
+															startTime: startPoint,
+															videoEmbedCode: adjustVideoStart(
+																videoSource,
+																videoEmbedCode,
+																startPoint,
+																startTime
+															),
+														});
+													}
+												}}
+											/>
+										)}
+										{videoLength >= 60 && (
+											<input
+												type="number"
+												value={startTime_m}
+												min={0}
+												max={59}
+												step={1}
+												onChange={(e) => {
+													const m = Number(e.target.value);
+													const startPoint =
+														startTime_d * 86400 +
+														startTime_h * 3600 +
+														m * 60 +
+														startTime_s;
+
+													if (
+														startPoint < videoLength &&
+														m % 1 === 0 &&
+														m > -1 &&
+														m < 60
+													) {
+														setState({ startTime_m: m });
+
+														let newCode = adjustVideoStart(
+															videoSource,
+															videoEmbedCode,
+															startPoint,
+															startTime
+														);
+														setAttributes({
+															startTime: startPoint,
+															videoEmbedCode: newCode,
+														});
+													}
+												}}
+											/>
+										)}
+										<input
+											type="number"
+											value={startTime_s}
+											min={0}
+											max={59}
+											step={1}
+											onChange={(e) => {
+												const s = Number(e.target.value);
+												const startPoint =
+													startTime_d * 86400 +
+													startTime_h * 3600 +
+													startTime_m * 60 +
+													s;
+
+												if (
+													startPoint < videoLength &&
+													s % 1 === 0 &&
+													s > -1 &&
+													s < 60
+												) {
+													setState({ startTime_s: s });
+													setAttributes({
+														startTime: startPoint,
+														videoEmbedCode: adjustVideoStart(
+															videoSource,
+															videoEmbedCode,
+															startPoint,
+															startTime
+														),
+													});
+												}
+											}}
+										/>
+									</div>
+								</>
+							)}
 						</PanelBody>
 					)}
 				</InspectorControls>
@@ -501,11 +823,22 @@ registerBlockType("ub/advanced-video", {
 											(media.height * newWidth) / media.width
 										);
 
+										const timeUnits = media.fileLength
+											.split(":")
+											.map((t) => parseInt(t))
+											.reverse();
+
+										const conversionFactor = [1, 60, 3600, 86400];
+
 										setAttributes({
 											videoId: media.id,
 											url: media.url,
 											width: newWidth,
 											height: newHeight,
+											videoLength: timeUnits.reduce(
+												(total, curr, i) => total + curr * conversionFactor[i],
+												0
+											),
 											videoEmbedCode: `<video ${
 												showPlayerControls ? "controls" : ""
 											} width="${newWidth}" height="${newHeight}"><source src="${
@@ -581,10 +914,14 @@ registerBlockType("ub/advanced-video", {
 													.then((response) => {
 														response.json().then((data) => {
 															if (data.items.length) {
-																const thumbHeight =
-																	data.items[0].snippet.thumbnails.high.height;
-																const thumbWidth =
-																	data.items[0].snippet.thumbnails.high.width;
+																const {
+																	height: thumbHeight,
+																	width: thumbWidth,
+																} = data.items[0].snippet.thumbnails.high;
+
+																let timePeriods = data.items[0].contentDetails.duration.match(
+																	/(\d{1,2}(?:W|D|H|M|S))/g
+																);
 																setAttributes({
 																	url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
 																	videoSource: "youtube",
@@ -596,6 +933,23 @@ registerBlockType("ub/advanced-video", {
 																	height:
 																		(thumbHeight * Math.min(600, thumbWidth)) /
 																		thumbWidth,
+																	videoLength: timePeriods.reduce(
+																		(sum, part) => {
+																			let multiplier = {
+																				W: 604800,
+																				D: 86400,
+																				H: 3600,
+																				M: 60,
+																				S: 1,
+																			};
+																			return (
+																				sum +
+																				Number(part.slice(0, -1)) *
+																					multiplier[part.slice(-1)]
+																			);
+																		},
+																		0
+																	),
 																});
 															} else {
 																setAttributes({
@@ -630,6 +984,7 @@ registerBlockType("ub/advanced-video", {
 																		origWidth: data[0].width,
 																		width: newWidth,
 																		height: newHeight,
+																		videoLength: data[0].duration,
 																	});
 																	fetch(
 																		`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
@@ -637,6 +992,11 @@ registerBlockType("ub/advanced-video", {
 																		)}&width=${newWidth}&height=${newHeight}`
 																	)
 																		.then((response) => {
+																			console.log(
+																				"additional uploader details"
+																			);
+																			console.log(data);
+
 																			response.json().then((data) => {
 																				setAttributes({
 																					videoEmbedCode: data.html,
@@ -681,6 +1041,7 @@ registerBlockType("ub/advanced-video", {
 																	videoSource: "dailymotion",
 																	height: newHeight,
 																	width: newWidth,
+																	videoLength: data.duration,
 																});
 															});
 														} else {
@@ -702,13 +1063,22 @@ registerBlockType("ub/advanced-video", {
 																const newHeight = Math.round(
 																	(data.height * newWidth) / data.width
 																);
+
+																console.log("videopress data");
+																console.log(data);
+
+																console.log(
+																	"generate alternative embed code using ff url"
+																);
+																console.log(data.original);
 																setAttributes({
 																	url: `https://videopress.com/v/${data.guid}`,
-																	videoEmbedCode: `<iframe width="${newWidth}" height="${newHeight}" src="https://videopress.com/embed/${data.guid}" frameborder="0" allowfullscreen></iframe>
+																	videoEmbedCode: `<iframe width="${newWidth}" height="${newHeight}" src="https://videopress.com/v/${data.guid}" frameborder="0" allowfullscreen></iframe>
 														<script src="https://videopress.com/videopress-iframe.js"></script>`,
 																	videoSource: "videopress",
 																	height: newHeight,
 																	width: newWidth,
+																	videoLength: Math.floor(data.duration / 1000),
 																});
 															});
 														} else {
@@ -779,8 +1149,16 @@ registerBlockType("ub/advanced-video", {
 									preserveAspectRatio: true,
 									autoplay: false,
 									showPlayerControls: true,
+									startTime: 0,
 								});
-								setState({ videoURLInput: "" });
+								setState({
+									videoURLInput: "",
+									allowCustomStartTime: false,
+									startTime_d: 0,
+									startTime_h: 0,
+									startTime_m: 0,
+									startTime_s: 0,
+								});
 							}}
 						>
 							{__("Replace")}

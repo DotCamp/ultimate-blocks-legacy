@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { convertFromSeconds } from "../../common";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 
@@ -324,13 +325,6 @@ class HowToStep extends Component {
 			sectionNum,
 			stepNum,
 		} = this.props;
-
-		const convertFromSeconds = (sec) => ({
-			s: sec % 60,
-			m: ~~(sec / 60) % 60,
-			h: ~~(sec / 3600) % 24,
-			d: ~~(sec / 86400),
-		});
 
 		if (hasVideoClip) {
 			const start = convertFromSeconds(videoClipStart);

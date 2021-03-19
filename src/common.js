@@ -94,3 +94,9 @@ export const splitArray = (sourceArray, condition) => {
 
 	return [passArray, failArray];
 };
+export const convertFromSeconds = (sec) => ({
+	s: sec % 60,
+	m: ~~(sec / 60) % 60,
+	h: ~~(sec / 3600) % 24,
+	d: ~~(sec / 86400),
+});
