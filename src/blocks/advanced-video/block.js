@@ -26,9 +26,7 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9]+";
 		} else if (source === "vimeo") {
 			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+";
-		} /*else if (source === "videopress") {
-			regexPart = "https:\\/\\/videopress\\.com\\/v\\/[A-Za-z0-9]+";
-		}*/
+		}
 
 		const embedRegex = new RegExp(
 			[
@@ -72,16 +70,10 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9-_]+\\?(";
 		} else if (source === "vimeo") {
 			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+\\?(";
-		} /*else if (source === "videopress") {
-			regexPart = "https:\\/\\/videopress\\.com\\/v\\/[A-Za-z0-9]+\\?(";
-		}*/ else {
+		} else {
 			//check if this part is reachable
 			console.log("source is either local or unknown");
 		}
-
-		console.log("implementing removal");
-
-		console.log(arg);
 
 		const embedRegex = new RegExp(
 			[
@@ -161,18 +153,14 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 		case "dailymotion":
 			startCode = `start=${startTime}`;
 			break;
-		case "videopress":
-			startCode = `at=${startTime}`;
-			break;
 		case "vimeo":
 			//specify hours minutes and seconds, can skip units with zero value
 			//use #t=xhxmxs
 			startCode = makeTimeCode(startTime);
 			break;
 		case "local":
-		//use #t=s
+		//already handled differently
 		default:
-			console.log("no case handler yet");
 			break;
 	}
 
@@ -198,7 +186,7 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 			newEmbedCode = editEmbedArgs(source, newEmbedCode, "add", startCode);
 		}
 	} else {
-		console.log("check local embed code");
+		//case handler for local/direct
 		const embedArgs = /<source (?:[^"=\s]+=".+?" )*(src="[^#"]+(#t=[0-9]+)?")/.exec(
 			newEmbedCode
 		);
@@ -496,9 +484,13 @@ registerBlockType("ub/advanced-video", {
 								}}
 							/>
 							{/* SUPPORTED IN DAILYMOTION, YOUTUBE, LOCAL, DIRECT */}
-							{(["local", "unknown", "youtube", "dailymotion"].includes(
-								videoSource
-							) ||
+							{([
+								"local",
+								"unknown",
+								"youtube",
+								"dailymotion",
+								"videopress",
+							].includes(videoSource) ||
 								(videoSource === "vimeo" && vimeoUploaderNotBasic)) && (
 								<>
 									<p>{__("Show player controls")}</p>
@@ -509,6 +501,7 @@ registerBlockType("ub/advanced-video", {
 												showPlayerControls: !showPlayerControls,
 											});
 											switch (videoSource) {
+												case "videopress":
 												case "local":
 												case "unknown":
 													if (showPlayerControls) {
@@ -567,8 +560,8 @@ registerBlockType("ub/advanced-video", {
 									/>
 								</>
 							)}
-							{/*SUPPORTED IN DIRECT, LOCAL, YOUTUBE, DAILYMOTION, VIMEO, VIDEOPRESS */}
-							{!["facebook", "unknown", "videopress"].includes(videoSource) && (
+							{/*SUPPORTED IN DIRECT, LOCAL, YOUTUBE, DAILYMOTION, VIMEO */}
+							{!["facebook", "unknown"].includes(videoSource) && (
 								<>
 									<p>{__("Autoplay")}</p>
 									<ToggleControl
@@ -576,6 +569,7 @@ registerBlockType("ub/advanced-video", {
 										onChange={() => {
 											setAttributes({ autoplay: !autoplay });
 											switch (videoSource) {
+												case "videopress":
 												case "local":
 												case "unknown":
 													if (autoplay) {
@@ -625,8 +619,6 @@ registerBlockType("ub/advanced-video", {
 														),
 													});
 													break;
-
-												case "facebook":
 												default:
 													console.log("there's nothing to change here");
 													break;
@@ -992,11 +984,6 @@ registerBlockType("ub/advanced-video", {
 																		)}&width=${newWidth}&height=${newHeight}`
 																	)
 																		.then((response) => {
-																			console.log(
-																				"additional uploader details"
-																			);
-																			console.log(data);
-
 																			response.json().then((data) => {
 																				setAttributes({
 																					videoEmbedCode: data.html,
@@ -1063,18 +1050,9 @@ registerBlockType("ub/advanced-video", {
 																const newHeight = Math.round(
 																	(data.height * newWidth) / data.width
 																);
-
-																console.log("videopress data");
-																console.log(data);
-
-																console.log(
-																	"generate alternative embed code using ff url"
-																);
-																console.log(data.original);
 																setAttributes({
 																	url: `https://videopress.com/v/${data.guid}`,
-																	videoEmbedCode: `<iframe width="${newWidth}" height="${newHeight}" src="https://videopress.com/v/${data.guid}" frameborder="0" allowfullscreen></iframe>
-														<script src="https://videopress.com/videopress-iframe.js"></script>`,
+																	videoEmbedCode: `<video controls width="${newWidth}" height="${newHeight}"><source src="${data.original}"></video>`,
 																	videoSource: "videopress",
 																	height: newHeight,
 																	width: newWidth,
