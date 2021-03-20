@@ -33,7 +33,7 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 		const embedRegex = new RegExp(
 			[
 				regexPart,
-				'(\\?[A-Za-z_]+=[^&"\\s]+(?:(?:&[A-Za-z_]+=[^&"\\s]+)*))?',
+				'(\\?[A-Za-z_]+=[^&"#\\s]+(?:(?:&[A-Za-z_]+=[^&#"\\s]+)*))?(?:#[^&#"\\s]+)?',
 			].join("")
 		);
 
@@ -57,8 +57,8 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 		} else if (embedArgs && embedArgs[1]) {
 			if (!embedArgs[1].includes(arg)) {
 				newEmbedCode = embedCode.replace(
-					embedArgs[0],
-					`${embedArgs[0]}&${arg}`
+					embedArgs[1],
+					`${embedArgs[1]}&${arg}`
 				);
 			}
 		} else {
