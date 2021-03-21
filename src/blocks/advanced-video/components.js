@@ -17,39 +17,51 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+";
 		}
 
-		const embedRegex = new RegExp(
-			[
-				regexPart,
-				'(\\?[A-Za-z_]+=[^&"#\\s]+(?:(?:&[A-Za-z_]+=[^&#"\\s]+)*))?(?:#[^&#"\\s]+)?',
-			].join("")
-		);
+		if (regexPart) {
+			const embedRegex = new RegExp(
+				[
+					regexPart,
+					'(\\?[A-Za-z_]+=[^&"#\\s]+(?:(?:&[A-Za-z_]+=[^&#"\\s]+)*))?(?:#[^&#"\\s]+)?',
+				].join("")
+			);
 
-		const embedArgs = embedRegex.exec(embedCode);
+			const embedArgs = embedRegex.exec(embedCode);
 
-		if (isTimeCode) {
-			//currently only for vimeo
-			const timecodeCanBeRemoved = /([^#]+)#.+/.exec(embedArgs[0]);
+			if (isTimeCode) {
+				//currently only for vimeo
+				const timecodeCanBeRemoved = /([^#]+)#.+/.exec(embedArgs[0]);
 
-			if (timecodeCanBeRemoved) {
-				newEmbedCode = embedCode.replace(
-					embedArgs[0],
-					`${timecodeCanBeRemoved[1]}#${arg}`
-				);
+				if (timecodeCanBeRemoved) {
+					newEmbedCode = embedCode.replace(
+						embedArgs[0],
+						`${timecodeCanBeRemoved[1]}#${arg}`
+					);
+				} else {
+					newEmbedCode = embedCode.replace(
+						embedArgs[0],
+						`${embedArgs[0]}#${arg}`
+					);
+				}
+			} else if (embedArgs && embedArgs[1]) {
+				if (!embedArgs[1].includes(arg)) {
+					newEmbedCode = embedCode.replace(
+						embedArgs[1],
+						`${embedArgs[1]}&${arg}`
+					);
+				}
 			} else {
 				newEmbedCode = embedCode.replace(
 					embedArgs[0],
-					`${embedArgs[0]}#${arg}`
-				);
-			}
-		} else if (embedArgs && embedArgs[1]) {
-			if (!embedArgs[1].includes(arg)) {
-				newEmbedCode = embedCode.replace(
-					embedArgs[1],
-					`${embedArgs[1]}&${arg}`
+					`${embedArgs[0]}?${arg}`
 				);
 			}
 		} else {
-			newEmbedCode = embedCode.replace(embedArgs[0], `${embedArgs[0]}?${arg}`);
+			const videoTag = /<video(?: .+?)*>/.exec(embedCode);
+
+			newEmbedCode = embedCode.replace(
+				videoTag[0],
+				videoTag[0].replace("<video", `<video ${arg}`)
+			);
 		}
 	} else if (mode === "remove") {
 		if (source === "youtube") {
@@ -64,50 +76,64 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 			console.log("source is either local or unknown");
 		}
 
-		const embedRegex = new RegExp(
-			[
-				regexPart,
-				arg,
-				'(?:&[A-Za-z_]+=[^&"\\s]+)?|[A-Za-z_]+=[^&"\\s]+?(?:(?:&[A-Za-z_]+=[^&"\\s]+?)*&',
-				arg,
-				"))",
-			].join(""),
-			"g"
-		);
-
-		const embedArgs = embedRegex.exec(newEmbedCode);
-		if (isTimeCode) {
-			//embedargs cannot be used. use another regex code. vimeo scenario
-			const vimeoTimeCode = /https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
-				newEmbedCode
+		if (regexPart) {
+			const embedRegex = new RegExp(
+				[
+					regexPart,
+					arg,
+					'(?:&[A-Za-z_]+=[^&"\\s]+)?|[A-Za-z_]+=[^&"\\s]+?(?:(?:&[A-Za-z_]+=[^&"\\s]+?)*&',
+					arg,
+					"))",
+				].join(""),
+				"g"
 			);
 
-			newEmbedCode = newEmbedCode.replace(
-				vimeoTimeCode[1],
-				vimeoTimeCode[1].replace(/#t=.+/, "")
-			);
-		} else {
-			if (embedArgs[1].includes(arg)) {
-				if (arg.length < embedArgs[1].length) {
-					let fullArg = arg;
+			const embedArgs = embedRegex.exec(newEmbedCode);
+			if (isTimeCode) {
+				//embedargs cannot be used. use another regex code. vimeo scenario
+				const vimeoTimeCode = /https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
+					newEmbedCode
+				);
 
-					if (embedArgs[1].indexOf(arg)) {
-						fullArg = "&" + arg;
+				newEmbedCode = newEmbedCode.replace(
+					vimeoTimeCode[1],
+					vimeoTimeCode[1].replace(/#t=.+/, "")
+				);
+			} else {
+				if (embedArgs[1].includes(arg)) {
+					if (arg.length < embedArgs[1].length) {
+						let fullArg = arg;
+
+						if (embedArgs[1].indexOf(arg)) {
+							fullArg = "&" + arg;
+						} else {
+							fullArg = arg + "&";
+						}
+
+						newEmbedCode = embedCode.replace(
+							embedArgs[1],
+							embedArgs[1].replace(fullArg, "")
+						);
 					} else {
-						fullArg = arg + "&";
+						newEmbedCode = embedCode.replace(
+							embedArgs[0],
+							embedArgs[0].replace(`?${arg}`, "")
+						);
 					}
-
-					newEmbedCode = embedCode.replace(
-						embedArgs[1],
-						embedArgs[1].replace(fullArg, "")
-					);
-				} else {
-					newEmbedCode = embedCode.replace(
-						embedArgs[0],
-						embedArgs[0].replace(`?${arg}`, "")
-					);
 				}
 			}
+		} else {
+			const videoControlsRegex = new RegExp(
+				`<video(?: .+)* ${arg}(?: .+?)*?>`,
+				"g"
+			);
+
+			const videoControlsMatch = videoControlsRegex.exec(embedCode);
+
+			newEmbedCode = embedCode.replace(
+				videoControlsMatch[0],
+				videoControlsMatch[0].replace(` ${arg}`, "")
+			);
 		}
 	}
 
@@ -225,6 +251,7 @@ export const inspectorControls = (props) => {
 		origHeight,
 		vimeoUploaderNotBasic,
 		mute,
+		loop,
 	} = attributes;
 
 	return (
@@ -347,31 +374,14 @@ export const inspectorControls = (props) => {
 										case "videopress":
 										case "local":
 										case "unknown":
-											if (showPlayerControls) {
-												//opposite of incoming value is still stored
-												const videoControlsMatch = /<video(?: .+)* controls(?: .+?)*?>/g.exec(
-													videoEmbedCode
-												);
-
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoControlsMatch[0],
-														videoControlsMatch[0].replace(" controls", "")
-													),
-												});
-												//remove controls from it, then replace video tag in video embed code with the one with controls attribute removed
-											} else {
-												const videoTag = /<video(?: .+?)*>/.exec(
-													videoEmbedCode
-												);
-
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoTag[0],
-														videoTag[0].replace("<video", "<video controls")
-													),
-												});
-											}
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													videoSource,
+													videoEmbedCode,
+													showPlayerControls ? "remove" : "add",
+													"controls"
+												),
+											});
 											break;
 										case "youtube":
 										case "vimeo":
@@ -415,29 +425,14 @@ export const inspectorControls = (props) => {
 										case "videopress":
 										case "local":
 										case "unknown":
-											if (autoplay) {
-												const videoControlsMatch = /<video(?: .+)* autoplay(?: .+?)*?>/g.exec(
-													videoEmbedCode
-												);
-
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoControlsMatch[0],
-														videoControlsMatch[0].replace(" autoplay", "")
-													),
-												});
-											} else {
-												const videoTag = /<video(?: .+?)*>/.exec(
-													videoEmbedCode
-												);
-
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoTag[0],
-														videoTag[0].replace("<video", "<video autoplay")
-													),
-												});
-											}
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													videoSource,
+													videoEmbedCode,
+													autoplay ? "remove" : "add",
+													"autoplay"
+												),
+											});
 											break;
 
 										case "youtube":
@@ -638,11 +633,71 @@ export const inspectorControls = (props) => {
 							</div>
 						</>
 					)}
+					{["youtube", "local", "unknown", "videopress", "vimeo"].includes(
+						videoSource
+					) && (
+						<>
+							<p>{__("Loop")}</p>
+							<ToggleControl
+								checked={loop}
+								onChange={() => {
+									setAttributes({ loop: !loop });
+									switch (videoSource) {
+										case "videopress":
+										case "local":
+										case "unknown":
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													videoSource,
+													videoEmbedCode,
+													loop ? "remove" : "add",
+													"loop"
+												),
+											});
+											break;
+										case "youtube":
+											let videoId = /https:\/\/www\.youtube\.com\/watch\?v=((?:\w|-){11})/.exec(
+												url
+											)[1];
+
+											let newEmbedCode = editEmbedArgs(
+												videoSource,
+												videoEmbedCode,
+												loop ? "remove" : "add",
+												"loop=1"
+											);
+
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													videoSource,
+													newEmbedCode,
+													loop ? "remove" : "add",
+													`playlist=${videoId}`
+												),
+											});
+											break;
+										case "vimeo":
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													videoSource,
+													videoEmbedCode,
+													loop ? "remove" : "add",
+													"loop=true"
+												),
+											});
+											break;
+										default:
+											break;
+									}
+								}}
+							/>
+						</>
+					)}
 					{["local", "unknown", "vimeo", "dailymotion", "videopress"].includes(
 						videoSource
 					) && (
 						<>
-							<p>{__("Mute initially")}</p>
+							<p>{__("Mute on page load")}</p>
 							<ToggleControl
 								checked={mute}
 								onChange={() => {
@@ -651,29 +706,14 @@ export const inspectorControls = (props) => {
 										case "videopress":
 										case "local":
 										case "unknown":
-											if (mute) {
-												const videoControlsMatch = /<video(?: .+)* muted(?: .+?)*?>/g.exec(
-													videoEmbedCode
-												);
-
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoControlsMatch[0],
-														videoControlsMatch[0].replace(" muted", "")
-													),
-												});
-											} else {
-												const videoTag = /<video(?: .+?)*>/.exec(
-													videoEmbedCode
-												);
-
-												setAttributes({
-													videoEmbedCode: videoEmbedCode.replace(
-														videoTag[0],
-														videoTag[0].replace("<video", "<video muted")
-													),
-												});
-											}
+											setAttributes({
+												videoEmbedCode: editEmbedArgs(
+													videoSource,
+													videoEmbedCode,
+													mute ? "remove" : "add",
+													"muted"
+												),
+											});
 											break;
 										case "vimeo":
 											setAttributes({

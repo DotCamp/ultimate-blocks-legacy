@@ -387,6 +387,7 @@ registerBlockType("ub/advanced-video", {
 																const newHeight = Math.round(
 																	(data.height * newWidth) / data.width
 																);
+
 																setAttributes({
 																	url: data.url,
 																	videoEmbedCode: decodeURIComponent(
@@ -496,6 +497,7 @@ registerBlockType("ub/advanced-video", {
 									showPlayerControls: true,
 									startTime: 0,
 									mute: false,
+									loop: false,
 								});
 								setState({
 									videoURLInput: "",
