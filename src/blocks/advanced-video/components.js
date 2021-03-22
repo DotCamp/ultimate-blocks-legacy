@@ -1,7 +1,8 @@
 import { convertFromSeconds } from "../../common";
 const { __ } = wp.i18n;
-const { InspectorControls } = wp.blockEditor || wp.editor;
-const { RangeControl, ToggleControl, PanelBody } = wp.components;
+const { MediaUpload, MediaUploadCheck, InspectorControls } =
+	wp.blockEditor || wp.editor;
+const { Button, RangeControl, ToggleControl, PanelBody } = wp.components;
 
 function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 	let newEmbedCode = embedCode;
@@ -225,6 +226,12 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 	return newEmbedCode;
 }
 
+function editThumbnail(source, embedCode, mode, thumbnailURL) {
+	return ["videopress", "local", "unknown"].includes(source)
+		? editEmbedArgs(source, embedCode, mode, `poster=${thumbnailURL}`)
+		: embedCode;
+}
+
 export const inspectorControls = (props) => {
 	const {
 		attributes,
@@ -235,6 +242,9 @@ export const inspectorControls = (props) => {
 		startTime_h,
 		startTime_m,
 		startTime_s,
+		useCustomThumbnail,
+		enterImageURL,
+		imageURLInput,
 	} = props;
 	const {
 		url,
@@ -252,6 +262,8 @@ export const inspectorControls = (props) => {
 		vimeoUploaderNotBasic,
 		mute,
 		loop,
+		thumbnail,
+		thumbnailID,
 	} = attributes;
 
 	return (
@@ -414,84 +426,89 @@ export const inspectorControls = (props) => {
 						</>
 					)}
 					{/*SUPPORTED IN DIRECT, LOCAL, YOUTUBE, DAILYMOTION, VIMEO */}
-					{!["facebook", "unknown"].includes(videoSource) && (
-						<>
-							<p>{__("Autoplay")}</p>
-							<ToggleControl
-								checked={autoplay}
-								onChange={() => {
-									setAttributes({ autoplay: !autoplay });
-									switch (videoSource) {
-										case "videopress":
-										case "local":
-										case "unknown":
+					{!["facebook", "unknown"].includes(videoSource) &&
+						!(videoSource === "vimeo" && useCustomThumbnail) && (
+							<>
+								<p>{__("Autoplay")}</p>
+								<ToggleControl
+									checked={autoplay}
+									onChange={() => {
+										setAttributes({ autoplay: !autoplay });
+										switch (videoSource) {
+											case "videopress":
+											case "local":
+											case "unknown":
+												setAttributes({
+													videoEmbedCode: editEmbedArgs(
+														videoSource,
+														videoEmbedCode,
+														autoplay ? "remove" : "add",
+														"autoplay"
+													),
+												});
+												break;
+
+											case "youtube":
+											case "vimeo":
+												setAttributes({
+													videoEmbedCode: editEmbedArgs(
+														videoSource,
+														videoEmbedCode,
+														autoplay ? "remove" : "add",
+														"autoplay=1"
+													),
+												});
+												if (!autoplay) {
+													setAttributes({ thumbnail: "", thumbnailID: -1 });
+													setState({ useCustomThumbnail: false });
+												}
+												break;
+
+											case "dailymotion":
+												setAttributes({
+													videoEmbedCode: editEmbedArgs(
+														"dailymotion",
+														videoEmbedCode,
+														autoplay ? "remove" : "add",
+														"autoplay=true"
+													),
+												});
+												break;
+											default:
+												console.log("there's nothing to change here");
+												break;
+										}
+									}}
+								/>
+
+								<p>{__("Allow custom start time")}</p>
+								<ToggleControl
+									checked={allowCustomStartTime}
+									onChange={() => {
+										setState({ allowCustomStartTime: !allowCustomStartTime });
+										if (allowCustomStartTime) {
 											setAttributes({
-												videoEmbedCode: editEmbedArgs(
+												startTime: 0,
+												videoEmbedCode: adjustVideoStart(
 													videoSource,
 													videoEmbedCode,
-													autoplay ? "remove" : "add",
-													"autoplay"
+													0,
+													startTime
 												),
 											});
-											break;
-
-										case "youtube":
-										case "vimeo":
-											setAttributes({
-												videoEmbedCode: editEmbedArgs(
-													videoSource,
-													videoEmbedCode,
-													autoplay ? "remove" : "add",
-													"autoplay=1"
-												),
+											setState({
+												startTime_d: 0,
+												startTime_h: 0,
+												startTime_m: 0,
+												startTime_s: 0,
 											});
-											break;
 
-										case "dailymotion":
-											setAttributes({
-												videoEmbedCode: editEmbedArgs(
-													"dailymotion",
-													videoEmbedCode,
-													autoplay ? "remove" : "add",
-													"autoplay=true"
-												),
-											});
-											break;
-										default:
-											console.log("there's nothing to change here");
-											break;
-									}
-								}}
-							/>
-
-							<p>{__("Allow custom start time")}</p>
-							<ToggleControl
-								checked={allowCustomStartTime}
-								onChange={() => {
-									setState({ allowCustomStartTime: !allowCustomStartTime });
-									if (allowCustomStartTime) {
-										setAttributes({
-											startTime: 0,
-											videoEmbedCode: adjustVideoStart(
-												videoSource,
-												videoEmbedCode,
-												0,
-												startTime
-											),
-										});
-										setState({
-											startTime_d: 0,
-											startTime_h: 0,
-											startTime_m: 0,
-											startTime_s: 0,
-										});
-
-										//also remove custom start time from embed code
-									}
-								}}
-							/>
-						</>
-					)}
+											//also remove custom start time from embed code
+										}
+									}}
+								/>
+							</>
+						)}
 					{allowCustomStartTime && (
 						<>
 							<p>{__("Start time")}</p>
@@ -740,6 +757,119 @@ export const inspectorControls = (props) => {
 									}
 								}}
 							/>
+						</>
+					)}
+					{!(videoSource === "vimeo" && autoplay) && (
+						<>
+							<p>{__("Use a custom thumbnail")}</p>
+							<ToggleControl
+								checked={useCustomThumbnail}
+								onChange={() => {
+									setState({ useCustomThumbnail: !useCustomThumbnail });
+									if (useCustomThumbnail) {
+										setAttributes({
+											thumbnail: "",
+											thumbnailID: -1,
+											videoEmbedCode: editThumbnail(
+												videoSource,
+												videoEmbedCode,
+												"remove",
+												thumbnail
+											),
+										});
+										setState({ enterImageURL: false });
+									} else {
+										if (videoSource === "vimeo") {
+											setAttributes({ autoplay: false });
+										}
+									}
+								}}
+							/>
+						</>
+					)}
+					{useCustomThumbnail && !thumbnail && (
+						<>
+							<Button
+								isPrimary
+								icon="admin-links"
+								onClick={() => setState({ enterImageURL: !enterImageURL })}
+							>
+								{__("Insert thumbnail URL")}
+							</Button>
+							{enterImageURL && (
+								<>
+									<input
+										type="text"
+										value={imageURLInput}
+										onChange={(e) =>
+											setState({ imageURLInput: e.target.value })
+										}
+									/>
+									<button
+										onClick={() => {
+											setAttributes({
+												thumbnail: imageURLInput,
+												videoEmbedCode: editThumbnail(
+													videoSource,
+													videoEmbedCode,
+													"add",
+													imageURLInput
+												),
+											});
+											setState({ imageURLInput: "" });
+										}}
+									>
+										{"\u21B5"}
+									</button>
+								</>
+							)}
+							{!enterImageURL && (
+								<MediaUploadCheck>
+									<MediaUpload
+										onSelect={(img) => {
+											setAttributes({
+												thumbnail: img.url,
+												thumbnailID: img.id,
+												videoEmbedCode: editThumbnail(
+													videoSource,
+													videoEmbedCode,
+													"add",
+													img.url
+												),
+											});
+										}}
+										allowedTypes={["image"]}
+										value={thumbnailID}
+										render={({ open }) => (
+											<Button isPrimary icon="upload" onClick={open}>
+												{__("Upload")}
+											</Button>
+										)}
+									/>
+								</MediaUploadCheck>
+							)}
+						</>
+					)}
+					{thumbnail && (
+						<>
+							<img src={thumbnail} height={200} />
+							<button
+								onClick={() => {
+									setAttributes({
+										thumbnail: "",
+										thumbnailID: -1,
+										videoEmbedCode: editThumbnail(
+											videoSource,
+											videoEmbedCode,
+											"remove",
+											thumbnail
+										),
+									});
+									setState({ useCustomThumbnail: true, enterImageURL: false });
+								}}
+							>
+								{__("Replace")}
+							</button>
 						</>
 					)}
 				</PanelBody>

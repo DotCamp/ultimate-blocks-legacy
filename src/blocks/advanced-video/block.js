@@ -84,6 +84,10 @@ registerBlockType("ub/advanced-video", {
 			type: "string",
 			default: "",
 		},
+		thumbnailID: {
+			type: "number",
+			default: -1,
+		},
 		videoEmbedCode: {
 			type: "string",
 			default: "",
@@ -120,9 +124,12 @@ registerBlockType("ub/advanced-video", {
 		},
 	},
 	edit: withState({
-		enterExternalURL: false,
+		enterVideoURL: false,
 		videoURLInput: "",
 		allowCustomStartTime: false,
+		useCustomThumbnaill: false,
+		enterImageURL: false,
+		imageURLInput: "",
 		startTime_d: 0,
 		startTime_h: 0,
 		startTime_m: 0,
@@ -137,7 +144,7 @@ registerBlockType("ub/advanced-video", {
 			attributes,
 			setAttributes,
 			setState,
-			enterExternalURL,
+			enterVideoURL,
 			videoURLInput,
 			startTime_d,
 			startTime_h,
@@ -219,14 +226,12 @@ registerBlockType("ub/advanced-video", {
 							<Button
 								isPrimary
 								icon="embed-video"
-								onClick={() =>
-									setState({ enterExternalURL: !enterExternalURL })
-								}
+								onClick={() => setState({ enterVideoURL: !enterVideoURL })}
 							>
 								{__("Insert video URL")}
 							</Button>
 						</div>
-						{enterExternalURL && (
+						{enterVideoURL && (
 							<div>
 								<URLInput
 									disableSuggestions
@@ -498,6 +503,8 @@ registerBlockType("ub/advanced-video", {
 									startTime: 0,
 									mute: false,
 									loop: false,
+									thumbnail: "",
+									thumbnailId: -1,
 								});
 								setState({
 									videoURLInput: "",
