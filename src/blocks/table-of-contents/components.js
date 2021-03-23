@@ -246,9 +246,9 @@ class TableOfContents extends Component {
 							? currentIDs.indexOf(header.clientId) > -1
 								? this.state.headers[currentIDs.indexOf(header.clientId)]
 										.disabled
-								: null
+								: false
 							: this.state.headers[i].disabled
-						: null,
+						: false,
 				customContent:
 					hasHeadings &&
 					this.state.headers[i] &&
@@ -257,9 +257,9 @@ class TableOfContents extends Component {
 							? currentIDs.indexOf(header.clientId) > -1
 								? this.state.headers[currentIDs.indexOf(header.clientId)]
 										.customContent
-								: null
+								: ""
 							: this.state.headers[i].customContent
-						: null,
+						: "",
 			}));
 
 			if (JSON.stringify(newHeaders) !== JSON.stringify(this.state.headers)) {
