@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.6
-Stable tag: 2.4.3
+Tested up to: 5.7
+Stable tag: 2.4.4
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,28 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.4 =
+
+* Content Toggle - Enable keyboard navigation.
+* Button - Allow customizing button border radius.
+* Button - Set button selection to new button.
+* Button - Highlight selected button.
+* Button - Ensure that a button is selected when clicking on it.
+* Button - Keep old button block instances center-aligned.
+* Content Filter - Set default matching option to matchAny.
+* Content Filter - Make a single matching tag in a multi-select category count for matchAll.
+* Content Filter - Ctegory name style change.
+* Divider - Allow changing border style.
+* Expand - Add ARIA attributes.
+* Expand - Allow toggling visibility through keyboard shortcuts.
+* Review - Allow adding link to review item page in schema.
+* Star Rating - Fix issue with setting star color to anything other than preset colors within the displayed palette.
+* Tabbed content - Force block appender button to appear within newly-inserted tabs.
+* Table of contents - When editing anchors, set default text to the actual heading text.
+* Other - Revert faulty fix for reusable block issue.
+* Other - Ensure that color selection indicators are present in color palette instances within the inspector.
+* Other - Compatibility check with latest WordPress version.
 
 = 2.4.3 =
 
