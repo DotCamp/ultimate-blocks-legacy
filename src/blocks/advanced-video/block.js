@@ -1,7 +1,8 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { MediaUpload, MediaUploadCheck, URLInput } = wp.blockEditor || wp.editor;
-const { withState } = wp.compose;
+const { withState, compose } = wp.compose;
+const { withSelect } = wp.data;
 const { Button, IconButton } = wp.components;
 
 import icon from "./icon";
@@ -32,8 +33,16 @@ registerBlockType("ub/advanced-video", {
 			type: "string",
 			default: "",
 		},
-		playerStyle: {
+		borderSize: {
+			type: "number",
+			default: 0,
+		},
+		borderStyle: {
 			//custom border styles placed outside embedded player
+			type: "string",
+			default: "", //choices: custom
+		},
+		borderColor: {
 			type: "string",
 			default: "",
 		},
@@ -122,24 +131,41 @@ registerBlockType("ub/advanced-video", {
 			type: "number",
 			default: 0,
 		},
+		playerColor: {
+			type: "string",
+			default: "", //vimeo only
+		},
 	},
-	edit: withState({
-		enterVideoURL: false,
-		videoURLInput: "",
-		allowCustomStartTime: false,
-		useCustomThumbnaill: false,
-		enterImageURL: false,
-		imageURLInput: "",
-		startTime_d: 0,
-		startTime_h: 0,
-		startTime_m: 0,
-		startTime_s: 0,
-		//include in each cache entry: url, embedCode, time. if entry is at least 1 hour old, replace. else, reuse old result
-		youtubeCache: {},
-		vimeoCache: {},
-		dailyMotionCache: {},
-		videoPressCache: {},
-	})(function (props) {
+	edit: compose([
+		withState({
+			enterVideoURL: false,
+			videoURLInput: "",
+			allowCustomStartTime: false,
+			useCustomThumbnaill: false,
+			enterImageURL: false,
+			imageURLInput: "",
+			startTime_d: 0,
+			startTime_h: 0,
+			startTime_m: 0,
+			startTime_s: 0,
+			//include in each cache entry: url, embedCode, time. if entry is at least 1 hour old, replace. else, reuse old result
+			youtubeCache: {},
+			vimeoCache: {},
+			dailyMotionCache: {},
+			videoPressCache: {},
+		}),
+		withSelect((select, ownProps) => {
+			const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				getBlock,
+				block: getBlock(ownProps.clientId),
+				parentID: getBlockRootClientId(ownProps.clientId),
+				getClientIdsWithDescendants,
+			};
+		}),
+	])(function (props) {
 		const {
 			attributes,
 			setAttributes,
@@ -150,13 +176,19 @@ registerBlockType("ub/advanced-video", {
 			startTime_h,
 			startTime_m,
 			startTime_s,
+			block,
 		} = props;
 		const {
 			videoId,
 			url,
 			videoEmbedCode,
 			startTime,
+			width,
 			showPlayerControls,
+			blockID,
+			borderSize,
+			borderStyle,
+			borderColor,
 		} = attributes;
 
 		if (
@@ -173,6 +205,9 @@ registerBlockType("ub/advanced-video", {
 			});
 		}
 
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId });
+		}
 		return (
 			<>
 				{inspectorControls(props)}
@@ -481,11 +516,18 @@ registerBlockType("ub/advanced-video", {
 					</>
 				)}
 				<div
+					className="ub-advanced-video-container"
 					dangerouslySetInnerHTML={{
 						__html:
 							videoEmbedCode ||
 							"<p>If a valid video source is entered, the video should appear here</p>",
 					}}
+					style={Object.assign(
+						{ width: `${width}px` },
+						borderSize > 0
+							? { border: `${borderSize}px ${borderStyle} ${borderColor}` }
+							: {}
+					)}
 				/>
 				{url !== "" && (
 					<div>
@@ -505,6 +547,9 @@ registerBlockType("ub/advanced-video", {
 									loop: false,
 									thumbnail: "",
 									thumbnailId: -1,
+									borderSize: 0,
+									borderStyle: "",
+									borderColor: "",
 								});
 								setState({
 									videoURLInput: "",

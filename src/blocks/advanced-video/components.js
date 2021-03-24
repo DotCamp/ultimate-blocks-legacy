@@ -1,8 +1,14 @@
 import { convertFromSeconds } from "../../common";
 const { __ } = wp.i18n;
-const { MediaUpload, MediaUploadCheck, InspectorControls } =
+const { MediaUpload, MediaUploadCheck, InspectorControls, ColorPalette } =
 	wp.blockEditor || wp.editor;
-const { Button, RangeControl, ToggleControl, PanelBody } = wp.components;
+const {
+	Button,
+	RangeControl,
+	ToggleControl,
+	PanelBody,
+	SelectControl,
+} = wp.components;
 
 function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 	let newEmbedCode = embedCode;
@@ -264,6 +270,9 @@ export const inspectorControls = (props) => {
 		loop,
 		thumbnail,
 		thumbnailID,
+		borderSize,
+		borderStyle,
+		borderColor,
 	} = attributes;
 
 	return (
@@ -316,7 +325,6 @@ export const inspectorControls = (props) => {
 							label={__("Video height (pixels)")}
 							value={height}
 							onChange={(height) => {
-								setAttributes({ height });
 								let newVideoEmbedCode = videoEmbedCode;
 
 								newVideoEmbedCode = newVideoEmbedCode.replace(
@@ -329,7 +337,7 @@ export const inspectorControls = (props) => {
 										`height="${height}"`
 									);
 								}
-								setAttributes({ videoEmbedCode: newVideoEmbedCode });
+								setAttributes({ height, videoEmbedCode: newVideoEmbedCode });
 							}}
 							min={200}
 							max={1600}
@@ -870,6 +878,62 @@ export const inspectorControls = (props) => {
 							>
 								{__("Replace")}
 							</button>
+						</>
+					)}
+					<p>{__("Use a border")}</p>
+					<ToggleControl
+						checked={borderSize > 0}
+						onChange={() => {
+							if (borderSize === 0) {
+								setAttributes({
+									borderSize: 1,
+									borderStyle: "solid",
+									borderColor: "#000000",
+								});
+							} else {
+								setAttributes({
+									borderSize: 0,
+									borderStyle: "",
+									borderColor: "",
+								});
+							}
+						}}
+					/>
+					{borderSize > 0 && (
+						<>
+							<RangeControl
+								label={__("Border size (pixels)")}
+								value={borderSize}
+								onChange={(borderSize) => {
+									setAttributes({ borderSize });
+								}}
+								min={1}
+								max={30}
+							/>
+							<SelectControl
+								label={__("Border Style")}
+								options={["solid", "dotted", "dashed"].map((o) => ({
+									value: o,
+									label: __(o),
+								}))}
+								value={borderStyle}
+								onChange={(borderStyle) => setAttributes({ borderStyle })}
+							/>
+							<p>
+								{__("Border Color")}
+								{borderColor && (
+									<span
+										class="component-color-indicator"
+										aria-label={`(Color: ${borderColor})`}
+										style={{ background: borderColor }}
+									/>
+								)}
+							</p>
+
+							<ColorPalette
+								value={borderColor}
+								onChange={(borderColor) => setAttributes({ borderColor })}
+							/>
 						</>
 					)}
 				</PanelBody>
