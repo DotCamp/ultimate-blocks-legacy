@@ -8,8 +8,13 @@ import { oldColorDefaults } from "./editorDisplay";
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { RichText, InnerBlocks, InspectorControls, PanelColorSettings } =
-	wp.blockEditor || wp.editor;
+const {
+	RichText,
+	InnerBlocks,
+	InspectorControls,
+	InspectorAdvancedControls,
+	PanelColorSettings,
+} = wp.blockEditor || wp.editor;
 
 const { compose } = wp.compose;
 
@@ -82,6 +87,10 @@ const attributes = {
 		type: "string",
 		default: "chevron", //valid icons: chevron, plus, none
 	},
+	toggleID: {
+		type: "string",
+		default: "",
+	},
 	border: {
 		type: "boolean",
 		default: true,
@@ -127,6 +136,7 @@ class ContentTogglePanel extends Component {
 				toggleLocation,
 				toggleColor,
 				toggleIcon,
+				toggleID,
 				border,
 				showOnlyOne,
 				parentID,
@@ -338,6 +348,30 @@ class ContentTogglePanel extends Component {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>,
+			<InspectorAdvancedControls>
+				<p>{__("Panel ID")}</p>
+				<input
+					type="text"
+					value={toggleID}
+					onChange={(e) => setAttributes({ toggleID: e.target.value })}
+				/>
+				<p class="ub-custom-id-input">
+					{__(
+						"Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.” Then, you’ll be able to link directly to this section of your page."
+					)}{" "}
+					<a
+						href="https://wordpress.org/support/article/page-jumps/"
+						target="_blank"
+						rel="external noreferrer noopener"
+					>
+						{__("Learn more about anchors")}
+						<span class="components-visually-hidden">
+							{__("(opens in a new tab)")}
+						</span>
+						<span class="dashicons-before dashicons-external" />
+					</a>
+				</p>
+			</InspectorAdvancedControls>,
 			<div
 				className={`wp-block-ub-content-toggle-accordion ${
 					border ? "" : "no-border"

@@ -308,6 +308,10 @@ $defaultValues = array(
 	            'type' => 'string',
 	            'default' => 'chevron'
             ),
+            'toggleID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'border' => array(
 	            'type' => 'boolean',
 	            'default' => true

@@ -50,11 +50,11 @@ function ub_render_content_toggle_block($attributes, $content){
 function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
-    $border_class = $border ? " " : "no-border ";
+    $border_class = $border ? "" : "no-border ";
     $icons= json_decode(file_get_contents(__DIR__ . '/icons/icons.json'));
     $icon_class = $icons->$toggleIcon;
 
-    return '<div class="' . $border_class . $classNamePrefix.'-accordion' . (isset($className) ? ' ' . esc_attr($className) : '') . '"'
+    return '<div id="'. $toggleID .'" class="' . $border_class . $classNamePrefix.'-accordion' . (isset($className) ? ' ' . esc_attr($className) : '') . '"'
                 . ($parentID === '' ? ' style="border-color: ' . $theme . ';"' : '') . '>
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'
                     . ($parentID === '' ? ' style="background-color: ' . $theme . ';"' : '') . ($preventCollapse ? ' aria-disabled="true"' : '')
