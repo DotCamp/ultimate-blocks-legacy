@@ -64,6 +64,10 @@ registerBlockType("ub/styled-list", {
 			type: "number",
 			default: 5,
 		},
+		fontSize: {
+			type: "number",
+			default: 15,
+		},
 		itemSpacing: {
 			type: "number",
 			default: 0, //in pixels
@@ -124,6 +128,7 @@ registerBlockType("ub/styled-list", {
 				alignment,
 				iconColor,
 				iconSize,
+				fontSize,
 				selectedIcon,
 				blockID,
 				itemSpacing,
@@ -327,6 +332,13 @@ registerBlockType("ub/styled-list", {
 							min={1}
 							max={10}
 						/>
+						<p>{__("Font size (pixels)")}</p>
+						<RangeControl
+							value={fontSize}
+							onChange={(fontSize) => setAttributes({ fontSize })}
+							min={10}
+							max={50}
+						/>
 						<p>{__("Item spacing (pixels)")}</p>
 						<RangeControl
 							value={itemSpacing}
@@ -409,6 +421,7 @@ registerBlockType("ub/styled-list", {
 				#ub-styled-list-${blockID} li{
 					margin-bottom: ${itemSpacing}px;
 					text-indent: -${(4 + iconSize) / 10}em;
+					font-size: ${fontSize}px;
 				}
 				#ub-styled-list-${blockID} li>ul{
 					margin-top: ${itemSpacing}px;

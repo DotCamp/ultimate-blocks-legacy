@@ -1527,6 +1527,10 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 5
             ),
+            'fontSize' => array(
+                'type' => 'number',
+                'default' => 15
+            ),
             'itemSpacing' => array(
                 'type' => 'number',
                 'default' => 0
