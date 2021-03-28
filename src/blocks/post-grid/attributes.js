@@ -63,6 +63,14 @@ const attributes = {
 		type: "array",
 		default: [],
 	},
+	tag: {
+		type: "string",
+		default: "",
+	},
+	tagArray: {
+		type: "array",
+		default: [],
+	},
 	offset: {
 		type: "number",
 		default: 0,

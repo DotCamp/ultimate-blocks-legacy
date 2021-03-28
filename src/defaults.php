@@ -977,6 +977,13 @@ $defaultValues = array(
             'postTitleTag' => array(
                 'type' => 'string',
                 'default' => 'h2'
+            ),
+            'tagArray' => array(
+                'type' => 'array',
+                'default' => array(),
+                'items' => array(
+                    'type' => 'number'
+                )
             )
         )
     ),

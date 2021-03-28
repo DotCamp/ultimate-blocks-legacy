@@ -1,0 +1,25 @@
+.ub-post-grid-tags {
+	margin-bottom: 5px;
+}
+
+.ub-post-grid-tag {
+	border: 1px solid black;
+	margin: 4px;
+	padding: 2px;
+	border-radius: 4px;
+}
+
+.ub-post-grid-tag-list {
+	position: absolute;
+	z-index: 1;
+	max-height: 100px;
+	overflow-y: scroll;
+	> div {
+		&:nth-child(odd) {
+			background-color: #eeeeee;
+		}
+		&:nth-child(even) {
+			background-color: #ffffff;
+		}
+	}
+}

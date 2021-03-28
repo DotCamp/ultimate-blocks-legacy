@@ -58,6 +58,7 @@ export default registerBlockType("ub/post-grid", {
 			orderBy,
 			amountPosts,
 			offset,
+			tagArray,
 		} = props.attributes;
 
 		const { getEntityRecords } = select("core");
@@ -76,6 +77,7 @@ export default registerBlockType("ub/post-grid", {
 				per_page: amountPosts,
 				offset: offset,
 				exclude: [getCurrentPostId()],
+				tags: tagArray,
 			},
 			(value) => typeof value !== "undefined"
 		);

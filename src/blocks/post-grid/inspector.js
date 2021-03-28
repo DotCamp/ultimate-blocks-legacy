@@ -1,4 +1,5 @@
-// Setup the block
+import PropTypes from "prop-types";
+
 const { __ } = wp.i18n;
 
 const { InspectorControls } = wp.blockEditor || wp.editor;
@@ -17,14 +18,79 @@ const { apiFetch } = wp;
 
 const MAX_POSTS_COLUMNS = 3;
 
+class Autocomplete extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { userInput: "", showSuggestions: false };
+	}
+
+	render() {
+		return (
+			<div>
+				<input
+					type="text"
+					value={this.state.userInput}
+					style={{ width: "200px" }}
+					onChange={(e) => {
+						this.setState({
+							userInput: e.target.value,
+							showSuggestions: e.target.value.length > 0,
+						});
+					}}
+					onKeyDown={(e) => {
+						if (e.key === "ArrowDown") {
+							this.setState({ showSuggestions: true });
+						}
+					}}
+				/>
+				{this.state.showSuggestions && (
+					<div className={this.props.className} style={{ width: "200px" }}>
+						{this.props.list
+							.filter(
+								(i) =>
+									i.label
+										.toLowerCase()
+										.indexOf(this.state.userInput.toLowerCase()) > -1
+							)
+							.map((item) => (
+								<div
+									onClick={() => {
+										this.props.addToSelection(item);
+										this.setState({ userInput: "", showSuggestions: false });
+									}}
+								>
+									{item.label}
+								</div>
+							))}
+					</div>
+				)}
+			</div>
+		);
+	}
+}
+
+Autocomplete.propTypes = {
+	list: PropTypes.array,
+	selection: PropTypes.array,
+};
+
+Autocomplete.defaultProps = {
+	list: [],
+	selection: PropTypes.array,
+};
+
 export default class Inspector extends Component {
 	constructor() {
 		super();
-		this.state = { categoriesList: [] };
+		this.state = {
+			categoriesList: [],
+			tagsList: [],
+			currentTagName: "",
+		};
 	}
 	componentDidMount() {
 		this.stillMounted = true;
-		this.fetchRequest = apiFetch({
+		this.categoryFetchRequest = apiFetch({
 			path: addQueryArgs("/wp/v2/categories", { per_page: -1 }),
 		})
 			.then((categoriesList) => {
@@ -37,6 +103,20 @@ export default class Inspector extends Component {
 					this.setState({ categoriesList: [] });
 				}
 			});
+
+		this.tagFetchRequest = apiFetch({
+			path: addQueryArgs("/wp/v2/tags", { per_page: -1 }),
+		})
+			.then((tagsList) => {
+				if (this.stillMounted) {
+					this.setState({ tagsList });
+				}
+			})
+			.catch(() => {
+				if (this.stillMounted) {
+					this.setState({ tagsList: [] });
+				}
+			});
 	}
 
 	componentWillUnmount() {
@@ -44,7 +124,7 @@ export default class Inspector extends Component {
 	}
 
 	render() {
-		const { categoriesList } = this.state;
+		const { categoriesList, tagsList } = this.state;
 
 		const {
 			attributes: {
@@ -66,6 +146,7 @@ export default class Inspector extends Component {
 				orderBy,
 				order,
 				postTitleTag,
+				tagArray,
 			},
 			setAttributes,
 			posts,
@@ -152,6 +233,38 @@ export default class Inspector extends Component {
 						/>
 					)}
 					{queryControlPanel}
+					<p>Tags</p>
+					{tagArray && (
+						<div className="ub-post-grid-tags">
+							{tagsList
+								.filter((t) => tagArray.includes(t.id))
+								.map((t) => (
+									<span className="ub-post-grid-tag">
+										{t.name}
+										<span
+											className="dashicons dashicons-dismiss"
+											onClick={() => {
+												setAttributes({
+													tagArray: tagArray.filter((sel) => sel !== t.id),
+												});
+											}}
+										/>
+									</span>
+								))}
+						</div>
+					)}
+					<Autocomplete
+						className="ub-post-grid-tag-list"
+						list={tagsList
+							.filter((t) => !tagArray.includes(t.id))
+							.map((t) => ({ label: t.name, value: t.id }))}
+						selection={tagArray}
+						addToSelection={(item) => {
+							if (!tagArray.includes(item.value)) {
+								setAttributes({ tagArray: [...tagArray, item.value] });
+							}
+						}}
+					/>
 				</PanelBody>
 				<PanelBody title={__("Post Grid Content", "ultimate-blocks")}>
 					<ToggleControl
