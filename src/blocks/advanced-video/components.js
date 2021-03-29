@@ -343,36 +343,40 @@ export const inspectorControls = (props) => {
 							max={1600}
 						/>
 					)}
-					<p>{__("Preserve aspect ratio")}</p>
-					<ToggleControl
-						checked={preserveAspectRatio}
-						onChange={() => {
-							setAttributes({
-								preserveAspectRatio: !preserveAspectRatio,
-							});
-							if (
-								!preserveAspectRatio &&
-								!["facebook", "unknown"].includes(videoSource)
-							) {
-								const newHeight = Math.round((origHeight * width) / origWidth);
+					<div className="ub-labelled-toggle">
+						<p>{__("Preserve aspect ratio")}</p>
+						<ToggleControl
+							checked={preserveAspectRatio}
+							onChange={() => {
+								setAttributes({
+									preserveAspectRatio: !preserveAspectRatio,
+								});
+								if (
+									!preserveAspectRatio &&
+									!["facebook", "unknown"].includes(videoSource)
+								) {
+									const newHeight = Math.round(
+										(origHeight * width) / origWidth
+									);
 
-								let newVideoEmbedCode = videoEmbedCode.replace(
-									/height="[0-9]+"/,
-									`height="${newHeight}"`
-								);
-								if (videoSource === "facebook") {
-									newVideoEmbedCode = newVideoEmbedCode.replace(
-										/&height=[0-9]+/,
+									let newVideoEmbedCode = videoEmbedCode.replace(
+										/height="[0-9]+"/,
 										`height="${newHeight}"`
 									);
+									if (videoSource === "facebook") {
+										newVideoEmbedCode = newVideoEmbedCode.replace(
+											/&height=[0-9]+/,
+											`height="${newHeight}"`
+										);
+									}
+									setAttributes({
+										height: newHeight,
+										videoEmbedCode: newVideoEmbedCode,
+									});
 								}
-								setAttributes({
-									height: newHeight,
-									videoEmbedCode: newVideoEmbedCode,
-								});
-							}
-						}}
-					/>
+							}}
+						/>
+					</div>
 					{/* SUPPORTED IN DAILYMOTION, YOUTUBE, LOCAL, DIRECT */}
 					{([
 						"local",
@@ -382,7 +386,7 @@ export const inspectorControls = (props) => {
 						"videopress",
 					].includes(videoSource) ||
 						(videoSource === "vimeo" && vimeoUploaderNotBasic)) && (
-						<>
+						<div className="ub-labelled-toggle">
 							<p>{__("Show player controls")}</p>
 							<ToggleControl
 								checked={showPlayerControls}
@@ -431,90 +435,93 @@ export const inspectorControls = (props) => {
 									}
 								}}
 							/>
-						</>
+						</div>
 					)}
 					{/*SUPPORTED IN DIRECT, LOCAL, YOUTUBE, DAILYMOTION, VIMEO */}
 					{!["facebook", "unknown"].includes(videoSource) &&
 						!(videoSource === "vimeo" && useCustomThumbnail) && (
 							<>
-								<p>{__("Autoplay")}</p>
-								<ToggleControl
-									checked={autoplay}
-									onChange={() => {
-										setAttributes({ autoplay: !autoplay });
-										switch (videoSource) {
-											case "videopress":
-											case "local":
-											case "unknown":
+								<div className="ub-labelled-toggle">
+									<p>{__("Autoplay")}</p>
+									<ToggleControl
+										checked={autoplay}
+										onChange={() => {
+											setAttributes({ autoplay: !autoplay });
+											switch (videoSource) {
+												case "videopress":
+												case "local":
+												case "unknown":
+													setAttributes({
+														videoEmbedCode: editEmbedArgs(
+															videoSource,
+															videoEmbedCode,
+															autoplay ? "remove" : "add",
+															"autoplay"
+														),
+													});
+													break;
+
+												case "youtube":
+												case "vimeo":
+													setAttributes({
+														videoEmbedCode: editEmbedArgs(
+															videoSource,
+															videoEmbedCode,
+															autoplay ? "remove" : "add",
+															"autoplay=1"
+														),
+													});
+													if (!autoplay) {
+														setAttributes({ thumbnail: "", thumbnailID: -1 });
+														setState({ useCustomThumbnail: false });
+													}
+													break;
+
+												case "dailymotion":
+													setAttributes({
+														videoEmbedCode: editEmbedArgs(
+															"dailymotion",
+															videoEmbedCode,
+															autoplay ? "remove" : "add",
+															"autoplay=true"
+														),
+													});
+													break;
+												default:
+													console.log("there's nothing to change here");
+													break;
+											}
+										}}
+									/>
+								</div>
+								<div className="ub-labelled-toggle">
+									<p>{__("Allow custom start time")}</p>
+									<ToggleControl
+										checked={allowCustomStartTime}
+										onChange={() => {
+											setState({ allowCustomStartTime: !allowCustomStartTime });
+											if (allowCustomStartTime) {
 												setAttributes({
-													videoEmbedCode: editEmbedArgs(
+													startTime: 0,
+													videoEmbedCode: adjustVideoStart(
 														videoSource,
 														videoEmbedCode,
-														autoplay ? "remove" : "add",
-														"autoplay"
+														0,
+														startTime
 													),
 												});
-												break;
-
-											case "youtube":
-											case "vimeo":
-												setAttributes({
-													videoEmbedCode: editEmbedArgs(
-														videoSource,
-														videoEmbedCode,
-														autoplay ? "remove" : "add",
-														"autoplay=1"
-													),
+												setState({
+													startTime_d: 0,
+													startTime_h: 0,
+													startTime_m: 0,
+													startTime_s: 0,
 												});
-												if (!autoplay) {
-													setAttributes({ thumbnail: "", thumbnailID: -1 });
-													setState({ useCustomThumbnail: false });
-												}
-												break;
 
-											case "dailymotion":
-												setAttributes({
-													videoEmbedCode: editEmbedArgs(
-														"dailymotion",
-														videoEmbedCode,
-														autoplay ? "remove" : "add",
-														"autoplay=true"
-													),
-												});
-												break;
-											default:
-												console.log("there's nothing to change here");
-												break;
-										}
-									}}
-								/>
-
-								<p>{__("Allow custom start time")}</p>
-								<ToggleControl
-									checked={allowCustomStartTime}
-									onChange={() => {
-										setState({ allowCustomStartTime: !allowCustomStartTime });
-										if (allowCustomStartTime) {
-											setAttributes({
-												startTime: 0,
-												videoEmbedCode: adjustVideoStart(
-													videoSource,
-													videoEmbedCode,
-													0,
-													startTime
-												),
-											});
-											setState({
-												startTime_d: 0,
-												startTime_h: 0,
-												startTime_m: 0,
-												startTime_s: 0,
-											});
-
-											//also remove custom start time from embed code
-										}
-									}}
-								/>
+												//also remove custom start time from embed code
+											}
+										}}
+									/>
+								</div>
 							</>
 						)}
 					{allowCustomStartTime && (
@@ -661,7 +668,7 @@ export const inspectorControls = (props) => {
 					{["youtube", "local", "unknown", "videopress", "vimeo"].includes(
 						videoSource
 					) && (
-						<>
+						<div className="ub-labelled-toggle">
 							<p>{__("Loop")}</p>
 							<ToggleControl
 								checked={loop}
@@ -716,12 +723,12 @@ export const inspectorControls = (props) => {
 									}
 								}}
 							/>
-						</>
+						</div>
 					)}
 					{["local", "unknown", "vimeo", "dailymotion", "videopress"].includes(
 						videoSource
 					) && (
-						<>
+						<div className="ub-labelled-toggle">
 							<p>{__("Mute on page load")}</p>
 							<ToggleControl
 								checked={mute}
@@ -765,16 +772,16 @@ export const inspectorControls = (props) => {
 									}
 								}}
 							/>
-						</>
+						</div>
 					)}
 					{!(videoSource === "vimeo" && autoplay) && (
-						<>
+						<div className="ub-labelled-toggle">
 							<p>{__("Use a custom thumbnail")}</p>
 							<ToggleControl
 								checked={useCustomThumbnail}
 								onChange={() => {
 									setState({ useCustomThumbnail: !useCustomThumbnail });
-									if (useCustomThumbnail) {
+									if (useCustomThumbnail && thumbnail !== "") {
 										setAttributes({
 											thumbnail: "",
 											thumbnailID: -1,
@@ -793,7 +800,7 @@ export const inspectorControls = (props) => {
 									}
 								}}
 							/>
-						</>
+						</div>
 					)}
 					{useCustomThumbnail && !thumbnail && (
 						<>
@@ -880,25 +887,27 @@ export const inspectorControls = (props) => {
 							</button>
 						</>
 					)}
-					<p>{__("Use a border")}</p>
-					<ToggleControl
-						checked={borderSize > 0}
-						onChange={() => {
-							if (borderSize === 0) {
-								setAttributes({
-									borderSize: 1,
-									borderStyle: "solid",
-									borderColor: "#000000",
-								});
-							} else {
-								setAttributes({
-									borderSize: 0,
-									borderStyle: "",
-									borderColor: "",
-								});
-							}
-						}}
-					/>
+					<div className="ub-labelled-toggle">
+						<p>{__("Use a border")}</p>
+						<ToggleControl
+							checked={borderSize > 0}
+							onChange={() => {
+								if (borderSize === 0) {
+									setAttributes({
+										borderSize: 1,
+										borderStyle: "solid",
+										borderColor: "#000000",
+									});
+								} else {
+									setAttributes({
+										borderSize: 0,
+										borderStyle: "",
+										borderColor: "",
+									});
+								}
+							}}
+						/>
+					</div>
 					{borderSize > 0 && (
 						<>
 							<RangeControl
