@@ -59,6 +59,7 @@ export default registerBlockType("ub/post-grid", {
 			amountPosts,
 			offset,
 			tagArray,
+			authorArray,
 		} = props.attributes;
 
 		const { getEntityRecords } = select("core");
@@ -78,6 +79,7 @@ export default registerBlockType("ub/post-grid", {
 				offset: offset,
 				exclude: [getCurrentPostId()],
 				tags: tagArray,
+				author: authorArray,
 			},
 			(value) => typeof value !== "undefined"
 		);
@@ -122,7 +124,10 @@ export default registerBlockType("ub/post-grid", {
 					{!Array.isArray(posts) ? (
 						<Spinner />
 					) : (
-						__("No posts found.", "ultimate-blocks")
+						<>
+							<Inspector {...{ ...props }} />
+							<div>{__("No posts found.", "ultimate-blocks")}</div>
+						</>
 					)}
 				</Placeholder>
 			);

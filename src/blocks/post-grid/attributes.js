@@ -55,6 +55,10 @@ const attributes = {
 		type: "number",
 		default: 2,
 	},
+	authorArray: {
+		type: "array",
+		default: [],
+	},
 	categories: {
 		type: "string",
 		default: "",
@@ -62,10 +66,6 @@ const attributes = {
 	categoryArray: {
 		type: "array",
 		default: [],
-	},
-	tag: {
-		type: "string",
-		default: "",
 	},
 	tagArray: {
 		type: "array",

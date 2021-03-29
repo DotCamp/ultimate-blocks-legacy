@@ -28,7 +28,8 @@ function ub_query_post( $attributes ){
             'post_type' => 'post',
             'ignore_sticky_posts' => 1,
             'post__not_in' => array($post->ID), // Exclude the current post from the grid.
-            'tag__in' => $attributes['tagArray']
+            'tag__in' => $attributes['tagArray'],
+            'author__in' => $attributes['authorArray']
         )
     );
 

@@ -31,12 +31,12 @@ class Autocomplete extends Component {
 					type="text"
 					value={this.state.userInput}
 					style={{ width: "200px" }}
-					onChange={(e) => {
+					onChange={(e) =>
 						this.setState({
 							userInput: e.target.value,
 							showSuggestions: e.target.value.length > 0,
-						});
-					}}
+						})
+					}
 					onKeyDown={(e) => {
 						if (e.key === "ArrowDown") {
 							this.setState({ showSuggestions: true });
@@ -85,6 +85,7 @@ export default class Inspector extends Component {
 		this.state = {
 			categoriesList: [],
 			tagsList: [],
+			authorsList: [],
 			currentTagName: "",
 		};
 	}
@@ -117,6 +118,19 @@ export default class Inspector extends Component {
 					this.setState({ tagsList: [] });
 				}
 			});
+		this.authorFetchRequest = apiFetch({
+			path: addQueryArgs("/wp/v2/users", { per_page: -1, who: "authors" }),
+		})
+			.then((authorsList) => {
+				if (this.stillMounted) {
+					this.setState({ authorsList });
+				}
+			})
+			.catch(() => {
+				if (this.stillMounted) {
+					this.setState({ authorsList: [] });
+				}
+			});
 	}
 
 	componentWillUnmount() {
@@ -124,7 +138,7 @@ export default class Inspector extends Component {
 	}
 
 	render() {
-		const { categoriesList, tagsList } = this.state;
+		const { categoriesList, tagsList, authorsList } = this.state;
 
 		const {
 			attributes: {
@@ -146,6 +160,7 @@ export default class Inspector extends Component {
 				orderBy,
 				order,
 				postTitleTag,
+				authorArray,
 				tagArray,
 			},
 			setAttributes,
@@ -213,33 +228,71 @@ export default class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={__("Post Grid Settings", "ultimate-blocks")}>
-					<SelectControl
-						label={__("Grid Type", "ultimate-blocks")}
-						options={postTypeOptions}
-						value={postLayout}
-						onChange={(postLayout) => setAttributes({ postLayout })}
-					/>
-					{"grid" === postLayout && (
-						<RangeControl
-							label={__("Columns", "ultimate-blocks")}
-							value={columns}
-							onChange={(columns) => setAttributes({ columns })}
-							min={1}
-							max={
-								!hasPosts
-									? MAX_POSTS_COLUMNS
-									: Math.min(MAX_POSTS_COLUMNS, posts.length)
-							}
-						/>
+					{Array.isArray(posts) && posts.length > 0 && (
+						<>
+							<SelectControl
+								label={__("Grid Type", "ultimate-blocks")}
+								options={postTypeOptions}
+								value={postLayout}
+								onChange={(postLayout) => setAttributes({ postLayout })}
+							/>
+							{"grid" === postLayout && (
+								<RangeControl
+									label={__("Columns", "ultimate-blocks")}
+									value={columns}
+									onChange={(columns) => setAttributes({ columns })}
+									min={1}
+									max={
+										!hasPosts
+											? MAX_POSTS_COLUMNS
+											: Math.min(MAX_POSTS_COLUMNS, posts.length)
+									}
+								/>
+							)}
+						</>
 					)}
+					<p>{__("Authors")}</p>
+					{authorArray && (
+						<div className="ub-autocomplete-container">
+							{authorsList
+								.filter((t) => authorArray.includes(t.id))
+								.map((t) => (
+									<span className="ub-autocomplete-selection">
+										{t.name}
+										<span
+											className="dashicons dashicons-dismiss"
+											onClick={() =>
+												setAttributes({
+													authorArray: authorArray.filter(
+														(sel) => sel !== t.id
+													),
+												})
+											}
+										/>
+									</span>
+								))}
+						</div>
+					)}
+					<Autocomplete
+						className="ub-autocomplete-list"
+						list={authorsList
+							.filter((t) => !authorArray.includes(t.id))
+							.map((t) => ({ label: t.name, value: t.id }))}
+						selection={authorArray}
+						addToSelection={(item) => {
+							if (!authorArray.includes(item.value)) {
+								setAttributes({ authorArray: [...authorArray, item.value] });
+							}
+						}}
+					/>
 					{queryControlPanel}
-					<p>Tags</p>
+					<p>{__("Tags")}</p>
 					{tagArray && (
-						<div className="ub-post-grid-tags">
+						<div className="ub-autocomplete-container">
 							{tagsList
 								.filter((t) => tagArray.includes(t.id))
 								.map((t) => (
-									<span className="ub-post-grid-tag">
+									<span className="ub-autocomplete-selection">
 										{t.name}
 										<span
 											className="dashicons dashicons-dismiss"
@@ -254,7 +307,7 @@ export default class Inspector extends Component {
 						</div>
 					)}
 					<Autocomplete
-						className="ub-post-grid-tag-list"
+						className="ub-autocomplete-list"
 						list={tagsList
 							.filter((t) => !tagArray.includes(t.id))
 							.map((t) => ({ label: t.name, value: t.id }))}
@@ -266,90 +319,94 @@ export default class Inspector extends Component {
 						}}
 					/>
 				</PanelBody>
-				<PanelBody title={__("Post Grid Content", "ultimate-blocks")}>
-					<ToggleControl
-						label={__("Display Featured Image", "ultimate-blocks")}
-						checked={checkPostImage}
-						onChange={(checkPostImage) => setAttributes({ checkPostImage })}
-					/>
-					{checkPostImage && (
-						<>
-							<TextControl
-								label={__("Post Image Width", "ultimate-blocks")}
-								type="number"
-								min={1}
-								value={postImageWidth}
-								onChange={(val) =>
-									setAttributes({ postImageWidth: Number(val) })
-								}
-							/>
-							<ToggleControl
-								label={__("Preserve Aspect Ratio", "ultimate-blocks")}
-								checked={preservePostImageAspectRatio}
-								onChange={(preservePostImageAspectRatio) =>
-									setAttributes({ preservePostImageAspectRatio })
-								}
-							/>
-							{!preservePostImageAspectRatio && (
+				{Array.isArray(posts) && posts.length > 0 && (
+					<PanelBody title={__("Post Grid Content", "ultimate-blocks")}>
+						<ToggleControl
+							label={__("Display Featured Image", "ultimate-blocks")}
+							checked={checkPostImage}
+							onChange={(checkPostImage) => setAttributes({ checkPostImage })}
+						/>
+						{checkPostImage && (
+							<>
 								<TextControl
-									label={__("Post Image Height", "ultimate-blocks")}
+									label={__("Post Image Width", "ultimate-blocks")}
 									type="number"
 									min={1}
-									value={postImageHeight}
+									value={postImageWidth}
 									onChange={(val) =>
-										setAttributes({ postImageHeight: Number(val) })
+										setAttributes({ postImageWidth: Number(val) })
 									}
 								/>
-							)}
-						</>
-					)}
-					<ToggleControl
-						label={__("Display Author", "ultimate-blocks")}
-						checked={checkPostAuthor}
-						onChange={(checkPostAuthor) => setAttributes({ checkPostAuthor })}
-					/>
-					<ToggleControl
-						label={__("Display Date", "ultimate-blocks")}
-						checked={checkPostDate}
-						onChange={(checkPostDate) => setAttributes({ checkPostDate })}
-					/>
-					<ToggleControl
-						label={__("Display Excerpt", "ultimate-blocks")}
-						checked={checkPostExcerpt}
-						onChange={(checkPostExcerpt) => setAttributes({ checkPostExcerpt })}
-					/>
-					{checkPostExcerpt && (
-						<RangeControl
-							label={__("Excerpt Length", "ultimate-blocks")}
-							value={excerptLength}
-							onChange={(value) => setAttributes({ excerptLength: value })}
-							min={0}
-							max={200}
+								<ToggleControl
+									label={__("Preserve Aspect Ratio", "ultimate-blocks")}
+									checked={preservePostImageAspectRatio}
+									onChange={(preservePostImageAspectRatio) =>
+										setAttributes({ preservePostImageAspectRatio })
+									}
+								/>
+								{!preservePostImageAspectRatio && (
+									<TextControl
+										label={__("Post Image Height", "ultimate-blocks")}
+										type="number"
+										min={1}
+										value={postImageHeight}
+										onChange={(val) =>
+											setAttributes({ postImageHeight: Number(val) })
+										}
+									/>
+								)}
+							</>
+						)}
+						<ToggleControl
+							label={__("Display Author", "ultimate-blocks")}
+							checked={checkPostAuthor}
+							onChange={(checkPostAuthor) => setAttributes({ checkPostAuthor })}
 						/>
-					)}
-					<ToggleControl
-						label={__("Display Continue Reading Link", "ultimate-blocks")}
-						checked={checkPostLink}
-						onChange={(checkPostLink) => setAttributes({ checkPostLink })}
-					/>
-					{checkPostLink && (
-						<TextControl
-							label={__("Customize Continue Reading Text", "ultimate-blocks")}
-							type="text"
-							value={readMoreText}
-							onChange={(value) => setAttributes({ readMoreText: value })}
+						<ToggleControl
+							label={__("Display Date", "ultimate-blocks")}
+							checked={checkPostDate}
+							onChange={(checkPostDate) => setAttributes({ checkPostDate })}
 						/>
-					)}
-					<SelectControl
-						label={__("Title tag", "ultimate-blocks")}
-						options={["h2", "h3", "h4"].map((a) => ({
-							value: a,
-							label: __(a),
-						}))}
-						value={postTitleTag}
-						onChange={(postTitleTag) => setAttributes({ postTitleTag })}
-					/>
-				</PanelBody>
+						<ToggleControl
+							label={__("Display Excerpt", "ultimate-blocks")}
+							checked={checkPostExcerpt}
+							onChange={(checkPostExcerpt) =>
+								setAttributes({ checkPostExcerpt })
+							}
+						/>
+						{checkPostExcerpt && (
+							<RangeControl
+								label={__("Excerpt Length", "ultimate-blocks")}
+								value={excerptLength}
+								onChange={(value) => setAttributes({ excerptLength: value })}
+								min={0}
+								max={200}
+							/>
+						)}
+						<ToggleControl
+							label={__("Display Continue Reading Link", "ultimate-blocks")}
+							checked={checkPostLink}
+							onChange={(checkPostLink) => setAttributes({ checkPostLink })}
+						/>
+						{checkPostLink && (
+							<TextControl
+								label={__("Customize Continue Reading Text", "ultimate-blocks")}
+								type="text"
+								value={readMoreText}
+								onChange={(value) => setAttributes({ readMoreText: value })}
+							/>
+						)}
+						<SelectControl
+							label={__("Title tag", "ultimate-blocks")}
+							options={["h2", "h3", "h4"].map((a) => ({
+								value: a,
+								label: __(a),
+							}))}
+							value={postTitleTag}
+							onChange={(postTitleTag) => setAttributes({ postTitleTag })}
+						/>
+					</PanelBody>
+				)}
 			</InspectorControls>
 		);
 	}

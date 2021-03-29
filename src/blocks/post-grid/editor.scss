@@ -1,15 +1,15 @@
-.ub-post-grid-tags {
+.ub-autocomplete-container {
 	margin-bottom: 5px;
 }
 
-.ub-post-grid-tag {
+.ub-autocomplete-selection {
 	border: 1px solid black;
 	margin: 4px;
 	padding: 2px;
 	border-radius: 4px;
 }
 
-.ub-post-grid-tag-list {
+.ub-autocomplete-list {
 	position: absolute;
 	z-index: 1;
 	max-height: 100px;

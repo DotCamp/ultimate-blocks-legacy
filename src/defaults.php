@@ -984,6 +984,13 @@ $defaultValues = array(
                 'items' => array(
                     'type' => 'number'
                 )
+            ),
+            'authorArray' => array(
+                'type' => 'array',
+                'default' => array(),
+                'items' => array(
+                    'type' => 'number'
+                )
             )
         )
     ),
