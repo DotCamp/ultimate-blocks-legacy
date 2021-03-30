@@ -47,7 +47,7 @@ registerBlockType("ub/click-to-tweet", {
 		},
 		tweetColor: {
 			type: "string",
-			default: "#444444",
+			default: "",
 		},
 		borderColor: {
 			type: "string",
@@ -145,7 +145,7 @@ registerBlockType("ub/click-to-tweet", {
 					<RichText
 						style={{
 							fontSize: tweetFontSize + "px",
-							color: tweetColor,
+							color: tweetColor || "inherit",
 						}}
 						placeholder={__("Add Tweetable Content Here")}
 						className="ub_tweet"

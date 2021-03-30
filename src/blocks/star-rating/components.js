@@ -98,11 +98,13 @@ export const inspectorControls = (props) => {
 			<PanelBody>
 				<p>
 					{__("Text Color")}
-					<span
-						class="component-color-indicator"
-						aria-label={`(Color: ${reviewTextColor})`}
-						style={{ background: reviewTextColor }}
-					/>
+					{reviewTextColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${reviewTextColor})`}
+							style={{ background: reviewTextColor }}
+						/>
+					)}
 				</p>
 				<ColorPalette
 					value={reviewTextColor}
@@ -144,9 +146,7 @@ export const editorDisplay = (props) => {
 					{[...Array(starCount)].map((e, i) => (
 						<div
 							key={i}
-							onMouseEnter={() => {
-								setState({ highlightedStars: i + 1 });
-							}}
+							onMouseEnter={() => setState({ highlightedStars: i + 1 })}
 							onClick={() => {
 								if (selectedStars % 1 === 0) {
 									setAttributes({
@@ -193,7 +193,10 @@ export const editorDisplay = (props) => {
 				className="ub-review-text"
 				placeholder={__("The text of the review goes here")}
 				value={reviewText}
-				style={{ textAlign: reviewTextAlign, color: reviewTextColor }}
+				style={{
+					textAlign: reviewTextAlign,
+					color: reviewTextColor || "inherit",
+				}}
 				onChange={(text) => setAttributes({ reviewText: text })}
 				keepPlaceholderOnFocus={true}
 				formattingControls={["bold", "italic", "strikethrough", "link"]}

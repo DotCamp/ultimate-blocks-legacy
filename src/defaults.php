@@ -93,7 +93,7 @@ $defaultValues = array(
             ),
             'headColor' => array(
                 'type' => 'string',
-                'default' => '#444444'
+                'default' => ''
             ),
             'headAlign' => array(
                 'type' => 'string',
@@ -105,7 +105,7 @@ $defaultValues = array(
             ),
             'contentColor' => array(
                 'type' => 'string',
-                'default' => '#444444'
+                'default' => ''
             ),
             'buttonFontSize' => array(
                 'type' => 'number',
@@ -117,7 +117,7 @@ $defaultValues = array(
             ),
             'buttonTextColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff'
+                'default' => ''
             ),
             'buttonWidth' => array(
                 'type' => 'number',
@@ -181,7 +181,7 @@ $defaultValues = array(
             ),
             'tweetColor' => array(
                 'type' => 'string',
-                'default' => '#444444'
+                'default' => ''
             ),
             'borderColor' => array(
                 'type' => 'string',
@@ -206,7 +206,7 @@ $defaultValues = array(
             ),
             'buttonTextColor' => array(
                 'type' => 'string',
-                'default' => '#000000'
+                'default' => ''
             ),
             'activeButtonColor' => array(
                 'type' => 'string',
@@ -214,7 +214,7 @@ $defaultValues = array(
             ),
             'activeButtonTextColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff'
+                'default' => ''
             ),
             'initiallyShowAll' => array(
                 'type' => 'boolean',
@@ -246,7 +246,7 @@ $defaultValues = array(
             ),
             'titleLinkColor' => array(
                 'type' => 'string',
-                'default' => '#000000'
+                'default' => ''
             ),
             'preventCollapse' => array(
                 'type' => 'boolean',
@@ -282,7 +282,7 @@ $defaultValues = array(
             ),
             'titleLinkColor' => array(
                 'type' => 'string',
-                'default' => '#000000'
+                'default' => ''
             ),
             'panelTitle' => array(
                 'type' => 'string',
@@ -307,6 +307,10 @@ $defaultValues = array(
             'toggleIcon' => array(
 	            'type' => 'string',
 	            'default' => 'chevron'
+            ),
+            'toggleID' => array(
+                'type' => 'string',
+                'default' => ''
             ),
             'border' => array(
 	            'type' => 'boolean',
@@ -1006,6 +1010,10 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 1
             ),
+            'labelColor' => array(
+                'type' => 'string',
+                'default' => ''
+            )
         )
     ),
     'ub/review' => array(
@@ -1098,9 +1106,13 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#f63d3d'
             ),
-            'callToActionForeColor' => array(
+            'callToActionBorderColor' => array(
                 'type' => 'string',
                 'default' => '#ffffff'
+            ),
+            'callToActionForeColor' => array(
+                'type' => 'string',
+                'default' => ''
             ),
             'inactiveStarColor' => array(
                 'type' => 'string',
@@ -1381,7 +1393,7 @@ $defaultValues = array(
             ),
             'reviewTextColor' => array(
                 'type' => 'string',
-                'default' => '#000000'
+                'default' => ''
             ),
             'starAlign' => array(
                 'type' => 'string',
@@ -1561,7 +1573,7 @@ $defaultValues = array(
             ),
             'titleColor' => array(
                 'type' => 'string',
-                'default' => '#000000'
+                'default' => '' //should be empty
             ),
             'tabsAlignment' => array(
                 'type' => 'string',
@@ -1728,7 +1740,7 @@ $defaultValues = array(
             ),
             'textColor' => array(
                 'type' => 'string',
-                'default' => '#444444'
+                'default' => ''
             ),
             'textSize' => array(
                 'type' => 'number',

@@ -424,7 +424,7 @@ export class TabHolder extends Component {
 									: "initial",
 							color:
 								propz.attributes.activeTab === i
-									? propz.attributes.titleColor
+									? propz.attributes.titleColor || "inherit"
 									: "#000000",
 						}}
 						onClick={() => toggleTitle("tab-title", i)}

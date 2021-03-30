@@ -21,14 +21,14 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class Line extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			indicator: 0,
-			isActive: false
+			isActive: false,
 		};
 	}
 	componentDidMount() {
@@ -36,7 +36,7 @@ export default class Line extends Component {
 			() =>
 				this.setState({
 					indicator: this.props.percent,
-					isActive: true
+					isActive: true,
 				}),
 			1000
 		);
@@ -50,9 +50,10 @@ export default class Line extends Component {
 
 	render() {
 		const { indicator, isActive } = this.state;
-		const { barColor, barThickness, percent } = this.props;
-		const progressBarPath = `M ${barThickness / 2},${barThickness /
-			2} L ${100 - barThickness / 2},${barThickness / 2}`;
+		const { barColor, barThickness, percent, labelColor } = this.props;
+		const progressBarPath = `M ${barThickness / 2},${barThickness / 2} L ${
+			100 - barThickness / 2
+		},${barThickness / 2}`;
 		return (
 			<div className="ub_progress-bar-container">
 				<svg
@@ -70,16 +71,15 @@ export default class Line extends Component {
 						d={progressBarPath}
 						stroke={barColor}
 						strokeWidth={barThickness}
-						style={{
-							strokeDashoffset: `${100 - indicator}px`
-						}}
+						style={{ strokeDashoffset: `${100 - indicator}px` }}
 					/>
 				</svg>
 				<div
 					className="ub_progress-bar-label"
 					style={{
 						width: `${percent}%`,
-						visibility: isActive ? 'visible' : 'hidden'
+						visibility: isActive ? "visible" : "hidden",
+						color: labelColor || "inherit",
 					}}
 				>
 					{percent}%

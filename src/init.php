@@ -193,7 +193,7 @@ function ub_include_block_attribute_css() {
                             }
                             else{
                                 $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL . 
-                                'color: '.$attributes['buttons'][$key]['buttonTextColor'].';' . PHP_EOL .
+                                'color: ' . ($attributes['buttons'][$key]['buttonTextColor'] ?: 'inherit') . ';' . PHP_EOL .
                                 'border: none;';
                             }
                             $blockStylesheets .= 'border-radius: '.($attributes['buttons'][$key]['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
@@ -225,12 +225,12 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL .
                     $prefix . ' .ub_call_to_action_headline_text{' . PHP_EOL .
                         'font-size: '.$attributes['headFontSize'].'px;' . PHP_EOL .
-                        'color: '.$attributes['headColor'].';' . PHP_EOL .
+                        'color: ' . ($attributes['headColor'] ?: "inherit") . ';' . PHP_EOL .
                         'text-align: '.$attributes['headAlign'].';' . PHP_EOL .
                     '}' . PHP_EOL . 
                     $prefix . ' .ub_cta_content_text{' . PHP_EOL .
                         'font-size: '.$attributes['contentFontSize'].'px;' . PHP_EOL .
-                        'color: '.$attributes['contentColor'].';' . PHP_EOL .
+                        'color: ' . ($attributes['contentColor'] ?: "inherit") . ';' . PHP_EOL .
                         'text-align: '.$attributes['contentAlign'].';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_cta_button{' . PHP_EOL .
@@ -238,7 +238,7 @@ function ub_include_block_attribute_css() {
                         'width: '.$attributes['buttonWidth'].'px;' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_cta_button_text{' . PHP_EOL .
-                        'color: '.$attributes['buttonTextColor'].';' . PHP_EOL .
+                        'color: ' . ($attributes['buttonTextColor'] ?: 'inherit'). ';' . PHP_EOL .
                         'font-size: '.$attributes['buttonFontSize'].'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
@@ -248,7 +248,7 @@ function ub_include_block_attribute_css() {
                         'border-color: '.$attributes['borderColor'].';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_tweet{' . PHP_EOL .
-                        'color: '.$attributes['tweetColor'].';' . PHP_EOL .
+                        'color: ' . ($attributes['tweetColor'] ?: 'inherit') . ';' . PHP_EOL .
                         'font-size: '.$attributes['tweetFontSize'].'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
@@ -256,11 +256,11 @@ function ub_include_block_attribute_css() {
                     $prefix = '#ub-content-filter-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .ub-content-filter-tag{' . PHP_EOL .
                         'background-color: ' . $attributes['buttonColor'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['buttonTextColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['buttonTextColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub-content-filter-tag.ub-selected{' . PHP_EOL .
                         'background-color: ' . $attributes['activeButtonColor'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['activeButtonTextColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['activeButtonTextColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
                 case 'ub/content-toggle-block':
@@ -277,13 +277,13 @@ function ub_include_block_attribute_css() {
                         'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                     '}' . PHP_EOL . 
                     $prefix . ' .wp-block-ub-content-toggle-accordion-title{' . PHP_EOL .
-                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .wp-block-ub-content-toggle-accordion-toggle-wrap{' . PHP_EOL .
                         'color: ' . $attributes['toggleColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     '.ub-content-toggle-title-'. $attributes['blockID'] . ' > a{' . PHP_EOL .
-                        'color: ' . $attributes['titleLinkColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['titleLinkColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}';
                     break;
                 case 'ub/countdown':
@@ -434,7 +434,8 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-label{' . PHP_EOL;                                
                     }
-                    $blockStylesheets .= 'visibility: hidden;' . PHP_EOL . 
+                    $blockStylesheets .= 'visibility: hidden;' . PHP_EOL .
+                                        'color: ' . ($attributes['labelColor'] ?: 'inherit') . ';'. PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . '.ub_progress-bar-filled .ub_progress-bar-label{' . PHP_EOL . 
                         'visibility: visible;' . PHP_EOL .
@@ -463,11 +464,11 @@ function ub_include_block_attribute_css() {
                         'text-align: ' . $attributes['descriptionAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_review_cta_main>a{' . PHP_EOL . 
-                        'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['callToActionForeColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_review_cta_btn{' . PHP_EOL . 
-                        'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
-                        'border-color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['callToActionForeColor'] ?: 'inherit') . ';' . PHP_EOL .
+                        'border-color: ' . $attributes['callToActionBorderColor'] . ';' . PHP_EOL .
                         'background-color: ' . $attributes['callToActionBackColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_review_image{' . PHP_EOL .
@@ -507,7 +508,7 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL .
                     $prefix . ' .ub-review-text{' . PHP_EOL .
                         'text-align: '. $attributes['reviewTextAlign'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['reviewTextColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['reviewTextColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' svg{' . PHP_EOL .
                         'fill: ' . $attributes['starColor'] . ';' . PHP_EOL .
@@ -633,7 +634,7 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
                         'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' .
                     $prefix . ' .wp-block-ub-tabbed-content-tabs-title{' . PHP_EOL .
                         'justify-content: ' . ($attributes['tabsAlignment'] === 'center' ? 'center' :
@@ -677,7 +678,7 @@ function ub_include_block_attribute_css() {
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
                         'background-color: '.$attributes['backgroundColor'].';' . PHP_EOL .
-                        'color: '.$attributes['textColor'].';' . PHP_EOL .
+                        'color: ' . ($attributes['textColor'] ?: "inherit") . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_testimonial_text{' . PHP_EOL .
                         'font-size: '.$attributes['textSize'].'px;'. PHP_EOL .

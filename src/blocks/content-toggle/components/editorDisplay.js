@@ -638,7 +638,7 @@ export class PanelContent extends Component {
 				<style
 					dangerouslySetInnerHTML={{
 						__html: `.ub-accordion-title-${blockID} a{
-					color: ${titleLinkColor}
+					color: ${titleLinkColor || "inherit"}
 				}`,
 					}}
 				/>

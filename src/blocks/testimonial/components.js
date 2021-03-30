@@ -84,11 +84,13 @@ export const inspectorControls = (props) => {
 			<PanelBody title={__("Testimonial Body")}>
 				<p>
 					{__("Font Color")}
-					<span
-						class="component-color-indicator"
-						aria-label={`(Color: ${textColor})`}
-						style={{ background: textColor }}
-					/>
+					{textColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${textColor})`}
+							style={{ background: textColor }}
+						/>
+					)}
 				</p>
 				<ColorPalette
 					value={textColor}
@@ -126,12 +128,13 @@ export const editorDisplay = (props) => {
 		authorAlign,
 		authorRoleAlign,
 	} = attributes;
+
 	return (
 		<div
 			className="ub_testimonial"
 			style={{
 				backgroundColor: backgroundColor,
-				color: textColor,
+				color: textColor || "inherit",
 			}}
 		>
 			<div className="ub_testimonial_img">

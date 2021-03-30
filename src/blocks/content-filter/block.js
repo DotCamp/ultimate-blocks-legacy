@@ -24,7 +24,7 @@ const attributes = {
 	},
 	buttonTextColor: {
 		type: "string",
-		default: "#000000",
+		default: "",
 	},
 	activeButtonColor: {
 		type: "string",

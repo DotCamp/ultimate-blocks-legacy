@@ -62,7 +62,7 @@ const attributes = {
 	},
 	textColor: {
 		type: "string",
-		default: "#444444",
+		default: "",
 	},
 	textSize: {
 		type: "number",
@@ -181,7 +181,7 @@ registerBlockType("ub/testimonial-block", {
 					className="ub_testimonial"
 					style={{
 						backgroundColor: backgroundColor,
-						color: textColor,
+						color: textColor || 'inherit',
 					}}
 				>
 					<div className="ub_testimonial_img">
