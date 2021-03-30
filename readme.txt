@@ -134,7 +134,6 @@ That's it. You're done!
 
 = 2.4.4 =
 
-* Content Toggle - Enable keyboard navigation.
 * Button - Allow customizing button border radius.
 * Button - Set button selection to new button.
 * Button - Highlight selected button.
@@ -143,6 +142,8 @@ That's it. You're done!
 * Content Filter - Set default matching option to matchAny.
 * Content Filter - Make a single matching tag in a multi-select category count for matchAll.
 * Content Filter - Ctegory name style change.
+* Content Toggle - Allow adding anchor IDs to individual panels.
+* Content Toggle - Enable keyboard navigation.
 * Divider - Allow changing border style.
 * Expand - Add ARIA attributes.
 * Expand - Allow toggling visibility through keyboard shortcuts.
@@ -151,7 +152,7 @@ That's it. You're done!
 * Tabbed content - Force block appender button to appear within newly-inserted tabs.
 * Table of contents - When editing anchors, set default text to the actual heading text.
 * Other - Revert faulty fix for reusable block issue.
-* Other - Ensure that color selection indicators are present in color palette instances within the inspector.
+* Other - Make texts with customizable colors text color inherit the parent element's color settings when it can be customized but is unset.
 * Other - Compatibility check with latest WordPress version.
 
 = 2.4.3 =
