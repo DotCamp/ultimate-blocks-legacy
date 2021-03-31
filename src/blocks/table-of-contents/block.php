@@ -60,7 +60,7 @@ function ub_render_table_of_contents_block($attributes){
                     $anchor = '#' . $item["anchor"];
                 }
 
-                if(count($currentGaps) && get_query_var('page') !== $currentGaps[$num]){
+                if(count($currentGaps) > $num && get_query_var('page') !== $currentGaps[$num]){
                     $baseURL = get_permalink();
                     $anchor = $baseURL . ($currentGaps[$num] > 1 ? (get_post_status(get_the_ID()) === 'publish' ? '' : '&page=')
                             . $currentGaps[$num] : '') . $anchor;
