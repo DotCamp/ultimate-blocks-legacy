@@ -50,15 +50,15 @@ export default class PostGridBlock extends Component {
 								`}
 							>
 								<>
-									<div className="ub-block-post-grid-image">
-										{checkPostImage && post.featured_media ? (
+									{checkPostImage && post.featured_media ? (
+										<div className="ub-block-post-grid-image">
 											<FeaturedImage
 												{...this.props}
 												imgID={post.featured_media}
 												imgSizeLandscape={post.featured_image_src}
 											/>
-										) : null}
-									</div>
+										</div>
+									) : null}
 									<div className="ub_block-post-grid-text">
 										<header className="ub_block-post-grid-header">
 											<PostTag className="ub-block-post-grid-title">
