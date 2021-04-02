@@ -430,6 +430,7 @@ export class PanelContent extends Component {
 							index,
 							parent,
 							parentID,
+							toggleID,
 							...others
 						} = panel.attributes
 					) => others)()
@@ -444,6 +445,7 @@ export class PanelContent extends Component {
 						index,
 						parent,
 						parentID,
+						toggleID,
 						...others
 					} = panel.attributes
 				) => others)()
@@ -467,6 +469,9 @@ export class PanelContent extends Component {
 							oldAttributeValues[changedPanel],
 							newAttributeValues[changedPanel]
 						);
+
+						console.log(newChange);
+
 						if (
 							changedPanel > -1 && //for preventing errors in gutenberg 8
 							newAttributeValues[changedPanel].showOnlyOne
