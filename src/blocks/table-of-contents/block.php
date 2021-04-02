@@ -66,7 +66,7 @@ function ub_render_table_of_contents_block($attributes){
                             . $currentGaps[$num] : '') . $anchor;
                 }
 
-                $content = array_key_exists("customContent", $item) && $item["customContent"] !== "" ? $item["customContent"] : $item["content"];
+                $content = array_key_exists("customContent", $item) && !empty($item["customContent"]) ? $item["customContent"] : $item["content"];
                 $outputString .= '<li><a href='. $anchor.'>'. $content .'</a></li>';
             }
             else{
