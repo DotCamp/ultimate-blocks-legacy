@@ -1,4 +1,4 @@
-const sass = require("node-sass");
+const sass = require("sass");
 const { writeFile, writeFileSync } = require("fs");
 const { transformFileSync } = require("@babel/core");
 const { resolve } = require("path");

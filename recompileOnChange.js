@@ -1,5 +1,5 @@
 const chokidar = require("chokidar");
-const { renderSync } = require("node-sass");
+const { renderSync } = require("sass");
 const {
 	readFileSync,
 	promises: { readdir, writeFile, readFile }
