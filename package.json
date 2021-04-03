@@ -15,7 +15,6 @@
 		"@fortawesome/free-brands-svg-icons": "^5.15.3",
 		"@fortawesome/free-solid-svg-icons": "^5.15.3",
 		"@fortawesome/react-fontawesome": "^0.1.14",
-		"ajv": "^6.12.6",
 		"moment": "^2.29.1",
 		"react": "^16.14.0",
 		"react-dom": "^16.14.0",
@@ -24,7 +23,7 @@
 		"swiper": "^6.5.3"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^12.3.0",
+		"@wordpress/scripts": "^14.0.1",
 		"concurrently": "^6.0.0",
 		"css-loader": "^5.2.0",
 		"gulp": "^4.0.2",
