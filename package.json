@@ -21,7 +21,7 @@
 		"react-dom": "^16.14.0",
 		"react-sortable-hoc": "^1.11.0",
 		"react-structured-data": "0.0.14",
-		"swiper": "^6.3.3"
+		"swiper": "^6.5.3"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^12.3.0",
