@@ -18,7 +18,7 @@
 		"moment": "^2.29.1",
 		"react": "^16.14.0",
 		"react-dom": "^16.14.0",
-		"react-sortable-hoc": "^1.11.0",
+		"react-sortable-hoc": "^2.0.0",
 		"react-structured-data": "0.0.14",
 		"swiper": "^6.5.3"
 	},
