@@ -268,17 +268,6 @@ export class ReviewBody extends Component {
 				/>
 				{(imageEnabled || descriptionEnabled) && (
 					<div className="ub_review_description_container">
-						{descriptionEnabled && (
-							<RichText
-								className="ub_review_description"
-								tagName="p"
-								placeholder={__("Item description")}
-								value={description}
-								onChange={(text) => setDescription(text)}
-								style={{ textAlign: descriptionAlign }}
-								unstableOnFocus={() => setEditable("reviewItemDescription")}
-							/>
-						)}
 						{imageEnabled &&
 							(imgID ? (
 								<div className="ub_review_image_container">
@@ -323,6 +312,17 @@ export class ReviewBody extends Component {
 									/>
 								</div>
 							))}
+						{descriptionEnabled && (
+							<RichText
+								className="ub_review_description"
+								tagName="p"
+								placeholder={__("Item description")}
+								value={description}
+								onChange={(text) => setDescription(text)}
+								style={{ textAlign: descriptionAlign }}
+								unstableOnFocus={() => setEditable("reviewItemDescription")}
+							/>
+						)}
 					</div>
 				)}
 				{items.map((j, i) => (
@@ -457,7 +457,7 @@ export class ReviewBody extends Component {
 									}}
 								>
 									<RichText
-										style={{ color: callToActionForeColor || 'inherit' }}
+										style={{ color: callToActionForeColor || "inherit" }}
 										placeholder={__("Call to action")}
 										value={callToActionText}
 										onChange={(text) => setCallToActionText(text)}

@@ -125,8 +125,8 @@ function ub_render_review_block($attributes){
             ($blockID === '' ? ' style="text-align: ' . $authorAlign . ';"' : '') . '>' . $authorName . '</p>' .
         (($enableImage || $enableDescription) && ($imgURL != '' || $description != '') ?
         '<div class="ub_review_description_container">' .
-            (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . $description . '</div>') .
             (!$enableImage || $imgURL === '' ? '' : '<img class="ub_review_image" src="' . $imgURL . '" alt = "' . $imgAlt . '">') .
+            (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . $description . '</div>') .
         '</div>' : '').
             $starRatings
     .'<div class="ub_review_summary">' .
