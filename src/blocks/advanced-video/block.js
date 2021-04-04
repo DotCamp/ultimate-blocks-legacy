@@ -135,6 +135,18 @@ registerBlockType("ub/advanced-video", {
 			type: "string",
 			default: "", //vimeo only
 		},
+		showInDesktop: {
+			type: "boolean",
+			default: true,
+		},
+		showInTablet: {
+			type: "boolean",
+			default: true,
+		},
+		showInMobile: {
+			type: "boolean",
+			default: true,
+		},
 	},
 	edit: compose([
 		withState({

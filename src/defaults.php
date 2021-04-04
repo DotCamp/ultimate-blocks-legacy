@@ -67,6 +67,10 @@ $defaultValues = array(
                 'type' => 'integer',
                 'default' => -1,
             ),
+            'videoSource' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'url' => array(
                 'type' => 'string',
                 'default' => '',
@@ -147,6 +151,18 @@ $defaultValues = array(
             'borderColor' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'showInDesktop' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'showInTablet' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'showInMobile' => array(
+                'type' => 'boolean',
+                'default' => true
             )
         )
     ),

@@ -273,6 +273,9 @@ export const inspectorControls = (props) => {
 		borderSize,
 		borderStyle,
 		borderColor,
+		showInDesktop,
+		showInTablet,
+		showInMobile,
 	} = attributes;
 
 	return (
@@ -945,6 +948,31 @@ export const inspectorControls = (props) => {
 							/>
 						</>
 					)}
+					<p>{__("Toggle visibility")}</p>
+					<Button
+						isPrimary={showInDesktop}
+						isSecondary={!showInDesktop}
+						icon="desktop"
+						showTooltip={true}
+						label={"Desktop"}
+						onClick={() => setAttributes({ showInDesktop: !showInDesktop })}
+					/>
+					<Button
+						isPrimary={showInTablet}
+						isSecondary={!showInTablet}
+						icon="tablet"
+						showTooltip={true}
+						label={"Tablet"}
+						onClick={() => setAttributes({ showInTablet: !showInTablet })}
+					/>
+					<Button
+						isPrimary={showInMobile}
+						isSecondary={!showInMobile}
+						icon="smartphone"
+						showTooltip={true}
+						label={"Mobile"}
+						onClick={() => setAttributes({ showInMobile: !showInMobile })}
+					/>
 				</PanelBody>
 			)}
 		</InspectorControls>

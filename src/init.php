@@ -167,6 +167,30 @@ function ub_include_block_attribute_css() {
                             'border: ' . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] . ';' . PHP_EOL .
                         '}';
                     }
+                    //if one of showInDesktop, showInTablet, showInMobile
+                    if(in_array(false, [$attributes['showInDesktop'], $attributes['showInTablet'], $attributes['showInMobile']])){
+                        if(!$attributes['showInDesktop']){
+                            $blockStylesheets .= '@media (min-width: 1024px){' . PHP_EOL .
+                                $prefix . '{' . PHP_EOL .
+                                    'display: none;' . PHP_EOL .
+                                '}' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                        if(!$attributes['showInTablet']){
+                            $blockStylesheets .= '@media (min-width: 800px) and (max-width: 1023px){' . PHP_EOL .
+                                $prefix . '{' . PHP_EOL .
+                                    'display: none;' . PHP_EOL .
+                                '}' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                        if(!$attributes['showInMobile']){
+                            $blockStylesheets .= '@media (max-width: 799px){' . PHP_EOL .
+                                $prefix . '{' . PHP_EOL .
+                                    'display: none;' . PHP_EOL .
+                                '}' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                    }
                     break;
                 case 'ub/advanced-heading':
                     $prefix = '#ub-advanced-heading-' . $attributes['blockID'];
