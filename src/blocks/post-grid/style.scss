@@ -107,8 +107,9 @@
 			text-decoration: underline;
 		}
 	}
-	.ub-block-post-grid-excerpt div + p {
+	.ub-block-post-grid-excerpt > p:last-child {
 		margin-top: 15px;
+		margin-bottom: 0;
 	}
 	.is-list {
 		article {
