@@ -1,7 +1,7 @@
 <?php
 
 function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
-    $activeStarColor, $starOutlineColor, $className=''){
+    $activeStarColor='#eeee00', $starOutlineColor='#000000', $className=''){
     $stars = '';
 
     foreach(range(0, $limit-1) as $current){

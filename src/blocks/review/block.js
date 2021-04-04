@@ -134,7 +134,7 @@ const attributes = {
 	},
 	activeStarColor: {
 		type: "string",
-		default: "#eeee00",
+		default: "",
 	},
 	titleAlign: {
 		type: "string",
@@ -174,7 +174,7 @@ const attributes = {
 	},
 	starOutlineColor: {
 		type: "string",
-		default: "#000000",
+		default: "",
 	},
 	imageSize: {
 		type: "number",
@@ -441,16 +441,33 @@ registerBlockType("ub/review", {
 			getClientIdsWithDescendants,
 		} = props;
 
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
+		let initialAttributes = {};
+
+		if (blockID === "") {
+			Object.assign(initialAttributes, {
+				blockID: block.clientId,
+				starOutlineColor: "#f7b708",
+				activeStarColor: "#f7b708",
+			});
+		} else {
+			if (
+				getClientIdsWithDescendants().some(
+					(ID) =>
+						"blockID" in getBlock(ID).attributes &&
+						getBlock(ID).attributes.blockID === blockID
+				)
+			) {
+				Object.assign(initialAttributes, { blockID: block.clientId });
+			}
+			if (starOutlineColor === "") {
+				Object.assign(initialAttributes, { starOutlineColor: "#000000" });
+			}
+			if (activeStarColor === "") {
+				Object.assign(initialAttributes, { activeStarColor: "#eeee00" });
+			}
 		}
+
+		setAttributes(initialAttributes);
 
 		const setAlignment = (target, value) => {
 			switch (target) {

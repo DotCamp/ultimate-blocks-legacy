@@ -1134,7 +1134,7 @@ $defaultValues = array(
             ),
             'activeStarColor' => array(
                 'type' => 'string',
-                'default' => '#eeee00'
+                'default' => ''
             ),
             //retained for backwards compatibility
             'selectedStarColor' => array(
@@ -1171,7 +1171,7 @@ $defaultValues = array(
             ),
             'starOutlineColor' => array(
                 'type' => 'string',
-                'default' => '#000000'
+                'default' => ''
             ),
             'imageSize' => array(
                 'type' => 'number',
