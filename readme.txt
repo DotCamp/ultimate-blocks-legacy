@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.4.4
+Stable tag: 2.4.5
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,12 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.5 =
+
+* Content Toggle - Prevent the anchor ID of any panel from being automatically applied to all other panels.
+* Table of Contents - Fix issue with transitioning from the table of contents in version 2.4.3.
+* Table of Contents - Prevent possible error with page gap array in Table of Contents.
 
 = 2.4.4 =
 
