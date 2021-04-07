@@ -1126,7 +1126,7 @@ $defaultValues = array(
             ),
             'callToActionForeColor' => array(
                 'type' => 'string',
-                'default' => ''
+                'default' => '#ffffff'
             ),
             'inactiveStarColor' => array(
                 'type' => 'string',
