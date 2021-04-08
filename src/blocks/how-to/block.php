@@ -126,7 +126,7 @@ function ub_render_how_to_block($attributes){
                             . '"itemListElement" :[{'. PHP_EOL;
 
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">' 
-                    . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' ? 
+                    . $step['title'].'</h4>' . ($step['stepPic']['url'] !== '' ? 
                     ($step['stepPic']['caption'] === '' ? '' : '<figure>') .
                         '<img class="ub_howto-step-image" src="' .$step['stepPic']['url']. '">' 
                     . ($step['stepPic']['caption'] === '' ? '' : '<figcaption>'.$step['stepPic']['caption'].'</figcaption></figure>')
@@ -137,10 +137,10 @@ function ub_render_how_to_block($attributes){
                             . '"text": "' .($step['title'] === '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
                             . ub_strip_html_tags($step['direction']) .'"}' . PHP_EOL;
 
-                if ($step['tip'] != ''){
+                if ($step['tip'] !== ''){
                     $stepsDisplay .= ub_convert_to_paragraphs($step['tip']);
                     $stepsCode .= ',{"@type": "HowToTip",' . PHP_EOL
-                                . '"text": "'. ub_strip_html_tags($step['tip']) .'"}' . PHP_EOL;
+                                . '"text": "' . ub_strip_html_tags($step['tip']) . '"}' . PHP_EOL;
                 }
 
                 $stepsCode .= ']}'. PHP_EOL;
@@ -164,7 +164,7 @@ function ub_render_how_to_block($attributes){
         if(count($section) > 0){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><h4 id="'.$step['anchor'].'">'
-                        . $step['title'].'</h4>' . ($step['stepPic']['url'] != '' ? 
+                        . $step['title'].'</h4>' . ($step['stepPic']['url'] !== '' ? 
                             ($step['stepPic']['caption'] === '' ? '' : '<figure>') . 
                                 '<img class="ub_howto-step-image" src="' .$step['stepPic']['url'] . '">' . 
                             ($step['stepPic']['caption'] === '' ? '' : '<figcaption>'.$step['stepPic']['caption'].'</figcaption></figure>') : '') .
@@ -180,10 +180,10 @@ function ub_render_how_to_block($attributes){
                             . '"text": "' . ($step['title'] === '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
                                         . ub_strip_html_tags($step['direction']).'"}' . PHP_EOL;
     
-                if ($step['tip'] != ''){
+                if ($step['tip'] !== ''){
                     $stepsDisplay .= ub_convert_to_paragraphs($step['tip']);
                     $stepsCode .= ',{"@type": "HowToTip",' . PHP_EOL
-                                . '"text": "'. ub_strip_html_tags($step['tip']  .'"}') . PHP_EOL;
+                                . '"text": "' . ub_strip_html_tags($step['tip']) . '"}' . PHP_EOL;
                 }
     
                 $stepsDisplay .= '</li>';
@@ -200,7 +200,7 @@ function ub_render_how_to_block($attributes){
     $parts = array_map( function($sec){ return $sec['steps'];}, $section);
     $clips = '';
 
-    if($videoURL != ''){
+    if($videoURL !== ''){
         if(strpos($videoURL,'https://www.youtube.com') === 0){
             $videoClipArg = '?t=';
         }
@@ -218,7 +218,7 @@ function ub_render_how_to_block($attributes){
     foreach($parts as $part){
         foreach($part as $step){
             if($step['hasVideoClip']){
-                if($clips != ''){
+                if($clips !== ''){
                     $clips .= ',';
                 }
                 $clips .='{"@type": "Clip",
