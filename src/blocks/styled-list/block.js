@@ -135,6 +135,7 @@ registerBlockType("ub/styled-list", {
 				columns,
 				maxMobileColumns,
 			},
+			onReplace,
 		} = props;
 
 		if (availableIcons.length === 0) {
@@ -394,12 +395,22 @@ registerBlockType("ub/styled-list", {
 					style={{ gridTemplateColumns: "auto ".repeat(columns - 1) + "auto" }}
 					multiline="li"
 					__unstableMultilineRootTag={"ul"}
+					onSplit={(list) =>
+						createBlock("ub/styled-list", {
+							...props.attributes,
+							blockID: "",
+							list,
+						})
+					}
+					__unstableOnSplitMiddle={() => createBlock("core/paragraph")}
+					onReplace={onReplace}
 					tagName="ul"
 					value={list}
-					onChange={(newList) => {
-						newList = newList.replace("<ul>", '<ul class="fa-ul">');
-						setAttributes({ list: newList });
-					}}
+					onChange={(newList) =>
+						setAttributes({
+							list: newList.replace("<ul>", '<ul class="fa-ul">'),
+						})
+					}
 				/>
 
 				<style
