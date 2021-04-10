@@ -342,7 +342,7 @@ registerBlockType("ub/button", {
 			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
 		}
 		if (blockID === "") {
-			setAttributes({ blockID: block.clientId, align: "left" });
+			setAttributes({ blockID: block.clientId, align: "center" });
 		} else {
 			if (align === "") {
 				setAttributes({ align: "center" });
