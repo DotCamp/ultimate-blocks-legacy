@@ -96,20 +96,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		tocContainer.removeAttribute("style");
 
+		let padding = 60;
+
 		instance.addEventListener("click", function (event) {
 			event.preventDefault();
 			const curWidth = tocMain.offsetWidth;
+
 			if (tocMain.classList.contains("ub_table-of-contents-collapsed")) {
 				//begin showing
 				tocContainer.classList.remove("ub-hide");
 				const targetHeight = tocContainer.scrollHeight;
 				tocContainer.classList.add("ub-hiding");
-				mainStyle.width = `${curWidth}px`;
+				mainStyle.width = `${curWidth}px`; //also take into account number of columns
 
 				setTimeout(() => {
 					mainStyle.width = "auto";
 					tocMain.classList.remove("ub_table-of-contents-collapsed");
-					const fullWidth = getComputedStyle(tocMain).width;
+					const fullWidth = getComputedStyle(tocMain).width.slice(0, -2);
 					mainStyle.width = `${curWidth}px`;
 
 					setTimeout(() => {
@@ -119,7 +122,11 @@ document.addEventListener("DOMContentLoaded", function () {
 						});
 						tocContainer.classList.remove("ub-hiding");
 
-						mainStyle.width = fullWidth;
+						mainStyle.width = `${fullWidth}px`;
+
+						setTimeout(() => {
+							tocContainer.style.width = `${fullWidth - padding}px`;
+						}, 50);
 					}, 50);
 				}, 50);
 			} else {
@@ -138,12 +145,15 @@ document.addEventListener("DOMContentLoaded", function () {
 					});
 					tocMain.classList.add("ub_table-of-contents-collapsed");
 
-					//measure width of toc title + toggle button, then use it as width of tocMain
 					const mainComputedStyle = getComputedStyle(tocMain);
+					padding =
+						parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) +
+						parseInt(mainComputedStyle.paddingRight.slice(0, -2));
+
+					//measure width of toc title + toggle button, then use it as width of tocMain
 					mainStyle.width = `${
 						5 +
-						parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) +
-						parseInt(mainComputedStyle.paddingRight.slice(0, -2)) +
+						padding +
 						instance.closest(".ub_table-of-contents-header").scrollWidth
 					}px`;
 				}, 50);

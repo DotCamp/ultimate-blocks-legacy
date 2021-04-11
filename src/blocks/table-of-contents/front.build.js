@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var showButton = block.getAttribute("data-showtext") || "show";
     var hideButton = block.getAttribute("data-hidetext") || "hide";
     tocContainer.removeAttribute("style");
+    var padding = 60;
     instance.addEventListener("click", function (event) {
       event.preventDefault();
       var curWidth = tocMain.offsetWidth;
@@ -91,11 +92,12 @@ document.addEventListener("DOMContentLoaded", function () {
         tocContainer.classList.remove("ub-hide");
         var targetHeight = tocContainer.scrollHeight;
         tocContainer.classList.add("ub-hiding");
-        mainStyle.width = "".concat(curWidth, "px");
+        mainStyle.width = "".concat(curWidth, "px"); //also take into account number of columns
+
         setTimeout(function () {
           mainStyle.width = "auto";
           tocMain.classList.remove("ub_table-of-contents-collapsed");
-          var fullWidth = getComputedStyle(tocMain).width;
+          var fullWidth = getComputedStyle(tocMain).width.slice(0, -2);
           mainStyle.width = "".concat(curWidth, "px");
           setTimeout(function () {
             Object.assign(containerStyle, {
@@ -103,7 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
               width: "100px"
             });
             tocContainer.classList.remove("ub-hiding");
-            mainStyle.width = fullWidth;
+            mainStyle.width = "".concat(fullWidth, "px");
+            setTimeout(function () {
+              tocContainer.style.width = "".concat(fullWidth - padding, "px");
+            }, 50);
           }, 50);
         }, 50);
       } else {
@@ -119,10 +124,11 @@ document.addEventListener("DOMContentLoaded", function () {
             height: "0",
             width: "0"
           });
-          tocMain.classList.add("ub_table-of-contents-collapsed"); //measure width of toc title + toggle button, then use it as width of tocMain
-
+          tocMain.classList.add("ub_table-of-contents-collapsed");
           var mainComputedStyle = getComputedStyle(tocMain);
-          mainStyle.width = "".concat(5 + parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) + parseInt(mainComputedStyle.paddingRight.slice(0, -2)) + instance.closest(".ub_table-of-contents-header").scrollWidth, "px");
+          padding = parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) + parseInt(mainComputedStyle.paddingRight.slice(0, -2)); //measure width of toc title + toggle button, then use it as width of tocMain
+
+          mainStyle.width = "".concat(5 + padding + instance.closest(".ub_table-of-contents-header").scrollWidth, "px");
         }, 50);
       }
 
