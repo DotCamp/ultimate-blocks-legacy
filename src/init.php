@@ -722,7 +722,7 @@ function ultimate_blocks_cgb_editor_assets() {
 	wp_enqueue_script(
 		'ultimate_blocks-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor'), // Dependencies, defined above.
+		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-api'), // Dependencies, defined above.
 		Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
@@ -774,6 +774,15 @@ function ultimate_blocks_cgb_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'ultimate_blocks_cgb_editor_assets' );
 
 
+function ub_register_settings(){
+	register_setting('ub_settings', 'ub_icon_choices', array(
+        'type'         => 'string',
+        'show_in_rest' => true,
+        'default'      => '' //value should be in json
+    ));
+}
+
+add_action( 'init', 'ub_register_settings' );
 
 /**
  * Rank Math ToC Plugins List.

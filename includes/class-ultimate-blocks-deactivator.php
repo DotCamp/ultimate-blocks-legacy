@@ -44,6 +44,9 @@ class Ultimate_Blocks_Deactivator {
 		delete_transient( '_welcome_redirect_ub' );
 		delete_option( 'UltimateBlocks_installDate', date( 'Y-m-d h:i:s' ) );
 
+		//undefine variables here
+		delete_option('ub_icon_choices');
+		unregister_setting('ub_settings', 'ub_icon_choices');
 	}
 	
 }
