@@ -10,7 +10,11 @@ const {
 } = wp.blockEditor || wp.editor;
 const { Button, IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
 
-import { dashesToCamelcase, splitArrayIntoChunks } from "../../common";
+import {
+	dashesToCamelcase,
+	splitArrayIntoChunks,
+	splitArray,
+} from "../../common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -20,21 +24,6 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(fas, fab);
 
 const allIcons = Object.assign(fas, fab);
-
-function splitArray(sourceArray, condition) {
-	let passArray = [];
-	let failArray = [];
-
-	sourceArray.forEach((item) => {
-		if (condition(item)) {
-			passArray.push(item);
-		} else {
-			failArray.push(item);
-		}
-	});
-
-	return [passArray, failArray];
-}
 
 class EditorComponent extends Component {
 	constructor(props) {
@@ -47,7 +36,6 @@ class EditorComponent extends Component {
 			iconSearchResultsPage: 0,
 			recentSelection: "",
 			selectionTime: 0,
-			edits: 0,
 		};
 	}
 
@@ -75,6 +63,14 @@ class EditorComponent extends Component {
 				}
 				if (frequentIcons.length) {
 					this.setState({ iconChoices: frequentIcons });
+
+					//check if anything from ub_icon_choices has been trimmed in frequentIcons
+					if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
+						const newIconArray = new models.Settings({
+							ub_icon_choices: JSON.stringify(frequentIcons),
+						});
+						newIconArray.save();
+					}
 
 					let icons = [];
 					let otherIcons = [];
@@ -107,7 +103,6 @@ class EditorComponent extends Component {
 			availableIcons,
 			iconSearchTerm,
 			iconSearchResultsPage,
-			edits,
 			recentSelection,
 			selectionTime,
 			iconChoices,
@@ -296,7 +291,6 @@ class EditorComponent extends Component {
 																this.setState({
 																	recentSelection: i.iconName,
 																	selectionTime: ~~(Date.now() / 1000),
-																	edits: edits + 1,
 																});
 
 																setAttributes({ selectedIcon: i.iconName });

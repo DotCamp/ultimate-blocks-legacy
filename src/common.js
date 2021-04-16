@@ -79,3 +79,18 @@ export const splitArrayIntoChunks = (inputArray, chunkSize) =>
 
 		return resultArray;
 	}, []);
+
+export const splitArray = (sourceArray, condition) => {
+	let passArray = [];
+	let failArray = [];
+
+	sourceArray.forEach((item) => {
+		if (condition(item)) {
+			passArray.push(item);
+		} else {
+			failArray.push(item);
+		}
+	});
+
+	return [passArray, failArray];
+};

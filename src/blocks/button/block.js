@@ -29,7 +29,7 @@ import {
 	editorDisplay,
 	iconSize,
 	allIcons,
-	defaultButtonProps,
+	EditorComponent,
 } from "./components";
 
 const { withDispatch, withSelect } = wp.data;
@@ -175,9 +175,9 @@ registerBlockType("ub/button-block", {
 		}
 
 		return [
-			isSelected && blockControls(props),
+			//isSelected && blockControls(props), might no longer work
 
-			isSelected && inspectorControls(props),
+			//isSelected && inspectorControls(props), //might no longer work
 
 			<div className={props.className}>
 				<button
@@ -287,111 +287,16 @@ registerBlockType("ub/button", {
 		__("Buttons", "ultimate-blocks"),
 		__("Ultimate Blocks", "ultimate-blocks"),
 	],
-	edit: compose([
-		withState({
-			hoveredButton: -1,
-			availableIcons: [],
-			iconSearchTerm: "",
-			enableLinkInput: false,
-			activeButtonIndex: 0,
-			iconSearchResultsPage: 0,
-		}),
-		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-			return {
-				getBlock,
-				block: getBlock(ownProps.clientId),
-				parentID: getBlockRootClientId(ownProps.clientId),
-				getClientIdsWithDescendants,
-			};
-		}),
-	])(function (props) {
-		const {
-			availableIcons,
-			isSelected,
-			setState,
-			block,
-			setAttributes,
-			attributes: {
-				blockID,
-				buttons,
-				buttonText,
-				url,
-				size,
-				buttonColor,
-				buttonHoverColor,
-				buttonTextColor,
-				buttonTextHoverColor,
-				buttonIsTransparent,
-				buttonRounded,
-				buttonWidth,
-				chosenIcon,
-				iconPosition,
-				addNofollow,
-				openInNewTab,
-				align,
-			},
+		return {
 			getBlock,
+			block: getBlock(ownProps.clientId),
+			parentID: getBlockRootClientId(ownProps.clientId),
 			getClientIdsWithDescendants,
-		} = props;
-
-		if (availableIcons.length === 0) {
-			const iconList = Object.keys(allIcons).sort();
-			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
-		}
-		if (blockID === "") {
-			setAttributes({ blockID: block.clientId, align: "center" });
-		} else {
-			if (align === "") {
-				setAttributes({ align: "center" });
-			}
-			if (
-				getClientIdsWithDescendants().some(
-					(ID) =>
-						"blockID" in getBlock(ID).attributes &&
-						getBlock(ID).attributes.blockID === blockID
-				)
-			) {
-				setAttributes({ blockID: block.clientId });
-			}
-		}
-
-		if (!isSelected && props.enableLinkInput) {
-			setState({ enableLinkInput: false });
-		}
-
-		if (buttons.length === 0) {
-			setAttributes({
-				buttons: [
-					Object.assign({}, defaultButtonProps, {
-						buttonText,
-						url,
-						size,
-						buttonColor,
-						buttonHoverColor,
-						buttonTextColor,
-						buttonTextHoverColor,
-						buttonRounded,
-						chosenIcon,
-						iconPosition,
-						buttonIsTransparent,
-						addNofollow,
-						openInNewTab,
-						buttonWidth,
-					}),
-				],
-			});
-		}
-
-		return [
-			isSelected && blockControls(props),
-
-			isSelected && inspectorControls(props),
-
-			<div className={props.className}>{editorDisplay(props)}</div>,
-		];
-	}),
+		};
+	})(EditorComponent),
 	save: () => null,
 });
