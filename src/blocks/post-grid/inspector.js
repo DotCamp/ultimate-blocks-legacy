@@ -22,14 +22,23 @@ class Autocomplete extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { userInput: "", showSuggestions: false };
+
+		this.listItem = [];
 	}
 
 	render() {
+		const filteredList = this.props.list.filter(
+			(i) =>
+				i.label.toLowerCase().indexOf(this.state.userInput.toLowerCase()) > -1
+		);
+
+		const { userInput, showSuggestions } = this.state;
+
 		return (
 			<div>
 				<input
 					type="text"
-					value={this.state.userInput}
+					value={userInput}
 					style={{ width: "200px" }}
 					onChange={(e) =>
 						this.setState({
@@ -38,30 +47,51 @@ class Autocomplete extends Component {
 						})
 					}
 					onKeyDown={(e) => {
-						if (e.key === "ArrowDown") {
-							this.setState({ showSuggestions: true });
+						if (e.key === "ArrowDown" && filteredList.length) {
+							if (showSuggestions) {
+								this.listItem[0].focus();
+								e.preventDefault();
+							} else {
+								this.setState({ showSuggestions: true });
+							}
 						}
 					}}
 				/>
-				{this.state.showSuggestions && (
+				{showSuggestions && (
 					<div className={this.props.className} style={{ width: "200px" }}>
-						{this.props.list
-							.filter(
-								(i) =>
-									i.label
-										.toLowerCase()
-										.indexOf(this.state.userInput.toLowerCase()) > -1
-							)
-							.map((item) => (
-								<div
-									onClick={() => {
-										this.props.addToSelection(item);
-										this.setState({ userInput: "", showSuggestions: false });
-									}}
-								>
-									{item.label}
-								</div>
-							))}
+						{filteredList.map((item, i) => (
+							<div
+								className={"ub-autocomplete-list-item"}
+								ref={(elem) => (this.listItem[i] = elem)}
+								onClick={() => {
+									this.props.addToSelection(item);
+									this.setState({ userInput: "", showSuggestions: false });
+								}}
+								onKeyDown={(e) => {
+									if (e.key === "ArrowDown") {
+										if (i < filteredList.length - 1) {
+											e.preventDefault();
+											this.listItem[i + 1].focus();
+										} else {
+											this.listItem[i].blur();
+											this.setState({ showSuggestions: false });
+										}
+									}
+									if (e.key === "ArrowUp") {
+										if (i > 0) {
+											e.preventDefault();
+											this.listItem[i - 1].focus();
+										} else {
+											this.listItem[i].blur();
+											this.setState({ showSuggestions: false });
+										}
+									}
+								}}
+								tabIndex={0}
+							>
+								{item.label}
+							</div>
+						))}
 					</div>
 				)}
 			</div>

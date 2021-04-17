@@ -150,7 +150,7 @@ export default registerBlockType("ub/post-grid", {
 
 		return (
 			<>
-				<Inspector {...{ ...props }} />
+				<Inspector {...props} />
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={wrapAlignment}
@@ -159,7 +159,7 @@ export default registerBlockType("ub/post-grid", {
 					/>
 					<Toolbar controls={toolBarButton} />
 				</BlockControls>
-				<PostGridBlock {...{ ...props }} />
+				<PostGridBlock {...props} />
 			</>
 		);
 	}),

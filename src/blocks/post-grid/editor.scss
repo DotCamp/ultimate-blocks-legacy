@@ -21,6 +21,9 @@
 		&:nth-child(even) {
 			background-color: #ffffff;
 		}
+		&:focus {
+			background-color: #aaaaaa;
+		}
 	}
 }
 
