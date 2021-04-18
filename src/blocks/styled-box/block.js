@@ -682,40 +682,42 @@ registerBlockType("ub/styled-box", {
 			isSelected && (
 				<BlockControls>
 					{blockToolbarExtras}
-					<Toolbar>
-						{["left", "center", "right", "justify"].map((a) => (
-							<IconButton
-								icon={`editor-${a === "justify" ? a : "align" + a}`}
-								label={__(
-									(a !== "justify" ? "Align " : "") +
-										a[0].toUpperCase() +
-										a.slice(1)
-								)}
-								onClick={() => {
-									const columnNum = parseInt(
-										editable.slice(editable.length - 1)
-									);
-									if (editable.includes("title")) {
-										setAttributes({
-											titleAlign: [
-												...titleAlign.slice(0, columnNum),
-												a,
-												...titleAlign.slice(columnNum + 1),
-											],
-										});
-									} else if (editable.includes("text")) {
-										setAttributes({
-											textAlign: [
-												...textAlign.slice(0, columnNum),
-												a,
-												...textAlign.slice(columnNum + 1),
-											],
-										});
-									}
-								}}
-							/>
-						))}
-					</Toolbar>
+					{mode !== "" && (
+						<Toolbar>
+							{["left", "center", "right", "justify"].map((a) => (
+								<IconButton
+									icon={`editor-${a === "justify" ? a : "align" + a}`}
+									label={__(
+										(a !== "justify" ? "Align " : "") +
+											a[0].toUpperCase() +
+											a.slice(1)
+									)}
+									onClick={() => {
+										const columnNum = parseInt(
+											editable.slice(editable.length - 1)
+										);
+										if (editable.includes("title")) {
+											setAttributes({
+												titleAlign: [
+													...titleAlign.slice(0, columnNum),
+													a,
+													...titleAlign.slice(columnNum + 1),
+												],
+											});
+										} else if (editable.includes("text")) {
+											setAttributes({
+												textAlign: [
+													...textAlign.slice(0, columnNum),
+													a,
+													...textAlign.slice(columnNum + 1),
+												],
+											});
+										}
+									}}
+								/>
+							))}
+						</Toolbar>
+					)}
 				</BlockControls>
 			),
 			isSelected && (
