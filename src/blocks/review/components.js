@@ -235,7 +235,6 @@ export class ReviewBody extends Component {
 			alignments,
 			enableCTA,
 			imageSize,
-			onReplace,
 		} = this.props;
 
 		const { titleAlign, authorAlign, descriptionAlign } = alignments;
@@ -352,6 +351,34 @@ export class ReviewBody extends Component {
 									{ label: label[1], value: j.value },
 									...items.slice(i + 1),
 								]);
+							}}
+							onMerge={(mergeWithNext) => {
+								if (mergeWithNext) {
+									if (i < items.length - 1) {
+										setItems([
+											...items.slice(0, i),
+											{
+												label: `${items[i].label}${items[i + 1].label}`,
+												value: j.value,
+											},
+											...items.slice(i + 2),
+										]);
+									}
+								} else {
+									if (i > 0) {
+										setItems([
+											...items.slice(0, i - 1),
+											{
+												label: `${items[i - 1].label}${items[i].label}`,
+												value: items[i - 1].value,
+											},
+											...items.slice(i + 1),
+										]);
+									}
+									if (i === items.length - 1) {
+										setActiveStarIndex(-1);
+									}
+								}
 							}}
 						/>
 						<div

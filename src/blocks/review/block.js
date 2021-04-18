@@ -439,7 +439,6 @@ registerBlockType("ub/review", {
 			block,
 			getBlock,
 			getClientIdsWithDescendants,
-			onReplace,
 		} = props;
 
 		let initialAttributes = {};
@@ -1204,27 +1203,29 @@ registerBlockType("ub/review", {
 			isSelected && (
 				<InspectorControls>
 					<PanelBody title={__("Star settings")} initialOpen={false}>
-						<RangeControl
-							label={__(
-								`Star rating for ${
-									parser.parseFromString(parts[editedStar].label, "text/html")
-										.body.textContent || "current feature"
-								}`
-							)}
-							value={parts[editedStar].value}
-							onChange={(newValue) => {
-								setAttributes({
-									parts: [
-										...parts.slice(0, editedStar),
-										Object.assign({}, parts[editedStar], { value: newValue }),
-										...parts.slice(editedStar + 1),
-									],
-								});
-							}}
-							min={1}
-							max={5}
-							step={0.5}
-						/>
+						{editedStar > -1 && (
+							<RangeControl
+								label={__(
+									`Star rating for ${
+										parser.parseFromString(parts[editedStar].label, "text/html")
+											.body.textContent || "current feature"
+									}`
+								)}
+								value={parts[editedStar].value}
+								onChange={(newValue) => {
+									setAttributes({
+										parts: [
+											...parts.slice(0, editedStar),
+											Object.assign({}, parts[editedStar], { value: newValue }),
+											...parts.slice(editedStar + 1),
+										],
+									});
+								}}
+								min={1}
+								max={5}
+								step={0.5}
+							/>
+						)}
 						<PanelColorSettings
 							title={__("Star Colors")}
 							initialOpen={true}
@@ -1698,7 +1699,6 @@ registerBlockType("ub/review", {
 				enableCTA={enableCTA}
 				ctaNoFollow={ctaNoFollow}
 				imageSize={imageSize}
-				onReplace={onReplace}
 			/>,
 		];
 	}),
