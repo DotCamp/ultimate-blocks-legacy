@@ -439,6 +439,7 @@ registerBlockType("ub/review", {
 			block,
 			getBlock,
 			getClientIdsWithDescendants,
+			onReplace,
 		} = props;
 
 		let initialAttributes = {};
@@ -1694,6 +1695,7 @@ registerBlockType("ub/review", {
 				enableCTA={enableCTA}
 				ctaNoFollow={ctaNoFollow}
 				imageSize={imageSize}
+				onReplace={onReplace}
 			/>,
 		];
 	}),

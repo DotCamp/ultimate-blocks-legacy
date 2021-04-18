@@ -235,6 +235,7 @@ export class ReviewBody extends Component {
 			alignments,
 			enableCTA,
 			imageSize,
+			onReplace,
 		} = this.props;
 
 		const { titleAlign, authorAlign, descriptionAlign } = alignments;
@@ -342,6 +343,15 @@ export class ReviewBody extends Component {
 							unstableOnFocus={() => {
 								setEditable("");
 								setActiveStarIndex(i);
+							}}
+							onSplit={(label) => label}
+							onReplace={(label) => {
+								setItems([
+									...items.slice(0, i),
+									{ label: label[0], value: j.value },
+									{ label: label[1], value: j.value },
+									...items.slice(i + 1),
+								]);
 							}}
 						/>
 						<div
