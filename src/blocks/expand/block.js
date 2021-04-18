@@ -70,6 +70,7 @@ registerBlockType("ub/expand-portion", {
 	category: "ultimateblocks",
 	supports: {
 		inserter: false,
+		reusable: false,
 	},
 	attributes: {
 		clickText: {
