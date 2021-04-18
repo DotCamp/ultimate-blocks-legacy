@@ -1198,6 +1198,8 @@ registerBlockType("ub/review", {
 			setAttributes(unusedAttributes);
 		}
 
+		const parser = new DOMParser();
+
 		return [
 			isSelected && (
 				<InspectorControls>
@@ -1205,7 +1207,8 @@ registerBlockType("ub/review", {
 						<RangeControl
 							label={__(
 								`Star rating for ${
-									parts[editedStar].label || "current feature"
+									parser.parseFromString(parts[editedStar].label, "text/html")
+										.body.textContent || "current feature"
 								}`
 							)}
 							value={parts[editedStar].value}
