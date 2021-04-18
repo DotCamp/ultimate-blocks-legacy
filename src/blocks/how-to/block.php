@@ -238,7 +238,8 @@ function ub_render_how_to_block($attributes){
         "name":"'. ub_strip_html_tags($title) .'",
         "description": "'.ub_strip_html_tags($introduction).'",'.
         ($advancedMode ?
-            '"totalTime": "'.$ISOTotalTime.'",'.($videoURL === '' ? '':
+            (array_unique($totalTime) !== array(0)? '"totalTime": "'.$ISOTotalTime.'",' : '').
+            ($videoURL === '' ? '':
             '"video": {
                 "@type": "VideoObject",
                 "name": "'.$videoName.'",
@@ -247,12 +248,13 @@ function ub_render_how_to_block($attributes){
                 "contentUrl": "'.$videoURL.'",
                 "uploadDate": "'. date('c', $videoUploadDate) .'",
                 "hasPart":['.$clips.']
-            },').'
-            "estimatedCost": {
+            },').
+            ($cost > 0 ? '"estimatedCost": {
                 "@type": "MonetaryAmount",
                 "currency": "'. ub_strip_html_tags($costCurrency) .'",
                 "value": "'. ub_strip_html_tags($cost) .'"
-            },'.$suppliesCode.','
+            },' : '')
+            .$suppliesCode.','
             .$toolsCode.','
         :'')
     .$stepsCode.',"yield": "'.ub_strip_html_tags($howToYield).'",
