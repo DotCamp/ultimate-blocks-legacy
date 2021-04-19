@@ -16,6 +16,7 @@ const {
 	IconButton,
 	PanelBody,
 	RadioControl,
+	RangeControl,
 } = wp.components;
 
 const attributes = {
@@ -168,6 +169,10 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	imageWidth: {
+		type: "number",
+		default: 200,
+	},
 };
 
 const defaultTimeDisplay = {
@@ -308,6 +313,8 @@ class HowToStep extends Component {
 			videoDuration,
 			hasVideoClip,
 			advancedMode,
+			imageWidth,
+			blockIsSelected,
 		} = this.props;
 
 		const { startTime, endTime, validTimeInput } = this.state;
@@ -356,27 +363,24 @@ class HowToStep extends Component {
 					/>
 				</div>
 				{stepPic.url !== "" ? (
-					<figure>
-						<img
-							className="ub_howto-step-image"
-							style={{ width: "100%" }}
-							src={stepPic.url}
-						/>
-						<span
-							style={{ position: "absolute", right: "3px" }}
-							title={__("Delete image")}
-							className="dashicons dashicons-dismiss"
-							onClick={() =>
-								editStep({
-									stepPic: {
-										id: -1,
-										alt: "",
-										url: "",
-										caption: "",
-									},
-								})
-							}
-						/>
+					<figure style={{ width: `${imageWidth}px` }}>
+						<img className="ub_howto-step-image" src={stepPic.url} />
+						{blockIsSelected && (
+							<span
+								title={__("Delete image")}
+								className="dashicons dashicons-dismiss"
+								onClick={() =>
+									editStep({
+										stepPic: {
+											id: -1,
+											alt: "",
+											url: "",
+											caption: "",
+										},
+									})
+								}
+							/>
+						)}
 						<RichText
 							tagName="figcaption"
 							keepPlaceholderOnFocus
@@ -680,6 +684,8 @@ class HowToSection extends Component {
 			clips,
 			videoURL,
 			advancedMode,
+			imageWidth,
+			blockIsSelected,
 		} = this.props;
 
 		return (
@@ -767,6 +773,8 @@ class HowToSection extends Component {
 									});
 								}
 							}}
+							imageWidth={imageWidth}
+							blockIsSelected={blockIsSelected}
 						/>
 					))}
 				</ListWrapper>
@@ -854,6 +862,7 @@ registerBlockType("ub/how-to", {
 				videoURL,
 				videoEmbedCode,
 				videoDuration,
+				imageWidth,
 			},
 			videoURLInput,
 			notYetLoaded,
@@ -862,6 +871,7 @@ registerBlockType("ub/how-to", {
 			block,
 			getBlock,
 			getClientIdsWithDescendants,
+			isSelected,
 		} = props;
 
 		const units = [
@@ -997,6 +1007,13 @@ registerBlockType("ub/how-to", {
 								setAttributes({ sectionListStyle })
 							}
 						/>
+						<RangeControl
+							label={__("Image width")}
+							value={imageWidth}
+							onChange={(imageWidth) => setAttributes({ imageWidth })}
+							min={200}
+							max={800}
+						/>
 					</PanelBody>
 					{advancedMode && includeSuppliesList && (
 						<PanelBody title={__("Supplies list settings")}>
@@ -1062,11 +1079,7 @@ registerBlockType("ub/how-to", {
 									disableSuggestions={true}
 									className="button-url"
 									value={videoURLInput}
-									onChange={(videoURLInput) =>
-										setState({
-											videoURLInput,
-										})
-									}
+									onChange={(videoURLInput) => setState({ videoURLInput })}
 								/>
 								<IconButton
 									icon={"editor-break"}
@@ -1382,23 +1395,25 @@ registerBlockType("ub/how-to", {
 																className="ub_howto-supply-image"
 																src={supply.imageURL}
 															/>
-															<span
-																title={__("Delete image")}
-																className="dashicons dashicons-dismiss"
-																onClick={() =>
-																	setAttributes({
-																		supplies: [
-																			...supplies.slice(0, i),
-																			Object.assign(supply, {
-																				imageID: 0,
-																				imageURL: "",
-																				imageAlt: "",
-																			}),
-																			...supplies.slice(i + 1),
-																		],
-																	})
-																}
-															/>
+															{isSelected && (
+																<span
+																	title={__("Delete image")}
+																	className="dashicons dashicons-dismiss"
+																	onClick={() =>
+																		setAttributes({
+																			supplies: [
+																				...supplies.slice(0, i),
+																				Object.assign(supply, {
+																					imageID: 0,
+																					imageURL: "",
+																					imageAlt: "",
+																				}),
+																				...supplies.slice(i + 1),
+																			],
+																		})
+																	}
+																/>
+															)}
 														</figure>
 													) : (
 														<MediaUpload
@@ -1494,23 +1509,25 @@ registerBlockType("ub/how-to", {
 													(tool.imageURL !== "" ? (
 														<figure>
 															<img src={tool.imageURL} />
-															<span
-																title={__("Delete image")}
-																className="dashicons dashicons-dismiss"
-																onClick={() =>
-																	setAttributes({
-																		tools: [
-																			...tools.slice(0, i),
-																			Object.assign(tool, {
-																				imageID: 0,
-																				imageURL: "",
-																				imageAlt: "",
-																			}),
-																			...tools.slice(i + 1),
-																		],
-																	})
-																}
-															/>
+															{isSelected && (
+																<span
+																	title={__("Delete image")}
+																	className="dashicons dashicons-dismiss"
+																	onClick={() =>
+																		setAttributes({
+																			tools: [
+																				...tools.slice(0, i),
+																				Object.assign(tool, {
+																					imageID: 0,
+																					imageURL: "",
+																					imageAlt: "",
+																				}),
+																				...tools.slice(i + 1),
+																			],
+																		})
+																	}
+																/>
+															)}
 														</figure>
 													) : (
 														<MediaUpload
@@ -1632,6 +1649,7 @@ registerBlockType("ub/how-to", {
 											],
 										})
 									}
+									blockIsSelected={isSelected}
 								/>
 							))}
 						</ListWrapper>
@@ -1716,6 +1734,8 @@ registerBlockType("ub/how-to", {
 												setAttributes({ section: newSection });
 											}
 										}}
+										imageWidth={imageWidth}
+										blockIsSelected={isSelected}
 									/>
 								))}
 							</ListWrapper>
@@ -1784,21 +1804,22 @@ registerBlockType("ub/how-to", {
 						onChange={(resultIntro) => setAttributes({ resultIntro })}
 					/>
 					{finalImageURL !== "" ? (
-						<figure>
-							<img style={{ width: "100%" }} src={finalImageURL} />
-							<span
-								style={{ position: "absolute", right: "3px" }}
-								title={__("Delete image")}
-								className="dashicons dashicons-dismiss"
-								onClick={() =>
-									setAttributes({
-										finalImageID: -1,
-										finalImageAlt: "",
-										finalImageURL: "",
-										finalImageCaption: "",
-									})
-								}
-							/>
+						<figure style={{ width: `${imageWidth}px` }}>
+							<img src={finalImageURL} />
+							{isSelected && (
+								<span
+									title={__("Delete image")}
+									className="dashicons dashicons-dismiss"
+									onClick={() =>
+										setAttributes({
+											finalImageID: -1,
+											finalImageAlt: "",
+											finalImageURL: "",
+											finalImageCaption: "",
+										})
+									}
+								/>
+							)}
 							<RichText
 								tagName="figcaption"
 								keepPlaceholderOnFocus

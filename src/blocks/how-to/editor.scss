@@ -4,4 +4,17 @@
 	> .components-button {
 		margin-bottom: 10px;
 	}
+	figure {
+		position: relative;
+		> .dashicons-dismiss {
+			position: absolute;
+			right: 3px;
+		}
+	}
+}
+.ub_howto-tools-list,
+.ub_howto-supplies-list {
+	figure {
+		max-width: 200px;
+	}
 }

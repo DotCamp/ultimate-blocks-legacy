@@ -362,6 +362,14 @@ function ub_include_block_attribute_css() {
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;                        
                     }
+                    $blockStylesheets .= '@media (min-width: 1024px){' . PHP_EOL .
+                        $prefix . ' .ub_howto-step-image, ' . $prefix . ' .ub_howto-yield-image{' . PHP_EOL .
+                            'width: ' . $attributes['imageWidth'] . 'px;' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        $prefix . ' figure{' . PHP_EOL .
+                            'width: ' . $attributes['imageWidth'] . 'px;' . PHP_EOL .
+                        '}' . PHP_EOL .
+                    '}' . PHP_EOL;
                     break;
                 case 'ub/image-slider':
                     $prefix = '#ub_image_slider_' . $attributes['blockID'];

@@ -669,6 +669,10 @@ $defaultValues = array(
             'finalImageCaption' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'imageWidth' => array(
+                'type' => 'number',
+                'default' => 200
             )
         )
     ),
