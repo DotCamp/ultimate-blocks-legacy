@@ -670,9 +670,13 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
-            'imageWidth' => array(
+            'finalImageWidth' => array(
                 'type' => 'number',
-                'default' => 200
+                'default' => 0
+            ),
+            'finalImageFloat' => array(
+                'type' => 'string',
+                'default' => 'none'
             )
         )
     ),

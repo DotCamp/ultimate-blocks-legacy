@@ -265,12 +265,12 @@ function ub_render_how_to_block($attributes){
                 ($advancedMode ? ($videoURL === '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
                 . $timeDisplay : '') . $stepsDisplay .   
-                '<h2>' . $resultIntro . '</h2>' . 
-                ($finalImageURL === '' ? '' : ($finalImageCaption === '' ? '' : '<figure>') .
+                '<div class="ub_howto-yield"><h2>' . $resultIntro . '</h2>' . 
+                ($finalImageURL === '' ? '' : ($finalImageCaption === '' ? '' : '<figure class="ub_howto-yield-image-container">') .
                     '<img class="ub_howto-yield-image" src="' .$finalImageURL. '">' . 
                     ($finalImageCaption === '' ? '' : '<figcaption>'. $finalImageCaption .'</figcaption></figure>')) .
-                ub_convert_to_paragraphs($howToYield) .
-            '</div>' . $JSONLD;
+                ub_convert_to_paragraphs($howToYield) . '</div>
+            </div>' . $JSONLD;
 }
 
 function ub_register_how_to_block(){

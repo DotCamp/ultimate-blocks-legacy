@@ -24,8 +24,27 @@
 }
 
 .ub_howto-step {
+	overflow: auto;
 	> figure,
 	> img {
 		margin-bottom: 10px;
+	}
+}
+
+.ub_howto-yield {
+	overflow: auto;
+}
+
+@media screen and (max-width: 767px) {
+	.ub_howto {
+		.ub_howto-steps-list,
+		.ub_howto-section .ub_howto-steps-list,
+		.ub_howto-step-display,
+		.ub_howto-section .ub_howto-step-display {
+			.ub_howto-step > figure {
+				width: 100%;
+				float: none;
+			}
+		}
 	}
 }

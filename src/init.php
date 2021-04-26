@@ -362,14 +362,63 @@ function ub_include_block_attribute_css() {
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;                        
                     }
-                    $blockStylesheets .= '@media (min-width: 1024px){' . PHP_EOL .
-                        $prefix . ' .ub_howto-step-image, ' . $prefix . ' .ub_howto-yield-image{' . PHP_EOL .
-                            'width: ' . $attributes['imageWidth'] . 'px;' . PHP_EOL .
-                        '}' . PHP_EOL .
-                        $prefix . ' figure{' . PHP_EOL .
-                            'width: ' . $attributes['imageWidth'] . 'px;' . PHP_EOL .
-                        '}' . PHP_EOL .
-                    '}' . PHP_EOL;
+
+                    function ub_howto_getStepPic($step){
+                        return $step['stepPic'];
+                    }
+
+                    function ub_howto_generateStepPicStyle($stepPic){
+                        return 'width: '. $stepPic['width'] .'px;' . 
+                        ($stepPic['float'] === 'left' ? 'padding-right: 10px;' : ($stepPic['float'] === 'right' ? 'padding-left: 10px;' : '') ) .
+                        ($stepPic['float'] === 'none' ? '' : 'float: ' . $stepPic['float'] . ';');
+                    }
+
+                    $blockStylesheets .= '@media (min-width: 768px){' . PHP_EOL;
+                    if($attributes['useSections']){
+                        $sectionPicArray = array_map( function($section){
+                            return array_map('ub_howto_getStepPic', $section['steps']);
+                        }, $attributes['section']);
+
+                        $blockStylesheets .= implode(array_map(function($section, $outerIndex, $prefix){
+                            return implode(array_map(function($stepPic, $outerIndex, $innerIndex, $prefix){
+                                if($stepPic['width'] > 0){
+                                    return $prefix . ' .ub_howto-section:nth-child('. ($outerIndex + 1) .') .ub_howto-step:nth-child(' . ($innerIndex + 1) . ') figure,' .
+                                    $prefix . ' .ub_howto-section:nth-child('. ($outerIndex + 1) .') .ub_howto-step:nth-child(' . ($innerIndex + 1) . ') .ub_howto-step-image {' .
+                                        ub_howto_generateStepPicStyle($stepPic) .
+                                    '}' . PHP_EOL;
+                                }
+                                else {
+                                    return '';
+                                }
+                            }, $section, array_fill(0, count($section), $outerIndex) , array_keys($section),  array_fill(0, count($section), $prefix) ));
+                        }, $sectionPicArray, array_keys($sectionPicArray), array_fill(0, count($sectionPicArray), $prefix ) ));
+                    }
+                    else {
+                        $stepPicArray = array_map('ub_howto_getStepPic', $attributes['section'][0]['steps']);
+                        $blockStylesheets .= implode(array_map(function($stepPic, $index, $prefix){
+                                                        if($stepPic['width'] > 0){
+                                                            return $prefix . ' .ub_howto-step:nth-child(' . ($index+1) .') figure,' .
+                                                                    $prefix . '.ub_howto-step:nth-child(' . ($index+1) .') .ub_howto-step-image {' .
+                                                                        ub_howto_generateStepPicStyle($stepPic) .
+                                                            '}' . PHP_EOL;
+                                                        }
+                                                        else {
+                                                            return '';
+                                                        }
+                                                    },
+                                $stepPicArray, array_keys($stepPicArray), array_fill(0, count($stepPicArray), $prefix)));
+                    }
+
+                    if($attributes['finalImageWidth'] > 0){
+                        $blockStylesheets .= $prefix . ' .ub_howto-yield-image-container{' .
+                            'width: ' . $attributes['finalImageWidth'] . 'px;' . 
+                            ($attributes['finalImageFloat'] === 'left' ? 'padding-right: 10px;' : ($attributes['finalImageFloat'] === 'right' ? 'padding-left: 10px;' : '') ) .
+                            ($attributes['finalImageFloat'] === 'none' ? '' : 'float: ' . $attributes['finalImageFloat'] . ';');
+                        '}';
+                    }
+
+                    $blockStylesheets .= '}' . PHP_EOL;
+
                     break;
                 case 'ub/image-slider':
                     $prefix = '#ub_image_slider_' . $attributes['blockID'];
