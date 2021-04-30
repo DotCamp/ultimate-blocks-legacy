@@ -39,7 +39,7 @@ class EditorComponent extends Component {
 		};
 	}
 
-	componentDidMount() {
+	loadIconList() {
 		const iconList = Object.keys(allIcons).sort();
 
 		loadPromise.then(() => {
@@ -98,14 +98,86 @@ class EditorComponent extends Component {
 		});
 	}
 
+	updateIconList() {
+		const {
+			availableIcons,
+			recentSelection,
+			selectionTime,
+			iconChoices,
+		} = this.state;
+		const prevIconMatch = iconChoices
+			.map((i) => i.name)
+			.indexOf(recentSelection);
+
+		let iconPrefs = [];
+
+		if (prevIconMatch > -1) {
+			let match = Object.assign({}, iconChoices[prevIconMatch]);
+
+			match.selectionTime = [selectionTime, ...match.selectionTime];
+
+			iconPrefs = [
+				match, //move matching element to head of array
+				...iconChoices.slice(0, prevIconMatch),
+				...iconChoices.slice(prevIconMatch + 1),
+			];
+		} else {
+			iconPrefs = [
+				{
+					name: recentSelection,
+					selectionTime: [selectionTime],
+				}, //add newest pick to head of array
+				...iconChoices,
+			];
+		}
+
+		//rearrange the icons
+
+		let icons = []; //most recent selection should always be first element of array
+		let otherIcons = [];
+		[icons, otherIcons] = splitArray(availableIcons, (icon) =>
+			iconPrefs.map((i) => i.name).includes(icon.iconName)
+		);
+
+		const iconPrefsName = iconPrefs.map((i) => i.name);
+
+		icons.sort(
+			(a, b) =>
+				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName)
+		);
+
+		this.setState({
+			recentSelection: "",
+			selectionTime: 0,
+			iconChoices: iconPrefs,
+			availableIcons: [...icons, ...otherIcons],
+		});
+
+		const newIconArray = new models.Settings({
+			ub_icon_choices: JSON.stringify(iconPrefs),
+		});
+		newIconArray.save();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (!prevProps.isSelected && this.props.isSelected) {
+			this.loadIconList();
+		}
+		if (prevProps.isSelected && !this.props.isSelected) {
+			this.updateIconList();
+		}
+	}
+
+	componentDidMount() {
+		this.loadIconList();
+	}
+
 	render() {
 		const {
 			availableIcons,
 			iconSearchTerm,
 			iconSearchResultsPage,
 			recentSelection,
-			selectionTime,
-			iconChoices,
 		} = this.state;
 
 		const {
@@ -305,67 +377,7 @@ class EditorComponent extends Component {
 											//if entry with name of selected icon exists in iconChoices, append selection time to selection time array
 											//else add new entry
 											if (recentSelection) {
-												const prevIconMatch = iconChoices
-													.map((i) => i.name)
-													.indexOf(recentSelection);
-
-												let iconPrefs = [];
-
-												if (prevIconMatch > -1) {
-													let match = Object.assign(
-														{},
-														iconChoices[prevIconMatch]
-													);
-
-													match.selectionTime = [
-														selectionTime,
-														...match.selectionTime,
-													];
-
-													iconPrefs = [
-														match, //move matching element to head of array
-														...iconChoices.slice(0, prevIconMatch),
-														...iconChoices.slice(prevIconMatch + 1),
-													];
-												} else {
-													iconPrefs = [
-														{
-															name: recentSelection,
-															selectionTime: [selectionTime],
-														}, //add newest pick to head of array
-														...iconChoices,
-													];
-												}
-
-												//rearrange the icons
-
-												let icons = []; //most recent selection should always be first element of array
-												let otherIcons = [];
-												[icons, otherIcons] = splitArray(
-													availableIcons,
-													(icon) =>
-														iconPrefs.map((i) => i.name).includes(icon.iconName)
-												);
-
-												const iconPrefsName = iconPrefs.map((i) => i.name);
-
-												icons.sort(
-													(a, b) =>
-														iconPrefsName.indexOf(a.iconName) -
-														iconPrefsName.indexOf(b.iconName)
-												);
-
-												this.setState({
-													recentSelection: "",
-													selectionTime: 0,
-													iconChoices: iconPrefs,
-													availableIcons: [...icons, ...otherIcons],
-												});
-
-												const newIconArray = new models.Settings({
-													ub_icon_choices: JSON.stringify(iconPrefs),
-												});
-												newIconArray.save();
+												this.updateIconList();
 											}
 										}
 									}}

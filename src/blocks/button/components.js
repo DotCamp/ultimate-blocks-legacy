@@ -769,28 +769,8 @@ export class EditorComponent extends Component {
 			selectionTime: 0,
 		};
 	}
-	componentDidMount() {
-		const {
-			attributes: {
-				buttons,
-				buttonText,
-				url,
-				size,
-				buttonColor,
-				buttonHoverColor,
-				buttonTextColor,
-				buttonTextHoverColor,
-				buttonIsTransparent,
-				buttonRounded,
-				buttonWidth,
-				chosenIcon,
-				iconPosition,
-				addNofollow,
-				openInNewTab,
-			},
-			setAttributes,
-		} = this.props;
 
+	loadIconList() {
 		const iconList = Object.keys(allIcons).sort();
 		loadPromise.then(() => {
 			this.settings = new models.Settings();
@@ -846,6 +826,92 @@ export class EditorComponent extends Component {
 				}
 			});
 		});
+	}
+
+	updateIconList() {
+		const {
+			availableIcons,
+			recentSelection,
+			selectionTime,
+			iconChoices,
+		} = this.state;
+		const prevIconMatch = iconChoices
+			.map((i) => i.name)
+			.indexOf(recentSelection);
+
+		let iconPrefs = [];
+
+		if (prevIconMatch > -1) {
+			let match = Object.assign({}, iconChoices[prevIconMatch]);
+
+			match.selectionTime = [selectionTime, ...match.selectionTime];
+
+			iconPrefs = [
+				match, //move matching element to head of array
+				...iconChoices.slice(0, prevIconMatch),
+				...iconChoices.slice(prevIconMatch + 1),
+			];
+		} else {
+			iconPrefs = [
+				{
+					name: recentSelection,
+					selectionTime: [selectionTime],
+				}, //add newest pick to head of array
+				...iconChoices,
+			];
+		}
+
+		//rearrange the icons
+
+		let icons = []; //most recent selection should always be first element of array
+		let otherIcons = [];
+		[icons, otherIcons] = splitArray(availableIcons, (icon) =>
+			iconPrefs.map((i) => i.name).includes(icon.iconName)
+		);
+
+		const iconPrefsName = iconPrefs.map((i) => i.name);
+
+		icons.sort(
+			(a, b) =>
+				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName)
+		);
+
+		this.setState({
+			recentSelection: "",
+			selectionTime: 0,
+			iconChoices: iconPrefs,
+			availableIcons: [...icons, ...otherIcons],
+		});
+
+		const newIconArray = new models.Settings({
+			ub_icon_choices: JSON.stringify(iconPrefs),
+		});
+		newIconArray.save();
+	}
+
+	componentDidMount() {
+		const {
+			attributes: {
+				buttons,
+				buttonText,
+				url,
+				size,
+				buttonColor,
+				buttonHoverColor,
+				buttonTextColor,
+				buttonTextHoverColor,
+				buttonIsTransparent,
+				buttonRounded,
+				buttonWidth,
+				chosenIcon,
+				iconPosition,
+				addNofollow,
+				openInNewTab,
+			},
+			setAttributes,
+		} = this.props;
+
+		this.loadIconList();
 
 		if (buttons.length === 0) {
 			setAttributes({
@@ -870,6 +936,16 @@ export class EditorComponent extends Component {
 			});
 		}
 	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (!prevProps.isSelected && this.props.isSelected) {
+			this.loadIconList();
+		}
+		if (prevProps.isSelected && !this.props.isSelected) {
+			this.updateIconList();
+		}
+	}
+
 	render() {
 		const {
 			isSelected,
@@ -885,11 +961,9 @@ export class EditorComponent extends Component {
 			activeButtonIndex,
 			enableLinkInput,
 			hoveredButton,
-			iconChoices,
 			iconSearchTerm,
 			iconSearchResultsPage,
 			recentSelection,
-			selectionTime,
 		} = this.state;
 
 		if (blockID === "") {
@@ -1021,7 +1095,7 @@ export class EditorComponent extends Component {
 					</Toolbar>
 				</BlockControls>
 			),
-			isSelected && (
+			isSelected && buttons.length > 0 && (
 				<InspectorControls>
 					<PanelBody title={__("Button Size", "ultimate-blocks")}>
 						<div className="ub-button-group">
@@ -1283,71 +1357,8 @@ export class EditorComponent extends Component {
 									onToggle={(isOpen) => {
 										if (!isOpen) {
 											if (recentSelection) {
-												const prevIconMatch = iconChoices
-													.map((i) => i.name)
-													.indexOf(recentSelection);
-
-												let iconPrefs = [];
-
-												if (prevIconMatch > -1) {
-													let match = Object.assign(
-														{},
-														iconChoices[prevIconMatch]
-													);
-
-													match.selectionTime = [
-														selectionTime,
-														...match.selectionTime,
-													];
-
-													iconPrefs = [
-														match, //move matching element to head of array
-														...iconChoices.slice(0, prevIconMatch),
-														...iconChoices.slice(prevIconMatch + 1),
-													];
-												} else {
-													iconPrefs = [
-														{
-															name: recentSelection,
-															selectionTime: [selectionTime],
-														}, //add newest pick to head of array
-														...iconChoices,
-													];
-												}
-
-												//rearrange the icons
-
-												let icons = []; //most recent selection should always be first element of array
-												let otherIcons = [];
-												[icons, otherIcons] = splitArray(
-													availableIcons,
-													(icon) =>
-														iconPrefs.map((i) => i.name).includes(icon.iconName)
-												);
-
-												const iconPrefsName = iconPrefs.map((i) => i.name);
-
-												icons.sort(
-													(a, b) =>
-														iconPrefsName.indexOf(a.iconName) -
-														iconPrefsName.indexOf(b.iconName)
-												);
-
-												this.setState({
-													recentSelection: "",
-													selectionTime: 0,
-													iconChoices: iconPrefs,
-													availableIcons: [...icons, ...otherIcons],
-												});
-
-												const newIconArray = new models.Settings({
-													ub_icon_choices: JSON.stringify(iconPrefs),
-												});
-												newIconArray.save();
+												this.updateIconList();
 											}
-
-											//reset
-											//this.setState({ recentSelection: "" });
 										}
 									}}
 								/>
