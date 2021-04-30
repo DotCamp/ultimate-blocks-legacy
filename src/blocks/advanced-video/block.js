@@ -46,6 +46,60 @@ registerBlockType("ub/advanced-video", {
 			type: "string",
 			default: "",
 		},
+
+		//begin border attributes for each side
+		topBorderSize: {
+			type: "number",
+			default: 0,
+		},
+		rightBorderSize: {
+			type: "number",
+			default: 0,
+		},
+		bottomBorderSize: {
+			type: "number",
+			default: 0,
+		},
+		leftBorderSize: {
+			type: "number",
+			default: 0,
+		},
+
+		topBorderStyle: {
+			type: "string",
+			default: "",
+		},
+		rightBorderStyle: {
+			type: "string",
+			default: "",
+		},
+		bottomBorderStyle: {
+			type: "string",
+			default: "",
+		},
+		leftBorderStyle: {
+			type: "string",
+			default: "",
+		},
+
+		topBorderColor: {
+			type: "string",
+			default: "",
+		},
+		rightBorderColor: {
+			type: "string",
+			default: "",
+		},
+		bottomBorderColor: {
+			type: "string",
+			default: "",
+		},
+		leftBorderColor: {
+			type: "string",
+			default: "",
+		},
+		//end border attributes for each side
+
 		vimeoShowDetails: {
 			//vimeo only
 			type: "boolean",
@@ -165,6 +219,7 @@ registerBlockType("ub/advanced-video", {
 			vimeoCache: {},
 			dailyMotionCache: {},
 			videoPressCache: {},
+			currentBorder: "all",
 		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
@@ -201,6 +256,18 @@ registerBlockType("ub/advanced-video", {
 			borderSize,
 			borderStyle,
 			borderColor,
+			topBorderSize,
+			leftBorderSize,
+			rightBorderSize,
+			bottomBorderSize,
+			topBorderStyle,
+			leftBorderStyle,
+			rightBorderStyle,
+			bottomBorderStyle,
+			topBorderColor,
+			leftBorderColor,
+			rightBorderColor,
+			bottomBorderColor,
 		} = attributes;
 
 		if (
@@ -536,8 +603,18 @@ registerBlockType("ub/advanced-video", {
 					}}
 					style={Object.assign(
 						{ width: `${width}px` },
-						borderSize > 0
-							? { border: `${borderSize}px ${borderStyle} ${borderColor}` }
+						[
+							topBorderSize,
+							leftBorderSize,
+							rightBorderSize,
+							bottomBorderSize,
+						].filter((s) => s > 0).length > 0
+							? {
+									borderTop: `${topBorderSize}px ${topBorderStyle} ${topBorderColor}`,
+									borderLeft: `${leftBorderSize}px ${leftBorderStyle} ${leftBorderColor}`,
+									borderRight: `${rightBorderSize}px ${rightBorderStyle} ${rightBorderColor}`,
+									borderBottom: `${bottomBorderSize}px ${bottomBorderStyle} ${bottomBorderColor}`,
+							  }
 							: {}
 					)}
 				/>

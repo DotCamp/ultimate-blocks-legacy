@@ -251,6 +251,7 @@ export const inspectorControls = (props) => {
 		useCustomThumbnail,
 		enterImageURL,
 		imageURLInput,
+		currentBorder,
 	} = props;
 	const {
 		url,
@@ -276,7 +277,28 @@ export const inspectorControls = (props) => {
 		showInDesktop,
 		showInTablet,
 		showInMobile,
+		topBorderSize,
+		leftBorderSize,
+		rightBorderSize,
+		bottomBorderSize,
+		topBorderStyle,
+		leftBorderStyle,
+		rightBorderStyle,
+		bottomBorderStyle,
+		topBorderColor,
+		leftBorderColor,
+		rightBorderColor,
+		bottomBorderColor,
 	} = attributes;
+
+	const currentColor =
+		currentBorder === "top"
+			? topBorderColor
+			: currentBorder === "left"
+			? leftBorderColor
+			: currentBorder === "right"
+			? rightBorderColor
+			: bottomBorderColor;
 
 	return (
 		<InspectorControls>
@@ -900,12 +922,43 @@ export const inspectorControls = (props) => {
 										borderSize: 1,
 										borderStyle: "solid",
 										borderColor: "#000000",
+
+										topBorderSize: 1,
+										rightBorderSize: 1,
+										bottomBorderSize: 1,
+										leftBorderSize: 1,
+
+										topBorderStyle: "solid",
+										rightBorderStyle: "solid",
+										bottomBorderStyle: "solid",
+										leftBorderStyle: "solid",
+
+										topBorderColor: "#000000",
+										rightBorderColor: "#000000",
+										bottomBorderColor: "#000000",
+										leftBorderColor: "#000000",
 									});
+									setState({ currentBorder: "all" });
 								} else {
 									setAttributes({
 										borderSize: 0,
 										borderStyle: "",
 										borderColor: "",
+
+										topBorderSize: 0,
+										rightBorderSize: 0,
+										bottomBorderSize: 0,
+										leftBorderSize: 0,
+
+										topBorderStyle: "",
+										rightBorderStyle: "",
+										bottomBorderStyle: "",
+										leftBorderStyle: "",
+
+										topBorderColor: "",
+										rightBorderColor: "",
+										bottomBorderColor: "",
+										leftBorderColor: "",
 									});
 								}
 							}}
@@ -913,13 +966,129 @@ export const inspectorControls = (props) => {
 					</div>
 					{borderSize > 0 && (
 						<>
+							<div
+								style={{
+									display: "grid",
+									gridTemplateColumns: "1fr 1fr 1fr",
+									width: "60px",
+								}}
+							>
+								{/* FIRST ROW */}
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+									}}
+								></div>
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+										borderTop: `2px solid ${
+											currentBorder === "top" ? "blue" : "black"
+										}`,
+										borderLeft: "1px dashed gray",
+										borderRight: "1px dashed gray",
+									}}
+									onClick={() => setState({ currentBorder: "top" })}
+								></div>
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+									}}
+								/>
+								{/* SECOND ROW */}
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+										borderLeft: `2px solid ${
+											currentBorder === "left" ? "blue" : "black"
+										}`,
+										borderTop: "1px dashed gray",
+										borderBottom: "1px dashed gray",
+									}}
+									onClick={() => setState({ currentBorder: "left" })}
+								/>
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+										border: `2px solid ${
+											currentBorder === "all" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setState({ currentBorder: "all" })}
+								></div>
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+										borderRight: `2px solid ${
+											currentBorder === "right" ? "blue" : "black"
+										}`,
+										borderTop: "1px dashed gray",
+										borderBottom: "1px dashed gray",
+									}}
+									onClick={() => setState({ currentBorder: "right" })}
+								/>
+								{/* THIRD ROW */}
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+									}}
+								/>
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+										borderBottom: `2px solid ${
+											currentBorder === "bottom" ? "blue" : "black"
+										}`,
+										borderLeft: "1px dashed gray",
+										borderRight: "1px dashed gray",
+									}}
+									onClick={() => setState({ currentBorder: "bottom" })}
+								/>
+								<div
+									style={{
+										width: "20px",
+										height: "20px",
+									}}
+								></div>
+							</div>
 							<RangeControl
 								label={__("Border size (pixels)")}
-								value={borderSize}
+								value={
+									currentBorder === "top"
+										? topBorderSize
+										: currentBorder === "left"
+										? leftBorderSize
+										: currentBorder === "right"
+										? rightBorderSize
+										: bottomBorderSize
+								}
 								onChange={(borderSize) => {
-									setAttributes({ borderSize });
+									if (currentBorder === "all") {
+										setAttributes({
+											topBorderSize: borderSize,
+											leftBorderSize: borderSize,
+											rightBorderSize: borderSize,
+											bottomBorderSize: borderSize,
+										});
+									} else if (currentBorder === "top") {
+										setAttributes({ topBorderSize: borderSize });
+									} else if (currentBorder === "left") {
+										setAttributes({ leftBorderSize: borderSize });
+									} else if (currentBorder === "right") {
+										setAttributes({ rightBorderSize: borderSize });
+									} else if (currentBorder === "bottom") {
+										setAttributes({ bottomBorderSize: borderSize });
+									}
 								}}
-								min={1}
+								min={0}
 								max={30}
 							/>
 							<SelectControl
@@ -928,23 +1097,65 @@ export const inspectorControls = (props) => {
 									value: o,
 									label: __(o),
 								}))}
-								value={borderStyle}
-								onChange={(borderStyle) => setAttributes({ borderStyle })}
+								value={
+									currentBorder === "top"
+										? topBorderStyle
+										: currentBorder === "left"
+										? leftBorderStyle
+										: currentBorder === "right"
+										? rightBorderStyle
+										: bottomBorderStyle
+								}
+								onChange={(borderStyle) => {
+									if (currentBorder === "all") {
+										setAttributes({
+											topBorderStyle: borderStyle,
+											leftBorderStyle: borderStyle,
+											rightBorderStyle: borderStyle,
+											bottomBorderStyle: borderStyle,
+										});
+									} else if (currentBorder === "top") {
+										setAttributes({ topBorderStyle: borderStyle });
+									} else if (currentBorder === "left") {
+										setAttributes({ leftBorderStyle: borderStyle });
+									} else if (currentBorder === "right") {
+										setAttributes({ rightBorderStyle: borderStyle });
+									} else if (currentBorder === "bottom") {
+										setAttributes({ bottomBorderStyle: borderStyle });
+									}
+								}}
 							/>
 							<p>
 								{__("Border Color")}
-								{borderColor && (
+								{currentColor && (
 									<span
 										class="component-color-indicator"
-										aria-label={`(Color: ${borderColor})`}
-										style={{ background: borderColor }}
+										aria-label={`(Color: ${currentColor})`}
+										style={{ background: currentColor }}
 									/>
 								)}
 							</p>
 
 							<ColorPalette
-								value={borderColor}
-								onChange={(borderColor) => setAttributes({ borderColor })}
+								value={currentColor}
+								onChange={(borderColor) => {
+									if (currentBorder === "all") {
+										setAttributes({
+											topBorderColor: borderColor,
+											leftBorderColor: borderColor,
+											rightBorderColor: borderColor,
+											bottomBorderSize: borderColor,
+										});
+									} else if (currentBorder === "top") {
+										setAttributes({ topBorderColor: borderColor });
+									} else if (currentBorder === "left") {
+										setAttributes({ leftBorderColor: borderColor });
+									} else if (currentBorder === "right") {
+										setAttributes({ rightBorderColor: borderColor });
+									} else if (currentBorder === "bottom") {
+										setAttributes({ bottomBorderColor: borderColor });
+									}
+								}}
 							/>
 						</>
 					)}
