@@ -47,6 +47,17 @@ Array.prototype.slice
 
 			expandingPart.classList.toggle("ub-hide");
 
+			if (!expandingPart.classList.contains("ub-hide")) {
+				Array.prototype.slice
+					.call(document.getElementsByClassName("ub_image_slider"))
+					.forEach((slider) => {
+						const swiper = new Swiper(
+							`#${slider.id}`,
+							JSON.parse(slider.dataset.swiperData)
+						);
+					});
+			}
+
 			Array.prototype.slice
 				.call(expandingPart.querySelectorAll(".wp-block-embed iframe"))
 				.forEach((embeddedContent) => {

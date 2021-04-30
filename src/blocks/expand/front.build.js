@@ -41,6 +41,13 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-expand-toggle-but
       return child.classList.contains("ub-expand-full");
     })[0];
     expandingPart.classList.toggle("ub-hide");
+
+    if (!expandingPart.classList.contains("ub-hide")) {
+      Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (slider) {
+        var swiper = new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
+      });
+    }
+
     Array.prototype.slice.call(expandingPart.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
       embeddedContent.style.removeProperty("width");
       embeddedContent.style.removeProperty("height");

@@ -128,6 +128,9 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
         instance.style.display = isVisible ? "block" : "none";
       } else if (isVisible) {
         instance.classList.remove("ub-hide");
+        Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (slider) {
+          var swiper = new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
+        });
       } else {
         instance.classList.add("ub-hide");
       }

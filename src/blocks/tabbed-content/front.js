@@ -107,6 +107,15 @@ function ub_handleTabEvent(tab) {
 				tabContent.classList.remove("ub-hide");
 
 				Array.prototype.slice
+					.call(document.getElementsByClassName("ub_image_slider"))
+					.forEach((slider) => {
+						const swiper = new Swiper(
+							`#${slider.id}`,
+							JSON.parse(slider.dataset.swiperData)
+						);
+					});
+
+				Array.prototype.slice
 					.call(tabContent.querySelectorAll(".wp-block-embed iframe"))
 					.forEach((embeddedContent) => {
 						embeddedContent.style.removeProperty("width");
@@ -732,6 +741,14 @@ Array.prototype.slice
 							root.dataset.noActiveTabs = true;
 						}
 					} else {
+						Array.prototype.slice
+							.call(document.getElementsByClassName("ub_image_slider"))
+							.forEach((slider) => {
+								const swiper = new Swiper(
+									`#${slider.id}`,
+									JSON.parse(slider.dataset.swiperData)
+								);
+							});
 						if (root.dataset.noActiveTabs) {
 							delete root.dataset.noActiveTabs;
 							root.dataset.activeTabs = JSON.stringify([i]);

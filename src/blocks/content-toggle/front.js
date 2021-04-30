@@ -83,6 +83,14 @@ function togglePanel(target) {
 				paddingTop: `${convertedTop}px`,
 				paddingBottom: `${convertedBottom}px`,
 			});
+			Array.prototype.slice
+				.call(document.getElementsByClassName("ub_image_slider"))
+				.forEach((slider) => {
+					const swiper = new Swiper(
+						`#${slider.id}`,
+						JSON.parse(slider.dataset.swiperData)
+					);
+				});
 		} else {
 			panelContent.classList.add("ub-hiding");
 			panelContent.style.height = "";

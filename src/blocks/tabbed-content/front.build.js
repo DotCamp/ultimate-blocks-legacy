@@ -81,6 +81,9 @@ function ub_handleTabEvent(tab) {
     if (ub_getNodeindex(tab) === i) {
       tabContent.classList.add("active");
       tabContent.classList.remove("ub-hide");
+      Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (slider) {
+        var swiper = new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
+      });
       Array.prototype.slice.call(tabContent.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
         embeddedContent.style.removeProperty("width");
         embeddedContent.style.removeProperty("height");
@@ -576,6 +579,10 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
           root.dataset.noActiveTabs = true;
         }
       } else {
+        Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (slider) {
+          var swiper = new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
+        });
+
         if (root.dataset.noActiveTabs) {
           delete root.dataset.noActiveTabs;
           root.dataset.activeTabs = JSON.stringify([i]);
