@@ -140,18 +140,79 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0,
             ),
-            'borderSize' => array(
+
+            //begin border attributes for each side
+            'topBorderSize' => array(
                 'type' => 'number',
-                'default' => 0,
+                'default' => 0
             ),
-            'borderStyle' => array(
+            'rightBorderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'bottomBorderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'leftBorderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+
+            'topBorderStyle' => array(
                 'type' => 'string',
                 'default' => ''
             ),
-            'borderColor' => array(
+            'rightBorderStyle' => array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'bottomBorderStyle' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'leftBorderStyle' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+
+            'topBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'rightBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'bottomBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'leftBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+    		//end border attributes for each side
+
+            //begin corner attributes
+            'topLeftRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'topRightRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'bottomLeftRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'bottomRightRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            //end corner attributes
+            
             'showInDesktop' => array(
                 'type' => 'boolean',
                 'default' => true

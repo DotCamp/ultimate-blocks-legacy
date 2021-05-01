@@ -159,12 +159,24 @@ function ub_include_block_attribute_css() {
         if(isset($attributes) && isset($attributes['blockID']) && $attributes['blockID'] != ''){
             switch ($block['blockName']){
                 default:
-                case 'ub/advanced-video':
                     //nothing could be done
+                    break;
+                case 'ub/advanced-video':
                     $prefix = '#ub-advanced-video-' . $attributes['blockID'];
-                    if($attributes['borderSize'] > 0){
+
+                    if(json_encode(array_unique(array($attributes['topBorderSize'], $attributes['leftBorderSize'],
+                        $attributes['rightBorderSize'], $attributes['bottomBorderSize']))) !== '[0]' ){
+                        
                         $blockStylesheets .= $prefix . '{' .
-                            'border: ' . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] . ';' . PHP_EOL .
+                            ($attributes['topBorderSize'] > 0 ? 'border-top: ' . $attributes['topBorderSize'] . 'px ' . $attributes['topBorderStyle'] . ' ' . $attributes['topBorderColor'] . ';' . PHP_EOL : '') .
+                            ($attributes['leftBorderSize'] > 0 ? 'border-left: ' . $attributes['leftBorderSize'] . 'px ' . $attributes['leftBorderStyle'] . ' ' . $attributes['leftBorderColor'] . ';' . PHP_EOL : '') .
+                            ($attributes['rightBorderSize'] > 0 ? 'border-right: ' . $attributes['rightBorderSize'] . 'px ' . $attributes['rightBorderStyle'] . ' ' . $attributes['rightBorderColor'] . ';' . PHP_EOL : '') .
+                            ($attributes['bottomBorderSize'] > 0 ? 'border-bottom: ' . $attributes['bottomBorderSize'] . 'px ' . $attributes['bottomBorderStyle'] . ' ' . $attributes['bottomBorderColor'] . ';' . PHP_EOL : '') .
+
+                            ($attributes['topLeftRadius'] > 0 ? 'border-top-left-radius: ' . $attributes['topLeftRadius'] . 'px;' . PHP_EOL : '') .
+                            ($attributes['topRightRadius'] > 0 ? 'border-top-right-radius: ' . $attributes['topRightRadius'] . 'px;' . PHP_EOL : '') .
+                            ($attributes['bottomLeftRadius'] > 0 ? 'border-bottom-left-radius: ' . $attributes['bottomLeftRadius'] . 'px;' . PHP_EOL : '') .
+                            ($attributes['bottomRightRadius'] > 0 ? 'border-bottom-right-radius: ' . $attributes['bottomRightRadius'] . 'px;' . PHP_EOL : '') .
                         '}';
                     }
                     //if one of showInDesktop, showInTablet, showInMobile

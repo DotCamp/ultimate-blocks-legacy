@@ -100,6 +100,24 @@ registerBlockType("ub/advanced-video", {
 		},
 		//end border attributes for each side
 
+		//begin corner attributes
+		topLeftRadius: {
+			type: "number",
+			default: 0,
+		},
+		topRightRadius: {
+			type: "number",
+			default: 0,
+		},
+		bottomLeftRadius: {
+			type: "number",
+			default: 0,
+		},
+		bottomRightRadius: {
+			type: "number",
+			default: 0,
+		},
+
 		vimeoShowDetails: {
 			//vimeo only
 			type: "boolean",
@@ -220,6 +238,7 @@ registerBlockType("ub/advanced-video", {
 			dailyMotionCache: {},
 			videoPressCache: {},
 			currentBorder: "all",
+			currentCorner: "all",
 		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
@@ -253,9 +272,6 @@ registerBlockType("ub/advanced-video", {
 			width,
 			showPlayerControls,
 			blockID,
-			borderSize,
-			borderStyle,
-			borderColor,
 			topBorderSize,
 			leftBorderSize,
 			rightBorderSize,
@@ -268,6 +284,10 @@ registerBlockType("ub/advanced-video", {
 			leftBorderColor,
 			rightBorderColor,
 			bottomBorderColor,
+			topLeftRadius,
+			topRightRadius,
+			bottomLeftRadius,
+			bottomRightRadius,
 		} = attributes;
 
 		if (
@@ -614,6 +634,10 @@ registerBlockType("ub/advanced-video", {
 									borderLeft: `${leftBorderSize}px ${leftBorderStyle} ${leftBorderColor}`,
 									borderRight: `${rightBorderSize}px ${rightBorderStyle} ${rightBorderColor}`,
 									borderBottom: `${bottomBorderSize}px ${bottomBorderStyle} ${bottomBorderColor}`,
+									borderTopLeftRadius: `${topLeftRadius}px`,
+									borderTopRightRadius: `${topRightRadius}px`,
+									borderBottomLeftRadius: `${bottomLeftRadius}px`,
+									borderBottomRightRadius: `${bottomRightRadius}px`,
 							  }
 							: {}
 					)}
@@ -636,9 +660,26 @@ registerBlockType("ub/advanced-video", {
 									loop: false,
 									thumbnail: "",
 									thumbnailId: -1,
-									borderSize: 0,
-									borderStyle: "",
-									borderColor: "",
+
+									topBorderSize: 0,
+									leftBorderSize: 0,
+									rightBorderSize: 0,
+									bottomBorderSize: 0,
+
+									topBorderStyle: "",
+									leftBorderStyle: "",
+									rightBorderStyle: "",
+									bottomBorderStyle: "",
+
+									topBorderColor: "",
+									leftBorderColor: "",
+									rightBorderColor: "",
+									bottomBorderColor: "",
+
+									topLeftRadius: 0,
+									topRightRadius: 0,
+									bottomLeftRadius: 0,
+									bottomRightRadius: 0,
 								});
 								setState({
 									videoURLInput: "",
