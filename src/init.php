@@ -308,7 +308,7 @@ function ub_include_block_attribute_css() {
                             '}';
                         break;
                         default:
-                            $blockStylesheets ='';
+                            $blockStylesheets .='';
                     }
                     break;
                 case 'ub/divider':
