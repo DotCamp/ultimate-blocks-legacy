@@ -1685,6 +1685,10 @@ $defaultValues = array(
                 'type' => 'boolean',
                 'default' => false
             ),
+            'hideOnMobile' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'showList' => array(
                 'type' => 'boolean',
                 'default' => true

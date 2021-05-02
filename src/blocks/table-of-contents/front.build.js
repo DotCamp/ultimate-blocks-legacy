@@ -83,6 +83,29 @@ document.addEventListener("DOMContentLoaded", function () {
     var hideButton = block.getAttribute("data-hidetext") || "hide";
     tocContainer.removeAttribute("style");
     var padding = 60;
+
+    function mobileEvent(mql) {
+      if (mql.matches) {
+        if (!tocMain.classList.contains("ub_table-of-contents-collapsed")) {
+          tocMain.classList.add("ub_table-of-contents-collapsed");
+          instance.innerHTML = showButton;
+          tocContainer.classList.add("ub-hide");
+        }
+      } else {
+        if (JSON.parse(tocMain.dataset.initiallyshow)) {
+          tocMain.classList.remove("ub_table-of-contents-collapsed");
+          instance.innerHTML = hideButton;
+          tocContainer.classList.remove("ub-hide");
+        }
+      }
+    }
+
+    var mobileQuery = window.matchMedia("(max-width: 800px)");
+
+    if (JSON.parse(block.getAttribute("data-initiallyhideonmobile"))) {
+      mobileQuery.addListener(mobileEvent);
+    }
+
     instance.addEventListener("click", function (event) {
       event.preventDefault();
       var curWidth = tocMain.offsetWidth;
@@ -133,6 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       instance.innerHTML = tocContainer.classList.contains("ub-hiding") ? hideButton : showButton;
+      mobileQuery.removeListener(mobileEvent);
     });
     tocContainer.addEventListener("transitionend", function () {
       if (tocContainer.offsetHeight === 0) {

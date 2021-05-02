@@ -53,6 +53,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	hideOnMobile: {
+		type: "boolean",
+		default: false,
+	},
 	showList: {
 		type: "boolean",
 		default: true,
@@ -163,12 +167,12 @@ registerBlockType("ub/table-of-contents", {
 							<ToggleControl
 								id="ub_toc_toggle_display"
 								checked={allowToCHiding}
-								onChange={(allowToCHiding) => {
+								onChange={(allowToCHiding) =>
 									setAttributes({
 										allowToCHiding,
 										showList: allowToCHiding ? showList : true,
-									});
-								}}
+									})
+								}
 							/>
 						</PanelRow>
 						{allowToCHiding && (
@@ -179,11 +183,7 @@ registerBlockType("ub/table-of-contents", {
 								<ToggleControl
 									id="ub_show_toc"
 									checked={showList}
-									onChange={() => {
-										setAttributes({
-											showList: !showList,
-										});
-									}}
+									onChange={() => setAttributes({ showList: !showList })}
 								/>
 							</PanelRow>
 						)}

@@ -605,6 +605,7 @@ export const inspectorControls = (props) => {
 	const {
 		allowedHeaders,
 		showList,
+		hideOnMobile,
 		allowToCHiding,
 		enableSmoothScroll,
 		allowToLatin,
@@ -723,21 +724,34 @@ export const inspectorControls = (props) => {
 							setAttributes({
 								allowToCHiding,
 								showList: allowToCHiding ? showList : true,
+								hideOnMobile: false,
 							})
 						}
 					/>
 				</PanelRow>
 				{allowToCHiding && (
-					<PanelRow>
-						<label htmlFor="ub_show_toc">
-							{__("Initially Show Table of Contents")}
-						</label>
-						<ToggleControl
-							id="ub_show_toc"
-							checked={showList}
-							onChange={() => setAttributes({ showList: !showList })}
-						/>
-					</PanelRow>
+					<>
+						<PanelRow>
+							<label htmlFor="ub_show_toc">
+								{__("Initially Show Table of Contents")}
+							</label>
+							<ToggleControl
+								id="ub_show_toc"
+								checked={showList}
+								onChange={() => setAttributes({ showList: !showList })}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<label htmlFor="ub_hide_on_mobile">
+								{__("Initially Hide Table of Contents on Mobile")}
+							</label>
+							<ToggleControl
+								id="ub_hide_on_mobile"
+								checked={hideOnMobile}
+								onChange={() => setAttributes({ hideOnMobile: !hideOnMobile })}
+							/>
+						</PanelRow>
+					</>
 				)}
 				<PanelRow>
 					<label htmlFor="ub_toc_enable_latin_conversion">
