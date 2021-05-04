@@ -347,6 +347,7 @@ export class TabHolder extends Component {
 			tabsAlignment,
 			tabVertical,
 			blockID,
+			tabStyle,
 		} = attributes;
 		let block = null;
 
@@ -419,13 +420,20 @@ export class TabHolder extends Component {
 						style={{
 							textAlign: propz.attributes.tabsTitleAlignment[i],
 							backgroundColor:
-								propz.attributes.activeTab === i
+								propz.attributes.tabStyle === "underline"
+									? "inherit"
+									: propz.attributes.activeTab === i
 									? propz.attributes.theme
-									: "initial",
+									: propz.attributes.normalColor || "inherit",
 							color:
 								propz.attributes.activeTab === i
 									? propz.attributes.titleColor || "inherit"
-									: "#000000",
+									: propz.attributes.normalTitleColor || "inherit",
+							borderBottom:
+								propz.attributes.activeTab === i &&
+								propz.attributes.tabStyle === "underline"
+									? `5px solid ${propz.attributes.titleColor || "inherit"}`
+									: null,
 						}}
 						onClick={() => toggleTitle("tab-title", i)}
 					>
@@ -576,7 +584,9 @@ export class TabHolder extends Component {
 				</BlockControls>
 			),
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,
-			<div className={className}>
+			<div
+				className={`${className}${tabStyle === "tabs" ? "" : `-${tabStyle}`}`}
+			>
 				<div
 					className={`${className}-holder ${
 						attributes.tabVertical ? "vertical-holder" : ""

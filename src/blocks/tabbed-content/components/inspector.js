@@ -26,31 +26,60 @@ export default class Inspector extends Component {
 		const {
 			activeTab,
 			theme,
+			normalColor,
 			titleColor,
+			normalTitleColor,
+			borderColor,
 			tabVertical,
 			tabletTabDisplay,
 			mobileTabDisplay,
 			tabsTitle,
 			tabsAnchor,
 			useAnchors,
+			tabStyle,
 		} = attributes;
+
+		const tabColorPanels = [
+			{
+				value: normalColor,
+				onChange: (value) => setAttributes({ normalColor: value }),
+				label: __("Tab Color"),
+			},
+			{
+				value: theme,
+				onChange: (value) => setAttributes({ theme: value }),
+				label: __("Active Tab Color"),
+			},
+			{
+				value: normalTitleColor,
+				onChange: (value) => setAttributes({ normalTitleColor: value }),
+				label: __("Tab Title Color"),
+			},
+			{
+				value: titleColor,
+				onChange: (value) => setAttributes({ titleColor: value }),
+				label: __("Active Tab Title Color"),
+			},
+		];
+
 		return (
 			<InspectorControls>
+				<PanelBody title={__("Tab style")}>
+					<RadioControl
+						selected={tabStyle}
+						options={["tabs", "pills", "underline"].map((a) => ({
+							label: __(a),
+							value: a,
+						}))}
+						onChange={(tabStyle) => setAttributes({ tabStyle })}
+					/>
+				</PanelBody>
 				<PanelColorSettings
 					title={__("Tab Colors")}
 					initialOpen={true}
-					colorSettings={[
-						{
-							value: theme,
-							onChange: (value) => setAttributes({ theme: value }),
-							label: __("Active Tab Color"),
-						},
-						{
-							value: titleColor,
-							onChange: (value) => setAttributes({ titleColor: value }),
-							label: __("Active Tab Title Color"),
-						},
-					]}
+					colorSettings={
+						tabStyle === "underline" ? tabColorPanels.slice(2) : tabColorPanels
+					}
 				/>
 				<PanelBody title={__("Tab Layout")}>
 					<ButtonGroup style={{ paddingBottom: "10px" }}>

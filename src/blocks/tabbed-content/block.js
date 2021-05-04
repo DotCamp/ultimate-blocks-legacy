@@ -14,7 +14,7 @@ const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
 const { withState, compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
-const { RichText, InnerBlocks } = wp.editor;
+const { RichText, InnerBlocks } = wp.blockEditor || wp.editor;
 
 const oldAttributes = {
 	id: {
@@ -76,9 +76,21 @@ const attributes = {
 		type: "string",
 		default: "#eeeeee",
 	},
+	normalColor: {
+		type: "string",
+		default: "",
+	},
 	titleColor: {
 		type: "string",
 		default: "#000000",
+	},
+	normalTitleColor: {
+		type: "string",
+		default: "#000000",
+	},
+	borderColor: {
+		type: "string",
+		default: "#d3d3d3",
 	},
 	tabsTitle: {
 		type: "array",
@@ -111,6 +123,10 @@ const attributes = {
 	mobileTabDisplay: {
 		type: "string",
 		default: "horizontaltab",
+	},
+	tabStyle: {
+		type: "string",
+		default: "tabs",
 	},
 };
 

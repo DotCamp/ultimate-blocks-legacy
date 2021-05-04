@@ -1597,9 +1597,21 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#eeeeee'
             ),
+            'normalColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'titleColor' => array(
                 'type' => 'string',
                 'default' => '' //should be empty
+            ),
+            'normalTitleColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'borderColor' => array(
+                'type' => 'string',
+                'default' => '#d3d3d3'
             ),
             'tabsAlignment' => array(
                 'type' => 'string',
@@ -1641,7 +1653,11 @@ $defaultValues = array(
             'mobileTabDisplay' => array(
                 'type' => 'string',
                 'default' => 'horizontaltab'
-            )
+            ),
+            'tabStyle' => array(
+                'type' => 'string',
+                'default' => 'tabs'
+            ),
         )
     ),
     'ub/table-of-contents-block' => array(

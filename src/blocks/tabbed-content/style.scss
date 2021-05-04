@@ -23,6 +23,16 @@
 .wp-block-ub-tabbed-content {
 	margin-top: 30px;
 	margin-bottom: 30px;
+
+	& .wp-block-ub-tabbed-content-tabs-content {
+		border: 1px solid lightgrey;
+	}
+
+	& .wp-block-ub-tabbed-content-tab-title-wrap {
+		border: 1px solid lightgrey;
+		border-bottom: 0;
+	}
+
 	&-holder {
 		.blocks-rich-text__tinymce.mce-content-body {
 			font-size: 14px;
@@ -48,7 +58,6 @@
 	}
 
 	&-tabs-content {
-		border: 1px solid lightgrey;
 		padding: 25px;
 		&.vertical-content-width {
 			width: 79%;
@@ -57,11 +66,9 @@
 	&-tab-title {
 		word-break: initial;
 		&-wrap {
-			border: 1px solid lightgrey;
 			border-top-right-radius: 5px;
 			border-top-left-radius: 5px;
 			padding: 10px 15px;
-			border-bottom: 0;
 			margin-right: 5px;
 			display: flex;
 			align-items: center;
