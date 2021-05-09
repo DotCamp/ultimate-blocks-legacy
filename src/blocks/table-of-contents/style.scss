@@ -54,6 +54,10 @@
 		padding-left: 5px;
 	}
 
+	&-collapsed {
+		padding: 10px;
+	}
+
 	@for $i from 1 through 3 {
 		&-#{$i}-column {
 			column-count: $i;

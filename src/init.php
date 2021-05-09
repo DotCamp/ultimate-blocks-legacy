@@ -720,7 +720,6 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['allowToCHiding']){
                         $blockStylesheets .= $prefix . '.ub_table-of-contents-collapsed {' . PHP_EOL .
-                            'padding: 10px;' . PHP_EOL .
                             'max-width: fit-content;' . PHP_EOL .
                             'max-width: -moz-fit-content;' . PHP_EOL .
                         '}' . PHP_EOL .
