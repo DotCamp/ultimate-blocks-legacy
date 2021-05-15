@@ -181,7 +181,7 @@ registerBlockType("ub/progress-bar", {
 				{barType === "linear" ? (
 					<Line {...progressBarAttributes} />
 				) : (
-					<Circle {...progressBarAttributes} />
+					<Circle {...progressBarAttributes} alignment={detailAlign} />
 				)}
 			</div>,
 		];

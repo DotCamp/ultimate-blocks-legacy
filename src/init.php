@@ -482,6 +482,7 @@ function ub_include_block_attribute_css() {
                         $circlePathLength = $circleRadius * M_PI * 2;
                         $blockStylesheets .= '#ub-progress-bar-'. $attributes['blockID'] . ' .ub_progress-bar-container{' . PHP_EOL .
                             'height: 150px;' . PHP_EOL . 'width: 150px;' . PHP_EOL .
+                            ( in_array($attributes['detailAlign'], ['left', 'right']) ? 'float: ' . $attributes['detailAlign'] : 'margin: auto' ) . ';' . PHP_EOL .
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-circle-trail{' . PHP_EOL . 
                             'stroke-dasharray: '.$circlePathLength.'px,'.$circlePathLength.'px' . PHP_EOL . 

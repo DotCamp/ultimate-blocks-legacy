@@ -21,7 +21,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
-import React, { Component } from "react";
+import { Component } from "react";
 
 export default class Circle extends Component {
 	constructor(props) {
@@ -46,9 +46,11 @@ export default class Circle extends Component {
 		if (this.state.isActive && this.props.percent !== nextProps.percent) {
 			this.setState({ indicator: nextProps.percent });
 		}
+		
 	}
 	render() {
-		const { barColor, barThickness, percent, labelColor } = this.props;
+		const { barColor, barThickness, percent, labelColor, alignment } =
+			this.props;
 		const { indicator, isActive } = this.state;
 		const circleRadius = 50 - (barThickness + 3) / 2;
 		const circlePathLength = circleRadius * Math.PI * 2;
@@ -57,13 +59,19 @@ export default class Circle extends Component {
 			circleRadius * 2
 		} a ${circleRadius},${circleRadius} 0 1 1 0,${-circleRadius * 2}`;
 		const size = 150;
+
 		return (
 			<div
 				className="ub_progress-bar-container"
-				style={{
-					height: `${size}px`,
-					width: `${size}px`,
-				}}
+				style={Object.assign(
+					{
+						height: `${size}px`,
+						width: `${size}px`,
+					},
+					["left", "right"].includes(alignment)
+						? { float: alignment }
+						: { margin: "auto" }
+				)}
 			>
 				<svg
 					className="ub_progress-bar-circle"
