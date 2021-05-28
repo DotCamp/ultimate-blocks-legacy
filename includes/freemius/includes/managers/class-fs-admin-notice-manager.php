@@ -308,7 +308,7 @@
 
             $current_screen = get_current_screen();
 
-            if ( $current_screen !== NULL && method_exists( $current_screen, 'is_block_editor' ) &&
+            if ( method_exists( $current_screen, 'is_block_editor' ) &&
                  $current_screen->is_block_editor()
             ) {
                 // Gutenberg page on 5+.

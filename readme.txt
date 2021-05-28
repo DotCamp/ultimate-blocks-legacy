@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.4.5
+Stable tag: 2.4.6
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,37 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.6 =
+
+* Review - Change default star color and outline color to #F7B708.
+* Review - Make review description text flow under review image in mobile.
+* Review - Fix display of review block's call to action button text color.
+* Review - Add new review feature in feature list when pressing enter.
+* Review - Prevent HTML tags from being displayed in star settings.
+* Review - Allow merging of review features.
+* Table of Contents - Fix animation for 2-column and 3-column layouts.
+* Table of Contents - Allow hiding in mobile while leaving desktop settings unaffected.
+* Table of Contents - Standardize transliteration of Cyrillic headings in line with BGN/PCGN.
+* Post Grid - Allow filtering posts by author.
+* Post Grid - Allow filtering posts by tag.
+* Post Grid - Prevent unused space for Post Grid image from affecting style.
+* HowTo - Fix JSON-LD error with HowTo tip.
+* HowTo - Omit cost and time code from JSON-LD code whenever they're equal to zero.
+* HowTo - Allow individually setting width and float for images in steps and yield.
+* Image Slider - Fix image slider functionality when parent block visibility is toggled.
+* Image Slider - Update swiper to v6.5.9.
+* Progress Bar - Fix display of progress bar value input slider.
+* Progress Bar - Also apply alignment setting to progress bar when circular mode is selected.
+* Styled Box - Hide alignment options in styled box when no mode is selected.
+* Styled List - Allow setting styled list item font size.
+* Styled List - Split styled list block instance into two after entering two empty items.
+* Tabbed Content - Add options for setting color of inactive tabs and alternate tab styles.
+* Button - Set default button alignment to center.
+* Content filter - Panels that have no tags from multi-select categories are no longer filtered out when nothing from that category is selected.
+* Divider - Prevent divider block internal CSS from removing other blocks' CSS.
+* Expand - Prevent wrapper innerblock of expand block from being used as reusable.
+* Other - Move recently-picked icons to top of icon list in Button and Styled list.
 
 = 2.4.5 =
 

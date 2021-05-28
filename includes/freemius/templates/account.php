@@ -21,7 +21,9 @@
 	/**
 	 * @var FS_Plugin_Tag $update
 	 */
-	$update = $fs->get_update( false, false, WP_FS__TIME_24_HOURS_IN_SEC / 24 );
+	$update = $fs->has_release_on_freemius() ?
+        $fs->get_update( false, false, WP_FS__TIME_24_HOURS_IN_SEC / 24 ) :
+        null;
 
 	if ( is_object($update) ) {
 		/**
@@ -433,11 +435,11 @@
 											'value' => $fs->get_plugin_version()
 										);
 
-										if ( $is_premium && ! $is_whitelabeled ) {
+										if ( ! fs_is_network_admin() && $is_premium && ! $is_whitelabeled ) {
 										    $profile[] = array(
                                                 'id'    => 'beta_program',
                                                 'title' => '',
-                                                'value' => $user->is_beta
+                                                'value' => $site->is_beta
                                             );
                                         }
 
@@ -1056,6 +1058,29 @@
                 });
             });
 
+            $( '.fs-toggle-whitelabel-mode' ).click( function () {
+                var $toggleLink = $( this );
+
+                $.ajax( {
+                    url   : ajaxurl,
+                    method: 'POST',
+                    data  : {
+                        action   : '<?php echo $fs->get_ajax_action( 'toggle_whitelabel_mode' ) ?>',
+                        security : '<?php echo $fs->get_ajax_security( 'toggle_whitelabel_mode' ) ?>',
+                        module_id: <?php echo $fs->get_id() ?>
+                    },
+                    beforeSend: function () {
+                        $toggleLink.parent().text( '<?php
+                            $is_whitelabeled ?
+                                fs_esc_html_echo_inline( 'Disabling white-label mode', 'disabling-whitelabel-mode' ) :
+                                fs_esc_html_echo_inline( 'Enabling white-label mode', 'enabling-whitelabel-mode' )
+                        ?>' + '...' );
+                    },
+                    complete: function () {
+                        location.reload();
+                    }
+                } );
+            });
         })(jQuery);
     </script>
 <?php
