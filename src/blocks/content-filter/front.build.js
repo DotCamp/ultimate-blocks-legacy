@@ -76,6 +76,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
     }
 
     blockProper.setAttribute("data-currentselection", JSON.stringify(newSelection));
+    var matchingOption = blockProper.getAttribute("data-matchingoption");
     Array.prototype.slice.call(blockProper.getElementsByClassName("ub-content-filter-panel")).forEach(function (instance) {
       var panelData = JSON.parse(instance.getAttribute("data-selectedfilters"));
       var mainData = JSON.parse(blockProper.getAttribute("data-currentselection"));
@@ -88,7 +89,10 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
           if (Array.isArray(category)) {
             if (category.every(function (f) {
               return !f;
-            }) || mainData[i].filter(function (f) {
+            }) && mainData[i].some(function (f) {
+              return f;
+            }) || //panel has no tag from category and maindata has at least one tag selected -> consider as mismatch
+            mainData[i].filter(function (f) {
               return f;
             }).length > 0 && !category.some(function (f, j) {
               return f && f === mainData[i][j];
@@ -122,7 +126,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
         });
       }
 
-      var isVisible = blockProper.getAttribute("data-matchingoption") === "matchAll" ? hasMatchedAll : hasMatchedOne;
+      var isVisible = matchingOption === "matchAll" ? hasMatchedAll : hasMatchedOne;
 
       if (isOldVersion) {
         instance.style.display = isVisible ? "block" : "none";

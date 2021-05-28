@@ -55,9 +55,8 @@ Array.prototype.slice
 					).forEach((sibling) => {
 						sibling.setAttribute("data-tagisselected", "false");
 						if (isOldVersion) {
-							sibling.style.backgroundColor = this.getAttribute(
-								"data-normalcolor"
-							);
+							sibling.style.backgroundColor =
+								this.getAttribute("data-normalcolor");
 							sibling.style.color = this.getAttribute("data-normaltextcolor");
 						} else {
 							sibling.classList.remove("ub-selected");
@@ -91,6 +90,8 @@ Array.prototype.slice
 				JSON.stringify(newSelection)
 			);
 
+			const matchingOption = blockProper.getAttribute("data-matchingoption");
+
 			Array.prototype.slice
 				.call(blockProper.getElementsByClassName("ub-content-filter-panel"))
 				.forEach((instance) => {
@@ -114,7 +115,7 @@ Array.prototype.slice
 						panelData.forEach((category, i) => {
 							if (Array.isArray(category)) {
 								if (
-									category.every((f) => !f) ||
+									(category.every((f) => !f) && mainData[i].some((f) => f)) || //panel has no tag from category and maindata has at least one tag selected -> consider as mismatch
 									(mainData[i].filter((f) => f).length > 0 &&
 										!category.some((f, j) => f && f === mainData[i][j]))
 								) {
@@ -153,9 +154,7 @@ Array.prototype.slice
 					}
 
 					const isVisible =
-						blockProper.getAttribute("data-matchingoption") === "matchAll"
-							? hasMatchedAll
-							: hasMatchedOne;
+						matchingOption === "matchAll" ? hasMatchedAll : hasMatchedOne;
 
 					if (isOldVersion) {
 						instance.style.display = isVisible ? "block" : "none";
