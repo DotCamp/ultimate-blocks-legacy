@@ -314,8 +314,8 @@ export const inspectorControls = (props) => {
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
 									Object.assign({}, buttons[activeButtonIndex], {
-										buttonIsTransparent: !buttons[activeButtonIndex]
-											.buttonIsTransparent,
+										buttonIsTransparent:
+											!buttons[activeButtonIndex].buttonIsTransparent,
 									}),
 									...buttons.slice(activeButtonIndex + 1),
 								],
@@ -829,12 +829,8 @@ export class EditorComponent extends Component {
 	}
 
 	updateIconList() {
-		const {
-			availableIcons,
-			recentSelection,
-			selectionTime,
-			iconChoices,
-		} = this.state;
+		const { availableIcons, recentSelection, selectionTime, iconChoices } =
+			this.state;
 		const prevIconMatch = iconChoices
 			.map((i) => i.name)
 			.indexOf(recentSelection);
@@ -1222,8 +1218,8 @@ export class EditorComponent extends Component {
 									buttons: [
 										...buttons.slice(0, activeButtonIndex),
 										Object.assign({}, buttons[activeButtonIndex], {
-											buttonIsTransparent: !buttons[activeButtonIndex]
-												.buttonIsTransparent,
+											buttonIsTransparent:
+												!buttons[activeButtonIndex].buttonIsTransparent,
 										}),
 										...buttons.slice(activeButtonIndex + 1),
 									],
@@ -1529,7 +1525,7 @@ export class EditorComponent extends Component {
 						</div>
 						{activeButtonIndex === i && enableLinkInput && (
 							<URLInputBox
-								{...props}
+								{...this.props}
 								index={i}
 								hideLinkInput={() => this.setState({ enableLinkInput: false })}
 								showLinkInput={() => this.setState({ enableLinkInput: true })}
