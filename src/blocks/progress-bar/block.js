@@ -6,8 +6,9 @@ const { BlockControls, InspectorControls, PanelColorSettings, RichText } =
 	wp.blockEditor || wp.editor;
 
 const {
-	Toolbar,
-	Button,
+	ToolbarGroup,
+	ToolbarItem,
+	ToolbarButton,
 	RangeControl,
 	PanelBody,
 	DropdownMenu,
@@ -108,16 +109,19 @@ registerBlockType("ub/progress-bar", {
 		return [
 			isSelected && (
 				<BlockControls>
-					<Toolbar>
-						<Button onClick={() => setAttributes({ barType: "linear" })}>
+					<ToolbarGroup>
+						<ToolbarButton onClick={() => setAttributes({ barType: "linear" })}>
 							{LinearProgressIcon}
-						</Button>
-						<Button onClick={() => setAttributes({ barType: "circular" })}>
+						</ToolbarButton>
+						<ToolbarButton
+							onClick={() => setAttributes({ barType: "circular" })}
+						>
 							{CircProgressIcon}
-						</Button>
-					</Toolbar>
-					<Toolbar>
-						<RangeControl
+						</ToolbarButton>
+					</ToolbarGroup>
+					<ToolbarGroup>
+						<ToolbarItem
+							as={RangeControl}
 							className="ub_progress_bar_value"
 							value={percentage}
 							onChange={(value) => setAttributes({ percentage: value })}
@@ -125,7 +129,8 @@ registerBlockType("ub/progress-bar", {
 							max={100}
 							allowReset
 						/>
-					</Toolbar>
+					</ToolbarGroup>
+					{/*ToolbarDropdownMenu doesn't work outside of Gutenberg. Do not convert until it's part of Wordpress core. */}
 					<DropdownMenu
 						icon={`editor-${
 							detailAlign === "justify" ? detailAlign : "align" + detailAlign

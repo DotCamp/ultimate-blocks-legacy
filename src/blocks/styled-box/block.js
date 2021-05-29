@@ -13,9 +13,9 @@ const {
 } = wp.blockEditor || wp.editor;
 
 const {
-	Toolbar,
+	ToolbarGroup,
+	ToolbarButton,
 	Button,
-	IconButton,
 	SelectControl,
 	PanelBody,
 	RangeControl,
@@ -170,13 +170,13 @@ registerBlockType("ub/styled-box", {
 				: arr.slice(0, newLength);
 
 		const columnCountToolbar = (
-			<Toolbar>
+			<ToolbarGroup>
 				{[
 					[oneColumnIcon, "One"],
 					[twoColumnsIcon, "Two"],
 					[threeColumnsIcon, "Three"],
 				].map((num, i) => (
-					<IconButton
+					<ToolbarButton
 						icon={num[0]}
 						label={__(`${num[1]} column${i > 0 ? "s" : ""}`)}
 						isActive={text.length === i}
@@ -196,7 +196,7 @@ registerBlockType("ub/styled-box", {
 						}
 					/>
 				))}
-			</Toolbar>
+			</ToolbarGroup>
 		);
 
 		if (
@@ -233,8 +233,8 @@ registerBlockType("ub/styled-box", {
 			);
 
 			blockToolbarExtras = (
-				<Toolbar className="components-toolbar">
-					<Button
+				<ToolbarGroup className="components-toolbar">
+					<ToolbarButton
 						className="components-icon-button components-toolbar-control"
 						onClick={() =>
 							setAttributes({
@@ -245,8 +245,8 @@ registerBlockType("ub/styled-box", {
 						}
 					>
 						{info}
-					</Button>
-					<Button
+					</ToolbarButton>
+					<ToolbarButton
 						className="components-icon-button components-toolbar-control"
 						onClick={() =>
 							setAttributes({
@@ -257,8 +257,8 @@ registerBlockType("ub/styled-box", {
 						}
 					>
 						{success}
-					</Button>
-					<Button
+					</ToolbarButton>
+					<ToolbarButton
 						className="components-icon-button components-toolbar-control"
 						onClick={() =>
 							setAttributes({
@@ -269,8 +269,8 @@ registerBlockType("ub/styled-box", {
 						}
 					>
 						{warning}
-					</Button>
-					<Button
+					</ToolbarButton>
+					<ToolbarButton
 						className="components-icon-button components-toolbar-control"
 						onClick={() =>
 							setAttributes({
@@ -281,8 +281,8 @@ registerBlockType("ub/styled-box", {
 						}
 					>
 						{error}
-					</Button>
-				</Toolbar>
+					</ToolbarButton>
+				</ToolbarGroup>
 			);
 
 			inspectorExtras = (
@@ -683,9 +683,9 @@ registerBlockType("ub/styled-box", {
 				<BlockControls>
 					{blockToolbarExtras}
 					{mode !== "" && (
-						<Toolbar>
+						<ToolbarGroup>
 							{["left", "center", "right", "justify"].map((a) => (
-								<IconButton
+								<ToolbarButton
 									icon={`editor-${a === "justify" ? a : "align" + a}`}
 									label={__(
 										(a !== "justify" ? "Align " : "") +
@@ -716,7 +716,7 @@ registerBlockType("ub/styled-box", {
 									}}
 								/>
 							))}
-						</Toolbar>
+						</ToolbarGroup>
 					)}
 				</BlockControls>
 			),

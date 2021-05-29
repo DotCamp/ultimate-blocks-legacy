@@ -12,9 +12,9 @@ const { InspectorControls, RichText, PanelColorSettings, BlockControls } =
 	wp.blockEditor || wp.editor;
 const {
 	DateTimePicker,
-	IconButton,
 	PanelBody,
-	Toolbar,
+	ToolbarGroup,
+	ToolbarButton,
 	SelectControl,
 } = wp.components;
 const { withSelect } = wp.data;
@@ -167,40 +167,40 @@ registerBlockType("ub/countdown", {
 			),
 			isSelected && (
 				<BlockControls>
-					<Toolbar>
-						<IconButton
+					<ToolbarGroup>
+						<ToolbarButton
 							isPrimary={style === "Regular"}
 							icon={RegularCountdownIcon}
 							label={__("Regular")}
 							onClick={() => setAttributes({ style: "Regular" })}
 						/>
-						<IconButton
+						<ToolbarButton
 							isPrimary={style === "Circular"}
 							icon={CircularCountdownIcon}
 							label={__("Circular")}
 							onClick={() => setAttributes({ style: "Circular" })}
 						/>
-						<IconButton
+						<ToolbarButton
 							isPrimary={style === "Odometer"}
 							icon={TickingCountdownIcon}
 							label={__("Odometer")}
 							onClick={() => setAttributes({ style: "Odometer" })}
 						/>
-					</Toolbar>
-					<Toolbar>
+					</ToolbarGroup>
+					<ToolbarGroup>
 						{["left", "center", "right", "justify"].map((a) => (
-							<IconButton
+							<ToolbarButton
 								icon={`editor-${a === "justify" ? a : "align" + a}`}
 								label={__(
 									(a !== "justify" ? "Align " : "") +
 										a[0].toUpperCase() +
 										a.slice(1)
 								)}
-								isActive={a}
+								isActive={messageAlign === a}
 								onClick={() => setAttributes({ messageAlign: a })}
 							/>
 						))}
-					</Toolbar>
+					</ToolbarGroup>
 				</BlockControls>
 			),
 			<>

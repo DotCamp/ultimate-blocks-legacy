@@ -15,9 +15,9 @@ const { BlockControls, InspectorControls, PanelColorSettings, URLInput } =
 	wp.blockEditor || wp.editor;
 
 const {
-	Toolbar,
+	ToolbarGroup,
+	ToolbarButton,
 	Button,
-	IconButton,
 	FormToggle,
 	PanelBody,
 	PanelRow,
@@ -1626,9 +1626,9 @@ registerBlockType("ub/review", {
 			isSelected && (
 				<BlockControls>
 					{editable !== "" && (
-						<Toolbar>
+						<ToolbarGroup>
 							{["left", "center", "right", "justify"].map((a) => (
-								<IconButton
+								<ToolbarButton
 									icon={`editor-${a === "justify" ? a : "align" + a}`}
 									label={__(
 										(a !== "justify" ? "Align " : "") +
@@ -1639,7 +1639,7 @@ registerBlockType("ub/review", {
 									onClick={() => setAlignment(editable, a)}
 								/>
 							))}
-						</Toolbar>
+						</ToolbarGroup>
 					)}
 				</BlockControls>
 			),

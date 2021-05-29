@@ -9,7 +9,8 @@ const {
 	PanelColorSettings,
 } = wp.blockEditor || wp.editor;
 
-const { Button, PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
+const { Button, PanelBody, RangeControl, ToolbarGroup, ToolbarButton } =
+	wp.components;
 
 import icons from "./icons";
 
@@ -19,11 +20,11 @@ export const blockControls = (props) => {
 	const { textAlign, authorAlign, authorRoleAlign } = attributes;
 	return (
 		<BlockControls>
-			<Toolbar>
+			<ToolbarGroup>
 				{["left", "center", "right", "justify"]
 					.slice(0, editable.indexOf("text") > 0 ? 4 : 3)
 					.map((a) => (
-						<IconButton
+						<ToolbarButton
 							icon={`editor-${a === "justify" ? a : "align" + a}`}
 							label={__(
 								(a !== "justify" ? "Align " : "") +
@@ -59,7 +60,7 @@ export const blockControls = (props) => {
 							}}
 						/>
 					))}
-			</Toolbar>
+			</ToolbarGroup>
 		</BlockControls>
 	);
 };

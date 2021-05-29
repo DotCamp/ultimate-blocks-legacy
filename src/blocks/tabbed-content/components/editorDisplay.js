@@ -12,7 +12,7 @@ const { __ } = wp.i18n;
 const { createBlock } = wp.blocks;
 const { RichText, InnerBlocks, BlockControls } = wp.blockEditor || wp.editor;
 
-const { Toolbar, IconButton } = wp.components;
+const { ToolbarGroup, ToolbarButton } = wp.components;
 
 export class OldTabHolder extends Component {
 	constructor(props) {
@@ -205,13 +205,8 @@ export class OldTabHolder extends Component {
 			<div className={className}>
 				<button
 					onClick={() => {
-						const {
-							activeControl,
-							activeTab,
-							theme,
-							titleColor,
-							tabsTitle,
-						} = this.props.block.attributes;
+						const { activeControl, activeTab, theme, titleColor, tabsTitle } =
+							this.props.block.attributes;
 						replaceBlock(
 							this.props.block.clientId,
 							createBlock(
@@ -554,9 +549,9 @@ export class TabHolder extends Component {
 		return [
 			isSelected && (
 				<BlockControls>
-					<Toolbar>
+					<ToolbarGroup>
 						{["left", "center", "right"].map((a) => (
-							<IconButton
+							<ToolbarButton
 								icon={`editor-align${a}`}
 								label={__(`Align Tab Title ${a[0].toUpperCase() + a.slice(1)}`)}
 								isActive={tabsTitleAlignment[activeTab] === a}
@@ -571,16 +566,16 @@ export class TabHolder extends Component {
 								}
 							/>
 						))}
-					</Toolbar>
-					<Toolbar>
+					</ToolbarGroup>
+					<ToolbarGroup>
 						{["left", "center", "right"].map((a) => (
-							<IconButton
+							<ToolbarButton
 								icon={`align-${a}`}
 								label={__(`Align Tabs ${a[0].toUpperCase() + a.slice(1)}`)}
 								onClick={() => setAttributes({ tabsAlignment: a })}
 							/>
 						))}
-					</Toolbar>
+					</ToolbarGroup>
 				</BlockControls>
 			),
 			isSelected && <Inspector {...{ attributes, setAttributes }} />,

@@ -3,7 +3,7 @@ import { EmptyStar, FullStar, HalfStar } from "./icons";
 const { __ } = wp.i18n;
 const { InspectorControls, RichText, BlockControls, ColorPalette } =
 	wp.blockEditor || wp.editor;
-const { PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
+const { PanelBody, RangeControl, ToolbarGroup, ToolbarButton } = wp.components;
 
 export const blockControls = (props) => {
 	const { attributes, setAttributes } = props;
@@ -11,18 +11,18 @@ export const blockControls = (props) => {
 	const { reviewTextAlign } = attributes;
 	return (
 		<BlockControls>
-			<Toolbar>
+			<ToolbarGroup>
 				{["left", "center", "right"].map((a) => (
-					<IconButton
+					<ToolbarButton
 						icon={`align-${a}`}
 						label={__(`Align stars ${a}`)}
 						onClick={() => setAttributes({ starAlign: a })}
 					/>
 				))}
-			</Toolbar>
-			<Toolbar>
+			</ToolbarGroup>
+			<ToolbarGroup>
 				{["left", "center", "right", "justify"].map((a) => (
-					<IconButton
+					<ToolbarButton
 						icon={`editor-${a === "justify" ? a : "align" + a}`}
 						label={__(
 							(a !== "justify" ? "Align " : "") +
@@ -33,7 +33,7 @@ export const blockControls = (props) => {
 						onClick={() => setAttributes({ reviewTextAlign: a })}
 					/>
 				))}
-			</Toolbar>
+			</ToolbarGroup>
 		</BlockControls>
 	);
 };
@@ -41,13 +41,8 @@ export const blockControls = (props) => {
 export const inspectorControls = (props) => {
 	const { attributes, setAttributes } = props;
 
-	const {
-		starCount,
-		starSize,
-		starColor,
-		selectedStars,
-		reviewTextColor,
-	} = attributes;
+	const { starCount, starSize, starColor, selectedStars, reviewTextColor } =
+		attributes;
 	return (
 		<InspectorControls>
 			<PanelBody title={__("Star Settings")}>

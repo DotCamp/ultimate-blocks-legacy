@@ -19,7 +19,8 @@ const {
 const {
 	Icon,
 	IconButton,
-	Toolbar,
+	ToolbarGroup,
+	ToolbarButton,
 	ToggleControl,
 	FormFileUpload,
 	RangeControl,
@@ -223,14 +224,14 @@ registerBlockType("ub/image-slider", {
 			isSelected && (
 				<BlockControls>
 					{imageArray.length > 0 && (
-						<Toolbar>
+						<ToolbarGroup>
 							<MediaUpload
 								value={imageArray.map((img) => img.id)}
 								allowedTypes={["image"]}
 								multiple
 								gallery
 								render={({ open }) => (
-									<IconButton
+									<ToolbarButton
 										icon={editGallery}
 										onClick={open}
 										label={__("Edit selection")}
@@ -253,7 +254,7 @@ registerBlockType("ub/image-slider", {
 									});
 								}}
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					)}
 				</BlockControls>
 			),

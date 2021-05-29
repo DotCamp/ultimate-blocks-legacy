@@ -5,7 +5,7 @@ const { __ } = wp.i18n;
 
 const { BlockControls, RichText, MediaUpload } = wp.blockEditor || wp.editor;
 
-const { Button, Toolbar, IconButton } = wp.components;
+const { Button, ToolbarGroup, ToolbarButton } = wp.components;
 
 const { createBlock } = wp.blocks;
 
@@ -41,31 +41,31 @@ export const blockControls = (props) => {
 
 	return (
 		<BlockControls>
-			<Toolbar>
-				<IconButton
+			<ToolbarGroup>
+				<ToolbarButton
 					icon={oneColumnIcon}
 					label={__("One column")}
 					isActive={column === "1"}
 					onClick={() => setAttributes({ column: "1" })}
 				/>
-				<IconButton
+				<ToolbarButton
 					icon={twoColumnsIcon}
 					label={__("Two columns")}
 					isActive={column === "2"}
 					onClick={() => setAttributes({ column: "2" })}
 				/>
-				<IconButton
+				<ToolbarButton
 					icon={threeColumnsIcon}
 					label={__("Three columns")}
 					isActive={column === "3"}
 					onClick={() => setAttributes({ column: "3" })}
 				/>
-			</Toolbar>
-			<Toolbar>
+			</ToolbarGroup>
+			<ToolbarGroup>
 				{["left", "center", "right", "justify"]
 					.slice(0, editable.indexOf("title") > -1 ? 3 : 4)
 					.map((a) => (
-						<IconButton
+						<ToolbarButton
 							icon={`editor-${a === "justify" ? a : "align" + a}`}
 							label={__(
 								(a !== "justify" ? "Align " : "") +
@@ -109,7 +109,7 @@ export const blockControls = (props) => {
 							}}
 						/>
 					))}
-			</Toolbar>
+			</ToolbarGroup>
 		</BlockControls>
 	);
 };

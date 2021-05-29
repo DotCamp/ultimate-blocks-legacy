@@ -28,7 +28,8 @@ const {
 	CheckboxControl,
 	SelectControl,
 	Popover,
-	Toolbar,
+	ToolbarGroup,
+	ToolbarButton,
 	TabPanel,
 } = wp.components;
 const { __ } = wp.i18n;
@@ -72,13 +73,13 @@ export const blockControls = (props) => {
 					onChange={(newAlignment) => setAttributes({ align: newAlignment })}
 					controls={["left", "center", "right"]}
 				/>
-				<Toolbar>
-					<IconButton
+				<ToolbarGroup>
+					<ToolbarButton
 						icon="admin-links"
 						label={__("Add button link")}
 						onClick={() => props.setState({ enableLinkInput: true })}
 					/>
-				</Toolbar>
+				</ToolbarGroup>
 			</BlockControls>
 		)
 	);
@@ -1082,13 +1083,13 @@ export class EditorComponent extends Component {
 						onChange={(newAlignment) => setAttributes({ align: newAlignment })}
 						controls={["left", "center", "right"]}
 					/>
-					<Toolbar>
-						<IconButton
+					<ToolbarGroup>
+						<ToolbarButton
 							icon="admin-links"
 							label={__("Add button link")}
 							onClick={() => this.setState({ enableLinkInput: true })}
 						/>
-					</Toolbar>
+					</ToolbarGroup>
 				</BlockControls>
 			),
 			isSelected && buttons.length > 0 && (

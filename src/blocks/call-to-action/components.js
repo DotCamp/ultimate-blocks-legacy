@@ -13,7 +13,8 @@ const {
 	PanelBody,
 	Icon,
 	IconButton,
-	Toolbar,
+	ToolbarGroup,
+	ToolbarButton,
 	RangeControl,
 	CheckboxControl,
 	ToggleControl,
@@ -28,11 +29,11 @@ export const blockControls = (props) => {
 	return (
 		<BlockControls>
 			{["header", "content"].includes(editable) && (
-				<Toolbar>
+				<ToolbarGroup>
 					{["left", "center", "right", "justify"]
 						.slice(0, editable === "header" ? 3 : 4)
 						.map((a) => (
-							<IconButton
+							<ToolbarButton
 								icon={`editor-${a === "justify" ? a : "align" + a}`}
 								label={__(
 									(a !== "justify" ? "Align " : "") +
@@ -51,7 +52,7 @@ export const blockControls = (props) => {
 								}
 							/>
 						))}
-				</Toolbar>
+				</ToolbarGroup>
 			)}
 		</BlockControls>
 	);

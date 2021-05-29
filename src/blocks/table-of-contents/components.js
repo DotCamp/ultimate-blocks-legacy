@@ -18,8 +18,8 @@ const {
 	ToggleControl,
 	PanelRow,
 	PanelBody,
-	Toolbar,
-	IconButton,
+	ToolbarGroup,
+	ToolbarButton,
 	SelectControl,
 	RangeControl,
 	TextControl,
@@ -323,12 +323,8 @@ class TableOfContents extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		// call header manipulation to trigger latin alphabet conversion of links
 		const { setAttributes, attributes } = this.props.blockProp;
-		const {
-			headers,
-			replacementHeaders,
-			breaks,
-			currentlyEditedItem,
-		} = this.state;
+		const { headers, replacementHeaders, breaks, currentlyEditedItem } =
+			this.state;
 
 		if (
 			this.props.allowToLatin !== prevProps.allowToLatin ||
@@ -359,10 +355,9 @@ class TableOfContents extends Component {
 						mismatchLocs.push(i);
 					}
 				}
-				let replacements = JSON.parse(
-					JSON.stringify(replacementHeaders)
-				).sort((a, b) =>
-					newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
+				let replacements = JSON.parse(JSON.stringify(replacementHeaders)).sort(
+					(a, b) =>
+						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
 				);
 
 				if (mismatchLocs.length < 1) {
@@ -430,13 +425,8 @@ class TableOfContents extends Component {
 	}
 
 	render() {
-		const {
-			allowedHeaders,
-			blockProp,
-			style,
-			numColumns,
-			listStyle,
-		} = this.props;
+		const { allowedHeaders, blockProp, style, numColumns, listStyle } =
+			this.props;
 
 		const { isSelected } = blockProp;
 
@@ -534,9 +524,8 @@ class TableOfContents extends Component {
 										const revisedHeaders = JSON.parse(
 											JSON.stringify(this.state.headers)
 										);
-										revisedHeaders[item.index].disabled = !revisedHeaders[
-											item.index
-										].disabled;
+										revisedHeaders[item.index].disabled =
+											!revisedHeaders[item.index].disabled;
 										this.setState({ headers: revisedHeaders });
 									}}
 								>
@@ -783,46 +772,46 @@ export const blockControls = (props) => {
 	const { numColumns, titleAlignment } = props.attributes;
 	return (
 		<BlockControls>
-			<Toolbar>
-				<IconButton
+			<ToolbarGroup>
+				<ToolbarButton
 					className={"ub_toc_column_selector"}
 					icon={oneColumnIcon}
 					label={__("One column")}
 					isPrimary={numColumns === 1}
 					onClick={() => setAttributes({ numColumns: 1 })}
 				/>
-				<IconButton
+				<ToolbarButton
 					className={"ub_toc_column_selector"}
 					icon={twoColumnsIcon}
 					label={__("Two columns")}
 					isPrimary={numColumns === 2}
 					onClick={() => setAttributes({ numColumns: 2 })}
 				/>
-				<IconButton
+				<ToolbarButton
 					className={"ub_toc_column_selector"}
 					icon={threeColumnsIcon}
 					label={__("Three columns")}
 					isPrimary={numColumns === 3}
 					onClick={() => setAttributes({ numColumns: 3 })}
 				/>
-			</Toolbar>
-			<Toolbar>
-				<IconButton
+			</ToolbarGroup>
+			<ToolbarGroup>
+				<ToolbarButton
 					icon="editor-ul"
 					label={__("Bulleted list")}
 					onClick={() => setAttributes({ listStyle: "bulleted" })}
 				/>
-				<IconButton
+				<ToolbarButton
 					icon="editor-ol"
 					label={__("Numbered list")}
 					onClick={() => setAttributes({ listStyle: "numbered" })}
 				/>
-				<IconButton
+				<ToolbarButton
 					icon={plainList}
 					label={__("Plain list")}
 					onClick={() => setAttributes({ listStyle: "plain" })}
 				/>
-			</Toolbar>
+			</ToolbarGroup>
 			<AlignmentToolbar
 				value={titleAlignment}
 				onChange={(value) => setAttributes({ titleAlignment: value })}
