@@ -113,7 +113,7 @@ export class OldTabHolder extends Component {
 							tagName="div"
 							className={className + "-tab-title "}
 							value={value.content}
-							formattingControls={["bold", "italic"]}
+							allowedFormats={["core/bold", "core/italic"]}
 							isSelected={
 								propz.attributes.activeControl === "tab-title-" + i &&
 								propz.isSelected
@@ -436,7 +436,7 @@ export class TabHolder extends Component {
 							tagName="div"
 							className={`${className}-tab-title`}
 							value={value}
-							formattingControls={["bold", "italic"]}
+							allowedFormats={["core/bold", "core/italic"]}
 							isSelected={
 								propz.attributes.activeControl === `tab-title-${i}` &&
 								propz.isSelected

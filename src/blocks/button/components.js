@@ -728,7 +728,11 @@ export const editorDisplay = (props) => {
 								}
 								unstableOnFocus={() => setState({ activeButtonIndex: i })}
 								value={b.buttonText}
-								formattingControls={["bold", "italic", "strikethrough"]}
+								allowedFormats={[
+									"core/bold",
+									"core/italic",
+									"core/strikethrough",
+								]}
 								keepPlaceholderOnFocus={true}
 							/>
 						</div>
@@ -1519,7 +1523,11 @@ export class EditorComponent extends Component {
 										this.setState({ activeButtonIndex: i })
 									}
 									value={b.buttonText}
-									formattingControls={["bold", "italic", "strikethrough"]}
+									allowedFormats={[
+										"core/bold",
+										"core/italic",
+										"core/strikethrough",
+									]}
 									keepPlaceholderOnFocus={true}
 								/>
 							</div>

@@ -306,7 +306,7 @@ export const editorDisplay = (props) => {
 							setAttributes({ ub_call_to_action_headline_text: value })
 						}
 						value={ub_call_to_action_headline_text}
-						formattingControls={["bold", "italic", "strikethrough"]}
+						allowedFormats={["core/bold", "core/italic", "core/strikethrough"]}
 						keepPlaceholderOnFocus={true}
 						unstableOnFocus={() => setState({ editable: "header" })}
 					/>

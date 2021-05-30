@@ -184,7 +184,6 @@ export const editorDisplay = (props) => {
 			</div>
 			<div className="ub_testimonial_content">
 				<RichText
-					tagName="p"
 					placeholder={__(
 						"This is the testimonial body. Add the testimonial text you want to add here."
 					)}
@@ -196,13 +195,12 @@ export const editorDisplay = (props) => {
 					onChange={(value) => setAttributes({ ub_testimonial_text: value })}
 					value={ub_testimonial_text}
 					keepPlaceholderOnFocus={true}
-					formattingControls={["bold", "strikethrough", "link"]}
+					allowedFormats={["core/bold", "core/strikethrough", "core/link"]}
 					unstableOnFocus={() => setState({ editable: "testimonial_text" })}
 				/>
 			</div>
 			<div className="ub_testimonial_sign">
 				<RichText
-					tagName="p"
 					placeholder={__("John Doe")}
 					style={{ textAlign: authorAlign }}
 					className="ub_testimonial_author"
@@ -212,7 +210,6 @@ export const editorDisplay = (props) => {
 					unstableOnFocus={() => setState({ editable: "author" })}
 				/>
 				<RichText
-					tagName="p"
 					placeholder={__("Founder, Company X")}
 					style={{ textAlign: authorRoleAlign }}
 					className="ub_testimonial_author_role"
@@ -221,7 +218,7 @@ export const editorDisplay = (props) => {
 					}
 					value={ub_testimonial_author_role}
 					keepPlaceholderOnFocus={true}
-					formattingControls={["bold", "strikethrough", "link"]}
+					allowedFormats={["core/bold", "core/strikethrough", "core/link"]}
 					unstableOnFocus={() => setState({ editable: "author_role" })}
 				/>
 			</div>

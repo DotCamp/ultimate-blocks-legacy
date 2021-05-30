@@ -550,7 +550,7 @@ registerBlockType("ub/image-slider", {
 							<>
 								<RichText
 									tagName="figcaption"
-									formattingControls={[]}
+									allowedFormats={[]}
 									className="ub_image_slider_image_caption"
 									value={descriptions[activeSlide].text}
 									placeholder={__("Caption goes here")}
@@ -570,7 +570,7 @@ registerBlockType("ub/image-slider", {
 									}}
 								/>
 								<RichText
-									formattingControls={[]}
+									allowedFormats={[]}
 									className="ub_image_slider_image_caption ub_image_slider_image_alt"
 									value={pics[activeSlide].alt}
 									placeholder={__("Image alt text")}

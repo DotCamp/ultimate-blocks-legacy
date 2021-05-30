@@ -194,7 +194,12 @@ export const editorDisplay = (props) => {
 				}}
 				onChange={(text) => setAttributes({ reviewText: text })}
 				keepPlaceholderOnFocus={true}
-				formattingControls={["bold", "italic", "strikethrough", "link"]}
+				allowedFormats={[
+					"core/bold",
+					"core/italic",
+					"core/strikethrough",
+					"core/link",
+				]}
 			/>
 		</>
 	);

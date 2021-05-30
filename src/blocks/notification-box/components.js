@@ -75,7 +75,7 @@ export const editorDisplay = (props) => {
 			style={{ textAlign: align }}
 			tagName="div"
 			placeholder={__("Add Your Content Here")}
-			formattingControls={["bold", "italic", "link", "strikethrough"]}
+			allowedFormats={["core/bold", "core/italic", "core/link", "core/strikethrough"]}
 			className={ub_selected_notify}
 			onChange={(value) => setAttributes({ ub_notify_info: value })}
 			value={ub_notify_info}
