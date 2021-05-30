@@ -8,7 +8,6 @@ const { RichText, MediaUpload, InspectorControls, URLInput } =
 const {
 	Button,
 	ToggleControl,
-	IconButton,
 	PanelBody,
 	RadioControl,
 	RangeControl,
@@ -60,9 +59,8 @@ class InspectorPanel extends Component {
 					sectionNum = parseInt(parsed[1]);
 					stepNum = parseInt(parsed[3]);
 
-					const { width, float, id } = section[sectionNum].steps[
-						stepNum
-					].stepPic;
+					const { width, float, id } =
+						section[sectionNum].steps[stepNum].stepPic;
 					if (id > -1) {
 						activeImage = { width, float };
 					}
@@ -393,19 +391,19 @@ class HowToStep extends Component {
 						onChange={(newVal) => editStep({ title: newVal })}
 						onFocus={selectStep}
 					/>
-					<IconButton
+					<Button
 						className="ub_howto-delete"
 						icon="trash"
 						label={__("Delete step")}
 						onClick={() => deleteStep()}
 					/>
-					<IconButton
+					<Button
 						className="ub_howto-arrow"
 						icon="arrow-up-alt"
 						onClick={() => moveUp()}
 						label={__("Move step up")}
 					/>
-					<IconButton
+					<Button
 						className="ub_howto-arrow"
 						icon="arrow-down-alt"
 						onClick={() => moveDown()}
@@ -760,7 +758,7 @@ class HowToSection extends Component {
 						value={sectionName}
 						onChange={(sectionName) => editSection({ sectionName, steps })}
 					/>
-					<IconButton
+					<Button
 						className="ub_howto-delete"
 						icon="trash"
 						label={__("Delete section")}
@@ -1053,24 +1051,28 @@ export class EditorComponent extends Component {
 									value={videoURLInput}
 									onChange={(videoURLInput) => this.setState({ videoURLInput })}
 								/>
-								<IconButton
+								<Button
 									icon={"editor-break"}
 									label={__("Apply")}
 									type={"submit"}
 									onClick={() => {
 										if (/^http(s)?:\/\//g.test(videoURLInput)) {
-											const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
-												videoURLInput
-											);
-											const vimeoMatch = /^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
-												videoURLInput
-											);
-											const dailyMotionMatch = /^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
-												videoURLInput
-											);
-											const videoPressMatch = /^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
-												videoURLInput
-											);
+											const youtubeMatch =
+												/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
+													videoURLInput
+												);
+											const vimeoMatch =
+												/^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
+													videoURLInput
+												);
+											const dailyMotionMatch =
+												/^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
+													videoURLInput
+												);
+											const videoPressMatch =
+												/^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
+													videoURLInput
+												);
 											if (youtubeMatch) {
 												fetch(
 													`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
@@ -1078,9 +1080,10 @@ export class EditorComponent extends Component {
 													.then((response) => {
 														response.json().then((data) => {
 															if (data.items.length) {
-																let timePeriods = data.items[0].contentDetails.duration.match(
-																	/(\d{1,2}(?:W|D|H|M|S))/g
-																);
+																let timePeriods =
+																	data.items[0].contentDetails.duration.match(
+																		/(\d{1,2}(?:W|D|H|M|S))/g
+																	);
 																setAttributes({
 																	videoURL: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
 																	videoName: data.items[0].snippet.title,
@@ -1255,7 +1258,7 @@ export class EditorComponent extends Component {
 										}
 									}}
 								/>
-								<IconButton
+								<Button
 									icon="trash"
 									label={__("Delete")}
 									onClick={() => {
@@ -1338,7 +1341,7 @@ export class EditorComponent extends Component {
 															})
 														}
 													/>
-													<IconButton
+													<Button
 														icon="trash"
 														label={__("Delete supply")}
 														onClick={() =>
@@ -1453,7 +1456,7 @@ export class EditorComponent extends Component {
 															})
 														}
 													/>
-													<IconButton
+													<Button
 														icon="trash"
 														label={__("Delete tool")}
 														onClick={() =>

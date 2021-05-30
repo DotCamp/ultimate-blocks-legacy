@@ -18,7 +18,7 @@ const {
 } = wp.blockEditor || wp.editor;
 const {
 	Icon,
-	IconButton,
+	Button,
 	ToolbarGroup,
 	ToolbarButton,
 	ToggleControl,
@@ -613,7 +613,7 @@ registerBlockType("ub/image-slider", {
 										});
 									}}
 								/>
-								<IconButton
+								<Button
 									icon={"editor-break"}
 									label={__("Apply")}
 									type={"submit"}

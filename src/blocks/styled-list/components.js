@@ -8,7 +8,7 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor || wp.editor;
-const { Button, IconButton, Dropdown, PanelBody, RangeControl } = wp.components;
+const { Button, Dropdown, PanelBody, RangeControl } = wp.components;
 
 import {
 	dashesToCamelcase,
@@ -99,12 +99,8 @@ class EditorComponent extends Component {
 	}
 
 	updateIconList() {
-		const {
-			availableIcons,
-			recentSelection,
-			selectionTime,
-			iconChoices,
-		} = this.state;
+		const { availableIcons, recentSelection, selectionTime, iconChoices } =
+			this.state;
 		const prevIconMatch = iconChoices
 			.map((i) => i.name)
 			.indexOf(recentSelection);
@@ -354,7 +350,7 @@ class EditorComponent extends Component {
 
 											{iconListPage.length > 0 &&
 												iconListPage[iconSearchResultsPage].map((i) => (
-													<IconButton
+													<Button
 														className="ub-styled-list-available-icon"
 														icon={<FontAwesomeIcon icon={i} size="lg" />}
 														label={i.iconName}

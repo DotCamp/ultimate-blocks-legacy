@@ -331,7 +331,7 @@ export const inspectorControls = (props) => {
 							<Dropdown
 								position="bottom right"
 								renderToggle={({ isOpen, onToggle }) => (
-									<IconButton
+									<Button
 										className="ub-button-icon-select"
 										icon={
 											buttons[activeButtonIndex].chosenIcon !== "" &&
@@ -416,7 +416,7 @@ export const inspectorControls = (props) => {
 										)}
 										{iconListPage.length > 0 &&
 											iconListPage[iconSearchResultsPage].map((i) => (
-												<IconButton
+												<Button
 													className="ub-button-available-icon"
 													icon={generateIcon(i, 35)}
 													label={i.iconName}
@@ -557,7 +557,7 @@ class URLInputBox extends Component {
 										})
 									}
 								/>
-								<IconButton
+								<Button
 									icon={"editor-break"}
 									label={__("Apply", "ultimate-blocks")}
 									type={"submit"}
@@ -1235,7 +1235,7 @@ export class EditorComponent extends Component {
 								<Dropdown
 									position="bottom right"
 									renderToggle={({ isOpen, onToggle }) => (
-										<IconButton
+										<Button
 											className="ub-button-icon-select"
 											icon={
 												buttons[activeButtonIndex].chosenIcon !== "" &&
@@ -1324,7 +1324,7 @@ export class EditorComponent extends Component {
 											)}
 											{iconListPage.length > 0 &&
 												iconListPage[iconSearchResultsPage].map((i) => (
-													<IconButton
+													<Button
 														className="ub-button-available-icon"
 														icon={generateIcon(i, 35)}
 														label={i.iconName}

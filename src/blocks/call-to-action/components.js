@@ -12,7 +12,7 @@ const {
 const {
 	PanelBody,
 	Icon,
-	IconButton,
+	Button,
 	ToolbarGroup,
 	ToolbarButton,
 	RangeControl,
@@ -369,7 +369,7 @@ export const editorDisplay = (props) => {
 							onChange={(value) => setAttributes({ url: value })}
 							unstableOnFocus={() => setState({ editable: "URLInput" })}
 						/>
-						<IconButton
+						<Button
 							icon={"editor-break"}
 							label={__("Apply", "ultimate-blocks")}
 							type={"submit"}
