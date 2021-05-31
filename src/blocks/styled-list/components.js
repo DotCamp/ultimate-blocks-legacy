@@ -8,7 +8,8 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor || wp.editor;
-const { Button, Dropdown, PanelBody, RangeControl } = wp.components;
+const { Button, Dropdown, PanelBody, RangeControl, ToggleControl } =
+	wp.components;
 
 import {
 	dashesToCamelcase,
@@ -18,7 +19,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { Component } from "react";
+import { Component, createRef } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(fas, fab);
@@ -36,7 +37,9 @@ class EditorComponent extends Component {
 			iconSearchResultsPage: 0,
 			recentSelection: "",
 			selectionTime: 0,
+			setFontSize: false,
 		};
+		this.blockContainer = createRef();
 	}
 
 	loadIconList() {
@@ -166,6 +169,8 @@ class EditorComponent extends Component {
 
 	componentDidMount() {
 		this.loadIconList();
+
+		this.setState({ setFontSize: this.props.attributes.fontSize > 0 });
 	}
 
 	render() {
@@ -174,6 +179,7 @@ class EditorComponent extends Component {
 			iconSearchTerm,
 			iconSearchResultsPage,
 			recentSelection,
+			setFontSize,
 		} = this.state;
 
 		const {
@@ -399,13 +405,36 @@ class EditorComponent extends Component {
 							min={1}
 							max={10}
 						/>
-						<p>{__("Font size (pixels)")}</p>
-						<RangeControl
-							value={fontSize}
-							onChange={(fontSize) => setAttributes({ fontSize })}
-							min={10}
-							max={50}
+						<ToggleControl
+							label={__("Customize font size")}
+							checked={setFontSize}
+							onChange={() => {
+								if (setFontSize) {
+									setAttributes({ fontSize: 0 });
+								} else {
+									setAttributes({
+										fontSize: parseInt(
+											getComputedStyle(
+												this.blockContainer.current.children[0]
+											).fontSize.slice(0, -2)
+										),
+									});
+								}
+
+								this.setState({ setFontSize: !setFontSize });
+							}}
 						/>
+						{setFontSize && (
+							<>
+								<p>{__("Font size (pixels)")}</p>
+								<RangeControl
+									value={fontSize}
+									onChange={(fontSize) => setAttributes({ fontSize })}
+									min={10}
+									max={50}
+								/>
+							</>
+						)}
 						<p>{__("Item spacing (pixels)")}</p>
 						<RangeControl
 							value={itemSpacing}
@@ -455,6 +484,7 @@ class EditorComponent extends Component {
 				className="ub_styled_list"
 				id={`ub-styled-list-${blockID}`}
 				style={{ textAlign: alignment }}
+				ref={this.blockContainer}
 			>
 				<RichText
 					className="fa-ul"
@@ -498,7 +528,7 @@ class EditorComponent extends Component {
                     #ub-styled-list-${blockID} li{
                         margin-bottom: ${itemSpacing}px;
                         text-indent: -${(4 + iconSize) / 10}em;
-                        font-size: ${fontSize}px;
+                        ${setFontSize ? `font-size: ${fontSize}px;` : ""}
                     }
                     #ub-styled-list-${blockID} li>ul{
                         margin-top: ${itemSpacing}px;

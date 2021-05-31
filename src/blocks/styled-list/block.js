@@ -47,7 +47,7 @@ registerBlockType("ub/styled-list", {
 		},
 		fontSize: {
 			type: "number",
-			default: 15,
+			default: 0, //set to current style's font size when font size customization is enabled
 		},
 		itemSpacing: {
 			type: "number",

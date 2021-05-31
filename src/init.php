@@ -658,7 +658,7 @@ function ub_include_block_attribute_css() {
                         '}' .
                         $prefix . ' li{' . PHP_EOL .
                             'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .
-                            'font-size: ' . ($attributes['fontSize']) . 'px;' . PHP_EOL;
+                            ($attributes['fontSize'] > 0 ? 'font-size: ' . ($attributes['fontSize']) . 'px;' . PHP_EOL : '') ;
                     if($attributes['itemSpacing'] > 0){
                             $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
                         }' . PHP_EOL .
