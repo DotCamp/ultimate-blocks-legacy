@@ -196,8 +196,14 @@ function ub_include_block_attribute_css() {
                                 'color: ' . ($attributes['buttons'][$key]['buttonTextColor'] ?: 'inherit') . ';' . PHP_EOL .
                                 'border: none;';
                             }
-                            $blockStylesheets .= 'border-radius: '.($attributes['buttons'][$key]['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
-                            '}' . PHP_EOL .
+                            if($attributes['buttons'][$key]['buttonRounded']){
+                                $blockStylesheets .= 'border-radius: ' . ($attributes['buttons'][$key]['buttonRadius'] ?: '60' ) . ($attributes['buttons'][$key]['buttonRadiusUnit'] ?: 'px') . ';' . PHP_EOL;
+                            }
+                            else{
+                                $blockStylesheets .= 'border-radius: 0;' . PHP_EOL;
+                            }
+
+                            $blockStylesheets .= '}' . PHP_EOL .
                             $prefix . ' .ub-button-container:nth-child('.($key+1).') a:hover{' . PHP_EOL;
                             if($attributes['buttons'][$key]['buttonIsTransparent']){
                                 $blockStylesheets .= 'color: '.$attributes['buttons'][$key]['buttonHoverColor'].';' . PHP_EOL .

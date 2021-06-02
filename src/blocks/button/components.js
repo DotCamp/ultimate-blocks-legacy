@@ -680,7 +680,7 @@ export const editorDisplay = (props) => {
 									? b.buttonColor
 									: b.buttonTextColor || "inherit",
 							borderRadius: b.buttonRounded
-								? `${b.buttonRadius}${b.buttonRadiusUnit}`
+								? `${b.buttonRadius || 60}${b.buttonRadiusUnit || "px"}`
 								: "0",
 							borderStyle: b.buttonIsTransparent ? "solid" : "none",
 							borderColor: b.buttonIsTransparent
@@ -1473,7 +1473,7 @@ export class EditorComponent extends Component {
 										? b.buttonColor
 										: b.buttonTextColor || "inherit",
 								borderRadius: b.buttonRounded
-									? `${b.buttonRadius}${b.buttonRadiusUnit}`
+									? `${b.buttonRadius || 60}${b.buttonRadiusUnit || "px"}`
 									: "0",
 								borderStyle: b.buttonIsTransparent ? "solid" : "none",
 								borderColor: b.buttonIsTransparent
