@@ -1,4 +1,4 @@
-import { EmptyStar, FullStar, HalfStar } from "./icons";
+import { Star } from "./icons";
 
 const { __ } = wp.i18n;
 const { InspectorControls, RichText, BlockControls, ColorPalette } =
@@ -84,9 +84,9 @@ export const inspectorControls = (props) => {
 					label={__("Star value")}
 					value={selectedStars}
 					onChange={(selectedStars) => setAttributes({ selectedStars })}
-					min={0.5}
+					min={0.1}
 					max={starCount}
-					step={0.5}
+					step={0.1}
 					beforeIcon="star-half"
 				/>
 			</PanelBody>
@@ -114,6 +114,7 @@ export const editorDisplay = (props) => {
 	const { setAttributes, setState, highlightedStars } = props;
 
 	const {
+		blockID,
 		starCount,
 		starSize,
 		starColor,
@@ -154,31 +155,17 @@ export const editorDisplay = (props) => {
 								}
 							}}
 						>
-							{i < (highlightedStars ? highlightedStars : selectedStars) ? (
-								highlightedStars ? (
-									highlightedStars - 1 === i ? (
-										selectedStars % 1 > 0 ? (
-											highlightedStars - selectedStars - 0.5 !== 0 ? (
-												<HalfStar size={starSize} fillColor={starColor} />
-											) : (
-												<FullStar size={starSize} fillColor={starColor} />
-											)
-										) : highlightedStars - selectedStars !== 0 ? (
-											<FullStar size={starSize} fillColor={starColor} />
-										) : (
-											<HalfStar size={starSize} fillColor={starColor} />
-										)
-									) : (
-										<FullStar size={starSize} fillColor={starColor} />
-									)
-								) : selectedStars - i >= 1 ? (
-									<FullStar size={starSize} fillColor={starColor} />
-								) : (
-									<HalfStar size={starSize} fillColor={starColor} />
-								)
-							) : (
-								<EmptyStar size={starSize} />
-							)}
+							<Star
+								id={blockID}
+								index={i}
+								size={starSize}
+								value={
+									(highlightedStars -
+										(highlightedStars === selectedStars ? 0.5 : 0) ||
+										selectedStars) - i
+								}
+								displayColor={starColor}
+							/>
 						</div>
 					))}
 				</div>
