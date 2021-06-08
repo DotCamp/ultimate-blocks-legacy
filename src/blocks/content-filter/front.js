@@ -93,7 +93,7 @@ Array.prototype.slice
 			const matchingOption = blockProper.getAttribute("data-matchingoption");
 
 			Array.prototype.slice
-				.call(blockProper.getElementsByClassName("ub-content-filter-panel"))
+				.call(blockProper.querySelectorAll(":scope > .ub-content-filter-panel"))
 				.forEach((instance) => {
 					const panelData = JSON.parse(
 						instance.getAttribute("data-selectedfilters")

@@ -77,7 +77,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
 
     blockProper.setAttribute("data-currentselection", JSON.stringify(newSelection));
     var matchingOption = blockProper.getAttribute("data-matchingoption");
-    Array.prototype.slice.call(blockProper.getElementsByClassName("ub-content-filter-panel")).forEach(function (instance) {
+    Array.prototype.slice.call(blockProper.querySelectorAll(":scope > .ub-content-filter-panel")).forEach(function (instance) {
       var panelData = JSON.parse(instance.getAttribute("data-selectedfilters"));
       var mainData = JSON.parse(blockProper.getAttribute("data-currentselection"));
       var hasMatchedAll = true;
