@@ -1,4 +1,4 @@
-import icon from "./icons/icons";
+import icon from "./icons";
 import edit from "./components";
 import transforms from "./transforms";
 
