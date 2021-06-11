@@ -3,12 +3,17 @@ import edit from "./components";
 import transforms from "./transforms";
 
 const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
-const { RichText } = wp.blockEditor || wp.editor;
+const { registerBlockType } = wp.blocks;
+const { withSelect } = wp.data;
 
 const attributes = {
+	blockID: {
+		type: "string",
+		default: "",
+	},
 	content: {
 		type: "string",
+		default: "",
 	},
 	level: {
 		type: "string",
@@ -20,16 +25,19 @@ const attributes = {
 	},
 	textColor: {
 		type: "string",
+		default: "",
 	},
 	backgroundColor: {
 		type: "string",
+		default: "",
 	},
 	fontSize: {
-		type: "string",
+		type: "number",
+		default: 0,
 	},
 	letterSpacing: {
-		type: "string",
-		default: "0",
+		type: "number",
+		default: 0,
 	},
 	textTransform: {
 		type: "string",
@@ -37,13 +45,15 @@ const attributes = {
 	},
 	fontFamily: {
 		type: "string",
+		default: "",
 	},
 	fontWeight: {
 		type: "string",
 		default: "Bold",
 	},
 	lineHeight: {
-		type: "string",
+		type: "number",
+		default: 0,
 	},
 	highlightBgColor: {
 		type: "string",
@@ -62,41 +72,15 @@ registerBlockType("ub/advanced-heading", {
 	],
 	attributes,
 	transforms,
-	edit,
-	save: ({ attributes, className }) => {
-		const {
-			content,
-			level,
-			alignment,
-			textColor,
-			backgroundColor,
-			fontSize,
-			letterSpacing,
-			textTransform,
-			fontFamily,
-			fontWeight,
-			lineHeight,
-		} = attributes;
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-		return (
-			<>
-				<RichText.Content
-					className={className}
-					tagName={level}
-					value={content}
-					style={{
-						textAlign: alignment,
-						color: textColor,
-						backgroundColor,
-						fontSize,
-						letterSpacing,
-						textTransform,
-						fontFamily,
-						fontWeight,
-						lineHeight,
-					}}
-				/>
-			</>
-		);
-	},
+		return {
+			getBlock,
+			block: getBlock(ownProps.clientId),
+			getClientIdsWithDescendants,
+		};
+	})(edit),
+	save: () => null,
 });

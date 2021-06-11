@@ -1,9 +1,9 @@
 import fontsList from "./fonts";
 const { __ } = wp.i18n;
 
-const headingLevels = [1, 2, 3, 4, 5, 6];
+export const headingLevels = [1, 2, 3, 4, 5, 6];
 
-const textTransformOptions = [
+export const textTransformOptions = [
 	{
 		value: "none",
 		label: __("None", "ultimate-blocks"),
@@ -22,7 +22,7 @@ const textTransformOptions = [
 	},
 ];
 
-const fontWeightOptions = [
+export const fontWeightOptions = [
 	{
 		value: "Normal",
 		label: __("Normal", "ultimate-blocks"),
@@ -69,16 +69,7 @@ const fontWeightOptions = [
 	},
 ];
 
-const fontFamilyOptions = fontsList.sort().map((fontFamilyOption) => {
-	return {
-		value: fontFamilyOption,
-		label: __(fontFamilyOption, "ultimate-blocks"),
-	};
-});
-
-export {
-	headingLevels,
-	textTransformOptions,
-	fontWeightOptions,
-	fontFamilyOptions,
-};
+export const fontFamilyOptions = fontsList.sort().map((fontFamilyOption) => ({
+	value: fontFamilyOption,
+	label: __(fontFamilyOption, "ultimate-blocks"),
+}));

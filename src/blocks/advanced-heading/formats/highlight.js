@@ -1,7 +1,7 @@
 import { textTransformOptions, fontWeightOptions } from "../settings-options";
 
 const { __ } = wp.i18n;
-const { Fragment, useState, useEffect } = wp.element;
+const { useState, useEffect } = wp.element;
 const { applyFormat, toggleFormat } = wp.richText;
 const { InspectorControls, PanelColorSettings, RichTextToolbarButton } =
 	wp.blockEditor || wp.editor;
@@ -169,13 +169,13 @@ const highlightEdit = ({ isActive, value, onChange }) => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<RichTextToolbarButton
 				icon="editor-underline"
 				title={__("Highlight")}
 				onClick={onToggle}
 				isActive={isActive}
-			/>{" "}
+			/>
 			{highlightedElements && (
 				<InspectorControls>
 					<PanelBody
@@ -198,7 +198,7 @@ const highlightEdit = ({ isActive, value, onChange }) => {
 									label: __("Highlight Background Color", "ultimate-blocks"),
 								},
 							]}
-						/>{" "}
+						/>
 						{/* Font Size */}
 						<RangeControl
 							label={__("Highlight Font Size", "ultimate-blocks")}
@@ -212,7 +212,7 @@ const highlightEdit = ({ isActive, value, onChange }) => {
 							}
 							min={12}
 							max={100}
-						/>{" "}
+						/>
 						{/* Text Transform */}
 						<SelectControl
 							label={__("Highlight Text transform", "ultimate-blocks")}
@@ -255,23 +255,20 @@ const highlightEdit = ({ isActive, value, onChange }) => {
 						/>
 					</PanelBody>
 				</InspectorControls>
-			)}{" "}
-		</Fragment>
+			)}
+		</>
 	);
 };
 
 /* register highlight format only for advanced-heading */
-var exclusiveHighlight = compose(
-	withSelect(function (select) {
-		return {
-			selectedBlock: select("core/block-editor").getSelectedBlock(),
-		};
-	}),
-	ifCondition(function (props) {
-		return (
+const exclusiveHighlight = compose(
+	withSelect((select) => ({
+		selectedBlock: select("core/block-editor").getSelectedBlock(),
+	})),
+	ifCondition(
+		(props) =>
 			props.selectedBlock && props.selectedBlock.name === "ub/advanced-heading"
-		);
-	})
+	)
 )(highlightEdit);
 
 /* format settings */

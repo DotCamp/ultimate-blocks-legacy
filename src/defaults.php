@@ -1,6 +1,62 @@
 <?php
 
 $defaultValues = array(
+    'ub/advanced-heading' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'content' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'level' => array(
+                'type' => 'string',
+                'default' => 'h1'
+            ),
+            'alignment' => array(
+                'type' => 'string',
+                'default' => 'none'
+            ),
+            'textColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'backgroundColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'fontSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'letterSpacing' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'textTransform' => array(
+                'type' => 'string',
+                'default' => 'None',
+            ),
+            'fontFamily' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'fontWeight' => array(
+                'type' => 'string',
+                'default' => 'Bold',
+            ),
+            'lineHeight' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'highlightBgColor' => array(
+                'type' => 'string',
+                'default' => 'None',
+            ),
+        )
+    ),
     'ub/button' => array(
         'attributes' => array(
             'blockID' => array(

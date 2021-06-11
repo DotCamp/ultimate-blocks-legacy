@@ -151,6 +151,20 @@ function ub_include_block_attribute_css() {
                 default:
                     //nothing could be done
                     break;
+                case 'ub/advanced-heading':
+                    $prefix = '#ub-advanced-heading-' . $attributes['blockID'];
+                    $blockStylesheets .= $prefix . ' {'. PHP_EOL .
+                        'text-align: '.$attributes['alignment'].';' . PHP_EOL .
+                        ($attributes['textColor'] ? 'color: ' . $attributes['textColor'] . ';' . PHP_EOL : '' ) .
+                        ($attributes['backgroundColor'] ? 'background-color: ' . $attributes['backgroundColor'] . ';' . PHP_EOL : '') .
+                        ($attributes['fontSize'] ? 'font-size: ' . $attributes['fontSize'] . 'px;' . PHP_EOL : '') .
+                        'letter-spacing: ' . $attributes['letterSpacing'] . ';' . PHP_EOL .
+                        'text-transform: ' . $attributes['textTransform']. ';' . PHP_EOL .
+                        'font-family: ' . $attributes['fontFamily'] . ';' . PHP_EOL .
+                        'font-weight: '. $attributes['fontWeight'] . ';' . PHP_EOL .
+                        ($attributes['lineHeight'] ? 'line-height: ' . $attributes['lineHeight'] . 'px;' . PHP_EOL : '') .
+                    '}';
+                    break;
                 case 'ub/button':
                     $prefix = '#ub-button-' . $attributes['blockID'];
                     if( !array_key_exists('buttons', $attributes) || count($attributes['buttons']) === 0 ){

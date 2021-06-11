@@ -19,8 +19,15 @@ const {
 } = wp.components;
 const { createRef, useEffect } = wp.element;
 
-const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
+const AdvancedHeadingEdit = ({
+	attributes,
+	setAttributes,
+	block,
+	getBlock,
+	getClientIdsWithDescendants,
+}) => {
 	const {
+		blockID,
 		content,
 		level,
 		alignment,
@@ -40,9 +47,7 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 		if (!fontSize) {
 			let defaultFontSize = window.getComputedStyle(elementRef.current)
 				.fontSize;
-
-			defaultFontSize = Math.round(parseInt(defaultFontSize)) + "px";
-			setAttributes({ fontSize: defaultFontSize });
+			setAttributes({ fontSize: parseInt(defaultFontSize) });
 		}
 
 		if (!fontFamily) {
@@ -54,16 +59,19 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 		if (!lineHeight) {
 			let defaultLineHeight = window.getComputedStyle(elementRef.current)
 				.lineHeight;
-			defaultLineHeight = Math.round(parseInt(defaultLineHeight)) + "px";
-			setAttributes({ lineHeight: defaultLineHeight });
+			setAttributes({ lineHeight: parseInt(defaultLineHeight) });
+		}
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
 		}
 	}, [elementRef]);
-
-	/* Methods */
-	const onChangeHeadingLevel = (e) => {
-		const newHeadingLevel = e.target.innerText;
-		setAttributes({ level: newHeadingLevel, fontSize: null, lineHeight: null });
-	};
 
 	return (
 		<>
@@ -77,7 +85,13 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 					<ButtonGroup aria-label={__("Heading Level", "ultimate-blocks")}>
 						{headingLevels.map((headingLevel) => (
 							<Button
-								onClick={onChangeHeadingLevel}
+								onClick={() => {
+									setAttributes({
+										level: `h${headingLevel}`,
+										fontSize: 0,
+										lineHeight: 0,
+									});
+								}}
 								key={headingLevel}
 								isPrimary={level === `h${headingLevel}`}
 							>
@@ -115,8 +129,8 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 					{/* Font Size */}
 					<RangeControl
 						label={__("Font Size", "ultimate-blocks")}
-						value={fontSize ? parseInt(fontSize) : 0}
-						onChange={(newFontSize) => setAttributes({ fontSize: newFontSize })}
+						value={fontSize}
+						onChange={(fontSize) => setAttributes({ fontSize })}
 						min={12}
 						max={100}
 					/>
@@ -147,9 +161,7 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 					<RangeControl
 						label={__("Letter Spacing", "ultimate-blocks")}
 						value={letterSpacing}
-						onChange={(newLetterSpacing) =>
-							setAttributes({ letterSpacing: newLetterSpacing })
-						}
+						onChange={(letterSpacing) => setAttributes({ letterSpacing })}
 						min={-2}
 						max={6}
 					/>
@@ -158,17 +170,13 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 						label={__("Font Weight", "ultimate-blocks")}
 						options={fontWeightOptions}
 						value={fontWeight}
-						onChange={(newFontWeight) =>
-							setAttributes({ fontWeight: newFontWeight })
-						}
+						onChange={(fontWeight) => setAttributes({ fontWeight })}
 					/>
 					{/* Line Height */}
 					<RangeControl
 						label={__("Line Height", "ultimate-blocks")}
-						value={lineHeight ? parseInt(lineHeight) : 0}
-						onChange={(newLineHeight) =>
-							setAttributes({ lineHeight: newLineHeight + "px" })
-						}
+						value={lineHeight}
+						onChange={(lineHeight) => setAttributes({ lineHeight })}
 						min={10}
 						max={120}
 					/>
@@ -183,12 +191,12 @@ const AdvancedHeadingEdit = ({ attributes, setAttributes }) => {
 					textAlign: alignment,
 					color: textColor,
 					backgroundColor,
-					fontSize,
+					fontSize: fontSize ? `${fontSize}px` : null,
 					letterSpacing,
 					textTransform,
 					fontFamily,
 					fontWeight,
-					lineHeight,
+					lineHeight: lineHeight ? `${lineHeight}px` : null,
 				}}
 			/>
 		</>

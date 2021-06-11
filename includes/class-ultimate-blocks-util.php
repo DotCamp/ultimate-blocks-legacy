@@ -32,6 +32,11 @@ class Ultimate_Blocks_Util {
 
 		return [
 			array(
+				'label'  => 'Advanced Heading',
+				'name'   => 'ub/advanced-heading',
+				'active' => true,
+			),
+			array(
 				'label'  => 'Button (Improved)',
 				'name'   => 'ub/button',
 				'active' => true,
