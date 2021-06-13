@@ -1068,6 +1068,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'valueType' => array(
+                'type' => 'string',
+                'default' => 'star'
+            ),
             'description' => array(
                 'type' => 'string',
                 'default' => ''
@@ -1141,6 +1145,14 @@ $defaultValues = array(
                 'default' => '#888888'
             ),
             'activeStarColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'activePercentBarColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'percentBarColor' => array(
                 'type' => 'string',
                 'default' => ''
             ),

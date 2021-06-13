@@ -22,6 +22,7 @@ const {
 	PanelBody,
 	PanelRow,
 	RangeControl,
+	RadioControl,
 	SelectControl,
 	TextControl,
 	DatePicker,
@@ -64,6 +65,10 @@ const attributes = {
 	itemSubsubtype: {
 		type: "string",
 		default: "",
+	},
+	valueType: {
+		type: "string",
+		default: "star", //also support percent
 	},
 	items: {
 		type: "string",
@@ -133,6 +138,14 @@ const attributes = {
 		default: "#888888",
 	},
 	activeStarColor: {
+		type: "string",
+		default: "",
+	},
+	activePercentBarColor: {
+		type: "string",
+		default: "",
+	},
+	percentBarColor: {
 		type: "string",
 		default: "",
 	},
@@ -371,6 +384,7 @@ registerBlockType("ub/review", {
 				imgID,
 				imgAlt,
 				imgURL,
+				valueType,
 				items,
 				parts,
 				starCount,
@@ -385,6 +399,8 @@ registerBlockType("ub/review", {
 				inactiveStarColor,
 				activeStarColor,
 				starOutlineColor,
+				activePercentBarColor,
+				percentBarColor,
 				titleAlign,
 				authorAlign,
 				descriptionAlign,
@@ -1202,11 +1218,34 @@ registerBlockType("ub/review", {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__("Star settings")} initialOpen={false}>
+					<PanelBody title={__("Review item rating format")}>
+						<RadioControl
+							selected={valueType}
+							options={["star", "percent"].map((a) => ({
+								label: __(a),
+								value: a,
+							}))}
+							onChange={(newValueType) => {
+								const factor = 100 / starCount;
+								setAttributes({
+									valueType: newValueType,
+									parts: parts.map((p) => ({
+										label: p.label,
+										value:
+											valueType === "star"
+												? p.value * factor
+												: p.value / factor,
+									})),
+								});
+							}}
+						/>
+					</PanelBody>
+
+					<PanelBody title={__("Value settings")} initialOpen={false}>
 						{editedStar > -1 && (
 							<RangeControl
 								label={__(
-									`Star rating for ${
+									`Value for ${
 										parser.parseFromString(parts[editedStar].label, "text/html")
 											.body.textContent || "current feature"
 									}`
@@ -1216,40 +1255,62 @@ registerBlockType("ub/review", {
 									setAttributes({
 										parts: [
 											...parts.slice(0, editedStar),
-											Object.assign({}, parts[editedStar], { value: newValue }),
+											Object.assign({}, parts[editedStar], {
+												value: newValue,
+											}),
 											...parts.slice(editedStar + 1),
 										],
 									});
 								}}
-								min={1}
-								max={5}
-								step={0.5}
+								min={valueType === "star" ? 0 : 1}
+								max={valueType === "star" ? starCount : 100}
+								step={valueType === "star" ? 0.1 : 1}
 							/>
 						)}
-						<PanelColorSettings
-							title={__("Star Colors")}
-							initialOpen={true}
-							colorSettings={[
-								{
-									value: activeStarColor,
-									onChange: (colorValue) =>
-										setAttributes({ activeStarColor: colorValue }),
-									label: __("Active Star Color"),
-								},
-								{
-									value: inactiveStarColor,
-									onChange: (colorValue) =>
-										setAttributes({ inactiveStarColor: colorValue }),
-									label: __("Inactive Star Color"),
-								},
-								{
-									value: starOutlineColor,
-									onChange: (colorValue) =>
-										setAttributes({ starOutlineColor: colorValue }),
-									label: __("Star Outline Color"),
-								},
-							]}
-						/>
+						{valueType === "star" ? (
+							<PanelColorSettings
+								title={__("Star Colors")}
+								initialOpen={true}
+								colorSettings={[
+									{
+										value: activeStarColor,
+										onChange: (colorValue) =>
+											setAttributes({ activeStarColor: colorValue }),
+										label: __("Active Star Color"),
+									},
+									{
+										value: inactiveStarColor,
+										onChange: (colorValue) =>
+											setAttributes({ inactiveStarColor: colorValue }),
+										label: __("Inactive Star Color"),
+									},
+									{
+										value: starOutlineColor,
+										onChange: (colorValue) =>
+											setAttributes({ starOutlineColor: colorValue }),
+										label: __("Star Outline Color"),
+									},
+								]}
+							/>
+						) : (
+							<PanelColorSettings
+								title={__("Percentage Bar Colors")}
+								colorSettings={[
+									{
+										value: activePercentBarColor,
+										onChange: (colorValue) =>
+											setAttributes({ activePercentBarColor: colorValue }),
+										label: __("Main Color"),
+									},
+									{
+										value: percentBarColor,
+										onChange: (colorValue) =>
+											setAttributes({ percentBarColor: colorValue }),
+										label: __("Background Color"),
+									},
+								]}
+							/>
+						)}
 					</PanelBody>
 					<PanelColorSettings
 						title={__("Button Colors")}
@@ -1654,6 +1715,7 @@ registerBlockType("ub/review", {
 				imgAlt={imgAlt}
 				imgURL={imgURL}
 				imageEnabled={enableImage}
+				valueType={valueType}
 				items={parts}
 				starCount={starCount}
 				enableSummary={useSummary}
@@ -1666,6 +1728,8 @@ registerBlockType("ub/review", {
 				callToActionForeColor={callToActionForeColor}
 				inactiveStarColor={inactiveStarColor}
 				activeStarColor={activeStarColor}
+				activePercentBarColor={activePercentBarColor}
+				percentBarColor={percentBarColor}
 				selectedStarColor={activeStarColor}
 				starOutlineColor={starOutlineColor}
 				setAuthorName={(newValue) => setAttributes({ authorName: newValue })}

@@ -190,6 +190,7 @@ export class ReviewBody extends Component {
 			average:
 				this.props.items.map((i) => i.value).reduce((total, v) => total + v) /
 				this.props.items.length,
+			mouseOnHold: false,
 		};
 	}
 
@@ -213,6 +214,7 @@ export class ReviewBody extends Component {
 			enableSummary,
 			summaryTitle,
 			summaryDescription,
+			valueType,
 			starCount,
 			setItems,
 			setSummaryDescription,
@@ -229,6 +231,8 @@ export class ReviewBody extends Component {
 			activeStarColor,
 			selectedStarColor,
 			starOutlineColor,
+			activePercentBarColor,
+			percentBarColor,
 			setEditable,
 			activeStarIndex,
 			setActiveStarIndex,
@@ -247,11 +251,28 @@ export class ReviewBody extends Component {
 			this.setState({ average: newAverage });
 		}
 
+		const setNewPercentage = (percentageBar, mouseX, i, j) => {
+			const newValue = Math.round(
+				(100 * (mouseX - percentageBar.x)) / percentageBar.width
+			);
+			const newArray = [
+				...items.slice(0, i),
+				{ label: j.label, value: newValue },
+				...items.slice(i + 1),
+			];
+			setItems(newArray);
+			setActiveStarIndex(i);
+			this.setState({
+				average:
+					newArray.map((i) => i.value).reduce((total, v) => total + v) /
+					newArray.length,
+			});
+		};
+
 		return (
 			<div className="ub_review_block">
 				<RichText
 					className="ub_review_item_name"
-					tagName="p"
 					placeholder={__("Title of the review")}
 					value={itemName}
 					style={{ textAlign: titleAlign }}
@@ -259,7 +280,6 @@ export class ReviewBody extends Component {
 					unstableOnFocus={() => setEditable("reviewTitle")}
 				/>
 				<RichText
-					tagName="p"
 					placeholder={__("Review Author name")}
 					value={authorName}
 					style={{ textAlign: authorAlign }}
@@ -315,7 +335,6 @@ export class ReviewBody extends Component {
 						{descriptionEnabled && (
 							<RichText
 								className="ub_review_description"
-								tagName="p"
 								placeholder={__("Item description")}
 								value={description}
 								onChange={(text) => setDescription(text)}
@@ -328,7 +347,6 @@ export class ReviewBody extends Component {
 				{items.map((j, i) => (
 					<div className="ub_review_entry">
 						<RichText
-							style={{ marginRight: "auto" }}
 							key={i}
 							placeholder={__("Feature name")}
 							value={j.label}
@@ -409,31 +427,78 @@ export class ReviewBody extends Component {
 									}}
 								/>
 							)}
-							<Stars
-								id={`${ID}-${i}`}
-								key={i}
-								value={j.value}
-								limit={starCount}
-								setValue={(newValue) => {
-									const newArray = [
-										...items.slice(0, i),
-										{ label: j.label, value: newValue },
-										...items.slice(i + 1),
-									];
-									setItems(newArray);
-									setActiveStarIndex(i);
-									this.setState({
-										average:
-											newArray
-												.map((i) => i.value)
-												.reduce((total, v) => total + v) / newArray.length,
-									});
-								}}
-								inactiveStarColor={inactiveStarColor}
-								activeStarColor={activeStarColor}
-								selectedStarColor={selectedStarColor}
-								starOutlineColor={starOutlineColor}
-							/>
+							{valueType === "star" ? (
+								<Stars
+									id={`${ID}-${i}`}
+									key={i}
+									value={j.value}
+									limit={starCount}
+									setValue={(newValue) => {
+										const newArray = [
+											...items.slice(0, i),
+											{ label: j.label, value: newValue },
+											...items.slice(i + 1),
+										];
+										setItems(newArray);
+										setActiveStarIndex(i);
+										this.setState({
+											average:
+												newArray
+													.map((i) => i.value)
+													.reduce((total, v) => total + v) / newArray.length,
+										});
+									}}
+									inactiveStarColor={inactiveStarColor}
+									activeStarColor={activeStarColor}
+									selectedStarColor={selectedStarColor}
+									starOutlineColor={starOutlineColor}
+								/>
+							) : (
+								<div className="ub_review_percentage">
+									<svg
+										className="ub_review_percentage_bar"
+										viewBox="0 0 100 1"
+										preserveAspectRatio="none"
+										height="10"
+										onClick={(e) =>
+											setNewPercentage(
+												e.currentTarget.getBoundingClientRect(),
+												e.clientX,
+												i,
+												j
+											)
+										}
+										//in cases where the user drags across the bar
+										onMouseDown={() => this.setState({ mouseOnHold: true })}
+										onMouseUp={() => this.setState({ mouseOnHold: false })}
+										onMouseMove={(e) => {
+											if (this.state.mouseOnHold) {
+												setNewPercentage(
+													e.currentTarget.getBoundingClientRect(),
+													e.clientX,
+													i,
+													j
+												);
+											}
+										}}
+									>
+										<path
+											className="ub_review_percentage_bar_trail"
+											d="M 0.5,0.5 L 99.5,0.5"
+											stroke={percentBarColor || "#d9d9d9"}
+											stroke-width="1"
+										/>
+										<path
+											className="ub_review_percentage_bar_path"
+											d="M 0.5,0.5 L 99.5,0.5"
+											stroke={activePercentBarColor}
+											stroke-width="1"
+											strokeDashoffset={`${100 - j.value}px`}
+										/>
+									</svg>
+									<div>{j.value}%</div>
+								</div>
+							)}
 						</div>
 					</div>
 				))}
@@ -450,7 +515,6 @@ export class ReviewBody extends Component {
 						<RichText
 							className="ub_review_summary_title"
 							placeholder={__("Title of the summary goes here")}
-							tagName="p"
 							onChange={(text) => setSummaryTitle(text)}
 							value={summaryTitle}
 							unstableOnFocus={() => setEditable("")}
@@ -468,19 +532,22 @@ export class ReviewBody extends Component {
 						<div className="ub_review_average">
 							<span className="ub_review_rating">
 								{Math.round(average * 10) / 10}
+								{valueType === "percent" ? "%" : ""}
 							</span>
-							<Stars
-								id={`${ID}-average`}
-								className="ub_review_average_stars"
-								onHover={() => null}
-								onClick={() => null}
-								value={average}
-								limit={starCount}
-								inactiveStarColor={inactiveStarColor}
-								activeStarColor={activeStarColor}
-								selectedStarColor={selectedStarColor}
-								starOutlineColor={starOutlineColor}
-							/>
+							{valueType === "star" && (
+								<Stars
+									id={`${ID}-average`}
+									className="ub_review_average_stars"
+									onHover={() => null}
+									onClick={() => null}
+									value={average}
+									limit={starCount}
+									inactiveStarColor={inactiveStarColor}
+									activeStarColor={activeStarColor}
+									selectedStarColor={selectedStarColor}
+									starOutlineColor={starOutlineColor}
+								/>
+							)}
 						</div>
 					</div>
 					<div className="ub_review_cta_panel">

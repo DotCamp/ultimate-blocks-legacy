@@ -5,6 +5,19 @@
 	float: right;
 }
 
+.ub_review_entry {
+	margin-right: auto;
+	.components-icon-button {
+		padding: 0;
+	}
+	.dashicons-trash {
+		color: #aaa;
+		&:hover {
+			color: #222;
+		}
+	}
+}
+
 .ub_review_block .ub_review_image_container {
 	position: relative;
 	margin-left: auto;
