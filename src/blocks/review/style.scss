@@ -112,6 +112,9 @@
 	grid-template-columns: 4fr 1fr;
 	overflow: auto;
 	margin-left: auto;
+	> svg {
+		height: 10px;
+	}
 	> div {
 		text-align: end;
 	}
