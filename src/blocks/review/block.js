@@ -117,6 +117,10 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	callToActionFontSize: {
+		type: "number",
+		default: 0,
+	},
 	callToActionURL: {
 		type: "string",
 		default: "",
@@ -359,6 +363,8 @@ registerBlockType("ub/review", {
 			offerPriceRaw: "0",
 			offerHighPriceRaw: "0",
 			offerLowPriceRaw: "0",
+			isLoaded: false,
+			setCTAFontSize: false,
 		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
@@ -392,6 +398,7 @@ registerBlockType("ub/review", {
 				summaryTitle,
 				summaryDescription,
 				callToActionText,
+				callToActionFontSize,
 				callToActionURL,
 				callToActionBackColor,
 				callToActionBorderColor,
@@ -450,6 +457,8 @@ registerBlockType("ub/review", {
 			offerPriceRaw,
 			offerHighPriceRaw,
 			offerLowPriceRaw,
+			isLoaded,
+			setCTAFontSize,
 			setEventEndDate,
 			setState,
 			block,
@@ -1215,6 +1224,10 @@ registerBlockType("ub/review", {
 
 		const parser = new DOMParser();
 
+		if (!isLoaded) {
+			setState({ isLoaded: true, setCTAFontSize: callToActionFontSize > 0 });
+		}
+
 		return [
 			isSelected && (
 				<InspectorControls>
@@ -1387,6 +1400,33 @@ registerBlockType("ub/review", {
 										}
 									/>
 								</PanelRow>
+								<PanelRow>
+									<label htmlFor="ub-review-cta-changefontsize">
+										{__("Change font size")}
+									</label>
+									<FormToggle
+										id="ub-review-cta-changefontsize"
+										label={__("Change font size")}
+										checked={setCTAFontSize}
+										onChange={() => {
+											setState({ setCTAFontSize: !setCTAFontSize });
+											if (setCTAFontSize) {
+												setAttributes({ callToActionFontSize: 0 });
+											}
+										}}
+									/>
+								</PanelRow>
+								{setCTAFontSize && (
+									<RangeControl
+										label={__("Font size")}
+										value={callToActionFontSize}
+										onChange={(callToActionFontSize) =>
+											setAttributes({ callToActionFontSize })
+										}
+										min={6}
+										max={50}
+									/>
+								)}
 							</>
 						)}
 					</PanelBody>
@@ -1732,6 +1772,7 @@ registerBlockType("ub/review", {
 				percentBarColor={percentBarColor}
 				selectedStarColor={activeStarColor}
 				starOutlineColor={starOutlineColor}
+				setAttributes={(newValues) => setAttributes(newValues)}
 				setAuthorName={(newValue) => setAttributes({ authorName: newValue })}
 				setItemName={(newValue) => setAttributes({ itemName: newValue })}
 				setDescription={(newValue) => setAttributes({ description: newValue })}
@@ -1763,6 +1804,8 @@ registerBlockType("ub/review", {
 				enableCTA={enableCTA}
 				ctaNoFollow={ctaNoFollow}
 				imageSize={imageSize}
+				ctaFontSize={callToActionFontSize}
+				measureCTAFontSize={setCTAFontSize}
 			/>,
 		];
 	}),

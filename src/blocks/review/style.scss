@@ -76,6 +76,7 @@
 	text-align: center;
 	text-transform: none;
 	cursor: pointer;
+	font-weight: normal;
 }
 
 .ub_review_item_name {
@@ -130,12 +131,6 @@
 	}
 }
 
-@media (max-width: 1200px) {
-	.ub_review_cta_btn {
-		font-size: 14px;
-	}
-}
-
 @media (max-width: 7688px) {
 	.ub_review_block {
 		padding: 20px 15px;
@@ -145,7 +140,6 @@
 @media (max-width: 576px) {
 	.ub_review_cta_btn {
 		padding: 15px 10px;
-		font-size: 18px;
 	}
 	.ub_review_image {
 		float: right;
@@ -165,7 +159,6 @@
 	}
 	.ub_review_cta_btn {
 		padding: 15px 8px;
-		font-size: 12px;
 	}
 }
 
@@ -177,9 +170,6 @@
 }
 
 @media (max-width: 375px) {
-	.ub_review_cta_btn {
-		font-size: 10px;
-	}
 	.ub_review_block {
 		padding: 20px 15px;
 		button > svg {
@@ -202,8 +192,5 @@
 		height: 45px;
 		line-height: 40px;
 		margin-left: auto;
-	}
-	.ub_review_cta_btn {
-		font-size: 8px;
 	}
 }

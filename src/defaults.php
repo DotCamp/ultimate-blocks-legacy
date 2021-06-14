@@ -1124,6 +1124,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'callToActionFontSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
             'callToActionURL' => array(
                 'type' => 'string',
                 'default' => ''

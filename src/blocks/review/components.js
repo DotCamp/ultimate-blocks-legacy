@@ -3,7 +3,7 @@ const { Button, Dashicon } = wp.components;
 const { __ } = wp.i18n;
 
 import { removeIcon } from "./icon";
-import { Component } from "react";
+import { Component, createRef } from "react";
 
 export class OldStars extends Component {
 	constructor(props) {
@@ -192,6 +192,19 @@ export class ReviewBody extends Component {
 				this.props.items.length,
 			mouseOnHold: false,
 		};
+		this.ctaButton = createRef();
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.measureCTAFontSize !== prevProps.measureCTAFontSize) {
+			if (this.props.measureCTAFontSize) {
+				this.props.setAttributes({
+					callToActionFontSize: parseInt(
+						getComputedStyle(this.ctaButton.current).fontSize.slice(0, -2)
+					),
+				});
+			}
+		}
 	}
 
 	render() {
@@ -239,6 +252,7 @@ export class ReviewBody extends Component {
 			alignments,
 			enableCTA,
 			imageSize,
+			ctaFontSize,
 		} = this.props;
 
 		const { titleAlign, authorAlign, descriptionAlign } = alignments;
@@ -558,7 +572,9 @@ export class ReviewBody extends Component {
 									style={{
 										backgroundColor: callToActionBackColor,
 										borderColor: callToActionBorderColor,
+										fontSize: ctaFontSize > 0 ? `${ctaFontSize}px` : null,
 									}}
+									ref={this.ctaButton}
 								>
 									<RichText
 										style={{ color: callToActionForeColor || "inherit" }}

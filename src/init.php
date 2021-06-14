@@ -535,6 +535,7 @@ function ub_include_block_attribute_css() {
                         'color: ' . ($attributes['callToActionForeColor'] ?: 'inherit') . ';' . PHP_EOL .
                         'border-color: ' . $attributes['callToActionBorderColor'] . ';' . PHP_EOL .
                         'background-color: ' . $attributes['callToActionBackColor'] . ';' . PHP_EOL .
+                        ($attributes['callToActionFontSize'] > 0 ? 'font-size: ' . $attributes['callToActionFontSize'] . 'px;' . PHP_EOL : '') .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_review_image{' . PHP_EOL .
                         'max-height: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
