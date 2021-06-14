@@ -27,7 +27,7 @@ function ub_render_image_slider_block($attributes){
         '" ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? $sliderHeight : 200) . 'px;"'
         : 'id="ub_image_slider_' . $blockID . '"').
         ' data-swiper-data=\'{"loop":' . json_encode($wrapsAround) .
-            ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . $paginationType . '"}
+            ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . $paginationType . '"'.($paginationType === 'bullets' ? ', "clickable":true' :'') . '}
             ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}, "effect": "' . $transition . '"'
             . ($transition === 'fade' ? ',"fadeEffect":{"crossFade": true}' : '')
             . ($transition === 'coverflow' ? ',"coverflowEffect":{"slideShadows":' . json_encode($slideShadows) . ', "rotate": ' . $rotate . ', "stretch": ' . $stretch . ', "depth": ' . $depth . ', "modifier": ' . $modifier . '}' : '')
