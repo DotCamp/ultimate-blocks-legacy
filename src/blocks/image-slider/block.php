@@ -28,7 +28,8 @@ function ub_render_image_slider_block($attributes){
         : 'id="ub_image_slider_' . $blockID . '"').
         ' data-swiper-data=\'{"loop":' . json_encode($wrapsAround) .
             ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . $paginationType . '"'.($paginationType === 'bullets' ? ', "clickable":true' :'') . '}
-            ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}, "effect": "' . $transition . '"'
+            ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"},  "keyboard": { "enabled": true },
+            "effect": "' . $transition . '"'
             . ($transition === 'fade' ? ',"fadeEffect":{"crossFade": true}' : '')
             . ($transition === 'coverflow' ? ',"coverflowEffect":{"slideShadows":' . json_encode($slideShadows) . ', "rotate": ' . $rotate . ', "stretch": ' . $stretch . ', "depth": ' . $depth . ', "modifier": ' . $modifier . '}' : '')
             . ($transition === 'cube' ? ',"cubeEffect":{"slideShadows":' . json_encode($slideShadows) . ', "shadow":' . json_encode($shadow) . ', "shadowOffset":' . $shadowOffset . ', "shadowScale":' . $shadowScale . '}' : '')
