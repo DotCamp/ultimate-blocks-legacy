@@ -91,29 +91,32 @@ const highlightEdit = ({ isActive, value, onChange }) => {
 
 		/* set default attributes */
 		if (highlightedElements) {
-			let highlightedStyle = selectedBlock
-				.querySelector(".has-highlight")
-				.getAttribute("style");
-			if (attributesToString(attributesList) !== highlightedStyle) {
-				setAttributesList(getAttributesList(highlightedStyle));
-			}
+			let hasHightlight = selectedBlock.querySelector(".has-highlight");
 
-			if (!attributesList["font-size"]) {
-				setHeadingFontSize(
-					window.getComputedStyle(selectedBlock.firstElementChild).fontSize
-				);
-			}
+			if (hasHightlight) {
+				let highlightedStyle = hasHightlight.getAttribute("style");
 
-			if (!attributesList["letter-spacing"]) {
-				let parent = window.getComputedStyle(selectedBlock.firstElementChild)
-					.letterSpacing;
-				setHeadingLetterSpacing(parent !== "normal" ? parent : "0");
-			}
+				if (attributesToString(attributesList) !== highlightedStyle) {
+					setAttributesList(getAttributesList(highlightedStyle));
+				}
 
-			if (!attributesList["font-weight"]) {
-				setHeadingFontWeight(
-					window.getComputedStyle(selectedBlock.firstElementChild).fontWeight
-				);
+				if (!attributesList["font-size"]) {
+					setHeadingFontSize(
+						window.getComputedStyle(selectedBlock.firstElementChild).fontSize
+					);
+				}
+
+				if (!attributesList["letter-spacing"]) {
+					let parent = window.getComputedStyle(selectedBlock.firstElementChild)
+						.letterSpacing;
+					setHeadingLetterSpacing(parent !== "normal" ? parent : "0");
+				}
+
+				if (!attributesList["font-weight"]) {
+					setHeadingFontWeight(
+						window.getComputedStyle(selectedBlock.firstElementChild).fontWeight
+					);
+				}
 			}
 		}
 	});
