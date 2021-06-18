@@ -139,15 +139,6 @@ const highlightEdit = ({ isActive, value, onChange }) => {
 
 	/* update the style with the new value */
 	const onChangeAttribute = (newValue, attribute) => {
-		setAttributesList((attributesList) => {
-			let newList = {
-				...attributesList,
-			};
-			newList[attribute] = newValue;
-
-			return newList;
-		});
-
 		// Get an array of the highlighted sections to style them
 		const { formats } = value;
 		let elementsArr = [];
@@ -168,7 +159,13 @@ const highlightEdit = ({ isActive, value, onChange }) => {
 			}
 		}
 
-		setElementsToChange(elementsArr);
+		setAttributesList((attributesList) => {
+			let newList = { ...attributesList };
+			newList[attribute] = newValue;
+
+			setElementsToChange(elementsArr);
+			return newList;
+		});
 	};
 
 	return (
