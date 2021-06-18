@@ -197,7 +197,8 @@ function ub_include_block_attribute_css() {
                                 'border: none;';
                             }
                             if($attributes['buttons'][$key]['buttonRounded']){
-                                $blockStylesheets .= 'border-radius: ' . ($attributes['buttons'][$key]['buttonRadius'] ?: '60' ) . ($attributes['buttons'][$key]['buttonRadiusUnit'] ?: 'px') . ';' . PHP_EOL;
+                                $blockStylesheets .= 'border-radius: ' . (array_key_exists('buttonRadius', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadius'] ?: '60' )
+                                                        . (array_key_exists('buttonRadiusUnit', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadiusUnit'] ?: 'px') . ';' . PHP_EOL;
                             }
                             else{
                                 $blockStylesheets .= 'border-radius: 0;' . PHP_EOL;
@@ -402,7 +403,7 @@ function ub_include_block_attribute_css() {
                     else {
                         $stepPicArray = array_map('ub_howto_getStepPic', $attributes['section'][0]['steps']);
                         $blockStylesheets .= implode(array_map(function($stepPic, $index, $prefix){
-                                                        if($stepPic['width'] > 0){
+                                                        if(array_key_exists('width', $stepPic) && $stepPic['width'] > 0){
                                                             return $prefix . ' .ub_howto-step:nth-child(' . ($index+1) .') figure,' .
                                                                     $prefix . '.ub_howto-step:nth-child(' . ($index+1) .') .ub_howto-step-image {' .
                                                                         ub_howto_generateStepPicStyle($stepPic) .
