@@ -8,8 +8,13 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor || wp.editor;
-const { Button, Dropdown, PanelBody, RangeControl, ToggleControl } =
-	wp.components;
+const {
+	Button,
+	Dropdown,
+	PanelBody,
+	RangeControl,
+	ToggleControl,
+} = wp.components;
 
 import {
 	dashesToCamelcase,
@@ -38,6 +43,7 @@ class EditorComponent extends Component {
 			recentSelection: "",
 			selectionTime: 0,
 			setFontSize: false,
+			hasApiAccess: true,
 		};
 		this.blockContainer = createRef();
 	}
@@ -48,62 +54,74 @@ class EditorComponent extends Component {
 		loadPromise.then(() => {
 			this.settings = new models.Settings();
 
-			this.settings.fetch().then((response) => {
-				let frequentIcons = [];
+			this.settings
+				.fetch()
+				.then((response) => {
+					let frequentIcons = [];
 
-				if (response.ub_icon_choices !== "") {
-					const currentTime = ~~(Date.now() / 1000);
+					if (response.ub_icon_choices !== "") {
+						const currentTime = ~~(Date.now() / 1000);
 
-					//trim old entries from frequenticons that are older than two weeks
-					frequentIcons = JSON.parse(response.ub_icon_choices)
-						.map((f) => ({
-							name: f.name,
-							selectionTime: f.selectionTime.filter(
-								(t) => t >= currentTime - 1209600
-							),
-						}))
-						.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
-				}
-				if (frequentIcons.length) {
-					this.setState({ iconChoices: frequentIcons });
-
-					//check if anything from ub_icon_choices has been trimmed in frequentIcons
-					if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
-						const newIconArray = new models.Settings({
-							ub_icon_choices: JSON.stringify(frequentIcons),
-						});
-						newIconArray.save();
+						//trim old entries from frequenticons that are older than two weeks
+						frequentIcons = JSON.parse(response.ub_icon_choices)
+							.map((f) => ({
+								name: f.name,
+								selectionTime: f.selectionTime.filter(
+									(t) => t >= currentTime - 1209600
+								),
+							}))
+							.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
 					}
+					if (frequentIcons.length) {
+						this.setState({ iconChoices: frequentIcons });
 
-					let icons = [];
-					let otherIcons = [];
+						//check if anything from ub_icon_choices has been trimmed in frequentIcons
+						if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
+							const newIconArray = new models.Settings({
+								ub_icon_choices: JSON.stringify(frequentIcons),
+							});
+							newIconArray.save();
+						}
 
-					[icons, otherIcons] = splitArray(
-						iconList.map((name) => allIcons[name]),
-						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
-					);
+						let icons = [];
+						let otherIcons = [];
 
-					const frequentIconNames = frequentIcons.map((i) => i.name);
+						[icons, otherIcons] = splitArray(
+							iconList.map((name) => allIcons[name]),
+							(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
+						);
 
-					icons.sort(
-						(a, b) =>
-							frequentIconNames.indexOf(a.iconName) -
-							frequentIconNames.indexOf(b.iconName)
-					);
+						const frequentIconNames = frequentIcons.map((i) => i.name);
 
-					this.setState({ availableIcons: [...icons, ...otherIcons] });
-				} else {
+						icons.sort(
+							(a, b) =>
+								frequentIconNames.indexOf(a.iconName) -
+								frequentIconNames.indexOf(b.iconName)
+						);
+
+						this.setState({ availableIcons: [...icons, ...otherIcons] });
+					} else {
+						this.setState({
+							availableIcons: iconList.map((name) => allIcons[name]),
+						});
+					}
+				})
+				.catch(() => {
 					this.setState({
+						hasApiAccess: false,
 						availableIcons: iconList.map((name) => allIcons[name]),
 					});
-				}
-			});
+				});
 		});
 	}
 
 	updateIconList() {
-		const { availableIcons, recentSelection, selectionTime, iconChoices } =
-			this.state;
+		const {
+			availableIcons,
+			recentSelection,
+			selectionTime,
+			iconChoices,
+		} = this.state;
 		const prevIconMatch = iconChoices
 			.map((i) => i.name)
 			.indexOf(recentSelection);
@@ -159,11 +177,13 @@ class EditorComponent extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (!prevProps.isSelected && this.props.isSelected) {
-			this.loadIconList();
-		}
-		if (prevProps.isSelected && !this.props.isSelected) {
-			this.updateIconList();
+		if (this.state.hasApiAccess) {
+			if (!prevProps.isSelected && this.props.isSelected) {
+				this.loadIconList();
+			}
+			if (prevProps.isSelected && !this.props.isSelected) {
+				this.updateIconList();
+			}
 		}
 	}
 
@@ -179,6 +199,7 @@ class EditorComponent extends Component {
 			iconSearchTerm,
 			iconSearchResultsPage,
 			recentSelection,
+			hasApiAccess,
 			setFontSize,
 		} = this.state;
 
@@ -378,7 +399,7 @@ class EditorComponent extends Component {
 										if (!isOpen) {
 											//if entry with name of selected icon exists in iconChoices, append selection time to selection time array
 											//else add new entry
-											if (recentSelection) {
+											if (recentSelection && hasApiAccess) {
 												this.updateIconList();
 											}
 										}
