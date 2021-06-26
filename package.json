@@ -20,7 +20,7 @@
 		"react-dom": "^16.14.0",
 		"react-sortable-hoc": "^2.0.0",
 		"react-structured-data": "0.0.14",
-		"swiper": "^6.5.9"
+		"swiper": "^6.7.1"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^15.0.1",
