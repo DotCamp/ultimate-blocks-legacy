@@ -205,8 +205,13 @@ export class OldTabHolder extends Component {
 			<div className={className}>
 				<button
 					onClick={() => {
-						const { activeControl, activeTab, theme, titleColor, tabsTitle } =
-							this.props.block.attributes;
+						const {
+							activeControl,
+							activeTab,
+							theme,
+							titleColor,
+							tabsTitle,
+						} = this.props.block.attributes;
 						replaceBlock(
 							this.props.block.clientId,
 							createBlock(
@@ -598,8 +603,10 @@ export class TabHolder extends Component {
 							items={attributes.tabsTitle}
 							onSortEnd={({ oldIndex, newIndex }) => {
 								const titleItems = attributes.tabsTitle.slice(0);
+								const alignments = attributes.tabsTitleAlignment.slice(0);
 								setAttributes({
 									tabsTitle: arrayMove(titleItems, oldIndex, newIndex),
+									tabsTitleAlignment: arrayMove(alignments, oldIndex, newIndex),
 									activeTab: newIndex,
 								});
 
@@ -611,9 +618,6 @@ export class TabHolder extends Component {
 									newIndex
 								);
 								showControls("tab-title", oldIndex);
-							}}
-							onChangeTitle={(content, i) => {
-								attributes.tabsTitle[i] = content;
 							}}
 							onRemoveTitle={(i) => {
 								setAttributes({
@@ -645,22 +649,6 @@ export class TabHolder extends Component {
 										...attributes.tabsTitle.slice(i + 1),
 									],
 								});
-							}}
-							onRemoveTitle={(i) => {
-								setAttributes({
-									tabsTitle: [
-										...attributes.tabsTitle.slice(0, i),
-										...attributes.tabsTitle.slice(i + 1),
-									],
-								});
-								removeBlock(
-									this.props.block.innerBlocks.filter(
-										(tab) => tab.attributes.index === i
-									)[0].clientId
-								);
-
-								setAttributes({ activeTab: 0 });
-								showControls("tab-title", 0);
 							}}
 							toggleTitle={showControls}
 							onAddTab={addTab}
