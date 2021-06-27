@@ -1,7 +1,7 @@
 import { OldPanelContent, PanelContent } from "./components/editorDisplay";
 
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
 
 const { compose } = wp.compose;
@@ -141,6 +141,21 @@ registerBlockType("ub/content-filter-block", {
 	category: "ultimateblocks",
 	keywords: [__("Filtering")],
 	attributes,
+
+	transforms: {
+		to: [
+			{
+				type: "block",
+				blocks: "core/group",
+				transform: (_, innerBlocks) =>
+					createBlock(
+						"core/group",
+						{},
+						innerBlocks.map((i) => createBlock("core/group", {}, i.innerBlocks))
+					),
+			},
+		],
+	},
 
 	edit: compose([
 		withSelect((select, ownProps) => {
