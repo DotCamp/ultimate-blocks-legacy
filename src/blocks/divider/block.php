@@ -2,9 +2,9 @@
 
 function ub_render_divider_block($attributes){
     extract($attributes);
-    return '<div class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
+    return '<hr class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
     ($blockID === '' ? 'style="border-top: ' . $borderSize . 'px ' . $borderStyle . ' ' . $borderColor . '; margin-top: ' . $borderHeight . 'px; margin-bottom: ' . $borderHeight . 'px;"' :
-        'id="ub_divider_' . $blockID.'"') . '></div>';
+        'id="ub_divider_' . $blockID.'"') . '></hr>';
 }
 
 function ub_register_divider_block(){
