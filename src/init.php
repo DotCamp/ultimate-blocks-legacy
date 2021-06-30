@@ -211,8 +211,8 @@ function ub_include_block_attribute_css() {
                                 'border: none;';
                             }
                             if($attributes['buttons'][$key]['buttonRounded']){
-                                $blockStylesheets .= 'border-radius: ' . (array_key_exists('buttonRadius', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadius'] ?: '60' )
-                                                        . (array_key_exists('buttonRadiusUnit', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadiusUnit'] ?: 'px') . ';' . PHP_EOL;
+                                $blockStylesheets .= 'border-radius: ' . (array_key_exists('buttonRadius', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadius'] ? $attributes['buttons'][$key]['buttonRadius'] : '60' )
+                                                        . (array_key_exists('buttonRadiusUnit', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadiusUnit'] ? $attributes['buttons'][$key]['buttonRadiusUnit'] : 'px') . ';' . PHP_EOL;
                             }
                             else{
                                 $blockStylesheets .= 'border-radius: 0;' . PHP_EOL;
