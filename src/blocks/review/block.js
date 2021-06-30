@@ -1249,6 +1249,10 @@ registerBlockType("ub/review", {
 												? p.value * factor
 												: p.value / factor,
 									})),
+									activePercentBarColor:
+										valueType === "star" && !activePercentBarColor
+											? "#f63d3d"
+											: activePercentBarColor,
 								});
 							}}
 						/>
