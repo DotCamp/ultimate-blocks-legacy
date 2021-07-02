@@ -733,7 +733,19 @@ $defaultValues = array(
             'finalImageFloat' => array(
                 'type' => 'string',
                 'default' => 'none'
-            )
+            ),
+            'firstLevelTag' => array(
+                'type' => 'string',
+                'default' => 'h2',
+            ),
+            'secondLevelTag' => array(
+                'type' => 'string',
+                'default' => 'h3',
+            ),
+            'thirdLevelTag' => array(
+                'type' => 'string',
+                'default' => 'h4',
+            ),
         )
     ),
     'ub/image-slider' => array(

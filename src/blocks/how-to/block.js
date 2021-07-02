@@ -164,6 +164,18 @@ const attributes = {
 		type: "string",
 		default: "none",
 	},
+	firstLevelTag: {
+		type: "string",
+		default: "h2",
+	},
+	secondLevelTag: {
+		type: "string",
+		default: "h3",
+	},
+	thirdLevelTag: {
+		type: "string",
+		default: "h4",
+	},
 };
 
 registerBlockType("ub/how-to", {

@@ -36,6 +36,9 @@ class InspectorPanel extends Component {
 				finalImageID,
 				finalImageWidth,
 				finalImageFloat,
+				firstLevelTag,
+				secondLevelTag,
+				thirdLevelTag,
 			},
 			setAttributes,
 			currentStep,
@@ -46,6 +49,8 @@ class InspectorPanel extends Component {
 
 		let sectionNum = -1;
 		let stepNum = -1;
+
+		const tagList = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "strong"];
 
 		if (currentStep !== "") {
 			if (currentStep === "final") {
@@ -106,12 +111,7 @@ class InspectorPanel extends Component {
 								});
 								if (section.length < 1) {
 									setAttributes({
-										section: [
-											{
-												sectionName: "",
-												steps: [],
-											},
-										],
+										section: [{ sectionName: "", steps: [] }],
 									});
 								} else {
 									let newSection = JSON.parse(JSON.stringify(section));
@@ -255,6 +255,26 @@ class InspectorPanel extends Component {
 						/>
 					</PanelBody>
 				)}
+				<PanelBody title={__("Tag Settings")}>
+					<SelectControl
+						label={__("Howto title tag")}
+						value={firstLevelTag}
+						options={tagList.map((tag) => ({ label: __(tag), value: tag }))}
+						onChange={(firstLevelTag) => setAttributes({ firstLevelTag })}
+					/>
+					<SelectControl
+						label={__("Section title tag")}
+						value={secondLevelTag}
+						options={tagList.map((tag) => ({ label: __(tag), value: tag }))}
+						onChange={(secondLevelTag) => setAttributes({ secondLevelTag })}
+					/>
+					<SelectControl
+						label={__("Step title tag")}
+						value={thirdLevelTag}
+						options={tagList.map((tag) => ({ label: __(tag), value: tag }))}
+						onChange={(thirdLevelTag) => setAttributes({ thirdLevelTag })}
+					/>
+				</PanelBody>
 			</InspectorControls>
 		);
 	}
@@ -274,9 +294,7 @@ const ListWrapper = (props) => {
 	) : (
 		<ul
 			className={className ? className : null}
-			style={{
-				listStyleType: listStyle === "none" ? "none" : null,
-			}}
+			style={{ listStyleType: listStyle === "none" ? "none" : null }}
 		>
 			{children}
 		</ul>
@@ -378,6 +396,7 @@ class HowToStep extends Component {
 			moveUp,
 			moveDown,
 			stepPic,
+			stepTag,
 			videoDuration,
 			hasVideoClip,
 			advancedMode,
@@ -391,7 +410,7 @@ class HowToStep extends Component {
 			<li className="ub_howto-step">
 				<div>
 					<RichText
-						tagName="h4"
+						tagName={stepTag}
 						keepPlaceholderOnFocus
 						placeholder={__("Title goes here")}
 						value={title}
@@ -743,7 +762,9 @@ class HowToSection extends Component {
 			sectionListStyle,
 			sectionNum,
 			sectionName,
+			sectionTag,
 			steps,
+			stepTag,
 			editSection,
 			deleteSection,
 			videoDuration,
@@ -760,7 +781,7 @@ class HowToSection extends Component {
 				<div>
 					<RichText
 						keepPlaceholderOnFocus
-						tagName="h3"
+						tagName={sectionTag}
 						placeholder={__("Section name goes here")}
 						value={sectionName}
 						onChange={(sectionName) => editSection({ sectionName, steps })}
@@ -783,6 +804,7 @@ class HowToSection extends Component {
 							clips={clips}
 							sectionNum={sectionNum}
 							stepNum={i}
+							stepTag={stepTag}
 							videoURL={videoURL}
 							videoDuration={videoDuration}
 							selectStep={() => this.props.selectStepInSection(i)}
@@ -961,6 +983,9 @@ export class EditorComponent extends Component {
 				videoURL,
 				videoEmbedCode,
 				videoDuration,
+				firstLevelTag,
+				secondLevelTag,
+				thirdLevelTag,
 			},
 			setAttributes,
 			block,
@@ -1035,7 +1060,7 @@ export class EditorComponent extends Component {
 				/>
 				<div className="ub_howto" id={`ub_howto-${blockID}`}>
 					<RichText
-						tagName="h2"
+						tagName={firstLevelTag}
 						placeholder={__("How to title")}
 						keepPlaceholderOnFocus={true}
 						value={title}
@@ -1275,7 +1300,7 @@ export class EditorComponent extends Component {
 								}}
 							/>
 							<RichText
-								tagName="h2"
+								tagName={secondLevelTag}
 								placeholder={__("Duration")}
 								keepPlaceholderOnFocus={true}
 								value={timeIntro}
@@ -1314,7 +1339,7 @@ export class EditorComponent extends Component {
 							{includeSuppliesList && (
 								<>
 									<RichText
-										tagName="h2"
+										tagName={secondLevelTag}
 										placeholder={__("Required supplies")}
 										keepPlaceholderOnFocus={true}
 										value={suppliesIntro}
@@ -1431,7 +1456,7 @@ export class EditorComponent extends Component {
 							{includeToolsList && (
 								<>
 									<RichText
-										tagName="h2"
+										tagName={secondLevelTag}
 										placeholder={__("Required tools")}
 										keepPlaceholderOnFocus={true}
 										value={toolsIntro}
@@ -1592,6 +1617,8 @@ export class EditorComponent extends Component {
 									videoDuration={videoDuration}
 									sectionListStyle={sectionListStyle}
 									sectionNum={i}
+									sectionTag={secondLevelTag}
+									stepTag={thirdLevelTag}
 									selectStepInSection={(step) =>
 										this.setState({ currentStep: `section-${i}-step-${step}` })
 									}
@@ -1629,6 +1656,7 @@ export class EditorComponent extends Component {
 										advancedMode={advancedMode}
 										sectionNum={-1}
 										stepNum={i}
+										stepTag={thirdLevelTag}
 										{...step}
 										clips={clips}
 										videoURL={videoURL}
@@ -1784,7 +1812,7 @@ export class EditorComponent extends Component {
 					)}
 					<div className="ub_howto-yield">
 						<RichText
-							tagName="h2"
+							tagName={secondLevelTag}
 							placeholder={__("Result")}
 							keepPlaceholderOnFocus={true}
 							value={resultIntro}
