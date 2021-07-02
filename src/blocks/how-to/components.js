@@ -1299,43 +1299,6 @@ export class EditorComponent extends Component {
 									__html: videoEmbedCode || "<p>Input error</p>",
 								}}
 							/>
-							<RichText
-								tagName={secondLevelTag}
-								placeholder={__("Duration")}
-								keepPlaceholderOnFocus={true}
-								value={timeIntro}
-								onChange={(timeIntro) => setAttributes({ timeIntro })}
-							/>
-							<div className="ub_howto-duration-input">
-								<span />
-								{units.map((u) => (
-									<p>{__(u)}</p>
-								))}
-								<RichText
-									keepPlaceholderOnFocus
-									value={totalTimeText}
-									onChange={(totalTimeText) => setAttributes({ totalTimeText })}
-								/>
-								{totalTime.map((t, i) => (
-									<RichText
-										className="ub_howto-time-value"
-										keepPlaceholderOnFocus
-										placeholder={__("0")}
-										value={String(t)}
-										onChange={(newInput) => {
-											if (!isNaN(Number(newInput))) {
-												setAttributes({
-													totalTime: [
-														...totalTime.slice(0, i),
-														Number(newInput),
-														...totalTime.slice(i + 1),
-													],
-												});
-											}
-										}}
-									/>
-								))}
-							</div>
 							{includeSuppliesList && (
 								<>
 									<RichText
@@ -1603,6 +1566,43 @@ export class EditorComponent extends Component {
 										}}
 									/>
 								</div>
+							</div>
+							<RichText
+								tagName={secondLevelTag}
+								placeholder={__("Duration")}
+								keepPlaceholderOnFocus={true}
+								value={timeIntro}
+								onChange={(timeIntro) => setAttributes({ timeIntro })}
+							/>
+							<div className="ub_howto-duration-input">
+								<span />
+								{units.map((u) => (
+									<p>{__(u)}</p>
+								))}
+								<RichText
+									keepPlaceholderOnFocus
+									value={totalTimeText}
+									onChange={(totalTimeText) => setAttributes({ totalTimeText })}
+								/>
+								{totalTime.map((t, i) => (
+									<RichText
+										className="ub_howto-time-value"
+										keepPlaceholderOnFocus
+										placeholder={__("0")}
+										value={String(t)}
+										onChange={(newInput) => {
+											if (!isNaN(Number(newInput))) {
+												setAttributes({
+													totalTime: [
+														...totalTime.slice(0, i),
+														Number(newInput),
+														...totalTime.slice(i + 1),
+													],
+												});
+											}
+										}}
+									/>
+								))}
 							</div>
 						</>
 					)}
