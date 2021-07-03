@@ -59,7 +59,7 @@ function ub_render_review_block($attributes){
     $ratings = '';
 
     foreach($parsedItems as $key=>$item){
-        $ratings .= '<div class="ub_review_entry">' . $item['label'] .
+        $ratings .= '<div class="ub_review_entry"><span>' . $item['label'] . '</span>' .
         ($valueType === 'star' ? ub_generateStarDisplay($item['value'], $starCount, $blockID . '-' . $key,
                                 $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_stars")
                                 : ub_generatePercentageBar($item['value'], $blockID . '-' . $key, $activePercentBarColor, $percentBarColor ?: '#d9d9d9')  ) . '</div>';
