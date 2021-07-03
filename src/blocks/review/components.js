@@ -359,7 +359,11 @@ export class ReviewBody extends Component {
 					</div>
 				)}
 				{items.map((j, i) => (
-					<div className="ub_review_entry">
+					<div
+						className={`ub_review_${
+							valueType === "percent" ? "percentage_" : ""
+						}entry`}
+					>
 						<RichText
 							key={i}
 							placeholder={__("Feature name")}
@@ -415,6 +419,7 @@ export class ReviewBody extends Component {
 						/>
 						<div
 							key={i}
+							className={"ub_review_value"}
 							style={{
 								marginLeft: "auto",
 								minWidth: items.length > 1 ? 120 : 100,

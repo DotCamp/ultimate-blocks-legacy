@@ -25,11 +25,19 @@
 	grid-template-columns: 75% 25%;
 }
 
-.ub_review_entry {
-	display: grid;
-	grid-template-columns: 25% 75%;
+.ub_review_entry,
+.ub_review_percentage_entry {
 	padding: 10px 0 10px 0;
 	border-bottom: 1px solid #e9e9e9;
+}
+
+.ub_review_entry {
+	display: flex;
+}
+
+.ub_review_percentage_entry {
+	display: grid;
+	grid-template-columns: 25% 75%;
 }
 
 .ub_review_rating {

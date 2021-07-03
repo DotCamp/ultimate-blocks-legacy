@@ -1,20 +1,21 @@
 <?php
 
 function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
-    $activeStarColor='#eeee00', $starOutlineColor='#000000', $className=''){
+    $activeStarColor = '#eeee00', $starOutlineColor = '#000000', $className = ''){
     $stars = '';
 
-    foreach(range(0, $limit-1) as $current){
+    $starRoute = "m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z";
+
+    foreach(range(0, $limit - 1) as $current){
         $stars .= '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 150 150">
         <defs><mask id="ub_review_star_filter-' . $id . '-' . $current
         .'"><rect height="150" width="' . ($value - $current > 0 ?
             ($value - $current < 1 ? $value - $current : 1) : 0) * 150
         .'" y="0" x="0" fill="#fff"/></mask></defs> <path fill="' . $inactiveStarColor . '" stroke-width="2.5"
-        d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
+        d="' . $starRoute . '"
         stroke="' . $starOutlineColor . '"/><path class="star" id="star' . $current .
         '" mask="url(#ub_review_star_filter-' . $id. '-' . $current . ')" fill="' . $activeStarColor . '" strokeWidth="2.5"
-        d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-        stroke="' . $starOutlineColor . '"/>
+        d="' . $starRoute . '" stroke="' . $starOutlineColor . '"/>
         </svg>';
     }
 
@@ -22,23 +23,21 @@ function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
 }
 
 function ub_generatePercentageBar($value, $id, $activeColor, $inactiveColor ){
+    $percentBar = "M 0.5,0.5 L 99.5,0.5";
     return '<div class="ub_review_percentage">
             <svg class="ub_review_percentage_bar" viewBox="0 0 100 1" preserveAspectRatio="none" height="10">
                 <path
                     class="ub_review_percentage_bar_trail"
-                    d="M 0.5,0.5 L 99.5,0.5"
-                    stroke="'.$inactiveColor.'"
+                    d="' . $percentBar . '" stroke="' . $inactiveColor . '"
                     stroke-width="1"
                 ></path>
                 <path
                     class="ub_review_percentage_bar_path"
-                    d="M 0.5,0.5 L 99.5,0.5"
-                    stroke="' . $activeColor . '"
-                    stroke-width="1"
-                    stroke-dashoffset="' . (100 - $value) . 'px"
+                    d="' . $percentBar . '" stroke="' . $activeColor . '"
+                    stroke-width="1" stroke-dashoffset="' . (100 - $value) . 'px"
                 ></path>
             </svg>
-            <div>'.$value.'%</div>
+            <div>' . $value . '%</div>
     </div>';
 }
 
@@ -54,12 +53,12 @@ function ub_render_review_block($attributes){
                                     return $item['value'];
                                 }, $parsedItems);
 
-    $average = round(array_sum($extractedValues)/count($extractedValues), 1);
+    $average = round(array_sum($extractedValues) / count($extractedValues), 1);
 
     $ratings = '';
 
-    foreach($parsedItems as $key=>$item){
-        $ratings .= '<div class="ub_review_entry"><span>' . $item['label'] . '</span>' .
+    foreach($parsedItems as $key => $item){
+        $ratings .= '<div class="ub_review_' . ($valueType === 'percent' ? 'percentage_' : '') . 'entry"><span>' . $item['label'] . '</span>' .
         ($valueType === 'star' ? ub_generateStarDisplay($item['value'], $starCount, $blockID . '-' . $key,
                                 $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_stars")
                                 : ub_generatePercentageBar($item['value'], $blockID . '-' . $key, $activePercentBarColor, $percentBarColor ?: '#d9d9d9')  ) . '</div>';
@@ -132,7 +131,7 @@ function ub_render_review_block($attributes){
         break;
         case 'MediaObject':
             $itemExtras = $itemSubtype === 'VideoObject' ? 
-                    ('"uploadDate": "'.date("Y-m-d", $videoUploadDate) . '", 
+                    ('"uploadDate": "' . date("Y-m-d", $videoUploadDate) . '", 
                     "contentUrl": "' . esc_url($videoURL) . '"') : '';
         break;
         default:
@@ -145,7 +144,7 @@ function ub_render_review_block($attributes){
         <p class="ub_review_item_name"' . ($blockID === '' ? ' style="text-align: ' . $titleAlign . ';"' : '') . '>' .
             $itemName . '</p><p class="ub_review_author_name"' .
             ($blockID === '' ? ' style="text-align: ' . $authorAlign . ';"' : '') . '>' . $authorName . '</p>' .
-        (($enableImage || $enableDescription) && ($imgURL != '' || $description != '') ?
+        (($enableImage || $enableDescription) && ($imgURL !== '' || $description !== '') ?
         '<div class="ub_review_description_container">' .
             (!$enableImage || $imgURL === '' ? '' : '<img class="ub_review_image" src="' . $imgURL . '" alt = "' . $imgAlt . '">') .
             (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . $description . '</div>') .
@@ -161,7 +160,7 @@ function ub_render_review_block($attributes){
             '</div>
         </div>
         <div class="ub_review_cta_panel">' .
-        ($enableCTA && $callToActionURL != '' ? '<div class="ub_review_cta_main">
+        ($enableCTA && $callToActionURL !== '' ? '<div class="ub_review_cta_main">
             <a href="' . esc_url($callToActionURL) .
                 '" ' . ($ctaOpenInNewTab ? 'target="_blank" ' : '') . 'rel="' . ($ctaNoFollow ? 'nofollow ' : '') . ($ctaIsSponsored ? 'sponsored ': '') . 'noopener noreferrer"' .
                     ($blockID === '' ? '  style="color: ' . $callToActionForeColor . ';"' : '') . '>
@@ -190,8 +189,8 @@ function ub_render_review_block($attributes){
             "name": "'. esc_html(preg_replace('/(<.+?>)/', '', $authorName)) .'"
         },
         "publisher": "'.$reviewPublisher.'",
-        "datePublished": "'. date("Y-m-d", $publicationDate) . '",
-        "url": "'.get_permalink().'"
+        "datePublished": "' . date("Y-m-d", $publicationDate) . '",
+        "url": "' . get_permalink() . '"
     }</script>')) : '')
     . '</div>';
 }

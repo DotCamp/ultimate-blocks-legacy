@@ -1,17 +1,18 @@
 @import "../../common";
 
-.ub_review_average_stars,
-.ub_review_entry .dashicons-trash {
+.ub_review_average_stars {
 	float: right;
 }
 
-.ub_review_entry {
+.ub_review_entry,
+.ub_review_percentage_entry {
 	margin-right: auto;
 	.components-icon-button {
 		padding: 0;
 	}
 	.dashicons-trash {
 		color: #aaa;
+		float: right;
 		&:hover {
 			color: #222;
 		}
