@@ -103,9 +103,7 @@ const AdvancedHeadingEdit = ({
 					<p>{__("Heading Alignment", "ultimate-blocks")}</p>
 					<AlignmentToolbar
 						value={alignment}
-						onChange={(newAlignment) =>
-							setAttributes({ alignment: newAlignment })
-						}
+						onChange={(alignment) => setAttributes({ alignment })}
 						isCollapsed={false}
 					/>
 					{/* Background & Text Color */}
@@ -114,14 +112,13 @@ const AdvancedHeadingEdit = ({
 						colorSettings={[
 							{
 								value: textColor,
-								onChange: (newTextColor) =>
-									setAttributes({ textColor: newTextColor }),
+								onChange: (textColor) => setAttributes({ textColor }),
 								label: __("Heading Text Color", "ultimate-blocks"),
 							},
 							{
 								value: backgroundColor,
-								onChange: (newBackgroundColor) =>
-									setAttributes({ backgroundColor: newBackgroundColor }),
+								onChange: (backgroundColor) =>
+									setAttributes({ backgroundColor }),
 								label: __("Heading Background Color", "ultimate-blocks"),
 							},
 						]}
@@ -144,18 +141,14 @@ const AdvancedHeadingEdit = ({
 						label={__("Text Transform", "ultimate-blocks")}
 						options={textTransformOptions}
 						value={textTransform}
-						onChange={(newTextTransform) =>
-							setAttributes({ textTransform: newTextTransform })
-						}
+						onChange={(textTransform) => setAttributes({ textTransform })}
 					/>
 					{/* Font Family */}
 					<SelectControl
 						label={__("Font Family", "ultimate-blocks")}
 						options={fontFamilyOptions}
 						value={fontsList.includes(fontFamily) ? fontFamily : "Default"}
-						onChange={(newFontFamily) =>
-							setAttributes({ fontFamily: newFontFamily })
-						}
+						onChange={(fontFamily) => setAttributes({ fontFamily })} //default doesn't work here
 					/>
 					{/* Letter Spacing */}
 					<RangeControl
@@ -194,7 +187,7 @@ const AdvancedHeadingEdit = ({
 					fontSize: fontSize ? `${fontSize}px` : null,
 					letterSpacing,
 					textTransform,
-					fontFamily,
+					fontFamily: fontFamily.includes(" ") ? `'${fontFamily}'` : fontFamily,
 					fontWeight,
 					lineHeight: lineHeight ? `${lineHeight}px` : null,
 				}}

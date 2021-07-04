@@ -23,53 +23,20 @@ export const textTransformOptions = [
 ];
 
 export const fontWeightOptions = [
-	{
-		value: "Normal",
-		label: __("Normal", "ultimate-blocks"),
-	},
-	{
-		value: "Bold",
-		label: __("Bold", "ultimate-blocks"),
-	},
-	{
-		value: "100",
-		label: __("100", "ultimate-blocks"),
-	},
-	{
-		value: "200",
-		label: __("200", "ultimate-blocks"),
-	},
-	{
-		value: "300",
-		label: __("300", "ultimate-blocks"),
-	},
-	{
-		value: "400",
-		label: __("400", "ultimate-blocks"),
-	},
-	{
-		value: "500",
-		label: __("500", "ultimate-blocks"),
-	},
-	{
-		value: "600",
-		label: __("600", "ultimate-blocks"),
-	},
-	{
-		value: "700",
-		label: __("700", "ultimate-blocks"),
-	},
-	{
-		value: "800",
-		label: __("800", "ultimate-blocks"),
-	},
-	{
-		value: "900",
-		label: __("900", "ultimate-blocks"),
-	},
-];
+	"Normal",
+	"Bold",
+	"100",
+	"200",
+	"300",
+	"400",
+	"500",
+	"600",
+	"700",
+	"800",
+	"900",
+].map((o) => ({ value: o, label: __(o, "ultimate-blocks") }));
 
-export const fontFamilyOptions = fontsList.sort().map((fontFamilyOption) => ({
+export const fontFamilyOptions = fontsList.map((fontFamilyOption) => ({
 	value: fontFamilyOption,
 	label: __(fontFamilyOption, "ultimate-blocks"),
 }));
