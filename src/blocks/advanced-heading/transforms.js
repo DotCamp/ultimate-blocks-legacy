@@ -32,6 +32,19 @@ const transforms = {
 			prefix: "#h6",
 			transform: () => createBlock("ub/advanced-heading", { level: "h6" }),
 		},
+		{
+			type: "block",
+			blocks: ["core/heading"],
+			transform: (attributes) =>
+				createBlock("ub/advanced-heading", {
+					content: attributes.content,
+					level: `h${attributes.level}`,
+					alignment: attributes.textAlign,
+					...(attributes.hasOwnProperty("style") && {
+						fontWeight: attributes.style.typography.fontWeight,
+					}),
+				}),
+		},
 	],
 };
 
