@@ -64,7 +64,13 @@ class TableOfContents extends Component {
 				} else {
 					let newBlock = Object.assign({}, block);
 					let blockAttributes = block.attributes;
-					if (block.name === "uagb/advanced-heading") {
+					if (block.name === "ub/advanced-heading") {
+						newBlock.attributes = Object.assign({}, blockAttributes, {
+							level: Number(blockAttributes.level.charAt(1)),
+						});
+						headings.push(newBlock);
+						pageBreaks.push(pageNum);
+					} else if (block.name === "uagb/advanced-heading") {
 						newBlock.attributes = Object.assign(blockAttributes, {
 							content: blockAttributes.headingTitle || "",
 						});
@@ -118,12 +124,19 @@ class TableOfContents extends Component {
 								"themeisle-blocks/advanced-heading",
 								"uagb/advanced-heading",
 								"generateblocks/headline",
+								"ub/advanced-heading",
 							].includes(block.name)
 						);
 
 						if (internalHeadings.length > 0) {
 							internalHeadings = internalHeadings.map((h) => {
 								switch (h.name) {
+									case "ub/advanced-heading":
+										h.attributes = Object.assign({}, h.attributes);
+										if (typeof h.attributes.level !== "number") {
+											h.attributes.level = Number(h.attributes.level.charAt(1));
+										}
+										break;
 									case "kadence/advancedheading":
 										if (!("content" in h.attributes)) {
 											h.attributes.content = "";
@@ -323,8 +336,12 @@ class TableOfContents extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		// call header manipulation to trigger latin alphabet conversion of links
 		const { setAttributes, attributes } = this.props.blockProp;
-		const { headers, replacementHeaders, breaks, currentlyEditedItem } =
-			this.state;
+		const {
+			headers,
+			replacementHeaders,
+			breaks,
+			currentlyEditedItem,
+		} = this.state;
 
 		if (
 			this.props.allowToLatin !== prevProps.allowToLatin ||
@@ -355,9 +372,10 @@ class TableOfContents extends Component {
 						mismatchLocs.push(i);
 					}
 				}
-				let replacements = JSON.parse(JSON.stringify(replacementHeaders)).sort(
-					(a, b) =>
-						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
+				let replacements = JSON.parse(
+					JSON.stringify(replacementHeaders)
+				).sort((a, b) =>
+					newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
 				);
 
 				if (mismatchLocs.length < 1) {
@@ -425,8 +443,13 @@ class TableOfContents extends Component {
 	}
 
 	render() {
-		const { allowedHeaders, blockProp, style, numColumns, listStyle } =
-			this.props;
+		const {
+			allowedHeaders,
+			blockProp,
+			style,
+			numColumns,
+			listStyle,
+		} = this.props;
 
 		const { isSelected } = blockProp;
 
@@ -524,8 +547,9 @@ class TableOfContents extends Component {
 										const revisedHeaders = JSON.parse(
 											JSON.stringify(this.state.headers)
 										);
-										revisedHeaders[item.index].disabled =
-											!revisedHeaders[item.index].disabled;
+										revisedHeaders[item.index].disabled = !revisedHeaders[
+											item.index
+										].disabled;
 										this.setState({ headers: revisedHeaders });
 									}}
 								>
