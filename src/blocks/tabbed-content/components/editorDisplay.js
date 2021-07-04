@@ -617,7 +617,17 @@ export class TabHolder extends Component {
 									this.props.block.clientId,
 									newIndex
 								);
-								showControls("tab-title", oldIndex);
+
+								setAttributes({
+									activeControl: `tab-title-${newIndex}`,
+									activeTab: newIndex,
+								});
+
+								tabs.forEach((tab, i) => {
+									updateBlockAttributes(tab.clientId, {
+										isActive: oldIndex === i,
+									});
+								});
 							}}
 							onRemoveTitle={(i) => {
 								setAttributes({
