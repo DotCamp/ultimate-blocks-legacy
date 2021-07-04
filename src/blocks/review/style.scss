@@ -87,6 +87,9 @@
 	cursor: pointer;
 	font-weight: normal;
 	background-image: none;
+	&:hover {
+		background-image: none;
+	}
 }
 
 .ub_review_item_name {
