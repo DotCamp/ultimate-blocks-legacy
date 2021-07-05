@@ -87,7 +87,8 @@
 	cursor: pointer;
 	font-weight: normal;
 	background-image: none;
-	&:hover {
+	&:hover,
+	&:active {
 		background-image: none;
 	}
 }
