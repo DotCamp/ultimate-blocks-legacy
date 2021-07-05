@@ -470,8 +470,6 @@ export class PanelContent extends Component {
 							newAttributeValues[changedPanel]
 						);
 
-						console.log(newChange);
-
 						if (
 							changedPanel > -1 && //for preventing errors in gutenberg 8
 							newAttributeValues[changedPanel].showOnlyOne

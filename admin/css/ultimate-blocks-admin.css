@@ -99,7 +99,7 @@ input:checked+.ub-switch-input-slider {
     flex-wrap: wrap;
     padding: 15px;
     margin: auto;
-    height: 550px;
+    height: 740px;
     width: 100%;
     max-width: 1040px;
     box-sizing: border-box;
@@ -110,9 +110,9 @@ input:checked+.ub-switch-input-slider {
 
 .ub__collection__item {
     border: 1px solid lightgrey;
-    padding: 15px;
+    padding: 10px;
     margin: 15px 0;
-    height: 80px;
+    height: 70px;
     max-width: 50%;
     margin: 10px;
     transition: all 0.5s ease-in-out;
