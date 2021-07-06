@@ -177,9 +177,10 @@ registerBlockType("ub/styled-box", {
 					[threeColumnsIcon, "Three"],
 				].map((num, i) => (
 					<ToolbarButton
+						className="column-setting-button"
 						icon={num[0]}
 						label={__(`${num[1]} column${i > 0 ? "s" : ""}`)}
-						isActive={text.length === i}
+						isActive={text.length === i + 1}
 						onClick={() =>
 							setAttributes({
 								text: newValue(text, i + 1),
