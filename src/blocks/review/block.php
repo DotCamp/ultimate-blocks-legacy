@@ -1,27 +1,5 @@
 <?php
 
-function ub_generateStarDisplay($value, $limit, $id, $inactiveStarColor,
-    $activeStarColor = '#eeee00', $starOutlineColor = '#000000', $className = ''){
-    $stars = '';
-
-    $starRoute = "m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z";
-
-    foreach(range(0, $limit - 1) as $current){
-        $stars .= '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 150 150">
-        <defs><mask id="ub_review_star_filter-' . $id . '-' . $current
-        .'"><rect height="150" width="' . ($value - $current > 0 ?
-            ($value - $current < 1 ? $value - $current : 1) : 0) * 150
-        .'" y="0" x="0" fill="#fff"/></mask></defs> <path fill="' . $inactiveStarColor . '" stroke-width="2.5"
-        d="' . $starRoute . '"
-        stroke="' . $starOutlineColor . '"/><path class="star" id="star' . $current .
-        '" mask="url(#ub_review_star_filter-' . $id. '-' . $current . ')" fill="' . $activeStarColor . '" strokeWidth="2.5"
-        d="' . $starRoute . '" stroke="' . $starOutlineColor . '"/>
-        </svg>';
-    }
-
-    return '<div class="' . $className . '">' . $stars . '</div>';
-}
-
 function ub_generatePercentageBar($value, $id, $activeColor, $inactiveColor ){
     $percentBar = "M 0.5,0.5 L 99.5,0.5";
     return '<div class="ub_review_percentage">
@@ -42,6 +20,8 @@ function ub_generatePercentageBar($value, $id, $activeColor, $inactiveColor ){
 }
 
 function ub_render_review_block($attributes){
+    require_once dirname(dirname(__DIR__)) . '/common.php';
+    
     extract($attributes);
     $parsedItems = isset($parts) ? $parts : json_decode($items, true);
 
@@ -60,7 +40,7 @@ function ub_render_review_block($attributes){
     foreach($parsedItems as $key => $item){
         $ratings .= '<div class="ub_review_' . ($valueType === 'percent' ? 'percentage_' : '') . 'entry"><span>' . $item['label'] . '</span>' .
         ($valueType === 'star' ? ub_generateStarDisplay($item['value'], $starCount, $blockID . '-' . $key,
-                                $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_stars")
+                                $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_stars", "ub_review_star_filter-")
                                 : ub_generatePercentageBar($item['value'], $blockID . '-' . $key, $activePercentBarColor, $percentBarColor ?: '#d9d9d9')  ) . '</div>';
     }
 
@@ -156,7 +136,7 @@ function ub_render_review_block($attributes){
             ($useSummary ? '<p>' . $summaryDescription . '</p>' : '') .
             '<div class="ub_review_average"><span class="ub_review_rating">' . $average . ($valueType === 'percent' ? '%':'') . '</span>' .
             ($valueType === 'star' ? ub_generateStarDisplay($average, $starCount, $blockID . '-average',
-            $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars") : '' ).
+            $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars", "ub_review_star_filter-") : '' ).
             '</div>
         </div>
         <div class="ub_review_cta_panel">' .

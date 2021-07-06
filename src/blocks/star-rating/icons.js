@@ -23,7 +23,7 @@ export const Star = (props) => (
 			<mask id={`ub_star_rating_filter-${props.id}-${props.index}`}>
 				<rect
 					height="150"
-					width={Math.min(props.value, 1) * 150}
+					width={Math.max(0, Math.min(props.value, 1)) * 150}
 					y="0"
 					x="0"
 					fill="#fff"
