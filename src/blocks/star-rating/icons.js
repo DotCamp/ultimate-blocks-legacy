@@ -33,17 +33,17 @@ export const Star = (props) => (
 
 		<path
 			fill={"none"}
-			strokeWidth="10"
+			strokeWidth="5"
 			d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-			stroke={props.starOutlineColor || "#000000"}
+			stroke={props.displayColor}
 		/>
 		<path
 			className="star"
 			mask={`url(#ub_star_rating_filter-${props.id}-${props.index})`}
 			fill={props.displayColor}
-			strokeWidth="10"
+			strokeWidth="5"
 			d="m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z"
-			stroke={props.starOutlineColor || "#000000"}
+			stroke={props.displayColor}
 		/>
 	</svg>
 );
