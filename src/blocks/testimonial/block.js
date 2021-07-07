@@ -181,7 +181,7 @@ registerBlockType("ub/testimonial-block", {
 					className="ub_testimonial"
 					style={{
 						backgroundColor: backgroundColor,
-						color: textColor || 'inherit',
+						color: textColor || "inherit",
 					}}
 				>
 					<div className="ub_testimonial_img">
@@ -235,7 +235,7 @@ registerBlockType("ub/testimonial", {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: compose([
-		withState({ editable: "" }),
+		withState({ editable: "", activeAlignment: false }),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
 				select("core/block-editor") || select("core/editor");

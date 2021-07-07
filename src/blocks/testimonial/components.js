@@ -9,15 +9,27 @@ const {
 	PanelColorSettings,
 } = wp.blockEditor || wp.editor;
 
-const { Button, PanelBody, RangeControl, ToolbarGroup, ToolbarButton } =
-	wp.components;
+const {
+	Button,
+	PanelBody,
+	RangeControl,
+	ToolbarGroup,
+	ToolbarButton,
+} = wp.components;
 
 import icons from "./icons";
 
 export const blockControls = (props) => {
-	const { editable, attributes, setAttributes } = props;
+	const {
+		editable,
+		activeAlignment,
+		attributes,
+		setAttributes,
+		setState,
+	} = props;
 
 	const { textAlign, authorAlign, authorRoleAlign } = attributes;
+
 	return (
 		<BlockControls>
 			<ToolbarGroup>
@@ -31,30 +43,20 @@ export const blockControls = (props) => {
 									a[0].toUpperCase() +
 									a.slice(1)
 							)}
-							isActive={() => {
-								switch (editable) {
-									case "testimonial_text":
-										return textAlign === a;
-									case "author":
-										return authorAlign === a;
-									case "author_role":
-										return authorRoleAlign === a;
-								}
-							}}
+							isActive={a === activeAlignment}
 							onClick={() => {
 								switch (editable) {
 									case "testimonial_text":
 										setAttributes({ textAlign: a });
+										setState({ activeAlignment: a });
 										break;
 									case "author":
-										setAttributes({
-											authorAlign: a,
-										});
+										setAttributes({ authorAlign: a });
+										setState({ activeAlignment: a });
 										break;
 									case "author_role":
-										setAttributes({
-											authorRoleAlign: a,
-										});
+										setAttributes({ authorRoleAlign: a });
+										setState({ activeAlignment: a });
 										break;
 								}
 							}}
@@ -188,15 +190,17 @@ export const editorDisplay = (props) => {
 						"This is the testimonial body. Add the testimonial text you want to add here."
 					)}
 					className="ub_testimonial_text"
-					style={{
-						fontSize: textSize,
-						textAlign: textAlign,
-					}}
+					style={{ fontSize: textSize, textAlign: textAlign }}
 					onChange={(value) => setAttributes({ ub_testimonial_text: value })}
 					value={ub_testimonial_text}
 					keepPlaceholderOnFocus={true}
 					allowedFormats={["core/bold", "core/strikethrough", "core/link"]}
-					unstableOnFocus={() => setState({ editable: "testimonial_text" })}
+					unstableOnFocus={() =>
+						setState({
+							editable: "testimonial_text",
+							activeAlignment: textAlign,
+						})
+					}
 				/>
 			</div>
 			<div className="ub_testimonial_sign">
@@ -207,7 +211,9 @@ export const editorDisplay = (props) => {
 					onChange={(value) => setAttributes({ ub_testimonial_author: value })}
 					value={ub_testimonial_author}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: "author" })}
+					unstableOnFocus={() =>
+						setState({ editable: "author", activeAlignment: authorAlign })
+					}
 				/>
 				<RichText
 					placeholder={__("Founder, Company X")}
@@ -219,7 +225,12 @@ export const editorDisplay = (props) => {
 					value={ub_testimonial_author_role}
 					keepPlaceholderOnFocus={true}
 					allowedFormats={["core/bold", "core/strikethrough", "core/link"]}
-					unstableOnFocus={() => setState({ editable: "author_role" })}
+					unstableOnFocus={() =>
+						setState({
+							editable: "author_role",
+							activeAlignment: authorRoleAlign,
+						})
+					}
 				/>
 			</div>
 		</div>
