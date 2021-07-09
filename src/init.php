@@ -108,6 +108,12 @@ function ub_load_assets() {
     );
 }
 
+function ub_advanced_heading_add_assets (){
+	//always enqueue on editor, enqueue on frontend only when advanced heading is present 
+	
+	wp_enqueue_style('ultimate_blocks-advanced-heading-fonts',  'https://pagecdn.io/lib/easyfonts/fonts.css');
+}
+
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
 	if ( is_singular() and has_blocks() ){
@@ -118,12 +124,16 @@ function ultimate_blocks_cgb_block_assets() {
         foreach( $presentBlocks as $block ){
             if( strpos($block['blockName'], 'ub/' ) === 0){
                 ub_load_assets();
-                break;
+                if( strpos($block['blockName'], 'ub/advanced-heading' ) === 0){
+                    ub_advanced_heading_add_assets();
+                    break;
+                }
             }
         }
     }
     elseif ( ub_check_is_gutenberg_page() ){
         ub_load_assets();
+        ub_advanced_heading_add_assets();
     }
 } // End function ultimate_blocks_cgb_block_assets().
 
