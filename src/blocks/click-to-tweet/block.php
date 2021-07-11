@@ -26,7 +26,7 @@ add_action( 'init', 'ub_register_meta' );
 function ub_render_click_to_tweet_block( $attributes ) {
     extract($attributes);
 	$via = get_post_meta( get_the_ID(), 'ub_ctt_via', true );
-	$via = ( $via ) ? '&via=' . str_replace( '@', '', $via ) : false;
+	$via = ( $via ) ? '&via=' .  mb_strimwidth( preg_replace( '/[^A-Za-z0-9_]/', '', $via ), 0, 15  ): false; //ensure that only valid Twitter usernames appear
     $tweet = preg_replace('/<br><br>$/', '<br>', $ubTweet);
 	$tweet_url  = ( $tweet ) ? rawurlencode( preg_replace('/<.+?>/', '', str_replace("<br>","\n",$tweet) )) : false;
 

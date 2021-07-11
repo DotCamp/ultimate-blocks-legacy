@@ -77,7 +77,7 @@ return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_a
         ' data-currentSelection="'.json_encode($currentSelection).
         '" data-initiallyShowAll="'.json_encode($initiallyShowAll).
         '" data-matchingOption="'.$matchingOption.'">'. 
-    $filterList.$content.'</div>';
+    $filterList . $content . '</div>';
 }
 
 function ub_register_content_filter_block(){

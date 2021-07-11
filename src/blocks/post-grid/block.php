@@ -27,7 +27,7 @@ function ub_query_post( $attributes ){
             'offset' => $attributes['offset'],
             'post_type' => 'post',
             'ignore_sticky_posts' => 1,
-            'post__not_in' => array($post->ID), // Exclude the current post from the grid.
+            'post__not_in' => array(absint($post->ID)), // Exclude the current post from the grid.
             'tag__in' => $attributes['tagArray'],
             'author__in' => $attributes['authorArray']
         )

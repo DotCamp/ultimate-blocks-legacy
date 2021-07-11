@@ -42,9 +42,9 @@ function ub_render_content_toggle_block($attributes, $content){
     extract($attributes);
 
     return '<div class="wp-block-ub-content-toggle' . (isset($className) ? ' ' . esc_attr($className) : '')
-                .'" '. ($blockID === '' ? '' : 'id="ub-content-toggle-' . $blockID . '"') .
-                 ($preventCollapse ? ' data-preventcollapse="true"' : '') .
-                 ($showOnlyOne ? ' data-showonlyone="true"': '') . '>' . $content.'</div>';
+                . '" ' . ($blockID === '' ? '' : 'id="ub-content-toggle-' . $blockID . '"') .
+                ($preventCollapse ? ' data-preventcollapse="true"' : '') .
+                ($showOnlyOne ? ' data-showonlyone="true"': '') . '>' . $content.'</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){
@@ -222,19 +222,15 @@ function ub_content_toggle_filter( $block_content, $block ) {
                     if($questions !== ""){
                         $questions .= ',' . PHP_EOL;
                     }
-                    $question = preg_replace('/<\/?.+?>/i', '', $togglePanel['attrs']['panelTitle']);
                     
                     $questions .= '{' .
                         '"@type":"Question",' .
-                        '"name":"' . $question .
+                        '"name":"' . wp_filter_nohtml_kses($togglePanel['attrs']['panelTitle']) .
                         '","acceptedAnswer":{' .
                             '"@type":"Answer",' .
                             '"text":"' . trim(str_replace('"', '\"', $answer)) . '"}}';
                 }
-
-
             }
-
         }
         ub_faq_questions($questions);
     }

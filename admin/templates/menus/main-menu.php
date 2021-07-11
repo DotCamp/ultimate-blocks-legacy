@@ -59,7 +59,7 @@
 			<h3><?php esc_html_e( 'Stay Connected with Us', 'ultimate-blocks' ); ?></h3>
 			<ul class="ub__settings_list">
 				<li><a href="https://www.facebook.com/groups/ultimateblocks/" target="_blank"><?php esc_html_e( 'Join Our Facebook Group!', 'ultimate-blocks' ); ?></a></li>
-				<li><a href="https://twitter.com/Ultimate_Blocks" target="_blank""><?php esc_html_e( 'Follow Us on Twitter!', 'ultimate-blocks' ); ?></a></li>
+				<li><a href="https://twitter.com/Ultimate_Blocks" target="_blank"><?php esc_html_e( 'Follow Us on Twitter!', 'ultimate-blocks' ); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -68,7 +68,7 @@
 			<h3 style="text-align: left"><?php esc_html_e( 'Other Plugins From Us', 'ultimate-blocks' ); ?></h3>
 			<ul class="ub__settings_list">
 				<li><a href="https://wordpress.org/plugins/wp-table-builder/" target="_blank"><?php esc_html_e( 'WP Table Builder ', 'ultimate-blocks' ); ?></a> - Drag & drop responsive table builder.</li>
-				<li><a href="https://wordpress.org/plugins/wp-coupons-and-deals/" target="_blank""><?php esc_html_e( 'WP Coupons and Deals', 'ultimate-blocks' ); ?></a> - Coupons & deals plugin for affiliate marketers.</li>
+				<li><a href="https://wordpress.org/plugins/wp-coupons-and-deals/" target="_blank"><?php esc_html_e( 'WP Coupons and Deals', 'ultimate-blocks' ); ?></a> - Coupons & deals plugin for affiliate marketers.</li>
 			</ul>
 		</div>	
 	</div>

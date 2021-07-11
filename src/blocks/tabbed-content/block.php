@@ -81,7 +81,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
     $tabletTabStyle = substr($tabletTabDisplay, 0, strlen($tabletTabDisplay) - 3);
 
     return '<div class="' . $blockName . ($tabStyle !== 'tabs' ? '-' . $tabStyle : '') . ' ' . $blockName . '-holder' . ($tabVertical ? ' vertical-holder' : '')
-            . (isset($className) ? ' ' . esc_attr($className) : '') . (isset($align) ? ' align'.$align : '') 
+            . (isset($className) ? ' ' . esc_attr($className) : '') . (isset($align) ? ' align' . $align : '') 
             . ($mobileTabDisplay !== 'accordion' ? ' ' . $blockName . '-' . $mobileTabStyle . '-holder-mobile' : '')
             . ($tabletTabDisplay !== 'accordion' ? ' ' . $blockName . '-' . $tabletTabStyle . '-holder-tablet' : '')
             . '"' .($blockID === '' ? '' : ' id="ub-tabbed-content-' . $blockID . '"')

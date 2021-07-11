@@ -7353,7 +7353,7 @@ if(!function_exists('ub_generateStarDisplay')){
 		$starRoute = "m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z";
 
 		foreach(range(0, $limit - 1) as $current){
-			$stars .= '<svg xmlns="http://www.w3.org/2000/svg" height="'.$size.'" width="' . $size . '" viewBox="0 0 150 150">
+			$stars .= '<svg xmlns="http://www.w3.org/2000/svg" height="' . $size . '" width="' . $size . '" viewBox="0 0 150 150">
 			<defs><mask id="' . $maskName . $id . '-' . $current
 			. '"><rect height="150" width="' . ($value - $current > 0 ?
 				($value - $current < 1 ? $value - $current : 1) : 0) * 150

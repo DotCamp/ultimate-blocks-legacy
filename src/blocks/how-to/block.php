@@ -35,9 +35,6 @@ function ub_convert_to_paragraphs($string){
     }
 }
 
-function ub_strip_html_tags($string){
-    return preg_replace('/<\/?[a-zA-Z0-9]+( .+(=\".+?\")?)*\/?>/', '', $string);
-}
 
 function ub_render_how_to_block($attributes){
     extract($attributes);
@@ -58,7 +55,7 @@ function ub_render_how_to_block($attributes){
                 if($i > 0){
                     $suppliesCode .= ',';
                 }
-                $suppliesCode .= '{"@type": "HowToSupply", "name": "' . ub_strip_html_tags($s['name']) . '"'.
+                $suppliesCode .= '{"@type": "HowToSupply", "name": "' . wp_filter_nohtml_kses($s['name']) . '"'.
                             ($s['imageURL'] === '' ? '' : ',"image": "' . $s['imageURL'] . '"') . '}';
             }
             $header .= $suppliesListStyle === 'ordered' ? '</ol>' : '</ul>';
@@ -79,7 +76,7 @@ function ub_render_how_to_block($attributes){
                 if($i > 0){
                     $toolsCode .= ',';
                 }
-                $toolsCode .= '{"@type": "HowToTool", "name": "' . ub_strip_html_tags($t['name']) . '"'
+                $toolsCode .= '{"@type": "HowToTool", "name": "' . wp_filter_nohtml_kses($t['name']) . '"'
                                 . ($t['imageURL'] === '' ? '' : ',"image": "' . $t['imageURL'] . '"') .'}';
             }
             $header .= $toolsListStyle === 'ordered' ? '</ol>' : '</ul>';
@@ -113,13 +110,13 @@ function ub_render_how_to_block($attributes){
             $stepsDisplay .= '<li class="ub_howto-section"><' . $secondLevelTag . '>' . $s['sectionName'] . '</' . $secondLevelTag . '>' . 
             ($sectionListStyle === 'ordered' ? '<ol' : '<ul') . ' class="ub_howto-step-display">';
             $stepsCode .= '{"@type": "HowToSection",' . PHP_EOL
-                        . '"name": "'. ub_strip_html_tags($s['sectionName']) . '",' . PHP_EOL
+                        . '"name": "'. wp_filter_nohtml_kses($s['sectionName']) . '",' . PHP_EOL
                         . '"itemListElement": [' . PHP_EOL;
             //get each step inside section
             
             foreach($s['steps'] as $j => $step){
                 $stepsCode .= '{"@type": "HowToStep",' . PHP_EOL
-                            . '"name": "' . ub_strip_html_tags($step['title']) . '",' . PHP_EOL
+                            . '"name": "' . wp_filter_nohtml_kses($step['title']) . '",' . PHP_EOL
                             . ($advancedMode ? '"url": "' . get_permalink() . '#' . $step['anchor'] . '",' . PHP_EOL
                             . ($step['hasVideoClip'] ? '"video":{"@id": "' . $step['anchor'] . '"}' : '') . PHP_EOL : '')
                             . '"image": "' . $step['stepPic']['url'] . '",' . PHP_EOL
@@ -134,13 +131,13 @@ function ub_render_how_to_block($attributes){
                     . ub_convert_to_paragraphs($step['direction']) . PHP_EOL;
 
                 $stepsCode .= '"@type": "HowToDirection",' . PHP_EOL
-                            . '"text": "' . ($step['title'] === '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
-                            . ub_strip_html_tags($step['direction']) . '"}' . PHP_EOL;
+                            . '"text": "' . ($step['title'] === '' || !$advancedMode ? '' : wp_filter_nohtml_kses($step['title']) . ' ')
+                            . wp_filter_nohtml_kses($step['direction']) . '"}' . PHP_EOL;
 
                 if ($step['tip'] !== ''){
                     $stepsDisplay .= ub_convert_to_paragraphs($step['tip']);
                     $stepsCode .= ',{"@type": "HowToTip",' . PHP_EOL
-                                . '"text": "' . ub_strip_html_tags($step['tip']) . '"}' . PHP_EOL;
+                                . '"text": "' . wp_filter_nohtml_kses($step['tip']) . '"}' . PHP_EOL;
                 }
 
                 $stepsCode .= ']}' . PHP_EOL;
@@ -171,19 +168,19 @@ function ub_render_how_to_block($attributes){
                         ub_convert_to_paragraphs($step['direction']);
 
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
-                            . '"name": "'. ub_strip_html_tags($step['title']) . '",' . PHP_EOL
+                            . '"name": "'. wp_filter_nohtml_kses($step['title']) . '",' . PHP_EOL
                             . ($advancedMode ? '"url": "' . get_permalink() . '#' .$step['anchor'] . '",' . PHP_EOL
                             . ($step['hasVideoClip'] ? '"video":{"@id": "' . $step['anchor'] . '"}' : '') . PHP_EOL : '')
                             . '"image": "' . $step['stepPic']['url'] . '",' . PHP_EOL     
                             . '"itemListElement" :[{' . PHP_EOL
                             . '"@type": "HowToDirection",' . PHP_EOL
-                            . '"text": "' . ($step['title'] === '' || !$advancedMode ? '' : ub_strip_html_tags($step['title']) . ' ')
-                                        . ub_strip_html_tags($step['direction']) . '"}' . PHP_EOL;
+                            . '"text": "' . ($step['title'] === '' || !$advancedMode ? '' : wp_filter_nohtml_kses($step['title']) . ' ')
+                                        . wp_filter_nohtml_kses($step['direction']) . '"}' . PHP_EOL;
     
                 if ($step['tip'] !== ''){
                     $stepsDisplay .= ub_convert_to_paragraphs($step['tip']);
                     $stepsCode .= ',{"@type": "HowToTip",' . PHP_EOL
-                                . '"text": "' . ub_strip_html_tags($step['tip']) . '"}' . PHP_EOL;
+                                . '"text": "' . wp_filter_nohtml_kses($step['tip']) . '"}' . PHP_EOL;
                 }
     
                 $stepsDisplay .= '</li>';
@@ -235,29 +232,29 @@ function ub_render_how_to_block($attributes){
     {
         "@context": "http://schema.org",
         "@type": "HowTo",
-        "name":"' . ub_strip_html_tags($title) . '",
-        "description": "' . ub_strip_html_tags($introduction) . '",' .
+        "name":"' . wp_filter_nohtml_kses($title) . '",
+        "description": "' . wp_filter_nohtml_kses($introduction) . '",' .
         ($advancedMode ?
             (array_unique($totalTime) !== array(0)? '"totalTime": "' . $ISOTotalTime . '",' : '').
             ($videoURL === '' ? '' :
             '"video": {
                 "@type": "VideoObject",
-                "name": "' . $videoName . '",
-                "description": "' . $videoDescription . '",
-                "thumbnailUrl": "' . $videoThumbnailURL . '",
-                "contentUrl": "' . $videoURL . '",
+                "name": "' . wp_filter_nohtml_kses($videoName) . '",
+                "description": "' . wp_filter_nohtml_kses($videoDescription) . '",
+                "thumbnailUrl": "' . esc_url($videoThumbnailURL) . '",
+                "contentUrl": "' . esc_url($videoURL) . '",
                 "uploadDate": "'. date('c', $videoUploadDate) . '",
                 "hasPart":[' . $clips . ']
             },') .
             ($cost > 0 ? '"estimatedCost": {
                 "@type": "MonetaryAmount",
-                "currency": "' . ub_strip_html_tags($costCurrency) . '",
-                "value": "' . ub_strip_html_tags($cost) . '"
+                "currency": "' . wp_filter_nohtml_kses($costCurrency) . '",
+                "value": "' . wp_filter_nohtml_kses($cost) . '"
             },' : '')
             .$suppliesCode.','
             .$toolsCode.','
         : '')
-    . $stepsCode . ',"yield": "' . ub_strip_html_tags($howToYield) . '",
+    . $stepsCode . ',"yield": "' . wp_filter_nohtml_kses($howToYield) . '",
     "image": "' . $finalImageURL . '"' . '}</script>';
 
     return '<div class="ub_howto" id="ub_howto_' . $blockID . '"><' . $firstLevelTag . '>'

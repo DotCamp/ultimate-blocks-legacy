@@ -77,7 +77,7 @@ function ub_render_table_of_contents_block($attributes){
                     strrpos($outputString, '</li>'), strlen('</li>'));
 
                 forEach($item as $key => $subItem){
-                    ub_makeListItem($key+1, $subItem, $listStyle, $blockID, $currentGaps);
+                    ub_makeListItem($key + 1, $subItem, $listStyle, $blockID, $currentGaps);
                 }
                 $outputString .= ($listStyle === 'numbered' ? '</ol>' : '</ul>') . '</li>';
             }
@@ -103,7 +103,7 @@ function ub_render_table_of_contents_block($attributes){
                 . (!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ) .
                 '" data-showtext="' . __('show', 'ultimate-blocks') . '" data-hidetext="' . __('hide', 'ultimate-blocks')
                 . '" data-scrolltype="' . $scrollOption . '"' . ($scrollOption === 'fixedamount' ? ' data-scrollamount="' . $scrollOffset . '"' : '')
-                . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType.$scrollTarget . '"' : '')
+                . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . $scrollTarget . '"' : '')
                 . ($blockID === '' ? '' : ' id="ub_table-of-contents-' . $blockID . '"') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
                     data-initiallyshow="' . json_encode($showList) . '">'.
                 (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">

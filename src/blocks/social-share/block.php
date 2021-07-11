@@ -41,12 +41,12 @@ function ub_render_social_share_block( $attributes ) {
 		$icons .= $iconDetails[$icon];
 	}
 
-	if($blockID==''){
-		$icons = str_replace('"><svg', '"'.$additionalStyle.'><svg',$icons);
+	if($blockID === ''){
+		$icons = str_replace('"><svg', '"' . $additionalStyle . '><svg', $icons);
 	}
 
     return '<div class="wp-block-ub-social-share'.(isset($className) ? ' ' . esc_attr($className) : '').
-                '"'.($blockID==''?'':' id="ub-social-share-'.$blockID.'"').'>
+                '"' . ($blockID === '' ? '' : ' id="ub-social-share-' . $blockID . '"') . '>
 		<div class="social-share-icons align-icons-' . $align . '">' . $icons .
         '</div>
 	</div>';
@@ -78,7 +78,7 @@ function ub_get_facebook_icon( $attributes, $icon_size, $iconShape ) {
     $facebook_url = 'https://www.facebook.com/sharer/sharer.php?u='
         . rawurlencode( get_the_permalink() ) . '&title=' . get_the_title();
 
-	return '<a target="_blank" href="' . $facebook_url . '"
+	return '<a target="_blank" href="' . esc_url($facebook_url) . '"
         class="social-share-icon ub-social-share-facebook ' . $iconShape . '">'
             . $facebook_icon .
         '</a>';
@@ -110,7 +110,7 @@ function ub_get_twitter_icon( $attributes, $icon_size, $iconShape ) {
     $twitter_url = 'http://twitter.com/share?text=' . get_the_title() .
 		'&url=' . rawurlencode( get_the_permalink() );
 
-	return '<a target="_blank" href="' . $twitter_url . '"
+	return '<a target="_blank" href="' . esc_url($twitter_url) . '"
         class="social-share-icon ub-social-share-twitter ' . $iconShape . '">'
         . $twitter_icon . '
 	</a>';
@@ -145,7 +145,7 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $iconShape ) {
 		&title=' . get_the_title();
 
 	return '<a target="_blank"
-		href="' . $linkedin_url . '"
+		href="' . esc_url($linkedin_url) . '"
 		class="social-share-icon ub-social-share-linkedin ' . $iconShape . '">'
 		. $linkedin_icon .
 	'</a>';
@@ -187,9 +187,9 @@ function ub_get_pinterest_icon( $attributes, $icon_size, $iconShape ) {
     $pinterest_url = 'https://pinterest.com/pin/create/button/?&url='
         . rawurlencode( get_the_permalink() )
         . '&description=' . get_the_title()
-        . '&media=' . esc_url( $thumbnail );
+        . '&media=' . $thumbnail;
 
-	return '<a target="_blank" href="' . $pinterest_url .
+	return '<a target="_blank" href="' . esc_url($pinterest_url) .
         '"class="social-share-icon ub-social-share-pinterest ' . $iconShape . '">'
         . $pinterest_icon .
 	'</a>';
@@ -224,7 +224,7 @@ function ub_get_reddit_icon( $attributes, $icon_size, $iconShape ) {
         '&title=' . get_the_title();
 
     return '<a target="_blank" href="' .
-        $reddit_url . '"class="social-share-icon ub-social-share-reddit ' .
+        esc_url($reddit_url) . '"class="social-share-icon ub-social-share-reddit ' .
         $iconShape . '">' .
 		$reddit_icon . '</a>';
 }

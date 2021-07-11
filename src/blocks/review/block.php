@@ -46,11 +46,11 @@ function ub_render_review_block($attributes){
 
     $offerCode = '"offers":{
         "@type": "' . $offerType . '",
-        "priceCurrency": "' . esc_html($offerCurrency) . '",' .
+        "priceCurrency": "' . wp_filter_nohtml_kses($offerCurrency) . '",' .
             ($offerType === 'AggregateOffer' ? 
                 '"lowPrice": "' . $offerLowPrice . '",
                 "highPrice": "' . $offerHighPrice . '",
-                "offerCount": "' . $offerCount . '"' 
+                "offerCount": "' . absint($offerCount) . '"' 
             : '"price": "' . $offerPrice . '",
                 "url": "' . esc_url($callToActionURL) . '"' .
                 ($offerExpiry > 0 ? (', "priceValidUntil": "' . date("Y-m-d", $offerExpiry) . '"') : '')).
@@ -60,12 +60,12 @@ function ub_render_review_block($attributes){
 
     switch ($itemType){
         case 'Book':
-            $itemExtras = '"author": "'. esc_html($bookAuthorName) . '",
-                            "isbn": "'. esc_html($isbn) . '",
-                            "saveAs": "' . esc_html($itemPage) . '"';
+            $itemExtras = '"author": "'. wp_filter_nohtml_kses($bookAuthorName) . '",
+                            "isbn": "'. wp_filter_nohtml_kses($isbn) . '",
+                            "saveAs": "' . esc_url($itemPage) . '"';
         break;
         case 'Course':
-            $itemExtras = '"provider": "' . esc_html($provider) . '"';
+            $itemExtras = '"provider": "' . wp_filter_nohtml_kses($provider) . '"';
         break;
         case 'Event':
             $itemExtras = $offerCode . ',
@@ -74,40 +74,40 @@ function ub_render_review_block($attributes){
             '"location":{
                 "@type":'. ($usePhysicalAddress ?
                             '"Place",
-                "name": "' . esc_html($addressName) . '",
-                "address": "' . esc_html($address) . '"' :
+                "name": "' . wp_filter_nohtml_kses($addressName) . '",
+                "address": "' . wp_filter_nohtml_kses($address) . '"' :
                             '"VirtualLocation",
                 "url": "' . esc_url($eventPage) . '"').
             '},
-            "organizer": "' . esc_html($organizer) . '",
-            "performer": "' . esc_html($performer) . '"';
+            "organizer": "' . wp_filter_nohtml_kses($organizer) . '",
+            "performer": "' . wp_filter_nohtml_kses($performer) . '"';
         break;
         case 'Product':
             $itemExtras = '"brand": {
                                 "@type": "Brand",
-                                "name": "' . esc_html($brand) . '"
+                                "name": "' . wp_filter_nohtml_kses($brand) . '"
                             },
-                            "sku": "'. esc_html($sku) .'",
-                            "' . esc_html($identifierType) . '": "' . esc_html($identifier) . '",' . $offerCode;
+                            "sku": "'. wp_filter_nohtml_kses($sku) .'",
+                            "' . wp_filter_nohtml_kses($identifierType) . '": "' . wp_filter_nohtml_kses($identifier) . '",' . $offerCode;
         break;
         case 'LocalBusiness':
             $itemExtras =  isset($cuisines) ? ( '"servesCuisine":' . json_encode($cuisines) . ',') : '' .
-                            '"address": "' . esc_html($address) . '",
-                            "telephone": "' . esc_html($telephone) . '",
-                            "priceRange": "' . esc_html($priceRange) . '",
-                            "saveAs": "' . esc_html($itemPage) . '"';
+                            '"address": "' . wp_filter_nohtml_kses($address) . '",
+                            "telephone": "' . wp_filter_nohtml_kses($telephone) . '",
+                            "priceRange": "' . wp_filter_nohtml_kses($priceRange) . '",
+                            "saveAs": "' . esc_url($itemPage) . '"';
         break;
         case 'Movie':
-            $itemExtras = '"saveAs": "' . esc_html($itemPage) . '"';
+            $itemExtras = '"saveAs": "' . esc_url($itemPage) . '"';
         break;
         case 'Organization':
-            $itemExtras = (in_array($itemSubsubtype, array('Dentist', 'Hospital', 'MedicalClinic', 'Pharmacy', 'Physician')) ? ('"priceRange":"' . esc_html($priceRange) . '",'): '').
-            '"address": "' . esc_html($address) . '",
-            "telephone": "' . $telephone . '"';
+            $itemExtras = (in_array($itemSubsubtype, array('Dentist', 'Hospital', 'MedicalClinic', 'Pharmacy', 'Physician')) ? ('"priceRange":"' . wp_filter_nohtml_kses($priceRange) . '",'): '').
+            '"address": "' . wp_filter_nohtml_kses($address) . '",
+            "telephone": "' . wp_filter_nohtml_kses($telephone) . '"';
         break;
         case 'SoftwareApplication':
-            $itemExtras = '"applicationCategory": "' . esc_html($appCategory) . '",
-                            "operatingSystem": "' . esc_html($operatingSystem) . '",' . $offerCode;
+            $itemExtras = '"applicationCategory": "' . wp_filter_nohtml_kses($appCategory) . '",
+                            "operatingSystem": "' . wp_filter_nohtml_kses($operatingSystem) . '",' . $offerCode;
         break;
         case 'MediaObject':
             $itemExtras = $itemSubtype === 'VideoObject' ? 
@@ -150,13 +150,13 @@ function ub_render_review_block($attributes){
                 '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
         "@context": "http://schema.org/",
         "@type": "Review",' .
-        ($useSummary ? '"reviewBody": "' . esc_html(preg_replace('/(<.+?>)/', '', $summaryDescription)) . '",' : '') .
-        '"description": "' . esc_html(preg_replace('/(<.+?>)/', '', $description)) . '",
+        ($useSummary ? '"reviewBody": "' . wp_filter_nohtml_kses($summaryDescription) . '",' : '') .
+        '"description": "' . wp_filter_nohtml_kses($description) . '",
         "itemReviewed": {
             "@type":"' . ($itemSubsubtype ?: $itemSubtype ?: $itemType) . '",' .
-            ($itemName ? ('"name":"' . esc_html(preg_replace('/(<.+?>)/', '', $itemName)) . '",') : '') .
+            ($itemName ? ('"name":"' . wp_filter_nohtml_kses($itemName) . '",') : '') .
             ($imgURL ? (($itemSubtype === 'VideoObject' ? '"thumbnailUrl' : '"image') . '": "' . esc_url($imgURL) . '",') : '') .
-            '"description": "' . esc_html(preg_replace('/(<.+?>)/', '', $description)) .'"'
+            '"description": "' . wp_filter_nohtml_kses($description) .'"'
                 . ($itemExtras === '' ? '' : ',' . $itemExtras ) .
         '},
         "reviewRating":{
@@ -166,9 +166,9 @@ function ub_render_review_block($attributes){
         },
         "author":{
             "@type": "Person",
-            "name": "'. esc_html(preg_replace('/(<.+?>)/', '', $authorName)) .'"
+            "name": "'. wp_filter_nohtml_kses($authorName) .'"
         },
-        "publisher": "'.$reviewPublisher.'",
+        "publisher": "' . wp_filter_nohtml_kses($reviewPublisher) . '",
         "datePublished": "' . date("Y-m-d", $publicationDate) . '",
         "url": "' . get_permalink() . '"
     }</script>')) : '')

@@ -46,7 +46,7 @@ function ub_render_button_block($attributes){
 
     $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    $buttonDisplay = (!isset($buttons) || count($buttons) === 0 ? '<div class="ub-button-container align-button-' . $align.(isset($className) ? ' ' . esc_attr($className) : '') . '"' . (!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>
+    $buttonDisplay = (!isset($buttons) || count($buttons) === 0 ? '<div class="ub-button-container align-button-' . $align . (isset($className) ? ' ' . esc_attr($className) : '') . '"' . (!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>
     <a href="' . esc_url($url) . '" target="' . ($openInNewTab ? '_blank' : '_self') . '"
     rel="noopener noreferrer' . ($addNofollow ? ' nofollow' : '').'"
     class="ub-button-block-main ub-button-' . $size .
