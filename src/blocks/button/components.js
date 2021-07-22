@@ -19,7 +19,6 @@ const {
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
-	IconButton,
 	Button,
 	ButtonGroup,
 	ToggleControl,
@@ -772,7 +771,9 @@ export class EditorComponent extends Component {
 			iconChoices: [],
 			recentSelection: "",
 			selectionTime: 0,
-			hasApiAccess: true,
+			hasApiAccess: false,
+			isWaiting: true,
+			tempRecentIcons: [],
 		};
 	}
 
@@ -781,64 +782,53 @@ export class EditorComponent extends Component {
 		loadPromise.then(() => {
 			this.settings = new models.Settings();
 
-			this.settings
-				.fetch()
-				.then((response) => {
-					let frequentIcons = [];
+			this.settings.fetch().then((response) => {
+				let frequentIcons = [];
 
-					if (response.ub_icon_choices !== "") {
-						const currentTime = ~~(Date.now() / 1000);
+				if (response.ub_icon_choices !== "") {
+					const currentTime = ~~(Date.now() / 1000);
 
-						//trim old entries from frequenticons that are older than two weeks
-						frequentIcons = JSON.parse(response.ub_icon_choices)
-							.map((f) => ({
-								name: f.name,
-								selectionTime: f.selectionTime.filter(
-									(t) => t >= currentTime - 1209600
-								),
-							}))
-							.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
-					}
-					if (frequentIcons.length) {
-						this.setState({ iconChoices: frequentIcons });
+					//trim old entries from frequenticons that are older than two weeks
+					frequentIcons = JSON.parse(response.ub_icon_choices)
+						.map((f) => ({
+							name: f.name,
+							selectionTime: f.selectionTime.filter(
+								(t) => t >= currentTime - 1209600
+							),
+						}))
+						.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
+				}
+				if (frequentIcons.length) {
+					this.setState({ iconChoices: frequentIcons });
 
-						//check if anything from ub_icon_choices has been trimmed in frequentIcons
-						if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
-							const newIconArray = new models.Settings({
-								ub_icon_choices: JSON.stringify(frequentIcons),
-							});
-							newIconArray.save();
-						}
-
-						let icons = [];
-						let otherIcons = [];
-
-						[icons, otherIcons] = splitArray(
-							iconList.map((name) => allIcons[name]),
-							(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
-						);
-
-						const frequentIconNames = frequentIcons.map((i) => i.name);
-
-						icons.sort(
-							(a, b) =>
-								frequentIconNames.indexOf(a.iconName) -
-								frequentIconNames.indexOf(b.iconName)
-						);
-
-						this.setState({ availableIcons: [...icons, ...otherIcons] });
-					} else {
-						this.setState({
-							availableIcons: iconList.map((name) => allIcons[name]),
+					//check if anything from ub_icon_choices has been trimmed in frequentIcons
+					if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
+						const newIconArray = new models.Settings({
+							ub_icon_choices: JSON.stringify(frequentIcons),
 						});
+						newIconArray.save();
 					}
-				})
-				.catch(() => {
-					this.setState({
-						hasApiAccess: false,
-						availableIcons: iconList.map((name) => allIcons[name]),
-					});
-				});
+
+					let icons = [];
+					let otherIcons = [];
+
+					[icons, otherIcons] = splitArray(
+						iconList.map((name) => allIcons[name]),
+						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
+					);
+
+					const frequentIconNames = frequentIcons.map((i) => i.name);
+
+					icons.sort(
+						(a, b) =>
+							frequentIconNames.indexOf(a.iconName) -
+							frequentIconNames.indexOf(b.iconName)
+					);
+
+					this.setState({ availableIcons: [...icons, ...otherIcons] });
+				}
+				this.setState({ hasApiAccess: true });
+			});
 		});
 	}
 
@@ -924,6 +914,12 @@ export class EditorComponent extends Component {
 			},
 			setAttributes,
 		} = this.props;
+
+		this.setState({
+			availableIcons: Object.keys(allIcons)
+				.sort()
+				.map((name) => allIcons[name]),
+		});
 
 		this.loadIconList();
 
@@ -1372,10 +1368,8 @@ export class EditorComponent extends Component {
 										</div>
 									)}
 									onToggle={(isOpen) => {
-										if (!isOpen) {
-											if (recentSelection && hasApiAccess) {
-												this.updateIconList();
-											}
+										if (!isOpen && recentSelection && hasApiAccess) {
+											this.updateIconList();
 										}
 									}}
 								/>
