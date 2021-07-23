@@ -168,7 +168,7 @@ function ub_include_block_attribute_css() {
                         ($attributes['textColor'] ? 'color: ' . $attributes['textColor'] . ';' . PHP_EOL : '' ) .
                         ($attributes['backgroundColor'] ? 'background-color: ' . $attributes['backgroundColor'] . ';' . PHP_EOL : '') .
                         ($attributes['fontSize'] ? 'font-size: ' . $attributes['fontSize'] . 'px;' . PHP_EOL : '') .
-                        'letter-spacing: ' . $attributes['letterSpacing'] . ';' . PHP_EOL .
+                        'letter-spacing: ' . $attributes['letterSpacing'] . 'px;' . PHP_EOL .
                         'text-transform: ' . $attributes['textTransform']. ';' . PHP_EOL .
                         'font-family: ' . (strpos($attributes['fontFamily'], " ") ? '"' : '')
                                 . $attributes['fontFamily'] . (strpos($attributes['fontFamily'], " ") ? '"' : '') . ';' . PHP_EOL .
