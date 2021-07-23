@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.7
-Stable tag: 2.4.7
+Tested up to: 5.8
+Stable tag: 2.4.8
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,34 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.8 =
+
+* NEW BLOCK: Advanced heading
+* Button - Use default icon list when current user can't access API.
+* Content filter - Prevent parent filter selection from overriding child filter selection.
+* Content filter - Allow converting content filter content to nested group blocks from core.
+* Divider - Change divider width.
+* Divider - Render divider with HR tag.
+* HowTo - Fix errors due to upgrading from previous versions.
+* HowTo - Allow changing tags for main title, section titles, and step titles.
+* HowTo - Prevent crash when toggling section mode while how to result is selected.
+* Image Slider - Upgrade Swiper to version 6.7.1.
+* Image Slider - Make image slider bullets clickable.
+* Image Slider - Make image slider navigation buttons properly respond to space keypress.
+* Image Slider - Enable arrow key navigation.
+* Review - Fix display of review image in Safari.
+* Review - Prevent review image from affecting star layout.
+* Review - Allow setting percentage values for review features.
+* Review - Allow customizing font size of call to action button.
+* Review - Prevent background image from overriding call to action button background color.
+* Star Rating - Fix frontend fractional star display.
+* Star Rating - Set star outline color for star rating in editor to match display color.
+* Styled List - Use default icon list when current user can't access API.
+* Styled List - Fix column count indicator for styled list.
+* Tabbed Content - Fix tab title alignments when rearranging and deleting tabs.
+* Testimonial - Fix alignment indicators in Testimonial.
+* Other - Replace deprecated filter (WordPress 5.8) with new filter.
 
 = 2.4.7 =
 
