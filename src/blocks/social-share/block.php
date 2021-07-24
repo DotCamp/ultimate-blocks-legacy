@@ -107,8 +107,7 @@ function ub_get_twitter_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Twitter URL.
-    $twitter_url = 'http://twitter.com/share?text=' . get_the_title() .
-		'&url=' . rawurlencode( get_the_permalink() );
+    $twitter_url = 'http://twitter.com/intent/tweet?url=' . rawurlencode( get_the_permalink() ) . '&text=' . get_the_title();
 
 	return '<a target="_blank" href="' . esc_url($twitter_url) . '"
         class="social-share-icon ub-social-share-twitter ' . $iconShape . '">'
@@ -140,9 +139,7 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $iconShape ) {
 	);
 
 	// Generate the Linked In URL.
-	$linkedin_url = 'https://www.linkedin.com/shareArticle?mini=true
-		&url=' . rawurlencode( get_the_permalink() ) . '
-		&title=' . get_the_title();
+	$linkedin_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( get_the_permalink() );
 
 	return '<a target="_blank"
 		href="' . esc_url($linkedin_url) . '"
