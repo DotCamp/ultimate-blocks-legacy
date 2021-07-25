@@ -355,7 +355,7 @@ function ub_getTabbedContentDisplayModes(block) {
   } //Keep addListener for these three. addEventListener won't work with safari versions older than 14.
 
 
-  window.matchMedia("(max-width: 699px)").addListener(function (mql) {
+  window.matchMedia("(max-width: 699px)").addEventListener("change", function (mql) {
     if (mql.matches) {
       transitionTo = 1;
     } else {
@@ -364,7 +364,7 @@ function ub_getTabbedContentDisplayModes(block) {
 
     processTransition();
   });
-  window.matchMedia("(min-width: 700px) and (max-width: 899px)").addListener(function (mql) {
+  window.matchMedia("(min-width: 700px) and (max-width: 899px)").addEventListener("change", function (mql) {
     if (mql.matches) {
       transitionTo = 2;
     } else {
@@ -373,7 +373,7 @@ function ub_getTabbedContentDisplayModes(block) {
 
     processTransition();
   });
-  window.matchMedia("(min-width: 900px)").addListener(function (mql) {
+  window.matchMedia("(min-width: 900px)").addEventListener("change", function (mql) {
     if (mql.matches) {
       transitionTo = 3;
     } else {

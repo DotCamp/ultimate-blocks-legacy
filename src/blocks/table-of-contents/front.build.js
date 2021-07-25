@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var mobileQuery = window.matchMedia("(max-width: 800px)");
 
     if (JSON.parse(block.getAttribute("data-initiallyhideonmobile"))) {
-      mobileQuery.addListener(mobileEvent);
+      mobileQuery.addEventListener("change", mobileEvent);
     }
 
     instance.addEventListener("click", function (event) {
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       instance.innerHTML = tocContainer.classList.contains("ub-hiding") ? hideButton : showButton;
-      mobileQuery.removeListener(mobileEvent);
+      mobileQuery.removeEventListener("change", mobileEvent);
     });
     tocContainer.addEventListener("transitionend", function () {
       if (tocContainer.offsetHeight === 0) {
