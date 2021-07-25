@@ -218,7 +218,7 @@ function ub_include_block_attribute_css() {
 
                     break;
                 case 'ub/advanced-heading':
-                    $prefix = '#ub-advanced-heading-' . $attributes['blockID'];
+                    $prefix = '.ub_advanced_heading[data-blockid="' . $attributes['blockID'] . '"]';
                     $blockStylesheets .= $prefix . ' {'. PHP_EOL .
                         ($attributes['alignment'] === 'none' ? '' : 'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL) .
                         ($attributes['textColor'] ? 'color: ' . $attributes['textColor'] . ';' . PHP_EOL : '' ) .

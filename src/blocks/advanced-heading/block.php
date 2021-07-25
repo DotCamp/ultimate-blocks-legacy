@@ -2,7 +2,7 @@
 
 function ub_render_advanced_heading_block($attributes){
     extract($attributes);
-	return '<' . $level . ' class="ub_advanced_heading" id="ub-advanced-heading-'.$blockID.'">' . $content .'</' . $level . '>';
+	return '<' . $level . ' class="ub_advanced_heading" id="' . ($anchor ?: 'ub-advanced-heading-'. $blockID) . '" data-blockid="' . $blockID . '">' . $content . '</' . $level . '>';
 }
 
 function ub_register_advanced_heading_block() {

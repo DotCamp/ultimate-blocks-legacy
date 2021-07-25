@@ -7,6 +7,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'anchor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'content' => array(
                 'type' => 'string',
                 'default' => ''

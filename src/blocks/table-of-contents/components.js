@@ -67,7 +67,6 @@ class TableOfContents extends Component {
 					if (block.name === "ub/advanced-heading") {
 						newBlock.attributes = Object.assign({}, blockAttributes, {
 							level: Number(blockAttributes.level.charAt(1)),
-							anchor: `ub-advanced-heading-${blockAttributes.blockID}`,
 						});
 						headings.push(newBlock);
 						pageBreaks.push(pageNum);
@@ -137,7 +136,6 @@ class TableOfContents extends Component {
 										if (typeof h.attributes.level !== "number") {
 											h.attributes.level = Number(h.attributes.level.charAt(1));
 										}
-										h.attributes.anchor = `ub-advanced-heading-${h.attributes.blockID}`;
 										break;
 									case "kadence/advancedheading":
 										if (!("content" in h.attributes)) {
@@ -203,8 +201,7 @@ class TableOfContents extends Component {
 			headers.forEach((heading, key) => {
 				if (
 					!heading.anchor ||
-					(heading.anchor.indexOf("themeisle-otter ") === -1 &&
-						heading.anchor.indexOf("ub-advanced-heading") === -1)
+					heading.anchor.indexOf("themeisle-otter ") === -1
 				) {
 					heading.anchor = `${key}-${
 						typeof heading.content === "undefined"
@@ -236,6 +233,15 @@ class TableOfContents extends Component {
 					) {
 						updateBlockAttributes(heading.clientId, {
 							elementId: heading.anchor,
+						});
+					}
+
+					if (
+						heading.blockName === "ub/advanced-heading" &&
+						heading.anchor !== getBlock(heading.clientId).attributes.anchor
+					) {
+						updateBlockAttributes(heading.clientId, {
+							anchor: heading.anchor,
 						});
 					}
 				}
