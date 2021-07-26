@@ -380,8 +380,8 @@ class HowToStep extends Component {
 
 		if (prevProps.videoURL !== videoURL) {
 			this.setState({
-				startTime: defaultTimeDisplay,
-				endTime: defaultTimeDisplay,
+				startTime: Object.assign({}, defaultTimeDisplay),
+				endTime: Object.assign({}, defaultTimeDisplay),
 			});
 		}
 	}
@@ -842,10 +842,7 @@ class HowToSection extends Component {
 									newSteps.forEach(
 										(step, j) => (step.anchor = `section${sectionNum}step${j}`)
 									);
-									editSection({
-										sectionName,
-										steps: newSteps,
-									});
+									editSection({ sectionName, steps: newSteps });
 									//set value of currentStep to recently-moved step
 									updateState({
 										currentStep: `section-${sectionNum}-step-${i - 1}`,
@@ -863,10 +860,7 @@ class HowToSection extends Component {
 									newSteps.forEach(
 										(step, j) => (step.anchor = `section${sectionNum}step${j}`)
 									);
-									editSection({
-										sectionName,
-										steps: newSteps,
-									});
+									editSection({ sectionName, steps: newSteps });
 									updateState({
 										currentStep: `section-${sectionNum}-step-${i + 1}`,
 									});
