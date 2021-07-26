@@ -545,6 +545,7 @@ class HowToStep extends Component {
 											value={startTime.d}
 											min={0}
 											step={1}
+											title={__("Days")}
 											onChange={(e) => {
 												const { h, m, s } = this.state.startTime;
 												const d = Number(e.target.value);
@@ -570,6 +571,7 @@ class HowToStep extends Component {
 											min={0}
 											max={23}
 											step={1}
+											title={__("Hours")}
 											onChange={(e) => {
 												const { d, m, s } = this.state.startTime;
 												const h = Number(e.target.value);
@@ -596,6 +598,7 @@ class HowToStep extends Component {
 											min={0}
 											max={59}
 											step={1}
+											title={__("Minutes")}
 											onChange={(e) => {
 												const { d, h, s } = this.state.startTime;
 												const m = Number(e.target.value);
@@ -621,6 +624,7 @@ class HowToStep extends Component {
 										min={0}
 										max={59}
 										step={1}
+										title={__("Seconds")}
 										onChange={(e) => {
 											const { d, h, m } = this.state.startTime;
 											const s = Number(e.target.value);
@@ -649,6 +653,7 @@ class HowToStep extends Component {
 											value={endTime.d}
 											min={0}
 											step={1}
+											title={__("Days")}
 											onChange={(e) => {
 												const { h, m, s } = this.state.endTime;
 												const d = Number(e.target.value);
@@ -674,6 +679,7 @@ class HowToStep extends Component {
 											min={0}
 											max={23}
 											step={1}
+											title={__("Hours")}
 											onChange={(e) => {
 												const { d, m, s } = this.state.endTime;
 												const h = Number(e.target.value);
@@ -700,6 +706,7 @@ class HowToStep extends Component {
 											min={0}
 											max={59}
 											step={1}
+											title={__("Minutes")}
 											onChange={(e) => {
 												const { d, h, s } = this.state.endTime;
 												const m = Number(e.target.value);
@@ -725,6 +732,7 @@ class HowToStep extends Component {
 										min={0}
 										max={59}
 										step={1}
+										title={__("Seconds")}
 										onChange={(e) => {
 											const { d, h, m } = this.state.endTime;
 											const s = Number(e.target.value);
