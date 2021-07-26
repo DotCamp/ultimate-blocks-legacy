@@ -151,15 +151,19 @@ class InspectorPanel extends Component {
 							/>
 						</>
 					)}
-					<RadioControl
-						label={__("Section list style")}
-						selected={sectionListStyle}
-						options={["none", "ordered", "unordered"].map((a) => ({
-							label: __(a),
-							value: a,
-						}))}
-						onChange={(sectionListStyle) => setAttributes({ sectionListStyle })}
-					/>
+					{useSections && (
+						<RadioControl
+							label={__("Section list style")}
+							selected={sectionListStyle}
+							options={["none", "ordered", "unordered"].map((a) => ({
+								label: __(a),
+								value: a,
+							}))}
+							onChange={(sectionListStyle) =>
+								setAttributes({ sectionListStyle })
+							}
+						/>
+					)}
 				</PanelBody>
 				{activeImage.width > 0 && (
 					<PanelBody title={__("Desktop image display settings")}>
