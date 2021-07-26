@@ -551,7 +551,11 @@ export class PanelContent extends Component {
 		];
 
 		if (this.props.attributes.blockID === "") {
-			setAttributes({ blockID: block.clientId, matchingOption: "matchAny" });
+			setAttributes({
+				blockID: block.clientId,
+				matchingOption: "matchAny",
+				activeButtonTextColor: "#ffffff",
+			});
 		} else if (
 			getClientIdsWithDescendants().some(
 				(ID) =>

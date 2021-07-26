@@ -32,7 +32,7 @@ const attributes = {
 	},
 	activeButtonTextColor: {
 		type: "string",
-		default: "#ffffff",
+		default: "",
 	},
 	initiallyShowAll: {
 		type: "boolean",
