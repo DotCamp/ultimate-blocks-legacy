@@ -219,6 +219,21 @@ registerBlockType("ub/content-toggle-block", {
 
 	attributes,
 
+	transforms: {
+		to: [
+			{
+				type: "block",
+				blocks: "core/group",
+				transform: (_, innerBlocks) =>
+					createBlock(
+						"core/group",
+						{},
+						innerBlocks.map((i) => createBlock("core/group", {}, i.innerBlocks))
+					),
+			},
+		],
+	},
+
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const {
