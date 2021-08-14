@@ -19,7 +19,7 @@ function ub_content_toggle_add_frontend_assets() {
                 wp_enqueue_script(
                     'ultimate_blocks-content-toggle-front-script',
                     plugins_url( 'content-toggle/front.build.js', dirname( __FILE__ ) ),
-                    array(  ),
+                    array( ),
                     Ultimate_Blocks_Constants::plugin_version(),
                     true
                 );
@@ -27,7 +27,7 @@ function ub_content_toggle_add_frontend_assets() {
             }
 
             if( is_singular() && isset($block['attrs']['hasFAQSchema'])) {
-                add_action('wp_footer', 'ub_merge_faqpages', 20);
+                add_action('wp_footer', 'ub_merge_faqpages', 80);
                 break;
             }
         }
@@ -96,41 +96,28 @@ add_action( 'wp_enqueue_scripts', 'ub_content_toggle_add_frontend_assets' );
 
 add_filter( 'render_block', 'ub_content_toggle_filter', 10, 3);
 
-function ub_faq_questions($qna = ''){
-    static $parsed_qna = '';
+function ub_faq_questions($qna = array()){
+    static $parsed_qna = array();
 
     if(!isset($qna)){
-        $parsed_qna = '';
+        $parsed_qna = array();
     }
 
     if(empty($qna)){
-        return rtrim($parsed_qna, " ,\n\r\t\v\0");
+        return $parsed_qna;
     }
     else{
-        $uniqueItems = json_encode(array_values(array_unique(json_decode('[' . $qna . ']'), SORT_REGULAR)), JSON_UNESCAPED_SLASHES);
+        $current_qna = array() ;
 
-        $current_qna = substr($uniqueItems, 1, strlen($uniqueItems)-2) ;
+        $current = array_map( function($item){ return json_encode($item); }, $parsed_qna );
+        $newItems = array_map( function($item){ return json_encode($item); }, $qna );
 
-        if($parsed_qna != ''){
-            $current = json_decode('[' . $parsed_qna . ']');
-            $newItems = json_decode('[' . $qna . ']');
-            foreach($newItems as $item){
-                if(is_array($current) && in_array($item, $current)){
-                    $current_qna = str_replace(json_encode($item, JSON_UNESCAPED_SLASHES), 'false', $current_qna);
-                }
+        foreach($newItems as $index => $item){
+            if( !in_array($item, $current) ){
+                array_push($current_qna, $qna[$index]);
             }
-            $currentItems = json_encode(array_values(
-                                array_filter(
-                                    json_decode('['.$current_qna . ']')
-                                )
-                            ), JSON_UNESCAPED_SLASHES);
-
-            $current_qna = substr($currentItems, 1, strlen($currentItems)-2) ;
-            $parsed_qna .= ',' . PHP_EOL;
         }
-        if($current_qna != ',' . PHP_EOL){
-            $parsed_qna .= $current_qna;
-        }
+        $parsed_qna = array_merge($parsed_qna, $current_qna);
         return true;
     }
 }
@@ -163,7 +150,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
             return $elem->innertext;
         }, $panel);
 
-        $questions = "";
+        $questions = array();
 
         foreach($block['innerBlocks'] as $key => $togglePanel){
             if(isset($panel[$key])){
@@ -218,17 +205,15 @@ function ub_content_toggle_filter( $block_content, $block ) {
                         return str_replace($matches[1], $attributeList, $matches[0]);
                 }, $answer);
 
-                if($answer !== "" && $togglePanel['attrs']['panelTitle'] !== ''){ //blank answers and questions are invalid
-                    if($questions !== ""){
-                        $questions .= ',' . PHP_EOL;
-                    }
+                if($answer !== "" && array_key_exists('panelTitle', $togglePanel['attrs']) && $togglePanel['attrs']['panelTitle'] !== ''){ //blank answers and questions are invalid
                     
-                    $questions .= '{' .
-                        '"@type":"Question",' .
-                        '"name":"' . wp_filter_nohtml_kses($togglePanel['attrs']['panelTitle']) .
-                        '","acceptedAnswer":{' .
-                            '"@type":"Answer",' .
-                            '"text":"' . trim(str_replace('"', '\"', $answer)) . '"}}';
+                    array_push($questions, array(
+                        '@type' => 'Question',
+                        'name' => wp_filter_nohtml_kses($togglePanel['attrs']['panelTitle']),
+                        'acceptedAnswer' => array(
+                            '@type' => 'Answer',
+                            'text' => trim(str_replace('"', '\"', $answer))
+                        ) ) );
                 }
             }
         }
@@ -242,6 +227,6 @@ function ub_merge_faqpages(){
     ?><?php echo '<script type="application/ld+json">{
             "@context":"http://schema.org/",
             "@type":"FAQPage",
-            "mainEntity": [' . ub_faq_questions() . ']}</script>';  ?>
+            "mainEntity": ' . json_encode(ub_faq_questions(), JSON_UNESCAPED_SLASHES) . '}</script>';  ?>
 <?php
 }
