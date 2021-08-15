@@ -1,18 +1,29 @@
 <?php
 
-function generateISODurationCode($inputArr){
-    $newInputArr = $inputArr;
+function generateISODurationCode($rawInput){
+    if(is_array($rawInput)){
+        $inputArr = $rawInput;
+    }
+    else{
+        $inputArr = array_fill(0, 7, 0);
+
+        $inputArr[3] = ($rawInput - $rawInput % 86400) / 86400;
+        $inputArr[4] = (($rawInput - $rawInput % 3600) / 3600) % 24;
+        $inputArr[5] = (($rawInput - $rawInput % 60) / 60) % 60 ;
+        $inputArr[6] = $rawInput % 60;
+    }
+
     $tIsAbsent = true;
     $output = 'P';
     $unitLetters = ['Y', 'M', 'W', 'D', 'H', 'M', 'S'];
 
-    if( $newInputArr[2] > 0 && 
-        count(array_filter($newInputArr, function($item){return $item > 0;})) > 1 ){
-            $newInputArr[3] += $newInputArr[2] * 7;
-            $newInputArr[2] = 0;
+    if($inputArr[2] > 0 && 
+        count(array_filter($inputArr, function($item){return $item > 0;})) > 1 ){
+            $inputArr[3] += $inputArr[2] * 7;
+            $inputArr[2] = 0;
     }
 
-    foreach($newInputArr as $i => $t){
+    foreach($inputArr as $i => $t){
         if($i > 3 && $tIsAbsent){
             $output .= 'T';
             $tIsAbsent = false;
@@ -118,7 +129,7 @@ function ub_render_how_to_block($attributes){
                 $stepsCode .= '{"@type": "HowToStep",' . PHP_EOL
                             . '"name": "' . wp_filter_nohtml_kses($step['title']) . '",' . PHP_EOL
                             . ($advancedMode ? '"url": "' . get_permalink() . '#' . $step['anchor'] . '",' . PHP_EOL
-                            . ($step['hasVideoClip'] ? '"video":{"@id": "' . $step['anchor'] . '"}' : '') . PHP_EOL : '')
+                            . ($step['hasVideoClip'] ? '"video":{"@id": "' . $step['anchor'] . '"},' : '') . PHP_EOL : '')
                             . '"image": "' . $step['stepPic']['url'] . '",' . PHP_EOL
                             . '"itemListElement" :[{' . PHP_EOL;
 
@@ -170,7 +181,7 @@ function ub_render_how_to_block($attributes){
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
                             . '"name": "'. wp_filter_nohtml_kses($step['title']) . '",' . PHP_EOL
                             . ($advancedMode ? '"url": "' . get_permalink() . '#' .$step['anchor'] . '",' . PHP_EOL
-                            . ($step['hasVideoClip'] ? '"video":{"@id": "' . $step['anchor'] . '"}' : '') . PHP_EOL : '')
+                            . ($step['hasVideoClip'] ? '"video":{"@id": "' . $step['anchor'] . '"},' : '') . PHP_EOL : '')
                             . '"image": "' . $step['stepPic']['url'] . '",' . PHP_EOL     
                             . '"itemListElement" :[{' . PHP_EOL
                             . '"@type": "HowToDirection",' . PHP_EOL
@@ -240,7 +251,8 @@ function ub_render_how_to_block($attributes){
             '"video": {
                 "@type": "VideoObject",
                 "name": "' . wp_filter_nohtml_kses($videoName) . '",
-                "description": "' . wp_filter_nohtml_kses($videoDescription) . '",
+                "description": "' . (wp_filter_nohtml_kses($videoDescription) ?:  __("No description provided") ) . '",
+                "duration" : "' . generateISODurationCode($videoDuration) . '",
                 "thumbnailUrl": "' . esc_url($videoThumbnailURL) . '",
                 "contentUrl": "' . esc_url($videoURL) . '",
                 "uploadDate": "'. date('c', $videoUploadDate) . '",
