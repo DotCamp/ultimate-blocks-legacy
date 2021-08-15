@@ -1418,21 +1418,41 @@ $defaultValues = array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
+            'facebookCaption' => array(
+                'type' => 'string',
+                'default' => 'share'
+            ),
             'showTwitterIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'twitterCaption' => array(
+                'type' => 'string',
+                'default' => 'tweet'
             ),
             'showLinkedInIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
+            'linkedInCaption' => array(
+                'type' => 'string',
+                'default' => 'share'
+            ),
             'showPinterestIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
+            'pinterestCaption' => array(
+                'type' => 'string',
+                'default' => 'pin'
+            ),
             'showRedditIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'redditCaption' => array(
+                'type' => 'string',
+                'default' => 'post'
             ),
             'showGooglePlusIcon' => array(
                 'type'    => 'boolean',
@@ -1441,6 +1461,10 @@ $defaultValues = array(
             'showTumblrIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'tumblrCaption' => array(
+                'type' => 'string',
+                'default' => 'share'
             ),
             'iconSize'    => array(
                 'type'    => 'string',
@@ -1464,7 +1488,15 @@ $defaultValues = array(
             'buttonColor' => array(
                 'type' => 'string',
                 'default' => ''
-            )  
+            ),
+            'useCaptions' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'addOutline' => array(
+                'type' => 'boolean',
+                'default' => false
+            )
         )
     ),
     'ub/star-rating-block' => array(

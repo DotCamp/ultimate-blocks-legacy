@@ -4,7 +4,14 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
-const { PanelBody, PanelRow, RadioControl, FormToggle } = wp.components;
+const {
+	PanelBody,
+	PanelRow,
+	RadioControl,
+	FormToggle,
+	ToggleControl,
+	TextControl,
+} = wp.components;
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -12,7 +19,20 @@ const { PanelBody, PanelRow, RadioControl, FormToggle } = wp.components;
 export default class Inspector extends Component {
 	render() {
 		const { attributes, setAttributes } = this.props;
-		const { iconShape, iconSize, iconOrder, buttonColor } = attributes;
+		const {
+			iconShape,
+			iconSize,
+			iconOrder,
+			buttonColor,
+			useCaptions,
+			addOutline,
+			facebookCaption,
+			twitterCaption,
+			linkedInCaption,
+			pinterestCaption,
+			redditCaption,
+			tumblrCaption,
+		} = attributes;
 		return (
 			<InspectorControls>
 				<PanelBody title={__("Size")} initialOpen={false}>
@@ -34,6 +54,7 @@ export default class Inspector extends Component {
 						options={[
 							{ label: "Circle", value: "circle" },
 							{ label: "Square", value: "square" },
+							{ label: "None", value: "none" },
 						]}
 						onChange={(value) => setAttributes({ iconShape: value })}
 					/>
@@ -171,6 +192,72 @@ export default class Inspector extends Component {
 							}}
 						/>
 					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__("Captions")} initialOpen={false}>
+					<ToggleControl
+						label={__("Include captions for each icon", "ultimate-blocks")}
+						checked={useCaptions}
+						onChange={() => setAttributes({ useCaptions: !useCaptions })}
+					/>
+					{useCaptions && (
+						<>
+							<ToggleControl
+								label={__("Include outline for each icon", "ultimate-blocks")}
+								checked={addOutline}
+								onChange={() => setAttributes({ addOutline: !addOutline })}
+							/>
+							{iconOrder.indexOf("facebook") > -1 && (
+								<TextControl
+									label={__("Facebook caption")}
+									value={facebookCaption}
+									onChange={(facebookCaption) =>
+										setAttributes({ facebookCaption })
+									}
+								/>
+							)}
+							{iconOrder.indexOf("twitter") > -1 && (
+								<TextControl
+									label={__("Twitter caption")}
+									value={twitterCaption}
+									onChange={(twitterCaption) =>
+										setAttributes({ twitterCaption })
+									}
+								/>
+							)}
+							{iconOrder.indexOf("linkedin") > -1 && (
+								<TextControl
+									label={__("LinkedIn caption")}
+									value={linkedInCaption}
+									onChange={(linkedInCaption) =>
+										setAttributes({ linkedInCaption })
+									}
+								/>
+							)}
+							{iconOrder.indexOf("pinterest") > -1 && (
+								<TextControl
+									label={__("Pinterest caption")}
+									value={pinterestCaption}
+									onChange={(pinterestCaption) =>
+										setAttributes({ pinterestCaption })
+									}
+								/>
+							)}
+							{iconOrder.indexOf("reddit") > -1 && (
+								<TextControl
+									label={__("Reddit caption")}
+									value={redditCaption}
+									onChange={(redditCaption) => setAttributes({ redditCaption })}
+								/>
+							)}
+							{iconOrder.indexOf("tumblr") > -1 && (
+								<TextControl
+									label={__("Tumblr caption")}
+									value={tumblrCaption}
+									onChange={(tumblrCaption) => setAttributes({ tumblrCaption })}
+								/>
+							)}
+						</>
+					)}
 				</PanelBody>
 				<PanelBody title={__("Color")} initialOpen={false}>
 					<PanelRow>

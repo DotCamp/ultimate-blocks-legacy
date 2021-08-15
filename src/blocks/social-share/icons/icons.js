@@ -1,9 +1,9 @@
-export const FacebookIcon = props => {
+export const FacebookIcon = (props) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			style={{ fill: '#ffffff' }}
-			fill="#ffffff"
+			style={{ fill: props.color }}
+			fill={props.color}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 264 512"
@@ -13,12 +13,12 @@ export const FacebookIcon = props => {
 	);
 };
 
-export const TwitterIcon = props => {
+export const TwitterIcon = (props) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			style={{ fill: '#ffffff' }}
-			fill="#ffffff"
+			style={{ fill: props.color }}
+			fill={props.color}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 512 512"
@@ -28,12 +28,12 @@ export const TwitterIcon = props => {
 	);
 };
 
-export const LinkedInIcon = props => {
+export const LinkedInIcon = (props) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			style={{ fill: '#ffffff' }}
-			fill="#ffffff"
+			style={{ fill: props.color }}
+			fill={props.color}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 448 512"
@@ -43,12 +43,12 @@ export const LinkedInIcon = props => {
 	);
 };
 
-export const PinterestIcon = props => {
+export const PinterestIcon = (props) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			style={{ fill: '#ffffff' }}
-			fill="#ffffff"
+			style={{ fill: props.color }}
+			fill={props.color}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 384 512"
@@ -58,12 +58,12 @@ export const PinterestIcon = props => {
 	);
 };
 
-export const RedditIcon = props => {
+export const RedditIcon = (props) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			style={{ fill: '#ffffff' }}
-			fill="#ffffff"
+			style={{ fill: props.color }}
+			fill={props.color}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 512 512"
@@ -73,12 +73,12 @@ export const RedditIcon = props => {
 	);
 };
 
-export const GooglePlusIcon = props => {
+export const GooglePlusIcon = (props) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			style={{ fill: '#ffffff' }}
-			fill="#ffffff"
+			style={{ fill: props.color }}
+			fill={props.color}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 640 512"
@@ -88,12 +88,12 @@ export const GooglePlusIcon = props => {
 	);
 };
 
-export const TumblrIcon = props => {
+export const TumblrIcon = (props) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			style={{ fill: '#ffffff' }}
-			fill="#ffffff"
+			style={{ fill: props.color }}
+			fill={props.color}
 			width={props.width}
 			height={props.height}
 			viewBox="0 0 320 512"

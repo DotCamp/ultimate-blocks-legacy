@@ -16,6 +16,19 @@
 				border-radius: 0%;
 			}
 		}
+		$sites: facebook, twitter, linkedin, pinterest, reddit, tumblr;
+
+		@each $site in $sites {
+			.ub-social-share-#{$site}-container {
+				border-width: 1px;
+				border-style: solid;
+				white-space: nowrap;
+			}
+		}
+		> div {
+			display: flex;
+			align-items: center;
+		}
 	}
 }
 .align-icons-center {
@@ -28,30 +41,20 @@
 	justify-content: flex-end;
 }
 
-.ub-social-share-facebook {
-	background-color: #365899;
-}
+$site-colors: (
+	facebook: #1877f2,
+	twitter: #1d9bf0,
+	linkedin: #2867b2,
+	pinterest: #e60023,
+	reddit: #ff4500,
+	tumblr: #001935,
+);
 
-.ub-social-share-twitter {
-	background-color: #1da1f2;
-}
-
-.ub-social-share-linkedin {
-	background-color: #0073b1;
-}
-
-.ub-social-share-pinterest {
-	background-color: #bd081c;
-}
-
-.ub-social-share-reddit {
-	background-color: #ff4500;
-}
-
-.ub-social-share-google-plus {
-	background-color: #db4437;
-}
-
-.ub-social-share-tumblr {
-	background-color: #36465d;
+@each $site, $color in $site-colors {
+	.ub-social-share-#{$site} {
+		background-color: $color;
+		& + span {
+			color: $color;
+		}
+	}
 }

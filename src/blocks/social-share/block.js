@@ -54,52 +54,117 @@ const { withState, compose } = wp.compose;
  *                             registered; otherwise `undefined`.
  */
 
-const SortableItem = SortableElement(({ icon, iconSize, iconShape, color }) => {
-	const iconDetails = {
-		facebook: {
-			bgColor: color || "#365899",
-			main: <FacebookIcon width={iconSize} height={iconSize} />,
-		},
-		linkedin: {
-			bgColor: color || "#0073b1",
-			main: <LinkedInIcon width={iconSize} height={iconSize} />,
-		},
-		pinterest: {
-			bgColor: color || "#bd081c",
-			main: <PinterestIcon width={iconSize} height={iconSize} />,
-		},
-		twitter: {
-			bgColor: color || "#1da1f2",
-			main: <TwitterIcon width={iconSize} height={iconSize} />,
-		},
-		tumblr: {
-			bgColor: color || "#36465d",
-			main: <TumblrIcon width={iconSize} height={iconSize} />,
-		},
-		reddit: {
-			bgColor: color || "#ff4500",
-			main: <RedditIcon width={iconSize} height={iconSize} />,
-		},
-	};
+const SortableItem = SortableElement(
+	({ icon, iconSize, iconShape, color, caption, addOutline }) => {
+		const iconDetails = {
+			facebook: {
+				bgColor: color || "#1877f2",
+				main: (
+					<FacebookIcon
+						width={iconSize}
+						height={iconSize}
+						color={iconShape === "none" ? color || "#1877f2" : "#ffffff"}
+					/>
+				),
+			},
+			linkedin: {
+				bgColor: color || "#2867b2",
+				main: (
+					<LinkedInIcon
+						width={iconSize}
+						height={iconSize}
+						color={iconShape === "none" ? color || "#2867b2" : "#ffffff"}
+					/>
+				),
+			},
+			pinterest: {
+				bgColor: color || "#e60023",
+				main: (
+					<PinterestIcon
+						width={iconSize}
+						height={iconSize}
+						color={iconShape === "none" ? color || "#e60023" : "#ffffff"}
+					/>
+				),
+			},
+			twitter: {
+				bgColor: color || "#1d9bf0",
+				main: (
+					<TwitterIcon
+						width={iconSize}
+						height={iconSize}
+						color={iconShape === "none" ? color || "#1d9bf0" : "#ffffff"}
+					/>
+				),
+			},
+			tumblr: {
+				bgColor: color || "#001935",
+				main: (
+					<TumblrIcon
+						width={iconSize}
+						height={iconSize}
+						color={iconShape === "none" ? color || "#001935" : "#ffffff"}
+					/>
+				),
+			},
+			reddit: {
+				bgColor: color || "#ff4500",
+				main: (
+					<RedditIcon
+						width={iconSize}
+						height={iconSize}
+						color={iconShape === "none" ? color || "#ff4500" : "#ffffff"}
+					/>
+				),
+			},
+		};
 
-	return (
-		<div
-			href="#ub-social-share-block-editor"
-			className={"ub-social-share-icon social-share-icon " + iconShape}
-			style={{
-				width: iconSize * 1.5,
-				height: iconSize * 1.5,
-				backgroundColor: iconDetails[icon].bgColor,
-				borderRadius: iconShape === "circle" ? "50%" : "0",
-			}}
-		>
-			{iconDetails[icon].main}
-		</div>
-	);
-});
+		return (
+			<div
+				style={
+					addOutline
+						? {
+								border: `1px solid ${iconDetails[icon].bgColor}`,
+								margin: "5px",
+								paddingRight: "5px",
+						  }
+						: null
+				}
+			>
+				<div
+					href="#ub-social-share-block-editor"
+					className={
+						"ub-social-share-icon social-share-icon " + iconShape + " " + icon
+					}
+					style={{
+						width: iconSize * 1.5,
+						height: iconSize * 1.5,
+						backgroundColor:
+							iconShape === "none" ? "transparent" : iconDetails[icon].bgColor,
+						borderRadius: iconShape === "circle" ? "50%" : "0",
+						display: "inline-flex",
+						boxShadow: iconShape === "none" ? "none" : null,
+					}}
+				>
+					{iconDetails[icon].main}
+				</div>
+				<span style={{ color: iconDetails[icon].bgColor }}>{caption}</span>
+			</div>
+		);
+	}
+);
 
 const SortableList = SortableContainer(
-	({ items, iconShape, iconSize, align, color }) => (
+	({
+		items,
+		iconShape,
+		iconSize,
+		align,
+		color,
+		captions,
+		useCaptions,
+		addOutline,
+	}) => (
 		<div
 			className={"social-share-icons align-icons-" + align}
 			style={{ display: "flex", flexDirection: "row" }}
@@ -112,6 +177,8 @@ const SortableList = SortableContainer(
 					iconShape={iconShape}
 					iconSize={iconSize}
 					color={color}
+					addOutline={addOutline && useCaptions}
+					caption={useCaptions ? captions[value] : ""}
 				/>
 			))}
 		</div>
@@ -132,25 +199,49 @@ registerBlockType("ub/social-share", {
 			type: "boolean",
 			default: true,
 		},
+		facebookCaption: {
+			type: "string",
+			default: "share",
+		},
 		showTwitterIcon: {
 			type: "boolean",
 			default: true,
+		},
+		twitterCaption: {
+			type: "string",
+			default: "tweet",
 		},
 		showLinkedInIcon: {
 			type: "boolean",
 			default: true,
 		},
+		linkedInCaption: {
+			type: "string",
+			default: "share",
+		},
 		showPinterestIcon: {
 			type: "boolean",
 			default: true,
+		},
+		pinterestCaption: {
+			type: "string",
+			default: "pin",
 		},
 		showRedditIcon: {
 			type: "boolean",
 			default: true,
 		},
+		redditCaption: {
+			type: "string",
+			default: "post",
+		},
 		showTumblrIcon: {
 			type: "boolean",
 			default: true,
+		},
+		tumblrCaption: {
+			type: "string",
+			default: "share",
 		},
 		iconSize: {
 			type: "string",
@@ -158,7 +249,7 @@ registerBlockType("ub/social-share", {
 		},
 		iconShape: {
 			type: "string",
-			default: "circle",
+			default: "circle", //available options: square, none
 		},
 		align: {
 			type: "string",
@@ -174,6 +265,14 @@ registerBlockType("ub/social-share", {
 				"reddit",
 				"tumblr",
 			],
+		},
+		useCaptions: {
+			type: "boolean",
+			default: false,
+		},
+		addOutline: {
+			type: "boolean",
+			default: false, //default should be false
 		},
 		buttonColor: {
 			type: "string",
@@ -206,7 +305,15 @@ registerBlockType("ub/social-share", {
 			getClientIdsWithDescendants,
 		} = props;
 
-		const { blockID, align, iconShape, iconOrder, buttonColor } = attributes;
+		const {
+			blockID,
+			align,
+			iconShape,
+			iconOrder,
+			buttonColor,
+			useCaptions,
+			addOutline,
+		} = attributes;
 
 		const iconSize = iconSizes[attributes.iconSize];
 
@@ -269,6 +376,16 @@ registerBlockType("ub/social-share", {
 					iconShape={iconShape}
 					align={align}
 					color={buttonColor}
+					useCaptions={useCaptions}
+					addOutline={addOutline}
+					captions={{
+						facebook: attributes.facebookCaption,
+						twitter: attributes.twitterCaption,
+						linkedin: attributes.linkedInCaption,
+						pinterest: attributes.pinterestCaption,
+						reddit: attributes.redditCaption,
+						tumblr: attributes.tumblrCaption,
+					}}
 				/>
 			</div>,
 		];

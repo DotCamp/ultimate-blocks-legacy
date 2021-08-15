@@ -1,6 +1,8 @@
-.wp-block-ub-social-share .social-share-icons .social-share-icon {
-	cursor: move;
-	transition: all 0.2s ease-in-out;
+.wp-block-ub-social-share .social-share-icons {
+	.social-share-icon {
+		cursor: move;
+		transition: all 0.2s ease-in-out;
+	}
 }
 
 .ub-social-share-icon {
