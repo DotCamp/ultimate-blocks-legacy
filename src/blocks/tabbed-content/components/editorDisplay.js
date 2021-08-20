@@ -481,9 +481,13 @@ export class TabHolder extends Component {
 						} SortableList`}
 						style={{
 							justifyContent:
-								tabsAlignment === "center"
+								propz.attributes.tabsAlignment === "center"
 									? "center"
-									: `flex-${tabsAlignment === "left" ? "start" : "end"}`,
+									: `flex-${
+											propz.attributes.tabsAlignment === "left"
+												? "start"
+												: "end"
+									  }`,
 						}}
 						useWindowAsScrollContainer={true}
 					>
