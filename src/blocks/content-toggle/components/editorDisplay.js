@@ -219,6 +219,7 @@ export class PanelContent extends Component {
 		const {
 			attributes: {
 				collapsed,
+				individualCollapse,
 				theme,
 				titleColor,
 				titleLinkColor,
@@ -476,6 +477,7 @@ export class PanelContent extends Component {
 						) {
 							//if value of collapsed is changed for a panel via inspector panel and showonlyone is active,
 							//value of collapsed in all other panels should be automatically set to true
+
 							panels.forEach((panel, i) => {
 								updateBlockAttributes(
 									panel.clientId,
@@ -487,7 +489,10 @@ export class PanelContent extends Component {
 								);
 							});
 							setAttributes(Object.assign({ collapsed: false }, newChange));
-						} else {
+						} else if (
+							newChange &&
+							!(newChange.hasOwnProperty("collapsed") && individualCollapse)
+						) {
 							panels.forEach((panel) => {
 								updateBlockAttributes(panel.clientId, newChange);
 							});
@@ -504,63 +509,109 @@ export class PanelContent extends Component {
 		return [
 			isSelected && (
 				<InspectorControls>
-					<PanelColorSettings
-						title={__("Color Scheme")}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: theme,
-								onChange: onThemeChange,
-								label: __("Container Color"),
-							},
-							{
-								value: titleColor,
-								onChange: onTitleColorChange,
-								label: __("Title Color"),
-							},
-							{
-								value: titleLinkColor,
-								onChange: onLinkColorChange,
-								label: __("Title link Color"),
-							},
-						]}
-					/>
-					<PanelBody title={__("Initial State")} initialOpen={true}>
+					<PanelBody title={__("Style")}>
+						<PanelColorSettings
+							title={__("Color Scheme")}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: theme,
+									onChange: onThemeChange,
+									label: __("Container Color"),
+								},
+								{
+									value: titleColor,
+									onChange: onTitleColorChange,
+									label: __("Title Color"),
+								},
+								{
+									value: titleLinkColor,
+									onChange: onLinkColorChange,
+									label: __("Title link Color"),
+								},
+							]}
+						/>
 						<PanelRow>
-							<label htmlFor="ub-content-toggle-amount">
-								{__("Show only one panel at a time")}
-							</label>
+							<label htmlFor="ub-content-toggle-border">{__("Border")}</label>
 							<FormToggle
-								id="ub-content-toggle-amount"
-								label={__("Show only one panel at a time")}
-								checked={showOnlyOne}
-								onChange={() => {
-									setAttributes({ showOnlyOne: !showOnlyOne });
+								id="ub-content-toggle-border"
+								label={__("Enable border")}
+								checked={panels[0].attributes.border}
+								onChange={() =>
 									panels.forEach((panel) =>
 										updateBlockAttributes(panel.clientId, {
-											showOnlyOne: !showOnlyOne,
+											border: !panel.attributes.border,
+										})
+									)
+								}
+							/>
+						</PanelRow>
+					</PanelBody>
+					<PanelBody title={__("Initial State")} initialOpen={true}>
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-set-individually">
+								{__("Set toggle status for each panel individually")}
+							</label>
+							<FormToggle
+								id="ub-content-toggle-set-individually"
+								label={__("Set toggle status for each panel individually")}
+								checked={individualCollapse}
+								onChange={() => {
+									setAttributes({
+										individualCollapse: !individualCollapse,
+										...(individualCollapse && { showOnlyOne: false }),
+										...(!individualCollapse && { preventCollapse: false }),
+									});
+
+									panels.forEach((panel) =>
+										updateBlockAttributes(panel.clientId, {
+											...(individualCollapse && { showOnlyOne: false }),
+											...(!individualCollapse && { preventCollapse: false }),
 										})
 									);
-									if (showOnlyOne) {
-										//value before setAttributes still in use
-										setAttributes({ collapsed: false, preventCollapse: false });
-										panels.forEach((panel) =>
-											updateBlockAttributes(panel.clientId, {
-												collapsed: false,
-												preventCollapse: false,
-											})
-										);
-									} else {
-										panels.forEach((panel, i) =>
-											updateBlockAttributes(panel.clientId, {
-												collapsed: i === 0,
-											})
-										);
-									}
 								}}
 							/>
 						</PanelRow>
-						{!showOnlyOne && (
+						{!individualCollapse && (
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-amount">
+									{__("Show only one panel at a time")}
+								</label>
+								<FormToggle
+									id="ub-content-toggle-amount"
+									label={__("Show only one panel at a time")}
+									checked={showOnlyOne}
+									onChange={() => {
+										setAttributes({ showOnlyOne: !showOnlyOne });
+										panels.forEach((panel) =>
+											updateBlockAttributes(panel.clientId, {
+												showOnlyOne: !showOnlyOne,
+											})
+										);
+										if (showOnlyOne) {
+											//value before setAttributes still in use
+											setAttributes({
+												collapsed: false,
+												preventCollapse: false,
+											});
+											panels.forEach((panel) =>
+												updateBlockAttributes(panel.clientId, {
+													collapsed: false,
+													preventCollapse: false,
+												})
+											);
+										} else {
+											panels.forEach((panel, i) =>
+												updateBlockAttributes(panel.clientId, {
+													collapsed: i !== 0,
+												})
+											);
+										}
+									}}
+								/>
+							</PanelRow>
+						)}
+						{!showOnlyOne && !individualCollapse && (
 							<PanelRow>
 								<label htmlFor="ub-content-toggle-state">
 									{__("Collapsed")}
@@ -573,7 +624,7 @@ export class PanelContent extends Component {
 								/>
 							</PanelRow>
 						)}
-						{!collapsed && !showOnlyOne && (
+						{!collapsed && !showOnlyOne && !individualCollapse && (
 							<PanelRow>
 								<label htmlFor="ub-content-toggle-state">
 									{__("Prevent collapse")}
@@ -596,11 +647,14 @@ export class PanelContent extends Component {
 								id="ub-content-toggle-faq-schema"
 								label={__("Enable FAQ Schema")}
 								checked={hasFAQSchema}
-								onChange={() =>
-									setAttributes({
-										hasFAQSchema: !hasFAQSchema,
-									})
-								}
+								onChange={() => {
+									setAttributes({ hasFAQSchema: !hasFAQSchema });
+									panels.forEach((panel) =>
+										updateBlockAttributes(panel.clientId, {
+											hasFAQSchema: !panel.attributes.hasFAQSchema,
+										})
+									);
+								}}
 							/>
 						</PanelRow>
 					</PanelBody>

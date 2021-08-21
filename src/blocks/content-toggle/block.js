@@ -32,6 +32,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	individualCollapse: {
+		type: "boolean",
+		default: false,
+	},
 	titleColor: {
 		type: "string",
 		default: "",

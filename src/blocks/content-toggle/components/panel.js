@@ -144,6 +144,7 @@ class ContentTogglePanel extends Component {
 			setAttributes,
 			removeBlock,
 			block,
+			blockParent,
 			blockParentId,
 			selectBlock,
 		} = this.props;
@@ -159,49 +160,65 @@ class ContentTogglePanel extends Component {
 
 		return [
 			<InspectorControls>
-				<PanelColorSettings
-					title={__("Color Scheme")}
-					initialOpen={false}
-					colorSettings={[
-						{
-							value: theme,
-							onChange: (value) => setAttributes({ theme: value }),
-							label: __("Container Color"),
-						},
-						{
-							value: titleColor,
-							onChange: (value) => setAttributes({ titleColor: value }),
-							label: __("Title Color"),
-						},
-						{
-							value: titleLinkColor,
-							onChange: (value) => setAttributes({ titleLinkColor: value }),
-							label: __("Title link Color"),
-						},
-						{
-							value: toggleColor,
-							onChange: (value) => setAttributes({ toggleColor: value }),
-							label: __("Toggle Icon Color"),
-						},
-					]}
-				/>
-				<PanelBody title={__("Initial State")} initialOpen={true}>
+				<PanelBody title={__("Style")}>
+					<PanelColorSettings
+						title={__("Color Scheme")}
+						initialOpen={false}
+						colorSettings={[
+							{
+								value: theme,
+								onChange: (value) => setAttributes({ theme: value }),
+								label: __("Container Color"),
+							},
+							{
+								value: titleColor,
+								onChange: (value) => setAttributes({ titleColor: value }),
+								label: __("Title Color"),
+							},
+							{
+								value: titleLinkColor,
+								onChange: (value) => setAttributes({ titleLinkColor: value }),
+								label: __("Title link Color"),
+							},
+							{
+								value: toggleColor,
+								onChange: (value) => setAttributes({ toggleColor: value }),
+								label: __("Toggle Icon Color"),
+							},
+						]}
+					/>
 					<PanelRow>
-						<label htmlFor="ub-content-toggle-amount">
-							{__("Show only one panel at a time")}
-						</label>
+						<label htmlFor="ub-content-toggle-border">{__("Border")}</label>
 						<FormToggle
-							id="ub-content-toggle-amount"
-							label={__("Show only one panel at a time")}
-							checked={showOnlyOne}
-							onChange={() => {
-								setAttributes({ showOnlyOne: !showOnlyOne });
-								if (!showOnlyOne) {
-									setAttributes({ collapsed: false, preventCollapse: false });
-								}
-							}}
+							id="ub-content-toggle-border"
+							label={__("Enable border")}
+							checked={border}
+							onChange={() => setAttributes({ border: !border })}
 						/>
 					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__("Initial State")} initialOpen={true}>
+					{!blockParent.attributes.individualCollapse && (
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-amount">
+								{__("Show only one panel at a time")}
+							</label>
+							<FormToggle
+								id="ub-content-toggle-amount"
+								label={__("Show only one panel at a time")}
+								checked={showOnlyOne}
+								onChange={() => {
+									setAttributes({ showOnlyOne: !showOnlyOne });
+									if (!showOnlyOne) {
+										setAttributes({
+											collapsed: false,
+											preventCollapse: false,
+										});
+									}
+								}}
+							/>
+						</PanelRow>
+					)}
 					<PanelRow>
 						<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
 						<FormToggle
@@ -219,30 +236,23 @@ class ContentTogglePanel extends Component {
 							}}
 						/>
 					</PanelRow>
-					{!collapsed && !showOnlyOne && (
-						<PanelRow>
-							<label htmlFor="ub-content-toggle-state">
-								{__("Prevent collapse")}
-							</label>
-							<FormToggle
-								id="ub-content-toggle-state"
-								label={__("Prevent collapse")}
-								checked={preventCollapse}
-								onChange={() =>
-									setAttributes({ preventCollapse: !preventCollapse })
-								}
-							/>
-						</PanelRow>
-					)}
-					<PanelRow>
-						<label htmlFor="ub-content-toggle-border">{__("Border")}</label>
-						<FormToggle
-							id="ub-content-toggle-border"
-							label={__("Enable border")}
-							checked={border}
-							onChange={() => setAttributes({ border: !border })}
-						/>
-					</PanelRow>
+					{!blockParent.attributes.individualCollapse &&
+						!collapsed &&
+						!showOnlyOne && (
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-state">
+									{__("Prevent collapse")}
+								</label>
+								<FormToggle
+									id="ub-content-toggle-state"
+									label={__("Prevent collapse")}
+									checked={preventCollapse}
+									onChange={() =>
+										setAttributes({ preventCollapse: !preventCollapse })
+									}
+								/>
+							</PanelRow>
+						)}
 				</PanelBody>
 				<PanelBody title={__("FAQ Schema")} initialOpen={true}>
 					<PanelRow>
@@ -549,6 +559,7 @@ registerBlockType("ub/content-toggle-panel-block", {
 
 			return {
 				block: getBlock(clientId),
+				blockParent: getBlock(getBlockRootClientId(clientId)),
 				blockParentId: getBlockRootClientId(clientId),
 			};
 		}),
