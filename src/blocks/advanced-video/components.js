@@ -1,4 +1,5 @@
 import { convertFromSeconds } from "../../common";
+
 const { __ } = wp.i18n;
 const { MediaUpload, MediaUploadCheck, InspectorControls, ColorPalette } =
 	wp.blockEditor || wp.editor;
@@ -7,7 +8,9 @@ const {
 	RangeControl,
 	ToggleControl,
 	PanelBody,
+	PanelRow,
 	SelectControl,
+	AnglePickerControl,
 } = wp.components;
 
 function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
@@ -253,6 +256,7 @@ export const inspectorControls = (props) => {
 		imageURLInput,
 		currentBorder,
 		currentCorner,
+		useShadow,
 	} = props;
 	const {
 		url,
@@ -294,6 +298,7 @@ export const inspectorControls = (props) => {
 		topRightRadius,
 		bottomLeftRadius,
 		bottomRightRadius,
+		shadow,
 	} = attributes;
 
 	const currentColor =
@@ -958,6 +963,99 @@ export const inspectorControls = (props) => {
 							label={"Mobile"}
 							onClick={() => setAttributes({ showInMobile: !showInMobile })}
 						/>
+						<PanelBody title={__("Shadow settings")}>
+							<PanelRow>
+								<p>{__("Include a shadow")}</p>
+								<ToggleControl
+									checked={useShadow}
+									onChange={() => {
+										setState({ useShadow: !useShadow });
+										if (useShadow) {
+											setAttributes({
+												shadow: [
+													{
+														angle: 0,
+														radius: 0,
+														color: "#000000",
+														transparency: 0,
+														blur: 0,
+														spread: 0,
+													},
+												],
+											});
+										}
+									}}
+								/>
+							</PanelRow>
+							{useShadow && (
+								<>
+									<AnglePickerControl
+										label={__("Shadow angle")}
+										value={shadow[0].angle}
+										onChange={(angle) =>
+											setAttributes({
+												shadow: [Object.assign({}, shadow[0], { angle })],
+											})
+										}
+									/>
+									<RangeControl
+										label={__("Shadow radius (px)")}
+										value={shadow[0].radius}
+										onChange={(radius) =>
+											setAttributes({
+												shadow: [Object.assign({}, shadow[0], { radius })],
+											})
+										}
+										min={0}
+										max={100}
+									/>
+									<ColorPalette
+										value={shadow[0].color}
+										onChange={(color) =>
+											setAttributes({
+												shadow: [Object.assign({}, shadow[0], { color })],
+											})
+										}
+									/>
+
+									<RangeControl
+										label={__("Shadow transparency")}
+										value={shadow[0].transparency}
+										onChange={(transparency) =>
+											setAttributes({
+												shadow: [
+													Object.assign({}, shadow[0], { transparency }),
+												],
+											})
+										}
+										min={0}
+										max={100}
+									/>
+									<RangeControl
+										label={__("Shadow blur radius (px)")}
+										value={shadow[0].blur}
+										onChange={(blur) =>
+											setAttributes({
+												shadow: [Object.assign({}, shadow[0], { blur })],
+											})
+										}
+										min={0}
+										max={100}
+									/>
+									<RangeControl
+										label={__("Shadow spread radius (px)")}
+										value={shadow[0].spread}
+										onChange={(spread) =>
+											setAttributes({
+												shadow: [Object.assign({}, shadow[0], { spread })],
+											})
+										}
+										min={-50}
+										max={50}
+									/>
+								</>
+							)}
+						</PanelBody>
 					</PanelBody>
 					<PanelBody title={__("Border settings")}>
 						<div className="ub-labelled-toggle">

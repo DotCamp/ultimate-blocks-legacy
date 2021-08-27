@@ -219,6 +219,19 @@ registerBlockType("ub/advanced-video", {
 			type: "boolean",
 			default: true,
 		},
+		shadow: {
+			type: "array",
+			default: [
+				{
+					angle: 0,
+					radius: 0,
+					color: "#000000",
+					transparency: 0,
+					blur: 0,
+					spread: 0,
+				},
+			],
+		},
 	},
 	edit: compose([
 		withState({
@@ -239,6 +252,7 @@ registerBlockType("ub/advanced-video", {
 			videoPressCache: {},
 			currentBorder: "all",
 			currentCorner: "all",
+			useShadow: false,
 		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
@@ -288,6 +302,7 @@ registerBlockType("ub/advanced-video", {
 			topRightRadius,
 			bottomLeftRadius,
 			bottomRightRadius,
+			shadow,
 		} = attributes;
 
 		if (
@@ -307,6 +322,7 @@ registerBlockType("ub/advanced-video", {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
+
 		return (
 			<>
 				{inspectorControls(props)}
@@ -638,6 +654,23 @@ registerBlockType("ub/advanced-video", {
 									borderTopRightRadius: `${topRightRadius}px`,
 									borderBottomLeftRadius: `${bottomLeftRadius}px`,
 									borderBottomRightRadius: `${bottomRightRadius}px`,
+							  }
+							: {},
+						shadow[0].radius > 0
+							? {
+									boxShadow: `${
+										shadow[0].radius *
+										Math.cos(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
+									}px ${
+										-shadow[0].radius *
+										Math.sin(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
+									}px ${shadow[0].blur}px ${shadow[0].spread}px rgba(${parseInt(
+										"0x" + shadow[0].color.substring(1, 3)
+									)}, ${parseInt(
+										"0x" + shadow[0].color.substring(3, 5)
+									)}, ${parseInt("0x" + shadow[0].color.substring(5, 7))}, ${
+										(100 - shadow[0].transparency) / 100
+									})`,
 							  }
 							: {}
 					)}
