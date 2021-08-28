@@ -394,6 +394,10 @@ function ub_include_block_attribute_css() {
                                 'grid-template-columns: ' . implode(' ',
                                     array_fill(0, array_search($attributes['smallestUnit'], $timeUnits) - array_search($attributes['largestUnit'], $timeUnits) +1 , '1fr')) . ';' . PHP_EOL .
                             '}';
+                            $blockStylesheets .= $prefix . ' .ub_countdown_circular_container > div{' . PHP_EOL .
+                                'height: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
+                                'width: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
+                            '}';
                         break;
                         default:
                             $blockStylesheets .='';

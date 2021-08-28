@@ -16,6 +16,7 @@ const {
 	ToolbarGroup,
 	ToolbarButton,
 	SelectControl,
+	RangeControl,
 } = wp.components;
 const { withSelect } = wp.data;
 const { withState, compose } = wp.compose;
@@ -49,6 +50,10 @@ registerBlockType("ub/countdown", {
 		circleColor: {
 			type: "string",
 			default: "#2DB7F5",
+		},
+		circleSize: {
+			type: "number",
+			default: 70,
 		},
 		largestUnit: {
 			type: "string",
@@ -87,6 +92,7 @@ registerBlockType("ub/countdown", {
 				endDate,
 				expiryMessage,
 				circleColor,
+				circleSize,
 				messageAlign,
 				largestUnit,
 				smallestUnit,
@@ -110,18 +116,27 @@ registerBlockType("ub/countdown", {
 			isSelected && (
 				<InspectorControls>
 					{style === "Circular" && (
-						<PanelColorSettings
-							title={__("Circle Color")}
-							initialOpen={true}
-							colorSettings={[
-								{
-									value: circleColor,
-									onChange: (colorValue) =>
-										setAttributes({ circleColor: colorValue }),
-									label: "",
-								},
-							]}
-						/>
+						<PanelBody title={__("Circle style")}>
+							<PanelColorSettings
+								title={__("Color")}
+								initialOpen={true}
+								colorSettings={[
+									{
+										value: circleColor,
+										onChange: (colorValue) =>
+											setAttributes({ circleColor: colorValue }),
+										label: "",
+									},
+								]}
+							/>
+							<RangeControl
+								label={__("Size")}
+								value={circleSize}
+								onChange={(circleSize) => setAttributes({ circleSize })}
+								min={30}
+								max={100}
+							/>
+						</PanelBody>
 					)}
 					<PanelBody title={__("Timer expiration")}>
 						<DateTimePicker
@@ -208,6 +223,7 @@ registerBlockType("ub/countdown", {
 					timerStyle={style}
 					deadline={endDate}
 					color={circleColor}
+					size={circleSize}
 					largestUnit={largestUnit}
 					smallestUnit={smallestUnit}
 					isAnimated={true}

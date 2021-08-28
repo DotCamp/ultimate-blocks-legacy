@@ -14,9 +14,8 @@ class Timer extends Component {
 			forceRefresh: false,
 		};
 	}
-	remainingTime = () => {
-		return this.props.deadline - Math.floor(Date.now() / 1000);
-	};
+	remainingTime = () => this.props.deadline - Math.floor(Date.now() / 1000);
+
 	componentDidMount() {
 		if (this.props.deadline - Math.floor(Date.now() / 1000) > 0) {
 			this.tick = setInterval(this.ticker, 1000);
@@ -37,12 +36,7 @@ class Timer extends Component {
 	}
 	componentDidUpdate(prevProps, prevState) {
 		const { timeLeft, numberChange } = this.state;
-		const {
-			largestUnit,
-			smallestUnit,
-			forceUpdate,
-			finishForcedUpdate,
-		} = this.props;
+		const { largestUnit, forceUpdate, finishForcedUpdate } = this.props;
 		if (timeLeft <= -1) {
 			clearInterval(this.tick);
 		}
@@ -124,7 +118,7 @@ class Timer extends Component {
 	}
 	render() {
 		const { timeLeft, numberChange, forceRefresh } = this.state;
-		const { color, largestUnit, smallestUnit } = this.props;
+		const { color, size, largestUnit, smallestUnit } = this.props;
 		const timeUnits = ["week", "day", "hour", "minute", "second"];
 
 		//apply value conversion only to days and hours
@@ -169,11 +163,11 @@ class Timer extends Component {
 		);
 
 		const circularFormatValues = [
-			<Circle color={color} amount={weeks} total={52} />,
-			<Circle color={color} amount={days} total={7} />,
-			<Circle color={color} amount={hours} total={24} />,
-			<Circle color={color} amount={minutes} total={60} />,
-			<Circle color={color} amount={seconds} total={60} />,
+			<Circle color={color} size={size} amount={weeks} total={52} />,
+			<Circle color={color} size={size} amount={days} total={7} />,
+			<Circle color={color} size={size} amount={hours} total={24} />,
+			<Circle color={color} size={size} amount={minutes} total={60} />,
+			<Circle color={color} size={size} amount={seconds} total={60} />,
 		].slice(
 			timeUnits.indexOf(largestUnit),
 			timeUnits.indexOf(smallestUnit) + 1

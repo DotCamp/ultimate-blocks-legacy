@@ -574,6 +574,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#2DB7F5'
             ),
+            'circieSize' => array(
+                'type' => 'number',
+                'default' => 70
+            ),
             'largestUnit' => array(
                 'type' => 'string',
                 'default' => 'week'

@@ -39,25 +39,25 @@ function ub_render_countdown_block($attributes){
     $defaultFormat = implode(' ', ub_filter_time_display($defaultFormatValues, $largestUnit, $smallestUnit) );
 
     if(!function_exists('ub_generateCircle')){
-        function ub_generateCircle($label, $value, $limit, $color){
-            $circlePath="M 50,50 m 0,-35 a 35,35 0 1 1 0,70 a 35,35 0 1 1 0,-70";
-            $prefix="ub_countdown_circle_";
-            return '<div class="'.$prefix.$label.'">
-                        <svg height="70" width="70" viewBox="0 0 100 100">
-                            <path class="'.$prefix.'trail" d="'.$circlePath.'" stroke-width="3" ></path>
-                            <path class="'.$prefix.'path" d="'.$circlePath.'" stroke="'.$color.
-                                '" stroke-width="3" style="stroke-dasharray: '.$value*219.911/$limit.'px, 219.911px;"></path>
+        function ub_generateCircle($label, $value, $limit, $color, $size){
+            $circlePath = "M 50,50 m 0,-35 a 35,35 0 1 1 0,70 a 35,35 0 1 1 0,-70";
+            $prefix = "ub_countdown_circle_";
+            return '<div class="' . $prefix . $label . '">
+                        <svg height="' . $size . '" width="' . $size . '" viewBox="0 0 100 100">
+                            <path class="' . $prefix . 'trail" d="' . $circlePath . '" stroke-width="3" ></path>
+                            <path class="' . $prefix . 'path" d="'.$circlePath.'" stroke="' . $color .
+                                '" stroke-width="3" style="stroke-dasharray: ' . $value * 219.911/$limit . 'px, 219.911px;"></path>
                         </svg>
-                        <div class="'.$prefix.'label ub_countdown_'.$label.'">'.$value.'</div>
+                        <div class="' . $prefix . 'label ub_countdown_' . $label . '">' . $value . '</div>
                     </div>';
         }
     }
 
-    $circularFormatValues = [ub_generateCircle("week", $weeks, 52, $circleColor),
-    ub_generateCircle("day", $days, 7, $circleColor),
-    ub_generateCircle("hour", $hours, 24, $circleColor),
-    ub_generateCircle("minute", $minutes, 60, $circleColor),
-    ub_generateCircle("second", $seconds, 60, $circleColor)];
+    $circularFormatValues = [ub_generateCircle("week", $weeks, 52, $circleColor, $circleSize),
+    ub_generateCircle("day", $days, 7, $circleColor, $circleSize),
+    ub_generateCircle("hour", $hours, 24, $circleColor, $circleSize),
+    ub_generateCircle("minute", $minutes, 60, $circleColor, $circleSize),
+    ub_generateCircle("second", $seconds, 60, $circleColor, $circleSize)];
 
     $circularFormatLabels =  [ '<p>'.__( 'Weeks', 'ultimate-blocks' ).'</p>',
     '<p>'.__( 'Days', 'ultimate-blocks' ).'</p>',
@@ -81,23 +81,14 @@ function ub_render_countdown_block($attributes){
 
             $missingDigits = ($maxValue ? floor(log10($maxValue)) + 1 : 1) - count($digits);
 
-            //echo 'digit array length: ' . count($digits);
-            //echo 'digits in max value: ' . $maxArrayLength;
-
             $digits = array_merge( ( $missingDigits > 0 ?  array_fill(0, $missingDigits, 0) : []),
                                  array_reverse($digits));
-
-            //echo 'return value: ' . json_encode($digits);
 
             return array_map(function($digit){
                 return '<div class="ub-countdown-odometer-digit">' . $digit . '</div>';
             }, $digits);
         }
     }
-    
-    //ub_generateDigitArray(56, 9999);
-
-    //echo 'largest unit: ' . $largestUnit;
 
     $odometerValues = ['<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_week">' . implode(ub_generateDigitArray($weeks)) .'</div>', 
         '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_day">' . implode(ub_generateDigitArray($days, $largestUnit === 'day' ? 0 : 6) ) . '</div>',

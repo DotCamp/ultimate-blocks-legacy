@@ -128,8 +128,8 @@ export class DigitDisplay extends Component {
 		this.setState({ digits: currentDigits, displayValue: value });
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		const { displayValue, digits } = this.state;
+	componentDidUpdate(prevProps) {
+		const { displayValue } = this.state;
 
 		const {
 			maxDisplay,
@@ -290,10 +290,7 @@ export class DigitDisplay extends Component {
 				newDigits = [...Array(missingDigits).fill(0), ...newDigits];
 			}
 
-			this.setState({
-				displayValue: value,
-				digits: newDigits,
-			});
+			this.setState({ displayValue: value, digits: newDigits });
 			finishForceRefresh();
 		}
 	}
