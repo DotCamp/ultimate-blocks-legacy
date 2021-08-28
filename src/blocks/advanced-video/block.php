@@ -3,8 +3,6 @@ function ub_render_advanced_video_block($attributes){
     require_once dirname(dirname(__DIR__)) . '/common.php';
     extract($attributes);
 
-    //echo json_encode($attributes);
-
     //enclosing div needed to prevent embedded video from trying to use the full height of the screen
     return '<div id="ub-advanced-video-'.$blockID.'" class="ub-advanced-video-container">' .
     
