@@ -393,18 +393,19 @@ registerBlockType("ub/advanced-video", {
 									icon={"editor-break"}
 									label={__("Apply", "ultimate-blocks")}
 									onClick={() => {
-										if (/^http(s)?:\/\//g.test(videoURLInput)) {
+										let videoURL = videoURLInput.trim();
+										if (/^http(s)?:\/\//g.test(videoURL)) {
 											const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
-												videoURLInput
+												videoURL
 											);
 											const vimeoMatch = /^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
-												videoURLInput
+												videoURL
 											);
 											const dailyMotionMatch = /^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
-												videoURLInput
+												videoURL
 											);
 											const videoPressMatch = /^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
-												videoURLInput
+												videoURL
 											);
 
 											const facebookVideoRegex = new RegExp(
@@ -418,7 +419,7 @@ registerBlockType("ub/advanced-video", {
 											);
 
 											const facebookVideoMatch = facebookVideoRegex.exec(
-												videoURLInput
+												videoURL
 											);
 
 											if (youtubeMatch) {
@@ -596,9 +597,9 @@ registerBlockType("ub/advanced-video", {
 													});
 											} else if (facebookVideoMatch) {
 												setAttributes({
-													url: videoURLInput,
+													url: videoURL,
 													videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
-														videoURLInput
+														videoURL
 													)}&width=600&show_text=false&height=600&appId" width="600" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
 													width: 600,
 													height: 600,
@@ -611,7 +612,7 @@ registerBlockType("ub/advanced-video", {
 												);
 
 												setAttributes({
-													url: videoURLInput,
+													url: videoURL,
 													videoEmbedCode: `<video controls width="500" height="500"><source src="${videoURLInput}"></video>`,
 													videoSource: "unknown",
 													width: 500,
