@@ -229,10 +229,10 @@ class TableOfContents extends Component {
 
 					if (
 						heading.blockName === "generateblocks/headline" &&
-						heading.anchor !== getBlock(heading.clientId).attributes.elementId
+						heading.anchor !== getBlock(heading.clientId).attributes.anchor
 					) {
 						updateBlockAttributes(heading.clientId, {
-							elementId: heading.anchor,
+							anchor: heading.anchor,
 						});
 					}
 
