@@ -91,8 +91,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
               return !f;
             }) && mainData[i].some(function (f) {
               return f;
-            }) || //panel has no tag from category and maindata has at least one tag selected -> consider as mismatch
-            mainData[i].filter(function (f) {
+            }) || mainData[i].filter(function (f) {
               return f;
             }).length > 0 && !category.some(function (f, j) {
               return f && f === mainData[i][j];
