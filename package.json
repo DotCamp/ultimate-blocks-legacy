@@ -24,8 +24,8 @@
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^18.0.1",
-		"concurrently": "^6.0.2",
-		"css-loader": "^5.2.4",
+		"concurrently": "^6.2.1",
+		"css-loader": "^6.2.0",
 		"gulp": "^4.0.2",
 		"gulp-notify": "^4.0.0",
 		"gulp-sort": "^2.0.0",
@@ -33,9 +33,9 @@
 		"ignore-emit-webpack-plugin": "^2.0.6",
 		"mini-css-extract-plugin": "^2.3.0",
 		"path": "^0.12.7",
-		"postcss-loader": "^5.2.0",
+		"postcss-loader": "^6.1.1",
 		"postcss-preset-env": "^6.7.0",
 		"sass": "^1.32.12",
-		"sass-loader": "^11.0.1"
+		"sass-loader": "^12.1.0"
 	}
 }
