@@ -23,7 +23,7 @@
 		"swiper": "^6.8.4"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^15.0.1",
+		"@wordpress/scripts": "^18.0.1",
 		"concurrently": "^6.0.2",
 		"css-loader": "^5.2.4",
 		"gulp": "^4.0.2",
@@ -31,7 +31,7 @@
 		"gulp-sort": "^2.0.0",
 		"gulp-wp-pot": "^2.5.0",
 		"ignore-emit-webpack-plugin": "^2.0.6",
-		"mini-css-extract-plugin": "^1.6.0",
+		"mini-css-extract-plugin": "^2.3.0",
 		"path": "^0.12.7",
 		"postcss-loader": "^5.2.0",
 		"postcss-preset-env": "^6.7.0",
