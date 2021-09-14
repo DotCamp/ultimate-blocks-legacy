@@ -275,9 +275,9 @@ function ub_render_how_to_block($attributes){
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'
                 . $timeDisplay : '') . $stepsDisplay .   
                 '<div class="ub_howto-yield"><' . $secondLevelTag . '>' . $resultIntro . '</' . $secondLevelTag . '>' . 
-                ($finalImageURL === '' ? '' : ($finalImageCaption === '' ? '' : '<figure class="ub_howto-yield-image-container">') .
+                ($finalImageURL === '' ? '' : (!isset($finalImageCaption) || $finalImageCaption === '' ? '' : '<figure class="ub_howto-yield-image-container">') .
                     '<img class="ub_howto-yield-image" src="' . $finalImageURL . '">' . 
-                    ($finalImageCaption === '' ? '' : '<figcaption>' . $finalImageCaption . '</figcaption></figure>')) .
+                    (!isset($finalImageCaption) || $finalImageCaption === '' ? '' : '<figcaption>' . $finalImageCaption . '</figcaption></figure>')) .
                 ub_convert_to_paragraphs($howToYield) . '</div>
             </div>' . $JSONLD;
 }
