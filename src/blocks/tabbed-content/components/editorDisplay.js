@@ -205,13 +205,8 @@ export class OldTabHolder extends Component {
 			<div className={className}>
 				<button
 					onClick={() => {
-						const {
-							activeControl,
-							activeTab,
-							theme,
-							titleColor,
-							tabsTitle,
-						} = this.props.block.attributes;
+						const { activeControl, activeTab, theme, titleColor, tabsTitle } =
+							this.props.block.attributes;
 						replaceBlock(
 							this.props.block.clientId,
 							createBlock(
@@ -308,11 +303,20 @@ export class TabHolder extends Component {
 
 	componentDidMount() {
 		const { attributes, setAttributes } = this.props;
-		const { tabsTitle, tabsTitleAlignment } = attributes;
+		const { tabsTitle, tabsTitleAlignment, tabsAnchor, useAnchors } =
+			attributes;
 
 		if (tabsTitle.length !== tabsTitleAlignment.length) {
 			setAttributes({
 				tabsTitleAlignment: Array(tabsTitle.length).fill("center"),
+			});
+		}
+
+		if (useAnchors && tabsTitle.length > tabsAnchor.length) {
+			setAttributes({
+				tabsAnchor: tabsAnchor.concat(
+					Array(tabsTitle.length - tabsAnchor.length).fill("")
+				),
 			});
 		}
 	}
@@ -343,6 +347,8 @@ export class TabHolder extends Component {
 		const {
 			tabsTitle,
 			tabsTitleAlignment,
+			useAnchors,
+			tabsAnchor,
 			activeTab,
 			tabsAlignment,
 			tabVertical,
@@ -395,6 +401,7 @@ export class TabHolder extends Component {
 				tabsTitle: [...tabsTitle, "Tab Title"],
 				tabsTitleAlignment: [...tabsTitleAlignment, "left"],
 				activeTab: i,
+				tabsAnchor: useAnchors ? [...tabsAnchor, ""] : [],
 			});
 
 			showControls("tab-title", i);
@@ -644,6 +651,9 @@ export class TabHolder extends Component {
 										...tabsTitleAlignment.slice(i + 1),
 									],
 									activeTab: 0,
+									tabsAnchor: useAnchors
+										? [...tabsAnchor.slice(0, i), ...tabsAnchor.slice(i + 1)]
+										: [],
 								});
 
 								removeBlock(
