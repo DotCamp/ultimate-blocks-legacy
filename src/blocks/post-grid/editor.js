@@ -15,6 +15,7 @@ export default class PostGridBlock extends Component {
 				checkPostDate,
 				checkPostExcerpt,
 				checkPostLink,
+				checkPostTitle,
 				excerptLength,
 				readMoreText,
 				postLayout,
@@ -61,12 +62,14 @@ export default class PostGridBlock extends Component {
 									) : null}
 									<div className="ub_block-post-grid-text">
 										<header className="ub_block-post-grid-header">
-											<PostTag className="ub-block-post-grid-title">
-												<a href={post.link} target="_blank" rel="bookmark">
-													{decodeEntities(post.title.rendered.trim()) ||
-														__("(Untitled)", "ultimate-blocks")}
-												</a>
-											</PostTag>
+											{checkPostTitle && (
+												<PostTag className="ub-block-post-grid-title">
+													<a href={post.link} target="_blank" rel="bookmark">
+														{decodeEntities(post.title.rendered.trim()) ||
+															__("(Untitled)", "ultimate-blocks")}
+													</a>
+												</PostTag>
+											)}
 											{checkPostAuthor && (
 												<div className="ub-block-post-grid-author">
 													<a

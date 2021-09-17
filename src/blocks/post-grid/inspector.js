@@ -189,6 +189,7 @@ export default class Inspector extends Component {
 				categoryArray,
 				orderBy,
 				order,
+				checkPostTitle,
 				postTitleTag,
 				authorArray,
 				tagArray,
@@ -426,15 +427,22 @@ export default class Inspector extends Component {
 								onChange={(value) => setAttributes({ readMoreText: value })}
 							/>
 						)}
-						<SelectControl
-							label={__("Title tag", "ultimate-blocks")}
-							options={["h2", "h3", "h4"].map((a) => ({
-								value: a,
-								label: __(a),
-							}))}
-							value={postTitleTag}
-							onChange={(postTitleTag) => setAttributes({ postTitleTag })}
+						<ToggleControl
+							label={__("Display Title", "ultimate-blocks")}
+							checked={checkPostTitle}
+							onChange={(checkPostTitle) => setAttributes({ checkPostTitle })}
 						/>
+						{checkPostTitle && (
+							<SelectControl
+								label={__("Title tag", "ultimate-blocks")}
+								options={["h2", "h3", "h4"].map((a) => ({
+									value: a,
+									label: __(a),
+								}))}
+								value={postTitleTag}
+								onChange={(postTitleTag) => setAttributes({ postTitleTag })}
+							/>
+						)}
 					</PanelBody>
 				)}
 			</InspectorControls>

@@ -83,6 +83,10 @@ const attributes = {
 		type: "string",
 		default: "date",
 	},
+	checkPostTitle: {
+		type: "boolean",
+		default: true,
+	},
 	postTitleTag: {
 		type: "string",
 		default: "h2",
