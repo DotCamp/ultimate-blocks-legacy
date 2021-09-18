@@ -107,9 +107,10 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 			const embedArgs = embedRegex.exec(newEmbedCode);
 			if (isTimeCode) {
 				//embedargs cannot be used. use another regex code. vimeo scenario
-				const vimeoTimeCode = /https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
-					newEmbedCode
-				);
+				const vimeoTimeCode =
+					/https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
+						newEmbedCode
+					);
 
 				newEmbedCode = newEmbedCode.replace(
 					vimeoTimeCode[1],
@@ -218,9 +219,10 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 		}
 	} else {
 		//case handler for local/direct
-		const embedArgs = /<source (?:[^"=\s]+=".+?" )*(src="[^#"]+(#t=[0-9]+)?")/.exec(
-			newEmbedCode
-		);
+		const embedArgs =
+			/<source (?:[^"=\s]+=".+?" )*(src="[^#"]+(#t=[0-9]+)?")/.exec(
+				newEmbedCode
+			);
 
 		if (embedArgs[2]) {
 			newEmbedCode = newEmbedCode.replace(
@@ -254,7 +256,7 @@ export class AdvancedVideoBlock extends Component {
 			enterVideoURL: false,
 			videoURLInput: "",
 			allowCustomStartTime: false,
-			useCustomThumbnaill: false,
+			useCustomThumbnail: false,
 			enterImageURL: false,
 			imageURLInput: "",
 			startTime_d: 0,
@@ -274,7 +276,8 @@ export class AdvancedVideoBlock extends Component {
 	componentDidMount() {
 		const { attributes, setAttributes, block } = this.props;
 		const { startTime, blockID, shadow } = attributes;
-		const { useShadow } = this.state;
+		const { useShadow, startTime_d, startTime_h, startTime_m, startTime_s } =
+			this.state;
 
 		if (
 			startTime !== 0 &&
@@ -803,9 +806,10 @@ export class AdvancedVideoBlock extends Component {
 														});
 														break;
 													case "youtube":
-														let videoId = /https:\/\/www\.youtube\.com\/watch\?v=((?:\w|-){11})/.exec(
-															url
-														)[1];
+														let videoId =
+															/https:\/\/www\.youtube\.com\/watch\?v=((?:\w|-){11})/.exec(
+																url
+															)[1];
 
 														let newEmbedCode = editEmbedArgs(
 															videoSource,
@@ -1624,18 +1628,22 @@ export class AdvancedVideoBlock extends Component {
 									onClick={() => {
 										let videoURL = videoURLInput.trim();
 										if (/^http(s)?:\/\//g.test(videoURL)) {
-											const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
-												videoURL
-											);
-											const vimeoMatch = /^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
-												videoURL
-											);
-											const dailyMotionMatch = /^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
-												videoURL
-											);
-											const videoPressMatch = /^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
-												videoURL
-											);
+											const youtubeMatch =
+												/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
+													videoURL
+												);
+											const vimeoMatch =
+												/^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
+													videoURL
+												);
+											const dailyMotionMatch =
+												/^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
+													videoURL
+												);
+											const videoPressMatch =
+												/^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
+													videoURL
+												);
 
 											const facebookVideoRegex = new RegExp(
 												[
@@ -1647,9 +1655,8 @@ export class AdvancedVideoBlock extends Component {
 												"g"
 											);
 
-											const facebookVideoMatch = facebookVideoRegex.exec(
-												videoURL
-											);
+											const facebookVideoMatch =
+												facebookVideoRegex.exec(videoURL);
 
 											if (youtubeMatch) {
 												fetch(
@@ -1663,9 +1670,10 @@ export class AdvancedVideoBlock extends Component {
 																	width: thumbWidth,
 																} = data.items[0].snippet.thumbnails.high;
 
-																let timePeriods = data.items[0].contentDetails.duration.match(
-																	/(\d{1,2}(?:W|D|H|M|S))/g
-																);
+																let timePeriods =
+																	data.items[0].contentDetails.duration.match(
+																		/(\d{1,2}(?:W|D|H|M|S))/g
+																	);
 																setAttributes({
 																	url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
 																	videoSource: "youtube",
