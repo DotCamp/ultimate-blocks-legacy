@@ -1,4 +1,4 @@
-<?
+<?php
 function ub_render_advanced_video_block($attributes){
     require_once dirname(dirname(__DIR__)) . '/common.php';
     extract($attributes);
