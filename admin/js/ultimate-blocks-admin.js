@@ -33,6 +33,16 @@
 
 	var blocks = [
 		{
+			label: "Advanced Heading",
+			name: "ub/advanced-heading",
+			active: true
+		},
+		{
+			label: "Advanced Video",
+			name: "ub/advanced-video",
+			active: true
+		},
+		{
 			label: "Button (Improved)",
 			name: "ub/button-block",
 			active: true
@@ -63,8 +73,8 @@
 			active: true
 		},
 		{
-			label: "Feature Box",
-			name: "ub/feature-box",
+			label: "Expand",
+			name: "ub/expand",
 			active: true
 		},
 		{
@@ -75,16 +85,6 @@
 		{
 			label: "Image Slider",
 			name: "ub/image-slider",
-			active: true
-		},
-		{
-			label: "Notification Box",
-			name: "ub/notification-box",
-			active: true
-		},
-		{
-			label: "Number Box",
-			name: "ub/number-box",
 			active: true
 		},
 		{

@@ -37,6 +37,11 @@ class Ultimate_Blocks_Util {
 				'active' => true,
 			),
 			array(
+				'label'  => 'Advanced Video',
+				'name'   => 'ub/advanced-video',
+				'active' => true,
+			),
+			array(
 				'label'  => 'Button (Improved)',
 				'name'   => 'ub/button',
 				'active' => true,

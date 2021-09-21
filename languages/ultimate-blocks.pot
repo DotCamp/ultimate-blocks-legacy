@@ -41,7 +41,7 @@ msgid ""
 msgstr ""
 
 #: admin/templates/help/help-page.php:25
-msgid "19 awesome blocks."
+msgid "22 awesome blocks."
 msgstr ""
 
 #: admin/templates/help/help-page.php:25
