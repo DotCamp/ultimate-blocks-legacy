@@ -578,7 +578,7 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#2DB7F5'
             ),
-            'circieSize' => array(
+            'circleSize' => array(
                 'type' => 'number',
                 'default' => 70
             ),
