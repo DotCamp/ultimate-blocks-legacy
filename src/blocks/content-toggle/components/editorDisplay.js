@@ -537,7 +537,8 @@ export class PanelContent extends Component {
 								id="ub-content-toggle-border"
 								label={__("Enable border")}
 								checked={
-									typeof panels === "undefined" || panels[0].attributes.border
+									typeof panels === "undefined" ||
+									(panels.length > 0 && panels[0].attributes.border)
 								}
 								onChange={() =>
 									panels.forEach((panel) =>

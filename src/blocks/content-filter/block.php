@@ -47,6 +47,10 @@ function ub_register_content_filter_entry_block(){
 function ub_render_content_filter_block($attributes, $content){
     extract($attributes);
 
+    if(!isset($filterArray)){
+        $filterArray = array();
+    }
+
     $newFilterArray = json_decode(json_encode($filterArray), true);
 
     $filterList = '';

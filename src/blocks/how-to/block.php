@@ -169,7 +169,7 @@ function ub_render_how_to_block($attributes){
     else{
         $stepsDisplay .=  ($sectionListStyle === 'ordered' ? '<ol' : '<ul') .
                             ' class="ub_howto-step-display">';
-        if(count($section) > 0){
+        if(isset($section) && count($section) > 0){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><' . $thirdLevelTag . ' id="' . $step['anchor'] . '">'
                         . $step['title'] . '</' . $thirdLevelTag . '>' . ($step['stepPic']['url'] !== '' ? 
@@ -205,7 +205,7 @@ function ub_render_how_to_block($attributes){
     $stepsDisplay .=  $sectionListStyle === 'ordered' ? '</ol>' : '</ul>';
     $stepsCode .= ']';
 
-    $parts = array_map( function($sec){ return $sec['steps'];}, $section);
+    $parts = array_map( function($sec){ return $sec['steps'];}, isset($section) ? $section : array() );
     $clips = '';
 
     if($videoURL !== ''){

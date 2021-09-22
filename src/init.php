@@ -204,7 +204,7 @@ function ub_include_block_attribute_css() {
                         }
                     }
 
-                    if($attributes['shadow'][0]['radius'] > 0){
+                    if(array_key_exists('shadow', $attributes) && $attributes['shadow'][0]['radius'] > 0){
                         $blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' . PHP_EOL .
                             'box-shadow: ' . ( $attributes['shadow'][0]['radius'] * cos( deg2rad(450 - $attributes['shadow'][0]['angle']) % 360) ) . 'px ' .
                                             ( -$attributes['shadow'][0]['radius'] * sin( deg2rad(450 - $attributes['shadow'][0]['angle']) % 360) ) . 'px ' .
@@ -486,7 +486,8 @@ function ub_include_block_attribute_css() {
                         }, $sectionPicArray, array_keys($sectionPicArray), array_fill(0, count($sectionPicArray), $prefix ) ));
                     }
                     else {
-                        $stepPicArray = array_map('ub_howto_getStepPic', $attributes['section'][0]['steps']);
+                        $stepPicArray = array_map('ub_howto_getStepPic',
+                            array_key_exists('section', $attributes) ? $attributes['section'][0]['steps'] : array());
                         $blockStylesheets .= implode(array_map(function($stepPic, $index, $prefix){
                                                         if(array_key_exists('width', $stepPic) && $stepPic['width'] > 0){
                                                             return $prefix . ' .ub_howto-step:nth-child(' . ($index+1) .') figure,' .

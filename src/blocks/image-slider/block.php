@@ -9,8 +9,8 @@
 function ub_render_image_slider_block($attributes){
     extract($attributes);
 
-    $imageArray = count($pics) > 0 ? $pics : json_decode($images, true);
-    $captionArray = count($descriptions) > 0 ? $descriptions : json_decode($captions, true);
+    $imageArray = isset($pics) ? (count($pics) > 0 ? $pics : json_decode($images, true)) : array();
+    $captionArray = isset($descriptions) ? count($descriptions) > 0 ? $descriptions : json_decode($captions, true) : array();
 
     $gallery = '';
 
