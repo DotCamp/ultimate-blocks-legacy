@@ -66,9 +66,8 @@ function ub_handleTabEvent(tab) {
 	tab.setAttribute("aria-selected", true);
 	tab.classList.add("active");
 
-	const {
-		width: tabContainerWidth,
-	} = tab.parentElement.getBoundingClientRect();
+	const { width: tabContainerWidth } =
+		tab.parentElement.getBoundingClientRect();
 	const tabContainerLocation =
 		tab.parentElement.getBoundingClientRect().x ||
 		tab.parentElement.getBoundingClientRect().left;
@@ -573,9 +572,8 @@ function ub_hashTabSwitch() {
 							tabContent.previousElementSibling.classList.remove("active");
 						}
 					});
-					targetElement.parentElement.parentElement.dataset.activeTabs = JSON.stringify(
-						[ancestorTabIndexes[i]]
-					);
+					targetElement.parentElement.parentElement.dataset.activeTabs =
+						JSON.stringify([ancestorTabIndexes[i]]);
 				} else {
 					const tabBar =
 						targetElement.parentElement.previousElementSibling.children[0];
@@ -630,9 +628,10 @@ function ub_hashTabSwitch() {
 
 			const targetAccordion = targetElement.previousElementSibling;
 
-			const scrollBoundingRect = (displayModes[0][displayMode] === "accordion"
-				? targetAccordion
-				: tabContentRoot
+			const scrollBoundingRect = (
+				displayModes[0][displayMode] === "accordion"
+					? targetAccordion
+					: tabContentRoot
 			).getBoundingClientRect();
 
 			setTimeout(() => {
@@ -693,6 +692,9 @@ document.addEventListener("DOMContentLoaded", () => {
 							!child.nextElementSibling.classList.contains("ub-hide")
 						);
 						child.setAttribute("aria-controls", child.nextElementSibling.id);
+						if (child.nextElementSibling.classList.contains("active")) {
+							child.classList.add("active");
+						}
 					}
 				});
 			} else {

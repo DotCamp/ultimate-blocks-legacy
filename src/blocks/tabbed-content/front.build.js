@@ -547,6 +547,10 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           child.setAttribute("aria-expanded", !child.nextElementSibling.classList.contains("ub-hide"));
           child.setAttribute("aria-controls", child.nextElementSibling.id);
+
+          if (child.nextElementSibling.classList.contains("active")) {
+            child.classList.add("active");
+          }
         }
       });
     } else {
