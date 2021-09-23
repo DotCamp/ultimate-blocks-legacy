@@ -10,7 +10,6 @@ const {
 } = wp.blockEditor || wp.editor;
 const {
 	Button,
-	IconButton,
 	RangeControl,
 	ToggleControl,
 	PanelBody,
@@ -300,8 +299,6 @@ export class AdvancedVideoBlock extends Component {
 		if (!useShadow && shadow[0].radius > 0) {
 			this.setState({ useShadow: true });
 		}
-
-		//
 	}
 	render() {
 		const { attributes, setAttributes } = this.props;
@@ -374,6 +371,227 @@ export class AdvancedVideoBlock extends Component {
 			[topBorderSize, rightBorderSize, bottomBorderSize, leftBorderSize].filter(
 				(s) => s > 0
 			).length > 0;
+
+		const checkVideoURLInput = () => {
+			let videoURL = videoURLInput.trim();
+			if (/^http(s)?:\/\//g.test(videoURL)) {
+				const youtubeMatch =
+					/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
+						videoURL
+					);
+				const vimeoMatch =
+					/^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
+						videoURL
+					);
+				const dailyMotionMatch =
+					/^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
+						videoURL
+					);
+				const videoPressMatch =
+					/^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
+						videoURL
+					);
+
+				const facebookVideoRegex = new RegExp(
+					[
+						"^https?:\\/\\/(?:",
+						"(?:(?:www|web|mobile|(ar|bg|de|fi|hr|hu|id|pl|ro|ru|th)-\\1|bs-ba|cs-cz|da-dk|el-gk|en-gb|es(?:-(?:es|la))?|et-ee|fa-ir|fb-lt|fr-(?:ca|fr)|fr|he-il|(it|nl|tr)(-\\2)?|ja-jp|ko-kr|ms-my|nb-no|pt-(?:br|pt)|sr-rs|sv-se|tl-ph|vi-vn|zh-(?:cn|hk|tw))", //main fb video url, first part, includes known subdomains
+						"?\\.?facebook\\.com\\/(?:(?:watch\\/\\?v=)|(?:[A-Za-z0-9.]+\\/videos\\/))[0-9]+)", //main fb video url, second part (both watch/?v=[postid] and [userid/pageid]/videos/[postid] variants)
+						"|fb\\.watch\\/[A-Za-z0-9_]+)\\/?", //fb.watch variant
+					].join(""),
+					"g"
+				);
+
+				const facebookVideoMatch = facebookVideoRegex.exec(videoURL);
+
+				if (youtubeMatch) {
+					fetch(
+						`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
+					)
+						.then((response) => {
+							response.json().then((data) => {
+								if (data.items.length) {
+									const { height: thumbHeight, width: thumbWidth } =
+										data.items[0].snippet.thumbnails.high;
+
+									let timePeriods = data.items[0].contentDetails.duration.match(
+										/(\d{1,2}(?:W|D|H|M|S))/g
+									);
+									setAttributes({
+										url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
+										videoSource: "youtube",
+										videoEmbedCode: data.items[0].player.embedHtml,
+										origWidth: thumbWidth,
+										origHeight: thumbHeight,
+										width: Math.min(600, thumbWidth),
+										height:
+											(thumbHeight * Math.min(600, thumbWidth)) / thumbWidth,
+										videoLength: timePeriods.reduce((sum, part) => {
+											let multiplier = {
+												W: 604800,
+												D: 86400,
+												H: 3600,
+												M: 60,
+												S: 1,
+											};
+											return (
+												sum +
+												Number(part.slice(0, -1)) * multiplier[part.slice(-1)]
+											);
+										}, 0),
+									});
+								} else {
+									setAttributes({
+										videoEmbedCode: `<p>${__("No video found at URL")}</p>`,
+									});
+								}
+							});
+						})
+						.catch((err) => {
+							console.log("youtube fetch error");
+							console.log(err);
+						});
+				} else if (vimeoMatch) {
+					fetch(`https://vimeo.com/api/v2/video/${vimeoMatch[1]}.json`)
+						.then((response) => {
+							if (response.ok) {
+								response
+									.json()
+									.then((data) => {
+										const newWidth = Math.min(600, data[0].width);
+										const newHeight = Math.round(
+											(data[0].height * newWidth) / data[0].width
+										);
+
+										setAttributes({
+											url: data[0].url,
+											origHeight: data[0].height,
+											origWidth: data[0].width,
+											width: newWidth,
+											height: newHeight,
+											videoLength: data[0].duration,
+										});
+										fetch(
+											`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
+												data[0].url
+											)}&width=${newWidth}&height=${newHeight}`
+										)
+											.then((response) => {
+												response.json().then((data) => {
+													setAttributes({
+														videoEmbedCode: data.html,
+														videoSource: "vimeo",
+														vimeoUploaderNotBasic:
+															data.account_type !== "basic",
+													});
+												});
+											})
+											.catch((err) => {
+												console.log("vimeo oembed error");
+												console.log(err);
+											});
+									})
+									.catch((err) => {
+										console.log(err);
+									});
+							} else {
+								console.log("No video found at URL");
+							}
+						})
+						.catch((err) => {
+							console.log("vimeo fetch error");
+							console.log(err);
+						});
+				} else if (dailyMotionMatch) {
+					fetch(
+						`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cheight%2Cwidth%2Cduration`
+					)
+						.then((response) => {
+							if (response.ok) {
+								response.json().then((data) => {
+									const newWidth = Math.min(600, data.width);
+									const newHeight = Math.round(
+										(data.height * newWidth) / data.width
+									);
+
+									setAttributes({
+										url: data.url,
+										videoEmbedCode: decodeURIComponent(data.embed_html),
+										videoSource: "dailymotion",
+										height: newHeight,
+										width: newWidth,
+										videoLength: data.duration,
+									});
+								});
+							} else {
+								console.log("No video found at URL");
+							}
+						})
+						.catch((err) => {
+							console.log("dailymotion input error");
+							console.log(err);
+						});
+				} else if (videoPressMatch) {
+					fetch(
+						`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
+					)
+						.then((response) => {
+							if (response.ok) {
+								response.json().then((data) => {
+									const newWidth = Math.min(600, data.width);
+									const newHeight = Math.round(
+										(data.height * newWidth) / data.width
+									);
+									setAttributes({
+										url: `https://videopress.com/v/${data.guid}`,
+										videoEmbedCode: `<video controls width="${newWidth}" height="${newHeight}"><source src="${data.original}"></video>`,
+										videoSource: "videopress",
+										height: newHeight,
+										width: newWidth,
+										videoLength: Math.floor(data.duration / 1000),
+									});
+								});
+							} else {
+								setAttributes({
+									videoEmbedCode: `<p>${__("No video found at URL")}</p>`,
+								});
+							}
+						})
+						.catch((err) => {
+							console.log("videopress input error");
+							console.log(err);
+						});
+				} else if (facebookVideoMatch) {
+					setAttributes({
+						url: videoURL,
+						videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
+							videoURL
+						)}&width=600&show_text=false&height=600&appId" width="600" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
+						width: 600,
+						height: 600,
+						videoSource: "facebook",
+						preserveAspectRatio: false,
+					});
+				} else {
+					console.log(
+						"site not supported. presume it's a direct link to a video"
+					);
+
+					setAttributes({
+						url: videoURL,
+						videoEmbedCode: `<video controls width="500" height="500"><source src="${videoURLInput}"></video>`,
+						videoSource: "unknown",
+						width: 500,
+						height: 500,
+						preserveAspectRatio: false,
+					});
+					this.setState({ videoURLInput: "" });
+				}
+			} else {
+				this.setState({ videoURLInput: "" });
+				console.log("invalid input");
+			}
+		};
 
 		return (
 			<>
@@ -1544,254 +1762,23 @@ export class AdvancedVideoBlock extends Component {
 							</Button>
 						</div>
 						{enterVideoURL && (
-							<div>
-								<URLInput
-									disableSuggestions
-									autoFocus={false}
+							<div className="ub-advanced-video-url-input">
+								<input
+									type="url"
 									value={videoURLInput}
-									onChange={(videoURLInput) => this.setState({ videoURLInput })}
-								/>
-								<IconButton
-									icon={"editor-break"}
-									label={__("Apply", "ultimate-blocks")}
-									onClick={() => {
-										let videoURL = videoURLInput.trim();
-										if (/^http(s)?:\/\//g.test(videoURL)) {
-											const youtubeMatch =
-												/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
-													videoURL
-												);
-											const vimeoMatch =
-												/^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
-													videoURL
-												);
-											const dailyMotionMatch =
-												/^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
-													videoURL
-												);
-											const videoPressMatch =
-												/^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
-													videoURL
-												);
-
-											const facebookVideoRegex = new RegExp(
-												[
-													"^https?:\\/\\/(?:",
-													"(?:(?:www|web|mobile|(ar|bg|de|fi|hr|hu|id|pl|ro|ru|th)-\\1|bs-ba|cs-cz|da-dk|el-gk|en-gb|es(?:-(?:es|la))?|et-ee|fa-ir|fb-lt|fr-(?:ca|fr)|fr|he-il|(it|nl|tr)(-\\2)?|ja-jp|ko-kr|ms-my|nb-no|pt-(?:br|pt)|sr-rs|sv-se|tl-ph|vi-vn|zh-(?:cn|hk|tw))", //main fb video url, first part, includes known subdomains
-													"?\\.?facebook\\.com\\/(?:(?:watch\\/\\?v=)|(?:[A-Za-z0-9.]+\\/videos\\/))[0-9]+)", //main fb video url, second part (both watch/?v=[postid] and [userid/pageid]/videos/[postid] variants)
-													"|fb\\.watch\\/[A-Za-z0-9_]+)\\/?", //fb.watch variant
-												].join(""),
-												"g"
-											);
-
-											const facebookVideoMatch =
-												facebookVideoRegex.exec(videoURL);
-
-											if (youtubeMatch) {
-												fetch(
-													`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
-												)
-													.then((response) => {
-														response.json().then((data) => {
-															if (data.items.length) {
-																const {
-																	height: thumbHeight,
-																	width: thumbWidth,
-																} = data.items[0].snippet.thumbnails.high;
-
-																let timePeriods =
-																	data.items[0].contentDetails.duration.match(
-																		/(\d{1,2}(?:W|D|H|M|S))/g
-																	);
-																setAttributes({
-																	url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
-																	videoSource: "youtube",
-																	videoEmbedCode:
-																		data.items[0].player.embedHtml,
-																	origWidth: thumbWidth,
-																	origHeight: thumbHeight,
-																	width: Math.min(600, thumbWidth),
-																	height:
-																		(thumbHeight * Math.min(600, thumbWidth)) /
-																		thumbWidth,
-																	videoLength: timePeriods.reduce(
-																		(sum, part) => {
-																			let multiplier = {
-																				W: 604800,
-																				D: 86400,
-																				H: 3600,
-																				M: 60,
-																				S: 1,
-																			};
-																			return (
-																				sum +
-																				Number(part.slice(0, -1)) *
-																					multiplier[part.slice(-1)]
-																			);
-																		},
-																		0
-																	),
-																});
-															} else {
-																setAttributes({
-																	videoEmbedCode: `<p>${__(
-																		"No video found at URL"
-																	)}</p>`,
-																});
-															}
-														});
-													})
-													.catch((err) => {
-														console.log("youtube fetch error");
-														console.log(err);
-													});
-											} else if (vimeoMatch) {
-												fetch(
-													`https://vimeo.com/api/v2/video/${vimeoMatch[1]}.json`
-												)
-													.then((response) => {
-														if (response.ok) {
-															response
-																.json()
-																.then((data) => {
-																	const newWidth = Math.min(600, data[0].width);
-																	const newHeight = Math.round(
-																		(data[0].height * newWidth) / data[0].width
-																	);
-
-																	setAttributes({
-																		url: data[0].url,
-																		origHeight: data[0].height,
-																		origWidth: data[0].width,
-																		width: newWidth,
-																		height: newHeight,
-																		videoLength: data[0].duration,
-																	});
-																	fetch(
-																		`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
-																			data[0].url
-																		)}&width=${newWidth}&height=${newHeight}`
-																	)
-																		.then((response) => {
-																			response.json().then((data) => {
-																				setAttributes({
-																					videoEmbedCode: data.html,
-																					videoSource: "vimeo",
-																					vimeoUploaderNotBasic:
-																						data.account_type !== "basic",
-																				});
-																			});
-																		})
-																		.catch((err) => {
-																			console.log("vimeo oembed error");
-																			console.log(err);
-																		});
-																})
-																.catch((err) => {
-																	console.log(err);
-																});
-														} else {
-															console.log("No video found at URL");
-														}
-													})
-													.catch((err) => {
-														console.log("vimeo fetch error");
-														console.log(err);
-													});
-											} else if (dailyMotionMatch) {
-												fetch(
-													`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cheight%2Cwidth%2Cduration`
-												)
-													.then((response) => {
-														if (response.ok) {
-															response.json().then((data) => {
-																const newWidth = Math.min(600, data.width);
-																const newHeight = Math.round(
-																	(data.height * newWidth) / data.width
-																);
-
-																setAttributes({
-																	url: data.url,
-																	videoEmbedCode: decodeURIComponent(
-																		data.embed_html
-																	),
-																	videoSource: "dailymotion",
-																	height: newHeight,
-																	width: newWidth,
-																	videoLength: data.duration,
-																});
-															});
-														} else {
-															console.log("No video found at URL");
-														}
-													})
-													.catch((err) => {
-														console.log("dailymotion input error");
-														console.log(err);
-													});
-											} else if (videoPressMatch) {
-												fetch(
-													`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
-												)
-													.then((response) => {
-														if (response.ok) {
-															response.json().then((data) => {
-																const newWidth = Math.min(600, data.width);
-																const newHeight = Math.round(
-																	(data.height * newWidth) / data.width
-																);
-																setAttributes({
-																	url: `https://videopress.com/v/${data.guid}`,
-																	videoEmbedCode: `<video controls width="${newWidth}" height="${newHeight}"><source src="${data.original}"></video>`,
-																	videoSource: "videopress",
-																	height: newHeight,
-																	width: newWidth,
-																	videoLength: Math.floor(data.duration / 1000),
-																});
-															});
-														} else {
-															setAttributes({
-																videoEmbedCode: `<p>${__(
-																	"No video found at URL"
-																)}</p>`,
-															});
-														}
-													})
-													.catch((err) => {
-														console.log("videopress input error");
-														console.log(err);
-													});
-											} else if (facebookVideoMatch) {
-												setAttributes({
-													url: videoURL,
-													videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
-														videoURL
-													)}&width=600&show_text=false&height=600&appId" width="600" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
-													width: 600,
-													height: 600,
-													videoSource: "facebook",
-													preserveAspectRatio: false,
-												});
-											} else {
-												console.log(
-													"site not supported. presume it's a direct link to a video"
-												);
-
-												setAttributes({
-													url: videoURL,
-													videoEmbedCode: `<video controls width="500" height="500"><source src="${videoURLInput}"></video>`,
-													videoSource: "unknown",
-													width: 500,
-													height: 500,
-													preserveAspectRatio: false,
-												});
-												this.setState({ videoURLInput: "" });
-											}
-										} else {
-											this.setState({ videoURLInput: "" });
-											console.log("invalid input");
+									onChange={(e) =>
+										this.setState({ videoURLInput: e.target.value })
+									}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											checkVideoURLInput();
 										}
 									}}
+								/>
+								<Button
+									icon={"editor-break"}
+									label={__("Apply", "ultimate-blocks")}
+									onClick={checkVideoURLInput}
 								/>
 							</div>
 						)}

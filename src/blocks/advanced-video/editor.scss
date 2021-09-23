@@ -44,3 +44,13 @@ $fixed-border-style: 1px dashed gray;
 		border-right: $fixed-border-style;
 	}
 }
+
+.ub-advanced-video-url-input {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+	> input,
+	> button {
+		display: block;
+	}
+}
