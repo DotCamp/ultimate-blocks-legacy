@@ -57,7 +57,7 @@ function ub_render_how_to_block($attributes){
     $suppliesCode = '"supply": [';
     if($advancedMode && $includeSuppliesList){
         $header .= '<' . $secondLevelTag . '>' . $suppliesIntro . '</' . $secondLevelTag . '>';
-        if(count($supplies) > 0){
+        if(isset($supplies) && count($supplies) > 0){
             $header .=  $suppliesListStyle === 'ordered' ? '<ol' : '<ul';
             $header .= ' class="ub_howto-supplies-list">';
             foreach($supplies as $i => $s){
@@ -78,7 +78,7 @@ function ub_render_how_to_block($attributes){
 
     if($advancedMode && $includeToolsList){
         $header .= '<' . $secondLevelTag . '>' . $toolsIntro . '</' . $secondLevelTag . '>';
-        if(count($tools) > 0){
+        if(isset($tools) && count($tools) > 0){
             $header .= $toolsListStyle === 'ordered' ? '<ol' : '<ul';
             $header .= ' class="ub_howto-tools-list">';
             foreach($tools as $i => $t){
