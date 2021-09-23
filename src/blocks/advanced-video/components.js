@@ -1045,99 +1045,6 @@ export class AdvancedVideoBlock extends Component {
 									label={"Mobile"}
 									onClick={() => setAttributes({ showInMobile: !showInMobile })}
 								/>
-								<PanelBody title={__("Shadow settings")}>
-									<PanelRow>
-										<p>{__("Include a shadow")}</p>
-										<ToggleControl
-											checked={useShadow}
-											onChange={() => {
-												this.setState({ useShadow: !useShadow });
-												if (useShadow) {
-													setAttributes({
-														shadow: [
-															{
-																angle: 0,
-																radius: 0,
-																color: "#000000",
-																transparency: 0,
-																blur: 0,
-																spread: 0,
-															},
-														],
-													});
-												}
-											}}
-										/>
-									</PanelRow>
-									{useShadow && (
-										<>
-											<AnglePickerControl
-												label={__("Shadow angle")}
-												value={shadow[0].angle}
-												onChange={(angle) =>
-													setAttributes({
-														shadow: [Object.assign({}, shadow[0], { angle })],
-													})
-												}
-											/>
-											<RangeControl
-												label={__("Shadow radius (px)")}
-												value={shadow[0].radius}
-												onChange={(radius) =>
-													setAttributes({
-														shadow: [Object.assign({}, shadow[0], { radius })],
-													})
-												}
-												min={0}
-												max={100}
-											/>
-											<ColorPalette
-												value={shadow[0].color}
-												onChange={(color) =>
-													setAttributes({
-														shadow: [Object.assign({}, shadow[0], { color })],
-													})
-												}
-											/>
-
-											<RangeControl
-												label={__("Shadow transparency")}
-												value={shadow[0].transparency}
-												onChange={(transparency) =>
-													setAttributes({
-														shadow: [
-															Object.assign({}, shadow[0], { transparency }),
-														],
-													})
-												}
-												min={0}
-												max={100}
-											/>
-											<RangeControl
-												label={__("Shadow blur radius (px)")}
-												value={shadow[0].blur}
-												onChange={(blur) =>
-													setAttributes({
-														shadow: [Object.assign({}, shadow[0], { blur })],
-													})
-												}
-												min={0}
-												max={100}
-											/>
-											<RangeControl
-												label={__("Shadow spread radius (px)")}
-												value={shadow[0].spread}
-												onChange={(spread) =>
-													setAttributes({
-														shadow: [Object.assign({}, shadow[0], { spread })],
-													})
-												}
-												min={-50}
-												max={50}
-											/>
-										</>
-									)}
-								</PanelBody>
 							</PanelBody>
 							<PanelBody title={__("Border settings")}>
 								<div className="ub-labelled-toggle">
@@ -1556,6 +1463,99 @@ export class AdvancedVideoBlock extends Component {
 									</>
 								)}
 							</PanelBody>
+							<PanelBody title={__("Shadow settings")}>
+								<PanelRow>
+									<p>{__("Include a shadow")}</p>
+									<ToggleControl
+										checked={useShadow}
+										onChange={() => {
+											this.setState({ useShadow: !useShadow });
+											if (useShadow) {
+												setAttributes({
+													shadow: [
+														{
+															angle: 0,
+															radius: 0,
+															color: "#000000",
+															transparency: 0,
+															blur: 0,
+															spread: 0,
+														},
+													],
+												});
+											}
+										}}
+									/>
+								</PanelRow>
+								{useShadow && (
+									<>
+										<AnglePickerControl
+											label={__("Shadow angle")}
+											value={shadow[0].angle}
+											onChange={(angle) =>
+												setAttributes({
+													shadow: [Object.assign({}, shadow[0], { angle })],
+												})
+											}
+										/>
+										<RangeControl
+											label={__("Shadow radius (px)")}
+											value={shadow[0].radius}
+											onChange={(radius) =>
+												setAttributes({
+													shadow: [Object.assign({}, shadow[0], { radius })],
+												})
+											}
+											min={0}
+											max={100}
+										/>
+										<ColorPalette
+											value={shadow[0].color}
+											onChange={(color) =>
+												setAttributes({
+													shadow: [Object.assign({}, shadow[0], { color })],
+												})
+											}
+										/>
+
+										<RangeControl
+											label={__("Shadow transparency")}
+											value={shadow[0].transparency}
+											onChange={(transparency) =>
+												setAttributes({
+													shadow: [
+														Object.assign({}, shadow[0], { transparency }),
+													],
+												})
+											}
+											min={0}
+											max={100}
+										/>
+										<RangeControl
+											label={__("Shadow blur radius (px)")}
+											value={shadow[0].blur}
+											onChange={(blur) =>
+												setAttributes({
+													shadow: [Object.assign({}, shadow[0], { blur })],
+												})
+											}
+											min={0}
+											max={100}
+										/>
+										<RangeControl
+											label={__("Shadow spread radius (px)")}
+											value={shadow[0].spread}
+											onChange={(spread) =>
+												setAttributes({
+													shadow: [Object.assign({}, shadow[0], { spread })],
+												})
+											}
+											min={-50}
+											max={50}
+										/>
+									</>
+								)}
+							</PanelBody>
 						</>
 					)}
 				</InspectorControls>
@@ -1951,6 +1951,8 @@ export class AdvancedVideoBlock extends Component {
 									topRightRadius: 0,
 									bottomLeftRadius: 0,
 									bottomRightRadius: 0,
+
+									shadow: [Object.assign({}, shadow[0], { radius: 0 })],
 								});
 								this.setState({
 									videoURLInput: "",
@@ -1959,6 +1961,7 @@ export class AdvancedVideoBlock extends Component {
 									startTime_h: 0,
 									startTime_m: 0,
 									startTime_s: 0,
+									useShadow: false,
 								});
 							}}
 						>
