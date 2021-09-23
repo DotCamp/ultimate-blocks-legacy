@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.4.8
+Stable tag: 2.4.9
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,28 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.9 =
+
+* NEW BLOCK: Advanced Video.
+* Content Filter - Fix display of active button text color.
+* Content Toggle - Revise FAQ schema generation function.
+* Content Toggle - Add option to convert Content Toggle into core blocks.
+* Content Toggle - Allow setting toggle status for each panel separately.
+* Countdown - Allow customizing circular countdown size.
+* Expand - Fix pointer display for expand toggle button.
+* HowTo - Fix initial video start time and end time values for each step.
+* HowTo - Add unit names to start time and end time inputs.
+* HowTo - Fix generation of duration code in ISO 8601 format.
+* Post Grid - Allow togging post title visibility.
+* Review - Prevent apostrophes from being escaped in review block JSON LD.
+* Social Share - Change Reddit icon color.
+* Social Share - Update Twitter and LinkedIn share URLs.
+* Social Share - Allow adding captions to icons.
+* Tabbed Content - Fix tab alignment display in editor.
+* Table of Contents - Fix incompatibility with Headline from GenerateBlocks.
+* Other - Update Font Awesome to 5.15.4.
+* Other - Update Swiper to 6.8.4.
 
 = 2.4.8 =
 
