@@ -1109,55 +1109,32 @@ export class AdvancedVideoBlock extends Component {
 								</div>
 								{hasBorder && (
 									<>
-										<div
-											style={{
-												display: "grid",
-												gridTemplateColumns: "1fr 1fr 1fr",
-												width: "60px",
-											}}
-										>
+										<div className="ub-indicator-grid">
 											{/* FIRST ROW */}
+											<div className="ub-indicator-grid-cell" />
 											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-left-border ub-indicator-grid-right-border"
 												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											></div>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
 													borderTop: `2px solid ${
 														currentBorder === "top" ? "blue" : "black"
 													}`,
-													borderLeft: "1px dashed gray",
-													borderRight: "1px dashed gray",
 												}}
 												onClick={() => this.setState({ currentBorder: "top" })}
 											></div>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											/>
+											<div className="ub-indicator-grid-cell" />
 											{/* SECOND ROW */}
 											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-bottom-border"
 												style={{
-													width: "20px",
-													height: "20px",
 													borderLeft: `2px solid ${
 														currentBorder === "left" ? "blue" : "black"
 													}`,
-													borderTop: "1px dashed gray",
-													borderBottom: "1px dashed gray",
 												}}
 												onClick={() => this.setState({ currentBorder: "left" })}
 											/>
 											<div
+												className="ub-indicator-grid-cell"
 												style={{
-													width: "20px",
-													height: "20px",
 													border: `2px solid ${
 														currentBorder === "all" ? "blue" : "black"
 													}`,
@@ -1165,49 +1142,37 @@ export class AdvancedVideoBlock extends Component {
 												onClick={() => this.setState({ currentBorder: "all" })}
 											/>
 											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-bottom-border"
 												style={{
-													width: "20px",
-													height: "20px",
 													borderRight: `2px solid ${
 														currentBorder === "right" ? "blue" : "black"
 													}`,
-													borderTop: "1px dashed gray",
-													borderBottom: "1px dashed gray",
 												}}
 												onClick={() =>
 													this.setState({ currentBorder: "right" })
 												}
 											/>
 											{/* THIRD ROW */}
+											<div className="ub-indicator-grid-cell" />
 											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-left-border ub-indicator-grid-right-border"
 												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											/>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
 													borderBottom: `2px solid ${
 														currentBorder === "bottom" ? "blue" : "black"
 													}`,
-													borderLeft: "1px dashed gray",
-													borderRight: "1px dashed gray",
 												}}
 												onClick={() =>
 													this.setState({ currentBorder: "bottom" })
 												}
 											/>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											></div>
+											<div className="ub-indicator-grid-cell" />
 										</div>
 										<RangeControl
-											label={__("Border size (pixels)")}
+											label={__(
+												currentBorder === "all"
+													? "Border size (pixels)"
+													: "Border size of current side (pixels)"
+											)}
 											value={
 												currentBorder === "top"
 													? topBorderSize
@@ -1246,6 +1211,116 @@ export class AdvancedVideoBlock extends Component {
 													? 0
 													: 1
 											}
+											max={30}
+										/>
+										<div className="ub-indicator-grid">
+											{/* FIRST ROW */}
+											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-right-border"
+												style={{
+													borderTop: `2px solid ${
+														currentCorner === "topleft" ? "blue" : "black"
+													}`,
+													borderLeft: `2px solid ${
+														currentCorner === "topleft" ? "blue" : "black"
+													}`,
+												}}
+												onClick={() =>
+													this.setState({ currentCorner: "topleft" })
+												}
+											/>
+											<div className="ub-indicator-grid-cell" />
+											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-left-border"
+												style={{
+													borderTop: `2px solid ${
+														currentCorner === "topright" ? "blue" : "black"
+													}`,
+													borderRight: `2px solid ${
+														currentCorner === "topright" ? "blue" : "black"
+													}`,
+												}}
+												onClick={() =>
+													this.setState({ currentCorner: "topright" })
+												}
+											></div>
+											{/* SECOND ROW */}
+											<div className="ub-indicator-grid-cell" />
+											<div
+												className="ub-indicator-grid-cell"
+												style={{
+													border: `2px solid ${
+														currentCorner === "all" ? "blue" : "black"
+													}`,
+												}}
+												onClick={() => this.setState({ currentCorner: "all" })}
+											></div>
+											<div className="ub-indicator-grid-cell" />
+											{/* THIRD ROW */}
+											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-right-border"
+												style={{
+													borderBottom: `2px solid ${
+														currentCorner === "bottomleft" ? "blue" : "black"
+													}`,
+													borderLeft: `2px solid ${
+														currentCorner === "bottomleft" ? "blue" : "black"
+													}`,
+												}}
+												onClick={() =>
+													this.setState({ currentCorner: "bottomleft" })
+												}
+											/>
+											<div className="ub-indicator-grid-cell" />
+											<div
+												className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-left-border"
+												style={{
+													borderBottom: `2px solid ${
+														currentCorner === "bottomright" ? "blue" : "black"
+													}`,
+													borderRight: `2px solid ${
+														currentCorner === "bottomright" ? "blue" : "black"
+													}`,
+												}}
+												onClick={() =>
+													this.setState({ currentCorner: "bottomright" })
+												}
+											></div>
+										</div>
+										<RangeControl
+											label={__(
+												currentCorner === "all"
+													? "Border radius"
+													: "Border radius of current corner"
+											)}
+											value={
+												currentCorner === "topleft"
+													? topLeftRadius
+													: currentCorner === "topright"
+													? topRightRadius
+													: currentCorner === "bottomleft"
+													? bottomLeftRadius
+													: bottomRightRadius
+											}
+											onChange={(radius) => {
+												if (currentCorner === "all") {
+													setAttributes({
+														topLeftRadius: radius,
+														topRightRadius: radius,
+														bottomLeftRadius: radius,
+														bottomRightRadius: radius,
+													});
+												} else if (currentCorner === "topleft") {
+													setAttributes({ topLeftRadius: radius });
+												} else if (currentCorner === "topright") {
+													setAttributes({ topRightRadius: radius });
+												} else if (currentCorner === "bottomleft") {
+													setAttributes({ bottomLeftRadius: radius });
+												} else if (currentCorner === "bottomright") {
+													setAttributes({ bottomRightRadius: radius });
+												}
+											}}
+											min={0}
 											max={30}
 										/>
 										<SelectControl
@@ -1313,152 +1388,6 @@ export class AdvancedVideoBlock extends Component {
 													setAttributes({ bottomBorderColor: borderColor });
 												}
 											}}
-										/>
-										<p>{__("Border radius")}</p>
-										<div
-											style={{
-												display: "grid",
-												gridTemplateColumns: "1fr 1fr 1fr",
-												width: "60px",
-											}}
-										>
-											{/* FIRST ROW */}
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-													borderTop: `2px solid ${
-														currentCorner === "topleft" ? "blue" : "black"
-													}`,
-													borderLeft: `2px solid ${
-														currentCorner === "topleft" ? "blue" : "black"
-													}`,
-													borderBottom: "1px dashed gray",
-													borderRight: "1px dashed gray",
-												}}
-												onClick={() =>
-													this.setState({ currentCorner: "topleft" })
-												}
-											/>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											/>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-													borderTop: `2px solid ${
-														currentCorner === "topright" ? "blue" : "black"
-													}`,
-													borderRight: `2px solid ${
-														currentCorner === "topright" ? "blue" : "black"
-													}`,
-													borderBottom: "1px dashed gray",
-													borderLeft: "1px dashed gray",
-												}}
-												onClick={() =>
-													this.setState({ currentCorner: "topright" })
-												}
-											></div>
-											{/* SECOND ROW */}
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											/>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-													border: `2px solid ${
-														currentCorner === "all" ? "blue" : "black"
-													}`,
-												}}
-												onClick={() => this.setState({ currentCorner: "all" })}
-											></div>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											/>
-											{/* THIRD ROW */}
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-													borderBottom: `2px solid ${
-														currentCorner === "bottomleft" ? "blue" : "black"
-													}`,
-													borderLeft: `2px solid ${
-														currentCorner === "bottomleft" ? "blue" : "black"
-													}`,
-													borderTop: "1px dashed gray",
-													borderRight: "1px dashed gray",
-												}}
-												onClick={() =>
-													this.setState({ currentCorner: "bottomleft" })
-												}
-											/>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-												}}
-											/>
-											<div
-												style={{
-													width: "20px",
-													height: "20px",
-													borderBottom: `2px solid ${
-														currentCorner === "bottomright" ? "blue" : "black"
-													}`,
-													borderRight: `2px solid ${
-														currentCorner === "bottomright" ? "blue" : "black"
-													}`,
-													borderTop: "1px dashed gray",
-													borderLeft: "1px dashed gray",
-												}}
-												onClick={() =>
-													this.setState({ currentCorner: "bottomright" })
-												}
-											></div>
-										</div>
-										<RangeControl
-											label={__("Border radius of current corner")}
-											value={
-												currentCorner === "topleft"
-													? topLeftRadius
-													: currentCorner === "topright"
-													? topRightRadius
-													: currentCorner === "bottomleft"
-													? bottomLeftRadius
-													: bottomRightRadius
-											}
-											onChange={(radius) => {
-												if (currentCorner === "all") {
-													setAttributes({
-														topLeftRadius: radius,
-														topRightRadius: radius,
-														bottomLeftRadius: radius,
-														bottomRightRadius: radius,
-													});
-												} else if (currentCorner === "topleft") {
-													setAttributes({ topLeftRadius: radius });
-												} else if (currentCorner === "topright") {
-													setAttributes({ topRightRadius: radius });
-												} else if (currentCorner === "bottomleft") {
-													setAttributes({ bottomLeftRadius: radius });
-												} else if (currentCorner === "bottomright") {
-													setAttributes({ bottomRightRadius: radius });
-												}
-											}}
-											min={0}
-											max={30}
 										/>
 									</>
 								)}

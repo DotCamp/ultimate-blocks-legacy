@@ -19,3 +19,28 @@
 		flex: 1 1 25%;
 	}
 }
+
+$fixed-border-style: 1px dashed gray;
+
+.ub-indicator-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	width: 60px;
+	margin-bottom: 20px;
+	&-cell {
+		width: 20px;
+		height: 20px;
+	}
+	&-top-border {
+		border-top: $fixed-border-style;
+	}
+	&-bottom-border {
+		border-bottom: $fixed-border-style;
+	}
+	&-left-border {
+		border-left: $fixed-border-style;
+	}
+	&-right-border {
+		border-right: $fixed-border-style;
+	}
+}
