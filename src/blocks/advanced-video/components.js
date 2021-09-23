@@ -1,13 +1,8 @@
 import { convertFromSeconds } from "../../common";
 import { Component } from "react";
 const { __ } = wp.i18n;
-const {
-	MediaUpload,
-	MediaUploadCheck,
-	InspectorControls,
-	ColorPalette,
-	URLInput,
-} = wp.blockEditor || wp.editor;
+const { MediaUpload, MediaUploadCheck, InspectorControls, ColorPalette } =
+	wp.blockEditor || wp.editor;
 const {
 	Button,
 	RangeControl,
@@ -1765,6 +1760,7 @@ export class AdvancedVideoBlock extends Component {
 							<div className="ub-advanced-video-url-input">
 								<input
 									type="url"
+									placeholder={__("Insert video URL")}
 									value={videoURLInput}
 									onChange={(e) =>
 										this.setState({ videoURLInput: e.target.value })
