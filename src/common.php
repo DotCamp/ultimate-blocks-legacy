@@ -7323,12 +7323,13 @@ if(!function_exists('ub_checkInnerBlocks')){
 }
 
 if(!function_exists('ub_getPresentBlocks')){
-    function ub_getPresentBlocks(){
+    function ub_getPresentBlocks($block_array = null){
         $presentBlocks = [];
 
-        $posts_array = get_post();
-        if($posts_array){
-            foreach(parse_blocks( $posts_array->post_content ) as $block){
+        $post_array = get_post();
+
+        if($post_array || $block_array){
+            foreach(parse_blocks( $block_array ?: $post_array->post_content ) as $block){
                 $presentBlocks = ub_checkInnerBlocks($block);
             }
         }

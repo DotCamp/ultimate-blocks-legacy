@@ -114,22 +114,62 @@ function ub_advanced_heading_add_assets (){
 	wp_enqueue_style('ultimate_blocks-advanced-heading-fonts',  'https://pagecdn.io/lib/easyfonts/fonts.css');
 }
 
+function ub_generate_widget_block_list($output = false){
+    static $blockList = array();
+    require_once plugin_dir_path(__FILE__) . 'common.php';
+        
+    if(!$output){
+        $widget_elements = get_option('widget_block');
+        foreach( (array) $widget_elements as $key => $widget_element ) {
+            if ( ! empty( $widget_element['content'] ) ) {
+                
+                $widget_blocks = ub_getPresentBlocks($widget_element['content']);
+
+                foreach( $widget_blocks as $block ){
+                    $blockList[] = $block;
+                }
+            }
+        }
+    }
+    return $blockList;
+}
+
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
 	if ( is_singular() and has_blocks() ){
         require_once plugin_dir_path(__FILE__) . 'common.php';
-        
-        $presentBlocks = ub_getPresentBlocks();
 
-        foreach( $presentBlocks as $block ){
+        $main_assets_loaded = false;
+
+        $advanced_heading_assets_loaded = false;
+
+        $widget_blocks = ub_generate_widget_block_list();
+        foreach( $widget_blocks as $block ){
             if( strpos($block['blockName'], 'ub/' ) === 0){
                 ub_load_assets();
+                $main_assets_loaded = true;
                 if( strpos($block['blockName'], 'ub/advanced-heading' ) === 0){
                     ub_advanced_heading_add_assets();
+                    $advanced_heading_assets_loaded = true;
                     break;
                 }
             }
         }
+
+        if(!($main_assets_loaded && $advanced_heading_assets_loaded)){
+            $presentBlocks = ub_getPresentBlocks();
+
+            foreach( $presentBlocks as $block ){
+                if( strpos($block['blockName'], 'ub/' ) === 0){
+                    ub_load_assets();
+                    if( strpos($block['blockName'], 'ub/advanced-heading' ) === 0){
+                        ub_advanced_heading_add_assets();
+                        break;
+                    }
+                }
+            }
+        }
+        
     }
     elseif ( ub_check_is_gutenberg_page() ){
         ub_load_assets();
@@ -144,7 +184,7 @@ function ub_include_block_attribute_css() {
     require plugin_dir_path(__FILE__) . 'defaults.php';
     require_once plugin_dir_path(__FILE__) . 'common.php';
 
-    $presentBlocks = array_unique(ub_getPresentBlocks(), SORT_REGULAR);
+    $presentBlocks = array_unique(array_merge( ub_getPresentBlocks(), ub_generate_widget_block_list(true) ), SORT_REGULAR);
     $blockStylesheets = "";
 
     $hasNoSmoothScroll = true;
