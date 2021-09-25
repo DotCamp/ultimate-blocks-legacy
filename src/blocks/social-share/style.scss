@@ -16,6 +16,10 @@
 				border-radius: 0%;
 			}
 		}
+		.ub-social-share-standalone-icon {
+			margin: 12px;
+			padding-right: 5px;
+		}
 		$sites: facebook, twitter, linkedin, pinterest, reddit, tumblr;
 
 		@each $site in $sites {
@@ -23,6 +27,7 @@
 				border-width: 1px;
 				border-style: solid;
 				white-space: nowrap;
+				display: flex;
 			}
 		}
 		> div {
@@ -53,7 +58,8 @@ $site-colors: (
 @each $site, $color in $site-colors {
 	.ub-social-share-#{$site} {
 		background-color: $color;
-		& + span {
+		& + span,
+		& + span > a {
 			color: $color;
 		}
 	}

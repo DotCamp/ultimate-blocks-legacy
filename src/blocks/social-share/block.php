@@ -60,6 +60,23 @@ function ub_render_social_share_block( $attributes ) {
  * @param  string  $iconShape Shape of Icon.
  * @return string
  */
+
+function ub_prepare_social_share_icon($icon, $iconShape, $siteName, $link, $caption, $hasOutline){
+	if($hasOutline){
+		return '<a target="_blank" href="' . esc_url($link) . '" class="ub-social-share-' . $siteName . '-container">
+		<span class="social-share-icon ub-social-share-' . $siteName . ' ' . $iconShape . '">' .
+		   $icon .
+		'</span>' .
+		( $caption ? ('<span>' . $caption . '</span>') : '' ) . '</a>';
+	}
+	else{
+		return ($caption ? ('<div class="ub-social-share-' . $siteName . '-container">') : '') .
+		'<a target="_blank" href="' . esc_url($link) . '" class="social-share-icon ub-social-share-' . $siteName . ' ' . ($caption ? ' ' : 'ub-social-share-standalone-icon ') . $iconShape . '">'
+        	. $icon . '</a>' . 
+		( $caption ? '<span><a target="_blank" href="' . esc_url($link) . '">' . $caption . '</a></span></div>' : '' );
+	}
+}
+
 function ub_get_facebook_icon( $attributes, $icon_size, $iconShape, $caption, $hasOutline ) {
     extract($attributes);
 	if ( !$showFacebookIcon ) {
@@ -79,10 +96,7 @@ function ub_get_facebook_icon( $attributes, $icon_size, $iconShape, $caption, $h
     $facebook_url = 'https://www.facebook.com/sharer/sharer.php?u='
         . rawurlencode( get_the_permalink() ) . '&title=' . get_the_title();
 
-	return ($caption? '<div class="ub-social-share-facebook-container">' : '') . '<a target="_blank" href="' . esc_url($facebook_url) . '"
-        class="social-share-icon ub-social-share-facebook ' . $iconShape . '">'
-            . $facebook_icon .
-        '</a>' . ( $caption ? '<span>' . $caption . '</span>' : '' ) . ($caption ? '</div>' : '');
+	return ub_prepare_social_share_icon($facebook_icon, $iconShape, 'facebook', $facebook_url, $caption, $hasOutline);
 }
 
 /**
@@ -111,10 +125,7 @@ function ub_get_twitter_icon( $attributes, $icon_size, $iconShape, $caption, $ha
 	// Generate the Twitter URL.
     $twitter_url = 'http://twitter.com/intent/tweet?url=' . rawurlencode( get_the_permalink() ) . '&text=' . get_the_title();
 
-	return ($caption ? '<div class="ub-social-share-twitter-container">' : '') . '<a target="_blank" href="' . esc_url($twitter_url) . '"
-        class="social-share-icon ub-social-share-twitter ' . $iconShape . '">'
-        . $twitter_icon . '
-	</a>' . ( $caption ? '<span>' . $caption . '</span>' : '' ) . ($caption ? '</div>' : '') ;
+	return ub_prepare_social_share_icon($twitter_icon, $iconShape, 'twitter', $twitter_url, $caption, $hasOutline);
 }
 
 
@@ -144,11 +155,7 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $iconShape, $caption, $h
 	// Generate the Linked In URL.
 	$linkedin_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( get_the_permalink() );
 
-	return ($caption ? '<div class="ub-social-share-linkedin-container">' : '') . '<a target="_blank"
-		href="' . esc_url($linkedin_url) . '"
-		class="social-share-icon ub-social-share-linkedin ' . $iconShape . '">'
-		. $linkedin_icon .
-	'</a>' . ( $caption ? '<span>' . $caption . '</span>' : '' ) . ($caption ? '</div>' : '') ;
+	return ub_prepare_social_share_icon($linkedin_icon, $iconShape, 'linkedin', $linkedin_url, $caption, $hasOutline);
 }
 
 
@@ -160,7 +167,7 @@ function ub_get_linkedin_icon( $attributes, $icon_size, $iconShape, $caption, $h
  * @param  string  $iconShape Shape of Icon.
  * @return string
  */
-function ub_get_pinterest_icon( $attributes, $icon_size, $iconShape ,$caption, $hasOutline ) {
+function ub_get_pinterest_icon( $attributes, $icon_size, $iconShape, $caption, $hasOutline ) {
 	global $post;
     extract($attributes);
 	if ( ! $showPinterestIcon ) {
@@ -190,10 +197,7 @@ function ub_get_pinterest_icon( $attributes, $icon_size, $iconShape ,$caption, $
         . '&description=' . get_the_title()
         . '&media=' . $thumbnail;
 
-	return ($caption? '<div class="ub-social-share-pinterest-container">' : '') . '<a target="_blank" href="' . esc_url($pinterest_url) .
-        '"class="social-share-icon ub-social-share-pinterest ' . $iconShape . '">'
-        . $pinterest_icon .
-	'</a>' . ( $caption ? '<span>' . $caption . '</span>' : '' ) . ($caption ? '</div>' : '') ;
+	return ub_prepare_social_share_icon($pinterest_icon, $iconShape, 'pinterest', $pinterest_url, $caption, $hasOutline);
 }
 
 
@@ -225,10 +229,7 @@ function ub_get_reddit_icon( $attributes, $icon_size, $iconShape, $caption, $has
         . rawurlencode( get_the_permalink() ) .
         '&title=' . get_the_title();
 
-    return ($caption ? '<div class="ub-social-share-reddit-container">' : '') . '<a target="_blank" href="' .
-        esc_url($reddit_url) . '"class="social-share-icon ub-social-share-reddit ' .
-        $iconShape . '">' .
-		$reddit_icon . '</a>' . ( $caption ? '<span>' . $caption . '</span>' : '' ) . ($caption ? '</div>' : '') ;
+	return ub_prepare_social_share_icon($reddit_icon, $iconShape, 'reddit', $reddit_url, $caption, $hasOutline);
 }
 
 
@@ -260,10 +261,7 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $iconShape, $caption, $has
         . rawurlencode( get_the_permalink() )
 		. '&title=' . get_the_title();
 
-	return ($caption ? '<div class="ub-social-share-tumblr-container">' : '') . '<a target="_blank" href="' . $tumblr_url .
-        '"class="social-share-icon ub-social-share-tumblr ' . $iconShape . '">'
-		. $tumblr_icon .
-	'</a>' . ( $caption ? '<span>' . $caption . '</span>' : '' ) . ($caption ? '</div>' : '') ;
+	return ub_prepare_social_share_icon($tumblr_icon, $iconShape, 'tumblr', $tumblr_url, $caption, $hasOutline);
 }
 
 /**

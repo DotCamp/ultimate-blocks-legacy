@@ -686,13 +686,23 @@ function ub_include_block_attribute_css() {
                         'height:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     if($attributes['buttonColor'] !== ''){
-                        
-                        $blockStylesheets .= $prefix . ' a{' . PHP_EOL .
-                            'background-color: ' . ($attributes['iconShape'] === 'none' ? 'transparent' : $attributes['buttonColor']) . ';' .
-                        '}' ;
-                        $blockStylesheets .= $prefix . ' a + span{' . PHP_EOL .
-                            'color: ' . $attributes['buttonColor'] . ';' .
-                        '}' ;
+                        if($attributes['useCaptions']){
+                            $blockStylesheets .= $prefix . ' .social-share-icon{' . PHP_EOL .
+                                'background-color: ' . ($attributes['iconShape'] === 'none' ? 'transparent' : $attributes['buttonColor']) . ';' .
+                            '}' ;
+                            $blockStylesheets .= $prefix . ' span > a{' . PHP_EOL .
+                                'color: ' . $attributes['buttonColor'] . ';' .
+                            '}' ;
+                        }
+                        else{
+                            $blockStylesheets .= $prefix . ' a{' . PHP_EOL .
+                                'background-color: ' . ($attributes['iconShape'] === 'none' ? 'transparent' : $attributes['buttonColor']) . ';' .
+                            '}' ;
+                            $blockStylesheets .= $prefix . ' a + span{' . PHP_EOL .
+                                'color: ' . $attributes['buttonColor'] . ';' .
+                            '}' ;
+                        }
+
                     }
                     else{
                         $siteColors = array(
@@ -711,14 +721,18 @@ function ub_include_block_attribute_css() {
                         }
                     }
                     if($attributes['useCaptions']){
-                        $blockStylesheets .= $prefix . ' .social-share-icons > div{' . PHP_EOL .
-                            'margin: 5px;' . PHP_EOL .
-                            'padding-right: 5px;' . PHP_EOL .
-                            'display: flex;' . PHP_EOL;
-                        if($attributes['addOutline'] && $attributes['buttonColor'] !== ''){
-                            $blockStylesheets .= 'border: 1px solid ' . $attributes['buttonColor'] .';' . PHP_EOL;
+                        $sites = array('facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'tumblr');
+                        foreach($sites as $site){
+                            $blockStylesheets .= $prefix . ' .ub-social-share-' . $site . '-container{' . PHP_EOL .
+                                'margin: 5px;' . PHP_EOL .
+                                'padding-right: 5px;' . PHP_EOL .
+                                'display: flex;' . PHP_EOL.
+                                'align-items: center;';
+                            if($attributes['addOutline'] && $attributes['buttonColor'] !== ''){
+                                $blockStylesheets .= 'border: 1px solid ' . $attributes['buttonColor'] .';' . PHP_EOL;
+                            }
+                            $blockStylesheets .= '}';
                         }
-                        $blockStylesheets .= '}';
                     }
 
                     if($attributes['useCaptions'] && !$attributes['addOutline']){
