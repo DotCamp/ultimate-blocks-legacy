@@ -78,6 +78,8 @@ function togglePanel(target) {
 Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-toggle")).forEach(function (toggleContainer) {
   var toggleHeads = Array.prototype.slice.call(toggleContainer.children).map(function (toggle) {
     return toggle.children[0];
+  }).filter(function (toggle) {
+    return toggle && toggle.classList.contains("wp-block-ub-content-toggle-accordion-title-wrap");
   });
   toggleHeads.forEach(function (toggleHead, i) {
     toggleHead.addEventListener("keydown", function (e) {
@@ -133,6 +135,8 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
 
     Array.prototype.slice.call(toggleContainer.children).map(function (p) {
       return p.children[0];
+    }).filter(function (toggle) {
+      return toggle && toggle.classList.contains("wp-block-ub-content-toggle-accordion-title-wrap");
     }).forEach(function (instance) {
       var panelContent = instance.nextElementSibling;
       instance.addEventListener("click", function (e) {

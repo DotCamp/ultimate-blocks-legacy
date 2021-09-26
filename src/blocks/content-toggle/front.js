@@ -110,7 +110,14 @@ Array.prototype.slice
 	.forEach((toggleContainer) => {
 		const toggleHeads = Array.prototype.slice
 			.call(toggleContainer.children)
-			.map((toggle) => toggle.children[0]);
+			.map((toggle) => toggle.children[0])
+			.filter(
+				(toggle) =>
+					toggle &&
+					toggle.classList.contains(
+						"wp-block-ub-content-toggle-accordion-title-wrap"
+					)
+			);
 
 		toggleHeads.forEach((toggleHead, i) => {
 			toggleHead.addEventListener("keydown", (e) => {
@@ -169,6 +176,13 @@ Array.prototype.slice
 			Array.prototype.slice
 				.call(toggleContainer.children)
 				.map((p) => p.children[0])
+				.filter(
+					(toggle) =>
+						toggle &&
+						toggle.classList.contains(
+							"wp-block-ub-content-toggle-accordion-title-wrap"
+						)
+				)
 				.forEach((instance) => {
 					const panelContent = instance.nextElementSibling;
 
