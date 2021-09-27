@@ -305,6 +305,9 @@ export class PanelContent extends Component {
 					preventCollapse: !panel.attributes.preventCollapse,
 				})
 			);
+			if (!preventCollapse) {
+				console.log("new value: false");
+			}
 		};
 
 		const newColorDefaults = {
@@ -620,7 +623,7 @@ export class PanelContent extends Component {
 								/>
 							</PanelRow>
 						)}
-						{!showOnlyOne && !individualCollapse && (
+						{!showOnlyOne && !individualCollapse && !preventCollapse && (
 							<PanelRow>
 								<label htmlFor="ub-content-toggle-state">
 									{__("Collapsed")}

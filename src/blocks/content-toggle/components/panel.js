@@ -219,23 +219,25 @@ class ContentTogglePanel extends Component {
 							/>
 						</PanelRow>
 					)}
-					<PanelRow>
-						<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
-						<FormToggle
-							id="ub-content-toggle-state"
-							label={__("Collapsed")}
-							checked={collapsed}
-							onChange={() => {
-								setAttributes({ collapsed: !collapsed });
-								if (showOnlyOne) {
-									this.setState({ showPanel: collapsed });
-								}
-								if (!collapsed) {
-									setAttributes({ preventCollapse: false });
-								}
-							}}
-						/>
-					</PanelRow>
+					{!preventCollapse && (
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
+							<FormToggle
+								id="ub-content-toggle-state"
+								label={__("Collapsed")}
+								checked={collapsed}
+								onChange={() => {
+									setAttributes({ collapsed: !collapsed });
+									if (showOnlyOne) {
+										this.setState({ showPanel: collapsed });
+									}
+									if (!collapsed) {
+										setAttributes({ preventCollapse: false });
+									}
+								}}
+							/>
+						</PanelRow>
+					)}
 					{!blockParent.attributes.individualCollapse &&
 						!collapsed &&
 						!showOnlyOne && (
