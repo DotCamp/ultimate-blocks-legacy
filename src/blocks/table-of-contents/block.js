@@ -101,6 +101,23 @@ const attributes = {
 		type: "string",
 		default: "id", //other types: class, element
 	},
+	titleColor: {
+		type: "string",
+		default: "#000000",
+	},
+	titleBackgroundColor: {
+		type: "string",
+		default: "#ffffff",
+	},
+	listColor: {
+		//must override link color in both frontend and editor
+		type: "string",
+		default: "#000000",
+	},
+	listBackgroundColor: {
+		type: "string",
+		default: "#ffffff",
+	},
 };
 
 registerBlockType("ub/table-of-contents", {
@@ -126,13 +143,8 @@ registerBlockType("ub/table-of-contents", {
 				.replaceBlock,
 		})),
 	])(function (props) {
-		const {
-			block,
-			replaceBlock,
-			isSelected,
-			attributes,
-			setAttributes,
-		} = props;
+		const { block, replaceBlock, isSelected, attributes, setAttributes } =
+			props;
 		const { allowedHeaders, showList, allowToCHiding } = attributes;
 		return [
 			isSelected && (
@@ -326,6 +338,7 @@ registerBlockType("ub/table-of-contents-block", {
 				className={`ub_table-of-contents${
 					showList ? "" : " ub_table-of-contents-collapsed"
 				}`}
+				id={`ub_table-of-contents-${blockID}`}
 			>
 				{editorDisplay(props)}
 			</div>,

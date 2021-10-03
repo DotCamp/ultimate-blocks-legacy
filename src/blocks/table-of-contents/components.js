@@ -24,8 +24,13 @@ const {
 	RangeControl,
 	TextControl,
 } = wp.components;
-const { InspectorControls, BlockControls, RichText, AlignmentToolbar } =
-	wp.blockEditor || wp.editor;
+const {
+	InspectorControls,
+	BlockControls,
+	RichText,
+	AlignmentToolbar,
+	PanelColorSettings,
+} = wp.blockEditor || wp.editor;
 const { select, dispatch, subscribe } = wp.data;
 const { __ } = wp.i18n;
 
@@ -452,6 +457,8 @@ class TableOfContents extends Component {
 
 		const { isSelected } = blockProp;
 
+		const { listColor, listBackgroundColor } = blockProp.attributes;
+
 		const { headers, currentlyEditedItem } = this.state;
 
 		const placeItem = (arr, item) => {
@@ -625,6 +632,10 @@ export const inspectorControls = (props) => {
 		scrollOffset,
 		scrollTarget,
 		scrollTargetType,
+		titleColor,
+		titleBackgroundColor,
+		listColor,
+		listBackgroundColor,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -633,7 +644,7 @@ export const inspectorControls = (props) => {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Allowed Headers")} initialOpen={true}>
+			<PanelBody title={__("Allowed Headings")} initialOpen={true}>
 				{allowedHeaders.map((a, i) => (
 					<PanelRow>
 						<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i + 1}`}</label>
@@ -719,6 +730,33 @@ export const inspectorControls = (props) => {
 					/>
 				</PanelRow>
 			</PanelBody>
+			<PanelColorSettings
+				title={__("Color Settings")}
+				colorSettings={[
+					{
+						value: titleColor,
+						onChange: (titleColor) => setAttributes({ titleColor }),
+						label: __("Title Color"),
+					},
+					{
+						value: titleBackgroundColor,
+						onChange: (titleBackgroundColor) =>
+							setAttributes({ titleBackgroundColor }),
+						label: __("Title Background Color"),
+					},
+					{
+						value: listColor,
+						onChange: (listColor) => setAttributes({ listColor }),
+						label: __("List Color"),
+					},
+					{
+						value: listBackgroundColor,
+						onChange: (listBackgroundColor) =>
+							setAttributes({ listBackgroundColor }),
+						label: __("List Background Color"),
+					},
+				]}
+			/>
 			<PanelBody title={__("Additional Settings")} initialOpen={true}>
 				<PanelRow>
 					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
@@ -847,6 +885,11 @@ export const editorDisplay = (props) => {
 		titleAlignment,
 		allowToLatin,
 		removeDiacritics,
+		titleColor,
+		titleBackgroundColor,
+		listColor,
+		listBackgroundColor,
+		blockID,
 	} = props.attributes;
 
 	return (
@@ -854,13 +897,14 @@ export const editorDisplay = (props) => {
 			<div
 				className="ub_table-of-contents-header"
 				style={{
-					justifySelf:
-						titleAlignment === "center"
-							? "center"
-							: `flex-${titleAlignment === "left" ? "start" : "end"}`,
+					textAlign: titleAlignment,
+					backgroundColor: titleBackgroundColor,
 				}}
 			>
-				<div className="ub_table-of-contents-title">
+				<div
+					className="ub_table-of-contents-title"
+					style={{ color: titleColor }}
+				>
 					<RichText
 						placeholder={__("Optional title")}
 						className="ub_table-of-contents-title"
@@ -897,8 +941,18 @@ export const editorDisplay = (props) => {
 					removeDiacritics={removeDiacritics}
 					canRemoveItemFocus={canRemoveItemFocus}
 					itemFocusRemoved={() => setState({ canRemoveItemFocus: false })}
+					style={{ color: listColor, backgroundColor: listBackgroundColor }}
 				/>
 			)}
+			{
+				<style
+					dangerouslySetInnerHTML={{
+						__html: `#ub_table-of-contents-${blockID} .ub_table-of-contents-container a{
+							color: ${listColor};
+						}`,
+					}}
+				/>
+			}
 		</>
 	);
 };

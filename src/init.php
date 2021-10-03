@@ -920,9 +920,24 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL;
                     }
                     $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
-                        'justify-self: ' . ($attributes['titleAlignment'] === 'center' ? 'center' :
-                            'flex-' . ($attributes['titleAlignment'] === 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
-                    '}' . PHP_EOL;
+                        'text-align: ' . $attributes['titleAlignment'] . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .ub_table-of-contents-header-container{' . PHP_EOL .
+                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .ub_table-of-contents-toggle-link{' . PHP_EOL .
+                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .ub_table-of-contents-title{' . PHP_EOL .
+                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .ub_table-of-contents-extra-container{' . PHP_EOL .
+                        'background-color: ' . $attributes['listBackgroundColor'] . ';' . PHP_EOL .
+                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .ub_table-of-contents-container a{' . PHP_EOL .
+                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL ;
                     break;
                 case 'ub/testimonial':
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];

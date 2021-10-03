@@ -84,12 +84,17 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 	instances.forEach((instance) => {
 		const block = instance.closest(".ub_table-of-contents");
-		const tocContainer = block.querySelector(".ub_table-of-contents-container");
 
+		const tocContainer = block.querySelector(".ub_table-of-contents-container");
 		const containerStyle = tocContainer.style;
 
-		const tocMain = tocContainer.parentNode;
-		const mainStyle = tocMain.style;
+		const tocExtraContainer = block.querySelector(
+			".ub_table-of-contents-extra-container"
+		);
+		const extraContainerStyle = tocExtraContainer.style;
+
+		const tocMain = tocExtraContainer.parentNode;
+		const mainStyle = block.style;
 
 		const showButton = block.getAttribute("data-showtext") || "show";
 		const hideButton = block.getAttribute("data-hidetext") || "hide";
@@ -117,24 +122,26 @@ document.addEventListener("DOMContentLoaded", function () {
 		let mobileQuery = window.matchMedia("(max-width: 800px)");
 
 		if (JSON.parse(block.getAttribute("data-initiallyhideonmobile"))) {
-			mobileQuery.addEventListener("change", mobileEvent);
+			mobileQuery.addListener(mobileEvent);
 		}
 
 		instance.addEventListener("click", function (event) {
 			event.preventDefault();
-			const curWidth = tocMain.offsetWidth;
+			const curWidth = block.offsetWidth;
 
-			if (tocMain.classList.contains("ub_table-of-contents-collapsed")) {
+			if (block.classList.contains("ub_table-of-contents-collapsed")) {
 				//begin showing
+				tocExtraContainer.classList.remove("ub-hide");
 				tocContainer.classList.remove("ub-hide");
-				const targetHeight = tocContainer.scrollHeight;
+				const targetHeight = tocExtraContainer.offsetHeight + padding / 2; //doesn't include padding
 				tocContainer.classList.add("ub-hiding");
+				tocExtraContainer.classList.add("ub-hiding");
 				mainStyle.width = `${curWidth}px`; //also take into account number of columns
 
 				setTimeout(() => {
 					mainStyle.width = "auto";
-					tocMain.classList.remove("ub_table-of-contents-collapsed");
-					const fullWidth = getComputedStyle(tocMain).width.slice(0, -2);
+					block.classList.remove("ub_table-of-contents-collapsed");
+					const fullWidth = getComputedStyle(block).width.slice(0, -2);
 					mainStyle.width = `${curWidth}px`;
 
 					setTimeout(() => {
@@ -142,21 +149,31 @@ document.addEventListener("DOMContentLoaded", function () {
 							height: `${targetHeight}px`,
 							width: "100px",
 						});
+						Object.assign(extraContainerStyle, {
+							height: `${targetHeight}px`,
+							width: "100px",
+						});
 						tocContainer.classList.remove("ub-hiding");
+						tocExtraContainer.classList.remove("ub-hiding");
 
 						mainStyle.width = `${fullWidth}px`;
 
 						setTimeout(() => {
 							tocContainer.style.width = `${fullWidth - padding}px`;
+							tocExtraContainer.style.width = `${fullWidth - padding}px`;
 						}, 50);
 					}, 50);
 				}, 50);
 			} else {
 				//begin hiding
-				mainStyle.width = `${tocMain.offsetWidth}px`;
+				mainStyle.width = `${block.offsetWidth}px`;
 				Object.assign(containerStyle, {
 					height: `${tocContainer.offsetHeight}px`,
 					width: `${tocContainer.offsetWidth}px`,
+				});
+				Object.assign(extraContainerStyle, {
+					height: `${tocExtraContainer.offsetHeight}px`,
+					width: `${tocExtraContainer.offsetWidth}px`,
 				});
 
 				setTimeout(() => {
@@ -165,18 +182,27 @@ document.addEventListener("DOMContentLoaded", function () {
 						height: "0",
 						width: "0",
 					});
-					tocMain.classList.add("ub_table-of-contents-collapsed");
+					Object.assign(extraContainerStyle, {
+						height: "0",
+						width: "0",
+					});
+					block.classList.add("ub_table-of-contents-collapsed");
 
-					const mainComputedStyle = getComputedStyle(tocMain);
 					padding =
-						parseInt(mainComputedStyle.paddingLeft.slice(0, -2)) +
-						parseInt(mainComputedStyle.paddingRight.slice(0, -2));
+						parseInt(
+							getComputedStyle(tocExtraContainer).paddingLeft.slice(0, -2)
+						) +
+						parseInt(
+							getComputedStyle(tocExtraContainer).paddingRight.slice(0, -2)
+						);
 
-					//measure width of toc title + toggle button, then use it as width of tocMain
+					//measure width of toc title + toggle button, then use it as width of block
+
 					mainStyle.width = `${
 						5 +
 						padding +
-						instance.closest(".ub_table-of-contents-header").scrollWidth
+						instance.closest(".ub_table-of-contents-header-container")
+							.scrollWidth
 					}px`;
 				}, 50);
 			}
@@ -185,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				? hideButton
 				: showButton;
 
-			mobileQuery.removeEventListener("change", mobileEvent);
+			mobileQuery.removeListener(mobileEvent);
 		});
 
 		tocContainer.addEventListener("transitionend", function () {
@@ -193,12 +219,21 @@ document.addEventListener("DOMContentLoaded", function () {
 				//hiding is done
 				tocContainer.classList.remove("ub-hiding");
 				tocContainer.classList.add("ub-hide");
+				tocExtraContainer.classList.remove("ub-hiding");
+				tocExtraContainer.classList.add("ub-hide");
 				if (containerStyle.display === "block") {
 					containerStyle.display = "";
+				}
+				if (extraContainerStyle.display === "block") {
+					extraContainerStyle.display = "";
 				}
 				mainStyle.minWidth = "";
 			}
 			Object.assign(containerStyle, {
+				height: "",
+				width: "",
+			});
+			Object.assign(extraContainerStyle, {
 				height: "",
 				width: "",
 			});

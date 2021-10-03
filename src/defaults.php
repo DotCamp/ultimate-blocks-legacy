@@ -2029,7 +2029,23 @@ $defaultValues = array(
             'scrollTargetType' => array(
                 'type' => 'string',
                 'default' => 'id' //other types: class, element
-            )
+            ),
+            'titleColor' => array(
+                'type' => 'string',
+                'default' => '#000000',
+            ),
+            'titleBackgroundColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'listColor' => array(
+                'type' => 'string',
+                'default' => '#000000',
+            ),
+            'listBackgroundColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
         )
     ),
     'ub/testimonial' => array(

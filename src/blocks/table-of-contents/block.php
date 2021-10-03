@@ -106,7 +106,7 @@ function ub_render_table_of_contents_block($attributes){
                 . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . $scrollTarget . '"' : '')
                 . ($blockID === '' ? '' : ' id="ub_table-of-contents-' . $blockID . '"') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
                     data-initiallyshow="' . json_encode($showList) . '">'.
-                (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header">
+                (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header-container"><div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'. $title . '</div>' . 
                     ($allowToCHiding ?
                     '<div class="ub_table-of-contents-header-toggle">
@@ -114,14 +114,14 @@ function ub_render_table_of_contents_block($attributes){
                         &nbsp;[<a class="ub_table-of-contents-toggle-link" href="#">'.
                             __($showList ? 'hide' : 'show', 'ultimate-blocks')
                             .'</a>]</div></div>' : '')
-                . '</div>') : '')
-                . '<div class="ub_table-of-contents-container ub_table-of-contents-' .
+                . '</div></div>') : '')
+                . '<div class="ub_table-of-contents-extra-container"><div class="ub_table-of-contents-container ub_table-of-contents-' .
                     $numColumns . '-column ' . ($showList || strlen($title) === 0 ||
                     (strlen($title) === 1 && $title[0] === '') ? '' : 'ub-hide') . '">' .
                 ($listStyle === 'numbered' ? '<ol>' :  '<ul'. ($listStyle === 'plain' && $blockID === '' ? ' style="list-style: none;"' : '') . '>')
                 . $listItems .
                 ($listStyle === 'numbered' ? '</ol>' : '</ul>')
-                .'</div></div>';
+                .'</div></div></div>';
 }
 
 function ub_register_table_of_contents_block() {

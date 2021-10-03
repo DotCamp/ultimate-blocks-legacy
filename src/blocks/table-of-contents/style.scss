@@ -10,6 +10,7 @@
 	display: grid;
 	ul,
 	ol {
+		margin-top: 1em;
 		margin-bottom: 0;
 		margin-left: 1.3em;
 		padding-inline-start: 0;
@@ -38,13 +39,10 @@
 	}
 	&-header {
 		text-align: center;
-		margin-bottom: 13px;
 		font-size: 20px;
 		font-weight: 500;
 		display: grid;
 		grid-template-columns: minmax(10px, 1fr) auto;
-		width: fit-content;
-		width: -moz-fit-content;
 		transition: all 0.5s ease-in-out;
 	}
 
@@ -70,6 +68,30 @@
 	}
 	.ub_table-of-contents-container ul > li:before {
 		content: none;
+	}
+}
+
+.ub_table-of-contents,
+.ub_table-of-contents-collapsed {
+	padding: 0;
+}
+
+.ub_table-of-contents-header-container {
+	padding: 30px 30px 0;
+	transition: all 0.5s ease-in-out;
+	display: grid;
+}
+.ub_table-of-contents-extra-container {
+	padding: 0 30px 30px; //frontend only
+	transition: all 0.5s ease-in-out;
+}
+
+.ub_table-of-contents-collapsed {
+	.ub_table-of-contents-header-container {
+		padding: 10px;
+	}
+	.ub_table-of-contents-extra-container {
+		padding: 0;
 	}
 }
 
