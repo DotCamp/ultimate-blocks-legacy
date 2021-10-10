@@ -10,7 +10,7 @@ function ub_render_tab_block($attributes, $contents){
     extract($attributes);
     return '<div role="tabpanel" class="wp-block-ub-tabbed-content-tab-content-wrap '.
         ($isActive ? 'active' : 'ub-hide') . (isset($className) ? ' ' . esc_attr($className) : '') . '"
-        id="ub-tabbed-content-' . $parentID . '-panel-' . $index . '" aria-labelledby="ub-tabbed-content-' . $parentID . '-tab-' . $index . '">'
+        id="ub-tabbed-content-' . $parentID . '-panel-' . $index . '" aria-labelledby="ub-tabbed-content-' . $parentID . '-tab-' . $index . '" tabindex="0">'
         . $contents . '</div>';
 }
 
@@ -73,7 +73,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
             .($activeTab === $key ? ' active' : '') . '"'.
             ($blockID === '' ? ' style="background-color: ' . ($activeTab === $key ? $theme : 'initial')
             . '; border-color: ' . ($activeTab === $key ? $theme : 'lightgrey') .
-            '; color: ' . ($activeTab === $key ? $titleColor : '#000000') . ';"' : '' ). ' tabindex="0">
+            '; color: ' . ($activeTab === $key ? $titleColor : '#000000') . ';"' : '' ). ' tabindex="-1">
             <div class="' . $blockName . '-tab-title">' . $title . '</div></div>';
     }
 

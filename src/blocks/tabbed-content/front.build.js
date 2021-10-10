@@ -46,6 +46,7 @@ function ub_handleTabEvent(tab) {
   });
   tab.setAttribute("aria-selected", true);
   tab.classList.add("active");
+  tab.setAttribute("tabindex", 0);
 
   var _tab$parentElement$ge = tab.parentElement.getBoundingClientRect(),
       tabContainerWidth = _tab$parentElement$ge.width;
@@ -108,6 +109,7 @@ function ub_checkPrevTab(event) {
   event.preventDefault();
 
   if (event.target.previousElementSibling) {
+    event.target.setAttribute("tabindex", -1);
     event.target.previousElementSibling.focus();
   } else {
     ub_focusOnLastTab(event);
@@ -118,6 +120,7 @@ function ub_checkNextTab(event) {
   event.preventDefault();
 
   if (event.target.nextElementSibling) {
+    event.target.setAttribute("tabindex", -1);
     event.target.nextElementSibling.focus();
   } else {
     ub_focusOnFirstTab(event);
@@ -126,13 +129,23 @@ function ub_checkNextTab(event) {
 
 function ub_focusOnFirstTab(event) {
   event.preventDefault();
+  event.target.setAttribute("tabindex", -1);
   event.target.parentElement.children[0].focus();
 }
 
 function ub_focusOnLastTab(event) {
   event.preventDefault();
+  event.target.setAttribute("tabindex", -1);
   var tabs = event.target.parentElement.children;
   tabs[tabs.length - 1].focus();
+}
+
+function ub_commonKeyPress(event) {
+  if (event.key === "Home") {
+    ub_focusOnFirstTab(event);
+  } else if (event.key === "End") {
+    ub_focusOnLastTab(event);
+  }
 }
 
 function ub_upDownPress(event) {
@@ -140,10 +153,8 @@ function ub_upDownPress(event) {
     ub_checkPrevTab(event);
   } else if (event.key === "ArrowDown") {
     ub_checkNextTab(event);
-  } else if (event.key === "Home") {
-    ub_focusOnFirstTab(event);
-  } else if (event.key === "End") {
-    ub_focusOnLastTab(event);
+  } else {
+    ub_commonKeyPress(event);
   }
 }
 
@@ -152,10 +163,8 @@ function ub_leftRightPress(event) {
     ub_checkPrevTab(event);
   } else if (event.key === "ArrowRight") {
     ub_checkNextTab(event);
-  } else if (event.key === "Home") {
-    ub_focusOnFirstTab(event);
-  } else if (event.key === "End") {
-    ub_focusOnLastTab(event);
+  } else {
+    ub_commonKeyPress(event);
   }
 }
 
@@ -513,18 +522,19 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.getComputedStyle(tabBar).display !== "none") {
       var scrollWidth = tabBar.scrollWidth,
           clientWidth = tabBar.clientWidth;
+      Array.prototype.slice.call(tabBar.children).forEach(function (tab) {
+        if (tab.classList.contains("active")) {
+          tab.setAttribute("tabindex", 0);
 
-      if (scrollWidth > clientWidth) {
-        Array.prototype.slice.call(tabBar.children).forEach(function (tab) {
-          if (tab.classList.contains("active")) {
+          if (scrollWidth > clientWidth) {
             var tabLocation = (tab.getBoundingClientRect().x || tab.getBoundingClientRect().left) + tab.getBoundingClientRect().width - (instance.getBoundingClientRect().x || instance.getBoundingClientRect().left);
 
             if (tabLocation > clientWidth) {
               tabBar.scrollLeft = tabLocation - clientWidth;
             }
           }
-        });
-      }
+        }
+      });
     }
 
     var displayModes = ub_getTabbedContentDisplayModes(instance);
