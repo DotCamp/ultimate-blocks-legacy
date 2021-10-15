@@ -775,7 +775,7 @@ export const inspectorControls = (props) => {
 				{allowToCHiding && (
 					<>
 						<PanelRow>
-							<label htmlFor="ub_show_toc">{__("Initial Collapsible")}</label>
+							<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
 							<ToggleControl
 								id="ub_show_toc"
 								checked={showList}
