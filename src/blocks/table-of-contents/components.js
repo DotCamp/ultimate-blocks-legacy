@@ -821,7 +821,7 @@ export const inspectorControls = (props) => {
 
 export const blockControls = (props) => {
 	const { setAttributes } = props;
-	const { numColumns, titleAlignment } = props.attributes;
+	const { numColumns, titleAlignment, listStyle } = props.attributes;
 	return (
 		<BlockControls>
 			<ToolbarGroup>
@@ -851,16 +851,19 @@ export const blockControls = (props) => {
 				<ToolbarButton
 					icon="editor-ul"
 					label={__("Bulleted list")}
+					isPrimary={listStyle === "bulleted"}
 					onClick={() => setAttributes({ listStyle: "bulleted" })}
 				/>
 				<ToolbarButton
 					icon="editor-ol"
 					label={__("Numbered list")}
+					isPrimary={listStyle === "numbered"}
 					onClick={() => setAttributes({ listStyle: "numbered" })}
 				/>
 				<ToolbarButton
 					icon={plainList}
 					label={__("Plain list")}
+					isPrimary={listStyle === "plain"}
 					onClick={() => setAttributes({ listStyle: "plain" })}
 				/>
 			</ToolbarGroup>
