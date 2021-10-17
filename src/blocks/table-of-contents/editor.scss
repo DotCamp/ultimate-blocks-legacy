@@ -9,6 +9,25 @@
 	ul,
 	ol {
 		margin-bottom: 0;
+		grid-area: extra;
+	}
+	ol > li {
+		display: grid;
+		grid-template-areas:
+			"listicon content buttons"
+			"extra extra extra";
+		grid-template-columns: minmax(0, min-content) auto auto;
+		&::before {
+			grid-area: listicon;
+			white-space: nowrap;
+		}
+		> a {
+			grid-area: content;
+		}
+		> .ub_toc_button_container {
+			grid-area: buttons;
+			margin-left: auto;
+		}
 	}
 }
 

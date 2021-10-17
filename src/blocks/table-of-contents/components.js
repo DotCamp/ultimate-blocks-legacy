@@ -502,67 +502,65 @@ class TableOfContents extends Component {
 		const parseList = (list) =>
 			list.map((item) => (
 				<li>
-					<div style={{ display: isSelected ? "flex" : "block" }}>
-						{isSelected && currentlyEditedItem === item.clientId ? (
-							<input
-								type="text"
-								value={item.customContent}
-								onChange={(e) => {
-									const revisedHeaders = JSON.parse(
-										JSON.stringify(this.state.headers)
-									);
-									revisedHeaders[item.index].customContent = e.target.value;
-									this.setState({ headers: revisedHeaders });
-								}}
-								onBlur={readCustomHeadingInput}
-							/>
-						) : (
-							<a
-								href={`#${item.anchor}`}
-								dangerouslySetInnerHTML={{
-									__html: `${item.disabled ? "<del>" : ""}${
-										item.customContent ||
-										(typeof item.content === "undefined"
-											? ""
-											: item.content.replace(/(<.+?>)/g, ""))
-									}${item.disabled ? "</del>" : ""}`,
-								}}
-							/>
-						)}
-						{isSelected && (
-							<div className="ub_toc_button_container">
-								{!item.disabled && (
-									<button
-										onClick={() => {
-											const revisedHeaders = JSON.parse(
-												JSON.stringify(this.state.headers)
-											);
-											if (!revisedHeaders[item.index].customContent) {
-												revisedHeaders[item.index].customContent =
-													revisedHeaders[item.index].content;
-												this.setState({ headers: revisedHeaders });
-											}
-											this.setState({ currentlyEditedItem: item.clientId });
-										}}
-									>
-										<span className="dashicons dashicons-edit-large"></span>
-									</button>
-								)}
+					{isSelected && currentlyEditedItem === item.clientId ? (
+						<input
+							type="text"
+							value={item.customContent}
+							onChange={(e) => {
+								const revisedHeaders = JSON.parse(
+									JSON.stringify(this.state.headers)
+								);
+								revisedHeaders[item.index].customContent = e.target.value;
+								this.setState({ headers: revisedHeaders });
+							}}
+							onBlur={readCustomHeadingInput}
+						/>
+					) : (
+						<a
+							href={`#${item.anchor}`}
+							dangerouslySetInnerHTML={{
+								__html: `${item.disabled ? "<del>" : ""}${
+									item.customContent ||
+									(typeof item.content === "undefined"
+										? ""
+										: item.content.replace(/(<.+?>)/g, ""))
+								}${item.disabled ? "</del>" : ""}`,
+							}}
+						/>
+					)}
+					{isSelected && (
+						<div className="ub_toc_button_container">
+							{!item.disabled && (
 								<button
 									onClick={() => {
 										const revisedHeaders = JSON.parse(
 											JSON.stringify(this.state.headers)
 										);
-										revisedHeaders[item.index].disabled =
-											!revisedHeaders[item.index].disabled;
-										this.setState({ headers: revisedHeaders });
+										if (!revisedHeaders[item.index].customContent) {
+											revisedHeaders[item.index].customContent =
+												revisedHeaders[item.index].content;
+											this.setState({ headers: revisedHeaders });
+										}
+										this.setState({ currentlyEditedItem: item.clientId });
 									}}
 								>
-									<FontAwesomeIcon icon={item.disabled ? faEye : faEyeSlash} />
+									<span className="dashicons dashicons-edit-large"></span>
 								</button>
-							</div>
-						)}
-					</div>
+							)}
+							<button
+								onClick={() => {
+									const revisedHeaders = JSON.parse(
+										JSON.stringify(this.state.headers)
+									);
+									revisedHeaders[item.index].disabled =
+										!revisedHeaders[item.index].disabled;
+									this.setState({ headers: revisedHeaders });
+								}}
+							>
+								<FontAwesomeIcon icon={item.disabled ? faEye : faEyeSlash} />
+							</button>
+						</div>
+					)}
 					{item.children &&
 						(listStyle === "numbered" ? (
 							<ol>{parseList(item.children)}</ol>
