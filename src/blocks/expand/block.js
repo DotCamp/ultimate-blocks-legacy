@@ -158,7 +158,10 @@ registerBlockType("ub/expand-portion", {
 					displayType === "full" && !isVisible ? " ub-hide" : ""
 				}`}
 			>
-				<InnerBlocks templateLock={false} />
+				<InnerBlocks
+					templateLock={false}
+					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
+				/>
 				<RichText
 					style={{ textAlign: toggleAlign }} //attribute from parent can't be directly used
 					value={clickText}
