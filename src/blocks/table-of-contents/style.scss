@@ -72,6 +72,14 @@
 	.ub_table-of-contents-container ul > li:before {
 		content: none;
 	}
+	&-header-container,
+	&-extra-container {
+		padding: 15px 30px;
+		transition: all 0.5s ease-in-out;
+	}
+	&-header-container {
+		display: grid;
+	}
 }
 
 .ub_table-of-contents,
@@ -79,23 +87,8 @@
 	padding: 0;
 }
 
-.ub_table-of-contents-header-container {
-	padding: 30px 30px 0;
-	transition: all 0.5s ease-in-out;
-	display: grid;
-}
-.ub_table-of-contents-extra-container {
-	padding: 0 30px 30px; //frontend only
-	transition: all 0.5s ease-in-out;
-}
-
-.ub_table-of-contents-collapsed {
-	.ub_table-of-contents-header-container {
-		padding: 10px;
-	}
-	.ub_table-of-contents-extra-container {
-		padding: 0;
-	}
+.ub_table-of-contents-collapsed .ub_table-of-contents-extra-container {
+	padding: 0;
 }
 
 @media screen and (max-width: 600px) {
