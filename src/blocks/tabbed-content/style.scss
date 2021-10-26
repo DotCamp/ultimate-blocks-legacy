@@ -119,9 +119,15 @@
 		&-tabs-title-mobile {
 			&-vertical-tab {
 				display: initial;
+				.wp-block-ub-tabbed-content-tab-title-tablet-vertical-wrap {
+					border-bottom: 1px solid #d3d3d3;
+				}
 			}
 			&-horizontal-tab {
 				display: flex;
+				.wp-block-ub-tabbed-content-tab-title-vertical-wrap {
+					border-right: 1px solid #d3d3d3;
+				}
 			}
 		}
 		&-holder.wp-block-ub-tabbed-content {
@@ -172,9 +178,15 @@
 		&-tabs-title-tablet {
 			&-vertical-tab {
 				display: initial;
+				.wp-block-ub-tabbed-content-tab-title-tablet-vertical-wrap {
+					border-bottom: 1px solid #d3d3d3;
+				}
 			}
 			&-horizontal-tab {
 				display: flex;
+				.wp-block-ub-tabbed-content-tab-title-vertical-wrap {
+					border-right: 1px solid #d3d3d3;
+				}
 			}
 		}
 		&-holder.wp-block-ub-tabbed-content {
