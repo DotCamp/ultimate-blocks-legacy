@@ -6,13 +6,13 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			box-shadow: 0px 3px 2px grey;
-			border-radius: 50%;
 			margin: 7px;
 			&.circle {
+				box-shadow: 0px 3px 2px grey;
 				border-radius: 50%;
 			}
 			&.square {
+				box-shadow: 0px 3px 2px grey;
 				border-radius: 0%;
 			}
 		}
@@ -60,7 +60,11 @@ $site-colors: (
 
 @each $site, $color in $site-colors {
 	.ub-social-share-#{$site} {
-		background-color: $color;
+		&.square,
+		&.circle {
+			background-color: $color;
+		}
+
 		& + span,
 		& + span > a {
 			color: $color;
