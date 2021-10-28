@@ -195,14 +195,14 @@ export default class Inspector extends Component {
 				</PanelBody>
 				<PanelBody title={__("Captions")} initialOpen={false}>
 					<ToggleControl
-						label={__("Include captions for each icon", "ultimate-blocks")}
+						label={__("Include captions", "ultimate-blocks")}
 						checked={useCaptions}
 						onChange={() => setAttributes({ useCaptions: !useCaptions })}
 					/>
 					{useCaptions && (
 						<>
 							<ToggleControl
-								label={__("Include outline for each icon", "ultimate-blocks")}
+								label={__("Include outline", "ultimate-blocks")}
 								checked={addOutline}
 								onChange={() => setAttributes({ addOutline: !addOutline })}
 							/>
