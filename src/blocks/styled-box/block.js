@@ -7,7 +7,6 @@ const {
 	BlockControls,
 	MediaUpload,
 	InspectorControls,
-	ColorPalette,
 	PanelColorSettings,
 	InnerBlocks,
 } = wp.blockEditor || wp.editor;
@@ -124,9 +123,18 @@ registerBlockType("ub/styled-box", {
 			};
 		}),
 		withDispatch((dispatch) => {
-			const { replaceInnerBlocks } =
-				dispatch("core/block-editor") || dispatch("core/editor");
-			return { replaceInnerBlocks };
+			const {
+				insertBlocks,
+				removeBlocks,
+				replaceInnerBlocks,
+				updateBlockAttributes,
+			} = dispatch("core/block-editor") || dispatch("core/editor");
+			return {
+				insertBlocks,
+				removeBlocks,
+				replaceInnerBlocks,
+				updateBlockAttributes,
+			};
 		}),
 	])(function (props) {
 		const {
@@ -155,7 +163,10 @@ registerBlockType("ub/styled-box", {
 			isSelected,
 			setState,
 			editable,
+			insertBlocks,
 			replaceInnerBlocks,
+			removeBlocks,
+			updateBlockAttributes,
 		} = props;
 
 		let renderedBlock;
@@ -180,21 +191,43 @@ registerBlockType("ub/styled-box", {
 						className="column-setting-button"
 						icon={num[0]}
 						label={__(`${num[1]} column${i > 0 ? "s" : ""}`)}
-						isActive={text.length === i + 1}
-						onClick={() =>
-							setAttributes({
-								text: newValue(text, i + 1),
-								textAlign: newValue(textAlign, i + 1, "left"),
-								title: newValue(title, i + 1),
-								titleAlign: newValue(titleAlign, i + 1, "center"),
-								number: newValue(number, i + 1),
-								image: newValue(image, i + 1, {
-									id: null,
-									alt: null,
-									url: null,
-								}),
-							})
+						isActive={
+							(mode === "number" ? block.innerBlocks : text).length === i + 1
 						}
+						onClick={() => {
+							if (mode === "number") {
+								if (i + 1 > block.innerBlocks.length) {
+									insertBlocks(
+										[
+											createBlock("ub/styled-box-numbered-box-column"),
+											createBlock("ub/styled-box-numbered-box-column"),
+										].slice(0, i + 1 - block.innerBlocks.length),
+										block.innerBlocks.length,
+										block.clientId
+									);
+								}
+								if (i + 1 < block.innerBlocks.length) {
+									removeBlocks(
+										block.innerBlocks
+											.map((i) => i.clientId)
+											.slice(i + 1 - block.innerBlocks.length)
+									);
+								}
+							} else {
+								setAttributes({
+									text: newValue(text, i + 1),
+									textAlign: newValue(textAlign, i + 1, "left"),
+									title: newValue(title, i + 1),
+									titleAlign: newValue(titleAlign, i + 1, "center"),
+									number: newValue(number, i + 1),
+									image: newValue(image, i + 1, {
+										id: null,
+										alt: null,
+										url: null,
+									}),
+								});
+							}
+						}}
 					/>
 				))}
 			</ToolbarGroup>
@@ -217,10 +250,9 @@ registerBlockType("ub/styled-box", {
 		}
 
 		if (mode === "notification") {
-			//remove inner block from bordered box mode first
 			if (
 				block.innerBlocks.length > 0 &&
-				block.innerBlocks[0].name === "ub/styled-box-bordered-content"
+				block.innerBlocks[0].name !== "ub/styled-box-notification-content"
 			) {
 				replaceInnerBlocks(block.innerBlocks[0].clientId, [
 					createBlock("ub/styled-box-notification-content"),
@@ -408,68 +440,40 @@ registerBlockType("ub/styled-box", {
 			blockToolbarExtras = columnCountToolbar;
 		} else if (mode === "number") {
 			blockToolbarExtras = columnCountToolbar;
-			renderedBlock = Array(text.length)
-				.fill("")
-				.map((_, i) => (
-					<div
-						className="ub-number-panel"
-						style={{
-							borderColor: outlineColor,
-						}}
-					>
-						<div
-							className="ub-number-container"
-							style={{ backgroundColor: backColor }}
-						>
-							<RichText
-								tagName="p"
-								placeholder={__(i + 1)}
-								className="ub-number-display"
-								style={{ color: foreColor }}
-								value={number[i]}
-								onChange={(value) =>
-									setAttributes({
-										number: [
-											...number.slice(0, i),
-											value,
-											...number.slice(i + 1),
-										],
-									})
-								}
-								keepPlaceholderOnFocus={true}
-								unstableOnFocus={() => setState({ editable: "" })}
-							/>
-						</div>
-						<RichText
-							tagName="p"
-							style={{ textAlign: titleAlign[i] }}
-							placeholder={__("Title")}
-							className="ub-number-box-title"
-							value={title[i]}
-							onChange={(value) =>
-								setAttributes({
-									title: [...title.slice(0, i), value, ...title.slice(i + 1)],
-								})
-							}
-							keepPlaceholderOnFocus={true}
-							unstableOnFocus={() => setState({ editable: `title${i}` })}
-						/>
-						<RichText
-							tagName="p"
-							placeholder={__("Your content goes here.")}
-							style={{ textAlign: textAlign[i] }}
-							className="ub-number-box-body"
-							value={text[i]}
-							onChange={(value) =>
-								setAttributes({
-									text: [...text.slice(0, i), value, ...text.slice(i + 1)],
-								})
-							}
-							keepPlaceholderOnFocus={true}
-							unstableOnFocus={() => setState({ editable: `text${i}` })}
-						/>
-					</div>
-				));
+
+			if (
+				block.innerBlocks.length > 0 &&
+				block.innerBlocks[0].name !== "ub/styled-box-numbered-box-column"
+			) {
+				replaceInnerBlocks(block.clientId, [
+					createBlock("ub/styled-box-numbered-box-column"),
+				]);
+			}
+
+			renderedBlock = (
+				<div className="ub-styled-box-number-box-main">
+					<InnerBlocks
+						allowedBlocks={["ub/styled-box-numbered-box-column"]}
+						template={[["ub/styled-box-numbered-box-column"]]}
+						renderAppender={() =>
+							block.innerBlocks.length < 3 && (
+								<InnerBlocks.ButtonBlockAppender />
+							)
+						}
+					/>
+					<style>
+						{`.ub-styled-box-number-box-main
+								> .block-editor-inner-blocks
+								> .block-editor-block-list__layout {
+									display: grid;
+									grid-auto-flow: column;
+									grid-template-columns: ${Array(Math.min(block.innerBlocks.length + 1, 3))
+										.fill("1fr")
+										.join(" ")};
+							}`}
+					</style>
+				</div>
+			);
 
 			inspectorExtras = (
 				<PanelColorSettings
@@ -478,20 +482,55 @@ registerBlockType("ub/styled-box", {
 					colorSettings={[
 						{
 							value: backColor,
-							onChange: (colorValue) =>
-								setAttributes({ backColor: colorValue }),
+							onChange: (colorValue) => {
+								setAttributes({ backColor: colorValue });
+
+								if (
+									block.innerBlocks.length > 0 &&
+									block.innerBlocks[0].name ===
+										"ub/styled-box-numbered-box-column"
+								) {
+									updateBlockAttributes(
+										block.innerBlocks.map((i) => i.clientId),
+										{ backColor: colorValue }
+									);
+								}
+							},
 							label: __("Number Background Color"),
 						},
 						{
 							value: foreColor,
-							onChange: (colorValue) =>
-								setAttributes({ foreColor: colorValue }),
+							onChange: (colorValue) => {
+								setAttributes({ foreColor: colorValue });
+
+								if (
+									block.innerBlocks.length > 0 &&
+									block.innerBlocks[0].name ===
+										"ub/styled-box-numbered-box-column"
+								) {
+									updateBlockAttributes(
+										block.innerBlocks.map((i) => i.clientId),
+										{ numberColor: colorValue }
+									);
+								}
+							},
 							label: __("Number Color"),
 						},
 						{
 							value: outlineColor,
-							onChange: (colorValue) =>
-								setAttributes({ outlineColor: colorValue }),
+							onChange: (colorValue) => {
+								setAttributes({ outlineColor: colorValue });
+								if (
+									block.innerBlocks.length > 0 &&
+									block.innerBlocks[0].name ===
+										"ub/styled-box-numbered-box-column"
+								) {
+									updateBlockAttributes(
+										block.innerBlocks.map((i) => i.clientId),
+										{ borderColor: colorValue }
+									);
+								}
+							},
 							label: __("Border Color"),
 						},
 					]}
@@ -500,7 +539,7 @@ registerBlockType("ub/styled-box", {
 		} else if (mode === "bordered") {
 			if (
 				block.innerBlocks.length > 0 &&
-				block.innerBlocks[0].name === "ub/styled-box-notification-content"
+				block.innerBlocks[0].name !== "ub/styled-box-bordered-content"
 			) {
 				replaceInnerBlocks(block.innerBlocks[0].clientId, [
 					createBlock("ub/styled-box-bordered-content"),
@@ -748,7 +787,7 @@ registerBlockType("ub/styled-box", {
 	}),
 
 	save: (props) =>
-		["bordered", "notification"].includes(props.attributes.mode) ? (
+		["bordered", "notification", "number"].includes(props.attributes.mode) ? (
 			<InnerBlocks.Content />
 		) : null,
 });
@@ -796,6 +835,152 @@ registerBlockType("ub/styled-box-notification-content", {
 			]}
 		/>
 	),
+
+	save: () => <InnerBlocks.Content />,
+});
+
+registerBlockType("ub/styled-box-numbered-content", {
+	title: __("Numbered Box Content"),
+	parent: ["ub/styled-box"],
+	icon: icon,
+	category: "ultimateblocks",
+	supports: {
+		inserter: false,
+		reusable: false,
+	},
+
+	edit: () => (
+		<InnerBlocks
+			templateLock={false}
+			template={[
+				["core/paragraph", { placeholder: "Enter content for numbered box" }],
+			]}
+		/>
+	),
+
+	save: () => <InnerBlocks.Content />,
+});
+
+registerBlockType("ub/styled-box-numbered-box-column", {
+	title: __("Numbered Box Column"),
+	parent: ["ub/styled-box"],
+	icon: icon,
+	category: "ultimateblocks",
+	supports: {
+		//parent is alredy set, do not set inserter to false
+		reusable: false,
+	},
+
+	attributes: {
+		number: {
+			type: "string",
+			default: "",
+		},
+		title: {
+			type: "string",
+			default: "",
+		},
+		titleAlign: {
+			type: "string",
+			default: "center",
+		},
+		numberColor: {
+			type: "string",
+			default: "",
+		},
+		backColor: {
+			type: "string",
+			default: "",
+		},
+		borderColor: {
+			type: "string",
+			default: "",
+		},
+	},
+
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getBlockIndex, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getBlockIndex,
+			getBlockRootClientId,
+		};
+	})(function (props) {
+		const {
+			attributes,
+			setAttributes,
+			block,
+			getBlock,
+			getBlockIndex,
+			getBlockRootClientId,
+		} = props;
+		const { borderColor, numberColor, backColor, number, title, titleAlign } =
+			attributes;
+
+		const {
+			outlineColor: parentOutlineColor,
+			foreColor: parentForeColor,
+			backColor: parentBackColor,
+		} = getBlock(getBlockRootClientId(block.clientId)).attributes;
+
+		if (borderColor === "") {
+			setAttributes({ borderColor: parentOutlineColor });
+		}
+		if (numberColor === "") {
+			setAttributes({ numberColor: parentForeColor });
+		}
+		if (backColor === "") {
+			setAttributes({ backColor: parentBackColor });
+		}
+
+		return (
+			<div className="ub-number-panel" style={{ borderColor: borderColor }}>
+				<div
+					className="ub-number-container"
+					style={{ backgroundColor: backColor }}
+				>
+					<RichText
+						tagName="p"
+						placeholder={__(
+							getBlockIndex(
+								block.clientId,
+								getBlockRootClientId(block.clientId)
+							) + 1
+						)}
+						keep
+						numerical
+						placeholders
+						className="ub-number-display"
+						style={{ color: numberColor }}
+						value={number}
+						onChange={(number) => setAttributes({ number })}
+						keepPlaceholderOnFocus={true}
+					/>
+				</div>
+				<RichText
+					tagName="p"
+					style={{ textAlign: titleAlign }}
+					placeholder={__("Title")}
+					className="ub-number-box-title"
+					value={title}
+					onChange={(title) => setAttributes({ title })}
+					keepPlaceholderOnFocus={true}
+				/>
+				<InnerBlocks
+					templateLock={false}
+					template={[
+						[
+							"core/paragraph",
+							{ placeholder: "Enter content for numbered box" },
+						],
+					]}
+				/>
+			</div>
+		);
+	}),
 
 	save: () => <InnerBlocks.Content />,
 });
