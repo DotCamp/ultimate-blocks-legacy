@@ -70,8 +70,7 @@
 	}
 }
 .ub-buttons > * {
-	display: inline-block;
-	margin: 0 10px;
+	vertical-align: middle;
 }
 
 .ub-button-delete {
@@ -98,4 +97,20 @@
 			transform: translateY(30%);
 		}
 	}
+}
+
+.ub-button-content-holder {
+	align-items: center;
+}
+.ub-button-small {
+	min-height: 45px;
+}
+.ub-button-medium {
+	min-height: 60px;
+}
+.ub-button-large {
+	min-height: 75px;
+}
+.ub-button-larger {
+	min-height: 80px;
 }
