@@ -470,6 +470,7 @@ registerBlockType("ub/styled-box", {
 									grid-template-columns: ${Array(Math.min(block.innerBlocks.length + 1, 3))
 										.fill("1fr")
 										.join(" ")};
+									column-gap: 10px;
 							}`}
 					</style>
 				</div>
