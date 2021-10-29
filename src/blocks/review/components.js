@@ -198,11 +198,13 @@ export class ReviewBody extends Component {
 	componentDidUpdate(prevProps) {
 		if (this.props.measureCTAFontSize !== prevProps.measureCTAFontSize) {
 			if (this.props.measureCTAFontSize) {
-				this.props.setAttributes({
-					callToActionFontSize: parseInt(
-						getComputedStyle(this.ctaButton.current).fontSize.slice(0, -2)
-					),
-				});
+				if (this.ctaButton.current) {
+					this.props.setAttributes({
+						callToActionFontSize: parseInt(
+							getComputedStyle(this.ctaButton.current).fontSize.slice(0, -2)
+						),
+					});
+				}
 			}
 		}
 	}
