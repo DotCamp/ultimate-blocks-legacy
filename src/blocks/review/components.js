@@ -236,6 +236,7 @@ export class ReviewBody extends Component {
 			setSummaryTitle,
 			callToActionText,
 			callToActionURL,
+			callToActionAlignment,
 			setCallToActionText,
 			setCallToActionURL,
 			hasFocus,
@@ -572,7 +573,10 @@ export class ReviewBody extends Component {
 						</div>
 					</div>
 					<div className="ub_review_cta_panel">
-						<div className="ub_review_cta_main">
+						<div
+							className="ub_review_cta_main"
+							style={{ justifyContent: callToActionAlignment }}
+						>
 							{enableCTA && (
 								<div //do not merge into RichText child
 									className="ub_review_cta_btn"

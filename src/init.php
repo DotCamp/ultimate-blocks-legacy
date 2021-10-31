@@ -654,6 +654,9 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .ub_review_description{' . PHP_EOL . 
                         'text-align: ' . $attributes['descriptionAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
+                    $prefix . ' .ub_review_cta_main{' . PHP_EOL . 
+                        'justify-content: ' . $attributes['ctaAlignment'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
                     $prefix . ' .ub_review_cta_main>a{' . PHP_EOL . 
                         'color: ' . ($attributes['callToActionForeColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
@@ -672,6 +675,7 @@ function ub_include_block_attribute_css() {
                             'display: block;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
+
                     break;
                 case 'ub/social-share':
                     $icon_sizes = array(

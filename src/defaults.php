@@ -1435,6 +1435,10 @@ $defaultValues = array(
                 'type' => 'boolean',
                 'default' => false
             ),
+            'ctaAlignment' => array(
+                'type' => 'string',
+                'default' => 'left'
+            ),
             'enableReviewSchema' => array(
                 'type' => 'boolean',
                 'default' => true

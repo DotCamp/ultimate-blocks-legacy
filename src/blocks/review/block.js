@@ -18,6 +18,7 @@ const {
 	ToolbarGroup,
 	ToolbarButton,
 	Button,
+	ButtonGroup,
 	FormToggle,
 	PanelBody,
 	PanelRow,
@@ -176,6 +177,10 @@ const attributes = {
 	ctaIsSponsored: {
 		type: "boolean",
 		default: false,
+	},
+	ctaAlignment: {
+		type: "string",
+		default: "left",
 	},
 	enableReviewSchema: {
 		type: "boolean",
@@ -415,6 +420,7 @@ registerBlockType("ub/review", {
 				ctaNoFollow,
 				ctaOpenInNewTab,
 				ctaIsSponsored,
+				ctaAlignment,
 				enableReviewSchema,
 				enableImage,
 				enableDescription,
@@ -1405,6 +1411,18 @@ registerBlockType("ub/review", {
 									/>
 								</PanelRow>
 								<PanelRow>
+									<label>{__("Alignment")}</label>
+									<ButtonGroup>
+										{["left", "center", "right"].map((a) => (
+											<Button
+												icon={`align-${a}`}
+												isPrimary={ctaAlignment === a}
+												onClick={() => setAttributes({ ctaAlignment: a })}
+											/>
+										))}
+									</ButtonGroup>
+								</PanelRow>
+								<PanelRow>
 									<label htmlFor="ub-review-cta-changefontsize">
 										{__("Change font size")}
 									</label>
@@ -1770,6 +1788,7 @@ registerBlockType("ub/review", {
 				callToActionBackColor={callToActionBackColor}
 				callToActionBorderColor={callToActionBorderColor}
 				callToActionForeColor={callToActionForeColor}
+				callToActionAlignment={ctaAlignment}
 				inactiveStarColor={inactiveStarColor}
 				activeStarColor={activeStarColor}
 				activePercentBarColor={activePercentBarColor}
