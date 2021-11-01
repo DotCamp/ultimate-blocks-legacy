@@ -219,6 +219,7 @@ export class ReviewBody extends Component {
 			imgID,
 			imgAlt,
 			imgURL,
+			imgPosition,
 			imageEnabled,
 			setImage,
 			description,
@@ -304,7 +305,9 @@ export class ReviewBody extends Component {
 					unstableOnFocus={() => setEditable("reviewAuthor")}
 				/>
 				{(imageEnabled || descriptionEnabled) && (
-					<div className="ub_review_description_container">
+					<div
+						className={`ub_review_description_container ub_review_${imgPosition}_image`}
+					>
 						{imageEnabled &&
 							(imgID ? (
 								<div className="ub_review_image_container">

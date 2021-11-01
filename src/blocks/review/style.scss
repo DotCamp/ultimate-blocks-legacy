@@ -13,7 +13,6 @@
 		}
 	}
 	.ub_review_image {
-		margin-left: auto;
 		margin-top: 10px;
 		float: right;
 		object-fit: contain; //needed for Safari
@@ -57,6 +56,7 @@
 	height: 50px;
 	line-height: 60px;
 	margin-left: auto;
+	align-items: center;
 }
 
 .ub_review_cta_panel {
@@ -115,9 +115,24 @@
 	padding: 0;
 	&_container {
 		display: flex;
-		flex-direction: row-reverse;
+		justify-content: space-between;
 		margin-bottom: 10px;
 		overflow: auto;
+	}
+}
+
+.ub_review {
+	&_left_image {
+		flex-direction: row;
+	}
+	&_right_image {
+		flex-direction: row-reverse;
+	}
+	&_top_image {
+		flex-direction: column;
+	}
+	&_bottom_image {
+		flex-direction: column-reverse;
 	}
 }
 
@@ -164,9 +179,6 @@
 	}
 	.ub_review_image {
 		float: right;
-	}
-	.ub_review_description_container {
-		display: block;
 	}
 }
 

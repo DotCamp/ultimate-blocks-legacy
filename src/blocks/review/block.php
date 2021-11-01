@@ -129,7 +129,7 @@ function ub_render_review_block($attributes){
             $itemName . '</p><p class="ub_review_author_name"' .
             ($blockID === '' ? ' style="text-align: ' . $authorAlign . ';"' : '') . '>' . $authorName . '</p>' .
         (($enableImage || $enableDescription) && ($imgURL !== '' || $description !== '') ?
-        '<div class="ub_review_description_container">' .
+        '<div class="ub_review_description_container ub_review_' . $imgPosition . '_image">' .
             (!$enableImage || $imgURL === '' ? '' : '<img class="ub_review_image" src="' . $imgURL . '" alt = "' . $imgAlt . '">') .
             (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . $description . '</div>') .
         '</div>' : '').

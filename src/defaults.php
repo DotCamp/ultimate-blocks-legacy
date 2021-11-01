@@ -1330,6 +1330,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'left'
             ),
+            'imgPosition' => array(
+                'type' => 'string',
+                'default' => 'right'
+            ),
             'imgURL' => array(
                 'type' => 'string',
                 'default' => ''

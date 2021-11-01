@@ -83,6 +83,10 @@ const attributes = {
 		type: "string",
 		default: "left",
 	},
+	imgPosition: {
+		type: "string",
+		default: "right",
+	},
 	imgURL: {
 		type: "string",
 		default: "",
@@ -392,6 +396,7 @@ registerBlockType("ub/review", {
 				itemSubtype,
 				itemSubsubtype,
 				description,
+				imgPosition,
 				imgID,
 				imgAlt,
 				imgURL,
@@ -1582,13 +1587,30 @@ registerBlockType("ub/review", {
 								</PanelRow>
 							)}
 							{enableImage && (
-								<RangeControl
-									label={__("Image size")}
-									value={imageSize}
-									onChange={(imageSize) => setAttributes({ imageSize })}
-									min={1}
-									max={200}
-								/>
+								<>
+									<RangeControl
+										label={__("Image size")}
+										value={imageSize}
+										onChange={(imageSize) => setAttributes({ imageSize })}
+										min={1}
+										max={200}
+									/>
+									<PanelRow>
+										<label>{__("Image position")}</label>
+										<SelectControl
+											value={imgPosition}
+											onChange={(imgPosition) => setAttributes({ imgPosition })}
+											options={[
+												"left",
+												"right",
+												...(enableDescription ? ["top", "bottom"] : []),
+											].map((a) => ({
+												label: __(a),
+												value: a,
+											}))}
+										/>
+									</PanelRow>
+								</>
 							)}
 							{(!enableReviewSchema || itemType !== "Course") && (
 								<PanelRow>
@@ -1599,9 +1621,15 @@ registerBlockType("ub/review", {
 										id="ub-review-description-toggle"
 										label={__("Enable review description")}
 										checked={enableDescription}
-										onChange={() =>
-											setAttributes({ enableDescription: !enableDescription })
-										}
+										onChange={() => {
+											setAttributes({ enableDescription: !enableDescription });
+											if (
+												!enableDescription &&
+												["top", "bottom"].includes(imgPosition)
+											) {
+												setAttributes({ imgPosition: "right" });
+											}
+										}}
 									/>
 								</PanelRow>
 							)}
@@ -1776,6 +1804,7 @@ registerBlockType("ub/review", {
 				imgID={imgID}
 				imgAlt={imgAlt}
 				imgURL={imgURL}
+				imgPosition={imgPosition}
 				imageEnabled={enableImage}
 				valueType={valueType}
 				items={parts}
