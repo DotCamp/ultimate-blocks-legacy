@@ -1588,13 +1588,16 @@ registerBlockType("ub/review", {
 							)}
 							{enableImage && (
 								<>
-									<RangeControl
-										label={__("Image size")}
-										value={imageSize}
-										onChange={(imageSize) => setAttributes({ imageSize })}
-										min={1}
-										max={200}
-									/>
+									<PanelRow>
+										<label>{__("Image size")}</label>
+										<input
+											type="number"
+											value={imageSize}
+											onChange={(e) => {
+												setAttributes({ imageSize: e.target.value });
+											}}
+										/>
+									</PanelRow>
 									<PanelRow>
 										<label>{__("Image position")}</label>
 										<SelectControl
