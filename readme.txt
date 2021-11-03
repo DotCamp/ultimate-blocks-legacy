@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.4.9
+Stable tag: 2.4.10
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,22 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.10 =
+
+* Button - Remove minimum width from flex buttons.
+* Content Toggle - Prevent event listeners from being applied to elements not part of the block itself.
+* Expand - Add buttons for adding child blocks.
+* HowTo - Prevent apostrophes from being escaped in JSON-LD code.
+* Social Share - Fix link rendering when icon captions are enabled.
+* Tabbed Content - Fix behavior when pressing Tab key.
+* Tabbed Content - Fix display of tab background color in vertical mode.
+* Tabbed Content - Fix display of tab borders when shifting from horizontal to vertical mode and vice versa.
+* Tabbed Content - Fix display of tabs when in accordion mode.
+* Table of Contents - Simplify inspector option texts.
+* Table of Contents - Add color settings.
+* Table of Contents - Fix list style selection display.
+* Other - Enable styling for blocks present in widgets.
 
 = 2.4.9 =
 
