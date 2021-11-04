@@ -55,6 +55,16 @@
 		&:focus {
 			overflow-x: auto;
 		}
+		@media (max-width: 699px) {
+			&.ub-mobile-hide {
+				display: none;
+			}
+		}
+		@media (min-width: 700px) and (max-width: 899px) {
+			&.ub-tablet-hide {
+				display: none;
+			}
+		}
 	}
 
 	&-tabs-content {
@@ -209,6 +219,17 @@
 	display: none;
 	&.active {
 		border-bottom: none;
+	}
+	@media (max-width: 699px) {
+		&.ub-mobile-display {
+			display: block;
+		}
+	}
+
+	@media (min-width: 700px) and (max-width: 899px) {
+		&.ub-tablet-display {
+			display: block;
+		}
 	}
 }
 
