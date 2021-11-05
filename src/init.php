@@ -931,21 +931,18 @@ function ub_include_block_attribute_css() {
                     $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
                         'text-align: ' . $attributes['titleAlignment'] . ';' . PHP_EOL .
                     '}' .
-                    $prefix . ' .ub_table-of-contents-header-container{' . PHP_EOL .
-                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
-                    '}' .
-                    $prefix . ' .ub_table-of-contents-toggle-link{' . PHP_EOL .
-                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
+                    $prefix . ' .ub_table-of-contents-header-container,' . $prefix . ' .ub_table-of-contents-toggle-link{' . PHP_EOL .
+                        'background-color: ' . ($attributes['titleBackgroundColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' .
                     $prefix . ' .ub_table-of-contents-title{' . PHP_EOL .
-                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_table-of-contents-extra-container{' . PHP_EOL .
-                        'background-color: ' . $attributes['listBackgroundColor'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
+                        'background-color: ' . ($attributes['listBackgroundColor'] ?: 'inherit') . ';' . PHP_EOL .
+                        'color: ' . ($attributes['listColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_table-of-contents-container a{' . PHP_EOL .
-                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['listColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL ;
                     break;
                 case 'ub/testimonial':

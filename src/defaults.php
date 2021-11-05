@@ -2040,19 +2040,19 @@ $defaultValues = array(
             ),
             'titleColor' => array(
                 'type' => 'string',
-                'default' => '#000000',
+                'default' => '',
             ),
             'titleBackgroundColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff',
+                'default' => '',
             ),
             'listColor' => array(
                 'type' => 'string',
-                'default' => '#000000',
+                'default' => '',
             ),
             'listBackgroundColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff',
+                'default' => '',
             ),
         )
     ),

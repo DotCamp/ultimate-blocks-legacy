@@ -103,20 +103,20 @@ const attributes = {
 	},
 	titleColor: {
 		type: "string",
-		default: "#000000",
+		default: "",
 	},
 	titleBackgroundColor: {
 		type: "string",
-		default: "#ffffff",
+		default: "",
 	},
 	listColor: {
 		//must override link color in both frontend and editor
 		type: "string",
-		default: "#000000",
+		default: "",
 	},
 	listBackgroundColor: {
 		type: "string",
-		default: "#ffffff",
+		default: "",
 	},
 };
 
