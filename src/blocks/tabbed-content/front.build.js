@@ -37,6 +37,10 @@ function ub_handleTabEvent(tab) {
   ub_getSiblings(tab, function (elem) {
     return elem.classList.contains("wp-block-ub-tabbed-content-tab-title-".concat(isVertical ? "vertical-" : "", "wrap"));
   }).forEach(function (sibling) {
+    if (sibling.tabIndex === 0) {
+      sibling.setAttribute("tabindex", -1);
+    }
+
     sibling.classList.remove("active");
     sibling.setAttribute("aria-selected", false);
 
@@ -46,6 +50,7 @@ function ub_handleTabEvent(tab) {
   });
   tab.setAttribute("aria-selected", true);
   tab.classList.add("active");
+  parent.dataset.activeTabs = JSON.stringify([parseInt(tab.id.match(/-\d+$/g)[0].slice(1))]);
   tab.setAttribute("tabindex", 0);
 
   var _tab$parentElement$ge = tab.parentElement.getBoundingClientRect(),

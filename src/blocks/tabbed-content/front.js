@@ -56,6 +56,10 @@ function ub_handleTabEvent(tab) {
 			}wrap`
 		)
 	).forEach((sibling) => {
+		if (sibling.tabIndex === 0) {
+			sibling.setAttribute("tabindex", -1);
+		}
+
 		sibling.classList.remove("active");
 		sibling.setAttribute("aria-selected", false);
 		if (defaultStyle) {
@@ -65,6 +69,11 @@ function ub_handleTabEvent(tab) {
 
 	tab.setAttribute("aria-selected", true);
 	tab.classList.add("active");
+
+	parent.dataset.activeTabs = JSON.stringify([
+		parseInt(tab.id.match(/-\d+$/g)[0].slice(1)),
+	]);
+
 	tab.setAttribute("tabindex", 0);
 
 	const { width: tabContainerWidth } =
