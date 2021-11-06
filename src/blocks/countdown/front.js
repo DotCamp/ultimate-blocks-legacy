@@ -50,26 +50,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 					const conversionFactor = [7, 24, 60, 60, 1];
 
-					const amounts = Array(timeUnits.indexOf(largestUnit))
-						.fill(0)
-						.concat(
-							initialValue[i].map((arr) => generateValue(arr)),
-							Array(4 - timeUnits.indexOf(smallestUnit)).fill(0)
-						);
+					if (largestUnit && smallestUnit) {
+						const amounts = Array(timeUnits.indexOf(largestUnit))
+							.fill(0)
+							.concat(
+								initialValue[i].map((arr) => generateValue(arr)),
+								Array(4 - timeUnits.indexOf(smallestUnit)).fill(0)
+							);
 
-					if (
-						timeLeft >
-						amounts.reduce(
-							(total, current, j) =>
-								total +
-								current *
-									conversionFactor
-										.slice(j, 4)
-										.reduce((curFactor, current) => curFactor * current, 1),
-							0
-						)
-					) {
-						animationDirection = "increase";
+						if (
+							timeLeft >
+							amounts.reduce(
+								(total, current, j) =>
+									total +
+									current *
+										conversionFactor
+											.slice(j, 4)
+											.reduce((curFactor, current) => curFactor * current, 1),
+								0
+							)
+						) {
+							animationDirection = "increase";
+						}
 					}
 				}
 
@@ -84,9 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
 							}
 
 							const missingDigits = minDigits - digits.length;
-							return (missingDigits > 0
-								? Array(missingDigits).fill(0)
-								: []
+							return (
+								missingDigits > 0 ? Array(missingDigits).fill(0) : []
 							).concat(digits.reverse());
 						};
 
@@ -404,13 +405,11 @@ document.addEventListener("DOMContentLoaded", () => {
 						if (instance.querySelector(".ub_countdown_hour"))
 							instance.querySelector(".ub_countdown_hour").innerHTML = hours;
 						if (instance.querySelector(".ub_countdown_minute"))
-							instance.querySelector(
-								".ub_countdown_minute"
-							).innerHTML = minutes;
+							instance.querySelector(".ub_countdown_minute").innerHTML =
+								minutes;
 						if (instance.querySelector(".ub_countdown_second"))
-							instance.querySelector(
-								".ub_countdown_second"
-							).innerHTML = seconds;
+							instance.querySelector(".ub_countdown_second").innerHTML =
+								seconds;
 
 						if (instance.querySelector(".ub_countdown_circular_container")) {
 							if (instance.querySelector(".ub_countdown_circle_week")) {
@@ -467,7 +466,9 @@ document.addEventListener("DOMContentLoaded", () => {
 					}
 				} else {
 					clearInterval(timer[i]);
-					instance.innerHTML = instance.getAttribute("data-expirymessage");
+					if (!isNaN(timeLeft)) {
+						instance.innerHTML = instance.getAttribute("data-expirymessage");
+					}
 				}
 			}, 1000);
 		});

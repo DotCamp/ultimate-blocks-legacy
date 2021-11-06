@@ -40,16 +40,19 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         });
         var conversionFactor = [7, 24, 60, 60, 1];
-        var amounts = Array(timeUnits.indexOf(largestUnit)).fill(0).concat(initialValue[i].map(function (arr) {
-          return generateValue(arr);
-        }), Array(4 - timeUnits.indexOf(smallestUnit)).fill(0));
 
-        if (timeLeft > amounts.reduce(function (total, current, j) {
-          return total + current * conversionFactor.slice(j, 4).reduce(function (curFactor, current) {
-            return curFactor * current;
-          }, 1);
-        }, 0)) {
-          animationDirection = "increase";
+        if (largestUnit && smallestUnit) {
+          var amounts = Array(timeUnits.indexOf(largestUnit)).fill(0).concat(initialValue[i].map(function (arr) {
+            return generateValue(arr);
+          }), Array(4 - timeUnits.indexOf(smallestUnit)).fill(0));
+
+          if (timeLeft > amounts.reduce(function (total, current, j) {
+            return total + current * conversionFactor.slice(j, 4).reduce(function (curFactor, current) {
+              return curFactor * current;
+            }, 1);
+          }, 0)) {
+            animationDirection = "increase";
+          }
         }
       }
 
@@ -313,7 +316,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       } else {
         clearInterval(timer[i]);
-        instance.innerHTML = instance.getAttribute("data-expirymessage");
+
+        if (!isNaN(timeLeft)) {
+          instance.innerHTML = instance.getAttribute("data-expirymessage");
+        }
       }
     }, 1000);
   });
