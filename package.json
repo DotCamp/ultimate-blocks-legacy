@@ -1,6 +1,6 @@
 {
 	"name": "ultimate-blocks",
-	"version": "2.4.7",
+	"version": "2.4.10",
 	"private": true,
 	"scripts": {
 		"start": "concurrently -k \"wp-scripts start\" \"node recompileOnChange.js\"",
@@ -14,7 +14,7 @@
 		"@fortawesome/fontawesome-svg-core": "^1.2.36",
 		"@fortawesome/free-brands-svg-icons": "^5.15.4",
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
-		"@fortawesome/react-fontawesome": "^0.1.15",
+		"@fortawesome/react-fontawesome": "^0.1.16",
 		"moment": "^2.29.1",
 		"react": "^16.14.0",
 		"react-dom": "^16.14.0",
@@ -24,7 +24,7 @@
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^19.1.0",
-		"concurrently": "^6.2.1",
+		"concurrently": "^6.3.0",
 		"css-loader": "^6.5.1",
 		"gulp": "^4.0.2",
 		"gulp-notify": "^4.0.0",
