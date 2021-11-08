@@ -470,6 +470,14 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'collapsed' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'collapsedOnMobile' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'titleColor' => array(
                 'type' => 'string',
                 'default' => ''

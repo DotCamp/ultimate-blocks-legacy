@@ -171,3 +171,12 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
     }
   }
 });
+document.addEventListener("DOMContentLoaded", function () {
+  Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-toggle")).forEach(function (toggleContainer) {
+    if (window.innerWidth < 700 && JSON.parse(toggleContainer.dataset.mobilecollapse) !== JSON.parse(toggleContainer.dataset.desktopcollapse)) {
+      Array.prototype.slice.call(toggleContainer.children).forEach(function (child) {
+        togglePanel(child.children[0]);
+      });
+    }
+  });
+});

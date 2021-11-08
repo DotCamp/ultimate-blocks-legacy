@@ -44,18 +44,19 @@ function ub_render_content_toggle_block($attributes, $content){
     return '<div class="wp-block-ub-content-toggle' . (isset($className) ? ' ' . esc_attr($className) : '')
                 . '" ' . ($blockID === '' ? '' : 'id="ub-content-toggle-' . $blockID . '"') .
                 ($preventCollapse ? ' data-preventcollapse="true"' : '') .
-                ($showOnlyOne ? ' data-showonlyone="true"': '') . '>' . $content.'</div>';
+                ($showOnlyOne ? ' data-showonlyone="true"': '') . 'data-mobilecollapse="' . json_encode($collapsedOnMobile) . '" data-desktopcollapse="' . json_encode($collapsed) . '">'
+                    . $content . '</div>';
 }
 
 function ub_render_content_toggle_panel_block($attributes, $content){
     $classNamePrefix = 'wp-block-ub-content-toggle';
     extract($attributes);
     $border_class = $border ? "" : "no-border ";
-    $icons= json_decode(file_get_contents(__DIR__ . '/icons/icons.json'));
+    $icons = json_decode(file_get_contents(__DIR__ . '/icons/icons.json'));
     $icon_class = $icons->$toggleIcon;
 
-    return '<div id="'. $toggleID .'" class="' . $border_class . $classNamePrefix.'-accordion' . (isset($className) ? ' ' . esc_attr($className) : '') . '"'
-                . ($parentID === '' ? ' style="border-color: ' . $theme . ';"' : '') . '>
+    return '<div id="' . $toggleID .'" class="' . $border_class . $classNamePrefix.'-accordion' . (isset($className) ? ' ' . esc_attr($className) : '') . '"'
+                . ($parentID === '' ? ' style="border-color: ' . $theme . ';"' : '') . '">
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'
                     . ($parentID === '' ? ' style="background-color: ' . $theme . ';"' : '') . ($preventCollapse ? ' aria-disabled="true"' : '')
                     .' aria-expanded="' . (json_encode(!$collapsed)) . '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '" tabindex="0">

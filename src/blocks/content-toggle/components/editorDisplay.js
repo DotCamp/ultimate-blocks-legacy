@@ -5,6 +5,7 @@ import {
 	getDescendantBlocks,
 	objectsMatch,
 } from "../../../common";
+import icons from "../icons/icons";
 
 const objectsNewChange = (obj1, obj2) => {
 	let diff = {};
@@ -24,7 +25,15 @@ const { createBlock } = wp.blocks;
 
 const { InnerBlocks, InspectorControls, PanelColorSettings } =
 	wp.blockEditor || wp.editor;
-const { PanelBody, PanelRow, FormToggle, SelectControl } = wp.components;
+const {
+	PanelBody,
+	PanelRow,
+	FormToggle,
+	SelectControl,
+	Button,
+	ButtonGroup,
+	Dropdown,
+} = wp.components;
 
 export class OldPanelContent extends Component {
 	constructor(props) {
@@ -219,6 +228,7 @@ export class PanelContent extends Component {
 		const {
 			attributes: {
 				collapsed,
+				collapsedOnMobile,
 				individualCollapse,
 				theme,
 				titleColor,
@@ -305,14 +315,16 @@ export class PanelContent extends Component {
 					preventCollapse: !panel.attributes.preventCollapse,
 				})
 			);
-			if (!preventCollapse) {
-				console.log("new value: false");
-			}
 		};
 
 		const newColorDefaults = {
 			theme: "#f1f1f1",
 			titleColor: "#000000",
+		};
+
+		const toggleIconPositions = {
+			left: __("Left", "ultimate-blocks"),
+			right: __("Right", "ultimate-blocks"),
 		};
 
 		//Detect if one of the child blocks has received a command to add another child block
@@ -624,31 +636,54 @@ export class PanelContent extends Component {
 							</PanelRow>
 						)}
 						{!showOnlyOne && !individualCollapse && !preventCollapse && (
-							<PanelRow>
-								<label htmlFor="ub-content-toggle-state">
-									{__("Collapsed")}
-								</label>
-								<FormToggle
-									id="ub-content-toggle-state"
-									label={__("Collapsed")}
-									checked={collapsed}
-									onChange={onCollapseChange}
-								/>
-							</PanelRow>
+							<>
+								<PanelRow>
+									<label htmlFor="ub-content-toggle-state">
+										{__("Collapsed")}
+									</label>
+									<FormToggle
+										id="ub-content-toggle-state"
+										label={__("Collapsed")}
+										checked={collapsed}
+										onChange={onCollapseChange}
+									/>
+								</PanelRow>
+								<PanelRow>
+									<label htmlFor="ub-content-toggle-mobile-state">
+										{__("Collapsed on mobile")}
+									</label>
+									<FormToggle
+										id="ub-content-toggle-mobile-state"
+										label={__("Collapsed on mobile")}
+										checked={collapsedOnMobile}
+										onChange={() => {
+											setAttributes({ collapsedOnMobile: !collapsedOnMobile });
+											panels.forEach((panel) =>
+												updateBlockAttributes(panel.clientId, {
+													collapsedOnMobile: !collapsedOnMobile,
+												})
+											);
+										}}
+									/>
+								</PanelRow>
+							</>
 						)}
-						{!collapsed && !showOnlyOne && !individualCollapse && (
-							<PanelRow>
-								<label htmlFor="ub-content-toggle-state">
-									{__("Prevent collapse")}
-								</label>
-								<FormToggle
-									id="ub-content-toggle-state"
-									label={__("Prevent collapse")}
-									checked={preventCollapse}
-									onChange={onPreventCollapseChange}
-								/>
-							</PanelRow>
-						)}
+						{!collapsed &&
+							!collapsedOnMobile &&
+							!showOnlyOne &&
+							!individualCollapse && (
+								<PanelRow>
+									<label htmlFor="ub-content-toggle-state">
+										{__("Prevent collapse")}
+									</label>
+									<FormToggle
+										id="ub-content-toggle-state"
+										label={__("Prevent collapse")}
+										checked={preventCollapse}
+										onChange={onPreventCollapseChange}
+									/>
+								</PanelRow>
+							)}
 					</PanelBody>
 					<PanelBody title={__("FAQ Schema")} initialOpen={true}>
 						<PanelRow>
@@ -697,6 +732,91 @@ export class PanelContent extends Component {
 							}}
 						/>
 					</div>
+					<PanelBody title={__("Toggle status icon", "ultimate-blocks")}>
+						{toggleIcon !== "none" && (
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-status-location">
+									{__("Location", "ultimate-blocks")}
+								</label>
+								<ButtonGroup
+									id="ub-content-toggle-status-location"
+									aria-label={__("toggle icon position", "ultimate-blocks")}
+								>
+									{Object.keys(toggleIconPositions).map((p) => {
+										if (
+											Object.prototype.hasOwnProperty.call(
+												toggleIconPositions,
+												p
+											)
+										) {
+											return (
+												<Button
+													isLarge
+													aria-pressed={toggleLocation === p}
+													isPrimary={toggleLocation === p}
+													onClick={() => {
+														setAttributes({ toggleLocation: p });
+														panels.forEach((panel) =>
+															updateBlockAttributes(panel.clientId, {
+																toggleLocation: p,
+															})
+														);
+													}}
+												>
+													{toggleIconPositions[p]}
+												</Button>
+											);
+										}
+									})}
+								</ButtonGroup>
+							</PanelRow>
+						)}
+						<PanelRow>
+							<label htmlFor="ub-content-toggle-status-icon">
+								{__("Icon", "ultimate-blocks")}
+							</label>
+							<Dropdown
+								position="bottom right"
+								renderToggle={({ onToggle, isOpen }) => (
+									<Button isLarge onClick={onToggle} area-expanded={isOpen}>
+										{icons[toggleIcon] === "none" ? (
+											<span>{__("None")}</span>
+										) : (
+											<span className={icons[toggleIcon]} />
+										)}
+									</Button>
+								)}
+								renderContent={() => (
+									<div className="wp-block-ub-content-toggle-customize-icons-wrap">
+										{Object.keys(icons).map((i) => {
+											if (Object.prototype.hasOwnProperty.call(icons, i)) {
+												return (
+													<Button
+														isPrimary={toggleIcon === i}
+														isLarge
+														onClick={() => {
+															setAttributes({ toggleIcon: i });
+															panels.forEach((panel) =>
+																updateBlockAttributes(panel.clientId, {
+																	toggleIcon: i,
+																})
+															);
+														}}
+													>
+														{icons[i] === "none" ? (
+															"None"
+														) : (
+															<span className={icons[i]} />
+														)}
+													</Button>
+												);
+											}
+										})}
+									</div>
+								)}
+							/>
+						</PanelRow>
+					</PanelBody>
 				</InspectorControls>
 			),
 			<div className={className} id={`ub-content-toggle-${blockID}`}>

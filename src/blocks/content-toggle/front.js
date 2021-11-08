@@ -223,3 +223,21 @@ Array.prototype.slice
 			}
 		}
 	});
+
+document.addEventListener("DOMContentLoaded", () => {
+	Array.prototype.slice
+		.call(document.getElementsByClassName("wp-block-ub-content-toggle"))
+		.forEach((toggleContainer) => {
+			if (
+				window.innerWidth < 700 &&
+				JSON.parse(toggleContainer.dataset.mobilecollapse) !==
+					JSON.parse(toggleContainer.dataset.desktopcollapse)
+			) {
+				Array.prototype.slice
+					.call(toggleContainer.children)
+					.forEach((child) => {
+						togglePanel(child.children[0]);
+					});
+			}
+		});
+});

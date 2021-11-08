@@ -47,6 +47,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	collapsedOnMobile: {
+		type: "boolean",
+		default: false,
+	},
 	hasFAQSchema: {
 		type: "boolean",
 		default: false,
@@ -130,6 +134,7 @@ class ContentTogglePanel extends Component {
 				titleLinkColor,
 				panelTitle,
 				collapsed,
+				collapsedOnMobile,
 				hasFAQSchema,
 				titleTag,
 				preventCollapse,
@@ -220,26 +225,44 @@ class ContentTogglePanel extends Component {
 						</PanelRow>
 					)}
 					{!preventCollapse && (
-						<PanelRow>
-							<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
-							<FormToggle
-								id="ub-content-toggle-state"
-								label={__("Collapsed")}
-								checked={collapsed}
-								onChange={() => {
-									setAttributes({ collapsed: !collapsed });
-									if (showOnlyOne) {
-										this.setState({ showPanel: collapsed });
+						<>
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-state">
+									{__("Collapsed")}
+								</label>
+								<FormToggle
+									id="ub-content-toggle-state"
+									label={__("Collapsed")}
+									checked={collapsed}
+									onChange={() => {
+										setAttributes({ collapsed: !collapsed });
+										if (showOnlyOne) {
+											this.setState({ showPanel: collapsed });
+										}
+										if (!collapsed) {
+											setAttributes({ preventCollapse: false });
+										}
+									}}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-mobile-state">
+									{__("Collapsed on mobile")}
+								</label>
+								<FormToggle
+									id="ub-content-toggle-mobile-state"
+									label={__("Collapsed on mobile")}
+									checked={collapsedOnMobile}
+									onChange={() =>
+										setAttributes({ collapsedOnMobile: !collapsedOnMobile })
 									}
-									if (!collapsed) {
-										setAttributes({ preventCollapse: false });
-									}
-								}}
-							/>
-						</PanelRow>
+								/>
+							</PanelRow>
+						</>
 					)}
 					{!blockParent.attributes.individualCollapse &&
 						!collapsed &&
+						!collapsedOnMobile &&
 						!showOnlyOne && (
 							<PanelRow>
 								<label htmlFor="ub-content-toggle-state">
@@ -329,7 +352,7 @@ class ContentTogglePanel extends Component {
 							renderToggle={({ onToggle, isOpen }) => (
 								<Button isLarge onClick={onToggle} area-expanded={isOpen}>
 									{icons[toggleIcon] === "none" ? (
-										<span>None</span>
+										<span>{__("None")}</span>
 									) : (
 										<span className={icons[toggleIcon]} />
 									)}
@@ -346,7 +369,7 @@ class ContentTogglePanel extends Component {
 													onClick={() => setAttributes({ toggleIcon: i })}
 												>
 													{icons[i] === "none" ? (
-														"None"
+														__("None")
 													) : (
 														<span className={icons[i]} />
 													)}
