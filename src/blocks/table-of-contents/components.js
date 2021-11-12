@@ -38,9 +38,6 @@ class OptionalParent extends Component {
 	constructor(props) {
 		super(props);
 	}
-	componentDidUpdate(prevProps) {
-		console.log("conditon change detected");
-	}
 	render() {
 		if (this.props.enabled) {
 			return (
@@ -609,9 +606,6 @@ class TableOfContents extends Component {
 				readCustomHeadingInput();
 			}
 		}
-
-		console.log("current list style");
-		console.log(listStyle);
 
 		if (
 			headers.length > 0 &&
