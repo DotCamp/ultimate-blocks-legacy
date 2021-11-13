@@ -78,7 +78,10 @@ export default class Inspector extends Component {
 					title={__("Tab Colors")}
 					initialOpen={true}
 					colorSettings={
-						tabStyle === "underline" ? tabColorPanels.slice(2) : tabColorPanels
+						tabStyle === "underline" &&
+						![tabletTabDisplay, mobileTabDisplay].includes("accordion")
+							? tabColorPanels.slice(2)
+							: tabColorPanels
 					}
 				/>
 				<PanelBody title={__("Tab Layout")}>

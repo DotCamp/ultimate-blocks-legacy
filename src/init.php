@@ -889,8 +889,10 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
                         ($attributes['tabStyle'] === 'underline' ? 'border-bottom: 5px solid ' . $attributes['titleColor'] . ';' . PHP_EOL :
                             'background-color: ' . $attributes['theme'] . ';' . PHP_EOL) .
-                        //'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
+                        'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                     '}' .
                     $prefix . ' .wp-block-ub-tabbed-content-tabs-title{' . PHP_EOL .
                         'justify-content: ' . ($attributes['tabsAlignment'] === 'center' ? 'center' :
