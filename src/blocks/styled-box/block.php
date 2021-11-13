@@ -78,7 +78,24 @@ function ub_render_styled_box_block($attributes, $content){
             </div>';
         }
     }
-    else if(in_array($mode, array('bordered', 'notification', 'number'))){
+    else if($mode === 'number'){
+        if(count( array_filter($text, function($item){return $item !== '';}) ) > 0 ||
+                count( array_filter($title, function($item){return $item !== '';}) ) > 0){
+            foreach(range(0, count($text)-1) as $i){
+                $renderedBlock .= '<div class="ub-number-panel">
+                    <div class="ub-number-container">
+                        <p class="ub-number-display">'.$number[$i].'</p>
+                    </div>
+                    <p class="ub-number-box-title">'.$title[$i].'</p>
+                    <p class="ub-number-box-body">'.$text[$i].'</p>
+                </div>';
+            }
+        }
+        else {
+            $renderedBlock = $content;
+        }
+    }
+    else if(in_array($mode, array('bordered', 'notification'))){
         $renderedBlock = $content;
     }
 

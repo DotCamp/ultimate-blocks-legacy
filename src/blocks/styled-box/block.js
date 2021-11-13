@@ -124,12 +124,14 @@ registerBlockType("ub/styled-box", {
 		}),
 		withDispatch((dispatch) => {
 			const {
+				insertBlock,
 				insertBlocks,
 				removeBlocks,
 				replaceInnerBlocks,
 				updateBlockAttributes,
 			} = dispatch("core/block-editor") || dispatch("core/editor");
 			return {
+				insertBlock,
 				insertBlocks,
 				removeBlocks,
 				replaceInnerBlocks,
@@ -163,6 +165,7 @@ registerBlockType("ub/styled-box", {
 			isSelected,
 			setState,
 			editable,
+			insertBlock,
 			insertBlocks,
 			replaceInnerBlocks,
 			removeBlocks,
@@ -441,13 +444,43 @@ registerBlockType("ub/styled-box", {
 		} else if (mode === "number") {
 			blockToolbarExtras = columnCountToolbar;
 
-			if (
-				block.innerBlocks.length > 0 &&
-				block.innerBlocks[0].name !== "ub/styled-box-numbered-box-column"
-			) {
-				replaceInnerBlocks(block.clientId, [
-					createBlock("ub/styled-box-numbered-box-column"),
-				]);
+			if (block.innerBlocks.length > 0) {
+				if (block.innerBlocks[0].name !== "ub/styled-box-numbered-box-column") {
+					replaceInnerBlocks(block.clientId, [
+						createBlock("ub/styled-box-numbered-box-column"),
+					]);
+				} else if (title.some((t) => t !== "")) {
+					setAttributes({
+						number: Array(number.length).fill(""),
+						title: Array(title.length).fill(""),
+						text: Array(text.length).fill(""),
+					});
+					console.log("titles cleared");
+				}
+			} else {
+				if (title.some((t) => t !== "")) {
+					const convertedBlocks = number.map((n, i) =>
+						createBlock(
+							"ub/styled-box-numbered-box-column",
+							{
+								number: n,
+								title: title[i],
+							},
+							[createBlock("core/paragraph", { content: text[i] })]
+						)
+					);
+
+					replaceInnerBlocks(block.clientId, convertedBlocks);
+				} else {
+					insertBlock(
+						createBlock("ub/styled-box-numbered-box-column", {
+							number: __("1"),
+							title: "",
+						}),
+						0,
+						block.clientId
+					);
+				}
 			}
 
 			renderedBlock = (
