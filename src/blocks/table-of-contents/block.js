@@ -118,6 +118,10 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	listIconColor: {
+		type: "string",
+		default: "",
+	},
 };
 
 registerBlockType("ub/table-of-contents", {

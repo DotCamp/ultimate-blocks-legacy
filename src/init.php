@@ -949,11 +949,15 @@ function ub_include_block_attribute_css() {
                             'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
-                    if($attributes['listColor'] || $attributes['listBackgroundColor']){
+                    if($attributes['listBackgroundColor']){
                         $blockStylesheets .= $prefix . ' .ub_table-of-contents-extra-container{' . PHP_EOL .
-                            ($attributes['listBackgroundColor'] ? ('background-color: ' . $attributes['listBackgroundColor'] . ';' . PHP_EOL ) : '' ) .
-                            ($attributes['listColor'] ? ('color: ' . $attributes['listColor'] . ';' . PHP_EOL) : '') . '}' . PHP_EOL;
+                            'background-color: ' . $attributes['listBackgroundColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
                     }
+                    if($attributes['listIconColor']){
+                        $blockStylesheets .= $prefix . ' li{' . PHP_EOL .
+                            'color: ' . $attributes['listIconColor'] . ';' . PHP_EOL . '}' . PHP_EOL;
+                    } 
                     break;
                 case 'ub/testimonial':
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];

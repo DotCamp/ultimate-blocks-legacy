@@ -657,6 +657,8 @@ export const inspectorControls = (props) => {
 		scrollTargetType,
 		titleColor,
 		titleBackgroundColor,
+		listStyle,
+		listIconColor,
 		listColor,
 		listBackgroundColor,
 	} = attributes;
@@ -778,6 +780,18 @@ export const inspectorControls = (props) => {
 							setAttributes({ listBackgroundColor }),
 						label: __("List Background Color"),
 					},
+					...[
+						listStyle !== "plain"
+							? {
+									value: listIconColor,
+									onChange: (listIconColor) => setAttributes({ listIconColor }),
+									label:
+										listStyle === "numbered"
+											? __("Item number color")
+											: __("List icon color"),
+							  }
+							: [],
+					],
 				]}
 			/>
 			<PanelBody title={__("Additional Settings")} initialOpen={true}>
@@ -915,6 +929,7 @@ export const editorDisplay = (props) => {
 		titleBackgroundColor,
 		listColor,
 		listBackgroundColor,
+		listIconColor,
 		blockID,
 	} = props.attributes;
 
@@ -967,13 +982,16 @@ export const editorDisplay = (props) => {
 					removeDiacritics={removeDiacritics}
 					canRemoveItemFocus={canRemoveItemFocus}
 					itemFocusRemoved={() => setState({ canRemoveItemFocus: false })}
-					style={{ color: listColor, backgroundColor: listBackgroundColor }}
+					style={{ backgroundColor: listBackgroundColor }}
 				/>
 			)}
 			{
 				<style
 					dangerouslySetInnerHTML={{
-						__html: `#ub_table-of-contents-${blockID} .ub_table-of-contents-container a{
+						__html: `#ub_table-of-contents-${blockID} .ub_table-of-contents-container li{
+							color: ${listIconColor};
+						}
+						#ub_table-of-contents-${blockID} .ub_table-of-contents-container a{
 							color: ${listColor};
 						}`,
 					}}
