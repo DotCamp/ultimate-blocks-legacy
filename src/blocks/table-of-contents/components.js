@@ -507,7 +507,8 @@ class TableOfContents extends Component {
 			)[0];
 
 			if (
-				currentlyEditedHeader.customContent === currentlyEditedHeader.content
+				currentlyEditedHeader.customContent ===
+				currentlyEditedHeader.content.replace(/<.+?>/g, "")
 			) {
 				//no changes detected
 				revisedHeaders[currentlyEditedHeader.index].customContent = "";
@@ -560,9 +561,13 @@ class TableOfContents extends Component {
 											const revisedHeaders = JSON.parse(
 												JSON.stringify(this.state.headers)
 											);
+
 											if (!revisedHeaders[item.index].customContent) {
 												revisedHeaders[item.index].customContent =
-													revisedHeaders[item.index].content;
+													revisedHeaders[item.index].content.replace(
+														/<.+?>/g,
+														""
+													);
 												this.setState({ headers: revisedHeaders });
 											}
 											this.setState({ currentlyEditedItem: item.clientId });
