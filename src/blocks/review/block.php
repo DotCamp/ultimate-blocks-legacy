@@ -66,7 +66,7 @@ function ub_render_review_block($attributes){
         case 'Book':
             $itemExtras = '"author": "'. ub_filterJsonldString($bookAuthorName) . '",
                             "isbn": "'. ub_filterJsonldString($isbn) . '",
-                            "saveAs": "' . esc_url($itemPage) . '"';
+                            "sameAs": "' . esc_url($itemPage) . '"';
         break;
         case 'Course':
             $itemExtras = '"provider": "' . ub_filterJsonldString($provider) . '"';
@@ -99,10 +99,10 @@ function ub_render_review_block($attributes){
                             '"address": "' . ub_filterJsonldString($address) . '",
                             "telephone": "' . ub_filterJsonldString($telephone) . '",
                             "priceRange": "' . ub_filterJsonldString($priceRange) . '",
-                            "saveAs": "' . esc_url($itemPage) . '"';
+                            "sameAs": "' . esc_url($itemPage) . '"';
         break;
         case 'Movie':
-            $itemExtras = '"saveAs": "' . esc_url($itemPage) . '"';
+            $itemExtras = '"sameAs": "' . esc_url($itemPage) . '"';
         break;
         case 'Organization':
             $itemExtras = (in_array($itemSubsubtype, array('Dentist', 'Hospital', 'MedicalClinic', 'Pharmacy', 'Physician')) ? ('"priceRange":"' . ub_filterJsonldString($priceRange) . '",'): '').
