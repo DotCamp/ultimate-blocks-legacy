@@ -9,6 +9,10 @@ function ub_render_table_of_contents_block($attributes){
            (!array_key_exists("disabled",  $header) || (array_key_exists("disabled",  $header) && !$header['disabled']));
     }));
 
+    if(!isset($gaps) || is_null($gaps)){
+        $gaps = [];
+    }
+
     $currentGaps = array_values(array_filter($gaps, function($gap, $index) use($allowedHeaders, $linkArray){
         return $allowedHeaders[$linkArray[$index]['level'] - 1] && (!array_key_exists("disabled",  $linkArray[$index]) || (array_key_exists("disabled", $linkArray[$index]) && !$linkArray[$index]['disabled']));
     }, ARRAY_FILTER_USE_BOTH));
