@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.4.10
+Stable tag: 2.4.11
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,24 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.11 =
+
+* Content Toggle - Add option for separate Content Toggle status in mobile.
+* Table of Contents - Add option to set bullet/number color separately.
+* Table of Contents - Make colors default to theme colors when values are not set.
+* Table of Contents - Remove HTML tags from custom anchor texts.
+* Table of Contents - Set default value of gaps for old Table of Contents instances.
+* Countdown - Keep expiry message when loading expired countdown timers.
+* Review - Add option to align call to action button.
+* Review - Allow setting image position with respect to description.
+* Review - Remove image size limit.
+* Review - Rename all instances of saveAs in generated schema code into sameAs.
+* Styled Box - Allow adding inner blocks to number box.
+* Tabbed Content - Ensure accordion mode works when using pills or underline tab styles.
+* Tabbed Content - Fix issue with tabindex cycle in pills and underline tab styles.
+* Tabbed Content - Fix tabindex values of tabs when clicked.
+
 
 = 2.4.10 =
 
