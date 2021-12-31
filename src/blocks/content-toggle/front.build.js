@@ -173,9 +173,13 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
 });
 document.addEventListener("DOMContentLoaded", function () {
   Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-toggle")).forEach(function (toggleContainer) {
-    if (window.innerWidth < 700 && JSON.parse(toggleContainer.dataset.mobilecollapse) !== JSON.parse(toggleContainer.dataset.desktopcollapse)) {
+    if (window.innerWidth < 700 && JSON.parse(toggleContainer.dataset.mobilecollapse)) {
       Array.prototype.slice.call(toggleContainer.children).forEach(function (child) {
-        togglePanel(child.children[0]);
+        var panel = child.children[0].nextElementSibling;
+
+        if (!panel.classList.contains("ub-hide")) {
+          togglePanel(child.children[0]);
+        }
       });
     }
   });

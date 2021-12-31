@@ -230,13 +230,16 @@ document.addEventListener("DOMContentLoaded", () => {
 		.forEach((toggleContainer) => {
 			if (
 				window.innerWidth < 700 &&
-				JSON.parse(toggleContainer.dataset.mobilecollapse) !==
-					JSON.parse(toggleContainer.dataset.desktopcollapse)
+				JSON.parse(toggleContainer.dataset.mobilecollapse)
 			) {
 				Array.prototype.slice
 					.call(toggleContainer.children)
 					.forEach((child) => {
-						togglePanel(child.children[0]);
+						const panel = child.children[0].nextElementSibling;
+
+						if (!panel.classList.contains("ub-hide")) {
+							togglePanel(child.children[0]);
+						}
 					});
 			}
 		});
