@@ -194,7 +194,7 @@ export class OldPanelContent extends Component {
 	}
 }
 
-export const oldColorDefaults = {
+const oldColorDefaults = {
 	theme: "#f63d3d",
 	titleColor: "#ffffff",
 };
@@ -204,8 +204,8 @@ export class PanelContent extends Component {
 		super(props);
 	}
 	componentDidMount() {
-		const { theme, titleColor } = this.props.attributes;
-		const { block, setAttributes } = this.props;
+		const { block, attributes, setAttributes } = this.props;
+		const { theme, titleColor, showOnlyOne, collapsedOnMobile } = attributes;
 
 		if (!this.props.attributes.blockID) {
 			let initialColors = {};
@@ -221,6 +221,15 @@ export class PanelContent extends Component {
 			Object.assign(this.props.attributes, {
 				theme: block.innerBlocks[0].attributes.theme,
 				titleColor: block.innerBlocks[0].attributes.titleColor,
+			});
+		}
+
+		if (showOnlyOne && collapsedOnMobile) {
+			setAttributes({ showOnlyOne: false });
+			this.props.block.innerBlocks.forEach((panel) => {
+				this.props.updateBlockAttributes(panel.clientId, {
+					showOnlyOne: false,
+				});
 			});
 		}
 	}
@@ -658,11 +667,21 @@ export class PanelContent extends Component {
 										checked={collapsedOnMobile}
 										onChange={() => {
 											setAttributes({ collapsedOnMobile: !collapsedOnMobile });
-											panels.forEach((panel) =>
+
+											panels.forEach((panel) => {
 												updateBlockAttributes(panel.clientId, {
 													collapsedOnMobile: !collapsedOnMobile,
-												})
-											);
+												});
+											});
+
+											if (!collapsedOnMobile) {
+												setAttributes({ showOnlyOne: false });
+												panels.forEach((panel) => {
+													updateBlockAttributes(panel.clientId, {
+														showOnlyOne: false,
+													});
+												});
+											}
 										}}
 									/>
 								</PanelRow>

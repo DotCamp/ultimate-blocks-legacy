@@ -3,7 +3,6 @@ import icons from "../icons/icons";
 
 import { panel_version_1_1_9 } from "../oldVersions";
 import { Component } from "react";
-import { oldColorDefaults } from "./editorDisplay";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -203,7 +202,7 @@ class ContentTogglePanel extends Component {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__("Initial State")} initialOpen={true}>
-					{!blockParent.attributes.individualCollapse && (
+					{!blockParent.attributes.individualCollapse && !collapsedOnMobile && (
 						<PanelRow>
 							<label htmlFor="ub-content-toggle-amount">
 								{__("Show only one panel at a time")}
@@ -218,6 +217,7 @@ class ContentTogglePanel extends Component {
 										setAttributes({
 											collapsed: false,
 											preventCollapse: false,
+											collapsedOnMobile: false,
 										});
 									}
 								}}
@@ -245,19 +245,24 @@ class ContentTogglePanel extends Component {
 									}}
 								/>
 							</PanelRow>
-							<PanelRow>
-								<label htmlFor="ub-content-toggle-mobile-state">
-									{__("Collapsed on mobile")}
-								</label>
-								<FormToggle
-									id="ub-content-toggle-mobile-state"
-									label={__("Collapsed on mobile")}
-									checked={collapsedOnMobile}
-									onChange={() =>
-										setAttributes({ collapsedOnMobile: !collapsedOnMobile })
-									}
-								/>
-							</PanelRow>
+							{!showOnlyOne && (
+								<PanelRow>
+									<label htmlFor="ub-content-toggle-mobile-state">
+										{__("Collapsed on mobile")}
+									</label>
+									<FormToggle
+										id="ub-content-toggle-mobile-state"
+										label={__("Collapsed on mobile")}
+										checked={collapsedOnMobile}
+										onChange={() => {
+											setAttributes({ collapsedOnMobile: !collapsedOnMobile });
+											if (!collapsedOnMobile) {
+												setAttributes({ showOnlyOne: false });
+											}
+										}}
+									/>
+								</PanelRow>
+							)}
 						</>
 					)}
 					{!blockParent.attributes.individualCollapse &&
