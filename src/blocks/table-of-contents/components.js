@@ -674,7 +674,7 @@ export const inspectorControls = (props) => {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Allowed Headings")} initialOpen={true}>
+			<PanelBody title={__("Allowed Headings")} initialOpen={false}>
 				{allowedHeaders.map((a, i) => (
 					<PanelRow>
 						<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i + 1}`}</label>
@@ -694,7 +694,105 @@ export const inspectorControls = (props) => {
 					</PanelRow>
 				))}
 			</PanelBody>
-			<PanelBody title={__("Scroll Settings")} initialOpen={true}>
+			<PanelColorSettings
+				title={__("Color Settings")}
+				initialOpen={false}
+				colorSettings={[
+					{
+						value: titleColor,
+						onChange: (titleColor) => setAttributes({ titleColor }),
+						label: __("Title Color"),
+					},
+					{
+						value: titleBackgroundColor,
+						onChange: (titleBackgroundColor) =>
+							setAttributes({ titleBackgroundColor }),
+						label: __("Title Background Color"),
+					},
+					{
+						value: listColor,
+						onChange: (listColor) => setAttributes({ listColor }),
+						label: __("List Color"),
+					},
+					{
+						value: listBackgroundColor,
+						onChange: (listBackgroundColor) =>
+							setAttributes({ listBackgroundColor }),
+						label: __("List Background Color"),
+					},
+					...[
+						listStyle !== "plain"
+							? {
+									value: listIconColor,
+									onChange: (listIconColor) => setAttributes({ listIconColor }),
+									label:
+										listStyle === "numbered"
+											? __("Item number color")
+											: __("List icon color"),
+							  }
+							: [],
+					],
+				]}
+			/>
+			<PanelBody title={__("Additional Settings")} initialOpen={false}>
+				<PanelRow>
+					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
+					<ToggleControl
+						id="ub_toc_toggle_display"
+						checked={allowToCHiding}
+						onChange={(allowToCHiding) =>
+							setAttributes({
+								allowToCHiding,
+								showList: allowToCHiding ? showList : true,
+								hideOnMobile: false,
+							})
+						}
+					/>
+				</PanelRow>
+				{allowToCHiding && (
+					<>
+						<PanelRow>
+							<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
+							<ToggleControl
+								id="ub_show_toc"
+								checked={showList}
+								onChange={() => setAttributes({ showList: !showList })}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<label htmlFor="ub_hide_on_mobile">
+								{__("Initial Hide on Mobile")}
+							</label>
+							<ToggleControl
+								id="ub_hide_on_mobile"
+								checked={hideOnMobile}
+								onChange={() => setAttributes({ hideOnMobile: !hideOnMobile })}
+							/>
+						</PanelRow>
+					</>
+				)}
+				<PanelRow>
+					<label htmlFor="ub_toc_enable_latin_conversion">
+						{__("Romanize anchor links")}
+					</label>
+					<ToggleControl
+						id="ub_toc_enable_latin_conversion"
+						checked={allowToLatin}
+						onChange={(e) => setAttributes({ allowToLatin: e })}
+					/>
+				</PanelRow>
+				<PanelRow>
+					<label htmlFor="ub_toc_toggle_diacritics">
+						{__("Remove diacritics from anchor links")}
+					</label>
+					<ToggleControl
+						id="ub_toc_toggle_diacritics"
+						checked={removeDiacritics}
+						onChange={(removeDiacritics) => setAttributes({ removeDiacritics })}
+					/>
+				</PanelRow>
+			</PanelBody>
+			<PanelBody title={__("Scroll Settings")} initialOpen={false}>
 				<SelectControl
 					label={__("Scroll offset adjustment")}
 					value={scrollOption}
@@ -757,103 +855,6 @@ export const inspectorControls = (props) => {
 								});
 							});
 						}}
-					/>
-				</PanelRow>
-			</PanelBody>
-			<PanelColorSettings
-				title={__("Color Settings")}
-				colorSettings={[
-					{
-						value: titleColor,
-						onChange: (titleColor) => setAttributes({ titleColor }),
-						label: __("Title Color"),
-					},
-					{
-						value: titleBackgroundColor,
-						onChange: (titleBackgroundColor) =>
-							setAttributes({ titleBackgroundColor }),
-						label: __("Title Background Color"),
-					},
-					{
-						value: listColor,
-						onChange: (listColor) => setAttributes({ listColor }),
-						label: __("List Color"),
-					},
-					{
-						value: listBackgroundColor,
-						onChange: (listBackgroundColor) =>
-							setAttributes({ listBackgroundColor }),
-						label: __("List Background Color"),
-					},
-					...[
-						listStyle !== "plain"
-							? {
-									value: listIconColor,
-									onChange: (listIconColor) => setAttributes({ listIconColor }),
-									label:
-										listStyle === "numbered"
-											? __("Item number color")
-											: __("List icon color"),
-							  }
-							: [],
-					],
-				]}
-			/>
-			<PanelBody title={__("Additional Settings")} initialOpen={true}>
-				<PanelRow>
-					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
-					<ToggleControl
-						id="ub_toc_toggle_display"
-						checked={allowToCHiding}
-						onChange={(allowToCHiding) =>
-							setAttributes({
-								allowToCHiding,
-								showList: allowToCHiding ? showList : true,
-								hideOnMobile: false,
-							})
-						}
-					/>
-				</PanelRow>
-				{allowToCHiding && (
-					<>
-						<PanelRow>
-							<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
-							<ToggleControl
-								id="ub_show_toc"
-								checked={showList}
-								onChange={() => setAttributes({ showList: !showList })}
-							/>
-						</PanelRow>
-						<PanelRow>
-							<label htmlFor="ub_hide_on_mobile">
-								{__("Initial Hide on Mobile")}
-							</label>
-							<ToggleControl
-								id="ub_hide_on_mobile"
-								checked={hideOnMobile}
-								onChange={() => setAttributes({ hideOnMobile: !hideOnMobile })}
-							/>
-						</PanelRow>
-					</>
-				)}
-				<PanelRow>
-					<label htmlFor="ub_toc_enable_latin_conversion">
-						{__("Romanize anchor links")}
-					</label>
-					<ToggleControl
-						id="ub_toc_enable_latin_conversion"
-						checked={allowToLatin}
-						onChange={(e) => setAttributes({ allowToLatin: e })}
-					/>
-				</PanelRow>
-				<PanelRow>
-					<label htmlFor="ub_toc_toggle_diacritics">
-						{__("Remove diacritics from anchor links")}
-					</label>
-					<ToggleControl
-						id="ub_toc_toggle_diacritics"
-						checked={removeDiacritics}
-						onChange={(removeDiacritics) => setAttributes({ removeDiacritics })}
 					/>
 				</PanelRow>
 			</PanelBody>
