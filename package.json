@@ -1,16 +1,16 @@
 {
 	"name": "ultimate-blocks",
-	"version": "2.4.10",
+	"version": "2.4.11",
 	"private": true,
 	"scripts": {
 		"start": "concurrently -k \"wp-scripts start\" \"node recompileOnChange.js\"",
 		"build": "wp-scripts build & node recompile.js"
 	},
 	"dependencies": {
-		"@babel/core": "^7.16.0",
-		"@babel/plugin-proposal-class-properties": "^7.16.0",
-		"@babel/preset-env": "^7.16.0",
-		"@babel/preset-react": "^7.16.0",
+		"@babel/core": "^7.16.12",
+		"@babel/plugin-proposal-class-properties": "^7.16.7",
+		"@babel/preset-env": "^7.16.11",
+		"@babel/preset-react": "^7.16.7",
 		"@fortawesome/fontawesome-svg-core": "^1.2.36",
 		"@fortawesome/free-brands-svg-icons": "^5.15.4",
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
@@ -23,19 +23,19 @@
 		"swiper": "^6.8.4"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^19.1.0",
-		"concurrently": "^6.3.0",
+		"@wordpress/scripts": "^19.2.3",
+		"concurrently": "^7.0.0",
 		"css-loader": "^6.5.1",
 		"gulp": "^4.0.2",
 		"gulp-notify": "^4.0.0",
 		"gulp-sort": "^2.0.0",
 		"gulp-wp-pot": "^2.5.0",
 		"ignore-emit-webpack-plugin": "^2.0.6",
-		"mini-css-extract-plugin": "^2.4.4",
+		"mini-css-extract-plugin": "^2.5.2",
 		"path": "^0.12.7",
-		"postcss-loader": "^6.2.0",
+		"postcss-loader": "^6.2.1",
 		"postcss-preset-env": "^6.7.0",
-		"sass": "^1.43.4",
-		"sass-loader": "^12.3.0"
+		"sass": "^1.49.0",
+		"sass-loader": "^12.4.0"
 	}
 }
