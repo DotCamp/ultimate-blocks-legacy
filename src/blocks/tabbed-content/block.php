@@ -14,7 +14,7 @@ function ub_render_tab_block($attributes, $contents){
         . $contents . '</div>';
 }
 
-if ( !class_exists( 'simple_html_dom_node' ) ) {
+if ( !class_exists( 'ub_simple_html_dom_node' ) ) {
     require dirname( dirname( __DIR__ ) ) . '/simple_html_dom.php';
 }
 

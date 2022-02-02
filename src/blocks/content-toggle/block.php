@@ -34,7 +34,7 @@ function ub_content_toggle_add_frontend_assets() {
     }
 }
 
-if ( !class_exists( 'simple_html_dom_node' ) ) {
+if ( !class_exists( 'ub_simple_html_dom_node' ) ) {
     require dirname( dirname( __DIR__ ) ) . '/simple_html_dom.php';
 }
 
