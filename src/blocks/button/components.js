@@ -55,7 +55,7 @@ export const defaultButtonProps = {
 	addNofollow: true,
 	openInNewTab: true,
 	addSponsored: false,
-	buttonWidth: "fixed",
+	buttonWidth: "flex",
 };
 
 export const blockControls = (props) => {
@@ -314,8 +314,8 @@ export const inspectorControls = (props) => {
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
 									Object.assign({}, buttons[activeButtonIndex], {
-										buttonIsTransparent: !buttons[activeButtonIndex]
-											.buttonIsTransparent,
+										buttonIsTransparent:
+											!buttons[activeButtonIndex].buttonIsTransparent,
 									}),
 									...buttons.slice(activeButtonIndex + 1),
 								],
@@ -833,12 +833,8 @@ export class EditorComponent extends Component {
 	}
 
 	updateIconList() {
-		const {
-			availableIcons,
-			recentSelection,
-			selectionTime,
-			iconChoices,
-		} = this.state;
+		const { availableIcons, recentSelection, selectionTime, iconChoices } =
+			this.state;
 		const prevIconMatch = iconChoices
 			.map((i) => i.name)
 			.indexOf(recentSelection);
@@ -1235,8 +1231,8 @@ export class EditorComponent extends Component {
 									buttons: [
 										...buttons.slice(0, activeButtonIndex),
 										Object.assign({}, buttons[activeButtonIndex], {
-											buttonIsTransparent: !buttons[activeButtonIndex]
-												.buttonIsTransparent,
+											buttonIsTransparent:
+												!buttons[activeButtonIndex].buttonIsTransparent,
 										}),
 										...buttons.slice(activeButtonIndex + 1),
 									],

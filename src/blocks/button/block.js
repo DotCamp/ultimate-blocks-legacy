@@ -115,7 +115,7 @@ const attributes = {
 	},
 	buttonWidth: {
 		type: "string",
-		default: "fixed",
+		default: "flex",
 	},
 	buttons: {
 		type: "array",
