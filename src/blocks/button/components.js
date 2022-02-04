@@ -15,7 +15,7 @@ const {
 	InspectorControls,
 	URLInput,
 	RichText,
-	PanelColorSettings,
+	ColorPalette,
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
@@ -113,28 +113,52 @@ export const inspectorControls = (props) => {
 		20
 	);
 
-	const makeNormalColorPanels = () => [
-		{
-			value: buttons[activeButtonIndex].buttonColor,
-			onChange: (colorValue) =>
-				setAttributes({
-					buttons: [
-						...buttons.slice(0, activeButtonIndex),
-						Object.assign({}, buttons[activeButtonIndex], {
-							buttonColor: colorValue,
-						}),
-						...buttons.slice(activeButtonIndex + 1),
-					],
-				}),
+	const normalColorPanels = buttons.length && (
+		<>
+			<p>
+				{__("Button Color", "ultimate-blocks")}
+				{buttons[activeButtonIndex].buttonColor && (
+					<span
+						class="component-color-indicator"
+						aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
+						style={{
+							background: buttons[activeButtonIndex].buttonColor,
+						}}
+					/>
+				)}
+			</p>
+			<ColorPalette
+				value={buttons[activeButtonIndex].buttonColor}
+				onChange={(colorValue) =>
+					setAttributes({
+						buttons: [
+							...buttons.slice(0, activeButtonIndex),
+							Object.assign({}, buttons[activeButtonIndex], {
+								buttonColor: colorValue,
+							}),
+							...buttons.slice(activeButtonIndex + 1),
+						],
+					})
+				}
+			/>
 
-			label: __("Button Color"),
-		},
-		...[
-			buttons[activeButtonIndex].buttonIsTransparent
-				? []
-				: {
-						value: buttons[activeButtonIndex].buttonTextColor,
-						onChange: (colorValue) =>
+			{!buttons[activeButtonIndex].buttonIsTransparent && (
+				<>
+					<p>
+						{__("Button Text Color", "ultimate-blocks")}
+						{buttons[activeButtonIndex].buttonTextColor && (
+							<span
+								class="component-color-indicator"
+								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
+								style={{
+									background: buttons[activeButtonIndex].buttonTextColor,
+								}}
+							/>
+						)}
+					</p>
+					<ColorPalette
+						value={buttons[activeButtonIndex].buttonTextColor}
+						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
@@ -143,34 +167,60 @@ export const inspectorControls = (props) => {
 									}),
 									...buttons.slice(activeButtonIndex + 1),
 								],
+							})
+						}
+					/>
+				</>
+			)}
+		</>
+	);
+
+	const hoverColorPanels = buttons.length && (
+		<>
+			<p>
+				{__("Button Color", "ultimate-blocks")}
+				{buttons[activeButtonIndex].buttonHoverColor && (
+					<span
+						class="component-color-indicator"
+						aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
+						style={{
+							background: buttons[activeButtonIndex].buttonHoverColor,
+						}}
+					/>
+				)}
+			</p>
+			<ColorPalette
+				value={buttons[activeButtonIndex].buttonHoverColor}
+				onChange={(colorValue) =>
+					setAttributes({
+						buttons: [
+							...buttons.slice(0, activeButtonIndex),
+							Object.assign({}, buttons[activeButtonIndex], {
+								buttonHoverColor: colorValue,
 							}),
+							...buttons.slice(activeButtonIndex + 1),
+						],
+					})
+				}
+			/>
 
-						label: __("Button Text Color"),
-				  },
-		],
-	];
-	const makeHoverColorPanels = () => [
-		{
-			value: buttons[activeButtonIndex].buttonHoverColor,
-			onChange: (colorValue) =>
-				setAttributes({
-					buttons: [
-						...buttons.slice(0, activeButtonIndex),
-						Object.assign({}, buttons[activeButtonIndex], {
-							buttonHoverColor: colorValue,
-						}),
-						...buttons.slice(activeButtonIndex + 1),
-					],
-				}),
-
-			label: __("Button Color"),
-		},
-		...[
-			buttons[activeButtonIndex].buttonIsTransparent
-				? []
-				: {
-						value: buttons[activeButtonIndex].buttonTextHoverColor,
-						onChange: (colorValue) =>
+			{!buttons[activeButtonIndex].buttonIsTransparent && (
+				<>
+					<p>
+						{__("Button Text Color", "ultimate-blocks")}
+						{buttons[activeButtonIndex].buttonTextHoverColor && (
+							<span
+								class="component-color-indicator"
+								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
+								style={{
+									background: buttons[activeButtonIndex].buttonTextHoverColor,
+								}}
+							/>
+						)}
+					</p>
+					<ColorPalette
+						value={buttons[activeButtonIndex].buttonTextHoverColor}
+						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
@@ -179,12 +229,13 @@ export const inspectorControls = (props) => {
 									}),
 									...buttons.slice(activeButtonIndex + 1),
 								],
-							}),
-
-						label: __("Button Text Color"),
-				  },
-		],
-	];
+							})
+						}
+					/>
+				</>
+			)}
+		</>
+	);
 
 	return (
 		buttons.length > 0 && (
@@ -464,30 +515,27 @@ export const inspectorControls = (props) => {
 						/>
 					</div>
 				</PanelBody>
-				<TabPanel
-					tabs={[
-						{
-							name: "buttoncolor",
-							title: __("Normal"),
-						},
-						{
-							name: "buttonhovercolor",
-							title: __("Hover"),
-						},
-					]}
+				<PanelBody
+					title={__("Button Colors Revamped", "ultimate-blocks")}
+					initialOpen={true}
 				>
-					{(tab) => (
-						<PanelColorSettings
-							title={__("Button Colors", "ultimate-blocks")}
-							initialOpen={true}
-							colorSettings={
-								tab.name === "buttoncolor"
-									? makeNormalColorPanels()
-									: makeHoverColorPanels()
-							}
-						/>
-					)}
-				</TabPanel>
+					<TabPanel
+						tabs={[
+							{
+								name: "buttoncolor",
+								title: __("Normal"),
+							},
+							{
+								name: "buttonhovercolor",
+								title: __("Hover"),
+							},
+						]}
+					>
+						{(tab) =>
+							tab.name === "buttoncolor" ? normalColorPanels : hoverColorPanels
+						}
+					</TabPanel>
+				</PanelBody>
 			</InspectorControls>
 		)
 	);
@@ -1014,28 +1062,52 @@ export class EditorComponent extends Component {
 			20
 		);
 
-		const makeNormalColorPanels = () => [
-			{
-				value: buttons[activeButtonIndex].buttonColor,
-				onChange: (colorValue) =>
-					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonColor: colorValue,
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
-					}),
+		const normalColorPanels = buttons.length && (
+			<>
+				<p>
+					{__("Button Color", "ultimate-blocks")}
+					{buttons[activeButtonIndex].buttonColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
+							style={{
+								background: buttons[activeButtonIndex].buttonColor,
+							}}
+						/>
+					)}
+				</p>
+				<ColorPalette
+					value={buttons[activeButtonIndex].buttonColor}
+					onChange={(colorValue) =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonColor: colorValue,
+								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+				/>
 
-				label: __("Button Color"),
-			},
-			...[
-				buttons[activeButtonIndex].buttonIsTransparent
-					? []
-					: {
-							value: buttons[activeButtonIndex].buttonTextColor,
-							onChange: (colorValue) =>
+				{!buttons[activeButtonIndex].buttonIsTransparent && (
+					<>
+						<p>
+							{__("Button Text Color", "ultimate-blocks")}
+							{buttons[activeButtonIndex].buttonTextColor && (
+								<span
+									class="component-color-indicator"
+									aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
+									style={{
+										background: buttons[activeButtonIndex].buttonTextColor,
+									}}
+								/>
+							)}
+						</p>
+						<ColorPalette
+							value={buttons[activeButtonIndex].buttonTextColor}
+							onChange={(colorValue) =>
 								setAttributes({
 									buttons: [
 										...buttons.slice(0, activeButtonIndex),
@@ -1044,34 +1116,60 @@ export class EditorComponent extends Component {
 										}),
 										...buttons.slice(activeButtonIndex + 1),
 									],
+								})
+							}
+						/>
+					</>
+				)}
+			</>
+		);
+
+		const hoverColorPanels = buttons.length && (
+			<>
+				<p>
+					{__("Button Color", "ultimate-blocks")}
+					{buttons[activeButtonIndex].buttonHoverColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
+							style={{
+								background: buttons[activeButtonIndex].buttonHoverColor,
+							}}
+						/>
+					)}
+				</p>
+				<ColorPalette
+					value={buttons[activeButtonIndex].buttonHoverColor}
+					onChange={(colorValue) =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonHoverColor: colorValue,
 								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+				/>
 
-							label: __("Button Text Color"),
-					  },
-			],
-		];
-		const makeHoverColorPanels = () => [
-			{
-				value: buttons[activeButtonIndex].buttonHoverColor,
-				onChange: (colorValue) =>
-					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonHoverColor: colorValue,
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
-					}),
-
-				label: __("Button Color"),
-			},
-			...[
-				buttons[activeButtonIndex].buttonIsTransparent
-					? []
-					: {
-							value: buttons[activeButtonIndex].buttonTextHoverColor,
-							onChange: (colorValue) =>
+				{!buttons[activeButtonIndex].buttonIsTransparent && (
+					<>
+						<p>
+							{__("Button Text Color", "ultimate-blocks")}
+							{buttons[activeButtonIndex].buttonTextHoverColor && (
+								<span
+									class="component-color-indicator"
+									aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
+									style={{
+										background: buttons[activeButtonIndex].buttonTextHoverColor,
+									}}
+								/>
+							)}
+						</p>
+						<ColorPalette
+							value={buttons[activeButtonIndex].buttonTextHoverColor}
+							onChange={(colorValue) =>
 								setAttributes({
 									buttons: [
 										...buttons.slice(0, activeButtonIndex),
@@ -1080,12 +1178,13 @@ export class EditorComponent extends Component {
 										}),
 										...buttons.slice(activeButtonIndex + 1),
 									],
-								}),
-
-							label: __("Button Text Color"),
-					  },
-			],
-		];
+								})
+							}
+						/>
+					</>
+				)}
+			</>
+		);
 
 		return [
 			isSelected && (
@@ -1398,30 +1497,29 @@ export class EditorComponent extends Component {
 							/>
 						</div>
 					</PanelBody>
-					<TabPanel
-						tabs={[
-							{
-								name: "buttoncolor",
-								title: __("Normal"),
-							},
-							{
-								name: "buttonhovercolor",
-								title: __("Hover"),
-							},
-						]}
+					<PanelBody
+						title={__("Button Colors", "ultimate-blocks")}
+						initialOpen={true}
 					>
-						{(tab) => (
-							<PanelColorSettings
-								title={__("Button Colors", "ultimate-blocks")}
-								initialOpen={true}
-								colorSettings={
-									tab.name === "buttoncolor"
-										? makeNormalColorPanels()
-										: makeHoverColorPanels()
-								}
-							/>
-						)}
-					</TabPanel>
+						<TabPanel
+							tabs={[
+								{
+									name: "buttoncolor",
+									title: __("Normal"),
+								},
+								{
+									name: "buttonhovercolor",
+									title: __("Hover"),
+								},
+							]}
+						>
+							{(tab) =>
+								tab.name === "buttoncolor"
+									? normalColorPanels
+									: hoverColorPanels
+							}
+						</TabPanel>
+					</PanelBody>
 				</InspectorControls>
 			),
 			<div className={`ub-buttons align-button-${align}`}>
