@@ -91,7 +91,7 @@ const attributes = {
 	},
 	buttonRounded: {
 		type: "boolean",
-		default: false,
+		default: true,
 	},
 	chosenIcon: {
 		type: "string",

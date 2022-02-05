@@ -46,8 +46,8 @@ export const defaultButtonProps = {
 	buttonHoverColor: "#313131",
 	buttonTextColor: "#ffffff",
 	buttonTextHoverColor: "#ffffff",
-	buttonRounded: false,
-	buttonRadius: 60,
+	buttonRounded: true,
+	buttonRadius: 10,
 	buttonRadiusUnit: "px",
 	chosenIcon: "",
 	iconPosition: "left",
@@ -292,7 +292,7 @@ export const inspectorControls = (props) => {
 						</ButtonGroup>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Button Style", "ultimate-blocks")}>
+				<PanelBody title={__("Border Settings", "ultimate-blocks")}>
 					<ToggleControl
 						label={__("Rounded", "ultimate-blocks")}
 						checked={buttons[activeButtonIndex].buttonRounded}
@@ -308,7 +308,9 @@ export const inspectorControls = (props) => {
 							})
 						}
 					/>
-					{buttons[activeButtonIndex].buttonRounded && (
+				</PanelBody>
+				{buttons[activeButtonIndex].buttonRounded && (
+					<PanelBody title={__("Button Radius", "ultimate-blocks")}>
 						<div id="ub-button-radius-panel">
 							<RangeControl
 								label={__("Button Radius")}
@@ -356,24 +358,8 @@ export const inspectorControls = (props) => {
 								))}
 							</ButtonGroup>
 						</div>
-					)}
-					<ToggleControl
-						label={__("Transparent", "ultimate-blocks")}
-						checked={buttons[activeButtonIndex].buttonIsTransparent}
-						onChange={() =>
-							setAttributes({
-								buttons: [
-									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonIsTransparent:
-											!buttons[activeButtonIndex].buttonIsTransparent,
-									}),
-									...buttons.slice(activeButtonIndex + 1),
-								],
-							})
-						}
-					/>
-				</PanelBody>
+					</PanelBody>
+				)}
 				<PanelBody title={__("Button Icon", "ultimate-blocks")}>
 					<div className="ub-button-grid">
 						<p>{__("Selected icon", "ultimate-blocks")}</p>
@@ -519,6 +505,22 @@ export const inspectorControls = (props) => {
 					title={__("Button Colors Revamped", "ultimate-blocks")}
 					initialOpen={true}
 				>
+					<ToggleControl
+						label={__("Transparent", "ultimate-blocks")}
+						checked={buttons[activeButtonIndex].buttonIsTransparent}
+						onChange={() =>
+							setAttributes({
+								buttons: [
+									...buttons.slice(0, activeButtonIndex),
+									Object.assign({}, buttons[activeButtonIndex], {
+										buttonIsTransparent:
+											!buttons[activeButtonIndex].buttonIsTransparent,
+									}),
+									...buttons.slice(activeButtonIndex + 1),
+								],
+							})
+						}
+					/>
 					<TabPanel
 						tabs={[
 							{
@@ -727,7 +729,7 @@ export const editorDisplay = (props) => {
 									? b.buttonColor
 									: b.buttonTextColor || "inherit",
 							borderRadius: b.buttonRounded
-								? `${b.buttonRadius || 60}${b.buttonRadiusUnit || "px"}`
+								? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
 								: "0",
 							borderStyle: b.buttonIsTransparent ? "solid" : "none",
 							borderColor: b.buttonIsTransparent
@@ -1257,7 +1259,7 @@ export class EditorComponent extends Component {
 							</ButtonGroup>
 						</div>
 					</PanelBody>
-					<PanelBody title={__("Button Style", "ultimate-blocks")}>
+					<PanelBody title={__("Border Settings", "ultimate-blocks")}>
 						<ToggleControl
 							label={__("Rounded", "ultimate-blocks")}
 							checked={buttons[activeButtonIndex].buttonRounded}
@@ -1322,22 +1324,6 @@ export class EditorComponent extends Component {
 								</ButtonGroup>
 							</div>
 						)}
-						<ToggleControl
-							label={__("Transparent", "ultimate-blocks")}
-							checked={buttons[activeButtonIndex].buttonIsTransparent}
-							onChange={() =>
-								setAttributes({
-									buttons: [
-										...buttons.slice(0, activeButtonIndex),
-										Object.assign({}, buttons[activeButtonIndex], {
-											buttonIsTransparent:
-												!buttons[activeButtonIndex].buttonIsTransparent,
-										}),
-										...buttons.slice(activeButtonIndex + 1),
-									],
-								})
-							}
-						/>
 					</PanelBody>
 					<PanelBody title={__("Button Icon", "ultimate-blocks")}>
 						<div className="ub-button-grid">
@@ -1501,6 +1487,22 @@ export class EditorComponent extends Component {
 						title={__("Button Colors", "ultimate-blocks")}
 						initialOpen={true}
 					>
+						<ToggleControl
+							label={__("Transparent", "ultimate-blocks")}
+							checked={buttons[activeButtonIndex].buttonIsTransparent}
+							onChange={() =>
+								setAttributes({
+									buttons: [
+										...buttons.slice(0, activeButtonIndex),
+										Object.assign({}, buttons[activeButtonIndex], {
+											buttonIsTransparent:
+												!buttons[activeButtonIndex].buttonIsTransparent,
+										}),
+										...buttons.slice(activeButtonIndex + 1),
+									],
+								})
+							}
+						/>
 						<TabPanel
 							tabs={[
 								{
@@ -1577,7 +1579,7 @@ export class EditorComponent extends Component {
 										? b.buttonColor
 										: b.buttonTextColor || "inherit",
 								borderRadius: b.buttonRounded
-									? `${b.buttonRadius || 60}${b.buttonRadiusUnit || "px"}`
+									? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
 									: "0",
 								borderStyle: b.buttonIsTransparent ? "solid" : "none",
 								borderColor: b.buttonIsTransparent
