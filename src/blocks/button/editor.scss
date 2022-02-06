@@ -114,3 +114,8 @@
 .ub-button-larger {
 	min-height: 80px;
 }
+
+.ub-button-icon-position > .components-base-control__field {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+}

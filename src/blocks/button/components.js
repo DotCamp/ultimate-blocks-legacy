@@ -25,7 +25,7 @@ const {
 	RangeControl,
 	Dropdown,
 	CheckboxControl,
-	SelectControl,
+	RadioControl,
 	Popover,
 	ToolbarGroup,
 	ToolbarButton,
@@ -473,33 +473,33 @@ export const inspectorControls = (props) => {
 								)}
 							/>
 						</div>
-						<p>{__("Icon position", "ultimate-blocks")}</p>
-						<SelectControl
-							className="ub-button-grid-selector"
-							value={buttons[activeButtonIndex].iconPosition}
-							options={[
-								{
-									label: __("Left", "ultimate-blocks"),
-									value: "left",
-								},
-								{
-									label: __("Right", "ultimate-blocks"),
-									value: "right",
-								},
-							]}
-							onChange={(pos) =>
-								setAttributes({
-									buttons: [
-										...buttons.slice(0, activeButtonIndex),
-										Object.assign({}, buttons[activeButtonIndex], {
-											iconPosition: pos,
-										}),
-										...buttons.slice(activeButtonIndex + 1),
-									],
-								})
-							}
-						/>
 					</div>
+					<RadioControl
+						className="ub-button-icon-position"
+						label={__("Icon position")}
+						selected={buttons[activeButtonIndex].iconPosition}
+						options={[
+							{
+								label: __("Left", "ultimate-blocks"),
+								value: "left",
+							},
+							{
+								label: __("Right", "ultimate-blocks"),
+								value: "right",
+							},
+						]}
+						onChange={(pos) =>
+							setAttributes({
+								buttons: [
+									...buttons.slice(0, activeButtonIndex),
+									Object.assign({}, buttons[activeButtonIndex], {
+										iconPosition: pos,
+									}),
+									...buttons.slice(activeButtonIndex + 1),
+								],
+							})
+						}
+					/>
 				</PanelBody>
 				<PanelBody
 					title={__("Button Colors Revamped", "ultimate-blocks")}
@@ -1455,33 +1455,33 @@ export class EditorComponent extends Component {
 									}}
 								/>
 							</div>
-							<p>{__("Icon position", "ultimate-blocks")}</p>
-							<SelectControl
-								className="ub-button-grid-selector"
-								value={buttons[activeButtonIndex].iconPosition}
-								options={[
-									{
-										label: __("Left", "ultimate-blocks"),
-										value: "left",
-									},
-									{
-										label: __("Right", "ultimate-blocks"),
-										value: "right",
-									},
-								]}
-								onChange={(pos) =>
-									setAttributes({
-										buttons: [
-											...buttons.slice(0, activeButtonIndex),
-											Object.assign({}, buttons[activeButtonIndex], {
-												iconPosition: pos,
-											}),
-											...buttons.slice(activeButtonIndex + 1),
-										],
-									})
-								}
-							/>
 						</div>
+						<RadioControl
+							className="ub-button-icon-position"
+							label={__("Icon position")}
+							selected={buttons[activeButtonIndex].iconPosition}
+							options={[
+								{
+									label: __("Left", "ultimate-blocks"),
+									value: "left",
+								},
+								{
+									label: __("Right", "ultimate-blocks"),
+									value: "right",
+								},
+							]}
+							onChange={(pos) =>
+								setAttributes({
+									buttons: [
+										...buttons.slice(0, activeButtonIndex),
+										Object.assign({}, buttons[activeButtonIndex], {
+											iconPosition: pos,
+										}),
+										...buttons.slice(activeButtonIndex + 1),
+									],
+								})
+							}
+						/>
 					</PanelBody>
 					<PanelBody
 						title={__("Button Colors", "ultimate-blocks")}
