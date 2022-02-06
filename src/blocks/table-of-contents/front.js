@@ -242,20 +242,27 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 	if (window.location.hash) {
 		const sourceToC = document.querySelector(".ub_table-of-contents");
-		const type = sourceToC.dataset.scrolltype;
-		const offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
-		const target =
-			type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
-		setTimeout(() => ub_hashHeaderScroll(type, target, offset), 50);
+		if (sourceToC) {
+			const type = sourceToC.dataset.scrolltype;
+			const offset =
+				type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
+			const target =
+				type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
+			setTimeout(() => ub_hashHeaderScroll(type, target, offset), 50);
+		}
 	}
 });
 
 window.onhashchange = function () {
 	const sourceToC = document.querySelector(".ub_table-of-contents");
-	const type = sourceToC.dataset.scrolltype;
-	const offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
-	const target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
-	ub_hashHeaderScroll(type, target, offset);
+
+	if (sourceToC) {
+		const type = sourceToC.dataset.scrolltype;
+		const offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
+		const target =
+			type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
+		ub_hashHeaderScroll(type, target, offset);
+	}
 };
 
 Array.prototype.slice

@@ -209,21 +209,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (window.location.hash) {
     var sourceToC = document.querySelector(".ub_table-of-contents");
-    var type = sourceToC.dataset.scrolltype;
-    var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
-    var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
-    setTimeout(function () {
-      return ub_hashHeaderScroll(type, target, offset);
-    }, 50);
+
+    if (sourceToC) {
+      var type = sourceToC.dataset.scrolltype;
+      var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
+      var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
+      setTimeout(function () {
+        return ub_hashHeaderScroll(type, target, offset);
+      }, 50);
+    }
   }
 });
 
 window.onhashchange = function () {
   var sourceToC = document.querySelector(".ub_table-of-contents");
-  var type = sourceToC.dataset.scrolltype;
-  var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
-  var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
-  ub_hashHeaderScroll(type, target, offset);
+
+  if (sourceToC) {
+    var type = sourceToC.dataset.scrolltype;
+    var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
+    var target = type === "namedelement" ? sourceToC.dataset.scrolltarget : "";
+    ub_hashHeaderScroll(type, target, offset);
+  }
 };
 
 Array.prototype.slice.call(document.querySelectorAll(".ub_table-of-contents-container li > a")).forEach(function (link) {
