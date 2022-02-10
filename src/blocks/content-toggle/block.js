@@ -223,6 +223,7 @@ registerBlockType("ub/content-toggle-block", {
 		__("Content Accordion"),
 		__("Toggle Collapse"),
 		__("Ultimate Blocks"),
+		__("FAQ"),
 	],
 
 	attributes,

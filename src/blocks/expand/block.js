@@ -17,7 +17,14 @@ registerBlockType("ub/expand", {
 	title: __("Expand"),
 	icon: icon,
 	category: "ultimateblocks",
-	keywords: [__("Preview"), __("Hidden Content")],
+	keywords: [
+		__("Preview"),
+		__("Hidden Content"),
+		__("Ultimate Blocks"),
+		__("Show"),
+		__("Hide"),
+		__("Toggle"),
+	],
 	attributes: {
 		blockID: {
 			type: "string",
