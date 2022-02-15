@@ -1001,6 +1001,31 @@ export class EditorComponent extends Component {
 					}),
 				],
 			});
+		} else {
+			let newButtons = JSON.parse(JSON.stringify(buttons));
+			let cornersNotSet = false;
+
+			newButtons.forEach((b) => {
+				if (!b.hasOwnProperty("topLeftRadius")) {
+					if (!cornersNotSet) {
+						cornersNotSet = true;
+					}
+
+					b.topLeftRadius = b.buttonRadius;
+					b.topRightRadius = b.buttonRadius;
+					b.bottomLeftRadius = b.buttonRadius;
+					b.bottomRightRadius = b.buttonRadius;
+
+					b.topLeftRadiusUnit = b.buttonRadiusUnit;
+					b.topRightRadiusUnit = b.buttonRadiusUnit;
+					b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
+					b.bottomRightRadiusUnit = b.buttonRadiusUnit;
+				}
+			});
+
+			if (cornersNotSet) {
+				setAttributes({ buttons: JSON.parse(JSON.stringify(newButtons)) });
+			}
 		}
 	}
 
