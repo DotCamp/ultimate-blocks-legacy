@@ -36,7 +36,7 @@ const { loadPromise, models } = wp.api;
 
 export const allIcons = Object.assign(fas, fab);
 
-export const iconSize = { small: 25, medium: 30, large: 35, larger: 40 };
+export const presetIconSize = { small: 25, medium: 30, large: 35, larger: 40 };
 
 export const defaultButtonProps = {
 	buttonText: "Button Text",
@@ -61,6 +61,8 @@ export const defaultButtonProps = {
 
 	chosenIcon: "",
 	iconPosition: "left",
+	iconSize: 0,
+	iconUnit: "px",
 	buttonIsTransparent: false,
 	addNofollow: true,
 	openInNewTab: true,
@@ -767,7 +769,7 @@ export const editorDisplay = (props) => {
 									<div className="ub-button-icon-holder">
 										{generateIcon(
 											allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
-											iconSize[b.size]
+											presetIconSize[b.size]
 										)}
 									</div>
 								)}
@@ -1020,6 +1022,9 @@ export class EditorComponent extends Component {
 					b.topRightRadiusUnit = b.buttonRadiusUnit;
 					b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
 					b.bottomRightRadiusUnit = b.buttonRadiusUnit;
+
+					b.iconSize = 0;
+					b.iconUnit = "px";
 				}
 			});
 
@@ -1514,6 +1519,18 @@ export class EditorComponent extends Component {
 										}}
 										min={1}
 										max={100}
+										step={
+											(currentCorner === "topleft"
+												? buttons[activeButtonIndex].topLeftRadiusUnit
+												: currentCorner === "topright"
+												? buttons[activeButtonIndex].topRightRadiusUnit
+												: currentCorner === "bottomleft"
+												? buttons[activeButtonIndex].bottomLeftRadiusUnit
+												: buttons[activeButtonIndex].bottomRightRadiusUnit) ===
+											"em"
+												? 0.1
+												: 1
+										}
 									/>
 									<ButtonGroup
 										aria-label={__("Button Radius Unit", "ultimate-blocks")}
@@ -1795,6 +1812,88 @@ export class EditorComponent extends Component {
 								})
 							}
 						/>
+						{buttons[activeButtonIndex].chosenIcon !== "" && (
+							<>
+								<ToggleControl
+									label={__("Change icon size", "ultimate-blocks")}
+									checked={buttons[activeButtonIndex].iconSize > 0}
+									onChange={(isOn) => {
+										let newAttributes = { iconUnit: "px" };
+
+										if (isOn) {
+											newAttributes = Object.assign({}, newAttributes, {
+												iconSize:
+													presetIconSize[buttons[activeButtonIndex].size],
+											});
+										} else {
+											newAttributes = Object.assign({}, newAttributes, {
+												iconSize: 0,
+											});
+										}
+
+										setAttributes({
+											buttons: [
+												...buttons.slice(0, activeButtonIndex),
+												Object.assign(
+													{},
+													buttons[activeButtonIndex],
+													newAttributes
+												),
+												...buttons.slice(activeButtonIndex + 1),
+											],
+										});
+									}}
+								/>
+								{buttons[activeButtonIndex].iconSize > 0 && (
+									<div id="ub-button-radius-panel">
+										<RangeControl
+											label={__("Icon size")}
+											value={buttons[activeButtonIndex].iconSize}
+											step={
+												buttons[activeButtonIndex].iconUnit === "em" ? 0.1 : 1
+											}
+											onChange={(value) =>
+												setAttributes({
+													buttons: [
+														...buttons.slice(0, activeButtonIndex),
+														Object.assign({}, buttons[activeButtonIndex], {
+															iconSize: value,
+														}),
+														...buttons.slice(activeButtonIndex + 1),
+													],
+												})
+											}
+										/>
+										<ButtonGroup
+											aria-label={__("Button Size Unit", "ultimate-blocks")}
+										>
+											{["px", "em"].map((b) => (
+												<Button
+													isLarge
+													isPrimary={b === buttons[activeButtonIndex].iconUnit}
+													aria-pressed={
+														b === buttons[activeButtonIndex].iconUnit
+													}
+													onClick={() =>
+														setAttributes({
+															buttons: [
+																...buttons.slice(0, activeButtonIndex),
+																Object.assign({}, buttons[activeButtonIndex], {
+																	iconUnit: b,
+																}),
+																...buttons.slice(activeButtonIndex + 1),
+															],
+														})
+													}
+												>
+													{b}
+												</Button>
+											))}
+										</ButtonGroup>
+									</div>
+								)}
+							</>
+						)}
 					</PanelBody>
 					<PanelBody
 						title={__("Button Colors", "ultimate-blocks")}
@@ -1937,7 +2036,8 @@ export class EditorComponent extends Component {
 										<div className="ub-button-icon-holder">
 											{generateIcon(
 												allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
-												iconSize[b.size]
+												b.iconSize || presetIconSize[b.size],
+												b.iconUnit || "px"
 											)}
 										</div>
 									)}

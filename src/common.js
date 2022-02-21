@@ -30,11 +30,11 @@ export const dashesToCamelcase = (str) =>
 		.map((s) => s[0].toUpperCase() + s.slice(1))
 		.join("");
 
-export const generateIcon = (selectedIcon, size) => (
+export const generateIcon = (selectedIcon, size, unit = "px") => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		height={size}
-		width={size}
+		height={`${size}${unit === "em" ? "em" : ""}`}
+		width={`${size}${unit === "em" ? "em" : ""}`}
 		viewBox={`0, 0, ${selectedIcon.icon[0]}, ${selectedIcon.icon[1]}`}
 	>
 		<path fill={"currentColor"} d={selectedIcon.icon[4]} />

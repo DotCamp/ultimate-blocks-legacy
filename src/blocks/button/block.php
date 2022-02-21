@@ -17,12 +17,14 @@ function ub_buttons_parse($b){
     $addNofollow = true;
     $addSponsored = false;
     $size = 'medium';
+    $iconSize = 0;
     $chosenIcon = '';
     $buttonText = 'Button Text';
+    $iconUnit = 'px';
 
     extract($b); //should overwrite the values above if they exist in the array
 
-    $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
+    $presetIconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
     return '<div class="ub-button-container' . ($buttonWidth === 'full' ? ' ub-button-full-container' : '') . '">
     <a href="' . esc_url($url) . '" target="' . ($openInNewTab ? '_blank' : '_self') . '"
@@ -31,10 +33,13 @@ function ub_buttons_parse($b){
     ($buttonWidth === 'full' ? ' ub-button-full-width' :
         ($buttonWidth === 'flex' ? ' ub-button-flex-'. $size : '')) . '" role="button">
     <div class="ub-button-content-holder">'.
-        ($chosenIcon !== '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
-        height="' . $iconSize[$size] . '", width="' . $iconSize[$size] . '"
-        viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
-        . '"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg></span>': '')
+        ($chosenIcon !== '' ? '<span class="ub-button-icon-holder">' . 
+        '<svg xmlns="http://www.w3.org/2000/svg"' .
+        'height="' . ($iconSize ? : $presetIconSize[$size]) . ($iconUnit === 'em' ? 'em':'') .
+        '", width="' . ($iconSize ? : $presetIconSize[$size]) . ($iconUnit === 'em' ? 'em' :'') . '"' .
+        'viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
+        . '"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg>'
+        . '</span>': '')
         .'<span class="ub-button-block-btn">' . $buttonText . '</span>
     </div></a></div>';
 }
