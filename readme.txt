@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 2.4.11
+Tested up to: 5.9
+Stable tag: 2.4.12
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,20 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.12 =
+
+* Button - Set default width to flex.
+* Button - Set default button radius to enabled and 10px.
+* Button - Add option to set individual button corner settings.
+* Button - Add code for converting old button corner data to new version.
+* Button - Allow changing button icon size.
+* Content Toggle - Fix frontend script behavior when collapse on mobile is on.
+* Content Toggle - Prevent showOnlyOne and collapseOnMobile from being simultaneously on.
+* Post Grid - Set default post title tag to h4.
+* Table of Contents - Prevent error when frontend script is loaded even in pages where the Table of Contents is not present.
+* Table of Contents - Changed Table of Contents Settings Sorting.
+* Other - Resolve simple_html_dom naming conflict.
 
 = 2.4.11 =
 
