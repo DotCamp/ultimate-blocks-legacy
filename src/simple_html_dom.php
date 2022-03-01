@@ -40,31 +40,31 @@
  * Version Rev. 1.9.1 (291)
  */
 
-defined('HDOM_TYPE_ELEMENT') || define('HDOM_TYPE_ELEMENT', 1);
-defined('HDOM_TYPE_COMMENT') || define('HDOM_TYPE_COMMENT', 2);
-defined('HDOM_TYPE_TEXT') || define('HDOM_TYPE_TEXT', 3);
-defined('HDOM_TYPE_ENDTAG') || define('HDOM_TYPE_ENDTAG', 4);
-defined('HDOM_TYPE_ROOT') || define('HDOM_TYPE_ROOT', 5);
-defined('HDOM_TYPE_UNKNOWN') || define('HDOM_TYPE_UNKNOWN', 6);
-defined('HDOM_QUOTE_DOUBLE') || define('HDOM_QUOTE_DOUBLE', 0);
-defined('HDOM_QUOTE_SINGLE') || define('HDOM_QUOTE_SINGLE', 1);
-defined('HDOM_QUOTE_NO') || define('HDOM_QUOTE_NO', 3);
-defined('HDOM_INFO_BEGIN') || define('HDOM_INFO_BEGIN', 0);
-defined('HDOM_INFO_END') || define('HDOM_INFO_END', 1);
-defined('HDOM_INFO_QUOTE') || define('HDOM_INFO_QUOTE', 2);
-defined('HDOM_INFO_SPACE') || define('HDOM_INFO_SPACE', 3);
-defined('HDOM_INFO_TEXT') || define('HDOM_INFO_TEXT', 4);
-defined('HDOM_INFO_INNER') || define('HDOM_INFO_INNER', 5);
-defined('HDOM_INFO_OUTER') || define('HDOM_INFO_OUTER', 6);
-defined('HDOM_INFO_ENDSPACE') || define('HDOM_INFO_ENDSPACE', 7);
+defined('UB_HDOM_TYPE_ELEMENT') || define('UB_HDOM_TYPE_ELEMENT', 1);
+defined('UB_HDOM_TYPE_COMMENT') || define('UB_HDOM_TYPE_COMMENT', 2);
+defined('UB_HDOM_TYPE_TEXT') || define('UB_HDOM_TYPE_TEXT', 3);
+defined('UB_HDOM_TYPE_ENDTAG') || define('UB_HDOM_TYPE_ENDTAG', 4);
+defined('UB_HDOM_TYPE_ROOT') || define('UB_HDOM_TYPE_ROOT', 5);
+defined('UB_HDOM_TYPE_UNKNOWN') || define('UB_HDOM_TYPE_UNKNOWN', 6);
+defined('UB_HDOM_QUOTE_DOUBLE') || define('UB_HDOM_QUOTE_DOUBLE', 0);
+defined('UB_HDOM_QUOTE_SINGLE') || define('UB_HDOM_QUOTE_SINGLE', 1);
+defined('UB_HDOM_QUOTE_NO') || define('UB_HDOM_QUOTE_NO', 3);
+defined('UB_HDOM_INFO_BEGIN') || define('UB_HDOM_INFO_BEGIN', 0);
+defined('UB_HDOM_INFO_END') || define('UB_HDOM_INFO_END', 1);
+defined('UB_HDOM_INFO_QUOTE') || define('UB_HDOM_INFO_QUOTE', 2);
+defined('UB_HDOM_INFO_SPACE') || define('UB_HDOM_INFO_SPACE', 3);
+defined('UB_HDOM_INFO_TEXT') || define('UB_HDOM_INFO_TEXT', 4);
+defined('UB_HDOM_INFO_INNER') || define('UB_HDOM_INFO_INNER', 5);
+defined('UB_HDOM_INFO_OUTER') || define('UB_HDOM_INFO_OUTER', 6);
+defined('UB_HDOM_INFO_ENDSPACE') || define('UB_HDOM_INFO_ENDSPACE', 7);
 
-defined('DEFAULT_TARGET_CHARSET') || define('DEFAULT_TARGET_CHARSET', 'UTF-8');
-defined('DEFAULT_BR_TEXT') || define('DEFAULT_BR_TEXT', "\r\n");
-defined('DEFAULT_SPAN_TEXT') || define('DEFAULT_SPAN_TEXT', ' ');
-defined('MAX_FILE_SIZE') || define('MAX_FILE_SIZE', 600000);
-defined('HDOM_SMARTY_AS_TEXT') || define('HDOM_SMARTY_AS_TEXT', 1);
+defined('UB_DEFAULT_TARGET_CHARSET') || define('UB_DEFAULT_TARGET_CHARSET', 'UTF-8');
+defined('UB_DEFAULT_BR_TEXT') || define('UB_DEFAULT_BR_TEXT', "\r\n");
+defined('UB_DEFAULT_SPAN_TEXT') || define('UB_DEFAULT_SPAN_TEXT', ' ');
+defined('UB_MAX_FILE_SIZE') || define('UB_MAX_FILE_SIZE', 600000);
+defined('UB_HDOM_SMARTY_AS_TEXT') || define('UB_HDOM_SMARTY_AS_TEXT', 1);
 
-function file_get_html(
+function ub_file_get_html(
 	$url,
 	$use_include_path = false,
 	$context = null,
@@ -72,12 +72,12 @@ function file_get_html(
 	$maxLen = -1,
 	$lowercase = true,
 	$forceTagsClosed = true,
-	$target_charset = DEFAULT_TARGET_CHARSET,
+	$target_charset = UB_DEFAULT_TARGET_CHARSET,
 	$stripRN = true,
-	$defaultBRText = DEFAULT_BR_TEXT,
-	$defaultSpanText = DEFAULT_SPAN_TEXT)
+	$defaultBRText = UB_DEFAULT_BR_TEXT,
+	$defaultSpanText = UB_DEFAULT_SPAN_TEXT)
 {
-	if($maxLen <= 0) { $maxLen = MAX_FILE_SIZE; }
+	if($maxLen <= 0) { $maxLen = UB_MAX_FILE_SIZE; }
 
 	$dom = new ub_simple_html_dom(
 		null,
@@ -110,14 +110,14 @@ function file_get_html(
 	return $dom->load($contents, $lowercase, $stripRN);
 }
 
-function str_get_html(
+function ub_str_get_html(
 	$str,
 	$lowercase = true,
 	$forceTagsClosed = true,
-	$target_charset = DEFAULT_TARGET_CHARSET,
+	$target_charset = UB_DEFAULT_TARGET_CHARSET,
 	$stripRN = true,
-	$defaultBRText = DEFAULT_BR_TEXT,
-	$defaultSpanText = DEFAULT_SPAN_TEXT)
+	$defaultBRText = UB_DEFAULT_BR_TEXT,
+	$defaultSpanText = UB_DEFAULT_SPAN_TEXT)
 {
 	$dom = new ub_simple_html_dom(
 		null,
@@ -129,7 +129,7 @@ function str_get_html(
 		$defaultSpanText
 	);
 
-	if (empty($str) || strlen($str) > MAX_FILE_SIZE) {
+	if (empty($str) || strlen($str) > UB_MAX_FILE_SIZE) {
 		$dom->clear();
 		return false;
 	}
@@ -137,14 +137,14 @@ function str_get_html(
 	return $dom->load($str, $lowercase, $stripRN);
 }
 
-function dump_html_tree($node, $show_attr = true, $deep = 0)
+function ub_dump_html_tree($node, $show_attr = true, $deep = 0)
 {
 	$node->dump($node);
 }
 
 class ub_simple_html_dom_node
 {
-	public $nodetype = HDOM_TYPE_TEXT;
+	public $nodetype = UB_HDOM_TYPE_TEXT;
 	public $tag = 'text';
 	public $attr = array();
 	public $children = array();
@@ -233,8 +233,8 @@ class ub_simple_html_dom_node
 
 		$string .= ' HDOM_INNER_INFO: ';
 
-		if (isset($node->_[HDOM_INFO_INNER])) {
-			$string .= "'" . $node->_[HDOM_INFO_INNER] . "'";
+		if (isset($node->_[UB_HDOM_INFO_INNER])) {
+			$string .= "'" . $node->_[UB_HDOM_INFO_INNER] . "'";
 		} else {
 			$string .= ' NULL ';
 		}
@@ -358,12 +358,12 @@ class ub_simple_html_dom_node
 
 	function innertext()
 	{
-		if (isset($this->_[HDOM_INFO_INNER])) {
-			return $this->_[HDOM_INFO_INNER];
+		if (isset($this->_[UB_HDOM_INFO_INNER])) {
+			return $this->_[UB_HDOM_INFO_INNER];
 		}
 
-		if (isset($this->_[HDOM_INFO_TEXT])) {
-			return $this->dom->restore_noise($this->_[HDOM_INFO_TEXT]);
+		if (isset($this->_[UB_HDOM_INFO_TEXT])) {
+			return $this->dom->restore_noise($this->_[UB_HDOM_INFO_TEXT]);
 		}
 
 		$ret = '';
@@ -400,24 +400,24 @@ class ub_simple_html_dom_node
 			call_user_func_array($this->dom->callback, array($this));
 		}
 
-		if (isset($this->_[HDOM_INFO_OUTER])) {
-			return $this->_[HDOM_INFO_OUTER];
+		if (isset($this->_[UB_HDOM_INFO_OUTER])) {
+			return $this->_[UB_HDOM_INFO_OUTER];
 		}
 
-		if (isset($this->_[HDOM_INFO_TEXT])) {
-			return $this->dom->restore_noise($this->_[HDOM_INFO_TEXT]);
+		if (isset($this->_[UB_HDOM_INFO_TEXT])) {
+			return $this->dom->restore_noise($this->_[UB_HDOM_INFO_TEXT]);
 		}
 
 		$ret = '';
 
-		if ($this->dom && $this->dom->nodes[$this->_[HDOM_INFO_BEGIN]]) {
-			$ret = $this->dom->nodes[$this->_[HDOM_INFO_BEGIN]]->makeup();
+		if ($this->dom && $this->dom->nodes[$this->_[UB_HDOM_INFO_BEGIN]]) {
+			$ret = $this->dom->nodes[$this->_[UB_HDOM_INFO_BEGIN]]->makeup();
 		}
 
-		if (isset($this->_[HDOM_INFO_INNER])) {
-			// todo: <br> should either never have HDOM_INFO_INNER or always
+		if (isset($this->_[UB_HDOM_INFO_INNER])) {
+			// todo: <br> should either never have UB_HDOM_INFO_INNER or always
 			if ($this->tag !== 'br') {
-				$ret .= $this->_[HDOM_INFO_INNER];
+				$ret .= $this->_[UB_HDOM_INFO_INNER];
 			}
 		} elseif ($this->nodes) {
 			foreach ($this->nodes as $n) {
@@ -425,7 +425,7 @@ class ub_simple_html_dom_node
 			}
 		}
 
-		if (isset($this->_[HDOM_INFO_END]) && $this->_[HDOM_INFO_END] != 0) {
+		if (isset($this->_[UB_HDOM_INFO_END]) && $this->_[UB_HDOM_INFO_END] != 0) {
 			$ret .= '</' . $this->tag . '>';
 		}
 
@@ -434,14 +434,14 @@ class ub_simple_html_dom_node
 
 	function text()
 	{
-		if (isset($this->_[HDOM_INFO_INNER])) {
-			return $this->_[HDOM_INFO_INNER];
+		if (isset($this->_[UB_HDOM_INFO_INNER])) {
+			return $this->_[UB_HDOM_INFO_INNER];
 		}
 
 		switch ($this->nodetype) {
-			case HDOM_TYPE_TEXT: return $this->dom->restore_noise($this->_[HDOM_INFO_TEXT]);
-			case HDOM_TYPE_COMMENT: return '';
-			case HDOM_TYPE_UNKNOWN: return '';
+			case UB_HDOM_TYPE_TEXT: return $this->dom->restore_noise($this->_[UB_HDOM_INFO_TEXT]);
+			case UB_HDOM_TYPE_COMMENT: return '';
+			case UB_HDOM_TYPE_UNKNOWN: return '';
 		}
 
 		if (strcasecmp($this->tag, 'script') === 0) { return ''; }
@@ -449,7 +449,7 @@ class ub_simple_html_dom_node
 
 		$ret = '';
 
-		// In rare cases, (always node type 1 or HDOM_TYPE_ELEMENT - observed
+		// In rare cases, (always node type 1 or UB_HDOM_TYPE_ELEMENT - observed
 		// for some span tags, and some p tags) $this->nodes is set to NULL.
 		// NOTE: This indicates that there is a problem where it's set to NULL
 		// without a clear happening.
@@ -467,7 +467,7 @@ class ub_simple_html_dom_node
 				// multiple spans don't run into each other.  This is plaintext
 				// after all.
 				if ($n->tag === 'span') {
-					$ret .= $this->dom->default_span_text;
+					$ret .= $this->dom->UB_DEFAULT_SPAN_TEXT;
 				}
 			}
 		}
@@ -485,8 +485,8 @@ class ub_simple_html_dom_node
 	function makeup()
 	{
 		// text, comment, unknown
-		if (isset($this->_[HDOM_INFO_TEXT])) {
-			return $this->dom->restore_noise($this->_[HDOM_INFO_TEXT]);
+		if (isset($this->_[UB_HDOM_INFO_TEXT])) {
+			return $this->dom->restore_noise($this->_[UB_HDOM_INFO_TEXT]);
 		}
 
 		$ret = '<' . $this->tag;
@@ -498,23 +498,23 @@ class ub_simple_html_dom_node
 			// skip removed attribute
 			if ($val === null || $val === false) { continue; }
 
-			$ret .= $this->_[HDOM_INFO_SPACE][$i][0];
+			$ret .= $this->_[UB_HDOM_INFO_SPACE][$i][0];
 
 			//no value attr: nowrap, checked selected...
 			if ($val === true) {
 				$ret .= $key;
 			} else {
-				switch ($this->_[HDOM_INFO_QUOTE][$i])
+				switch ($this->_[UB_HDOM_INFO_QUOTE][$i])
 				{
-					case HDOM_QUOTE_DOUBLE: $quote = '"'; break;
-					case HDOM_QUOTE_SINGLE: $quote = '\''; break;
+					case UB_HDOM_QUOTE_DOUBLE: $quote = '"'; break;
+					case UB_HDOM_QUOTE_SINGLE: $quote = '\''; break;
 					default: $quote = '';
 				}
 
 				$ret .= $key
-				. $this->_[HDOM_INFO_SPACE][$i][1]
+				. $this->_[UB_HDOM_INFO_SPACE][$i][1]
 				. '='
-				. $this->_[HDOM_INFO_SPACE][$i][2]
+				. $this->_[UB_HDOM_INFO_SPACE][$i][2]
 				. $quote
 				. $val
 				. $quote;
@@ -522,7 +522,7 @@ class ub_simple_html_dom_node
 		}
 
 		$ret = $this->dom->restore_noise($ret);
-		return $ret . $this->_[HDOM_INFO_ENDSPACE] . '>';
+		return $ret . $this->_[UB_HDOM_INFO_ENDSPACE] . '>';
 	}
 
 	function find($selector, $idx = null, $lowercase = false)
@@ -537,9 +537,9 @@ class ub_simple_html_dom_node
 			// code tracker id 2788009
 			// used to be: if (($levle=count($selectors[0]))===0) return array();
 			if (($levle = count($selectors[$c])) === 0) { return array(); }
-			if (!isset($this->_[HDOM_INFO_BEGIN])) { return array(); }
+			if (!isset($this->_[UB_HDOM_INFO_BEGIN])) { return array(); }
 
-			$head = array($this->_[HDOM_INFO_BEGIN] => 1);
+			$head = array($this->_[UB_HDOM_INFO_BEGIN] => 1);
 			$cmd = ' '; // Combinator
 
 			// handle descendant selectors, no recursive!
@@ -588,18 +588,18 @@ class ub_simple_html_dom_node
 		if ($parent_cmd === ' ') { // Descendant Combinator
 			// Find parent closing tag if the current element doesn't have a closing
 			// tag (i.e. void element)
-			$end = (!empty($this->_[HDOM_INFO_END])) ? $this->_[HDOM_INFO_END] : 0;
+			$end = (!empty($this->_[UB_HDOM_INFO_END])) ? $this->_[UB_HDOM_INFO_END] : 0;
 			if ($end == 0) {
 				$parent = $this->parent;
-				while (!isset($parent->_[HDOM_INFO_END]) && $parent !== null) {
+				while (!isset($parent->_[UB_HDOM_INFO_END]) && $parent !== null) {
 					$end -= 1;
 					$parent = $parent->parent;
 				}
-				$end += $parent->_[HDOM_INFO_END];
+				$end += $parent->_[UB_HDOM_INFO_END];
 			}
 
 			// Get list of target nodes
-			$nodes_start = $this->_[HDOM_INFO_BEGIN] + 1;
+			$nodes_start = $this->_[UB_HDOM_INFO_BEGIN] + 1;
 			$nodes_count = $end - $nodes_start;
 			$nodes = array_slice($this->dom->nodes, $nodes_start, $nodes_count, true);
 		} elseif ($parent_cmd === '>') { // Child Combinator
@@ -790,7 +790,7 @@ class ub_simple_html_dom_node
 			}
 
 			// Found a match. Add to list and clear node
-			if ($pass) $ret[$node->_[HDOM_INFO_BEGIN]] = 1;
+			if ($pass) $ret[$node->_[UB_HDOM_INFO_BEGIN]] = 1;
 			unset($node);
 		}
 		// It's passed by reference so this is actually what this function returns.
@@ -1003,17 +1003,17 @@ class ub_simple_html_dom_node
 		if (is_object($debug_object)) { $debug_object->debug_log_entry(1); }
 
 		switch ($name) {
-			case 'outertext': return $this->_[HDOM_INFO_OUTER] = $value;
+			case 'outertext': return $this->_[UB_HDOM_INFO_OUTER] = $value;
 			case 'innertext':
-				if (isset($this->_[HDOM_INFO_TEXT])) {
-					return $this->_[HDOM_INFO_TEXT] = $value;
+				if (isset($this->_[UB_HDOM_INFO_TEXT])) {
+					return $this->_[UB_HDOM_INFO_TEXT] = $value;
 				}
-				return $this->_[HDOM_INFO_INNER] = $value;
+				return $this->_[UB_HDOM_INFO_INNER] = $value;
 		}
 
 		if (!isset($this->attr[$name])) {
-			$this->_[HDOM_INFO_SPACE][] = array(' ', '', '');
-			$this->_[HDOM_INFO_QUOTE][] = HDOM_QUOTE_DOUBLE;
+			$this->_[UB_HDOM_INFO_SPACE][] = array(' ', '', '');
+			$this->_[UB_HDOM_INFO_QUOTE][] = UB_HDOM_QUOTE_DOUBLE;
 		}
 
 		$this->attr[$name] = $value;
@@ -1428,9 +1428,9 @@ class ub_simple_html_dom
 	public $_charset = '';
 	public $_target_charset = '';
 
-	protected $default_br_text = '';
+	protected $UB_DEFAULT_BR_TEXT = '';
 
-	public $default_span_text = '';
+	public $UB_DEFAULT_SPAN_TEXT = '';
 
 	protected $self_closing_tags = array(
 		'area' => 1,
@@ -1480,10 +1480,10 @@ class ub_simple_html_dom
 		$str = null,
 		$lowercase = true,
 		$forceTagsClosed = true,
-		$target_charset = DEFAULT_TARGET_CHARSET,
+		$target_charset = UB_DEFAULT_TARGET_CHARSET,
 		$stripRN = true,
-		$defaultBRText = DEFAULT_BR_TEXT,
-		$defaultSpanText = DEFAULT_SPAN_TEXT,
+		$defaultBRText = UB_DEFAULT_BR_TEXT,
+		$defaultSpanText = UB_DEFAULT_SPAN_TEXT,
 		$options = 0)
 	{
 		if ($str) {
@@ -1518,8 +1518,8 @@ class ub_simple_html_dom
 		$str,
 		$lowercase = true,
 		$stripRN = true,
-		$defaultBRText = DEFAULT_BR_TEXT,
-		$defaultSpanText = DEFAULT_SPAN_TEXT,
+		$defaultBRText = UB_DEFAULT_BR_TEXT,
+		$defaultSpanText = UB_DEFAULT_SPAN_TEXT,
 		$options = 0)
 	{
 		global $debug_object;
@@ -1554,14 +1554,14 @@ class ub_simple_html_dom
 		// strip out server side scripts
 		$this->remove_noise("'(<\?)(.*?)(\?>)'s", true);
 
-		if($options & HDOM_SMARTY_AS_TEXT) { // Strip Smarty scripts
+		if($options & UB_HDOM_SMARTY_AS_TEXT) { // Strip Smarty scripts
 			$this->remove_noise("'(\{\w)(.*?)(\})'s", true);
 		}
 
 		// parsing
 		$this->parse();
 		// end
-		$this->root->_[HDOM_INFO_END] = $this->cursor;
+		$this->root->_[UB_HDOM_INFO_END] = $this->cursor;
 		$this->parse_charset();
 
 		// make load function chainable
@@ -1641,8 +1641,8 @@ class ub_simple_html_dom
 
 	protected function prepare(
 		$str, $lowercase = true,
-		$defaultBRText = DEFAULT_BR_TEXT,
-		$defaultSpanText = DEFAULT_SPAN_TEXT)
+		$defaultBRText = UB_DEFAULT_BR_TEXT,
+		$defaultSpanText = UB_DEFAULT_SPAN_TEXT)
 	{
 		$this->clear();
 
@@ -1654,12 +1654,12 @@ class ub_simple_html_dom
 		$this->noise = array();
 		$this->nodes = array();
 		$this->lowercase = $lowercase;
-		$this->default_br_text = $defaultBRText;
-		$this->default_span_text = $defaultSpanText;
+		$this->UB_DEFAULT_BR_TEXT = $defaultBRText;
+		$this->UB_DEFAULT_SPAN_TEXT = $defaultSpanText;
 		$this->root = new ub_simple_html_dom_node($this);
 		$this->root->tag = 'root';
-		$this->root->_[HDOM_INFO_BEGIN] = -1;
-		$this->root->nodetype = HDOM_TYPE_ROOT;
+		$this->root->_[UB_HDOM_INFO_BEGIN] = -1;
+		$this->root->nodetype = UB_HDOM_TYPE_ROOT;
 		$this->parent = $this->root;
 		if ($this->size > 0) { $this->char = $this->doc[0]; }
 	}
@@ -1680,7 +1680,7 @@ class ub_simple_html_dom
 			// Add a text node for text between tags
 			$node = new ub_simple_html_dom_node($this);
 			++$this->cursor;
-			$node->_[HDOM_INFO_TEXT] = $s;
+			$node->_[UB_HDOM_INFO_TEXT] = $s;
 			$this->link_nodes($node, false);
 		}
 	}
@@ -1827,7 +1827,7 @@ class ub_simple_html_dom
 	{
 		// Set end position if no further tags found
 		if ($this->char !== '<') {
-			$this->root->_[HDOM_INFO_END] = $this->cursor;
+			$this->root->_[UB_HDOM_INFO_END] = $this->cursor;
 			return false;
 		}
 
@@ -1858,7 +1858,7 @@ class ub_simple_html_dom
 				if (isset($this->optional_closing_tags[$parent_lower])
 					&& isset($this->block_tags[$tag_lower])) {
 
-					$this->parent->_[HDOM_INFO_END] = 0;
+					$this->parent->_[UB_HDOM_INFO_END] = 0;
 					$org_parent = $this->parent;
 
 					// Traverse ancestors to find a matching opening tag
@@ -1877,7 +1877,7 @@ class ub_simple_html_dom
 							$this->parent = $this->parent->parent;
 						}
 
-						$this->parent->_[HDOM_INFO_END] = $this->cursor;
+						$this->parent->_[UB_HDOM_INFO_END] = $this->cursor;
 						return $this->as_text_node($tag);
 					}
 				} elseif (($this->parent->parent)
@@ -1885,7 +1885,7 @@ class ub_simple_html_dom
 				) {
 					// Grandparent exists and current tag is a block tag, so our
 					// parent doesn't have an end tag
-					$this->parent->_[HDOM_INFO_END] = 0; // No end tag
+					$this->parent->_[UB_HDOM_INFO_END] = 0; // No end tag
 					$org_parent = $this->parent;
 
 					// Traverse ancestors to find a matching opening tag
@@ -1899,13 +1899,13 @@ class ub_simple_html_dom
 					// If we don't have a match add current tag as text node
 					if (strtolower($this->parent->tag) !== $tag_lower) {
 						$this->parent = $org_parent; // restore origonal parent
-						$this->parent->_[HDOM_INFO_END] = $this->cursor;
+						$this->parent->_[UB_HDOM_INFO_END] = $this->cursor;
 						return $this->as_text_node($tag);
 					}
 				} elseif (($this->parent->parent)
 					&& strtolower($this->parent->parent->tag) === $tag_lower
 				) { // Grandparent exists and current tag closes it
-					$this->parent->_[HDOM_INFO_END] = 0;
+					$this->parent->_[UB_HDOM_INFO_END] = 0;
 					$this->parent = $this->parent->parent;
 				} else { // Random tag, add as text node
 					return $this->as_text_node($tag);
@@ -1913,7 +1913,7 @@ class ub_simple_html_dom
 			}
 
 			// Set end position of parent tag to current cursor position
-			$this->parent->_[HDOM_INFO_END] = $this->cursor;
+			$this->parent->_[UB_HDOM_INFO_END] = $this->cursor;
 
 			if ($this->parent->parent) {
 				$this->parent = $this->parent->parent;
@@ -1925,7 +1925,7 @@ class ub_simple_html_dom
 
 		// start tag
 		$node = new ub_simple_html_dom_node($this);
-		$node->_[HDOM_INFO_BEGIN] = $this->cursor;
+		$node->_[UB_HDOM_INFO_BEGIN] = $this->cursor;
 		++$this->cursor;
 		$tag = $this->copy_until($this->token_slash); // Get tag name
 		$node->tag_start = $begin_tag_pos;
@@ -1935,17 +1935,17 @@ class ub_simple_html_dom
 		// <![CDATA[ ... ]]>
 		// <!-- Comment -->
 		if (isset($tag[0]) && $tag[0] === '!') {
-			$node->_[HDOM_INFO_TEXT] = '<' . $tag . $this->copy_until_char('>');
+			$node->_[UB_HDOM_INFO_TEXT] = '<' . $tag . $this->copy_until_char('>');
 
 			if (isset($tag[2]) && $tag[1] === '-' && $tag[2] === '-') { // Comment ("<!--")
-				$node->nodetype = HDOM_TYPE_COMMENT;
+				$node->nodetype = UB_HDOM_TYPE_COMMENT;
 				$node->tag = 'comment';
 			} else { // Could be doctype or CDATA but we don't care
-				$node->nodetype = HDOM_TYPE_UNKNOWN;
+				$node->nodetype = UB_HDOM_TYPE_UNKNOWN;
 				$node->tag = 'unknown';
 			}
 
-			if ($this->char === '>') { $node->_[HDOM_INFO_TEXT] .= '>'; }
+			if ($this->char === '>') { $node->_[UB_HDOM_INFO_TEXT] .= '>'; }
 
 			$this->link_nodes($node, true);
 			$this->char = (++$this->pos < $this->size) ? $this->doc[$this->pos] : null; // next
@@ -1956,7 +1956,7 @@ class ub_simple_html_dom
 		// i.e. "<<html>"
 		if ($pos = strpos($tag, '<') !== false) {
 			$tag = '<' . substr($tag, 0, -1);
-			$node->_[HDOM_INFO_TEXT] = $tag;
+			$node->_[UB_HDOM_INFO_TEXT] = $tag;
 			$this->link_nodes($node, false);
 			$this->char = $this->doc[--$this->pos]; // prev
 			return true;
@@ -1964,7 +1964,7 @@ class ub_simple_html_dom
 
 		// Handle invalid tag names (i.e. "<html#doc>")
 		if (!preg_match('/^\w[\w:-]*$/', $tag)) {
-			$node->_[HDOM_INFO_TEXT] = '<' . $tag . $this->copy_until('<>');
+			$node->_[UB_HDOM_INFO_TEXT] = '<' . $tag . $this->copy_until('<>');
 
 			// Next char is the beginning of a new tag, don't touch it.
 			if ($this->char === '<') {
@@ -1973,14 +1973,14 @@ class ub_simple_html_dom
 			}
 
 			// Next char closes current tag, add and be done with it.
-			if ($this->char === '>') { $node->_[HDOM_INFO_TEXT] .= '>'; }
+			if ($this->char === '>') { $node->_[UB_HDOM_INFO_TEXT] .= '>'; }
 			$this->link_nodes($node, false);
 			$this->char = (++$this->pos < $this->size) ? $this->doc[$this->pos] : null; // next
 			return true;
 		}
 
 		// begin tag, add new node
-		$node->nodetype = HDOM_TYPE_ELEMENT;
+		$node->nodetype = UB_HDOM_TYPE_ELEMENT;
 		$tag_lower = strtolower($tag);
 		$node->tag = ($this->lowercase) ? $tag_lower : $tag;
 
@@ -1988,7 +1988,7 @@ class ub_simple_html_dom
 		if (isset($this->optional_closing_tags[$tag_lower])) {
 			// Traverse ancestors to close all optional closing tags
 			while (isset($this->optional_closing_tags[$tag_lower][strtolower($this->parent->tag)])) {
-				$this->parent->_[HDOM_INFO_END] = 0;
+				$this->parent->_[UB_HDOM_INFO_END] = 0;
 				$this->parent = $this->parent->parent;
 			}
 			$node->parent = $this->parent;
@@ -2018,9 +2018,9 @@ class ub_simple_html_dom
 			// handle endless '<'
 			// Out of bounds before the tag ended
 			if ($this->pos >= $this->size - 1 && $this->char !== '>') {
-				$node->nodetype = HDOM_TYPE_TEXT;
-				$node->_[HDOM_INFO_END] = 0;
-				$node->_[HDOM_INFO_TEXT] = '<' . $tag . $space[0] . $name;
+				$node->nodetype = UB_HDOM_TYPE_TEXT;
+				$node->_[UB_HDOM_INFO_END] = 0;
+				$node->_[UB_HDOM_INFO_TEXT] = '<' . $tag . $space[0] . $name;
 				$node->tag = 'text';
 				$this->link_nodes($node, false);
 				return true;
@@ -2029,11 +2029,11 @@ class ub_simple_html_dom
 			// handle mismatch '<'
 			// Attributes cannot start after opening tag
 			if ($this->doc[$this->pos - 1] == '<') {
-				$node->nodetype = HDOM_TYPE_TEXT;
+				$node->nodetype = UB_HDOM_TYPE_TEXT;
 				$node->tag = 'text';
 				$node->attr = array();
-				$node->_[HDOM_INFO_END] = 0;
-				$node->_[HDOM_INFO_TEXT] = substr(
+				$node->_[UB_HDOM_INFO_END] = 0;
+				$node->_[UB_HDOM_INFO_TEXT] = substr(
 					$this->doc,
 					$begin_tag_pos,
 					$this->pos - $begin_tag_pos - 1
@@ -2057,12 +2057,12 @@ class ub_simple_html_dom
 					$this->parse_attr($node, $name, $space); // get attribute value
 				} else {
 					//no value attr: nowrap, checked selected...
-					$node->_[HDOM_INFO_QUOTE][] = HDOM_QUOTE_NO;
+					$node->_[UB_HDOM_INFO_QUOTE][] = UB_HDOM_QUOTE_NO;
 					$node->attr[$name] = true;
 					if ($this->char != '>') { $this->char = $this->doc[--$this->pos]; } // prev
 				}
 
-				$node->_[HDOM_INFO_SPACE][] = $space;
+				$node->_[UB_HDOM_INFO_SPACE][] = $space;
 
 				// prepare for next attribute
 				$space = array(
@@ -2076,12 +2076,12 @@ class ub_simple_html_dom
 		} while ($this->char !== '>' && $this->char !== '/'); // go until the tag ended
 
 		$this->link_nodes($node, true);
-		$node->_[HDOM_INFO_ENDSPACE] = $space[0];
+		$node->_[UB_HDOM_INFO_ENDSPACE] = $space[0];
 
 		// handle empty tags (i.e. "<div/>")
 		if ($this->copy_until_char('>') === '/') {
-			$node->_[HDOM_INFO_ENDSPACE] .= '/';
-			$node->_[HDOM_INFO_END] = 0;
+			$node->_[UB_HDOM_INFO_ENDSPACE] .= '/';
+			$node->_[UB_HDOM_INFO_END] = 0;
 		} else {
 			// reset parent
 			if (!isset($this->self_closing_tags[strtolower($node->tag)])) {
@@ -2095,7 +2095,7 @@ class ub_simple_html_dom
 		// This way when we see it in plaintext, we can generate formatting that the user wants.
 		// since a br tag never has sub nodes, this works well.
 		if ($node->tag === 'br') {
-			$node->_[HDOM_INFO_INNER] = $this->default_br_text;
+			$node->_[UB_HDOM_INFO_INNER] = $this->UB_DEFAULT_BR_TEXT;
 		}
 
 		return true;
@@ -2110,19 +2110,19 @@ class ub_simple_html_dom
 
 		switch ($this->char) {
 			case '"':
-				$quote_type = HDOM_QUOTE_DOUBLE;
+				$quote_type = UB_HDOM_QUOTE_DOUBLE;
 				$this->char = (++$this->pos < $this->size) ? $this->doc[$this->pos] : null; // next
 				$value = $this->copy_until_char('"');
 				$this->char = (++$this->pos < $this->size) ? $this->doc[$this->pos] : null; // next
 				break;
 			case '\'':
-				$quote_type = HDOM_QUOTE_SINGLE;
+				$quote_type = UB_HDOM_QUOTE_SINGLE;
 				$this->char = (++$this->pos < $this->size) ? $this->doc[$this->pos] : null; // next
 				$value = $this->copy_until_char('\'');
 				$this->char = (++$this->pos < $this->size) ? $this->doc[$this->pos] : null; // next
 				break;
 			default:
-				$quote_type = HDOM_QUOTE_NO;
+				$quote_type = UB_HDOM_QUOTE_NO;
 				$value = $this->copy_until($this->token_attr);
 		}
 
@@ -2140,7 +2140,7 @@ class ub_simple_html_dom
 		}
 
 		if (!$is_duplicate) {
-			$node->_[HDOM_INFO_QUOTE][] = $quote_type;
+			$node->_[UB_HDOM_INFO_QUOTE][] = $quote_type;
 			$node->attr[$name] = $value;
 		}
 	}
@@ -2158,7 +2158,7 @@ class ub_simple_html_dom
 	{
 		$node = new ub_simple_html_dom_node($this);
 		++$this->cursor;
-		$node->_[HDOM_INFO_TEXT] = '</' . $tag . '>';
+		$node->_[UB_HDOM_INFO_TEXT] = '</' . $tag . '>';
 		$this->link_nodes($node, false);
 		$this->char = (++$this->pos < $this->size) ? $this->doc[$this->pos] : null; // next
 		return true;
@@ -2336,12 +2336,12 @@ class ub_simple_html_dom
 
 	function createElement($name, $value = null)
 	{
-		return @str_get_html("<$name>$value</$name>")->firstChild();
+		return @ub_str_get_html("<$name>$value</$name>")->firstChild();
 	}
 
 	function createTextNode($value)
 	{
-		return @end(str_get_html($value)->nodes);
+		return @end(ub_str_get_html($value)->nodes);
 	}
 
 	function getElementById($id)
