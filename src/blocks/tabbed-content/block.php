@@ -33,7 +33,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
 
     $tabs = '';
 
-    $contents = str_get_html('<div id="tabarray">' . $contents . '</div>', $lowercase=true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=false)
+    $contents = ub_str_get_html('<div id="tabarray">' . $contents . '</div>', $lowercase=true, $forceTagsClosed=true, $target_charset = UB_DEFAULT_TARGET_CHARSET, $stripRN=false)
                     ->find('#tabarray > .wp-block-ub-tabbed-content-tab-content-wrap');
 
     $tabContents = [];

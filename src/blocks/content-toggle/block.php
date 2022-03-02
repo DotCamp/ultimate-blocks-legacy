@@ -132,7 +132,7 @@ function ub_content_toggle_filter( $block_content, $block ) {
     $output = $block_content;
 
     if(isset($block['attrs']['hasFAQSchema'])){
-        $parsedBlockContent = str_get_html(preg_replace('/^<div class="wp-block-ub-content-toggle(?: [^>]*)?" id="ub-content-toggle-.*?">/',
+        $parsedBlockContent = ub_str_get_html(preg_replace('/^<div class="wp-block-ub-content-toggle(?: [^>]*)?" id="ub-content-toggle-.*?">/',
         '<div class="toggleroot">', $block_content));
 
         $panel = $parsedBlockContent->find('.toggleroot>.wp-block-ub-content-toggle-accordion>.wp-block-ub-content-toggle-accordion-content-wrap');
