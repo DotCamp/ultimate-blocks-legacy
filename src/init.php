@@ -864,8 +864,8 @@ function ub_include_block_attribute_css() {
                             font-size: 1em;
                             height: ' . ((4 + $attributes['iconSize']) / 10) . 'em; 
                             width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                            background-image:url(\'data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 ' . $iconData[0]. ' ' .$iconData[1]
-                            .'\"><path fill=\"%23'.substr($attributes['iconColor'],1).'\" d=\"'.$iconData[2].'\"></path></svg>\');' . PHP_EOL .
+                            background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
+                            .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
                         '}' .
                         $prefix . ' li{' . PHP_EOL .
                             'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .
