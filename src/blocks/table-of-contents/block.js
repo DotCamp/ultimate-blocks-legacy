@@ -18,7 +18,7 @@ import {
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
-const { ToggleControl, PanelRow, PanelBody } = wp.components;
+const { ToggleControl, PanelRow, PanelBody, CheckboxControl } = wp.components;
 
 const { InspectorControls, RichText } = wp.blockEditor || wp.editor;
 

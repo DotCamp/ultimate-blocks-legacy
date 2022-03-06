@@ -58,3 +58,11 @@
 .ub_toc_button_container {
 	white-space: nowrap;
 }
+
+.ub_toc_heading_selection {
+	display: flex;
+	flex-wrap: wrap;
+	> * {
+		flex-basis: 33%;
+	}
+}

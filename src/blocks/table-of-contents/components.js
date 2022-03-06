@@ -23,6 +23,7 @@ const {
 	SelectControl,
 	RangeControl,
 	TextControl,
+	CheckboxControl,
 } = wp.components;
 const {
 	InspectorControls,
@@ -675,11 +676,10 @@ export const inspectorControls = (props) => {
 	return (
 		<InspectorControls>
 			<PanelBody title={__("Allowed Headings")} initialOpen={false}>
-				{allowedHeaders.map((a, i) => (
-					<PanelRow>
-						<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i + 1}`}</label>
-						<ToggleControl
-							id={`ub_toggle_h${i + 1}`}
+				<div className="ub_toc_heading_selection">
+					{allowedHeaders.map((a, i) => (
+						<CheckboxControl
+							label={`H${i + 1}`}
 							checked={a}
 							onChange={() =>
 								setAttributes({
@@ -691,8 +691,8 @@ export const inspectorControls = (props) => {
 								})
 							}
 						/>
-					</PanelRow>
-				))}
+					))}
+				</div>
 			</PanelBody>
 			<PanelColorSettings
 				title={__("Color Settings")}
