@@ -667,6 +667,7 @@ export const inspectorControls = (props) => {
 		listIconColor,
 		listColor,
 		listBackgroundColor,
+		numColumns,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -772,6 +773,57 @@ export const inspectorControls = (props) => {
 						</PanelRow>
 					</>
 				)}
+			</PanelBody>
+			<PanelBody title={__("Body")}>
+				<PanelRow>
+					<p>{__("Columns")}</p>
+					<ToolbarGroup>
+						<ToolbarButton
+							className={"ub_toc_column_selector"}
+							icon={oneColumnIcon}
+							label={__("One column")}
+							isPrimary={numColumns === 1}
+							onClick={() => setAttributes({ numColumns: 1 })}
+						/>
+						<ToolbarButton
+							className={"ub_toc_column_selector"}
+							icon={twoColumnsIcon}
+							label={__("Two columns")}
+							isPrimary={numColumns === 2}
+							onClick={() => setAttributes({ numColumns: 2 })}
+						/>
+						<ToolbarButton
+							className={"ub_toc_column_selector"}
+							icon={threeColumnsIcon}
+							label={__("Three columns")}
+							isPrimary={numColumns === 3}
+							onClick={() => setAttributes({ numColumns: 3 })}
+						/>
+					</ToolbarGroup>
+				</PanelRow>
+				<PanelRow>
+					<p>{__("List type")}</p>
+					<ToolbarGroup>
+						<ToolbarButton
+							icon="editor-ul"
+							label={__("Bulleted list")}
+							isPrimary={listStyle === "bulleted"}
+							onClick={() => setAttributes({ listStyle: "bulleted" })}
+						/>
+						<ToolbarButton
+							icon="editor-ol"
+							label={__("Numbered list")}
+							isPrimary={listStyle === "numbered"}
+							onClick={() => setAttributes({ listStyle: "numbered" })}
+						/>
+						<ToolbarButton
+							icon={plainList}
+							label={__("Plain list")}
+							isPrimary={listStyle === "plain"}
+							onClick={() => setAttributes({ listStyle: "plain" })}
+						/>
+					</ToolbarGroup>
+				</PanelRow>
 			</PanelBody>
 			<PanelBody title={__("Additional Settings")} initialOpen={false}>
 				<PanelRow>
