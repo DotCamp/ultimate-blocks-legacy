@@ -694,6 +694,7 @@ export const inspectorControls = (props) => {
 					))}
 				</div>
 			</PanelBody>
+
 			<PanelColorSettings
 				title={__("Color Settings")}
 				initialOpen={false}
@@ -734,7 +735,7 @@ export const inspectorControls = (props) => {
 					],
 				]}
 			/>
-			<PanelBody title={__("Additional Settings")} initialOpen={false}>
+			<PanelBody title={__("Collapsible")}>
 				<PanelRow>
 					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
 					<ToggleControl
@@ -771,6 +772,8 @@ export const inspectorControls = (props) => {
 						</PanelRow>
 					</>
 				)}
+			</PanelBody>
+			<PanelBody title={__("Additional Settings")} initialOpen={false}>
 				<PanelRow>
 					<label htmlFor="ub_toc_enable_latin_conversion">
 						{__("Romanize anchor links")}
