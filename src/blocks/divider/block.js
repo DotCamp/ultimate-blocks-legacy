@@ -40,6 +40,10 @@ const attributes = {
 		type: "number",
 		default: 20,
 	},
+	width: {
+		type: "number",
+		default: 100,
+	},
 };
 /**
  * Register: aa Gutenberg Block.
@@ -86,6 +90,7 @@ registerBlockType("ub/divider", {
 				borderStyle,
 				borderColor,
 				borderHeight,
+				width,
 			},
 			isSelected,
 			setAttributes,
@@ -118,7 +123,6 @@ registerBlockType("ub/divider", {
 							onChange={(value) => setAttributes({ borderSize: value })}
 							min={1}
 							max={20}
-							beforeIcon="minus"
 							allowReset
 						/>
 
@@ -128,10 +132,16 @@ registerBlockType("ub/divider", {
 							onChange={(value) => setAttributes({ borderHeight: value })}
 							min={10}
 							max={200}
-							beforeIcon="minus"
 							allowReset
 						/>
-
+						<RangeControl
+							label={__("Width")}
+							value={width}
+							onChange={(value) => setAttributes({ width: value })}
+							min={0}
+							max={100}
+							allowReset
+						/>
 						<p>
 							{__("Color")}
 							<span
@@ -168,6 +178,7 @@ registerBlockType("ub/divider", {
 						borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
 						marginTop: borderHeight + "px",
 						marginBottom: borderHeight + "px",
+						width: width + "%",
 					}}
 				/>
 			</div>,
