@@ -6,11 +6,15 @@
 
 .ub_divider {
 	display: flex;
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: auto; //needed for proper alignment
+	margin-right: auto; //needed for proper alignment
 	align-content: center;
-	border-bottom: none; //override twenty twenty-one
-	max-width: initial;
+	//begin overrides for twenty twenty-one
+	border-bottom: none;
+	&.ub_divider:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.wp-block-separator):not(.woocommerce) {
+		max-width: initial;
+	}
+	//end overrides for twenty twenty-one
 }
 
 .entry-content.entry-content .ub_divider {

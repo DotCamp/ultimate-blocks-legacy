@@ -464,8 +464,13 @@ function ub_include_block_attribute_css() {
                                         'border-top: ' . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] .';' . PHP_EOL .
                                         'margin-top: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
                                         'margin-bottom: ' . $attributes['borderHeight'] .'px;' . PHP_EOL .
-                                        'width: ' . $attributes['width'] . '%;' . PHP_EOL .
-                    '}' . PHP_EOL;
+                                        'width: ' . $attributes['width'] . '%;' . PHP_EOL;
+
+                    if($attributes['alignment'] !== 'center'){
+                        $blockStylesheets .= 'margin-' . $attributes['alignment'] . ': 0 !important;' . PHP_EOL;
+                    }
+
+                    $blockStylesheets .= '}' . PHP_EOL;
                     break;
                 case 'ub/expand':
                     $blockStylesheets .= '#ub-expand-' . $attributes['blockID'] . ' .ub-expand-toggle-button{' . PHP_EOL .

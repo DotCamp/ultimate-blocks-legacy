@@ -15,7 +15,14 @@ const { registerBlockType } = wp.blocks;
 
 const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
 
-const { PanelBody, RangeControl, SelectControl } = wp.components;
+const {
+	PanelBody,
+	PanelRow,
+	RangeControl,
+	SelectControl,
+	Button,
+	ButtonGroup,
+} = wp.components;
 
 const { withSelect } = wp.data;
 
@@ -43,6 +50,10 @@ const attributes = {
 	width: {
 		type: "number",
 		default: 100,
+	},
+	alignment: {
+		type: "string",
+		default: "center",
 	},
 };
 /**
@@ -91,6 +102,7 @@ registerBlockType("ub/divider", {
 				borderColor,
 				borderHeight,
 				width,
+				alignment,
 			},
 			isSelected,
 			setAttributes,
@@ -142,6 +154,20 @@ registerBlockType("ub/divider", {
 							max={100}
 							allowReset
 						/>
+						<PanelRow>
+							<p>{__("Alignment")}</p>
+							{width < 100 && (
+								<ButtonGroup>
+									{["left", "center", "right"].map((a) => (
+										<Button
+											icon={`align-${a}`}
+											isPressed={alignment === a}
+											onClick={() => setAttributes({ alignment: a })}
+										/>
+									))}
+								</ButtonGroup>
+							)}
+						</PanelRow>
 						<p>
 							{__("Color")}
 							<span
@@ -174,12 +200,19 @@ registerBlockType("ub/divider", {
 			<div className={className}>
 				<div
 					className="ub_divider"
-					style={{
-						borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
-						marginTop: borderHeight + "px",
-						marginBottom: borderHeight + "px",
-						width: width + "%",
-					}}
+					style={Object.assign(
+						{
+							borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
+							marginTop: borderHeight + "px",
+							marginBottom: borderHeight + "px",
+							width: width + "%",
+						},
+						alignment === "left"
+							? { marginLeft: "0" }
+							: alignment === "right"
+							? { marginRight: "0" }
+							: {}
+					)}
 				/>
 			</div>,
 		];

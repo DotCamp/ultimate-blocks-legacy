@@ -625,6 +625,10 @@ $defaultValues = array(
             'width' => array(
                 'type' => 'number',
                 'default' => 100
+            ),
+            'alignment' => array(
+                'type' => 'string',
+                'default' => 'center'
             )
         )
     ),
