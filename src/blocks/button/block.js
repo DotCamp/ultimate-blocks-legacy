@@ -26,6 +26,7 @@ import {
 import {
 	blockControls,
 	inspectorControls,
+	defaultButtonProps,
 	editorDisplay,
 	iconSize,
 	allIcons,
@@ -288,15 +289,102 @@ registerBlockType("ub/button", {
 		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	edit: withSelect((select, ownProps) => {
-		const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
+		const {
+			getBlock,
+			getBlockRootClientId,
+			getClientIdsWithDescendants,
+			getBlocks,
+		} = select("core/block-editor") || select("core/editor");
 
 		return {
 			getBlock,
 			block: getBlock(ownProps.clientId),
 			parentID: getBlockRootClientId(ownProps.clientId),
 			getClientIdsWithDescendants,
+			getBlocks,
 		};
 	})(EditorComponent),
 	save: () => null,
+	transforms: {
+		from: [
+			{
+				type: "block",
+				blocks: ["core/buttons"],
+				transform: (attributes, innerBlocks) => {
+					let newButtons = innerBlocks.map((ib) => {
+						const splitNumFromUnit = (str) => {
+							const [, ...arr] = str.match(/(\d*)([\s\S]*)/);
+							return [Number(arr[0]), arr[1]];
+						};
+
+						let radiusSettings = {};
+
+						if ("style" in ib.attributes && "border" in ib.attributes.style) {
+							if (typeof ib.attributes.style.border.radius === "string") {
+								//parse width first
+
+								const parsedRadius = splitNumFromUnit(
+									ib.attributes.style.border.radius
+								);
+
+								radiusSettings = Object.assign(radiusSettings, {
+									topLeftRadius: parsedRadius[0],
+									topLeftRadiusUnit: parsedRadius[1],
+									topRightRadius: parsedRadius[0],
+									topRightRadiusUnit: parsedRadius[1],
+									bottomLeftRadius: parsedRadius[0],
+									bottomLeftRadiusUnit: parsedRadius[1],
+									bottomRightRadius: parsedRadius[0],
+									bottomRightRadiusUnit: parsedRadius[1],
+								});
+							} else {
+								const topLeft = splitNumFromUnit(
+									ib.attributes.style.border.radius.topLeft
+								);
+								const topRight = splitNumFromUnit(
+									ib.attributes.style.border.radius.topRight
+								);
+								const bottomLeft = splitNumFromUnit(
+									ib.attributes.style.border.radius.bottomLeft
+								);
+								const bottomRight = splitNumFromUnit(
+									ib.attributes.style.border.radius.bottomRight
+								);
+
+								radiusSettings = Object.assign(radiusSettings, {
+									topLeftRadius: topLeft[0],
+									topLeftRadiusUnit: topLeft[1],
+									topRightRadius: topRight[0],
+									topRightRadiusUnit: topRight[1],
+									bottomLeftRadius: bottomLeft[0],
+									bottomLeftRadiusUnit: bottomLeft[1],
+									bottomRightRadius: bottomRight[0],
+									bottomRightRadiusUnit: bottomRight[1],
+								});
+							}
+						}
+
+						const oldButtonStyle = window.getComputedStyle(
+							document.querySelector(`#block-${ib.clientId}>div`)
+						);
+
+						return JSON.parse(
+							JSON.stringify(
+								Object.assign(defaultButtonProps, {
+									buttonText: ib.attributes.text || "",
+									buttonColor: oldButtonStyle.backgroundColor,
+									buttonTextColor: oldButtonStyle.color,
+									...radiusSettings,
+								})
+							)
+						);
+					});
+
+					return createBlock("ub/button", {
+						buttons: newButtons,
+					});
+				},
+			},
+		],
+	},
 });
