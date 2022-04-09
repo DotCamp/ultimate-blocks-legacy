@@ -15,7 +15,7 @@
 		"@fortawesome/free-brands-svg-icons": "^5.15.4",
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
 		"@fortawesome/react-fontawesome": "^0.1.16",
-		"moment": "^2.29.1",
+		"moment": "^2.29.2",
 		"react": "^16.14.0",
 		"react-dom": "^16.14.0",
 		"react-sortable-hoc": "^2.0.0",
