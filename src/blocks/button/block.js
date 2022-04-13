@@ -310,7 +310,39 @@ registerBlockType("ub/button", {
 			{
 				type: "block",
 				blocks: ["core/buttons"],
-				transform: (attributes, innerBlocks) => {
+				transform: (_, innerBlocks) => {
+					const revisedDefaultProps = {
+						buttonText: "Button Text",
+						url: "",
+						size: "medium",
+						buttonColor: "#313131",
+						buttonHoverColor: "#313131",
+						buttonTextColor: "#ffffff",
+						buttonTextHoverColor: "#ffffff",
+						buttonRounded: false,
+						buttonRadius: 0, //retained for compatibility
+						buttonRadiusUnit: "px", //retained for compatibility
+
+						topLeftRadius: 0,
+						topLeftRadiusUnit: "px",
+						topRightRadius: 0,
+						topRightRadiusUnit: "px",
+						bottomLeftRadius: 0,
+						bottomLeftRadiusUnit: "px",
+						bottomRightRadius: 0,
+						bottomRightRadiusUnit: "px",
+
+						chosenIcon: "",
+						iconPosition: "left",
+						iconSize: 0,
+						iconUnit: "px",
+						buttonIsTransparent: false,
+						addNofollow: true,
+						openInNewTab: true,
+						addSponsored: false,
+						buttonWidth: "flex",
+					};
+
 					let newButtons = innerBlocks.map((ib) => {
 						const splitNumFromUnit = (str) => {
 							const [, ...arr] = str.match(/(\d*)([\s\S]*)/);
@@ -320,12 +352,10 @@ registerBlockType("ub/button", {
 						let radiusSettings = {};
 
 						if ("style" in ib.attributes && "border" in ib.attributes.style) {
-							if (typeof ib.attributes.style.border.radius === "string") {
-								//parse width first
+							const br = ib.attributes.style.border.radius;
 
-								const parsedRadius = splitNumFromUnit(
-									ib.attributes.style.border.radius
-								);
+							if (typeof br === "string") {
+								const parsedRadius = splitNumFromUnit(br);
 
 								radiusSettings = Object.assign(radiusSettings, {
 									topLeftRadius: parsedRadius[0],
@@ -336,20 +366,15 @@ registerBlockType("ub/button", {
 									bottomLeftRadiusUnit: parsedRadius[1],
 									bottomRightRadius: parsedRadius[0],
 									bottomRightRadiusUnit: parsedRadius[1],
+
+									buttonRadius: parsedRadius[0],
+									buttonRadiusUnit: parsedRadius[1],
 								});
 							} else {
-								const topLeft = splitNumFromUnit(
-									ib.attributes.style.border.radius.topLeft
-								);
-								const topRight = splitNumFromUnit(
-									ib.attributes.style.border.radius.topRight
-								);
-								const bottomLeft = splitNumFromUnit(
-									ib.attributes.style.border.radius.bottomLeft
-								);
-								const bottomRight = splitNumFromUnit(
-									ib.attributes.style.border.radius.bottomRight
-								);
+								const topLeft = splitNumFromUnit(br.topLeft || "0px");
+								const topRight = splitNumFromUnit(br.topRight || "0px");
+								const bottomLeft = splitNumFromUnit(br.bottomLeft || "0px");
+								const bottomRight = splitNumFromUnit(br.bottomRight || "0px");
 
 								radiusSettings = Object.assign(radiusSettings, {
 									topLeftRadius: topLeft[0],
@@ -368,21 +393,21 @@ registerBlockType("ub/button", {
 							document.querySelector(`#block-${ib.clientId}>div`)
 						);
 
-						return JSON.parse(
-							JSON.stringify(
-								Object.assign(defaultButtonProps, {
-									buttonText: ib.attributes.text || "",
-									buttonColor: oldButtonStyle.backgroundColor,
-									buttonTextColor: oldButtonStyle.color,
-									...radiusSettings,
-								})
-							)
+						const buttonAttributes = Object.assign(
+							revisedDefaultProps,
+							{
+								buttonRounded: Object.keys(radiusSettings).length > 0,
+								buttonText: ib.attributes.text || "",
+								buttonColor: oldButtonStyle.backgroundColor,
+								buttonTextColor: oldButtonStyle.color,
+							},
+							radiusSettings
 						);
+
+						return JSON.parse(JSON.stringify(buttonAttributes)); //prevent old buttonAttributes values from overwriting new ones
 					});
 
-					return createBlock("ub/button", {
-						buttons: newButtons,
-					});
+					return createBlock("ub/button", { buttons: newButtons });
 				},
 			},
 		],
