@@ -393,13 +393,21 @@ registerBlockType("ub/button", {
 							document.querySelector(`#block-${ib.clientId}>div`)
 						);
 
+						const isUsingOutline =
+							"className" in ib.attributes &&
+							ib.attributes.className === "is-style-outline";
+
 						const buttonAttributes = Object.assign(
 							revisedDefaultProps,
 							{
 								buttonRounded: Object.keys(radiusSettings).length > 0,
 								buttonText: ib.attributes.text || "",
-								buttonColor: oldButtonStyle.backgroundColor,
+								buttonColor: isUsingOutline
+									? oldButtonStyle.color
+									: oldButtonStyle.backgroundColor,
 								buttonTextColor: oldButtonStyle.color,
+								buttonIsTransparent: isUsingOutline,
+								url: ib.attributes.url,
 							},
 							radiusSettings
 						);
