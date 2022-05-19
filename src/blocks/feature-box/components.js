@@ -155,7 +155,7 @@ export const editorDisplay = (props) => {
 									imgOneAlt: img.alt,
 								})
 							}
-							type="image"
+							allowedTypes={["image"]}
 							value={imgOneID}
 							render={({ open }) => (
 								<Button
@@ -220,7 +220,7 @@ export const editorDisplay = (props) => {
 									imgTwoAlt: img.alt,
 								})
 							}
-							type="image"
+							allowedTypes={["image"]}
 							value={imgTwoID}
 							render={({ open }) => (
 								<Button
@@ -285,7 +285,7 @@ export const editorDisplay = (props) => {
 									imgThreeAlt: img.alt,
 								})
 							}
-							type="image"
+							allowedTypes={["image"]}
 							value={imgThreeID}
 							render={({ open }) => (
 								<Button

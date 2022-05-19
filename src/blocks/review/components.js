@@ -339,7 +339,7 @@ export class ReviewBody extends Component {
 								<div className="ub_review_upload_button">
 									<MediaUpload
 										onSelect={(img) => setImage(img)}
-										type="image"
+										allowedTypes={["image"]}
 										value={imgID}
 										render={({ open }) => (
 											<Button

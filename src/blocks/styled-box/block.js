@@ -396,7 +396,7 @@ registerBlockType("ub/styled-box", {
 											],
 										})
 									}
-									type="image"
+									allowedTypes={["image"]}
 									value={image[i].id}
 									render={({ open }) => (
 										<Button
