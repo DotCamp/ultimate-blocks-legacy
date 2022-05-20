@@ -322,6 +322,7 @@ export class PanelContent extends Component {
 			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
 					preventCollapse: !panel.attributes.preventCollapse,
+					...(!preventCollapse && { collapsed: false }),
 				})
 			);
 		};
