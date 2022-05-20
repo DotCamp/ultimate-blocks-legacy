@@ -586,20 +586,20 @@ export class PanelContent extends Component {
 								onChange={() => {
 									setAttributes({
 										individualCollapse: !individualCollapse,
-										...(individualCollapse && {
+										...(!individualCollapse && {
 											showOnlyOne: false,
 											collapsed: panels[0].attributes.collapsed,
 										}),
-										...(!individualCollapse && { preventCollapse: false }),
+										...(individualCollapse && { preventCollapse: false }),
 									});
 
 									panels.forEach((panel) =>
 										updateBlockAttributes(panel.clientId, {
-											...(individualCollapse && {
+											...(!individualCollapse && {
 												showOnlyOne: false,
 												collapsed: panels[0].attributes.collapsed,
 											}),
-											...(!individualCollapse && { preventCollapse: false }),
+											...(individualCollapse && { preventCollapse: false }),
 										})
 									);
 								}}
