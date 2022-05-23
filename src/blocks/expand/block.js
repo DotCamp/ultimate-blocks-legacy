@@ -78,6 +78,7 @@ registerBlockType("ub/expand-portion", {
 	supports: {
 		inserter: false,
 		reusable: false,
+		lock: false,
 	},
 	attributes: {
 		clickText: {

@@ -25,6 +25,7 @@ registerBlockType("ub/tab", {
 	supports: {
 		inserter: false,
 		reusable: false,
+		lock: false,
 	},
 	edit(props) {
 		return (
