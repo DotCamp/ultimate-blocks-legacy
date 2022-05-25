@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.9
-Stable tag: 2.4.16
+Tested up to: 6.0
+Stable tag: 2.4.17
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,15 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.17 =
+
+* Compatibility with WordPress 6.0.
+* Content Toggle - Make turning on individualCollapse work properly when showOnlyOne is on.
+* Content Toggle - Force all content toggle panels to show when prevent collapse is enabled.
+* Expand - Prevent deletion of Expand Inner Portion block.
+* Tabbed Content - Prevent deletion of Tab inner block.
+* Other - Limit allowed media types for media inputs in Review, Styled Box, and Testimonial blocks to images.
 
 = 2.4.16 =
 
