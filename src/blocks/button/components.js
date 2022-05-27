@@ -514,7 +514,7 @@ export const inspectorControls = (props) => {
 					/>
 				</PanelBody>
 				<PanelBody
-					title={__("Button Colors Revamped", "ultimate-blocks")}
+					title={__("Button Colors", "ultimate-blocks")}
 					initialOpen={true}
 				>
 					<ToggleControl
@@ -981,27 +981,6 @@ export class EditorComponent extends Component {
 		});
 
 		this.loadIconList();
-
-		console.log(
-			JSON.stringify(
-				Object.values(allIcons)
-					.sort((a, b) => {
-						if (a.iconName > b.iconName) {
-							return 1;
-						} else {
-							return -1;
-						}
-					})
-					.filter(
-						(v, i, a) =>
-							a.findIndex((v2) => ["iconName"].every((k) => v2[k] === v[k])) ===
-							i
-					)
-					.map((entry) => ({
-						[entry.iconName]: [entry.icon[0], entry.icon[1], entry.icon[4]],
-					}))
-			)
-		);
 
 		if (buttons.length === 0) {
 			setAttributes({
@@ -1841,16 +1820,11 @@ export class EditorComponent extends Component {
 									onChange={(isOn) => {
 										let newAttributes = { iconUnit: "px" };
 
-										if (isOn) {
-											newAttributes = Object.assign({}, newAttributes, {
-												iconSize:
-													presetIconSize[buttons[activeButtonIndex].size],
-											});
-										} else {
-											newAttributes = Object.assign({}, newAttributes, {
-												iconSize: 0,
-											});
-										}
+										newAttributes = Object.assign({}, newAttributes, {
+											iconSize: isOn
+												? presetIconSize[buttons[activeButtonIndex].size]
+												: 0,
+										});
 
 										setAttributes({
 											buttons: [
