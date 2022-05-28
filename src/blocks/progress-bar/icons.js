@@ -12,23 +12,23 @@ const icon = (
 	</svg>
 );
 
-export const LinearProgressIcon = (
+export const LinearProgressIcon = (props) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		width={20}
-		height={20}
+		width={props.size || 20}
+		height={props.size || 20}
 		viewBox="0 0 455.138 455.139"
 	>
 		<path d="M0,141.653v171.832h455.138V141.653H0z M432.721,291.071H22.414V164.067h410.312v127.004H432.721z M104.294,271.465H44.528 v-89.652h59.767V271.465z M193.947,271.465h-59.765v-89.652h59.765V271.465z M287.334,271.465h-59.768v-89.652h59.768V271.465z" />
 	</svg>
 );
 
-export const CircProgressIcon = (
+export const CircProgressIcon = (props) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 496 496"
-		width={20}
-		height={20}
+		width={props.size || 20}
+		height={props.size || 20}
 	>
 		<path d="M248,92c-13.6,0-24-10.4-24-24V24c0-13.6,10.4-24,24-24s24,10.4,24,24v44C272,80.8,261.6,92,248,92z" />
 		<path d="M248,496c-13.6,0-24-10.4-24-24v-44c0-13.6,10.4-24,24-24s24,10.4,24,24v44 C272,485.6,261.6,496,248,496z" />

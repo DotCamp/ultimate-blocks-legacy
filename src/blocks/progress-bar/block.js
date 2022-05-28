@@ -6,11 +6,14 @@ const { BlockControls, InspectorControls, PanelColorSettings, RichText } =
 	wp.blockEditor || wp.editor;
 
 const {
+	Button,
+	ButtonGroup,
 	ToolbarGroup,
 	ToolbarItem,
 	ToolbarButton,
 	RangeControl,
 	PanelBody,
+	PanelRow,
 	DropdownMenu,
 } = wp.components;
 
@@ -110,13 +113,21 @@ registerBlockType("ub/progress-bar", {
 			isSelected && (
 				<BlockControls>
 					<ToolbarGroup>
-						<ToolbarButton onClick={() => setAttributes({ barType: "linear" })}>
-							{LinearProgressIcon}
+						<ToolbarButton
+							isPressed={barType === "linear"}
+							showTooltip={true}
+							label={__("Horizontal")}
+							onClick={() => setAttributes({ barType: "linear" })}
+						>
+							<LinearProgressIcon />
 						</ToolbarButton>
 						<ToolbarButton
+							isPressed={barType === "circular"}
+							showTooltip={true}
+							label={__("Circular")}
 							onClick={() => setAttributes({ barType: "circular" })}
 						>
-							{CircProgressIcon}
+							<CircProgressIcon />
 						</ToolbarButton>
 					</ToolbarGroup>
 					<ToolbarGroup>
@@ -144,23 +155,28 @@ registerBlockType("ub/progress-bar", {
 			),
 			isSelected && (
 				<InspectorControls>
-					<PanelBody title={__("Progress Bar Settings")}>
-						<PanelColorSettings
-							title={__("Color")}
-							initialOpen={false}
-							colorSettings={[
-								{
-									value: barColor,
-									onChange: (barColor) => setAttributes({ barColor }),
-									label: "Progress Bar Color",
-								},
-								{
-									value: labelColor,
-									onChange: (labelColor) => setAttributes({ labelColor }),
-									label: "Label Color",
-								},
-							]}
-						/>
+					<PanelBody title={__("Style")}>
+						<PanelRow>
+							<p>{__("Progress Bar Type")}</p>
+							<ButtonGroup>
+								<Button
+									isPressed={barType === "linear"}
+									showTooltip={true}
+									label={__("Horizontal")}
+									onClick={() => setAttributes({ barType: "linear" })}
+								>
+									<LinearProgressIcon size={30} />
+								</Button>
+								<Button
+									isPressed={barType === "circular"}
+									showTooltip={true}
+									label={__("Circular")}
+									onClick={() => setAttributes({ barType: "circular" })}
+								>
+									<CircProgressIcon size={30} />
+								</Button>
+							</ButtonGroup>
+						</PanelRow>
 						<RangeControl
 							label={__("Thickness")}
 							value={barThickness}
@@ -170,6 +186,32 @@ registerBlockType("ub/progress-bar", {
 							allowReset
 						/>
 					</PanelBody>
+					<PanelBody title={__("Value")}>
+						<RangeControl
+							className="ub_progress_bar_value"
+							value={percentage}
+							onChange={(value) => setAttributes({ percentage: value })}
+							min={0}
+							max={100}
+							allowReset
+						/>
+					</PanelBody>
+					<PanelColorSettings
+						title={__("Color")}
+						initialOpen={false}
+						colorSettings={[
+							{
+								value: barColor,
+								onChange: (barColor) => setAttributes({ barColor }),
+								label: "Progress Bar Color",
+							},
+							{
+								value: labelColor,
+								onChange: (labelColor) => setAttributes({ labelColor }),
+								label: "Label Color",
+							},
+						]}
+					/>
 				</InspectorControls>
 			),
 			<div className="ub_progress-bar">
