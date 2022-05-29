@@ -1272,7 +1272,7 @@ $defaultValues = array(
             ),
             'percentage' => array(
                 'type' => 'number',
-                'default' => 25
+                'default' => -1
             ),
             'barType' => array(
                 'type' => 'string',

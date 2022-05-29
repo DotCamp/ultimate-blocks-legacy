@@ -35,7 +35,7 @@ registerBlockType("ub/progress-bar", {
 		},
 		percentage: {
 			type: "number",
-			default: 25,
+			default: -1,
 		},
 		barType: {
 			type: "string",
@@ -91,15 +91,21 @@ registerBlockType("ub/progress-bar", {
 			getClientIdsWithDescendants,
 		} = props;
 
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId, percentage: 75 });
+		} else {
+			if (percentage === -1) {
+				setAttributes({ percentage: 25 });
+			}
+			if (
+				getClientIdsWithDescendants().some(
+					(ID) =>
+						"blockID" in getBlock(ID).attributes &&
+						getBlock(ID).attributes.blockID === blockID
+				)
+			) {
+				setAttributes({ blockID: block.clientId });
+			}
 		}
 
 		const progressBarAttributes = {
