@@ -64,7 +64,7 @@ export default class Line extends Component {
 					<path
 						className="ub_progress-bar-line-trail"
 						d={progressBarPath}
-						strokeWidth="1"
+						strokeWidth={barThickness}
 					/>
 					<path
 						className="ub_progress-bar-line-path"

@@ -46,7 +46,6 @@ export default class Circle extends Component {
 		if (this.state.isActive && this.props.percent !== nextProps.percent) {
 			this.setState({ indicator: nextProps.percent });
 		}
-		
 	}
 	render() {
 		const { barColor, barThickness, percent, labelColor, alignment } =
@@ -82,7 +81,7 @@ export default class Circle extends Component {
 					<path
 						className="ub_progress-bar-circle-trail"
 						d={progressBarPath}
-						strokeWidth={3}
+						strokeWidth={barThickness + 2}
 						style={{
 							strokeDasharray: `${circlePathLength}px, ${circlePathLength}px`,
 						}}
