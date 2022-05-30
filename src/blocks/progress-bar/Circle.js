@@ -55,6 +55,7 @@ export default class Circle extends Component {
 			percent,
 			labelColor,
 			alignment,
+			size,
 		} = this.props;
 		const { indicator, isActive } = this.state;
 		const circleRadius = 50 - (barThickness + 3) / 2;
@@ -63,7 +64,6 @@ export default class Circle extends Component {
 		const progressBarPath = `M 50,50 m 0,${-circleRadius} a ${circleRadius},${circleRadius} 0 1 1 0,${
 			circleRadius * 2
 		} a ${circleRadius},${circleRadius} 0 1 1 0,${-circleRadius * 2}`;
-		const size = 150;
 
 		return (
 			<div

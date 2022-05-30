@@ -1298,6 +1298,10 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 1
             ),
+            'circleSize' => array(
+                'type' => 'number',
+                'default' => 150
+            ),
             'labelColor' => array(
                 'type' => 'string',
                 'default' => ''

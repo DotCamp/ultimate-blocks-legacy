@@ -633,17 +633,17 @@ function ub_include_block_attribute_css() {
                             'width: '.$attributes['percentage'].'%;' . PHP_EOL;
                     }
                     else{
-                        $circleRadius = 50 - ($attributes['barThickness'] + 3)/2;
+                        $circleRadius = 50 - ($attributes['barThickness'] + 3) / 2;
                         $circlePathLength = $circleRadius * M_PI * 2;
                         $blockStylesheets .= '#ub-progress-bar-'. $attributes['blockID'] . ' .ub_progress-bar-container{' . PHP_EOL .
-                            'height: 150px;' . PHP_EOL . 'width: 150px;' . PHP_EOL .
+                            'height: ' . $attributes['circleSize'] . 'px;' . PHP_EOL . 'width: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
                             ( in_array($attributes['detailAlign'], ['left', 'right']) ? 'float: ' . $attributes['detailAlign'] : 'margin: auto' ) . ';' . PHP_EOL .
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-circle-trail{' . PHP_EOL . 
-                            'stroke-dasharray: '.$circlePathLength.'px,'.$circlePathLength.'px' . PHP_EOL . 
+                            'stroke-dasharray: ' . $circlePathLength . 'px,' . $circlePathLength . 'px' . PHP_EOL . 
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-circle-path{' . PHP_EOL .
-                            'stroke-dasharray: 0px, '.$circlePathLength.'px' . PHP_EOL .
+                            'stroke-dasharray: 0px, ' . $circlePathLength . 'px' . PHP_EOL .
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-label{' . PHP_EOL;                                
                     }
@@ -654,8 +654,8 @@ function ub_include_block_attribute_css() {
                         'visibility: visible;' . PHP_EOL .
                     '}' . PHP_EOL;
                     if($attributes['barType'] === 'linear'){
-                        $blockStylesheets .= $prefix. '.ub_progress-bar-filled .ub_progress-bar-line-path{' . PHP_EOL .
-                            'stroke-dashoffset: ' . (100-$attributes['percentage']) . 'px';
+                        $blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-line-path{' . PHP_EOL .
+                            'stroke-dashoffset: ' . (100 - $attributes['percentage']) . 'px';
                     }
                     else{
                         $strokeArcLength = $circlePathLength * $attributes['percentage'] / 100;

@@ -61,6 +61,10 @@ registerBlockType("ub/progress-bar", {
 			type: "number",
 			default: 1,
 		},
+		circleSize: {
+			type: "number",
+			default: 150,
+		},
 		labelColor: {
 			type: "string",
 			default: "",
@@ -87,6 +91,7 @@ registerBlockType("ub/progress-bar", {
 				barColor,
 				barBackgroundColor,
 				barThickness,
+				circleSize,
 				labelColor,
 			},
 			isSelected,
@@ -197,6 +202,16 @@ registerBlockType("ub/progress-bar", {
 							max={5}
 							allowReset
 						/>
+						{barType === "circular" && (
+							<RangeControl
+								label={__("Circle size")}
+								value={circleSize}
+								onChange={(value) => setAttributes({ circleSize: value })}
+								min={50}
+								max={600}
+								allowReset
+							/>
+						)}
 					</PanelBody>
 					<PanelBody title={__("Value")}>
 						<RangeControl
@@ -246,7 +261,11 @@ registerBlockType("ub/progress-bar", {
 				{barType === "linear" ? (
 					<Line {...progressBarAttributes} />
 				) : (
-					<Circle {...progressBarAttributes} alignment={detailAlign} />
+					<Circle
+						{...progressBarAttributes}
+						alignment={detailAlign}
+						size={circleSize}
+					/>
 				)}
 			</div>,
 		];

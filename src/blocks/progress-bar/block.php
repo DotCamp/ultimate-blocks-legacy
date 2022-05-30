@@ -24,8 +24,8 @@ function ub_render_progress_bar_block($attributes){
                             'a ' . $circleRadius . ',' . $circleRadius . ' 0 1 1 0,' . (2 * -$circleRadius);
         $strokeArcLength = $circlePathLength * $percentage / 100;
 
-        $chosenProgressBar = '<div class="' . $blockName.'-container" ' . ($blockID === '' ? 'style="height: 150px; width: 150px;"' : 'id="' . $blockID . '"') . '>
-        <svg class="' . $blockName . '-circle" height="150" width="150" viewBox = "0 0 100 100">
+        $chosenProgressBar = '<div class="' . $blockName.'-container" ' . ($blockID === '' ? 'style="height: ' . $circleSize . 'px; width: ' . $circleSize . 'px;"' : 'id="' . $blockID . '"') . '>
+        <svg class="' . $blockName . '-circle" height="' . $circleSize . '" width="' . $circleSize . '" viewBox = "0 0 100 100">
             <path class="' . $blockName . '-circle-trail" d="' . $progressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . ($barThickness + 2) . '"'.
                 ($blockID === '' ? ' style = "stroke-dasharray: ' . $circlePathLength . 'px,' . $circlePathLength . 'px"':'') . '/>
             <path class="' . $blockName . '-circle-path" d="' . $progressBarPath . '" stroke="' . $barColor . '"
