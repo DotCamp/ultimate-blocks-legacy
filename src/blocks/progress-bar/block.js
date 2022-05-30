@@ -53,6 +53,10 @@ registerBlockType("ub/progress-bar", {
 			type: "string",
 			default: "#2DB7F5",
 		},
+		barBackgroundColor: {
+			type: "string",
+			default: "#d9d9d9",
+		},
 		barThickness: {
 			type: "number",
 			default: 1,
@@ -81,6 +85,7 @@ registerBlockType("ub/progress-bar", {
 				detail,
 				detailAlign,
 				barColor,
+				barBackgroundColor,
 				barThickness,
 				labelColor,
 			},
@@ -110,9 +115,10 @@ registerBlockType("ub/progress-bar", {
 
 		const progressBarAttributes = {
 			percent: percentage,
-			barColor: barColor,
-			barThickness: barThickness,
-			labelColor: labelColor,
+			barColor,
+			barBackgroundColor,
+			barThickness,
+			labelColor,
 		};
 
 		return [
@@ -210,6 +216,12 @@ registerBlockType("ub/progress-bar", {
 								value: barColor,
 								onChange: (barColor) => setAttributes({ barColor }),
 								label: "Progress Bar Color",
+							},
+							{
+								value: barBackgroundColor,
+								onChange: (barBackgroundColor) =>
+									setAttributes({ barBackgroundColor }),
+								label: "Background Bar Color",
 							},
 							{
 								value: labelColor,

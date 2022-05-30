@@ -1290,6 +1290,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#2db7f5'
             ),
+            'barBackgroundColor' => array(
+                'type' => 'string',
+                'default' => '#d9d9d9'
+            ),
             'barThickness' => array(
                 'type' => 'number',
                 'default' => 1

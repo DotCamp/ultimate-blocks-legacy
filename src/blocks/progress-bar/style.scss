@@ -13,7 +13,6 @@
 			text-align: center;
 		}
 		&-trail {
-			stroke: #d9d9d9;
 			stroke-dashoffset: 0px;
 			transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s,
 				stroke 0.3s ease 0s;
@@ -28,7 +27,6 @@
 	}
 	&-line {
 		&-trail {
-			stroke: #d9d9d9;
 			fill-opacity: 0;
 			stroke-linecap: round;
 		}

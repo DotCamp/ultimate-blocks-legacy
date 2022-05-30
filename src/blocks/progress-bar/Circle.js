@@ -48,8 +48,14 @@ export default class Circle extends Component {
 		}
 	}
 	render() {
-		const { barColor, barThickness, percent, labelColor, alignment } =
-			this.props;
+		const {
+			barColor,
+			barBackgroundColor,
+			barThickness,
+			percent,
+			labelColor,
+			alignment,
+		} = this.props;
 		const { indicator, isActive } = this.state;
 		const circleRadius = 50 - (barThickness + 3) / 2;
 		const circlePathLength = circleRadius * Math.PI * 2;
@@ -81,6 +87,7 @@ export default class Circle extends Component {
 					<path
 						className="ub_progress-bar-circle-trail"
 						d={progressBarPath}
+						stroke={barBackgroundColor}
 						strokeWidth={barThickness + 2}
 						style={{
 							strokeDasharray: `${circlePathLength}px, ${circlePathLength}px`,

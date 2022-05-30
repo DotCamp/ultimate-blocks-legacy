@@ -50,7 +50,8 @@ export default class Line extends Component {
 
 	render() {
 		const { indicator, isActive } = this.state;
-		const { barColor, barThickness, percent, labelColor } = this.props;
+		const { barColor, barBackgroundColor, barThickness, percent, labelColor } =
+			this.props;
 		const progressBarPath = `M ${barThickness / 2},${barThickness / 2} L ${
 			100 - barThickness / 2
 		},${barThickness / 2}`;
@@ -64,6 +65,7 @@ export default class Line extends Component {
 					<path
 						className="ub_progress-bar-line-trail"
 						d={progressBarPath}
+						stroke={barBackgroundColor}
 						strokeWidth={barThickness}
 					/>
 					<path
