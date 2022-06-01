@@ -982,6 +982,27 @@ export class EditorComponent extends Component {
 
 		this.loadIconList();
 
+		console.log(
+			JSON.stringify(
+				Object.values(allIcons)
+					.sort((a, b) => {
+						if (a.iconName > b.iconName) {
+							return 1;
+						} else {
+							return -1;
+						}
+					})
+					.filter(
+						(v, i, a) =>
+							a.findIndex((v2) => ["iconName"].every((k) => v2[k] === v[k])) ===
+							i
+					)
+					.map((entry) => ({
+						[entry.iconName]: [entry.icon[0], entry.icon[1], entry.icon[4]],
+					}))
+			)
+		);
+
 		if (buttons.length === 0) {
 			setAttributes({
 				buttons: [
