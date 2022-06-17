@@ -181,7 +181,6 @@ function ultimate_blocks_cgb_block_assets() {
 add_action( 'enqueue_block_assets', 'ultimate_blocks_cgb_block_assets' );
 
 function ub_include_block_attribute_css() {
-	global $post;
     require plugin_dir_path(__FILE__) . 'defaults.php';
     require_once plugin_dir_path(__FILE__) . 'common.php';
 
@@ -1008,7 +1007,7 @@ function ub_include_block_attribute_css() {
     $blockStylesheets = preg_replace( '/\s+/', ' ', $blockStylesheets );
     ob_start(); ?>
 
-<style id="<?php echo 'ub-styles-' . $post->ID; ?>" rel="stylesheet"><?php echo($blockStylesheets); ?></style>
+<style id="ub-styles" rel="stylesheet"><?php echo($blockStylesheets); ?></style>
 
     <?php
     ob_end_flush();
