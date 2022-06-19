@@ -10,13 +10,8 @@ import {
 const { __ } = wp.i18n;
 const { InspectorControls, PanelColorSettings, RichText, AlignmentToolbar } =
 	wp.blockEditor || wp.editor;
-const {
-	PanelBody,
-	Button,
-	ButtonGroup,
-	RangeControl,
-	SelectControl,
-} = wp.components;
+const { PanelBody, Button, ButtonGroup, RangeControl, SelectControl } =
+	wp.components;
 const { createRef, useEffect } = wp.element;
 
 const AdvancedHeadingEdit = ({
@@ -45,31 +40,40 @@ const AdvancedHeadingEdit = ({
 	const elementRef = createRef();
 	useEffect(() => {
 		if (!fontSize) {
-			let defaultFontSize = window.getComputedStyle(elementRef.current)
-				.fontSize;
+			let defaultFontSize = window.getComputedStyle(
+				elementRef.current
+			).fontSize;
 			setAttributes({ fontSize: parseInt(defaultFontSize) });
 		}
 
 		if (!fontFamily) {
-			let defaultFontFamily = window.getComputedStyle(elementRef.current)
-				.fontFamily;
+			let defaultFontFamily = window.getComputedStyle(
+				elementRef.current
+			).fontFamily;
 			setAttributes({ fontFamily: defaultFontFamily });
 		}
 
 		if (!lineHeight) {
-			let defaultLineHeight = window.getComputedStyle(elementRef.current)
-				.lineHeight;
+			let defaultLineHeight = window.getComputedStyle(
+				elementRef.current
+			).lineHeight;
 			setAttributes({ lineHeight: parseInt(defaultLineHeight) });
 		}
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId, level: "h2" });
+		} else {
+			if (!level) {
+				setAttributes({ level: "h1" });
+			}
+			if (
+				getClientIdsWithDescendants().some(
+					(ID) =>
+						"blockID" in getBlock(ID).attributes &&
+						getBlock(ID).attributes.blockID === blockID
+				)
+			) {
+				setAttributes({ blockID: block.clientId });
+			}
 		}
 	}, [elementRef]);
 
@@ -177,7 +181,7 @@ const AdvancedHeadingEdit = ({
 			</InspectorControls>
 			<RichText
 				ref={elementRef}
-				tagName={level}
+				tagName={level || "h2"}
 				value={content}
 				onChange={(value) => setAttributes({ content: value })}
 				style={{

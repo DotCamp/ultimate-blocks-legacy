@@ -21,7 +21,7 @@ const attributes = {
 	},
 	level: {
 		type: "string",
-		default: "h1",
+		default: "",
 	},
 	alignment: {
 		type: "string",
