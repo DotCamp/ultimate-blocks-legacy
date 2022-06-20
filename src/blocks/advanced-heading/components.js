@@ -1,17 +1,28 @@
 import "./formats/register-formats";
 import fontsList from "./fonts";
 import {
-	headingLevels,
 	textTransformOptions,
 	fontWeightOptions,
 	fontFamilyOptions,
 } from "./settings-options";
+import { h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon } from "./icons";
 
 const { __ } = wp.i18n;
-const { InspectorControls, PanelColorSettings, RichText, AlignmentToolbar } =
-	wp.blockEditor || wp.editor;
-const { PanelBody, Button, ButtonGroup, RangeControl, SelectControl } =
-	wp.components;
+const {
+	InspectorControls,
+	BlockControls,
+	PanelColorSettings,
+	RichText,
+	AlignmentToolbar,
+} = wp.blockEditor || wp.editor;
+const {
+	PanelBody,
+	Button,
+	ButtonGroup,
+	RangeControl,
+	SelectControl,
+	DropdownMenu,
+} = wp.components;
 const { createRef, useEffect } = wp.element;
 
 const AdvancedHeadingEdit = ({
@@ -77,6 +88,8 @@ const AdvancedHeadingEdit = ({
 		}
 	}, [elementRef]);
 
+	const headingIcons = [h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon];
+
 	return (
 		<>
 			<InspectorControls>
@@ -87,20 +100,19 @@ const AdvancedHeadingEdit = ({
 					{/* Heading Level */}
 					<p>{__("Heading Level", "ultimate-blocks")}</p>
 					<ButtonGroup aria-label={__("Heading Level", "ultimate-blocks")}>
-						{headingLevels.map((headingLevel) => (
+						{headingIcons.map((h, i) => (
 							<Button
 								onClick={() => {
 									setAttributes({
-										level: `h${headingLevel}`,
+										level: `h${i + 1}`,
 										fontSize: 0,
 										lineHeight: 0,
 									});
 								}}
-								key={headingLevel}
-								isPrimary={level === `h${headingLevel}`}
-							>
-								h{headingLevel}
-							</Button>
+								icon={h}
+								key={i}
+								isPrimary={level === `h${i + 1}`}
+							/>
 						))}
 					</ButtonGroup>
 					{/* Alignment */}
@@ -179,6 +191,36 @@ const AdvancedHeadingEdit = ({
 					/>
 				</PanelBody>
 			</InspectorControls>
+			<BlockControls>
+				<DropdownMenu
+					className="ub_advanced_heading_toolbar_level_selector"
+					icon={
+						headingIcons[
+							[...Array(6).keys()].map((a) => `h${a + 1}`).indexOf(level)
+						]
+					}
+				>
+					{({ onClose }) => (
+						<>
+							{headingIcons.map((h, i) => (
+								<Button
+									icon={h}
+									onClick={() => {
+										setAttributes({
+											level: `h${i + 1}`,
+											fontSize: 0,
+											lineHeight: 0,
+										});
+										onClose();
+									}}
+									key={i}
+									isPrimary={level === `h${i + 1}`}
+								/>
+							))}
+						</>
+					)}
+				</DropdownMenu>
+			</BlockControls>
 			<RichText
 				ref={elementRef}
 				tagName={level || "h2"}

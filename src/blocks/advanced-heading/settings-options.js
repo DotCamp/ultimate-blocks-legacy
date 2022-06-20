@@ -1,8 +1,6 @@
 import fontsList from "./fonts";
 const { __ } = wp.i18n;
 
-export const headingLevels = [1, 2, 3, 4, 5, 6];
-
 export const textTransformOptions = [
 	{
 		value: "none",
