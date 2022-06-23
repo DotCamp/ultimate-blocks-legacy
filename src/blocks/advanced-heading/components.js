@@ -24,6 +24,7 @@ const {
 	DropdownMenu,
 } = wp.components;
 const { createRef, useEffect } = wp.element;
+const { createBlock } = wp.blocks;
 
 const AdvancedHeadingEdit = ({
 	attributes,
@@ -31,6 +32,7 @@ const AdvancedHeadingEdit = ({
 	block,
 	getBlock,
 	getClientIdsWithDescendants,
+	onReplace,
 }) => {
 	const {
 		blockID,
@@ -237,6 +239,16 @@ const AdvancedHeadingEdit = ({
 					fontWeight,
 					lineHeight: lineHeight ? `${lineHeight}px` : null,
 				}}
+				onSplit={(contentFragment) =>
+					contentFragment
+						? createBlock("ub/advanced-heading", {
+								...attributes,
+								blockID: "",
+								content: contentFragment,
+						  })
+						: createBlock("core/paragraph")
+				}
+				onReplace={onReplace}
 			/>
 		</>
 	);
