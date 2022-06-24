@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 2.4.17
+Stable tag: 2.5.0
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,20 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.5.0 - June 24th, 2022 =
+
+* Progress Bar - Copy settings controls to inspector.
+* Progress Bar - Match background bar height with main height.
+* Progress Bar - Set default value to 75.
+* Progress Bar - Add option to set background bar color.
+* Progress Bar - Allow resizing circular progress bar.
+* Advanced Heading - Add heading level selector to block toolbar.
+* Advanced Heading - Set default heading level to h2.
+* Advanced Heading - Automatically make paragraph block when adding empty new line from advanced heading, and a separate advanced heading block when pressing enter within advanced heading content.
+* Button - Remove minimum height from buttons while in editor.
+* Content Toggle - Fix attribute rendering in frontend.
+* Other - Update FontAwesome to 6.1.
 
 = 2.4.17 =
 
