@@ -1,4 +1,5 @@
 const { __ } = wp.i18n;
+import { useRef, useEffect } from "react";
 
 export const richTextToHTML = (elem) => {
 	let outputString = "";
@@ -100,3 +101,11 @@ export const convertFromSeconds = (sec) => ({
 	h: ~~(sec / 3600) % 24,
 	d: ~~(sec / 86400),
 });
+
+export const usePrevious = (value) => {
+	const ref = useRef();
+	useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+};

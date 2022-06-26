@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 
 function delay(ms) {
 	//adapted from from https://stackoverflow.com/a/39496056
@@ -25,95 +25,77 @@ function integerArray(limit1, limit2) {
 	}
 }
 
-class MovingDigits extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isAnimating: false,
-			currentAnimation: null,
-		};
-	}
-	componentDidMount() {
-		//display the lowest number to prepare for downward movement
+function MovingDigits(props) {
+	const [isAnimating, setIsAnimating] = useState(false);
+	const [currentAnimation, setCurrentAnimation] = useState(null);
 
-		if (this.props.dir === "decrease") {
-			this.setState({
-				currentAnimation: `translateY(${
-					100 * (1 / this.props.digits.length - 1)
-				}%)`,
-			});
+	const { dir, digits } = props;
+
+	useEffect(() => {
+		if (dir === "decrease") {
+			setCurrentAnimation(`translateY(${100 * (1 / digits.length - 1)}%)`);
 		}
 
-		this.setState({ isAnimating: true });
-	}
-	componentDidUpdate() {
+		setIsAnimating(true);
+	}, []);
+
+	useEffect(() => {
 		const setNewTransform = (newTransform) => {
-			if (this.state.currentAnimation !== newTransform) {
+			if (currentAnimation !== newTransform) {
 				delay(40)
 					.then(() => {
-						this.setState({
-							currentAnimation: newTransform,
-						});
+						setCurrentAnimation(newTransform);
 						return delay(300);
 					})
 					.then(() => {
-						this.props.dismountEvent();
+						props.dismountEvent();
 					});
 			}
 		};
-		if (this.state.isAnimating) {
-			if (this.props.dir === "decrease") {
+		if (isAnimating) {
+			if (dir === "decrease") {
 				//animate scrolling to top number
 				setNewTransform("translateY(0)");
 			}
-			if (this.props.dir === "increase") {
+			if (dir === "increase") {
 				//animate scrolling to bottom number
-				setNewTransform(
-					`translateY(${100 * (1 / this.props.digits.length - 1)}%)`
-				);
+				setNewTransform(`translateY(${100 * (1 / digits.length - 1)}%)`);
 			}
 		}
-	}
-	render() {
-		return (
-			<div
-				className="moving-digit"
-				style={{
-					transform: this.state.currentAnimation,
-					transition: this.state.isAnimating ? "all 0.3s" : null,
-				}}
-			>
-				{this.props.digits.map((d, j) => (
-					<div key={j} className="digit">
-						{d}
-					</div>
-				))}
-			</div>
-		);
-	}
+	}, [isAnimating, currentAnimation]);
+
+	return (
+		<div
+			className="moving-digit"
+			style={{
+				transform: currentAnimation,
+				transition: isAnimating ? "all 0.3s" : null,
+			}}
+		>
+			{digits.map((d, j) => (
+				<div key={j} className="digit">
+					{d}
+				</div>
+			))}
+		</div>
+	);
 }
 
-export class DigitDisplay extends Component {
-	constructor(props) {
-		super(props);
+export function DigitDisplay(props) {
+	const [displayValue, setDisplayValue] = useState(0);
+	const [digits, setDigits] = useState([0, 0]);
+	const [incomingDigits, setIncomingDigits] = useState([]);
 
-		this.state = {
-			displayValue: 0,
-			digits: [0, 0],
-			incomingDigits: [],
-			digitChange: "none",
-		};
-	}
-	static defaultProps = {
-		value: 0,
-		minDisplay: 0,
-		maxDisplay: 0,
-		numberChange: "none",
-	};
+	const {
+		value = 0,
+		minDisplay = 0,
+		maxDisplay = 0,
+		numberChange = "none",
+		forceRefresh,
+		finishForceRefresh,
+	} = props;
 
-	componentDidMount() {
-		const { value, maxDisplay } = this.props;
-
+	useEffect(() => {
 		const digitCount = maxDisplay
 			? Math.floor(Math.log10(maxDisplay)) + 1
 			: value === 0
@@ -125,161 +107,152 @@ export class DigitDisplay extends Component {
 				...Array(digitCount - currentDigits.length).fill(0)
 			);
 		}
-		this.setState({ digits: currentDigits, displayValue: value });
-	}
 
-	componentDidUpdate(prevProps) {
-		const { displayValue } = this.state;
+		setDigits(currentDigits);
+		setDisplayValue(value);
+	}, []);
 
-		const {
-			maxDisplay,
-			value,
-			numberChange,
-			forceRefresh,
-			finishForceRefresh,
-		} = this.props;
+	useEffect(() => {
+		//begin animation
+		const digitCount = maxDisplay
+			? Math.floor(Math.log10(maxDisplay)) + 1
+			: value === 0 && displayValue === 0
+			? 1
+			: Math.floor(Math.log10(Math.max(value, displayValue))) + 1;
 
-		if (prevProps.numberChange !== numberChange) {
-			//begin animation
-			const digitCount = maxDisplay
-				? Math.floor(Math.log10(maxDisplay)) + 1
-				: value === 0 && displayValue === 0
-				? 1
-				: Math.floor(Math.log10(Math.max(value, displayValue))) + 1;
+		//currently displayed digits
+		let currentDigits = breakIntoDigits(displayValue);
+		if (currentDigits.length < digitCount) {
+			currentDigits.unshift(
+				...Array(digitCount - currentDigits.length).fill(0)
+			);
+		}
 
-			//currently displayed digits
-			let currentDigits = breakIntoDigits(displayValue);
-			if (currentDigits.length < digitCount) {
-				currentDigits.unshift(
-					...Array(digitCount - currentDigits.length).fill(0)
-				);
+		//replacement digits
+		let newDigits = breakIntoDigits(value);
+		if (newDigits.length < digitCount) {
+			newDigits.unshift(...Array(digitCount - newDigits.length).fill(0));
+		}
+
+		if (numberChange === "increase") {
+			let maxDigits = breakIntoDigits(maxDisplay || value);
+			if (maxDigits.length === 0) {
+				maxDigits = [0];
 			}
 
-			//replacement digits
-			let newDigits = breakIntoDigits(value);
-			if (newDigits.length < digitCount) {
-				newDigits.unshift(...Array(digitCount - newDigits.length).fill(0));
-			}
+			let extraDigits = [];
+			let prevDigits = [];
 
-			if (numberChange === "increase") {
-				let maxDigits = breakIntoDigits(maxDisplay || value);
-				if (maxDigits.length === 0) {
-					maxDigits = [0];
+			newDigits = newDigits.map((d, i) => {
+				let currentMax =
+					currentDigits[i - 1] === maxDigits[i - 1] ? maxDigits[i] : 9;
+
+				if (prevDigits.length > 1) {
+					let prevDigits2 = prevDigits.slice(1, prevDigits.length - 1);
+					let cycle = prevDigits2.map((p) =>
+						integerArray(0, maxDigits[i - 1] === p ? maxDigits[i] : 9)
+					);
+					extraDigits = cycle.reduce((prev, curr) => prev.concat(curr), []);
 				}
 
-				let extraDigits = [];
-				let prevDigits = [];
-
-				newDigits = newDigits.map((d, i) => {
-					let currentMax =
-						currentDigits[i - 1] === maxDigits[i - 1] ? maxDigits[i] : 9;
-
-					if (prevDigits.length > 1) {
-						let prevDigits2 = prevDigits.slice(1, prevDigits.length - 1);
-						let cycle = prevDigits2.map((p) =>
-							integerArray(0, maxDigits[i - 1] === p ? maxDigits[i] : 9)
-						);
-						extraDigits = cycle.reduce((prev, curr) => prev.concat(curr), []);
-					}
-
-					if (d === currentDigits[i]) {
-						if (value > displayValue) {
-							prevDigits =
-								prevDigits.length > 0
-									? [
-											...integerArray(d, currentMax),
-											...extraDigits,
-											...integerArray(0, d),
-									  ]
-									: [d];
-						} else {
-							prevDigits = [...extraDigits, ...integerArray(0, d)];
-						}
-					} else if (currentDigits[i] < d) {
-						if (prevDigits.length > 1) {
-							prevDigits = [
-								...integerArray(currentDigits[i], currentMax),
-								...extraDigits,
-								...integerArray(0, d),
-							];
-						} else {
-							prevDigits = integerArray(currentDigits[i], d);
-						}
+				if (d === currentDigits[i]) {
+					if (value > displayValue) {
+						prevDigits =
+							prevDigits.length > 0
+								? [
+										...integerArray(d, currentMax),
+										...extraDigits,
+										...integerArray(0, d),
+								  ]
+								: [d];
 					} else {
+						prevDigits = [...extraDigits, ...integerArray(0, d)];
+					}
+				} else if (currentDigits[i] < d) {
+					if (prevDigits.length > 1) {
 						prevDigits = [
 							...integerArray(currentDigits[i], currentMax),
 							...extraDigits,
 							...integerArray(0, d),
 						];
+					} else {
+						prevDigits = integerArray(currentDigits[i], d);
 					}
-					return prevDigits.length > 1 ? prevDigits : d;
-				});
+				} else {
+					prevDigits = [
+						...integerArray(currentDigits[i], currentMax),
+						...extraDigits,
+						...integerArray(0, d),
+					];
+				}
+				return prevDigits.length > 1 ? prevDigits : d;
+			});
 
-				this.setState({ incomingDigits: newDigits });
-			} else if (numberChange === "decrease") {
-				let maxDigits = breakIntoDigits(maxDisplay || displayValue);
+			setIncomingDigits(newDigits);
+		} else if (numberChange === "decrease") {
+			let maxDigits = breakIntoDigits(maxDisplay || displayValue);
 
-				if (maxDigits.length === 0) {
-					maxDigits = [0];
+			if (maxDigits.length === 0) {
+				maxDigits = [0];
+			}
+
+			let extraDigits = [];
+			let prevDigits = [];
+
+			newDigits = newDigits.map((d, i) => {
+				let currentMax =
+					newDigits[i - 1] === maxDigits[i - 1] ? maxDigits[i] : 9;
+
+				if (prevDigits.length > 1) {
+					let prevDigits2 = prevDigits.slice(1, prevDigits.length - 1);
+					let cycle = prevDigits2.map((p) =>
+						integerArray(0, maxDigits[i - 1] === p ? maxDigits[i] : 9)
+					);
+					extraDigits = cycle.reduce((prev, curr) => prev.concat(curr), []);
 				}
 
-				let extraDigits = [];
-				let prevDigits = [];
-
-				newDigits = newDigits.map((d, i) => {
-					let currentMax =
-						newDigits[i - 1] === maxDigits[i - 1] ? maxDigits[i] : 9;
-
-					if (prevDigits.length > 1) {
-						let prevDigits2 = prevDigits.slice(1, prevDigits.length - 1);
-						let cycle = prevDigits2.map((p) =>
-							integerArray(0, maxDigits[i - 1] === p ? maxDigits[i] : 9)
-						);
-						extraDigits = cycle.reduce((prev, curr) => prev.concat(curr), []);
-					}
-
-					if (d === currentDigits[i]) {
-						if (value < displayValue) {
-							prevDigits =
-								prevDigits.length > 0
-									? [
-											...integerArray(d, currentMax),
-											...extraDigits,
-											...integerArray(0, d),
-									  ]
-									: [d];
-						} else {
-							prevDigits = [
-								...integerArray(d, currentMax),
-								...extraDigits,
-								...integerArray(0, d),
-							];
-						}
-					} else if (currentDigits[i] > d) {
-						if (prevDigits.length > 1) {
-							prevDigits = [
-								...integerArray(d, currentMax),
-								...extraDigits,
-								...integerArray(0, currentDigits[i]),
-							];
-						} else {
-							prevDigits = integerArray(d, currentDigits[i]);
-						}
+				if (d === currentDigits[i]) {
+					if (value < displayValue) {
+						prevDigits =
+							prevDigits.length > 0
+								? [
+										...integerArray(d, currentMax),
+										...extraDigits,
+										...integerArray(0, d),
+								  ]
+								: [d];
 					} else {
+						prevDigits = [
+							...integerArray(d, currentMax),
+							...extraDigits,
+							...integerArray(0, d),
+						];
+					}
+				} else if (currentDigits[i] > d) {
+					if (prevDigits.length > 1) {
 						prevDigits = [
 							...integerArray(d, currentMax),
 							...extraDigits,
 							...integerArray(0, currentDigits[i]),
 						];
+					} else {
+						prevDigits = integerArray(d, currentDigits[i]);
 					}
-					return prevDigits.length > 1 ? prevDigits : d;
-				});
-
-				this.setState({ incomingDigits: newDigits });
-			}
+				} else {
+					prevDigits = [
+						...integerArray(d, currentMax),
+						...extraDigits,
+						...integerArray(0, currentDigits[i]),
+					];
+				}
+				return prevDigits.length > 1 ? prevDigits : d;
+			});
+			setIncomingDigits(newDigits);
 		}
+	}, [numberChange]);
 
-		if (forceRefresh && !prevProps.forceRefresh) {
+	useEffect(() => {
+		if (forceRefresh) {
 			const maxDigitCount = Math.floor(
 				Math.log10(maxDisplay || value || 1) + 1
 			);
@@ -290,65 +263,60 @@ export class DigitDisplay extends Component {
 				newDigits = [...Array(missingDigits).fill(0), ...newDigits];
 			}
 
-			this.setState({ displayValue: value, digits: newDigits });
+			setDisplayValue(value);
+			setDigits(newDigits);
+
 			finishForceRefresh();
 		}
-	}
+	}, [forceRefresh]);
 
-	render() {
-		const { digits, incomingDigits } = this.state;
-
-		const { value, maxDisplay, numberChange } = this.props;
-
-		return (
-			<div className="ub-countdown-digit-container">
-				{incomingDigits.length === 0 &&
-					digits.map((d, i) => (
-						<div key={i} className="digit">
-							{d}
-						</div>
-					))}
-				{incomingDigits.map((d, i) =>
-					!Array.isArray(d) ? (
-						<div key={i} className="digit">
-							{d}
-						</div>
-					) : (
-						<MovingDigits
-							digits={d}
-							key={i}
-							dir={numberChange}
-							dismountEvent={() => {
-								let replacementDigits = incomingDigits.map((d) => {
-									if (Array.isArray(d)) {
-										return numberChange === "increase" ? d[d.length - 1] : d[0];
-									} else {
-										return d;
-									}
-								});
-
-								if (
-									maxDisplay === 0 &&
-									numberChange !== "increase" &&
-									replacementDigits.length > 1 &&
-									replacementDigits[0] === 0
-								) {
-									replacementDigits = replacementDigits.slice(
-										replacementDigits.length - Math.floor(Math.log10(value) + 1)
-									);
+	return (
+		<div className="ub-countdown-digit-container">
+			{incomingDigits.length === 0 &&
+				digits.map((d, i) => (
+					<div key={i} className="digit">
+						{d}
+					</div>
+				))}
+			{incomingDigits.map((d, i) =>
+				!Array.isArray(d) ? (
+					<div key={i} className="digit">
+						{d}
+					</div>
+				) : (
+					<MovingDigits
+						digits={d}
+						key={i}
+						dir={numberChange}
+						dismountEvent={() => {
+							let replacementDigits = incomingDigits.map((d) => {
+								if (Array.isArray(d)) {
+									return numberChange === "increase" ? d[d.length - 1] : d[0];
+								} else {
+									return d;
 								}
+							});
 
-								this.setState({
-									incomingDigits: [],
-									digits: replacementDigits,
-									displayValue: value,
-								});
-								this.props.stopAnimation();
-							}}
-						/>
-					)
-				)}
-			</div>
-		);
-	}
+							if (
+								maxDisplay === 0 &&
+								numberChange !== "increase" &&
+								replacementDigits.length > 1 &&
+								replacementDigits[0] === 0
+							) {
+								replacementDigits = replacementDigits.slice(
+									replacementDigits.length - Math.floor(Math.log10(value) + 1)
+								);
+							}
+
+							setIncomingDigits([]);
+							setDigits(replacementDigits);
+							setDisplayValue(value);
+
+							props.stopAnimation();
+						}}
+					/>
+				)
+			)}
+		</div>
+	);
 }

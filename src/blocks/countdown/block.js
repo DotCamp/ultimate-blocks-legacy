@@ -6,6 +6,8 @@ import icon, {
 
 import Timer from "./components";
 
+import { useEffect, useState } from "react";
+
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { InspectorControls, RichText, PanelColorSettings, BlockControls } =
@@ -19,86 +21,30 @@ const {
 	RangeControl,
 } = wp.components;
 const { withSelect } = wp.data;
-const { withState, compose } = wp.compose;
 
-registerBlockType("ub/countdown", {
-	title: __("Countdown"),
-	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Countdown"), __("Timer"), __("Ultimate Blocks")],
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		endDate: {
-			type: "number",
-			default: 60 * (1440 + Math.ceil(Date.now() / 60000)), // 24 hours from Date.now
-		},
-		style: {
-			type: "string",
-			default: "Odometer", //available types: Regular, Circular, Odometer
-		},
-		expiryMessage: {
-			type: "string",
-			default: "",
-		},
-		messageAlign: {
-			type: "string",
-			default: "left",
-		},
-		circleColor: {
-			type: "string",
-			default: "#2DB7F5",
-		},
-		circleSize: {
-			type: "number",
-			default: 70,
-		},
-		largestUnit: {
-			type: "string",
-			default: "week",
-		},
-		smallestUnit: {
-			type: "string",
-			default: "second",
-		},
-	},
+function CountdownMain(props) {
+	const [forceUpdate, setForceUpdate] = useState(false);
 
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+	const {
+		isSelected,
+		setAttributes,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+		attributes: {
+			blockID,
+			style,
+			endDate,
+			expiryMessage,
+			circleColor,
+			circleSize,
+			messageAlign,
+			largestUnit,
+			smallestUnit,
+		},
+	} = props;
 
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
-			};
-		}),
-		withState({ forceUpdate: false }),
-	])(function (props) {
-		const {
-			isSelected,
-			setAttributes,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-			setState,
-			forceUpdate,
-			attributes: {
-				blockID,
-				style,
-				endDate,
-				expiryMessage,
-				circleColor,
-				circleSize,
-				messageAlign,
-				largestUnit,
-				smallestUnit,
-			},
-		} = props;
-
+	useEffect(() => {
 		if (
 			blockID === "" ||
 			getClientIdsWithDescendants().some(
@@ -109,11 +55,13 @@ registerBlockType("ub/countdown", {
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
+	}, []);
 
-		const timeUnits = ["week", "day", "hour", "minute", "second"];
+	const timeUnits = ["week", "day", "hour", "minute", "second"];
 
-		return [
-			isSelected && (
+	return (
+		<>
+			{isSelected && (
 				<InspectorControls>
 					{style === "Circular" && (
 						<PanelBody title={__("Circle style")}>
@@ -174,13 +122,13 @@ registerBlockType("ub/countdown", {
 								}))}
 							onChange={(smallestUnit) => {
 								setAttributes({ smallestUnit });
-								setState({ forceUpdate: true });
+								setForceUpdate(true);
 							}}
 						/>
 					</PanelBody>
 				</InspectorControls>
-			),
-			isSelected && (
+			)}
+			{isSelected && (
 				<BlockControls>
 					<ToolbarGroup>
 						<ToolbarButton
@@ -217,7 +165,7 @@ registerBlockType("ub/countdown", {
 						))}
 					</ToolbarGroup>
 				</BlockControls>
-			),
+			)}
 			<>
 				<Timer
 					timerStyle={style}
@@ -228,7 +176,7 @@ registerBlockType("ub/countdown", {
 					smallestUnit={smallestUnit}
 					isAnimated={true}
 					forceUpdate={forceUpdate}
-					finishForcedUpdate={() => setState({ forceUpdate: false })}
+					finishForcedUpdate={() => setForceUpdate(false)}
 				/>
 				<RichText
 					tagName="div"
@@ -238,9 +186,65 @@ registerBlockType("ub/countdown", {
 					onChange={(text) => setAttributes({ expiryMessage: text })}
 					keepPlaceholderOnFocus={true}
 				/>
-			</>,
-		];
-	}),
+			</>
+		</>
+	);
+}
+
+registerBlockType("ub/countdown", {
+	title: __("Countdown"),
+	icon: icon,
+	category: "ultimateblocks",
+	keywords: [__("Countdown"), __("Timer"), __("Ultimate Blocks")],
+	attributes: {
+		blockID: {
+			type: "string",
+			default: "",
+		},
+		endDate: {
+			type: "number",
+			default: 60 * (1440 + Math.ceil(Date.now() / 60000)), // 24 hours from Date.now
+		},
+		style: {
+			type: "string",
+			default: "Odometer", //available types: Regular, Circular, Odometer
+		},
+		expiryMessage: {
+			type: "string",
+			default: "",
+		},
+		messageAlign: {
+			type: "string",
+			default: "left",
+		},
+		circleColor: {
+			type: "string",
+			default: "#2DB7F5",
+		},
+		circleSize: {
+			type: "number",
+			default: 70,
+		},
+		largestUnit: {
+			type: "string",
+			default: "week",
+		},
+		smallestUnit: {
+			type: "string",
+			default: "second",
+		},
+	},
+
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(CountdownMain),
 
 	save: () => null,
 });
