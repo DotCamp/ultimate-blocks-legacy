@@ -1,7 +1,6 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { withState, compose } = wp.compose;
 const { withSelect } = wp.data;
 
 import icon from "./icon";
