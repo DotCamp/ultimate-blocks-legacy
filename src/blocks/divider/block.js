@@ -10,6 +10,8 @@ import icon from "./icons/icon";
 
 import { version_1_1_2 } from "./oldVersions";
 
+import { useEffect } from "react";
+
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
@@ -69,51 +71,27 @@ const attributes = {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType("ub/divider", {
-	title: __("Divider"),
-	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Divider"), __("Separator"), __("Ultimate Blocks")],
-	attributes,
 
-	/**
-	 * The edit function describes the structure of your block in the context of the editor.
-	 * This represents what the editor will render when the block is used.
-	 *
-	 * The "edit" property must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 */
-	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
+function DividerBlock(props) {
+	const {
+		attributes: {
+			blockID,
+			borderSize,
+			borderStyle,
+			borderColor,
+			borderHeight,
+			width,
+			alignment,
+		},
+		isSelected,
+		setAttributes,
+		className,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+	} = props;
 
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
-		};
-	})(function (props) {
-		const {
-			attributes: {
-				blockID,
-				borderSize,
-				borderStyle,
-				borderColor,
-				borderHeight,
-				width,
-				alignment,
-			},
-			isSelected,
-			setAttributes,
-			className,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-		} = props;
-
-		// Creates a <p class='wp-block-cgb-block-divider'></p>.
-
+	useEffect(() => {
 		if (
 			blockID === "" ||
 			getClientIdsWithDescendants().some(
@@ -124,9 +102,11 @@ registerBlockType("ub/divider", {
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
+	}, []);
 
-		return [
-			isSelected && (
+	return (
+		<>
+			{isSelected && (
 				<InspectorControls>
 					<PanelBody title={__("Divider Settings")}>
 						<RangeControl
@@ -135,6 +115,7 @@ registerBlockType("ub/divider", {
 							onChange={(value) => setAttributes({ borderSize: value })}
 							min={1}
 							max={20}
+							beforeIcon="minus"
 							allowReset
 						/>
 
@@ -144,6 +125,7 @@ registerBlockType("ub/divider", {
 							onChange={(value) => setAttributes({ borderHeight: value })}
 							min={10}
 							max={200}
+							beforeIcon="minus"
 							allowReset
 						/>
 						<RangeControl
@@ -195,8 +177,7 @@ registerBlockType("ub/divider", {
 						/>
 					</PanelBody>
 				</InspectorControls>
-			),
-
+			)}
 			<div className={className}>
 				<div
 					className="ub_divider"
@@ -214,9 +195,36 @@ registerBlockType("ub/divider", {
 							: {}
 					)}
 				/>
-			</div>,
-		];
-	}),
+			</div>
+		</>
+	);
+}
+
+registerBlockType("ub/divider", {
+	title: __("Divider"),
+	icon: icon,
+	category: "ultimateblocks",
+	keywords: [__("Divider"), __("Separator"), __("Ultimate Blocks")],
+	attributes,
+
+	/**
+	 * The edit function describes the structure of your block in the context of the editor.
+	 * This represents what the editor will render when the block is used.
+	 *
+	 * The "edit" property must be a valid function.
+	 *
+	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+	 */
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(DividerBlock),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
