@@ -1,5 +1,6 @@
 //Import Icon
 import icon from "./icons/icon";
+import { useEffect } from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -23,6 +24,97 @@ const { withSelect } = wp.data;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
+
+function ClickToTweet(props) {
+	const {
+		isSelected,
+		setAttributes,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+		attributes,
+	} = props;
+
+	const { ubTweet, ubVia, tweetFontSize, tweetColor, borderColor, blockID } =
+		attributes;
+	useEffect(() => {
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
+		} else if (
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, []);
+
+	return (
+		<>
+			{isSelected && (
+				<InspectorControls>
+					<PanelBody title={__("Click to Tweet Settings")}>
+						<TextControl
+							label={__("Twitter Username")}
+							placeholder="@"
+							value={ubVia}
+							onChange={(value) => setAttributes({ ubVia: value })}
+						/>
+						<RangeControl
+							label={__("Font Size")}
+							value={tweetFontSize}
+							onChange={(value) => setAttributes({ tweetFontSize: value })}
+							min={10}
+							max={200}
+							beforeIcon="editor-textcolor"
+							allowReset
+						/>
+						<PanelColorSettings
+							title={__("Color Scheme")}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: tweetColor,
+									onChange: (tweetColor) => setAttributes({ tweetColor }),
+									label: __("Tweet Color"),
+								},
+								{
+									value: borderColor,
+									onChange: (borderColor) => setAttributes({ borderColor }),
+									label: __("Border Color"),
+								},
+							]}
+						/>
+					</PanelBody>
+				</InspectorControls>
+			)}
+			<div className={props.className}>
+				<div className="ub_click_to_tweet" style={{ borderColor: borderColor }}>
+					<RichText
+						style={{
+							fontSize: tweetFontSize + "px",
+							color: tweetColor || "inherit",
+						}}
+						placeholder={__("Add Tweetable Content Here")}
+						className="ub_tweet"
+						value={ubTweet}
+						onChange={(value) => setAttributes({ ubTweet: value })}
+					/>
+
+					<div className="ub_click_tweet">
+						<span>
+							<i />
+							{__("Click to Tweet")}
+						</span>
+					</div>
+				</div>
+			</div>
+		</>
+	);
+}
+
 registerBlockType("ub/click-to-tweet", {
 	title: __("Click to Tweet"),
 	icon: icon,
@@ -71,98 +163,7 @@ registerBlockType("ub/click-to-tweet", {
 			getBlock,
 			getClientIdsWithDescendants,
 		};
-	})(function (props) {
-		const {
-			isSelected,
-			setAttributes,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-			attributes,
-		} = props;
-
-		const {
-			ubTweet,
-			ubVia,
-			tweetFontSize,
-			tweetColor,
-			borderColor,
-			blockID,
-		} = attributes;
-
-		if (blockID === "") {
-			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-
-		return [
-			isSelected && (
-				<InspectorControls>
-					<PanelBody title={__("Click to Tweet Settings")}>
-						<TextControl
-							label={__("Twitter Username")}
-							placeholder="@"
-							value={ubVia}
-							onChange={(value) => setAttributes({ ubVia: value })}
-						/>
-						<RangeControl
-							label={__("Font Size")}
-							value={tweetFontSize}
-							onChange={(value) => setAttributes({ tweetFontSize: value })}
-							min={10}
-							max={200}
-							beforeIcon="editor-textcolor"
-							allowReset
-						/>
-						<PanelColorSettings
-							title={__("Color Scheme")}
-							initialOpen={false}
-							colorSettings={[
-								{
-									value: tweetColor,
-									onChange: (tweetColor) => setAttributes({ tweetColor }),
-									label: __("Tweet Color"),
-								},
-								{
-									value: borderColor,
-									onChange: (borderColor) => setAttributes({ borderColor }),
-									label: __("Border Color"),
-								},
-							]}
-						/>
-					</PanelBody>
-				</InspectorControls>
-			),
-			<div className={props.className}>
-				<div className="ub_click_to_tweet" style={{ borderColor: borderColor }}>
-					<RichText
-						style={{
-							fontSize: tweetFontSize + "px",
-							color: tweetColor || "inherit",
-						}}
-						placeholder={__("Add Tweetable Content Here")}
-						className="ub_tweet"
-						value={ubTweet}
-						onChange={(value) => setAttributes({ ubTweet: value })}
-					/>
-
-					<div className="ub_click_tweet">
-						<span>
-							<i />
-							{__("Click to Tweet")}
-						</span>
-					</div>
-				</div>
-			</div>,
-		];
-	}),
+	})(ClickToTweet),
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
