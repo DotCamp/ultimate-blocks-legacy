@@ -9,7 +9,12 @@ import {
 	updateFrom,
 } from "./oldVersions";
 
-import { blockControls, inspectorControls, editorDisplay } from "./components";
+import {
+	blockControls,
+	inspectorControls,
+	editorDisplay,
+	CallToAction,
+} from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 
 const { __ } = wp.i18n;
@@ -323,34 +328,6 @@ registerBlockType("ub/call-to-action-block", {
 				getClientIdsWithDescendants,
 			};
 		}),
-	])(function (props) {
-		const {
-			attributes: { blockID },
-			isSelected,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-			setAttributes,
-		} = props;
-
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-
-		return [
-			isSelected && blockControls(props),
-
-			isSelected && inspectorControls(props),
-
-			<div className={props.className}>{editorDisplay(props)}</div>,
-		];
-	}),
+	])(CallToAction),
 	save: () => null,
 });

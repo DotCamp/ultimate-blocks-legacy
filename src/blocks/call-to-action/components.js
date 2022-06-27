@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const { __ } = wp.i18n;
 
 const {
@@ -380,3 +382,33 @@ export const editorDisplay = (props) => {
 		</>
 	);
 };
+
+export function CallToAction(props){
+	const {
+		attributes: { blockID },
+		isSelected,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+		setAttributes,
+	} = props;
+
+	useEffect(()=>{
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [])
+
+	return <>
+		{isSelected && blockControls(props)}
+		{isSelected && inspectorControls(props)}
+		<div className={props.className}>{editorDisplay(props)}</div>
+	</>
+}
