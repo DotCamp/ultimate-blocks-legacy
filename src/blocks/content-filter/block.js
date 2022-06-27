@@ -1,4 +1,8 @@
-import { OldPanelContent, PanelContent } from "./components/editorDisplay";
+import {
+	OldPanelContent,
+	PanelContent,
+	NewPanelContent,
+} from "./components/editorDisplay";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -177,7 +181,7 @@ registerBlockType("ub/content-filter-block", {
 				insertBlock,
 			};
 		}),
-	])(PanelContent),
+	])(NewPanelContent),
 
 	save: () => <InnerBlocks.Content />,
 });
