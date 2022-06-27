@@ -8,11 +8,12 @@ import {
 
 import { blockControls, inspectorControls, editorDisplay } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
+import { useEffect, useState } from "react";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 
 const { withDispatch, withSelect } = wp.data;
 
@@ -111,46 +112,69 @@ registerBlockType("ub/testimonial-block", {
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
 				.replaceBlock,
 		})),
-		withState({ editable: "" }),
 	])(function (props) {
 		const { isSelected, attributes, block, replaceBlock } = props;
 
-		return [
-			isSelected && blockControls(props),
+		const [editable, setEditable] = useState("");
+		const [activeAlignment, setActiveAlignment] = useState(false);
 
-			isSelected && inspectorControls(props),
+		function setState(state) {
+			if (state.hasOwnProperty("editable")) {
+				setEditable(state.editable);
+			}
+			if (state.hasOwnProperty("activeAlignment")) {
+				setActiveAlignment(state.activeAlignment);
+			}
+		}
 
-			<div className={props.className}>
-				<button
-					onClick={() => {
-						const {
-							ub_testimonial_author,
-							ub_testimonial_author_role,
-							ub_testimonial_text,
-							...otherAttributes
-						} = attributes;
-						replaceBlock(
-							block.clientId,
-							createBlock(
-								"ub/testimonial",
-								Object.assign(otherAttributes, {
-									ub_testimonial_author: mergeRichTextArray(
-										ub_testimonial_author
-									),
-									ub_testimonial_author_role: mergeRichTextArray(
-										ub_testimonial_author_role
-									),
-									ub_testimonial_text: mergeRichTextArray(ub_testimonial_text),
-								})
-							)
-						);
-					}}
-				>
-					{upgradeButtonLabel}
-				</button>
-				{editorDisplay(props)}
-			</div>,
-		];
+		return (
+			<>
+				{isSelected &&
+					blockControls({
+						...props,
+						editable,
+						activeAlignment,
+						setState,
+					})}
+				{isSelected && inspectorControls(props)}
+				<div className={props.className}>
+					<button
+						onClick={() => {
+							const {
+								ub_testimonial_author,
+								ub_testimonial_author_role,
+								ub_testimonial_text,
+								...otherAttributes
+							} = attributes;
+							replaceBlock(
+								block.clientId,
+								createBlock(
+									"ub/testimonial",
+									Object.assign(otherAttributes, {
+										ub_testimonial_author: mergeRichTextArray(
+											ub_testimonial_author
+										),
+										ub_testimonial_author_role: mergeRichTextArray(
+											ub_testimonial_author_role
+										),
+										ub_testimonial_text:
+											mergeRichTextArray(ub_testimonial_text),
+									})
+								)
+							);
+						}}
+					>
+						{upgradeButtonLabel}
+					</button>
+					{editorDisplay({
+						...props,
+						editable,
+						activeAlignment,
+						setState,
+					})}
+				</div>
+			</>
+		);
 	}),
 
 	/**
@@ -235,7 +259,6 @@ registerBlockType("ub/testimonial", {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: compose([
-		withState({ editable: "", activeAlignment: false }),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
 				select("core/block-editor") || select("core/editor");
@@ -256,24 +279,53 @@ registerBlockType("ub/testimonial", {
 			getClientIdsWithDescendants,
 		} = props;
 
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			props.setAttributes({ blockID: block.clientId });
+		const [editable, setEditable] = useState("");
+		const [activeAlignment, setActiveAlignment] = useState(false);
+
+		useEffect(() => {
+			if (
+				blockID === "" ||
+				getClientIdsWithDescendants().some(
+					(ID) =>
+						"blockID" in getBlock(ID).attributes &&
+						getBlock(ID).attributes.blockID === blockID
+				)
+			) {
+				props.setAttributes({ blockID: block.clientId });
+			}
+		}, []);
+
+		function setState(state) {
+			if (state.hasOwnProperty("editable")) {
+				setEditable(state.editable);
+			}
+			if (state.hasOwnProperty("activeAlignment")) {
+				setActiveAlignment(state.activeAlignment);
+			}
 		}
 
-		return [
-			isSelected && blockControls(props),
+		return (
+			<>
+				{isSelected &&
+					blockControls({
+						...props,
+						editable,
+						activeAlignment,
+						setState,
+					})}
 
-			isSelected && inspectorControls(props),
+				{isSelected && inspectorControls(props)}
 
-			<div className={className}>{editorDisplay(props)}</div>,
-		];
+				<div className={className}>
+					{editorDisplay({
+						...props,
+						editable,
+						activeAlignment,
+						setState,
+					})}
+				</div>
+			</>
+		);
 	}),
 	save: () => null,
 });
