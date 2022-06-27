@@ -10,12 +10,11 @@ import Inspector from "./inspector";
 
 const { withSelect } = wp.data;
 const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
-const { Placeholder, Spinner, Toolbar, QueryControls } = wp.components;
+const { Placeholder, Spinner, ToolbarGroup, QueryControls } = wp.components;
 const { addQueryArgs } = wp.url;
 const { apiFetch } = wp;
-const canSelectMultipleCategories = QueryControls.toString().includes(
-	"selectedCategories"
-);
+const canSelectMultipleCategories =
+	QueryControls.toString().includes("selectedCategories");
 
 //function below taken from https://stackoverflow.com/a/37616104
 const filterObjectAttributes = (obj, condition) =>
@@ -157,7 +156,7 @@ export default registerBlockType("ub/post-grid", {
 						controls={["center", "wide", "full"]}
 						onChange={(value) => setAttributes({ wrapAlignment: value })}
 					/>
-					<Toolbar controls={toolBarButton} />
+					<ToolbarGroup controls={toolBarButton} />
 				</BlockControls>
 				<PostGridBlock {...props} />
 			</>

@@ -4,70 +4,43 @@
 
 const { addQueryArgs } = wp.url;
 const { apiFetch } = wp;
-const { Component } = wp.element;
+import { useEffect, useState } from "react";
 
-export default class FeaturedImage extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			imageUrl: "",
-			image_data: [],
-			loaded: false,
-		};
-	}
+export default function FeaturedImage(props) {
+	const [stillMounted, setStillMounted] = useState(false);
+	const [imageUrl, setImageUrl] = useState("");
 
-	componentDidMount() {
-		this.stillMounted = true;
-		this.fetchRequest = apiFetch({
-			path: addQueryArgs("/wp/v2/media/" + this.props.imgID),
-		})
-			.then((image_data) => {
-				if (this.stillMounted) {
-					this.setState({ image_data });
-					this.setImageUrl();
-				}
-			})
-			.catch(() => {
-				if (this.stillMounted) {
-					this.setState({ image_data: [] });
+	useEffect(() => {
+		setStillMounted(true);
+
+		return () => setStillMounted(false);
+	}, []);
+
+	useEffect(() => {
+		if (stillMounted) {
+			apiFetch({
+				path: addQueryArgs("/wp/v2/media/" + props.imgID),
+			}).then((image_data) => {
+				let imageUrl = image_data?.media_details?.sizes["full"]?.source_url;
+
+				if (imageUrl) {
+					setImageUrl(imageUrl);
 				}
 			});
-	}
-
-	componentWillUnmount() {
-		this.stillMounted = false;
-	}
-
-	setImageUrl = () => {
-		let imageUrl = this.getImageUrl();
-
-		if (!imageUrl) {
-			this.setState({ loaded: true });
-		} else {
-			this.setState({ imageUrl });
 		}
-	};
+	}, [stillMounted]);
 
-	getImageUrl = () =>
-		this.state.image_data?.media_details?.sizes["full"]?.source_url;
+	const { postImageWidth, preservePostImageAspectRatio, postImageHeight } =
+		props.attributes;
 
-	render() {
-		const { imageUrl } = this.state;
-		const {
-			postImageWidth,
-			preservePostImageAspectRatio,
-			postImageHeight,
-		} = this.props.attributes;
-
-		return (
-			<img
-				style={{
-					width: postImageWidth,
-					...(!preservePostImageAspectRatio && { height: postImageHeight }),
-				}}
-				src={imageUrl || this.props.imgSizeLandscape}
-				alt="img"
-			/>
-		);
-	}
+	return (
+		<img
+			style={{
+				width: postImageWidth,
+				...(!preservePostImageAspectRatio && { height: postImageHeight }),
+			}}
+			src={imageUrl || props.imgSizeLandscape}
+			alt="img"
+		/>
+	);
 }
