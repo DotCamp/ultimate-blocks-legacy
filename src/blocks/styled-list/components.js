@@ -8,13 +8,8 @@ const {
 	AlignmentToolbar,
 	BlockControls,
 } = wp.blockEditor || wp.editor;
-const {
-	Button,
-	Dropdown,
-	PanelBody,
-	RangeControl,
-	ToggleControl,
-} = wp.components;
+const { Button, Dropdown, PanelBody, RangeControl, ToggleControl } =
+	wp.components;
 
 import {
 	dashesToCamelcase,
@@ -24,37 +19,55 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { Component, createRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(fas, fab);
 
 const allIcons = Object.assign(fas, fab);
 
-class EditorComponent extends Component {
-	constructor(props) {
-		super(props);
+function EditorComponent(props) {
+	const [iconChoices, setIconChoices] = useState([]);
+	const [availableIcons, setAvailableIcons] = useState([]);
+	const [iconSearchTerm, setIconSearchTerm] = useState("");
+	const [iconSearchResultsPage, setIconSearchResultsPage] = useState(0);
+	const [recentSelection, setRecentSelection] = useState("");
+	const [selectionTime, setSelectionTime] = useState(0);
+	const [setFontSize, toggleSetFontSize] = useState(false);
+	const [hasApiAccess, setHasApiAccess] = useState(false);
 
-		this.state = {
-			iconChoices: [],
-			availableIcons: [],
-			iconSearchTerm: "",
-			iconSearchResultsPage: 0,
-			recentSelection: "",
-			selectionTime: 0,
-			setFontSize: false,
-			hasApiAccess: false,
-		};
-		this.blockContainer = createRef();
-	}
+	const {
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+		isSelected,
+		onReplace,
+		setAttributes,
+		attributes: {
+			list,
+			listItem,
+			alignment,
+			iconColor,
+			iconSize,
+			fontSize,
+			selectedIcon,
+			blockID,
+			itemSpacing,
+			columns,
+			maxMobileColumns,
+		},
+	} = props;
 
-	loadIconList() {
+	const blockContainer = useRef(null);
+
+	function loadIconList() {
 		const iconList = Object.keys(allIcons).sort();
 
+		//promise not being loaded
 		loadPromise.then(() => {
-			this.settings = new models.Settings();
+			const settings = new models.Settings();
 
-			this.settings.fetch().then((response) => {
+			settings.fetch().then((response) => {
 				let frequentIcons = [];
 
 				if (response.ub_icon_choices !== "") {
@@ -71,7 +84,7 @@ class EditorComponent extends Component {
 						.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
 				}
 				if (frequentIcons.length) {
-					this.setState({ iconChoices: frequentIcons });
+					setIconChoices(frequentIcons);
 
 					//check if anything from ub_icon_choices has been trimmed in frequentIcons
 					if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
@@ -97,24 +110,14 @@ class EditorComponent extends Component {
 							frequentIconNames.indexOf(b.iconName)
 					);
 
-					this.setState({ availableIcons: [...icons, ...otherIcons] });
-				} else {
-					this.setState({
-						availableIcons: iconList.map((name) => allIcons[name]),
-					});
+					setAvailableIcons([...icons, ...otherIcons]);
 				}
-				this.setState({ hasApiAccess: true });
+				setHasApiAccess(true);
 			});
 		});
 	}
 
-	updateIconList() {
-		const {
-			availableIcons,
-			recentSelection,
-			selectionTime,
-			iconChoices,
-		} = this.state;
+	function updateIconList() {
 		const prevIconMatch = iconChoices
 			.map((i) => i.name)
 			.indexOf(recentSelection);
@@ -156,136 +159,103 @@ class EditorComponent extends Component {
 				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName)
 		);
 
-		this.setState({
-			recentSelection: "",
-			selectionTime: 0,
-			iconChoices: iconPrefs,
-			availableIcons: [...icons, ...otherIcons],
-		});
+		setRecentSelection("");
+		setSelectionTime(0);
+		setIconChoices(iconPrefs);
+		setAvailableIcons([...icons, ...otherIcons]);
 
 		const newIconArray = new models.Settings({
 			ub_icon_choices: JSON.stringify(iconPrefs),
 		});
+
 		newIconArray.save();
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.hasApiAccess) {
-			if (!prevProps.isSelected && this.props.isSelected) {
-				this.loadIconList();
-			}
-			if (prevProps.isSelected && !this.props.isSelected) {
-				this.updateIconList();
+	useEffect(() => {
+		if (hasApiAccess) {
+			if (isSelected) {
+				loadIconList();
+			} else {
+				updateIconList();
 			}
 		}
-	}
+	}, [isSelected]);
 
-	componentDidMount() {
-		this.setState({
-			availableIcons: Object.keys(allIcons)
+	useEffect(() => {
+		setAvailableIcons(
+			Object.keys(allIcons)
 				.sort()
-				.map((name) => allIcons[name]),
-		});
+				.map((name) => allIcons[name])
+		);
 
-		this.loadIconList();
+		loadIconList();
 
-		this.setState({ setFontSize: this.props.attributes.fontSize > 0 });
-	}
-
-	render() {
-		const {
-			availableIcons,
-			iconSearchTerm,
-			iconSearchResultsPage,
-			recentSelection,
-			hasApiAccess,
-			setFontSize,
-		} = this.state;
-
-		const {
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-			isSelected,
-			setAttributes,
-			attributes: {
-				list,
-				listItem,
-				alignment,
-				iconColor,
-				iconSize,
-				fontSize,
-				selectedIcon,
-				blockID,
-				itemSpacing,
-				columns,
-				maxMobileColumns,
-			},
-			onReplace,
-		} = this.props;
+		toggleSetFontSize(fontSize > 0);
 
 		if (
 			blockID === "" ||
 			getClientIdsWithDescendants().some(
 				(ID) =>
 					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === this.props.attributes.blockID
+					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
+	}, []);
 
-		if (
-			JSON.stringify(listItem) !==
-			`[${Array(3)
-				.fill('{"text":"","selectedIcon":"check","indent":0}')
-				.join(",")}]`
-		) {
-			let newList = "";
+	if (
+		JSON.stringify(listItem) !==
+		`[${Array(3)
+			.fill('{"text":"","selectedIcon":"check","indent":0}')
+			.join(",")}]`
+	) {
+		let newList = "";
 
-			listItem.forEach((item, i) => {
-				let insertionPoint = newList.length;
+		listItem.forEach((item, i) => {
+			let insertionPoint = newList.length;
 
-				for (let j = 0; j < item.indent; j++) {
-					let ulPosition = newList.lastIndexOf("</ul>", insertionPoint - 1);
-					if (ulPosition > -1 && newList.lastIndexOf("<li>") < ulPosition) {
-						insertionPoint = ulPosition;
-					} else {
-						insertionPoint -= 5;
-						break;
-					}
+			for (let j = 0; j < item.indent; j++) {
+				let ulPosition = newList.lastIndexOf("</ul>", insertionPoint - 1);
+				if (ulPosition > -1 && newList.lastIndexOf("<li>") < ulPosition) {
+					insertionPoint = ulPosition;
+				} else {
+					insertionPoint -= 5;
+					break;
 				}
+			}
 
-				let insertedItem =
-					i === 0 || item.indent <= listItem[i - 1].indent
-						? `<li>${item.text}</li>`
-						: `<ul class="fa-ul"><li>${item.text}</li></ul>`;
+			let insertedItem =
+				i === 0 || item.indent <= listItem[i - 1].indent
+					? `<li>${item.text}</li>`
+					: `<ul class="fa-ul"><li>${item.text}</li></ul>`;
 
-				newList = [
-					newList.slice(0, insertionPoint),
-					insertedItem,
-					newList.slice(insertionPoint),
-				].join("");
-			});
+			newList = [
+				newList.slice(0, insertionPoint),
+				insertedItem,
+				newList.slice(insertionPoint),
+			].join("");
+		});
 
-			setAttributes({
-				selectedIcon: listItem[0].selectedIcon,
-				list: newList,
-				listItem: Array(3).fill({
-					text: "",
-					selectedIcon: "check",
-					indent: 0,
-				}),
-			});
-		}
+		setAttributes({
+			selectedIcon: listItem[0].selectedIcon,
+			list: newList,
+			listItem: Array(3).fill({
+				text: "",
+				selectedIcon: "check",
+				indent: 0,
+			}),
+		});
+	}
 
-		const iconListPage = splitArrayIntoChunks(
-			availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
-			24
-		);
+	const iconListPage = splitArrayIntoChunks(
+		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
+		24
+	);
 
-		return [
-			isSelected && (
+	return (
+		<>
+			{isSelected && (
 				<InspectorControls>
 					<PanelBody title={__("Icon Options")}>
 						<div
@@ -331,12 +301,10 @@ class EditorComponent extends Component {
 											<input
 												type="text"
 												value={iconSearchTerm}
-												onChange={(e) =>
-													this.setState({
-														iconSearchTerm: e.target.value,
-														iconSearchResultsPage: 0,
-													})
-												}
+												onChange={(e) => {
+													setIconSearchTerm(e.target.value);
+													setIconSearchResultsPage(0);
+												}}
 											/>
 											<br />
 											{iconListPage.length > 0 && (
@@ -344,10 +312,9 @@ class EditorComponent extends Component {
 													<button
 														onClick={() => {
 															if (iconSearchResultsPage > 0) {
-																this.setState({
-																	iconSearchResultsPage:
-																		iconSearchResultsPage - 1,
-																});
+																setIconSearchResultsPage(
+																	iconSearchResultsPage - 1
+																);
 															}
 														}}
 													>
@@ -362,10 +329,9 @@ class EditorComponent extends Component {
 																iconSearchResultsPage <
 																iconListPage.length - 1
 															) {
-																this.setState({
-																	iconSearchResultsPage:
-																		iconSearchResultsPage + 1,
-																});
+																setIconSearchResultsPage(
+																	iconSearchResultsPage + 1
+																);
 															}
 														}}
 													>
@@ -382,10 +348,8 @@ class EditorComponent extends Component {
 														label={i.iconName}
 														onClick={() => {
 															if (selectedIcon !== i.iconName) {
-																this.setState({
-																	recentSelection: i.iconName,
-																	selectionTime: ~~(Date.now() / 1000),
-																});
+																setRecentSelection(i.iconName);
+																setSelectionTime(~~(Date.now() / 1000));
 
 																setAttributes({ selectedIcon: i.iconName });
 															}
@@ -396,7 +360,7 @@ class EditorComponent extends Component {
 									)}
 									onToggle={(isOpen) => {
 										if (!isOpen && recentSelection && hasApiAccess) {
-											this.updateIconList();
+											updateIconList();
 										}
 									}}
 								/>
@@ -431,13 +395,12 @@ class EditorComponent extends Component {
 									setAttributes({
 										fontSize: parseInt(
 											getComputedStyle(
-												this.blockContainer.current.children[0]
+												blockContainer.current.children[0]
 											).fontSize.slice(0, -2)
 										),
 									});
 								}
-
-								this.setState({ setFontSize: !setFontSize });
+								toggleSetFontSize(!setFontSize);
 							}}
 						/>
 						{setFontSize && (
@@ -485,22 +448,22 @@ class EditorComponent extends Component {
 						)}
 					</PanelBody>
 				</InspectorControls>
-			),
+			)}
 
-			isSelected && (
+			{isSelected && (
 				<BlockControls>
 					<AlignmentToolbar
 						value={alignment}
 						onChange={(value) => setAttributes({ alignment: value })}
 					/>
 				</BlockControls>
-			),
+			)}
 
 			<div
 				className="ub_styled_list"
 				id={`ub-styled-list-${blockID}`}
 				style={{ textAlign: alignment }}
-				ref={this.blockContainer}
+				ref={blockContainer}
 			>
 				<RichText
 					className="fa-ul"
@@ -509,7 +472,7 @@ class EditorComponent extends Component {
 					__unstableMultilineRootTag={"ul"}
 					onSplit={(list) =>
 						createBlock("ub/styled-list", {
-							...this.props.attributes,
+							...props.attributes,
 							blockID: "",
 							list,
 						})
@@ -551,9 +514,9 @@ class EditorComponent extends Component {
                     }`,
 					}}
 				/>
-			</div>,
-		];
-	}
+			</div>
+		</>
+	);
 }
 
 export default EditorComponent;
