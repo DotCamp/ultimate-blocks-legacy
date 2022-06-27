@@ -4,6 +4,8 @@ import { Slider } from "./components";
 
 import { version_1_1_4 } from "./oldVersions";
 
+import { useEffect, useState } from "react";
+
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
@@ -27,8 +29,6 @@ const {
 	PanelBody,
 	SelectControl,
 } = wp.components;
-
-const { withState, compose } = wp.compose;
 
 const { withSelect } = wp.data;
 
@@ -132,96 +132,80 @@ const attributes = {
 	},
 };
 
-registerBlockType("ub/image-slider", {
-	title: __("Image Slider"),
-	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Image Slider"), __("Slideshow"), __("Ultimate Blocks")],
-	attributes,
+function ImageSliderMain(props) {
+	const [componentKey, setComponentKey] = useState(0);
+	const [activeSlide, setActiveSlide] = useState(0);
 
-	edit: compose([
-		withState({ componentKey: 0, activeSlide: 0 }),
-		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+	const {
+		attributes: {
+			images,
+			pics,
+			captions,
+			descriptions,
+			wrapsAround,
+			isDraggable,
+			autoplays,
+			autoplayDuration,
+			sliderHeight,
+			showPageDots,
+			usePagination,
+			paginationType,
+			blockID,
+			transition,
+			slideShadows,
+			rotate,
+			stretch,
+			depth,
+			modifier,
+			limitRotation,
+			shadow,
+			shadowOffset,
+			shadowScale,
+		},
+		setAttributes,
+		isSelected,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+	} = props;
 
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
-			};
-		}),
-	])(function (props) {
-		const {
-			attributes: {
-				images,
-				pics,
-				captions,
-				descriptions,
-				wrapsAround,
-				isDraggable,
-				autoplays,
-				autoplayDuration,
-				sliderHeight,
-				showPageDots,
-				usePagination,
-				paginationType,
-				blockID,
-				transition,
-				slideShadows,
-				rotate,
-				stretch,
-				depth,
-				modifier,
-				limitRotation,
-				shadow,
-				shadowOffset,
-				shadowScale,
-			},
-			setAttributes,
-			isSelected,
-			setState,
-			componentKey,
-			activeSlide,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-		} = props;
+	//maybe use useEffect for some of the values here?
 
-		if (images && JSON.parse(images).length !== 0 && pics.length === 0) {
-			setAttributes({
-				pics: JSON.parse(images),
-				images: "[]",
-				descriptions: JSON.parse(captions),
-				captions: "[]",
-			});
-		}
-		const imageArray = pics;
-		const captionArray = descriptions;
+	if (images && JSON.parse(images).length !== 0 && pics.length === 0) {
+		setAttributes({
+			pics: JSON.parse(images),
+			images: "[]",
+			descriptions: JSON.parse(captions),
+			captions: "[]",
+		});
+	}
+	const imageArray = pics;
+	const captionArray = descriptions;
 
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		} else if (!showPageDots && usePagination) {
-			setAttributes({ usePagination: false });
-		}
+	if (
+		blockID === "" ||
+		getClientIdsWithDescendants().some(
+			(ID) =>
+				"blockID" in getBlock(ID).attributes &&
+				getBlock(ID).attributes.blockID === blockID
+		)
+	) {
+		setAttributes({ blockID: block.clientId });
+	} else if (!showPageDots && usePagination) {
+		setAttributes({ usePagination: false });
+	}
 
-		if (paginationType === "") {
-			setAttributes({ paginationType: "bullets" });
-		}
+	if (paginationType === "") {
+		setAttributes({ paginationType: "bullets" });
+	}
 
-		if (paginationType !== "" && componentKey === 0) {
-			setState({ componentKey: componentKey + 1 });
-		}
+	if (paginationType !== "" && componentKey === 0) {
+		setComponentKey(componentKey + 1);
+	}
 
-		return [
-			isSelected && (
+	return (
+		<>
+			{isSelected && (
 				<BlockControls>
 					{imageArray.length > 0 && (
 						<ToolbarGroup>
@@ -257,8 +241,8 @@ registerBlockType("ub/image-slider", {
 						</ToolbarGroup>
 					)}
 				</BlockControls>
-			),
-			isSelected && imageArray.length > 0 && (
+			)}
+			{isSelected && imageArray.length > 0 && (
 				<InspectorControls>
 					<PanelBody title={__("Slider Settings")} initialOpen={false}>
 						<ToggleControl
@@ -266,7 +250,7 @@ registerBlockType("ub/image-slider", {
 							checked={wrapsAround}
 							onChange={() => {
 								setAttributes({ wrapsAround: !wrapsAround });
-								setState({ componentKey: componentKey + 1 });
+								setComponentKey(componentKey + 1);
 							}}
 						/>
 						<ToggleControl
@@ -274,7 +258,7 @@ registerBlockType("ub/image-slider", {
 							checked={isDraggable}
 							onChange={() => {
 								setAttributes({ isDraggable: !isDraggable });
-								setState({ componentKey: componentKey + 1 });
+								setComponentKey(componentKey + 1);
 							}}
 						/>
 						<ToggleControl
@@ -282,7 +266,7 @@ registerBlockType("ub/image-slider", {
 							checked={usePagination}
 							onChange={() => {
 								setAttributes({ usePagination: !usePagination });
-								setState({ componentKey: componentKey + 1 });
+								setComponentKey(componentKey + 1);
 							}}
 						/>
 						{usePagination && (
@@ -295,7 +279,7 @@ registerBlockType("ub/image-slider", {
 								}))}
 								onChange={(paginationType) => {
 									setAttributes({ paginationType });
-									setState({ componentKey: componentKey + 1 });
+									setComponentKey(componentKey + 1);
 								}}
 							/>
 						)}
@@ -310,7 +294,7 @@ registerBlockType("ub/image-slider", {
 							)}
 							onChange={(transition) => {
 								setAttributes({ transition });
-								setState({ componentKey: componentKey + 1 });
+								setComponentKey(componentKey + 1);
 							}}
 						/>
 						{["cube", "coverflow", "flip"].includes(transition) && (
@@ -319,7 +303,7 @@ registerBlockType("ub/image-slider", {
 								checked={slideShadows}
 								onChange={() => {
 									setAttributes({ slideShadows: !slideShadows });
-									setState({ componentKey: componentKey + 1 });
+									setComponentKey(componentKey + 1);
 								}}
 							/>
 						)}
@@ -330,9 +314,7 @@ registerBlockType("ub/image-slider", {
 									value={rotate}
 									onChange={(rotate) => {
 										setAttributes({ rotate });
-										setState({
-											componentKey: componentKey + 1,
-										});
+										setComponentKey(componentKey + 1);
 									}}
 									min={0}
 									max={180} //change if this proves to be excessive
@@ -342,9 +324,7 @@ registerBlockType("ub/image-slider", {
 									value={stretch}
 									onChange={(stretch) => {
 										setAttributes({ stretch });
-										setState({
-											componentKey: componentKey + 1,
-										});
+										setComponentKey(componentKey + 1);
 									}}
 									min={0}
 									max={180} //change if this proves to be excessive
@@ -354,9 +334,7 @@ registerBlockType("ub/image-slider", {
 									value={depth}
 									onChange={(depth) => {
 										setAttributes({ depth });
-										setState({
-											componentKey: componentKey + 1,
-										});
+										setComponentKey(componentKey + 1);
 									}}
 									min={0}
 									max={200}
@@ -366,9 +344,7 @@ registerBlockType("ub/image-slider", {
 									value={modifier}
 									onChange={(modifier) => {
 										setAttributes({ modifier });
-										setState({
-											componentKey: componentKey + 1,
-										});
+										setComponentKey(componentKey + 1);
 									}}
 									min={0}
 									max={3} //change if this proves to be excessive
@@ -383,7 +359,7 @@ registerBlockType("ub/image-slider", {
 									checked={shadow}
 									onChange={() => {
 										setAttributes({ shadow: !shadow });
-										setState({ componentKey: componentKey + 1 });
+										setComponentKey(componentKey + 1);
 									}}
 								/>
 								<RangeControl
@@ -391,9 +367,7 @@ registerBlockType("ub/image-slider", {
 									value={shadowOffset}
 									onChange={(shadowOffset) => {
 										setAttributes({ shadowOffset });
-										setState({
-											componentKey: componentKey + 1,
-										});
+										setComponentKey(componentKey + 1);
 									}}
 									min={1}
 									max={100}
@@ -403,9 +377,7 @@ registerBlockType("ub/image-slider", {
 									value={shadowScale}
 									onChange={(shadowScale) => {
 										setAttributes({ shadowScale });
-										setState({
-											componentKey: componentKey + 1,
-										});
+										setComponentKey(componentKey + 1);
 									}}
 									min={0}
 									max={2}
@@ -419,7 +391,7 @@ registerBlockType("ub/image-slider", {
 								checked={limitRotation}
 								onChange={() => {
 									setAttributes({ limitRotation: !limitRotation });
-									setState({ componentKey: componentKey + 1 });
+									setComponentKey(componentKey + 1);
 								}}
 							/>
 						)}
@@ -428,7 +400,7 @@ registerBlockType("ub/image-slider", {
 							checked={autoplays}
 							onChange={() => {
 								setAttributes({ autoplays: !autoplays });
-								setState({ componentKey: componentKey + 1 });
+								setComponentKey(componentKey + 1);
 							}}
 						/>
 						{autoplays && (
@@ -437,9 +409,7 @@ registerBlockType("ub/image-slider", {
 								value={autoplayDuration}
 								onChange={(value) => {
 									setAttributes({ autoplayDuration: value });
-									setState({
-										componentKey: componentKey + 1,
-									});
+									setComponentKey(componentKey + 1);
 								}}
 								min={1}
 								max={10}
@@ -450,14 +420,14 @@ registerBlockType("ub/image-slider", {
 							value={sliderHeight}
 							onChange={(newHeight) => {
 								setAttributes({ sliderHeight: newHeight });
-								setState({ componentKey: componentKey + 1 }); //ensure proper placement of arrows and page dots
+								setComponentKey(componentKey + 1); //ensure proper placement of arrows and page dots
 							}}
 							min={200}
 							max={500}
 						/>
 					</PanelBody>
 				</InspectorControls>
-			),
+			)}
 
 			<div
 				id={`ub_image_slider_${blockID}`}
@@ -489,7 +459,7 @@ registerBlockType("ub/image-slider", {
 							setActiveSlide={(val) => {
 								if (val !== activeSlide)
 									//needed to prevent infinite loop
-									setState({ activeSlide: val });
+									setActiveSlide(val);
 							}}
 							initialSlide={activeSlide}
 							draggable={isDraggable}
@@ -622,9 +592,28 @@ registerBlockType("ub/image-slider", {
 						)}
 					</>
 				)}
-			</div>,
-		];
-	}),
+			</div>
+		</>
+	);
+}
+
+registerBlockType("ub/image-slider", {
+	title: __("Image Slider"),
+	icon: icon,
+	category: "ultimateblocks",
+	keywords: [__("Image Slider"), __("Slideshow"), __("Ultimate Blocks")],
+	attributes,
+
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(ImageSliderMain),
 	save() {
 		return null;
 	},
