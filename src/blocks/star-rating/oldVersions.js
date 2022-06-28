@@ -1,45 +1,40 @@
-import { EmptyStar, FullStar } from './icons';
+import { EmptyStar, FullStar } from "./icons";
 
 export const oldAttributes = {
 	starCount: {
-		type: 'number',
-		default: 5
+		type: "number",
+		default: 5,
 	},
 	starSize: {
-		type: 'number',
-		default: 20
+		type: "number",
+		default: 20,
 	},
 	starColor: {
-		type: 'string',
-		default: '#ffff00'
+		type: "string",
+		default: "#ffff00",
 	},
 	selectedStars: {
-		type: 'number',
-		default: 0
+		type: "number",
+		default: 0,
 	},
 	reviewText: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub-review-text'
+		type: "array",
+		source: "children",
+		selector: ".ub-review-text",
 	},
 	reviewTextAlign: {
-		type: 'string',
-		default: 'text'
+		type: "string",
+		default: "text",
 	},
 	starAlign: {
-		type: 'string',
-		default: 'left'
-	}
+		type: "string",
+		default: "left",
+	},
 };
 
-export const version_1_1_2 = props => {
-	const {
-		starCount,
-		starSize,
-		starColor,
-		selectedStars,
-		reviewText
-	} = props.attributes;
+export const version_1_1_2 = (props) => {
+	const { starCount, starSize, starColor, selectedStars, reviewText } =
+		props.attributes;
 	return (
 		<div className="ub-star-rating">
 			<div className="ub-star-container">
@@ -58,19 +53,19 @@ export const version_1_1_2 = props => {
 	);
 };
 
-export const version_1_1_5 = props => {
+export const version_1_1_5 = (props) => {
 	const {
 		starCount,
 		starSize,
 		starColor,
 		selectedStars,
 		reviewText,
-		reviewTextAlign
+		reviewTextAlign,
 	} = props.attributes;
 	return (
 		<div className="ub-star-rating">
 			<div className="ub-star-container">
-				{[...Array(starCount)].map((e, i) => (
+				{[...Array(starCount)].map((_, i) => (
 					<div key={i}>
 						{i < selectedStars ? (
 							<FullStar size={starSize} fillColor={starColor} />
@@ -80,17 +75,14 @@ export const version_1_1_5 = props => {
 					</div>
 				))}
 			</div>
-			<div
-				className="ub-review-text"
-				style={{ textAlign: reviewTextAlign }}
-			>
+			<div className="ub-review-text" style={{ textAlign: reviewTextAlign }}>
 				{reviewText}
 			</div>
 		</div>
 	);
 };
 
-export const version_2_0_0 = props => {
+export const version_2_0_0 = (props) => {
 	const {
 		starCount,
 		starSize,
@@ -98,7 +90,7 @@ export const version_2_0_0 = props => {
 		selectedStars,
 		reviewText,
 		reviewTextAlign,
-		starAlign
+		starAlign,
 	} = props.attributes;
 	return (
 		<div className="ub-star-rating">
@@ -106,19 +98,16 @@ export const version_2_0_0 = props => {
 				className="ub-star-outer-container"
 				style={{
 					justifyContent:
-						starAlign === 'center'
-							? 'center'
-							: `flex-${starAlign === 'left' ? 'start' : 'end'}`
+						starAlign === "center"
+							? "center"
+							: `flex-${starAlign === "left" ? "start" : "end"}`,
 				}}
 			>
 				<div className="ub-star-inner-container">
-					{[...Array(starCount)].map((e, i) => (
+					{[...Array(starCount)].map((_, i) => (
 						<div key={i}>
 							{i < selectedStars ? (
-								<FullStar
-									size={starSize}
-									fillColor={starColor}
-								/>
+								<FullStar size={starSize} fillColor={starColor} />
 							) : (
 								<EmptyStar size={starSize} />
 							)}
@@ -126,17 +115,14 @@ export const version_2_0_0 = props => {
 					))}
 				</div>
 			</div>
-			<div
-				className="ub-review-text"
-				style={{ textAlign: reviewTextAlign }}
-			>
+			<div className="ub-review-text" style={{ textAlign: reviewTextAlign }}>
 				{reviewText}
 			</div>
 		</div>
 	);
 };
 
-export const updateFrom = oldVersion => ({
+export const updateFrom = (oldVersion) => ({
 	attributes: oldAttributes,
-	save: oldVersion
+	save: oldVersion,
 });

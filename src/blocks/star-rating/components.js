@@ -111,7 +111,7 @@ export const inspectorControls = (props) => {
 };
 
 export const editorDisplay = (props) => {
-	const { setAttributes, setState, highlightedStars } = props;
+	const { setAttributes, setHighlightedStars, highlightedStars } = props;
 
 	const {
 		blockID,
@@ -137,12 +137,12 @@ export const editorDisplay = (props) => {
 			>
 				<div
 					className="ub-star-inner-container"
-					onMouseLeave={() => setState({ highlightedStars: 0 })}
+					onMouseLeave={() => setHighlightedStars(0)}
 				>
 					{[...Array(starCount)].map((e, i) => (
 						<div
 							key={i}
-							onMouseEnter={() => setState({ highlightedStars: i + 1 })}
+							onMouseEnter={() => setHighlightedStars(i + 1)}
 							onClick={() => {
 								if (selectedStars % 1 === 0) {
 									setAttributes({

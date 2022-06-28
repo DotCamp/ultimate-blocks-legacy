@@ -2,7 +2,7 @@ const { __ } = wp.i18n;
 
 const { registerBlockType, createBlock } = wp.blocks;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { withDispatch, withSelect } = wp.data;
 
 import { EmptyStar, BlockIcon, FullStar } from "./icons";
@@ -15,6 +15,7 @@ import {
 } from "./oldVersions";
 import { blockControls, inspectorControls, editorDisplay } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
+import { useState, useEffect } from "react";
 
 const attributes = {
 	blockID: {
@@ -55,6 +56,77 @@ const attributes = {
 	},
 };
 
+function OldStarRating(props) {
+	const [highlightedStars, setHighlightedStars] = useState(0);
+
+	const { isSelected, block, replaceBlock, attributes } = props;
+
+	return (
+		<>
+			{isSelected && blockControls(props)}
+			{isSelected && inspectorControls(props)}
+			<div className="ub-star-rating">
+				<button
+					onClick={() => {
+						const { reviewText, ...otherAttributes } = attributes;
+						replaceBlock(
+							block.clientId,
+							createBlock(
+								"ub/star-rating-block",
+								Object.assign(otherAttributes, {
+									reviewText: mergeRichTextArray(reviewText),
+								})
+							)
+						);
+					}}
+				>
+					{upgradeButtonLabel}
+				</button>
+				{editorDisplay({ ...props, highlightedStars, setHighlightedStars })}
+			</div>
+		</>
+	);
+}
+
+function StarRating(props) {
+	const [highlightedStars, setHighlightedStars] = useState(0);
+	const {
+		isSelected,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+		attributes: { starColor, blockID },
+		setAttributes,
+	} = props;
+
+	useEffect(() => {
+		if (blockID === "") {
+			setAttributes({
+				blockID: block.clientId,
+				starColor: "#ffb901",
+			});
+		} else if (
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
+		}
+	});
+
+	return (
+		<>
+			{isSelected && blockControls(props)}
+			{isSelected && inspectorControls(props)}
+			<div className="ub-star-rating">
+				{editorDisplay({ ...props, highlightedStars, setHighlightedStars })}
+			</div>
+		</>
+	);
+}
+
 registerBlockType("ub/star-rating", {
 	title: __("Star Rating"),
 	icon: BlockIcon,
@@ -75,34 +147,7 @@ registerBlockType("ub/star-rating", {
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
 				.replaceBlock,
 		})),
-		withState({ highlightedStars: 0 }),
-	])(function (props) {
-		const { isSelected, block, replaceBlock, attributes } = props;
-
-		return [
-			isSelected && blockControls(props),
-			isSelected && inspectorControls(props),
-			<div className="ub-star-rating">
-				<button
-					onClick={() => {
-						const { reviewText, ...otherAttributes } = attributes;
-						replaceBlock(
-							block.clientId,
-							createBlock(
-								"ub/star-rating-block",
-								Object.assign(otherAttributes, {
-									reviewText: mergeRichTextArray(reviewText),
-								})
-							)
-						);
-					}}
-				>
-					{upgradeButtonLabel}
-				</button>
-				{editorDisplay(props)}
-			</div>,
-		];
-	}),
+	])(OldStarRating),
 
 	save(props) {
 		const {
@@ -158,48 +203,15 @@ registerBlockType("ub/star-rating-block", {
 
 	attributes,
 
-	edit: compose([
-		withState({ highlightedStars: 0 }),
-		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
-			};
-		}),
-	])(function (props) {
-		const {
-			isSelected,
-			block,
+		return {
+			block: getBlock(ownProps.clientId),
 			getBlock,
 			getClientIdsWithDescendants,
-			attributes: { starColor, blockID },
-			setAttributes,
-		} = props;
-
-		if (blockID === "") {
-			setAttributes({
-				blockID: block.clientId,
-				starColor: "#ffb901",
-			});
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-
-		return [
-			isSelected && blockControls(props),
-			isSelected && inspectorControls(props),
-			<div className="ub-star-rating">{editorDisplay(props)}</div>,
-		];
-	}),
+		};
+	})(StarRating),
 	save: () => null,
 });
