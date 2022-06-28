@@ -2,6 +2,8 @@ import { ExpandRoot } from "./components";
 
 import icon from "./icon";
 
+import { useEffect } from "react";
+
 const { __ } = wp.i18n;
 
 const { registerBlockType } = wp.blocks;
@@ -70,6 +72,72 @@ registerBlockType("ub/expand", {
 	save: () => <InnerBlocks.Content />,
 });
 
+function ExpandPortion(props) {
+	const {
+		attributes,
+		setAttributes,
+		isSelected,
+		block,
+		updateBlockAttributes,
+		getBlock,
+		getBlockRootClientId,
+	} = props;
+	const { clickText, displayType, isVisible, toggleAlign } = attributes;
+
+	const parentBlockID = getBlockRootClientId(block.clientId);
+
+	useEffect(() => {
+		if (
+			props.attributes.parentID === "" ||
+			props.attributes.parentID !== getBlock(parentBlockID).attributes.blockID
+		) {
+			props.attributes.parentID = getBlock(parentBlockID).attributes.blockID;
+		}
+	}, []);
+
+	return (
+		<>
+			{isSelected && (
+				<BlockControls>
+					<AlignmentToolbar
+						value={toggleAlign} //attribute from parent can't be directly used
+						onChange={(newAlignment) => {
+							updateBlockAttributes(parentBlockID, {
+								toggleAlign: newAlignment,
+							});
+
+							getBlock(parentBlockID).innerBlocks.forEach((innerBlock) =>
+								updateBlockAttributes(innerBlock.clientId, {
+									toggleAlign: newAlignment,
+								})
+							);
+						}}
+						controls={["left", "center", "right"]}
+					></AlignmentToolbar>
+				</BlockControls>
+			)}
+			<div
+				className={`ub-expand-portion ub-expand-${displayType}${
+					displayType === "full" && !isVisible ? " ub-hide" : ""
+				}`}
+			>
+				<InnerBlocks
+					templateLock={false}
+					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
+				/>
+				<RichText
+					style={{ textAlign: toggleAlign }} //attribute from parent can't be directly used
+					value={clickText}
+					onChange={(value) => setAttributes({ clickText: value })}
+					placeholder={__(
+						`Text for show ${displayType === "full" ? "less" : "more"} button`
+					)}
+				/>
+			</div>
+		</>
+	);
+}
+
 registerBlockType("ub/expand-portion", {
 	title: __("Expand Portion"),
 	parent: "ub/expand",
@@ -120,66 +188,6 @@ registerBlockType("ub/expand-portion", {
 				dispatch("core/block-editor") || dispatch("core/editor")
 			).updateBlockAttributes,
 		})),
-	])(function (props) {
-		const {
-			attributes,
-			setAttributes,
-			isSelected,
-			block,
-			updateBlockAttributes,
-			getBlock,
-			getBlockRootClientId,
-		} = props;
-		const { clickText, displayType, isVisible, toggleAlign } = attributes;
-
-		const parentBlockID = getBlockRootClientId(block.clientId);
-
-		if (
-			props.attributes.parentID === "" ||
-			props.attributes.parentID !== getBlock(parentBlockID).attributes.blockID
-		) {
-			props.attributes.parentID = getBlock(parentBlockID).attributes.blockID;
-		}
-
-		return [
-			isSelected && (
-				<BlockControls>
-					<AlignmentToolbar
-						value={toggleAlign} //attribute from parent can't be directly used
-						onChange={(newAlignment) => {
-							updateBlockAttributes(parentBlockID, {
-								toggleAlign: newAlignment,
-							});
-
-							getBlock(parentBlockID).innerBlocks.forEach((innerBlock) =>
-								updateBlockAttributes(innerBlock.clientId, {
-									toggleAlign: newAlignment,
-								})
-							);
-						}}
-						controls={["left", "center", "right"]}
-					></AlignmentToolbar>
-				</BlockControls>
-			),
-			<div
-				className={`ub-expand-portion ub-expand-${displayType}${
-					displayType === "full" && !isVisible ? " ub-hide" : ""
-				}`}
-			>
-				<InnerBlocks
-					templateLock={false}
-					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
-				/>
-				<RichText
-					style={{ textAlign: toggleAlign }} //attribute from parent can't be directly used
-					value={clickText}
-					onChange={(value) => setAttributes({ clickText: value })}
-					placeholder={__(
-						`Text for show ${displayType === "full" ? "less" : "more"} button`
-					)}
-				/>
-			</div>,
-		];
-	}),
+	])(ExpandPortion),
 	save: () => <InnerBlocks.Content />,
 });
