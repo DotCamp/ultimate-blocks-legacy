@@ -21,86 +21,30 @@ const { withSelect } = wp.data;
 
 import Circle from "./Circle";
 import Line from "./Line";
+import { useEffect } from "react";
 
-registerBlockType("ub/progress-bar", {
-	title: __("Progress Bar"),
-	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Progress Bar"), __("Ultimate Blocks")],
+function ProgressBarMain(props) {
+	const {
+		attributes: {
+			blockID,
+			percentage,
+			barType,
+			detail,
+			detailAlign,
+			barColor,
+			barBackgroundColor,
+			barThickness,
+			circleSize,
+			labelColor,
+		},
+		isSelected,
+		setAttributes,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+	} = props;
 
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		percentage: {
-			type: "number",
-			default: -1,
-		},
-		barType: {
-			type: "string",
-			default: "linear", //choose between linear and circular
-		},
-		detail: {
-			type: "string",
-			default: "",
-		},
-		detailAlign: {
-			type: "string",
-			default: "left",
-		},
-		barColor: {
-			type: "string",
-			default: "#2DB7F5",
-		},
-		barBackgroundColor: {
-			type: "string",
-			default: "#d9d9d9",
-		},
-		barThickness: {
-			type: "number",
-			default: 1,
-		},
-		circleSize: {
-			type: "number",
-			default: 150,
-		},
-		labelColor: {
-			type: "string",
-			default: "",
-		},
-	},
-
-	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
-
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
-		};
-	})(function (props) {
-		const {
-			attributes: {
-				blockID,
-				percentage,
-				barType,
-				detail,
-				detailAlign,
-				barColor,
-				barBackgroundColor,
-				barThickness,
-				circleSize,
-				labelColor,
-			},
-			isSelected,
-			setAttributes,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-		} = props;
-
+	useEffect(() => {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId, percentage: 75 });
 		} else {
@@ -117,17 +61,19 @@ registerBlockType("ub/progress-bar", {
 				setAttributes({ blockID: block.clientId });
 			}
 		}
+	}, []);
 
-		const progressBarAttributes = {
-			percent: percentage,
-			barColor,
-			barBackgroundColor,
-			barThickness,
-			labelColor,
-		};
+	const progressBarAttributes = {
+		percent: percentage,
+		barColor,
+		barBackgroundColor,
+		barThickness,
+		labelColor,
+	};
 
-		return [
-			isSelected && (
+	return (
+		<>
+			{isSelected && (
 				<BlockControls>
 					<ToolbarGroup>
 						<ToolbarButton
@@ -169,8 +115,8 @@ registerBlockType("ub/progress-bar", {
 						}))}
 					/>
 				</BlockControls>
-			),
-			isSelected && (
+			)}
+			{isSelected && (
 				<InspectorControls>
 					<PanelBody title={__("Style")}>
 						<PanelRow>
@@ -246,7 +192,7 @@ registerBlockType("ub/progress-bar", {
 						]}
 					/>
 				</InspectorControls>
-			),
+			)}
 			<div className="ub_progress-bar">
 				<div className="ub_progress-bar-text">
 					<RichText
@@ -258,18 +204,80 @@ registerBlockType("ub/progress-bar", {
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
-				{barType === "linear" ? (
-					<Line {...progressBarAttributes} />
-				) : (
-					<Circle
-						{...progressBarAttributes}
-						alignment={detailAlign}
-						size={circleSize}
-					/>
-				)}
-			</div>,
-		];
-	}),
+				{percentage > -1 && //linear progress bar fails to render properly unless a value of 0 or greater is inputted
+					(barType === "linear" ? (
+						<Line {...progressBarAttributes} />
+					) : (
+						<Circle
+							{...progressBarAttributes}
+							alignment={detailAlign}
+							size={circleSize}
+						/>
+					))}
+			</div>
+		</>
+	);
+}
+
+registerBlockType("ub/progress-bar", {
+	title: __("Progress Bar"),
+	icon: icon,
+	category: "ultimateblocks",
+	keywords: [__("Progress Bar"), __("Ultimate Blocks")],
+
+	attributes: {
+		blockID: {
+			type: "string",
+			default: "",
+		},
+		percentage: {
+			type: "number",
+			default: -1,
+		},
+		barType: {
+			type: "string",
+			default: "linear", //choose between linear and circular
+		},
+		detail: {
+			type: "string",
+			default: "",
+		},
+		detailAlign: {
+			type: "string",
+			default: "left",
+		},
+		barColor: {
+			type: "string",
+			default: "#2DB7F5",
+		},
+		barBackgroundColor: {
+			type: "string",
+			default: "#d9d9d9",
+		},
+		barThickness: {
+			type: "number",
+			default: 1,
+		},
+		circleSize: {
+			type: "number",
+			default: 150,
+		},
+		labelColor: {
+			type: "string",
+			default: "",
+		},
+	},
+
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(ownProps.clientId),
+			getBlock,
+			getClientIdsWithDescendants,
+		};
+	})(ProgressBarMain),
 
 	save: () => null,
 });
