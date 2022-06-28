@@ -26,6 +26,8 @@ import {
 // Import components
 import Inspector from "./inspector";
 
+import { useEffect, useState } from "react";
+
 // variables
 const iconSizes = {
 	normal: 20,
@@ -38,7 +40,6 @@ const { registerBlockType } = wp.blocks;
 
 const { BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
 const { withSelect } = wp.data;
-const { withState, compose } = wp.compose;
 
 /**
  * Register: aa Gutenberg Block.
@@ -185,6 +186,109 @@ const SortableList = SortableContainer(
 	)
 );
 
+function SocialShareMain(props) {
+	const [hasTransitioned, setHasTransitioned] = useState(false);
+
+	const {
+		attributes,
+		setAttributes,
+		isSelected,
+		className,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+	} = props;
+
+	const {
+		blockID,
+		align,
+		iconShape,
+		iconOrder,
+		buttonColor,
+		useCaptions,
+		addOutline,
+	} = attributes;
+
+	const iconSize = iconSizes[attributes.iconSize];
+
+	const enabledIcon = {
+		facebook: attributes.showFacebookIcon,
+		twitter: attributes.showTwitterIcon,
+		linkedin: attributes.showLinkedInIcon,
+		pinterest: attributes.showPinterestIcon,
+		reddit: attributes.showRedditIcon,
+		tumblr: attributes.showTumblrIcon,
+	};
+
+	useEffect(() => {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
+		}
+
+		if (!hasTransitioned) {
+			if (Object.values(enabledIcon).includes(false)) {
+				setAttributes({
+					iconOrder: iconOrder.filter((iconName) => enabledIcon[iconName]),
+					showFacebookIcon: true,
+					showTwitterIcon: true,
+					showLinkedInIcon: true,
+					showPinterestIcon: true,
+					showRedditIcon: true,
+					showTumblrIcon: true,
+				});
+			}
+			setHasTransitioned(true);
+		}
+	}, []);
+
+	return (
+		<>
+			{isSelected && (
+				<BlockControls>
+					<AlignmentToolbar
+						value={align}
+						onChange={(newAlignment) => setAttributes({ align: newAlignment })}
+						controls={["left", "center", "right"]}
+					/>
+				</BlockControls>
+			)}
+			{isSelected && <Inspector {...props} />}
+			<div id="ub-social-share-block-editor" className={className}>
+				<SortableList
+					axis="x"
+					items={iconOrder}
+					onSortEnd={({ oldIndex, newIndex }) =>
+						setAttributes({
+							iconOrder: arrayMove(iconOrder, oldIndex, newIndex),
+						})
+					}
+					iconSize={iconSize}
+					iconShape={iconShape}
+					align={align}
+					color={buttonColor}
+					useCaptions={useCaptions}
+					addOutline={addOutline}
+					captions={{
+						facebook: attributes.facebookCaption,
+						twitter: attributes.twitterCaption,
+						linkedin: attributes.linkedInCaption,
+						pinterest: attributes.pinterestCaption,
+						reddit: attributes.redditCaption,
+						tumblr: attributes.tumblrCaption,
+					}}
+				/>
+			</div>
+		</>
+	);
+}
+
 registerBlockType("ub/social-share", {
 	title: __("Social Share"),
 	icon: icon,
@@ -280,116 +384,16 @@ registerBlockType("ub/social-share", {
 		},
 	},
 
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+	edit: withSelect((select, ownProps) => {
+		const { getBlock, getClientIdsWithDescendants } =
+			select("core/block-editor") || select("core/editor");
 
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
-			};
-		}),
-		withState({ hasTransitioned: false }),
-	])(function (props) {
-		const {
-			attributes,
-			setAttributes,
-			isSelected,
-			className,
-			block,
-			hasTransitioned,
-			setState,
+		return {
+			block: getBlock(ownProps.clientId),
 			getBlock,
 			getClientIdsWithDescendants,
-		} = props;
-
-		const {
-			blockID,
-			align,
-			iconShape,
-			iconOrder,
-			buttonColor,
-			useCaptions,
-			addOutline,
-		} = attributes;
-
-		const iconSize = iconSizes[attributes.iconSize];
-
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-
-		const enabledIcon = {
-			facebook: attributes.showFacebookIcon,
-			twitter: attributes.showTwitterIcon,
-			linkedin: attributes.showLinkedInIcon,
-			pinterest: attributes.showPinterestIcon,
-			reddit: attributes.showRedditIcon,
-			tumblr: attributes.showTumblrIcon,
 		};
-
-		if (!hasTransitioned) {
-			if (Object.values(enabledIcon).includes(false)) {
-				setAttributes({
-					iconOrder: iconOrder.filter((iconName) => enabledIcon[iconName]),
-					showFacebookIcon: true,
-					showTwitterIcon: true,
-					showLinkedInIcon: true,
-					showPinterestIcon: true,
-					showRedditIcon: true,
-					showTumblrIcon: true,
-				});
-			}
-			setState({ hasTransitioned: true });
-		}
-
-		return [
-			isSelected && (
-				<BlockControls>
-					<AlignmentToolbar
-						value={align}
-						onChange={(newAlignment) => setAttributes({ align: newAlignment })}
-						controls={["left", "center", "right"]}
-					/>
-				</BlockControls>
-			),
-			isSelected && <Inspector {...props} />,
-			<div id="ub-social-share-block-editor" className={className}>
-				<SortableList
-					axis="x"
-					items={iconOrder}
-					onSortEnd={({ oldIndex, newIndex }) =>
-						setAttributes({
-							iconOrder: arrayMove(iconOrder, oldIndex, newIndex),
-						})
-					}
-					iconSize={iconSize}
-					iconShape={iconShape}
-					align={align}
-					color={buttonColor}
-					useCaptions={useCaptions}
-					addOutline={addOutline}
-					captions={{
-						facebook: attributes.facebookCaption,
-						twitter: attributes.twitterCaption,
-						linkedin: attributes.linkedInCaption,
-						pinterest: attributes.pinterestCaption,
-						reddit: attributes.redditCaption,
-						tumblr: attributes.tumblrCaption,
-					}}
-				/>
-			</div>,
-		];
-	}),
+	})(SocialShareMain),
 
 	save: () => null,
 });
