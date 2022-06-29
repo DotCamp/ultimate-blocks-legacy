@@ -2,7 +2,7 @@ import icon from "../icons/icon";
 import icons from "../icons/icons";
 
 import { panel_version_1_1_9 } from "../oldVersions";
-import { Component } from "react";
+import { useState, useEffect } from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -104,65 +104,59 @@ const attributes = {
 	},
 };
 
-class ContentTogglePanel extends Component {
-	constructor(props) {
-		super(props);
-		this.state = { showPanel: true };
+function ContentTogglePanel(props) {
+	const [showPanel, setPanelStatus] = useState(false);
+
+	const {
+		attributes: {
+			theme,
+			titleColor,
+			titleLinkColor,
+			panelTitle,
+			collapsed,
+			collapsedOnMobile,
+			hasFAQSchema,
+			titleTag,
+			preventCollapse,
+			toggleLocation,
+			toggleColor,
+			toggleIcon,
+			toggleID,
+			border,
+			showOnlyOne,
+			parentID,
+		},
+		setAttributes,
+		removeBlock,
+		block,
+		blockParent,
+		blockParentId,
+		selectBlock,
+	} = props;
+
+	const toggleIconPositions = {
+		left: __("Left", "ultimate-blocks"),
+		right: __("Right", "ultimate-blocks"),
+	};
+
+	if (parentID === "" || parentID !== blockParentId) {
+		setAttributes({ parentID: blockParentId });
 	}
 
-	componentDidMount() {
-		if (this.props.attributes.showOnlyOne && this.props.attributes.collapsed) {
-			this.setState({ showPanel: false });
+	useEffect(() => {
+		if (props.attributes.showOnlyOne && props.attributes.collapsed) {
+			setPanelStatus(false);
 		}
-	}
+	}, []);
 
-	componentWillReceiveProps(newProps) {
-		const { showOnlyOne, collapsed } = newProps.attributes;
-		if (showOnlyOne && collapsed !== this.props.attributes.collapsed) {
-			this.setState({ showPanel: !collapsed });
+	useEffect(() => {
+		if (showOnlyOne) {
+			setPanelStatus(!collapsed);
 		}
-	}
+	}, [collapsed]);
 
-	render() {
-		const { showPanel } = this.state;
-
-		const {
-			attributes: {
-				theme,
-				titleColor,
-				titleLinkColor,
-				panelTitle,
-				collapsed,
-				collapsedOnMobile,
-				hasFAQSchema,
-				titleTag,
-				preventCollapse,
-				toggleLocation,
-				toggleColor,
-				toggleIcon,
-				toggleID,
-				border,
-				showOnlyOne,
-				parentID,
-			},
-			setAttributes,
-			removeBlock,
-			block,
-			blockParent,
-			blockParentId,
-			selectBlock,
-		} = this.props;
-
-		const toggleIconPositions = {
-			left: __("Left", "ultimate-blocks"),
-			right: __("Right", "ultimate-blocks"),
-		};
-
-		if (parentID === "" || parentID !== blockParentId) {
-			setAttributes({ parentID: blockParentId });
-		}
-
-		return [
+	return (
+		<>
 			<InspectorControls>
 				<PanelBody title={__("Style")}>
 					<PanelColorSettings
@@ -202,28 +196,30 @@ class ContentTogglePanel extends Component {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__("Initial State")} initialOpen={true}>
-					{!blockParent.attributes.individualCollapse && !collapsedOnMobile && (
-						<PanelRow>
-							<label htmlFor="ub-content-toggle-amount">
-								{__("Show only one panel at a time")}
-							</label>
-							<FormToggle
-								id="ub-content-toggle-amount"
-								label={__("Show only one panel at a time")}
-								checked={showOnlyOne}
-								onChange={() => {
-									setAttributes({ showOnlyOne: !showOnlyOne });
-									if (!showOnlyOne) {
-										setAttributes({
-											collapsed: false,
-											preventCollapse: false,
-											collapsedOnMobile: false,
-										});
-									}
-								}}
-							/>
-						</PanelRow>
-					)}
+					{blockParent && //compatibility with v 2.0.0
+						!blockParent.attributes.individualCollapse &&
+						!collapsedOnMobile && (
+							<PanelRow>
+								<label htmlFor="ub-content-toggle-amount">
+									{__("Show only one panel at a time")}
+								</label>
+								<FormToggle
+									id="ub-content-toggle-amount"
+									label={__("Show only one panel at a time")}
+									checked={showOnlyOne}
+									onChange={() => {
+										setAttributes({ showOnlyOne: !showOnlyOne });
+										if (!showOnlyOne) {
+											setAttributes({
+												collapsed: false,
+												preventCollapse: false,
+												collapsedOnMobile: false,
+											});
+										}
+									}}
+								/>
+							</PanelRow>
+						)}
 					{!preventCollapse && (
 						<>
 							<PanelRow>
@@ -237,7 +233,7 @@ class ContentTogglePanel extends Component {
 									onChange={() => {
 										setAttributes({ collapsed: !collapsed });
 										if (showOnlyOne) {
-											this.setState({ showPanel: collapsed });
+											setPanelStatus(collapsed);
 										}
 										if (!collapsed) {
 											setAttributes({ preventCollapse: false });
@@ -265,7 +261,8 @@ class ContentTogglePanel extends Component {
 							)}
 						</>
 					)}
-					{!blockParent.attributes.individualCollapse &&
+					{blockParent && //compatibility with v 2.0.0
+						!blockParent.attributes.individualCollapse &&
 						!collapsed &&
 						!collapsedOnMobile &&
 						!showOnlyOne && (
@@ -387,7 +384,7 @@ class ContentTogglePanel extends Component {
 						/>
 					</PanelRow>
 				</PanelBody>
-			</InspectorControls>,
+			</InspectorControls>
 			<InspectorAdvancedControls>
 				<p>{__("Panel ID")}</p>
 				<input
@@ -411,7 +408,7 @@ class ContentTogglePanel extends Component {
 						<span class="dashicons-before dashicons-external" />
 					</a>
 				</p>
-			</InspectorAdvancedControls>,
+			</InspectorAdvancedControls>
 			<div
 				className={`wp-block-ub-content-toggle-accordion ${
 					border ? "" : "no-border"
@@ -432,7 +429,7 @@ class ContentTogglePanel extends Component {
 						placeholder={__("Panel Title")}
 						keepPlaceholderOnFocus={true}
 						unstableOnFocus={() => {
-							this.setState({ showPanel: true });
+							setPanelStatus(true);
 							selectBlock(blockParentId);
 						}}
 					/>
@@ -445,7 +442,7 @@ class ContentTogglePanel extends Component {
 							style={{ color: toggleColor }}
 						>
 							<span
-								onClick={() => this.setState({ showPanel: !showPanel })}
+								onClick={() => setPanelStatus(!showPanel)}
 								className={`wp-block-ub-content-toggle-accordion-state-indicator ${
 									icons[toggleIcon] ? icons[toggleIcon] : ""
 								} ${showPanel ? "open" : ""}`}
@@ -489,9 +486,9 @@ class ContentTogglePanel extends Component {
 						className="dashicons dashicons-plus-alt"
 					/>
 				</div>
-			</div>,
-		];
-	}
+			</div>
+		</>
+	);
 }
 
 registerBlockType("ub/content-toggle-panel", {

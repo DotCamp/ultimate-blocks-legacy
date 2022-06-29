@@ -269,11 +269,6 @@ registerBlockType("ub/content-toggle-block", {
 				selectBlock,
 			};
 		}),
-		withState({
-			oldArrangement: [],
-			oldAttributeValues: [],
-			mainBlockSelected: true,
-		}),
 	])(PanelContent),
 
 	save: () => <InnerBlocks.Content />,

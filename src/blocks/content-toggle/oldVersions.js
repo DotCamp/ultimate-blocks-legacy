@@ -1,58 +1,52 @@
 const { RichText, InnerBlocks } = wp.editor;
 
-export const version_1_1_2 = props => {
+export const version_1_1_2 = (props) => {
 	const { accordions, collapsed, theme, titleColor } = props.attributes;
-	const classNamePrefix = 'wp-block-ub-content-toggle';
+	const classNamePrefix = "wp-block-ub-content-toggle";
 	return (
 		<div>
-			{accordions.map((accordion, i) => {
-				return (
+			{accordions.map((accordion, i) => (
+				<div
+					style={{ borderColor: theme }}
+					className={`${classNamePrefix}-accordion`}
+					key={i}
+				>
 					<div
-						style={{ borderColor: theme }}
-						className={`${classNamePrefix}-accordion`}
-						key={i}
+						className={`${classNamePrefix}-accordion-title-wrap`}
+						style={{ backgroundColor: theme }}
 					>
-						<div
-							className={`${classNamePrefix}-accordion-title-wrap`}
-							style={{ backgroundColor: theme }}
-						>
-							<RichText.Content
-								tagName="span"
-								className={`${classNamePrefix}-accordion-title`}
-								style={{
-									color: titleColor
-								}}
-								value={accordion.title}
-							/>
-							<span
-								className={
-									`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
-									(collapsed ? '' : 'open')
-								}
-							/>
-						</div>
-						<div
-							style={{
-								display: collapsed ? 'none' : 'block'
-							}}
-							className={`${classNamePrefix}-accordion-content-wrap`}
-						>
-							<RichText.Content
-								tagName="div"
-								className={`${classNamePrefix}-accordion-content`}
-								value={accordion.content}
-							/>
-						</div>
+						<RichText.Content
+							tagName="span"
+							className={`${classNamePrefix}-accordion-title`}
+							style={{ color: titleColor }}
+							value={accordion.title}
+						/>
+						<span
+							className={
+								`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
+								(collapsed ? "" : "open")
+							}
+						/>
 					</div>
-				);
-			})}
+					<div
+						style={{ display: collapsed ? "none" : "block" }}
+						className={`${classNamePrefix}-accordion-content-wrap`}
+					>
+						<RichText.Content
+							tagName="div"
+							className={`${classNamePrefix}-accordion-content`}
+							value={accordion.content}
+						/>
+					</div>
+				</div>
+			))}
 		</div>
 	);
 };
 
-export const panel_version_1_1_9 = props => {
+export const panel_version_1_1_9 = (props) => {
 	const { theme, collapsed, titleColor, panelTitle } = props.attributes;
-	const classNamePrefix = 'wp-block-ub-content-toggle';
+	const classNamePrefix = "wp-block-ub-content-toggle";
 	return (
 		<div
 			style={{ borderColor: theme }}
@@ -71,14 +65,12 @@ export const panel_version_1_1_9 = props => {
 				<span
 					className={
 						`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
-						(collapsed ? '' : 'open')
+						(collapsed ? "" : "open")
 					}
 				/>
 			</div>
 			<div
-				style={{
-					display: collapsed ? 'none' : 'block'
-				}}
+				style={{ display: collapsed ? "none" : "block" }}
 				className={`${classNamePrefix}-accordion-content-wrap`}
 			>
 				<InnerBlocks.Content />
