@@ -28,7 +28,7 @@ import {
 	inspectorControls,
 	defaultButtonProps,
 	editorDisplay,
-	iconSize,
+	presetIconSize,
 	allIcons,
 	EditorComponent,
 } from "./components";
@@ -168,11 +168,53 @@ registerBlockType("ub/button-block", {
 			block,
 			replaceBlock,
 			attributes,
+			setAttributes,
 		} = props;
+
+		const {
+			buttons,
+			buttonText,
+			url,
+			size,
+			buttonColor,
+			buttonHoverColor,
+			buttonTextColor,
+			buttonTextHoverColor,
+			buttonRounded,
+			chosenIcon,
+			iconPosition,
+			buttonIsTransparent,
+			addNofollow,
+			openInNewTab,
+			buttonWidth,
+		} = attributes;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
 			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
+		}
+
+		if (typeof buttons === "undefined") {
+			setAttributes({
+				buttons: [
+					Object.assign({}, defaultButtonProps, {
+						buttonText,
+						url,
+						size,
+						buttonColor,
+						buttonHoverColor,
+						buttonTextColor,
+						buttonTextHoverColor,
+						buttonRounded,
+						chosenIcon,
+						iconPosition,
+						buttonIsTransparent,
+						addNofollow,
+						openInNewTab,
+						buttonWidth,
+					}),
+				],
+			});
 		}
 
 		return [
@@ -260,7 +302,7 @@ registerBlockType("ub/button-block", {
 								<span className="ub-button-icon-holder">
 									{generateIcon(
 										allIcons[`fa${dashesToCamelcase(chosenIcon)}`],
-										iconSize[size]
+										presetIconSize[size]
 									)}
 								</span>
 							)}
