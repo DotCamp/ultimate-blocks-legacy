@@ -668,6 +668,8 @@ export const inspectorControls = (props) => {
 		listColor,
 		listBackgroundColor,
 		numColumns,
+		showText,
+		hideText,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -753,6 +755,20 @@ export const inspectorControls = (props) => {
 				</PanelRow>
 				{allowToCHiding && (
 					<>
+						<PanelRow>
+							<TextControl
+								label={__("Show text")}
+								value={showText}
+								onChange={(showText) => setAttributes({ showText })}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label={__("Hide text")}
+								value={hideText}
+								onChange={(hideText) => setAttributes({ hideText })}
+							/>
+						</PanelRow>
 						<PanelRow>
 							<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
 							<ToggleControl
@@ -992,6 +1008,8 @@ export const editorDisplay = (props) => {
 		listBackgroundColor,
 		listIconColor,
 		blockID,
+		showText,
+		hideText,
 	} = props.attributes;
 
 	return (
@@ -1025,7 +1043,7 @@ export const editorDisplay = (props) => {
 								href="#"
 								onClick={() => setAttributes({ showList: !showList })}
 							>
-								{showList ? __("hide") : __("show")}
+								{showList ? hideText || __("hide") : showText || __("show")}
 							</a>
 							]
 						</div>

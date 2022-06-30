@@ -122,6 +122,14 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	showText: {
+		type: "string",
+		default: "show",
+	},
+	hideText: {
+		type: "string",
+		default: "hide",
+	},
 };
 
 registerBlockType("ub/table-of-contents", {

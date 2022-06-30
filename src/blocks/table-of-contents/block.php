@@ -105,7 +105,7 @@ function ub_render_table_of_contents_block($attributes){
     
     return '<div class="ub_table-of-contents' . (isset($className) ? ' ' . esc_attr($className) : '')
                 . (!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ) .
-                '" data-showtext="' . __('show', 'ultimate-blocks') . '" data-hidetext="' . __('hide', 'ultimate-blocks')
+                '" data-showtext="' . ($showText ?: __('show', 'ultimate-blocks') ) . '" data-hidetext="' . ($hideText ?: __('hide', 'ultimate-blocks'))
                 . '" data-scrolltype="' . $scrollOption . '"' . ($scrollOption === 'fixedamount' ? ' data-scrollamount="' . $scrollOffset . '"' : '')
                 . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . $scrollTarget . '"' : '')
                 . ($blockID === '' ? '' : ' id="ub_table-of-contents-' . $blockID . '"') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
@@ -115,8 +115,9 @@ function ub_render_table_of_contents_block($attributes){
                     ($allowToCHiding ?
                     '<div class="ub_table-of-contents-header-toggle">
                         <div class="ub_table-of-contents-toggle">
-                        &nbsp;[<a class="ub_table-of-contents-toggle-link" href="#">'.
-                            __($showList ? 'hide' : 'show', 'ultimate-blocks')
+                        &nbsp;[<a class="ub_table-of-contents-toggle-link" href="#">' .
+                            ( $showList ? ($hideText ?: __('hide', 'ultimate-blocks'))
+                             : ($showText ?: __('show', 'ultimate-blocks')) )
                             .'</a>]</div></div>' : '')
                 . '</div></div>') : '')
                 . '<div class="ub_table-of-contents-extra-container"><div class="ub_table-of-contents-container ub_table-of-contents-' .

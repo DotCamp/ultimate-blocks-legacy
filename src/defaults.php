@@ -2081,7 +2081,15 @@ $defaultValues = array(
             'listIconColor' => array(
                 'type' => 'string',
                 'default' => ''
-            )
+            ),
+            'showText' => array(
+                'type' => 'string',
+                'default' => 'show'
+            ),
+            'hideText' => array(
+                'type' => 'string',
+                'default' => 'hide'
+            ),
         )
     ),
     'ub/testimonial' => array(
