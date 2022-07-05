@@ -398,7 +398,7 @@ export class TabHolder extends Component {
 				this.props.block.clientId
 			);
 			setAttributes({
-				tabsTitle: [...tabsTitle, "Tab Title"],
+				tabsTitle: [...tabsTitle, `Tab ${i + 1}`],
 				tabsTitleAlignment: [...tabsTitleAlignment, "left"],
 				activeTab: i,
 				tabsAnchor: useAnchors ? [...tabsAnchor, ""] : [],
@@ -454,7 +454,7 @@ export class TabHolder extends Component {
 								propz.isSelected
 							}
 							onChange={(content) => onChangeTitle(content, i)}
-							placeholder="Tab Title"
+							placeholder={`Tab ${i + 1}`}
 						/>
 						<div
 							className={`ub-tab-actions${
@@ -674,8 +674,6 @@ export class TabHolder extends Component {
 									],
 								});
 							}}
-							toggleTitle={showControls}
-							onAddTab={addTab}
 						/>
 					</div>
 					<div
