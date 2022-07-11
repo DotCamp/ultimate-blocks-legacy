@@ -1,15 +1,20 @@
+import {
+	horizontalTabIcon,
+	verticalTabIcon,
+	accordionIcon,
+} from "../icons/icon";
+
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
+	PanelRow,
 	ToggleControl,
 	RadioControl,
 	TextControl,
-	Icon,
 	ButtonGroup,
 	Button,
-	Tooltip,
 } = wp.components;
 
 /**
@@ -29,7 +34,6 @@ export default class Inspector extends Component {
 			normalColor,
 			titleColor,
 			normalTitleColor,
-			borderColor,
 			tabVertical,
 			tabletTabDisplay,
 			mobileTabDisplay,
@@ -85,69 +89,120 @@ export default class Inspector extends Component {
 					}
 				/>
 				<PanelBody title={__("Tab Layout")}>
-					<ButtonGroup style={{ paddingBottom: "10px" }}>
-						<Tooltip text={__("Desktop")}>
+					<PanelRow>
+						<label>{__("Mode")}</label>
+						<ButtonGroup style={{ paddingBottom: "10px" }}>
 							<Button
-								isPrimary={displayMode === "desktop"}
+								icon="desktop"
+								showTooltip={true}
+								label={__("Desktop")}
+								isPressed={displayMode === "desktop"}
 								onClick={() => this.setState({ displayMode: "desktop" })}
-							>
-								<Icon icon="desktop" />
-							</Button>
-						</Tooltip>
-						<Tooltip text={__("Tablet")}>
+							/>
 							<Button
-								isPrimary={displayMode === "tablet"}
+								icon="tablet"
+								showTooltip={true}
+								label={__("Tablet")}
+								isPressed={displayMode === "tablet"}
 								onClick={() => this.setState({ displayMode: "tablet" })}
-							>
-								<Icon icon="tablet" />
-							</Button>
-						</Tooltip>
-						<Tooltip text={__("Mobile")}>
+							/>
 							<Button
-								isPrimary={displayMode === "mobile"}
+								icon="smartphone"
+								showTooltip={true}
+								label={__("Mobile")}
+								isPressed={displayMode === "mobile"}
 								onClick={() => this.setState({ displayMode: "mobile" })}
-							>
-								<Icon icon="smartphone" />
-							</Button>
-						</Tooltip>
-					</ButtonGroup>
-
+							/>
+						</ButtonGroup>
+					</PanelRow>
 					{displayMode === "desktop" && (
-						<ToggleControl
-							label={__("Vertical", "tabbed-content-blocks")}
-							checked={tabVertical}
-							onChange={(tabVertical) => setAttributes({ tabVertical })}
-						/>
+						<PanelRow>
+							<label>{__("Tab Display")}</label>
+							<ButtonGroup>
+								<Button
+									icon={horizontalTabIcon}
+									showTooltip={true}
+									label={__("Horizontal")}
+									isPressed={!tabVertical}
+									onClick={() => setAttributes({ tabVertical: false })}
+								/>
+								<Button
+									icon={verticalTabIcon}
+									showTooltip={true}
+									label={__("Vertical")}
+									isPressed={tabVertical}
+									onClick={() => setAttributes({ tabVertical: true })}
+								/>
+							</ButtonGroup>
+						</PanelRow>
 					)}
 					{displayMode === "tablet" && (
-						<RadioControl
-							label={__("Tablet Tab Display")}
-							selected={tabletTabDisplay}
-							options={["Horizontal tab", "Vertical tab", "Accordion"].map(
-								(a) => ({
-									label: __(a),
-									value: a.toLowerCase().replace(/ /g, ""),
-								})
-							)}
-							onChange={(tabletTabDisplay) =>
-								setAttributes({ tabletTabDisplay })
-							}
-						/>
+						<PanelRow>
+							<label>{__("Tablet Tab Display")}</label>
+							<ButtonGroup>
+								<Button
+									icon={horizontalTabIcon}
+									showTooltip={true}
+									label={__("Horizontal")}
+									isPressed={tabletTabDisplay === "horizontaltab"}
+									onClick={() =>
+										setAttributes({ tabletTabDisplay: "horizontaltab" })
+									}
+								/>
+								<Button
+									icon={verticalTabIcon}
+									showTooltip={true}
+									label={__("Vertical")}
+									isPressed={tabletTabDisplay === "verticaltab"}
+									onClick={() =>
+										setAttributes({ tabletTabDisplay: "verticaltab" })
+									}
+								/>
+								<Button
+									icon={accordionIcon}
+									showTooltip={true}
+									label={__("Accordion")}
+									isPressed={tabletTabDisplay === "accordion"}
+									onClick={() =>
+										setAttributes({ tabletTabDisplay: "accordion" })
+									}
+								/>
+							</ButtonGroup>
+						</PanelRow>
 					)}
 					{displayMode === "mobile" && (
-						<RadioControl
-							label={__("Mobile Tab Display")}
-							selected={mobileTabDisplay}
-							options={["Horizontal tab", "Vertical tab", "Accordion"].map(
-								(a) => ({
-									label: __(a),
-									value: a.toLowerCase().replace(/ /g, ""),
-								})
-							)}
-							onChange={(mobileTabDisplay) =>
-								setAttributes({ mobileTabDisplay })
-							}
-						/>
+						<PanelRow>
+							<label>{__("Mobile Tab Display")}</label>
+							<ButtonGroup>
+								<Button
+									icon={horizontalTabIcon}
+									showTooltip={true}
+									label={__("Horizontal")}
+									isPressed={mobileTabDisplay === "horizontaltab"}
+									onClick={() =>
+										setAttributes({ mobileTabDisplay: "horizontaltab" })
+									}
+								/>
+								<Button
+									icon={verticalTabIcon}
+									showTooltip={true}
+									label={__("Vertical")}
+									isPressed={mobileTabDisplay === "verticaltab"}
+									onClick={() =>
+										setAttributes({ mobileTabDisplay: "verticaltab" })
+									}
+								/>
+								<Button
+									icon={accordionIcon}
+									showTooltip={true}
+									label={__("Accordion")}
+									isPressed={mobileTabDisplay === "accordion"}
+									onClick={() =>
+										setAttributes({ mobileTabDisplay: "accordion" })
+									}
+								/>
+							</ButtonGroup>
+						</PanelRow>
 					)}
 				</PanelBody>
 				<PanelBody title={__("Tab Anchors")}>
