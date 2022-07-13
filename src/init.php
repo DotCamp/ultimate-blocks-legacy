@@ -408,27 +408,29 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL;
                     break;
                 case 'ub/content-toggle-block':
-                    $attributes = array_merge($attributes,
-                        array_map(function($attribute){
-                            return $attribute['default'];
-                        }, $defaultValues['ub/content-toggle-panel-block']['attributes']),
-                        $block['innerBlocks'][0]['attrs']);
-                    $prefix = '#ub-content-toggle-' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . ' .wp-block-ub-content-toggle-accordion{' . PHP_EOL .
-                        'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL . 
-                    $prefix . ' .wp-block-ub-content-toggle-accordion-title-wrap{' . PHP_EOL .
-                        'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL . 
-                    $prefix . ' .wp-block-ub-content-toggle-accordion-title{' . PHP_EOL .
-                        'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
-                    $prefix . ' .wp-block-ub-content-toggle-accordion-toggle-wrap{' . PHP_EOL .
-                        'color: ' . $attributes['toggleColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
-                    '.ub-content-toggle-title-'. $attributes['blockID'] . ' > a{' . PHP_EOL .
-                        'color: ' . ($attributes['titleLinkColor'] ?: 'inherit') . ';' . PHP_EOL .
-                    '}';
+                    if($block['innerBlocks']){
+                        $attributes = array_merge($attributes,
+                            array_map(function($attribute){
+                                return $attribute['default'];
+                            }, $defaultValues['ub/content-toggle-panel-block']['attributes']),
+                            $block['innerBlocks'][0]['attrs']);
+                        $prefix = '#ub-content-toggle-' . $attributes['blockID'];
+                        $blockStylesheets .= $prefix . ' .wp-block-ub-content-toggle-accordion{' . PHP_EOL .
+                            'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL . 
+                        $prefix . ' .wp-block-ub-content-toggle-accordion-title-wrap{' . PHP_EOL .
+                            'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL . 
+                        $prefix . ' .wp-block-ub-content-toggle-accordion-title{' . PHP_EOL .
+                            'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        $prefix . ' .wp-block-ub-content-toggle-accordion-toggle-wrap{' . PHP_EOL .
+                            'color: ' . $attributes['toggleColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        '.ub-content-toggle-title-'. $attributes['blockID'] . ' > a{' . PHP_EOL .
+                            'color: ' . ($attributes['titleLinkColor'] ?: 'inherit') . ';' . PHP_EOL .
+                        '}';
+                    }
                     break;
                 case 'ub/countdown':
                     $prefix = '#ub_countdown_'. $attributes['blockID'];
