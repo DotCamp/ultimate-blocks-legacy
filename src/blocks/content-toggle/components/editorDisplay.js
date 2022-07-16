@@ -193,7 +193,12 @@ const oldColorDefaults = {
 };
 
 export function PanelContent(props) {
+	const panels = props.block.innerBlocks;
+
+	const newArrangement = panels.map((panel) => panel.attributes.index);
+
 	useEffect(() => {
+		//first initializations
 		const { block, attributes, setAttributes } = props;
 		const { theme, titleColor, showOnlyOne, collapsedOnMobile } = attributes;
 
@@ -222,6 +227,64 @@ export function PanelContent(props) {
 				});
 			});
 		}
+
+		//initialize monitoring for child block arrangement
+		if (newArrangement.length === 0) {
+			if (oldArrangement.length > 0) {
+				removeBlock(block.clientId);
+				return null; //prevent block from being rendered to prevent error
+			} else {
+				insertBlock(
+					createBlock("ub/content-toggle-panel-block", {
+						theme: newColorDefaults.theme,
+						collapsed,
+						titleColor: newColorDefaults.titleColor,
+						titleLinkColor,
+						hasFAQSchema,
+						toggleLocation,
+						toggleColor,
+						toggleIcon,
+						border,
+						showOnlyOne,
+					}),
+					0,
+					block.clientId
+				);
+				setOldArrangement(Array.from(Array(panels.length).keys()));
+			}
+		}
+
+		//blockid initialization
+		if (blockID === "") {
+			setAttributes(
+				Object.assign({ blockID: block.clientId }, newColorDefaults)
+			);
+		} else if (
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
+		}
+
+		//initialize variable for monitoring changes in child block attributes
+		setOldAttributeValues(
+			panels.map((panel) =>
+				((
+					{
+						panelTitle,
+						newBlockPosition,
+						index,
+						parent,
+						parentID,
+						toggleID,
+						...others
+					} = panel.attributes
+				) => others)()
+			)
+		);
 	}, []);
 
 	const [oldArrangement, setOldArrangement] = useState([]);
@@ -258,10 +321,6 @@ export function PanelContent(props) {
 		getClientIdsWithDescendants,
 		getBlock,
 	} = props;
-
-	const panels = props.block.innerBlocks;
-
-	const newArrangement = panels.map((panel) => panel.attributes.index);
 
 	const newBlockTarget = panels.filter(
 		(panel) => panel.attributes.newBlockPosition !== "none"
@@ -356,172 +415,117 @@ export function PanelContent(props) {
 				newBlockPosition: "none",
 			});
 		}
+	}, [newBlockTarget]);
 
-		if (newArrangement.length === 0) {
-			if (oldArrangement.length > 0) {
-				removeBlock(block.clientId);
-				return null; //prevent block from being rendered to prevent error
-			} else {
-				insertBlock(
-					createBlock("ub/content-toggle-panel-block", {
-						theme: newColorDefaults.theme,
-						collapsed,
-						titleColor: newColorDefaults.titleColor,
-						titleLinkColor,
-						hasFAQSchema,
-						toggleLocation,
-						toggleColor,
-						toggleIcon,
-						border,
-						showOnlyOne,
-					}),
-					0,
-					block.clientId
-				);
-				setOldArrangement(Array.from(Array(panels.length).keys()));
-			}
-		} else if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
-			//Fix indexes in case of rearrangments
-			if (newArrangement.length < oldArrangement.length && showOnlyOne) {
-				if (!panels.map((p) => p.attributes.collapsed).includes(false)) {
-					oldArrangement.forEach((i) => {
-						if (!newArrangement.includes(i)) {
-							updateBlockAttributes(panels[Math.max(0, i - 1)].clientId, {
-								collapsed: false,
-							});
-						}
-					});
-				}
-			}
-			panels.forEach((panel, i) =>
-				updateBlockAttributes(panel.clientId, {
-					index: i,
-					parent: block.clientId,
-				})
-			);
-			setOldArrangement(newArrangement);
-		} else if (mainBlockSelected) {
-			if (
-				selectedBlock !== block.clientId &&
-				getDescendantBlocks(props.block)
-					.map((d) => d.clientId)
-					.includes(selectedBlock)
-			) {
-				setMainBlockSelectStatus(false);
-			}
-		} else {
-			const childBlocks = props.block.innerBlocks
-				.filter((block) => block.name === "ub/content-toggle-panel-block")
-				.map((panels) => panels.clientId);
-
-			if (childBlocks.includes(selectedBlock) && !wp.data.useDispatch) {
-				//useDispatch is only present in Gutenberg v5.9, together with clickthrough selection feature
-				setMainBlockSelectStatus(true);
-				selectBlock(props.block.clientId);
-			}
-		}
-
-		if (blockID === "") {
-			setAttributes(
-				Object.assign({ blockID: block.clientId }, newColorDefaults)
-			);
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-
-		let newAttributeValues;
-
-		if (oldArrangement.length === 0) {
-			setOldAttributeValues(
-				panels.map((panel) =>
-					((
-						{
-							panelTitle,
-							newBlockPosition,
-							index,
-							parent,
-							parentID,
-							toggleID,
-							...others
-						} = panel.attributes
-					) => others)()
-				)
-			);
-		} else {
-			newAttributeValues = panels.map((panel) =>
-				((
-					{
-						panelTitle,
-						newBlockPosition,
-						index,
-						parent,
-						parentID,
-						toggleID,
-						...others
-					} = panel.attributes
-				) => others)()
-			);
-
-			if (newAttributeValues.length > 0) {
-				if (newAttributeValues.length === oldAttributeValues.length) {
-					if (
-						!newAttributeValues.every((entry, i) =>
-							objectsMatch(entry, oldAttributeValues[i])
-						)
-					) {
-						//add exception for changing collapsed to matching for index when showOnlyOne is changed to true
-						//when showOnlyOne is true and collapsed state is changed in one of the panels,
-
-						const changedPanel = block.innerBlocks
-							.map((innerBlock) => innerBlock.clientId)
-							.indexOf(selectedBlock);
-
-						const newChange = objectsNewChange(
-							oldAttributeValues[changedPanel],
-							newAttributeValues[changedPanel]
-						);
-
-						if (
-							changedPanel > -1 && //for preventing errors in gutenberg 8
-							newAttributeValues[changedPanel].showOnlyOne
-						) {
-							//if value of collapsed is changed for a panel via inspector panel and showonlyone is active,
-							//value of collapsed in all other panels should be automatically set to true
-
-							panels.forEach((panel, i) => {
-								updateBlockAttributes(
-									panel.clientId,
-									Object.assign(
-										{},
-										newChange,
-										i !== changedPanel ? { collapsed: true } : null
-									)
-								);
-							});
-							setAttributes(Object.assign({ collapsed: false }, newChange));
-						} else if (
-							newChange &&
-							!(newChange.hasOwnProperty("collapsed") && individualCollapse)
-						) {
-							panels.forEach((panel) => {
-								updateBlockAttributes(panel.clientId, newChange);
-							});
-							setAttributes(newChange);
-						}
-						setOldAttributeValues(newAttributeValues);
+	if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
+		//Fix indexes in case of rearrangments
+		if (newArrangement.length < oldArrangement.length && showOnlyOne) {
+			if (!panels.map((p) => p.attributes.collapsed).includes(false)) {
+				oldArrangement.forEach((i) => {
+					if (!newArrangement.includes(i)) {
+						updateBlockAttributes(panels[Math.max(0, i - 1)].clientId, {
+							collapsed: false,
+						});
 					}
-				} else {
+				});
+			}
+		}
+		panels.forEach((panel, i) =>
+			updateBlockAttributes(panel.clientId, {
+				index: i,
+				parent: block.clientId,
+			})
+		);
+		setOldArrangement(newArrangement);
+	} else if (mainBlockSelected) {
+		if (
+			selectedBlock !== block.clientId &&
+			getDescendantBlocks(props.block)
+				.map((d) => d.clientId)
+				.includes(selectedBlock)
+		) {
+			setMainBlockSelectStatus(false);
+		}
+	} else {
+		const childBlocks = props.block.innerBlocks
+			.filter((block) => block.name === "ub/content-toggle-panel-block")
+			.map((panels) => panels.clientId);
+
+		if (childBlocks.includes(selectedBlock) && !wp.data.useDispatch) {
+			//useDispatch is only present in Gutenberg v5.9, together with clickthrough selection feature
+			setMainBlockSelectStatus(true);
+			selectBlock(props.block.clientId);
+		}
+	}
+
+	if (oldArrangement.length > 0) {
+		let newAttributeValues = panels.map((panel) =>
+			((
+				{
+					panelTitle,
+					newBlockPosition,
+					index,
+					parent,
+					parentID,
+					toggleID,
+					...others
+				} = panel.attributes
+			) => others)()
+		);
+
+		if (newAttributeValues.length > 0) {
+			if (newAttributeValues.length === oldAttributeValues.length) {
+				if (
+					!newAttributeValues.every((entry, i) =>
+						objectsMatch(entry, oldAttributeValues[i])
+					)
+				) {
+					//add exception for changing collapsed to matching for index when showOnlyOne is changed to true
+					//when showOnlyOne is true and collapsed state is changed in one of the panels,
+
+					const changedPanel = block.innerBlocks
+						.map((innerBlock) => innerBlock.clientId)
+						.indexOf(selectedBlock);
+
+					const newChange = objectsNewChange(
+						oldAttributeValues[changedPanel],
+						newAttributeValues[changedPanel]
+					);
+
+					if (
+						changedPanel > -1 && //for preventing errors in gutenberg 8
+						newAttributeValues[changedPanel].showOnlyOne
+					) {
+						//if value of collapsed is changed for a panel via inspector panel and showonlyone is active,
+						//value of collapsed in all other panels should be automatically set to true
+
+						panels.forEach((panel, i) => {
+							updateBlockAttributes(
+								panel.clientId,
+								Object.assign(
+									{},
+									newChange,
+									i !== changedPanel ? { collapsed: true } : null
+								)
+							);
+						});
+						setAttributes(Object.assign({ collapsed: false }, newChange));
+					} else if (
+						newChange &&
+						!(newChange.hasOwnProperty("collapsed") && individualCollapse)
+					) {
+						panels.forEach((panel) => {
+							updateBlockAttributes(panel.clientId, newChange);
+						});
+						setAttributes(newChange);
+					}
 					setOldAttributeValues(newAttributeValues);
 				}
+			} else {
+				setOldAttributeValues(newAttributeValues);
 			}
 		}
-	}, []);
+	}
 
 	return (
 		<>
