@@ -21,6 +21,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import colorList from "./colorlist";
 
 library.add(fas, fab);
 
@@ -369,6 +370,7 @@ function EditorComponent(props) {
 						<p>
 							{__("Icon color")}
 							<span
+								id="ub-styled-list-selected-color"
 								class="component-color-indicator"
 								aria-label={`(Color: ${iconColor})`}
 								style={{ background: iconColor }}
@@ -376,7 +378,22 @@ function EditorComponent(props) {
 						</p>
 						<ColorPalette
 							value={iconColor}
-							onChange={(iconColor) => setAttributes({ iconColor })}
+							onChange={(iconColor) => {
+								if (iconColor.match(/#[0-9a-f]{6}/gi)) {
+									setAttributes({ iconColor });
+								} else {
+									setAttributes({
+										iconColor:
+											iconColor.toLowerCase() in colorList
+												? colorList[iconColor.toLowerCase()]
+												: getComputedStyle(
+														document.documentElement
+												  ).getPropertyValue(
+														iconColor.substring(4, iconColor.length - 1)
+												  ),
+									});
+								}
+							}}
 						/>
 						<p>{__("Icon size")}</p>
 						<RangeControl
