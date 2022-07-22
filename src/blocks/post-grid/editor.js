@@ -50,7 +50,7 @@ export default function PostGridBlock(props) {
 							{checkPostImage && post.featured_media ? (
 								<div className="ub-block-post-grid-image">
 									<FeaturedImage
-										{...this.props}
+										{...props}
 										imgID={post.featured_media}
 										imgSizeLandscape={post.featured_image_src}
 									/>
