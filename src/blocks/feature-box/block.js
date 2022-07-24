@@ -18,7 +18,7 @@ const { registerBlockType, createBlock } = wp.blocks;
 
 const { withDispatch, withSelect } = wp.data;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 
 const attributes = {
 	blockID: {
@@ -160,12 +160,11 @@ registerBlockType("ub/feature-box", {
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
 				.replaceBlock,
 		})),
-		withState({ editable: "" }),
 	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
 
 		return [
-			isSelected && blockControls(props),
+			isSelected && blockControls({ ...props, editable }),
 
 			<div className={props.className}>
 				<button
@@ -224,7 +223,7 @@ registerBlockType("ub/feature-box", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, setEditable })}
 			</div>,
 		];
 	}),
@@ -363,16 +362,17 @@ registerBlockType("ub/feature-box-block", {
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
 				.replaceBlock,
 		})),
-		withState({ editable: "" }),
 	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
+
+		const [editable, setEditable] = useState("");
 
 		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
 		return [
-			isSelected && blockControls(props),
+			isSelected && blockControls({ ...props, editable, setEditable }),
 
 			<div className={props.className}>
 				<button
@@ -382,7 +382,7 @@ registerBlockType("ub/feature-box-block", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, editable, setEditable })}
 			</div>,
 		];
 	}),

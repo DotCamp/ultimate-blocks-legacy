@@ -32,10 +32,11 @@ import {
 	allIcons,
 	EditorComponent,
 } from "./components";
+import { useState } from "react";
 
 const { withDispatch, withSelect } = wp.data;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
 
@@ -146,11 +147,6 @@ registerBlockType("ub/button-block", {
 		inserter: false, //this block is being phased out in favor of the PHP-rendered version
 	},
 	edit: compose([
-		withState({
-			isMouseHovered: false,
-			availableIcons: [],
-			iconSearchTerm: "",
-		}),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
@@ -161,15 +157,27 @@ registerBlockType("ub/button-block", {
 				.replaceBlock,
 		})),
 	])(function (props) {
-		const {
-			isSelected,
-			setState,
-			availableIcons,
-			block,
-			replaceBlock,
-			attributes,
-			setAttributes,
-		} = props;
+		const { isSelected, block, replaceBlock, attributes, setAttributes } =
+			props;
+
+		const [isMouseHovered, toggleMouseHover] = useState(false);
+		const [availableIcons, setAvailableIcons] = useState([]);
+		const [iconSearchTerm, setIconSearchTerm] = useState("");
+		const [iconSearchResultsPage, setIconSearchResultsPage] = useState(0);
+		const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
+		const [hoveredButton, setHoveredButton] = useState(-1);
+		const [enableLinkInput, toggleLinkInput] = useState(false);
+
+		const stateVars = {
+			activeButtonIndex,
+			setActiveButtonIndex,
+			hoveredButton,
+			setHoveredButton,
+			enableLinkInput,
+			toggleLinkInput,
+			iconSearchResultsPage,
+			setIconSearchResultsPage,
+		};
 
 		const {
 			buttons,
@@ -191,7 +199,7 @@ registerBlockType("ub/button-block", {
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
-			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
+			setAvailableIcons(iconList.map((name) => allIcons[name]));
 		}
 
 		if (typeof buttons === "undefined") {
@@ -239,7 +247,7 @@ registerBlockType("ub/button-block", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, ...stateVars })}
 			</div>,
 		];
 	}),

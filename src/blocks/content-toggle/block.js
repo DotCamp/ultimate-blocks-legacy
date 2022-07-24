@@ -15,7 +15,7 @@ import { version_1_1_2 } from "./oldVersions";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 
@@ -158,7 +158,6 @@ registerBlockType("ub/content-toggle", {
 				replaceBlock,
 			};
 		}),
-		withState({ oldArrangement: "", mainBlockSelected: true }),
 	])(OldPanelContent),
 
 	save() {

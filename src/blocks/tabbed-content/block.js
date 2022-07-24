@@ -12,7 +12,7 @@ import { OldTabHolder, TabHolder } from "./components/editorDisplay";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { RichText, InnerBlocks } = wp.blockEditor || wp.editor;
 
@@ -183,7 +183,6 @@ registerBlockType("ub/tabbed-content", {
 				replaceBlock,
 			};
 		}),
-		withState({ oldArrangement: "" }),
 	])(OldTabHolder),
 
 	save: function (props) {
@@ -301,7 +300,6 @@ registerBlockType("ub/tabbed-content-block", {
 				selectBlock,
 			};
 		}),
-		withState({ oldArrangement: [] }),
 	])(TabHolder),
 
 	save: () => <InnerBlocks.Content />,

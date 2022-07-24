@@ -150,7 +150,7 @@ export const inspectorControls = (props) => {
 };
 
 export const editorDisplay = (props) => {
-	const { attributes, setAttributes, setState } = props;
+	const { attributes, setAttributes, setEditable } = props;
 
 	const {
 		column,
@@ -201,7 +201,7 @@ export const editorDisplay = (props) => {
 							})
 						}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={(_) => setState({ editable: "" })}
+						unstableOnFocus={(_) => setEditable("")}
 					/>
 				</div>
 				<RichText
@@ -212,7 +212,7 @@ export const editorDisplay = (props) => {
 					value={columnOneTitle}
 					onChange={(value) => setAttributes({ columnOneTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={(_) => setState({ editable: "title1" })}
+					unstableOnFocus={(_) => setEditable("title1")}
 				/>
 				<RichText
 					tagName="p"
@@ -222,7 +222,7 @@ export const editorDisplay = (props) => {
 					value={columnOneBody}
 					onChange={(value) => setAttributes({ columnOneBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={(_) => setState({ editable: "body1" })}
+					unstableOnFocus={(_) => setEditable("body1")}
 				/>
 			</div>
 			<div
@@ -251,7 +251,7 @@ export const editorDisplay = (props) => {
 							})
 						}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={(_) => setState({ editable: "" })}
+						unstableOnFocus={(_) => setEditable("")}
 					/>
 				</div>
 				<RichText
@@ -262,7 +262,7 @@ export const editorDisplay = (props) => {
 					value={columnTwoTitle}
 					onChange={(value) => setAttributes({ columnTwoTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={(_) => setState({ editable: "title2" })}
+					unstableOnFocus={(_) => setEditable("title2")}
 				/>
 				<RichText
 					tagName="p"
@@ -272,7 +272,7 @@ export const editorDisplay = (props) => {
 					value={columnTwoBody}
 					onChange={(value) => setAttributes({ columnTwoBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={(_) => setState({ editable: "body2" })}
+					unstableOnFocus={(_) => setEditable("body2")}
 				/>
 			</div>
 			<div
@@ -301,7 +301,7 @@ export const editorDisplay = (props) => {
 							})
 						}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={(_) => setState({ editable: "" })}
+						unstableOnFocus={(_) => setEditable("")}
 					/>
 				</div>
 				<RichText
@@ -312,7 +312,7 @@ export const editorDisplay = (props) => {
 					value={columnThreeTitle}
 					onChange={(value) => setAttributes({ columnThreeTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={(_) => setState({ editable: "title3" })}
+					unstableOnFocus={(_) => setEitable("title3")}
 				/>
 				<RichText
 					tagName="p"
@@ -322,7 +322,7 @@ export const editorDisplay = (props) => {
 					value={columnThreeBody}
 					onChange={(value) => setAttributes({ columnThreeBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={(_) => setState({ editable: "body3" })}
+					unstableOnFocus={(_) => setEditable("body3")}
 				/>
 			</div>
 		</div>

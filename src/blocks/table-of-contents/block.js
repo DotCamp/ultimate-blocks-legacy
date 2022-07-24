@@ -15,16 +15,17 @@ import {
 	oldAttributes,
 	updateFrom,
 } from "./oldVersions";
+import { useState } from "react";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks;
-const { ToggleControl, PanelRow, PanelBody, CheckboxControl } = wp.components;
+const { ToggleControl, PanelRow, PanelBody } = wp.components;
 
 const { InspectorControls, RichText } = wp.blockEditor || wp.editor;
 
 const { withDispatch, withSelect } = wp.data;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 
 import { upgradeButtonLabel, mergeRichTextArray } from "../../common";
 
@@ -322,7 +323,6 @@ registerBlockType("ub/table-of-contents-block", {
 				getClientIdsWithDescendants,
 			};
 		}),
-		withState({ canRemoveItemFocus: false }),
 	])(function (props) {
 		const {
 			isSelected,
@@ -331,6 +331,8 @@ registerBlockType("ub/table-of-contents-block", {
 			getBlock,
 			getClientIdsWithDescendants,
 		} = props;
+
+		const [canRemoveItemFocus, toggleCanRemoveItemFocus] = useState(false);
 
 		if (
 			blockID === "" ||
@@ -352,7 +354,11 @@ registerBlockType("ub/table-of-contents-block", {
 				}`}
 				id={`ub_table-of-contents-${blockID}`}
 			>
-				{editorDisplay(props)}
+				{editorDisplay({
+					...props,
+					canRemoveItemFocus,
+					toggleCanRemoveItemFocus,
+				})}
 			</div>,
 		];
 	}),

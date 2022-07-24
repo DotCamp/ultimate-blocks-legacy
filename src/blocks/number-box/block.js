@@ -16,13 +16,14 @@ import {
 	editorDisplay,
 	upgradeToStyledBox,
 } from "./components";
+import { useState } from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
 
 const { withDispatch, withSelect } = wp.data;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 
 const attributes = {
 	blockID: {
@@ -149,9 +150,10 @@ registerBlockType("ub/number-box", {
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
 				.replaceBlock,
 		})),
-		withState({ editable: "" }),
 	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
+
+		const [editable, setEditable] = useState("");
 
 		return [
 			isSelected && blockControls(props),
@@ -210,7 +212,7 @@ registerBlockType("ub/number-box", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, editable, setEditable })}
 			</div>,
 		];
 	}),
@@ -383,7 +385,6 @@ registerBlockType("ub/number-box-block", {
 	},
 
 	edit: compose([
-		withState({ editable: "" }),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
@@ -395,13 +396,14 @@ registerBlockType("ub/number-box-block", {
 		})),
 	])(function (props) {
 		const { isSelected, block, replaceBlock, attributes } = props;
+		const [editable, setEditable] = useState("");
 
 		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
 
 		return [
-			isSelected && blockControls(props),
+			isSelected && blockControls({ ...props, editable }),
 
 			isSelected && inspectorControls(props),
 
@@ -413,7 +415,7 @@ registerBlockType("ub/number-box-block", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, setEditable })}
 			</div>,
 		];
 	}),

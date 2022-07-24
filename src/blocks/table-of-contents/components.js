@@ -990,7 +990,7 @@ export const blockControls = (props) => {
 };
 
 export const editorDisplay = (props) => {
-	const { setAttributes, setState, canRemoveItemFocus } = props;
+	const { setAttributes, canRemoveItemFocus, toggleCanRemoveItemFocus } = props;
 	const {
 		links,
 		title,
@@ -1028,7 +1028,7 @@ export const editorDisplay = (props) => {
 					<RichText
 						placeholder={__("Optional title")}
 						className="ub_table-of-contents-title"
-						onFocus={() => setState({ canRemoveItemFocus: true })}
+						onFocus={() => toggleCanRemoveItemFocus(true)}
 						onChange={(text) => setAttributes({ title: text })}
 						value={title}
 						keepPlaceholderOnFocus={true}
@@ -1060,7 +1060,7 @@ export const editorDisplay = (props) => {
 					allowToLatin={allowToLatin}
 					removeDiacritics={removeDiacritics}
 					canRemoveItemFocus={canRemoveItemFocus}
-					itemFocusRemoved={() => setState({ canRemoveItemFocus: false })}
+					itemFocusRemoved={() => toggleCanRemoveItemFocus(false)}
 					style={{ backgroundColor: listBackgroundColor }}
 				/>
 			)}

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const { __ } = wp.i18n;
 
@@ -263,7 +263,7 @@ export const inspectorControls = (props) => {
 };
 
 export const editorDisplay = (props) => {
-	const { isSelected, setState, attributes, setAttributes } = props;
+	const { isSelected, attributes, setAttributes, setEditable } = props;
 
 	const {
 		ctaBackgroundColor,
@@ -310,7 +310,7 @@ export const editorDisplay = (props) => {
 						value={ub_call_to_action_headline_text}
 						allowedFormats={["core/bold", "core/italic", "core/strikethrough"]}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={() => setState({ editable: "header" })}
+						unstableOnFocus={() => setEditable("header")}
 					/>
 				</div>
 
@@ -327,7 +327,7 @@ export const editorDisplay = (props) => {
 						onChange={(value) => setAttributes({ ub_cta_content_text: value })}
 						value={ub_cta_content_text}
 						keepPlaceholderOnFocus={true}
-						unstableOnFocus={() => setState({ editable: "content" })}
+						unstableOnFocus={() => setEditable("content")}
 					/>
 				</div>
 
@@ -350,7 +350,7 @@ export const editorDisplay = (props) => {
 							onChange={(value) => setAttributes({ ub_cta_button_text: value })}
 							value={ub_cta_button_text}
 							keepPlaceholderOnFocus={true}
-							unstableOnFocus={() => setState({ editable: "button" })}
+							unstableOnFocus={() => setEditable("button")}
 						/>
 					</span>
 				</div>
@@ -369,7 +369,7 @@ export const editorDisplay = (props) => {
 							className="button-url"
 							value={props.attributes.url}
 							onChange={(value) => setAttributes({ url: value })}
-							unstableOnFocus={() => setState({ editable: "URLInput" })}
+							unstableOnFocus={() => setEditable("URLInput")}
 						/>
 						<Button
 							icon={"editor-break"}
@@ -383,7 +383,7 @@ export const editorDisplay = (props) => {
 	);
 };
 
-export function CallToAction(props){
+export function CallToAction(props) {
 	const {
 		attributes: { blockID },
 		isSelected,
@@ -393,7 +393,7 @@ export function CallToAction(props){
 		setAttributes,
 	} = props;
 
-	useEffect(()=>{
+	useEffect(() => {
 		if (
 			blockID === "" ||
 			getClientIdsWithDescendants().some(
@@ -404,11 +404,17 @@ export function CallToAction(props){
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
-	}, [])
+	}, []);
 
-	return <>
-		{isSelected && blockControls(props)}
-		{isSelected && inspectorControls(props)}
-		<div className={props.className}>{editorDisplay(props)}</div>
-	</>
+	const [editable, setEditable] = useState("");
+
+	return (
+		<>
+			{isSelected && blockControls({ ...props, editable, setEditable })}
+			{isSelected && inspectorControls({ ...props, editable, setEditable })}
+			<div className={props.className}>
+				{editorDisplay({ ...props, editable, setEditable })}
+			</div>
+		</>
+	);
 }

@@ -42,9 +42,6 @@ export function OldPanelContent(props) {
 		className,
 		isSelected,
 		updateBlockAttributes,
-		oldArrangement,
-		mainBlockSelected,
-		setState,
 		selectBlock,
 		insertBlock,
 		removeBlock,
@@ -53,6 +50,10 @@ export function OldPanelContent(props) {
 		block,
 		replaceBlock,
 	} = props;
+	//withState({ oldArrangement: "", mainBlockSelected: true }),
+
+	const [oldArrangement, setOldArrangement] = useState("");
+	const [mainBlockSelected, toggleMainBlockSelected] = useState(true);
 
 	const { collapsed, theme, titleColor } = attributes;
 
@@ -120,7 +121,7 @@ export function OldPanelContent(props) {
 					parent: block.clientId,
 				})
 			);
-			setState({ oldArrangement: newArrangement });
+			setOldArrangement(newArrangement);
 		}
 	} else if (mainBlockSelected) {
 		const childBlocks = panels
@@ -130,11 +131,11 @@ export function OldPanelContent(props) {
 			selectedBlock !== block.clientId &&
 			childBlocks.includes(selectedBlock)
 		) {
-			setState({ mainBlockSelected: false });
+			toggleMainBlockSelected(false);
 		}
 	} else {
 		selectBlock(parentOfSelectedBlock);
-		setState({ mainBlockSelected: true });
+		toggleMainBlockSelected(true);
 	}
 
 	return (

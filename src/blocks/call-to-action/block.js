@@ -22,7 +22,7 @@ const { registerBlockType, createBlock } = wp.blocks;
 
 const { withDispatch, withSelect } = wp.data;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 
 /**
  * Register: aa Gutenberg Block.
@@ -165,12 +165,13 @@ registerBlockType("ub/call-to-action", {
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
 				.replaceBlock,
 		})),
-		withState({ editable: "" }),
 	])(function (props) {
 		const { isSelected, block, replaceBlock } = props;
 
+		const [editable, setEditable] = useState("");
+
 		return [
-			isSelected && blockControls(props),
+			isSelected && blockControls({ ...props, editable }),
 
 			isSelected && inspectorControls(props),
 
@@ -203,7 +204,7 @@ registerBlockType("ub/call-to-action", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, setEditable })}
 			</div>,
 		];
 	}),
@@ -317,7 +318,6 @@ registerBlockType("ub/call-to-action-block", {
 	],
 	attributes,
 	edit: compose([
-		withState({ editable: "" }),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
 				select("core/block-editor") || select("core/editor");

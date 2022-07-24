@@ -31,7 +31,7 @@ const {
 	ToggleControl,
 } = wp.components;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { withSelect } = wp.data;
 
 const defaultAttributes = {
@@ -1821,17 +1821,6 @@ registerBlockType("ub/review", {
 	keywords: [__("Review"), __("Ultimate Blocks")],
 	attributes: defaultAttributes,
 	edit: compose([
-		withState({
-			editable: "",
-			editedStar: 0,
-			lastCuisine: "",
-			setEventEndDate: false,
-			offerPriceRaw: "0",
-			offerHighPriceRaw: "0",
-			offerLowPriceRaw: "0",
-			isLoaded: false,
-			setCTAFontSize: false,
-		}),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
 				select("core/block-editor") || select("core/editor");

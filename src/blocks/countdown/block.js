@@ -108,7 +108,7 @@ function CountdownMain(props) {
 								}))}
 							onChange={(largestUnit) => {
 								setAttributes({ largestUnit });
-								setState({ forceUpdate: true });
+								setForceUpdate(true);
 							}}
 						/>
 						<SelectControl

@@ -14,7 +14,7 @@ const {
 	RangeControl,
 	PanelBody,
 	PanelRow,
-	DropdownMenu,
+	ToolbarDropdownMenu,
 } = wp.components;
 
 const { withSelect } = wp.data;
@@ -104,8 +104,7 @@ function ProgressBarMain(props) {
 							allowReset
 						/>
 					</ToolbarGroup>
-					{/*ToolbarDropdownMenu doesn't work outside of Gutenberg. Do not convert until it's part of Wordpress core. */}
-					<DropdownMenu
+					<ToolbarDropdownMenu
 						icon={`editor-${
 							detailAlign === "justify" ? detailAlign : "align" + detailAlign
 						}`}

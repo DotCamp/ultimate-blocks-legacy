@@ -70,10 +70,12 @@ export const defaultButtonProps = {
 	buttonWidth: "flex",
 };
 
+//commented out in old button block
 export const blockControls = (props) => {
 	const {
 		setAttributes,
 		attributes: { buttons, align },
+		toggleLinkInput,
 	} = props;
 
 	return (
@@ -88,7 +90,7 @@ export const blockControls = (props) => {
 					<ToolbarButton
 						icon="admin-links"
 						label={__("Add button link")}
-						onClick={() => props.setState({ enableLinkInput: true })}
+						onClick={() => toggleLinkInput(true)}
 					/>
 				</ToolbarGroup>
 			</BlockControls>
@@ -96,6 +98,7 @@ export const blockControls = (props) => {
 	);
 };
 
+//commented out in old button block
 export const inspectorControls = (props) => {
 	const BUTTON_SIZES = {
 		small: __("S", "ultimate-blocks"),
@@ -113,10 +116,11 @@ export const inspectorControls = (props) => {
 	const {
 		attributes: { buttons },
 		setAttributes,
-		setState,
 		availableIcons,
 		iconSearchTerm,
+		setIconSearchTerm,
 		iconSearchResultsPage,
+		setIconSearchResultsPage,
 		activeButtonIndex,
 	} = props;
 
@@ -401,12 +405,10 @@ export const inspectorControls = (props) => {
 										<input
 											type="text"
 											value={iconSearchTerm}
-											onChange={(e) =>
-												setState({
-													iconSearchTerm: e.target.value,
-													iconSearchResultsPage: 0,
-												})
-											}
+											onChange={(e) => {
+												setIconSearchResultsPage(0);
+												setIconSearchTerm(e.target.value);
+											}}
 										/>
 										{iconSearchTerm === "" && (
 											<Button
@@ -432,10 +434,9 @@ export const inspectorControls = (props) => {
 												<button
 													onClick={() => {
 														if (iconSearchResultsPage > 0) {
-															setState({
-																iconSearchResultsPage:
-																	iconSearchResultsPage - 1,
-															});
+															setIconSearchResultsPage(
+																iconSearchResultsPage - 1
+															);
 														}
 													}}
 												>
@@ -450,10 +451,9 @@ export const inspectorControls = (props) => {
 															iconSearchResultsPage <
 															iconListPage.length - 1
 														) {
-															setState({
-																iconSearchResultsPage:
-																	iconSearchResultsPage + 1,
-															});
+															setIconSearchResultsPage(
+																iconSearchResultsPage + 1
+															);
 														}
 													}}
 												>
@@ -704,12 +704,14 @@ const URLInputBox = (props) => {
 export const editorDisplay = (props) => {
 	const {
 		isSelected,
-		enableLinkInput,
-		setState,
 		setAttributes,
 		attributes: { buttons, align },
-		hoveredButton,
 		activeButtonIndex,
+		setActiveButtonIndex,
+		hoveredButton,
+		setHoveredButton,
+		enableLinkInput,
+		toggleLinkInput,
 	} = props;
 
 	return (
@@ -727,12 +729,11 @@ export const editorDisplay = (props) => {
 									<span
 										title={__("Delete This Button")}
 										onClick={() => {
-											setState({
-												activeButtonIndex:
-													activeButtonIndex > i
-														? activeButtonIndex - 1
-														: Math.min(activeButtonIndex, buttons.length - 2),
-											});
+											setActiveButtonIndex(
+												activeButtonIndex > i
+													? activeButtonIndex - 1
+													: Math.min(activeButtonIndex, buttons.length - 2)
+											);
 											setAttributes({
 												buttons: [
 													...buttons.slice(0, i),
@@ -752,9 +753,9 @@ export const editorDisplay = (props) => {
 										? `ub-button-flex-${b.size}`
 										: ""
 								}`}
-								onMouseEnter={() => setState({ hoveredButton: i })}
-								onMouseLeave={() => setState({ hoveredButton: -1 })}
-								onClick={() => setState({ activeButtonIndex: i })}
+								onMouseEnter={() => setHoveredButton(i)}
+								onMouseLeave={() => setHoveredButton(-1)}
+								onClick={() => setActiveButtonIndex(i)}
 								style={{
 									backgroundColor: b.buttonIsTransparent
 										? "transparent"
@@ -816,7 +817,7 @@ export const editorDisplay = (props) => {
 												],
 											})
 										}
-										unstableOnFocus={() => setState({ activeButtonIndex: i })}
+										unstableOnFocus={() => setActiveButtonIndex(i)}
 										value={b.buttonText}
 										allowedFormats={[
 											"core/bold",
@@ -832,8 +833,8 @@ export const editorDisplay = (props) => {
 									{...props}
 									index={i}
 									visibilityTrigger={enableLinkInput}
-									hideLinkInput={() => setState({ enableLinkInput: false })}
-									showLinkInput={() => setState({ enableLinkInput: true })}
+									hideLinkInput={() => toggleLinkInput(false)}
+									showLinkInput={() => toggleLinkInput(true)}
 								/>
 							)}
 						</div>
@@ -841,7 +842,7 @@ export const editorDisplay = (props) => {
 					<button
 						onClick={() => {
 							setAttributes({ buttons: [...buttons, defaultButtonProps] });
-							setState({ activeButtonIndex: buttons.length });
+							setActiveButtonIndex(buttons.length);
 						}}
 					>
 						+
