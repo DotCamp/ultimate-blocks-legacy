@@ -135,6 +135,9 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
         Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (slider) {
           var swiper = new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
         });
+        setTimeout(function () {
+          window.dispatchEvent(new Event("resize"));
+        }, 100);
       } else {
         instance.classList.add("ub-hide");
       }

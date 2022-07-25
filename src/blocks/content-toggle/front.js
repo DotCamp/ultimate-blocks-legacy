@@ -91,6 +91,10 @@ function togglePanel(target) {
 						JSON.parse(slider.dataset.swiperData)
 					);
 				});
+
+			setTimeout(function () {
+				window.dispatchEvent(new Event("resize"));
+			}, 100);
 		} else {
 			panelContent.classList.add("ub-hiding");
 			panelContent.style.height = "";

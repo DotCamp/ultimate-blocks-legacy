@@ -168,6 +168,10 @@ Array.prototype.slice
 									JSON.parse(slider.dataset.swiperData)
 								);
 							});
+
+						setTimeout(function () {
+							window.dispatchEvent(new Event("resize"));
+						}, 100);
 					} else {
 						instance.classList.add("ub-hide");
 					}

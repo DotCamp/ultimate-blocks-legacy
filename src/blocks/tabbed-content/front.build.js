@@ -90,6 +90,9 @@ function ub_handleTabEvent(tab) {
       Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (slider) {
         var swiper = new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
       });
+      setTimeout(function () {
+        window.dispatchEvent(new Event("resize"));
+      }, 100);
       Array.prototype.slice.call(tabContent.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
         embeddedContent.style.removeProperty("width");
         embeddedContent.style.removeProperty("height");
@@ -612,6 +615,9 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-tabbed-c
         Array.prototype.slice.call(document.getElementsByClassName("ub_image_slider")).forEach(function (slider) {
           var swiper = new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
         });
+        setTimeout(function () {
+          window.dispatchEvent(new Event("resize"));
+        }, 100);
 
         if (root.dataset.noActiveTabs) {
           delete root.dataset.noActiveTabs;
