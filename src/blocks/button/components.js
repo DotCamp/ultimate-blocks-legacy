@@ -2182,7 +2182,7 @@ export function EditorComponent(props) {
 											onChange={() =>
 												setAttributes({
 													buttons: [
-														...buttons.slice(0, ix),
+														...buttons.slice(0, i),
 														Object.assign({}, buttons[i], {
 															addSponsored: !buttons[i].addSponsored,
 														}),
