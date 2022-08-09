@@ -9927,20 +9927,23 @@ if(!function_exists('ub_checkInnerBlocks')){
     function ub_checkInnerBlocks( $block ) {
         static $currentBlocks = [];
         
-        $current = $block;
+        $currentBlockArray = [$block];
     
         if( $block['blockName'] == 'core/block' ) { //reusable block
-            $current = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) )[0];
+			$currentBlockArray = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) );
         }
     
-        if( $current['blockName'] != '' ) {
-            array_push( $currentBlocks, $current );
-            if( count( $current['innerBlocks'] ) > 0 ){
-                foreach( $current['innerBlocks'] as $innerBlock ) {
-                    ub_checkInnerBlocks( $innerBlock );
-                }
-            }
-        }
+		foreach($currentBlockArray as $current){
+			if( $current['blockName'] != '' ) {
+				array_push( $currentBlocks, $current );
+				if( count( $current['innerBlocks'] ) > 0 ){
+					foreach( $current['innerBlocks'] as $innerBlock ) {
+						ub_checkInnerBlocks( $innerBlock );
+					}
+				}
+			}
+		}
+
         return $currentBlocks;
     }
 }
