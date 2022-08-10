@@ -13,7 +13,7 @@ import { version_1_1_2 } from "./oldVersions";
 import { useEffect } from "react";
 
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 
 const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
 
@@ -225,6 +225,24 @@ registerBlockType("ub/divider", {
 			getClientIdsWithDescendants,
 		};
 	})(DividerBlock),
+
+	transforms: {
+		from: [
+			{
+				type: "block",
+				blocks: "core/separator",
+				transform: (attributes) =>
+					createBlock(
+						"ub/divider",
+						"style" in attributes
+							? {
+									borderColor: attributes.style.color.background,
+							  }
+							: {}
+					),
+			},
+		],
+	},
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined
