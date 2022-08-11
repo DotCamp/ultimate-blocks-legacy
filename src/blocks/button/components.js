@@ -64,7 +64,7 @@ export const defaultButtonProps = {
 	iconSize: 0,
 	iconUnit: "px",
 	buttonIsTransparent: false,
-	addNofollow: true,
+	addNofollow: false,
 	openInNewTab: true,
 	addSponsored: false,
 	buttonWidth: "flex",

@@ -109,7 +109,7 @@ const attributes = {
 	},
 	addNofollow: {
 		type: "boolean",
-		default: true,
+		default: false,
 	},
 	openInNewTab: {
 		type: "boolean",

@@ -287,7 +287,7 @@ $defaultValues = array(
             ),
             'addNofollow' => array(
                 'type' => 'boolean',
-                'default'=> true
+                'default'=> false
             ),
             'openInNewTab' => array(
                 'type' => 'boolean',
