@@ -678,7 +678,7 @@ export const inspectorControls = (props) => {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Allowed Headings")} initialOpen={false}>
+			<PanelBody title={__("Allowed Headings")}>
 				<div className="ub_toc_heading_selection">
 					{allowedHeaders.map((a, i) => (
 						<CheckboxControl
@@ -738,7 +738,7 @@ export const inspectorControls = (props) => {
 					],
 				]}
 			/>
-			<PanelBody title={__("Collapsible")}>
+			<PanelBody title={__("Collapsible")} initialOpen={false}>
 				<PanelRow>
 					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
 					<ToggleControl
@@ -790,7 +790,7 @@ export const inspectorControls = (props) => {
 					</>
 				)}
 			</PanelBody>
-			<PanelBody title={__("Body")}>
+			<PanelBody title={__("Body")} initialOpen={false}>
 				<PanelRow>
 					<p>{__("Columns")}</p>
 					<ToolbarGroup>
