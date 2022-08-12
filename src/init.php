@@ -964,7 +964,7 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL;
                     }
                     if($attributes['titleColor']){
-                        $blockStylesheets .= $prefix . ' .ub_table-of-contents-title{' . PHP_EOL .
+                        $blockStylesheets .= $prefix . ' .ub_table-of-contents-title, ' . $prefix . ' .ub_table-of-contents-toggle,' . $prefix . ' .ub_table-of-contents-toggle-link{' . PHP_EOL .
                             'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
                         '}' . PHP_EOL;
                     }

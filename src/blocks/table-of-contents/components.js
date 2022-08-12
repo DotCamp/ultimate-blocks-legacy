@@ -1036,11 +1036,12 @@ export const editorDisplay = (props) => {
 				</div>
 				{allowToCHiding && (
 					<div id="ub_table-of-contents-header-toggle">
-						<div id="ub_table-of-contents-toggle">
+						<div id="ub_table-of-contents-toggle" style={{ color: titleColor }}>
 							[
 							<a
 								className="ub_table-of-contents-toggle-link"
 								href="#"
+								style={{ color: titleColor }}
 								onClick={() => setAttributes({ showList: !showList })}
 							>
 								{showList ? hideText || __("hide") : showText || __("show")}
