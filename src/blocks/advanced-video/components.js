@@ -1113,7 +1113,7 @@ export function AdvancedVideoBlock(props) {
 									<Button
 										isPrimary
 										icon="admin-links"
-										onClick={() => setImageURLInputStatus(false)}
+										onClick={() => setImageURLInputStatus(!enterImageURL)}
 									>
 										{__("Insert thumbnail URL")}
 									</Button>
