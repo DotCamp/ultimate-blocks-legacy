@@ -2,3 +2,13 @@
 	width: fit-content;
 	max-width: 100%;
 }
+
+.ub-advanced-video-thumbnail {
+	position: relative;
+	& > svg {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
