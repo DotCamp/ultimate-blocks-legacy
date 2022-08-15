@@ -2,6 +2,7 @@
 import React from 'react';
 import ContentPhrase from "$Components/ContentPhrase";
 import BlockStatusFilterControl from "$Components/BlockStatusFilterControl";
+import BlockControlsContainer from "$Components/BlockControlsContainer";
 
 /**
  * Menu content component.
@@ -12,6 +13,7 @@ function MenuContent() {
 		<div className={ 'menu-content' }>
 			<ContentPhrase />
 			<BlockStatusFilterControl />
+			<BlockControlsContainer />
 		</div>
 	);
 }
