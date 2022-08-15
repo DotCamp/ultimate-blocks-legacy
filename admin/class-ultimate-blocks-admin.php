@@ -92,7 +92,7 @@ class Ultimate_Blocks_Admin {
 		 */
 		global $menu_page;
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ultimate-blocks-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, trailingslashit(ULTIMATE_BLOCKS_URL) . 'bundle-dist/ub-admin-settings.css', array(), $this->version, 'all' );
 
 	}
 
@@ -120,8 +120,7 @@ class Ultimate_Blocks_Admin {
 			return;
 		}
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ultimate-blocks-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script( $this->plugin_name, trailingslashit(ULTIMATE_BLOCKS_URL). 'bundle-dist/ub-admin-settings.js', [], $this->version, true );
 	}
 
 
@@ -198,12 +197,12 @@ class Ultimate_Blocks_Admin {
 				}
 
 				if($canMakeCustomFile){
-					$blockDirName = strtolower(str_replace(' ', '-', 
+					$blockDirName = strtolower(str_replace(' ', '-',
 					trim(preg_replace('/\(.+\)/', '', $saved_blocks[ $key ]['label']))
 						));
 					$frontStyleLocation = $blockDir . $blockDirName . '/style.css';
 					$adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
-	
+
 					if(file_exists($frontStyleLocation) && $saved_blocks[ $key ]['active']){ //also detect if block is enabled
 						if($block['name'] == 'ub/click-to-tweet'){
 							fwrite($frontStyleFile, str_replace("src/blocks/click-to-tweet/icons", "ultimate-blocks", file_get_contents($frontStyleLocation)));
@@ -227,7 +226,7 @@ class Ultimate_Blocks_Admin {
 					}
 				}
 			}
-			
+
 			if($canMakeCustomFile){
 				fclose($frontStyleFile);
 				fclose($adminStyleFile);
@@ -350,7 +349,7 @@ class Ultimate_Blocks_Admin {
 	 * @since 2.1.6
 	 */
 	public static function UltimateBlocks_review_notice() {
-        
+
         $install_date = get_option( 'UltimateBlocks_installDate' );
         $display_date = date( 'Y-m-d h:i:s' );
         $datetime1 = new DateTime( $install_date );
