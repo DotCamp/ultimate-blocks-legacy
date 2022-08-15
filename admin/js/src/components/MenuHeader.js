@@ -10,7 +10,7 @@ import withMenuContext from "$HOC/withMenuContext";
  */
 function MenuHeader( { menuData } ) {
 	return (
-		<div className={ 'header' }>
+		<div className={ 'menu-header' }>
 			<div className={ 'logo-container' }>
 				<img alt={ 'plugin logo' } src={ menuData.assets.logo } />
 			</div>

@@ -5,11 +5,10 @@ $screen-xl: 1280px;
 $screen-2xl: 1536px;
 
 @mixin screen-max($max) {
-  @media screen and (max-width: $max - 1){
+  @media screen and (max-width: $max - 1) {
 	@content
   }
 }
-
 
 %size-full {
   width: 100%;
@@ -18,4 +17,10 @@ $screen-2xl: 1536px;
 
 %drop-shadow-lg {
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25)
+}
+
+%flex-center-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
