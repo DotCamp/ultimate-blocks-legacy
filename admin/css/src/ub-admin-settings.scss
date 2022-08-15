@@ -16,7 +16,10 @@
 	grid-template-rows: auto 1fr;
 
 	& > div {
-	  padding: 0 40px 0 40px;
+	  padding: 0 200px 0 200px;
+	  @include screen-max($screen-2xl) {
+		padding: 0 50px 0 50px;
+	  }
 	}
 
 	.header {
