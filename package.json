@@ -9,6 +9,8 @@
   },
   "alias": {
     "$Containers": "./admin/js/src/containers",
+	"$Components": "./admin/js/src/components",
+	"$HOC": "./admin/js/src/hoc",
     "$Styles": "./admin/css/src/"
   },
   "dependencies": {

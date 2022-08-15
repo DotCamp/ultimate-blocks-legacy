@@ -1,0 +1,40 @@
+@import "./base/common";
+@import "./base/themes/admin-menu-theme";
+
+.ub-admin-menu-wrapper {
+  @extend %size-full;
+  position: absolute;
+  background-color: $gray-300;
+  color: $text-color;
+  z-index: 10;
+
+  .ub-admin-menu-container {
+	@extend %size-full;
+	background-color: $white;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 1fr;
+
+	& > div {
+	  padding: 0 40px 0 40px;
+	}
+
+	.header {
+	  padding-top: 10px;
+	  padding-bottom: 10px;
+	  @extend %drop-shadow-lg;
+	  display: flex;
+	  align-items: center;
+	  background-color: $gray-100;
+
+	  .logo-container {
+		height: $logo-height;
+
+		img {
+		  height: 100%;
+		}
+	  }
+	}
+  }
+}
+

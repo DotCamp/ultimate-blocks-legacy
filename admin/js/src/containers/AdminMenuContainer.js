@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
+import MenuHeader from "$Components/MenuHeader";
 
 /**
  * Container for admin menu.
@@ -9,7 +10,7 @@ import React from 'react';
 function AdminMenuContainer() {
 	return (
 		<div className={ 'ub-admin-menu-container' }>
-			admin menu container
+			<MenuHeader />
 		</div>
 	);
 }

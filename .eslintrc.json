@@ -22,7 +22,8 @@
 		"wp": true,
 		"wpApiSettings": true,
 		"window": true,
-		"document": true
+		"document": true,
+		"ubAdminMenuData": true
 	},
 	"plugins": ["react", "jsx-a11y", "jest"],
 	"settings": {
