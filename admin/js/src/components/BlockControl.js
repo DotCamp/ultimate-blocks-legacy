@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ToggleControl from "$Components/ToggleControl";
 
 /**
@@ -14,14 +14,26 @@ import ToggleControl from "$Components/ToggleControl";
  * @param {Boolean} props.status block status
  */
 function BlockControl( { title, blockId, status } ) {
+	const initialRender = useRef( true );
+	const [ innerStatus, setInnerStatus ] = useState( status );
+
+	useEffect( () => {
+		if ( initialRender.current ) {
+			initialRender.current = false;
+		} else {
+		// TODO [ErdemBircan] remove for production
+			console.log( `change ${ blockId } status to: ${ innerStatus }` );
+		}
+	}, [ innerStatus ] );
+
 	return (
-		<div className={ 'block-control' }>
+		<div className={ 'block-control' } data-enabled={ JSON.stringify( innerStatus ) }>
 			<div className={ 'block-title' }>
 				<div>
 					{ title }
 				</div>
 				<div>
-					<ToggleControl status={ status } />
+					<ToggleControl onStatusChange={ setInnerStatus } status={ status } />
 				</div>
 			</div>
 			<div className={ 'block-info' }></div>

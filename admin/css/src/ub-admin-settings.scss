@@ -56,7 +56,7 @@
 		margin: 60px 0;
 
 		.line-wrapper {
-		  margin: 6px 0;
+		  margin: 15px 0;
 		  font-weight: 400;
 		}
 
@@ -83,20 +83,33 @@
 		border-radius: 5px;
 
 		.block-control {
-		  overflow: hidden;
 		  @extend %box-shadow-md;
+		  @extend %default-transition;
+		  overflow: hidden;
 		  width: $block-control-width;
 		  max-width: $block-control-width;
 		  height: $block-control-height;
 		  border: 1px solid $block-control-border;
 		  border-radius: $block-control-border-radius;
-		  margin: 40px 20px;
+		  margin: 25px 15px;
 		  display: grid;
 		  grid-template-columns: 1fr;
 		  grid-template-rows: auto 1fr auto;
 		  grid-template-areas: "title" "info" "howTo";
 
+		  &[data-enabled='false'] {
+			border-color: $gray-500;
+
+		  }
+
+		  &[data-enabled='false'] .block-title {
+			background-color: $gray-400;
+			color: $gray-800;
+
+		  }
+
 		  .block-title {
+			@extend %default-transition;
 			grid-area: title;
 			display: flex;
 			justify-content: space-between;
@@ -118,8 +131,33 @@
   }
 
   .ub-toggle-control {
-	width: 42px;
+	@extend %default-transition;
+	position: relative;
+	width: 50px;
 	height: 24px;
+	background-color: $red-500;
+	border: 2px solid $red-500;
+	border-radius: 24px;
+	cursor: pointer;
+
+	&[data-enabled='false'] {
+	  background-color: $gray-500;
+	  border: 2px solid $gray-500;
+	}
+
+	.knob {
+	  @extend %default-transition;
+	  position: absolute;
+	  left: 0;
+	  width: 24px;
+	  height: 24px;
+	  border-radius: 24px;
+	  background-color: $white;
+	}
+
+	&[data-enabled='true'] .knob {
+	  left: calc(100% - 24px);
+	}
   }
 }
 

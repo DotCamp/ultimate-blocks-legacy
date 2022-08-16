@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { StrictMode } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import AdminMenuContainer from "$Containers/AdminMenuContainer";
 import "$Styles/ub-admin-settings.scss";
@@ -21,11 +21,9 @@ if ( mountPoint ) {
 	} );
 
 	root.render(
-		<StrictMode>
-			<AdminMenuWrapper>
-				<MenuContext startupValue={ appData }><AdminMenuContainer /></MenuContext>
-			</AdminMenuWrapper>
-		</StrictMode>
+		<AdminMenuWrapper>
+			<MenuContext startupValue={ appData }><AdminMenuContainer /></MenuContext>
+		</AdminMenuWrapper>
 	);
 } else {
 	throw new Error( 'no mount point found for settings menu' );

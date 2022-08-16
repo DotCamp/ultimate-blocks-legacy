@@ -28,3 +28,8 @@ $screen-2xl: 1536px;
   justify-content: center;
   align-items: center;
 }
+
+%default-transition {
+  transition: all 0.2s ease-out;
+
+}

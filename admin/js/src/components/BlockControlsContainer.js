@@ -28,7 +28,18 @@ function BlockControlsContainer( { menuData } ) {
 	return (
 		<div className={ 'controls-container' }>
 			{
-				menuData.blocks.info.map( ( { title, name } ) => {
+				menuData.blocks.info.sort( ( a, b ) => {
+					const aName = a.title;
+					const bName = b.title;
+
+					if ( aName < bName ) {
+						return -1;
+					} else if ( aName > bName ) {
+						return 1;
+					}
+
+					return 0;
+				} ).map( ( { title, name } ) => {
 					return <BlockControl key={ name } title={ title } blockId={ name } status={ getStatus( name ) } />;
 				} )
 			}
