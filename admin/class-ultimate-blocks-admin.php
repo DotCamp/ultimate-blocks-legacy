@@ -82,7 +82,14 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function add_settings_menu_data( $data ) {
 		$data['assets'] = [
-				'logo' => trailingslashit($this->plugin_url) . 'admin/images/banners/ultimate_blocks_logo.png'
+				'logo' => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png'
+		];
+
+		$registered_ub_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+		$data['blocks'] = [
+				'statusData' => get_option( 'ultimate_blocks', new stdClass() ),
+				'list'       => $registered_ub_blocks
 		];
 
 		return $data;

@@ -47,6 +47,7 @@
 	  grid-template-rows: auto auto 1fr;
 	  justify-content: center;
 	  justify-items: center;
+	  overflow: auto;
 
 	  .content-phrase {
 		@extend %flex-center-all;

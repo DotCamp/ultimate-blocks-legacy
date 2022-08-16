@@ -14,6 +14,9 @@ if ( mountPoint ) {
 	const appData = Object.assign( {}, ubAdminMenuData );
 	ubAdminMenuData = null;
 
+	// TODO [ErdemBircan] remove for production
+	console.log( appData );
+
 	root.render(
 		<AdminMenuWrapper>
 			<MenuContext startupValue={ appData }><AdminMenuContainer /></MenuContext>
