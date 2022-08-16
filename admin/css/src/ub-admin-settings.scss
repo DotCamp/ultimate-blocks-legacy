@@ -18,7 +18,7 @@
 	grid-template-rows: auto 1fr;
 
 	& > div {
-	  padding: 0 200px 0 200px;
+	  padding: 0 100px 0 100px;
 	  @include screen-max($screen-2xl) {
 		padding: 0 50px 0 50px;
 	  }
@@ -118,6 +118,7 @@
 			background-color: $block-title-bg;
 			font-size: $block-title-font-size;
 			color: $block-title-color;
+			user-select: none;
 		  }
 
 		  .block-howto {
@@ -133,8 +134,8 @@
   .ub-toggle-control {
 	@extend %default-transition;
 	position: relative;
-	width: 50px;
-	height: 24px;
+	width: 42px;
+	height: 20px;
 	background-color: $red-500;
 	border: 2px solid $red-500;
 	border-radius: 24px;
@@ -149,14 +150,34 @@
 	  @extend %default-transition;
 	  position: absolute;
 	  left: 0;
-	  width: 24px;
-	  height: 24px;
+	  width: 20px;
+	  height: 20px;
 	  border-radius: 24px;
 	  background-color: $white;
 	}
 
 	&[data-enabled='true'] .knob {
-	  left: calc(100% - 24px);
+	  left: calc(100% - 20px);
+	}
+  }
+
+  .ub-menu-button {
+	@extend %flex-center-all;
+	@extend %default-transition;
+	padding: 10px 20px;
+	background-color: $red-500;
+	color: $white;
+	font-size: 0.8rem;
+	cursor: pointer;
+	border-radius: 5px;
+	user-select: none;
+
+	&[data-enabled='false'] {
+	  background-color: $gray-800;
+	}
+
+	&[data-enabled='true']:active {
+	  transform: scale(0.8);
 	}
   }
 }
