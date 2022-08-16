@@ -1,0 +1,196 @@
+@import "https://fonts.googleapis.com/css2?family=Lato&display=swap";
+.ub-admin-menu-wrapper .ub-admin-menu-container, .ub-admin-menu-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header {
+  box-shadow: 0 1px 20px #00000040;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control {
+  box-shadow: 0 6px 8px -4px #00000040;
+}
+
+.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control {
+  transition: all .2s ease-out;
+}
+
+.ub-admin-menu-wrapper {
+  color: #7b6d6d;
+  z-index: 10;
+  background-color: #e5e5e5;
+  font-family: Lato, sans-serif;
+  font-size: 1rem;
+  position: absolute;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container {
+  background-color: #fff;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  display: grid;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container > div {
+  padding: 0 100px;
+}
+
+@media screen and (max-width: 1535px) {
+  .ub-admin-menu-wrapper .ub-admin-menu-container > div {
+    padding: 0 50px;
+  }
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header {
+  background-color: #fbfbfb;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container {
+  height: 40px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container img {
+  height: 100%;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content {
+  grid-template-rows: auto auto 1fr;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  justify-items: center;
+  display: grid;
+  overflow: auto;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase {
+  flex-direction: column;
+  margin: 60px 0;
+  font-size: 2.5rem;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase .line-wrapper {
+  margin: 15px 0;
+  font-weight: 400;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase .text-indicate {
+  color: #f63d3d;
+  font-weight: 500;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control {
+  width: 300px;
+  height: 40px;
+  background-color: #e5e5e5;
+  border-radius: 999999px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control {
+  width: 340px;
+  max-width: 340px;
+  height: 270px;
+  border: 1px solid #5f1717;
+  border-radius: 21px;
+  grid-template: "title"
+                 "info" 1fr
+                 "howTo"
+                 / 1fr;
+  margin: 25px 15px;
+  display: grid;
+  overflow: hidden;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] {
+  border-color: #b4a7a7;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] .block-title {
+  color: #938181;
+  background-color: #dfdfdf;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title {
+  color: #912323;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: #fff0f0;
+  grid-area: title;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-size: 1.4rem;
+  display: flex;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto {
+  grid-area: howTo;
+  padding: 20px;
+}
+
+.ub-admin-menu-wrapper .ub-toggle-control {
+  width: 42px;
+  height: 20px;
+  cursor: pointer;
+  background-color: #f63d3d;
+  border: 2px solid #f63d3d;
+  border-radius: 24px;
+  position: relative;
+}
+
+.ub-admin-menu-wrapper .ub-toggle-control[data-enabled="false"] {
+  background-color: #b4a7a7;
+  border: 2px solid #b4a7a7;
+}
+
+.ub-admin-menu-wrapper .ub-toggle-control .knob {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 24px;
+  position: absolute;
+  left: 0;
+}
+
+.ub-admin-menu-wrapper .ub-toggle-control[data-enabled="true"] .knob {
+  left: calc(100% - 20px);
+}
+
+.ub-admin-menu-wrapper .ub-menu-button {
+  color: #fff;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: #f63d3d;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: .8rem;
+}
+
+.ub-admin-menu-wrapper .ub-menu-button[data-enabled="false"] {
+  background-color: #938181;
+}
+
+.ub-admin-menu-wrapper .ub-menu-button[data-enabled="true"]:active {
+  transform: scale(.8);
+}
+
+/*# sourceMappingURL=ub-admin-settings.css.map */

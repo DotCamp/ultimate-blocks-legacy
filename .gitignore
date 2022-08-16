@@ -6,4 +6,3 @@ node_modules/
 .idea
 .swp
 .parcel-cache
-bundle-dist
