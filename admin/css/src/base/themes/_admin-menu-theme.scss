@@ -1,9 +1,23 @@
 @import "../colors";
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
+// text
 $text-color: $gray-600;
-$logo-height: 40px;
 $font-family: 'Lato', sans-serif;
 $font-size: 1rem;
+
+// block controls
+$block-control-padding: 20px;
+$block-control-width: 340px;
+$block-control-height: 270px;
+$block-control-border: #5F1717;
+$block-control-border-radius: 21px;
+$block-title-bg: $red-100;
+$block-title-color: #912323;
+$block-title-font-size: 1.4rem;
+
+// others
 $phrase-font-size: 1.65rem;
+$logo-height: 40px;
+
 

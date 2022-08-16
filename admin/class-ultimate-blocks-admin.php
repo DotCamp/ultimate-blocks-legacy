@@ -85,11 +85,8 @@ class Ultimate_Blocks_Admin {
 				'logo' => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png'
 		];
 
-		$registered_ub_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
-
 		$data['blocks'] = [
-				'statusData' => get_option( 'ultimate_blocks', new stdClass() ),
-				'list'       => $registered_ub_blocks
+				'statusData' => get_option( 'ultimate_blocks', false ),
 		];
 
 		return $data;
@@ -145,8 +142,12 @@ class Ultimate_Blocks_Admin {
 			return;
 		}
 
+		wp_enqueue_script( $this->plugin_name . '_registered_blocks',
+				trailingslashit( $this->plugin_url ) . 'dist/blocks.build.js', [], $this->version, true );
+
 		wp_enqueue_script( $this->plugin_name,
 				trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.js', [], $this->version, true );
+
 
 		$frontend_script_data = apply_filters( 'ub/filter/admin_settings_menu_data', [] );
 

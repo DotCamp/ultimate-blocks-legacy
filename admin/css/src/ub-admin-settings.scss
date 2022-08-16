@@ -27,7 +27,7 @@
 	.menu-header {
 	  padding-top: 10px;
 	  padding-bottom: 10px;
-	  @extend %drop-shadow-lg;
+	  @extend %box-shadow-lg;
 	  display: flex;
 	  align-items: center;
 	  background-color: $gray-100;
@@ -74,13 +74,52 @@
 	  }
 
 	  .controls-container {
+		@extend %flex-center-all;
+		flex-wrap: wrap;
+
 		width: 100%;
 		height: 100%;
-		background-color: $gray-600;
 		margin: 30px 0;
 		border-radius: 5px;
+
+		.block-control {
+		  overflow: hidden;
+		  @extend %box-shadow-md;
+		  width: $block-control-width;
+		  max-width: $block-control-width;
+		  height: $block-control-height;
+		  border: 1px solid $block-control-border;
+		  border-radius: $block-control-border-radius;
+		  margin: 40px 20px;
+		  display: grid;
+		  grid-template-columns: 1fr;
+		  grid-template-rows: auto 1fr auto;
+		  grid-template-areas: "title" "info" "howTo";
+
+		  .block-title {
+			grid-area: title;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: $block-control-padding;
+			background-color: $block-title-bg;
+			font-size: $block-title-font-size;
+			color: $block-title-color;
+		  }
+
+		  .block-howto {
+			@extend %flex-center-all;
+			padding: $block-control-padding;
+			grid-area: howTo;
+		  }
+		}
 	  }
 	}
+  }
+
+  .ub-toggle-control {
+	width: 42px;
+	height: 24px;
   }
 }
 
