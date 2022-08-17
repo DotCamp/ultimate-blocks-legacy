@@ -22,7 +22,7 @@ function BlockControl( { title, blockId, status, iconElement } ) {
 	const [ innerStatus, setInnerStatus ] = useState( status );
 
 	const howToUse = () => {
-	// TODO [ErdemBircan] remove for production
+		// TODO [ErdemBircan] remove for production
 		console.log( `showing how-to for ${ blockId }` );
 	};
 

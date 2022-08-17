@@ -105,16 +105,16 @@
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control {
-  width: 340px;
-  max-width: 340px;
-  height: 270px;
+  width: 290px;
+  max-width: 290px;
+  height: 250px;
   border: 1px solid #5f1717;
   border-radius: 21px;
   grid-template: "title"
                  "info" 1fr
                  "howTo"
                  / 1fr;
-  margin: 25px 15px;
+  margin: 15px 10px;
   display: grid;
   overflow: hidden;
 }
@@ -141,7 +141,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   display: flex;
 }
 

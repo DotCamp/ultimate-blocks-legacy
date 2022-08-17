@@ -91,7 +91,7 @@
 		  height: $block-control-height;
 		  border: 1px solid $block-control-border;
 		  border-radius: $block-control-border-radius;
-		  margin: 25px 15px;
+		  margin: $block-control-y-margin $block-control-x-margin;
 		  display: grid;
 		  grid-template-columns: 1fr;
 		  grid-template-rows: auto 1fr auto;
