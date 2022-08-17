@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import FilterControlItem from "$Components/FilterControlItem";
+import ActiveFilterIndicator, { generateIndicatorData } from "$Components/ActiveFilterIndicator";
 
 /**
  * Filter types for blocks.
@@ -31,7 +32,20 @@ function BlockStatusFilterControl( { filterVal, onFilterChanged = () => {} } ) {
 		return filterValBeforeCheck;
 	};
 
+	const containerRef = createRef();
+
 	const [ innerFilterVal, setInnerFilterVal ] = useState( filterVal );
+	const [ activeItemRef, setActiveItemRef ] = useState( null );
+	const [ indicatorPosData, setIndicatorPosData ] = useState( generateIndicatorData( 0, 50 ) );
+
+	useEffect( () => {
+		if ( activeItemRef ) {
+			const { x, width } = activeItemRef.getBoundingClientRect();
+			const { x: containerX } = containerRef.current.getBoundingClientRect();
+
+			setIndicatorPosData( generateIndicatorData( x - containerX, width ) );
+		}
+	}, [ activeItemRef ] );
 
 	useEffect( () => {
 		const checkedFilterVal = filterValCheck( innerFilterVal );
@@ -43,7 +57,8 @@ function BlockStatusFilterControl( { filterVal, onFilterChanged = () => {} } ) {
 	}, [ innerFilterVal ] );
 
 	return (
-		<div className={ 'block-status-filter-control' }>
+		<div ref={ containerRef } className={ 'block-status-filter-control' }>
+			<ActiveFilterIndicator positionData={ indicatorPosData } />
 			{
 				Object.values( ( () => {
 					// eslint-disable-next-line no-unused-vars
@@ -51,7 +66,7 @@ function BlockStatusFilterControl( { filterVal, onFilterChanged = () => {} } ) {
 					return rest;
 				} )() ).map( filterId => {
 					return (
-						<FilterControlItem key={ filterId } id={ filterId } title={ filterId } onFilterItemSelected={ setInnerFilterVal } active={ innerFilterVal === filterId } />
+						<FilterControlItem key={ filterId } id={ filterId } title={ filterId } onFilterItemSelected={ setInnerFilterVal } active={ innerFilterVal === filterId } activeItemRefCallback={ setActiveItemRef } />
 					);
 				} )
 

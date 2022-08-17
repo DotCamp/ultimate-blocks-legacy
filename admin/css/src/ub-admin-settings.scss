@@ -68,16 +68,34 @@
 	  }
 
 	  .block-status-filter-control {
-		width: 300px;
-		height: 40px;
-		background-color: $gray-300;
-		border-radius: 20px;
+		@extend %default-border;
+		@extend %pill;
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: 1fr;
+		padding: 5px;
+		justify-content: center;
+		align-items: center;
+
+		.active-indicator {
+		  @extend %default-transition;
+		  @extend %pill;
+		  position: absolute;
+		  width: 10px;
+		  height: 30px;
+		  background-color: $red-500;
+		  z-index: 9;
+		}
 
 		.filter-control-item {
+		  @extend %flex-center-all;
 		  @extend %default-transition;
 		  @extend %unselectable;
 		  cursor: pointer;
+		  padding: 5px 20px;
 		  text-transform: capitalize;
+		  z-index: 10;
 
 		  &[data-active="true"] {
 			color: $white;
@@ -86,7 +104,9 @@
 	  }
 
 	  .controls-container {
-		@extend %flex-center-all;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
 		flex-wrap: wrap;
 
 		width: 100%;
@@ -97,11 +117,11 @@
 		.block-control {
 		  @extend %box-shadow-md;
 		  @extend %default-transition;
+		  @extend %default-border;
 		  overflow: hidden;
 		  width: $block-control-width;
 		  max-width: $block-control-width;
 		  height: $block-control-height;
-		  border: 1px solid $block-control-border;
 		  border-radius: $block-control-border-radius;
 		  margin: $block-control-y-margin $block-control-x-margin;
 		  display: grid;
@@ -180,12 +200,12 @@
 
   .ub-toggle-control {
 	@extend %default-transition;
+	@extend %pill;
 	position: relative;
 	width: 42px;
 	height: 20px;
 	background-color: $red-500;
 	border: 2px solid $red-500;
-	border-radius: 24px;
 	cursor: pointer;
 
 	&[data-enabled='false'] {
@@ -199,7 +219,7 @@
 	  left: 0;
 	  width: 20px;
 	  height: 20px;
-	  border-radius: 24px;
+	  border-radius: 100%;
 	  background-color: $white;
 	}
 

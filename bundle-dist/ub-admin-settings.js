@@ -23852,6 +23852,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = exports.FILTER_TYPES = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _FilterControlItem = _interopRequireDefault(require("$Components/FilterControlItem"));
+var _ActiveFilterIndicator = _interopRequireWildcard(require("$Components/ActiveFilterIndicator"));
 var _excluded = [
     "_DEFAULT"
 ];
@@ -23983,7 +23984,19 @@ function BlockStatusFilterControl(_ref) {
         if (!Object.values(FILTER_TYPES).includes(val)) filterValBeforeCheck = FILTER_TYPES._DEFAULT;
         return filterValBeforeCheck;
     };
+    var containerRef = /*#__PURE__*/ (0, _react.createRef)();
     var _useState = (0, _react.useState)(filterVal), _useState2 = _slicedToArray(_useState, 2), innerFilterVal = _useState2[0], setInnerFilterVal = _useState2[1];
+    var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), activeItemRef = _useState4[0], setActiveItemRef = _useState4[1];
+    var _useState5 = (0, _react.useState)((0, _ActiveFilterIndicator.generateIndicatorData)(0, 50)), _useState6 = _slicedToArray(_useState5, 2), indicatorPosData = _useState6[0], setIndicatorPosData = _useState6[1];
+    (0, _react.useEffect)(function() {
+        if (activeItemRef) {
+            var _activeItemRef$getBou = activeItemRef.getBoundingClientRect(), x = _activeItemRef$getBou.x, width = _activeItemRef$getBou.width;
+            var _containerRef$current = containerRef.current.getBoundingClientRect(), containerX = _containerRef$current.x;
+            setIndicatorPosData((0, _ActiveFilterIndicator.generateIndicatorData)(x - containerX, width));
+        }
+    }, [
+        activeItemRef
+    ]);
     (0, _react.useEffect)(function() {
         var checkedFilterVal = filterValCheck(innerFilterVal);
         if (checkedFilterVal !== innerFilterVal) setInnerFilterVal(checkedFilterVal);
@@ -23992,8 +24005,11 @@ function BlockStatusFilterControl(_ref) {
         innerFilterVal
     ]);
     return /*#__PURE__*/ _react["default"].createElement("div", {
+        ref: containerRef,
         className: "block-status-filter-control"
-    }, Object.values(function() {
+    }, /*#__PURE__*/ _react["default"].createElement(_ActiveFilterIndicator["default"], {
+        positionData: indicatorPosData
+    }), Object.values(function() {
         // eslint-disable-next-line no-unused-vars
         var _DEFAULT = FILTER_TYPES._DEFAULT, rest = _objectWithoutProperties(FILTER_TYPES, _excluded);
         return rest;
@@ -24003,7 +24019,8 @@ function BlockStatusFilterControl(_ref) {
             id: filterId,
             title: filterId,
             onFilterItemSelected: setInnerFilterVal,
-            active: innerFilterVal === filterId
+            active: innerFilterVal === filterId,
+            activeItemRefCallback: setActiveItemRef
         });
     }));
 }
@@ -24012,17 +24029,46 @@ function BlockStatusFilterControl(_ref) {
  */ var _default = BlockStatusFilterControl;
 exports["default"] = _default;
 
-},{"react":"21dqq","$Components/FilterControlItem":"eozng"}],"eozng":[function(require,module,exports) {
+},{"react":"21dqq","$Components/FilterControlItem":"eozng","$Components/ActiveFilterIndicator":"aWJJu"}],"eozng":[function(require,module,exports) {
 "use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
         "default": obj
     };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
 }
 // eslint-disable-next-line no-unused-vars
 /**
@@ -24036,14 +24082,22 @@ function _interopRequireDefault(obj) {
  * @param {String} props.id item id, this id represents if of the filter this component represents
  * @param {Function} props.onFilterItemSelected callback for filter item selected event
  * @param {Boolean} props.active filter active status
+ * @param {Function} props.activeItemRefCallback callback for active item reference
  */ function FilterControlItem(_ref) {
-    var title = _ref.title, id = _ref.id, onFilterItemSelected = _ref.onFilterItemSelected, active = _ref.active;
+    var title = _ref.title, id = _ref.id, onFilterItemSelected = _ref.onFilterItemSelected, active = _ref.active, activeItemRefCallback = _ref.activeItemRefCallback;
+    var itemRef = /*#__PURE__*/ (0, _react.createRef)();
+    (0, _react.useEffect)(function() {
+        if (active) activeItemRefCallback(itemRef.current);
+    }, [
+        active
+    ]);
     /**
    * Handle item select event.
    */ var handleClick = function handleClick() {
         onFilterItemSelected(id);
     }; // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
     return /*#__PURE__*/ _react["default"].createElement("div", {
+        ref: itemRef,
         "data-active": JSON.stringify(active),
         onClick: handleClick,
         className: "filter-control-item"
@@ -24052,6 +24106,91 @@ function _interopRequireDefault(obj) {
 /**
  * @module FilterControlItem
  */ var _default = FilterControlItem;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"aWJJu":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.generateIndicatorData = exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Generate indicator position data.
+ * @param {Number} x x position
+ * @param {Number} width width
+ * @returns {Object} position data
+ */ var generateIndicatorData = function generateIndicatorData(x, width) {
+    return {
+        x: x,
+        width: width
+    };
+};
+/**
+ * Active item indicator for filter component.
+ *
+ * @param {Object} props component properties
+ * @param {Object} [props.positionData={x:0, y:0, width: 100}] position data
+ * @constructor
+ */ exports.generateIndicatorData = generateIndicatorData;
+function ActiveFilterIndicator(_ref) {
+    var _ref$positionData = _ref.positionData, positionData = _ref$positionData === void 0 ? {
+        x: 0,
+        width: 100
+    } : _ref$positionData;
+    /**
+   * Add px to given value
+   * @param {Number} val value
+   * @returns {string} post fixed value
+   */ var toPx = function toPx(val) {
+        return "".concat(val, "px");
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        style: {
+            left: toPx(positionData.x),
+            width: toPx(positionData.width)
+        },
+        className: "active-indicator"
+    });
+}
+/**
+ * @module ActiveFilterIndicator
+ */ var _default = ActiveFilterIndicator;
 exports["default"] = _default;
 
 },{"react":"21dqq"}],"e69CO":[function(require,module,exports) {

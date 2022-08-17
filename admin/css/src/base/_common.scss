@@ -1,3 +1,5 @@
+@import "./themes/admin-menu-theme";
+
 $screen-sm: 640px;
 $screen-md: 768px;
 $screen-lg: 1024px;
@@ -35,5 +37,13 @@ $screen-2xl: 1536px;
 
 %default-transition {
   transition: all 0.2s ease-out;
+}
+
+%default-border {
+  border: 1px solid $border-color;
+}
+
+%pill {
+  border-radius: 999px;
 
 }
