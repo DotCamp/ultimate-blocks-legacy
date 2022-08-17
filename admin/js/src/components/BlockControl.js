@@ -19,7 +19,7 @@ import withIcon from "$HOC/withIcon";
  */
 function BlockControl( { title, blockId, status, iconElement } ) {
 	const initialRender = useRef( true );
-	const [ innerStatus, setInnerStatus ] = useState( status );
+	const [ innerStatus, setInnerStatus ] = useState( status === undefined ? false : status );
 
 	const howToUse = () => {
 		// TODO [ErdemBircan] remove for production
@@ -47,7 +47,7 @@ function BlockControl( { title, blockId, status, iconElement } ) {
 					{ title }
 				</div>
 				<div className={ 'block-title-right-container' }>
-					<ToggleControl onStatusChange={ setInnerStatus } status={ status } />
+					<ToggleControl onStatusChange={ setInnerStatus } status={ innerStatus } />
 				</div>
 			</div>
 			<div className={ 'block-info' }></div>

@@ -75,6 +75,7 @@
 
 		.filter-control-item {
 		  @extend %default-transition;
+		  @extend %unselectable;
 		  cursor: pointer;
 		  text-transform: capitalize;
 

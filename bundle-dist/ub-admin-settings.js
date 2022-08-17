@@ -24269,7 +24269,7 @@ function _arrayWithHoles(arr) {
  */ function BlockControl(_ref) {
     var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement;
     var initialRender = (0, _react.useRef)(true);
-    var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
+    var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
     var howToUse = function howToUse() {
         // TODO [ErdemBircan] remove for production
         console.log("showing how-to for ".concat(blockId));
@@ -24294,7 +24294,7 @@ function _arrayWithHoles(arr) {
         className: "block-title-right-container"
     }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
         onStatusChange: setInnerStatus,
-        status: status
+        status: innerStatus
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-info"
     }), /*#__PURE__*/ _react["default"].createElement("div", {
