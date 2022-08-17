@@ -51,6 +51,7 @@
 
 	  .content-phrase {
 		@extend %flex-center-all;
+		@extend %unselectable;
 		flex-direction: column;
 		font-size: $phrase-font-size;
 		margin: 60px 0;
@@ -70,7 +71,17 @@
 		width: 300px;
 		height: 40px;
 		background-color: $gray-300;
-		border-radius: 999999px;
+		border-radius: 20px;
+
+		.filter-control-item {
+		  @extend %default-transition;
+		  cursor: pointer;
+		  text-transform: capitalize;
+
+		  &[data-active="true"] {
+			color: $white;
+		  }
+		}
 	  }
 
 	  .controls-container {
@@ -122,6 +133,7 @@
 
 		  .block-title {
 			@extend %default-transition;
+			@extend %unselectable;
 			grid-area: title;
 			display: flex;
 			justify-content: space-between;
@@ -130,7 +142,6 @@
 			background-color: $block-title-bg;
 			font-size: $block-title-font-size;
 			color: $block-title-color;
-			user-select: none;
 
 			.block-title-left-container {
 			  display: flex;
@@ -199,13 +210,13 @@
   .ub-menu-button {
 	@extend %flex-center-all;
 	@extend %default-transition;
+	@extend %unselectable;
 	padding: 10px 20px;
 	background-color: $red-500;
 	color: $white;
 	font-size: 0.8rem;
 	cursor: pointer;
 	border-radius: 5px;
-	user-select: none;
 
 	&[data-enabled='false'] {
 	  background-color: $gray-800;
@@ -215,5 +226,23 @@
 	  transform: scale(0.8);
 	}
   }
+}
+
+.block-control-transition-enter {
+  opacity: 0
+}
+
+.block-control-transition-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.block-control-transition-exit {
+  opacity: 1;
+}
+
+.block-control-transition-exit-active {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
 }
 

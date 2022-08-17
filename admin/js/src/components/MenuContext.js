@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { createContext } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 /**
  * Menu context.
@@ -18,8 +18,18 @@ export const CreatedMenuContext = createContext( {} );
  * @constructor
  */
 function MenuContext( { children, startupValue } ) {
+	const setFilterValue = ( val ) => {
+		setContextObject( { ...contextObject, app: { ...contextObject.app, blockFilter: val } } );
+	};
+
+	startupValue.actions = {
+		setFilterValue,
+	};
+
+	const [ contextObject, setContextObject ] = useState( startupValue );
+
 	return (
-		<CreatedMenuContext.Provider value={ startupValue }>
+		<CreatedMenuContext.Provider value={ contextObject }>
 			{ children }
 		</CreatedMenuContext.Provider>
 	);

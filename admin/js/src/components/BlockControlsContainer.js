@@ -1,7 +1,9 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import withMenuContext from "$HOC/withMenuContext";
 import BlockControl from "$Components/BlockControl";
+import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
 
 /**
  * Block controls container.
@@ -26,7 +28,7 @@ function BlockControlsContainer( { menuData } ) {
 	};
 
 	return (
-		<div className={ 'controls-container' }>
+		<TransitionGroup className={ 'controls-container' } >
 			{
 				menuData.blocks.info.sort( ( a, b ) => {
 					const aName = a.title;
@@ -39,11 +41,23 @@ function BlockControlsContainer( { menuData } ) {
 					}
 
 					return 0;
+				} ).filter( ( { name } ) => {
+					const currentFilter = menuData.app.blockFilter;
+					if ( currentFilter === FILTER_TYPES.ALL ) {
+						return true;
+					}
+
+					const blockStatus = getStatus( name ) ? FILTER_TYPES.ENABLED : FILTER_TYPES.DISABLED;
+
+					return blockStatus === currentFilter;
 				} ).map( ( { title, name, icon } ) => {
-					return <BlockControl key={ name } title={ title } blockId={ name } status={ getStatus( name ) } iconObject={ icon.src } />;
+					return ( <CSSTransition timeout={ 200 } key={ name } classNames={ 'block-control-transition' }>
+						<BlockControl key={ name } title={ title } blockId={ name } status={ getStatus( name ) }
+							iconObject={ icon.src } />
+					</CSSTransition> );
 				} )
 			}
-		</div>
+		</TransitionGroup>
 	);
 }
 

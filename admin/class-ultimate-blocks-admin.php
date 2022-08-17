@@ -143,7 +143,14 @@ class Ultimate_Blocks_Admin {
 		}
 
 		wp_enqueue_script( $this->plugin_name . '_registered_blocks',
-				trailingslashit( $this->plugin_url ) . 'dist/blocks.build.js', [], $this->version, true );
+				trailingslashit( $this->plugin_url ) . 'dist/blocks.build.js', [
+						'wp-blocks',
+						'wp-i18n',
+						'wp-element',
+						'wp-editor',
+						'wp-hooks',
+						'wp-api'
+				], $this->version, true );
 
 		wp_enqueue_script( $this->plugin_name,
 				trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.js', [], $this->version, true );
