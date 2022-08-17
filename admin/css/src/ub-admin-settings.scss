@@ -108,6 +108,18 @@
 
 		  }
 
+		  &[data-enabled='false'] .title-icon {
+			fill: $gray-500;
+
+			svg {
+			  fill: $gray-500;
+
+			  * {
+				fill: $gray-500;
+			  }
+			}
+		  }
+
 		  .block-title {
 			@extend %default-transition;
 			grid-area: title;
@@ -119,6 +131,29 @@
 			font-size: $block-title-font-size;
 			color: $block-title-color;
 			user-select: none;
+
+			.block-title-left-container {
+			  display: flex;
+			  justify-content: flex-start;
+			  align-items: center;
+
+			  .title-icon {
+				@extend %default-transition;
+				width: $block-title-icon-size;
+				height: $block-title-icon-size;
+				margin-right: 10px;
+
+				svg {
+				  @extend %default-transition;
+				  width: $block-title-icon-size;
+				  height: $block-title-icon-size;
+
+				  * {
+					@extend %default-transition;
+				  }
+				}
+			  }
+			}
 		  }
 
 		  .block-howto {

@@ -23532,7 +23532,7 @@ function _extends() {
 /**
  * Menu context hoc.
  * @param {React.ElementType} BaseComponent react component
- * @returns {Function} function to use as hoc
+ * @returns {Function} function to use as HOC
  */ var withMenuContext = function withMenuContext(BaseComponent) {
     return function(props) {
         var preparedContext = (0, _react.useContext)(_MenuContext.CreatedMenuContext);
@@ -23773,12 +23773,13 @@ function _interopRequireDefault(obj) {
         else if (aName > bName) return 1;
         return 0;
     }).map(function(_ref3) {
-        var title = _ref3.title, name = _ref3.name;
+        var title = _ref3.title, name = _ref3.name, icon = _ref3.icon;
         return /*#__PURE__*/ _react["default"].createElement(_BlockControl["default"], {
             key: name,
             title: title,
             blockId: name,
-            status: getStatus(name)
+            status: getStatus(name),
+            iconObject: icon.src
         });
     }));
 }
@@ -23804,6 +23805,7 @@ exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _ToggleControl = _interopRequireDefault(require("$Components/ToggleControl"));
 var _MenuButton = _interopRequireDefault(require("$Components/MenuButton"));
+var _withIcon = _interopRequireDefault(require("$HOC/withIcon"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -23891,8 +23893,10 @@ function _arrayWithHoles(arr) {
  * @param {String} props.title block title
  * @param {String} props.blockId registry id of block
  * @param {Boolean} props.status block status
+ * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
+ *
  */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement;
     var initialRender = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
     var howToUse = function howToUse() {
@@ -23911,7 +23915,13 @@ function _arrayWithHoles(arr) {
         "data-enabled": JSON.stringify(innerStatus)
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title"
-    }, /*#__PURE__*/ _react["default"].createElement("div", null, title), /*#__PURE__*/ _react["default"].createElement("div", null, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-title-left-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-icon"
+    }, iconElement), title), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-title-right-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
         onStatusChange: setInnerStatus,
         status: status
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
@@ -23926,10 +23936,10 @@ function _arrayWithHoles(arr) {
 }
 /**
  * @module BlockControl
- */ var _default = BlockControl;
+ */ var _default = (0, _withIcon["default"])(BlockControl);
 exports["default"] = _default;
 
-},{"react":"21dqq","$Components/ToggleControl":"a7r96","$Components/MenuButton":"cbTU3"}],"a7r96":[function(require,module,exports) {
+},{"react":"21dqq","$Components/ToggleControl":"a7r96","$Components/MenuButton":"cbTU3","$HOC/withIcon":"l4uaA"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -24084,6 +24094,81 @@ function _interopRequireDefault(obj) {
 /**
  * @module MenuButton
  */ var _default = MenuButton;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"l4uaA":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+/**
+ * Hoc for creating and adding icon element by using Gutenberg block icon attribute object.
+ *
+ * @param {React.ElementType} BaseComponent target component
+ * @returns {Function} function to use as HOC
+ */ var withIcon = function withIcon(BaseComponent) {
+    return function(props) {
+        var iconElement = "x";
+        if (!props.iconObject || _typeof(props.iconObject) !== "object") throw new Error("invalid type of icon object is supplied to withIcon HOC");
+        else {
+            var iconObject = props.iconObject;
+            var type = iconObject.type, iconProps = iconObject.props;
+            iconElement = /*#__PURE__*/ (0, _react.createElement)(type, iconProps);
+        }
+        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, {
+            iconElement: iconElement
+        }));
+    };
+};
+/**
+ * @module withIcon
+ */ var _default = withIcon;
 exports["default"] = _default;
 
 },{"react":"21dqq"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {

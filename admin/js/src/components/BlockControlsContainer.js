@@ -39,8 +39,8 @@ function BlockControlsContainer( { menuData } ) {
 					}
 
 					return 0;
-				} ).map( ( { title, name } ) => {
-					return <BlockControl key={ name } title={ title } blockId={ name } status={ getStatus( name ) } />;
+				} ).map( ( { title, name, icon } ) => {
+					return <BlockControl key={ name } title={ title } blockId={ name } status={ getStatus( name ) } iconObject={ icon.src } />;
 				} )
 			}
 		</div>

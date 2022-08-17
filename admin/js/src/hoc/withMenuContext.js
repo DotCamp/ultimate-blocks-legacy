@@ -5,7 +5,7 @@ import { CreatedMenuContext } from '$Components/MenuContext';
 /**
  * Menu context hoc.
  * @param {React.ElementType} BaseComponent react component
- * @returns {Function} function to use as hoc
+ * @returns {Function} function to use as HOC
  */
 const withMenuContext = ( BaseComponent ) => ( props ) => {
 	const preparedContext = useContext( CreatedMenuContext );
