@@ -6,6 +6,7 @@ import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
 import withStore from "$HOC/withStore";
 import { getBlocks, setBlockActiveStatus } from "$Stores/settings-menu/slices/blocks";
 import { getBlockFilter } from "$Stores/settings-menu/slices/app";
+import { toggleBlockStatus } from "$Stores/settings-menu/actions";
 
 /**
  * Block controls container.
@@ -16,7 +17,7 @@ import { getBlockFilter } from "$Stores/settings-menu/slices/app";
  * @param {Object} props.blockFilter current filter for block status, will be supplied via HOC
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  */
-function BlockControlsContainer( { blocks, blockFilter, setBlockStatus } ) {
+function BlockControlsContainer( { blocks, blockFilter, setBlockStatus, dispatch } ) {
 	/**
 	 * Handle block status change
 	 * @param {String} blockId target id
@@ -24,6 +25,7 @@ function BlockControlsContainer( { blocks, blockFilter, setBlockStatus } ) {
 	 */
 	const handleBlockStatusChange = ( blockId, status ) => {
 		setBlockStatus( { id: blockId, status } );
+		dispatch( toggleBlockStatus )( blockId, status );
 	};
 
 	return (
@@ -66,7 +68,7 @@ const selectMapping = ( selector ) => ( {
 	blockFilter: selector( getBlockFilter ),
 } );
 
-const actionMapping = () => ( {
+const actionMapping = ( dispatch ) => ( {
 	setBlockStatus: setBlockActiveStatus,
 } );
 

@@ -82,7 +82,14 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function add_settings_menu_data( $data ) {
 		$data['assets'] = [
-				'logo' => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png'
+				'logo' => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png',
+				'ajax' => [
+						'toggleStatus' => [
+								"url"    => get_admin_url( null, 'admin-ajax.php' ),
+								'action' => 'toggle_block_status',
+								'nonce'  => wp_create_nonce( 'toggle_block_status' )
+						]
+				]
 		];
 
 		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-menu-info.php';
@@ -91,6 +98,7 @@ class Ultimate_Blocks_Admin {
 				'statusData' => get_option( 'ultimate_blocks', false ),
 				'info'       => $block_menu_infos
 		];
+
 
 		return $data;
 	}

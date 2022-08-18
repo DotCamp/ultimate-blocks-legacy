@@ -25337,7 +25337,7 @@ parcelHelpers.defineInteropFlag(exports);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getLogo = exports["default"] = void 0;
+exports.getLogo = exports.getAjaxInfo = exports["default"] = void 0;
 var _toolkit = require("@reduxjs/toolkit");
 /**
  * Options for asset store slice
@@ -25345,7 +25345,8 @@ var _toolkit = require("@reduxjs/toolkit");
  */ var assetsSliceOptions = {
     name: "assets",
     initialState: {
-        logo: ""
+        logo: "",
+        ajax: {}
     }
 };
 var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
@@ -25357,8 +25358,16 @@ var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
     return state.assets.logo;
 };
 /**
- * @module assetsSlice
+ * Get ajax information.
+ * @param {Object} state store state
+ * @returns {Object} ajax information
  */ exports.getLogo = getLogo;
+var getAjaxInfo = function getAjaxInfo(state) {
+    return state.assets.ajax;
+};
+/**
+ * @module assetsSlice
+ */ exports.getAjaxInfo = getAjaxInfo;
 var _default = assetsSlice.reducer;
 exports["default"] = _default;
 
@@ -29622,6 +29631,7 @@ var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
 var _withStore = _interopRequireDefault(require("$HOC/withStore"));
 var _blocks = require("$Stores/settings-menu/slices/blocks");
 var _app = require("$Stores/settings-menu/slices/app");
+var _actions = require("$Stores/settings-menu/actions");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -29661,7 +29671,7 @@ function _arrayLikeToArray(arr, len) {
  * @param {Object} props.blockFilter current filter for block status, will be supplied via HOC
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  */ function BlockControlsContainer(_ref) {
-    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus;
+    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch;
     /**
    * Handle block status change
    * @param {String} blockId target id
@@ -29671,6 +29681,7 @@ function _arrayLikeToArray(arr, len) {
             id: blockId,
             status: status
         });
+        dispatch(_actions.toggleBlockStatus)(blockId, status);
     };
     return /*#__PURE__*/ _react["default"].createElement(_reactTransitionGroup.TransitionGroup, {
         className: "controls-container"
@@ -29708,7 +29719,7 @@ var selectMapping = function selectMapping(selector) {
         blockFilter: selector(_app.getBlockFilter)
     };
 };
-var actionMapping = function actionMapping() {
+var actionMapping = function actionMapping(dispatch) {
     return {
         setBlockStatus: _blocks.setBlockActiveStatus
     };
@@ -29718,7 +29729,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","react-transition-group":"fZSkB","$Components/BlockControl":"h5tMi","$Components/BlockStatusFilterControl":"hebBQ","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/blocks":"ohEvx","$Stores/settings-menu/slices/app":"c28DV"}],"fZSkB":[function(require,module,exports) {
+},{"react":"21dqq","react-transition-group":"fZSkB","$Components/BlockControl":"h5tMi","$Components/BlockStatusFilterControl":"hebBQ","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/blocks":"ohEvx","$Stores/settings-menu/slices/app":"c28DV","$Stores/settings-menu/actions":"g3gW2"}],"fZSkB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "CSSTransition", ()=>(0, _csstransitionDefault.default));
@@ -37170,7 +37181,31 @@ var getBlockFilter = function getBlockFilter(state) {
 var _default = appSlice.reducer;
 exports["default"] = _default;
 
-},{"@reduxjs/toolkit":"lL1Ef","$Components/BlockStatusFilterControl":"hebBQ"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"@reduxjs/toolkit":"lL1Ef","$Components/BlockStatusFilterControl":"hebBQ"}],"g3gW2":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleBlockStatus = void 0;
+var _assets = require("$Stores/settings-menu/slices/assets");
+var toggleBlockStatus = function toggleBlockStatus(dispatch, getState) {
+    return function(blockId, status) {
+        var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfo = _getAjaxInfo.toggleStatus;
+        var url = ajaxInfo.url, action = ajaxInfo.action, nonce = ajaxInfo.nonce;
+        var formData = new FormData();
+        formData.append("block_name", blockId);
+        formData.append("enable", JSON.stringify(status));
+        formData.append("action", action);
+        formData.append("_wpnonce", nonce);
+        fetch(url, {
+            method: "POST",
+            body: formData
+        });
+    };
+};
+exports.toggleBlockStatus = toggleBlockStatus;
+
+},{"$Stores/settings-menu/slices/assets":"9SnHn"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

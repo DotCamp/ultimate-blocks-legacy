@@ -8,6 +8,7 @@ const assetsSliceOptions = {
 	name: 'assets',
 	initialState: {
 		logo: '',
+		ajax: {},
 	},
 };
 
@@ -20,6 +21,15 @@ const assetsSlice = createSlice( assetsSliceOptions );
  */
 export const getLogo = ( state ) => {
 	return state.assets.logo;
+};
+
+/**
+ * Get ajax information.
+ * @param {Object} state store state
+ * @returns {Object} ajax information
+ */
+export const getAjaxInfo = ( state ) => {
+	return state.assets.ajax;
 };
 
 /**
