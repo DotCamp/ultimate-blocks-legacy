@@ -29686,7 +29686,7 @@ function _arrayLikeToArray(arr, len) {
         var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
         return blockStatus === blockFilter;
     }).map(function(_ref3) {
-        var title = _ref3.title, name = _ref3.name, icon = _ref3.icon, active = _ref3.active;
+        var title = _ref3.title, name = _ref3.name, icon = _ref3.icon, active = _ref3.active, info = _ref3.info;
         return /*#__PURE__*/ _react["default"].createElement(_reactTransitionGroup.CSSTransition, {
             timeout: 200,
             key: name,
@@ -29697,7 +29697,8 @@ function _arrayLikeToArray(arr, len) {
             blockId: name,
             status: active,
             iconObject: icon,
-            onStatusChange: handleBlockStatusChange
+            onStatusChange: handleBlockStatusChange,
+            info: info
         }));
     }));
 }
@@ -32000,9 +32001,10 @@ function _arrayWithHoles(arr) {
  * @param {Boolean} props.status block status
  * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
  * @param {Function} props.onStatusChange callback for status change event
+ * @param {Array} props.info information about block and its usage
  *
  */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info;
     var initialRender = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
     var howToUse = function howToUse() {
@@ -32031,7 +32033,11 @@ function _arrayWithHoles(arr) {
         status: innerStatus
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-info"
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, /*#__PURE__*/ _react["default"].createElement("ul", null, info.map(function(infoLine, index) {
+        return /*#__PURE__*/ _react["default"].createElement("li", {
+            key: index
+        }, infoLine[0].toUpperCase() + Array.from(infoLine).splice(1).join(""));
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-howto"
     }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
         title: "How to Use",
@@ -37292,7 +37298,7 @@ function _defineProperty(obj, key, value) {
     var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
         return blockData.deprecated === undefined && blockData.parent === undefined;
     });
-    var statusData = appData.blocks.statusData;
+    var _appData$blocks = appData.blocks, statusData = _appData$blocks.statusData, info = _appData$blocks.info;
     var allowedKeys = [
         "icon",
         "name",
@@ -37310,6 +37316,9 @@ function _defineProperty(obj, key, value) {
             if (name === newBlockObject.name) blockStatus = active;
         });
         newBlockObject.active = blockStatus;
+        newBlockObject.info = [];
+        var name = newBlockObject.name;
+        if (info[name] && Array.isArray(info[name])) newBlockObject.info = info[name];
         carry.push(newBlockObject);
         return carry;
     }, []);

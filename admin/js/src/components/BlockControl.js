@@ -16,9 +16,10 @@ import withIcon from "$HOC/withIcon";
  * @param {Boolean} props.status block status
  * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
  * @param {Function} props.onStatusChange callback for status change event
+ * @param {Array} props.info information about block and its usage
  *
  */
-function BlockControl( { title, blockId, status, iconElement, onStatusChange } ) {
+function BlockControl( { title, blockId, status, iconElement, onStatusChange, info } ) {
 	const initialRender = useRef( true );
 	const [ innerStatus, setInnerStatus ] = useState( status === undefined ? false : status );
 
@@ -50,7 +51,18 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange } )
 					<ToggleControl onStatusChange={ setInnerStatus } status={ innerStatus } />
 				</div>
 			</div>
-			<div className={ 'block-info' }></div>
+			<div className={ 'block-info' }>
+				<ul>
+					{
+						info.map( ( infoLine, index ) => {
+							return ( <li key={ index }>
+								{ infoLine[ 0 ].toUpperCase() + Array.from( infoLine ).splice( 1 ).join( '' ) }
+							</li> );
+						} )
+					}
+
+				</ul>
+			</div>
 			<div className={ 'block-howto' }>
 				<MenuButton title={ 'How to Use' } status={ innerStatus } onClickHandler={ howToUse } />
 			</div>

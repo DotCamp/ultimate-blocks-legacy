@@ -136,7 +136,7 @@
 
 		  &[data-enabled='false'] .block-title {
 			background-color: $gray-400;
-			color: $gray-800;
+			color: $gray-500;
 
 		  }
 
@@ -149,6 +149,20 @@
 			  * {
 				fill: $gray-500;
 			  }
+			}
+		  }
+
+		  &[data-enabled='false'] .block-info {
+			color: $gray-500;
+		  }
+
+		  .block-info {
+			grid-area: info;
+			padding: 5px 40px;
+			overflow: auto;
+
+			ul {
+			  list-style: inside;
 			}
 		  }
 

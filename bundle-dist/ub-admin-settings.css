@@ -161,12 +161,26 @@
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] .block-title {
-  color: #938181;
+  color: #b4a7a7;
   background-color: #dfdfdf;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] .title-icon svg * {
   fill: #b4a7a7;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] .block-info {
+  color: #b4a7a7;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info {
+  grid-area: info;
+  padding: 5px 40px;
+  overflow: auto;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info ul {
+  list-style: inside;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title {

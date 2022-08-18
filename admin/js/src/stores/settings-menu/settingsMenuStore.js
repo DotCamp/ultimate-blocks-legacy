@@ -19,7 +19,7 @@ function createStore() {
 		return blockData.deprecated === undefined && blockData.parent === undefined;
 	} );
 
-	const { statusData } = appData.blocks;
+	const { statusData, info } = appData.blocks;
 	const allowedKeys = [ 'icon', 'name', 'title' ];
 	const reducedBlocks = registeredUbBlocks.reduce( ( carry, current ) => {
 		const newBlockObject = {};
@@ -37,6 +37,12 @@ function createStore() {
 			}
 		} );
 		newBlockObject.active = blockStatus;
+
+		newBlockObject.info = [];
+		const { name } = newBlockObject;
+		if ( info[ name ] && Array.isArray( info[ name ] ) ) {
+			newBlockObject.info = info[ name ];
+		}
 
 		carry.push( newBlockObject );
 

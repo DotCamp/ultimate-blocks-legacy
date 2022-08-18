@@ -85,8 +85,11 @@ class Ultimate_Blocks_Admin {
 				'logo' => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png'
 		];
 
+		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-menu-info.php';
+
 		$data['blocks'] = [
 				'statusData' => get_option( 'ultimate_blocks', false ),
+				'info'       => $block_menu_infos
 		];
 
 		return $data;

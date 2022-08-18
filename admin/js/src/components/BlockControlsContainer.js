@@ -48,10 +48,12 @@ function BlockControlsContainer( { blocks, blockFilter, setBlockStatus } ) {
 					const blockStatus = active ? FILTER_TYPES.ENABLED : FILTER_TYPES.DISABLED;
 
 					return blockStatus === blockFilter;
-				} ).map( ( { title, name, icon, active } ) => {
+				} ).map( ( { title, name, icon, active, info } ) => {
 					return ( <CSSTransition timeout={ 200 } key={ name } classNames={ 'block-control-transition' }>
 						<BlockControl key={ name } title={ title } blockId={ name } status={ active }
-							iconObject={ icon } onStatusChange={ handleBlockStatusChange } />
+							iconObject={ icon } onStatusChange={ handleBlockStatusChange }
+							info={ info }
+						/>
 					</CSSTransition> );
 				} )
 			}
