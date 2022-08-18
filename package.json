@@ -11,6 +11,7 @@
     "$Containers": "./admin/js/src/containers",
     "$Components": "./admin/js/src/components",
     "$HOC": "./admin/js/src/hoc",
+	"$Stores": "./admin/js/src/stores",
     "$Styles": "./admin/css/src/"
   },
   "dependencies": {
@@ -22,9 +23,11 @@
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@reduxjs/toolkit": "^1.8.4",
     "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-redux": "^8.0.2",
     "react-sortable-hoc": "^2.0.0",
     "react-transition-group": "^4.4.5",
     "swiper": "^6.8.4"

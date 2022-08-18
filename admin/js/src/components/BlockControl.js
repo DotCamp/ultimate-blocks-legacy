@@ -15,9 +15,10 @@ import withIcon from "$HOC/withIcon";
  * @param {String} props.blockId registry id of block
  * @param {Boolean} props.status block status
  * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
+ * @param {Function} props.onStatusChange callback for status change event
  *
  */
-function BlockControl( { title, blockId, status, iconElement } ) {
+function BlockControl( { title, blockId, status, iconElement, onStatusChange } ) {
 	const initialRender = useRef( true );
 	const [ innerStatus, setInnerStatus ] = useState( status === undefined ? false : status );
 
@@ -30,8 +31,7 @@ function BlockControl( { title, blockId, status, iconElement } ) {
 		if ( initialRender.current ) {
 			initialRender.current = false;
 		} else {
-			// TODO [ErdemBircan] remove for production
-			console.log( `change ${ blockId } status to: ${ innerStatus }` );
+			onStatusChange( blockId, innerStatus );
 		}
 	}, [ innerStatus ] );
 

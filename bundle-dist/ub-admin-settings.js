@@ -145,66 +145,27 @@
 })({"eQDYk":[function(require,module,exports) {
 "use strict";
 var _react = _interopRequireDefault(require("react"));
+var _reactRedux = require("react-redux");
 var _client = require("react-dom/client");
 var _AdminMenuContainer = _interopRequireDefault(require("$Containers/AdminMenuContainer"));
 require("$Styles/ub-admin-settings.scss");
 var _AdminMenuWrapper = _interopRequireDefault(require("$Components/AdminMenuWrapper"));
-var _MenuContext = _interopRequireDefault(require("$Components/MenuContext"));
-var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
+var _settingsMenuStore = _interopRequireDefault(require("./stores/settings-menu/settingsMenuStore"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {};
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
+// eslint-disable-next-line no-unused-vars
 var mountPoint = document.querySelector("#ub-admin-menu");
 if (mountPoint) {
     var root = (0, _client.createRoot)(mountPoint);
-    var appData = _objectSpread({}, ubAdminMenuData);
-    ubAdminMenuData = null; // add block infos to context data
-    var registeredUbBlocks = wp.data.select("core/blocks").getBlockTypes();
-    appData.blocks.info = registeredUbBlocks.filter(function(blockData) {
-        return blockData.deprecated === undefined && blockData.parent === undefined;
-    });
-    appData.app = {
-        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT
-    };
-    root.render(/*#__PURE__*/ _react["default"].createElement(_AdminMenuWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_MenuContext["default"], {
-        startupValue: appData
+    root.render(/*#__PURE__*/ _react["default"].createElement(_AdminMenuWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_reactRedux.Provider, {
+        store: (0, _settingsMenuStore["default"])()
     }, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null))));
 } else throw new Error("no mount point found for settings menu");
 
-},{"react":"21dqq","react-dom/client":"lOjBx","$Containers/AdminMenuContainer":"7a8vF","$Styles/ub-admin-settings.scss":"cBeYy","$Components/AdminMenuWrapper":"do7SF","$Components/MenuContext":"ep2QN","$Components/BlockStatusFilterControl":"hebBQ"}],"21dqq":[function(require,module,exports) {
+},{"react":"21dqq","react-dom/client":"lOjBx","$Containers/AdminMenuContainer":"7a8vF","$Styles/ub-admin-settings.scss":"cBeYy","$Components/AdminMenuWrapper":"do7SF","react-redux":"bdVon","./stores/settings-menu/settingsMenuStore":"7VzQu"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("./cjs/react.development.js");
 
@@ -23483,7 +23444,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("react"));
-var _withMenuContext = _interopRequireDefault(require("$HOC/withMenuContext"));
+var _withStore = _interopRequireDefault(require("$HOC/withStore"));
+var _assets = require("$Stores/settings-menu/slices/assets");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -23493,66 +23455,38 @@ function _interopRequireDefault(obj) {
 /**
  * Settings menu header element.
  *
+ * @param {Object} props component properties
+ * @param {String} props.logoUrl plugin logo url, will be supplied via HOC
  * @returns {JSX.Element} component
  * @constructor
  */ function MenuHeader(_ref) {
-    var menuData = _ref.menuData;
+    var logoUrl = _ref.logoUrl;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "menu-header"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "logo-container"
     }, /*#__PURE__*/ _react["default"].createElement("img", {
         alt: "plugin logo",
-        src: menuData.assets.logo
+        src: logoUrl
     })));
 }
+var selectMapping = function selectMapping(select) {
+    return {
+        logoUrl: select(_assets.getLogo)
+    };
+};
 /**
  * @module MenuHeader
- */ var _default = (0, _withMenuContext["default"])(MenuHeader);
+ */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","$HOC/withMenuContext":"607Jq"}],"607Jq":[function(require,module,exports) {
+},{"react":"21dqq","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/assets":"9SnHn"}],"kWmDy":[function(require,module,exports) {
 "use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("react"));
-var _MenuContext = require("$Components/MenuContext");
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
+var _reactRedux = require("react-redux");
 function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function(target) {
         for(var i = 1; i < arguments.length; i++){
@@ -23563,25 +23497,6 @@ function _extends() {
     };
     return _extends.apply(this, arguments);
 }
-/**
- * Menu context hoc.
- * @param {React.ElementType} BaseComponent react component
- * @returns {Function} function to use as HOC
- */ var withMenuContext = function withMenuContext(BaseComponent) {
-    return function(props) {
-        var preparedContext = (0, _react.useContext)(_MenuContext.CreatedMenuContext);
-        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, {
-            menuData: preparedContext
-        }));
-    };
-};
-/**
- * @module withMenuContext
- */ var _default = withMenuContext;
-exports["default"] = _default;
-
-},{"react":"21dqq","$Components/MenuContext":"ep2QN"}],"ep2QN":[function(require,module,exports) {
-"use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
     return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
@@ -23590,83 +23505,5432 @@ function _typeof(obj) {
         return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     }, _typeof(obj);
 }
+/**
+ * HOC for adding store related properties to components
+ * @param {React.ElementType} BaseComponent target component
+ * @param {Function | null} [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
+ * @param {Function | null} [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
+ * @returns {Function} HOC function
+ */ var withStore = function withStore(BaseComponent) {
+    var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var actionMapping = arguments.length > 2 ? arguments[2] : undefined;
+    return function(props) {
+        // prepare selection mappings
+        var selections = {};
+        if (selectMapping && typeof selectMapping === "function") {
+            var selectorObject = selectMapping(_reactRedux.useSelector);
+            if (_typeof(selectorObject) === "object") selections = selectorObject;
+        }
+        var dispatch = (0, _reactRedux.useDispatch)(); // prepare action mappings
+        var actions = {};
+        if (actionMapping && typeof actionMapping === "function") {
+            var preActionObject = actionMapping(dispatch, _reactRedux.useSelector);
+            if (preActionObject && _typeof(preActionObject) === "object") actions = Object.keys(preActionObject).filter(function(key) {
+                return Object.prototype.hasOwnProperty.call(preActionObject, key);
+            }).reduce(function(carry, current) {
+                var actionCallback = preActionObject[current];
+                if (typeof actionCallback === "function") carry[current] = function(val) {
+                    dispatch(actionCallback(val));
+                };
+                return carry;
+            }, {});
+        }
+        return /*#__PURE__*/ React.createElement(BaseComponent, _extends({}, props, selections, actions, {
+            selector: _reactRedux.useSelector,
+            dispatch: dispatch
+        }));
+    };
+};
+/**
+ * @module withStore
+ */ var _default = withStore;
+exports["default"] = _default;
+
+},{"react-redux":"bdVon"}],"bdVon":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "batch", ()=>(0, _reactBatchedUpdates.unstable_batchedUpdates));
+// The primary entry point assumes we're working with standard ReactDOM/RN, but
+// older versions that do not include `useSyncExternalStore` (React 16.9 - 17.x).
+// Because of that, the useSyncExternalStore compat shim is needed.
+var _shim = require("use-sync-external-store/shim");
+var _withSelector = require("use-sync-external-store/shim/with-selector");
+var _reactBatchedUpdates = require("./utils/reactBatchedUpdates");
+var _batch = require("./utils/batch");
+var _useSelector = require("./hooks/useSelector");
+var _connect = require("./components/connect");
+var _exports = require("./exports");
+parcelHelpers.exportAll(_exports, exports);
+(0, _useSelector.initializeUseSelector)((0, _withSelector.useSyncExternalStoreWithSelector));
+(0, _connect.initializeConnect)((0, _shim.useSyncExternalStore)); // Enable batched updates in our subscriptions for use
+// with standard React renderers (ReactDOM, React Native)
+(0, _batch.setBatch)((0, _reactBatchedUpdates.unstable_batchedUpdates));
+
+},{"use-sync-external-store/shim":"hyxdF","use-sync-external-store/shim/with-selector":"iDrhg","./utils/reactBatchedUpdates":"5K86X","./utils/batch":"ikw0G","./hooks/useSelector":"l3rFI","./components/connect":"5gOIw","./exports":"iAa1P","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hyxdF":[function(require,module,exports) {
+"use strict";
+module.exports = require("../cjs/use-sync-external-store-shim.development.js");
+
+},{"../cjs/use-sync-external-store-shim.development.js":"khU3l"}],"khU3l":[function(require,module,exports) {
+/**
+ * @license React
+ * use-sync-external-store-shim.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+(function() {
+    "use strict";
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+    var React = require("react");
+    var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    function error(format) {
+        for(var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)args[_key2 - 1] = arguments[_key2];
+        printWarning("error", format, args);
+    }
+    function printWarning(level, format, args) {
+        var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+        var stack = ReactDebugCurrentFrame.getStackAddendum();
+        if (stack !== "") {
+            format += "%s";
+            args = args.concat([
+                stack
+            ]);
+        } // eslint-disable-next-line react-internal/safe-string-coercion
+        var argsWithFormat = args.map(function(item) {
+            return String(item);
+        }); // Careful: RN currently depends on this prefix
+        argsWithFormat.unshift("Warning: " + format); // We intentionally don't use spread (or .apply) directly because it
+        // breaks IE9: https://github.com/facebook/react/issues/13610
+        // eslint-disable-next-line react-internal/no-production-logging
+        Function.prototype.apply.call(console[level], console, argsWithFormat);
+    }
+    /**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */ function is(x, y) {
+        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+        ;
+    }
+    var objectIs = typeof Object.is === "function" ? Object.is : is;
+    // dispatch for CommonJS interop named imports.
+    var useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue;
+    var didWarnOld18Alpha = false;
+    var didWarnUncachedGetSnapshot = false; // Disclaimer: This shim breaks many of the rules of React, and only works
+    // because of a very particular set of implementation details and assumptions
+    // -- change any one of them and it will break. The most important assumption
+    // is that updates are always synchronous, because concurrent rendering is
+    // only available in versions of React that also have a built-in
+    // useSyncExternalStore API. And we only use this shim when the built-in API
+    // does not exist.
+    //
+    // Do not assume that the clever hacks used by this hook also work in general.
+    // The point of this shim is to replace the need for hacks by other libraries.
+    function useSyncExternalStore(subscribe, getSnapshot, // React do not expose a way to check if we're hydrating. So users of the shim
+    // will need to track that themselves and return the correct value
+    // from `getSnapshot`.
+    getServerSnapshot) {
+        if (!didWarnOld18Alpha) {
+            if (React.startTransition !== undefined) {
+                didWarnOld18Alpha = true;
+                error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
+            }
+        }
+        // breaks the rules of React, and only works here because of specific
+        // implementation details, most importantly that updates are
+        // always synchronous.
+        var value = getSnapshot();
+        if (!didWarnUncachedGetSnapshot) {
+            var cachedValue = getSnapshot();
+            if (!objectIs(value, cachedValue)) {
+                error("The result of getSnapshot should be cached to avoid an infinite loop");
+                didWarnUncachedGetSnapshot = true;
+            }
+        }
+        // re-render whenever the subscribed state changes by updating an some
+        // arbitrary useState hook. Then, during render, we call getSnapshot to read
+        // the current value.
+        //
+        // Because we don't actually use the state returned by the useState hook, we
+        // can save a bit of memory by storing other stuff in that slot.
+        //
+        // To implement the early bailout, we need to track some things on a mutable
+        // object. Usually, we would put that in a useRef hook, but we can stash it in
+        // our useState hook instead.
+        //
+        // To force a re-render, we call forceUpdate({inst}). That works because the
+        // new object always fails an equality check.
+        var _useState = useState({
+            inst: {
+                value: value,
+                getSnapshot: getSnapshot
+            }
+        }), inst = _useState[0].inst, forceUpdate = _useState[1]; // Track the latest getSnapshot function with a ref. This needs to be updated
+        // in the layout phase so we can access it during the tearing check that
+        // happens on subscribe.
+        useLayoutEffect(function() {
+            inst.value = value;
+            inst.getSnapshot = getSnapshot; // Whenever getSnapshot or subscribe changes, we need to check in the
+            // commit phase if there was an interleaved mutation. In concurrent mode
+            // this can happen all the time, but even in synchronous mode, an earlier
+            // effect may have mutated the store.
+            if (checkIfSnapshotChanged(inst)) // Force a re-render.
+            forceUpdate({
+                inst: inst
+            });
+        }, [
+            subscribe,
+            value,
+            getSnapshot
+        ]);
+        useEffect(function() {
+            // Check for changes right before subscribing. Subsequent changes will be
+            // detected in the subscription handler.
+            if (checkIfSnapshotChanged(inst)) // Force a re-render.
+            forceUpdate({
+                inst: inst
+            });
+            var handleStoreChange = function() {
+                // TODO: Because there is no cross-renderer API for batching updates, it's
+                // up to the consumer of this library to wrap their subscription event
+                // with unstable_batchedUpdates. Should we try to detect when this isn't
+                // the case and print a warning in development?
+                // The store changed. Check if the snapshot changed since the last time we
+                // read from the store.
+                if (checkIfSnapshotChanged(inst)) // Force a re-render.
+                forceUpdate({
+                    inst: inst
+                });
+            }; // Subscribe to the store and return a clean-up function.
+            return subscribe(handleStoreChange);
+        }, [
+            subscribe
+        ]);
+        useDebugValue(value);
+        return value;
+    }
+    function checkIfSnapshotChanged(inst) {
+        var latestGetSnapshot = inst.getSnapshot;
+        var prevValue = inst.value;
+        try {
+            var nextValue = latestGetSnapshot();
+            return !objectIs(prevValue, nextValue);
+        } catch (error) {
+            return true;
+        }
+    }
+    function useSyncExternalStore$1(subscribe, getSnapshot, getServerSnapshot) {
+        // Note: The shim does not use getServerSnapshot, because pre-18 versions of
+        // React do not expose a way to check if we're hydrating. So users of the shim
+        // will need to track that themselves and return the correct value
+        // from `getSnapshot`.
+        return getSnapshot();
+    }
+    var canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
+    var isServerEnvironment = !canUseDOM;
+    var shim = isServerEnvironment ? useSyncExternalStore$1 : useSyncExternalStore;
+    var useSyncExternalStore$2 = React.useSyncExternalStore !== undefined ? React.useSyncExternalStore : shim;
+    exports.useSyncExternalStore = useSyncExternalStore$2;
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+})();
+
+},{"react":"21dqq"}],"iDrhg":[function(require,module,exports) {
+"use strict";
+module.exports = require("../cjs/use-sync-external-store-shim/with-selector.development.js");
+
+},{"../cjs/use-sync-external-store-shim/with-selector.development.js":"vU6Qe"}],"vU6Qe":[function(require,module,exports) {
+/**
+ * @license React
+ * use-sync-external-store-shim/with-selector.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+(function() {
+    "use strict";
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+    var React = require("react");
+    var shim = require("use-sync-external-store/shim");
+    /**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */ function is(x, y) {
+        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+        ;
+    }
+    var objectIs = typeof Object.is === "function" ? Object.is : is;
+    var useSyncExternalStore = shim.useSyncExternalStore;
+    // for CommonJS interop.
+    var useRef = React.useRef, useEffect = React.useEffect, useMemo = React.useMemo, useDebugValue = React.useDebugValue; // Same as useSyncExternalStore, but supports selector and isEqual arguments.
+    function useSyncExternalStoreWithSelector(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
+        // Use this to track the rendered snapshot.
+        var instRef = useRef(null);
+        var inst;
+        if (instRef.current === null) {
+            inst = {
+                hasValue: false,
+                value: null
+            };
+            instRef.current = inst;
+        } else inst = instRef.current;
+        var _useMemo = useMemo(function() {
+            // Track the memoized state using closure variables that are local to this
+            // memoized instance of a getSnapshot function. Intentionally not using a
+            // useRef hook, because that state would be shared across all concurrent
+            // copies of the hook/component.
+            var hasMemo = false;
+            var memoizedSnapshot;
+            var memoizedSelection;
+            var memoizedSelector = function(nextSnapshot) {
+                if (!hasMemo) {
+                    // The first time the hook is called, there is no memoized result.
+                    hasMemo = true;
+                    memoizedSnapshot = nextSnapshot;
+                    var _nextSelection = selector(nextSnapshot);
+                    if (isEqual !== undefined) // Even if the selector has changed, the currently rendered selection
+                    // may be equal to the new selection. We should attempt to reuse the
+                    // current value if possible, to preserve downstream memoizations.
+                    {
+                        if (inst.hasValue) {
+                            var currentSelection = inst.value;
+                            if (isEqual(currentSelection, _nextSelection)) {
+                                memoizedSelection = currentSelection;
+                                return currentSelection;
+                            }
+                        }
+                    }
+                    memoizedSelection = _nextSelection;
+                    return _nextSelection;
+                } // We may be able to reuse the previous invocation's result.
+                // We may be able to reuse the previous invocation's result.
+                var prevSnapshot = memoizedSnapshot;
+                var prevSelection = memoizedSelection;
+                if (objectIs(prevSnapshot, nextSnapshot)) // The snapshot is the same as last time. Reuse the previous selection.
+                return prevSelection;
+                 // The snapshot has changed, so we need to compute a new selection.
+                // The snapshot has changed, so we need to compute a new selection.
+                var nextSelection = selector(nextSnapshot); // If a custom isEqual function is provided, use that to check if the data
+                // has changed. If it hasn't, return the previous selection. That signals
+                // to React that the selections are conceptually equal, and we can bail
+                // out of rendering.
+                // If a custom isEqual function is provided, use that to check if the data
+                // has changed. If it hasn't, return the previous selection. That signals
+                // to React that the selections are conceptually equal, and we can bail
+                // out of rendering.
+                if (isEqual !== undefined && isEqual(prevSelection, nextSelection)) return prevSelection;
+                memoizedSnapshot = nextSnapshot;
+                memoizedSelection = nextSelection;
+                return nextSelection;
+            }; // Assigning this to a constant so that Flow knows it can't change.
+            // Assigning this to a constant so that Flow knows it can't change.
+            var maybeGetServerSnapshot = getServerSnapshot === undefined ? null : getServerSnapshot;
+            var getSnapshotWithSelector = function() {
+                return memoizedSelector(getSnapshot());
+            };
+            var getServerSnapshotWithSelector = maybeGetServerSnapshot === null ? undefined : function() {
+                return memoizedSelector(maybeGetServerSnapshot());
+            };
+            return [
+                getSnapshotWithSelector,
+                getServerSnapshotWithSelector
+            ];
+        }, [
+            getSnapshot,
+            getServerSnapshot,
+            selector,
+            isEqual
+        ]), getSelection = _useMemo[0], getServerSelection = _useMemo[1];
+        var value = useSyncExternalStore(subscribe, getSelection, getServerSelection);
+        useEffect(function() {
+            inst.hasValue = true;
+            inst.value = value;
+        }, [
+            value
+        ]);
+        useDebugValue(value);
+        return value;
+    }
+    exports.useSyncExternalStoreWithSelector = useSyncExternalStoreWithSelector;
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+})();
+
+},{"react":"21dqq","use-sync-external-store/shim":"hyxdF"}],"5K86X":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "unstable_batchedUpdates", ()=>(0, _reactDom.unstable_batchedUpdates));
+var _reactDom = require("react-dom");
+
+},{"react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"ikw0G":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "setBatch", ()=>setBatch);
+parcelHelpers.export(exports, "getBatch", ()=>getBatch);
+// Default to a dummy "batch" implementation that just runs the callback
+function defaultNoopBatch(callback) {
+    callback();
+}
+let batch = defaultNoopBatch; // Allow injecting another batching function later
+const setBatch = (newBatch)=>batch = newBatch; // Supply a getter just to skip dealing with ESM bindings
+const getBatch = ()=>batch;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l3rFI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initializeUseSelector", ()=>initializeUseSelector);
+/**
+ * Hook factory, which creates a `useSelector` hook bound to a given context.
+ *
+ * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
+ * @returns {Function} A `useSelector` hook bound to the specified context.
+ */ parcelHelpers.export(exports, "createSelectorHook", ()=>createSelectorHook);
+parcelHelpers.export(exports, "useSelector", ()=>useSelector);
+var _react = require("react");
+var _useReduxContext = require("./useReduxContext");
+var _context = require("../components/Context");
+var _useSyncExternalStore = require("../utils/useSyncExternalStore");
+let useSyncExternalStoreWithSelector = (0, _useSyncExternalStore.notInitialized);
+const initializeUseSelector = (fn)=>{
+    useSyncExternalStoreWithSelector = fn;
+};
+const refEquality = (a, b)=>a === b;
+function createSelectorHook(context = (0, _context.ReactReduxContext)) {
+    const useReduxContext = context === (0, _context.ReactReduxContext) ? (0, _useReduxContext.useReduxContext) : ()=>(0, _react.useContext)(context);
+    return function useSelector(selector, equalityFn = refEquality) {
+        if (!selector) throw new Error(`You must pass a selector to useSelector`);
+        if (typeof selector !== "function") throw new Error(`You must pass a function as a selector to useSelector`);
+        if (typeof equalityFn !== "function") throw new Error(`You must pass a function as an equality function to useSelector`);
+        const { store , subscription , getServerState  } = useReduxContext();
+        const selectedState = useSyncExternalStoreWithSelector(subscription.addNestedSub, store.getState, getServerState || store.getState, selector, equalityFn);
+        (0, _react.useDebugValue)(selectedState);
+        return selectedState;
+    };
+}
+const useSelector = /*#__PURE__*/ createSelectorHook();
+
+},{"react":"21dqq","./useReduxContext":"3828k","../components/Context":"ji81o","../utils/useSyncExternalStore":"dSsKl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3828k":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * A hook to access the value of the `ReactReduxContext`. This is a low-level
+ * hook that you should usually not need to call directly.
+ *
+ * @returns {any} the value of the `ReactReduxContext`
+ *
+ * @example
+ *
+ * import React from 'react'
+ * import { useReduxContext } from 'react-redux'
+ *
+ * export const CounterComponent = () => {
+ *   const { store } = useReduxContext()
+ *   return <div>{store.getState()}</div>
+ * }
+ */ parcelHelpers.export(exports, "useReduxContext", ()=>useReduxContext);
+var _react = require("react");
+var _context = require("../components/Context");
+function useReduxContext() {
+    const contextValue = (0, _react.useContext)((0, _context.ReactReduxContext));
+    if (!contextValue) throw new Error("could not find react-redux context value; please ensure the component is wrapped in a <Provider>");
+    return contextValue;
+}
+
+},{"react":"21dqq","../components/Context":"ji81o","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ji81o":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ReactReduxContext", ()=>ReactReduxContext);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+const ReactReduxContext = /*#__PURE__*/ (0, _reactDefault.default).createContext(null);
+ReactReduxContext.displayName = "ReactRedux";
+exports.default = ReactReduxContext;
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dSsKl":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "notInitialized", ()=>notInitialized);
+const notInitialized = ()=>{
+    throw new Error("uSES not initialized!");
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5gOIw":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initializeConnect", ()=>initializeConnect);
+var _extends = require("@babel/runtime/helpers/esm/extends");
+var _extendsDefault = parcelHelpers.interopDefault(_extends);
+var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
+/* eslint-disable valid-jsdoc, @typescript-eslint/no-unused-vars */ var _hoistNonReactStatics = require("hoist-non-react-statics");
+var _hoistNonReactStaticsDefault = parcelHelpers.interopDefault(_hoistNonReactStatics);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactIs = require("react-is");
+var _selectorFactory = require("../connect/selectorFactory");
+var _selectorFactoryDefault = parcelHelpers.interopDefault(_selectorFactory);
+var _mapDispatchToProps = require("../connect/mapDispatchToProps");
+var _mapStateToProps = require("../connect/mapStateToProps");
+var _mergeProps = require("../connect/mergeProps");
+var _subscription = require("../utils/Subscription");
+var _useIsomorphicLayoutEffect = require("../utils/useIsomorphicLayoutEffect");
+var _shallowEqual = require("../utils/shallowEqual");
+var _shallowEqualDefault = parcelHelpers.interopDefault(_shallowEqual);
+var _warning = require("../utils/warning");
+var _warningDefault = parcelHelpers.interopDefault(_warning);
+var _context = require("./Context");
+var _useSyncExternalStore = require("../utils/useSyncExternalStore");
+const _excluded = [
+    "reactReduxForwardedRef"
+];
+let useSyncExternalStore = (0, _useSyncExternalStore.notInitialized);
+const initializeConnect = (fn)=>{
+    useSyncExternalStore = fn;
+}; // Define some constant arrays just to avoid re-creating these
+const EMPTY_ARRAY = [
+    null,
+    0
+];
+const NO_SUBSCRIPTION_ARRAY = [
+    null,
+    null
+]; // Attempts to stringify whatever not-really-a-component value we were given
+// for logging in an error message
+const stringifyComponent = (Comp)=>{
+    try {
+        return JSON.stringify(Comp);
+    } catch (err) {
+        return String(Comp);
+    }
+};
+// This is "just" a `useLayoutEffect`, but with two modifications:
+// - we need to fall back to `useEffect` in SSR to avoid annoying warnings
+// - we extract this to a separate function to avoid closing over values
+//   and causing memory leaks
+function useIsomorphicLayoutEffectWithArgs(effectFunc, effectArgs, dependencies) {
+    (0, _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect)(()=>effectFunc(...effectArgs), dependencies);
+} // Effect callback, extracted: assign the latest props values to refs for later usage
+function captureWrapperProps(lastWrapperProps, lastChildProps, renderIsScheduled, wrapperProps, childPropsFromStoreUpdate, notifyNestedSubs) {
+    // We want to capture the wrapper props and child props we used for later comparisons
+    lastWrapperProps.current = wrapperProps;
+    renderIsScheduled.current = false; // If the render was from a store update, clear out that reference and cascade the subscriber update
+    if (childPropsFromStoreUpdate.current) {
+        childPropsFromStoreUpdate.current = null;
+        notifyNestedSubs();
+    }
+} // Effect callback, extracted: subscribe to the Redux store or nearest connected ancestor,
+// check for updates after dispatched actions, and trigger re-renders.
+function subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, additionalSubscribeListener) {
+    // If we're not subscribed to the store, nothing to do here
+    if (!shouldHandleStateChanges) return ()=>{}; // Capture values for checking if and when this component unmounts
+    let didUnsubscribe = false;
+    let lastThrownError = null; // We'll run this callback every time a store subscription update propagates to this component
+    const checkForUpdates = ()=>{
+        if (didUnsubscribe || !isMounted.current) // Don't run stale listeners.
+        // Redux doesn't guarantee unsubscriptions happen until next dispatch.
+        return;
+         // TODO We're currently calling getState ourselves here, rather than letting `uSES` do it
+        const latestStoreState = store.getState();
+        let newChildProps, error;
+        try {
+            // Actually run the selector with the most recent store state and wrapper props
+            // to determine what the child props should be
+            newChildProps = childPropsSelector(latestStoreState, lastWrapperProps.current);
+        } catch (e) {
+            error = e;
+            lastThrownError = e;
+        }
+        if (!error) lastThrownError = null;
+         // If the child props haven't changed, nothing to do here - cascade the subscription update
+        if (newChildProps === lastChildProps.current) {
+            if (!renderIsScheduled.current) notifyNestedSubs();
+        } else {
+            // Save references to the new child props.  Note that we track the "child props from store update"
+            // as a ref instead of a useState/useReducer because we need a way to determine if that value has
+            // been processed.  If this went into useState/useReducer, we couldn't clear out the value without
+            // forcing another re-render, which we don't want.
+            lastChildProps.current = newChildProps;
+            childPropsFromStoreUpdate.current = newChildProps;
+            renderIsScheduled.current = true; // TODO This is hacky and not how `uSES` is meant to be used
+            // Trigger the React `useSyncExternalStore` subscriber
+            additionalSubscribeListener();
+        }
+    }; // Actually subscribe to the nearest connected ancestor (or store)
+    subscription.onStateChange = checkForUpdates;
+    subscription.trySubscribe(); // Pull data from the store after first render in case the store has
+    // changed since we began.
+    checkForUpdates();
+    const unsubscribeWrapper = ()=>{
+        didUnsubscribe = true;
+        subscription.tryUnsubscribe();
+        subscription.onStateChange = null;
+        if (lastThrownError) // It's possible that we caught an error due to a bad mapState function, but the
+        // parent re-rendered without this component and we're about to unmount.
+        // This shouldn't happen as long as we do top-down subscriptions correctly, but
+        // if we ever do those wrong, this throw will surface the error in our tests.
+        // In that case, throw the error from here so it doesn't get lost.
+        throw lastThrownError;
+    };
+    return unsubscribeWrapper;
+} // Reducer initial state creation for our update reducer
+const initStateUpdates = ()=>EMPTY_ARRAY;
+function strictEqual(a, b) {
+    return a === b;
+}
+/**
+ * Infers the type of props that a connector will inject into a component.
+ */ let hasWarnedAboutDeprecatedPureOption = false;
+/**
+ * Connects a React component to a Redux store.
+ *
+ * - Without arguments, just wraps the component, without changing the behavior / props
+ *
+ * - If 2 params are passed (3rd param, mergeProps, is skipped), default behavior
+ * is to override ownProps (as stated in the docs), so what remains is everything that's
+ * not a state or dispatch prop
+ *
+ * - When 3rd param is passed, we don't know if ownProps propagate and whether they
+ * should be valid component props, because it depends on mergeProps implementation.
+ * As such, it is the user's responsibility to extend ownProps interface from state or
+ * dispatch props or both when applicable
+ *
+ * @param mapStateToProps A function that extracts values from state
+ * @param mapDispatchToProps Setup for dispatching actions
+ * @param mergeProps Optional callback to merge state and dispatch props together
+ * @param options Options for configuring the connection
+ *
+ */ function connect(mapStateToProps, mapDispatchToProps, mergeProps, { // The `pure` option has been removed, so TS doesn't like us destructuring this to check its existence.
+// @ts-ignore
+pure , areStatesEqual =strictEqual , areOwnPropsEqual =(0, _shallowEqualDefault.default) , areStatePropsEqual =(0, _shallowEqualDefault.default) , areMergedPropsEqual =(0, _shallowEqualDefault.default) , // use React's forwardRef to expose a ref of the wrapped component
+forwardRef =false , // the context consumer to use
+context =(0, _context.ReactReduxContext)  } = {}) {
+    if (pure !== undefined && !hasWarnedAboutDeprecatedPureOption) {
+        hasWarnedAboutDeprecatedPureOption = true;
+        (0, _warningDefault.default)('The `pure` option has been removed. `connect` is now always a "pure/memoized" component');
+    }
+    const Context = context;
+    const initMapStateToProps = (0, _mapStateToProps.mapStateToPropsFactory)(mapStateToProps);
+    const initMapDispatchToProps = (0, _mapDispatchToProps.mapDispatchToPropsFactory)(mapDispatchToProps);
+    const initMergeProps = (0, _mergeProps.mergePropsFactory)(mergeProps);
+    const shouldHandleStateChanges = Boolean(mapStateToProps);
+    const wrapWithConnect = (WrappedComponent)=>{
+        if (!(0, _reactIs.isValidElementType)(WrappedComponent)) throw new Error(`You must pass a component to the function returned by connect. Instead received ${stringifyComponent(WrappedComponent)}`);
+        const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || "Component";
+        const displayName = `Connect(${wrappedComponentName})`;
+        const selectorFactoryOptions = {
+            shouldHandleStateChanges,
+            displayName,
+            wrappedComponentName,
+            WrappedComponent,
+            // @ts-ignore
+            initMapStateToProps,
+            // @ts-ignore
+            initMapDispatchToProps,
+            initMergeProps,
+            areStatesEqual,
+            areStatePropsEqual,
+            areOwnPropsEqual,
+            areMergedPropsEqual
+        };
+        function ConnectFunction(props) {
+            const [propsContext, reactReduxForwardedRef, wrapperProps] = (0, _react.useMemo)(()=>{
+                // Distinguish between actual "data" props that were passed to the wrapper component,
+                // and values needed to control behavior (forwarded refs, alternate context instances).
+                // To maintain the wrapperProps object reference, memoize this destructuring.
+                const { reactReduxForwardedRef  } = props, wrapperProps = (0, _objectWithoutPropertiesLooseDefault.default)(props, _excluded);
+                return [
+                    props.context,
+                    reactReduxForwardedRef,
+                    wrapperProps
+                ];
+            }, [
+                props
+            ]);
+            const ContextToUse = (0, _react.useMemo)(()=>{
+                // Users may optionally pass in a custom context instance to use instead of our ReactReduxContext.
+                // Memoize the check that determines which context instance we should use.
+                return propsContext && propsContext.Consumer && (0, _reactIs.isContextConsumer)(/*#__PURE__*/ (0, _reactDefault.default).createElement(propsContext.Consumer, null)) ? propsContext : Context;
+            }, [
+                propsContext,
+                Context
+            ]); // Retrieve the store and ancestor subscription via context, if available
+            const contextValue = (0, _react.useContext)(ContextToUse); // The store _must_ exist as either a prop or in context.
+            // We'll check to see if it _looks_ like a Redux store first.
+            // This allows us to pass through a `store` prop that is just a plain value.
+            const didStoreComeFromProps = Boolean(props.store) && Boolean(props.store.getState) && Boolean(props.store.dispatch);
+            const didStoreComeFromContext = Boolean(contextValue) && Boolean(contextValue.store);
+            if (!didStoreComeFromProps && !didStoreComeFromContext) throw new Error(`Could not find "store" in the context of ` + `"${displayName}". Either wrap the root component in a <Provider>, ` + `or pass a custom React context provider to <Provider> and the corresponding ` + `React context consumer to ${displayName} in connect options.`);
+             // Based on the previous check, one of these must be true
+            const store = didStoreComeFromProps ? props.store : contextValue.store;
+            const getServerState = didStoreComeFromContext ? contextValue.getServerState : store.getState;
+            const childPropsSelector = (0, _react.useMemo)(()=>{
+                // The child props selector needs the store reference as an input.
+                // Re-create this selector whenever the store changes.
+                return (0, _selectorFactoryDefault.default)(store.dispatch, selectorFactoryOptions);
+            }, [
+                store
+            ]);
+            const [subscription, notifyNestedSubs] = (0, _react.useMemo)(()=>{
+                if (!shouldHandleStateChanges) return NO_SUBSCRIPTION_ARRAY; // This Subscription's source should match where store came from: props vs. context. A component
+                // connected to the store via props shouldn't use subscription from context, or vice versa.
+                const subscription = (0, _subscription.createSubscription)(store, didStoreComeFromProps ? undefined : contextValue.subscription); // `notifyNestedSubs` is duplicated to handle the case where the component is unmounted in
+                // the middle of the notification loop, where `subscription` will then be null. This can
+                // probably be avoided if Subscription's listeners logic is changed to not call listeners
+                // that have been unsubscribed in the  middle of the notification loop.
+                const notifyNestedSubs = subscription.notifyNestedSubs.bind(subscription);
+                return [
+                    subscription,
+                    notifyNestedSubs
+                ];
+            }, [
+                store,
+                didStoreComeFromProps,
+                contextValue
+            ]); // Determine what {store, subscription} value should be put into nested context, if necessary,
+            // and memoize that value to avoid unnecessary context updates.
+            const overriddenContextValue = (0, _react.useMemo)(()=>{
+                if (didStoreComeFromProps) // This component is directly subscribed to a store from props.
+                // We don't want descendants reading from this store - pass down whatever
+                // the existing context value is from the nearest connected ancestor.
+                return contextValue;
+                 // Otherwise, put this component's subscription instance into context, so that
+                // connected descendants won't update until after this component is done
+                return (0, _extendsDefault.default)({}, contextValue, {
+                    subscription
+                });
+            }, [
+                didStoreComeFromProps,
+                contextValue,
+                subscription
+            ]); // Set up refs to coordinate values between the subscription effect and the render logic
+            const lastChildProps = (0, _react.useRef)();
+            const lastWrapperProps = (0, _react.useRef)(wrapperProps);
+            const childPropsFromStoreUpdate = (0, _react.useRef)();
+            const renderIsScheduled = (0, _react.useRef)(false);
+            const isProcessingDispatch = (0, _react.useRef)(false);
+            const isMounted = (0, _react.useRef)(false);
+            const latestSubscriptionCallbackError = (0, _react.useRef)();
+            (0, _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect)(()=>{
+                isMounted.current = true;
+                return ()=>{
+                    isMounted.current = false;
+                };
+            }, []);
+            const actualChildPropsSelector = (0, _react.useMemo)(()=>{
+                const selector = ()=>{
+                    // Tricky logic here:
+                    // - This render may have been triggered by a Redux store update that produced new child props
+                    // - However, we may have gotten new wrapper props after that
+                    // If we have new child props, and the same wrapper props, we know we should use the new child props as-is.
+                    // But, if we have new wrapper props, those might change the child props, so we have to recalculate things.
+                    // So, we'll use the child props from store update only if the wrapper props are the same as last time.
+                    if (childPropsFromStoreUpdate.current && wrapperProps === lastWrapperProps.current) return childPropsFromStoreUpdate.current;
+                     // TODO We're reading the store directly in render() here. Bad idea?
+                    // This will likely cause Bad Things (TM) to happen in Concurrent Mode.
+                    // Note that we do this because on renders _not_ caused by store updates, we need the latest store state
+                    // to determine what the child props should be.
+                    return childPropsSelector(store.getState(), wrapperProps);
+                };
+                return selector;
+            }, [
+                store,
+                wrapperProps
+            ]); // We need this to execute synchronously every time we re-render. However, React warns
+            // about useLayoutEffect in SSR, so we try to detect environment and fall back to
+            // just useEffect instead to avoid the warning, since neither will run anyway.
+            const subscribeForReact = (0, _react.useMemo)(()=>{
+                const subscribe = (reactListener)=>{
+                    if (!subscription) return ()=>{};
+                    return subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, reactListener);
+                };
+                return subscribe;
+            }, [
+                subscription
+            ]);
+            useIsomorphicLayoutEffectWithArgs(captureWrapperProps, [
+                lastWrapperProps,
+                lastChildProps,
+                renderIsScheduled,
+                wrapperProps,
+                childPropsFromStoreUpdate,
+                notifyNestedSubs
+            ]);
+            let actualChildProps;
+            try {
+                actualChildProps = useSyncExternalStore(subscribeForReact, // TODO and we're just passing that through so it triggers a re-render for us rather than relying on `uSES`.
+                actualChildPropsSelector, getServerState ? ()=>childPropsSelector(getServerState(), wrapperProps) : actualChildPropsSelector);
+            } catch (err) {
+                if (latestSubscriptionCallbackError.current) err.message += `\nThe error may be correlated with this previous error:\n${latestSubscriptionCallbackError.current.stack}\n\n`;
+                throw err;
+            }
+            (0, _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect)(()=>{
+                latestSubscriptionCallbackError.current = undefined;
+                childPropsFromStoreUpdate.current = undefined;
+                lastChildProps.current = actualChildProps;
+            }); // Now that all that's done, we can finally try to actually render the child component.
+            // We memoize the elements for the rendered child component as an optimization.
+            const renderedWrappedComponent = (0, _react.useMemo)(()=>{
+                return(/*#__PURE__*/ // @ts-ignore
+                (0, _reactDefault.default).createElement(WrappedComponent, (0, _extendsDefault.default)({}, actualChildProps, {
+                    ref: reactReduxForwardedRef
+                })));
+            }, [
+                reactReduxForwardedRef,
+                WrappedComponent,
+                actualChildProps
+            ]); // If React sees the exact same element reference as last time, it bails out of re-rendering
+            // that child, same as if it was wrapped in React.memo() or returned false from shouldComponentUpdate.
+            const renderedChild = (0, _react.useMemo)(()=>{
+                if (shouldHandleStateChanges) // If this component is subscribed to store updates, we need to pass its own
+                // subscription instance down to our descendants. That means rendering the same
+                // Context instance, and putting a different value into the context.
+                return /*#__PURE__*/ (0, _reactDefault.default).createElement(ContextToUse.Provider, {
+                    value: overriddenContextValue
+                }, renderedWrappedComponent);
+                return renderedWrappedComponent;
+            }, [
+                ContextToUse,
+                renderedWrappedComponent,
+                overriddenContextValue
+            ]);
+            return renderedChild;
+        }
+        const _Connect = (0, _reactDefault.default).memo(ConnectFunction);
+        // Add a hacky cast to get the right output type
+        const Connect = _Connect;
+        Connect.WrappedComponent = WrappedComponent;
+        Connect.displayName = ConnectFunction.displayName = displayName;
+        if (forwardRef) {
+            const _forwarded = (0, _reactDefault.default).forwardRef(function forwardConnectRef(props, ref) {
+                // @ts-ignore
+                return /*#__PURE__*/ (0, _reactDefault.default).createElement(Connect, (0, _extendsDefault.default)({}, props, {
+                    reactReduxForwardedRef: ref
+                }));
+            });
+            const forwarded = _forwarded;
+            forwarded.displayName = displayName;
+            forwarded.WrappedComponent = WrappedComponent;
+            return (0, _hoistNonReactStaticsDefault.default)(forwarded, WrappedComponent);
+        }
+        return (0, _hoistNonReactStaticsDefault.default)(Connect, WrappedComponent);
+    };
+    return wrapWithConnect;
+}
+exports.default = connect;
+
+},{"@babel/runtime/helpers/esm/extends":"fTBFS","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"adHgr","hoist-non-react-statics":"1GfsB","react":"21dqq","react-is":"lb6Ui","../connect/selectorFactory":"e9uH3","../connect/mapDispatchToProps":"5QhPl","../connect/mapStateToProps":"4Hl4c","../connect/mergeProps":"hQpBj","../utils/Subscription":"ieuHT","../utils/useIsomorphicLayoutEffect":"kNbVc","../utils/shallowEqual":"gV5L4","../utils/warning":"cUQUw","./Context":"ji81o","../utils/useSyncExternalStore":"dSsKl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fTBFS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _extends() {
+    _extends = Object.assign || function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+exports.default = _extends;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"adHgr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+exports.default = _objectWithoutPropertiesLoose;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1GfsB":[function(require,module,exports) {
+"use strict";
+var reactIs = require("react-is");
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */ var REACT_STATICS = {
+    childContextTypes: true,
+    contextType: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    getDerivedStateFromError: true,
+    getDerivedStateFromProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    callee: true,
+    arguments: true,
+    arity: true
+};
+var FORWARD_REF_STATICS = {
+    "$$typeof": true,
+    render: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true
+};
+var MEMO_STATICS = {
+    "$$typeof": true,
+    compare: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true,
+    type: true
+};
+var TYPE_STATICS = {};
+TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
+TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
+function getStatics(component) {
+    // React v16.11 and below
+    if (reactIs.isMemo(component)) return MEMO_STATICS;
+     // React v16.12 and above
+    return TYPE_STATICS[component["$$typeof"]] || REACT_STATICS;
+}
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+    if (typeof sourceComponent !== "string") {
+        // don't hoist over string (html) components
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+        }
+        var keys = getOwnPropertyNames(sourceComponent);
+        if (getOwnPropertySymbols) keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+        var targetStatics = getStatics(targetComponent);
+        var sourceStatics = getStatics(sourceComponent);
+        for(var i = 0; i < keys.length; ++i){
+            var key = keys[i];
+            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try {
+                    // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
+            }
+        }
+    }
+    return targetComponent;
+}
+module.exports = hoistNonReactStatics;
+
+},{"react-is":"7EuwB"}],"7EuwB":[function(require,module,exports) {
+"use strict";
+module.exports = require("./cjs/react-is.development.js");
+
+},{"./cjs/react-is.development.js":"5DsXl"}],"5DsXl":[function(require,module,exports) {
+/** @license React v16.13.1
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+(function() {
+    "use strict";
+    // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+    // nor polyfill, then a plain number is used for performance.
+    var hasSymbol = typeof Symbol === "function" && Symbol.for;
+    var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for("react.element") : 0xeac7;
+    var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for("react.portal") : 0xeaca;
+    var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for("react.fragment") : 0xeacb;
+    var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for("react.strict_mode") : 0xeacc;
+    var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for("react.profiler") : 0xead2;
+    var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for("react.provider") : 0xeacd;
+    var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for("react.context") : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
+    // (unstable) APIs that have been removed. Can we remove the symbols?
+    var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for("react.async_mode") : 0xeacf;
+    var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for("react.concurrent_mode") : 0xeacf;
+    var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for("react.forward_ref") : 0xead0;
+    var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for("react.suspense") : 0xead1;
+    var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for("react.suspense_list") : 0xead8;
+    var REACT_MEMO_TYPE = hasSymbol ? Symbol.for("react.memo") : 0xead3;
+    var REACT_LAZY_TYPE = hasSymbol ? Symbol.for("react.lazy") : 0xead4;
+    var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for("react.block") : 0xead9;
+    var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for("react.fundamental") : 0xead5;
+    var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for("react.responder") : 0xead6;
+    var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for("react.scope") : 0xead7;
+    function isValidElementType(type) {
+        return typeof type === "string" || typeof type === "function" || type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
+    }
+    function typeOf(object) {
+        if (typeof object === "object" && object !== null) {
+            var $$typeof = object.$$typeof;
+            switch($$typeof){
+                case REACT_ELEMENT_TYPE:
+                    var type = object.type;
+                    switch(type){
+                        case REACT_ASYNC_MODE_TYPE:
+                        case REACT_CONCURRENT_MODE_TYPE:
+                        case REACT_FRAGMENT_TYPE:
+                        case REACT_PROFILER_TYPE:
+                        case REACT_STRICT_MODE_TYPE:
+                        case REACT_SUSPENSE_TYPE:
+                            return type;
+                        default:
+                            var $$typeofType = type && type.$$typeof;
+                            switch($$typeofType){
+                                case REACT_CONTEXT_TYPE:
+                                case REACT_FORWARD_REF_TYPE:
+                                case REACT_LAZY_TYPE:
+                                case REACT_MEMO_TYPE:
+                                case REACT_PROVIDER_TYPE:
+                                    return $$typeofType;
+                                default:
+                                    return $$typeof;
+                            }
+                    }
+                case REACT_PORTAL_TYPE:
+                    return $$typeof;
+            }
+        }
+        return undefined;
+    } // AsyncMode is deprecated along with isAsyncMode
+    var AsyncMode = REACT_ASYNC_MODE_TYPE;
+    var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+    var ContextConsumer = REACT_CONTEXT_TYPE;
+    var ContextProvider = REACT_PROVIDER_TYPE;
+    var Element = REACT_ELEMENT_TYPE;
+    var ForwardRef = REACT_FORWARD_REF_TYPE;
+    var Fragment = REACT_FRAGMENT_TYPE;
+    var Lazy = REACT_LAZY_TYPE;
+    var Memo = REACT_MEMO_TYPE;
+    var Portal = REACT_PORTAL_TYPE;
+    var Profiler = REACT_PROFILER_TYPE;
+    var StrictMode = REACT_STRICT_MODE_TYPE;
+    var Suspense = REACT_SUSPENSE_TYPE;
+    var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
+    function isAsyncMode(object) {
+        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+            hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
+            console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
+        }
+        return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
+    }
+    function isConcurrentMode(object) {
+        return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
+    }
+    function isContextConsumer(object) {
+        return typeOf(object) === REACT_CONTEXT_TYPE;
+    }
+    function isContextProvider(object) {
+        return typeOf(object) === REACT_PROVIDER_TYPE;
+    }
+    function isElement(object) {
+        return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+    }
+    function isForwardRef(object) {
+        return typeOf(object) === REACT_FORWARD_REF_TYPE;
+    }
+    function isFragment(object) {
+        return typeOf(object) === REACT_FRAGMENT_TYPE;
+    }
+    function isLazy(object) {
+        return typeOf(object) === REACT_LAZY_TYPE;
+    }
+    function isMemo(object) {
+        return typeOf(object) === REACT_MEMO_TYPE;
+    }
+    function isPortal(object) {
+        return typeOf(object) === REACT_PORTAL_TYPE;
+    }
+    function isProfiler(object) {
+        return typeOf(object) === REACT_PROFILER_TYPE;
+    }
+    function isStrictMode(object) {
+        return typeOf(object) === REACT_STRICT_MODE_TYPE;
+    }
+    function isSuspense(object) {
+        return typeOf(object) === REACT_SUSPENSE_TYPE;
+    }
+    exports.AsyncMode = AsyncMode;
+    exports.ConcurrentMode = ConcurrentMode;
+    exports.ContextConsumer = ContextConsumer;
+    exports.ContextProvider = ContextProvider;
+    exports.Element = Element;
+    exports.ForwardRef = ForwardRef;
+    exports.Fragment = Fragment;
+    exports.Lazy = Lazy;
+    exports.Memo = Memo;
+    exports.Portal = Portal;
+    exports.Profiler = Profiler;
+    exports.StrictMode = StrictMode;
+    exports.Suspense = Suspense;
+    exports.isAsyncMode = isAsyncMode;
+    exports.isConcurrentMode = isConcurrentMode;
+    exports.isContextConsumer = isContextConsumer;
+    exports.isContextProvider = isContextProvider;
+    exports.isElement = isElement;
+    exports.isForwardRef = isForwardRef;
+    exports.isFragment = isFragment;
+    exports.isLazy = isLazy;
+    exports.isMemo = isMemo;
+    exports.isPortal = isPortal;
+    exports.isProfiler = isProfiler;
+    exports.isStrictMode = isStrictMode;
+    exports.isSuspense = isSuspense;
+    exports.isValidElementType = isValidElementType;
+    exports.typeOf = typeOf;
+})();
+
+},{}],"lb6Ui":[function(require,module,exports) {
+"use strict";
+module.exports = require("./cjs/react-is.development.js");
+
+},{"./cjs/react-is.development.js":"idDA8"}],"idDA8":[function(require,module,exports) {
+/**
+ * @license React
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+(function() {
+    "use strict";
+    // ATTENTION
+    // When adding new symbols to this file,
+    // Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
+    // The Symbol used to tag the ReactElement-like types.
+    var REACT_ELEMENT_TYPE = Symbol.for("react.element");
+    var REACT_PORTAL_TYPE = Symbol.for("react.portal");
+    var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+    var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
+    var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+    var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
+    var REACT_CONTEXT_TYPE = Symbol.for("react.context");
+    var REACT_SERVER_CONTEXT_TYPE = Symbol.for("react.server_context");
+    var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
+    var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
+    var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
+    var REACT_MEMO_TYPE = Symbol.for("react.memo");
+    var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+    var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
+    // -----------------------------------------------------------------------------
+    var enableScopeAPI = false; // Experimental Create Event Handle API.
+    var enableCacheElement = false;
+    var enableTransitionTracing = false; // No known bugs, but needs performance testing
+    var enableLegacyHidden = false; // Enables unstable_avoidThisFallback feature in Fiber
+    // stuff. Intended to enable React core members to more easily debug scheduling
+    // issues in DEV builds.
+    var enableDebugTracing = false; // Track which Fiber(s) schedule render work.
+    var REACT_MODULE_REFERENCE;
+    REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
+    function isValidElementType(type) {
+        if (typeof type === "string" || typeof type === "function") return true;
+         // Note: typeof might be other than 'symbol' or 'number' (e.g. if it's a polyfill).
+        if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) return true;
+        if (typeof type === "object" && type !== null) {
+            if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // types supported by any Flight configuration anywhere since
+            // we don't know which Flight build this will end up being used
+            // with.
+            type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== undefined) return true;
+        }
+        return false;
+    }
+    function typeOf(object) {
+        if (typeof object === "object" && object !== null) {
+            var $$typeof = object.$$typeof;
+            switch($$typeof){
+                case REACT_ELEMENT_TYPE:
+                    var type = object.type;
+                    switch(type){
+                        case REACT_FRAGMENT_TYPE:
+                        case REACT_PROFILER_TYPE:
+                        case REACT_STRICT_MODE_TYPE:
+                        case REACT_SUSPENSE_TYPE:
+                        case REACT_SUSPENSE_LIST_TYPE:
+                            return type;
+                        default:
+                            var $$typeofType = type && type.$$typeof;
+                            switch($$typeofType){
+                                case REACT_SERVER_CONTEXT_TYPE:
+                                case REACT_CONTEXT_TYPE:
+                                case REACT_FORWARD_REF_TYPE:
+                                case REACT_LAZY_TYPE:
+                                case REACT_MEMO_TYPE:
+                                case REACT_PROVIDER_TYPE:
+                                    return $$typeofType;
+                                default:
+                                    return $$typeof;
+                            }
+                    }
+                case REACT_PORTAL_TYPE:
+                    return $$typeof;
+            }
+        }
+        return undefined;
+    }
+    var ContextConsumer = REACT_CONTEXT_TYPE;
+    var ContextProvider = REACT_PROVIDER_TYPE;
+    var Element = REACT_ELEMENT_TYPE;
+    var ForwardRef = REACT_FORWARD_REF_TYPE;
+    var Fragment = REACT_FRAGMENT_TYPE;
+    var Lazy = REACT_LAZY_TYPE;
+    var Memo = REACT_MEMO_TYPE;
+    var Portal = REACT_PORTAL_TYPE;
+    var Profiler = REACT_PROFILER_TYPE;
+    var StrictMode = REACT_STRICT_MODE_TYPE;
+    var Suspense = REACT_SUSPENSE_TYPE;
+    var SuspenseList = REACT_SUSPENSE_LIST_TYPE;
+    var hasWarnedAboutDeprecatedIsAsyncMode = false;
+    var hasWarnedAboutDeprecatedIsConcurrentMode = false; // AsyncMode should be deprecated
+    function isAsyncMode(object) {
+        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+            hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
+            console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 18+.");
+        }
+        return false;
+    }
+    function isConcurrentMode(object) {
+        if (!hasWarnedAboutDeprecatedIsConcurrentMode) {
+            hasWarnedAboutDeprecatedIsConcurrentMode = true; // Using console['warn'] to evade Babel and ESLint
+            console["warn"]("The ReactIs.isConcurrentMode() alias has been deprecated, and will be removed in React 18+.");
+        }
+        return false;
+    }
+    function isContextConsumer(object) {
+        return typeOf(object) === REACT_CONTEXT_TYPE;
+    }
+    function isContextProvider(object) {
+        return typeOf(object) === REACT_PROVIDER_TYPE;
+    }
+    function isElement(object) {
+        return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+    }
+    function isForwardRef(object) {
+        return typeOf(object) === REACT_FORWARD_REF_TYPE;
+    }
+    function isFragment(object) {
+        return typeOf(object) === REACT_FRAGMENT_TYPE;
+    }
+    function isLazy(object) {
+        return typeOf(object) === REACT_LAZY_TYPE;
+    }
+    function isMemo(object) {
+        return typeOf(object) === REACT_MEMO_TYPE;
+    }
+    function isPortal(object) {
+        return typeOf(object) === REACT_PORTAL_TYPE;
+    }
+    function isProfiler(object) {
+        return typeOf(object) === REACT_PROFILER_TYPE;
+    }
+    function isStrictMode(object) {
+        return typeOf(object) === REACT_STRICT_MODE_TYPE;
+    }
+    function isSuspense(object) {
+        return typeOf(object) === REACT_SUSPENSE_TYPE;
+    }
+    function isSuspenseList(object) {
+        return typeOf(object) === REACT_SUSPENSE_LIST_TYPE;
+    }
+    exports.ContextConsumer = ContextConsumer;
+    exports.ContextProvider = ContextProvider;
+    exports.Element = Element;
+    exports.ForwardRef = ForwardRef;
+    exports.Fragment = Fragment;
+    exports.Lazy = Lazy;
+    exports.Memo = Memo;
+    exports.Portal = Portal;
+    exports.Profiler = Profiler;
+    exports.StrictMode = StrictMode;
+    exports.Suspense = Suspense;
+    exports.SuspenseList = SuspenseList;
+    exports.isAsyncMode = isAsyncMode;
+    exports.isConcurrentMode = isConcurrentMode;
+    exports.isContextConsumer = isContextConsumer;
+    exports.isContextProvider = isContextProvider;
+    exports.isElement = isElement;
+    exports.isForwardRef = isForwardRef;
+    exports.isFragment = isFragment;
+    exports.isLazy = isLazy;
+    exports.isMemo = isMemo;
+    exports.isPortal = isPortal;
+    exports.isProfiler = isProfiler;
+    exports.isStrictMode = isStrictMode;
+    exports.isSuspense = isSuspense;
+    exports.isSuspenseList = isSuspenseList;
+    exports.isValidElementType = isValidElementType;
+    exports.typeOf = typeOf;
+})();
+
+},{}],"e9uH3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "pureFinalPropsSelectorFactory", ()=>pureFinalPropsSelectorFactory);
+var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
+var _verifySubselectors = require("./verifySubselectors");
+var _verifySubselectorsDefault = parcelHelpers.interopDefault(_verifySubselectors);
+const _excluded = [
+    "initMapStateToProps",
+    "initMapDispatchToProps",
+    "initMergeProps"
+];
+function pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, { areStatesEqual , areOwnPropsEqual , areStatePropsEqual  }) {
+    let hasRunAtLeastOnce = false;
+    let state;
+    let ownProps;
+    let stateProps;
+    let dispatchProps;
+    let mergedProps;
+    function handleFirstCall(firstState, firstOwnProps) {
+        state = firstState;
+        ownProps = firstOwnProps;
+        stateProps = mapStateToProps(state, ownProps);
+        dispatchProps = mapDispatchToProps(dispatch, ownProps);
+        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        hasRunAtLeastOnce = true;
+        return mergedProps;
+    }
+    function handleNewPropsAndNewState() {
+        stateProps = mapStateToProps(state, ownProps);
+        if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
+        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        return mergedProps;
+    }
+    function handleNewProps() {
+        if (mapStateToProps.dependsOnOwnProps) stateProps = mapStateToProps(state, ownProps);
+        if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
+        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        return mergedProps;
+    }
+    function handleNewState() {
+        const nextStateProps = mapStateToProps(state, ownProps);
+        const statePropsChanged = !areStatePropsEqual(nextStateProps, stateProps);
+        stateProps = nextStateProps;
+        if (statePropsChanged) mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        return mergedProps;
+    }
+    function handleSubsequentCalls(nextState, nextOwnProps) {
+        const propsChanged = !areOwnPropsEqual(nextOwnProps, ownProps);
+        const stateChanged = !areStatesEqual(nextState, state);
+        state = nextState;
+        ownProps = nextOwnProps;
+        if (propsChanged && stateChanged) return handleNewPropsAndNewState();
+        if (propsChanged) return handleNewProps();
+        if (stateChanged) return handleNewState();
+        return mergedProps;
+    }
+    return function pureFinalPropsSelector(nextState, nextOwnProps) {
+        return hasRunAtLeastOnce ? handleSubsequentCalls(nextState, nextOwnProps) : handleFirstCall(nextState, nextOwnProps);
+    };
+}
+function finalPropsSelectorFactory(dispatch, _ref) {
+    let { initMapStateToProps , initMapDispatchToProps , initMergeProps  } = _ref, options = (0, _objectWithoutPropertiesLooseDefault.default)(_ref, _excluded);
+    const mapStateToProps = initMapStateToProps(dispatch, options);
+    const mapDispatchToProps = initMapDispatchToProps(dispatch, options);
+    const mergeProps = initMergeProps(dispatch, options);
+    (0, _verifySubselectorsDefault.default)(mapStateToProps, mapDispatchToProps, mergeProps);
+    return pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
+}
+exports.default = finalPropsSelectorFactory;
+
+},{"@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"adHgr","./verifySubselectors":"10wWL","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"10wWL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _warning = require("../utils/warning");
+var _warningDefault = parcelHelpers.interopDefault(_warning);
+function verify(selector, methodName) {
+    if (!selector) throw new Error(`Unexpected value for ${methodName} in connect.`);
+    else if (methodName === "mapStateToProps" || methodName === "mapDispatchToProps") {
+        if (!Object.prototype.hasOwnProperty.call(selector, "dependsOnOwnProps")) (0, _warningDefault.default)(`The selector for ${methodName} of connect did not specify a value for dependsOnOwnProps.`);
+    }
+}
+function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps) {
+    verify(mapStateToProps, "mapStateToProps");
+    verify(mapDispatchToProps, "mapDispatchToProps");
+    verify(mergeProps, "mergeProps");
+}
+exports.default = verifySubselectors;
+
+},{"../utils/warning":"cUQUw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cUQUw":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function warning(message) {
+    /* eslint-disable no-console */ if (typeof console !== "undefined" && typeof console.error === "function") console.error(message);
+    /* eslint-enable no-console */ try {
+        // This error was thrown as a convenience so that if you enable
+        // "break on all exceptions" in your console,
+        // it would pause the execution at this line.
+        throw new Error(message);
+    /* eslint-disable no-empty */ } catch (e) {}
+/* eslint-enable no-empty */ }
+exports.default = warning;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5QhPl":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "mapDispatchToPropsFactory", ()=>mapDispatchToPropsFactory);
+var _bindActionCreators = require("../utils/bindActionCreators");
+var _bindActionCreatorsDefault = parcelHelpers.interopDefault(_bindActionCreators);
+var _wrapMapToProps = require("./wrapMapToProps");
+var _invalidArgFactory = require("./invalidArgFactory");
+function mapDispatchToPropsFactory(mapDispatchToProps) {
+    return mapDispatchToProps && typeof mapDispatchToProps === "object" ? (0, _wrapMapToProps.wrapMapToPropsConstant)((dispatch)=>(0, _bindActionCreatorsDefault.default)(mapDispatchToProps, dispatch)) : !mapDispatchToProps ? (0, _wrapMapToProps.wrapMapToPropsConstant)((dispatch)=>({
+            dispatch
+        })) : typeof mapDispatchToProps === "function" ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapDispatchToProps, "mapDispatchToProps") : (0, _invalidArgFactory.createInvalidArgFactory)(mapDispatchToProps, "mapDispatchToProps");
+}
+
+},{"../utils/bindActionCreators":"afPZO","./wrapMapToProps":"bSgjL","./invalidArgFactory":"fnbUv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"afPZO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function bindActionCreators(actionCreators, dispatch) {
+    const boundActionCreators = {};
+    for(const key in actionCreators){
+        const actionCreator = actionCreators[key];
+        if (typeof actionCreator === "function") boundActionCreators[key] = (...args)=>dispatch(actionCreator(...args));
+    }
+    return boundActionCreators;
+}
+exports.default = bindActionCreators;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bSgjL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "wrapMapToPropsConstant", ()=>wrapMapToPropsConstant) // dependsOnOwnProps is used by createMapToPropsProxy to determine whether to pass props as args
+;
+// to the mapToProps function being wrapped. It is also used by makePurePropsSelector to determine
+// whether mapToProps needs to be invoked when props have changed.
+//
+// A length of one signals that mapToProps does not depend on props from the parent component.
+// A length of zero is assumed to mean mapToProps is getting args via arguments or ...args and
+// therefore not reporting its length accurately..
+// TODO Can this get pulled out so that we can subscribe directly to the store if we don't need ownProps?
+parcelHelpers.export(exports, "getDependsOnOwnProps", ()=>getDependsOnOwnProps) // Used by whenMapStateToPropsIsFunction and whenMapDispatchToPropsIsFunction,
+;
+// this function wraps mapToProps in a proxy function which does several things:
+//
+//  * Detects whether the mapToProps function being called depends on props, which
+//    is used by selectorFactory to decide if it should reinvoke on props changes.
+//
+//  * On first call, handles mapToProps if returns another function, and treats that
+//    new function as the true mapToProps for subsequent calls.
+//
+//  * On first call, verifies the first result is a plain object, in order to warn
+//    the developer that their mapToProps function is not returning a valid result.
+//
+parcelHelpers.export(exports, "wrapMapToPropsFunc", ()=>wrapMapToPropsFunc);
+var _verifyPlainObject = require("../utils/verifyPlainObject");
+var _verifyPlainObjectDefault = parcelHelpers.interopDefault(_verifyPlainObject);
+function wrapMapToPropsConstant(//  It seems that the dispatch argument
+//  could be a dispatch function in some cases (ex: whenMapDispatchToPropsIsMissing)
+//  and a state object in some others (ex: whenMapStateToPropsIsMissing)
+// eslint-disable-next-line no-unused-vars
+getConstant) {
+    return function initConstantSelector(dispatch) {
+        const constant = getConstant(dispatch);
+        function constantSelector() {
+            return constant;
+        }
+        constantSelector.dependsOnOwnProps = false;
+        return constantSelector;
+    };
+}
+function getDependsOnOwnProps(mapToProps) {
+    return mapToProps.dependsOnOwnProps ? Boolean(mapToProps.dependsOnOwnProps) : mapToProps.length !== 1;
+}
+function wrapMapToPropsFunc(mapToProps, methodName) {
+    return function initProxySelector(dispatch, { displayName  }) {
+        const proxy = function mapToPropsProxy(stateOrDispatch, ownProps) {
+            return proxy.dependsOnOwnProps ? proxy.mapToProps(stateOrDispatch, ownProps) : proxy.mapToProps(stateOrDispatch, undefined);
+        }; // allow detectFactoryAndVerify to get ownProps
+        proxy.dependsOnOwnProps = true;
+        proxy.mapToProps = function detectFactoryAndVerify(stateOrDispatch, ownProps) {
+            proxy.mapToProps = mapToProps;
+            proxy.dependsOnOwnProps = getDependsOnOwnProps(mapToProps);
+            let props = proxy(stateOrDispatch, ownProps);
+            if (typeof props === "function") {
+                proxy.mapToProps = props;
+                proxy.dependsOnOwnProps = getDependsOnOwnProps(props);
+                props = proxy(stateOrDispatch, ownProps);
+            }
+            (0, _verifyPlainObjectDefault.default)(props, displayName, methodName);
+            return props;
+        };
+        return proxy;
+    };
+}
+
+},{"../utils/verifyPlainObject":"f6LbZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"f6LbZ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _isPlainObject = require("./isPlainObject");
+var _isPlainObjectDefault = parcelHelpers.interopDefault(_isPlainObject);
+var _warning = require("./warning");
+var _warningDefault = parcelHelpers.interopDefault(_warning);
+function verifyPlainObject(value, displayName, methodName) {
+    if (!(0, _isPlainObjectDefault.default)(value)) (0, _warningDefault.default)(`${methodName}() in ${displayName} must return a plain object. Instead received ${value}.`);
+}
+exports.default = verifyPlainObject;
+
+},{"./isPlainObject":"lM8m6","./warning":"cUQUw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lM8m6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function isPlainObject(obj) {
+    if (typeof obj !== "object" || obj === null) return false;
+    let proto = Object.getPrototypeOf(obj);
+    if (proto === null) return true;
+    let baseProto = proto;
+    while(Object.getPrototypeOf(baseProto) !== null)baseProto = Object.getPrototypeOf(baseProto);
+    return proto === baseProto;
+}
+exports.default = isPlainObject;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fnbUv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createInvalidArgFactory", ()=>createInvalidArgFactory);
+function createInvalidArgFactory(arg, name) {
+    return (dispatch, options)=>{
+        throw new Error(`Invalid value of type ${typeof arg} for ${name} argument when connecting component ${options.wrappedComponentName}.`);
+    };
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4Hl4c":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "mapStateToPropsFactory", ()=>mapStateToPropsFactory);
+var _wrapMapToProps = require("./wrapMapToProps");
+var _invalidArgFactory = require("./invalidArgFactory");
+function mapStateToPropsFactory(mapStateToProps) {
+    return !mapStateToProps ? (0, _wrapMapToProps.wrapMapToPropsConstant)(()=>({})) : typeof mapStateToProps === "function" ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapStateToProps, "mapStateToProps") : (0, _invalidArgFactory.createInvalidArgFactory)(mapStateToProps, "mapStateToProps");
+}
+
+},{"./wrapMapToProps":"bSgjL","./invalidArgFactory":"fnbUv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hQpBj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "defaultMergeProps", ()=>defaultMergeProps);
+parcelHelpers.export(exports, "wrapMergePropsFunc", ()=>wrapMergePropsFunc);
+parcelHelpers.export(exports, "mergePropsFactory", ()=>mergePropsFactory);
+var _extends = require("@babel/runtime/helpers/esm/extends");
+var _extendsDefault = parcelHelpers.interopDefault(_extends);
+var _verifyPlainObject = require("../utils/verifyPlainObject");
+var _verifyPlainObjectDefault = parcelHelpers.interopDefault(_verifyPlainObject);
+var _invalidArgFactory = require("./invalidArgFactory");
+function defaultMergeProps(stateProps, dispatchProps, ownProps) {
+    // @ts-ignore
+    return (0, _extendsDefault.default)({}, ownProps, stateProps, dispatchProps);
+}
+function wrapMergePropsFunc(mergeProps) {
+    return function initMergePropsProxy(dispatch, { displayName , areMergedPropsEqual  }) {
+        let hasRunOnce = false;
+        let mergedProps;
+        return function mergePropsProxy(stateProps, dispatchProps, ownProps) {
+            const nextMergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+            if (hasRunOnce) {
+                if (!areMergedPropsEqual(nextMergedProps, mergedProps)) mergedProps = nextMergedProps;
+            } else {
+                hasRunOnce = true;
+                mergedProps = nextMergedProps;
+                (0, _verifyPlainObjectDefault.default)(mergedProps, displayName, "mergeProps");
+            }
+            return mergedProps;
+        };
+    };
+}
+function mergePropsFactory(mergeProps) {
+    return !mergeProps ? ()=>defaultMergeProps : typeof mergeProps === "function" ? wrapMergePropsFunc(mergeProps) : (0, _invalidArgFactory.createInvalidArgFactory)(mergeProps, "mergeProps");
+}
+
+},{"@babel/runtime/helpers/esm/extends":"fTBFS","../utils/verifyPlainObject":"f6LbZ","./invalidArgFactory":"fnbUv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ieuHT":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createSubscription", ()=>createSubscription);
+var _batch = require("./batch"); // encapsulates the subscription logic for connecting a component to the redux store, as
+// well as nesting subscriptions of descendant components, so that we can ensure the
+// ancestor components re-render before descendants
+function createListenerCollection() {
+    const batch = (0, _batch.getBatch)();
+    let first = null;
+    let last = null;
+    return {
+        clear () {
+            first = null;
+            last = null;
+        },
+        notify () {
+            batch(()=>{
+                let listener = first;
+                while(listener){
+                    listener.callback();
+                    listener = listener.next;
+                }
+            });
+        },
+        get () {
+            let listeners = [];
+            let listener = first;
+            while(listener){
+                listeners.push(listener);
+                listener = listener.next;
+            }
+            return listeners;
+        },
+        subscribe (callback) {
+            let isSubscribed = true;
+            let listener = last = {
+                callback,
+                next: null,
+                prev: last
+            };
+            if (listener.prev) listener.prev.next = listener;
+            else first = listener;
+            return function unsubscribe() {
+                if (!isSubscribed || first === null) return;
+                isSubscribed = false;
+                if (listener.next) listener.next.prev = listener.prev;
+                else last = listener.prev;
+                if (listener.prev) listener.prev.next = listener.next;
+                else first = listener.next;
+            };
+        }
+    };
+}
+const nullListeners = {
+    notify () {},
+    get: ()=>[]
+};
+function createSubscription(store, parentSub) {
+    let unsubscribe;
+    let listeners = nullListeners;
+    function addNestedSub(listener) {
+        trySubscribe();
+        return listeners.subscribe(listener);
+    }
+    function notifyNestedSubs() {
+        listeners.notify();
+    }
+    function handleChangeWrapper() {
+        if (subscription.onStateChange) subscription.onStateChange();
+    }
+    function isSubscribed() {
+        return Boolean(unsubscribe);
+    }
+    function trySubscribe() {
+        if (!unsubscribe) {
+            unsubscribe = parentSub ? parentSub.addNestedSub(handleChangeWrapper) : store.subscribe(handleChangeWrapper);
+            listeners = createListenerCollection();
+        }
+    }
+    function tryUnsubscribe() {
+        if (unsubscribe) {
+            unsubscribe();
+            unsubscribe = undefined;
+            listeners.clear();
+            listeners = nullListeners;
+        }
+    }
+    const subscription = {
+        addNestedSub,
+        notifyNestedSubs,
+        handleChangeWrapper,
+        isSubscribed,
+        trySubscribe,
+        tryUnsubscribe,
+        getListeners: ()=>listeners
+    };
+    return subscription;
+}
+
+},{"./batch":"ikw0G","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kNbVc":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "canUseDOM", ()=>canUseDOM);
+parcelHelpers.export(exports, "useIsomorphicLayoutEffect", ()=>useIsomorphicLayoutEffect);
+var _react = require("react"); // React currently throws a warning when using useLayoutEffect on the server.
+const canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
+const useIsomorphicLayoutEffect = canUseDOM ? (0, _react.useLayoutEffect) : (0, _react.useEffect);
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gV5L4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function is(x, y) {
+    if (x === y) return x !== 0 || y !== 0 || 1 / x === 1 / y;
+    else return x !== x && y !== y;
+}
+function shallowEqual(objA, objB) {
+    if (is(objA, objB)) return true;
+    if (typeof objA !== "object" || objA === null || typeof objB !== "object" || objB === null) return false;
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
+    if (keysA.length !== keysB.length) return false;
+    for(let i = 0; i < keysA.length; i++){
+        if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) return false;
+    }
+    return true;
+}
+exports.default = shallowEqual;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iAa1P":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Provider", ()=>(0, _providerDefault.default));
+parcelHelpers.export(exports, "ReactReduxContext", ()=>(0, _context.ReactReduxContext));
+parcelHelpers.export(exports, "connect", ()=>(0, _connectDefault.default));
+parcelHelpers.export(exports, "useDispatch", ()=>(0, _useDispatch.useDispatch));
+parcelHelpers.export(exports, "createDispatchHook", ()=>(0, _useDispatch.createDispatchHook));
+parcelHelpers.export(exports, "useSelector", ()=>(0, _useSelector.useSelector));
+parcelHelpers.export(exports, "createSelectorHook", ()=>(0, _useSelector.createSelectorHook));
+parcelHelpers.export(exports, "useStore", ()=>(0, _useStore.useStore));
+parcelHelpers.export(exports, "createStoreHook", ()=>(0, _useStore.createStoreHook));
+parcelHelpers.export(exports, "shallowEqual", ()=>(0, _shallowEqualDefault.default));
+var _provider = require("./components/Provider");
+var _providerDefault = parcelHelpers.interopDefault(_provider);
+var _connect = require("./components/connect");
+var _connectDefault = parcelHelpers.interopDefault(_connect);
+var _context = require("./components/Context");
+var _useDispatch = require("./hooks/useDispatch");
+var _useSelector = require("./hooks/useSelector");
+var _useStore = require("./hooks/useStore");
+var _shallowEqual = require("./utils/shallowEqual");
+var _shallowEqualDefault = parcelHelpers.interopDefault(_shallowEqual);
+var _types = require("./types");
+parcelHelpers.exportAll(_types, exports);
+
+},{"./components/Provider":"bdd6J","./components/connect":"5gOIw","./components/Context":"ji81o","./hooks/useDispatch":"aOjNn","./hooks/useSelector":"l3rFI","./hooks/useStore":"39JZU","./utils/shallowEqual":"gV5L4","./types":"8RiCo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bdd6J":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _context = require("./Context");
+var _subscription = require("../utils/Subscription");
+var _useIsomorphicLayoutEffect = require("../utils/useIsomorphicLayoutEffect");
+function Provider({ store , context , children , serverState  }) {
+    const contextValue = (0, _react.useMemo)(()=>{
+        const subscription = (0, _subscription.createSubscription)(store);
+        return {
+            store,
+            subscription,
+            getServerState: serverState ? ()=>serverState : undefined
+        };
+    }, [
+        store,
+        serverState
+    ]);
+    const previousState = (0, _react.useMemo)(()=>store.getState(), [
+        store
+    ]);
+    (0, _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect)(()=>{
+        const { subscription  } = contextValue;
+        subscription.onStateChange = subscription.notifyNestedSubs;
+        subscription.trySubscribe();
+        if (previousState !== store.getState()) subscription.notifyNestedSubs();
+        return ()=>{
+            subscription.tryUnsubscribe();
+            subscription.onStateChange = undefined;
+        };
+    }, [
+        contextValue,
+        previousState
+    ]);
+    const Context = context || (0, _context.ReactReduxContext); // @ts-ignore 'AnyAction' is assignable to the constraint of type 'A', but 'A' could be instantiated with a different subtype
+    return /*#__PURE__*/ (0, _reactDefault.default).createElement(Context.Provider, {
+        value: contextValue
+    }, children);
+}
+exports.default = Provider;
+
+},{"react":"21dqq","./Context":"ji81o","../utils/Subscription":"ieuHT","../utils/useIsomorphicLayoutEffect":"kNbVc","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aOjNn":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Hook factory, which creates a `useDispatch` hook bound to a given context.
+ *
+ * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
+ * @returns {Function} A `useDispatch` hook bound to the specified context.
+ */ parcelHelpers.export(exports, "createDispatchHook", ()=>createDispatchHook);
+parcelHelpers.export(exports, "useDispatch", ()=>useDispatch);
+var _context = require("../components/Context");
+var _useStore = require("./useStore");
+function createDispatchHook(context = (0, _context.ReactReduxContext)) {
+    const useStore = context === (0, _context.ReactReduxContext) ? (0, _useStore.useStore) : (0, _useStore.createStoreHook)(context);
+    return function useDispatch() {
+        const store = useStore(); // @ts-ignore
+        return store.dispatch;
+    };
+}
+const useDispatch = /*#__PURE__*/ createDispatchHook();
+
+},{"../components/Context":"ji81o","./useStore":"39JZU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"39JZU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Hook factory, which creates a `useStore` hook bound to a given context.
+ *
+ * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
+ * @returns {Function} A `useStore` hook bound to the specified context.
+ */ parcelHelpers.export(exports, "createStoreHook", ()=>createStoreHook);
+parcelHelpers.export(exports, "useStore", ()=>useStore);
+var _react = require("react");
+var _context = require("../components/Context");
+var _useReduxContext = require("./useReduxContext");
+function createStoreHook(context = (0, _context.ReactReduxContext)) {
+    const useReduxContext = context === (0, _context.ReactReduxContext) ? (0, _useReduxContext.useReduxContext) : ()=>(0, _react.useContext)(context);
+    return function useStore() {
+        const { store  } = useReduxContext(); // @ts-ignore
+        return store;
+    };
+}
+const useStore = /*#__PURE__*/ createStoreHook();
+
+},{"react":"21dqq","../components/Context":"ji81o","./useReduxContext":"3828k","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8RiCo":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9SnHn":[function(require,module,exports) {
+"use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports["default"] = exports.CreatedMenuContext = void 0;
-var _react = _interopRequireWildcard(require("react"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+exports.getLogo = exports["default"] = void 0;
+var _toolkit = require("@reduxjs/toolkit");
+/**
+ * Options for asset store slice
+ * @type {Object}
+ */ var assetsSliceOptions = {
+    name: "assets",
+    initialState: {
+        logo: ""
+    }
+};
+var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
+/**
+ * Get logo url.
+ * @param {Object} state store state
+ * @returns {string} logo url
+ */ var getLogo = function getLogo(state) {
+    return state.assets.logo;
+};
+/**
+ * @module assetsSlice
+ */ exports.getLogo = getLogo;
+var _default = assetsSlice.reducer;
+exports["default"] = _default;
+
+},{"@reduxjs/toolkit":"lL1Ef"}],"lL1Ef":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MiddlewareArray", ()=>MiddlewareArray);
+parcelHelpers.export(exports, "TaskAbortError", ()=>TaskAbortError);
+parcelHelpers.export(exports, "addListener", ()=>addListener);
+parcelHelpers.export(exports, "clearAllListeners", ()=>clearAllListeners);
+parcelHelpers.export(exports, "configureStore", ()=>configureStore);
+parcelHelpers.export(exports, "createAction", ()=>createAction);
+parcelHelpers.export(exports, "createAsyncThunk", ()=>createAsyncThunk);
+parcelHelpers.export(exports, "createDraftSafeSelector", ()=>createDraftSafeSelector);
+parcelHelpers.export(exports, "createEntityAdapter", ()=>createEntityAdapter);
+parcelHelpers.export(exports, "createImmutableStateInvariantMiddleware", ()=>createImmutableStateInvariantMiddleware);
+parcelHelpers.export(exports, "createListenerMiddleware", ()=>createListenerMiddleware);
+parcelHelpers.export(exports, "createNextState", ()=>(0, _immerDefault.default));
+parcelHelpers.export(exports, "createReducer", ()=>createReducer);
+parcelHelpers.export(exports, "createSelector", ()=>(0, _reselect.createSelector));
+parcelHelpers.export(exports, "createSerializableStateInvariantMiddleware", ()=>createSerializableStateInvariantMiddleware);
+parcelHelpers.export(exports, "createSlice", ()=>createSlice);
+parcelHelpers.export(exports, "current", ()=>(0, _immer.current));
+parcelHelpers.export(exports, "findNonSerializableValue", ()=>findNonSerializableValue);
+parcelHelpers.export(exports, "freeze", ()=>(0, _immer.freeze));
+parcelHelpers.export(exports, "getDefaultMiddleware", ()=>getDefaultMiddleware);
+parcelHelpers.export(exports, "getType", ()=>getType);
+parcelHelpers.export(exports, "isAllOf", ()=>isAllOf);
+parcelHelpers.export(exports, "isAnyOf", ()=>isAnyOf);
+parcelHelpers.export(exports, "isAsyncThunkAction", ()=>isAsyncThunkAction);
+parcelHelpers.export(exports, "isDraft", ()=>(0, _immer.isDraft));
+parcelHelpers.export(exports, "isFulfilled", ()=>isFulfilled);
+parcelHelpers.export(exports, "isImmutableDefault", ()=>isImmutableDefault);
+parcelHelpers.export(exports, "isPending", ()=>isPending);
+parcelHelpers.export(exports, "isPlain", ()=>isPlain);
+parcelHelpers.export(exports, "isPlainObject", ()=>isPlainObject);
+parcelHelpers.export(exports, "isRejected", ()=>isRejected);
+parcelHelpers.export(exports, "isRejectedWithValue", ()=>isRejectedWithValue);
+parcelHelpers.export(exports, "miniSerializeError", ()=>miniSerializeError);
+parcelHelpers.export(exports, "nanoid", ()=>nanoid);
+parcelHelpers.export(exports, "original", ()=>(0, _immer.original));
+parcelHelpers.export(exports, "removeListener", ()=>removeListener);
+parcelHelpers.export(exports, "unwrapResult", ()=>unwrapResult);
+// src/index.ts
+var _immer = require("immer");
+var _immerDefault = parcelHelpers.interopDefault(_immer);
+var _reselect = require("reselect");
+// src/configureStore.ts
+var _redux = require("redux");
+// src/getDefaultMiddleware.ts
+var _reduxThunk = require("redux-thunk");
+var _reduxThunkDefault = parcelHelpers.interopDefault(_reduxThunk);
+parcelHelpers.exportAll(_redux, exports);
+var process = require("process");
+var __extends = undefined && undefined.__extends || function() {
+    var extendStatics = function(d, b) {
+        extendStatics = Object.setPrototypeOf || ({
+            __proto__: []
+        }) instanceof Array && function(d, b) {
+            d.__proto__ = b;
+        } || function(d, b) {
+            for(var p in b)if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+        };
+        return extendStatics(d, b);
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-    if (_i == null) return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _s, _e;
-    try {
-        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
-            _arr.push(_s.value);
-            if (i && _arr.length === i) break;
+    return function(d, b) {
+        if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
         }
-    } catch (err) {
-        _d = true;
-        _e = err;
-    } finally{
-        try {
-            if (!_n && _i["return"] != null) _i["return"]();
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+var __generator = undefined && undefined.__generator || function(thisArg, body) {
+    var _ = {
+        label: 0,
+        sent: function() {
+            if (t[0] & 1) throw t[1];
+            return t[1];
+        },
+        trys: [],
+        ops: []
+    }, f, y, t, g;
+    return g = {
+        next: verb(0),
+        "throw": verb(1),
+        "return": verb(2)
+    }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+    }), g;
+    function verb(n) {
+        return function(v) {
+            return step([
+                n,
+                v
+            ]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while(_)try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [
+                op[0] & 2,
+                t.value
+            ];
+            switch(op[0]){
+                case 0:
+                case 1:
+                    t = op;
+                    break;
+                case 4:
+                    _.label++;
+                    return {
+                        value: op[1],
+                        done: false
+                    };
+                case 5:
+                    _.label++;
+                    y = op[1];
+                    op = [
+                        0
+                    ];
+                    continue;
+                case 7:
+                    op = _.ops.pop();
+                    _.trys.pop();
+                    continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                        _ = 0;
+                        continue;
+                    }
+                    if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                        _.label = op[1];
+                        break;
+                    }
+                    if (op[0] === 6 && _.label < t[1]) {
+                        _.label = t[1];
+                        t = op;
+                        break;
+                    }
+                    if (t && _.label < t[2]) {
+                        _.label = t[2];
+                        _.ops.push(op);
+                        break;
+                    }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop();
+                    continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) {
+            op = [
+                6,
+                e
+            ];
+            y = 0;
         } finally{
-            if (_d) throw _e;
+            f = t = 0;
+        }
+        if (op[0] & 5) throw op[1];
+        return {
+            value: op[0] ? op[1] : void 0,
+            done: true
+        };
+    }
+};
+var __spreadArray = undefined && undefined.__spreadArray || function(to, from) {
+    for(var i = 0, il = from.length, j = to.length; i < il; i++, j++)to[j] = from[i];
+    return to;
+};
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = function(obj, key, value) {
+    return key in obj ? __defProp(obj, key, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: value
+    }) : obj[key] = value;
+};
+var __spreadValues = function(a, b) {
+    for(var prop in b || (b = {}))if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+    if (__getOwnPropSymbols) for(var _i = 0, _c = __getOwnPropSymbols(b); _i < _c.length; _i++){
+        var prop = _c[_i];
+        if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+    }
+    return a;
+};
+var __spreadProps = function(a, b) {
+    return __defProps(a, __getOwnPropDescs(b));
+};
+var __async = function(__this, __arguments, generator) {
+    return new Promise(function(resolve, reject) {
+        var fulfilled = function(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        };
+        var rejected = function(value) {
+            try {
+                step(generator.throw(value));
+            } catch (e) {
+                reject(e);
+            }
+        };
+        var step = function(x) {
+            return x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+        };
+        step((generator = generator.apply(__this, __arguments)).next());
+    });
+};
+var createDraftSafeSelector = function() {
+    var args = [];
+    for(var _i = 0; _i < arguments.length; _i++)args[_i] = arguments[_i];
+    var selector = (0, _reselect.createSelector).apply(void 0, args);
+    var wrappedSelector = function(value) {
+        var rest = [];
+        for(var _i = 1; _i < arguments.length; _i++)rest[_i - 1] = arguments[_i];
+        return selector.apply(void 0, __spreadArray([
+            (0, _immer.isDraft)(value) ? (0, _immer.current)(value) : value
+        ], rest));
+    };
+    return wrappedSelector;
+};
+var composeWithDevTools = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : function() {
+    if (arguments.length === 0) return void 0;
+    if (typeof arguments[0] === "object") return 0, _redux.compose;
+    return (0, _redux.compose).apply(null, arguments);
+};
+var devToolsEnhancer = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__ : function() {
+    return function(noop2) {
+        return noop2;
+    };
+};
+// src/isPlainObject.ts
+function isPlainObject(value) {
+    if (typeof value !== "object" || value === null) return false;
+    var proto = Object.getPrototypeOf(value);
+    if (proto === null) return true;
+    var baseProto = proto;
+    while(Object.getPrototypeOf(baseProto) !== null)baseProto = Object.getPrototypeOf(baseProto);
+    return proto === baseProto;
+}
+function getTimeMeasureUtils(maxDelay, fnName) {
+    var elapsed = 0;
+    return {
+        measureTime: function(fn) {
+            var started = Date.now();
+            try {
+                return fn();
+            } finally{
+                var finished = Date.now();
+                elapsed += finished - started;
+            }
+        },
+        warnIfExceeded: function() {
+            if (elapsed > maxDelay) console.warn(fnName + " took " + elapsed + "ms, which is more than the warning threshold of " + maxDelay + "ms. \nIf your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.\nIt is disabled in production builds, so you don't need to worry about that.");
+        }
+    };
+}
+var MiddlewareArray = /** @class */ function(_super) {
+    __extends(MiddlewareArray, _super);
+    function MiddlewareArray() {
+        var args = [];
+        for(var _i = 0; _i < arguments.length; _i++)args[_i] = arguments[_i];
+        var _this = _super.apply(this, args) || this;
+        Object.setPrototypeOf(_this, MiddlewareArray.prototype);
+        return _this;
+    }
+    Object.defineProperty(MiddlewareArray, Symbol.species, {
+        get: function() {
+            return MiddlewareArray;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MiddlewareArray.prototype.concat = function() {
+        var arr = [];
+        for(var _i = 0; _i < arguments.length; _i++)arr[_i] = arguments[_i];
+        return _super.prototype.concat.apply(this, arr);
+    };
+    MiddlewareArray.prototype.prepend = function() {
+        var arr = [];
+        for(var _i = 0; _i < arguments.length; _i++)arr[_i] = arguments[_i];
+        if (arr.length === 1 && Array.isArray(arr[0])) return new (MiddlewareArray.bind.apply(MiddlewareArray, __spreadArray([
+            void 0
+        ], arr[0].concat(this))))();
+        return new (MiddlewareArray.bind.apply(MiddlewareArray, __spreadArray([
+            void 0
+        ], arr.concat(this))))();
+    };
+    return MiddlewareArray;
+}(Array);
+function freezeDraftable(val) {
+    return (0, _immer.isDraftable)(val) ? (0, _immerDefault.default)(val, function() {}) : val;
+}
+// src/immutableStateInvariantMiddleware.ts
+var isProduction = false;
+var prefix = "Invariant failed";
+function invariant(condition, message) {
+    if (condition) return;
+    if (isProduction) throw new Error(prefix);
+    throw new Error(prefix + ": " + (message || ""));
+}
+function stringify(obj, serializer, indent, decycler) {
+    return JSON.stringify(obj, getSerialize(serializer, decycler), indent);
+}
+function getSerialize(serializer, decycler) {
+    var stack = [], keys = [];
+    if (!decycler) decycler = function(_, value) {
+        if (stack[0] === value) return "[Circular ~]";
+        return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]";
+    };
+    return function(key, value) {
+        if (stack.length > 0) {
+            var thisPos = stack.indexOf(this);
+            ~thisPos ? stack.splice(thisPos + 1) : stack.push(this);
+            ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key);
+            if (~stack.indexOf(value)) value = decycler.call(this, key, value);
+        } else stack.push(value);
+        return serializer == null ? value : serializer.call(this, key, value);
+    };
+}
+function isImmutableDefault(value) {
+    return typeof value !== "object" || value === null || typeof value === "undefined" || Object.isFrozen(value);
+}
+function trackForMutations(isImmutable, ignorePaths, obj) {
+    var trackedProperties = trackProperties(isImmutable, ignorePaths, obj);
+    return {
+        detectMutations: function() {
+            return detectMutations(isImmutable, ignorePaths, trackedProperties, obj);
+        }
+    };
+}
+function trackProperties(isImmutable, ignorePaths, obj, path) {
+    if (ignorePaths === void 0) ignorePaths = [];
+    if (path === void 0) path = "";
+    var tracked = {
+        value: obj
+    };
+    if (!isImmutable(obj)) {
+        tracked.children = {};
+        for(var key in obj){
+            var childPath = path ? path + "." + key : key;
+            if (ignorePaths.length && ignorePaths.indexOf(childPath) !== -1) continue;
+            tracked.children[key] = trackProperties(isImmutable, ignorePaths, obj[key], childPath);
         }
     }
-    return _arr;
+    return tracked;
 }
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
+function detectMutations(isImmutable, ignorePaths, trackedProperty, obj, sameParentRef, path) {
+    if (ignorePaths === void 0) ignorePaths = [];
+    if (sameParentRef === void 0) sameParentRef = false;
+    if (path === void 0) path = "";
+    var prevObj = trackedProperty ? trackedProperty.value : void 0;
+    var sameRef = prevObj === obj;
+    if (sameParentRef && !sameRef && !Number.isNaN(obj)) return {
+        wasMutated: true,
+        path: path
+    };
+    if (isImmutable(prevObj) || isImmutable(obj)) return {
+        wasMutated: false
+    };
+    var keysToDetect = {};
+    for(var key in trackedProperty.children)keysToDetect[key] = true;
+    for(var key in obj)keysToDetect[key] = true;
+    for(var key in keysToDetect){
+        var childPath = path ? path + "." + key : key;
+        if (ignorePaths.length && ignorePaths.indexOf(childPath) !== -1) continue;
+        var result = detectMutations(isImmutable, ignorePaths, trackedProperty.children[key], obj[key], sameRef, childPath);
+        if (result.wasMutated) return result;
+    }
+    return {
+        wasMutated: false
+    };
 }
+function createImmutableStateInvariantMiddleware(options) {
+    if (options === void 0) options = {};
+    var next, action;
+    var _c = options.isImmutable, isImmutable = _c === void 0 ? isImmutableDefault : _c, ignoredPaths = options.ignoredPaths, _d = options.warnAfter, warnAfter = _d === void 0 ? 32 : _d, ignore = options.ignore;
+    ignoredPaths = ignoredPaths || ignore;
+    var track = trackForMutations.bind(null, isImmutable, ignoredPaths);
+    return function(_c) {
+        var getState = _c.getState;
+        var state = getState();
+        var tracker = track(state);
+        var result;
+        return function(next) {
+            return function(action) {
+                var measureUtils = getTimeMeasureUtils(warnAfter, "ImmutableStateInvariantMiddleware");
+                measureUtils.measureTime(function() {
+                    state = getState();
+                    result = tracker.detectMutations();
+                    tracker = track(state);
+                    invariant(!result.wasMutated, "A state mutation was detected between dispatches, in the path '" + (result.path || "") + "'.  This may cause incorrect behavior. (https://redux.js.org/style-guide/style-guide#do-not-mutate-state)");
+                });
+                var dispatchedAction = next(action);
+                measureUtils.measureTime(function() {
+                    state = getState();
+                    result = tracker.detectMutations();
+                    tracker = track(state);
+                    result.wasMutated && invariant(!result.wasMutated, "A state mutation was detected inside a dispatch, in the path: " + (result.path || "") + ". Take a look at the reducer(s) handling the action " + stringify(action) + ". (https://redux.js.org/style-guide/style-guide#do-not-mutate-state)");
+                });
+                measureUtils.warnIfExceeded();
+                return dispatchedAction;
+            };
+        };
+    };
+}
+// src/serializableStateInvariantMiddleware.ts
+function isPlain(val) {
+    var type = typeof val;
+    return type === "undefined" || val === null || type === "string" || type === "boolean" || type === "number" || Array.isArray(val) || isPlainObject(val);
+}
+function findNonSerializableValue(value, path, isSerializable, getEntries, ignoredPaths) {
+    if (path === void 0) path = "";
+    if (isSerializable === void 0) isSerializable = isPlain;
+    if (ignoredPaths === void 0) ignoredPaths = [];
+    var foundNestedSerializable;
+    if (!isSerializable(value)) return {
+        keyPath: path || "<root>",
+        value: value
+    };
+    if (typeof value !== "object" || value === null) return false;
+    var entries = getEntries != null ? getEntries(value) : Object.entries(value);
+    var hasIgnoredPaths = ignoredPaths.length > 0;
+    for(var _i = 0, entries_1 = entries; _i < entries_1.length; _i++){
+        var _c = entries_1[_i], key = _c[0], nestedValue = _c[1];
+        var nestedPath = path ? path + "." + key : key;
+        if (hasIgnoredPaths && ignoredPaths.indexOf(nestedPath) >= 0) continue;
+        if (!isSerializable(nestedValue)) return {
+            keyPath: nestedPath,
+            value: nestedValue
+        };
+        if (typeof nestedValue === "object") {
+            foundNestedSerializable = findNonSerializableValue(nestedValue, nestedPath, isSerializable, getEntries, ignoredPaths);
+            if (foundNestedSerializable) return foundNestedSerializable;
+        }
+    }
+    return false;
+}
+function createSerializableStateInvariantMiddleware(options) {
+    if (options === void 0) options = {};
+    var next, action;
+    var _c = options.isSerializable, isSerializable = _c === void 0 ? isPlain : _c, getEntries = options.getEntries, _d = options.ignoredActions, ignoredActions = _d === void 0 ? [] : _d, _e = options.ignoredActionPaths, ignoredActionPaths = _e === void 0 ? [
+        "meta.arg",
+        "meta.baseQueryMeta"
+    ] : _e, _f = options.ignoredPaths, ignoredPaths = _f === void 0 ? [] : _f, _g = options.warnAfter, warnAfter = _g === void 0 ? 32 : _g, _h = options.ignoreState, ignoreState = _h === void 0 ? false : _h, _j = options.ignoreActions, ignoreActions = _j === void 0 ? false : _j;
+    return function(storeAPI) {
+        return function(next) {
+            return function(action) {
+                var result = next(action);
+                var measureUtils = getTimeMeasureUtils(warnAfter, "SerializableStateInvariantMiddleware");
+                if (!ignoreActions && !(ignoredActions.length && ignoredActions.indexOf(action.type) !== -1)) measureUtils.measureTime(function() {
+                    var foundActionNonSerializableValue = findNonSerializableValue(action, "", isSerializable, getEntries, ignoredActionPaths);
+                    if (foundActionNonSerializableValue) {
+                        var keyPath = foundActionNonSerializableValue.keyPath, value = foundActionNonSerializableValue.value;
+                        console.error("A non-serializable value was detected in an action, in the path: `" + keyPath + "`. Value:", value, "\nTake a look at the logic that dispatched this action: ", action, "\n(See https://redux.js.org/faq/actions#why-should-type-be-a-string-or-at-least-serializable-why-should-my-action-types-be-constants)", "\n(To allow non-serializable values see: https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data)");
+                    }
+                });
+                if (!ignoreState) {
+                    measureUtils.measureTime(function() {
+                        var state = storeAPI.getState();
+                        var foundStateNonSerializableValue = findNonSerializableValue(state, "", isSerializable, getEntries, ignoredPaths);
+                        if (foundStateNonSerializableValue) {
+                            var keyPath = foundStateNonSerializableValue.keyPath, value = foundStateNonSerializableValue.value;
+                            console.error("A non-serializable value was detected in the state, in the path: `" + keyPath + "`. Value:", value, "\nTake a look at the reducer(s) handling this action type: " + action.type + ".\n(See https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state)");
+                        }
+                    });
+                    measureUtils.warnIfExceeded();
+                }
+                return result;
+            };
+        };
+    };
+}
+// src/getDefaultMiddleware.ts
+function isBoolean(x) {
+    return typeof x === "boolean";
+}
+function curryGetDefaultMiddleware() {
+    return function curriedGetDefaultMiddleware(options) {
+        return getDefaultMiddleware(options);
+    };
+}
+function getDefaultMiddleware(options) {
+    if (options === void 0) options = {};
+    var _c = options.thunk, thunk = _c === void 0 ? true : _c, _d = options.immutableCheck, immutableCheck = _d === void 0 ? true : _d, _e = options.serializableCheck, serializableCheck = _e === void 0 ? true : _e;
+    var middlewareArray = new MiddlewareArray();
+    if (thunk) {
+        if (isBoolean(thunk)) middlewareArray.push((0, _reduxThunkDefault.default));
+        else middlewareArray.push((0, _reduxThunkDefault.default).withExtraArgument(thunk.extraArgument));
+    }
+    if (immutableCheck) {
+        var immutableOptions = {};
+        if (!isBoolean(immutableCheck)) immutableOptions = immutableCheck;
+        middlewareArray.unshift(createImmutableStateInvariantMiddleware(immutableOptions));
+    }
+    if (serializableCheck) {
+        var serializableOptions = {};
+        if (!isBoolean(serializableCheck)) serializableOptions = serializableCheck;
+        middlewareArray.push(createSerializableStateInvariantMiddleware(serializableOptions));
+    }
+    return middlewareArray;
+}
+// src/configureStore.ts
+var IS_PRODUCTION = false;
+function configureStore(options) {
+    var curriedGetDefaultMiddleware = curryGetDefaultMiddleware();
+    var _c = options || {}, _d = _c.reducer, reducer = _d === void 0 ? void 0 : _d, _e = _c.middleware, middleware = _e === void 0 ? curriedGetDefaultMiddleware() : _e, _f = _c.devTools, devTools = _f === void 0 ? true : _f, _g = _c.preloadedState, preloadedState = _g === void 0 ? void 0 : _g, _h = _c.enhancers, enhancers = _h === void 0 ? void 0 : _h;
+    var rootReducer;
+    if (typeof reducer === "function") rootReducer = reducer;
+    else if (isPlainObject(reducer)) rootReducer = (0, _redux.combineReducers)(reducer);
+    else throw new Error('"reducer" is a required argument, and must be a function or an object of functions that can be passed to combineReducers');
+    var finalMiddleware = middleware;
+    if (typeof finalMiddleware === "function") {
+        finalMiddleware = finalMiddleware(curriedGetDefaultMiddleware);
+        if (!IS_PRODUCTION && !Array.isArray(finalMiddleware)) throw new Error("when using a middleware builder function, an array of middleware must be returned");
+    }
+    if (!IS_PRODUCTION && finalMiddleware.some(function(item) {
+        return typeof item !== "function";
+    })) throw new Error("each middleware provided to configureStore must be a function");
+    var middlewareEnhancer = (0, _redux.applyMiddleware).apply(void 0, finalMiddleware);
+    var finalCompose = (0, _redux.compose);
+    if (devTools) finalCompose = composeWithDevTools(__spreadValues({
+        trace: !IS_PRODUCTION
+    }, typeof devTools === "object" && devTools));
+    var storeEnhancers = [
+        middlewareEnhancer
+    ];
+    if (Array.isArray(enhancers)) storeEnhancers = __spreadArray([
+        middlewareEnhancer
+    ], enhancers);
+    else if (typeof enhancers === "function") storeEnhancers = enhancers(storeEnhancers);
+    var composedEnhancer = finalCompose.apply(void 0, storeEnhancers);
+    return (0, _redux.createStore)(rootReducer, preloadedState, composedEnhancer);
+}
+// src/createAction.ts
+function createAction(type, prepareAction) {
+    function actionCreator() {
+        var args = [];
+        for(var _i = 0; _i < arguments.length; _i++)args[_i] = arguments[_i];
+        if (prepareAction) {
+            var prepared = prepareAction.apply(void 0, args);
+            if (!prepared) throw new Error("prepareAction did not return an object");
+            return __spreadValues(__spreadValues({
+                type: type,
+                payload: prepared.payload
+            }, "meta" in prepared && {
+                meta: prepared.meta
+            }), "error" in prepared && {
+                error: prepared.error
+            });
+        }
+        return {
+            type: type,
+            payload: args[0]
+        };
+    }
+    actionCreator.toString = function() {
+        return "" + type;
+    };
+    actionCreator.type = type;
+    actionCreator.match = function(action) {
+        return action.type === type;
+    };
+    return actionCreator;
+}
+function isFSA(action) {
+    return isPlainObject(action) && typeof action.type === "string" && Object.keys(action).every(isValidKey);
+}
+function isValidKey(key) {
+    return [
+        "type",
+        "payload",
+        "error",
+        "meta"
+    ].indexOf(key) > -1;
+}
+function getType(actionCreator) {
+    return "" + actionCreator;
+}
+// src/mapBuilders.ts
+function executeReducerBuilderCallback(builderCallback) {
+    var actionsMap = {};
+    var actionMatchers = [];
+    var defaultCaseReducer;
+    var builder = {
+        addCase: function(typeOrActionCreator, reducer) {
+            if (actionMatchers.length > 0) throw new Error("`builder.addCase` should only be called before calling `builder.addMatcher`");
+            if (defaultCaseReducer) throw new Error("`builder.addCase` should only be called before calling `builder.addDefaultCase`");
+            var type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
+            if (type in actionsMap) throw new Error("addCase cannot be called with two reducers for the same action type");
+            actionsMap[type] = reducer;
+            return builder;
+        },
+        addMatcher: function(matcher, reducer) {
+            if (defaultCaseReducer) throw new Error("`builder.addMatcher` should only be called before calling `builder.addDefaultCase`");
+            actionMatchers.push({
+                matcher: matcher,
+                reducer: reducer
+            });
+            return builder;
+        },
+        addDefaultCase: function(reducer) {
+            if (defaultCaseReducer) throw new Error("`builder.addDefaultCase` can only be called once");
+            defaultCaseReducer = reducer;
+            return builder;
+        }
+    };
+    builderCallback(builder);
+    return [
+        actionsMap,
+        actionMatchers,
+        defaultCaseReducer
+    ];
+}
+// src/createReducer.ts
+function isStateFunction(x) {
+    return typeof x === "function";
+}
+function createReducer(initialState, mapOrBuilderCallback, actionMatchers, defaultCaseReducer) {
+    if (actionMatchers === void 0) actionMatchers = [];
+    var _c = typeof mapOrBuilderCallback === "function" ? executeReducerBuilderCallback(mapOrBuilderCallback) : [
+        mapOrBuilderCallback,
+        actionMatchers,
+        defaultCaseReducer
+    ], actionsMap = _c[0], finalActionMatchers = _c[1], finalDefaultCaseReducer = _c[2];
+    var getInitialState;
+    if (isStateFunction(initialState)) getInitialState = function() {
+        return freezeDraftable(initialState());
+    };
+    else {
+        var frozenInitialState_1 = freezeDraftable(initialState);
+        getInitialState = function() {
+            return frozenInitialState_1;
+        };
+    }
+    function reducer(state, action) {
+        if (state === void 0) state = getInitialState();
+        var caseReducers = __spreadArray([
+            actionsMap[action.type]
+        ], finalActionMatchers.filter(function(_c) {
+            var matcher = _c.matcher;
+            return matcher(action);
+        }).map(function(_c) {
+            var reducer2 = _c.reducer;
+            return reducer2;
+        }));
+        if (caseReducers.filter(function(cr) {
+            return !!cr;
+        }).length === 0) caseReducers = [
+            finalDefaultCaseReducer
+        ];
+        return caseReducers.reduce(function(previousState, caseReducer) {
+            if (caseReducer) {
+                if ((0, _immer.isDraft)(previousState)) {
+                    var draft = previousState;
+                    var result = caseReducer(draft, action);
+                    if (typeof result === "undefined") return previousState;
+                    return result;
+                } else if (!(0, _immer.isDraftable)(previousState)) {
+                    var result = caseReducer(previousState, action);
+                    if (typeof result === "undefined") {
+                        if (previousState === null) return previousState;
+                        throw Error("A case reducer on a non-draftable value must not return undefined");
+                    }
+                    return result;
+                } else return (0, _immerDefault.default)(previousState, function(draft) {
+                    return caseReducer(draft, action);
+                });
+            }
+            return previousState;
+        }, state);
+    }
+    reducer.getInitialState = getInitialState;
+    return reducer;
+}
+// src/createSlice.ts
+function getType2(slice, actionKey) {
+    return slice + "/" + actionKey;
+}
+function createSlice(options) {
+    var name = options.name;
+    if (!name) throw new Error("`name` is a required option for createSlice");
+    if (typeof process !== "undefined" && true) {
+        if (options.initialState === void 0) console.error("You must provide an `initialState` value that is not `undefined`. You may have misspelled `initialState`");
+    }
+    var initialState = typeof options.initialState == "function" ? options.initialState : freezeDraftable(options.initialState);
+    var reducers = options.reducers || {};
+    var reducerNames = Object.keys(reducers);
+    var sliceCaseReducersByName = {};
+    var sliceCaseReducersByType = {};
+    var actionCreators = {};
+    reducerNames.forEach(function(reducerName) {
+        var maybeReducerWithPrepare = reducers[reducerName];
+        var type = getType2(name, reducerName);
+        var caseReducer;
+        var prepareCallback;
+        if ("reducer" in maybeReducerWithPrepare) {
+            caseReducer = maybeReducerWithPrepare.reducer;
+            prepareCallback = maybeReducerWithPrepare.prepare;
+        } else caseReducer = maybeReducerWithPrepare;
+        sliceCaseReducersByName[reducerName] = caseReducer;
+        sliceCaseReducersByType[type] = caseReducer;
+        actionCreators[reducerName] = prepareCallback ? createAction(type, prepareCallback) : createAction(type);
+    });
+    function buildReducer() {
+        var _c = typeof options.extraReducers === "function" ? executeReducerBuilderCallback(options.extraReducers) : [
+            options.extraReducers
+        ], _d = _c[0], extraReducers = _d === void 0 ? {} : _d, _e = _c[1], actionMatchers = _e === void 0 ? [] : _e, _f = _c[2], defaultCaseReducer = _f === void 0 ? void 0 : _f;
+        var finalCaseReducers = __spreadValues(__spreadValues({}, extraReducers), sliceCaseReducersByType);
+        return createReducer(initialState, finalCaseReducers, actionMatchers, defaultCaseReducer);
+    }
+    var _reducer;
+    return {
+        name: name,
+        reducer: function(state, action) {
+            if (!_reducer) _reducer = buildReducer();
+            return _reducer(state, action);
+        },
+        actions: actionCreators,
+        caseReducers: sliceCaseReducersByName,
+        getInitialState: function() {
+            if (!_reducer) _reducer = buildReducer();
+            return _reducer.getInitialState();
+        }
+    };
+}
+// src/entities/entity_state.ts
+function getInitialEntityState() {
+    return {
+        ids: [],
+        entities: {}
+    };
+}
+function createInitialStateFactory() {
+    function getInitialState(additionalState) {
+        if (additionalState === void 0) additionalState = {};
+        return Object.assign(getInitialEntityState(), additionalState);
+    }
+    return {
+        getInitialState: getInitialState
+    };
+}
+// src/entities/state_selectors.ts
+function createSelectorsFactory() {
+    function getSelectors(selectState) {
+        var selectIds = function(state) {
+            return state.ids;
+        };
+        var selectEntities = function(state) {
+            return state.entities;
+        };
+        var selectAll = createDraftSafeSelector(selectIds, selectEntities, function(ids, entities) {
+            return ids.map(function(id) {
+                return entities[id];
+            });
+        });
+        var selectId = function(_, id) {
+            return id;
+        };
+        var selectById = function(entities, id) {
+            return entities[id];
+        };
+        var selectTotal = createDraftSafeSelector(selectIds, function(ids) {
+            return ids.length;
+        });
+        if (!selectState) return {
+            selectIds: selectIds,
+            selectEntities: selectEntities,
+            selectAll: selectAll,
+            selectTotal: selectTotal,
+            selectById: createDraftSafeSelector(selectEntities, selectId, selectById)
+        };
+        var selectGlobalizedEntities = createDraftSafeSelector(selectState, selectEntities);
+        return {
+            selectIds: createDraftSafeSelector(selectState, selectIds),
+            selectEntities: selectGlobalizedEntities,
+            selectAll: createDraftSafeSelector(selectState, selectAll),
+            selectTotal: createDraftSafeSelector(selectState, selectTotal),
+            selectById: createDraftSafeSelector(selectGlobalizedEntities, selectId, selectById)
+        };
+    }
+    return {
+        getSelectors: getSelectors
+    };
+}
+function createSingleArgumentStateOperator(mutator) {
+    var operator = createStateOperator(function(_, state) {
+        return mutator(state);
+    });
+    return function operation(state) {
+        return operator(state, void 0);
+    };
+}
+function createStateOperator(mutator) {
+    return function operation(state, arg) {
+        function isPayloadActionArgument(arg2) {
+            return isFSA(arg2);
+        }
+        var runMutator = function(draft) {
+            if (isPayloadActionArgument(arg)) mutator(arg.payload, draft);
+            else mutator(arg, draft);
+        };
+        if ((0, _immer.isDraft)(state)) {
+            runMutator(state);
+            return state;
+        } else return (0, _immerDefault.default)(state, runMutator);
+    };
+}
+// src/entities/utils.ts
+function selectIdValue(entity, selectId) {
+    var key = selectId(entity);
+    if (key === void 0) console.warn("The entity passed to the `selectId` implementation returned undefined.", "You should probably provide your own `selectId` implementation.", "The entity that was passed:", entity, "The `selectId` implementation:", selectId.toString());
+    return key;
+}
+function ensureEntitiesArray(entities) {
+    if (!Array.isArray(entities)) entities = Object.values(entities);
+    return entities;
+}
+function splitAddedUpdatedEntities(newEntities, selectId, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    var added = [];
+    var updated = [];
+    for(var _i = 0, newEntities_1 = newEntities; _i < newEntities_1.length; _i++){
+        var entity = newEntities_1[_i];
+        var id = selectIdValue(entity, selectId);
+        if (id in state.entities) updated.push({
+            id: id,
+            changes: entity
+        });
+        else added.push(entity);
+    }
+    return [
+        added,
+        updated
+    ];
+}
+// src/entities/unsorted_state_adapter.ts
+function createUnsortedStateAdapter(selectId) {
+    function addOneMutably(entity, state) {
+        var key = selectIdValue(entity, selectId);
+        if (key in state.entities) return;
+        state.ids.push(key);
+        state.entities[key] = entity;
+    }
+    function addManyMutably(newEntities, state) {
+        newEntities = ensureEntitiesArray(newEntities);
+        for(var _i = 0, newEntities_2 = newEntities; _i < newEntities_2.length; _i++){
+            var entity = newEntities_2[_i];
+            addOneMutably(entity, state);
+        }
+    }
+    function setOneMutably(entity, state) {
+        var key = selectIdValue(entity, selectId);
+        if (!(key in state.entities)) state.ids.push(key);
+        state.entities[key] = entity;
+    }
+    function setManyMutably(newEntities, state) {
+        newEntities = ensureEntitiesArray(newEntities);
+        for(var _i = 0, newEntities_3 = newEntities; _i < newEntities_3.length; _i++){
+            var entity = newEntities_3[_i];
+            setOneMutably(entity, state);
+        }
+    }
+    function setAllMutably(newEntities, state) {
+        newEntities = ensureEntitiesArray(newEntities);
+        state.ids = [];
+        state.entities = {};
+        addManyMutably(newEntities, state);
+    }
+    function removeOneMutably(key, state) {
+        return removeManyMutably([
+            key
+        ], state);
+    }
+    function removeManyMutably(keys, state) {
+        var didMutate = false;
+        keys.forEach(function(key) {
+            if (key in state.entities) {
+                delete state.entities[key];
+                didMutate = true;
+            }
+        });
+        if (didMutate) state.ids = state.ids.filter(function(id) {
+            return id in state.entities;
+        });
+    }
+    function removeAllMutably(state) {
+        Object.assign(state, {
+            ids: [],
+            entities: {}
+        });
+    }
+    function takeNewKey(keys, update, state) {
+        var original2 = state.entities[update.id];
+        var updated = Object.assign({}, original2, update.changes);
+        var newKey = selectIdValue(updated, selectId);
+        var hasNewKey = newKey !== update.id;
+        if (hasNewKey) {
+            keys[update.id] = newKey;
+            delete state.entities[update.id];
+        }
+        state.entities[newKey] = updated;
+        return hasNewKey;
+    }
+    function updateOneMutably(update, state) {
+        return updateManyMutably([
+            update
+        ], state);
+    }
+    function updateManyMutably(updates, state) {
+        var newKeys = {};
+        var updatesPerEntity = {};
+        updates.forEach(function(update) {
+            if (update.id in state.entities) updatesPerEntity[update.id] = {
+                id: update.id,
+                changes: __spreadValues(__spreadValues({}, updatesPerEntity[update.id] ? updatesPerEntity[update.id].changes : null), update.changes)
+            };
+        });
+        updates = Object.values(updatesPerEntity);
+        var didMutateEntities = updates.length > 0;
+        if (didMutateEntities) {
+            var didMutateIds = updates.filter(function(update) {
+                return takeNewKey(newKeys, update, state);
+            }).length > 0;
+            if (didMutateIds) state.ids = Object.keys(state.entities);
+        }
+    }
+    function upsertOneMutably(entity, state) {
+        return upsertManyMutably([
+            entity
+        ], state);
+    }
+    function upsertManyMutably(newEntities, state) {
+        var _c = splitAddedUpdatedEntities(newEntities, selectId, state), added = _c[0], updated = _c[1];
+        updateManyMutably(updated, state);
+        addManyMutably(added, state);
+    }
+    return {
+        removeAll: createSingleArgumentStateOperator(removeAllMutably),
+        addOne: createStateOperator(addOneMutably),
+        addMany: createStateOperator(addManyMutably),
+        setOne: createStateOperator(setOneMutably),
+        setMany: createStateOperator(setManyMutably),
+        setAll: createStateOperator(setAllMutably),
+        updateOne: createStateOperator(updateOneMutably),
+        updateMany: createStateOperator(updateManyMutably),
+        upsertOne: createStateOperator(upsertOneMutably),
+        upsertMany: createStateOperator(upsertManyMutably),
+        removeOne: createStateOperator(removeOneMutably),
+        removeMany: createStateOperator(removeManyMutably)
+    };
+}
+// src/entities/sorted_state_adapter.ts
+function createSortedStateAdapter(selectId, sort) {
+    var _c = createUnsortedStateAdapter(selectId), removeOne = _c.removeOne, removeMany = _c.removeMany, removeAll = _c.removeAll;
+    function addOneMutably(entity, state) {
+        return addManyMutably([
+            entity
+        ], state);
+    }
+    function addManyMutably(newEntities, state) {
+        newEntities = ensureEntitiesArray(newEntities);
+        var models = newEntities.filter(function(model) {
+            return !(selectIdValue(model, selectId) in state.entities);
+        });
+        if (models.length !== 0) merge(models, state);
+    }
+    function setOneMutably(entity, state) {
+        return setManyMutably([
+            entity
+        ], state);
+    }
+    function setManyMutably(newEntities, state) {
+        newEntities = ensureEntitiesArray(newEntities);
+        if (newEntities.length !== 0) merge(newEntities, state);
+    }
+    function setAllMutably(newEntities, state) {
+        newEntities = ensureEntitiesArray(newEntities);
+        state.entities = {};
+        state.ids = [];
+        addManyMutably(newEntities, state);
+    }
+    function updateOneMutably(update, state) {
+        return updateManyMutably([
+            update
+        ], state);
+    }
+    function updateManyMutably(updates, state) {
+        var appliedUpdates = false;
+        for(var _i = 0, updates_1 = updates; _i < updates_1.length; _i++){
+            var update = updates_1[_i];
+            var entity = state.entities[update.id];
+            if (!entity) continue;
+            appliedUpdates = true;
+            Object.assign(entity, update.changes);
+            var newId = selectId(entity);
+            if (update.id !== newId) {
+                delete state.entities[update.id];
+                state.entities[newId] = entity;
+            }
+        }
+        if (appliedUpdates) resortEntities(state);
+    }
+    function upsertOneMutably(entity, state) {
+        return upsertManyMutably([
+            entity
+        ], state);
+    }
+    function upsertManyMutably(newEntities, state) {
+        var _c = splitAddedUpdatedEntities(newEntities, selectId, state), added = _c[0], updated = _c[1];
+        updateManyMutably(updated, state);
+        addManyMutably(added, state);
+    }
+    function areArraysEqual(a, b) {
+        if (a.length !== b.length) return false;
+        for(var i = 0; i < a.length && i < b.length; i++){
+            if (a[i] === b[i]) continue;
+            return false;
+        }
+        return true;
+    }
+    function merge(models, state) {
+        models.forEach(function(model) {
+            state.entities[selectId(model)] = model;
+        });
+        resortEntities(state);
+    }
+    function resortEntities(state) {
+        var allEntities = Object.values(state.entities);
+        allEntities.sort(sort);
+        var newSortedIds = allEntities.map(selectId);
+        var ids = state.ids;
+        if (!areArraysEqual(ids, newSortedIds)) state.ids = newSortedIds;
+    }
+    return {
+        removeOne: removeOne,
+        removeMany: removeMany,
+        removeAll: removeAll,
+        addOne: createStateOperator(addOneMutably),
+        updateOne: createStateOperator(updateOneMutably),
+        upsertOne: createStateOperator(upsertOneMutably),
+        setOne: createStateOperator(setOneMutably),
+        setMany: createStateOperator(setManyMutably),
+        setAll: createStateOperator(setAllMutably),
+        addMany: createStateOperator(addManyMutably),
+        updateMany: createStateOperator(updateManyMutably),
+        upsertMany: createStateOperator(upsertManyMutably)
+    };
+}
+// src/entities/create_adapter.ts
+function createEntityAdapter(options) {
+    if (options === void 0) options = {};
+    var _c = __spreadValues({
+        sortComparer: false,
+        selectId: function(instance) {
+            return instance.id;
+        }
+    }, options), selectId = _c.selectId, sortComparer = _c.sortComparer;
+    var stateFactory = createInitialStateFactory();
+    var selectorsFactory = createSelectorsFactory();
+    var stateAdapter = sortComparer ? createSortedStateAdapter(selectId, sortComparer) : createUnsortedStateAdapter(selectId);
+    return __spreadValues(__spreadValues(__spreadValues({
+        selectId: selectId,
+        sortComparer: sortComparer
+    }, stateFactory), selectorsFactory), stateAdapter);
+}
+// src/nanoid.ts
+var urlAlphabet = "ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW";
+var nanoid = function(size) {
+    if (size === void 0) size = 21;
+    var id = "";
+    var i = size;
+    while(i--)id += urlAlphabet[Math.random() * 64 | 0];
+    return id;
+};
+// src/createAsyncThunk.ts
+var commonProperties = [
+    "name",
+    "message",
+    "stack",
+    "code"
+];
+var RejectWithValue = /** @class */ function() {
+    function RejectWithValue(payload, meta) {
+        this.payload = payload;
+        this.meta = meta;
+    }
+    return RejectWithValue;
+}();
+var FulfillWithMeta = /** @class */ function() {
+    function FulfillWithMeta(payload, meta) {
+        this.payload = payload;
+        this.meta = meta;
+    }
+    return FulfillWithMeta;
+}();
+var miniSerializeError = function(value) {
+    if (typeof value === "object" && value !== null) {
+        var simpleError = {};
+        for(var _i = 0, commonProperties_1 = commonProperties; _i < commonProperties_1.length; _i++){
+            var property = commonProperties_1[_i];
+            if (typeof value[property] === "string") simpleError[property] = value[property];
+        }
+        return simpleError;
+    }
+    return {
+        message: String(value)
+    };
+};
+function createAsyncThunk(typePrefix, payloadCreator, options) {
+    var fulfilled = createAction(typePrefix + "/fulfilled", function(payload, requestId, arg, meta) {
+        return {
+            payload: payload,
+            meta: __spreadProps(__spreadValues({}, meta || {}), {
+                arg: arg,
+                requestId: requestId,
+                requestStatus: "fulfilled"
+            })
+        };
+    });
+    var pending = createAction(typePrefix + "/pending", function(requestId, arg, meta) {
+        return {
+            payload: void 0,
+            meta: __spreadProps(__spreadValues({}, meta || {}), {
+                arg: arg,
+                requestId: requestId,
+                requestStatus: "pending"
+            })
+        };
+    });
+    var rejected = createAction(typePrefix + "/rejected", function(error, requestId, arg, payload, meta) {
+        return {
+            payload: payload,
+            error: (options && options.serializeError || miniSerializeError)(error || "Rejected"),
+            meta: __spreadProps(__spreadValues({}, meta || {}), {
+                arg: arg,
+                requestId: requestId,
+                rejectedWithValue: !!payload,
+                requestStatus: "rejected",
+                aborted: (error == null ? void 0 : error.name) === "AbortError",
+                condition: (error == null ? void 0 : error.name) === "ConditionError"
+            })
+        };
+    });
+    var displayedWarning = false;
+    var AC = typeof AbortController !== "undefined" ? AbortController : /** @class */ function() {
+        function class_1() {
+            this.signal = {
+                aborted: false,
+                addEventListener: function() {},
+                dispatchEvent: function() {
+                    return false;
+                },
+                onabort: function() {},
+                removeEventListener: function() {},
+                reason: void 0,
+                throwIfAborted: function() {}
+            };
+        }
+        class_1.prototype.abort = function() {
+            if (!displayedWarning) {
+                displayedWarning = true;
+                console.info("This platform does not implement AbortController. \nIf you want to use the AbortController to react to `abort` events, please consider importing a polyfill like 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'.");
+            }
+        };
+        return class_1;
+    }();
+    function actionCreator(arg) {
+        return function(dispatch, getState, extra) {
+            var requestId = (options == null ? void 0 : options.idGenerator) ? options.idGenerator(arg) : nanoid();
+            var abortController = new AC();
+            var abortReason;
+            var abortedPromise = new Promise(function(_, reject) {
+                return abortController.signal.addEventListener("abort", function() {
+                    return reject({
+                        name: "AbortError",
+                        message: abortReason || "Aborted"
+                    });
+                });
+            });
+            var started = false;
+            function abort(reason) {
+                if (started) {
+                    abortReason = reason;
+                    abortController.abort();
+                }
+            }
+            var promise = function() {
+                return __async(this, null, function() {
+                    var _a, _b, finalAction, conditionResult, err_1, skipDispatch;
+                    return __generator(this, function(_c) {
+                        switch(_c.label){
+                            case 0:
+                                _c.trys.push([
+                                    0,
+                                    4,
+                                    ,
+                                    5
+                                ]);
+                                conditionResult = (_a = options == null ? void 0 : options.condition) == null ? void 0 : _a.call(options, arg, {
+                                    getState: getState,
+                                    extra: extra
+                                });
+                                if (!isThenable(conditionResult)) return [
+                                    3 /*break*/ ,
+                                    2
+                                ];
+                                return [
+                                    4 /*yield*/ ,
+                                    conditionResult
+                                ];
+                            case 1:
+                                conditionResult = _c.sent();
+                                _c.label = 2;
+                            case 2:
+                                if (conditionResult === false) throw {
+                                    name: "ConditionError",
+                                    message: "Aborted due to condition callback returning false."
+                                };
+                                started = true;
+                                dispatch(pending(requestId, arg, (_b = options == null ? void 0 : options.getPendingMeta) == null ? void 0 : _b.call(options, {
+                                    requestId: requestId,
+                                    arg: arg
+                                }, {
+                                    getState: getState,
+                                    extra: extra
+                                })));
+                                return [
+                                    4 /*yield*/ ,
+                                    Promise.race([
+                                        abortedPromise,
+                                        Promise.resolve(payloadCreator(arg, {
+                                            dispatch: dispatch,
+                                            getState: getState,
+                                            extra: extra,
+                                            requestId: requestId,
+                                            signal: abortController.signal,
+                                            rejectWithValue: function(value, meta) {
+                                                return new RejectWithValue(value, meta);
+                                            },
+                                            fulfillWithValue: function(value, meta) {
+                                                return new FulfillWithMeta(value, meta);
+                                            }
+                                        })).then(function(result) {
+                                            if (result instanceof RejectWithValue) throw result;
+                                            if (result instanceof FulfillWithMeta) return fulfilled(result.payload, requestId, arg, result.meta);
+                                            return fulfilled(result, requestId, arg);
+                                        })
+                                    ])
+                                ];
+                            case 3:
+                                finalAction = _c.sent();
+                                return [
+                                    3 /*break*/ ,
+                                    5
+                                ];
+                            case 4:
+                                err_1 = _c.sent();
+                                finalAction = err_1 instanceof RejectWithValue ? rejected(null, requestId, arg, err_1.payload, err_1.meta) : rejected(err_1, requestId, arg);
+                                return [
+                                    3 /*break*/ ,
+                                    5
+                                ];
+                            case 5:
+                                skipDispatch = options && !options.dispatchConditionRejection && rejected.match(finalAction) && finalAction.meta.condition;
+                                if (!skipDispatch) dispatch(finalAction);
+                                return [
+                                    2 /*return*/ ,
+                                    finalAction
+                                ];
+                        }
+                    });
+                });
+            }();
+            return Object.assign(promise, {
+                abort: abort,
+                requestId: requestId,
+                arg: arg,
+                unwrap: function() {
+                    return promise.then(unwrapResult);
+                }
+            });
+        };
+    }
+    return Object.assign(actionCreator, {
+        pending: pending,
+        rejected: rejected,
+        fulfilled: fulfilled,
+        typePrefix: typePrefix
+    });
+}
+function unwrapResult(action) {
+    if (action.meta && action.meta.rejectedWithValue) throw action.payload;
+    if (action.error) throw action.error;
+    return action.payload;
+}
+function isThenable(value) {
+    return value !== null && typeof value === "object" && typeof value.then === "function";
+}
+// src/tsHelpers.ts
+var hasMatchFunction = function(v) {
+    return v && typeof v.match === "function";
+};
+// src/matchers.ts
+var matches = function(matcher, action) {
+    if (hasMatchFunction(matcher)) return matcher.match(action);
+    else return matcher(action);
+};
+function isAnyOf() {
+    var matchers = [];
+    for(var _i = 0; _i < arguments.length; _i++)matchers[_i] = arguments[_i];
+    return function(action) {
+        return matchers.some(function(matcher) {
+            return matches(matcher, action);
+        });
+    };
+}
+function isAllOf() {
+    var matchers = [];
+    for(var _i = 0; _i < arguments.length; _i++)matchers[_i] = arguments[_i];
+    return function(action) {
+        return matchers.every(function(matcher) {
+            return matches(matcher, action);
+        });
+    };
+}
+function hasExpectedRequestMetadata(action, validStatus) {
+    if (!action || !action.meta) return false;
+    var hasValidRequestId = typeof action.meta.requestId === "string";
+    var hasValidRequestStatus = validStatus.indexOf(action.meta.requestStatus) > -1;
+    return hasValidRequestId && hasValidRequestStatus;
+}
+function isAsyncThunkArray(a) {
+    return typeof a[0] === "function" && "pending" in a[0] && "fulfilled" in a[0] && "rejected" in a[0];
+}
+function isPending() {
+    var asyncThunks = [];
+    for(var _i = 0; _i < arguments.length; _i++)asyncThunks[_i] = arguments[_i];
+    if (asyncThunks.length === 0) return function(action) {
+        return hasExpectedRequestMetadata(action, [
+            "pending"
+        ]);
+    };
+    if (!isAsyncThunkArray(asyncThunks)) return isPending()(asyncThunks[0]);
+    return function(action) {
+        var matchers = asyncThunks.map(function(asyncThunk) {
+            return asyncThunk.pending;
+        });
+        var combinedMatcher = isAnyOf.apply(void 0, matchers);
+        return combinedMatcher(action);
+    };
+}
+function isRejected() {
+    var asyncThunks = [];
+    for(var _i = 0; _i < arguments.length; _i++)asyncThunks[_i] = arguments[_i];
+    if (asyncThunks.length === 0) return function(action) {
+        return hasExpectedRequestMetadata(action, [
+            "rejected"
+        ]);
+    };
+    if (!isAsyncThunkArray(asyncThunks)) return isRejected()(asyncThunks[0]);
+    return function(action) {
+        var matchers = asyncThunks.map(function(asyncThunk) {
+            return asyncThunk.rejected;
+        });
+        var combinedMatcher = isAnyOf.apply(void 0, matchers);
+        return combinedMatcher(action);
+    };
+}
+function isRejectedWithValue() {
+    var asyncThunks = [];
+    for(var _i = 0; _i < arguments.length; _i++)asyncThunks[_i] = arguments[_i];
+    var hasFlag = function(action) {
+        return action && action.meta && action.meta.rejectedWithValue;
+    };
+    if (asyncThunks.length === 0) return function(action) {
+        var combinedMatcher = isAllOf(isRejected.apply(void 0, asyncThunks), hasFlag);
+        return combinedMatcher(action);
+    };
+    if (!isAsyncThunkArray(asyncThunks)) return isRejectedWithValue()(asyncThunks[0]);
+    return function(action) {
+        var combinedMatcher = isAllOf(isRejected.apply(void 0, asyncThunks), hasFlag);
+        return combinedMatcher(action);
+    };
+}
+function isFulfilled() {
+    var asyncThunks = [];
+    for(var _i = 0; _i < arguments.length; _i++)asyncThunks[_i] = arguments[_i];
+    if (asyncThunks.length === 0) return function(action) {
+        return hasExpectedRequestMetadata(action, [
+            "fulfilled"
+        ]);
+    };
+    if (!isAsyncThunkArray(asyncThunks)) return isFulfilled()(asyncThunks[0]);
+    return function(action) {
+        var matchers = asyncThunks.map(function(asyncThunk) {
+            return asyncThunk.fulfilled;
+        });
+        var combinedMatcher = isAnyOf.apply(void 0, matchers);
+        return combinedMatcher(action);
+    };
+}
+function isAsyncThunkAction() {
+    var asyncThunks = [];
+    for(var _i = 0; _i < arguments.length; _i++)asyncThunks[_i] = arguments[_i];
+    if (asyncThunks.length === 0) return function(action) {
+        return hasExpectedRequestMetadata(action, [
+            "pending",
+            "fulfilled",
+            "rejected"
+        ]);
+    };
+    if (!isAsyncThunkArray(asyncThunks)) return isAsyncThunkAction()(asyncThunks[0]);
+    return function(action) {
+        var matchers = [];
+        for(var _i = 0, asyncThunks_1 = asyncThunks; _i < asyncThunks_1.length; _i++){
+            var asyncThunk = asyncThunks_1[_i];
+            matchers.push(asyncThunk.pending, asyncThunk.rejected, asyncThunk.fulfilled);
+        }
+        var combinedMatcher = isAnyOf.apply(void 0, matchers);
+        return combinedMatcher(action);
+    };
+}
+// src/listenerMiddleware/utils.ts
+var assertFunction = function(func, expected) {
+    if (typeof func !== "function") throw new TypeError(expected + " is not a function");
+};
+var noop = function() {};
+var catchRejection = function(promise, onError) {
+    if (onError === void 0) onError = noop;
+    promise.catch(onError);
+    return promise;
+};
+var addAbortSignalListener = function(abortSignal, callback) {
+    abortSignal.addEventListener("abort", callback, {
+        once: true
+    });
+};
+var abortControllerWithReason = function(abortController, reason) {
+    var signal = abortController.signal;
+    if (signal.aborted) return;
+    if (!("reason" in signal)) Object.defineProperty(signal, "reason", {
+        enumerable: true,
+        value: reason,
+        configurable: true,
+        writable: true
+    });
+    abortController.abort(reason);
+};
+// src/listenerMiddleware/exceptions.ts
+var task = "task";
+var listener = "listener";
+var completed = "completed";
+var cancelled = "cancelled";
+var taskCancelled = "task-" + cancelled;
+var taskCompleted = "task-" + completed;
+var listenerCancelled = listener + "-" + cancelled;
+var listenerCompleted = listener + "-" + completed;
+var TaskAbortError = /** @class */ function() {
+    function TaskAbortError(code) {
+        this.code = code;
+        this.name = "TaskAbortError";
+        this.message = task + " " + cancelled + " (reason: " + code + ")";
+    }
+    return TaskAbortError;
+}();
+// src/listenerMiddleware/task.ts
+var validateActive = function(signal) {
+    if (signal.aborted) throw new TaskAbortError(signal.reason);
+};
+var promisifyAbortSignal = function(signal) {
+    return catchRejection(new Promise(function(_, reject) {
+        var notifyRejection = function() {
+            return reject(new TaskAbortError(signal.reason));
+        };
+        if (signal.aborted) notifyRejection();
+        else addAbortSignalListener(signal, notifyRejection);
+    }));
+};
+var runTask = function(task2, cleanUp) {
+    return __async(void 0, null, function() {
+        var value, error_1;
+        return __generator(this, function(_c) {
+            switch(_c.label){
+                case 0:
+                    _c.trys.push([
+                        0,
+                        3,
+                        4,
+                        5
+                    ]);
+                    return [
+                        4 /*yield*/ ,
+                        Promise.resolve()
+                    ];
+                case 1:
+                    _c.sent();
+                    return [
+                        4 /*yield*/ ,
+                        task2()
+                    ];
+                case 2:
+                    value = _c.sent();
+                    return [
+                        2 /*return*/ ,
+                        {
+                            status: "ok",
+                            value: value
+                        }
+                    ];
+                case 3:
+                    error_1 = _c.sent();
+                    return [
+                        2 /*return*/ ,
+                        {
+                            status: error_1 instanceof TaskAbortError ? "cancelled" : "rejected",
+                            error: error_1
+                        }
+                    ];
+                case 4:
+                    cleanUp == null || cleanUp();
+                    return [
+                        7 /*endfinally*/ 
+                    ];
+                case 5:
+                    return [
+                        2 /*return*/ 
+                    ];
+            }
+        });
+    });
+};
+var createPause = function(signal) {
+    return function(promise) {
+        return catchRejection(Promise.race([
+            promisifyAbortSignal(signal),
+            promise
+        ]).then(function(output) {
+            validateActive(signal);
+            return output;
+        }));
+    };
+};
+var createDelay = function(signal) {
+    var pause = createPause(signal);
+    return function(timeoutMs) {
+        return pause(new Promise(function(resolve) {
+            return setTimeout(resolve, timeoutMs);
+        }));
+    };
+};
+// src/listenerMiddleware/index.ts
+var assign = Object.assign;
+var INTERNAL_NIL_TOKEN = {};
+var alm = "listenerMiddleware";
+var createFork = function(parentAbortSignal) {
+    var linkControllers = function(controller) {
+        return addAbortSignalListener(parentAbortSignal, function() {
+            return abortControllerWithReason(controller, parentAbortSignal.reason);
+        });
+    };
+    return function(taskExecutor) {
+        assertFunction(taskExecutor, "taskExecutor");
+        var childAbortController = new AbortController();
+        linkControllers(childAbortController);
+        var result = runTask(function() {
+            return __async(void 0, null, function() {
+                var result2;
+                return __generator(this, function(_c) {
+                    switch(_c.label){
+                        case 0:
+                            validateActive(parentAbortSignal);
+                            validateActive(childAbortController.signal);
+                            return [
+                                4 /*yield*/ ,
+                                taskExecutor({
+                                    pause: createPause(childAbortController.signal),
+                                    delay: createDelay(childAbortController.signal),
+                                    signal: childAbortController.signal
+                                })
+                            ];
+                        case 1:
+                            result2 = _c.sent();
+                            validateActive(childAbortController.signal);
+                            return [
+                                2 /*return*/ ,
+                                result2
+                            ];
+                    }
+                });
+            });
+        }, function() {
+            return abortControllerWithReason(childAbortController, taskCompleted);
+        });
+        return {
+            result: createPause(parentAbortSignal)(result),
+            cancel: function() {
+                abortControllerWithReason(childAbortController, taskCancelled);
+            }
+        };
+    };
+};
+var createTakePattern = function(startListening, signal) {
+    var take = function(predicate, timeout) {
+        return __async(void 0, null, function() {
+            var unsubscribe, tuplePromise, promises, output;
+            return __generator(this, function(_c) {
+                switch(_c.label){
+                    case 0:
+                        validateActive(signal);
+                        unsubscribe = function() {};
+                        tuplePromise = new Promise(function(resolve) {
+                            unsubscribe = startListening({
+                                predicate: predicate,
+                                effect: function(action, listenerApi) {
+                                    listenerApi.unsubscribe();
+                                    resolve([
+                                        action,
+                                        listenerApi.getState(),
+                                        listenerApi.getOriginalState()
+                                    ]);
+                                }
+                            });
+                        });
+                        promises = [
+                            promisifyAbortSignal(signal),
+                            tuplePromise
+                        ];
+                        if (timeout != null) promises.push(new Promise(function(resolve) {
+                            return setTimeout(resolve, timeout, null);
+                        }));
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([
+                            1,
+                            ,
+                            3,
+                            4
+                        ]);
+                        return [
+                            4 /*yield*/ ,
+                            Promise.race(promises)
+                        ];
+                    case 2:
+                        output = _c.sent();
+                        validateActive(signal);
+                        return [
+                            2 /*return*/ ,
+                            output
+                        ];
+                    case 3:
+                        unsubscribe();
+                        return [
+                            7 /*endfinally*/ 
+                        ];
+                    case 4:
+                        return [
+                            2 /*return*/ 
+                        ];
+                }
+            });
+        });
+    };
+    return function(predicate, timeout) {
+        return catchRejection(take(predicate, timeout));
+    };
+};
+var getListenerEntryPropsFrom = function(options) {
+    var type = options.type, actionCreator = options.actionCreator, matcher = options.matcher, predicate = options.predicate, effect = options.effect;
+    if (type) predicate = createAction(type).match;
+    else if (actionCreator) {
+        type = actionCreator.type;
+        predicate = actionCreator.match;
+    } else if (matcher) predicate = matcher;
+    else if (predicate) ;
+    else throw new Error("Creating or removing a listener requires one of the known fields for matching an action");
+    assertFunction(effect, "options.listener");
+    return {
+        predicate: predicate,
+        type: type,
+        effect: effect
+    };
+};
+var createListenerEntry = function(options) {
+    var _c = getListenerEntryPropsFrom(options), type = _c.type, predicate = _c.predicate, effect = _c.effect;
+    var id = nanoid();
+    var entry = {
+        id: id,
+        effect: effect,
+        type: type,
+        predicate: predicate,
+        pending: new Set(),
+        unsubscribe: function() {
+            throw new Error("Unsubscribe not initialized");
+        }
+    };
+    return entry;
+};
+var createClearListenerMiddleware = function(listenerMap) {
+    return function() {
+        listenerMap.forEach(cancelActiveListeners);
+        listenerMap.clear();
+    };
+};
+var safelyNotifyError = function(errorHandler, errorToNotify, errorInfo) {
+    try {
+        errorHandler(errorToNotify, errorInfo);
+    } catch (errorHandlerError) {
+        setTimeout(function() {
+            throw errorHandlerError;
+        }, 0);
+    }
+};
+var addListener = createAction(alm + "/add");
+var clearAllListeners = createAction(alm + "/removeAll");
+var removeListener = createAction(alm + "/remove");
+var defaultErrorHandler = function() {
+    var args = [];
+    for(var _i = 0; _i < arguments.length; _i++)args[_i] = arguments[_i];
+    console.error.apply(console, __spreadArray([
+        alm + "/error"
+    ], args));
+};
+var cancelActiveListeners = function(entry) {
+    entry.pending.forEach(function(controller) {
+        abortControllerWithReason(controller, listenerCancelled);
+    });
+};
+function createListenerMiddleware(middlewareOptions) {
+    var _this = this;
+    if (middlewareOptions === void 0) middlewareOptions = {};
+    var listenerMap = new Map();
+    var extra = middlewareOptions.extra, _c = middlewareOptions.onError, onError = _c === void 0 ? defaultErrorHandler : _c;
+    assertFunction(onError, "onError");
+    var insertEntry = function(entry) {
+        entry.unsubscribe = function() {
+            return listenerMap.delete(entry.id);
+        };
+        listenerMap.set(entry.id, entry);
+        return function(cancelOptions) {
+            entry.unsubscribe();
+            if (cancelOptions == null ? void 0 : cancelOptions.cancelActive) cancelActiveListeners(entry);
+        };
+    };
+    var findListenerEntry = function(comparator) {
+        for(var _i = 0, _c = Array.from(listenerMap.values()); _i < _c.length; _i++){
+            var entry = _c[_i];
+            if (comparator(entry)) return entry;
+        }
+        return void 0;
+    };
+    var startListening = function(options) {
+        var entry = findListenerEntry(function(existingEntry) {
+            return existingEntry.effect === options.effect;
+        });
+        if (!entry) entry = createListenerEntry(options);
+        return insertEntry(entry);
+    };
+    var stopListening = function(options) {
+        var _c = getListenerEntryPropsFrom(options), type = _c.type, effect = _c.effect, predicate = _c.predicate;
+        var entry = findListenerEntry(function(entry2) {
+            var matchPredicateOrType = typeof type === "string" ? entry2.type === type : entry2.predicate === predicate;
+            return matchPredicateOrType && entry2.effect === effect;
+        });
+        if (entry) {
+            entry.unsubscribe();
+            if (options.cancelActive) cancelActiveListeners(entry);
+        }
+        return !!entry;
+    };
+    var notifyListener = function(entry, action, api, getOriginalState) {
+        return __async(_this, null, function() {
+            var internalTaskController, take, listenerError_1;
+            return __generator(this, function(_c) {
+                switch(_c.label){
+                    case 0:
+                        internalTaskController = new AbortController();
+                        take = createTakePattern(startListening, internalTaskController.signal);
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([
+                            1,
+                            3,
+                            4,
+                            5
+                        ]);
+                        entry.pending.add(internalTaskController);
+                        return [
+                            4 /*yield*/ ,
+                            Promise.resolve(entry.effect(action, assign({}, api, {
+                                getOriginalState: getOriginalState,
+                                condition: function(predicate, timeout) {
+                                    return take(predicate, timeout).then(Boolean);
+                                },
+                                take: take,
+                                delay: createDelay(internalTaskController.signal),
+                                pause: createPause(internalTaskController.signal),
+                                extra: extra,
+                                signal: internalTaskController.signal,
+                                fork: createFork(internalTaskController.signal),
+                                unsubscribe: entry.unsubscribe,
+                                subscribe: function() {
+                                    listenerMap.set(entry.id, entry);
+                                },
+                                cancelActiveListeners: function() {
+                                    entry.pending.forEach(function(controller, _, set) {
+                                        if (controller !== internalTaskController) {
+                                            abortControllerWithReason(controller, listenerCancelled);
+                                            set.delete(controller);
+                                        }
+                                    });
+                                }
+                            })))
+                        ];
+                    case 2:
+                        _c.sent();
+                        return [
+                            3 /*break*/ ,
+                            5
+                        ];
+                    case 3:
+                        listenerError_1 = _c.sent();
+                        if (!(listenerError_1 instanceof TaskAbortError)) safelyNotifyError(onError, listenerError_1, {
+                            raisedBy: "effect"
+                        });
+                        return [
+                            3 /*break*/ ,
+                            5
+                        ];
+                    case 4:
+                        abortControllerWithReason(internalTaskController, listenerCompleted);
+                        entry.pending.delete(internalTaskController);
+                        return [
+                            7 /*endfinally*/ 
+                        ];
+                    case 5:
+                        return [
+                            2 /*return*/ 
+                        ];
+                }
+            });
+        });
+    };
+    var clearListenerMiddleware = createClearListenerMiddleware(listenerMap);
+    var middleware = function(api) {
+        return function(next) {
+            return function(action) {
+                if (addListener.match(action)) return startListening(action.payload);
+                if (clearAllListeners.match(action)) {
+                    clearListenerMiddleware();
+                    return;
+                }
+                if (removeListener.match(action)) return stopListening(action.payload);
+                var originalState = api.getState();
+                var getOriginalState = function() {
+                    if (originalState === INTERNAL_NIL_TOKEN) throw new Error(alm + ": getOriginalState can only be called synchronously");
+                    return originalState;
+                };
+                var result;
+                try {
+                    result = next(action);
+                    if (listenerMap.size > 0) {
+                        var currentState = api.getState();
+                        var listenerEntries = Array.from(listenerMap.values());
+                        for(var _i = 0, listenerEntries_1 = listenerEntries; _i < listenerEntries_1.length; _i++){
+                            var entry = listenerEntries_1[_i];
+                            var runListener = false;
+                            try {
+                                runListener = entry.predicate(action, currentState, originalState);
+                            } catch (predicateError) {
+                                runListener = false;
+                                safelyNotifyError(onError, predicateError, {
+                                    raisedBy: "predicate"
+                                });
+                            }
+                            if (!runListener) continue;
+                            notifyListener(entry, action, api, getOriginalState);
+                        }
+                    }
+                } finally{
+                    originalState = INTERNAL_NIL_TOKEN;
+                }
+                return result;
+            };
+        };
+    };
+    return {
+        middleware: middleware,
+        startListening: startListening,
+        stopListening: stopListening,
+        clearListeners: clearListenerMiddleware
+    };
+}
+// src/index.ts
+(0, _immer.enableES5)();
+
+},{"immer":"4sfoz","reselect":"isIsC","redux":"cDNB3","redux-thunk":"iFVTZ","process":"d5jf4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4sfoz":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Immer", ()=>un);
+parcelHelpers.export(exports, "applyPatches", ()=>pn);
+parcelHelpers.export(exports, "castDraft", ()=>K);
+parcelHelpers.export(exports, "castImmutable", ()=>$);
+parcelHelpers.export(exports, "createDraft", ()=>ln);
+parcelHelpers.export(exports, "current", ()=>D);
+parcelHelpers.export(exports, "enableAllPlugins", ()=>J);
+parcelHelpers.export(exports, "enableES5", ()=>N);
+parcelHelpers.export(exports, "enableMapSet", ()=>C);
+parcelHelpers.export(exports, "enablePatches", ()=>T);
+parcelHelpers.export(exports, "finishDraft", ()=>dn);
+parcelHelpers.export(exports, "freeze", ()=>d);
+parcelHelpers.export(exports, "immerable", ()=>L);
+parcelHelpers.export(exports, "isDraft", ()=>r);
+parcelHelpers.export(exports, "isDraftable", ()=>t);
+parcelHelpers.export(exports, "nothing", ()=>H);
+parcelHelpers.export(exports, "original", ()=>e);
+parcelHelpers.export(exports, "produce", ()=>fn);
+parcelHelpers.export(exports, "produceWithPatches", ()=>cn);
+parcelHelpers.export(exports, "setAutoFreeze", ()=>sn);
+parcelHelpers.export(exports, "setUseProxies", ()=>vn);
+function n(n) {
+    for(var r = arguments.length, t = Array(r > 1 ? r - 1 : 0), e = 1; e < r; e++)t[e - 1] = arguments[e];
+    var i = Y[n], o = i ? "function" == typeof i ? i.apply(null, t) : i : "unknown error nr: " + n;
+    throw Error("[Immer] " + o);
+    throw Error("[Immer] minified error nr: " + n + (t.length ? " " + t.map(function(n) {
+        return "'" + n + "'";
+    }).join(",") : "") + ". Find the full error at: https://bit.ly/3cXEKWf");
+}
+function r(n) {
+    return !!n && !!n[Q];
+}
+function t(n) {
+    return !!n && (function(n) {
+        if (!n || "object" != typeof n) return !1;
+        var r = Object.getPrototypeOf(n);
+        if (null === r) return !0;
+        var t = Object.hasOwnProperty.call(r, "constructor") && r.constructor;
+        return t === Object || "function" == typeof t && Function.toString.call(t) === Z;
+    }(n) || Array.isArray(n) || !!n[L] || !!n.constructor[L] || s(n) || v(n));
+}
+function e(t) {
+    return r(t) || n(23, t), t[Q].t;
+}
+function i(n, r, t) {
+    void 0 === t && (t = !1), 0 === o(n) ? (t ? Object.keys : nn)(n).forEach(function(e) {
+        t && "symbol" == typeof e || r(e, n[e], n);
+    }) : n.forEach(function(t, e) {
+        return r(e, t, n);
+    });
+}
+function o(n) {
+    var r = n[Q];
+    return r ? r.i > 3 ? r.i - 4 : r.i : Array.isArray(n) ? 1 : s(n) ? 2 : v(n) ? 3 : 0;
+}
+function u(n, r) {
+    return 2 === o(n) ? n.has(r) : Object.prototype.hasOwnProperty.call(n, r);
+}
+function a(n, r) {
+    return 2 === o(n) ? n.get(r) : n[r];
+}
+function f(n, r, t) {
+    var e = o(n);
+    2 === e ? n.set(r, t) : 3 === e ? (n.delete(r), n.add(t)) : n[r] = t;
+}
+function c(n, r) {
+    return n === r ? 0 !== n || 1 / n == 1 / r : n != n && r != r;
+}
+function s(n) {
+    return X && n instanceof Map;
+}
+function v(n) {
+    return q && n instanceof Set;
+}
+function p(n) {
+    return n.o || n.t;
+}
+function l(n) {
+    if (Array.isArray(n)) return Array.prototype.slice.call(n);
+    var r = rn(n);
+    delete r[Q];
+    for(var t = nn(r), e = 0; e < t.length; e++){
+        var i = t[e], o = r[i];
+        !1 === o.writable && (o.writable = !0, o.configurable = !0), (o.get || o.set) && (r[i] = {
+            configurable: !0,
+            writable: !0,
+            enumerable: o.enumerable,
+            value: n[i]
+        });
+    }
+    return Object.create(Object.getPrototypeOf(n), r);
+}
+function d(n, e) {
+    return void 0 === e && (e = !1), y(n) || r(n) || !t(n) ? n : (o(n) > 1 && (n.set = n.add = n.clear = n.delete = h), Object.freeze(n), e && i(n, function(n, r) {
+        return d(r, !0);
+    }, !0), n);
+}
+function h() {
+    n(2);
+}
+function y(n) {
+    return null == n || "object" != typeof n || Object.isFrozen(n);
+}
+function b(r) {
+    var t = tn[r];
+    return t || n(18, r), t;
+}
+function m(n, r) {
+    tn[n] || (tn[n] = r);
+}
+function _() {
+    return U || n(0), U;
+}
+function j(n, r) {
+    r && (b("Patches"), n.u = [], n.s = [], n.v = r);
+}
+function O(n) {
+    g(n), n.p.forEach(S), n.p = null;
+}
+function g(n) {
+    n === U && (U = n.l);
+}
+function w(n) {
+    return U = {
+        p: [],
+        l: U,
+        h: n,
+        m: !0,
+        _: 0
+    };
+}
+function S(n) {
+    var r = n[Q];
+    0 === r.i || 1 === r.i ? r.j() : r.O = !0;
+}
+function P(r, e) {
+    e._ = e.p.length;
+    var i = e.p[0], o = void 0 !== r && r !== i;
+    return e.h.g || b("ES5").S(e, r, o), o ? (i[Q].P && (O(e), n(4)), t(r) && (r = M(e, r), e.l || x(e, r)), e.u && b("Patches").M(i[Q].t, r, e.u, e.s)) : r = M(e, i, []), O(e), e.u && e.v(e.u, e.s), r !== H ? r : void 0;
+}
+function M(n, r, t) {
+    if (y(r)) return r;
+    var e = r[Q];
+    if (!e) return i(r, function(i, o) {
+        return A(n, e, r, i, o, t);
+    }, !0), r;
+    if (e.A !== n) return r;
+    if (!e.P) return x(n, e.t, !0), e.t;
+    if (!e.I) {
+        e.I = !0, e.A._--;
+        var o = 4 === e.i || 5 === e.i ? e.o = l(e.k) : e.o;
+        i(3 === e.i ? new Set(o) : o, function(r, i) {
+            return A(n, e, o, r, i, t);
+        }), x(n, o, !1), t && n.u && b("Patches").R(e, t, n.u, n.s);
+    }
+    return e.o;
+}
+function A(e, i, o, a, c, s) {
+    if (c === o && n(5), r(c)) {
+        var v = M(e, c, s && i && 3 !== i.i && !u(i.D, a) ? s.concat(a) : void 0);
+        if (f(o, a, v), !r(v)) return;
+        e.m = !1;
+    }
+    if (t(c) && !y(c)) {
+        if (!e.h.F && e._ < 1) return;
+        M(e, c), i && i.A.l || x(e, c);
+    }
+}
+function x(n, r, t) {
+    void 0 === t && (t = !1), n.h.F && n.m && d(r, t);
+}
+function z(n, r) {
+    var t = n[Q];
+    return (t ? p(t) : n)[r];
+}
+function I(n, r) {
+    if (r in n) for(var t = Object.getPrototypeOf(n); t;){
+        var e = Object.getOwnPropertyDescriptor(t, r);
+        if (e) return e;
+        t = Object.getPrototypeOf(t);
+    }
+}
+function k(n) {
+    n.P || (n.P = !0, n.l && k(n.l));
+}
+function E(n) {
+    n.o || (n.o = l(n.t));
+}
+function R(n, r, t) {
+    var e = s(r) ? b("MapSet").N(r, t) : v(r) ? b("MapSet").T(r, t) : n.g ? function(n, r) {
+        var t = Array.isArray(n), e = {
+            i: t ? 1 : 0,
+            A: r ? r.A : _(),
+            P: !1,
+            I: !1,
+            D: {},
+            l: r,
+            t: n,
+            k: null,
+            o: null,
+            j: null,
+            C: !1
+        }, i = e, o = en;
+        t && (i = [
+            e
+        ], o = on);
+        var u = Proxy.revocable(i, o), a = u.revoke, f = u.proxy;
+        return e.k = f, e.j = a, f;
+    }(r, t) : b("ES5").J(r, t);
+    return (t ? t.A : _()).p.push(e), e;
+}
+function D(e) {
+    return r(e) || n(22, e), function n(r) {
+        if (!t(r)) return r;
+        var e, u = r[Q], c = o(r);
+        if (u) {
+            if (!u.P && (u.i < 4 || !b("ES5").K(u))) return u.t;
+            u.I = !0, e = F(r, c), u.I = !1;
+        } else e = F(r, c);
+        return i(e, function(r, t) {
+            u && a(u.t, r) === t || f(e, r, n(t));
+        }), 3 === c ? new Set(e) : e;
+    }(e);
+}
+function F(n, r) {
+    switch(r){
+        case 2:
+            return new Map(n);
+        case 3:
+            return Array.from(n);
+    }
+    return l(n);
+}
+function N() {
+    function t(n, r) {
+        var t = s[n];
+        return t ? t.enumerable = r : s[n] = t = {
+            configurable: !0,
+            enumerable: r,
+            get: function() {
+                var r = this[Q];
+                return f(r), en.get(r, n);
+            },
+            set: function(r) {
+                var t = this[Q];
+                f(t), en.set(t, n, r);
+            }
+        }, t;
+    }
+    function e(n) {
+        for(var r = n.length - 1; r >= 0; r--){
+            var t = n[r][Q];
+            if (!t.P) switch(t.i){
+                case 5:
+                    a(t) && k(t);
+                    break;
+                case 4:
+                    o(t) && k(t);
+            }
+        }
+    }
+    function o(n) {
+        for(var r = n.t, t = n.k, e = nn(t), i = e.length - 1; i >= 0; i--){
+            var o = e[i];
+            if (o !== Q) {
+                var a = r[o];
+                if (void 0 === a && !u(r, o)) return !0;
+                var f = t[o], s = f && f[Q];
+                if (s ? s.t !== a : !c(f, a)) return !0;
+            }
+        }
+        var v = !!r[Q];
+        return e.length !== nn(r).length + (v ? 0 : 1);
+    }
+    function a(n) {
+        var r = n.k;
+        if (r.length !== n.t.length) return !0;
+        var t = Object.getOwnPropertyDescriptor(r, r.length - 1);
+        if (t && !t.get) return !0;
+        for(var e = 0; e < r.length; e++)if (!r.hasOwnProperty(e)) return !0;
+        return !1;
+    }
+    function f(r) {
+        r.O && n(3, JSON.stringify(p(r)));
+    }
+    var s = {};
+    m("ES5", {
+        J: function(n, r) {
+            var e = Array.isArray(n), i = function(n, r) {
+                if (n) {
+                    for(var e = Array(r.length), i = 0; i < r.length; i++)Object.defineProperty(e, "" + i, t(i, !0));
+                    return e;
+                }
+                var o = rn(r);
+                delete o[Q];
+                for(var u = nn(o), a = 0; a < u.length; a++){
+                    var f = u[a];
+                    o[f] = t(f, n || !!o[f].enumerable);
+                }
+                return Object.create(Object.getPrototypeOf(r), o);
+            }(e, n), o = {
+                i: e ? 5 : 4,
+                A: r ? r.A : _(),
+                P: !1,
+                I: !1,
+                D: {},
+                l: r,
+                t: n,
+                k: i,
+                o: null,
+                O: !1,
+                C: !1
+            };
+            return Object.defineProperty(i, Q, {
+                value: o,
+                writable: !0
+            }), i;
+        },
+        S: function(n, t, o) {
+            o ? r(t) && t[Q].A === n && e(n.p) : (n.u && function n(r) {
+                if (r && "object" == typeof r) {
+                    var t = r[Q];
+                    if (t) {
+                        var e = t.t, o = t.k, f = t.D, c = t.i;
+                        if (4 === c) i(o, function(r) {
+                            r !== Q && (void 0 !== e[r] || u(e, r) ? f[r] || n(o[r]) : (f[r] = !0, k(t)));
+                        }), i(e, function(n) {
+                            void 0 !== o[n] || u(o, n) || (f[n] = !1, k(t));
+                        });
+                        else if (5 === c) {
+                            if (a(t) && (k(t), f.length = !0), o.length < e.length) for(var s = o.length; s < e.length; s++)f[s] = !1;
+                            else for(var v = e.length; v < o.length; v++)f[v] = !0;
+                            for(var p = Math.min(o.length, e.length), l = 0; l < p; l++)o.hasOwnProperty(l) || (f[l] = !0), void 0 === f[l] && n(o[l]);
+                        }
+                    }
+                }
+            }(n.p[0]), e(n.p));
+        },
+        K: function(n) {
+            return 4 === n.i ? o(n) : a(n);
+        }
+    });
+}
+function T() {
+    function e(n) {
+        if (!t(n)) return n;
+        if (Array.isArray(n)) return n.map(e);
+        if (s(n)) return new Map(Array.from(n.entries()).map(function(n) {
+            return [
+                n[0],
+                e(n[1])
+            ];
+        }));
+        if (v(n)) return new Set(Array.from(n).map(e));
+        var r = Object.create(Object.getPrototypeOf(n));
+        for(var i in n)r[i] = e(n[i]);
+        return u(n, L) && (r[L] = n[L]), r;
+    }
+    function f(n) {
+        return r(n) ? e(n) : n;
+    }
+    var c = "add";
+    m("Patches", {
+        $: function(r, t) {
+            return t.forEach(function(t) {
+                for(var i = t.path, u = t.op, f = r, s = 0; s < i.length - 1; s++){
+                    var v = o(f), p = "" + i[s];
+                    0 !== v && 1 !== v || "__proto__" !== p && "constructor" !== p || n(24), "function" == typeof f && "prototype" === p && n(24), "object" != typeof (f = a(f, p)) && n(15, i.join("/"));
+                }
+                var l = o(f), d = e(t.value), h = i[i.length - 1];
+                switch(u){
+                    case "replace":
+                        switch(l){
+                            case 2:
+                                return f.set(h, d);
+                            case 3:
+                                n(16);
+                            default:
+                                return f[h] = d;
+                        }
+                    case c:
+                        switch(l){
+                            case 1:
+                                return "-" === h ? f.push(d) : f.splice(h, 0, d);
+                            case 2:
+                                return f.set(h, d);
+                            case 3:
+                                return f.add(d);
+                            default:
+                                return f[h] = d;
+                        }
+                    case "remove":
+                        switch(l){
+                            case 1:
+                                return f.splice(h, 1);
+                            case 2:
+                                return f.delete(h);
+                            case 3:
+                                return f.delete(t.value);
+                            default:
+                                return delete f[h];
+                        }
+                    default:
+                        n(17, u);
+                }
+            }), r;
+        },
+        R: function(n, r, t, e) {
+            switch(n.i){
+                case 0:
+                case 4:
+                case 2:
+                    return function(n, r, t, e) {
+                        var o = n.t, s = n.o;
+                        i(n.D, function(n, i) {
+                            var v = a(o, n), p = a(s, n), l = i ? u(o, n) ? "replace" : c : "remove";
+                            if (v !== p || "replace" !== l) {
+                                var d = r.concat(n);
+                                t.push("remove" === l ? {
+                                    op: l,
+                                    path: d
+                                } : {
+                                    op: l,
+                                    path: d,
+                                    value: p
+                                }), e.push(l === c ? {
+                                    op: "remove",
+                                    path: d
+                                } : "remove" === l ? {
+                                    op: c,
+                                    path: d,
+                                    value: f(v)
+                                } : {
+                                    op: "replace",
+                                    path: d,
+                                    value: f(v)
+                                });
+                            }
+                        });
+                    }(n, r, t, e);
+                case 5:
+                case 1:
+                    return function(n, r, t, e) {
+                        var i = n.t, o = n.D, u = n.o;
+                        if (u.length < i.length) {
+                            var a = [
+                                u,
+                                i
+                            ];
+                            i = a[0], u = a[1];
+                            var s = [
+                                e,
+                                t
+                            ];
+                            t = s[0], e = s[1];
+                        }
+                        for(var v = 0; v < i.length; v++)if (o[v] && u[v] !== i[v]) {
+                            var p = r.concat([
+                                v
+                            ]);
+                            t.push({
+                                op: "replace",
+                                path: p,
+                                value: f(u[v])
+                            }), e.push({
+                                op: "replace",
+                                path: p,
+                                value: f(i[v])
+                            });
+                        }
+                        for(var l = i.length; l < u.length; l++){
+                            var d = r.concat([
+                                l
+                            ]);
+                            t.push({
+                                op: c,
+                                path: d,
+                                value: f(u[l])
+                            });
+                        }
+                        i.length < u.length && e.push({
+                            op: "replace",
+                            path: r.concat([
+                                "length"
+                            ]),
+                            value: i.length
+                        });
+                    }(n, r, t, e);
+                case 3:
+                    return function(n, r, t, e) {
+                        var i = n.t, o = n.o, u = 0;
+                        i.forEach(function(n) {
+                            if (!o.has(n)) {
+                                var i = r.concat([
+                                    u
+                                ]);
+                                t.push({
+                                    op: "remove",
+                                    path: i,
+                                    value: n
+                                }), e.unshift({
+                                    op: c,
+                                    path: i,
+                                    value: n
+                                });
+                            }
+                            u++;
+                        }), u = 0, o.forEach(function(n) {
+                            if (!i.has(n)) {
+                                var o = r.concat([
+                                    u
+                                ]);
+                                t.push({
+                                    op: c,
+                                    path: o,
+                                    value: n
+                                }), e.unshift({
+                                    op: "remove",
+                                    path: o,
+                                    value: n
+                                });
+                            }
+                            u++;
+                        });
+                    }(n, r, t, e);
+            }
+        },
+        M: function(n, r, t, e) {
+            t.push({
+                op: "replace",
+                path: [],
+                value: r === H ? void 0 : r
+            }), e.push({
+                op: "replace",
+                path: [],
+                value: n
+            });
+        }
+    });
+}
+function C() {
+    function r(n, r) {
+        function t() {
+            this.constructor = n;
+        }
+        a(n, r), n.prototype = (t.prototype = r.prototype, new t);
+    }
+    function e(n) {
+        n.o || (n.D = new Map, n.o = new Map(n.t));
+    }
+    function o(n) {
+        n.o || (n.o = new Set, n.t.forEach(function(r) {
+            if (t(r)) {
+                var e = R(n.A.h, r, n);
+                n.p.set(r, e), n.o.add(e);
+            } else n.o.add(r);
+        }));
+    }
+    function u(r) {
+        r.O && n(3, JSON.stringify(p(r)));
+    }
+    var a = function(n, r) {
+        return (a = Object.setPrototypeOf || ({
+            __proto__: []
+        }) instanceof Array && function(n, r) {
+            n.__proto__ = r;
+        } || function(n, r) {
+            for(var t in r)r.hasOwnProperty(t) && (n[t] = r[t]);
+        })(n, r);
+    }, f = function() {
+        function n(n, r) {
+            return this[Q] = {
+                i: 2,
+                l: r,
+                A: r ? r.A : _(),
+                P: !1,
+                I: !1,
+                o: void 0,
+                D: void 0,
+                t: n,
+                k: this,
+                C: !1,
+                O: !1
+            }, this;
+        }
+        r(n, Map);
+        var o = n.prototype;
+        return Object.defineProperty(o, "size", {
+            get: function() {
+                return p(this[Q]).size;
+            }
+        }), o.has = function(n) {
+            return p(this[Q]).has(n);
+        }, o.set = function(n, r) {
+            var t = this[Q];
+            return u(t), p(t).has(n) && p(t).get(n) === r || (e(t), k(t), t.D.set(n, !0), t.o.set(n, r), t.D.set(n, !0)), this;
+        }, o.delete = function(n) {
+            if (!this.has(n)) return !1;
+            var r = this[Q];
+            return u(r), e(r), k(r), r.t.has(n) ? r.D.set(n, !1) : r.D.delete(n), r.o.delete(n), !0;
+        }, o.clear = function() {
+            var n = this[Q];
+            u(n), p(n).size && (e(n), k(n), n.D = new Map, i(n.t, function(r) {
+                n.D.set(r, !1);
+            }), n.o.clear());
+        }, o.forEach = function(n, r) {
+            var t = this;
+            p(this[Q]).forEach(function(e, i) {
+                n.call(r, t.get(i), i, t);
+            });
+        }, o.get = function(n) {
+            var r = this[Q];
+            u(r);
+            var i = p(r).get(n);
+            if (r.I || !t(i)) return i;
+            if (i !== r.t.get(n)) return i;
+            var o = R(r.A.h, i, r);
+            return e(r), r.o.set(n, o), o;
+        }, o.keys = function() {
+            return p(this[Q]).keys();
+        }, o.values = function() {
+            var n, r = this, t = this.keys();
+            return (n = {})[V] = function() {
+                return r.values();
+            }, n.next = function() {
+                var n = t.next();
+                return n.done ? n : {
+                    done: !1,
+                    value: r.get(n.value)
+                };
+            }, n;
+        }, o.entries = function() {
+            var n, r = this, t = this.keys();
+            return (n = {})[V] = function() {
+                return r.entries();
+            }, n.next = function() {
+                var n = t.next();
+                if (n.done) return n;
+                var e = r.get(n.value);
+                return {
+                    done: !1,
+                    value: [
+                        n.value,
+                        e
+                    ]
+                };
+            }, n;
+        }, o[V] = function() {
+            return this.entries();
+        }, n;
+    }(), c = function() {
+        function n(n, r) {
+            return this[Q] = {
+                i: 3,
+                l: r,
+                A: r ? r.A : _(),
+                P: !1,
+                I: !1,
+                o: void 0,
+                t: n,
+                k: this,
+                p: new Map,
+                O: !1,
+                C: !1
+            }, this;
+        }
+        r(n, Set);
+        var t = n.prototype;
+        return Object.defineProperty(t, "size", {
+            get: function() {
+                return p(this[Q]).size;
+            }
+        }), t.has = function(n) {
+            var r = this[Q];
+            return u(r), r.o ? !!r.o.has(n) || !(!r.p.has(n) || !r.o.has(r.p.get(n))) : r.t.has(n);
+        }, t.add = function(n) {
+            var r = this[Q];
+            return u(r), this.has(n) || (o(r), k(r), r.o.add(n)), this;
+        }, t.delete = function(n) {
+            if (!this.has(n)) return !1;
+            var r = this[Q];
+            return u(r), o(r), k(r), r.o.delete(n) || !!r.p.has(n) && r.o.delete(r.p.get(n));
+        }, t.clear = function() {
+            var n = this[Q];
+            u(n), p(n).size && (o(n), k(n), n.o.clear());
+        }, t.values = function() {
+            var n = this[Q];
+            return u(n), o(n), n.o.values();
+        }, t.entries = function() {
+            var n = this[Q];
+            return u(n), o(n), n.o.entries();
+        }, t.keys = function() {
+            return this.values();
+        }, t[V] = function() {
+            return this.values();
+        }, t.forEach = function(n, r) {
+            for(var t = this.values(), e = t.next(); !e.done;)n.call(r, e.value, e.value, this), e = t.next();
+        }, n;
+    }();
+    m("MapSet", {
+        N: function(n, r) {
+            return new f(n, r);
+        },
+        T: function(n, r) {
+            return new c(n, r);
+        }
+    });
+}
+function J() {
+    N(), C(), T();
+}
+function K(n) {
+    return n;
+}
+function $(n) {
+    return n;
+}
+var G, U, W = "undefined" != typeof Symbol && "symbol" == typeof Symbol("x"), X = "undefined" != typeof Map, q = "undefined" != typeof Set, B = "undefined" != typeof Proxy && void 0 !== Proxy.revocable && "undefined" != typeof Reflect, H = W ? Symbol.for("immer-nothing") : ((G = {})["immer-nothing"] = !0, G), L = W ? Symbol.for("immer-draftable") : "__$immer_draftable", Q = W ? Symbol.for("immer-state") : "__$immer_state", V = "undefined" != typeof Symbol && Symbol.iterator || "@@iterator", Y = {
+    0: "Illegal state",
+    1: "Immer drafts cannot have computed properties",
+    2: "This object has been frozen and should not be mutated",
+    3: function(n) {
+        return "Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? " + n;
+    },
+    4: "An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",
+    5: "Immer forbids circular references",
+    6: "The first or second argument to `produce` must be a function",
+    7: "The third argument to `produce` must be a function or undefined",
+    8: "First argument to `createDraft` must be a plain object, an array, or an immerable object",
+    9: "First argument to `finishDraft` must be a draft returned by `createDraft`",
+    10: "The given draft is already finalized",
+    11: "Object.defineProperty() cannot be used on an Immer draft",
+    12: "Object.setPrototypeOf() cannot be used on an Immer draft",
+    13: "Immer only supports deleting array indices",
+    14: "Immer only supports setting array indices and the 'length' property",
+    15: function(n) {
+        return "Cannot apply patch, path doesn't resolve: " + n;
+    },
+    16: 'Sets cannot have "replace" patches.',
+    17: function(n) {
+        return "Unsupported patch operation: " + n;
+    },
+    18: function(n) {
+        return "The plugin for '" + n + "' has not been loaded into Immer. To enable the plugin, import and call `enable" + n + "()` when initializing your application.";
+    },
+    20: "Cannot use proxies if Proxy, Proxy.revocable or Reflect are not available",
+    21: function(n) {
+        return "produce can only be called on things that are draftable: plain objects, arrays, Map, Set or classes that are marked with '[immerable]: true'. Got '" + n + "'";
+    },
+    22: function(n) {
+        return "'current' expects a draft, got: " + n;
+    },
+    23: function(n) {
+        return "'original' expects a draft, got: " + n;
+    },
+    24: "Patching reserved attributes like __proto__, prototype and constructor is not allowed"
+}, Z = "" + Object.prototype.constructor, nn = "undefined" != typeof Reflect && Reflect.ownKeys ? Reflect.ownKeys : void 0 !== Object.getOwnPropertySymbols ? function(n) {
+    return Object.getOwnPropertyNames(n).concat(Object.getOwnPropertySymbols(n));
+} : Object.getOwnPropertyNames, rn = Object.getOwnPropertyDescriptors || function(n) {
+    var r = {};
+    return nn(n).forEach(function(t) {
+        r[t] = Object.getOwnPropertyDescriptor(n, t);
+    }), r;
+}, tn = {}, en = {
+    get: function(n, r) {
+        if (r === Q) return n;
+        var e = p(n);
+        if (!u(e, r)) return function(n, r, t) {
+            var e, i = I(r, t);
+            return i ? "value" in i ? i.value : null === (e = i.get) || void 0 === e ? void 0 : e.call(n.k) : void 0;
+        }(n, e, r);
+        var i = e[r];
+        return n.I || !t(i) ? i : i === z(n.t, r) ? (E(n), n.o[r] = R(n.A.h, i, n)) : i;
+    },
+    has: function(n, r) {
+        return r in p(n);
+    },
+    ownKeys: function(n) {
+        return Reflect.ownKeys(p(n));
+    },
+    set: function(n, r, t) {
+        var e = I(p(n), r);
+        if (null == e ? void 0 : e.set) return e.set.call(n.k, t), !0;
+        if (!n.P) {
+            var i = z(p(n), r), o = null == i ? void 0 : i[Q];
+            if (o && o.t === t) return n.o[r] = t, n.D[r] = !1, !0;
+            if (c(t, i) && (void 0 !== t || u(n.t, r))) return !0;
+            E(n), k(n);
+        }
+        return n.o[r] === t && "number" != typeof t && (void 0 !== t || r in n.o) || (n.o[r] = t, n.D[r] = !0, !0);
+    },
+    deleteProperty: function(n, r) {
+        return void 0 !== z(n.t, r) || r in n.t ? (n.D[r] = !1, E(n), k(n)) : delete n.D[r], n.o && delete n.o[r], !0;
+    },
+    getOwnPropertyDescriptor: function(n, r) {
+        var t = p(n), e = Reflect.getOwnPropertyDescriptor(t, r);
+        return e ? {
+            writable: !0,
+            configurable: 1 !== n.i || "length" !== r,
+            enumerable: e.enumerable,
+            value: t[r]
+        } : e;
+    },
+    defineProperty: function() {
+        n(11);
+    },
+    getPrototypeOf: function(n) {
+        return Object.getPrototypeOf(n.t);
+    },
+    setPrototypeOf: function() {
+        n(12);
+    }
+}, on = {};
+i(en, function(n, r) {
+    on[n] = function() {
+        return arguments[0] = arguments[0][0], r.apply(this, arguments);
+    };
+}), on.deleteProperty = function(r, t) {
+    return isNaN(parseInt(t)) && n(13), on.set.call(this, r, t, void 0);
+}, on.set = function(r, t, e) {
+    return "length" !== t && isNaN(parseInt(t)) && n(14), en.set.call(this, r[0], t, e, r[0]);
+};
+var un = function() {
+    function e(r) {
+        var e = this;
+        this.g = B, this.F = !0, this.produce = function(r, i, o) {
+            if ("function" == typeof r && "function" != typeof i) {
+                var u = i;
+                i = r;
+                var a = e;
+                return function(n) {
+                    var r = this;
+                    void 0 === n && (n = u);
+                    for(var t = arguments.length, e = Array(t > 1 ? t - 1 : 0), o = 1; o < t; o++)e[o - 1] = arguments[o];
+                    return a.produce(n, function(n) {
+                        var t;
+                        return (t = i).call.apply(t, [
+                            r,
+                            n
+                        ].concat(e));
+                    });
+                };
+            }
+            var f;
+            if ("function" != typeof i && n(6), void 0 !== o && "function" != typeof o && n(7), t(r)) {
+                var c = w(e), s = R(e, r, void 0), v = !0;
+                try {
+                    f = i(s), v = !1;
+                } finally{
+                    v ? O(c) : g(c);
+                }
+                return "undefined" != typeof Promise && f instanceof Promise ? f.then(function(n) {
+                    return j(c, o), P(n, c);
+                }, function(n) {
+                    throw O(c), n;
+                }) : (j(c, o), P(f, c));
+            }
+            if (!r || "object" != typeof r) {
+                if (void 0 === (f = i(r)) && (f = r), f === H && (f = void 0), e.F && d(f, !0), o) {
+                    var p = [], l = [];
+                    b("Patches").M(r, f, p, l), o(p, l);
+                }
+                return f;
+            }
+            n(21, r);
+        }, this.produceWithPatches = function(n, r) {
+            if ("function" == typeof n) return function(r) {
+                for(var t = arguments.length, i = Array(t > 1 ? t - 1 : 0), o = 1; o < t; o++)i[o - 1] = arguments[o];
+                return e.produceWithPatches(r, function(r) {
+                    return n.apply(void 0, [
+                        r
+                    ].concat(i));
+                });
+            };
+            var t, i, o = e.produce(n, r, function(n, r) {
+                t = n, i = r;
+            });
+            return "undefined" != typeof Promise && o instanceof Promise ? o.then(function(n) {
+                return [
+                    n,
+                    t,
+                    i
+                ];
+            }) : [
+                o,
+                t,
+                i
+            ];
+        }, "boolean" == typeof (null == r ? void 0 : r.useProxies) && this.setUseProxies(r.useProxies), "boolean" == typeof (null == r ? void 0 : r.autoFreeze) && this.setAutoFreeze(r.autoFreeze);
+    }
+    var i = e.prototype;
+    return i.createDraft = function(e) {
+        t(e) || n(8), r(e) && (e = D(e));
+        var i = w(this), o = R(this, e, void 0);
+        return o[Q].C = !0, g(i), o;
+    }, i.finishDraft = function(r, t) {
+        var e = r && r[Q];
+        e && e.C || n(9), e.I && n(10);
+        var i = e.A;
+        return j(i, t), P(void 0, i);
+    }, i.setAutoFreeze = function(n) {
+        this.F = n;
+    }, i.setUseProxies = function(r) {
+        r && !B && n(20), this.g = r;
+    }, i.applyPatches = function(n, t) {
+        var e;
+        for(e = t.length - 1; e >= 0; e--){
+            var i = t[e];
+            if (0 === i.path.length && "replace" === i.op) {
+                n = i.value;
+                break;
+            }
+        }
+        e > -1 && (t = t.slice(e + 1));
+        var o = b("Patches").$;
+        return r(n) ? o(n, t) : this.produce(n, function(n) {
+            return o(n, t);
+        });
+    }, e;
+}(), an = new un, fn = an.produce, cn = an.produceWithPatches.bind(an), sn = an.setAutoFreeze.bind(an), vn = an.setUseProxies.bind(an), pn = an.applyPatches.bind(an), ln = an.createDraft.bind(an), dn = an.finishDraft.bind(an);
+exports.default = fn;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"isIsC":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "defaultMemoize", ()=>(0, _defaultMemoize.defaultMemoize));
+parcelHelpers.export(exports, "defaultEqualityCheck", ()=>(0, _defaultMemoize.defaultEqualityCheck));
+parcelHelpers.export(exports, "createSelectorCreator", ()=>createSelectorCreator);
+parcelHelpers.export(exports, "createSelector", ()=>createSelector);
+parcelHelpers.export(exports, "createStructuredSelector", ()=>createStructuredSelector);
+var _defaultMemoize = require("./defaultMemoize");
+function getDependencies(funcs) {
+    var dependencies = Array.isArray(funcs[0]) ? funcs[0] : funcs;
+    if (!dependencies.every(function(dep) {
+        return typeof dep === "function";
+    })) {
+        var dependencyTypes = dependencies.map(function(dep) {
+            return typeof dep === "function" ? "function " + (dep.name || "unnamed") + "()" : typeof dep;
+        }).join(", ");
+        throw new Error("createSelector expects all input-selectors to be functions, but received the following types: [" + dependencyTypes + "]");
+    }
+    return dependencies;
+}
+function createSelectorCreator(memoize) {
+    for(var _len = arguments.length, memoizeOptionsFromArgs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++)memoizeOptionsFromArgs[_key - 1] = arguments[_key];
+    var createSelector = function createSelector() {
+        for(var _len2 = arguments.length, funcs = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++)funcs[_key2] = arguments[_key2];
+        var _recomputations = 0;
+        var _lastResult; // Due to the intricacies of rest params, we can't do an optional arg after `...funcs`.
+        // So, start by declaring the default value here.
+        // (And yes, the words 'memoize' and 'options' appear too many times in this next sequence.)
+        var directlyPassedOptions = {
+            memoizeOptions: undefined
+        }; // Normally, the result func or "output selector" is the last arg
+        var resultFunc = funcs.pop(); // If the result func is actually an _object_, assume it's our options object
+        if (typeof resultFunc === "object") {
+            directlyPassedOptions = resultFunc; // and pop the real result func off
+            resultFunc = funcs.pop();
+        }
+        if (typeof resultFunc !== "function") throw new Error("createSelector expects an output function after the inputs, but received: [" + typeof resultFunc + "]");
+         // Determine which set of options we're using. Prefer options passed directly,
+        // but fall back to options given to createSelectorCreator.
+        var _directlyPassedOption = directlyPassedOptions, _directlyPassedOption2 = _directlyPassedOption.memoizeOptions, memoizeOptions = _directlyPassedOption2 === void 0 ? memoizeOptionsFromArgs : _directlyPassedOption2; // Simplifying assumption: it's unlikely that the first options arg of the provided memoizer
+        // is an array. In most libs I've looked at, it's an equality function or options object.
+        // Based on that, if `memoizeOptions` _is_ an array, we assume it's a full
+        // user-provided array of options. Otherwise, it must be just the _first_ arg, and so
+        // we wrap it in an array so we can apply it.
+        var finalMemoizeOptions = Array.isArray(memoizeOptions) ? memoizeOptions : [
+            memoizeOptions
+        ];
+        var dependencies = getDependencies(funcs);
+        var memoizedResultFunc = memoize.apply(void 0, [
+            function recomputationWrapper() {
+                _recomputations++; // apply arguments instead of spreading for performance.
+                return resultFunc.apply(null, arguments);
+            }
+        ].concat(finalMemoizeOptions)); // If a selector is called with the exact same arguments we don't need to traverse our dependencies again.
+        var selector = memoize(function dependenciesChecker() {
+            var params = [];
+            var length = dependencies.length;
+            for(var i = 0; i < length; i++)// apply arguments instead of spreading and mutate a local list of params for performance.
+            // @ts-ignore
+            params.push(dependencies[i].apply(null, arguments));
+             // apply arguments instead of spreading for performance.
+            _lastResult = memoizedResultFunc.apply(null, params);
+            return _lastResult;
+        });
+        Object.assign(selector, {
+            resultFunc: resultFunc,
+            memoizedResultFunc: memoizedResultFunc,
+            dependencies: dependencies,
+            lastResult: function lastResult() {
+                return _lastResult;
+            },
+            recomputations: function recomputations() {
+                return _recomputations;
+            },
+            resetRecomputations: function resetRecomputations() {
+                return _recomputations = 0;
+            }
+        });
+        return selector;
+    }; // @ts-ignore
+    return createSelector;
+}
+var createSelector = /* #__PURE__ */ createSelectorCreator((0, _defaultMemoize.defaultMemoize));
+var createStructuredSelector = function createStructuredSelector(selectors, selectorCreator) {
+    if (selectorCreator === void 0) selectorCreator = createSelector;
+    if (typeof selectors !== "object") throw new Error("createStructuredSelector expects first argument to be an object " + ("where each property is a selector, instead received a " + typeof selectors));
+    var objectKeys = Object.keys(selectors);
+    var resultSelector = selectorCreator(objectKeys.map(function(key) {
+        return selectors[key];
+    }), function() {
+        for(var _len3 = arguments.length, values = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++)values[_key3] = arguments[_key3];
+        return values.reduce(function(composition, value, index) {
+            composition[objectKeys[index]] = value;
+            return composition;
+        }, {});
+    });
+    return resultSelector;
+};
+
+},{"./defaultMemoize":"gK721","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gK721":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "defaultEqualityCheck", ()=>defaultEqualityCheck);
+parcelHelpers.export(exports, "createCacheKeyComparator", ()=>createCacheKeyComparator);
+// defaultMemoize now supports a configurable cache size with LRU behavior,
+// and optional comparison of the result value with existing values
+parcelHelpers.export(exports, "defaultMemoize", ()=>defaultMemoize);
+// Cache implementation based on Erik Rasmussen's `lru-memoize`:
+// https://github.com/erikras/lru-memoize
+var NOT_FOUND = "NOT_FOUND";
+function createSingletonCache(equals) {
+    var entry;
+    return {
+        get: function get(key) {
+            if (entry && equals(entry.key, key)) return entry.value;
+            return NOT_FOUND;
+        },
+        put: function put(key, value) {
+            entry = {
+                key: key,
+                value: value
+            };
+        },
+        getEntries: function getEntries() {
+            return entry ? [
+                entry
+            ] : [];
+        },
+        clear: function clear() {
+            entry = undefined;
+        }
+    };
+}
+function createLruCache(maxSize, equals) {
+    var entries = [];
+    function get(key) {
+        var cacheIndex = entries.findIndex(function(entry) {
+            return equals(key, entry.key);
+        }); // We found a cached entry
+        if (cacheIndex > -1) {
+            var entry = entries[cacheIndex]; // Cached entry not at top of cache, move it to the top
+            if (cacheIndex > 0) {
+                entries.splice(cacheIndex, 1);
+                entries.unshift(entry);
+            }
+            return entry.value;
+        } // No entry found in cache, return sentinel
+        return NOT_FOUND;
+    }
+    function put(key, value) {
+        if (get(key) === NOT_FOUND) {
+            // TODO Is unshift slow?
+            entries.unshift({
+                key: key,
+                value: value
+            });
+            if (entries.length > maxSize) entries.pop();
+        }
+    }
+    function getEntries() {
+        return entries;
+    }
+    function clear() {
+        entries = [];
+    }
+    return {
+        get: get,
+        put: put,
+        getEntries: getEntries,
+        clear: clear
+    };
+}
+var defaultEqualityCheck = function defaultEqualityCheck(a, b) {
+    return a === b;
+};
+function createCacheKeyComparator(equalityCheck) {
+    return function areArgumentsShallowlyEqual(prev, next) {
+        if (prev === null || next === null || prev.length !== next.length) return false;
+         // Do this in a for loop (and not a `forEach` or an `every`) so we can determine equality as fast as possible.
+        var length = prev.length;
+        for(var i = 0; i < length; i++){
+            if (!equalityCheck(prev[i], next[i])) return false;
+        }
+        return true;
+    };
+}
+function defaultMemoize(func, equalityCheckOrOptions) {
+    var providedOptions = typeof equalityCheckOrOptions === "object" ? equalityCheckOrOptions : {
+        equalityCheck: equalityCheckOrOptions
+    };
+    var _providedOptions$equa = providedOptions.equalityCheck, equalityCheck = _providedOptions$equa === void 0 ? defaultEqualityCheck : _providedOptions$equa, _providedOptions$maxS = providedOptions.maxSize, maxSize = _providedOptions$maxS === void 0 ? 1 : _providedOptions$maxS, resultEqualityCheck = providedOptions.resultEqualityCheck;
+    var comparator = createCacheKeyComparator(equalityCheck);
+    var cache = maxSize === 1 ? createSingletonCache(comparator) : createLruCache(maxSize, comparator); // we reference arguments instead of spreading them for performance reasons
+    function memoized() {
+        var value = cache.get(arguments);
+        if (value === NOT_FOUND) {
+            // @ts-ignore
+            value = func.apply(null, arguments);
+            if (resultEqualityCheck) {
+                var entries = cache.getEntries();
+                var matchingEntry = entries.find(function(entry) {
+                    return resultEqualityCheck(entry.value, value);
+                });
+                if (matchingEntry) value = matchingEntry.value;
+            }
+            cache.put(arguments, value);
+        }
+        return value;
+    }
+    memoized.clearCache = function() {
+        return cache.clear();
+    };
+    return memoized;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cDNB3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "__DO_NOT_USE__ActionTypes", ()=>ActionTypes);
+parcelHelpers.export(exports, "applyMiddleware", ()=>applyMiddleware);
+parcelHelpers.export(exports, "bindActionCreators", ()=>bindActionCreators);
+parcelHelpers.export(exports, "combineReducers", ()=>combineReducers);
+parcelHelpers.export(exports, "compose", ()=>compose);
+parcelHelpers.export(exports, "createStore", ()=>createStore);
+parcelHelpers.export(exports, "legacy_createStore", ()=>legacy_createStore);
+var _objectSpread2 = require("@babel/runtime/helpers/esm/objectSpread2");
+var _objectSpread2Default = parcelHelpers.interopDefault(_objectSpread2);
+/**
+ * Adapted from React: https://github.com/facebook/react/blob/master/packages/shared/formatProdErrorMessage.js
+ *
+ * Do not require this module directly! Use normal throw error calls. These messages will be replaced with error codes
+ * during build.
+ * @param {number} code
+ */ function formatProdErrorMessage(code) {
+    return "Minified Redux error #" + code + "; visit https://redux.js.org/Errors?code=" + code + " for the full message or " + "use the non-minified dev environment for full errors. ";
+}
+// Inlined version of the `symbol-observable` polyfill
+var $$observable = function() {
+    return typeof Symbol === "function" && Symbol.observable || "@@observable";
+}();
+/**
+ * These are private action types reserved by Redux.
+ * For any unknown actions, you must return the current state.
+ * If the current state is undefined, you must return the initial state.
+ * Do not reference these action types directly in your code.
+ */ var randomString = function randomString() {
+    return Math.random().toString(36).substring(7).split("").join(".");
+};
+var ActionTypes = {
+    INIT: "@@redux/INIT" + randomString(),
+    REPLACE: "@@redux/REPLACE" + randomString(),
+    PROBE_UNKNOWN_ACTION: function PROBE_UNKNOWN_ACTION() {
+        return "@@redux/PROBE_UNKNOWN_ACTION" + randomString();
+    }
+};
+/**
+ * @param {any} obj The object to inspect.
+ * @returns {boolean} True if the argument appears to be a plain object.
+ */ function isPlainObject(obj) {
+    if (typeof obj !== "object" || obj === null) return false;
+    var proto = obj;
+    while(Object.getPrototypeOf(proto) !== null)proto = Object.getPrototypeOf(proto);
+    return Object.getPrototypeOf(obj) === proto;
+}
+// Inlined / shortened version of `kindOf` from https://github.com/jonschlinkert/kind-of
+function miniKindOf(val) {
+    if (val === void 0) return "undefined";
+    if (val === null) return "null";
+    var type = typeof val;
+    switch(type){
+        case "boolean":
+        case "string":
+        case "number":
+        case "symbol":
+        case "function":
+            return type;
+    }
+    if (Array.isArray(val)) return "array";
+    if (isDate(val)) return "date";
+    if (isError(val)) return "error";
+    var constructorName = ctorName(val);
+    switch(constructorName){
+        case "Symbol":
+        case "Promise":
+        case "WeakMap":
+        case "WeakSet":
+        case "Map":
+        case "Set":
+            return constructorName;
+    } // other
+    return type.slice(8, -1).toLowerCase().replace(/\s/g, "");
+}
+function ctorName(val) {
+    return typeof val.constructor === "function" ? val.constructor.name : null;
+}
+function isError(val) {
+    return val instanceof Error || typeof val.message === "string" && val.constructor && typeof val.constructor.stackTraceLimit === "number";
+}
+function isDate(val) {
+    if (val instanceof Date) return true;
+    return typeof val.toDateString === "function" && typeof val.getDate === "function" && typeof val.setDate === "function";
+}
+function kindOf(val) {
+    var typeOfVal = typeof val;
+    typeOfVal = miniKindOf(val);
+    return typeOfVal;
+}
+/**
+ * @deprecated
+ *
+ * **We recommend using the `configureStore` method
+ * of the `@reduxjs/toolkit` package**, which replaces `createStore`.
+ *
+ * Redux Toolkit is our recommended approach for writing Redux logic today,
+ * including store setup, reducers, data fetching, and more.
+ *
+ * **For more details, please read this Redux docs page:**
+ * **https://redux.js.org/introduction/why-rtk-is-redux-today**
+ *
+ * `configureStore` from Redux Toolkit is an improved version of `createStore` that
+ * simplifies setup and helps avoid common bugs.
+ *
+ * You should not be using the `redux` core package by itself today, except for learning purposes.
+ * The `createStore` method from the core `redux` package will not be removed, but we encourage
+ * all users to migrate to using Redux Toolkit for all Redux code.
+ *
+ * If you want to use `createStore` without this visual deprecation warning, use
+ * the `legacy_createStore` import instead:
+ *
+ * `import { legacy_createStore as createStore} from 'redux'`
+ *
+ */ function createStore(reducer, preloadedState, enhancer) {
+    var _ref2;
+    if (typeof preloadedState === "function" && typeof enhancer === "function" || typeof enhancer === "function" && typeof arguments[3] === "function") throw new Error("It looks like you are passing several store enhancers to createStore(). This is not supported. Instead, compose them together to a single function. See https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store-with-enhancers for an example.");
+    if (typeof preloadedState === "function" && typeof enhancer === "undefined") {
+        enhancer = preloadedState;
+        preloadedState = undefined;
+    }
+    if (typeof enhancer !== "undefined") {
+        if (typeof enhancer !== "function") throw new Error("Expected the enhancer to be a function. Instead, received: '" + kindOf(enhancer) + "'");
+        return enhancer(createStore)(reducer, preloadedState);
+    }
+    if (typeof reducer !== "function") throw new Error("Expected the root reducer to be a function. Instead, received: '" + kindOf(reducer) + "'");
+    var currentReducer = reducer;
+    var currentState = preloadedState;
+    var currentListeners = [];
+    var nextListeners = currentListeners;
+    var isDispatching = false;
+    /**
+   * This makes a shallow copy of currentListeners so we can use
+   * nextListeners as a temporary list while dispatching.
+   *
+   * This prevents any bugs around consumers calling
+   * subscribe/unsubscribe in the middle of a dispatch.
+   */ function ensureCanMutateNextListeners() {
+        if (nextListeners === currentListeners) nextListeners = currentListeners.slice();
+    }
+    /**
+   * Reads the state tree managed by the store.
+   *
+   * @returns {any} The current state tree of your application.
+   */ function getState() {
+        if (isDispatching) throw new Error("You may not call store.getState() while the reducer is executing. The reducer has already received the state as an argument. Pass it down from the top reducer instead of reading it from the store.");
+        return currentState;
+    }
+    /**
+   * Adds a change listener. It will be called any time an action is dispatched,
+   * and some part of the state tree may potentially have changed. You may then
+   * call `getState()` to read the current state tree inside the callback.
+   *
+   * You may call `dispatch()` from a change listener, with the following
+   * caveats:
+   *
+   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
+   * If you subscribe or unsubscribe while the listeners are being invoked, this
+   * will not have any effect on the `dispatch()` that is currently in progress.
+   * However, the next `dispatch()` call, whether nested or not, will use a more
+   * recent snapshot of the subscription list.
+   *
+   * 2. The listener should not expect to see all state changes, as the state
+   * might have been updated multiple times during a nested `dispatch()` before
+   * the listener is called. It is, however, guaranteed that all subscribers
+   * registered before the `dispatch()` started will be called with the latest
+   * state by the time it exits.
+   *
+   * @param {Function} listener A callback to be invoked on every dispatch.
+   * @returns {Function} A function to remove this change listener.
+   */ function subscribe(listener) {
+        if (typeof listener !== "function") throw new Error("Expected the listener to be a function. Instead, received: '" + kindOf(listener) + "'");
+        if (isDispatching) throw new Error("You may not call store.subscribe() while the reducer is executing. If you would like to be notified after the store has been updated, subscribe from a component and invoke store.getState() in the callback to access the latest state. See https://redux.js.org/api/store#subscribelistener for more details.");
+        var isSubscribed = true;
+        ensureCanMutateNextListeners();
+        nextListeners.push(listener);
+        return function unsubscribe() {
+            if (!isSubscribed) return;
+            if (isDispatching) throw new Error("You may not unsubscribe from a store listener while the reducer is executing. See https://redux.js.org/api/store#subscribelistener for more details.");
+            isSubscribed = false;
+            ensureCanMutateNextListeners();
+            var index = nextListeners.indexOf(listener);
+            nextListeners.splice(index, 1);
+            currentListeners = null;
+        };
+    }
+    /**
+   * Dispatches an action. It is the only way to trigger a state change.
+   *
+   * The `reducer` function, used to create the store, will be called with the
+   * current state tree and the given `action`. Its return value will
+   * be considered the **next** state of the tree, and the change listeners
+   * will be notified.
+   *
+   * The base implementation only supports plain object actions. If you want to
+   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+   * wrap your store creating function into the corresponding middleware. For
+   * example, see the documentation for the `redux-thunk` package. Even the
+   * middleware will eventually dispatch plain object actions using this method.
+   *
+   * @param {Object} action A plain object representing “what changed”. It is
+   * a good idea to keep actions serializable so you can record and replay user
+   * sessions, or use the time travelling `redux-devtools`. An action must have
+   * a `type` property which may not be `undefined`. It is a good idea to use
+   * string constants for action types.
+   *
+   * @returns {Object} For convenience, the same action object you dispatched.
+   *
+   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+   * return something else (for example, a Promise you can await).
+   */ function dispatch(action) {
+        if (!isPlainObject(action)) throw new Error("Actions must be plain objects. Instead, the actual type was: '" + kindOf(action) + "'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.");
+        if (typeof action.type === "undefined") throw new Error('Actions may not have an undefined "type" property. You may have misspelled an action type string constant.');
+        if (isDispatching) throw new Error("Reducers may not dispatch actions.");
+        try {
+            isDispatching = true;
+            currentState = currentReducer(currentState, action);
+        } finally{
+            isDispatching = false;
+        }
+        var listeners = currentListeners = nextListeners;
+        for(var i = 0; i < listeners.length; i++){
+            var listener = listeners[i];
+            listener();
+        }
+        return action;
+    }
+    /**
+   * Replaces the reducer currently used by the store to calculate the state.
+   *
+   * You might need this if your app implements code splitting and you want to
+   * load some of the reducers dynamically. You might also need this if you
+   * implement a hot reloading mechanism for Redux.
+   *
+   * @param {Function} nextReducer The reducer for the store to use instead.
+   * @returns {void}
+   */ function replaceReducer(nextReducer) {
+        if (typeof nextReducer !== "function") throw new Error("Expected the nextReducer to be a function. Instead, received: '" + kindOf(nextReducer));
+        currentReducer = nextReducer; // This action has a similiar effect to ActionTypes.INIT.
+        // Any reducers that existed in both the new and old rootReducer
+        // will receive the previous state. This effectively populates
+        // the new state tree with any relevant data from the old one.
+        dispatch({
+            type: ActionTypes.REPLACE
+        });
+    }
+    /**
+   * Interoperability point for observable/reactive libraries.
+   * @returns {observable} A minimal observable of state changes.
+   * For more information, see the observable proposal:
+   * https://github.com/tc39/proposal-observable
+   */ function observable() {
+        var _ref;
+        var outerSubscribe = subscribe;
+        return _ref = {
+            /**
+       * The minimal observable subscription method.
+       * @param {Object} observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns {subscription} An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */ subscribe: function subscribe(observer) {
+                if (typeof observer !== "object" || observer === null) throw new Error("Expected the observer to be an object. Instead, received: '" + kindOf(observer) + "'");
+                function observeState() {
+                    if (observer.next) observer.next(getState());
+                }
+                observeState();
+                var unsubscribe = outerSubscribe(observeState);
+                return {
+                    unsubscribe: unsubscribe
+                };
+            }
+        }, _ref[$$observable] = function() {
+            return this;
+        }, _ref;
+    } // When a store is created, an "INIT" action is dispatched so that every
+    // reducer returns their initial state. This effectively populates
+    // the initial state tree.
+    dispatch({
+        type: ActionTypes.INIT
+    });
+    return _ref2 = {
+        dispatch: dispatch,
+        subscribe: subscribe,
+        getState: getState,
+        replaceReducer: replaceReducer
+    }, _ref2[$$observable] = observable, _ref2;
+}
+/**
+ * Creates a Redux store that holds the state tree.
+ *
+ * **We recommend using `configureStore` from the
+ * `@reduxjs/toolkit` package**, which replaces `createStore`:
+ * **https://redux.js.org/introduction/why-rtk-is-redux-today**
+ *
+ * The only way to change the data in the store is to call `dispatch()` on it.
+ *
+ * There should only be a single store in your app. To specify how different
+ * parts of the state tree respond to actions, you may combine several reducers
+ * into a single reducer function by using `combineReducers`.
+ *
+ * @param {Function} reducer A function that returns the next state tree, given
+ * the current state tree and the action to handle.
+ *
+ * @param {any} [preloadedState] The initial state. You may optionally specify it
+ * to hydrate the state from the server in universal apps, or to restore a
+ * previously serialized user session.
+ * If you use `combineReducers` to produce the root reducer function, this must be
+ * an object with the same shape as `combineReducers` keys.
+ *
+ * @param {Function} [enhancer] The store enhancer. You may optionally specify it
+ * to enhance the store with third-party capabilities such as middleware,
+ * time travel, persistence, etc. The only store enhancer that ships with Redux
+ * is `applyMiddleware()`.
+ *
+ * @returns {Store} A Redux store that lets you read the state, dispatch actions
+ * and subscribe to changes.
+ */ var legacy_createStore = createStore;
+/**
+ * Prints a warning in the console if it exists.
+ *
+ * @param {String} message The warning message.
+ * @returns {void}
+ */ function warning(message) {
+    /* eslint-disable no-console */ if (typeof console !== "undefined" && typeof console.error === "function") console.error(message);
+    /* eslint-enable no-console */ try {
+        // This error was thrown as a convenience so that if you enable
+        // "break on all exceptions" in your console,
+        // it would pause the execution at this line.
+        throw new Error(message);
+    } catch (e) {} // eslint-disable-line no-empty
+}
+function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+    var reducerKeys = Object.keys(reducers);
+    var argumentName = action && action.type === ActionTypes.INIT ? "preloadedState argument passed to createStore" : "previous state received by the reducer";
+    if (reducerKeys.length === 0) return "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";
+    if (!isPlainObject(inputState)) return "The " + argumentName + ' has unexpected type of "' + kindOf(inputState) + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
+    var unexpectedKeys = Object.keys(inputState).filter(function(key) {
+        return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];
+    });
+    unexpectedKeys.forEach(function(key) {
+        unexpectedKeyCache[key] = true;
+    });
+    if (action && action.type === ActionTypes.REPLACE) return;
+    if (unexpectedKeys.length > 0) return "Unexpected " + (unexpectedKeys.length > 1 ? "keys" : "key") + " " + ('"' + unexpectedKeys.join('", "') + '" found in ' + argumentName + ". ") + "Expected to find one of the known reducer keys instead: " + ('"' + reducerKeys.join('", "') + '". Unexpected keys will be ignored.');
+}
+function assertReducerShape(reducers) {
+    Object.keys(reducers).forEach(function(key) {
+        var reducer = reducers[key];
+        var initialState = reducer(undefined, {
+            type: ActionTypes.INIT
+        });
+        if (typeof initialState === "undefined") throw new Error('The slice reducer for key "' + key + '" returned undefined during initialization. ' + "If the state passed to the reducer is undefined, you must " + "explicitly return the initial state. The initial state may " + "not be undefined. If you don't want to set a value for this reducer, " + "you can use null instead of undefined.");
+        if (typeof reducer(undefined, {
+            type: ActionTypes.PROBE_UNKNOWN_ACTION()
+        }) === "undefined") throw new Error('The slice reducer for key "' + key + '" returned undefined when probed with a random type. ' + ("Don't try to handle '" + ActionTypes.INIT + '\' or other actions in "redux/*" ') + "namespace. They are considered private. Instead, you must return the " + "current state for any unknown actions, unless it is undefined, " + "in which case you must return the initial state, regardless of the " + "action type. The initial state may not be undefined, but can be null.");
+    });
+}
+/**
+ * Turns an object whose values are different reducer functions, into a single
+ * reducer function. It will call every child reducer, and gather their results
+ * into a single state object, whose keys correspond to the keys of the passed
+ * reducer functions.
+ *
+ * @param {Object} reducers An object whose values correspond to different
+ * reducer functions that need to be combined into one. One handy way to obtain
+ * it is to use ES6 `import * as reducers` syntax. The reducers may never return
+ * undefined for any action. Instead, they should return their initial state
+ * if the state passed to them was undefined, and the current state for any
+ * unrecognized action.
+ *
+ * @returns {Function} A reducer function that invokes every reducer inside the
+ * passed object, and builds a state object with the same shape.
+ */ function combineReducers(reducers) {
+    var reducerKeys = Object.keys(reducers);
+    var finalReducers = {};
+    for(var i = 0; i < reducerKeys.length; i++){
+        var key = reducerKeys[i];
+        if (typeof reducers[key] === "undefined") warning('No reducer provided for key "' + key + '"');
+        if (typeof reducers[key] === "function") finalReducers[key] = reducers[key];
+    }
+    var finalReducerKeys = Object.keys(finalReducers); // This is used to make sure we don't warn about the same
+    // keys multiple times.
+    var unexpectedKeyCache;
+    unexpectedKeyCache = {};
+    var shapeAssertionError;
+    try {
+        assertReducerShape(finalReducers);
+    } catch (e) {
+        shapeAssertionError = e;
+    }
+    return function combination(state, action) {
+        if (state === void 0) state = {};
+        if (shapeAssertionError) throw shapeAssertionError;
+        var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
+        if (warningMessage) warning(warningMessage);
+        var hasChanged = false;
+        var nextState = {};
+        for(var _i = 0; _i < finalReducerKeys.length; _i++){
+            var _key = finalReducerKeys[_i];
+            var reducer = finalReducers[_key];
+            var previousStateForKey = state[_key];
+            var nextStateForKey = reducer(previousStateForKey, action);
+            if (typeof nextStateForKey === "undefined") {
+                var actionType = action && action.type;
+                throw new Error("When called with an action of type " + (actionType ? '"' + String(actionType) + '"' : "(unknown type)") + ', the slice reducer for key "' + _key + '" returned undefined. ' + "To ignore an action, you must explicitly return the previous state. " + "If you want this reducer to hold no value, you can return null instead of undefined.");
+            }
+            nextState[_key] = nextStateForKey;
+            hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+        }
+        hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+        return hasChanged ? nextState : state;
+    };
+}
+function bindActionCreator(actionCreator, dispatch) {
+    return function() {
+        return dispatch(actionCreator.apply(this, arguments));
+    };
+}
+/**
+ * Turns an object whose values are action creators, into an object with the
+ * same keys, but with every function wrapped into a `dispatch` call so they
+ * may be invoked directly. This is just a convenience method, as you can call
+ * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
+ *
+ * For convenience, you can also pass an action creator as the first argument,
+ * and get a dispatch wrapped function in return.
+ *
+ * @param {Function|Object} actionCreators An object whose values are action
+ * creator functions. One handy way to obtain it is to use ES6 `import * as`
+ * syntax. You may also pass a single function.
+ *
+ * @param {Function} dispatch The `dispatch` function available on your Redux
+ * store.
+ *
+ * @returns {Function|Object} The object mimicking the original object, but with
+ * every action creator wrapped into the `dispatch` call. If you passed a
+ * function as `actionCreators`, the return value will also be a single
+ * function.
+ */ function bindActionCreators(actionCreators, dispatch) {
+    if (typeof actionCreators === "function") return bindActionCreator(actionCreators, dispatch);
+    if (typeof actionCreators !== "object" || actionCreators === null) throw new Error("bindActionCreators expected an object or a function, but instead received: '" + kindOf(actionCreators) + "'. " + 'Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
+    var boundActionCreators = {};
+    for(var key in actionCreators){
+        var actionCreator = actionCreators[key];
+        if (typeof actionCreator === "function") boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+    }
+    return boundActionCreators;
+}
+/**
+ * Composes single-argument functions from right to left. The rightmost
+ * function can take multiple arguments as it provides the signature for
+ * the resulting composite function.
+ *
+ * @param {...Function} funcs The functions to compose.
+ * @returns {Function} A function obtained by composing the argument functions
+ * from right to left. For example, compose(f, g, h) is identical to doing
+ * (...args) => f(g(h(...args))).
+ */ function compose() {
+    for(var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++)funcs[_key] = arguments[_key];
+    if (funcs.length === 0) return function(arg) {
+        return arg;
+    };
+    if (funcs.length === 1) return funcs[0];
+    return funcs.reduce(function(a, b) {
+        return function() {
+            return a(b.apply(void 0, arguments));
+        };
+    });
+}
+/**
+ * Creates a store enhancer that applies middleware to the dispatch method
+ * of the Redux store. This is handy for a variety of tasks, such as expressing
+ * asynchronous actions in a concise manner, or logging every action payload.
+ *
+ * See `redux-thunk` package as an example of the Redux middleware.
+ *
+ * Because middleware is potentially asynchronous, this should be the first
+ * store enhancer in the composition chain.
+ *
+ * Note that each middleware will be given the `dispatch` and `getState` functions
+ * as named arguments.
+ *
+ * @param {...Function} middlewares The middleware chain to be applied.
+ * @returns {Function} A store enhancer applying the middleware.
+ */ function applyMiddleware() {
+    for(var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++)middlewares[_key] = arguments[_key];
+    return function(createStore) {
+        return function() {
+            var store = createStore.apply(void 0, arguments);
+            var _dispatch = function dispatch() {
+                throw new Error("Dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.");
+            };
+            var middlewareAPI = {
+                getState: store.getState,
+                dispatch: function dispatch() {
+                    return _dispatch.apply(void 0, arguments);
+                }
+            };
+            var chain = middlewares.map(function(middleware) {
+                return middleware(middlewareAPI);
+            });
+            _dispatch = compose.apply(void 0, chain)(store.dispatch);
+            return (0, _objectSpread2Default.default)((0, _objectSpread2Default.default)({}, store), {}, {
+                dispatch: _dispatch
+            });
+        };
+    };
+}
+/*
+ * This is a dummy function to check if the function name has been altered by minification.
+ * If the function has been minified and NODE_ENV !== 'production', warn the user.
+ */ function isCrushed() {}
+if (typeof isCrushed.name === "string" && isCrushed.name !== "isCrushed") warning('You are currently using minified code outside of NODE_ENV === "production". This means that you are running a slower development build of Redux. You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) to ensure you have the correct code for your production build.');
+
+},{"@babel/runtime/helpers/esm/objectSpread2":"bS0uk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bS0uk":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _definePropertyJs = require("./defineProperty.js");
+var _definePropertyJsDefault = parcelHelpers.interopDefault(_definePropertyJs);
 function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
@@ -23677,17 +28941,22 @@ function ownKeys(object, enumerableOnly) {
     }
     return keys;
 }
-function _objectSpread(target) {
+function _objectSpread2(target) {
     for(var i = 1; i < arguments.length; i++){
         var source = null != arguments[i] ? arguments[i] : {};
         i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
+            (0, _definePropertyJsDefault.default)(target, key, source[key]);
         }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
             Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
     }
     return target;
 }
+exports.default = _objectSpread2;
+
+},{"./defineProperty.js":"hbmCA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hbmCA":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
 function _defineProperty(obj, key, value) {
     if (key in obj) Object.defineProperty(obj, key, {
         value: value,
@@ -23698,43 +28967,182 @@ function _defineProperty(obj, key, value) {
     else obj[key] = value;
     return obj;
 }
-/**
- * Menu context.
- * @type {React.Context<{}>}
- */ var CreatedMenuContext = /*#__PURE__*/ (0, _react.createContext)({});
-/**
- * Menu context component.
- *
- * This component will supply application wide data for components hooking into it.
- *
- * @param {Object} props component properties
- * @param {any} props.startupValue startup value for context
- * @param {React.ReactNode} props.children component children
- * @constructor
- */ exports.CreatedMenuContext = CreatedMenuContext;
-function MenuContext(_ref) {
-    var children = _ref.children, startupValue = _ref.startupValue;
-    var setFilterValue = function setFilterValue(val) {
-        setContextObject(_objectSpread(_objectSpread({}, contextObject), {}, {
-            app: _objectSpread(_objectSpread({}, contextObject.app), {}, {
-                blockFilter: val
-            })
-        }));
-    };
-    startupValue.actions = {
-        setFilterValue: setFilterValue
-    };
-    var _useState = (0, _react.useState)(startupValue), _useState2 = _slicedToArray(_useState, 2), contextObject = _useState2[0], setContextObject = _useState2[1];
-    return /*#__PURE__*/ _react["default"].createElement(CreatedMenuContext.Provider, {
-        value: contextObject
-    }, children);
-}
-/**
- * @module MenuContext
- */ var _default = MenuContext;
-exports["default"] = _default;
+exports.default = _defineProperty;
 
-},{"react":"21dqq"}],"inddj":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iFVTZ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/** A function that accepts a potential "extra argument" value to be injected later,
+ * and returns an instance of the thunk middleware that uses that value
+ */ function createThunkMiddleware(extraArgument) {
+    // Standard Redux middleware definition pattern:
+    // See: https://redux.js.org/tutorials/fundamentals/part-4-store#writing-custom-middleware
+    var middleware = function middleware(_ref) {
+        var dispatch = _ref.dispatch, getState = _ref.getState;
+        return function(next) {
+            return function(action) {
+                // The thunk middleware looks for any functions that were passed to `store.dispatch`.
+                // If this "action" is really a function, call it and return the result.
+                if (typeof action === "function") // Inject the store's `dispatch` and `getState` methods, as well as any "extra arg"
+                return action(dispatch, getState, extraArgument);
+                 // Otherwise, pass the action down the middleware chain as usual
+                return next(action);
+            };
+        };
+    };
+    return middleware;
+}
+var thunk = createThunkMiddleware(); // Attach the factory function so users can create a customized version
+// with whatever "extra arg" they want to inject into their thunks
+thunk.withExtraArgument = createThunkMiddleware;
+exports.default = thunk;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5jf4":[function(require,module,exports) {
+// shim for using process in browser
+var process = module.exports = {};
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+var cachedSetTimeout;
+var cachedClearTimeout;
+function defaultSetTimout() {
+    throw new Error("setTimeout has not been defined");
+}
+function defaultClearTimeout() {
+    throw new Error("clearTimeout has not been defined");
+}
+(function() {
+    try {
+        if (typeof setTimeout === "function") cachedSetTimeout = setTimeout;
+        else cachedSetTimeout = defaultSetTimout;
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === "function") cachedClearTimeout = clearTimeout;
+        else cachedClearTimeout = defaultClearTimeout;
+    } catch (e1) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+})();
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) //normal enviroments in sane situations
+    return setTimeout(fun, 0);
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch (e) {
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch (e1) {
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) //normal enviroments in sane situations
+    return clearTimeout(marker);
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e) {
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e1) {
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) return;
+    draining = false;
+    if (currentQueue.length) queue = currentQueue.concat(queue);
+    else queueIndex = -1;
+    if (queue.length) drainQueue();
+}
+function drainQueue() {
+    if (draining) return;
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+    var len = queue.length;
+    while(len){
+        currentQueue = queue;
+        queue = [];
+        while(++queueIndex < len)if (currentQueue) currentQueue[queueIndex].run();
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+process.nextTick = function(fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) for(var i = 1; i < arguments.length; i++)args[i - 1] = arguments[i];
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) runTimeout(drainQueue);
+};
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function() {
+    this.fun.apply(null, this.array);
+};
+process.title = "browser";
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ""; // empty string to avoid regexp issues
+process.versions = {};
+function noop() {}
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+process.listeners = function(name) {
+    return [];
+};
+process.binding = function(name) {
+    throw new Error("process.binding is not supported");
+};
+process.cwd = function() {
+    return "/";
+};
+process.chdir = function(dir) {
+    throw new Error("process.chdir is not supported");
+};
+process.umask = function() {
+    return 0;
+};
+
+},{}],"inddj":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -23743,9 +29151,9 @@ exports["default"] = void 0;
 var _react = _interopRequireDefault(require("react"));
 var _ContentPhrase = _interopRequireDefault(require("$Components/ContentPhrase"));
 var _BlockStatusFilterControl = _interopRequireDefault(require("$Components/BlockStatusFilterControl"));
+var _app = require("$Stores/settings-menu/slices/app");
+var _withStore = _interopRequireDefault(require("$HOC/withStore"));
 var _BlockControlsContainer = _interopRequireDefault(require("$Components/BlockControlsContainer"));
-var _withMenuContext = _interopRequireDefault(require("$HOC/withMenuContext"));
-var _MenuContext = require("$Components/MenuContext");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -23757,25 +29165,33 @@ function _interopRequireDefault(obj) {
  * @constructor
  *
  * @param {Object} props component properties
- * @param {Object} props.menuData menu context data, will be supplied via HOC
+ * @param {String} props.blockFilter current block filter, will be supplied via HOC
+ * @param {Function} props.setBlockFilterValue set block filter value for the app, will be supplied via HOC
  */ function MenuContent(_ref) {
-    var menuData = _ref.menuData;
-    var changeFilter = function changeFilter(filterVar) {
-        menuData.actions.setFilterValue(filterVar);
-    };
+    var blockFilter = _ref.blockFilter, setBlockFilterValue = _ref.setBlockFilterValue;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "menu-content"
     }, /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null), /*#__PURE__*/ _react["default"].createElement(_BlockStatusFilterControl["default"], {
-        filterVal: menuData.app.blockFilter,
-        onFilterChanged: changeFilter
+        filterVal: blockFilter,
+        onFilterChanged: setBlockFilterValue
     }), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null));
 }
+var selectMapping = function selectMapping(selector) {
+    return {
+        blockFilter: selector(_app.getBlockFilter)
+    };
+};
+var actionMapping = function actionMapping() {
+    return {
+        setBlockFilterValue: _app.setBlockFilter
+    };
+};
 /**
  * @module MenuContent
- */ var _default = (0, _withMenuContext["default"])(MenuContent);
+ */ var _default = (0, _withStore["default"])(MenuContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","$Components/ContentPhrase":"fjblj","$Components/BlockStatusFilterControl":"hebBQ","$Components/BlockControlsContainer":"e69CO","$HOC/withMenuContext":"607Jq","$Components/MenuContext":"ep2QN"}],"fjblj":[function(require,module,exports) {
+},{"react":"21dqq","$Components/ContentPhrase":"fjblj","$Components/BlockStatusFilterControl":"hebBQ","$Components/BlockControlsContainer":"e69CO","$Stores/settings-menu/slices/app":"c28DV","$HOC/withStore":"kWmDy"}],"fjblj":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -24195,91 +29611,82 @@ exports["default"] = _default;
 
 },{"react":"21dqq"}],"e69CO":[function(require,module,exports) {
 "use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 var _reactTransitionGroup = require("react-transition-group");
-var _withMenuContext = _interopRequireDefault(require("$HOC/withMenuContext"));
 var _BlockControl = _interopRequireDefault(require("$Components/BlockControl"));
 var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
+var _withStore = _interopRequireDefault(require("$HOC/withStore"));
+var _blocks = require("$Stores/settings-menu/slices/blocks");
+var _app = require("$Stores/settings-menu/slices/app");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-// eslint-disable-next-line no-unused-vars
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
 /**
  * Block controls container.
  * @constructor
  *
  * @param {Object} props component properties
- * @param {Object} props.menuData menu data, will be supplied via context
+ * @param {Object} props.blocks menu data, will be supplied via HOC
+ * @param {Object} props.blockFilter current filter for block status, will be supplied via HOC
+ * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  */ function BlockControlsContainer(_ref) {
-    var menuData = _ref.menuData;
-    var statusData = menuData.blocks.statusData.reduce(function(carry, _ref2) {
-        var active = _ref2.active, name = _ref2.name;
-        carry[name] = active;
-        return carry;
-    }, {});
+    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus;
     /**
-   * Get status of given block id
-   * @param {String} blockId registered block id
-   * @returns {Boolean} status
-   */ var getStatus = function getStatus(blockId) {
-        return statusData[blockId];
+   * Handle block status change
+   * @param {String} blockId target id
+   * @param {boolean} status status value
+   */ var handleBlockStatusChange = function handleBlockStatusChange(blockId, status) {
+        setBlockStatus({
+            id: blockId,
+            status: status
+        });
     };
     return /*#__PURE__*/ _react["default"].createElement(_reactTransitionGroup.TransitionGroup, {
         className: "controls-container"
-    }, menuData.blocks.info.sort(function(a, b) {
+    }, _toConsumableArray(blocks).sort(function(a, b) {
         var aName = a.title;
         var bName = b.title;
         if (aName < bName) return -1;
         else if (aName > bName) return 1;
         return 0;
-    }).filter(function(_ref3) {
-        var name = _ref3.name;
-        var currentFilter = menuData.app.blockFilter;
-        if (currentFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL) return true;
-        var blockStatus = getStatus(name) ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
-        return blockStatus === currentFilter;
-    }).map(function(_ref4) {
-        var title = _ref4.title, name = _ref4.name, icon = _ref4.icon;
+    }).filter(function(_ref2) {
+        var active = _ref2.active;
+        if (blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL) return true;
+        var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
+        return blockStatus === blockFilter;
+    }).map(function(_ref3) {
+        var title = _ref3.title, name = _ref3.name, icon = _ref3.icon, active = _ref3.active;
         return /*#__PURE__*/ _react["default"].createElement(_reactTransitionGroup.CSSTransition, {
             timeout: 200,
             key: name,
@@ -24288,400 +29695,29 @@ function _interopRequireWildcard(obj, nodeInterop) {
             key: name,
             title: title,
             blockId: name,
-            status: getStatus(name),
-            iconObject: icon.src
+            status: active,
+            iconObject: icon,
+            onStatusChange: handleBlockStatusChange
         }));
     }));
 }
-/**
- * @module BlockControlsContainer
- */ var _default = (0, _withMenuContext["default"])(BlockControlsContainer);
-exports["default"] = _default;
-
-},{"react":"21dqq","$HOC/withMenuContext":"607Jq","$Components/BlockControl":"h5tMi","$Components/BlockStatusFilterControl":"hebBQ","react-transition-group":"fZSkB"}],"h5tMi":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("react"));
-var _ToggleControl = _interopRequireDefault(require("$Components/ToggleControl"));
-var _MenuButton = _interopRequireDefault(require("$Components/MenuButton"));
-var _withIcon = _interopRequireDefault(require("$HOC/withIcon"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
+var selectMapping = function selectMapping(selector) {
+    return {
+        blocks: selector(_blocks.getBlocks),
+        blockFilter: selector(_app.getBlockFilter)
     };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-    if (_i == null) return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _s, _e;
-    try {
-        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
-            _arr.push(_s.value);
-            if (i && _arr.length === i) break;
-        }
-    } catch (err) {
-        _d = true;
-        _e = err;
-    } finally{
-        try {
-            if (!_n && _i["return"] != null) _i["return"]();
-        } finally{
-            if (_d) throw _e;
-        }
-    }
-    return _arr;
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-}
-/**
- * Menu block control component.
- *
- * This control will be used for both enabling/disabling blocks and showing info about them.
- * @constructor
- *
- * @param {Object} props component properties
- * @param {String} props.title block title
- * @param {String} props.blockId registry id of block
- * @param {Boolean} props.status block status
- * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
- *
- */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement;
-    var initialRender = (0, _react.useRef)(true);
-    var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    var howToUse = function howToUse() {
-        // TODO [ErdemBircan] remove for production
-        console.log("showing how-to for ".concat(blockId));
-    };
-    (0, _react.useEffect)(function() {
-        if (initialRender.current) initialRender.current = false;
-        else // TODO [ErdemBircan] remove for production
-        console.log("change ".concat(blockId, " status to: ").concat(innerStatus));
-    }, [
-        innerStatus
-    ]);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-control",
-        "data-enabled": JSON.stringify(innerStatus)
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-title"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-title-left-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "title-icon"
-    }, iconElement), title), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-title-right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
-        onStatusChange: setInnerStatus,
-        status: innerStatus
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-info"
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-howto"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        title: "How to Use",
-        status: innerStatus,
-        onClickHandler: howToUse
-    })));
-}
-/**
- * @module BlockControl
- */ var _default = (0, _withIcon["default"])(BlockControl);
-exports["default"] = _default;
-
-},{"react":"21dqq","$Components/ToggleControl":"a7r96","$Components/MenuButton":"cbTU3","$HOC/withIcon":"l4uaA"}],"a7r96":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("react"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-    if (_i == null) return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _s, _e;
-    try {
-        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
-            _arr.push(_s.value);
-            if (i && _arr.length === i) break;
-        }
-    } catch (err) {
-        _d = true;
-        _e = err;
-    } finally{
-        try {
-            if (!_n && _i["return"] != null) _i["return"]();
-        } finally{
-            if (_d) throw _e;
-        }
-    }
-    return _arr;
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-}
-/**
- * Toggle control component.
- *
- * @constructor
- * @param {Object} props component properties
- * @param {Boolean} props.status control status
- * @param {Function} props.onStatusChange status changed callback
- */ function ToggleControl(_ref) {
-    var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange;
-    var initialRender = (0, _react.useRef)(true);
-    var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    (0, _react.useEffect)(function() {
-        if (initialRender.current) initialRender.current = false;
-        else onStatusChange(innerStatus);
-    }, [
-        innerStatus
-    ]);
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    _react["default"].createElement("div", {
-        onClick: function onClick() {
-            return setInnerStatus(!innerStatus);
-        },
-        className: "ub-toggle-control",
-        "data-enabled": JSON.stringify(innerStatus)
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "knob"
-    })));
-}
-/**
- * @module ToggleControl;
- */ var _default = ToggleControl;
-exports["default"] = _default;
-
-},{"react":"21dqq"}],"cbTU3":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Menu button component.
- *
- * @param {Object} props component properties
- * @param {String} props.title button title
- * @param {Function} [props.onClickHandler=()=>{}] click callback
- * @param {Boolean} [props.status=false] disabled status
- * @constructor
- */ function MenuButton(_ref) {
-    var title = _ref.title, _ref$onClickHandler = _ref.onClickHandler, onClickHandler = _ref$onClickHandler === void 0 ? function() {} : _ref$onClickHandler, _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status;
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    _react["default"].createElement("div", {
-        onClick: function onClick() {
-            if (status) onClickHandler();
-        },
-        className: "ub-menu-button",
-        "data-enabled": JSON.stringify(status)
-    }, title));
-}
-/**
- * @module MenuButton
- */ var _default = MenuButton;
-exports["default"] = _default;
-
-},{"react":"21dqq"}],"l4uaA":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("react"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _extends() {
-    _extends = Object.assign ? Object.assign.bind() : function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-/**
- * Hoc for creating and adding icon element by using Gutenberg block icon attribute object.
- *
- * @param {React.ElementType} BaseComponent target component
- * @returns {Function} function to use as HOC
- */ var withIcon = function withIcon(BaseComponent) {
-    return function(props) {
-        var iconElement = "x";
-        if (!props.iconObject || _typeof(props.iconObject) !== "object") throw new Error("invalid type of icon object is supplied to withIcon HOC");
-        else {
-            var iconObject = props.iconObject;
-            var type = iconObject.type, iconProps = iconObject.props;
-            iconElement = /*#__PURE__*/ (0, _react.createElement)(type, iconProps);
-        }
-        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, {
-            iconElement: iconElement
-        }));
+};
+var actionMapping = function actionMapping() {
+    return {
+        setBlockStatus: _blocks.setBlockActiveStatus
     };
 };
 /**
- * @module withIcon
- */ var _default = withIcon;
+ * @module BlockControlsContainer
+ */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq"}],"fZSkB":[function(require,module,exports) {
+},{"react":"21dqq","react-transition-group":"fZSkB","$Components/BlockControl":"h5tMi","$Components/BlockStatusFilterControl":"hebBQ","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/blocks":"ohEvx","$Stores/settings-menu/slices/app":"c28DV"}],"fZSkB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "CSSTransition", ()=>(0, _csstransitionDefault.default));
@@ -25036,69 +30072,7 @@ CSSTransition.propTypes = (0, _extendsDefault.default)({}, (0, _transitionDefaul
 });
 exports.default = CSSTransition;
 
-},{"@babel/runtime/helpers/esm/extends":"fTBFS","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"adHgr","@babel/runtime/helpers/esm/inheritsLoose":"9u2Z8","prop-types":"7wKI2","dom-helpers/addClass":"7dIIz","dom-helpers/removeClass":"66hgg","react":"21dqq","./Transition":"cKsrS","./utils/PropTypes":"9Zqaa","./utils/reflow":"V4VjQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fTBFS":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function _extends() {
-    _extends = Object.assign || function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-exports.default = _extends;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"adHgr":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-exports.default = _objectWithoutPropertiesLoose;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9u2Z8":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"fTBFS","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"adHgr","@babel/runtime/helpers/esm/inheritsLoose":"9u2Z8","prop-types":"7wKI2","dom-helpers/addClass":"7dIIz","dom-helpers/removeClass":"66hgg","react":"21dqq","./Transition":"cKsrS","./utils/PropTypes":"9Zqaa","./utils/reflow":"V4VjQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9u2Z8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _setPrototypeOfJs = require("./setPrototypeOf.js");
@@ -25129,167 +30103,7 @@ var ReactIs = require("react-is");
 var throwOnDirectAccess = true;
 module.exports = require("./factoryWithTypeCheckers")(ReactIs.isElement, throwOnDirectAccess);
 
-},{"react-is":"7EuwB","./factoryWithTypeCheckers":"bBUgD"}],"7EuwB":[function(require,module,exports) {
-"use strict";
-module.exports = require("./cjs/react-is.development.js");
-
-},{"./cjs/react-is.development.js":"5DsXl"}],"5DsXl":[function(require,module,exports) {
-/** @license React v16.13.1
- * react-is.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */ "use strict";
-(function() {
-    "use strict";
-    // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
-    // nor polyfill, then a plain number is used for performance.
-    var hasSymbol = typeof Symbol === "function" && Symbol.for;
-    var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for("react.element") : 0xeac7;
-    var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for("react.portal") : 0xeaca;
-    var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for("react.fragment") : 0xeacb;
-    var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for("react.strict_mode") : 0xeacc;
-    var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for("react.profiler") : 0xead2;
-    var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for("react.provider") : 0xeacd;
-    var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for("react.context") : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
-    // (unstable) APIs that have been removed. Can we remove the symbols?
-    var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for("react.async_mode") : 0xeacf;
-    var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for("react.concurrent_mode") : 0xeacf;
-    var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for("react.forward_ref") : 0xead0;
-    var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for("react.suspense") : 0xead1;
-    var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for("react.suspense_list") : 0xead8;
-    var REACT_MEMO_TYPE = hasSymbol ? Symbol.for("react.memo") : 0xead3;
-    var REACT_LAZY_TYPE = hasSymbol ? Symbol.for("react.lazy") : 0xead4;
-    var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for("react.block") : 0xead9;
-    var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for("react.fundamental") : 0xead5;
-    var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for("react.responder") : 0xead6;
-    var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for("react.scope") : 0xead7;
-    function isValidElementType(type) {
-        return typeof type === "string" || typeof type === "function" || type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
-    }
-    function typeOf(object) {
-        if (typeof object === "object" && object !== null) {
-            var $$typeof = object.$$typeof;
-            switch($$typeof){
-                case REACT_ELEMENT_TYPE:
-                    var type = object.type;
-                    switch(type){
-                        case REACT_ASYNC_MODE_TYPE:
-                        case REACT_CONCURRENT_MODE_TYPE:
-                        case REACT_FRAGMENT_TYPE:
-                        case REACT_PROFILER_TYPE:
-                        case REACT_STRICT_MODE_TYPE:
-                        case REACT_SUSPENSE_TYPE:
-                            return type;
-                        default:
-                            var $$typeofType = type && type.$$typeof;
-                            switch($$typeofType){
-                                case REACT_CONTEXT_TYPE:
-                                case REACT_FORWARD_REF_TYPE:
-                                case REACT_LAZY_TYPE:
-                                case REACT_MEMO_TYPE:
-                                case REACT_PROVIDER_TYPE:
-                                    return $$typeofType;
-                                default:
-                                    return $$typeof;
-                            }
-                    }
-                case REACT_PORTAL_TYPE:
-                    return $$typeof;
-            }
-        }
-        return undefined;
-    } // AsyncMode is deprecated along with isAsyncMode
-    var AsyncMode = REACT_ASYNC_MODE_TYPE;
-    var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
-    var ContextConsumer = REACT_CONTEXT_TYPE;
-    var ContextProvider = REACT_PROVIDER_TYPE;
-    var Element = REACT_ELEMENT_TYPE;
-    var ForwardRef = REACT_FORWARD_REF_TYPE;
-    var Fragment = REACT_FRAGMENT_TYPE;
-    var Lazy = REACT_LAZY_TYPE;
-    var Memo = REACT_MEMO_TYPE;
-    var Portal = REACT_PORTAL_TYPE;
-    var Profiler = REACT_PROFILER_TYPE;
-    var StrictMode = REACT_STRICT_MODE_TYPE;
-    var Suspense = REACT_SUSPENSE_TYPE;
-    var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
-    function isAsyncMode(object) {
-        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-            hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
-            console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
-        }
-        return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
-    }
-    function isConcurrentMode(object) {
-        return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
-    }
-    function isContextConsumer(object) {
-        return typeOf(object) === REACT_CONTEXT_TYPE;
-    }
-    function isContextProvider(object) {
-        return typeOf(object) === REACT_PROVIDER_TYPE;
-    }
-    function isElement(object) {
-        return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-    }
-    function isForwardRef(object) {
-        return typeOf(object) === REACT_FORWARD_REF_TYPE;
-    }
-    function isFragment(object) {
-        return typeOf(object) === REACT_FRAGMENT_TYPE;
-    }
-    function isLazy(object) {
-        return typeOf(object) === REACT_LAZY_TYPE;
-    }
-    function isMemo(object) {
-        return typeOf(object) === REACT_MEMO_TYPE;
-    }
-    function isPortal(object) {
-        return typeOf(object) === REACT_PORTAL_TYPE;
-    }
-    function isProfiler(object) {
-        return typeOf(object) === REACT_PROFILER_TYPE;
-    }
-    function isStrictMode(object) {
-        return typeOf(object) === REACT_STRICT_MODE_TYPE;
-    }
-    function isSuspense(object) {
-        return typeOf(object) === REACT_SUSPENSE_TYPE;
-    }
-    exports.AsyncMode = AsyncMode;
-    exports.ConcurrentMode = ConcurrentMode;
-    exports.ContextConsumer = ContextConsumer;
-    exports.ContextProvider = ContextProvider;
-    exports.Element = Element;
-    exports.ForwardRef = ForwardRef;
-    exports.Fragment = Fragment;
-    exports.Lazy = Lazy;
-    exports.Memo = Memo;
-    exports.Portal = Portal;
-    exports.Profiler = Profiler;
-    exports.StrictMode = StrictMode;
-    exports.Suspense = Suspense;
-    exports.isAsyncMode = isAsyncMode;
-    exports.isConcurrentMode = isConcurrentMode;
-    exports.isContextConsumer = isContextConsumer;
-    exports.isContextProvider = isContextProvider;
-    exports.isElement = isElement;
-    exports.isForwardRef = isForwardRef;
-    exports.isFragment = isFragment;
-    exports.isLazy = isLazy;
-    exports.isMemo = isMemo;
-    exports.isPortal = isPortal;
-    exports.isProfiler = isProfiler;
-    exports.isStrictMode = isStrictMode;
-    exports.isSuspense = isSuspense;
-    exports.isValidElementType = isValidElementType;
-    exports.typeOf = typeOf;
-})();
-
-},{}],"bBUgD":[function(require,module,exports) {
+},{"react-is":"7EuwB","./factoryWithTypeCheckers":"bBUgD"}],"bBUgD":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -27079,7 +31893,5278 @@ SwitchTransition.defaultProps = {
 };
 exports.default = SwitchTransition;
 
-},{"@babel/runtime/helpers/esm/inheritsLoose":"9u2Z8","react":"21dqq","prop-types":"7wKI2","./Transition":"cKsrS","./TransitionGroupContext":"47LXo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/inheritsLoose":"9u2Z8","react":"21dqq","prop-types":"7wKI2","./Transition":"cKsrS","./TransitionGroupContext":"47LXo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"h5tMi":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+var _ToggleControl = _interopRequireDefault(require("$Components/ToggleControl"));
+var _MenuButton = _interopRequireDefault(require("$Components/MenuButton"));
+var _withIcon = _interopRequireDefault(require("$HOC/withIcon"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Menu block control component.
+ *
+ * This control will be used for both enabling/disabling blocks and showing info about them.
+ * @constructor
+ *
+ * @param {Object} props component properties
+ * @param {String} props.title block title
+ * @param {String} props.blockId registry id of block
+ * @param {Boolean} props.status block status
+ * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
+ * @param {Function} props.onStatusChange callback for status change event
+ *
+ */ function BlockControl(_ref) {
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange;
+    var initialRender = (0, _react.useRef)(true);
+    var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
+    var howToUse = function howToUse() {
+        // TODO [ErdemBircan] remove for production
+        console.log("showing how-to for ".concat(blockId));
+    };
+    (0, _react.useEffect)(function() {
+        if (initialRender.current) initialRender.current = false;
+        else onStatusChange(blockId, innerStatus);
+    }, [
+        innerStatus
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-control",
+        "data-enabled": JSON.stringify(innerStatus)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-title"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-title-left-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-icon"
+    }, iconElement), title), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-title-right-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
+        onStatusChange: setInnerStatus,
+        status: innerStatus
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-info"
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-howto"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        title: "How to Use",
+        status: innerStatus,
+        onClickHandler: howToUse
+    })));
+}
+/**
+ * @module BlockControl
+ */ var _default = (0, _withIcon["default"])(BlockControl);
+exports["default"] = _default;
+
+},{"react":"21dqq","$Components/ToggleControl":"a7r96","$Components/MenuButton":"cbTU3","$HOC/withIcon":"l4uaA"}],"a7r96":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Toggle control component.
+ *
+ * @constructor
+ * @param {Object} props component properties
+ * @param {Boolean} props.status control status
+ * @param {Function} props.onStatusChange status changed callback
+ */ function ToggleControl(_ref) {
+    var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange;
+    var initialRender = (0, _react.useRef)(true);
+    var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
+    (0, _react.useEffect)(function() {
+        if (initialRender.current) initialRender.current = false;
+        else onStatusChange(innerStatus);
+    }, [
+        innerStatus
+    ]);
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
+        onClick: function onClick() {
+            return setInnerStatus(!innerStatus);
+        },
+        className: "ub-toggle-control",
+        "data-enabled": JSON.stringify(innerStatus)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "knob"
+    })));
+}
+/**
+ * @module ToggleControl;
+ */ var _default = ToggleControl;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"cbTU3":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Menu button component.
+ *
+ * @param {Object} props component properties
+ * @param {String} props.title button title
+ * @param {Function} [props.onClickHandler=()=>{}] click callback
+ * @param {Boolean} [props.status=false] disabled status
+ * @constructor
+ */ function MenuButton(_ref) {
+    var title = _ref.title, _ref$onClickHandler = _ref.onClickHandler, onClickHandler = _ref$onClickHandler === void 0 ? function() {} : _ref$onClickHandler, _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status;
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
+        onClick: function onClick() {
+            if (status) onClickHandler();
+        },
+        className: "ub-menu-button",
+        "data-enabled": JSON.stringify(status)
+    }, title));
+}
+/**
+ * @module MenuButton
+ */ var _default = MenuButton;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"l4uaA":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+/**
+ * Hoc for creating and adding icon element by using Gutenberg block icon attribute object.
+ *
+ * @param {React.ElementType} BaseComponent target component
+ * @returns {Function} function to use as HOC
+ */ var withIcon = function withIcon(BaseComponent) {
+    return function(props) {
+        var iconElement = "x";
+        if (!props.iconObject || _typeof(props.iconObject) !== "object") throw new Error("invalid type of icon object is supplied to withIcon HOC");
+        else {
+            var iconObject = props.iconObject;
+            var type = iconObject.type, iconProps = iconObject.props;
+            iconElement = /*#__PURE__*/ (0, _react.createElement)(type, iconProps);
+        }
+        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, {
+            iconElement: iconElement
+        }));
+    };
+};
+/**
+ * @module withIcon
+ */ var _default = withIcon;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"ohEvx":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setBlockActiveStatus = exports.getBlocks = exports["default"] = void 0;
+var _toolkit = require("@reduxjs/toolkit");
+var _block = _interopRequireDefault(require("../../../../../../src/blocks/post-grid/block"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+/**
+ * Block slice options
+ * @type {Object}
+ */ var blocksSliceOptions = {
+    name: "blocks",
+    initialState: {
+        registered: []
+    },
+    reducers: {
+        /**
+     * Set active status of target block.
+     * @param {Object} state store state
+     * @param {Object} props action props
+     * @param {Object} props.payload action payload
+     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
+            var payload = _ref.payload;
+            var id = payload.id, status = payload.status;
+            var registered = state.registered;
+            var uRegistered = _toConsumableArray(registered);
+            var blockIndex = -1;
+            uRegistered.map(function(bObj, index) {
+                if (bObj.name === id) blockIndex = index;
+            });
+            if (blockIndex >= 0) {
+                uRegistered[blockIndex].active = status;
+                state.registered = uRegistered;
+            }
+        }
+    }
+};
+var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
+var setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
+/**
+ * Get registered plugin blocks.
+ * @param {Object} state store state
+ * @return {Array} blocks
+ */ exports.setBlockActiveStatus = setBlockActiveStatus;
+var getBlocks = function getBlocks(state) {
+    return state.blocks.registered;
+};
+/**
+ * @module blocksSlice
+ */ exports.getBlocks = getBlocks;
+var _default = blocksSlice.reducer;
+exports["default"] = _default;
+
+},{"@reduxjs/toolkit":"lL1Ef","../../../../../../src/blocks/post-grid/block":"1youf"}],"1youf":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _icons = _interopRequireDefault(require("./icons"));
+var _attributes = _interopRequireDefault(require("./attributes"));
+var _editor = _interopRequireDefault(require("./editor"));
+var _inspector = _interopRequireDefault(require("./inspector"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+var __ = wp.i18n.__; // Import __() from wp.i18n
+var registerBlockType = wp.blocks.registerBlockType;
+var withSelect = wp.data.withSelect;
+var _ref = wp.blockEditor || wp.editor, BlockControls = _ref.BlockControls, BlockAlignmentToolbar = _ref.BlockAlignmentToolbar;
+var _wp$components = wp.components, Placeholder = _wp$components.Placeholder, Spinner = _wp$components.Spinner, ToolbarGroup = _wp$components.ToolbarGroup, QueryControls = _wp$components.QueryControls;
+var addQueryArgs = wp.url.addQueryArgs;
+var _wp = wp, apiFetch = _wp.apiFetch;
+var canSelectMultipleCategories = QueryControls.toString().includes("selectedCategories"); //function below taken from https://stackoverflow.com/a/37616104
+var filterObjectAttributes = function filterObjectAttributes(obj, condition) {
+    return Object.fromEntries(Object.entries(obj).filter(condition));
+};
+var _default = registerBlockType("ub/post-grid", {
+    title: __("Post Grid", "ultimate-blocks"),
+    description: __("Add a grid or list of customizable posts.", "ultimate-blocks"),
+    icon: _icons["default"],
+    category: "ultimateblocks",
+    keywords: [
+        __("post grid", "ultimate-blocks"),
+        __("posts", "ultimate-blocks"),
+        __("Ultimate Blocks", "ultimate-blocks")
+    ],
+    attributes: _attributes["default"],
+    /**
+   * The edit function describes the structure of your block in the context of the editor.
+   * This represents what the editor will render when the block is used.
+   *
+   * The "edit" property must be a valid function.
+   *
+   * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+   */ getEditWrapperProps: function getEditWrapperProps(_ref2) {
+        var wrapAlignment = _ref2.wrapAlignment;
+        if ([
+            "full",
+            "wide",
+            "center"
+        ].includes(wrapAlignment)) return {
+            "data-align": wrapAlignment
+        };
+    },
+    edit: withSelect(function(select, props) {
+        var _props$attributes = props.attributes, order = _props$attributes.order, categoryArray = _props$attributes.categoryArray, categories = _props$attributes.categories, orderBy = _props$attributes.orderBy, amountPosts = _props$attributes.amountPosts, offset = _props$attributes.offset, tagArray = _props$attributes.tagArray, authorArray = _props$attributes.authorArray;
+        var _select = select("core"), getEntityRecords = _select.getEntityRecords;
+        var _ref3 = select("core/block--editor") || select("core/editor"), getCurrentPostId = _ref3.getCurrentPostId; //double dashes are needed
+        var getPosts = filterObjectAttributes({
+            categories: canSelectMultipleCategories ? categoryArray && categoryArray.length > 0 ? categoryArray.map(function(cat) {
+                return cat.id;
+            }) : [] : categories,
+            order: order,
+            orderby: orderBy,
+            per_page: amountPosts,
+            offset: offset,
+            exclude: [
+                getCurrentPostId()
+            ],
+            tags: tagArray,
+            author: authorArray
+        }, function(value) {
+            return typeof value !== "undefined";
+        });
+        return {
+            posts: getEntityRecords("postType", "post", getPosts)
+        };
+    })(function(props) {
+        var attributes = props.attributes, setAttributes = props.setAttributes, posts = props.posts;
+        var postLayout = attributes.postLayout, wrapAlignment = attributes.wrapAlignment, categories = attributes.categories;
+        var emptyPosts = Array.isArray(posts) && posts.length;
+        if (categories !== "" && canSelectMultipleCategories) apiFetch({
+            path: addQueryArgs("/wp/v2/categories", {
+                per_page: -1
+            })
+        }).then(function(categoriesList) {
+            setAttributes({
+                categoryArray: categoriesList.filter(function(c) {
+                    return c.id === Number(categories);
+                }),
+                categories: ""
+            });
+        })["catch"](function() {
+            setAttributes({
+                categoryArray: [],
+                categories: ""
+            });
+        });
+        if (!emptyPosts) return /*#__PURE__*/ React.createElement(Placeholder, {
+            icon: "admin-post",
+            label: __("Ultimate Blocks Post Grid", "ultimate-blocks")
+        }, !Array.isArray(posts) ? /*#__PURE__*/ React.createElement(Spinner, null) : /*#__PURE__*/ React.createElement(React.Fragment, null, /*#__PURE__*/ React.createElement(_inspector["default"], _objectSpread({}, props)), /*#__PURE__*/ React.createElement("div", null, __("No posts found.", "ultimate-blocks"))));
+        var toolBarButton = [
+            {
+                icon: "grid-view",
+                title: __("Grid View", "ultimate-blocks"),
+                onClick: function onClick() {
+                    return setAttributes({
+                        postLayout: "grid"
+                    });
+                },
+                isActive: "grid" === postLayout
+            },
+            {
+                icon: "list-view",
+                title: __("List View", "ultimate-blocks"),
+                onClick: function onClick() {
+                    return setAttributes({
+                        postLayout: "list"
+                    });
+                },
+                isActive: "list" === postLayout
+            }
+        ];
+        return /*#__PURE__*/ React.createElement(React.Fragment, null, /*#__PURE__*/ React.createElement(_inspector["default"], props), /*#__PURE__*/ React.createElement(BlockControls, null, /*#__PURE__*/ React.createElement(BlockAlignmentToolbar, {
+            value: wrapAlignment,
+            controls: [
+                "center",
+                "wide",
+                "full"
+            ],
+            onChange: function onChange(value) {
+                return setAttributes({
+                    wrapAlignment: value
+                });
+            }
+        }), /*#__PURE__*/ React.createElement(ToolbarGroup, {
+            controls: toolBarButton
+        })), /*#__PURE__*/ React.createElement(_editor["default"], props));
+    }),
+    save: function save() {
+        return null;
+    }
+});
+exports["default"] = _default;
+
+},{"./icons":"87ghZ","./attributes":"kxm0X","./editor":"3ndEU","./inspector":"iJYWc"}],"87ghZ":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var icons = /*#__PURE__*/ React.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: "512px",
+    viewBox: "-9 1 511 511.999",
+    width: "512px"
+}, /*#__PURE__*/ React.createElement("g", {
+    transform: "matrix(1.19615 0 0 1.19615 -48.3503 10.6689)"
+}, /*#__PURE__*/ React.createElement("path", {
+    d: "m44.425781 32.351562c-6.382812 0-11.574219 5.191407-11.574219 11.570313v331.890625c0 6.378906 5.191407 11.570312 11.574219 11.570312h404.253907c6.378906 0 11.570312-5.191406 11.570312-11.570312 0-2.777344 0-324.945312 0-331.890625 0-6.378906-5.191406-11.570313-11.570312-11.570313-18.128907 0-387.746094 0-404.253907 0zm400.824219 36.664063h-352.402344v-21.660156h352.402344zm-397.398438-21.660156h29.996094v21.660156h-29.996094zm0 325.027343v-288.367187h397.398438v288.367187zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m160.527344 106.898438h-79.140625c-8.496094 0-15.410157 6.914062-15.410157 15.410156v92.742187c0 8.496094 6.914063 15.410157 15.410157 15.410157h79.144531c8.496094 0 15.410156-6.914063 15.410156-15.410157v-92.742187c-.003906-8.496094-6.914062-15.410156-15.414062-15.410156zm.410156 108.152343c0 .226563-.183594.410157-.410156.410157h-79.140625c-.226563 0-.410157-.1875-.410157-.410157v-92.742187c0-.226563.183594-.410156.410157-.410156h79.144531c.226562 0 .40625.1875.40625.410156zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m286.121094 106.898438h-79.140625c-8.5 0-15.414063 6.914062-15.414063 15.410156v92.742187c0 8.496094 6.914063 15.410157 15.414063 15.410157h79.140625c8.5 0 15.410156-6.914063 15.410156-15.410157v-92.742187c0-8.496094-6.910156-15.410156-15.410156-15.410156zm.410156 108.152343c0 .226563-.183594.410157-.410156.410157h-79.140625c-.226563 0-.410157-.1875-.410157-.410157v-92.742187c0-.226563.183594-.410156.410157-.410156h79.140625c.226562 0 .410156.1875.410156.410156zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m411.714844 106.898438h-79.144532c-8.496093 0-15.410156 6.914062-15.410156 15.410156v92.742187c0 8.496094 6.914063 15.410157 15.410156 15.410157h79.144532c8.5 0 15.410156-6.914063 15.410156-15.410157v-92.742187c0-8.496094-6.910156-15.410156-15.410156-15.410156zm.410156 108.152343c0 .226563-.183594.410157-.410156.410157h-79.144532c-.226562 0-.40625-.1875-.40625-.410157v-92.742187c0-.226563.183594-.410156.40625-.410156h79.144532c.226562 0 .410156.1875.410156.410156zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m168.4375 248.171875h-94.960938c-4.144531 0-7.503906 3.355469-7.503906 7.5s3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.355469 7.5-7.5s-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m168.4375 276.808594h-94.960938c-4.144531 0-7.503906 3.355468-7.503906 7.5 0 4.144531 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.355469 7.5-7.5 0-4.144532-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m168.4375 305.449219h-94.960938c-4.144531 0-7.503906 3.355469-7.503906 7.5 0 4.140625 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.359375 7.5-7.5 0-4.144531-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m168.4375 334.085938h-94.960938c-4.144531 0-7.503906 3.355468-7.503906 7.5 0 4.140624 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.359376 7.5-7.5 0-4.144532-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m294.03125 248.171875h-94.960938c-4.144531 0-7.503906 3.355469-7.503906 7.5s3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.355469 7.5-7.5s-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m294.03125 276.808594h-94.960938c-4.144531 0-7.503906 3.355468-7.503906 7.5 0 4.144531 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.355469 7.5-7.5 0-4.144532-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m294.03125 305.449219h-94.960938c-4.144531 0-7.503906 3.355469-7.503906 7.5 0 4.140625 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.359375 7.5-7.5 0-4.144531-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m294.03125 334.085938h-94.960938c-4.144531 0-7.503906 3.355468-7.503906 7.5 0 4.140624 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.359376 7.5-7.5 0-4.144532-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m419.625 248.171875h-94.960938c-4.144531 0-7.503906 3.355469-7.503906 7.5s3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.355469 7.5-7.5s-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m419.625 276.808594h-94.960938c-4.144531 0-7.503906 3.355468-7.503906 7.5 0 4.144531 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.355469 7.5-7.5 0-4.144532-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m419.625 305.449219h-94.960938c-4.144531 0-7.503906 3.355469-7.503906 7.5 0 4.140625 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.359375 7.5-7.5 0-4.144531-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m419.625 334.085938h-94.960938c-4.144531 0-7.503906 3.355468-7.503906 7.5 0 4.140624 3.359375 7.5 7.503906 7.5h94.960938c4.144531 0 7.5-3.359376 7.5-7.5 0-4.144532-3.355469-7.5-7.5-7.5zm0 0",
+    fill: "#F63D3D"
+}), /*#__PURE__*/ React.createElement("path", {
+    d: "m.5 375.8125c0 24.21875 19.703125 43.925781 43.925781 43.925781h178.300781v44.609375h-40.804687c-11 0-19.949219 8.949219-19.949219 19.945313v7.757812c0 11 8.949219 19.949219 19.949219 19.949219h47.128906c4.144531 0 7.5-3.359375 7.5-7.5 0-4.144531-3.355469-7.5-7.5-7.5h-47.128906c-2.730469 0-4.949219-2.222656-4.949219-4.949219v-7.757812c0-2.726563 2.21875-4.945313 4.949219-4.945313h129.257813c2.730468 0 4.949218 2.21875 4.949218 4.945313v7.757812c0 2.730469-2.21875 4.949219-4.949218 4.949219h-47.128907c-4.140625 0-7.5 3.355469-7.5 7.5 0 4.140625 3.359375 7.5 7.5 7.5h47.128907c11 0 19.949218-8.949219 19.949218-19.949219v-7.757812c0-10.996094-8.949218-19.945313-19.949218-19.945313h-40.804688v-44.609375h178.304688c24.21875 0 43.921874-19.707031 43.921874-43.925781v-138.675781c0-4.140625-3.355468-7.5-7.5-7.5-4.144531 0-7.5 3.359375-7.5 7.5v138.675781c0 15.949219-12.976562 28.921875-28.921874 28.921875-8.121094 0-402.925782 0-404.253907 0-15.949219 0-28.925781-12.972656-28.925781-28.921875v-331.890625c0-15.945313 12.976562-28.921875 28.925781-28.921875h404.253907c15.945312 0 28.921874 12.976562 28.921874 28.921875v158.214844c0 4.144531 3.355469 7.5 7.5 7.5 4.144532 0 7.5-3.355469 7.5-7.5v-158.214844c0-24.21875-19.703124-43.921875-43.921874-43.921875h-404.253907c-24.222656 0-43.925781 19.703125-43.925781 43.921875zm254.875 43.925781v44.609375h-17.648438v-44.609375zm0 0",
+    fill: "#F63D3D"
+})));
+var _default = icons;
+exports["default"] = _default;
+
+},{}],"kxm0X":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var attributes = {
+    wrapAlignment: {
+        type: "string",
+        "default": ""
+    },
+    checkPostImage: {
+        type: "boolean",
+        "default": true
+    },
+    postImageWidth: {
+        type: "number",
+        "default": 600
+    },
+    preservePostImageAspectRatio: {
+        type: "boolean",
+        "default": true
+    },
+    postImageHeight: {
+        type: "number",
+        "default": 400
+    },
+    checkPostAuthor: {
+        type: "boolean",
+        "default": true
+    },
+    checkPostDate: {
+        type: "boolean",
+        "default": true
+    },
+    checkPostExcerpt: {
+        type: "boolean",
+        "default": true
+    },
+    excerptLength: {
+        type: "number",
+        "default": 55
+    },
+    checkPostLink: {
+        type: "bolean",
+        "default": true
+    },
+    readMoreText: {
+        type: "string",
+        "default": "Continue Reading"
+    },
+    amountPosts: {
+        type: "number",
+        "default": 6
+    },
+    postLayout: {
+        type: "string",
+        "default": "grid"
+    },
+    columns: {
+        type: "number",
+        "default": 2
+    },
+    authorArray: {
+        type: "array",
+        "default": []
+    },
+    categories: {
+        type: "string",
+        "default": ""
+    },
+    categoryArray: {
+        type: "array",
+        "default": []
+    },
+    tagArray: {
+        type: "array",
+        "default": []
+    },
+    offset: {
+        type: "number",
+        "default": 0
+    },
+    order: {
+        type: "string",
+        "default": "desc"
+    },
+    orderBy: {
+        type: "string",
+        "default": "date"
+    },
+    checkPostTitle: {
+        type: "boolean",
+        "default": true
+    },
+    postTitleTag: {
+        type: "string",
+        "default": "h4"
+    }
+};
+var _default = attributes;
+exports["default"] = _default;
+
+},{}],"3ndEU":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = PostGridBlock;
+var _image = _interopRequireDefault(require("./image"));
+var _moment = _interopRequireDefault(require("moment"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+// Setup the block
+var __ = wp.i18n.__;
+var decodeEntities = wp.htmlEntities.decodeEntities;
+function PostGridBlock(props) {
+    var _props$attributes = props.attributes, checkPostImage = _props$attributes.checkPostImage, checkPostAuthor = _props$attributes.checkPostAuthor, checkPostDate = _props$attributes.checkPostDate, checkPostExcerpt = _props$attributes.checkPostExcerpt, checkPostLink = _props$attributes.checkPostLink, checkPostTitle = _props$attributes.checkPostTitle, excerptLength = _props$attributes.excerptLength, readMoreText = _props$attributes.readMoreText, postLayout = _props$attributes.postLayout, columns = _props$attributes.columns, postTitleTag = _props$attributes.postTitleTag, className = props.className, posts = props.posts;
+    var PostTag = postTitleTag;
+    return /*#__PURE__*/ React.createElement("section", {
+        className: "".concat(className ? "".concat(className, " ") : "", "ub-block-post-grid")
+    }, /*#__PURE__*/ React.createElement("div", {
+        className: "ub-post-grid-items ".concat(postLayout === "list" ? "is-list" : "is-grid columns-".concat(columns))
+    }, posts.map(function(post, i) {
+        return /*#__PURE__*/ React.createElement("article", {
+            key: i,
+            id: "post-".concat(post.id),
+            className: "post-".concat(post.id).concat(post.featured_image_src && checkPostImage ? " has-post-thumbnail" : "", "\n					")
+        }, /*#__PURE__*/ React.createElement(React.Fragment, null, checkPostImage && post.featured_media ? /*#__PURE__*/ React.createElement("div", {
+            className: "ub-block-post-grid-image"
+        }, /*#__PURE__*/ React.createElement(_image["default"], _extends({}, props, {
+            imgID: post.featured_media,
+            imgSizeLandscape: post.featured_image_src
+        }))) : null, /*#__PURE__*/ React.createElement("div", {
+            className: "ub_block-post-grid-text"
+        }, /*#__PURE__*/ React.createElement("header", {
+            className: "ub_block-post-grid-header"
+        }, checkPostTitle && /*#__PURE__*/ React.createElement(PostTag, {
+            className: "ub-block-post-grid-title"
+        }, /*#__PURE__*/ React.createElement("a", {
+            href: post.link,
+            target: "_blank",
+            rel: "bookmark"
+        }, decodeEntities(post.title.rendered.trim()) || __("(Untitled)", "ultimate-blocks"))), checkPostAuthor && /*#__PURE__*/ React.createElement("div", {
+            className: "ub-block-post-grid-author"
+        }, /*#__PURE__*/ React.createElement("a", {
+            className: "ub-text-link",
+            target: "_blank",
+            href: post.author_info.author_link
+        }, post.author_info.display_name)), checkPostDate && /*#__PURE__*/ React.createElement("time", {
+            dateTime: (0, _moment["default"])(post.date_gmt).utc().format(),
+            className: "ub-block-post-grid-date"
+        }, (0, _moment["default"])(post.date_gmt).local().format("MMMM DD, Y", "ultimate-blocks"))), /*#__PURE__*/ React.createElement("div", {
+            className: "ub-block-post-grid-excerpt"
+        }, checkPostExcerpt && /*#__PURE__*/ React.createElement("div", {
+            dangerouslySetInnerHTML: {
+                __html: cateExcerpt(post.excerpt.rendered, excerptLength)
+            }
+        }), checkPostLink && /*#__PURE__*/ React.createElement("p", null, /*#__PURE__*/ React.createElement("a", {
+            className: "ub-block-post-grid-more-link ub-text-link",
+            href: post.link,
+            target: "_blank",
+            rel: "bookmark"
+        }, readMoreText))))));
+    })));
+} // cate excerpt
+function cateExcerpt(str, no_words) {
+    return str.split(" ").splice(0, no_words).join(" ");
+}
+
+},{"./image":"lisk0","moment":"jwcsj"}],"lisk0":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = FeaturedImage;
+var _react = require("react");
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Post grid featured image.
+ */ var addQueryArgs = wp.url.addQueryArgs;
+var _wp = wp, apiFetch = _wp.apiFetch;
+function FeaturedImage(props) {
+    var _useState = (0, _react.useState)(false), _useState2 = _slicedToArray(_useState, 2), stillMounted = _useState2[0], setStillMounted = _useState2[1];
+    var _useState3 = (0, _react.useState)(""), _useState4 = _slicedToArray(_useState3, 2), imageUrl = _useState4[0], setImageUrl = _useState4[1];
+    (0, _react.useEffect)(function() {
+        setStillMounted(true);
+        return function() {
+            return setStillMounted(false);
+        };
+    }, []);
+    (0, _react.useEffect)(function() {
+        if (stillMounted) apiFetch({
+            path: addQueryArgs("/wp/v2/media/" + props.imgID)
+        }).then(function(image_data) {
+            var _image_data$media_det, _image_data$media_det2;
+            var imageUrl = image_data === null || image_data === void 0 ? void 0 : (_image_data$media_det = image_data.media_details) === null || _image_data$media_det === void 0 ? void 0 : (_image_data$media_det2 = _image_data$media_det.sizes["full"]) === null || _image_data$media_det2 === void 0 ? void 0 : _image_data$media_det2.source_url;
+            if (imageUrl) setImageUrl(imageUrl);
+        });
+    }, [
+        stillMounted
+    ]);
+    var _props$attributes = props.attributes, postImageWidth = _props$attributes.postImageWidth, preservePostImageAspectRatio = _props$attributes.preservePostImageAspectRatio, postImageHeight = _props$attributes.postImageHeight;
+    return /*#__PURE__*/ React.createElement("img", {
+        style: _objectSpread({
+            width: postImageWidth
+        }, !preservePostImageAspectRatio && {
+            height: postImageHeight
+        }),
+        src: imageUrl || props.imgSizeLandscape,
+        alt: "img"
+    });
+}
+
+},{"react":"21dqq"}],"jwcsj":[function(require,module,exports) {
+(function(global, factory) {
+    module.exports = factory();
+})(this, function() {
+    "use strict";
+    var hookCallback;
+    function hooks() {
+        return hookCallback.apply(null, arguments);
+    }
+    // This is done to register the method called with moment()
+    // without creating circular dependencies.
+    function setHookCallback(callback) {
+        hookCallback = callback;
+    }
+    function isArray(input) {
+        return input instanceof Array || Object.prototype.toString.call(input) === "[object Array]";
+    }
+    function isObject(input) {
+        // IE8 will treat undefined and null as object if it wasn't for
+        // input != null
+        return input != null && Object.prototype.toString.call(input) === "[object Object]";
+    }
+    function hasOwnProp(a, b) {
+        return Object.prototype.hasOwnProperty.call(a, b);
+    }
+    function isObjectEmpty(obj) {
+        if (Object.getOwnPropertyNames) return Object.getOwnPropertyNames(obj).length === 0;
+        else {
+            var k;
+            for(k in obj){
+                if (hasOwnProp(obj, k)) return false;
+            }
+            return true;
+        }
+    }
+    function isUndefined(input) {
+        return input === void 0;
+    }
+    function isNumber(input) {
+        return typeof input === "number" || Object.prototype.toString.call(input) === "[object Number]";
+    }
+    function isDate(input) {
+        return input instanceof Date || Object.prototype.toString.call(input) === "[object Date]";
+    }
+    function map(arr, fn) {
+        var res = [], i, arrLen = arr.length;
+        for(i = 0; i < arrLen; ++i)res.push(fn(arr[i], i));
+        return res;
+    }
+    function extend(a, b) {
+        for(var i in b)if (hasOwnProp(b, i)) a[i] = b[i];
+        if (hasOwnProp(b, "toString")) a.toString = b.toString;
+        if (hasOwnProp(b, "valueOf")) a.valueOf = b.valueOf;
+        return a;
+    }
+    function createUTC(input, format, locale, strict) {
+        return createLocalOrUTC(input, format, locale, strict, true).utc();
+    }
+    function defaultParsingFlags() {
+        // We need to deep clone this object.
+        return {
+            empty: false,
+            unusedTokens: [],
+            unusedInput: [],
+            overflow: -2,
+            charsLeftOver: 0,
+            nullInput: false,
+            invalidEra: null,
+            invalidMonth: null,
+            invalidFormat: false,
+            userInvalidated: false,
+            iso: false,
+            parsedDateParts: [],
+            era: null,
+            meridiem: null,
+            rfc2822: false,
+            weekdayMismatch: false
+        };
+    }
+    function getParsingFlags(m) {
+        if (m._pf == null) m._pf = defaultParsingFlags();
+        return m._pf;
+    }
+    var some;
+    if (Array.prototype.some) some = Array.prototype.some;
+    else some = function(fun) {
+        var t = Object(this), len = t.length >>> 0, i;
+        for(i = 0; i < len; i++){
+            if (i in t && fun.call(this, t[i], i, t)) return true;
+        }
+        return false;
+    };
+    function isValid(m) {
+        if (m._isValid == null) {
+            var flags = getParsingFlags(m), parsedParts = some.call(flags.parsedDateParts, function(i) {
+                return i != null;
+            }), isNowValid = !isNaN(m._d.getTime()) && flags.overflow < 0 && !flags.empty && !flags.invalidEra && !flags.invalidMonth && !flags.invalidWeekday && !flags.weekdayMismatch && !flags.nullInput && !flags.invalidFormat && !flags.userInvalidated && (!flags.meridiem || flags.meridiem && parsedParts);
+            if (m._strict) isNowValid = isNowValid && flags.charsLeftOver === 0 && flags.unusedTokens.length === 0 && flags.bigHour === undefined;
+            if (Object.isFrozen == null || !Object.isFrozen(m)) m._isValid = isNowValid;
+            else return isNowValid;
+        }
+        return m._isValid;
+    }
+    function createInvalid(flags) {
+        var m = createUTC(NaN);
+        if (flags != null) extend(getParsingFlags(m), flags);
+        else getParsingFlags(m).userInvalidated = true;
+        return m;
+    }
+    // Plugins that add properties should also add the key here (null value),
+    // so we can properly clone ourselves.
+    var momentProperties = hooks.momentProperties = [], updateInProgress = false;
+    function copyConfig(to, from) {
+        var i, prop, val, momentPropertiesLen = momentProperties.length;
+        if (!isUndefined(from._isAMomentObject)) to._isAMomentObject = from._isAMomentObject;
+        if (!isUndefined(from._i)) to._i = from._i;
+        if (!isUndefined(from._f)) to._f = from._f;
+        if (!isUndefined(from._l)) to._l = from._l;
+        if (!isUndefined(from._strict)) to._strict = from._strict;
+        if (!isUndefined(from._tzm)) to._tzm = from._tzm;
+        if (!isUndefined(from._isUTC)) to._isUTC = from._isUTC;
+        if (!isUndefined(from._offset)) to._offset = from._offset;
+        if (!isUndefined(from._pf)) to._pf = getParsingFlags(from);
+        if (!isUndefined(from._locale)) to._locale = from._locale;
+        if (momentPropertiesLen > 0) for(i = 0; i < momentPropertiesLen; i++){
+            prop = momentProperties[i];
+            val = from[prop];
+            if (!isUndefined(val)) to[prop] = val;
+        }
+        return to;
+    }
+    // Moment prototype object
+    function Moment(config) {
+        copyConfig(this, config);
+        this._d = new Date(config._d != null ? config._d.getTime() : NaN);
+        if (!this.isValid()) this._d = new Date(NaN);
+        // Prevent infinite loop in case updateOffset creates new moment
+        // objects.
+        if (updateInProgress === false) {
+            updateInProgress = true;
+            hooks.updateOffset(this);
+            updateInProgress = false;
+        }
+    }
+    function isMoment(obj) {
+        return obj instanceof Moment || obj != null && obj._isAMomentObject != null;
+    }
+    function warn(msg) {
+        if (hooks.suppressDeprecationWarnings === false && typeof console !== "undefined" && console.warn) console.warn("Deprecation warning: " + msg);
+    }
+    function deprecate(msg, fn) {
+        var firstTime = true;
+        return extend(function() {
+            if (hooks.deprecationHandler != null) hooks.deprecationHandler(null, msg);
+            if (firstTime) {
+                var args = [], arg, i, key, argLen = arguments.length;
+                for(i = 0; i < argLen; i++){
+                    arg = "";
+                    if (typeof arguments[i] === "object") {
+                        arg += "\n[" + i + "] ";
+                        for(key in arguments[0])if (hasOwnProp(arguments[0], key)) arg += key + ": " + arguments[0][key] + ", ";
+                        arg = arg.slice(0, -2); // Remove trailing comma and space
+                    } else arg = arguments[i];
+                    args.push(arg);
+                }
+                warn(msg + "\nArguments: " + Array.prototype.slice.call(args).join("") + "\n" + new Error().stack);
+                firstTime = false;
+            }
+            return fn.apply(this, arguments);
+        }, fn);
+    }
+    var deprecations = {};
+    function deprecateSimple(name, msg) {
+        if (hooks.deprecationHandler != null) hooks.deprecationHandler(name, msg);
+        if (!deprecations[name]) {
+            warn(msg);
+            deprecations[name] = true;
+        }
+    }
+    hooks.suppressDeprecationWarnings = false;
+    hooks.deprecationHandler = null;
+    function isFunction(input) {
+        return typeof Function !== "undefined" && input instanceof Function || Object.prototype.toString.call(input) === "[object Function]";
+    }
+    function set(config) {
+        var prop, i;
+        for(i in config)if (hasOwnProp(config, i)) {
+            prop = config[i];
+            if (isFunction(prop)) this[i] = prop;
+            else this["_" + i] = prop;
+        }
+        this._config = config;
+        // Lenient ordinal parsing accepts just a number in addition to
+        // number + (possibly) stuff coming from _dayOfMonthOrdinalParse.
+        // TODO: Remove "ordinalParse" fallback in next major release.
+        this._dayOfMonthOrdinalParseLenient = new RegExp((this._dayOfMonthOrdinalParse.source || this._ordinalParse.source) + "|" + /\d{1,2}/.source);
+    }
+    function mergeConfigs(parentConfig, childConfig) {
+        var res = extend({}, parentConfig), prop;
+        for(prop in childConfig)if (hasOwnProp(childConfig, prop)) {
+            if (isObject(parentConfig[prop]) && isObject(childConfig[prop])) {
+                res[prop] = {};
+                extend(res[prop], parentConfig[prop]);
+                extend(res[prop], childConfig[prop]);
+            } else if (childConfig[prop] != null) res[prop] = childConfig[prop];
+            else delete res[prop];
+        }
+        for(prop in parentConfig)if (hasOwnProp(parentConfig, prop) && !hasOwnProp(childConfig, prop) && isObject(parentConfig[prop])) // make sure changes to properties don't modify parent config
+        res[prop] = extend({}, res[prop]);
+        return res;
+    }
+    function Locale(config) {
+        if (config != null) this.set(config);
+    }
+    var keys;
+    if (Object.keys) keys = Object.keys;
+    else keys = function(obj) {
+        var i, res = [];
+        for(i in obj)if (hasOwnProp(obj, i)) res.push(i);
+        return res;
+    };
+    var defaultCalendar = {
+        sameDay: "[Today at] LT",
+        nextDay: "[Tomorrow at] LT",
+        nextWeek: "dddd [at] LT",
+        lastDay: "[Yesterday at] LT",
+        lastWeek: "[Last] dddd [at] LT",
+        sameElse: "L"
+    };
+    function calendar(key, mom, now) {
+        var output = this._calendar[key] || this._calendar["sameElse"];
+        return isFunction(output) ? output.call(mom, now) : output;
+    }
+    function zeroFill(number, targetLength, forceSign) {
+        var absNumber = "" + Math.abs(number), zerosToFill = targetLength - absNumber.length, sign = number >= 0;
+        return (sign ? forceSign ? "+" : "" : "-") + Math.pow(10, Math.max(0, zerosToFill)).toString().substr(1) + absNumber;
+    }
+    var formattingTokens = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|N{1,5}|YYYYYY|YYYYY|YYYY|YY|y{2,4}|yo?|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g, localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g, formatFunctions = {}, formatTokenFunctions = {};
+    // token:    'M'
+    // padded:   ['MM', 2]
+    // ordinal:  'Mo'
+    // callback: function () { this.month() + 1 }
+    function addFormatToken(token, padded, ordinal, callback) {
+        var func = callback;
+        if (typeof callback === "string") func = function() {
+            return this[callback]();
+        };
+        if (token) formatTokenFunctions[token] = func;
+        if (padded) formatTokenFunctions[padded[0]] = function() {
+            return zeroFill(func.apply(this, arguments), padded[1], padded[2]);
+        };
+        if (ordinal) formatTokenFunctions[ordinal] = function() {
+            return this.localeData().ordinal(func.apply(this, arguments), token);
+        };
+    }
+    function removeFormattingTokens(input) {
+        if (input.match(/\[[\s\S]/)) return input.replace(/^\[|\]$/g, "");
+        return input.replace(/\\/g, "");
+    }
+    function makeFormatFunction(format) {
+        var array = format.match(formattingTokens), i, length;
+        for(i = 0, length = array.length; i < length; i++)if (formatTokenFunctions[array[i]]) array[i] = formatTokenFunctions[array[i]];
+        else array[i] = removeFormattingTokens(array[i]);
+        return function(mom) {
+            var output = "", i;
+            for(i = 0; i < length; i++)output += isFunction(array[i]) ? array[i].call(mom, format) : array[i];
+            return output;
+        };
+    }
+    // format date using native date object
+    function formatMoment(m, format) {
+        if (!m.isValid()) return m.localeData().invalidDate();
+        format = expandFormat(format, m.localeData());
+        formatFunctions[format] = formatFunctions[format] || makeFormatFunction(format);
+        return formatFunctions[format](m);
+    }
+    function expandFormat(format, locale) {
+        var i = 5;
+        function replaceLongDateFormatTokens(input) {
+            return locale.longDateFormat(input) || input;
+        }
+        localFormattingTokens.lastIndex = 0;
+        while(i >= 0 && localFormattingTokens.test(format)){
+            format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
+            localFormattingTokens.lastIndex = 0;
+            i -= 1;
+        }
+        return format;
+    }
+    var defaultLongDateFormat = {
+        LTS: "h:mm:ss A",
+        LT: "h:mm A",
+        L: "MM/DD/YYYY",
+        LL: "MMMM D, YYYY",
+        LLL: "MMMM D, YYYY h:mm A",
+        LLLL: "dddd, MMMM D, YYYY h:mm A"
+    };
+    function longDateFormat(key) {
+        var format = this._longDateFormat[key], formatUpper = this._longDateFormat[key.toUpperCase()];
+        if (format || !formatUpper) return format;
+        this._longDateFormat[key] = formatUpper.match(formattingTokens).map(function(tok) {
+            if (tok === "MMMM" || tok === "MM" || tok === "DD" || tok === "dddd") return tok.slice(1);
+            return tok;
+        }).join("");
+        return this._longDateFormat[key];
+    }
+    var defaultInvalidDate = "Invalid date";
+    function invalidDate() {
+        return this._invalidDate;
+    }
+    var defaultOrdinal = "%d", defaultDayOfMonthOrdinalParse = /\d{1,2}/;
+    function ordinal(number) {
+        return this._ordinal.replace("%d", number);
+    }
+    var defaultRelativeTime = {
+        future: "in %s",
+        past: "%s ago",
+        s: "a few seconds",
+        ss: "%d seconds",
+        m: "a minute",
+        mm: "%d minutes",
+        h: "an hour",
+        hh: "%d hours",
+        d: "a day",
+        dd: "%d days",
+        w: "a week",
+        ww: "%d weeks",
+        M: "a month",
+        MM: "%d months",
+        y: "a year",
+        yy: "%d years"
+    };
+    function relativeTime(number, withoutSuffix, string, isFuture) {
+        var output = this._relativeTime[string];
+        return isFunction(output) ? output(number, withoutSuffix, string, isFuture) : output.replace(/%d/i, number);
+    }
+    function pastFuture(diff, output) {
+        var format = this._relativeTime[diff > 0 ? "future" : "past"];
+        return isFunction(format) ? format(output) : format.replace(/%s/i, output);
+    }
+    var aliases = {};
+    function addUnitAlias(unit, shorthand) {
+        var lowerCase = unit.toLowerCase();
+        aliases[lowerCase] = aliases[lowerCase + "s"] = aliases[shorthand] = unit;
+    }
+    function normalizeUnits(units) {
+        return typeof units === "string" ? aliases[units] || aliases[units.toLowerCase()] : undefined;
+    }
+    function normalizeObjectUnits(inputObject) {
+        var normalizedInput = {}, normalizedProp, prop;
+        for(prop in inputObject)if (hasOwnProp(inputObject, prop)) {
+            normalizedProp = normalizeUnits(prop);
+            if (normalizedProp) normalizedInput[normalizedProp] = inputObject[prop];
+        }
+        return normalizedInput;
+    }
+    var priorities = {};
+    function addUnitPriority(unit, priority) {
+        priorities[unit] = priority;
+    }
+    function getPrioritizedUnits(unitsObj) {
+        var units = [], u;
+        for(u in unitsObj)if (hasOwnProp(unitsObj, u)) units.push({
+            unit: u,
+            priority: priorities[u]
+        });
+        units.sort(function(a, b) {
+            return a.priority - b.priority;
+        });
+        return units;
+    }
+    function isLeapYear(year) {
+        return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
+    }
+    function absFloor(number) {
+        if (number < 0) // -0 -> 0
+        return Math.ceil(number) || 0;
+        else return Math.floor(number);
+    }
+    function toInt(argumentForCoercion) {
+        var coercedNumber = +argumentForCoercion, value = 0;
+        if (coercedNumber !== 0 && isFinite(coercedNumber)) value = absFloor(coercedNumber);
+        return value;
+    }
+    function makeGetSet(unit, keepTime) {
+        return function(value) {
+            if (value != null) {
+                set$1(this, unit, value);
+                hooks.updateOffset(this, keepTime);
+                return this;
+            } else return get(this, unit);
+        };
+    }
+    function get(mom, unit) {
+        return mom.isValid() ? mom._d["get" + (mom._isUTC ? "UTC" : "") + unit]() : NaN;
+    }
+    function set$1(mom, unit, value) {
+        if (mom.isValid() && !isNaN(value)) {
+            if (unit === "FullYear" && isLeapYear(mom.year()) && mom.month() === 1 && mom.date() === 29) {
+                value = toInt(value);
+                mom._d["set" + (mom._isUTC ? "UTC" : "") + unit](value, mom.month(), daysInMonth(value, mom.month()));
+            } else mom._d["set" + (mom._isUTC ? "UTC" : "") + unit](value);
+        }
+    }
+    // MOMENTS
+    function stringGet(units) {
+        units = normalizeUnits(units);
+        if (isFunction(this[units])) return this[units]();
+        return this;
+    }
+    function stringSet(units, value) {
+        if (typeof units === "object") {
+            units = normalizeObjectUnits(units);
+            var prioritized = getPrioritizedUnits(units), i, prioritizedLen = prioritized.length;
+            for(i = 0; i < prioritizedLen; i++)this[prioritized[i].unit](units[prioritized[i].unit]);
+        } else {
+            units = normalizeUnits(units);
+            if (isFunction(this[units])) return this[units](value);
+        }
+        return this;
+    }
+    var match1 = /\d/, match2 = /\d\d/, match3 = /\d{3}/, match4 = /\d{4}/, match6 = /[+-]?\d{6}/, match1to2 = /\d\d?/, match3to4 = /\d\d\d\d?/, match5to6 = /\d\d\d\d\d\d?/, match1to3 = /\d{1,3}/, match1to4 = /\d{1,4}/, match1to6 = /[+-]?\d{1,6}/, matchUnsigned = /\d+/, matchSigned = /[+-]?\d+/, matchOffset = /Z|[+-]\d\d:?\d\d/gi, matchShortOffset = /Z|[+-]\d\d(?::?\d\d)?/gi, matchTimestamp = /[+-]?\d+(\.\d{1,3})?/, // any word (or two) characters or numbers including two/three word month in arabic.
+    // includes scottish gaelic two word and hyphenated months
+    matchWord = /[0-9]{0,256}['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFF07\uFF10-\uFFEF]{1,256}|[\u0600-\u06FF\/]{1,256}(\s*?[\u0600-\u06FF]{1,256}){1,2}/i, regexes;
+    regexes = {};
+    function addRegexToken(token, regex, strictRegex) {
+        regexes[token] = isFunction(regex) ? regex : function(isStrict, localeData) {
+            return isStrict && strictRegex ? strictRegex : regex;
+        };
+    }
+    function getParseRegexForToken(token, config) {
+        if (!hasOwnProp(regexes, token)) return new RegExp(unescapeFormat(token));
+        return regexes[token](config._strict, config._locale);
+    }
+    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+    function unescapeFormat(s) {
+        return regexEscape(s.replace("\\", "").replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function(matched, p1, p2, p3, p4) {
+            return p1 || p2 || p3 || p4;
+        }));
+    }
+    function regexEscape(s) {
+        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    }
+    var tokens = {};
+    function addParseToken(token, callback) {
+        var i, func = callback, tokenLen;
+        if (typeof token === "string") token = [
+            token
+        ];
+        if (isNumber(callback)) func = function(input, array) {
+            array[callback] = toInt(input);
+        };
+        tokenLen = token.length;
+        for(i = 0; i < tokenLen; i++)tokens[token[i]] = func;
+    }
+    function addWeekParseToken(token, callback) {
+        addParseToken(token, function(input, array, config, token) {
+            config._w = config._w || {};
+            callback(input, config._w, config, token);
+        });
+    }
+    function addTimeToArrayFromToken(token, input, config) {
+        if (input != null && hasOwnProp(tokens, token)) tokens[token](input, config._a, config, token);
+    }
+    var YEAR = 0, MONTH = 1, DATE = 2, HOUR = 3, MINUTE = 4, SECOND = 5, MILLISECOND = 6, WEEK = 7, WEEKDAY = 8;
+    function mod(n, x) {
+        return (n % x + x) % x;
+    }
+    var indexOf;
+    if (Array.prototype.indexOf) indexOf = Array.prototype.indexOf;
+    else indexOf = function(o) {
+        // I know
+        var i;
+        for(i = 0; i < this.length; ++i){
+            if (this[i] === o) return i;
+        }
+        return -1;
+    };
+    function daysInMonth(year, month) {
+        if (isNaN(year) || isNaN(month)) return NaN;
+        var modMonth = mod(month, 12);
+        year += (month - modMonth) / 12;
+        return modMonth === 1 ? isLeapYear(year) ? 29 : 28 : 31 - modMonth % 7 % 2;
+    }
+    // FORMATTING
+    addFormatToken("M", [
+        "MM",
+        2
+    ], "Mo", function() {
+        return this.month() + 1;
+    });
+    addFormatToken("MMM", 0, 0, function(format) {
+        return this.localeData().monthsShort(this, format);
+    });
+    addFormatToken("MMMM", 0, 0, function(format) {
+        return this.localeData().months(this, format);
+    });
+    // ALIASES
+    addUnitAlias("month", "M");
+    // PRIORITY
+    addUnitPriority("month", 8);
+    // PARSING
+    addRegexToken("M", match1to2);
+    addRegexToken("MM", match1to2, match2);
+    addRegexToken("MMM", function(isStrict, locale) {
+        return locale.monthsShortRegex(isStrict);
+    });
+    addRegexToken("MMMM", function(isStrict, locale) {
+        return locale.monthsRegex(isStrict);
+    });
+    addParseToken([
+        "M",
+        "MM"
+    ], function(input, array) {
+        array[MONTH] = toInt(input) - 1;
+    });
+    addParseToken([
+        "MMM",
+        "MMMM"
+    ], function(input, array, config, token) {
+        var month = config._locale.monthsParse(input, token, config._strict);
+        // if we didn't find a month name, mark the date as invalid.
+        if (month != null) array[MONTH] = month;
+        else getParsingFlags(config).invalidMonth = input;
+    });
+    // LOCALES
+    var defaultLocaleMonths = "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), defaultLocaleMonthsShort = "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"), MONTHS_IN_FORMAT = /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/, defaultMonthsShortRegex = matchWord, defaultMonthsRegex = matchWord;
+    function localeMonths(m, format) {
+        if (!m) return isArray(this._months) ? this._months : this._months["standalone"];
+        return isArray(this._months) ? this._months[m.month()] : this._months[(this._months.isFormat || MONTHS_IN_FORMAT).test(format) ? "format" : "standalone"][m.month()];
+    }
+    function localeMonthsShort(m, format) {
+        if (!m) return isArray(this._monthsShort) ? this._monthsShort : this._monthsShort["standalone"];
+        return isArray(this._monthsShort) ? this._monthsShort[m.month()] : this._monthsShort[MONTHS_IN_FORMAT.test(format) ? "format" : "standalone"][m.month()];
+    }
+    function handleStrictParse(monthName, format, strict) {
+        var i, ii, mom, llc = monthName.toLocaleLowerCase();
+        if (!this._monthsParse) {
+            // this is not used
+            this._monthsParse = [];
+            this._longMonthsParse = [];
+            this._shortMonthsParse = [];
+            for(i = 0; i < 12; ++i){
+                mom = createUTC([
+                    2000,
+                    i
+                ]);
+                this._shortMonthsParse[i] = this.monthsShort(mom, "").toLocaleLowerCase();
+                this._longMonthsParse[i] = this.months(mom, "").toLocaleLowerCase();
+            }
+        }
+        if (strict) {
+            if (format === "MMM") {
+                ii = indexOf.call(this._shortMonthsParse, llc);
+                return ii !== -1 ? ii : null;
+            } else {
+                ii = indexOf.call(this._longMonthsParse, llc);
+                return ii !== -1 ? ii : null;
+            }
+        } else if (format === "MMM") {
+            ii = indexOf.call(this._shortMonthsParse, llc);
+            if (ii !== -1) return ii;
+            ii = indexOf.call(this._longMonthsParse, llc);
+            return ii !== -1 ? ii : null;
+        } else {
+            ii = indexOf.call(this._longMonthsParse, llc);
+            if (ii !== -1) return ii;
+            ii = indexOf.call(this._shortMonthsParse, llc);
+            return ii !== -1 ? ii : null;
+        }
+    }
+    function localeMonthsParse(monthName, format, strict) {
+        var i, mom, regex;
+        if (this._monthsParseExact) return handleStrictParse.call(this, monthName, format, strict);
+        if (!this._monthsParse) {
+            this._monthsParse = [];
+            this._longMonthsParse = [];
+            this._shortMonthsParse = [];
+        }
+        // TODO: add sorting
+        // Sorting makes sure if one month (or abbr) is a prefix of another
+        // see sorting in computeMonthsParse
+        for(i = 0; i < 12; i++){
+            // make the regex if we don't have it already
+            mom = createUTC([
+                2000,
+                i
+            ]);
+            if (strict && !this._longMonthsParse[i]) {
+                this._longMonthsParse[i] = new RegExp("^" + this.months(mom, "").replace(".", "") + "$", "i");
+                this._shortMonthsParse[i] = new RegExp("^" + this.monthsShort(mom, "").replace(".", "") + "$", "i");
+            }
+            if (!strict && !this._monthsParse[i]) {
+                regex = "^" + this.months(mom, "") + "|^" + this.monthsShort(mom, "");
+                this._monthsParse[i] = new RegExp(regex.replace(".", ""), "i");
+            }
+            // test the regex
+            if (strict && format === "MMMM" && this._longMonthsParse[i].test(monthName)) return i;
+            else if (strict && format === "MMM" && this._shortMonthsParse[i].test(monthName)) return i;
+            else if (!strict && this._monthsParse[i].test(monthName)) return i;
+        }
+    }
+    // MOMENTS
+    function setMonth(mom, value) {
+        var dayOfMonth;
+        if (!mom.isValid()) // No op
+        return mom;
+        if (typeof value === "string") {
+            if (/^\d+$/.test(value)) value = toInt(value);
+            else {
+                value = mom.localeData().monthsParse(value);
+                // TODO: Another silent failure?
+                if (!isNumber(value)) return mom;
+            }
+        }
+        dayOfMonth = Math.min(mom.date(), daysInMonth(mom.year(), value));
+        mom._d["set" + (mom._isUTC ? "UTC" : "") + "Month"](value, dayOfMonth);
+        return mom;
+    }
+    function getSetMonth(value) {
+        if (value != null) {
+            setMonth(this, value);
+            hooks.updateOffset(this, true);
+            return this;
+        } else return get(this, "Month");
+    }
+    function getDaysInMonth() {
+        return daysInMonth(this.year(), this.month());
+    }
+    function monthsShortRegex(isStrict) {
+        if (this._monthsParseExact) {
+            if (!hasOwnProp(this, "_monthsRegex")) computeMonthsParse.call(this);
+            if (isStrict) return this._monthsShortStrictRegex;
+            else return this._monthsShortRegex;
+        } else {
+            if (!hasOwnProp(this, "_monthsShortRegex")) this._monthsShortRegex = defaultMonthsShortRegex;
+            return this._monthsShortStrictRegex && isStrict ? this._monthsShortStrictRegex : this._monthsShortRegex;
+        }
+    }
+    function monthsRegex(isStrict) {
+        if (this._monthsParseExact) {
+            if (!hasOwnProp(this, "_monthsRegex")) computeMonthsParse.call(this);
+            if (isStrict) return this._monthsStrictRegex;
+            else return this._monthsRegex;
+        } else {
+            if (!hasOwnProp(this, "_monthsRegex")) this._monthsRegex = defaultMonthsRegex;
+            return this._monthsStrictRegex && isStrict ? this._monthsStrictRegex : this._monthsRegex;
+        }
+    }
+    function computeMonthsParse() {
+        function cmpLenRev(a, b) {
+            return b.length - a.length;
+        }
+        var shortPieces = [], longPieces = [], mixedPieces = [], i, mom;
+        for(i = 0; i < 12; i++){
+            // make the regex if we don't have it already
+            mom = createUTC([
+                2000,
+                i
+            ]);
+            shortPieces.push(this.monthsShort(mom, ""));
+            longPieces.push(this.months(mom, ""));
+            mixedPieces.push(this.months(mom, ""));
+            mixedPieces.push(this.monthsShort(mom, ""));
+        }
+        // Sorting makes sure if one month (or abbr) is a prefix of another it
+        // will match the longer piece.
+        shortPieces.sort(cmpLenRev);
+        longPieces.sort(cmpLenRev);
+        mixedPieces.sort(cmpLenRev);
+        for(i = 0; i < 12; i++){
+            shortPieces[i] = regexEscape(shortPieces[i]);
+            longPieces[i] = regexEscape(longPieces[i]);
+        }
+        for(i = 0; i < 24; i++)mixedPieces[i] = regexEscape(mixedPieces[i]);
+        this._monthsRegex = new RegExp("^(" + mixedPieces.join("|") + ")", "i");
+        this._monthsShortRegex = this._monthsRegex;
+        this._monthsStrictRegex = new RegExp("^(" + longPieces.join("|") + ")", "i");
+        this._monthsShortStrictRegex = new RegExp("^(" + shortPieces.join("|") + ")", "i");
+    }
+    // FORMATTING
+    addFormatToken("Y", 0, 0, function() {
+        var y = this.year();
+        return y <= 9999 ? zeroFill(y, 4) : "+" + y;
+    });
+    addFormatToken(0, [
+        "YY",
+        2
+    ], 0, function() {
+        return this.year() % 100;
+    });
+    addFormatToken(0, [
+        "YYYY",
+        4
+    ], 0, "year");
+    addFormatToken(0, [
+        "YYYYY",
+        5
+    ], 0, "year");
+    addFormatToken(0, [
+        "YYYYYY",
+        6,
+        true
+    ], 0, "year");
+    // ALIASES
+    addUnitAlias("year", "y");
+    // PRIORITIES
+    addUnitPriority("year", 1);
+    // PARSING
+    addRegexToken("Y", matchSigned);
+    addRegexToken("YY", match1to2, match2);
+    addRegexToken("YYYY", match1to4, match4);
+    addRegexToken("YYYYY", match1to6, match6);
+    addRegexToken("YYYYYY", match1to6, match6);
+    addParseToken([
+        "YYYYY",
+        "YYYYYY"
+    ], YEAR);
+    addParseToken("YYYY", function(input, array) {
+        array[YEAR] = input.length === 2 ? hooks.parseTwoDigitYear(input) : toInt(input);
+    });
+    addParseToken("YY", function(input, array) {
+        array[YEAR] = hooks.parseTwoDigitYear(input);
+    });
+    addParseToken("Y", function(input, array) {
+        array[YEAR] = parseInt(input, 10);
+    });
+    // HELPERS
+    function daysInYear(year) {
+        return isLeapYear(year) ? 366 : 365;
+    }
+    // HOOKS
+    hooks.parseTwoDigitYear = function(input) {
+        return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
+    };
+    // MOMENTS
+    var getSetYear = makeGetSet("FullYear", true);
+    function getIsLeapYear() {
+        return isLeapYear(this.year());
+    }
+    function createDate(y, m, d, h, M, s, ms) {
+        // can't just apply() to create a date:
+        // https://stackoverflow.com/q/181348
+        var date;
+        // the date constructor remaps years 0-99 to 1900-1999
+        if (y < 100 && y >= 0) {
+            // preserve leap years using a full 400 year cycle, then reset
+            date = new Date(y + 400, m, d, h, M, s, ms);
+            if (isFinite(date.getFullYear())) date.setFullYear(y);
+        } else date = new Date(y, m, d, h, M, s, ms);
+        return date;
+    }
+    function createUTCDate(y) {
+        var date, args;
+        // the Date.UTC function remaps years 0-99 to 1900-1999
+        if (y < 100 && y >= 0) {
+            args = Array.prototype.slice.call(arguments);
+            // preserve leap years using a full 400 year cycle, then reset
+            args[0] = y + 400;
+            date = new Date(Date.UTC.apply(null, args));
+            if (isFinite(date.getUTCFullYear())) date.setUTCFullYear(y);
+        } else date = new Date(Date.UTC.apply(null, arguments));
+        return date;
+    }
+    // start-of-first-week - start-of-year
+    function firstWeekOffset(year, dow, doy) {
+        var fwd = 7 + dow - doy, // first-week day local weekday -- which local weekday is fwd
+        fwdlw = (7 + createUTCDate(year, 0, fwd).getUTCDay() - dow) % 7;
+        return -fwdlw + fwd - 1;
+    }
+    // https://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
+    function dayOfYearFromWeeks(year, week, weekday, dow, doy) {
+        var localWeekday = (7 + weekday - dow) % 7, weekOffset = firstWeekOffset(year, dow, doy), dayOfYear = 1 + 7 * (week - 1) + localWeekday + weekOffset, resYear, resDayOfYear;
+        if (dayOfYear <= 0) {
+            resYear = year - 1;
+            resDayOfYear = daysInYear(resYear) + dayOfYear;
+        } else if (dayOfYear > daysInYear(year)) {
+            resYear = year + 1;
+            resDayOfYear = dayOfYear - daysInYear(year);
+        } else {
+            resYear = year;
+            resDayOfYear = dayOfYear;
+        }
+        return {
+            year: resYear,
+            dayOfYear: resDayOfYear
+        };
+    }
+    function weekOfYear(mom, dow, doy) {
+        var weekOffset = firstWeekOffset(mom.year(), dow, doy), week = Math.floor((mom.dayOfYear() - weekOffset - 1) / 7) + 1, resWeek, resYear;
+        if (week < 1) {
+            resYear = mom.year() - 1;
+            resWeek = week + weeksInYear(resYear, dow, doy);
+        } else if (week > weeksInYear(mom.year(), dow, doy)) {
+            resWeek = week - weeksInYear(mom.year(), dow, doy);
+            resYear = mom.year() + 1;
+        } else {
+            resYear = mom.year();
+            resWeek = week;
+        }
+        return {
+            week: resWeek,
+            year: resYear
+        };
+    }
+    function weeksInYear(year, dow, doy) {
+        var weekOffset = firstWeekOffset(year, dow, doy), weekOffsetNext = firstWeekOffset(year + 1, dow, doy);
+        return (daysInYear(year) - weekOffset + weekOffsetNext) / 7;
+    }
+    // FORMATTING
+    addFormatToken("w", [
+        "ww",
+        2
+    ], "wo", "week");
+    addFormatToken("W", [
+        "WW",
+        2
+    ], "Wo", "isoWeek");
+    // ALIASES
+    addUnitAlias("week", "w");
+    addUnitAlias("isoWeek", "W");
+    // PRIORITIES
+    addUnitPriority("week", 5);
+    addUnitPriority("isoWeek", 5);
+    // PARSING
+    addRegexToken("w", match1to2);
+    addRegexToken("ww", match1to2, match2);
+    addRegexToken("W", match1to2);
+    addRegexToken("WW", match1to2, match2);
+    addWeekParseToken([
+        "w",
+        "ww",
+        "W",
+        "WW"
+    ], function(input, week, config, token) {
+        week[token.substr(0, 1)] = toInt(input);
+    });
+    // HELPERS
+    // LOCALES
+    function localeWeek(mom) {
+        return weekOfYear(mom, this._week.dow, this._week.doy).week;
+    }
+    var defaultLocaleWeek = {
+        dow: 0,
+        doy: 6
+    };
+    function localeFirstDayOfWeek() {
+        return this._week.dow;
+    }
+    function localeFirstDayOfYear() {
+        return this._week.doy;
+    }
+    // MOMENTS
+    function getSetWeek(input) {
+        var week = this.localeData().week(this);
+        return input == null ? week : this.add((input - week) * 7, "d");
+    }
+    function getSetISOWeek(input) {
+        var week = weekOfYear(this, 1, 4).week;
+        return input == null ? week : this.add((input - week) * 7, "d");
+    }
+    // FORMATTING
+    addFormatToken("d", 0, "do", "day");
+    addFormatToken("dd", 0, 0, function(format) {
+        return this.localeData().weekdaysMin(this, format);
+    });
+    addFormatToken("ddd", 0, 0, function(format) {
+        return this.localeData().weekdaysShort(this, format);
+    });
+    addFormatToken("dddd", 0, 0, function(format) {
+        return this.localeData().weekdays(this, format);
+    });
+    addFormatToken("e", 0, 0, "weekday");
+    addFormatToken("E", 0, 0, "isoWeekday");
+    // ALIASES
+    addUnitAlias("day", "d");
+    addUnitAlias("weekday", "e");
+    addUnitAlias("isoWeekday", "E");
+    // PRIORITY
+    addUnitPriority("day", 11);
+    addUnitPriority("weekday", 11);
+    addUnitPriority("isoWeekday", 11);
+    // PARSING
+    addRegexToken("d", match1to2);
+    addRegexToken("e", match1to2);
+    addRegexToken("E", match1to2);
+    addRegexToken("dd", function(isStrict, locale) {
+        return locale.weekdaysMinRegex(isStrict);
+    });
+    addRegexToken("ddd", function(isStrict, locale) {
+        return locale.weekdaysShortRegex(isStrict);
+    });
+    addRegexToken("dddd", function(isStrict, locale) {
+        return locale.weekdaysRegex(isStrict);
+    });
+    addWeekParseToken([
+        "dd",
+        "ddd",
+        "dddd"
+    ], function(input, week, config, token) {
+        var weekday = config._locale.weekdaysParse(input, token, config._strict);
+        // if we didn't get a weekday name, mark the date as invalid
+        if (weekday != null) week.d = weekday;
+        else getParsingFlags(config).invalidWeekday = input;
+    });
+    addWeekParseToken([
+        "d",
+        "e",
+        "E"
+    ], function(input, week, config, token) {
+        week[token] = toInt(input);
+    });
+    // HELPERS
+    function parseWeekday(input, locale) {
+        if (typeof input !== "string") return input;
+        if (!isNaN(input)) return parseInt(input, 10);
+        input = locale.weekdaysParse(input);
+        if (typeof input === "number") return input;
+        return null;
+    }
+    function parseIsoWeekday(input, locale) {
+        if (typeof input === "string") return locale.weekdaysParse(input) % 7 || 7;
+        return isNaN(input) ? null : input;
+    }
+    // LOCALES
+    function shiftWeekdays(ws, n) {
+        return ws.slice(n, 7).concat(ws.slice(0, n));
+    }
+    var defaultLocaleWeekdays = "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), defaultLocaleWeekdaysShort = "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"), defaultLocaleWeekdaysMin = "Su_Mo_Tu_We_Th_Fr_Sa".split("_"), defaultWeekdaysRegex = matchWord, defaultWeekdaysShortRegex = matchWord, defaultWeekdaysMinRegex = matchWord;
+    function localeWeekdays(m, format) {
+        var weekdays = isArray(this._weekdays) ? this._weekdays : this._weekdays[m && m !== true && this._weekdays.isFormat.test(format) ? "format" : "standalone"];
+        return m === true ? shiftWeekdays(weekdays, this._week.dow) : m ? weekdays[m.day()] : weekdays;
+    }
+    function localeWeekdaysShort(m) {
+        return m === true ? shiftWeekdays(this._weekdaysShort, this._week.dow) : m ? this._weekdaysShort[m.day()] : this._weekdaysShort;
+    }
+    function localeWeekdaysMin(m) {
+        return m === true ? shiftWeekdays(this._weekdaysMin, this._week.dow) : m ? this._weekdaysMin[m.day()] : this._weekdaysMin;
+    }
+    function handleStrictParse$1(weekdayName, format, strict) {
+        var i, ii, mom, llc = weekdayName.toLocaleLowerCase();
+        if (!this._weekdaysParse) {
+            this._weekdaysParse = [];
+            this._shortWeekdaysParse = [];
+            this._minWeekdaysParse = [];
+            for(i = 0; i < 7; ++i){
+                mom = createUTC([
+                    2000,
+                    1
+                ]).day(i);
+                this._minWeekdaysParse[i] = this.weekdaysMin(mom, "").toLocaleLowerCase();
+                this._shortWeekdaysParse[i] = this.weekdaysShort(mom, "").toLocaleLowerCase();
+                this._weekdaysParse[i] = this.weekdays(mom, "").toLocaleLowerCase();
+            }
+        }
+        if (strict) {
+            if (format === "dddd") {
+                ii = indexOf.call(this._weekdaysParse, llc);
+                return ii !== -1 ? ii : null;
+            } else if (format === "ddd") {
+                ii = indexOf.call(this._shortWeekdaysParse, llc);
+                return ii !== -1 ? ii : null;
+            } else {
+                ii = indexOf.call(this._minWeekdaysParse, llc);
+                return ii !== -1 ? ii : null;
+            }
+        } else {
+            if (format === "dddd") {
+                ii = indexOf.call(this._weekdaysParse, llc);
+                if (ii !== -1) return ii;
+                ii = indexOf.call(this._shortWeekdaysParse, llc);
+                if (ii !== -1) return ii;
+                ii = indexOf.call(this._minWeekdaysParse, llc);
+                return ii !== -1 ? ii : null;
+            } else if (format === "ddd") {
+                ii = indexOf.call(this._shortWeekdaysParse, llc);
+                if (ii !== -1) return ii;
+                ii = indexOf.call(this._weekdaysParse, llc);
+                if (ii !== -1) return ii;
+                ii = indexOf.call(this._minWeekdaysParse, llc);
+                return ii !== -1 ? ii : null;
+            } else {
+                ii = indexOf.call(this._minWeekdaysParse, llc);
+                if (ii !== -1) return ii;
+                ii = indexOf.call(this._weekdaysParse, llc);
+                if (ii !== -1) return ii;
+                ii = indexOf.call(this._shortWeekdaysParse, llc);
+                return ii !== -1 ? ii : null;
+            }
+        }
+    }
+    function localeWeekdaysParse(weekdayName, format, strict) {
+        var i, mom, regex;
+        if (this._weekdaysParseExact) return handleStrictParse$1.call(this, weekdayName, format, strict);
+        if (!this._weekdaysParse) {
+            this._weekdaysParse = [];
+            this._minWeekdaysParse = [];
+            this._shortWeekdaysParse = [];
+            this._fullWeekdaysParse = [];
+        }
+        for(i = 0; i < 7; i++){
+            // make the regex if we don't have it already
+            mom = createUTC([
+                2000,
+                1
+            ]).day(i);
+            if (strict && !this._fullWeekdaysParse[i]) {
+                this._fullWeekdaysParse[i] = new RegExp("^" + this.weekdays(mom, "").replace(".", "\\.?") + "$", "i");
+                this._shortWeekdaysParse[i] = new RegExp("^" + this.weekdaysShort(mom, "").replace(".", "\\.?") + "$", "i");
+                this._minWeekdaysParse[i] = new RegExp("^" + this.weekdaysMin(mom, "").replace(".", "\\.?") + "$", "i");
+            }
+            if (!this._weekdaysParse[i]) {
+                regex = "^" + this.weekdays(mom, "") + "|^" + this.weekdaysShort(mom, "") + "|^" + this.weekdaysMin(mom, "");
+                this._weekdaysParse[i] = new RegExp(regex.replace(".", ""), "i");
+            }
+            // test the regex
+            if (strict && format === "dddd" && this._fullWeekdaysParse[i].test(weekdayName)) return i;
+            else if (strict && format === "ddd" && this._shortWeekdaysParse[i].test(weekdayName)) return i;
+            else if (strict && format === "dd" && this._minWeekdaysParse[i].test(weekdayName)) return i;
+            else if (!strict && this._weekdaysParse[i].test(weekdayName)) return i;
+        }
+    }
+    // MOMENTS
+    function getSetDayOfWeek(input) {
+        if (!this.isValid()) return input != null ? this : NaN;
+        var day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
+        if (input != null) {
+            input = parseWeekday(input, this.localeData());
+            return this.add(input - day, "d");
+        } else return day;
+    }
+    function getSetLocaleDayOfWeek(input) {
+        if (!this.isValid()) return input != null ? this : NaN;
+        var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
+        return input == null ? weekday : this.add(input - weekday, "d");
+    }
+    function getSetISODayOfWeek(input) {
+        if (!this.isValid()) return input != null ? this : NaN;
+        // behaves the same as moment#day except
+        // as a getter, returns 7 instead of 0 (1-7 range instead of 0-6)
+        // as a setter, sunday should belong to the previous week.
+        if (input != null) {
+            var weekday = parseIsoWeekday(input, this.localeData());
+            return this.day(this.day() % 7 ? weekday : weekday - 7);
+        } else return this.day() || 7;
+    }
+    function weekdaysRegex(isStrict) {
+        if (this._weekdaysParseExact) {
+            if (!hasOwnProp(this, "_weekdaysRegex")) computeWeekdaysParse.call(this);
+            if (isStrict) return this._weekdaysStrictRegex;
+            else return this._weekdaysRegex;
+        } else {
+            if (!hasOwnProp(this, "_weekdaysRegex")) this._weekdaysRegex = defaultWeekdaysRegex;
+            return this._weekdaysStrictRegex && isStrict ? this._weekdaysStrictRegex : this._weekdaysRegex;
+        }
+    }
+    function weekdaysShortRegex(isStrict) {
+        if (this._weekdaysParseExact) {
+            if (!hasOwnProp(this, "_weekdaysRegex")) computeWeekdaysParse.call(this);
+            if (isStrict) return this._weekdaysShortStrictRegex;
+            else return this._weekdaysShortRegex;
+        } else {
+            if (!hasOwnProp(this, "_weekdaysShortRegex")) this._weekdaysShortRegex = defaultWeekdaysShortRegex;
+            return this._weekdaysShortStrictRegex && isStrict ? this._weekdaysShortStrictRegex : this._weekdaysShortRegex;
+        }
+    }
+    function weekdaysMinRegex(isStrict) {
+        if (this._weekdaysParseExact) {
+            if (!hasOwnProp(this, "_weekdaysRegex")) computeWeekdaysParse.call(this);
+            if (isStrict) return this._weekdaysMinStrictRegex;
+            else return this._weekdaysMinRegex;
+        } else {
+            if (!hasOwnProp(this, "_weekdaysMinRegex")) this._weekdaysMinRegex = defaultWeekdaysMinRegex;
+            return this._weekdaysMinStrictRegex && isStrict ? this._weekdaysMinStrictRegex : this._weekdaysMinRegex;
+        }
+    }
+    function computeWeekdaysParse() {
+        function cmpLenRev(a, b) {
+            return b.length - a.length;
+        }
+        var minPieces = [], shortPieces = [], longPieces = [], mixedPieces = [], i, mom, minp, shortp, longp;
+        for(i = 0; i < 7; i++){
+            // make the regex if we don't have it already
+            mom = createUTC([
+                2000,
+                1
+            ]).day(i);
+            minp = regexEscape(this.weekdaysMin(mom, ""));
+            shortp = regexEscape(this.weekdaysShort(mom, ""));
+            longp = regexEscape(this.weekdays(mom, ""));
+            minPieces.push(minp);
+            shortPieces.push(shortp);
+            longPieces.push(longp);
+            mixedPieces.push(minp);
+            mixedPieces.push(shortp);
+            mixedPieces.push(longp);
+        }
+        // Sorting makes sure if one weekday (or abbr) is a prefix of another it
+        // will match the longer piece.
+        minPieces.sort(cmpLenRev);
+        shortPieces.sort(cmpLenRev);
+        longPieces.sort(cmpLenRev);
+        mixedPieces.sort(cmpLenRev);
+        this._weekdaysRegex = new RegExp("^(" + mixedPieces.join("|") + ")", "i");
+        this._weekdaysShortRegex = this._weekdaysRegex;
+        this._weekdaysMinRegex = this._weekdaysRegex;
+        this._weekdaysStrictRegex = new RegExp("^(" + longPieces.join("|") + ")", "i");
+        this._weekdaysShortStrictRegex = new RegExp("^(" + shortPieces.join("|") + ")", "i");
+        this._weekdaysMinStrictRegex = new RegExp("^(" + minPieces.join("|") + ")", "i");
+    }
+    // FORMATTING
+    function hFormat() {
+        return this.hours() % 12 || 12;
+    }
+    function kFormat() {
+        return this.hours() || 24;
+    }
+    addFormatToken("H", [
+        "HH",
+        2
+    ], 0, "hour");
+    addFormatToken("h", [
+        "hh",
+        2
+    ], 0, hFormat);
+    addFormatToken("k", [
+        "kk",
+        2
+    ], 0, kFormat);
+    addFormatToken("hmm", 0, 0, function() {
+        return "" + hFormat.apply(this) + zeroFill(this.minutes(), 2);
+    });
+    addFormatToken("hmmss", 0, 0, function() {
+        return "" + hFormat.apply(this) + zeroFill(this.minutes(), 2) + zeroFill(this.seconds(), 2);
+    });
+    addFormatToken("Hmm", 0, 0, function() {
+        return "" + this.hours() + zeroFill(this.minutes(), 2);
+    });
+    addFormatToken("Hmmss", 0, 0, function() {
+        return "" + this.hours() + zeroFill(this.minutes(), 2) + zeroFill(this.seconds(), 2);
+    });
+    function meridiem(token, lowercase) {
+        addFormatToken(token, 0, 0, function() {
+            return this.localeData().meridiem(this.hours(), this.minutes(), lowercase);
+        });
+    }
+    meridiem("a", true);
+    meridiem("A", false);
+    // ALIASES
+    addUnitAlias("hour", "h");
+    // PRIORITY
+    addUnitPriority("hour", 13);
+    // PARSING
+    function matchMeridiem(isStrict, locale) {
+        return locale._meridiemParse;
+    }
+    addRegexToken("a", matchMeridiem);
+    addRegexToken("A", matchMeridiem);
+    addRegexToken("H", match1to2);
+    addRegexToken("h", match1to2);
+    addRegexToken("k", match1to2);
+    addRegexToken("HH", match1to2, match2);
+    addRegexToken("hh", match1to2, match2);
+    addRegexToken("kk", match1to2, match2);
+    addRegexToken("hmm", match3to4);
+    addRegexToken("hmmss", match5to6);
+    addRegexToken("Hmm", match3to4);
+    addRegexToken("Hmmss", match5to6);
+    addParseToken([
+        "H",
+        "HH"
+    ], HOUR);
+    addParseToken([
+        "k",
+        "kk"
+    ], function(input, array, config) {
+        var kInput = toInt(input);
+        array[HOUR] = kInput === 24 ? 0 : kInput;
+    });
+    addParseToken([
+        "a",
+        "A"
+    ], function(input, array, config) {
+        config._isPm = config._locale.isPM(input);
+        config._meridiem = input;
+    });
+    addParseToken([
+        "h",
+        "hh"
+    ], function(input, array, config) {
+        array[HOUR] = toInt(input);
+        getParsingFlags(config).bigHour = true;
+    });
+    addParseToken("hmm", function(input, array, config) {
+        var pos = input.length - 2;
+        array[HOUR] = toInt(input.substr(0, pos));
+        array[MINUTE] = toInt(input.substr(pos));
+        getParsingFlags(config).bigHour = true;
+    });
+    addParseToken("hmmss", function(input, array, config) {
+        var pos1 = input.length - 4, pos2 = input.length - 2;
+        array[HOUR] = toInt(input.substr(0, pos1));
+        array[MINUTE] = toInt(input.substr(pos1, 2));
+        array[SECOND] = toInt(input.substr(pos2));
+        getParsingFlags(config).bigHour = true;
+    });
+    addParseToken("Hmm", function(input, array, config) {
+        var pos = input.length - 2;
+        array[HOUR] = toInt(input.substr(0, pos));
+        array[MINUTE] = toInt(input.substr(pos));
+    });
+    addParseToken("Hmmss", function(input, array, config) {
+        var pos1 = input.length - 4, pos2 = input.length - 2;
+        array[HOUR] = toInt(input.substr(0, pos1));
+        array[MINUTE] = toInt(input.substr(pos1, 2));
+        array[SECOND] = toInt(input.substr(pos2));
+    });
+    // LOCALES
+    function localeIsPM(input) {
+        // IE8 Quirks Mode & IE7 Standards Mode do not allow accessing strings like arrays
+        // Using charAt should be more compatible.
+        return (input + "").toLowerCase().charAt(0) === "p";
+    }
+    var defaultLocaleMeridiemParse = /[ap]\.?m?\.?/i, // Setting the hour should keep the time, because the user explicitly
+    // specified which hour they want. So trying to maintain the same hour (in
+    // a new timezone) makes sense. Adding/subtracting hours does not follow
+    // this rule.
+    getSetHour = makeGetSet("Hours", true);
+    function localeMeridiem(hours, minutes, isLower) {
+        if (hours > 11) return isLower ? "pm" : "PM";
+        else return isLower ? "am" : "AM";
+    }
+    var baseConfig = {
+        calendar: defaultCalendar,
+        longDateFormat: defaultLongDateFormat,
+        invalidDate: defaultInvalidDate,
+        ordinal: defaultOrdinal,
+        dayOfMonthOrdinalParse: defaultDayOfMonthOrdinalParse,
+        relativeTime: defaultRelativeTime,
+        months: defaultLocaleMonths,
+        monthsShort: defaultLocaleMonthsShort,
+        week: defaultLocaleWeek,
+        weekdays: defaultLocaleWeekdays,
+        weekdaysMin: defaultLocaleWeekdaysMin,
+        weekdaysShort: defaultLocaleWeekdaysShort,
+        meridiemParse: defaultLocaleMeridiemParse
+    };
+    // internal storage for locale config files
+    var locales = {}, localeFamilies = {}, globalLocale;
+    function commonPrefix(arr1, arr2) {
+        var i, minl = Math.min(arr1.length, arr2.length);
+        for(i = 0; i < minl; i += 1){
+            if (arr1[i] !== arr2[i]) return i;
+        }
+        return minl;
+    }
+    function normalizeLocale(key) {
+        return key ? key.toLowerCase().replace("_", "-") : key;
+    }
+    // pick the locale from the array
+    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
+    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
+    function chooseLocale(names) {
+        var i = 0, j, next, locale, split;
+        while(i < names.length){
+            split = normalizeLocale(names[i]).split("-");
+            j = split.length;
+            next = normalizeLocale(names[i + 1]);
+            next = next ? next.split("-") : null;
+            while(j > 0){
+                locale = loadLocale(split.slice(0, j).join("-"));
+                if (locale) return locale;
+                if (next && next.length >= j && commonPrefix(split, next) >= j - 1) break;
+                j--;
+            }
+            i++;
+        }
+        return globalLocale;
+    }
+    function isLocaleNameSane(name) {
+        // Prevent names that look like filesystem paths, i.e contain '/' or '\'
+        return name.match("^[^/\\\\]*$") != null;
+    }
+    function loadLocale(name) {
+        var oldLocale = null, aliasedRequire;
+        // TODO: Find a better way to register and load all the locales in Node
+        if (locales[name] === undefined && true && module && module.exports && isLocaleNameSane(name)) try {
+            oldLocale = globalLocale._abbr;
+            aliasedRequire = undefined;
+            aliasedRequire("./locale/" + name);
+            getSetGlobalLocale(oldLocale);
+        } catch (e) {
+            // mark as not found to avoid repeating expensive file require call causing high CPU
+            // when trying to find en-US, en_US, en-us for every format call
+            locales[name] = null; // null means not found
+        }
+        return locales[name];
+    }
+    // This function will load locale and then set the global locale.  If
+    // no arguments are passed in, it will simply return the current global
+    // locale key.
+    function getSetGlobalLocale(key, values) {
+        var data;
+        if (key) {
+            if (isUndefined(values)) data = getLocale(key);
+            else data = defineLocale(key, values);
+            if (data) // moment.duration._locale = moment._locale = data;
+            globalLocale = data;
+            else if (typeof console !== "undefined" && console.warn) //warn user if arguments are passed but the locale could not be set
+            console.warn("Locale " + key + " not found. Did you forget to load it?");
+        }
+        return globalLocale._abbr;
+    }
+    function defineLocale(name, config) {
+        if (config !== null) {
+            var locale, parentConfig = baseConfig;
+            config.abbr = name;
+            if (locales[name] != null) {
+                deprecateSimple("defineLocaleOverride", "use moment.updateLocale(localeName, config) to change an existing locale. moment.defineLocale(localeName, config) should only be used for creating a new locale See http://momentjs.com/guides/#/warnings/define-locale/ for more info.");
+                parentConfig = locales[name]._config;
+            } else if (config.parentLocale != null) {
+                if (locales[config.parentLocale] != null) parentConfig = locales[config.parentLocale]._config;
+                else {
+                    locale = loadLocale(config.parentLocale);
+                    if (locale != null) parentConfig = locale._config;
+                    else {
+                        if (!localeFamilies[config.parentLocale]) localeFamilies[config.parentLocale] = [];
+                        localeFamilies[config.parentLocale].push({
+                            name: name,
+                            config: config
+                        });
+                        return null;
+                    }
+                }
+            }
+            locales[name] = new Locale(mergeConfigs(parentConfig, config));
+            if (localeFamilies[name]) localeFamilies[name].forEach(function(x) {
+                defineLocale(x.name, x.config);
+            });
+            // backwards compat for now: also set the locale
+            // make sure we set the locale AFTER all child locales have been
+            // created, so we won't end up with the child locale set.
+            getSetGlobalLocale(name);
+            return locales[name];
+        } else {
+            // useful for testing
+            delete locales[name];
+            return null;
+        }
+    }
+    function updateLocale(name, config) {
+        if (config != null) {
+            var locale, tmpLocale, parentConfig = baseConfig;
+            if (locales[name] != null && locales[name].parentLocale != null) // Update existing child locale in-place to avoid memory-leaks
+            locales[name].set(mergeConfigs(locales[name]._config, config));
+            else {
+                // MERGE
+                tmpLocale = loadLocale(name);
+                if (tmpLocale != null) parentConfig = tmpLocale._config;
+                config = mergeConfigs(parentConfig, config);
+                if (tmpLocale == null) // updateLocale is called for creating a new locale
+                // Set abbr so it will have a name (getters return
+                // undefined otherwise).
+                config.abbr = name;
+                locale = new Locale(config);
+                locale.parentLocale = locales[name];
+                locales[name] = locale;
+            }
+            // backwards compat for now: also set the locale
+            getSetGlobalLocale(name);
+        } else // pass null for config to unupdate, useful for tests
+        if (locales[name] != null) {
+            if (locales[name].parentLocale != null) {
+                locales[name] = locales[name].parentLocale;
+                if (name === getSetGlobalLocale()) getSetGlobalLocale(name);
+            } else if (locales[name] != null) delete locales[name];
+        }
+        return locales[name];
+    }
+    // returns locale data
+    function getLocale(key) {
+        var locale;
+        if (key && key._locale && key._locale._abbr) key = key._locale._abbr;
+        if (!key) return globalLocale;
+        if (!isArray(key)) {
+            //short-circuit everything else
+            locale = loadLocale(key);
+            if (locale) return locale;
+            key = [
+                key
+            ];
+        }
+        return chooseLocale(key);
+    }
+    function listLocales() {
+        return keys(locales);
+    }
+    function checkOverflow(m) {
+        var overflow, a = m._a;
+        if (a && getParsingFlags(m).overflow === -2) {
+            overflow = a[MONTH] < 0 || a[MONTH] > 11 ? MONTH : a[DATE] < 1 || a[DATE] > daysInMonth(a[YEAR], a[MONTH]) ? DATE : a[HOUR] < 0 || a[HOUR] > 24 || a[HOUR] === 24 && (a[MINUTE] !== 0 || a[SECOND] !== 0 || a[MILLISECOND] !== 0) ? HOUR : a[MINUTE] < 0 || a[MINUTE] > 59 ? MINUTE : a[SECOND] < 0 || a[SECOND] > 59 ? SECOND : a[MILLISECOND] < 0 || a[MILLISECOND] > 999 ? MILLISECOND : -1;
+            if (getParsingFlags(m)._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) overflow = DATE;
+            if (getParsingFlags(m)._overflowWeeks && overflow === -1) overflow = WEEK;
+            if (getParsingFlags(m)._overflowWeekday && overflow === -1) overflow = WEEKDAY;
+            getParsingFlags(m).overflow = overflow;
+        }
+        return m;
+    }
+    // iso 8601 regex
+    // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
+    var extendedIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})-(?:\d\d-\d\d|W\d\d-\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?::\d\d(?::\d\d(?:[.,]\d+)?)?)?)([+-]\d\d(?::?\d\d)?|\s*Z)?)?$/, basicIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})(?:\d\d\d\d|W\d\d\d|W\d\d|\d\d\d|\d\d|))(?:(T| )(\d\d(?:\d\d(?:\d\d(?:[.,]\d+)?)?)?)([+-]\d\d(?::?\d\d)?|\s*Z)?)?$/, tzRegex = /Z|[+-]\d\d(?::?\d\d)?/, isoDates = [
+        [
+            "YYYYYY-MM-DD",
+            /[+-]\d{6}-\d\d-\d\d/
+        ],
+        [
+            "YYYY-MM-DD",
+            /\d{4}-\d\d-\d\d/
+        ],
+        [
+            "GGGG-[W]WW-E",
+            /\d{4}-W\d\d-\d/
+        ],
+        [
+            "GGGG-[W]WW",
+            /\d{4}-W\d\d/,
+            false
+        ],
+        [
+            "YYYY-DDD",
+            /\d{4}-\d{3}/
+        ],
+        [
+            "YYYY-MM",
+            /\d{4}-\d\d/,
+            false
+        ],
+        [
+            "YYYYYYMMDD",
+            /[+-]\d{10}/
+        ],
+        [
+            "YYYYMMDD",
+            /\d{8}/
+        ],
+        [
+            "GGGG[W]WWE",
+            /\d{4}W\d{3}/
+        ],
+        [
+            "GGGG[W]WW",
+            /\d{4}W\d{2}/,
+            false
+        ],
+        [
+            "YYYYDDD",
+            /\d{7}/
+        ],
+        [
+            "YYYYMM",
+            /\d{6}/,
+            false
+        ],
+        [
+            "YYYY",
+            /\d{4}/,
+            false
+        ], 
+    ], // iso time formats and regexes
+    isoTimes = [
+        [
+            "HH:mm:ss.SSSS",
+            /\d\d:\d\d:\d\d\.\d+/
+        ],
+        [
+            "HH:mm:ss,SSSS",
+            /\d\d:\d\d:\d\d,\d+/
+        ],
+        [
+            "HH:mm:ss",
+            /\d\d:\d\d:\d\d/
+        ],
+        [
+            "HH:mm",
+            /\d\d:\d\d/
+        ],
+        [
+            "HHmmss.SSSS",
+            /\d\d\d\d\d\d\.\d+/
+        ],
+        [
+            "HHmmss,SSSS",
+            /\d\d\d\d\d\d,\d+/
+        ],
+        [
+            "HHmmss",
+            /\d\d\d\d\d\d/
+        ],
+        [
+            "HHmm",
+            /\d\d\d\d/
+        ],
+        [
+            "HH",
+            /\d\d/
+        ], 
+    ], aspNetJsonRegex = /^\/?Date\((-?\d+)/i, // RFC 2822 regex: For details see https://tools.ietf.org/html/rfc2822#section-3.3
+    rfc2822 = /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/, obsOffsets = {
+        UT: 0,
+        GMT: 0,
+        EDT: -240,
+        EST: -300,
+        CDT: -300,
+        CST: -360,
+        MDT: -360,
+        MST: -420,
+        PDT: -420,
+        PST: -480
+    };
+    // date from iso format
+    function configFromISO(config) {
+        var i, l, string = config._i, match = extendedIsoRegex.exec(string) || basicIsoRegex.exec(string), allowTime, dateFormat, timeFormat, tzFormat, isoDatesLen = isoDates.length, isoTimesLen = isoTimes.length;
+        if (match) {
+            getParsingFlags(config).iso = true;
+            for(i = 0, l = isoDatesLen; i < l; i++)if (isoDates[i][1].exec(match[1])) {
+                dateFormat = isoDates[i][0];
+                allowTime = isoDates[i][2] !== false;
+                break;
+            }
+            if (dateFormat == null) {
+                config._isValid = false;
+                return;
+            }
+            if (match[3]) {
+                for(i = 0, l = isoTimesLen; i < l; i++)if (isoTimes[i][1].exec(match[3])) {
+                    // match[2] should be 'T' or space
+                    timeFormat = (match[2] || " ") + isoTimes[i][0];
+                    break;
+                }
+                if (timeFormat == null) {
+                    config._isValid = false;
+                    return;
+                }
+            }
+            if (!allowTime && timeFormat != null) {
+                config._isValid = false;
+                return;
+            }
+            if (match[4]) {
+                if (tzRegex.exec(match[4])) tzFormat = "Z";
+                else {
+                    config._isValid = false;
+                    return;
+                }
+            }
+            config._f = dateFormat + (timeFormat || "") + (tzFormat || "");
+            configFromStringAndFormat(config);
+        } else config._isValid = false;
+    }
+    function extractFromRFC2822Strings(yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr) {
+        var result = [
+            untruncateYear(yearStr),
+            defaultLocaleMonthsShort.indexOf(monthStr),
+            parseInt(dayStr, 10),
+            parseInt(hourStr, 10),
+            parseInt(minuteStr, 10), 
+        ];
+        if (secondStr) result.push(parseInt(secondStr, 10));
+        return result;
+    }
+    function untruncateYear(yearStr) {
+        var year = parseInt(yearStr, 10);
+        if (year <= 49) return 2000 + year;
+        else if (year <= 999) return 1900 + year;
+        return year;
+    }
+    function preprocessRFC2822(s) {
+        // Remove comments and folding whitespace and replace multiple-spaces with a single space
+        return s.replace(/\([^)]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").replace(/^\s\s*/, "").replace(/\s\s*$/, "");
+    }
+    function checkWeekday(weekdayStr, parsedInput, config) {
+        if (weekdayStr) {
+            // TODO: Replace the vanilla JS Date object with an independent day-of-week check.
+            var weekdayProvided = defaultLocaleWeekdaysShort.indexOf(weekdayStr), weekdayActual = new Date(parsedInput[0], parsedInput[1], parsedInput[2]).getDay();
+            if (weekdayProvided !== weekdayActual) {
+                getParsingFlags(config).weekdayMismatch = true;
+                config._isValid = false;
+                return false;
+            }
+        }
+        return true;
+    }
+    function calculateOffset(obsOffset, militaryOffset, numOffset) {
+        if (obsOffset) return obsOffsets[obsOffset];
+        else if (militaryOffset) // the only allowed military tz is Z
+        return 0;
+        else {
+            var hm = parseInt(numOffset, 10), m = hm % 100, h = (hm - m) / 100;
+            return h * 60 + m;
+        }
+    }
+    // date and time from ref 2822 format
+    function configFromRFC2822(config) {
+        var match = rfc2822.exec(preprocessRFC2822(config._i)), parsedArray;
+        if (match) {
+            parsedArray = extractFromRFC2822Strings(match[4], match[3], match[2], match[5], match[6], match[7]);
+            if (!checkWeekday(match[1], parsedArray, config)) return;
+            config._a = parsedArray;
+            config._tzm = calculateOffset(match[8], match[9], match[10]);
+            config._d = createUTCDate.apply(null, config._a);
+            config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+            getParsingFlags(config).rfc2822 = true;
+        } else config._isValid = false;
+    }
+    // date from 1) ASP.NET, 2) ISO, 3) RFC 2822 formats, or 4) optional fallback if parsing isn't strict
+    function configFromString(config) {
+        var matched = aspNetJsonRegex.exec(config._i);
+        if (matched !== null) {
+            config._d = new Date(+matched[1]);
+            return;
+        }
+        configFromISO(config);
+        if (config._isValid === false) delete config._isValid;
+        else return;
+        configFromRFC2822(config);
+        if (config._isValid === false) delete config._isValid;
+        else return;
+        if (config._strict) config._isValid = false;
+        else // Final attempt, use Input Fallback
+        hooks.createFromInputFallback(config);
+    }
+    hooks.createFromInputFallback = deprecate("value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.", function(config) {
+        config._d = new Date(config._i + (config._useUTC ? " UTC" : ""));
+    });
+    // Pick the first defined of two or three arguments.
+    function defaults(a, b, c) {
+        if (a != null) return a;
+        if (b != null) return b;
+        return c;
+    }
+    function currentDateArray(config) {
+        // hooks is actually the exported moment object
+        var nowValue = new Date(hooks.now());
+        if (config._useUTC) return [
+            nowValue.getUTCFullYear(),
+            nowValue.getUTCMonth(),
+            nowValue.getUTCDate(), 
+        ];
+        return [
+            nowValue.getFullYear(),
+            nowValue.getMonth(),
+            nowValue.getDate()
+        ];
+    }
+    // convert an array to a date.
+    // the array should mirror the parameters below
+    // note: all values past the year are optional and will default to the lowest possible value.
+    // [year, month, day , hour, minute, second, millisecond]
+    function configFromArray(config) {
+        var i, date, input = [], currentDate, expectedWeekday, yearToUse;
+        if (config._d) return;
+        currentDate = currentDateArray(config);
+        //compute day of the year from weeks and weekdays
+        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) dayOfYearFromWeekInfo(config);
+        //if the day of the year is set, figure out what it is
+        if (config._dayOfYear != null) {
+            yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
+            if (config._dayOfYear > daysInYear(yearToUse) || config._dayOfYear === 0) getParsingFlags(config)._overflowDayOfYear = true;
+            date = createUTCDate(yearToUse, 0, config._dayOfYear);
+            config._a[MONTH] = date.getUTCMonth();
+            config._a[DATE] = date.getUTCDate();
+        }
+        // Default to current date.
+        // * if no year, month, day of month are given, default to today
+        // * if day of month is given, default month and year
+        // * if month is given, default only year
+        // * if year is given, don't default anything
+        for(i = 0; i < 3 && config._a[i] == null; ++i)config._a[i] = input[i] = currentDate[i];
+        // Zero out whatever was not defaulted, including time
+        for(; i < 7; i++)config._a[i] = input[i] = config._a[i] == null ? i === 2 ? 1 : 0 : config._a[i];
+        // Check for 24:00:00.000
+        if (config._a[HOUR] === 24 && config._a[MINUTE] === 0 && config._a[SECOND] === 0 && config._a[MILLISECOND] === 0) {
+            config._nextDay = true;
+            config._a[HOUR] = 0;
+        }
+        config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
+        expectedWeekday = config._useUTC ? config._d.getUTCDay() : config._d.getDay();
+        // Apply timezone offset from input. The actual utcOffset can be changed
+        // with parseZone.
+        if (config._tzm != null) config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+        if (config._nextDay) config._a[HOUR] = 24;
+        // check for mismatching day of week
+        if (config._w && typeof config._w.d !== "undefined" && config._w.d !== expectedWeekday) getParsingFlags(config).weekdayMismatch = true;
+    }
+    function dayOfYearFromWeekInfo(config) {
+        var w, weekYear, week, weekday, dow, doy, temp, weekdayOverflow, curWeek;
+        w = config._w;
+        if (w.GG != null || w.W != null || w.E != null) {
+            dow = 1;
+            doy = 4;
+            // TODO: We need to take the current isoWeekYear, but that depends on
+            // how we interpret now (local, utc, fixed offset). So create
+            // a now version of current config (take local/utc/offset flags, and
+            // create now).
+            weekYear = defaults(w.GG, config._a[YEAR], weekOfYear(createLocal(), 1, 4).year);
+            week = defaults(w.W, 1);
+            weekday = defaults(w.E, 1);
+            if (weekday < 1 || weekday > 7) weekdayOverflow = true;
+        } else {
+            dow = config._locale._week.dow;
+            doy = config._locale._week.doy;
+            curWeek = weekOfYear(createLocal(), dow, doy);
+            weekYear = defaults(w.gg, config._a[YEAR], curWeek.year);
+            // Default to current week.
+            week = defaults(w.w, curWeek.week);
+            if (w.d != null) {
+                // weekday -- low day numbers are considered next week
+                weekday = w.d;
+                if (weekday < 0 || weekday > 6) weekdayOverflow = true;
+            } else if (w.e != null) {
+                // local weekday -- counting starts from beginning of week
+                weekday = w.e + dow;
+                if (w.e < 0 || w.e > 6) weekdayOverflow = true;
+            } else // default to beginning of week
+            weekday = dow;
+        }
+        if (week < 1 || week > weeksInYear(weekYear, dow, doy)) getParsingFlags(config)._overflowWeeks = true;
+        else if (weekdayOverflow != null) getParsingFlags(config)._overflowWeekday = true;
+        else {
+            temp = dayOfYearFromWeeks(weekYear, week, weekday, dow, doy);
+            config._a[YEAR] = temp.year;
+            config._dayOfYear = temp.dayOfYear;
+        }
+    }
+    // constant that refers to the ISO standard
+    hooks.ISO_8601 = function() {};
+    // constant that refers to the RFC 2822 form
+    hooks.RFC_2822 = function() {};
+    // date from string and format string
+    function configFromStringAndFormat(config) {
+        // TODO: Move this to another part of the creation flow to prevent circular deps
+        if (config._f === hooks.ISO_8601) {
+            configFromISO(config);
+            return;
+        }
+        if (config._f === hooks.RFC_2822) {
+            configFromRFC2822(config);
+            return;
+        }
+        config._a = [];
+        getParsingFlags(config).empty = true;
+        // This array is used to make a Date, either with `new Date` or `Date.UTC`
+        var string = "" + config._i, i, parsedInput, tokens, token, skipped, stringLength = string.length, totalParsedInputLength = 0, era, tokenLen;
+        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
+        tokenLen = tokens.length;
+        for(i = 0; i < tokenLen; i++){
+            token = tokens[i];
+            parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
+            if (parsedInput) {
+                skipped = string.substr(0, string.indexOf(parsedInput));
+                if (skipped.length > 0) getParsingFlags(config).unusedInput.push(skipped);
+                string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
+                totalParsedInputLength += parsedInput.length;
+            }
+            // don't parse if it's not a known token
+            if (formatTokenFunctions[token]) {
+                if (parsedInput) getParsingFlags(config).empty = false;
+                else getParsingFlags(config).unusedTokens.push(token);
+                addTimeToArrayFromToken(token, parsedInput, config);
+            } else if (config._strict && !parsedInput) getParsingFlags(config).unusedTokens.push(token);
+        }
+        // add remaining unparsed input length to the string
+        getParsingFlags(config).charsLeftOver = stringLength - totalParsedInputLength;
+        if (string.length > 0) getParsingFlags(config).unusedInput.push(string);
+        // clear _12h flag if hour is <= 12
+        if (config._a[HOUR] <= 12 && getParsingFlags(config).bigHour === true && config._a[HOUR] > 0) getParsingFlags(config).bigHour = undefined;
+        getParsingFlags(config).parsedDateParts = config._a.slice(0);
+        getParsingFlags(config).meridiem = config._meridiem;
+        // handle meridiem
+        config._a[HOUR] = meridiemFixWrap(config._locale, config._a[HOUR], config._meridiem);
+        // handle era
+        era = getParsingFlags(config).era;
+        if (era !== null) config._a[YEAR] = config._locale.erasConvertYear(era, config._a[YEAR]);
+        configFromArray(config);
+        checkOverflow(config);
+    }
+    function meridiemFixWrap(locale, hour, meridiem) {
+        var isPm;
+        if (meridiem == null) // nothing to do
+        return hour;
+        if (locale.meridiemHour != null) return locale.meridiemHour(hour, meridiem);
+        else if (locale.isPM != null) {
+            // Fallback
+            isPm = locale.isPM(meridiem);
+            if (isPm && hour < 12) hour += 12;
+            if (!isPm && hour === 12) hour = 0;
+            return hour;
+        } else // this is not supposed to happen
+        return hour;
+    }
+    // date from string and array of format strings
+    function configFromStringAndArray(config) {
+        var tempConfig, bestMoment, scoreToBeat, i, currentScore, validFormatFound, bestFormatIsValid = false, configfLen = config._f.length;
+        if (configfLen === 0) {
+            getParsingFlags(config).invalidFormat = true;
+            config._d = new Date(NaN);
+            return;
+        }
+        for(i = 0; i < configfLen; i++){
+            currentScore = 0;
+            validFormatFound = false;
+            tempConfig = copyConfig({}, config);
+            if (config._useUTC != null) tempConfig._useUTC = config._useUTC;
+            tempConfig._f = config._f[i];
+            configFromStringAndFormat(tempConfig);
+            if (isValid(tempConfig)) validFormatFound = true;
+            // if there is any input that was not parsed add a penalty for that format
+            currentScore += getParsingFlags(tempConfig).charsLeftOver;
+            //or tokens
+            currentScore += getParsingFlags(tempConfig).unusedTokens.length * 10;
+            getParsingFlags(tempConfig).score = currentScore;
+            if (!bestFormatIsValid) {
+                if (scoreToBeat == null || currentScore < scoreToBeat || validFormatFound) {
+                    scoreToBeat = currentScore;
+                    bestMoment = tempConfig;
+                    if (validFormatFound) bestFormatIsValid = true;
+                }
+            } else if (currentScore < scoreToBeat) {
+                scoreToBeat = currentScore;
+                bestMoment = tempConfig;
+            }
+        }
+        extend(config, bestMoment || tempConfig);
+    }
+    function configFromObject(config) {
+        if (config._d) return;
+        var i = normalizeObjectUnits(config._i), dayOrDate = i.day === undefined ? i.date : i.day;
+        config._a = map([
+            i.year,
+            i.month,
+            dayOrDate,
+            i.hour,
+            i.minute,
+            i.second,
+            i.millisecond
+        ], function(obj) {
+            return obj && parseInt(obj, 10);
+        });
+        configFromArray(config);
+    }
+    function createFromConfig(config) {
+        var res = new Moment(checkOverflow(prepareConfig(config)));
+        if (res._nextDay) {
+            // Adding is smart enough around DST
+            res.add(1, "d");
+            res._nextDay = undefined;
+        }
+        return res;
+    }
+    function prepareConfig(config) {
+        var input = config._i, format = config._f;
+        config._locale = config._locale || getLocale(config._l);
+        if (input === null || format === undefined && input === "") return createInvalid({
+            nullInput: true
+        });
+        if (typeof input === "string") config._i = input = config._locale.preparse(input);
+        if (isMoment(input)) return new Moment(checkOverflow(input));
+        else if (isDate(input)) config._d = input;
+        else if (isArray(format)) configFromStringAndArray(config);
+        else if (format) configFromStringAndFormat(config);
+        else configFromInput(config);
+        if (!isValid(config)) config._d = null;
+        return config;
+    }
+    function configFromInput(config) {
+        var input = config._i;
+        if (isUndefined(input)) config._d = new Date(hooks.now());
+        else if (isDate(input)) config._d = new Date(input.valueOf());
+        else if (typeof input === "string") configFromString(config);
+        else if (isArray(input)) {
+            config._a = map(input.slice(0), function(obj) {
+                return parseInt(obj, 10);
+            });
+            configFromArray(config);
+        } else if (isObject(input)) configFromObject(config);
+        else if (isNumber(input)) // from milliseconds
+        config._d = new Date(input);
+        else hooks.createFromInputFallback(config);
+    }
+    function createLocalOrUTC(input, format, locale, strict, isUTC) {
+        var c = {};
+        if (format === true || format === false) {
+            strict = format;
+            format = undefined;
+        }
+        if (locale === true || locale === false) {
+            strict = locale;
+            locale = undefined;
+        }
+        if (isObject(input) && isObjectEmpty(input) || isArray(input) && input.length === 0) input = undefined;
+        // object construction must be done this way.
+        // https://github.com/moment/moment/issues/1423
+        c._isAMomentObject = true;
+        c._useUTC = c._isUTC = isUTC;
+        c._l = locale;
+        c._i = input;
+        c._f = format;
+        c._strict = strict;
+        return createFromConfig(c);
+    }
+    function createLocal(input, format, locale, strict) {
+        return createLocalOrUTC(input, format, locale, strict, false);
+    }
+    var prototypeMin = deprecate("moment().min is deprecated, use moment.max instead. http://momentjs.com/guides/#/warnings/min-max/", function() {
+        var other = createLocal.apply(null, arguments);
+        if (this.isValid() && other.isValid()) return other < this ? this : other;
+        else return createInvalid();
+    }), prototypeMax = deprecate("moment().max is deprecated, use moment.min instead. http://momentjs.com/guides/#/warnings/min-max/", function() {
+        var other = createLocal.apply(null, arguments);
+        if (this.isValid() && other.isValid()) return other > this ? this : other;
+        else return createInvalid();
+    });
+    // Pick a moment m from moments so that m[fn](other) is true for all
+    // other. This relies on the function fn to be transitive.
+    //
+    // moments should either be an array of moment objects or an array, whose
+    // first element is an array of moment objects.
+    function pickBy(fn, moments) {
+        var res, i;
+        if (moments.length === 1 && isArray(moments[0])) moments = moments[0];
+        if (!moments.length) return createLocal();
+        res = moments[0];
+        for(i = 1; i < moments.length; ++i)if (!moments[i].isValid() || moments[i][fn](res)) res = moments[i];
+        return res;
+    }
+    // TODO: Use [].sort instead?
+    function min() {
+        var args = [].slice.call(arguments, 0);
+        return pickBy("isBefore", args);
+    }
+    function max() {
+        var args = [].slice.call(arguments, 0);
+        return pickBy("isAfter", args);
+    }
+    var now = function() {
+        return Date.now ? Date.now() : +new Date();
+    };
+    var ordering = [
+        "year",
+        "quarter",
+        "month",
+        "week",
+        "day",
+        "hour",
+        "minute",
+        "second",
+        "millisecond", 
+    ];
+    function isDurationValid(m) {
+        var key, unitHasDecimal = false, i, orderLen = ordering.length;
+        for(key in m){
+            if (hasOwnProp(m, key) && !(indexOf.call(ordering, key) !== -1 && (m[key] == null || !isNaN(m[key])))) return false;
+        }
+        for(i = 0; i < orderLen; ++i)if (m[ordering[i]]) {
+            if (unitHasDecimal) return false; // only allow non-integers for smallest unit
+            if (parseFloat(m[ordering[i]]) !== toInt(m[ordering[i]])) unitHasDecimal = true;
+        }
+        return true;
+    }
+    function isValid$1() {
+        return this._isValid;
+    }
+    function createInvalid$1() {
+        return createDuration(NaN);
+    }
+    function Duration(duration) {
+        var normalizedInput = normalizeObjectUnits(duration), years = normalizedInput.year || 0, quarters = normalizedInput.quarter || 0, months = normalizedInput.month || 0, weeks = normalizedInput.week || normalizedInput.isoWeek || 0, days = normalizedInput.day || 0, hours = normalizedInput.hour || 0, minutes = normalizedInput.minute || 0, seconds = normalizedInput.second || 0, milliseconds = normalizedInput.millisecond || 0;
+        this._isValid = isDurationValid(normalizedInput);
+        // representation for dateAddRemove
+        this._milliseconds = +milliseconds + seconds * 1e3 + minutes * 6e4 + hours * 3600000; //using 1000 * 60 * 60 instead of 36e5 to avoid floating point rounding errors https://github.com/moment/moment/issues/2978
+        // Because of dateAddRemove treats 24 hours as different from a
+        // day when working around DST, we need to store them separately
+        this._days = +days + weeks * 7;
+        // It is impossible to translate months into days without knowing
+        // which months you are are talking about, so we have to store
+        // it separately.
+        this._months = +months + quarters * 3 + years * 12;
+        this._data = {};
+        this._locale = getLocale();
+        this._bubble();
+    }
+    function isDuration(obj) {
+        return obj instanceof Duration;
+    }
+    function absRound(number) {
+        if (number < 0) return Math.round(-1 * number) * -1;
+        else return Math.round(number);
+    }
+    // compare two arrays, return the number of differences
+    function compareArrays(array1, array2, dontConvert) {
+        var len = Math.min(array1.length, array2.length), lengthDiff = Math.abs(array1.length - array2.length), diffs = 0, i;
+        for(i = 0; i < len; i++)if (dontConvert && array1[i] !== array2[i] || !dontConvert && toInt(array1[i]) !== toInt(array2[i])) diffs++;
+        return diffs + lengthDiff;
+    }
+    // FORMATTING
+    function offset(token, separator) {
+        addFormatToken(token, 0, 0, function() {
+            var offset = this.utcOffset(), sign = "+";
+            if (offset < 0) {
+                offset = -offset;
+                sign = "-";
+            }
+            return sign + zeroFill(~~(offset / 60), 2) + separator + zeroFill(~~offset % 60, 2);
+        });
+    }
+    offset("Z", ":");
+    offset("ZZ", "");
+    // PARSING
+    addRegexToken("Z", matchShortOffset);
+    addRegexToken("ZZ", matchShortOffset);
+    addParseToken([
+        "Z",
+        "ZZ"
+    ], function(input, array, config) {
+        config._useUTC = true;
+        config._tzm = offsetFromString(matchShortOffset, input);
+    });
+    // HELPERS
+    // timezone chunker
+    // '+10:00' > ['10',  '00']
+    // '-1530'  > ['-15', '30']
+    var chunkOffset = /([\+\-]|\d\d)/gi;
+    function offsetFromString(matcher, string) {
+        var matches = (string || "").match(matcher), chunk, parts, minutes;
+        if (matches === null) return null;
+        chunk = matches[matches.length - 1] || [];
+        parts = (chunk + "").match(chunkOffset) || [
+            "-",
+            0,
+            0
+        ];
+        minutes = +(parts[1] * 60) + toInt(parts[2]);
+        return minutes === 0 ? 0 : parts[0] === "+" ? minutes : -minutes;
+    }
+    // Return a moment from input, that is local/utc/zone equivalent to model.
+    function cloneWithOffset(input, model) {
+        var res, diff;
+        if (model._isUTC) {
+            res = model.clone();
+            diff = (isMoment(input) || isDate(input) ? input.valueOf() : createLocal(input).valueOf()) - res.valueOf();
+            // Use low-level api, because this fn is low-level api.
+            res._d.setTime(res._d.valueOf() + diff);
+            hooks.updateOffset(res, false);
+            return res;
+        } else return createLocal(input).local();
+    }
+    function getDateOffset(m) {
+        // On Firefox.24 Date#getTimezoneOffset returns a floating point.
+        // https://github.com/moment/moment/pull/1871
+        return -Math.round(m._d.getTimezoneOffset());
+    }
+    // HOOKS
+    // This function will be called whenever a moment is mutated.
+    // It is intended to keep the offset in sync with the timezone.
+    hooks.updateOffset = function() {};
+    // MOMENTS
+    // keepLocalTime = true means only change the timezone, without
+    // affecting the local hour. So 5:31:26 +0300 --[utcOffset(2, true)]-->
+    // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist with offset
+    // +0200, so we adjust the time as needed, to be valid.
+    //
+    // Keeping the time actually adds/subtracts (one hour)
+    // from the actual represented time. That is why we call updateOffset
+    // a second time. In case it wants us to change the offset again
+    // _changeInProgress == true case, then we have to adjust, because
+    // there is no such time in the given timezone.
+    function getSetOffset(input, keepLocalTime, keepMinutes) {
+        var offset = this._offset || 0, localAdjust;
+        if (!this.isValid()) return input != null ? this : NaN;
+        if (input != null) {
+            if (typeof input === "string") {
+                input = offsetFromString(matchShortOffset, input);
+                if (input === null) return this;
+            } else if (Math.abs(input) < 16 && !keepMinutes) input = input * 60;
+            if (!this._isUTC && keepLocalTime) localAdjust = getDateOffset(this);
+            this._offset = input;
+            this._isUTC = true;
+            if (localAdjust != null) this.add(localAdjust, "m");
+            if (offset !== input) {
+                if (!keepLocalTime || this._changeInProgress) addSubtract(this, createDuration(input - offset, "m"), 1, false);
+                else if (!this._changeInProgress) {
+                    this._changeInProgress = true;
+                    hooks.updateOffset(this, true);
+                    this._changeInProgress = null;
+                }
+            }
+            return this;
+        } else return this._isUTC ? offset : getDateOffset(this);
+    }
+    function getSetZone(input, keepLocalTime) {
+        if (input != null) {
+            if (typeof input !== "string") input = -input;
+            this.utcOffset(input, keepLocalTime);
+            return this;
+        } else return -this.utcOffset();
+    }
+    function setOffsetToUTC(keepLocalTime) {
+        return this.utcOffset(0, keepLocalTime);
+    }
+    function setOffsetToLocal(keepLocalTime) {
+        if (this._isUTC) {
+            this.utcOffset(0, keepLocalTime);
+            this._isUTC = false;
+            if (keepLocalTime) this.subtract(getDateOffset(this), "m");
+        }
+        return this;
+    }
+    function setOffsetToParsedOffset() {
+        if (this._tzm != null) this.utcOffset(this._tzm, false, true);
+        else if (typeof this._i === "string") {
+            var tZone = offsetFromString(matchOffset, this._i);
+            if (tZone != null) this.utcOffset(tZone);
+            else this.utcOffset(0, true);
+        }
+        return this;
+    }
+    function hasAlignedHourOffset(input) {
+        if (!this.isValid()) return false;
+        input = input ? createLocal(input).utcOffset() : 0;
+        return (this.utcOffset() - input) % 60 === 0;
+    }
+    function isDaylightSavingTime() {
+        return this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset();
+    }
+    function isDaylightSavingTimeShifted() {
+        if (!isUndefined(this._isDSTShifted)) return this._isDSTShifted;
+        var c = {}, other;
+        copyConfig(c, this);
+        c = prepareConfig(c);
+        if (c._a) {
+            other = c._isUTC ? createUTC(c._a) : createLocal(c._a);
+            this._isDSTShifted = this.isValid() && compareArrays(c._a, other.toArray()) > 0;
+        } else this._isDSTShifted = false;
+        return this._isDSTShifted;
+    }
+    function isLocal() {
+        return this.isValid() ? !this._isUTC : false;
+    }
+    function isUtcOffset() {
+        return this.isValid() ? this._isUTC : false;
+    }
+    function isUtc() {
+        return this.isValid() ? this._isUTC && this._offset === 0 : false;
+    }
+    // ASP.NET json date format regex
+    var aspNetRegex = /^(-|\+)?(?:(\d*)[. ])?(\d+):(\d+)(?::(\d+)(\.\d*)?)?$/, // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+    // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+    // and further modified to allow for strings containing both week and day
+    isoRegex = /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
+    function createDuration(input, key) {
+        var duration = input, // matching against regexp is expensive, do it on demand
+        match = null, sign, ret, diffRes;
+        if (isDuration(input)) duration = {
+            ms: input._milliseconds,
+            d: input._days,
+            M: input._months
+        };
+        else if (isNumber(input) || !isNaN(+input)) {
+            duration = {};
+            if (key) duration[key] = +input;
+            else duration.milliseconds = +input;
+        } else if (match = aspNetRegex.exec(input)) {
+            sign = match[1] === "-" ? -1 : 1;
+            duration = {
+                y: 0,
+                d: toInt(match[DATE]) * sign,
+                h: toInt(match[HOUR]) * sign,
+                m: toInt(match[MINUTE]) * sign,
+                s: toInt(match[SECOND]) * sign,
+                ms: toInt(absRound(match[MILLISECOND] * 1000)) * sign
+            };
+        } else if (match = isoRegex.exec(input)) {
+            sign = match[1] === "-" ? -1 : 1;
+            duration = {
+                y: parseIso(match[2], sign),
+                M: parseIso(match[3], sign),
+                w: parseIso(match[4], sign),
+                d: parseIso(match[5], sign),
+                h: parseIso(match[6], sign),
+                m: parseIso(match[7], sign),
+                s: parseIso(match[8], sign)
+            };
+        } else if (duration == null) // checks for null or undefined
+        duration = {};
+        else if (typeof duration === "object" && ("from" in duration || "to" in duration)) {
+            diffRes = momentsDifference(createLocal(duration.from), createLocal(duration.to));
+            duration = {};
+            duration.ms = diffRes.milliseconds;
+            duration.M = diffRes.months;
+        }
+        ret = new Duration(duration);
+        if (isDuration(input) && hasOwnProp(input, "_locale")) ret._locale = input._locale;
+        if (isDuration(input) && hasOwnProp(input, "_isValid")) ret._isValid = input._isValid;
+        return ret;
+    }
+    createDuration.fn = Duration.prototype;
+    createDuration.invalid = createInvalid$1;
+    function parseIso(inp, sign) {
+        // We'd normally use ~~inp for this, but unfortunately it also
+        // converts floats to ints.
+        // inp may be undefined, so careful calling replace on it.
+        var res = inp && parseFloat(inp.replace(",", "."));
+        // apply sign while we're at it
+        return (isNaN(res) ? 0 : res) * sign;
+    }
+    function positiveMomentsDifference(base, other) {
+        var res = {};
+        res.months = other.month() - base.month() + (other.year() - base.year()) * 12;
+        if (base.clone().add(res.months, "M").isAfter(other)) --res.months;
+        res.milliseconds = +other - +base.clone().add(res.months, "M");
+        return res;
+    }
+    function momentsDifference(base, other) {
+        var res;
+        if (!(base.isValid() && other.isValid())) return {
+            milliseconds: 0,
+            months: 0
+        };
+        other = cloneWithOffset(other, base);
+        if (base.isBefore(other)) res = positiveMomentsDifference(base, other);
+        else {
+            res = positiveMomentsDifference(other, base);
+            res.milliseconds = -res.milliseconds;
+            res.months = -res.months;
+        }
+        return res;
+    }
+    // TODO: remove 'name' arg after deprecation is removed
+    function createAdder(direction, name) {
+        return function(val, period) {
+            var dur, tmp;
+            //invert the arguments, but complain about it
+            if (period !== null && !isNaN(+period)) {
+                deprecateSimple(name, "moment()." + name + "(period, number) is deprecated. Please use moment()." + name + "(number, period). " + "See http://momentjs.com/guides/#/warnings/add-inverted-param/ for more info.");
+                tmp = val;
+                val = period;
+                period = tmp;
+            }
+            dur = createDuration(val, period);
+            addSubtract(this, dur, direction);
+            return this;
+        };
+    }
+    function addSubtract(mom, duration, isAdding, updateOffset) {
+        var milliseconds = duration._milliseconds, days = absRound(duration._days), months = absRound(duration._months);
+        if (!mom.isValid()) // No op
+        return;
+        updateOffset = updateOffset == null ? true : updateOffset;
+        if (months) setMonth(mom, get(mom, "Month") + months * isAdding);
+        if (days) set$1(mom, "Date", get(mom, "Date") + days * isAdding);
+        if (milliseconds) mom._d.setTime(mom._d.valueOf() + milliseconds * isAdding);
+        if (updateOffset) hooks.updateOffset(mom, days || months);
+    }
+    var add = createAdder(1, "add"), subtract = createAdder(-1, "subtract");
+    function isString(input) {
+        return typeof input === "string" || input instanceof String;
+    }
+    // type MomentInput = Moment | Date | string | number | (number | string)[] | MomentInputObject | void; // null | undefined
+    function isMomentInput(input) {
+        return isMoment(input) || isDate(input) || isString(input) || isNumber(input) || isNumberOrStringArray(input) || isMomentInputObject(input) || input === null || input === undefined;
+    }
+    function isMomentInputObject(input) {
+        var objectTest = isObject(input) && !isObjectEmpty(input), propertyTest = false, properties = [
+            "years",
+            "year",
+            "y",
+            "months",
+            "month",
+            "M",
+            "days",
+            "day",
+            "d",
+            "dates",
+            "date",
+            "D",
+            "hours",
+            "hour",
+            "h",
+            "minutes",
+            "minute",
+            "m",
+            "seconds",
+            "second",
+            "s",
+            "milliseconds",
+            "millisecond",
+            "ms", 
+        ], i, property, propertyLen = properties.length;
+        for(i = 0; i < propertyLen; i += 1){
+            property = properties[i];
+            propertyTest = propertyTest || hasOwnProp(input, property);
+        }
+        return objectTest && propertyTest;
+    }
+    function isNumberOrStringArray(input) {
+        var arrayTest = isArray(input), dataTypeTest = false;
+        if (arrayTest) dataTypeTest = input.filter(function(item) {
+            return !isNumber(item) && isString(input);
+        }).length === 0;
+        return arrayTest && dataTypeTest;
+    }
+    function isCalendarSpec(input) {
+        var objectTest = isObject(input) && !isObjectEmpty(input), propertyTest = false, properties = [
+            "sameDay",
+            "nextDay",
+            "lastDay",
+            "nextWeek",
+            "lastWeek",
+            "sameElse", 
+        ], i, property;
+        for(i = 0; i < properties.length; i += 1){
+            property = properties[i];
+            propertyTest = propertyTest || hasOwnProp(input, property);
+        }
+        return objectTest && propertyTest;
+    }
+    function getCalendarFormat(myMoment, now) {
+        var diff = myMoment.diff(now, "days", true);
+        return diff < -6 ? "sameElse" : diff < -1 ? "lastWeek" : diff < 0 ? "lastDay" : diff < 1 ? "sameDay" : diff < 2 ? "nextDay" : diff < 7 ? "nextWeek" : "sameElse";
+    }
+    function calendar$1(time, formats) {
+        // Support for single parameter, formats only overload to the calendar function
+        if (arguments.length === 1) {
+            if (!arguments[0]) {
+                time = undefined;
+                formats = undefined;
+            } else if (isMomentInput(arguments[0])) {
+                time = arguments[0];
+                formats = undefined;
+            } else if (isCalendarSpec(arguments[0])) {
+                formats = arguments[0];
+                time = undefined;
+            }
+        }
+        // We want to compare the start of today, vs this.
+        // Getting start-of-today depends on whether we're local/utc/offset or not.
+        var now = time || createLocal(), sod = cloneWithOffset(now, this).startOf("day"), format = hooks.calendarFormat(this, sod) || "sameElse", output = formats && (isFunction(formats[format]) ? formats[format].call(this, now) : formats[format]);
+        return this.format(output || this.localeData().calendar(format, this, createLocal(now)));
+    }
+    function clone() {
+        return new Moment(this);
+    }
+    function isAfter(input, units) {
+        var localInput = isMoment(input) ? input : createLocal(input);
+        if (!(this.isValid() && localInput.isValid())) return false;
+        units = normalizeUnits(units) || "millisecond";
+        if (units === "millisecond") return this.valueOf() > localInput.valueOf();
+        else return localInput.valueOf() < this.clone().startOf(units).valueOf();
+    }
+    function isBefore(input, units) {
+        var localInput = isMoment(input) ? input : createLocal(input);
+        if (!(this.isValid() && localInput.isValid())) return false;
+        units = normalizeUnits(units) || "millisecond";
+        if (units === "millisecond") return this.valueOf() < localInput.valueOf();
+        else return this.clone().endOf(units).valueOf() < localInput.valueOf();
+    }
+    function isBetween(from, to, units, inclusivity) {
+        var localFrom = isMoment(from) ? from : createLocal(from), localTo = isMoment(to) ? to : createLocal(to);
+        if (!(this.isValid() && localFrom.isValid() && localTo.isValid())) return false;
+        inclusivity = inclusivity || "()";
+        return (inclusivity[0] === "(" ? this.isAfter(localFrom, units) : !this.isBefore(localFrom, units)) && (inclusivity[1] === ")" ? this.isBefore(localTo, units) : !this.isAfter(localTo, units));
+    }
+    function isSame(input, units) {
+        var localInput = isMoment(input) ? input : createLocal(input), inputMs;
+        if (!(this.isValid() && localInput.isValid())) return false;
+        units = normalizeUnits(units) || "millisecond";
+        if (units === "millisecond") return this.valueOf() === localInput.valueOf();
+        else {
+            inputMs = localInput.valueOf();
+            return this.clone().startOf(units).valueOf() <= inputMs && inputMs <= this.clone().endOf(units).valueOf();
+        }
+    }
+    function isSameOrAfter(input, units) {
+        return this.isSame(input, units) || this.isAfter(input, units);
+    }
+    function isSameOrBefore(input, units) {
+        return this.isSame(input, units) || this.isBefore(input, units);
+    }
+    function diff(input, units, asFloat) {
+        var that, zoneDelta, output;
+        if (!this.isValid()) return NaN;
+        that = cloneWithOffset(input, this);
+        if (!that.isValid()) return NaN;
+        zoneDelta = (that.utcOffset() - this.utcOffset()) * 6e4;
+        units = normalizeUnits(units);
+        switch(units){
+            case "year":
+                output = monthDiff(this, that) / 12;
+                break;
+            case "month":
+                output = monthDiff(this, that);
+                break;
+            case "quarter":
+                output = monthDiff(this, that) / 3;
+                break;
+            case "second":
+                output = (this - that) / 1e3;
+                break; // 1000
+            case "minute":
+                output = (this - that) / 6e4;
+                break; // 1000 * 60
+            case "hour":
+                output = (this - that) / 36e5;
+                break; // 1000 * 60 * 60
+            case "day":
+                output = (this - that - zoneDelta) / 864e5;
+                break; // 1000 * 60 * 60 * 24, negate dst
+            case "week":
+                output = (this - that - zoneDelta) / 6048e5;
+                break; // 1000 * 60 * 60 * 24 * 7, negate dst
+            default:
+                output = this - that;
+        }
+        return asFloat ? output : absFloor(output);
+    }
+    function monthDiff(a, b) {
+        if (a.date() < b.date()) // end-of-month calculations work correct when the start month has more
+        // days than the end month.
+        return -monthDiff(b, a);
+        // difference in months
+        var wholeMonthDiff = (b.year() - a.year()) * 12 + (b.month() - a.month()), // b is in (anchor - 1 month, anchor + 1 month)
+        anchor = a.clone().add(wholeMonthDiff, "months"), anchor2, adjust;
+        if (b - anchor < 0) {
+            anchor2 = a.clone().add(wholeMonthDiff - 1, "months");
+            // linear across the month
+            adjust = (b - anchor) / (anchor - anchor2);
+        } else {
+            anchor2 = a.clone().add(wholeMonthDiff + 1, "months");
+            // linear across the month
+            adjust = (b - anchor) / (anchor2 - anchor);
+        }
+        //check for negative zero, return zero if negative zero
+        return -(wholeMonthDiff + adjust) || 0;
+    }
+    hooks.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ";
+    hooks.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]";
+    function toString() {
+        return this.clone().locale("en").format("ddd MMM DD YYYY HH:mm:ss [GMT]ZZ");
+    }
+    function toISOString(keepOffset) {
+        if (!this.isValid()) return null;
+        var utc = keepOffset !== true, m = utc ? this.clone().utc() : this;
+        if (m.year() < 0 || m.year() > 9999) return formatMoment(m, utc ? "YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]" : "YYYYYY-MM-DD[T]HH:mm:ss.SSSZ");
+        if (isFunction(Date.prototype.toISOString)) {
+            // native implementation is ~50x faster, use it when we can
+            if (utc) return this.toDate().toISOString();
+            else return new Date(this.valueOf() + this.utcOffset() * 60000).toISOString().replace("Z", formatMoment(m, "Z"));
+        }
+        return formatMoment(m, utc ? "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]" : "YYYY-MM-DD[T]HH:mm:ss.SSSZ");
+    }
+    /**
+     * Return a human readable representation of a moment that can
+     * also be evaluated to get a new moment which is the same
+     *
+     * @link https://nodejs.org/dist/latest/docs/api/util.html#util_custom_inspect_function_on_objects
+     */ function inspect() {
+        if (!this.isValid()) return "moment.invalid(/* " + this._i + " */)";
+        var func = "moment", zone = "", prefix, year, datetime, suffix;
+        if (!this.isLocal()) {
+            func = this.utcOffset() === 0 ? "moment.utc" : "moment.parseZone";
+            zone = "Z";
+        }
+        prefix = "[" + func + '("]';
+        year = 0 <= this.year() && this.year() <= 9999 ? "YYYY" : "YYYYYY";
+        datetime = "-MM-DD[T]HH:mm:ss.SSS";
+        suffix = zone + '[")]';
+        return this.format(prefix + year + datetime + suffix);
+    }
+    function format(inputString) {
+        if (!inputString) inputString = this.isUtc() ? hooks.defaultFormatUtc : hooks.defaultFormat;
+        var output = formatMoment(this, inputString);
+        return this.localeData().postformat(output);
+    }
+    function from(time, withoutSuffix) {
+        if (this.isValid() && (isMoment(time) && time.isValid() || createLocal(time).isValid())) return createDuration({
+            to: this,
+            from: time
+        }).locale(this.locale()).humanize(!withoutSuffix);
+        else return this.localeData().invalidDate();
+    }
+    function fromNow(withoutSuffix) {
+        return this.from(createLocal(), withoutSuffix);
+    }
+    function to(time, withoutSuffix) {
+        if (this.isValid() && (isMoment(time) && time.isValid() || createLocal(time).isValid())) return createDuration({
+            from: this,
+            to: time
+        }).locale(this.locale()).humanize(!withoutSuffix);
+        else return this.localeData().invalidDate();
+    }
+    function toNow(withoutSuffix) {
+        return this.to(createLocal(), withoutSuffix);
+    }
+    // If passed a locale key, it will set the locale for this
+    // instance.  Otherwise, it will return the locale configuration
+    // variables for this instance.
+    function locale(key) {
+        var newLocaleData;
+        if (key === undefined) return this._locale._abbr;
+        else {
+            newLocaleData = getLocale(key);
+            if (newLocaleData != null) this._locale = newLocaleData;
+            return this;
+        }
+    }
+    var lang = deprecate("moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.", function(key) {
+        if (key === undefined) return this.localeData();
+        else return this.locale(key);
+    });
+    function localeData() {
+        return this._locale;
+    }
+    var MS_PER_SECOND = 1000, MS_PER_MINUTE = 60 * MS_PER_SECOND, MS_PER_HOUR = 60 * MS_PER_MINUTE, MS_PER_400_YEARS = 3506328 * MS_PER_HOUR;
+    // actual modulo - handles negative numbers (for dates before 1970):
+    function mod$1(dividend, divisor) {
+        return (dividend % divisor + divisor) % divisor;
+    }
+    function localStartOfDate(y, m, d) {
+        // the date constructor remaps years 0-99 to 1900-1999
+        if (y < 100 && y >= 0) // preserve leap years using a full 400 year cycle, then reset
+        return new Date(y + 400, m, d) - MS_PER_400_YEARS;
+        else return new Date(y, m, d).valueOf();
+    }
+    function utcStartOfDate(y, m, d) {
+        // Date.UTC remaps years 0-99 to 1900-1999
+        if (y < 100 && y >= 0) // preserve leap years using a full 400 year cycle, then reset
+        return Date.UTC(y + 400, m, d) - MS_PER_400_YEARS;
+        else return Date.UTC(y, m, d);
+    }
+    function startOf(units) {
+        var time, startOfDate;
+        units = normalizeUnits(units);
+        if (units === undefined || units === "millisecond" || !this.isValid()) return this;
+        startOfDate = this._isUTC ? utcStartOfDate : localStartOfDate;
+        switch(units){
+            case "year":
+                time = startOfDate(this.year(), 0, 1);
+                break;
+            case "quarter":
+                time = startOfDate(this.year(), this.month() - this.month() % 3, 1);
+                break;
+            case "month":
+                time = startOfDate(this.year(), this.month(), 1);
+                break;
+            case "week":
+                time = startOfDate(this.year(), this.month(), this.date() - this.weekday());
+                break;
+            case "isoWeek":
+                time = startOfDate(this.year(), this.month(), this.date() - (this.isoWeekday() - 1));
+                break;
+            case "day":
+            case "date":
+                time = startOfDate(this.year(), this.month(), this.date());
+                break;
+            case "hour":
+                time = this._d.valueOf();
+                time -= mod$1(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR);
+                break;
+            case "minute":
+                time = this._d.valueOf();
+                time -= mod$1(time, MS_PER_MINUTE);
+                break;
+            case "second":
+                time = this._d.valueOf();
+                time -= mod$1(time, MS_PER_SECOND);
+                break;
+        }
+        this._d.setTime(time);
+        hooks.updateOffset(this, true);
+        return this;
+    }
+    function endOf(units) {
+        var time, startOfDate;
+        units = normalizeUnits(units);
+        if (units === undefined || units === "millisecond" || !this.isValid()) return this;
+        startOfDate = this._isUTC ? utcStartOfDate : localStartOfDate;
+        switch(units){
+            case "year":
+                time = startOfDate(this.year() + 1, 0, 1) - 1;
+                break;
+            case "quarter":
+                time = startOfDate(this.year(), this.month() - this.month() % 3 + 3, 1) - 1;
+                break;
+            case "month":
+                time = startOfDate(this.year(), this.month() + 1, 1) - 1;
+                break;
+            case "week":
+                time = startOfDate(this.year(), this.month(), this.date() - this.weekday() + 7) - 1;
+                break;
+            case "isoWeek":
+                time = startOfDate(this.year(), this.month(), this.date() - (this.isoWeekday() - 1) + 7) - 1;
+                break;
+            case "day":
+            case "date":
+                time = startOfDate(this.year(), this.month(), this.date() + 1) - 1;
+                break;
+            case "hour":
+                time = this._d.valueOf();
+                time += MS_PER_HOUR - mod$1(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR) - 1;
+                break;
+            case "minute":
+                time = this._d.valueOf();
+                time += MS_PER_MINUTE - mod$1(time, MS_PER_MINUTE) - 1;
+                break;
+            case "second":
+                time = this._d.valueOf();
+                time += MS_PER_SECOND - mod$1(time, MS_PER_SECOND) - 1;
+                break;
+        }
+        this._d.setTime(time);
+        hooks.updateOffset(this, true);
+        return this;
+    }
+    function valueOf() {
+        return this._d.valueOf() - (this._offset || 0) * 60000;
+    }
+    function unix() {
+        return Math.floor(this.valueOf() / 1000);
+    }
+    function toDate() {
+        return new Date(this.valueOf());
+    }
+    function toArray() {
+        var m = this;
+        return [
+            m.year(),
+            m.month(),
+            m.date(),
+            m.hour(),
+            m.minute(),
+            m.second(),
+            m.millisecond(), 
+        ];
+    }
+    function toObject() {
+        var m = this;
+        return {
+            years: m.year(),
+            months: m.month(),
+            date: m.date(),
+            hours: m.hours(),
+            minutes: m.minutes(),
+            seconds: m.seconds(),
+            milliseconds: m.milliseconds()
+        };
+    }
+    function toJSON() {
+        // new Date(NaN).toJSON() === null
+        return this.isValid() ? this.toISOString() : null;
+    }
+    function isValid$2() {
+        return isValid(this);
+    }
+    function parsingFlags() {
+        return extend({}, getParsingFlags(this));
+    }
+    function invalidAt() {
+        return getParsingFlags(this).overflow;
+    }
+    function creationData() {
+        return {
+            input: this._i,
+            format: this._f,
+            locale: this._locale,
+            isUTC: this._isUTC,
+            strict: this._strict
+        };
+    }
+    addFormatToken("N", 0, 0, "eraAbbr");
+    addFormatToken("NN", 0, 0, "eraAbbr");
+    addFormatToken("NNN", 0, 0, "eraAbbr");
+    addFormatToken("NNNN", 0, 0, "eraName");
+    addFormatToken("NNNNN", 0, 0, "eraNarrow");
+    addFormatToken("y", [
+        "y",
+        1
+    ], "yo", "eraYear");
+    addFormatToken("y", [
+        "yy",
+        2
+    ], 0, "eraYear");
+    addFormatToken("y", [
+        "yyy",
+        3
+    ], 0, "eraYear");
+    addFormatToken("y", [
+        "yyyy",
+        4
+    ], 0, "eraYear");
+    addRegexToken("N", matchEraAbbr);
+    addRegexToken("NN", matchEraAbbr);
+    addRegexToken("NNN", matchEraAbbr);
+    addRegexToken("NNNN", matchEraName);
+    addRegexToken("NNNNN", matchEraNarrow);
+    addParseToken([
+        "N",
+        "NN",
+        "NNN",
+        "NNNN",
+        "NNNNN"
+    ], function(input, array, config, token) {
+        var era = config._locale.erasParse(input, token, config._strict);
+        if (era) getParsingFlags(config).era = era;
+        else getParsingFlags(config).invalidEra = input;
+    });
+    addRegexToken("y", matchUnsigned);
+    addRegexToken("yy", matchUnsigned);
+    addRegexToken("yyy", matchUnsigned);
+    addRegexToken("yyyy", matchUnsigned);
+    addRegexToken("yo", matchEraYearOrdinal);
+    addParseToken([
+        "y",
+        "yy",
+        "yyy",
+        "yyyy"
+    ], YEAR);
+    addParseToken([
+        "yo"
+    ], function(input, array, config, token) {
+        var match;
+        if (config._locale._eraYearOrdinalRegex) match = input.match(config._locale._eraYearOrdinalRegex);
+        if (config._locale.eraYearOrdinalParse) array[YEAR] = config._locale.eraYearOrdinalParse(input, match);
+        else array[YEAR] = parseInt(input, 10);
+    });
+    function localeEras(m, format) {
+        var i, l, date, eras = this._eras || getLocale("en")._eras;
+        for(i = 0, l = eras.length; i < l; ++i){
+            switch(typeof eras[i].since){
+                case "string":
+                    // truncate time
+                    date = hooks(eras[i].since).startOf("day");
+                    eras[i].since = date.valueOf();
+                    break;
+            }
+            switch(typeof eras[i].until){
+                case "undefined":
+                    eras[i].until = Infinity;
+                    break;
+                case "string":
+                    // truncate time
+                    date = hooks(eras[i].until).startOf("day").valueOf();
+                    eras[i].until = date.valueOf();
+                    break;
+            }
+        }
+        return eras;
+    }
+    function localeErasParse(eraName, format, strict) {
+        var i, l, eras = this.eras(), name, abbr, narrow;
+        eraName = eraName.toUpperCase();
+        for(i = 0, l = eras.length; i < l; ++i){
+            name = eras[i].name.toUpperCase();
+            abbr = eras[i].abbr.toUpperCase();
+            narrow = eras[i].narrow.toUpperCase();
+            if (strict) switch(format){
+                case "N":
+                case "NN":
+                case "NNN":
+                    if (abbr === eraName) return eras[i];
+                    break;
+                case "NNNN":
+                    if (name === eraName) return eras[i];
+                    break;
+                case "NNNNN":
+                    if (narrow === eraName) return eras[i];
+                    break;
+            }
+            else if ([
+                name,
+                abbr,
+                narrow
+            ].indexOf(eraName) >= 0) return eras[i];
+        }
+    }
+    function localeErasConvertYear(era, year) {
+        var dir = era.since <= era.until ? 1 : -1;
+        if (year === undefined) return hooks(era.since).year();
+        else return hooks(era.since).year() + (year - era.offset) * dir;
+    }
+    function getEraName() {
+        var i, l, val, eras = this.localeData().eras();
+        for(i = 0, l = eras.length; i < l; ++i){
+            // truncate time
+            val = this.clone().startOf("day").valueOf();
+            if (eras[i].since <= val && val <= eras[i].until) return eras[i].name;
+            if (eras[i].until <= val && val <= eras[i].since) return eras[i].name;
+        }
+        return "";
+    }
+    function getEraNarrow() {
+        var i, l, val, eras = this.localeData().eras();
+        for(i = 0, l = eras.length; i < l; ++i){
+            // truncate time
+            val = this.clone().startOf("day").valueOf();
+            if (eras[i].since <= val && val <= eras[i].until) return eras[i].narrow;
+            if (eras[i].until <= val && val <= eras[i].since) return eras[i].narrow;
+        }
+        return "";
+    }
+    function getEraAbbr() {
+        var i, l, val, eras = this.localeData().eras();
+        for(i = 0, l = eras.length; i < l; ++i){
+            // truncate time
+            val = this.clone().startOf("day").valueOf();
+            if (eras[i].since <= val && val <= eras[i].until) return eras[i].abbr;
+            if (eras[i].until <= val && val <= eras[i].since) return eras[i].abbr;
+        }
+        return "";
+    }
+    function getEraYear() {
+        var i, l, dir, val, eras = this.localeData().eras();
+        for(i = 0, l = eras.length; i < l; ++i){
+            dir = eras[i].since <= eras[i].until ? 1 : -1;
+            // truncate time
+            val = this.clone().startOf("day").valueOf();
+            if (eras[i].since <= val && val <= eras[i].until || eras[i].until <= val && val <= eras[i].since) return (this.year() - hooks(eras[i].since).year()) * dir + eras[i].offset;
+        }
+        return this.year();
+    }
+    function erasNameRegex(isStrict) {
+        if (!hasOwnProp(this, "_erasNameRegex")) computeErasParse.call(this);
+        return isStrict ? this._erasNameRegex : this._erasRegex;
+    }
+    function erasAbbrRegex(isStrict) {
+        if (!hasOwnProp(this, "_erasAbbrRegex")) computeErasParse.call(this);
+        return isStrict ? this._erasAbbrRegex : this._erasRegex;
+    }
+    function erasNarrowRegex(isStrict) {
+        if (!hasOwnProp(this, "_erasNarrowRegex")) computeErasParse.call(this);
+        return isStrict ? this._erasNarrowRegex : this._erasRegex;
+    }
+    function matchEraAbbr(isStrict, locale) {
+        return locale.erasAbbrRegex(isStrict);
+    }
+    function matchEraName(isStrict, locale) {
+        return locale.erasNameRegex(isStrict);
+    }
+    function matchEraNarrow(isStrict, locale) {
+        return locale.erasNarrowRegex(isStrict);
+    }
+    function matchEraYearOrdinal(isStrict, locale) {
+        return locale._eraYearOrdinalRegex || matchUnsigned;
+    }
+    function computeErasParse() {
+        var abbrPieces = [], namePieces = [], narrowPieces = [], mixedPieces = [], i, l, eras = this.eras();
+        for(i = 0, l = eras.length; i < l; ++i){
+            namePieces.push(regexEscape(eras[i].name));
+            abbrPieces.push(regexEscape(eras[i].abbr));
+            narrowPieces.push(regexEscape(eras[i].narrow));
+            mixedPieces.push(regexEscape(eras[i].name));
+            mixedPieces.push(regexEscape(eras[i].abbr));
+            mixedPieces.push(regexEscape(eras[i].narrow));
+        }
+        this._erasRegex = new RegExp("^(" + mixedPieces.join("|") + ")", "i");
+        this._erasNameRegex = new RegExp("^(" + namePieces.join("|") + ")", "i");
+        this._erasAbbrRegex = new RegExp("^(" + abbrPieces.join("|") + ")", "i");
+        this._erasNarrowRegex = new RegExp("^(" + narrowPieces.join("|") + ")", "i");
+    }
+    // FORMATTING
+    addFormatToken(0, [
+        "gg",
+        2
+    ], 0, function() {
+        return this.weekYear() % 100;
+    });
+    addFormatToken(0, [
+        "GG",
+        2
+    ], 0, function() {
+        return this.isoWeekYear() % 100;
+    });
+    function addWeekYearFormatToken(token, getter) {
+        addFormatToken(0, [
+            token,
+            token.length
+        ], 0, getter);
+    }
+    addWeekYearFormatToken("gggg", "weekYear");
+    addWeekYearFormatToken("ggggg", "weekYear");
+    addWeekYearFormatToken("GGGG", "isoWeekYear");
+    addWeekYearFormatToken("GGGGG", "isoWeekYear");
+    // ALIASES
+    addUnitAlias("weekYear", "gg");
+    addUnitAlias("isoWeekYear", "GG");
+    // PRIORITY
+    addUnitPriority("weekYear", 1);
+    addUnitPriority("isoWeekYear", 1);
+    // PARSING
+    addRegexToken("G", matchSigned);
+    addRegexToken("g", matchSigned);
+    addRegexToken("GG", match1to2, match2);
+    addRegexToken("gg", match1to2, match2);
+    addRegexToken("GGGG", match1to4, match4);
+    addRegexToken("gggg", match1to4, match4);
+    addRegexToken("GGGGG", match1to6, match6);
+    addRegexToken("ggggg", match1to6, match6);
+    addWeekParseToken([
+        "gggg",
+        "ggggg",
+        "GGGG",
+        "GGGGG"
+    ], function(input, week, config, token) {
+        week[token.substr(0, 2)] = toInt(input);
+    });
+    addWeekParseToken([
+        "gg",
+        "GG"
+    ], function(input, week, config, token) {
+        week[token] = hooks.parseTwoDigitYear(input);
+    });
+    // MOMENTS
+    function getSetWeekYear(input) {
+        return getSetWeekYearHelper.call(this, input, this.week(), this.weekday(), this.localeData()._week.dow, this.localeData()._week.doy);
+    }
+    function getSetISOWeekYear(input) {
+        return getSetWeekYearHelper.call(this, input, this.isoWeek(), this.isoWeekday(), 1, 4);
+    }
+    function getISOWeeksInYear() {
+        return weeksInYear(this.year(), 1, 4);
+    }
+    function getISOWeeksInISOWeekYear() {
+        return weeksInYear(this.isoWeekYear(), 1, 4);
+    }
+    function getWeeksInYear() {
+        var weekInfo = this.localeData()._week;
+        return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
+    }
+    function getWeeksInWeekYear() {
+        var weekInfo = this.localeData()._week;
+        return weeksInYear(this.weekYear(), weekInfo.dow, weekInfo.doy);
+    }
+    function getSetWeekYearHelper(input, week, weekday, dow, doy) {
+        var weeksTarget;
+        if (input == null) return weekOfYear(this, dow, doy).year;
+        else {
+            weeksTarget = weeksInYear(input, dow, doy);
+            if (week > weeksTarget) week = weeksTarget;
+            return setWeekAll.call(this, input, week, weekday, dow, doy);
+        }
+    }
+    function setWeekAll(weekYear, week, weekday, dow, doy) {
+        var dayOfYearData = dayOfYearFromWeeks(weekYear, week, weekday, dow, doy), date = createUTCDate(dayOfYearData.year, 0, dayOfYearData.dayOfYear);
+        this.year(date.getUTCFullYear());
+        this.month(date.getUTCMonth());
+        this.date(date.getUTCDate());
+        return this;
+    }
+    // FORMATTING
+    addFormatToken("Q", 0, "Qo", "quarter");
+    // ALIASES
+    addUnitAlias("quarter", "Q");
+    // PRIORITY
+    addUnitPriority("quarter", 7);
+    // PARSING
+    addRegexToken("Q", match1);
+    addParseToken("Q", function(input, array) {
+        array[MONTH] = (toInt(input) - 1) * 3;
+    });
+    // MOMENTS
+    function getSetQuarter(input) {
+        return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
+    }
+    // FORMATTING
+    addFormatToken("D", [
+        "DD",
+        2
+    ], "Do", "date");
+    // ALIASES
+    addUnitAlias("date", "D");
+    // PRIORITY
+    addUnitPriority("date", 9);
+    // PARSING
+    addRegexToken("D", match1to2);
+    addRegexToken("DD", match1to2, match2);
+    addRegexToken("Do", function(isStrict, locale) {
+        // TODO: Remove "ordinalParse" fallback in next major release.
+        return isStrict ? locale._dayOfMonthOrdinalParse || locale._ordinalParse : locale._dayOfMonthOrdinalParseLenient;
+    });
+    addParseToken([
+        "D",
+        "DD"
+    ], DATE);
+    addParseToken("Do", function(input, array) {
+        array[DATE] = toInt(input.match(match1to2)[0]);
+    });
+    // MOMENTS
+    var getSetDayOfMonth = makeGetSet("Date", true);
+    // FORMATTING
+    addFormatToken("DDD", [
+        "DDDD",
+        3
+    ], "DDDo", "dayOfYear");
+    // ALIASES
+    addUnitAlias("dayOfYear", "DDD");
+    // PRIORITY
+    addUnitPriority("dayOfYear", 4);
+    // PARSING
+    addRegexToken("DDD", match1to3);
+    addRegexToken("DDDD", match3);
+    addParseToken([
+        "DDD",
+        "DDDD"
+    ], function(input, array, config) {
+        config._dayOfYear = toInt(input);
+    });
+    // HELPERS
+    // MOMENTS
+    function getSetDayOfYear(input) {
+        var dayOfYear = Math.round((this.clone().startOf("day") - this.clone().startOf("year")) / 864e5) + 1;
+        return input == null ? dayOfYear : this.add(input - dayOfYear, "d");
+    }
+    // FORMATTING
+    addFormatToken("m", [
+        "mm",
+        2
+    ], 0, "minute");
+    // ALIASES
+    addUnitAlias("minute", "m");
+    // PRIORITY
+    addUnitPriority("minute", 14);
+    // PARSING
+    addRegexToken("m", match1to2);
+    addRegexToken("mm", match1to2, match2);
+    addParseToken([
+        "m",
+        "mm"
+    ], MINUTE);
+    // MOMENTS
+    var getSetMinute = makeGetSet("Minutes", false);
+    // FORMATTING
+    addFormatToken("s", [
+        "ss",
+        2
+    ], 0, "second");
+    // ALIASES
+    addUnitAlias("second", "s");
+    // PRIORITY
+    addUnitPriority("second", 15);
+    // PARSING
+    addRegexToken("s", match1to2);
+    addRegexToken("ss", match1to2, match2);
+    addParseToken([
+        "s",
+        "ss"
+    ], SECOND);
+    // MOMENTS
+    var getSetSecond = makeGetSet("Seconds", false);
+    // FORMATTING
+    addFormatToken("S", 0, 0, function() {
+        return ~~(this.millisecond() / 100);
+    });
+    addFormatToken(0, [
+        "SS",
+        2
+    ], 0, function() {
+        return ~~(this.millisecond() / 10);
+    });
+    addFormatToken(0, [
+        "SSS",
+        3
+    ], 0, "millisecond");
+    addFormatToken(0, [
+        "SSSS",
+        4
+    ], 0, function() {
+        return this.millisecond() * 10;
+    });
+    addFormatToken(0, [
+        "SSSSS",
+        5
+    ], 0, function() {
+        return this.millisecond() * 100;
+    });
+    addFormatToken(0, [
+        "SSSSSS",
+        6
+    ], 0, function() {
+        return this.millisecond() * 1000;
+    });
+    addFormatToken(0, [
+        "SSSSSSS",
+        7
+    ], 0, function() {
+        return this.millisecond() * 10000;
+    });
+    addFormatToken(0, [
+        "SSSSSSSS",
+        8
+    ], 0, function() {
+        return this.millisecond() * 100000;
+    });
+    addFormatToken(0, [
+        "SSSSSSSSS",
+        9
+    ], 0, function() {
+        return this.millisecond() * 1000000;
+    });
+    // ALIASES
+    addUnitAlias("millisecond", "ms");
+    // PRIORITY
+    addUnitPriority("millisecond", 16);
+    // PARSING
+    addRegexToken("S", match1to3, match1);
+    addRegexToken("SS", match1to3, match2);
+    addRegexToken("SSS", match1to3, match3);
+    var token, getSetMillisecond;
+    for(token = "SSSS"; token.length <= 9; token += "S")addRegexToken(token, matchUnsigned);
+    function parseMs(input, array) {
+        array[MILLISECOND] = toInt(("0." + input) * 1000);
+    }
+    for(token = "S"; token.length <= 9; token += "S")addParseToken(token, parseMs);
+    getSetMillisecond = makeGetSet("Milliseconds", false);
+    // FORMATTING
+    addFormatToken("z", 0, 0, "zoneAbbr");
+    addFormatToken("zz", 0, 0, "zoneName");
+    // MOMENTS
+    function getZoneAbbr() {
+        return this._isUTC ? "UTC" : "";
+    }
+    function getZoneName() {
+        return this._isUTC ? "Coordinated Universal Time" : "";
+    }
+    var proto = Moment.prototype;
+    proto.add = add;
+    proto.calendar = calendar$1;
+    proto.clone = clone;
+    proto.diff = diff;
+    proto.endOf = endOf;
+    proto.format = format;
+    proto.from = from;
+    proto.fromNow = fromNow;
+    proto.to = to;
+    proto.toNow = toNow;
+    proto.get = stringGet;
+    proto.invalidAt = invalidAt;
+    proto.isAfter = isAfter;
+    proto.isBefore = isBefore;
+    proto.isBetween = isBetween;
+    proto.isSame = isSame;
+    proto.isSameOrAfter = isSameOrAfter;
+    proto.isSameOrBefore = isSameOrBefore;
+    proto.isValid = isValid$2;
+    proto.lang = lang;
+    proto.locale = locale;
+    proto.localeData = localeData;
+    proto.max = prototypeMax;
+    proto.min = prototypeMin;
+    proto.parsingFlags = parsingFlags;
+    proto.set = stringSet;
+    proto.startOf = startOf;
+    proto.subtract = subtract;
+    proto.toArray = toArray;
+    proto.toObject = toObject;
+    proto.toDate = toDate;
+    proto.toISOString = toISOString;
+    proto.inspect = inspect;
+    if (typeof Symbol !== "undefined" && Symbol.for != null) proto[Symbol.for("nodejs.util.inspect.custom")] = function() {
+        return "Moment<" + this.format() + ">";
+    };
+    proto.toJSON = toJSON;
+    proto.toString = toString;
+    proto.unix = unix;
+    proto.valueOf = valueOf;
+    proto.creationData = creationData;
+    proto.eraName = getEraName;
+    proto.eraNarrow = getEraNarrow;
+    proto.eraAbbr = getEraAbbr;
+    proto.eraYear = getEraYear;
+    proto.year = getSetYear;
+    proto.isLeapYear = getIsLeapYear;
+    proto.weekYear = getSetWeekYear;
+    proto.isoWeekYear = getSetISOWeekYear;
+    proto.quarter = proto.quarters = getSetQuarter;
+    proto.month = getSetMonth;
+    proto.daysInMonth = getDaysInMonth;
+    proto.week = proto.weeks = getSetWeek;
+    proto.isoWeek = proto.isoWeeks = getSetISOWeek;
+    proto.weeksInYear = getWeeksInYear;
+    proto.weeksInWeekYear = getWeeksInWeekYear;
+    proto.isoWeeksInYear = getISOWeeksInYear;
+    proto.isoWeeksInISOWeekYear = getISOWeeksInISOWeekYear;
+    proto.date = getSetDayOfMonth;
+    proto.day = proto.days = getSetDayOfWeek;
+    proto.weekday = getSetLocaleDayOfWeek;
+    proto.isoWeekday = getSetISODayOfWeek;
+    proto.dayOfYear = getSetDayOfYear;
+    proto.hour = proto.hours = getSetHour;
+    proto.minute = proto.minutes = getSetMinute;
+    proto.second = proto.seconds = getSetSecond;
+    proto.millisecond = proto.milliseconds = getSetMillisecond;
+    proto.utcOffset = getSetOffset;
+    proto.utc = setOffsetToUTC;
+    proto.local = setOffsetToLocal;
+    proto.parseZone = setOffsetToParsedOffset;
+    proto.hasAlignedHourOffset = hasAlignedHourOffset;
+    proto.isDST = isDaylightSavingTime;
+    proto.isLocal = isLocal;
+    proto.isUtcOffset = isUtcOffset;
+    proto.isUtc = isUtc;
+    proto.isUTC = isUtc;
+    proto.zoneAbbr = getZoneAbbr;
+    proto.zoneName = getZoneName;
+    proto.dates = deprecate("dates accessor is deprecated. Use date instead.", getSetDayOfMonth);
+    proto.months = deprecate("months accessor is deprecated. Use month instead", getSetMonth);
+    proto.years = deprecate("years accessor is deprecated. Use year instead", getSetYear);
+    proto.zone = deprecate("moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/", getSetZone);
+    proto.isDSTShifted = deprecate("isDSTShifted is deprecated. See http://momentjs.com/guides/#/warnings/dst-shifted/ for more information", isDaylightSavingTimeShifted);
+    function createUnix(input) {
+        return createLocal(input * 1000);
+    }
+    function createInZone() {
+        return createLocal.apply(null, arguments).parseZone();
+    }
+    function preParsePostFormat(string) {
+        return string;
+    }
+    var proto$1 = Locale.prototype;
+    proto$1.calendar = calendar;
+    proto$1.longDateFormat = longDateFormat;
+    proto$1.invalidDate = invalidDate;
+    proto$1.ordinal = ordinal;
+    proto$1.preparse = preParsePostFormat;
+    proto$1.postformat = preParsePostFormat;
+    proto$1.relativeTime = relativeTime;
+    proto$1.pastFuture = pastFuture;
+    proto$1.set = set;
+    proto$1.eras = localeEras;
+    proto$1.erasParse = localeErasParse;
+    proto$1.erasConvertYear = localeErasConvertYear;
+    proto$1.erasAbbrRegex = erasAbbrRegex;
+    proto$1.erasNameRegex = erasNameRegex;
+    proto$1.erasNarrowRegex = erasNarrowRegex;
+    proto$1.months = localeMonths;
+    proto$1.monthsShort = localeMonthsShort;
+    proto$1.monthsParse = localeMonthsParse;
+    proto$1.monthsRegex = monthsRegex;
+    proto$1.monthsShortRegex = monthsShortRegex;
+    proto$1.week = localeWeek;
+    proto$1.firstDayOfYear = localeFirstDayOfYear;
+    proto$1.firstDayOfWeek = localeFirstDayOfWeek;
+    proto$1.weekdays = localeWeekdays;
+    proto$1.weekdaysMin = localeWeekdaysMin;
+    proto$1.weekdaysShort = localeWeekdaysShort;
+    proto$1.weekdaysParse = localeWeekdaysParse;
+    proto$1.weekdaysRegex = weekdaysRegex;
+    proto$1.weekdaysShortRegex = weekdaysShortRegex;
+    proto$1.weekdaysMinRegex = weekdaysMinRegex;
+    proto$1.isPM = localeIsPM;
+    proto$1.meridiem = localeMeridiem;
+    function get$1(format, index, field, setter) {
+        var locale = getLocale(), utc = createUTC().set(setter, index);
+        return locale[field](utc, format);
+    }
+    function listMonthsImpl(format, index, field) {
+        if (isNumber(format)) {
+            index = format;
+            format = undefined;
+        }
+        format = format || "";
+        if (index != null) return get$1(format, index, field, "month");
+        var i, out = [];
+        for(i = 0; i < 12; i++)out[i] = get$1(format, i, field, "month");
+        return out;
+    }
+    // ()
+    // (5)
+    // (fmt, 5)
+    // (fmt)
+    // (true)
+    // (true, 5)
+    // (true, fmt, 5)
+    // (true, fmt)
+    function listWeekdaysImpl(localeSorted, format, index, field) {
+        if (typeof localeSorted === "boolean") {
+            if (isNumber(format)) {
+                index = format;
+                format = undefined;
+            }
+            format = format || "";
+        } else {
+            format = localeSorted;
+            index = format;
+            localeSorted = false;
+            if (isNumber(format)) {
+                index = format;
+                format = undefined;
+            }
+            format = format || "";
+        }
+        var locale = getLocale(), shift = localeSorted ? locale._week.dow : 0, i, out = [];
+        if (index != null) return get$1(format, (index + shift) % 7, field, "day");
+        for(i = 0; i < 7; i++)out[i] = get$1(format, (i + shift) % 7, field, "day");
+        return out;
+    }
+    function listMonths(format, index) {
+        return listMonthsImpl(format, index, "months");
+    }
+    function listMonthsShort(format, index) {
+        return listMonthsImpl(format, index, "monthsShort");
+    }
+    function listWeekdays(localeSorted, format, index) {
+        return listWeekdaysImpl(localeSorted, format, index, "weekdays");
+    }
+    function listWeekdaysShort(localeSorted, format, index) {
+        return listWeekdaysImpl(localeSorted, format, index, "weekdaysShort");
+    }
+    function listWeekdaysMin(localeSorted, format, index) {
+        return listWeekdaysImpl(localeSorted, format, index, "weekdaysMin");
+    }
+    getSetGlobalLocale("en", {
+        eras: [
+            {
+                since: "0001-01-01",
+                until: Infinity,
+                offset: 1,
+                name: "Anno Domini",
+                narrow: "AD",
+                abbr: "AD"
+            },
+            {
+                since: "0000-12-31",
+                until: -Infinity,
+                offset: 1,
+                name: "Before Christ",
+                narrow: "BC",
+                abbr: "BC"
+            }, 
+        ],
+        dayOfMonthOrdinalParse: /\d{1,2}(th|st|nd|rd)/,
+        ordinal: function(number) {
+            var b = number % 10, output = toInt(number % 100 / 10) === 1 ? "th" : b === 1 ? "st" : b === 2 ? "nd" : b === 3 ? "rd" : "th";
+            return number + output;
+        }
+    });
+    // Side effect imports
+    hooks.lang = deprecate("moment.lang is deprecated. Use moment.locale instead.", getSetGlobalLocale);
+    hooks.langData = deprecate("moment.langData is deprecated. Use moment.localeData instead.", getLocale);
+    var mathAbs = Math.abs;
+    function abs() {
+        var data = this._data;
+        this._milliseconds = mathAbs(this._milliseconds);
+        this._days = mathAbs(this._days);
+        this._months = mathAbs(this._months);
+        data.milliseconds = mathAbs(data.milliseconds);
+        data.seconds = mathAbs(data.seconds);
+        data.minutes = mathAbs(data.minutes);
+        data.hours = mathAbs(data.hours);
+        data.months = mathAbs(data.months);
+        data.years = mathAbs(data.years);
+        return this;
+    }
+    function addSubtract$1(duration, input, value, direction) {
+        var other = createDuration(input, value);
+        duration._milliseconds += direction * other._milliseconds;
+        duration._days += direction * other._days;
+        duration._months += direction * other._months;
+        return duration._bubble();
+    }
+    // supports only 2.0-style add(1, 's') or add(duration)
+    function add$1(input, value) {
+        return addSubtract$1(this, input, value, 1);
+    }
+    // supports only 2.0-style subtract(1, 's') or subtract(duration)
+    function subtract$1(input, value) {
+        return addSubtract$1(this, input, value, -1);
+    }
+    function absCeil(number) {
+        if (number < 0) return Math.floor(number);
+        else return Math.ceil(number);
+    }
+    function bubble() {
+        var milliseconds = this._milliseconds, days = this._days, months = this._months, data = this._data, seconds, minutes, hours, years, monthsFromDays;
+        // if we have a mix of positive and negative values, bubble down first
+        // check: https://github.com/moment/moment/issues/2166
+        if (!(milliseconds >= 0 && days >= 0 && months >= 0 || milliseconds <= 0 && days <= 0 && months <= 0)) {
+            milliseconds += absCeil(monthsToDays(months) + days) * 864e5;
+            days = 0;
+            months = 0;
+        }
+        // The following code bubbles up values, see the tests for
+        // examples of what that means.
+        data.milliseconds = milliseconds % 1000;
+        seconds = absFloor(milliseconds / 1000);
+        data.seconds = seconds % 60;
+        minutes = absFloor(seconds / 60);
+        data.minutes = minutes % 60;
+        hours = absFloor(minutes / 60);
+        data.hours = hours % 24;
+        days += absFloor(hours / 24);
+        // convert days to months
+        monthsFromDays = absFloor(daysToMonths(days));
+        months += monthsFromDays;
+        days -= absCeil(monthsToDays(monthsFromDays));
+        // 12 months -> 1 year
+        years = absFloor(months / 12);
+        months %= 12;
+        data.days = days;
+        data.months = months;
+        data.years = years;
+        return this;
+    }
+    function daysToMonths(days) {
+        // 400 years have 146097 days (taking into account leap year rules)
+        // 400 years have 12 months === 4800
+        return days * 4800 / 146097;
+    }
+    function monthsToDays(months) {
+        // the reverse of daysToMonths
+        return months * 146097 / 4800;
+    }
+    function as(units) {
+        if (!this.isValid()) return NaN;
+        var days, months, milliseconds = this._milliseconds;
+        units = normalizeUnits(units);
+        if (units === "month" || units === "quarter" || units === "year") {
+            days = this._days + milliseconds / 864e5;
+            months = this._months + daysToMonths(days);
+            switch(units){
+                case "month":
+                    return months;
+                case "quarter":
+                    return months / 3;
+                case "year":
+                    return months / 12;
+            }
+        } else {
+            // handle milliseconds separately because of floating point math errors (issue #1867)
+            days = this._days + Math.round(monthsToDays(this._months));
+            switch(units){
+                case "week":
+                    return days / 7 + milliseconds / 6048e5;
+                case "day":
+                    return days + milliseconds / 864e5;
+                case "hour":
+                    return days * 24 + milliseconds / 36e5;
+                case "minute":
+                    return days * 1440 + milliseconds / 6e4;
+                case "second":
+                    return days * 86400 + milliseconds / 1000;
+                // Math.floor prevents floating point math errors here
+                case "millisecond":
+                    return Math.floor(days * 864e5) + milliseconds;
+                default:
+                    throw new Error("Unknown unit " + units);
+            }
+        }
+    }
+    // TODO: Use this.as('ms')?
+    function valueOf$1() {
+        if (!this.isValid()) return NaN;
+        return this._milliseconds + this._days * 864e5 + this._months % 12 * 2592e6 + toInt(this._months / 12) * 31536e6;
+    }
+    function makeAs(alias) {
+        return function() {
+            return this.as(alias);
+        };
+    }
+    var asMilliseconds = makeAs("ms"), asSeconds = makeAs("s"), asMinutes = makeAs("m"), asHours = makeAs("h"), asDays = makeAs("d"), asWeeks = makeAs("w"), asMonths = makeAs("M"), asQuarters = makeAs("Q"), asYears = makeAs("y");
+    function clone$1() {
+        return createDuration(this);
+    }
+    function get$2(units) {
+        units = normalizeUnits(units);
+        return this.isValid() ? this[units + "s"]() : NaN;
+    }
+    function makeGetter(name) {
+        return function() {
+            return this.isValid() ? this._data[name] : NaN;
+        };
+    }
+    var milliseconds = makeGetter("milliseconds"), seconds = makeGetter("seconds"), minutes = makeGetter("minutes"), hours = makeGetter("hours"), days = makeGetter("days"), months = makeGetter("months"), years = makeGetter("years");
+    function weeks() {
+        return absFloor(this.days() / 7);
+    }
+    var round = Math.round, thresholds = {
+        ss: 44,
+        s: 45,
+        m: 45,
+        h: 22,
+        d: 26,
+        w: null,
+        M: 11
+    };
+    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
+    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
+        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
+    }
+    function relativeTime$1(posNegDuration, withoutSuffix, thresholds, locale) {
+        var duration = createDuration(posNegDuration).abs(), seconds = round(duration.as("s")), minutes = round(duration.as("m")), hours = round(duration.as("h")), days = round(duration.as("d")), months = round(duration.as("M")), weeks = round(duration.as("w")), years = round(duration.as("y")), a = seconds <= thresholds.ss && [
+            "s",
+            seconds
+        ] || seconds < thresholds.s && [
+            "ss",
+            seconds
+        ] || minutes <= 1 && [
+            "m"
+        ] || minutes < thresholds.m && [
+            "mm",
+            minutes
+        ] || hours <= 1 && [
+            "h"
+        ] || hours < thresholds.h && [
+            "hh",
+            hours
+        ] || days <= 1 && [
+            "d"
+        ] || days < thresholds.d && [
+            "dd",
+            days
+        ];
+        if (thresholds.w != null) a = a || weeks <= 1 && [
+            "w"
+        ] || weeks < thresholds.w && [
+            "ww",
+            weeks
+        ];
+        a = a || months <= 1 && [
+            "M"
+        ] || months < thresholds.M && [
+            "MM",
+            months
+        ] || years <= 1 && [
+            "y"
+        ] || [
+            "yy",
+            years
+        ];
+        a[2] = withoutSuffix;
+        a[3] = +posNegDuration > 0;
+        a[4] = locale;
+        return substituteTimeAgo.apply(null, a);
+    }
+    // This function allows you to set the rounding function for relative time strings
+    function getSetRelativeTimeRounding(roundingFunction) {
+        if (roundingFunction === undefined) return round;
+        if (typeof roundingFunction === "function") {
+            round = roundingFunction;
+            return true;
+        }
+        return false;
+    }
+    // This function allows you to set a threshold for relative time strings
+    function getSetRelativeTimeThreshold(threshold, limit) {
+        if (thresholds[threshold] === undefined) return false;
+        if (limit === undefined) return thresholds[threshold];
+        thresholds[threshold] = limit;
+        if (threshold === "s") thresholds.ss = limit - 1;
+        return true;
+    }
+    function humanize(argWithSuffix, argThresholds) {
+        if (!this.isValid()) return this.localeData().invalidDate();
+        var withSuffix = false, th = thresholds, locale, output;
+        if (typeof argWithSuffix === "object") {
+            argThresholds = argWithSuffix;
+            argWithSuffix = false;
+        }
+        if (typeof argWithSuffix === "boolean") withSuffix = argWithSuffix;
+        if (typeof argThresholds === "object") {
+            th = Object.assign({}, thresholds, argThresholds);
+            if (argThresholds.s != null && argThresholds.ss == null) th.ss = argThresholds.s - 1;
+        }
+        locale = this.localeData();
+        output = relativeTime$1(this, !withSuffix, th, locale);
+        if (withSuffix) output = locale.pastFuture(+this, output);
+        return locale.postformat(output);
+    }
+    var abs$1 = Math.abs;
+    function sign(x) {
+        return (x > 0) - (x < 0) || +x;
+    }
+    function toISOString$1() {
+        // for ISO strings we do not use the normal bubbling rules:
+        //  * milliseconds bubble up until they become hours
+        //  * days do not bubble at all
+        //  * months bubble up until they become years
+        // This is because there is no context-free conversion between hours and days
+        // (think of clock changes)
+        // and also not between days and months (28-31 days per month)
+        if (!this.isValid()) return this.localeData().invalidDate();
+        var seconds = abs$1(this._milliseconds) / 1000, days = abs$1(this._days), months = abs$1(this._months), minutes, hours, years, s, total = this.asSeconds(), totalSign, ymSign, daysSign, hmsSign;
+        if (!total) // this is the same as C#'s (Noda) and python (isodate)...
+        // but not other JS (goog.date)
+        return "P0D";
+        // 3600 seconds -> 60 minutes -> 1 hour
+        minutes = absFloor(seconds / 60);
+        hours = absFloor(minutes / 60);
+        seconds %= 60;
+        minutes %= 60;
+        // 12 months -> 1 year
+        years = absFloor(months / 12);
+        months %= 12;
+        // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
+        s = seconds ? seconds.toFixed(3).replace(/\.?0+$/, "") : "";
+        totalSign = total < 0 ? "-" : "";
+        ymSign = sign(this._months) !== sign(total) ? "-" : "";
+        daysSign = sign(this._days) !== sign(total) ? "-" : "";
+        hmsSign = sign(this._milliseconds) !== sign(total) ? "-" : "";
+        return totalSign + "P" + (years ? ymSign + years + "Y" : "") + (months ? ymSign + months + "M" : "") + (days ? daysSign + days + "D" : "") + (hours || minutes || seconds ? "T" : "") + (hours ? hmsSign + hours + "H" : "") + (minutes ? hmsSign + minutes + "M" : "") + (seconds ? hmsSign + s + "S" : "");
+    }
+    var proto$2 = Duration.prototype;
+    proto$2.isValid = isValid$1;
+    proto$2.abs = abs;
+    proto$2.add = add$1;
+    proto$2.subtract = subtract$1;
+    proto$2.as = as;
+    proto$2.asMilliseconds = asMilliseconds;
+    proto$2.asSeconds = asSeconds;
+    proto$2.asMinutes = asMinutes;
+    proto$2.asHours = asHours;
+    proto$2.asDays = asDays;
+    proto$2.asWeeks = asWeeks;
+    proto$2.asMonths = asMonths;
+    proto$2.asQuarters = asQuarters;
+    proto$2.asYears = asYears;
+    proto$2.valueOf = valueOf$1;
+    proto$2._bubble = bubble;
+    proto$2.clone = clone$1;
+    proto$2.get = get$2;
+    proto$2.milliseconds = milliseconds;
+    proto$2.seconds = seconds;
+    proto$2.minutes = minutes;
+    proto$2.hours = hours;
+    proto$2.days = days;
+    proto$2.weeks = weeks;
+    proto$2.months = months;
+    proto$2.years = years;
+    proto$2.humanize = humanize;
+    proto$2.toISOString = toISOString$1;
+    proto$2.toString = toISOString$1;
+    proto$2.toJSON = toISOString$1;
+    proto$2.locale = locale;
+    proto$2.localeData = localeData;
+    proto$2.toIsoString = deprecate("toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)", toISOString$1);
+    proto$2.lang = lang;
+    // FORMATTING
+    addFormatToken("X", 0, 0, "unix");
+    addFormatToken("x", 0, 0, "valueOf");
+    // PARSING
+    addRegexToken("x", matchSigned);
+    addRegexToken("X", matchTimestamp);
+    addParseToken("X", function(input, array, config) {
+        config._d = new Date(parseFloat(input) * 1000);
+    });
+    addParseToken("x", function(input, array, config) {
+        config._d = new Date(toInt(input));
+    });
+    //! moment.js
+    hooks.version = "2.29.3";
+    setHookCallback(createLocal);
+    hooks.fn = proto;
+    hooks.min = min;
+    hooks.max = max;
+    hooks.now = now;
+    hooks.utc = createUTC;
+    hooks.unix = createUnix;
+    hooks.months = listMonths;
+    hooks.isDate = isDate;
+    hooks.locale = getSetGlobalLocale;
+    hooks.invalid = createInvalid;
+    hooks.duration = createDuration;
+    hooks.isMoment = isMoment;
+    hooks.weekdays = listWeekdays;
+    hooks.parseZone = createInZone;
+    hooks.localeData = getLocale;
+    hooks.isDuration = isDuration;
+    hooks.monthsShort = listMonthsShort;
+    hooks.weekdaysMin = listWeekdaysMin;
+    hooks.defineLocale = defineLocale;
+    hooks.updateLocale = updateLocale;
+    hooks.locales = listLocales;
+    hooks.weekdaysShort = listWeekdaysShort;
+    hooks.normalizeUnits = normalizeUnits;
+    hooks.relativeTimeRounding = getSetRelativeTimeRounding;
+    hooks.relativeTimeThreshold = getSetRelativeTimeThreshold;
+    hooks.calendarFormat = getCalendarFormat;
+    hooks.prototype = proto;
+    // currently HTML5 input type only supports 24-hour formats
+    hooks.HTML5_FMT = {
+        DATETIME_LOCAL: "YYYY-MM-DDTHH:mm",
+        DATETIME_LOCAL_SECONDS: "YYYY-MM-DDTHH:mm:ss",
+        DATETIME_LOCAL_MS: "YYYY-MM-DDTHH:mm:ss.SSS",
+        DATE: "YYYY-MM-DD",
+        TIME: "HH:mm",
+        TIME_SECONDS: "HH:mm:ss",
+        TIME_MS: "HH:mm:ss.SSS",
+        WEEK: "GGGG-[W]WW",
+        MONTH: "YYYY-MM"
+    };
+    return hooks;
+});
+
+},{}],"iJYWc":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = Inspector;
+var _propTypes = _interopRequireDefault(require("prop-types"));
+var _react = require("react");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+var __ = wp.i18n.__;
+var _ref = wp.blockEditor || wp.editor, InspectorControls = _ref.InspectorControls;
+var _wp$components = wp.components, PanelBody = _wp$components.PanelBody, SelectControl = _wp$components.SelectControl, ToggleControl = _wp$components.ToggleControl, QueryControls = _wp$components.QueryControls, TextControl = _wp$components.TextControl, RangeControl = _wp$components.RangeControl;
+var addQueryArgs = wp.url.addQueryArgs;
+var _wp = wp, apiFetch = _wp.apiFetch;
+var MAX_POSTS_COLUMNS = 3;
+function Autocomplete(props) {
+    var _useState = (0, _react.useState)(""), _useState2 = _slicedToArray(_useState, 2), userInput = _useState2[0], setUserInput = _useState2[1];
+    var _useState3 = (0, _react.useState)(false), _useState4 = _slicedToArray(_useState3, 2), showSuggestions = _useState4[0], setSuggestionDisplay = _useState4[1];
+    var listItem = (0, _react.useRef)(null);
+    var filteredList = props.list.filter(function(i) {
+        return i.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1;
+    });
+    (0, _react.useEffect)(function() {
+        listItem.current = Array(props.list.length);
+    }, [
+        props.list
+    ]);
+    return /*#__PURE__*/ React.createElement("div", null, /*#__PURE__*/ React.createElement("input", {
+        type: "text",
+        value: userInput,
+        style: {
+            width: "200px"
+        },
+        onChange: function onChange(e) {
+            setUserInput(e.target.value);
+            setSuggestionDisplay(e.target.value.length > 0);
+        },
+        onKeyDown: function onKeyDown(e) {
+            if (e.key === "ArrowDown" && filteredList.length) {
+                if (showSuggestions) {
+                    listItem.current[0].focus();
+                    e.preventDefault();
+                } else setSuggestionDisplay(true);
+            }
+        }
+    }), showSuggestions && /*#__PURE__*/ React.createElement("div", {
+        className: props.className,
+        style: {
+            width: "200px"
+        }
+    }, filteredList.map(function(item, i) {
+        return /*#__PURE__*/ React.createElement("div", {
+            className: "ub-autocomplete-list-item",
+            ref: function ref(elem) {
+                listItem.current[i] = elem;
+            },
+            onClick: function onClick() {
+                props.addToSelection(item);
+                setUserInput("");
+                setSuggestionDisplay(false);
+            },
+            onKeyDown: function onKeyDown(e) {
+                if (e.key === "ArrowDown") {
+                    if (i < filteredList.length - 1) {
+                        e.preventDefault();
+                        listItem.current[i + 1].focus();
+                    } else {
+                        listItem.current[i].blur();
+                        setSuggestionDisplay(false);
+                    }
+                }
+                if (e.key === "ArrowUp") {
+                    if (i > 0) {
+                        e.preventDefault();
+                        listItem.current[i - 1].focus();
+                    } else {
+                        listItem.current[i].blur();
+                        setSuggestionDisplay(false);
+                    }
+                }
+            },
+            tabIndex: 0
+        }, item.label);
+    })));
+}
+Autocomplete.propTypes = {
+    list: _propTypes["default"].array,
+    selection: _propTypes["default"].array
+};
+Autocomplete.defaultProps = {
+    list: [],
+    selection: _propTypes["default"].array
+};
+function Inspector(props) {
+    var _useState5 = (0, _react.useState)([]), _useState6 = _slicedToArray(_useState5, 2), categoriesList = _useState6[0], setCategoriesList = _useState6[1];
+    var _useState7 = (0, _react.useState)([]), _useState8 = _slicedToArray(_useState7, 2), tagsList = _useState8[0], setTagsList = _useState8[1];
+    var _useState9 = (0, _react.useState)([]), _useState10 = _slicedToArray(_useState9, 2), authorsList = _useState10[0], setAuthorsList = _useState10[1];
+    var _useState11 = (0, _react.useState)(false), _useState12 = _slicedToArray(_useState11, 2), stillMounted = _useState12[0], setStillMounted = _useState12[1];
+    var _props$attributes = props.attributes, checkPostImage = _props$attributes.checkPostImage, postImageWidth = _props$attributes.postImageWidth, preservePostImageAspectRatio = _props$attributes.preservePostImageAspectRatio, postImageHeight = _props$attributes.postImageHeight, checkPostAuthor = _props$attributes.checkPostAuthor, checkPostDate = _props$attributes.checkPostDate, checkPostExcerpt = _props$attributes.checkPostExcerpt, checkPostLink = _props$attributes.checkPostLink, excerptLength = _props$attributes.excerptLength, readMoreText = _props$attributes.readMoreText, amountPosts = _props$attributes.amountPosts, postLayout = _props$attributes.postLayout, columns = _props$attributes.columns, categories = _props$attributes.categories, categoryArray = _props$attributes.categoryArray, orderBy = _props$attributes.orderBy, order = _props$attributes.order, checkPostTitle = _props$attributes.checkPostTitle, postTitleTag = _props$attributes.postTitleTag, authorArray = _props$attributes.authorArray, tagArray = _props$attributes.tagArray, setAttributes = props.setAttributes, posts = props.posts;
+    (0, _react.useEffect)(function() {
+        setStillMounted(true);
+        return function() {
+            return setStillMounted(false);
+        };
+    }, []);
+    (0, _react.useEffect)(function() {
+        if (stillMounted) {
+            apiFetch({
+                path: addQueryArgs("/wp/v2/categories", {
+                    per_page: -1
+                })
+            }).then(function(categoriesList) {
+                setCategoriesList(categoriesList);
+            })["catch"](function() {
+                if (stillMounted) setCategoriesList([]);
+            });
+            apiFetch({
+                path: addQueryArgs("/wp/v2/tags", {
+                    per_page: -1
+                })
+            }).then(function(tagsList) {
+                setTagsList(tagsList);
+            })["catch"](function() {
+                if (stillMounted) setTagsList([]);
+            });
+            apiFetch({
+                path: addQueryArgs("/wp/v2/users", {
+                    per_page: -1,
+                    who: "authors"
+                })
+            }).then(function(authorsList) {
+                setAuthorsList(authorsList);
+            })["catch"](function() {
+                if (stillMounted) setAuthorsList([]);
+            });
+        }
+    }, [
+        stillMounted
+    ]);
+    var hasPosts = Array.isArray(posts) && posts.length; // Post type options
+    var postTypeOptions = [
+        {
+            value: "grid",
+            label: __("Grid", "ultimate-blocks")
+        },
+        {
+            value: "list",
+            label: __("List", "ultimate-blocks")
+        }
+    ];
+    var categorySuggestions = categoriesList.reduce(function(accumulator, category) {
+        return _objectSpread(_objectSpread({}, accumulator), {}, _defineProperty({}, category.name, category));
+    }, {});
+    var queryControlPanel = QueryControls.toString().includes("selectedCategories") ? /*#__PURE__*/ React.createElement(QueryControls, {
+        order: order,
+        orderBy: orderBy,
+        numberOfItems: amountPosts,
+        categorySuggestions: categorySuggestions,
+        selectedCategories: categoryArray,
+        onOrderChange: function onOrderChange(value) {
+            return setAttributes({
+                order: value
+            });
+        },
+        onOrderByChange: function onOrderByChange(value) {
+            return setAttributes({
+                orderBy: value
+            });
+        },
+        onCategoryChange: function onCategoryChange(tokens) {
+            var suggestions = categoriesList.reduce(function(accumulator, category) {
+                return _objectSpread(_objectSpread({}, accumulator), {}, _defineProperty({}, category.name, category));
+            }, {});
+            var allCategories = tokens.map(function(token) {
+                return typeof token === "string" ? suggestions[token] : token;
+            });
+            setAttributes({
+                categoryArray: allCategories
+            });
+        },
+        onNumberOfItemsChange: function onNumberOfItemsChange(value) {
+            return setAttributes({
+                amountPosts: value
+            });
+        }
+    }) : /*#__PURE__*/ React.createElement(QueryControls, {
+        order: order,
+        orderBy: orderBy,
+        numberOfItems: amountPosts,
+        categoriesList: categoriesList,
+        categorySuggestions: categoriesList,
+        selectedCategories: categories,
+        onOrderChange: function onOrderChange(value) {
+            return setAttributes({
+                order: value
+            });
+        },
+        onOrderByChange: function onOrderByChange(value) {
+            return setAttributes({
+                orderBy: value
+            });
+        },
+        onCategoryChange: function onCategoryChange(value) {
+            return setAttributes({
+                categories: "" !== value ? value : undefined
+            });
+        },
+        onNumberOfItemsChange: function onNumberOfItemsChange(value) {
+            return setAttributes({
+                amountPosts: value
+            });
+        }
+    });
+    return /*#__PURE__*/ React.createElement(InspectorControls, null, /*#__PURE__*/ React.createElement(PanelBody, {
+        title: __("Post Grid Settings", "ultimate-blocks")
+    }, Array.isArray(posts) && posts.length > 0 && /*#__PURE__*/ React.createElement(React.Fragment, null, /*#__PURE__*/ React.createElement(SelectControl, {
+        label: __("Grid Type", "ultimate-blocks"),
+        options: postTypeOptions,
+        value: postLayout,
+        onChange: function onChange(postLayout) {
+            return setAttributes({
+                postLayout: postLayout
+            });
+        }
+    }), "grid" === postLayout && /*#__PURE__*/ React.createElement(RangeControl, {
+        label: __("Columns", "ultimate-blocks"),
+        value: columns,
+        onChange: function onChange(columns) {
+            return setAttributes({
+                columns: columns
+            });
+        },
+        min: 1,
+        max: !hasPosts ? MAX_POSTS_COLUMNS : Math.min(MAX_POSTS_COLUMNS, posts.length)
+    })), /*#__PURE__*/ React.createElement("p", null, __("Authors")), authorArray && /*#__PURE__*/ React.createElement("div", {
+        className: "ub-autocomplete-container"
+    }, authorsList.filter(function(t) {
+        return authorArray.includes(t.id);
+    }).map(function(t) {
+        return /*#__PURE__*/ React.createElement("span", {
+            className: "ub-autocomplete-selection"
+        }, t.name, /*#__PURE__*/ React.createElement("span", {
+            className: "dashicons dashicons-dismiss",
+            onClick: function onClick() {
+                return setAttributes({
+                    authorArray: authorArray.filter(function(sel) {
+                        return sel !== t.id;
+                    })
+                });
+            }
+        }));
+    })), /*#__PURE__*/ React.createElement(Autocomplete, {
+        className: "ub-autocomplete-list",
+        list: authorsList.filter(function(t) {
+            return !authorArray.includes(t.id);
+        }).map(function(t) {
+            return {
+                label: t.name,
+                value: t.id
+            };
+        }),
+        selection: authorArray,
+        addToSelection: function addToSelection(item) {
+            if (!authorArray.includes(item.value)) setAttributes({
+                authorArray: [].concat(_toConsumableArray(authorArray), [
+                    item.value
+                ])
+            });
+        }
+    }), queryControlPanel, /*#__PURE__*/ React.createElement("p", null, __("Tags")), tagArray && /*#__PURE__*/ React.createElement("div", {
+        className: "ub-autocomplete-container"
+    }, tagsList.filter(function(t) {
+        return tagArray.includes(t.id);
+    }).map(function(t) {
+        return /*#__PURE__*/ React.createElement("span", {
+            className: "ub-autocomplete-selection"
+        }, t.name, /*#__PURE__*/ React.createElement("span", {
+            className: "dashicons dashicons-dismiss",
+            onClick: function onClick() {
+                setAttributes({
+                    tagArray: tagArray.filter(function(sel) {
+                        return sel !== t.id;
+                    })
+                });
+            }
+        }));
+    })), /*#__PURE__*/ React.createElement(Autocomplete, {
+        className: "ub-autocomplete-list",
+        list: tagsList.filter(function(t) {
+            return !tagArray.includes(t.id);
+        }).map(function(t) {
+            return {
+                label: t.name,
+                value: t.id
+            };
+        }),
+        selection: tagArray,
+        addToSelection: function addToSelection(item) {
+            if (!tagArray.includes(item.value)) setAttributes({
+                tagArray: [].concat(_toConsumableArray(tagArray), [
+                    item.value
+                ])
+            });
+        }
+    })), Array.isArray(posts) && posts.length > 0 && /*#__PURE__*/ React.createElement(PanelBody, {
+        title: __("Post Grid Content", "ultimate-blocks")
+    }, /*#__PURE__*/ React.createElement(ToggleControl, {
+        label: __("Display Featured Image", "ultimate-blocks"),
+        checked: checkPostImage,
+        onChange: function onChange(checkPostImage) {
+            return setAttributes({
+                checkPostImage: checkPostImage
+            });
+        }
+    }), checkPostImage && /*#__PURE__*/ React.createElement(React.Fragment, null, /*#__PURE__*/ React.createElement(TextControl, {
+        label: __("Post Image Width", "ultimate-blocks"),
+        type: "number",
+        min: 1,
+        value: postImageWidth,
+        onChange: function onChange(val) {
+            return setAttributes({
+                postImageWidth: Number(val)
+            });
+        }
+    }), /*#__PURE__*/ React.createElement(ToggleControl, {
+        label: __("Preserve Aspect Ratio", "ultimate-blocks"),
+        checked: preservePostImageAspectRatio,
+        onChange: function onChange(preservePostImageAspectRatio) {
+            return setAttributes({
+                preservePostImageAspectRatio: preservePostImageAspectRatio
+            });
+        }
+    }), !preservePostImageAspectRatio && /*#__PURE__*/ React.createElement(TextControl, {
+        label: __("Post Image Height", "ultimate-blocks"),
+        type: "number",
+        min: 1,
+        value: postImageHeight,
+        onChange: function onChange(val) {
+            return setAttributes({
+                postImageHeight: Number(val)
+            });
+        }
+    })), /*#__PURE__*/ React.createElement(ToggleControl, {
+        label: __("Display Author", "ultimate-blocks"),
+        checked: checkPostAuthor,
+        onChange: function onChange(checkPostAuthor) {
+            return setAttributes({
+                checkPostAuthor: checkPostAuthor
+            });
+        }
+    }), /*#__PURE__*/ React.createElement(ToggleControl, {
+        label: __("Display Date", "ultimate-blocks"),
+        checked: checkPostDate,
+        onChange: function onChange(checkPostDate) {
+            return setAttributes({
+                checkPostDate: checkPostDate
+            });
+        }
+    }), /*#__PURE__*/ React.createElement(ToggleControl, {
+        label: __("Display Excerpt", "ultimate-blocks"),
+        checked: checkPostExcerpt,
+        onChange: function onChange(checkPostExcerpt) {
+            return setAttributes({
+                checkPostExcerpt: checkPostExcerpt
+            });
+        }
+    }), checkPostExcerpt && /*#__PURE__*/ React.createElement(RangeControl, {
+        label: __("Excerpt Length", "ultimate-blocks"),
+        value: excerptLength,
+        onChange: function onChange(value) {
+            return setAttributes({
+                excerptLength: value
+            });
+        },
+        min: 0,
+        max: 200
+    }), /*#__PURE__*/ React.createElement(ToggleControl, {
+        label: __("Display Continue Reading Link", "ultimate-blocks"),
+        checked: checkPostLink,
+        onChange: function onChange(checkPostLink) {
+            return setAttributes({
+                checkPostLink: checkPostLink
+            });
+        }
+    }), checkPostLink && /*#__PURE__*/ React.createElement(TextControl, {
+        label: __("Customize Continue Reading Text", "ultimate-blocks"),
+        type: "text",
+        value: readMoreText,
+        onChange: function onChange(value) {
+            return setAttributes({
+                readMoreText: value
+            });
+        }
+    }), /*#__PURE__*/ React.createElement(ToggleControl, {
+        label: __("Display Title", "ultimate-blocks"),
+        checked: checkPostTitle,
+        onChange: function onChange(checkPostTitle) {
+            return setAttributes({
+                checkPostTitle: checkPostTitle
+            });
+        }
+    }), checkPostTitle && /*#__PURE__*/ React.createElement(SelectControl, {
+        label: __("Title tag", "ultimate-blocks"),
+        options: [
+            "h2",
+            "h3",
+            "h4"
+        ].map(function(a) {
+            return {
+                value: a,
+                label: __(a)
+            };
+        }),
+        value: postTitleTag,
+        onChange: function onChange(postTitleTag) {
+            return setAttributes({
+                postTitleTag: postTitleTag
+            });
+        }
+    })));
+}
+
+},{"prop-types":"7wKI2","react":"21dqq"}],"c28DV":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setBlockFilter = exports.getBlockFilter = exports["default"] = void 0;
+var _toolkit = require("@reduxjs/toolkit");
+var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
+/**
+ * App slice options
+ * @type {Object}
+ */ var appSliceOptions = {
+    name: "app",
+    initialState: {
+        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT
+    },
+    reducers: {
+        setBlockFilter: function setBlockFilter(state, _ref) {
+            var payload = _ref.payload;
+            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
+            else throw new Error("invalid block filter type supplied");
+        }
+    }
+};
+var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
+var setBlockFilter = appSlice.actions.setBlockFilter;
+/**
+ * Get current block filter.
+ * @param {Object} state store state
+ * @returns {String} filter value
+ */ exports.setBlockFilter = setBlockFilter;
+var getBlockFilter = function getBlockFilter(state) {
+    return state.app.blockFilter;
+};
+/**
+ * @module appSlice
+ */ exports.getBlockFilter = getBlockFilter;
+var _default = appSlice.reducer;
+exports["default"] = _default;
+
+},{"@reduxjs/toolkit":"lL1Ef","$Components/BlockStatusFilterControl":"hebBQ"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -27149,6 +37234,113 @@ function _interopRequireWildcard(obj, nodeInterop) {
  */ var _default = AdminMenuWrapper;
 exports["default"] = _default;
 
-},{"react":"21dqq"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
+},{"react":"21dqq"}],"7VzQu":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _toolkit = require("@reduxjs/toolkit");
+var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
+var _assets = _interopRequireDefault(require("$Stores/settings-menu/slices/assets"));
+var _app = _interopRequireDefault(require("$Stores/settings-menu/slices/app"));
+var _blocks = _interopRequireDefault(require("$Stores/settings-menu/slices/blocks"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+/**
+ * Create settings menu store.
+ *
+ * @return {Object} store
+ */ function createStore() {
+    var appData = _objectSpread({}, ubAdminMenuData);
+    ubAdminMenuData = null; // add block infos to context data
+    var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
+    var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
+        return blockData.deprecated === undefined && blockData.parent === undefined;
+    });
+    var statusData = appData.blocks.statusData;
+    var allowedKeys = [
+        "icon",
+        "name",
+        "title"
+    ];
+    var reducedBlocks = registeredUbBlocks.reduce(function(carry, current) {
+        var newBlockObject = {};
+        allowedKeys.map(function(key) {
+            newBlockObject[key] = current[key];
+        });
+        newBlockObject.icon = newBlockObject.icon.src;
+        var blockStatus = false;
+        statusData.map(function(_ref) {
+            var name = _ref.name, active = _ref.active;
+            if (name === newBlockObject.name) blockStatus = active;
+        });
+        newBlockObject.active = blockStatus;
+        carry.push(newBlockObject);
+        return carry;
+    }, []);
+    var preloadedState = {
+        assets: appData.assets,
+        app: {
+            blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT
+        },
+        blocks: {
+            registered: reducedBlocks
+        }
+    };
+    return (0, _toolkit.configureStore)({
+        reducer: {
+            assets: _assets["default"],
+            app: _app["default"],
+            blocks: _blocks["default"]
+        },
+        middleware: function middleware(getDefaultMiddleware) {
+            return getDefaultMiddleware({
+                serializableCheck: false
+            });
+        },
+        preloadedState: preloadedState
+    });
+}
+/**
+ * @module createStore
+ */ var _default = createStore;
+exports["default"] = _default;
+
+},{"@reduxjs/toolkit":"lL1Ef","$Components/BlockStatusFilterControl":"hebBQ","$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/app":"c28DV","$Stores/settings-menu/slices/blocks":"ohEvx"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
 
 //# sourceMappingURL=ub-admin-settings.js.map

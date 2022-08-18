@@ -1,36 +1,35 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import withMenuContext from "$HOC/withMenuContext";
 import BlockControl from "$Components/BlockControl";
 import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
+import withStore from "$HOC/withStore";
+import { getBlocks, setBlockActiveStatus } from "$Stores/settings-menu/slices/blocks";
+import { getBlockFilter } from "$Stores/settings-menu/slices/app";
 
 /**
  * Block controls container.
  * @constructor
  *
  * @param {Object} props component properties
- * @param {Object} props.menuData menu data, will be supplied via context
+ * @param {Object} props.blocks menu data, will be supplied via HOC
+ * @param {Object} props.blockFilter current filter for block status, will be supplied via HOC
+ * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  */
-function BlockControlsContainer( { menuData } ) {
-	const statusData = menuData.blocks.statusData.reduce( ( carry, { active, name } ) => {
-		carry[ name ] = active;
-		return carry;
-	}, {} );
-
+function BlockControlsContainer( { blocks, blockFilter, setBlockStatus } ) {
 	/**
-	 * Get status of given block id
-	 * @param {String} blockId registered block id
-	 * @returns {Boolean} status
+	 * Handle block status change
+	 * @param {String} blockId target id
+	 * @param {boolean} status status value
 	 */
-	const getStatus = ( blockId ) => {
-		return statusData[ blockId ];
+	const handleBlockStatusChange = ( blockId, status ) => {
+		setBlockStatus( { id: blockId, status } );
 	};
 
 	return (
 		<TransitionGroup className={ 'controls-container' } >
 			{
-				menuData.blocks.info.sort( ( a, b ) => {
+				[ ...blocks ].sort( ( a, b ) => {
 					const aName = a.title;
 					const bName = b.title;
 
@@ -41,19 +40,18 @@ function BlockControlsContainer( { menuData } ) {
 					}
 
 					return 0;
-				} ).filter( ( { name } ) => {
-					const currentFilter = menuData.app.blockFilter;
-					if ( currentFilter === FILTER_TYPES.ALL ) {
+				} ).filter( ( { active } ) => {
+					if ( blockFilter === FILTER_TYPES.ALL ) {
 						return true;
 					}
 
-					const blockStatus = getStatus( name ) ? FILTER_TYPES.ENABLED : FILTER_TYPES.DISABLED;
+					const blockStatus = active ? FILTER_TYPES.ENABLED : FILTER_TYPES.DISABLED;
 
-					return blockStatus === currentFilter;
-				} ).map( ( { title, name, icon } ) => {
+					return blockStatus === blockFilter;
+				} ).map( ( { title, name, icon, active } ) => {
 					return ( <CSSTransition timeout={ 200 } key={ name } classNames={ 'block-control-transition' }>
-						<BlockControl key={ name } title={ title } blockId={ name } status={ getStatus( name ) }
-							iconObject={ icon.src } />
+						<BlockControl key={ name } title={ title } blockId={ name } status={ active }
+							iconObject={ icon } onStatusChange={ handleBlockStatusChange } />
 					</CSSTransition> );
 				} )
 			}
@@ -61,7 +59,16 @@ function BlockControlsContainer( { menuData } ) {
 	);
 }
 
+const selectMapping = ( selector ) => ( {
+	blocks: selector( getBlocks ),
+	blockFilter: selector( getBlockFilter ),
+} );
+
+const actionMapping = () => ( {
+	setBlockStatus: setBlockActiveStatus,
+} );
+
 /**
  * @module BlockControlsContainer
  */
-export default withMenuContext( BlockControlsContainer );
+export default withStore( BlockControlsContainer, selectMapping, actionMapping );

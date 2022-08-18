@@ -2,32 +2,41 @@
 import React from 'react';
 import ContentPhrase from "$Components/ContentPhrase";
 import BlockStatusFilterControl from "$Components/BlockStatusFilterControl";
+import { getBlockFilter, setBlockFilter } from "$Stores/settings-menu/slices/app";
+import withStore from "$HOC/withStore";
 import BlockControlsContainer from "$Components/BlockControlsContainer";
-import withMenuContext from "$HOC/withMenuContext";
-import { CreatedMenuContext } from "$Components/MenuContext";
 
 /**
  * Menu content component.
  * @constructor
  *
  * @param {Object} props component properties
- * @param {Object} props.menuData menu context data, will be supplied via HOC
+ * @param {String} props.blockFilter current block filter, will be supplied via HOC
+ * @param {Function} props.setBlockFilterValue set block filter value for the app, will be supplied via HOC
  */
-function MenuContent( { menuData } ) {
-	const changeFilter = ( filterVar ) => {
-		menuData.actions.setFilterValue( filterVar );
-	};
-
+function MenuContent( { blockFilter, setBlockFilterValue } ) {
 	return (
 		<div className={ 'menu-content' }>
 			<ContentPhrase />
-			<BlockStatusFilterControl filterVal={ menuData.app.blockFilter } onFilterChanged={ changeFilter } />
+			<BlockStatusFilterControl filterVal={ blockFilter } onFilterChanged={ setBlockFilterValue } />
 			<BlockControlsContainer />
 		</div>
 	);
 }
 
+const selectMapping = ( selector ) => {
+	return {
+		blockFilter: selector( getBlockFilter ),
+	};
+};
+
+const actionMapping = ( ) => {
+	return {
+		setBlockFilterValue: setBlockFilter,
+	};
+};
+
 /**
  * @module MenuContent
  */
-export default withMenuContext( MenuContent );
+export default withStore( MenuContent, selectMapping, actionMapping );
