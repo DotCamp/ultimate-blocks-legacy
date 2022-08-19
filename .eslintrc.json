@@ -25,7 +25,8 @@
 		"window": true,
 		"document": true,
 		"ubAdminMenuData": true,
-		"FormData": true
+		"FormData": true,
+		"localStorage": true
 
 	},
 	"plugins": ["react", "jsx-a11y", "jest"],

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
+import initialState from "$Stores/settings-menu/initialState";
 
 /**
  * App slice options
@@ -7,10 +8,7 @@ import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
  */
 const appSliceOptions = {
 	name: 'app',
-	initialState: {
-		blockFilter: FILTER_TYPES._DEFAULT,
-		showBlockInfo: true,
-	},
+	initialState: initialState.app,
 	reducers: {
 		/**
 		 * Set current filter value.
@@ -40,6 +38,15 @@ const appSliceOptions = {
 const appSlice = createSlice( appSliceOptions );
 
 export const { setBlockFilter, toggleShowBlockInfo } = appSlice.actions;
+
+/**
+ * Get all application options.
+ * @param {Object} state store state
+ * @returns {Object} options
+ */
+export const getAllAppOptions = ( state ) => {
+	return state.app;
+};
 
 /**
  * Get current block filter.

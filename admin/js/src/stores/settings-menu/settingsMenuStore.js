@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
 import assetsSlice from "$Stores/settings-menu/slices/assets";
 import appSlice from "$Stores/settings-menu/slices/app";
 import blocksSlice from "$Stores/settings-menu/slices/blocks";
+import deepmerge from "deepmerge";
+import initialState from "$Stores/settings-menu/initialState";
+import { getLocalStorage } from "$Components/LocalStorageProvider";
 
 /**
  * Create settings menu store.
@@ -49,12 +51,18 @@ function createStore() {
 		return carry;
 	}, [] );
 
-	const preloadedState = {
+	let preloadedState = {
 		assets: appData.assets,
 		blocks: {
 			registered: reducedBlocks,
 		},
 	};
+
+	// merge with default store state
+	preloadedState = deepmerge( preloadedState, initialState );
+
+	// merge with localStorage data
+	preloadedState = deepmerge( preloadedState, getLocalStorage() );
 
 	return configureStore( {
 		reducer: {

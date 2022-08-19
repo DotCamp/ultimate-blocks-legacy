@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 /**
  * HOC for adding store related properties to components
- * @param {React.ElementType} BaseComponent target component
+ * @param {React.ElementType | Object} BaseComponent target component
  * @param {Function | null} [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
  * @param {Function | null} [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
  * @returns {Function} HOC function

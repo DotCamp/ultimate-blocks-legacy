@@ -151,6 +151,7 @@ var _AdminMenuContainer = _interopRequireDefault(require("$Containers/AdminMenuC
 require("$Styles/ub-admin-settings.scss");
 var _AdminMenuWrapper = _interopRequireDefault(require("$Components/AdminMenuWrapper"));
 var _settingsMenuStore = _interopRequireDefault(require("./stores/settings-menu/settingsMenuStore"));
+var _LocalStorageProvider = _interopRequireDefault(require("$Components/LocalStorageProvider"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -162,10 +163,10 @@ if (mountPoint) {
     var root = (0, _client.createRoot)(mountPoint);
     root.render(/*#__PURE__*/ _react["default"].createElement(_AdminMenuWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_reactRedux.Provider, {
         store: (0, _settingsMenuStore["default"])()
-    }, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null))));
+    }, /*#__PURE__*/ _react["default"].createElement(_LocalStorageProvider["default"], null, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null)))));
 } else throw new Error("no mount point found for settings menu");
 
-},{"react":"21dqq","react-dom/client":"lOjBx","$Containers/AdminMenuContainer":"7a8vF","$Styles/ub-admin-settings.scss":"cBeYy","$Components/AdminMenuWrapper":"do7SF","react-redux":"bdVon","./stores/settings-menu/settingsMenuStore":"7VzQu"}],"21dqq":[function(require,module,exports) {
+},{"react":"21dqq","react-dom/client":"lOjBx","$Containers/AdminMenuContainer":"7a8vF","$Styles/ub-admin-settings.scss":"cBeYy","$Components/AdminMenuWrapper":"do7SF","react-redux":"bdVon","./stores/settings-menu/settingsMenuStore":"7VzQu","$Components/LocalStorageProvider":"1Y8eP"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("./cjs/react.development.js");
 
@@ -23525,7 +23526,7 @@ function _typeof(obj) {
 }
 /**
  * HOC for adding store related properties to components
- * @param {React.ElementType} BaseComponent target component
+ * @param {React.ElementType | Object} BaseComponent target component
  * @param {Function | null} [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
  * @param {Function | null} [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
  * @returns {Function} HOC function
@@ -29174,18 +29175,21 @@ process.umask = function() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports["default"] = void 0;
+exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
 var _toolkit = require("@reduxjs/toolkit");
 var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
+var _initialState = _interopRequireDefault(require("$Stores/settings-menu/initialState"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
 /**
  * App slice options
  * @type {Object}
  */ var appSliceOptions = {
     name: "app",
-    initialState: {
-        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
-        showBlockInfo: true
-    },
+    initialState: _initialState["default"].app,
     reducers: {
         /**
      * Set current filter value.
@@ -29210,11 +29214,19 @@ var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
 var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
 var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo;
 /**
+ * Get all application options.
+ * @param {Object} state store state
+ * @returns {Object} options
+ */ exports.toggleShowBlockInfo = toggleShowBlockInfo;
+exports.setBlockFilter = setBlockFilter;
+var getAllAppOptions = function getAllAppOptions(state) {
+    return state.app;
+};
+/**
  * Get current block filter.
  * @param {Object} state store state
  * @returns {String} filter value
- */ exports.toggleShowBlockInfo = toggleShowBlockInfo;
-exports.setBlockFilter = setBlockFilter;
+ */ exports.getAllAppOptions = getAllAppOptions;
 var getBlockFilter = function getBlockFilter(state) {
     return state.app.blockFilter;
 };
@@ -29232,7 +29244,7 @@ var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
 var _default = appSlice.reducer;
 exports["default"] = _default;
 
-},{"@reduxjs/toolkit":"lL1Ef","$Components/BlockStatusFilterControl":"hebBQ"}],"hebBQ":[function(require,module,exports) {
+},{"@reduxjs/toolkit":"lL1Ef","$Components/BlockStatusFilterControl":"hebBQ","$Stores/settings-menu/initialState":"3xPpL"}],"hebBQ":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -29589,7 +29601,28 @@ function ActiveFilterIndicator(_ref) {
  */ var _default = ActiveFilterIndicator;
 exports["default"] = _default;
 
-},{"react":"21dqq"}],"clIT3":[function(require,module,exports) {
+},{"react":"21dqq"}],"3xPpL":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
+/**
+ * Initial store.
+ * @type {Object}
+ */ var initialState = {
+    app: {
+        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
+        showBlockInfo: true
+    }
+};
+/**
+ * @module initialState
+ */ var _default = initialState;
+exports["default"] = _default;
+
+},{"$Components/BlockStatusFilterControl":"hebBQ"}],"clIT3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FontAwesomeIcon", ()=>FontAwesomeIcon);
@@ -38732,10 +38765,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _toolkit = require("@reduxjs/toolkit");
-var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
 var _assets = _interopRequireDefault(require("$Stores/settings-menu/slices/assets"));
 var _app = _interopRequireDefault(require("$Stores/settings-menu/slices/app"));
 var _blocks = _interopRequireDefault(require("$Stores/settings-menu/slices/blocks"));
+var _deepmerge = _interopRequireDefault(require("deepmerge"));
+var _initialState = _interopRequireDefault(require("$Stores/settings-menu/initialState"));
+var _LocalStorageProvider = require("$Components/LocalStorageProvider");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -38812,7 +38847,9 @@ function _defineProperty(obj, key, value) {
         blocks: {
             registered: reducedBlocks
         }
-    };
+    }; // merge with default store state
+    preloadedState = (0, _deepmerge["default"])(preloadedState, _initialState["default"]); // merge with localStorage data
+    preloadedState = (0, _deepmerge["default"])(preloadedState, (0, _LocalStorageProvider.getLocalStorage)());
     return (0, _toolkit.configureStore)({
         reducer: {
             assets: _assets["default"],
@@ -38832,6 +38869,191 @@ function _defineProperty(obj, key, value) {
  */ var _default = createStore;
 exports["default"] = _default;
 
-},{"@reduxjs/toolkit":"lL1Ef","$Components/BlockStatusFilterControl":"hebBQ","$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/app":"c28DV","$Stores/settings-menu/slices/blocks":"ohEvx"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
+},{"@reduxjs/toolkit":"lL1Ef","$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/app":"c28DV","$Stores/settings-menu/slices/blocks":"ohEvx","deepmerge":"ck1Q2","$Stores/settings-menu/initialState":"3xPpL","$Components/LocalStorageProvider":"1Y8eP"}],"ck1Q2":[function(require,module,exports) {
+"use strict";
+var isMergeableObject = function isMergeableObject(value) {
+    return isNonNullObject(value) && !isSpecial(value);
+};
+function isNonNullObject(value) {
+    return !!value && typeof value === "object";
+}
+function isSpecial(value) {
+    var stringValue = Object.prototype.toString.call(value);
+    return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
+}
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === "function" && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 0xeac7;
+function isReactElement(value) {
+    return value.$$typeof === REACT_ELEMENT_TYPE;
+}
+function emptyTarget(val) {
+    return Array.isArray(val) ? [] : {};
+}
+function cloneUnlessOtherwiseSpecified(value, options) {
+    return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
+}
+function defaultArrayMerge(target, source, options) {
+    return target.concat(source).map(function(element) {
+        return cloneUnlessOtherwiseSpecified(element, options);
+    });
+}
+function getMergeFunction(key, options) {
+    if (!options.customMerge) return deepmerge;
+    var customMerge = options.customMerge(key);
+    return typeof customMerge === "function" ? customMerge : deepmerge;
+}
+function getEnumerableOwnPropertySymbols(target) {
+    return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+        return target.propertyIsEnumerable(symbol);
+    }) : [];
+}
+function getKeys(target) {
+    return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
+}
+function propertyIsOnObject(object, property) {
+    try {
+        return property in object;
+    } catch (_) {
+        return false;
+    }
+}
+// Protects from prototype poisoning and unexpected merging up the prototype chain.
+function propertyIsUnsafe(target, key) {
+    return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
+     && !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
+     && Object.propertyIsEnumerable.call(target, key) // and also unsafe if they're nonenumerable.
+    );
+}
+function mergeObject(target, source, options) {
+    var destination = {};
+    if (options.isMergeableObject(target)) getKeys(target).forEach(function(key) {
+        destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+    });
+    getKeys(source).forEach(function(key) {
+        if (propertyIsUnsafe(target, key)) return;
+        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+        else destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+    });
+    return destination;
+}
+function deepmerge(target, source, options) {
+    options = options || {};
+    options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+    options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+    // cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
+    // implementations can use it. The caller may not replace it.
+    options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+    var sourceIsArray = Array.isArray(source);
+    var targetIsArray = Array.isArray(target);
+    var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+    if (!sourceAndTargetTypesMatch) return cloneUnlessOtherwiseSpecified(source, options);
+    else if (sourceIsArray) return options.arrayMerge(target, source, options);
+    else return mergeObject(target, source, options);
+}
+deepmerge.all = function deepmergeAll(array, options) {
+    if (!Array.isArray(array)) throw new Error("first argument should be an array");
+    return array.reduce(function(prev, next) {
+        return deepmerge(prev, next, options);
+    }, {});
+};
+var deepmerge_1 = deepmerge;
+module.exports = deepmerge_1;
+
+},{}],"1Y8eP":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getLocalStorage = exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+var _withStore = _interopRequireDefault(require("$HOC/withStore"));
+var _app = require("$Stores/settings-menu/slices/app");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+// eslint-disable-next-line no-unused-vars
+var storageKey = "ubMenuData";
+/**
+ * Get localStorage data for settings menu
+ * @return {Object} menu data
+ */ var getLocalStorage = function getLocalStorage() {
+    var data = localStorage.getItem(storageKey);
+    if (data) return JSON.parse(data);
+    return {};
+};
+exports.getLocalStorage = getLocalStorage;
+var writeToLocalStorage = function writeToLocalStorage(callback) {
+    var dataToWrite = callback(getLocalStorage());
+    localStorage.setItem(storageKey, JSON.stringify(dataToWrite));
+};
+/**
+ * Local storage provider.
+ *
+ * This component will watch store state changes and write those to localStorage.
+ * @constructor
+ *
+ * @param {Object} props component properties
+ * @param {React.ElementType} props.children component children
+ * @param {Object} props.appState store application state, will be supplied via HOC
+ */ function LocalStorageProvider(_ref) {
+    var children = _ref.children, appState = _ref.appState;
+    (0, _react.useEffect)(function() {
+        writeToLocalStorage(function(currentData) {
+            currentData.app = appState;
+            return currentData;
+        });
+    }, [
+        appState
+    ]);
+    return children;
+}
+var selectMapping = function selectMapping(select) {
+    return {
+        appState: select(_app.getAllAppOptions)
+    };
+};
+/**
+ * @module LocalStorageProvider
+ */ var _default = (0, _withStore["default"])(LocalStorageProvider, selectMapping);
+exports["default"] = _default;
+
+},{"react":"21dqq","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/app":"c28DV"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
 
 //# sourceMappingURL=ub-admin-settings.js.map
