@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import BlockControl from "$Components/BlockControl";
 import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
 import withStore from "$HOC/withStore";
 import { getBlocks, setBlockActiveStatus } from "$Stores/settings-menu/slices/blocks";
 import { getBlockFilter, getBlockInfoShowStatus } from "$Stores/settings-menu/slices/app";
 import { toggleBlockStatus } from "$Stores/settings-menu/actions";
+import VisibilityWrapper from "$Components/VisibilityWrapper";
 
 /**
  * Block controls container.
@@ -57,14 +57,12 @@ function BlockControlsContainer( { blocks, blockFilter, setBlockStatus, dispatch
 					const blockStatus = active ? FILTER_TYPES.ENABLED : FILTER_TYPES.DISABLED;
 					const visibilityStatus = blockFilter === FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
 					return (
-						<div
+						<VisibilityWrapper
 							key={ name }
-							style={ {
-								display: visibilityStatus ? 'block' : 'none',
-							} }
+							visibilityStatus={ visibilityStatus }
 						>
 							<BlockControl title={ title } blockId={ name } status={ active } iconObject={ icon }
-								onStatusChange={ handleBlockStatusChange } info={ info } /></div>
+								onStatusChange={ handleBlockStatusChange } info={ info } /></VisibilityWrapper>
 					);
 				} )
 			}

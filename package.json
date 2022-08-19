@@ -11,7 +11,7 @@
     "$Containers": "./admin/js/src/containers",
     "$Components": "./admin/js/src/components",
     "$HOC": "./admin/js/src/hoc",
-	"$Stores": "./admin/js/src/stores",
+    "$Stores": "./admin/js/src/stores",
     "$Styles": "./admin/css/src/"
   },
   "dependencies": {
@@ -29,7 +29,6 @@
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",
     "react-sortable-hoc": "^2.0.0",
-    "react-transition-group": "^4.4.5",
     "swiper": "^6.8.4"
   },
   "devDependencies": {

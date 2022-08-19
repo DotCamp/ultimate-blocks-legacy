@@ -299,4 +299,33 @@
   transition: opacity .5s ease-out;
 }
 
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes disappear {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.visibility-wrapper[data-visible="true"] {
+  animation: appear .2s ease-out forwards;
+  display: block !important;
+}
+
+.visibility-wrapper[data-visible="false"] {
+  animation: disappear .2s ease-out forwards;
+}
+
 /*# sourceMappingURL=ub-admin-settings.css.map */
