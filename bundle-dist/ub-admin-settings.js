@@ -33119,11 +33119,19 @@ exports["default"] = _default;
 
 },{"react":"21dqq"}],"e69CO":[function(require,module,exports) {
 "use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 var _reactTransitionGroup = require("react-transition-group");
 var _BlockControl = _interopRequireDefault(require("$Components/BlockControl"));
 var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
@@ -33136,11 +33144,49 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
 function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
 function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
@@ -33150,16 +33196,37 @@ function _unsupportedIterableToArray(o, minLen) {
     if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
 function _arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
     return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
 }
 /**
  * Block controls container.
@@ -33183,28 +33250,32 @@ function _arrayLikeToArray(arr, len) {
         });
         dispatch(_actions.toggleBlockStatus)(blockId, status);
     };
-    return /*#__PURE__*/ _react["default"].createElement(_reactTransitionGroup.TransitionGroup, {
+    var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
+    (0, _react.useEffect)(function() {
+        var sortedBlocks = _toConsumableArray(blocks).sort(function(a, b) {
+            var aName = a.title;
+            var bName = b.title;
+            if (aName < bName) return -1;
+            else if (aName > bName) return 1;
+            return 0;
+        });
+        setInnerBlocks(sortedBlocks);
+    }, [
+        blocks
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "controls-container",
         "data-show-info": JSON.stringify(showInfoStatus)
-    }, _toConsumableArray(blocks).sort(function(a, b) {
-        var aName = a.title;
-        var bName = b.title;
-        if (aName < bName) return -1;
-        else if (aName > bName) return 1;
-        return 0;
-    }).filter(function(_ref2) {
-        var active = _ref2.active;
-        if (blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL) return true;
+    }, innerBlocks.map(function(_ref2) {
+        var title = _ref2.title, name = _ref2.name, icon = _ref2.icon, active = _ref2.active, info = _ref2.info;
         var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
-        return blockStatus === blockFilter;
-    }).map(function(_ref3) {
-        var title = _ref3.title, name = _ref3.name, icon = _ref3.icon, active = _ref3.active, info = _ref3.info;
-        return /*#__PURE__*/ _react["default"].createElement(_reactTransitionGroup.CSSTransition, {
-            timeout: 200,
+        var visibilityStatus = blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
+        return /*#__PURE__*/ _react["default"].createElement("div", {
             key: name,
-            classNames: "block-control-transition"
+            style: {
+                display: visibilityStatus ? "block" : "none"
+            }
         }, /*#__PURE__*/ _react["default"].createElement(_BlockControl["default"], {
-            key: name,
             title: title,
             blockId: name,
             status: active,
@@ -34844,6 +34915,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _ToggleControl = _interopRequireDefault(require("$Components/ToggleControl"));
 var _MenuButton = _interopRequireDefault(require("$Components/MenuButton"));
 var _withIcon = _interopRequireDefault(require("$HOC/withIcon"));
+var _app = require("$Stores/settings-menu/slices/app");
+var _withStore = _interopRequireDefault(require("$HOC/withStore"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -34934,25 +35007,43 @@ function _arrayWithHoles(arr) {
  * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
  * @param {Function} props.onStatusChange callback for status change event
  * @param {Array} props.info information about block and its usage
+ * @param {Boolean} props.blockInfoShowStatus block info show status, will be supplied via HOC
  *
  */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, _ref$blockInfoShowSta = _ref.blockInfoShowStatus, blockInfoShowStatus = _ref$blockInfoShowSta === void 0 ? false : _ref$blockInfoShowSta;
     var initialRender = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    var howToUse = function howToUse() {
-        // TODO [ErdemBircan] remove for production
-        console.log("showing how-to for ".concat(blockId));
-    };
+    var _useState3 = (0, _react.useState)({}), _useState4 = _slicedToArray(_useState3, 2), blockStyle = _useState4[0], setBlockStyle = _useState4[1];
+    var _useState5 = (0, _react.useState)(0), _useState6 = _slicedToArray(_useState5, 2), headerHeight = _useState6[0], setHeaderHeight = _useState6[1];
+    var headerRef = (0, _react.useRef)();
+    (0, _react.useEffect)(function() {
+        var _headerRef$current$ge = headerRef.current.getBoundingClientRect(), height = _headerRef$current$ge.height;
+        setHeaderHeight(height);
+    }, []);
+    (0, _react.useEffect)(function() {
+        setBlockStyle({
+            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
+        });
+    }, [
+        headerHeight,
+        blockInfoShowStatus
+    ]);
     (0, _react.useEffect)(function() {
         if (initialRender.current) initialRender.current = false;
         else onStatusChange(blockId, innerStatus);
     }, [
         innerStatus
     ]);
+    var howToUse = function howToUse() {
+        // TODO [ErdemBircan] remove for production
+        console.log("showing how-to for ".concat(blockId));
+    };
     return /*#__PURE__*/ _react["default"].createElement("div", {
+        style: blockStyle,
         className: "block-control",
         "data-enabled": JSON.stringify(innerStatus)
     }, /*#__PURE__*/ _react["default"].createElement("div", {
+        ref: headerRef,
         className: "block-title"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-left-container"
@@ -34977,12 +35068,17 @@ function _arrayWithHoles(arr) {
         onClickHandler: howToUse
     })));
 }
+var selectMapping = function selectMapping(select) {
+    return {
+        blockInfoShowStatus: select(_app.getBlockInfoShowStatus)
+    };
+};
 /**
  * @module BlockControl
- */ var _default = (0, _withIcon["default"])(BlockControl);
+ */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","$Components/ToggleControl":"a7r96","$Components/MenuButton":"cbTU3","$HOC/withIcon":"l4uaA"}],"a7r96":[function(require,module,exports) {
+},{"react":"21dqq","$Components/ToggleControl":"a7r96","$Components/MenuButton":"cbTU3","$HOC/withIcon":"l4uaA","$Stores/settings-menu/slices/app":"c28DV","$HOC/withStore":"kWmDy"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

@@ -131,13 +131,11 @@
 		border-radius: 5px;
 
 		&[data-show-info="false"] .block-control {
-		  height: auto;
 
 		  & > div:not(.block-title) {
 			display: none;
 		  }
 		}
-
 
 		.block-control {
 		  @extend %box-shadow-md;
@@ -156,7 +154,6 @@
 
 		  &[data-enabled='false'] {
 			border-color: $gray-500;
-
 		  }
 
 		  &[data-enabled='false'] .block-title {

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import BlockControl from "$Components/BlockControl";
 import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
@@ -29,38 +29,46 @@ function BlockControlsContainer( { blocks, blockFilter, setBlockStatus, dispatch
 		dispatch( toggleBlockStatus )( blockId, status );
 	};
 
+	const [ innerBlocks, setInnerBlocks ] = useState( blocks );
+
+	useEffect( () => {
+		const sortedBlocks = [ ...blocks ].sort(
+			( a, b ) => {
+				const aName = a.title;
+				const bName = b.title;
+
+				if ( aName < bName ) {
+					return -1;
+				} else if ( aName > bName ) {
+					return 1;
+				}
+
+				return 0;
+			}
+		);
+
+		setInnerBlocks( sortedBlocks );
+	}, [ blocks ] );
+
 	return (
-		<TransitionGroup className={ 'controls-container' } data-show-info={ JSON.stringify( showInfoStatus ) } >
+		<div className={ 'controls-container' } data-show-info={ JSON.stringify( showInfoStatus ) }>
 			{
-				[ ...blocks ].sort( ( a, b ) => {
-					const aName = a.title;
-					const bName = b.title;
-
-					if ( aName < bName ) {
-						return -1;
-					} else if ( aName > bName ) {
-						return 1;
-					}
-
-					return 0;
-				} ).filter( ( { active } ) => {
-					if ( blockFilter === FILTER_TYPES.ALL ) {
-						return true;
-					}
-
+				innerBlocks.map( ( { title, name, icon, active, info } ) => {
 					const blockStatus = active ? FILTER_TYPES.ENABLED : FILTER_TYPES.DISABLED;
-
-					return blockStatus === blockFilter;
-				} ).map( ( { title, name, icon, active, info } ) => {
-					return ( <CSSTransition timeout={ 200 } key={ name } classNames={ 'block-control-transition' }>
-						<BlockControl key={ name } title={ title } blockId={ name } status={ active }
-							iconObject={ icon } onStatusChange={ handleBlockStatusChange }
-							info={ info }
-						/>
-					</CSSTransition> );
+					const visibilityStatus = blockFilter === FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
+					return (
+						<div
+							key={ name }
+							style={ {
+								display: visibilityStatus ? 'block' : 'none',
+							} }
+						>
+							<BlockControl title={ title } blockId={ name } status={ active } iconObject={ icon }
+								onStatusChange={ handleBlockStatusChange } info={ info } /></div>
+					);
 				} )
 			}
-		</TransitionGroup>
+		</div>
 	);
 }
 
@@ -70,7 +78,7 @@ const selectMapping = ( selector ) => ( {
 	showInfoStatus: selector( getBlockInfoShowStatus ),
 } );
 
-const actionMapping = ( ) => ( {
+const actionMapping = () => ( {
 	setBlockStatus: setBlockActiveStatus,
 } );
 

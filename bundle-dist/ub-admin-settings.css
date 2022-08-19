@@ -159,10 +159,6 @@
   display: flex;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container[data-show-info="false"] .block-control {
-  height: auto;
-}
-
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container[data-show-info="false"] .block-control > div:not(.block-title) {
   display: none;
 }

@@ -1,8 +1,10 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useRef, useState, createElement } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ToggleControl from "$Components/ToggleControl";
 import MenuButton from "$Components/MenuButton";
 import withIcon from "$HOC/withIcon";
+import { getBlockInfoShowStatus } from "$Stores/settings-menu/slices/app";
+import withStore from "$HOC/withStore";
 
 /**
  * Menu block control component.
@@ -17,16 +19,27 @@ import withIcon from "$HOC/withIcon";
  * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
  * @param {Function} props.onStatusChange callback for status change event
  * @param {Array} props.info information about block and its usage
+ * @param {Boolean} props.blockInfoShowStatus block info show status, will be supplied via HOC
  *
  */
-function BlockControl( { title, blockId, status, iconElement, onStatusChange, info } ) {
+function BlockControl( { title, blockId, status, iconElement, onStatusChange, info, blockInfoShowStatus = false } ) {
 	const initialRender = useRef( true );
-	const [ innerStatus, setInnerStatus ] = useState( status === undefined ? false : status );
 
-	const howToUse = () => {
-		// TODO [ErdemBircan] remove for production
-		console.log( `showing how-to for ${ blockId }` );
-	};
+	const [ innerStatus, setInnerStatus ] = useState( status === undefined ? false : status );
+	const [ blockStyle, setBlockStyle ] = useState( {} );
+	const [ headerHeight, setHeaderHeight ] = useState( 0 );
+
+	const headerRef = useRef();
+	useEffect( () => {
+		const { height } = headerRef.current.getBoundingClientRect();
+		setHeaderHeight( height );
+	}, [] );
+
+	useEffect( () => {
+		setBlockStyle( {
+			height: blockInfoShowStatus ? '' : `${ headerHeight }px`,
+		} );
+	}, [ headerHeight, blockInfoShowStatus ] );
 
 	useEffect( () => {
 		if ( initialRender.current ) {
@@ -36,9 +49,14 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 		}
 	}, [ innerStatus ] );
 
+	const howToUse = () => {
+		// TODO [ErdemBircan] remove for production
+		console.log( `showing how-to for ${ blockId }` );
+	};
+
 	return (
-		<div className={ 'block-control' } data-enabled={ JSON.stringify( innerStatus ) }>
-			<div className={ 'block-title' }>
+		<div style={ blockStyle } className={ 'block-control' } data-enabled={ JSON.stringify( innerStatus ) }>
+			<div ref={ headerRef } className={ 'block-title' }>
 				<div className={ 'block-title-left-container' }>
 					<div className={ 'title-icon' }>
 						{
@@ -70,7 +88,13 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 	);
 }
 
+const selectMapping = ( select ) => {
+	return {
+		blockInfoShowStatus: select( getBlockInfoShowStatus ),
+	};
+};
+
 /**
  * @module BlockControl
  */
-export default withIcon( BlockControl );
+export default withStore( withIcon( BlockControl ), selectMapping );
