@@ -23,7 +23,7 @@
   display: flex;
 }
 
-.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator {
+.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle {
   transition: all .2s ease-out;
 }
 
@@ -63,6 +63,7 @@
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header {
   background-color: #fbfbfb;
+  justify-content: space-between;
   align-items: center;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -75,6 +76,21 @@
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container img {
   height: 100%;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle {
+  cursor: pointer;
+  color: #e5e5e5;
+  padding: 5px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle[data-light-it-up="true"] {
+  color: #eab308;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle svg {
+  width: 25px;
+  height: 25px;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content {
@@ -133,13 +149,22 @@
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container {
   width: 100%;
-  height: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
   border-radius: 5px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   margin: 30px 0;
   display: flex;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container[data-show-info="false"] .block-control {
+  height: auto;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container[data-show-info="false"] .block-control > div:not(.block-title) {
+  display: none;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control {

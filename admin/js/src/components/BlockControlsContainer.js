@@ -5,7 +5,7 @@ import BlockControl from "$Components/BlockControl";
 import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
 import withStore from "$HOC/withStore";
 import { getBlocks, setBlockActiveStatus } from "$Stores/settings-menu/slices/blocks";
-import { getBlockFilter } from "$Stores/settings-menu/slices/app";
+import { getBlockFilter, getBlockInfoShowStatus } from "$Stores/settings-menu/slices/app";
 import { toggleBlockStatus } from "$Stores/settings-menu/actions";
 
 /**
@@ -16,8 +16,9 @@ import { toggleBlockStatus } from "$Stores/settings-menu/actions";
  * @param {Object} props.blocks menu data, will be supplied via HOC
  * @param {Object} props.blockFilter current filter for block status, will be supplied via HOC
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
+ * @param {Boolean} props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  */
-function BlockControlsContainer( { blocks, blockFilter, setBlockStatus, dispatch } ) {
+function BlockControlsContainer( { blocks, blockFilter, setBlockStatus, dispatch, showInfoStatus } ) {
 	/**
 	 * Handle block status change
 	 * @param {String} blockId target id
@@ -29,7 +30,7 @@ function BlockControlsContainer( { blocks, blockFilter, setBlockStatus, dispatch
 	};
 
 	return (
-		<TransitionGroup className={ 'controls-container' } >
+		<TransitionGroup className={ 'controls-container' } data-show-info={ JSON.stringify( showInfoStatus ) } >
 			{
 				[ ...blocks ].sort( ( a, b ) => {
 					const aName = a.title;
@@ -66,9 +67,10 @@ function BlockControlsContainer( { blocks, blockFilter, setBlockStatus, dispatch
 const selectMapping = ( selector ) => ( {
 	blocks: selector( getBlocks ),
 	blockFilter: selector( getBlockFilter ),
+	showInfoStatus: selector( getBlockInfoShowStatus ),
 } );
 
-const actionMapping = ( dispatch ) => ( {
+const actionMapping = ( ) => ( {
 	setBlockStatus: setBlockActiveStatus,
 } );
 

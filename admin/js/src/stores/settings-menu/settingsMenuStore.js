@@ -51,9 +51,6 @@ function createStore() {
 
 	const preloadedState = {
 		assets: appData.assets,
-		app: {
-			blockFilter: FILTER_TYPES._DEFAULT,
-		},
 		blocks: {
 			registered: reducedBlocks,
 		},
