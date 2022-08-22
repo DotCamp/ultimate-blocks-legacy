@@ -1,5 +1,7 @@
 <?php
 
+namespace Ultimate_Blocks\includes\common\traits;
+
 /**
  * Manager base trait.
  */

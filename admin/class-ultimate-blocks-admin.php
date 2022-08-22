@@ -70,7 +70,7 @@ class Ultimate_Blocks_Admin {
 		$this->plugin_path = ULTIMATE_BLOCKS_PATH;
 		$this->plugin_url  = ULTIMATE_BLOCKS_URL;
 
-		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_settings_menu_data' ], 10, 1 );
+		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_settings_menu_data' ], 1, 1 );
 	}
 
 	/**

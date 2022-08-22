@@ -15,6 +15,9 @@ function createStore() {
 	const appData = { ...ubAdminMenuData };
 	ubAdminMenuData = null;
 
+	// TODO [ErdemBircan] remove for production
+	console.log( appData );
+
 	// add block infos to context data
 	const registeredBlocks = wp.data.select( 'core/blocks' ).getBlockTypes();
 	const registeredUbBlocks = registeredBlocks.filter( blockData => {

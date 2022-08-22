@@ -38969,7 +38969,8 @@ function _defineProperty(obj, key, value) {
  * @return {Object} store
  */ function createStore() {
     var appData = _objectSpread({}, ubAdminMenuData);
-    ubAdminMenuData = null; // add block infos to context data
+    ubAdminMenuData = null; // TODO [ErdemBircan] remove for production
+    console.log(appData); // add block infos to context data
     var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
     var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
         return blockData.deprecated === undefined && blockData.parent === undefined;
