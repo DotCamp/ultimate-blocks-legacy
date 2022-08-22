@@ -86,6 +86,11 @@
 
 		  .version-control-button {
 			@extend %pointer;
+
+			&[data-disabled='true'] {
+			  color: $gray-300;
+			  cursor: default;
+			}
 		  }
 		}
 

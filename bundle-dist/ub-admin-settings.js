@@ -29611,12 +29611,16 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
 /**
- * Initial store.
+ * Initial store state.
  * @type {Object}
  */ var initialState = {
     app: {
         blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
         showBlockInfo: true
+    },
+    versionControl: {
+        currentVersion: "1.0.0",
+        versions: {}
     }
 };
 /**
@@ -33088,6 +33092,13 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactFontawesome = require("@fortawesome/react-fontawesome");
+var _versionControl = require("$Stores/settings-menu/slices/versionControl");
+var _withStore = _interopRequireDefault(require("$HOC/withStore"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -33162,9 +33173,31 @@ function _arrayWithHoles(arr) {
 }
 /**
  * Version control component.
+ *
+ * @param {Object} props component properties
+ * @param {String} props.pluginVersion plugin version
+ * @param {Object} props.allVersions available versions
  * @constructor
- */ function VersionControl() {
+ */ function VersionControl(_ref) {
+    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions;
     var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
+    var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
+    /**
+   * Calculate button disabled status.
+   * @return {boolean} disabled status
+   */ var buttonDisabledStatus = function buttonDisabledStatus() {
+        return pluginVersion === selectedVersion;
+    };
+    var sortedVersions = Object.keys(allVersions).sort().reverse();
+    var versionsLength = sortedVersions.length;
+    (0, _react.useEffect)(function() {
+        var levelBorder = versionsLength / 2;
+        var versionIndex = sortedVersions.indexOf(pluginVersion); // eslint-disable-next-line no-nested-ternary
+        var calculatedLevel = versionIndex === 0 ? "none" : versionIndex > levelBorder || versionIndex < 0 ? "high" : "medium";
+        setVersionLevel(calculatedLevel);
+    }, [
+        selectedVersion
+    ]);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "version-control-container"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
@@ -33174,18 +33207,82 @@ function _arrayWithHoles(arr) {
         className: "version-control-text"
     }, "Version:"), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "version-control-list"
-    }, /*#__PURE__*/ _react["default"].createElement("select", null)), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-button"
+    }, /*#__PURE__*/ _react["default"].createElement("select", {
+        value: selectedVersion,
+        onChange: function onChange(e) {
+            return setSelectedVersion(e.target.value);
+        }
+    }, sortedVersions.map(function(versionId) {
+        return /*#__PURE__*/ _react["default"].createElement("option", {
+            key: versionId,
+            value: versionId
+        }, versionId);
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-button",
+        "data-disabled": JSON.stringify(buttonDisabledStatus())
     }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: "fa-solid fa-circle-chevron-left"
     })));
 }
 /**
+ * Store select mapping
+ * @param {Function} select store selector
+ * @return {Object} select mapping
+ */ var selectionMapping = function selectionMapping(select) {
+    return {
+        allVersions: select(_versionControl.versions),
+        pluginVersion: select(_versionControl.currentVersion)
+    };
+};
+/**
  * @module VersionControl
- */ var _default = VersionControl;
+ */ var _default = (0, _withStore["default"])(VersionControl, selectionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3"}],"inddj":[function(require,module,exports) {
+},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/versionControl":"6jcRk"}],"6jcRk":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.versions = exports["default"] = exports.currentVersion = void 0;
+var _initialState = _interopRequireDefault(require("$Stores/settings-menu/initialState"));
+var _toolkit = require("@reduxjs/toolkit");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Version control slice options.
+ *
+ * @type {Object}
+ */ var versionControlSliceOptions = {
+    name: "versionControl",
+    initialState: _initialState["default"].versionControl
+};
+var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
+/**
+ * Get plugin current version.
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var currentVersion = function currentVersion(state) {
+    return state.versionControl.currentVersion;
+};
+/**
+ * Get plugin current version.
+ * @param {Object} state store state
+ * @return {string} current version
+ */ exports.currentVersion = currentVersion;
+var versions = function versions(state) {
+    return state.versionControl.versions;
+};
+/**
+ * @module versionControlSlice
+ */ exports.versions = versions;
+var _default = versionControlSlice.reducer;
+exports["default"] = _default;
+
+},{"$Stores/settings-menu/initialState":"3xPpL","@reduxjs/toolkit":"lL1Ef"}],"inddj":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -38924,6 +39021,7 @@ var _toolkit = require("@reduxjs/toolkit");
 var _assets = _interopRequireDefault(require("$Stores/settings-menu/slices/assets"));
 var _app = _interopRequireDefault(require("$Stores/settings-menu/slices/app"));
 var _blocks = _interopRequireDefault(require("$Stores/settings-menu/slices/blocks"));
+var _versionControl = _interopRequireDefault(require("$Stores/settings-menu/slices/versionControl"));
 var _deepmerge = _interopRequireDefault(require("deepmerge"));
 var _initialState = _interopRequireDefault(require("$Stores/settings-menu/initialState"));
 var _LocalStorageProvider = require("$Components/LocalStorageProvider");
@@ -38969,8 +39067,7 @@ function _defineProperty(obj, key, value) {
  * @return {Object} store
  */ function createStore() {
     var appData = _objectSpread({}, ubAdminMenuData);
-    ubAdminMenuData = null; // TODO [ErdemBircan] remove for production
-    console.log(appData); // add block infos to context data
+    ubAdminMenuData = null; // add block infos to context data
     var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
     var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
         return blockData.deprecated === undefined && blockData.parent === undefined;
@@ -39003,15 +39100,17 @@ function _defineProperty(obj, key, value) {
         assets: appData.assets,
         blocks: {
             registered: reducedBlocks
-        }
+        },
+        versionControl: appData.versionControl
     }; // merge with default store state
-    preloadedState = (0, _deepmerge["default"])(preloadedState, _initialState["default"]); // merge with localStorage data
+    preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState); // merge with localStorage data
     preloadedState = (0, _deepmerge["default"])(preloadedState, (0, _LocalStorageProvider.getLocalStorage)());
     return (0, _toolkit.configureStore)({
         reducer: {
             assets: _assets["default"],
             app: _app["default"],
-            blocks: _blocks["default"]
+            blocks: _blocks["default"],
+            versionControl: _versionControl["default"]
         },
         middleware: function middleware(getDefaultMiddleware) {
             return getDefaultMiddleware({
@@ -39026,7 +39125,7 @@ function _defineProperty(obj, key, value) {
  */ var _default = createStore;
 exports["default"] = _default;
 
-},{"@reduxjs/toolkit":"lL1Ef","$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/app":"c28DV","$Stores/settings-menu/slices/blocks":"ohEvx","deepmerge":"ck1Q2","$Stores/settings-menu/initialState":"3xPpL","$Components/LocalStorageProvider":"1Y8eP"}],"ck1Q2":[function(require,module,exports) {
+},{"@reduxjs/toolkit":"lL1Ef","$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/app":"c28DV","$Stores/settings-menu/slices/blocks":"ohEvx","deepmerge":"ck1Q2","$Stores/settings-menu/initialState":"3xPpL","$Components/LocalStorageProvider":"1Y8eP","$Stores/settings-menu/slices/versionControl":"6jcRk"}],"ck1Q2":[function(require,module,exports) {
 "use strict";
 var isMergeableObject = function isMergeableObject(value) {
     return isNonNullObject(value) && !isSpecial(value);

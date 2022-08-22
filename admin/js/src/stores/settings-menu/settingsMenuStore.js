@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import assetsSlice from "$Stores/settings-menu/slices/assets";
 import appSlice from "$Stores/settings-menu/slices/app";
 import blocksSlice from "$Stores/settings-menu/slices/blocks";
+import versionControlSlice from "$Stores/settings-menu/slices/versionControl";
 import deepmerge from "deepmerge";
 import initialState from "$Stores/settings-menu/initialState";
 import { getLocalStorage } from "$Components/LocalStorageProvider";
@@ -14,9 +15,6 @@ import { getLocalStorage } from "$Components/LocalStorageProvider";
 function createStore() {
 	const appData = { ...ubAdminMenuData };
 	ubAdminMenuData = null;
-
-	// TODO [ErdemBircan] remove for production
-	console.log( appData );
 
 	// add block infos to context data
 	const registeredBlocks = wp.data.select( 'core/blocks' ).getBlockTypes();
@@ -59,10 +57,11 @@ function createStore() {
 		blocks: {
 			registered: reducedBlocks,
 		},
+		versionControl: appData.versionControl,
 	};
 
 	// merge with default store state
-	preloadedState = deepmerge( preloadedState, initialState );
+	preloadedState = deepmerge( initialState, preloadedState, );
 
 	// merge with localStorage data
 	preloadedState = deepmerge( preloadedState, getLocalStorage() );
@@ -72,6 +71,7 @@ function createStore() {
 			assets: assetsSlice,
 			app: appSlice,
 			blocks: blocksSlice,
+			versionControl: versionControlSlice,
 		},
 		middleware: ( getDefaultMiddleware ) => getDefaultMiddleware( {
 			serializableCheck: false,

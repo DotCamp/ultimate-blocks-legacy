@@ -118,6 +118,11 @@
   background-color: #f63d3d;
 }
 
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-button[data-disabled="true"] {
+  color: #e5e5e5;
+  cursor: default;
+}
+
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle {
   color: #e5e5e5;
   padding: 5px;
