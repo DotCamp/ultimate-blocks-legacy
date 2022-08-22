@@ -12,7 +12,7 @@ function VersionControl() {
 	return (
 		<div className={ 'version-control-container' }>
 			<div data-level={ versionLevel } className={ 'version-control-status-indicator' }></div>
-			<div>Version:</div>
+			<div className={ 'version-control-text' }>Version:</div>
 			<div className={ 'version-control-list' }>
 				<select></select>
 			</div>

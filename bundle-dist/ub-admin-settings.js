@@ -33170,7 +33170,9 @@ function _arrayWithHoles(arr) {
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         "data-level": versionLevel,
         className: "version-control-status-indicator"
-    }), /*#__PURE__*/ _react["default"].createElement("div", null, "Version:"), /*#__PURE__*/ _react["default"].createElement("div", {
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-text"
+    }, "Version:"), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "version-control-list"
     }, /*#__PURE__*/ _react["default"].createElement("select", null)), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "version-control-button"

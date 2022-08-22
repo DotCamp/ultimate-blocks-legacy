@@ -4,7 +4,7 @@
   height: 100%;
 }
 
-.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase {
+.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-text {
   -webkit-user-select: none;
   user-select: none;
 }

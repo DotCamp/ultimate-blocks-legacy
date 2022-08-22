@@ -62,6 +62,10 @@
 			padding: 0 5px;
 		  }
 
+		  .version-control-text {
+			@extend %unselectable;
+		  }
+
 		  .version-control-status-indicator {
 			@include size(15);
 			border-radius: 100%;
