@@ -1,0 +1,12 @@
+{
+  "name": "ultimate-blocks/ultimate-blocks",
+  "description": "Ultimate blocks",
+  "type": "project",
+  "license": "GPL3+",
+  "require": {},
+  "autoload": {
+	"psr-4": {
+	  "Ultimate_Blocks\\": "./"
+	}
+  }
+}

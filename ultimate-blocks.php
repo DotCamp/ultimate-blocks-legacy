@@ -43,6 +43,8 @@ define( 'ULTIMATE_BLOCKS_URL', Ultimate_Blocks_Constants::plugin_url() );
  */
 define( 'ULTIMATE_BLOCKS_TEXT_DOMAIN', Ultimate_Blocks_Constants::text_domain() );
 
+require_once trailingslashit(ULTIMATE_BLOCKS_PATH) . 'vendor/autoload.php';
+
 /**
  * Block Initializer.
  */
