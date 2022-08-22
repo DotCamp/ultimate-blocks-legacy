@@ -177,6 +177,10 @@
   overflow: hidden;
 }
 
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-initial-animation="true"] {
+  transition: none;
+}
+
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control[data-enabled="false"] {
   border-color: #b4a7a7;
 }

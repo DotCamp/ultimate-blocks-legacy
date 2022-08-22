@@ -22,8 +22,9 @@ import withStore from "$HOC/withStore";
  * @param {Boolean} props.blockInfoShowStatus block info show status, will be supplied via HOC
  *
  */
-function BlockControl( { title, blockId, status, iconElement, onStatusChange, info, blockInfoShowStatus = false } ) {
+function BlockControl( { title, blockId, status, iconElement, onStatusChange, info, blockInfoShowStatus } ) {
 	const initialRender = useRef( true );
+	const initialAnimation = useRef( true );
 
 	const [ innerStatus, setInnerStatus ] = useState( status === undefined ? false : status );
 	const [ blockStyle, setBlockStyle ] = useState( {} );
@@ -39,7 +40,19 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 		setBlockStyle( {
 			height: blockInfoShowStatus ? '' : `${ headerHeight }px`,
 		} );
-	}, [ headerHeight, blockInfoShowStatus ] );
+	}, [ headerHeight ] );
+
+	useEffect( () => {
+		setBlockStyle( {
+			height: blockInfoShowStatus ? '' : `${ headerHeight }px`,
+		} );
+
+		return () => {
+			if ( blockInfoShowStatus !== undefined ) {
+				initialAnimation.current = false;
+			}
+		};
+	}, [ blockInfoShowStatus ] );
 
 	useEffect( () => {
 		if ( initialRender.current ) {
@@ -55,7 +68,7 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 	};
 
 	return (
-		<div style={ blockStyle } className={ 'block-control' } data-enabled={ JSON.stringify( innerStatus ) }>
+		<div style={ blockStyle } className={ 'block-control' } data-enabled={ JSON.stringify( innerStatus ) } data-initial-animation={ JSON.stringify( initialAnimation.current ) }>
 			<div ref={ headerRef } className={ 'block-title' }>
 				<div className={ 'block-title-left-container' }>
 					<div className={ 'title-icon' }>

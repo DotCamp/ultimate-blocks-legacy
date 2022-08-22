@@ -152,6 +152,10 @@
 		  grid-template-rows: auto 1fr auto;
 		  grid-template-areas: "title" "info" "howTo";
 
+		  &[data-initial-animation="true"] {
+			transition: none;
+		  }
+
 		  &[data-enabled='false'] {
 			border-color: $gray-500;
 		  }

@@ -33446,8 +33446,9 @@ function _arrayWithHoles(arr) {
  * @param {Boolean} props.blockInfoShowStatus block info show status, will be supplied via HOC
  *
  */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, _ref$blockInfoShowSta = _ref.blockInfoShowStatus, blockInfoShowStatus = _ref$blockInfoShowSta === void 0 ? false : _ref$blockInfoShowSta;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus;
     var initialRender = (0, _react.useRef)(true);
+    var initialAnimation = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
     var _useState3 = (0, _react.useState)({}), _useState4 = _slicedToArray(_useState3, 2), blockStyle = _useState4[0], setBlockStyle = _useState4[1];
     var _useState5 = (0, _react.useState)(0), _useState6 = _slicedToArray(_useState5, 2), headerHeight = _useState6[0], setHeaderHeight = _useState6[1];
@@ -33461,7 +33462,16 @@ function _arrayWithHoles(arr) {
             height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
         });
     }, [
-        headerHeight,
+        headerHeight
+    ]);
+    (0, _react.useEffect)(function() {
+        setBlockStyle({
+            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
+        });
+        return function() {
+            if (blockInfoShowStatus !== undefined) initialAnimation.current = false;
+        };
+    }, [
         blockInfoShowStatus
     ]);
     (0, _react.useEffect)(function() {
@@ -33477,7 +33487,8 @@ function _arrayWithHoles(arr) {
     return /*#__PURE__*/ _react["default"].createElement("div", {
         style: blockStyle,
         className: "block-control",
-        "data-enabled": JSON.stringify(innerStatus)
+        "data-enabled": JSON.stringify(innerStatus),
+        "data-initial-animation": JSON.stringify(initialAnimation.current)
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         ref: headerRef,
         className: "block-title"
