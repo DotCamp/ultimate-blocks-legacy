@@ -23449,6 +23449,8 @@ var _withStore = _interopRequireDefault(require("$HOC/withStore"));
 var _assets = require("$Stores/settings-menu/slices/assets");
 var _app = require("$Stores/settings-menu/slices/app");
 var _reactFontawesome = require("@fortawesome/react-fontawesome");
+var _RightContainerItem = _interopRequireDefault(require("$Components/RightContainerItem"));
+var _VersionControl = _interopRequireDefault(require("$Components/VersionControl"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -23460,7 +23462,7 @@ function _interopRequireDefault(obj) {
  *
  * @param {Object} props component properties
  * @param {String} props.logoUrl plugin logo url, will be supplied via HOC
- * @param {Function} props.toggleShowInfo toggle showing block controls info, will be supplied via HOC
+ * @param {Function} props.toggleShowInfoStatus toggle showing block controls info, will be supplied via HOC
  * @param {Boolean} props.blockInfoShowStatus status of showing extra block information, will be supplied via HOC
  * @returns {JSX.Element} component
  * @constructor
@@ -23475,13 +23477,13 @@ function _interopRequireDefault(obj) {
         src: logoUrl
     })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
         onClick: toggleShowInfoStatus,
         className: "blog-info-toggle",
         "data-light-it-up": JSON.stringify(!blockInfoShowStatus)
     }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: "fa-solid fa-lightbulb"
-    }))));
+    })))));
 }
 var selectMapping = function selectMapping(select) {
     return {
@@ -23499,7 +23501,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/app":"c28DV","@fortawesome/react-fontawesome":"clIT3"}],"kWmDy":[function(require,module,exports) {
+},{"react":"21dqq","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/app":"c28DV","@fortawesome/react-fontawesome":"clIT3","$Components/RightContainerItem":"cm0ja","$Components/VersionControl":"fUke1"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -33040,7 +33042,148 @@ printWarning = function(text) {
 };
 module.exports = checkPropTypes;
 
-},{"./lib/ReactPropTypesSecret":"jZTZJ","./lib/has":"fqKuf"}],"inddj":[function(require,module,exports) {
+},{"./lib/ReactPropTypesSecret":"jZTZJ","./lib/has":"fqKuf"}],"cm0ja":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Menu right container item.
+ *
+ * @param {Object} props component properties
+ * @param {React.ElementType}  props.children component children
+ * @constructor
+ */ function RightContainerItem(_ref) {
+    var children = _ref.children;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "right-container-item"
+    }, children);
+}
+/**
+ * @module RightContainerItem
+ */ var _default = RightContainerItem;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"fUke1":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Version control component.
+ * @constructor
+ */ function VersionControl() {
+    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-level": versionLevel,
+        className: "version-control-status-indicator"
+    }), /*#__PURE__*/ _react["default"].createElement("div", null, "Version:"), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-list"
+    }, /*#__PURE__*/ _react["default"].createElement("select", null)), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-button"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-circle-chevron-left"
+    })));
+}
+/**
+ * @module VersionControl
+ */ var _default = VersionControl;
+exports["default"] = _default;
+
+},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3"}],"inddj":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

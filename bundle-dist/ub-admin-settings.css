@@ -17,13 +17,17 @@
   box-shadow: 0 6px 8px -4px #00000040;
 }
 
-.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase {
+.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .content-phrase, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
   justify-content: center;
   align-items: center;
   display: flex;
 }
 
-.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
+  flex-flow: row;
+}
+
+.ub-admin-menu-wrapper .ub-menu-button, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle {
   transition: all .2s ease-out;
 }
 
@@ -33,6 +37,10 @@
 
 .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control {
   border-radius: 999px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-button {
+  cursor: pointer;
 }
 
 .ub-admin-menu-wrapper {
@@ -74,21 +82,52 @@
   height: 40px;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container img {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container img, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
   height: 100%;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle {
-  cursor: pointer;
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item {
+  height: 100%;
+  padding: 0 10px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item:not(.right-container-item:last-of-type) {
+  border-right: 2px solid #e5e5e5;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container > div {
+  padding: 0 5px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-status-indicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  padding: 0 !important;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-status-indicator[data-level="none"] {
+  background-color: #22c55e;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-status-indicator[data-level="medium"] {
+  background-color: #eab308;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-status-indicator[data-level="high"] {
+  background-color: #f63d3d;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle {
   color: #e5e5e5;
   padding: 5px;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle[data-light-it-up="true"] {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle[data-light-it-up="true"] {
   color: #eab308;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .blog-info-toggle svg {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle svg {
   width: 25px;
   height: 25px;
 }

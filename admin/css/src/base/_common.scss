@@ -35,6 +35,12 @@ $screen-2xl: 1536px;
   align-items: center;
 }
 
+%flex-center-all-row {
+  @extend %flex-center-all;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
 %default-transition {
   transition: all 0.2s ease-out;
 }
@@ -45,5 +51,13 @@ $screen-2xl: 1536px;
 
 %pill {
   border-radius: 999px;
+}
 
+%pointer {
+  cursor: pointer;
+}
+
+@mixin size($val) {
+  width: #{$val}px;
+  height: #{$val}px;
 }

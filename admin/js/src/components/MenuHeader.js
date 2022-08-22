@@ -4,13 +4,15 @@ import withStore from "$HOC/withStore";
 import { getLogo } from "$Stores/settings-menu/slices/assets";
 import { toggleShowBlockInfo, getBlockInfoShowStatus } from "$Stores/settings-menu/slices/app";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import RightContainerItem from "$Components/RightContainerItem";
+import VersionControl from "$Components/VersionControl";
 
 /**
  * Settings menu header element.
  *
  * @param {Object} props component properties
  * @param {String} props.logoUrl plugin logo url, will be supplied via HOC
- * @param {Function} props.toggleShowInfo toggle showing block controls info, will be supplied via HOC
+ * @param {Function} props.toggleShowInfoStatus toggle showing block controls info, will be supplied via HOC
  * @param {Boolean} props.blockInfoShowStatus status of showing extra block information, will be supplied via HOC
  * @returns {JSX.Element} component
  * @constructor
@@ -22,10 +24,15 @@ function MenuHeader( { logoUrl, toggleShowInfoStatus, blockInfoShowStatus } ) {
 				<img alt={ 'plugin logo' } src={ logoUrl } />
 			</div>
 			<div className={ 'right-container' }>
-				{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */ }
-				<div onClick={ toggleShowInfoStatus } className={ 'blog-info-toggle' } data-light-it-up={ JSON.stringify( ! blockInfoShowStatus ) }>
-					<FontAwesomeIcon icon="fa-solid fa-lightbulb" />
-				</div>
+				<RightContainerItem>
+					<VersionControl />
+				</RightContainerItem>
+				<RightContainerItem>
+					{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */ }
+					<div onClick={ toggleShowInfoStatus } className={ 'blog-info-toggle' } data-light-it-up={ JSON.stringify( ! blockInfoShowStatus ) }>
+						<FontAwesomeIcon icon="fa-solid fa-lightbulb" />
+					</div>
+				</RightContainerItem>
 			</div>
 		</div>
 	);
