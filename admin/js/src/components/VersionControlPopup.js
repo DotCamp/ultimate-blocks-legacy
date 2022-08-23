@@ -21,8 +21,28 @@ function VersionControlPopup( { from, to, onCloseHandler, onOperationStart, relo
 		FINISHED: 'finished',
 	};
 
+	const RESPONSE_TYPES = {
+		OK: 'ok',
+		ERROR: 'error',
+	};
+
+	/**
+	 * Generate response object.
+	 * @param {String} message message
+	 * @param {String} [type='ok'] response type.
+	 * @return {Object} response object
+	 */
+	const generateResponseObject = ( message, type = RESPONSE_TYPES.OK ) => {
+		return {
+			type,
+			message,
+		};
+	};
+
 	const [ operationStatus, setOperationStatus ] = useState( OPERATION_STATUS_TYPES.NOT_STARTED );
 	const [ reloadCountdown, setReloadCountdown ] = useState( reloadDelay / 1000 );
+
+	const [ responseObject, setResponseObject ] = useState( generateResponseObject( '' ) );
 
 	const isDowngrade = from > to;
 
@@ -33,18 +53,20 @@ function VersionControlPopup( { from, to, onCloseHandler, onOperationStart, relo
 	 */
 	const startOperation = () => {
 		setOperationStatus( OPERATION_STATUS_TYPES.STARTED );
-		onOperationStart().then( ( { status } ) => {
+		onOperationStart().then( ( { message } ) => {
+			setResponseObject( generateResponseObject( message, RESPONSE_TYPES.OK ) );
+		} ).catch( ( { message } )=> {
+			setResponseObject( generateResponseObject( message, RESPONSE_TYPES.ERROR ) );
+		} ).finally( () => {
 			setOperationStatus( OPERATION_STATUS_TYPES.FINISHED );
-			if ( status === 'OK' ) {
-				reloadPage();
-			}
+			reloadPage();
 		} );
 	};
 
 	/**
 	 * Reload page after a designated amount of time.
 	 */
-	const reloadPage = () =>{
+	const reloadPage = () => {
 		const reloadIntervalId = setInterval( () => {
 			if ( countdownToReload.current <= 0 ) {
 				window.location.reload();
@@ -60,8 +82,7 @@ function VersionControlPopup( { from, to, onCloseHandler, onOperationStart, relo
 		<div className={ 'modal-container' }>
 			<div className={ 'rollback-versions' }>
 				<div className={ `version-id ${ isDowngrade ? 'ub-positive-color' : 'ub-negative-color' }` }>{ from }</div>
-				<div className={ 'version-icon' }
-					 data-in-progress={ JSON.stringify( operationStatus === OPERATION_STATUS_TYPES.STARTED ) }>
+				<div className={ 'version-icon' } data-in-progress={ JSON.stringify( operationStatus === OPERATION_STATUS_TYPES.STARTED ) }>
 					<div className={ 'version-icon-inner-wrapper' }>
 						<FontAwesomeIcon icon="fa-solid fa-right-long" />
 					</div>
@@ -90,8 +111,8 @@ function VersionControlPopup( { from, to, onCloseHandler, onOperationStart, relo
 						{
 							operationStatus === OPERATION_STATUS_TYPES.FINISHED && (
 								<div className={ 'operation-finished-wrapper' }>
-									<div>{
-										__( 'Operation successful.', 'ultimate-blocks' )
+									<div className={ 'version-control-response' } data-resp-type={ responseObject.type }>{
+										responseObject.message
 									}</div>
 									<div>{
 										reloadCountdown <= 0 ? (

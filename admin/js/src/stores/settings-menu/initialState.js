@@ -12,6 +12,8 @@ const initialState = {
 	versionControl: {
 		currentVersion: '1.0.0',
 		versions: {},
+		ajax: {
+		},
 	},
 };
 

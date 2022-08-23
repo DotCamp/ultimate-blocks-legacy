@@ -29620,7 +29620,8 @@ var _BlockStatusFilterControl = require("$Components/BlockStatusFilterControl");
     },
     versionControl: {
         currentVersion: "1.0.0",
-        versions: {}
+        versions: {},
+        ajax: {}
     }
 };
 /**
@@ -33096,6 +33097,7 @@ var _versionControl = require("$Stores/settings-menu/slices/versionControl");
 var _withStore = _interopRequireDefault(require("$HOC/withStore"));
 var _VersionControlPopup = _interopRequireDefault(require("$Components/VersionControlPopup"));
 var _Portal = _interopRequireDefault(require("$Components/Portal"));
+var _actions = require("$Stores/settings-menu/actions");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -33177,13 +33179,14 @@ function _arrayWithHoles(arr) {
  * Version control component.
  *
  * @param {Object} props component properties
- * @param {String} props.pluginVersion plugin version
- * @param {Object} props.allVersions available versions
+ * @param {String} props.pluginVersion plugin version, will be supplied via HOC
+ * @param {Object} props.allVersions available versions, will be supplied via HOC
+ * @param {Function} props.dispatch store dispatch function, will be supplied via HOC
  * @constructor
  */ function VersionControl(_ref) {
-    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions;
+    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
     var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1]; // TODO [ErdemBircan] change to pluginVersion for production
-    var _useState3 = (0, _react.useState)("2.5.1"), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
+    var _useState3 = (0, _react.useState)("2.4.8"), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
     var _useState5 = (0, _react.useState)(true), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
     /**
    * Calculate button disabled status.
@@ -33198,13 +33201,7 @@ function _arrayWithHoles(arr) {
    *
    * @return {Promise} operation promise object
    */ var startVersionOperation = function startVersionOperation() {
-        return new Promise(function(res, rej) {
-            setTimeout(function() {
-                res({
-                    status: "OK"
-                });
-            }, 2000);
-        });
+        return dispatch(_actions.rollbackToVersion)(selectedVersion);
     };
     (0, _react.useEffect)(function() {
         var levelBorder = versionsLength / 2;
@@ -33265,12 +33262,12 @@ function _arrayWithHoles(arr) {
  */ var _default = (0, _withStore["default"])(VersionControl, selectionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/versionControl":"6jcRk","$Components/VersionControlPopup":"k3f3V","$Components/Portal":"hOoRN"}],"6jcRk":[function(require,module,exports) {
+},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/versionControl":"6jcRk","$Components/VersionControlPopup":"k3f3V","$Components/Portal":"hOoRN","$Stores/settings-menu/actions":"g3gW2"}],"6jcRk":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.versions = exports["default"] = exports.currentVersion = void 0;
+exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
 var _initialState = _interopRequireDefault(require("$Stores/settings-menu/initialState"));
 var _toolkit = require("@reduxjs/toolkit");
 function _interopRequireDefault(obj) {
@@ -33303,8 +33300,16 @@ var versions = function versions(state) {
     return state.versionControl.versions;
 };
 /**
- * @module versionControlSlice
+ * Get ajax operations info.
+ * @param {Object} state store state
+ * @return {Object} ajax info
  */ exports.versions = versions;
+var ajaxInfo = function ajaxInfo(state) {
+    return state.versionControl.ajax;
+};
+/**
+ * @module versionControlSlice
+ */ exports.ajaxInfo = ajaxInfo;
 var _default = versionControlSlice.reducer;
 exports["default"] = _default;
 
@@ -33414,8 +33419,25 @@ function _arrayWithHoles(arr) {
         STARTED: "started",
         FINISHED: "finished"
     };
+    var RESPONSE_TYPES = {
+        OK: "ok",
+        ERROR: "error"
+    };
+    /**
+   * Generate response object.
+   * @param {String} message message
+   * @param {String} [type='ok'] response type.
+   * @return {Object} response object
+   */ var generateResponseObject = function generateResponseObject(message) {
+        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RESPONSE_TYPES.OK;
+        return {
+            type: type,
+            message: message
+        };
+    };
     var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
     var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
+    var _useState5 = (0, _react.useState)(generateResponseObject("")), _useState6 = _slicedToArray(_useState5, 2), responseObject = _useState6[0], setResponseObject = _useState6[1];
     var isDowngrade = from > to;
     var countdownToReload = (0, _react.useRef)(reloadDelay);
     /**
@@ -33423,9 +33445,14 @@ function _arrayWithHoles(arr) {
    */ var startOperation = function startOperation() {
         setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
         onOperationStart().then(function(_ref2) {
-            var status = _ref2.status;
+            var message = _ref2.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.OK));
+        })["catch"](function(_ref3) {
+            var message = _ref3.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.ERROR));
+        })["finally"](function() {
             setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
-            if (status === "OK") reloadPage();
+            reloadPage();
         });
     };
     /**
@@ -33475,7 +33502,10 @@ function _arrayWithHoles(arr) {
         title: "Close"
     }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
         className: "operation-finished-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Operation successful.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now...", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-response",
+        "data-resp-type": responseObject.type
+    }, responseObject.message), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now...", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
 }
 /**
  * @module VersionControlPopup
@@ -34954,7 +34984,62 @@ function _interopRequireDefault(obj) {
  */ var _default = Portal;
 exports["default"] = _default;
 
-},{"react":"21dqq","react-dom":"j6uA9"}],"inddj":[function(require,module,exports) {
+},{"react":"21dqq","react-dom":"j6uA9"}],"g3gW2":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleBlockStatus = exports.rollbackToVersion = void 0;
+var _assets = require("$Stores/settings-menu/slices/assets");
+var _versionControl = require("$Stores/settings-menu/slices/versionControl");
+var _i18n = require("@wordpress/i18n");
+/**
+ * Toggle block status.
+ * @param {Function} dispatch store action dispatch function
+ * @param {Function} getState store state selection function
+ * @return {Function} action function
+ */ var toggleBlockStatus = function toggleBlockStatus(dispatch, getState) {
+    return function(blockId, status) {
+        var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfo = _getAjaxInfo.toggleStatus;
+        var url = ajaxInfo.url, action = ajaxInfo.action, nonce = ajaxInfo.nonce;
+        var formData = new FormData();
+        formData.append("block_name", blockId);
+        formData.append("enable", JSON.stringify(status));
+        formData.append("action", action);
+        formData.append("_wpnonce", nonce);
+        fetch(url, {
+            method: "POST",
+            body: formData
+        });
+    };
+};
+/**
+ * Rollback plugin version.
+ * @param {Function} dispatch store action dispatch function
+ * @param {Function} getState store state selection function
+ * @return {Function} action function
+ */ exports.toggleBlockStatus = toggleBlockStatus;
+var rollbackToVersion = function rollbackToVersion(dispatch, getState) {
+    return function(version) {
+        var _ajaxInfo$versionRoll = (0, _versionControl.ajaxInfo)(getState()).versionRollback, url = _ajaxInfo$versionRoll.url, action = _ajaxInfo$versionRoll.action, nonce = _ajaxInfo$versionRoll.nonce;
+        var formData = new FormData();
+        formData.append("action", action);
+        formData.append("nonce", nonce);
+        formData.append("version", version);
+        return fetch(url, {
+            method: "POST",
+            body: formData
+        }).then(function(resp) {
+            return resp.json();
+        }).then(function(data) {
+            if (data.error) throw new Error(data.error);
+            return data;
+        });
+    };
+};
+exports.rollbackToVersion = rollbackToVersion;
+
+},{"$Stores/settings-menu/slices/assets":"9SnHn","$Stores/settings-menu/slices/versionControl":"6jcRk","@wordpress/i18n":"7CyoE"}],"inddj":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -40482,31 +40567,7 @@ function Inspector(props) {
     })));
 }
 
-},{"prop-types":"7wKI2","react":"21dqq"}],"g3gW2":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.toggleBlockStatus = void 0;
-var _assets = require("$Stores/settings-menu/slices/assets");
-var toggleBlockStatus = function toggleBlockStatus(dispatch, getState) {
-    return function(blockId, status) {
-        var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfo = _getAjaxInfo.toggleStatus;
-        var url = ajaxInfo.url, action = ajaxInfo.action, nonce = ajaxInfo.nonce;
-        var formData = new FormData();
-        formData.append("block_name", blockId);
-        formData.append("enable", JSON.stringify(status));
-        formData.append("action", action);
-        formData.append("_wpnonce", nonce);
-        fetch(url, {
-            method: "POST",
-            body: formData
-        });
-    };
-};
-exports.toggleBlockStatus = toggleBlockStatus;
-
-},{"$Stores/settings-menu/slices/assets":"9SnHn"}],"azTGO":[function(require,module,exports) {
+},{"prop-types":"7wKI2","react":"21dqq"}],"azTGO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

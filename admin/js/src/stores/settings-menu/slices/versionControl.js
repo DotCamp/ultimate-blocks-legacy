@@ -32,6 +32,15 @@ export const versions = ( state ) => {
 };
 
 /**
+ * Get ajax operations info.
+ * @param {Object} state store state
+ * @return {Object} ajax info
+ */
+export const ajaxInfo = ( state ) => {
+	return state.versionControl.ajax;
+};
+
+/**
  * @module versionControlSlice
  */
 export default versionControlSlice.reducer;

@@ -410,6 +410,19 @@
 		}
 	  }
 
+	  .operation-finished-wrapper {
+		.version-control-response {
+		  font-weight: bold;
+		  color: $positive;
+
+		  &[data-resp-type='error'] {
+			@extend .ub-negative-color;
+		  }
+
+		}
+
+	  }
+
 	  .version-warning {
 		@extend %flex-center-all;
 		flex-direction: column;

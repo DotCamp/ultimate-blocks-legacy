@@ -47,7 +47,7 @@
   color: #22c55e;
 }
 
-.ub-negative-color {
+.ub-negative-color, .version-control-popup .modal-container .version-content .operation-finished-wrapper .version-control-response[data-resp-type="error"] {
   color: #f63d3d;
 }
 
@@ -402,6 +402,11 @@
 
 .version-control-popup .modal-container .version-content > div, .version-control-popup .modal-container .version-content > div > div:not(div:first-child) {
   margin-top: 20px;
+}
+
+.version-control-popup .modal-container .version-content .operation-finished-wrapper .version-control-response {
+  color: #22c55e;
+  font-weight: bold;
 }
 
 .version-control-popup .modal-container .version-content .version-warning {

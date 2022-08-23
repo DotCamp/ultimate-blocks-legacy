@@ -1,23 +1,25 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { currentVersion, versions } from "$Stores/settings-menu/slices/versionControl";
+import { currentVersion, versions, ajaxInfo } from "$Stores/settings-menu/slices/versionControl";
 import withStore from "$HOC/withStore";
 import VersionControlPopup from "$Components/VersionControlPopup";
 import Portal from "$Components/Portal";
+import { rollbackToVersion } from "$Stores/settings-menu/actions";
 
 /**
  * Version control component.
  *
  * @param {Object} props component properties
- * @param {String} props.pluginVersion plugin version
- * @param {Object} props.allVersions available versions
+ * @param {String} props.pluginVersion plugin version, will be supplied via HOC
+ * @param {Object} props.allVersions available versions, will be supplied via HOC
+ * @param {Function} props.dispatch store dispatch function, will be supplied via HOC
  * @constructor
  */
-function VersionControl( { pluginVersion, allVersions } ) {
+function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 	const [ versionLevel, setVersionLevel ] = useState( 'none' );
 	// TODO [ErdemBircan] change to pluginVersion for production
-	const [ selectedVersion, setSelectedVersion ] = useState( '2.5.1' );
+	const [ selectedVersion, setSelectedVersion ] = useState( '2.4.8' );
 	const [ popupVisibility, setPopupVisibility ] = useState( true );
 
 	/**
@@ -37,13 +39,7 @@ function VersionControl( { pluginVersion, allVersions } ) {
 	 * @return {Promise} operation promise object
 	 */
 	const startVersionOperation = () => {
-		return new Promise( ( res, rej ) => {
-			setTimeout( () => {
-				res( {
-					status: 'OK',
-				} );
-			}, 2000 );
-		} );
+		return dispatch( rollbackToVersion )( selectedVersion );
 	};
 
 	useEffect( () => {
