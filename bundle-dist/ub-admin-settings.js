@@ -33094,6 +33094,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactFontawesome = require("@fortawesome/react-fontawesome");
 var _versionControl = require("$Stores/settings-menu/slices/versionControl");
 var _withStore = _interopRequireDefault(require("$HOC/withStore"));
+var _VersionControlPopup = _interopRequireDefault(require("$Components/VersionControlPopup"));
+var _Portal = _interopRequireDefault(require("$Components/Portal"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -33180,8 +33182,9 @@ function _arrayWithHoles(arr) {
  * @constructor
  */ function VersionControl(_ref) {
     var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions;
-    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
-    var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
+    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1]; // TODO [ErdemBircan] change to pluginVersion for production
+    var _useState3 = (0, _react.useState)("2.5.1"), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
+    var _useState5 = (0, _react.useState)(true), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
     /**
    * Calculate button disabled status.
    * @return {boolean} disabled status
@@ -33190,6 +33193,19 @@ function _arrayWithHoles(arr) {
     };
     var sortedVersions = Object.keys(allVersions).sort().reverse();
     var versionsLength = sortedVersions.length;
+    /**
+   * Start version operation.
+   *
+   * @return {Promise} operation promise object
+   */ var startVersionOperation = function startVersionOperation() {
+        return new Promise(function(res, rej) {
+            setTimeout(function() {
+                res({
+                    status: "OK"
+                });
+            }, 2000);
+        });
+    };
     (0, _react.useEffect)(function() {
         var levelBorder = versionsLength / 2;
         var versionIndex = sortedVersions.indexOf(pluginVersion); // eslint-disable-next-line no-nested-ternary
@@ -33204,8 +33220,6 @@ function _arrayWithHoles(arr) {
         "data-level": versionLevel,
         className: "version-control-status-indicator"
     }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-text"
-    }, "Version:"), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "version-control-list"
     }, /*#__PURE__*/ _react["default"].createElement("select", {
         value: selectedVersion,
@@ -33218,10 +33232,22 @@ function _arrayWithHoles(arr) {
             value: versionId
         }, versionId);
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        onClick: function onClick() {
+            return setPopupVisibility(true);
+        },
         className: "version-control-button",
         "data-disabled": JSON.stringify(buttonDisabledStatus())
     }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: "fa-solid fa-circle-chevron-left"
+    })), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
+        target: document.body
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
+        onCloseHandler: function onCloseHandler() {
+            return setPopupVisibility(false);
+        },
+        from: pluginVersion,
+        to: selectedVersion,
+        onOperationStart: startVersionOperation
     })));
 }
 /**
@@ -33239,7 +33265,7 @@ function _arrayWithHoles(arr) {
  */ var _default = (0, _withStore["default"])(VersionControl, selectionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/versionControl":"6jcRk"}],"6jcRk":[function(require,module,exports) {
+},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/versionControl":"6jcRk","$Components/VersionControlPopup":"k3f3V","$Components/Portal":"hOoRN"}],"6jcRk":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -33282,7 +33308,1653 @@ var versions = function versions(state) {
 var _default = versionControlSlice.reducer;
 exports["default"] = _default;
 
-},{"$Stores/settings-menu/initialState":"3xPpL","@reduxjs/toolkit":"lL1Ef"}],"inddj":[function(require,module,exports) {
+},{"$Stores/settings-menu/initialState":"3xPpL","@reduxjs/toolkit":"lL1Ef"}],"k3f3V":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("react"));
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+var _i18n = require("@wordpress/i18n");
+var _MenuButton = _interopRequireWildcard(require("$Components/MenuButton"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Version control popup component.
+ * @param {Object} props component properties
+ * @param {String} props.from current version
+ * @param {String} props.to version to rollback
+ * @param {Function} props.onCloseHandler close popup callback
+ * @param {Function} props.onOperationStart operation start callback
+ * @param {Number} props.reloadDelay automatic page reload delay in milliseconds
+ * @constructor
+ */ function VersionControlPopup(_ref) {
+    var from = _ref.from, to = _ref.to, onCloseHandler = _ref.onCloseHandler, onOperationStart = _ref.onOperationStart, _ref$reloadDelay = _ref.reloadDelay, reloadDelay = _ref$reloadDelay === void 0 ? 5000 : _ref$reloadDelay;
+    var OPERATION_STATUS_TYPES = {
+        NOT_STARTED: "notStarted",
+        STARTED: "started",
+        FINISHED: "finished"
+    };
+    var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
+    var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
+    var isDowngrade = from > to;
+    var countdownToReload = (0, _react.useRef)(reloadDelay);
+    /**
+   * Start rollback operation.
+   */ var startOperation = function startOperation() {
+        setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
+        onOperationStart().then(function(_ref2) {
+            var status = _ref2.status;
+            setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
+            if (status === "OK") reloadPage();
+        });
+    };
+    /**
+   * Reload page after a designated amount of time.
+   */ var reloadPage = function reloadPage() {
+        var reloadIntervalId = setInterval(function() {
+            if (countdownToReload.current <= 0) {
+                window.location.reload();
+                clearInterval(reloadIntervalId);
+            } else {
+                countdownToReload.current = countdownToReload.current - 1000;
+                setReloadCountdown(countdownToReload.current / 1000);
+            }
+        }, 1000);
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-popup"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "modal-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "rollback-versions"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-positive-color" : "ub-negative-color")
+    }, from), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon",
+        "data-in-progress": JSON.stringify(operationStatus === OPERATION_STATUS_TYPES.STARTED)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon-inner-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-right-long"
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-negative-color" : "ub-positive-color")
+    }, to)), operationStatus !== OPERATION_STATUS_TYPES.STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-content"
+    }, operationStatus === OPERATION_STATUS_TYPES.NOT_STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-warning"
+    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Older versions might be unstable. Do it on your own risk and create a backup.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-rollback-button-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        type: _MenuButton.BUTTON_TYPES.POSITIVE,
+        onClickHandler: startOperation,
+        status: true,
+        title: "Start"
+    }), /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        onClickHandler: onCloseHandler,
+        status: true,
+        title: "Close"
+    }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "operation-finished-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Operation successful.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now...", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
+}
+/**
+ * @module VersionControlPopup
+ */ var _default = VersionControlPopup;
+exports["default"] = _default;
+
+},{"react":"21dqq","@fortawesome/react-fontawesome":"clIT3","@wordpress/i18n":"7CyoE","$Components/MenuButton":"cbTU3"}],"7CyoE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "sprintf", ()=>(0, _sprintf.sprintf));
+parcelHelpers.export(exports, "defaultI18n", ()=>(0, _defaultI18NDefault.default));
+parcelHelpers.export(exports, "setLocaleData", ()=>(0, _defaultI18N.setLocaleData));
+parcelHelpers.export(exports, "resetLocaleData", ()=>(0, _defaultI18N.resetLocaleData));
+parcelHelpers.export(exports, "getLocaleData", ()=>(0, _defaultI18N.getLocaleData));
+parcelHelpers.export(exports, "subscribe", ()=>(0, _defaultI18N.subscribe));
+parcelHelpers.export(exports, "__", ()=>(0, _defaultI18N.__));
+parcelHelpers.export(exports, "_x", ()=>(0, _defaultI18N._x));
+parcelHelpers.export(exports, "_n", ()=>(0, _defaultI18N._n));
+parcelHelpers.export(exports, "_nx", ()=>(0, _defaultI18N._nx));
+parcelHelpers.export(exports, "isRTL", ()=>(0, _defaultI18N.isRTL));
+parcelHelpers.export(exports, "hasTranslation", ()=>(0, _defaultI18N.hasTranslation));
+var _sprintf = require("./sprintf");
+var _createI18N = require("./create-i18n");
+parcelHelpers.exportAll(_createI18N, exports);
+var _defaultI18N = require("./default-i18n");
+var _defaultI18NDefault = parcelHelpers.interopDefault(_defaultI18N);
+
+},{"./sprintf":"jSK0R","./create-i18n":"2IrAM","./default-i18n":"eKzAG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jSK0R":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Returns a formatted string. If an error occurs in applying the format, the
+ * original format string is returned.
+ *
+ * @param {string} format The format of the string to generate.
+ * @param {...*}   args   Arguments to apply to the format.
+ *
+ * @see https://www.npmjs.com/package/sprintf-js
+ *
+ * @return {string} The formatted string.
+ */ parcelHelpers.export(exports, "sprintf", ()=>sprintf);
+/**
+ * External dependencies
+ */ var _memize = require("memize");
+var _memizeDefault = parcelHelpers.interopDefault(_memize);
+var _sprintfJs = require("sprintf-js");
+var _sprintfJsDefault = parcelHelpers.interopDefault(_sprintfJs);
+/**
+ * Log to console, once per message; or more precisely, per referentially equal
+ * argument set. Because Jed throws errors, we log these to the console instead
+ * to avoid crashing the application.
+ *
+ * @param {...*} args Arguments to pass to `console.error`
+ */ const logErrorOnce = (0, _memizeDefault.default)(console.error); // eslint-disable-line no-console
+function sprintf(format) {
+    try {
+        for(var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++)args[_key - 1] = arguments[_key];
+        return (0, _sprintfJsDefault.default).sprintf(format, ...args);
+    } catch (error) {
+        if (error instanceof Error) logErrorOnce("sprintf error: \n\n" + error.toString());
+        return format;
+    }
+}
+
+},{"memize":"fLBL9","sprintf-js":"jU5aA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fLBL9":[function(require,module,exports) {
+/**
+ * Memize options object.
+ *
+ * @typedef MemizeOptions
+ *
+ * @property {number} [maxSize] Maximum size of the cache.
+ */ /**
+ * Internal cache entry.
+ *
+ * @typedef MemizeCacheNode
+ *
+ * @property {?MemizeCacheNode|undefined} [prev] Previous node.
+ * @property {?MemizeCacheNode|undefined} [next] Next node.
+ * @property {Array<*>}                   args   Function arguments for cache
+ *                                               entry.
+ * @property {*}                          val    Function result.
+ */ /**
+ * Properties of the enhanced function for controlling cache.
+ *
+ * @typedef MemizeMemoizedFunction
+ *
+ * @property {()=>void} clear Clear the cache.
+ */ /**
+ * Accepts a function to be memoized, and returns a new memoized function, with
+ * optional options.
+ *
+ * @template {Function} F
+ *
+ * @param {F}             fn        Function to memoize.
+ * @param {MemizeOptions} [options] Options object.
+ *
+ * @return {F & MemizeMemoizedFunction} Memoized function.
+ */ function memize(fn, options) {
+    var size = 0;
+    /** @type {?MemizeCacheNode|undefined} */ var head;
+    /** @type {?MemizeCacheNode|undefined} */ var tail;
+    options = options || {};
+    function memoized() {
+        var node = head, len = arguments.length, args, i;
+        searchCache: while(node){
+            // Perform a shallow equality test to confirm that whether the node
+            // under test is a candidate for the arguments passed. Two arrays
+            // are shallowly equal if their length matches and each entry is
+            // strictly equal between the two sets. Avoid abstracting to a
+            // function which could incur an arguments leaking deoptimization.
+            // Check whether node arguments match arguments length
+            if (node.args.length !== arguments.length) {
+                node = node.next;
+                continue;
+            }
+            // Check whether node arguments match arguments values
+            for(i = 0; i < len; i++)if (node.args[i] !== arguments[i]) {
+                node = node.next;
+                continue searchCache;
+            }
+            // At this point we can assume we've found a match
+            // Surface matched node to head if not already
+            if (node !== head) {
+                // As tail, shift to previous. Must only shift if not also
+                // head, since if both head and tail, there is no previous.
+                if (node === tail) tail = node.prev;
+                // Adjust siblings to point to each other. If node was tail,
+                // this also handles new tail's empty `next` assignment.
+                /** @type {MemizeCacheNode} */ node.prev.next = node.next;
+                if (node.next) node.next.prev = node.prev;
+                node.next = head;
+                node.prev = null;
+                /** @type {MemizeCacheNode} */ head.prev = node;
+                head = node;
+            }
+            // Return immediately
+            return node.val;
+        }
+        // No cached value found. Continue to insertion phase:
+        // Create a copy of arguments (avoid leaking deoptimization)
+        args = new Array(len);
+        for(i = 0; i < len; i++)args[i] = arguments[i];
+        node = {
+            args: args,
+            // Generate the result from original function
+            val: fn.apply(null, args)
+        };
+        // Don't need to check whether node is already head, since it would
+        // have been returned above already if it was
+        // Shift existing head down list
+        if (head) {
+            head.prev = node;
+            node.next = head;
+        } else // If no head, follows that there's no tail (at initial or reset)
+        tail = node;
+        // Trim tail if we're reached max size and are pending cache insertion
+        if (size === /** @type {MemizeOptions} */ options.maxSize) {
+            tail = /** @type {MemizeCacheNode} */ tail.prev;
+            /** @type {MemizeCacheNode} */ tail.next = null;
+        } else size++;
+        head = node;
+        return node.val;
+    }
+    memoized.clear = function() {
+        head = null;
+        tail = null;
+        size = 0;
+    };
+    // Ignore reason: There's not a clear solution to create an intersection of
+    // the function with additional properties, where the goal is to retain the
+    // function signature of the incoming argument and add control properties
+    // on the return value.
+    // @ts-ignore
+    return memoized;
+}
+module.exports = memize;
+
+},{}],"jU5aA":[function(require,module,exports) {
+/* global window, exports, define */ !function() {
+    "use strict";
+    var re = {
+        not_string: /[^s]/,
+        not_bool: /[^t]/,
+        not_type: /[^T]/,
+        not_primitive: /[^v]/,
+        number: /[diefg]/,
+        numeric_arg: /[bcdiefguxX]/,
+        json: /[j]/,
+        not_json: /[^j]/,
+        text: /^[^\x25]+/,
+        modulo: /^\x25{2}/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        key: /^([a-z_][a-z_\d]*)/i,
+        key_access: /^\.([a-z_][a-z_\d]*)/i,
+        index_access: /^\[(\d+)\]/,
+        sign: /^[+-]/
+    };
+    function sprintf(key) {
+        // `arguments` is not an array, but should be fine for this call
+        return sprintf_format(sprintf_parse(key), arguments);
+    }
+    function vsprintf(fmt, argv) {
+        return sprintf.apply(null, [
+            fmt
+        ].concat(argv || []));
+    }
+    function sprintf_format(parse_tree, argv) {
+        var cursor = 1, tree_length = parse_tree.length, arg, output = "", i, k, ph, pad, pad_character, pad_length, is_positive, sign;
+        for(i = 0; i < tree_length; i++){
+            if (typeof parse_tree[i] === "string") output += parse_tree[i];
+            else if (typeof parse_tree[i] === "object") {
+                ph = parse_tree[i] // convenience purposes only
+                ;
+                if (ph.keys) {
+                    arg = argv[cursor];
+                    for(k = 0; k < ph.keys.length; k++){
+                        if (arg == undefined) throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k - 1]));
+                        arg = arg[ph.keys[k]];
+                    }
+                } else if (ph.param_no) arg = argv[ph.param_no];
+                else arg = argv[cursor++];
+                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) arg = arg();
+                if (re.numeric_arg.test(ph.type) && typeof arg !== "number" && isNaN(arg)) throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg));
+                if (re.number.test(ph.type)) is_positive = arg >= 0;
+                switch(ph.type){
+                    case "b":
+                        arg = parseInt(arg, 10).toString(2);
+                        break;
+                    case "c":
+                        arg = String.fromCharCode(parseInt(arg, 10));
+                        break;
+                    case "d":
+                    case "i":
+                        arg = parseInt(arg, 10);
+                        break;
+                    case "j":
+                        arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0);
+                        break;
+                    case "e":
+                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential();
+                        break;
+                    case "f":
+                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg);
+                        break;
+                    case "g":
+                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg);
+                        break;
+                    case "o":
+                        arg = (parseInt(arg, 10) >>> 0).toString(8);
+                        break;
+                    case "s":
+                        arg = String(arg);
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "t":
+                        arg = String(!!arg);
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "T":
+                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "u":
+                        arg = parseInt(arg, 10) >>> 0;
+                        break;
+                    case "v":
+                        arg = arg.valueOf();
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "x":
+                        arg = (parseInt(arg, 10) >>> 0).toString(16);
+                        break;
+                    case "X":
+                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase();
+                        break;
+                }
+                if (re.json.test(ph.type)) output += arg;
+                else {
+                    if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
+                        sign = is_positive ? "+" : "-";
+                        arg = arg.toString().replace(re.sign, "");
+                    } else sign = "";
+                    pad_character = ph.pad_char ? ph.pad_char === "0" ? "0" : ph.pad_char.charAt(1) : " ";
+                    pad_length = ph.width - (sign + arg).length;
+                    pad = ph.width ? pad_length > 0 ? pad_character.repeat(pad_length) : "" : "";
+                    output += ph.align ? sign + arg + pad : pad_character === "0" ? sign + pad + arg : pad + sign + arg;
+                }
+            }
+        }
+        return output;
+    }
+    var sprintf_cache = Object.create(null);
+    function sprintf_parse(fmt) {
+        if (sprintf_cache[fmt]) return sprintf_cache[fmt];
+        var _fmt = fmt, match, parse_tree = [], arg_names = 0;
+        while(_fmt){
+            if ((match = re.text.exec(_fmt)) !== null) parse_tree.push(match[0]);
+            else if ((match = re.modulo.exec(_fmt)) !== null) parse_tree.push("%");
+            else if ((match = re.placeholder.exec(_fmt)) !== null) {
+                if (match[2]) {
+                    arg_names |= 1;
+                    var field_list = [], replacement_field = match[2], field_match = [];
+                    if ((field_match = re.key.exec(replacement_field)) !== null) {
+                        field_list.push(field_match[1]);
+                        while((replacement_field = replacement_field.substring(field_match[0].length)) !== ""){
+                            if ((field_match = re.key_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
+                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
+                            else throw new SyntaxError("[sprintf] failed to parse named argument key");
+                        }
+                    } else throw new SyntaxError("[sprintf] failed to parse named argument key");
+                    match[2] = field_list;
+                } else arg_names |= 2;
+                if (arg_names === 3) throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");
+                parse_tree.push({
+                    placeholder: match[0],
+                    param_no: match[1],
+                    keys: match[2],
+                    sign: match[3],
+                    pad_char: match[4],
+                    align: match[5],
+                    width: match[6],
+                    precision: match[7],
+                    type: match[8]
+                });
+            } else throw new SyntaxError("[sprintf] unexpected placeholder");
+            _fmt = _fmt.substring(match[0].length);
+        }
+        return sprintf_cache[fmt] = parse_tree;
+    }
+    exports["sprintf"] = sprintf;
+    exports["vsprintf"] = vsprintf;
+    if (typeof window !== "undefined") {
+        window["sprintf"] = sprintf;
+        window["vsprintf"] = vsprintf;
+        if (typeof define === "function" && define["amd"]) define(function() {
+            return {
+                "sprintf": sprintf,
+                "vsprintf": vsprintf
+            };
+        });
+    }
+/* eslint-enable quote-props */ }(); // eslint-disable-line
+
+},{}],"2IrAM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createI18n", ()=>createI18n);
+/**
+ * External dependencies
+ */ var _tannin = require("tannin");
+var _tanninDefault = parcelHelpers.interopDefault(_tannin);
+/**
+ * @typedef {Record<string,any>} LocaleData
+ */ /**
+ * Default locale data to use for Tannin domain when not otherwise provided.
+ * Assumes an English plural forms expression.
+ *
+ * @type {LocaleData}
+ */ const DEFAULT_LOCALE_DATA = {
+    "": {
+        /** @param {number} n */ plural_forms (n) {
+            return n === 1 ? 0 : 1;
+        }
+    }
+};
+/*
+ * Regular expression that matches i18n hooks like `i18n.gettext`, `i18n.ngettext`,
+ * `i18n.gettext_domain` or `i18n.ngettext_with_context` or `i18n.has_translation`.
+ */ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
+const createI18n = (initialData, initialDomain, hooks)=>{
+    /**
+   * The underlying instance of Tannin to which exported functions interface.
+   *
+   * @type {Tannin}
+   */ const tannin = new (0, _tanninDefault.default)({});
+    const listeners = new Set();
+    const notifyListeners = ()=>{
+        listeners.forEach((listener)=>listener());
+    };
+    /**
+   * Subscribe to changes of locale data.
+   *
+   * @param {SubscribeCallback} callback Subscription callback.
+   * @return {UnsubscribeCallback} Unsubscribe callback.
+   */ const subscribe = (callback)=>{
+        listeners.add(callback);
+        return ()=>listeners.delete(callback);
+    };
+    /** @type {GetLocaleData} */ const getLocaleData = function() {
+        let domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "default";
+        return tannin.data[domain];
+    };
+    /**
+   * @param {LocaleData} [data]
+   * @param {string}     [domain]
+   */ const doSetLocaleData = function(data) {
+        var _tannin$data$domain;
+        let domain = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "default";
+        tannin.data[domain] = {
+            ...tannin.data[domain],
+            ...data
+        }; // Populate default domain configuration (supported locale date which omits
+        // a plural forms expression).
+        tannin.data[domain][""] = {
+            ...DEFAULT_LOCALE_DATA[""],
+            ...(_tannin$data$domain = tannin.data[domain]) === null || _tannin$data$domain === void 0 ? void 0 : _tannin$data$domain[""]
+        }; // Clean up cached plural forms functions cache as it might be updated.
+        delete tannin.pluralForms[domain];
+    };
+    /** @type {SetLocaleData} */ const setLocaleData = (data, domain)=>{
+        doSetLocaleData(data, domain);
+        notifyListeners();
+    };
+    /** @type {AddLocaleData} */ const addLocaleData = function(data) {
+        var _tannin$data$domain2;
+        let domain = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "default";
+        tannin.data[domain] = {
+            ...tannin.data[domain],
+            ...data,
+            // Populate default domain configuration (supported locale date which omits
+            // a plural forms expression).
+            "": {
+                ...DEFAULT_LOCALE_DATA[""],
+                ...(_tannin$data$domain2 = tannin.data[domain]) === null || _tannin$data$domain2 === void 0 ? void 0 : _tannin$data$domain2[""],
+                ...data === null || data === void 0 ? void 0 : data[""]
+            }
+        }; // Clean up cached plural forms functions cache as it might be updated.
+        delete tannin.pluralForms[domain];
+        notifyListeners();
+    };
+    /** @type {ResetLocaleData} */ const resetLocaleData = (data, domain)=>{
+        // Reset all current Tannin locale data.
+        tannin.data = {}; // Reset cached plural forms functions cache.
+        tannin.pluralForms = {};
+        setLocaleData(data, domain);
+    };
+    /**
+   * Wrapper for Tannin's `dcnpgettext`. Populates default locale data if not
+   * otherwise previously assigned.
+   *
+   * @param {string|undefined} domain   Domain to retrieve the translated text.
+   * @param {string|undefined} context  Context information for the translators.
+   * @param {string}           single   Text to translate if non-plural. Used as
+   *                                    fallback return value on a caught error.
+   * @param {string}           [plural] The text to be used if the number is
+   *                                    plural.
+   * @param {number}           [number] The number to compare against to use
+   *                                    either the singular or plural form.
+   *
+   * @return {string} The translated string.
+   */ const dcnpgettext = function() {
+        let domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "default";
+        let context = arguments.length > 1 ? arguments[1] : undefined;
+        let single = arguments.length > 2 ? arguments[2] : undefined;
+        let plural = arguments.length > 3 ? arguments[3] : undefined;
+        let number = arguments.length > 4 ? arguments[4] : undefined;
+        if (!tannin.data[domain]) // Use `doSetLocaleData` to set silently, without notifying listeners.
+        doSetLocaleData(undefined, domain);
+        return tannin.dcnpgettext(domain, context, single, plural, number);
+    };
+    /** @type {GetFilterDomain} */ const getFilterDomain = function() {
+        let domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "default";
+        return domain;
+    };
+    /** @type {__} */ const __ = (text, domain)=>{
+        let translation = dcnpgettext(domain, undefined, text);
+        if (!hooks) return translation;
+        /**
+     * Filters text with its translation.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} text        Text to translate.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext", translation, text, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_" + getFilterDomain(domain), translation, text, domain);
+    };
+    /** @type {_x} */ const _x = (text, context, domain)=>{
+        let translation = dcnpgettext(domain, context, text);
+        if (!hooks) return translation;
+        /**
+     * Filters text with its translation based on context information.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} text        Text to translate.
+     * @param {string} context     Context information for the translators.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context", translation, text, context, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context_" + getFilterDomain(domain), translation, text, context, domain);
+    };
+    /** @type {_n} */ const _n = (single, plural, number, domain)=>{
+        let translation = dcnpgettext(domain, undefined, single, plural, number);
+        if (!hooks) return translation;
+        /**
+     * Filters the singular or plural form of a string.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} single      The text to be used if the number is singular.
+     * @param {string} plural      The text to be used if the number is plural.
+     * @param {string} number      The number to compare against to use either the singular or plural form.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext", translation, single, plural, number, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_" + getFilterDomain(domain), translation, single, plural, number, domain);
+    };
+    /** @type {_nx} */ const _nx = (single, plural, number, context, domain)=>{
+        let translation = dcnpgettext(domain, context, single, plural, number);
+        if (!hooks) return translation;
+        /**
+     * Filters the singular or plural form of a string with gettext context.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} single      The text to be used if the number is singular.
+     * @param {string} plural      The text to be used if the number is plural.
+     * @param {string} number      The number to compare against to use either the singular or plural form.
+     * @param {string} context     Context information for the translators.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context", translation, single, plural, number, context, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context_" + getFilterDomain(domain), translation, single, plural, number, context, domain);
+    };
+    /** @type {IsRtl} */ const isRTL = ()=>{
+        return "rtl" === _x("ltr", "text direction");
+    };
+    /** @type {HasTranslation} */ const hasTranslation = (single, context, domain)=>{
+        var _tannin$data, _tannin$data2;
+        const key = context ? context + "\x04" + single : single;
+        let result = !!((_tannin$data = tannin.data) !== null && _tannin$data !== void 0 && (_tannin$data2 = _tannin$data[domain !== null && domain !== void 0 ? domain : "default"]) !== null && _tannin$data2 !== void 0 && _tannin$data2[key]);
+        if (hooks) {
+            /**
+       * Filters the presence of a translation in the locale data.
+       *
+       * @param {boolean} hasTranslation Whether the translation is present or not..
+       * @param {string}  single         The singular form of the translated text (used as key in locale data)
+       * @param {string}  context        Context information for the translators.
+       * @param {string}  domain         Text domain. Unique identifier for retrieving translated strings.
+       */ result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation", result, single, context, domain);
+            result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation_" + getFilterDomain(domain), result, single, context, domain);
+        }
+        return result;
+    };
+    if (initialData) setLocaleData(initialData, initialDomain);
+    if (hooks) {
+        /**
+     * @param {string} hookName
+     */ const onHookAddedOrRemoved = (hookName)=>{
+            if (I18N_HOOK_REGEXP.test(hookName)) notifyListeners();
+        };
+        hooks.addAction("hookAdded", "core/i18n", onHookAddedOrRemoved);
+        hooks.addAction("hookRemoved", "core/i18n", onHookAddedOrRemoved);
+    }
+    return {
+        getLocaleData,
+        setLocaleData,
+        addLocaleData,
+        resetLocaleData,
+        subscribe,
+        __,
+        _x,
+        _n,
+        _nx,
+        isRTL,
+        hasTranslation
+    };
+};
+
+},{"tannin":"bWSIR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWSIR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _pluralForms = require("@tannin/plural-forms");
+var _pluralFormsDefault = parcelHelpers.interopDefault(_pluralForms);
+/**
+ * Tannin constructor options.
+ *
+ * @typedef {Object} TanninOptions
+ *
+ * @property {string}   [contextDelimiter] Joiner in string lookup with context.
+ * @property {Function} [onMissingKey]     Callback to invoke when key missing.
+ */ /**
+ * Domain metadata.
+ *
+ * @typedef {Object} TanninDomainMetadata
+ *
+ * @property {string}            [domain]       Domain name.
+ * @property {string}            [lang]         Language code.
+ * @property {(string|Function)} [plural_forms] Plural forms expression or
+ *                                              function evaluator.
+ */ /**
+ * Domain translation pair respectively representing the singular and plural
+ * translation.
+ *
+ * @typedef {[string,string]} TanninTranslation
+ */ /**
+ * Locale data domain. The key is used as reference for lookup, the value an
+ * array of two string entries respectively representing the singular and plural
+ * translation.
+ *
+ * @typedef {{[key:string]:TanninDomainMetadata|TanninTranslation,'':TanninDomainMetadata|TanninTranslation}} TanninLocaleDomain
+ */ /**
+ * Jed-formatted locale data.
+ *
+ * @see http://messageformat.github.io/Jed/
+ *
+ * @typedef {{[domain:string]:TanninLocaleDomain}} TanninLocaleData
+ */ /**
+ * Default Tannin constructor options.
+ *
+ * @type {TanninOptions}
+ */ var DEFAULT_OPTIONS = {
+    contextDelimiter: "\x04",
+    onMissingKey: null
+};
+/**
+ * Given a specific locale data's config `plural_forms` value, returns the
+ * expression.
+ *
+ * @example
+ *
+ * ```
+ * getPluralExpression( 'nplurals=2; plural=(n != 1);' ) === '(n != 1)'
+ * ```
+ *
+ * @param {string} pf Locale data plural forms.
+ *
+ * @return {string} Plural forms expression.
+ */ function getPluralExpression(pf) {
+    var parts, i, part;
+    parts = pf.split(";");
+    for(i = 0; i < parts.length; i++){
+        part = parts[i].trim();
+        if (part.indexOf("plural=") === 0) return part.substr(7);
+    }
+}
+function Tannin(data, options) {
+    var key;
+    /**
+	 * Jed-formatted locale data.
+	 *
+	 * @name Tannin#data
+	 * @type {TanninLocaleData}
+	 */ this.data = data;
+    /**
+	 * Plural forms function cache, keyed by plural forms string.
+	 *
+	 * @name Tannin#pluralForms
+	 * @type {Object<string,Function>}
+	 */ this.pluralForms = {};
+    /**
+	 * Effective options for instance, including defaults.
+	 *
+	 * @name Tannin#options
+	 * @type {TanninOptions}
+	 */ this.options = {};
+    for(key in DEFAULT_OPTIONS)this.options[key] = options !== undefined && key in options ? options[key] : DEFAULT_OPTIONS[key];
+}
+exports.default = Tannin;
+/**
+ * Returns the plural form index for the given domain and value.
+ *
+ * @param {string} domain Domain on which to calculate plural form.
+ * @param {number} n      Value for which plural form is to be calculated.
+ *
+ * @return {number} Plural form index.
+ */ Tannin.prototype.getPluralForm = function(domain, n) {
+    var getPluralForm = this.pluralForms[domain], config, plural, pf;
+    if (!getPluralForm) {
+        config = this.data[domain][""];
+        pf = config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
+        // string property on a key to guarantee this as metadata.
+        // @ts-ignore
+        config.plural_forms;
+        if (typeof pf !== "function") {
+            plural = getPluralExpression(config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
+            // string property on a key to guarantee this as metadata.
+            // @ts-ignore
+            config.plural_forms);
+            pf = (0, _pluralFormsDefault.default)(plural);
+        }
+        getPluralForm = this.pluralForms[domain] = pf;
+    }
+    return getPluralForm(n);
+};
+/**
+ * Translate a string.
+ *
+ * @param {string}      domain   Translation domain.
+ * @param {string|void} context  Context distinguishing terms of the same name.
+ * @param {string}      singular Primary key for translation lookup.
+ * @param {string=}     plural   Fallback value used for non-zero plural
+ *                               form index.
+ * @param {number=}     n        Value to use in calculating plural form.
+ *
+ * @return {string} Translated string.
+ */ Tannin.prototype.dcnpgettext = function(domain, context, singular, plural, n) {
+    var index, key, entry;
+    if (n === undefined) // Default to singular.
+    index = 0;
+    else // Find index by evaluating plural form for value.
+    index = this.getPluralForm(domain, n);
+    key = singular;
+    // If provided, context is prepended to key with delimiter.
+    if (context) key = context + this.options.contextDelimiter + singular;
+    entry = this.data[domain][key];
+    // Verify not only that entry exists, but that the intended index is within
+    // range and non-empty.
+    if (entry && entry[index]) return entry[index];
+    if (this.options.onMissingKey) this.options.onMissingKey(singular, domain);
+    // If entry not found, fall back to singular vs. plural with zero index
+    // representing the singular value.
+    return index === 0 ? singular : plural;
+};
+
+},{"@tannin/plural-forms":"ch17b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ch17b":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _compile = require("@tannin/compile");
+var _compileDefault = parcelHelpers.interopDefault(_compile);
+function pluralForms(expression) {
+    var evaluate = (0, _compileDefault.default)(expression);
+    return function(n) {
+        return +evaluate({
+            n: n
+        });
+    };
+}
+exports.default = pluralForms;
+
+},{"@tannin/compile":"5dvv3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5dvv3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _postfix = require("@tannin/postfix");
+var _postfixDefault = parcelHelpers.interopDefault(_postfix);
+var _evaluate = require("@tannin/evaluate");
+var _evaluateDefault = parcelHelpers.interopDefault(_evaluate);
+function compile(expression) {
+    var terms = (0, _postfixDefault.default)(expression);
+    return function(variables) {
+        return (0, _evaluateDefault.default)(terms, variables);
+    };
+}
+exports.default = compile;
+
+},{"@tannin/postfix":"gjJvb","@tannin/evaluate":"8I9co","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gjJvb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
+/**
+ * Operator precedence mapping.
+ *
+ * @type {Object}
+ */ PRECEDENCE = {
+    "(": 9,
+    "!": 8,
+    "*": 7,
+    "/": 7,
+    "%": 7,
+    "+": 6,
+    "-": 6,
+    "<": 5,
+    "<=": 5,
+    ">": 5,
+    ">=": 5,
+    "==": 4,
+    "!=": 4,
+    "&&": 3,
+    "||": 2,
+    "?": 1,
+    "?:": 1
+};
+/**
+ * Characters which signal pair opening, to be terminated by terminators.
+ *
+ * @type {string[]}
+ */ OPENERS = [
+    "(",
+    "?"
+];
+/**
+ * Characters which signal pair termination, the value an array with the
+ * opener as its first member. The second member is an optional operator
+ * replacement to push to the stack.
+ *
+ * @type {string[]}
+ */ TERMINATORS = {
+    ")": [
+        "("
+    ],
+    ":": [
+        "?",
+        "?:"
+    ]
+};
+/**
+ * Pattern matching operators and openers.
+ *
+ * @type {RegExp}
+ */ PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
+function postfix(expression) {
+    var terms = [], stack = [], match, operator, term, element;
+    while(match = expression.match(PATTERN)){
+        operator = match[0];
+        // Term is the string preceding the operator match. It may contain
+        // whitespace, and may be empty (if operator is at beginning).
+        term = expression.substr(0, match.index).trim();
+        if (term) terms.push(term);
+        while(element = stack.pop()){
+            if (TERMINATORS[operator]) {
+                if (TERMINATORS[operator][0] === element) {
+                    // Substitution works here under assumption that because
+                    // the assigned operator will no longer be a terminator, it
+                    // will be pushed to the stack during the condition below.
+                    operator = TERMINATORS[operator][1] || operator;
+                    break;
+                }
+            } else if (OPENERS.indexOf(element) >= 0 || PRECEDENCE[element] < PRECEDENCE[operator]) {
+                // Push to stack if either an opener or when pop reveals an
+                // element of lower precedence.
+                stack.push(element);
+                break;
+            }
+            // For each popped from stack, push to terms.
+            terms.push(element);
+        }
+        if (!TERMINATORS[operator]) stack.push(operator);
+        // Slice matched fragment from expression to continue match.
+        expression = expression.substr(match.index + operator.length);
+    }
+    // Push remainder of operand, if exists, to terms.
+    expression = expression.trim();
+    if (expression) terms.push(expression);
+    // Pop remaining items from stack into terms.
+    return terms.concat(stack.reverse());
+}
+exports.default = postfix;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8I9co":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Operator callback functions.
+ *
+ * @type {Object}
+ */ var OPERATORS = {
+    "!": function(a) {
+        return !a;
+    },
+    "*": function(a, b) {
+        return a * b;
+    },
+    "/": function(a, b) {
+        return a / b;
+    },
+    "%": function(a, b) {
+        return a % b;
+    },
+    "+": function(a, b) {
+        return a + b;
+    },
+    "-": function(a, b) {
+        return a - b;
+    },
+    "<": function(a, b) {
+        return a < b;
+    },
+    "<=": function(a, b) {
+        return a <= b;
+    },
+    ">": function(a, b) {
+        return a > b;
+    },
+    ">=": function(a, b) {
+        return a >= b;
+    },
+    "==": function(a, b) {
+        return a === b;
+    },
+    "!=": function(a, b) {
+        return a !== b;
+    },
+    "&&": function(a, b) {
+        return a && b;
+    },
+    "||": function(a, b) {
+        return a || b;
+    },
+    "?:": function(a, b, c) {
+        if (a) throw b;
+        return c;
+    }
+};
+function evaluate(postfix, variables) {
+    var stack = [], i, j, args, getOperatorResult, term, value;
+    for(i = 0; i < postfix.length; i++){
+        term = postfix[i];
+        getOperatorResult = OPERATORS[term];
+        if (getOperatorResult) {
+            // Pop from stack by number of function arguments.
+            j = getOperatorResult.length;
+            args = Array(j);
+            while(j--)args[j] = stack.pop();
+            try {
+                value = getOperatorResult.apply(null, args);
+            } catch (earlyReturn) {
+                return earlyReturn;
+            }
+        } else if (variables.hasOwnProperty(term)) value = variables[term];
+        else value = +term;
+        stack.push(value);
+    }
+    return stack[0];
+}
+exports.default = evaluate;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eKzAG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getLocaleData", ()=>getLocaleData);
+parcelHelpers.export(exports, "setLocaleData", ()=>setLocaleData);
+parcelHelpers.export(exports, "resetLocaleData", ()=>resetLocaleData);
+parcelHelpers.export(exports, "subscribe", ()=>subscribe);
+parcelHelpers.export(exports, "__", ()=>__);
+parcelHelpers.export(exports, "_x", ()=>_x);
+parcelHelpers.export(exports, "_n", ()=>_n);
+parcelHelpers.export(exports, "_nx", ()=>_nx);
+parcelHelpers.export(exports, "isRTL", ()=>isRTL);
+parcelHelpers.export(exports, "hasTranslation", ()=>hasTranslation);
+/**
+ * Internal dependencies
+ */ var _createI18N = require("./create-i18n");
+/**
+ * WordPress dependencies
+ */ var _hooks = require("@wordpress/hooks");
+const i18n = (0, _createI18N.createI18n)(undefined, undefined, (0, _hooks.defaultHooks));
+/**
+ * Default, singleton instance of `I18n`.
+ */ exports.default = i18n;
+const getLocaleData = i18n.getLocaleData.bind(i18n);
+const setLocaleData = i18n.setLocaleData.bind(i18n);
+const resetLocaleData = i18n.resetLocaleData.bind(i18n);
+const subscribe = i18n.subscribe.bind(i18n);
+const __ = i18n.__.bind(i18n);
+const _x = i18n._x.bind(i18n);
+const _n = i18n._n.bind(i18n);
+const _nx = i18n._nx.bind(i18n);
+const isRTL = i18n.isRTL.bind(i18n);
+const hasTranslation = i18n.hasTranslation.bind(i18n);
+
+},{"./create-i18n":"2IrAM","@wordpress/hooks":"8Bsjr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Bsjr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "defaultHooks", ()=>defaultHooks);
+parcelHelpers.export(exports, "createHooks", ()=>(0, _createHooksDefault.default));
+parcelHelpers.export(exports, "addAction", ()=>addAction);
+parcelHelpers.export(exports, "addFilter", ()=>addFilter);
+parcelHelpers.export(exports, "removeAction", ()=>removeAction);
+parcelHelpers.export(exports, "removeFilter", ()=>removeFilter);
+parcelHelpers.export(exports, "hasAction", ()=>hasAction);
+parcelHelpers.export(exports, "hasFilter", ()=>hasFilter);
+parcelHelpers.export(exports, "removeAllActions", ()=>removeAllActions);
+parcelHelpers.export(exports, "removeAllFilters", ()=>removeAllFilters);
+parcelHelpers.export(exports, "doAction", ()=>doAction);
+parcelHelpers.export(exports, "applyFilters", ()=>applyFilters);
+parcelHelpers.export(exports, "currentAction", ()=>currentAction);
+parcelHelpers.export(exports, "currentFilter", ()=>currentFilter);
+parcelHelpers.export(exports, "doingAction", ()=>doingAction);
+parcelHelpers.export(exports, "doingFilter", ()=>doingFilter);
+parcelHelpers.export(exports, "didAction", ()=>didAction);
+parcelHelpers.export(exports, "didFilter", ()=>didFilter);
+parcelHelpers.export(exports, "actions", ()=>actions);
+parcelHelpers.export(exports, "filters", ()=>filters);
+/**
+ * Internal dependencies
+ */ var _createHooks = require("./createHooks");
+var _createHooksDefault = parcelHelpers.interopDefault(_createHooks);
+const defaultHooks = (0, _createHooksDefault.default)();
+const { addAction , addFilter , removeAction , removeFilter , hasAction , hasFilter , removeAllActions , removeAllFilters , doAction , applyFilters , currentAction , currentFilter , doingAction , doingFilter , didAction , didFilter , actions , filters  } = defaultHooks;
+
+},{"./createHooks":"hhEcY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hhEcY":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Internal class for constructing hooks. Use `createHooks()` function
+ *
+ * Note, it is necessary to expose this class to make its type public.
+ *
+ * @private
+ */ parcelHelpers.export(exports, "_Hooks", ()=>_Hooks);
+/**
+ * Internal dependencies
+ */ var _createAddHook = require("./createAddHook");
+var _createAddHookDefault = parcelHelpers.interopDefault(_createAddHook);
+var _createRemoveHook = require("./createRemoveHook");
+var _createRemoveHookDefault = parcelHelpers.interopDefault(_createRemoveHook);
+var _createHasHook = require("./createHasHook");
+var _createHasHookDefault = parcelHelpers.interopDefault(_createHasHook);
+var _createRunHook = require("./createRunHook");
+var _createRunHookDefault = parcelHelpers.interopDefault(_createRunHook);
+var _createCurrentHook = require("./createCurrentHook");
+var _createCurrentHookDefault = parcelHelpers.interopDefault(_createCurrentHook);
+var _createDoingHook = require("./createDoingHook");
+var _createDoingHookDefault = parcelHelpers.interopDefault(_createDoingHook);
+var _createDidHook = require("./createDidHook");
+var _createDidHookDefault = parcelHelpers.interopDefault(_createDidHook);
+class _Hooks {
+    constructor(){
+        /** @type {import('.').Store} actions */ this.actions = Object.create(null);
+        this.actions.__current = [];
+        /** @type {import('.').Store} filters */ this.filters = Object.create(null);
+        this.filters.__current = [];
+        this.addAction = (0, _createAddHookDefault.default)(this, "actions");
+        this.addFilter = (0, _createAddHookDefault.default)(this, "filters");
+        this.removeAction = (0, _createRemoveHookDefault.default)(this, "actions");
+        this.removeFilter = (0, _createRemoveHookDefault.default)(this, "filters");
+        this.hasAction = (0, _createHasHookDefault.default)(this, "actions");
+        this.hasFilter = (0, _createHasHookDefault.default)(this, "filters");
+        this.removeAllActions = (0, _createRemoveHookDefault.default)(this, "actions", true);
+        this.removeAllFilters = (0, _createRemoveHookDefault.default)(this, "filters", true);
+        this.doAction = (0, _createRunHookDefault.default)(this, "actions");
+        this.applyFilters = (0, _createRunHookDefault.default)(this, "filters", true);
+        this.currentAction = (0, _createCurrentHookDefault.default)(this, "actions");
+        this.currentFilter = (0, _createCurrentHookDefault.default)(this, "filters");
+        this.doingAction = (0, _createDoingHookDefault.default)(this, "actions");
+        this.doingFilter = (0, _createDoingHookDefault.default)(this, "filters");
+        this.didAction = (0, _createDidHookDefault.default)(this, "actions");
+        this.didFilter = (0, _createDidHookDefault.default)(this, "filters");
+    }
+}
+/** @typedef {_Hooks} Hooks */ /**
+ * Returns an instance of the hooks object.
+ *
+ * @return {Hooks} A Hooks instance.
+ */ function createHooks() {
+    return new _Hooks();
+}
+exports.default = createHooks;
+
+},{"./createAddHook":"8uq0x","./createRemoveHook":"5GhVG","./createHasHook":"apZQU","./createRunHook":"aU57G","./createCurrentHook":"99Xz5","./createDoingHook":"l2l8V","./createDidHook":"hSCQx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8uq0x":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Internal dependencies
+ */ var _validateNamespaceJs = require("./validateNamespace.js");
+var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback AddHook
+ *
+ * Adds the hook to the appropriate hooks container.
+ *
+ * @param {string}               hookName      Name of hook to add
+ * @param {string}               namespace     The unique namespace identifying the callback in the form `vendor/plugin/function`.
+ * @param {import('.').Callback} callback      Function to call when the hook is run
+ * @param {number}               [priority=10] Priority of this hook
+ */ /**
+ * Returns a function which, when invoked, will add a hook.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {AddHook} Function that adds a new hook.
+ */ function createAddHook(hooks, storeKey) {
+    return function addHook(hookName, namespace, callback) {
+        let priority = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10;
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        if (!(0, _validateNamespaceJsDefault.default)(namespace)) return;
+        if ("function" !== typeof callback) {
+            // eslint-disable-next-line no-console
+            console.error("The hook callback must be a function.");
+            return;
+        } // Validate numeric priority
+        if ("number" !== typeof priority) {
+            // eslint-disable-next-line no-console
+            console.error("If specified, the hook priority must be a number.");
+            return;
+        }
+        const handler = {
+            callback,
+            priority,
+            namespace
+        };
+        if (hooksStore[hookName]) {
+            // Find the correct insert index of the new hook.
+            const handlers = hooksStore[hookName].handlers;
+            /** @type {number} */ let i;
+            for(i = handlers.length; i > 0; i--){
+                if (priority >= handlers[i - 1].priority) break;
+            }
+            if (i === handlers.length) // If append, operate via direct assignment.
+            handlers[i] = handler;
+            else // Otherwise, insert before index via splice.
+            handlers.splice(i, 0, handler);
+             // We may also be currently executing this hook.  If the callback
+            // we're adding would come after the current callback, there's no
+            // problem; otherwise we need to increase the execution index of
+            // any other runs by 1 to account for the added element.
+            hooksStore.__current.forEach((hookInfo)=>{
+                if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex++;
+            });
+        } else // This is the first hook of its type.
+        hooksStore[hookName] = {
+            handlers: [
+                handler
+            ],
+            runs: 0
+        };
+        if (hookName !== "hookAdded") hooks.doAction("hookAdded", hookName, namespace, callback, priority);
+    };
+}
+exports.default = createAddHook;
+
+},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5RkL7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Validate a namespace string.
+ *
+ * @param {string} namespace The namespace to validate - should take the form
+ *                           `vendor/plugin/function`.
+ *
+ * @return {boolean} Whether the namespace is valid.
+ */ function validateNamespace(namespace) {
+    if ("string" !== typeof namespace || "" === namespace) {
+        // eslint-disable-next-line no-console
+        console.error("The namespace must be a non-empty string.");
+        return false;
+    }
+    if (!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(namespace)) {
+        // eslint-disable-next-line no-console
+        console.error("The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.");
+        return false;
+    }
+    return true;
+}
+exports.default = validateNamespace;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dkyGe":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Validate a hookName string.
+ *
+ * @param {string} hookName The hook name to validate. Should be a non empty string containing
+ *                          only numbers, letters, dashes, periods and underscores. Also,
+ *                          the hook name cannot begin with `__`.
+ *
+ * @return {boolean} Whether the hook name is valid.
+ */ function validateHookName(hookName) {
+    if ("string" !== typeof hookName || "" === hookName) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name must be a non-empty string.");
+        return false;
+    }
+    if (/^__/.test(hookName)) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name cannot begin with `__`.");
+        return false;
+    }
+    if (!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(hookName)) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name can only contain numbers, letters, dashes, periods and underscores.");
+        return false;
+    }
+    return true;
+}
+exports.default = validateHookName;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5GhVG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Internal dependencies
+ */ var _validateNamespaceJs = require("./validateNamespace.js");
+var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback RemoveHook
+ * Removes the specified callback (or all callbacks) from the hook with a given hookName
+ * and namespace.
+ *
+ * @param {string} hookName  The name of the hook to modify.
+ * @param {string} namespace The unique namespace identifying the callback in the
+ *                           form `vendor/plugin/function`.
+ *
+ * @return {number | undefined} The number of callbacks removed.
+ */ /**
+ * Returns a function which, when invoked, will remove a specified hook or all
+ * hooks by the given name.
+ *
+ * @param {import('.').Hooks}    hooks             Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ * @param {boolean}              [removeAll=false] Whether to remove all callbacks for a hookName,
+ *                                                 without regard to namespace. Used to create
+ *                                                 `removeAll*` functions.
+ *
+ * @return {RemoveHook} Function that removes hooks.
+ */ function createRemoveHook(hooks, storeKey) {
+    let removeAll = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    return function removeHook(hookName, namespace) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        if (!removeAll && !(0, _validateNamespaceJsDefault.default)(namespace)) return;
+         // Bail if no hooks exist by this name.
+        if (!hooksStore[hookName]) return 0;
+        let handlersRemoved = 0;
+        if (removeAll) {
+            handlersRemoved = hooksStore[hookName].handlers.length;
+            hooksStore[hookName] = {
+                runs: hooksStore[hookName].runs,
+                handlers: []
+            };
+        } else {
+            // Try to find the specified callback to remove.
+            const handlers = hooksStore[hookName].handlers;
+            for(let i = handlers.length - 1; i >= 0; i--)if (handlers[i].namespace === namespace) {
+                handlers.splice(i, 1);
+                handlersRemoved++; // This callback may also be part of a hook that is
+                // currently executing.  If the callback we're removing
+                // comes after the current callback, there's no problem;
+                // otherwise we need to decrease the execution index of any
+                // other runs by 1 to account for the removed element.
+                hooksStore.__current.forEach((hookInfo)=>{
+                    if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex--;
+                });
+            }
+        }
+        if (hookName !== "hookRemoved") hooks.doAction("hookRemoved", hookName, namespace);
+        return handlersRemoved;
+    };
+}
+exports.default = createRemoveHook;
+
+},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"apZQU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * @callback HasHook
+ *
+ * Returns whether any handlers are attached for the given hookName and optional namespace.
+ *
+ * @param {string} hookName    The name of the hook to check for.
+ * @param {string} [namespace] Optional. The unique namespace identifying the callback
+ *                             in the form `vendor/plugin/function`.
+ *
+ * @return {boolean} Whether there are handlers that are attached to the given hook.
+ */ /**
+ * Returns a function which, when invoked, will return whether any handlers are
+ * attached to a particular hook.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {HasHook} Function that returns whether any handlers are
+ *                   attached to a particular hook and optional namespace.
+ */ function createHasHook(hooks, storeKey) {
+    return function hasHook(hookName, namespace) {
+        const hooksStore = hooks[storeKey]; // Use the namespace if provided.
+        if ("undefined" !== typeof namespace) return hookName in hooksStore && hooksStore[hookName].handlers.some((hook)=>hook.namespace === namespace);
+        return hookName in hooksStore;
+    };
+}
+exports.default = createHasHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aU57G":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Returns a function which, when invoked, will execute all callbacks
+ * registered to a hook of the specified type, optionally returning the final
+ * value of the call chain.
+ *
+ * @param {import('.').Hooks}    hooks                  Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ * @param {boolean}              [returnFirstArg=false] Whether each hook callback is expected to
+ *                                                      return its first argument.
+ *
+ * @return {(hookName:string, ...args: unknown[]) => unknown} Function that runs hook callbacks.
+ */ function createRunHook(hooks, storeKey) {
+    let returnFirstArg = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    return function runHooks(hookName) {
+        const hooksStore = hooks[storeKey];
+        if (!hooksStore[hookName]) hooksStore[hookName] = {
+            handlers: [],
+            runs: 0
+        };
+        hooksStore[hookName].runs++;
+        const handlers = hooksStore[hookName].handlers; // The following code is stripped from production builds.
+        // Handle any 'all' hooks registered.
+        if ("hookAdded" !== hookName && hooksStore.all) handlers.push(...hooksStore.all.handlers);
+        for(var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++)args[_key - 1] = arguments[_key];
+        if (!handlers || !handlers.length) return returnFirstArg ? args[0] : undefined;
+        const hookInfo = {
+            name: hookName,
+            currentIndex: 0
+        };
+        hooksStore.__current.push(hookInfo);
+        while(hookInfo.currentIndex < handlers.length){
+            const handler = handlers[hookInfo.currentIndex];
+            const result = handler.callback.apply(null, args);
+            if (returnFirstArg) args[0] = result;
+            hookInfo.currentIndex++;
+        }
+        hooksStore.__current.pop();
+        if (returnFirstArg) return args[0];
+    };
+}
+exports.default = createRunHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"99Xz5":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Returns a function which, when invoked, will return the name of the
+ * currently running hook, or `null` if no hook of the given type is currently
+ * running.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {() => string | null} Function that returns the current hook name or null.
+ */ function createCurrentHook(hooks, storeKey) {
+    return function currentHook() {
+        var _hooksStore$__current, _hooksStore$__current2;
+        const hooksStore = hooks[storeKey];
+        return (_hooksStore$__current = (_hooksStore$__current2 = hooksStore.__current[hooksStore.__current.length - 1]) === null || _hooksStore$__current2 === void 0 ? void 0 : _hooksStore$__current2.name) !== null && _hooksStore$__current !== void 0 ? _hooksStore$__current : null;
+    };
+}
+exports.default = createCurrentHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l2l8V":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * @callback DoingHook
+ * Returns whether a hook is currently being executed.
+ *
+ * @param {string} [hookName] The name of the hook to check for.  If
+ *                            omitted, will check for any hook being executed.
+ *
+ * @return {boolean} Whether the hook is being executed.
+ */ /**
+ * Returns a function which, when invoked, will return whether a hook is
+ * currently being executed.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {DoingHook} Function that returns whether a hook is currently
+ *                     being executed.
+ */ function createDoingHook(hooks, storeKey) {
+    return function doingHook(hookName) {
+        const hooksStore = hooks[storeKey]; // If the hookName was not passed, check for any current hook.
+        if ("undefined" === typeof hookName) return "undefined" !== typeof hooksStore.__current[0];
+         // Return the __current hook.
+        return hooksStore.__current[0] ? hookName === hooksStore.__current[0].name : false;
+    };
+}
+exports.default = createDoingHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hSCQx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Internal dependencies
+ */ var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback DidHook
+ *
+ * Returns the number of times an action has been fired.
+ *
+ * @param {string} hookName The hook name to check.
+ *
+ * @return {number | undefined} The number of times the hook has run.
+ */ /**
+ * Returns a function which, when invoked, will return the number of times a
+ * hook has been called.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {DidHook} Function that returns a hook's call count.
+ */ function createDidHook(hooks, storeKey) {
+    return function didHook(hookName) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        return hooksStore[hookName] && hooksStore[hookName].runs ? hooksStore[hookName].runs : 0;
+    };
+}
+exports.default = createDidHook;
+
+},{"./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cbTU3":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = exports.BUTTON_TYPES = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Button types.
+ * @type {Object}
+ */ var BUTTON_TYPES = {
+    NEGATIVE: "negative",
+    POSITIVE: "positive"
+};
+/**
+ * Menu button component.
+ *
+ * @param {Object} props component properties
+ * @param {String} props.title button title
+ * @param {Function} [props.onClickHandler=()=>{}] click callback
+ * @param {Boolean} [props.status=false] enabled status
+ * @param {String} [props.type='negative'] button type
+ * @constructor
+ */ exports.BUTTON_TYPES = BUTTON_TYPES;
+function MenuButton(_ref) {
+    var title = _ref.title, _ref$onClickHandler = _ref.onClickHandler, onClickHandler = _ref$onClickHandler === void 0 ? function() {} : _ref$onClickHandler, _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status, _ref$type = _ref.type, type = _ref$type === void 0 ? BUTTON_TYPES.NEGATIVE : _ref$type;
+    var typeClass = function typeClass() {
+        var buttonClass = "";
+        switch(type){
+            case BUTTON_TYPES.NEGATIVE:
+                buttonClass = "ub-negative-bg";
+                break;
+            case BUTTON_TYPES.POSITIVE:
+                buttonClass = "ub-positive-bg";
+                break;
+        }
+        return buttonClass;
+    };
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
+        onClick: function onClick() {
+            if (status) onClickHandler();
+        },
+        className: "ub-menu-button ".concat(typeClass()),
+        "data-enabled": JSON.stringify(status)
+    }, title));
+}
+/**
+ * @module MenuButton
+ */ var _default = MenuButton;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"hOoRN":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _reactDom = require("react-dom");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Portal component.
+ *
+ * @param {Object} props component properties
+ * @param {React.ElementType} props.children component children
+ * @param {Element} props.target portal parent
+ * @constructor
+ */ function Portal(_ref) {
+    var children = _ref.children, target = _ref.target;
+    return /*#__PURE__*/ (0, _reactDom.createPortal)(children, target);
+}
+/**
+ * @module Portal
+ */ var _default = Portal;
+exports["default"] = _default;
+
+},{"react":"21dqq","react-dom":"j6uA9"}],"inddj":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -33885,43 +35557,6 @@ function _arrayWithHoles(arr) {
 /**
  * @module ToggleControl;
  */ var _default = ToggleControl;
-exports["default"] = _default;
-
-},{"react":"21dqq"}],"cbTU3":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Menu button component.
- *
- * @param {Object} props component properties
- * @param {String} props.title button title
- * @param {Function} [props.onClickHandler=()=>{}] click callback
- * @param {Boolean} [props.status=false] disabled status
- * @constructor
- */ function MenuButton(_ref) {
-    var title = _ref.title, _ref$onClickHandler = _ref.onClickHandler, onClickHandler = _ref$onClickHandler === void 0 ? function() {} : _ref$onClickHandler, _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status;
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    _react["default"].createElement("div", {
-        onClick: function onClick() {
-            if (status) onClickHandler();
-        },
-        className: "ub-menu-button",
-        "data-enabled": JSON.stringify(status)
-    }, title));
-}
-/**
- * @module MenuButton
- */ var _default = MenuButton;
 exports["default"] = _default;
 
 },{"react":"21dqq"}],"l4uaA":[function(require,module,exports) {

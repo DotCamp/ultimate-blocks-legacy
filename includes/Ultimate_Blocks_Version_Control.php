@@ -33,9 +33,18 @@ class Ultimate_Blocks_Version_Control {
 
 		$current_version = get_plugin_data( trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'ultimate-blocks.php' )['Version'];
 
-		$plugin_remote_info = plugins_api( 'plugin_information', [
-			'slug' => 'ultimate-blocks',
-		] );
+		// TODO [ErdemBircan] remove transient operations for production
+		$plugin_remote_info = get_transient( 'ub-dev-plugin-information' );
+
+		if ( $plugin_remote_info === false ) {
+
+			$plugin_remote_info = plugins_api( 'plugin_information', [
+				'slug' => 'ultimate-blocks',
+			] );
+
+			set_transient( 'ub-dev-plugin-information', $plugin_remote_info );
+		}
+
 
 		$all_versions = $plugin_remote_info->versions;
 		unset( $all_versions['trunk'] );

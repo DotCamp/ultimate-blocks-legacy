@@ -90,6 +90,7 @@
 			&[data-disabled='true'] {
 			  color: $gray-300;
 			  cursor: default;
+			  pointer-events: none;
 			}
 		  }
 		}
@@ -321,25 +322,7 @@
 	}
   }
 
-  .ub-menu-button {
-	@extend %flex-center-all;
-	@extend %default-transition;
-	@extend %unselectable;
-	padding: 10px 20px;
-	background-color: $red-500;
-	color: $white;
-	font-size: 0.8rem;
-	cursor: pointer;
-	border-radius: 5px;
 
-	&[data-enabled='false'] {
-	  background-color: $gray-800;
-	}
-
-	&[data-enabled='true']:active {
-	  transform: scale(0.8);
-	}
-  }
 }
 
 .block-control-transition-enter {
@@ -391,3 +374,122 @@
   }
 }
 
+.version-control-popup {
+  @extend %flex-center-all;
+  position: fixed;
+  inset: 0;
+  background-color: $version-control-popup-bg;
+  z-index: 10000;
+  font-family: $font-family;
+  font-size: $version-control-general-font-size;
+
+  .modal-container {
+	@extend %default-border;
+	background-color: $white;
+	border-radius: $block-control-border-radius;
+	overflow: hidden;
+	padding: 20px 60px;
+
+	& > div {
+	  margin: 10px 0;
+	}
+
+	.version-content {
+	  @extend %flex-center-all;
+	  margin-top: 30px;
+
+	  & > div {
+		margin-top: 20px;
+
+		& > div:not(div:first-child) {
+		  margin-top: 20px;
+		}
+
+		& > div {
+		  @extend %flex-center-all;
+		}
+	  }
+
+	  .version-warning {
+		@extend %flex-center-all;
+		flex-direction: column;
+		@extend %unselectable;
+	  }
+
+	  .version-rollback-button-container {
+		@extend %flex-center-all-row;
+	  }
+	}
+
+	.rollback-versions {
+	  @extend %flex-center-all;
+
+	  .version-id {
+		@extend %unselectable;
+		font-size: $versions-font-size;
+		font-weight: bold;
+		margin: 0 40px;
+	  }
+
+	  .version-icon {
+		@extend %flex-center-all;
+		width: fit-content;
+		height: fit-content;
+		overflow: hidden;
+
+		&[data-in-progress='true'] .version-icon-inner-wrapper {
+		  @extend %default-transition;
+		  animation: stay-a-while-and-listen 2s ease-out infinite;
+		}
+
+		.version-icon-inner-wrapper {
+		  padding: 0 10px;
+		}
+
+		svg {
+		  width: 2.5rem;
+		  height: 2.5rem;
+		}
+	  }
+	}
+  }
+}
+
+@keyframes stay-a-while-and-listen {
+  0% {
+	transform: translateX(-100%);
+  }
+
+  40% {
+	transform: translateX(0);
+  }
+
+  60% {
+	transform: translateX(0);
+  }
+
+  100% {
+	transform: translateX(100%);
+  }
+}
+
+.ub-menu-button {
+  @extend %flex-center-all;
+  @extend %default-transition;
+  @extend %unselectable;
+  padding: 10px 20px;
+  background-color: $red-500;
+  color: $white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px 20px;
+
+  &[data-enabled='false'] {
+	background-color: $gray-800;
+  }
+
+  &[data-enabled='true']:active {
+	transform: scale(0.8);
+  }
+}

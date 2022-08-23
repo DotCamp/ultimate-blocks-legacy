@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { currentVersion, versions } from "$Stores/settings-menu/slices/versionControl";
 import withStore from "$HOC/withStore";
+import VersionControlPopup from "$Components/VersionControlPopup";
+import Portal from "$Components/Portal";
 
 /**
  * Version control component.
@@ -14,7 +16,9 @@ import withStore from "$HOC/withStore";
  */
 function VersionControl( { pluginVersion, allVersions } ) {
 	const [ versionLevel, setVersionLevel ] = useState( 'none' );
-	const [ selectedVersion, setSelectedVersion ] = useState( pluginVersion );
+	// TODO [ErdemBircan] change to pluginVersion for production
+	const [ selectedVersion, setSelectedVersion ] = useState( '2.5.1' );
+	const [ popupVisibility, setPopupVisibility ] = useState( true );
 
 	/**
 	 * Calculate button disabled status.
@@ -26,6 +30,21 @@ function VersionControl( { pluginVersion, allVersions } ) {
 
 	const sortedVersions = Object.keys( allVersions ).sort().reverse();
 	const versionsLength = sortedVersions.length;
+
+	/**
+	 * Start version operation.
+	 *
+	 * @return {Promise} operation promise object
+	 */
+	const startVersionOperation = () => {
+		return new Promise( ( res, rej ) => {
+			setTimeout( () => {
+				res( {
+					status: 'OK',
+				} );
+			}, 2000 );
+		} );
+	};
 
 	useEffect( () => {
 		const levelBorder = versionsLength / 2;
@@ -40,7 +59,6 @@ function VersionControl( { pluginVersion, allVersions } ) {
 	return (
 		<div className={ 'version-control-container' }>
 			<div data-level={ versionLevel } className={ 'version-control-status-indicator' }></div>
-			<div className={ 'version-control-text' }>Version:</div>
 			<div className={ 'version-control-list' }>
 				<select value={ selectedVersion } onChange={ ( e ) => setSelectedVersion( e.target.value ) }>
 					{
@@ -52,9 +70,13 @@ function VersionControl( { pluginVersion, allVersions } ) {
 					}
 				</select>
 			</div>
-			<div className={ 'version-control-button' } data-disabled={ JSON.stringify( buttonDisabledStatus() ) }>
+			{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */ }
+			<div onClick={ () => setPopupVisibility( true ) } className={ 'version-control-button' } data-disabled={ JSON.stringify( buttonDisabledStatus() ) }>
 				<FontAwesomeIcon icon="fa-solid fa-circle-chevron-left" />
 			</div>
+			{
+				popupVisibility && ( <Portal target={ document.body }><VersionControlPopup onCloseHandler={ () => setPopupVisibility( false ) } from={ pluginVersion } to={ selectedVersion } onOperationStart={ startVersionOperation } /></Portal> )
+			}
 		</div>
 	);
 }

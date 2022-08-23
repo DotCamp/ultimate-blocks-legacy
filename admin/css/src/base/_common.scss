@@ -61,3 +61,19 @@ $screen-2xl: 1536px;
   width: #{$val}px;
   height: #{$val}px;
 }
+
+.ub-positive-color {
+  color: $positive;
+}
+
+.ub-negative-color {
+  color: $negative;
+}
+
+.ub-positive-bg {
+  background-color: $positive !important;
+}
+
+.ub-negative-bg {
+  background-color: $negative !important;
+}
