@@ -33185,16 +33185,16 @@ function _arrayWithHoles(arr) {
  * @constructor
  */ function VersionControl(_ref) {
     var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
-    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1]; // TODO [ErdemBircan] change to pluginVersion for production
-    var _useState3 = (0, _react.useState)("2.4.8"), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
-    var _useState5 = (0, _react.useState)(true), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
+    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
+    var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
+    var _useState5 = (0, _react.useState)(false), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
     /**
    * Calculate button disabled status.
    * @return {boolean} disabled status
    */ var buttonDisabledStatus = function buttonDisabledStatus() {
         return pluginVersion === selectedVersion;
     };
-    var sortedVersions = Object.keys(allVersions).sort().reverse();
+    var sortedVersions = allVersions.sort().reverse();
     var versionsLength = sortedVersions.length;
     /**
    * Start version operation.

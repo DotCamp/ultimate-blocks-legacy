@@ -18,9 +18,8 @@ import { rollbackToVersion } from "$Stores/settings-menu/actions";
  */
 function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 	const [ versionLevel, setVersionLevel ] = useState( 'none' );
-	// TODO [ErdemBircan] change to pluginVersion for production
-	const [ selectedVersion, setSelectedVersion ] = useState( '2.4.8' );
-	const [ popupVisibility, setPopupVisibility ] = useState( true );
+	const [ selectedVersion, setSelectedVersion ] = useState( pluginVersion );
+	const [ popupVisibility, setPopupVisibility ] = useState( false );
 
 	/**
 	 * Calculate button disabled status.
@@ -30,7 +29,7 @@ function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 		return pluginVersion === selectedVersion;
 	};
 
-	const sortedVersions = Object.keys( allVersions ).sort().reverse();
+	const sortedVersions = allVersions.sort().reverse();
 	const versionsLength = sortedVersions.length;
 
 	/**
@@ -67,11 +66,15 @@ function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 				</select>
 			</div>
 			{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */ }
-			<div onClick={ () => setPopupVisibility( true ) } className={ 'version-control-button' } data-disabled={ JSON.stringify( buttonDisabledStatus() ) }>
+			<div onClick={ () => setPopupVisibility( true ) } className={ 'version-control-button' }
+				 data-disabled={ JSON.stringify( buttonDisabledStatus() ) }>
 				<FontAwesomeIcon icon="fa-solid fa-circle-chevron-left" />
 			</div>
 			{
-				popupVisibility && ( <Portal target={ document.body }><VersionControlPopup onCloseHandler={ () => setPopupVisibility( false ) } from={ pluginVersion } to={ selectedVersion } onOperationStart={ startVersionOperation } /></Portal> )
+				popupVisibility && (
+					<Portal target={ document.body }><VersionControlPopup onCloseHandler={ () => setPopupVisibility( false ) }
+						from={ pluginVersion } to={ selectedVersion }
+						onOperationStart={ startVersionOperation } /></Portal> )
 			}
 		</div>
 	);
