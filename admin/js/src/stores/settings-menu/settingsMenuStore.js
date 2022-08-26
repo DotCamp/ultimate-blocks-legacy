@@ -19,7 +19,7 @@ function createStore() {
 	// add block infos to context data
 	const registeredBlocks = wp.data.select( 'core/blocks' ).getBlockTypes();
 	const registeredUbBlocks = registeredBlocks.filter( blockData => {
-		return blockData.deprecated === undefined && blockData.parent === undefined;
+		return blockData.parent === undefined && blockData.supports.inserter === undefined;
 	} );
 
 	const { statusData, info } = appData.blocks;

@@ -83,16 +83,13 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 				</div>
 			</div>
 			<div className={ 'block-info' }>
-				<ul>
-					{
-						info.map( ( infoLine, index ) => {
-							return ( <li key={ index }>
-								{ infoLine[ 0 ].toUpperCase() + Array.from( infoLine ).splice( 1 ).join( '' ) }
-							</li> );
-						} )
-					}
-
-				</ul>
+				{
+					info.map( ( infoLine, index ) => {
+						return ( <div className={'info-line'} key={ index }>
+							{ infoLine[ 0 ].toUpperCase() + Array.from( infoLine ).splice( 1 ).join( '' ) }
+						</div> );
+					} )
+				}
 			</div>
 			<div className={ 'block-howto' }>
 				<MenuButton title={ 'How to Use' } status={ innerStatus } onClickHandler={ howToUse } />

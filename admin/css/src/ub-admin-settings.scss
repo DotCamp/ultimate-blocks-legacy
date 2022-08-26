@@ -237,12 +237,14 @@
 		  }
 
 		  .block-info {
+			@extend %flex-center-all;
 			grid-area: info;
-			padding: 5px 40px;
+			padding: 10px;
 			overflow: auto;
 
-			ul {
-			  list-style: inside;
+			.info-line {
+			  @extend %flex-center-all;
+			  text-align: center;
 			}
 		  }
 
