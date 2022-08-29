@@ -1,8 +1,8 @@
 {
 	"root": true,
-	"parser": "babel-eslint",
+	"parser": "@babel/eslint-parser",
 	"extends": [
-		"wordpress",
+		"plugin:@wordpress/eslint-plugin/recommended",
 		"plugin:react/recommended",
 		"plugin:jsx-a11y/recommended",
 		"plugin:jest/recommended"
