@@ -36601,6 +36601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common */ "./src/common.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var $Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! $Inc/registerPluginBlock */ "./src/inc/registerPluginBlock.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -36626,8 +36627,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var __ = wp.i18n.__;
-var registerBlockType = wp.blocks.registerBlockType;
 
 var _ref = wp.blockEditor || wp.editor,
     BlockControls = _ref.BlockControls,
@@ -36653,341 +36654,341 @@ var compose = wp.compose.compose;
 var withSelect = wp.data.withSelect;
 var defaultAttributes = {
   ID: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   blockID: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   authorName: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   itemName: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   itemType: {
-    type: "string",
-    "default": "Product"
+    type: 'string',
+    "default": 'Product'
   },
   //for book, movie, and local business link
   itemPage: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   itemSubtype: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   itemSubsubtype: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   valueType: {
-    type: "string",
-    "default": "star" //also support percent
+    type: 'string',
+    "default": 'star' //also support percent
 
   },
   items: {
-    type: "string",
+    type: 'string',
     "default": '[{"label":"","value":0}]'
   },
   description: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   descriptionAlign: {
-    type: "string",
-    "default": "left"
+    type: 'string',
+    "default": 'left'
   },
   imgPosition: {
-    type: "string",
-    "default": "right"
+    type: 'string',
+    "default": 'right'
   },
   imgURL: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   imgID: {
-    type: "number"
+    type: 'number'
   },
   imgAlt: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   parts: {
-    type: "array",
+    type: 'array',
     "default": [{
-      label: "",
+      label: '',
       value: 0
     }]
   },
   starCount: {
-    type: "number",
+    type: 'number',
     "default": 5
   },
   useSummary: {
-    type: "boolean",
+    type: 'boolean',
     "default": true
   },
   summaryTitle: {
-    type: "string",
-    "default": "Summary"
+    type: 'string',
+    "default": 'Summary'
   },
   summaryDescription: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   callToActionText: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   callToActionFontSize: {
-    type: "number",
+    type: 'number',
     "default": 0
   },
   callToActionURL: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   callToActionBackColor: {
-    type: "string",
-    "default": "#f63d3d"
+    type: 'string',
+    "default": '#f63d3d'
   },
   callToActionBorderColor: {
-    type: "string",
-    "default": "#ffffff"
+    type: 'string',
+    "default": '#ffffff'
   },
   callToActionForeColor: {
-    type: "string",
-    "default": "#ffffff"
+    type: 'string',
+    "default": '#ffffff'
   },
   inactiveStarColor: {
-    type: "string",
-    "default": "#888888"
+    type: 'string',
+    "default": '#888888'
   },
   activeStarColor: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   activePercentBarColor: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   percentBarColor: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   titleAlign: {
-    type: "string",
-    "default": "left"
+    type: 'string',
+    "default": 'left'
   },
   authorAlign: {
-    type: "string",
-    "default": "left"
+    type: 'string',
+    "default": 'left'
   },
   enableCTA: {
-    type: "boolean",
+    type: 'boolean',
     "default": true
   },
   ctaNoFollow: {
-    type: "boolean",
+    type: 'boolean',
     "default": true
   },
   ctaOpenInNewTab: {
-    type: "boolean",
+    type: 'boolean',
     "default": true
   },
   ctaIsSponsored: {
-    type: "boolean",
+    type: 'boolean',
     "default": false
   },
   ctaAlignment: {
-    type: "string",
-    "default": "left"
+    type: 'string',
+    "default": 'left'
   },
   enableReviewSchema: {
-    type: "boolean",
+    type: 'boolean',
     "default": true
   },
   enableImage: {
-    type: "boolean",
+    type: 'boolean',
     "default": false
   },
   enableDescription: {
-    type: "boolean",
+    type: 'boolean',
     "default": false
   },
   starOutlineColor: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   imageSize: {
-    type: "number",
+    type: 'number',
     "default": 100 //range: 0-200
 
   },
   brand: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   sku: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   identifier: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   identifierType: {
-    type: "string",
-    "default": "gtin" // nsn, mpn, gtin8, gtin12, gtin13, gtin14, gtin
+    type: 'string',
+    "default": 'gtin' // nsn, mpn, gtin8, gtin12, gtin13, gtin14, gtin
 
   },
   offerType: {
-    type: "string",
-    "default": "Offer" //can also be set to aggregate offer (which prevevnts calltoactionurl from being  used as offer url)
+    type: 'string',
+    "default": 'Offer' //can also be set to aggregate offer (which prevevnts calltoactionurl from being  used as offer url)
 
   },
   offerStatus: {
-    type: "string",
-    "default": "InStock" //available values: Discontinued, InStock, InStoreOnly, LimitedAvailability, OnlineOnly, OutOfStock, PreOrder, PreSale, SoldOut
+    type: 'string',
+    "default": 'InStock' //available values: Discontinued, InStock, InStoreOnly, LimitedAvailability, OnlineOnly, OutOfStock, PreOrder, PreSale, SoldOut
 
   },
   //begin aggregate offer-only attributes
   offerHighPrice: {
-    type: "number",
+    type: 'number',
     "default": 0
   },
   offerLowPrice: {
-    type: "number",
+    type: 'number',
     "default": 0
   },
   offerCount: {
-    type: "number",
+    type: 'number',
     "default": 0
   },
   //end aggregate offer-only attributes
   offerPrice: {
     //only for offer
-    type: "number",
+    type: 'number',
     "default": 0
   },
   offerCurrency: {
-    type: "string",
-    "default": "USD"
+    type: 'string',
+    "default": 'USD'
   },
   offerExpiry: {
-    type: "number",
+    type: 'number',
     //default: 60 * (10080 + Math.ceil(Date.now() / 60000)),
     "default": 0
   },
   usePhysicalAddress: {
-    type: "boolean",
+    type: 'boolean',
     "default": true //can be set to false when using event itemType
 
   },
   address: {
     //for localbusiness location, organiztion location, and event location
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   addressName: {
     //for event location
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   url: {
     //for event and organization virtual location
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   reviewPublisher: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   reviewPublicationDate: {
-    type: "number",
+    type: 'number',
     "default": Math.ceil(Date.now() / 1000)
   },
   //beginning of book-only attributes
   bookAuthorName: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   isbn: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   //end of book-only attributes
   cuisines: {
     //for restaurant
-    type: "array",
+    type: 'array',
     "default": [] //should be an array of strings
 
   },
   phoneNumber: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   priceRange: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   appCategory: {
     //softwareapplication only
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   operatingSystem: {
     //softwareapplication only
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   provider: {
     //for course
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   //beginning of event-only attributes
   eventStartDate: {
-    type: "number",
+    type: 'number',
     "default": 60 * (1440 + Math.ceil(Date.now() / 60000)) // 24 hours from Date.now
 
   },
   eventEndDate: {
-    type: "number",
+    type: 'number',
     "default": 0 //toggling an option should set this to 48 hours from Date.now
 
   },
   eventPage: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   organizer: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   performer: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   },
   //end event only attributes
   //begin video object attributes
   videoUploadDate: {
-    type: "number",
+    type: 'number',
     "default": Math.ceil(Date.now() / 1000)
   },
   videoURL: {
-    type: "string",
-    "default": ""
+    type: 'string',
+    "default": ''
   }
 };
 
 function ReviewMain(props) {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(""),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       editable = _useState2[0],
       _setEditable = _useState2[1];
@@ -36997,7 +36998,7 @@ function ReviewMain(props) {
       editedStar = _useState4[0],
       setEditedStar = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(""),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(''),
       _useState6 = _slicedToArray(_useState5, 2),
       lastCuisine = _useState6[0],
       setLastCuisine = _useState6[1];
@@ -37007,17 +37008,17 @@ function ReviewMain(props) {
       setEventEndDate = _useState8[0],
       toggleSetEventEndDate = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)("0"),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)('0'),
       _useState10 = _slicedToArray(_useState9, 2),
       offerPriceRaw = _useState10[0],
       setOfferPriceRaw = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)("0"),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)('0'),
       _useState12 = _slicedToArray(_useState11, 2),
       offerHighPriceRaw = _useState12[0],
       setOfferHighPriceRaw = _useState12[1];
 
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)("0"),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)('0'),
       _useState14 = _slicedToArray(_useState13, 2),
       offerLowPriceRaw = _useState14[0],
       setOfferLowPriceRaw = _useState14[1];
@@ -37112,21 +37113,21 @@ function ReviewMain(props) {
 
   var setAlignment = function setAlignment(target, value) {
     switch (target) {
-      case "reviewTitle":
+      case 'reviewTitle':
         _setAttributes({
           titleAlign: value
         });
 
         break;
 
-      case "reviewAuthor":
+      case 'reviewAuthor':
         _setAttributes({
           authorAlign: value
         });
 
         break;
 
-      case "reviewItemDescription":
+      case 'reviewItemDescription':
         _setAttributes({
           descriptionAlign: value
         });
@@ -37137,13 +37138,13 @@ function ReviewMain(props) {
 
   var getCurrentAlignment = function getCurrentAlignment(target) {
     switch (target) {
-      case "reviewTitle":
+      case 'reviewTitle':
         return titleAlign;
 
-      case "reviewAuthor":
+      case 'reviewAuthor':
         return authorAlign;
 
-      case "reviewItemDescription":
+      case 'reviewItemDescription':
         return descriptionAlign;
     }
   };
@@ -37151,37 +37152,37 @@ function ReviewMain(props) {
   (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
     var initialAttributes = {};
 
-    if (blockID === "") {
+    if (blockID === '') {
       Object.assign(initialAttributes, {
         blockID: block.clientId,
-        starOutlineColor: "#f7b708",
-        activeStarColor: "#f7b708"
+        starOutlineColor: '#f7b708',
+        activeStarColor: '#f7b708'
       });
     } else {
       if (getClientIdsWithDescendants().some(function (ID) {
-        return "blockID" in getBlock(ID).attributes && getBlock(ID).attributes.blockID === blockID;
+        return 'blockID' in getBlock(ID).attributes && getBlock(ID).attributes.blockID === blockID;
       })) {
         Object.assign(initialAttributes, {
           blockID: block.clientId
         });
       }
 
-      if (starOutlineColor === "") {
+      if (starOutlineColor === '') {
         Object.assign(initialAttributes, {
-          starOutlineColor: "#000000"
+          starOutlineColor: '#000000'
         });
       }
 
-      if (activeStarColor === "") {
+      if (activeStarColor === '') {
         Object.assign(initialAttributes, {
-          activeStarColor: "#eeee00"
+          activeStarColor: '#eeee00'
         });
       }
     }
 
     _setAttributes(initialAttributes);
 
-    if (items && items !== JSON.stringify(parts) && parts.length === 1 && parts[0].label === "" && parts[0].value === 0) {
+    if (items && items !== JSON.stringify(parts) && parts.length === 1 && parts[0].label === '' && parts[0].value === 0) {
       _setAttributes({
         parts: JSON.parse(items),
         items: '[{"label":"","value":0}]'
@@ -37196,50 +37197,50 @@ function ReviewMain(props) {
 
   var itemTypeExtras;
   var subtypeCategories = {
-    Book: ["Audiobook"],
-    Event: ["BusinessEvent", "ChildrensEvent", "ComedyEvent", "CourseInstance", "DanceEvent", "DeliveryEvent", "EducationEvent", "EventSeries", //pending
-    "Festival", "FoodEvent", "Hackathon", //pending
-    "LiteraryEvent", "MusicEvent", "PublicationEvent", "SaleEvent", "ScreeningEvent", "SocialEvent", "SportsEvent", "TheaterEvent", "VisualArtsEvent"],
-    Game: ["VideoGame"],
-    LocalBusiness: ["AnimalShelter", "ArchiveOrganization", //pending
-    "AutomotiveBusiness", "ChildCare", "Dentist", "DryCleaningOrLaundry", "EmergencyService", "EmploymentAgency", "EntertainmentBusiness", "FinancialService", "FoodEstablishment", "GovernmentOffice", "HealthAndBeautyBusiness", "HomeAndConstructionBusiness", "InternetCafe", "LegalService", "Library", "LodgingBusiness", "MedicalBusiness", "ProfessionalService", "RadioStation", "RealEstateAgent", "RecyclingCenter", "SelfStorage", "ShoppingCenter", "SportsActivityLocation", "TelevisionStation", "TouristInformationCenter", "TravelAgency"],
-    MediaObject: ["3DModel", //pending
-    "AudioObject", "DataDownload", "ImageObject", "LegislationObject", //pending
-    "MusicVideoObject", "VideoObject"],
-    MusicPlaylist: ["MusicAlbum", "MusicRelease"],
-    Organization: ["Airline", "Consortium", //pending
-    "Corporation", "EducationalOrganization", "FundingScheme", //pending
-    "GovernmentOrganization", "LibrarySystem", //pending
-    "MedicalOrganization", "NewsMediaOrganization", //pending
-    "NGO", "PerformingGroup", "Project", //pending
-    "SportsOrganization", "WorkersUnion"],
-    Product: ["IndividualProduct", "ProductCollection", "ProductGroup", "ProductModel", "SomeProducts", "Vehicle"],
-    SoftwareApplication: ["MobileApplication", "VideoGame", "WebApplication"]
+    Book: ['Audiobook'],
+    Event: ['BusinessEvent', 'ChildrensEvent', 'ComedyEvent', 'CourseInstance', 'DanceEvent', 'DeliveryEvent', 'EducationEvent', 'EventSeries', //pending
+    'Festival', 'FoodEvent', 'Hackathon', //pending
+    'LiteraryEvent', 'MusicEvent', 'PublicationEvent', 'SaleEvent', 'ScreeningEvent', 'SocialEvent', 'SportsEvent', 'TheaterEvent', 'VisualArtsEvent'],
+    Game: ['VideoGame'],
+    LocalBusiness: ['AnimalShelter', 'ArchiveOrganization', //pending
+    'AutomotiveBusiness', 'ChildCare', 'Dentist', 'DryCleaningOrLaundry', 'EmergencyService', 'EmploymentAgency', 'EntertainmentBusiness', 'FinancialService', 'FoodEstablishment', 'GovernmentOffice', 'HealthAndBeautyBusiness', 'HomeAndConstructionBusiness', 'InternetCafe', 'LegalService', 'Library', 'LodgingBusiness', 'MedicalBusiness', 'ProfessionalService', 'RadioStation', 'RealEstateAgent', 'RecyclingCenter', 'SelfStorage', 'ShoppingCenter', 'SportsActivityLocation', 'TelevisionStation', 'TouristInformationCenter', 'TravelAgency'],
+    MediaObject: ['3DModel', //pending
+    'AudioObject', 'DataDownload', 'ImageObject', 'LegislationObject', //pending
+    'MusicVideoObject', 'VideoObject'],
+    MusicPlaylist: ['MusicAlbum', 'MusicRelease'],
+    Organization: ['Airline', 'Consortium', //pending
+    'Corporation', 'EducationalOrganization', 'FundingScheme', //pending
+    'GovernmentOrganization', 'LibrarySystem', //pending
+    'MedicalOrganization', 'NewsMediaOrganization', //pending
+    'NGO', 'PerformingGroup', 'Project', //pending
+    'SportsOrganization', 'WorkersUnion'],
+    Product: ['IndividualProduct', 'ProductCollection', 'ProductGroup', 'ProductModel', 'SomeProducts', 'Vehicle'],
+    SoftwareApplication: ['MobileApplication', 'VideoGame', 'WebApplication']
   };
   var subsubtypes = {
-    PublicationEvent: ["BroadcastEvent", "OnDemandEvent"],
-    EducationalOrganization: ["CollegeOrUniversity", "ElementarySchool", "HighSchool", "MiddleSchool", "Preschool", "School"],
-    MedicalOrganization: ["Dentist", "DiagnosticLab", "Hospital", "MedicalClinic", "Pharmacy", "Physician", "VeterinaryCare"],
-    PerformingGroup: ["DanceGroup", "MusicGroup", "TheaterGroup"],
-    Project: ["FundingAgency", "ResearchProject"],
-    SportsOrganization: ["SportsTeam"],
-    AutomotiveBusiness: ["AutoBodyShop", "AutoDealer", "AutoPartsStore", "AutoRental", "AutoRepair", "AutoWash", "GasStation", "MotorcycleDealer", "MotorcycleRepair"],
-    EmergencyService: ["FireStation", "Hospital", "PoliceStation"],
-    EntertainmentBusiness: ["AdultEntertainment", "AmusementPark", "ArtGallery", "Casino", "ComedyClub", "MovieTheater", "NightClub"],
-    FinancialService: ["AccountingService", "AutomatedTeller", "BankOrCreditUnion", "InsuranceAgency"],
-    FoodEstablishment: ["Bakery", "BarOrPub", "Brewery", "CafeOrCoffeeShop", "Distillery", "FastFoodRestaurant", "IceCreamShop", "Restaurant", "Winery"],
-    GovernmentOffice: ["PostOffice"],
-    HealthAndBeautyBusiness: ["BeautySalon", "DaySpa", "HairSalon", "HealthClub", "NailSalon", "TattooParlor"],
-    HomeAndConstructionBusiness: ["Electrician", "GeneralContractor", "HVACBusiness", "HousePainter", "Locksmith", "MovingCompany", "Plumber", "RoofingContractor"],
-    LegalService: ["Attorney", "Notary"],
-    LodgingBusiness: ["BedAndBreakfast", "Campground", "Hostel", "Hotel", "Motel", "Resort"],
+    PublicationEvent: ['BroadcastEvent', 'OnDemandEvent'],
+    EducationalOrganization: ['CollegeOrUniversity', 'ElementarySchool', 'HighSchool', 'MiddleSchool', 'Preschool', 'School'],
+    MedicalOrganization: ['Dentist', 'DiagnosticLab', 'Hospital', 'MedicalClinic', 'Pharmacy', 'Physician', 'VeterinaryCare'],
+    PerformingGroup: ['DanceGroup', 'MusicGroup', 'TheaterGroup'],
+    Project: ['FundingAgency', 'ResearchProject'],
+    SportsOrganization: ['SportsTeam'],
+    AutomotiveBusiness: ['AutoBodyShop', 'AutoDealer', 'AutoPartsStore', 'AutoRental', 'AutoRepair', 'AutoWash', 'GasStation', 'MotorcycleDealer', 'MotorcycleRepair'],
+    EmergencyService: ['FireStation', 'Hospital', 'PoliceStation'],
+    EntertainmentBusiness: ['AdultEntertainment', 'AmusementPark', 'ArtGallery', 'Casino', 'ComedyClub', 'MovieTheater', 'NightClub'],
+    FinancialService: ['AccountingService', 'AutomatedTeller', 'BankOrCreditUnion', 'InsuranceAgency'],
+    FoodEstablishment: ['Bakery', 'BarOrPub', 'Brewery', 'CafeOrCoffeeShop', 'Distillery', 'FastFoodRestaurant', 'IceCreamShop', 'Restaurant', 'Winery'],
+    GovernmentOffice: ['PostOffice'],
+    HealthAndBeautyBusiness: ['BeautySalon', 'DaySpa', 'HairSalon', 'HealthClub', 'NailSalon', 'TattooParlor'],
+    HomeAndConstructionBusiness: ['Electrician', 'GeneralContractor', 'HVACBusiness', 'HousePainter', 'Locksmith', 'MovingCompany', 'Plumber', 'RoofingContractor'],
+    LegalService: ['Attorney', 'Notary'],
+    LodgingBusiness: ['BedAndBreakfast', 'Campground', 'Hostel', 'Hotel', 'Motel', 'Resort'],
     MedicalBusiness: [//only subtypes that support reviews are included
-    "Dentist", "MedicalClinic", "Optician", "Pharmacy", "Physician"],
-    SportsActivityLocation: ["BowlingAlley", "ExerciseGym", "GolfCourse", "HealthClub", "PublicSwimmingPool", "SkiResort", "SportsClub", "StadiumOrArena", "TennisComplex"],
-    Store: ["AutoPartsStore", "BikeStore", "BookStore", "ClothingStore", "ComputerStore", "ConvenienceStore", "DepartmentStore", "ElectronicsStore", "Florist", "FurnitureStore", "GardenStore", "GroceryStore", "HardwareStore", "HobbyShop", "HomeGoodsStore", "JewelryStore", "LiquorStore", "MensClothingStore", "MobilePhoneStore", "MovieRentalStore", "MusicStore", "OfficeEquipmentStore", "OutletStore", "PawnShop", "PetStore", "ShoeStore", "SportingGoodsStore", "TireShop", "ToyStore", "WholesaleStore"]
+    'Dentist', 'MedicalClinic', 'Optician', 'Pharmacy', 'Physician'],
+    SportsActivityLocation: ['BowlingAlley', 'ExerciseGym', 'GolfCourse', 'HealthClub', 'PublicSwimmingPool', 'SkiResort', 'SportsClub', 'StadiumOrArena', 'TennisComplex'],
+    Store: ['AutoPartsStore', 'BikeStore', 'BookStore', 'ClothingStore', 'ComputerStore', 'ConvenienceStore', 'DepartmentStore', 'ElectronicsStore', 'Florist', 'FurnitureStore', 'GardenStore', 'GroceryStore', 'HardwareStore', 'HobbyShop', 'HomeGoodsStore', 'JewelryStore', 'LiquorStore', 'MensClothingStore', 'MobilePhoneStore', 'MovieRentalStore', 'MusicStore', 'OfficeEquipmentStore', 'OutletStore', 'PawnShop', 'PetStore', 'ShoeStore', 'SportingGoodsStore', 'TireShop', 'ToyStore', 'WholesaleStore']
   };
   var addressInput = /*#__PURE__*/React.createElement(TextControl, {
-    label: __("Address"),
+    label: __('Address'),
     value: address,
     onChange: function onChange(address) {
       return _setAttributes({
@@ -37247,36 +37248,36 @@ function ReviewMain(props) {
       });
     }
   });
-  var cuisineInput = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, __("Serves cuisine")), /*#__PURE__*/React.createElement("ul", {
+  var cuisineInput = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, __('Serves cuisine')), /*#__PURE__*/React.createElement("ul", {
     className: "ub_review_cuisine_list"
   }, Array.isArray(cuisines) && cuisines.length > 0 ? cuisines.map(function (c, i) {
     return /*#__PURE__*/React.createElement("li", null, c, /*#__PURE__*/React.createElement("span", {
-      "class": "dashicons dashicons-dismiss",
+      className: "dashicons dashicons-dismiss",
       onClick: function onClick() {
         _setAttributes({
           cuisines: [].concat(_toConsumableArray(cuisines.slice(0, i)), _toConsumableArray(cuisines.slice(i + 1)))
         });
       }
     }));
-  }) : /*#__PURE__*/React.createElement("span", null, __("Cuisine list empty"))), /*#__PURE__*/React.createElement("label", null, __("Add a cuisine to the list")), /*#__PURE__*/React.createElement("input", {
+  }) : /*#__PURE__*/React.createElement("span", null, __('Cuisine list empty'))), /*#__PURE__*/React.createElement("label", null, __('Add a cuisine to the list')), /*#__PURE__*/React.createElement("input", {
     type: "text",
     value: lastCuisine,
     onKeyUp: function onKeyUp(e) {
-      if (e.key === "Enter" && e.target.value !== "") {
+      if (e.key === 'Enter' && e.target.value !== '') {
         _setAttributes({
           cuisines: [].concat(_toConsumableArray(cuisines), [e.target.value])
         });
 
-        setLastCuisine("");
+        setLastCuisine('');
       }
     },
     onChange: function onChange(e) {
-      if (e.target.value.includes(",")) {
-        var latestItemArray = e.target.value.split(",");
+      if (e.target.value.includes(',')) {
+        var latestItemArray = e.target.value.split(',');
 
-        if (latestItemArray[0] !== "") {
+        if (latestItemArray[0] !== '') {
           _setAttributes({
-            cuisines: [].concat(_toConsumableArray(cuisines.length > 1 || cuisines[0] !== "" ? cuisines : []), _toConsumableArray(latestItemArray.slice(0, latestItemArray.length - 1)))
+            cuisines: [].concat(_toConsumableArray(cuisines.length > 1 || cuisines[0] !== '' ? cuisines : []), _toConsumableArray(latestItemArray.slice(0, latestItemArray.length - 1)))
           });
 
           setLastCuisine(latestItemArray[latestItemArray.length - 1]);
@@ -37286,12 +37287,12 @@ function ReviewMain(props) {
       }
     },
     onBlur: function onBlur() {
-      if (lastCuisine !== "") {
+      if (lastCuisine !== '') {
         _setAttributes({
-          cuisines: [].concat(_toConsumableArray(cuisines.length > 1 || cuisines[0] !== "" ? cuisines : []), [lastCuisine])
+          cuisines: [].concat(_toConsumableArray(cuisines.length > 1 || cuisines[0] !== '' ? cuisines : []), [lastCuisine])
         });
 
-        setLastCuisine("");
+        setLastCuisine('');
       }
     }
   }));
@@ -37307,17 +37308,17 @@ function ReviewMain(props) {
       });
     }
   }));
-  var offerAttributes = ["offerType", "offerStatus", "offerHighPrice", "offerLowPrice", "offerCount", "offerPrice", "offerCurrency", "offerExpiry"];
-  var unusedDefaults = ["bookAuthorName", "isbn", "provider"].concat(offerAttributes, ["startDate", "endDate", "usePhysicalAddress", "addressName", "address", "eventPage", "itemPage", "organizer", "performer", "brand", "sku", "identifierType", "identifier", "cuisines", "phoneNumber", "priceRange", "appCategory", "operatingSystem", "videoUploadDate", "videoURL"]);
+  var offerAttributes = ['offerType', 'offerStatus', 'offerHighPrice', 'offerLowPrice', 'offerCount', 'offerPrice', 'offerCurrency', 'offerExpiry'];
+  var unusedDefaults = ['bookAuthorName', 'isbn', 'provider'].concat(offerAttributes, ['startDate', 'endDate', 'usePhysicalAddress', 'addressName', 'address', 'eventPage', 'itemPage', 'organizer', 'performer', 'brand', 'sku', 'identifierType', 'identifier', 'cuisines', 'phoneNumber', 'priceRange', 'appCategory', 'operatingSystem', 'videoUploadDate', 'videoURL']);
 
   switch (itemType) {
     default:
       //there's nothing to add
       break;
 
-    case "Book":
+    case 'Book':
       itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
-        label: __("ISBN"),
+        label: __('ISBN'),
         value: isbn,
         onChange: function onChange(isbn) {
           return _setAttributes({
@@ -37325,7 +37326,7 @@ function ReviewMain(props) {
           });
         }
       }), /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Book author name"),
+        label: __('Book author name'),
         value: bookAuthorName,
         onChange: function onChange(bookAuthorName) {
           return _setAttributes({
@@ -37333,12 +37334,12 @@ function ReviewMain(props) {
           });
         }
       }), itemURLInput);
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ["isbn", "bookAuthorName", "itemPage"]);
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ['isbn', 'bookAuthorName', 'itemPage']);
       break;
 
-    case "Course":
+    case 'Course':
       itemTypeExtras = /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Provider"),
+        label: __('Provider'),
         value: provider,
         onChange: function onChange(provider) {
           return _setAttributes({
@@ -37346,11 +37347,11 @@ function ReviewMain(props) {
           });
         }
       });
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, "provider");
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, 'provider');
       break;
 
-    case "Event":
-      itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, __("Event start date")), /*#__PURE__*/React.createElement(DatePicker, {
+    case 'Event':
+      itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, __('Event start date')), /*#__PURE__*/React.createElement(DatePicker, {
         currentDate: eventStartDate * 1000,
         onChange: function onChange(newDate) {
           var newDateVal = Math.floor(Date.parse(newDate) / 1000);
@@ -37367,9 +37368,9 @@ function ReviewMain(props) {
         }
       }), /*#__PURE__*/React.createElement("label", {
         htmlFor: "ub-review-event-date-toggle"
-      }, __("Use event end date")), /*#__PURE__*/React.createElement(FormToggle, {
+      }, __('Use event end date')), /*#__PURE__*/React.createElement(FormToggle, {
         id: "ub-review-event-date-toggle",
-        label: __("Set event end date"),
+        label: __('Set event end date'),
         checked: setEventEndDate,
         onChange: function onChange() {
           toggleSetEventEndDate(!setEventEndDate);
@@ -37378,7 +37379,7 @@ function ReviewMain(props) {
             eventEndDate: setEventEndDate ? 0 : 86400 + eventStartDate
           });
         }
-      }), setEventEndDate && [/*#__PURE__*/React.createElement("h3", null, __("Event end date")), /*#__PURE__*/React.createElement(DatePicker, {
+      }), setEventEndDate && [/*#__PURE__*/React.createElement("h3", null, __('Event end date')), /*#__PURE__*/React.createElement(DatePicker, {
         currentDate: eventEndDate * 1000,
         onChange: function onChange(newDate) {
           return _setAttributes({
@@ -37386,7 +37387,7 @@ function ReviewMain(props) {
           });
         }
       })], /*#__PURE__*/React.createElement(PanelBody, {
-        title: __("Event venue"),
+        title: __('Event venue'),
         initialOpen: true
       }, /*#__PURE__*/React.createElement(Button, {
         icon: "admin-home",
@@ -37397,7 +37398,7 @@ function ReviewMain(props) {
           });
         },
         showTooltip: true,
-        label: "Use physical location"
+        label: 'Use physical location'
       }), /*#__PURE__*/React.createElement(Button, {
         icon: "admin-site-alt3",
         isPrimary: !usePhysicalAddress,
@@ -37407,9 +37408,9 @@ function ReviewMain(props) {
           });
         },
         showTooltip: true,
-        label: "Use virtual location"
+        label: 'Use virtual location'
       }), usePhysicalAddress ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Address Name"),
+        label: __('Address Name'),
         value: addressName,
         onChange: function onChange(addressName) {
           return _setAttributes({
@@ -37419,7 +37420,7 @@ function ReviewMain(props) {
       }), addressInput) : /*#__PURE__*/React.createElement("div", {
         id: "ub_review_event_page_input"
       }, /*#__PURE__*/React.createElement(URLInput, {
-        label: __("Event Page"),
+        label: __('Event Page'),
         autoFocus: false,
         value: eventPage,
         onChange: function onChange(eventPage) {
@@ -37428,7 +37429,7 @@ function ReviewMain(props) {
           });
         }
       }))), /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Performer"),
+        label: __('Performer'),
         value: performer,
         onChange: function onChange(performer) {
           return _setAttributes({
@@ -37436,7 +37437,7 @@ function ReviewMain(props) {
           });
         }
       }), /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Organizer"),
+        label: __('Organizer'),
         value: organizer,
         onChange: function onChange(organizer) {
           return _setAttributes({
@@ -37444,12 +37445,12 @@ function ReviewMain(props) {
           });
         }
       }));
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, [].concat(offerAttributes, ["startDate", "endDate", "usePhysicalAddress", "addressName", "address", "eventPage", "organizer", "performer"]));
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, [].concat(offerAttributes, ['startDate', 'endDate', 'usePhysicalAddress', 'addressName', 'address', 'eventPage', 'organizer', 'performer']));
       break;
 
-    case "Product":
+    case 'Product':
       itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Brand"),
+        label: __('Brand'),
         value: brand,
         onChange: function onChange(brand) {
           return _setAttributes({
@@ -37457,7 +37458,7 @@ function ReviewMain(props) {
           });
         }
       }), /*#__PURE__*/React.createElement(TextControl, {
-        label: __("SKU"),
+        label: __('SKU'),
         value: sku,
         onChange: function onChange(sku) {
           return _setAttributes({
@@ -37465,7 +37466,7 @@ function ReviewMain(props) {
           });
         }
       }), /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Identifier"),
+        label: __('Identifier'),
         value: identifier,
         onChange: function onChange(identifier) {
           return _setAttributes({
@@ -37473,9 +37474,9 @@ function ReviewMain(props) {
           });
         }
       }), /*#__PURE__*/React.createElement(SelectControl, {
-        label: __("Identifier type"),
+        label: __('Identifier type'),
         value: identifierType,
-        options: ["nsn", "mpn", "gtin8", "gtin12", "gtin13", "gtin14", "gtin"].map(function (a) {
+        options: ['nsn', 'mpn', 'gtin8', 'gtin12', 'gtin13', 'gtin14', 'gtin'].map(function (a) {
           return {
             label: __(a.toUpperCase()),
             value: a
@@ -37487,12 +37488,12 @@ function ReviewMain(props) {
           });
         }
       }));
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ["brand", "sku", "identifiertype", "identifier"].concat(offerAttributes));
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ['brand', 'sku', 'identifiertype', 'identifier'].concat(offerAttributes));
       break;
 
-    case "LocalBusiness":
-      itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, itemSubtype === "FoodEstablishment" && itemSubsubtype !== "Distillery" && cuisineInput, !(["AnimalShelter", "ArchiveOrganization"].includes(itemSubtype) || ["FireStation", "PoliceStation"].includes(itemSubsubtype)) && /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Price Range"),
+    case 'LocalBusiness':
+      itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, itemSubtype === 'FoodEstablishment' && itemSubsubtype !== 'Distillery' && cuisineInput, !(['AnimalShelter', 'ArchiveOrganization'].includes(itemSubtype) || ['FireStation', 'PoliceStation'].includes(itemSubsubtype)) && /*#__PURE__*/React.createElement(TextControl, {
+        label: __('Price Range'),
         value: priceRange,
         onChange: function onChange(priceRange) {
           return _setAttributes({
@@ -37500,7 +37501,7 @@ function ReviewMain(props) {
           });
         }
       }), addressInput, /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Telephone Number"),
+        label: __('Telephone Number'),
         type: "tel",
         value: phoneNumber,
         onChange: function onChange(phoneNumber) {
@@ -37510,21 +37511,21 @@ function ReviewMain(props) {
         }
       }), itemURLInput);
 
-      if (itemSubtype === "FoodEstablishment" && itemSubsubtype !== "Distillery") {
-        unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, "cuisines");
+      if (itemSubtype === 'FoodEstablishment' && itemSubsubtype !== 'Distillery') {
+        unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, 'cuisines');
       }
 
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ["address", "itemPage", "phoneNumber", "priceRange"]);
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ['address', 'itemPage', 'phoneNumber', 'priceRange']);
       break;
 
-    case "Movie":
+    case 'Movie':
       itemTypeExtras = itemURLInput;
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ["itemPage"]);
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ['itemPage']);
       break;
 
-    case "Organization":
-      itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, (itemSubsubtype === "Hospital" || subsubtypes.MedicalBusiness.includes(itemSubsubtype)) && /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Price Range"),
+    case 'Organization':
+      itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, (itemSubsubtype === 'Hospital' || subsubtypes.MedicalBusiness.includes(itemSubsubtype)) && /*#__PURE__*/React.createElement(TextControl, {
+        label: __('Price Range'),
         value: priceRange,
         onChange: function onChange(priceRange) {
           return _setAttributes({
@@ -37532,7 +37533,7 @@ function ReviewMain(props) {
           });
         }
       }), addressInput, /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Telephone Number"),
+        label: __('Telephone Number'),
         type: "tel",
         value: phoneNumber,
         onChange: function onChange(phoneNumber) {
@@ -37541,12 +37542,12 @@ function ReviewMain(props) {
           });
         }
       }));
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ["address", "phoneNumber", "priceRange"]);
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ['address', 'phoneNumber', 'priceRange']);
       break;
 
-    case "SoftwareApplication":
+    case 'SoftwareApplication':
       itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Application Category"),
+        label: __('Application Category'),
         value: appCategory,
         onChange: function onChange(appCategory) {
           return _setAttributes({
@@ -37554,7 +37555,7 @@ function ReviewMain(props) {
           });
         }
       }), /*#__PURE__*/React.createElement(TextControl, {
-        label: __("Operating System"),
+        label: __('Operating System'),
         value: operatingSystem,
         onChange: function onChange(operatingSystem) {
           return _setAttributes({
@@ -37562,12 +37563,12 @@ function ReviewMain(props) {
           });
         }
       }));
-      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, [].concat(offerAttributes, ["appCategory", "operatingSystem"]));
+      unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, [].concat(offerAttributes, ['appCategory', 'operatingSystem']));
       break;
 
-    case "MediaObject":
-      if (itemSubtype === "VideoObject") {
-        itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, __("Video upload date")), ",", /*#__PURE__*/React.createElement(DatePicker, {
+    case 'MediaObject':
+      if (itemSubtype === 'VideoObject') {
+        itemTypeExtras = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", null, __('Video upload date')), ",", /*#__PURE__*/React.createElement(DatePicker, {
           currentDate: videoUploadDate * 1000,
           onChange: function onChange(newDate) {
             return _setAttributes({
@@ -37577,7 +37578,7 @@ function ReviewMain(props) {
         }), /*#__PURE__*/React.createElement("div", {
           id: "ub_review_video_url_input"
         }, /*#__PURE__*/React.createElement(URLInput, {
-          label: __("Video URL"),
+          label: __('Video URL'),
           autoFocus: false,
           value: videoURL,
           onChange: function onChange(videoURL) {
@@ -37586,7 +37587,7 @@ function ReviewMain(props) {
             });
           }
         })));
-        unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ["videoUploadDate", "videoURL"]);
+        unusedDefaults = (0,_common__WEBPACK_IMPORTED_MODULE_3__.removeFromArray)(unusedDefaults, ['videoUploadDate', 'videoURL']);
       }
 
       break;
@@ -37613,10 +37614,10 @@ function ReviewMain(props) {
 
   var parser = new DOMParser();
   return /*#__PURE__*/React.createElement(React.Fragment, null, isSelected && /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
-    title: __("Review item rating format")
+    title: __('Review item rating format')
   }, /*#__PURE__*/React.createElement(RadioControl, {
     selected: valueType,
-    options: ["star", "percent"].map(function (a) {
+    options: ['star', 'percent'].map(function (a) {
       return {
         label: __(a),
         value: a
@@ -37630,17 +37631,17 @@ function ReviewMain(props) {
         parts: parts.map(function (p) {
           return {
             label: p.label,
-            value: valueType === "star" ? p.value * factor : p.value / factor
+            value: valueType === 'star' ? p.value * factor : p.value / factor
           };
         }),
-        activePercentBarColor: valueType === "star" && !activePercentBarColor ? "#f63d3d" : activePercentBarColor
+        activePercentBarColor: valueType === 'star' && !activePercentBarColor ? '#f63d3d' : activePercentBarColor
       });
     }
   })), /*#__PURE__*/React.createElement(PanelBody, {
-    title: __("Value settings"),
+    title: __('Value settings'),
     initialOpen: false
   }, editedStar > -1 && /*#__PURE__*/React.createElement(RangeControl, {
-    label: __("Value for ".concat(parser.parseFromString(parts[editedStar].label, "text/html").body.textContent || "current feature")),
+    label: __("Value for ".concat(parser.parseFromString(parts[editedStar].label, 'text/html').body.textContent || 'current feature')),
     value: parts[editedStar].value,
     onChange: function onChange(newValue) {
       _setAttributes({
@@ -37649,11 +37650,11 @@ function ReviewMain(props) {
         })], _toConsumableArray(parts.slice(editedStar + 1)))
       });
     },
-    min: valueType === "star" ? 0 : 1,
-    max: valueType === "star" ? starCount : 100,
-    step: valueType === "star" ? 0.1 : 1
-  }), valueType === "star" ? /*#__PURE__*/React.createElement(PanelColorSettings, {
-    title: __("Star Colors"),
+    min: valueType === 'star' ? 0 : 1,
+    max: valueType === 'star' ? starCount : 100,
+    step: valueType === 'star' ? 0.1 : 1
+  }), valueType === 'star' ? /*#__PURE__*/React.createElement(PanelColorSettings, {
+    title: __('Star Colors'),
     initialOpen: true,
     colorSettings: [{
       value: activeStarColor,
@@ -37662,7 +37663,7 @@ function ReviewMain(props) {
           activeStarColor: colorValue
         });
       },
-      label: __("Active Star Color")
+      label: __('Active Star Color')
     }, {
       value: inactiveStarColor,
       onChange: function onChange(colorValue) {
@@ -37670,7 +37671,7 @@ function ReviewMain(props) {
           inactiveStarColor: colorValue
         });
       },
-      label: __("Inactive Star Color")
+      label: __('Inactive Star Color')
     }, {
       value: starOutlineColor,
       onChange: function onChange(colorValue) {
@@ -37678,10 +37679,10 @@ function ReviewMain(props) {
           starOutlineColor: colorValue
         });
       },
-      label: __("Star Outline Color")
+      label: __('Star Outline Color')
     }]
   }) : /*#__PURE__*/React.createElement(PanelColorSettings, {
-    title: __("Percentage Bar Colors"),
+    title: __('Percentage Bar Colors'),
     colorSettings: [{
       value: activePercentBarColor,
       onChange: function onChange(colorValue) {
@@ -37689,7 +37690,7 @@ function ReviewMain(props) {
           activePercentBarColor: colorValue
         });
       },
-      label: __("Main Color")
+      label: __('Main Color')
     }, {
       value: percentBarColor,
       onChange: function onChange(colorValue) {
@@ -37697,10 +37698,10 @@ function ReviewMain(props) {
           percentBarColor: colorValue
         });
       },
-      label: __("Background Color")
+      label: __('Background Color')
     }]
   })), /*#__PURE__*/React.createElement(PanelColorSettings, {
-    title: __("Button Colors"),
+    title: __('Button Colors'),
     initialOpen: false,
     colorSettings: [{
       value: callToActionBackColor,
@@ -37709,7 +37710,7 @@ function ReviewMain(props) {
           callToActionBackColor: colorValue
         });
       },
-      label: __("Button Background")
+      label: __('Button Background')
     }, {
       value: callToActionBorderColor,
       onChange: function onChange(colorValue) {
@@ -37717,7 +37718,7 @@ function ReviewMain(props) {
           callToActionBorderColor: colorValue
         });
       },
-      label: __("Button Border Color")
+      label: __('Button Border Color')
     }, {
       value: callToActionForeColor,
       onChange: function onChange(colorValue) {
@@ -37725,16 +37726,16 @@ function ReviewMain(props) {
           callToActionForeColor: colorValue
         });
       },
-      label: __("Button Text Color")
+      label: __('Button Text Color')
     }]
   }), /*#__PURE__*/React.createElement(PanelBody, {
-    title: __("Call to Action button"),
+    title: __('Call to Action button'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-cta-enable"
-  }, __("Enable")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Enable')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-cta-enable",
-    label: __("Enable"),
+    label: __('Enable'),
     checked: enableCTA,
     onChange: function onChange() {
       return _setAttributes({
@@ -37743,9 +37744,9 @@ function ReviewMain(props) {
     }
   })), enableCTA && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-cta-nofollow"
-  }, __("Add nofollow")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Add nofollow')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-cta-nofollow",
-    label: __("Add nofollow"),
+    label: __('Add nofollow'),
     checked: ctaNoFollow,
     onChange: function onChange() {
       return _setAttributes({
@@ -37754,9 +37755,9 @@ function ReviewMain(props) {
     }
   })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-cta-openinnewtab"
-  }, __("Open link in new tab")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Open link in new tab')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-cta-openinnewtab",
-    label: __("Open link in new tab"),
+    label: __('Open link in new tab'),
     checked: ctaOpenInNewTab,
     onChange: function onChange() {
       return _setAttributes({
@@ -37765,16 +37766,16 @@ function ReviewMain(props) {
     }
   })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-cta-issponsored"
-  }, __("Mark link as sponsored")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Mark link as sponsored')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-cta-issponsored",
-    label: __("Mark link as sponsored"),
+    label: __('Mark link as sponsored'),
     checked: ctaIsSponsored,
     onChange: function onChange() {
       return _setAttributes({
         ctaIsSponsored: !ctaIsSponsored
       });
     }
-  })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", null, __("Alignment")), /*#__PURE__*/React.createElement(ButtonGroup, null, ["left", "center", "right"].map(function (a) {
+  })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", null, __('Alignment')), /*#__PURE__*/React.createElement(ButtonGroup, null, ['left', 'center', 'right'].map(function (a) {
     return /*#__PURE__*/React.createElement(Button, {
       icon: "align-".concat(a),
       isPrimary: ctaAlignment === a,
@@ -37786,9 +37787,9 @@ function ReviewMain(props) {
     });
   }))), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-cta-changefontsize"
-  }, __("Change font size")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Change font size')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-cta-changefontsize",
-    label: __("Change font size"),
+    label: __('Change font size'),
     checked: setCTAFontSize,
     onChange: function onChange() {
       toggleSetCTAFontSize(!setCTAFontSize);
@@ -37800,7 +37801,7 @@ function ReviewMain(props) {
       }
     }
   })), setCTAFontSize && /*#__PURE__*/React.createElement(RangeControl, {
-    label: __("Font size"),
+    label: __('Font size'),
     value: callToActionFontSize,
     onChange: function onChange(callToActionFontSize) {
       return _setAttributes({
@@ -37810,13 +37811,13 @@ function ReviewMain(props) {
     min: 6,
     max: 50
   }))), /*#__PURE__*/React.createElement(PanelBody, {
-    title: __("Review schema"),
+    title: __('Review schema'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-schema-toggle"
-  }, __("Enable review schema")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Enable review schema')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-schema-toggle",
-    label: __("Enable review schema"),
+    label: __('Enable review schema'),
     checked: enableReviewSchema,
     onChange: function onChange() {
       var newAttributes = {
@@ -37834,9 +37835,9 @@ function ReviewMain(props) {
     }
   })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-summary-toggle"
-  }, __("Use review summary")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Use review summary')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-summary-toggle",
-    label: __("Use review summary"),
+    label: __('Use review summary'),
     checked: useSummary,
     onChange: function onChange() {
       return _setAttributes({
@@ -37844,20 +37845,20 @@ function ReviewMain(props) {
       });
     }
   })), enableReviewSchema && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SelectControl, {
-    label: __("Item type"),
+    label: __('Item type'),
     value: itemType,
     onChange: function onChange(itemType) {
       _setAttributes({
         itemType: itemType
       });
 
-      if (itemType === "Movie") {
+      if (itemType === 'Movie') {
         _setAttributes({
           enableImage: true
         });
       }
 
-      if (itemType === "Course") {
+      if (itemType === 'Course') {
         _setAttributes({
           enableDescription: true
         });
@@ -37865,26 +37866,26 @@ function ReviewMain(props) {
 
       if (!subtypeCategories.hasOwnProperty(itemType) || !subtypeCategories[itemType].includes(itemSubtype)) {
         _setAttributes({
-          itemSubtype: "",
-          itemSubsubtype: ""
+          itemSubtype: '',
+          itemSubsubtype: ''
         });
       }
     },
-    options: ["Book", "Course", "CreativeWorkSeason", "CreativeWorkSeries", "Episode", "Event", "Game", "LocalBusiness", "MediaObject", "Movie", "MusicPlaylist", "MusicRecording", "Organization", "Product", "SoftwareApplication"].map(function (a) {
+    options: ['Book', 'Course', 'CreativeWorkSeason', 'CreativeWorkSeries', 'Episode', 'Event', 'Game', 'LocalBusiness', 'MediaObject', 'Movie', 'MusicPlaylist', 'MusicRecording', 'Organization', 'Product', 'SoftwareApplication'].map(function (a) {
       return {
         label: a,
         value: a
       };
     })
   }), subtypeCategories.hasOwnProperty(itemType) && /*#__PURE__*/React.createElement(SelectControl, {
-    label: __("Item subtype"),
+    label: __('Item subtype'),
     value: itemSubtype,
     onChange: function onChange(itemSubtype) {
       _setAttributes({
         itemSubtype: itemSubtype
       });
 
-      if (itemSubtype === "VideoObject") {
+      if (itemSubtype === 'VideoObject') {
         _setAttributes({
           enableImage: true
         });
@@ -37892,45 +37893,45 @@ function ReviewMain(props) {
 
       if (!subsubtypes.hasOwnProperty(itemSubtype) || !subsubtypes[itemSubtype].includes(itemSubsubtype)) {
         _setAttributes({
-          itemSubsubtype: ""
+          itemSubsubtype: ''
         });
       }
     },
-    options: [""].concat(_toConsumableArray(subtypeCategories[itemType])).map(function (a) {
+    options: [''].concat(_toConsumableArray(subtypeCategories[itemType])).map(function (a) {
       return {
         label: a,
         value: a
       };
     })
   }), subsubtypes.hasOwnProperty(itemSubtype) && /*#__PURE__*/React.createElement(SelectControl, {
-    label: __("Item subsubtype"),
+    label: __('Item subsubtype'),
     value: itemSubsubtype,
     onChange: function onChange(itemSubsubtype) {
       return _setAttributes({
         itemSubsubtype: itemSubsubtype
       });
     },
-    options: [""].concat(_toConsumableArray(subsubtypes[itemSubtype])).map(function (a) {
+    options: [''].concat(_toConsumableArray(subsubtypes[itemSubtype])).map(function (a) {
       return {
         label: a,
         value: a
       };
     })
-  })), /*#__PURE__*/React.createElement(React.Fragment, null, !(enableReviewSchema && (itemType === "Movie" || itemSubtype === "VideoObject")) &&
+  })), /*#__PURE__*/React.createElement(React.Fragment, null, !(enableReviewSchema && (itemType === 'Movie' || itemSubtype === 'VideoObject')) &&
   /*#__PURE__*/
   //images are required for these item types and optional for the rest
   React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-image-toggle"
-  }, __("Enable review image")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Enable review image')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-image-toggle",
-    label: __("Enable review image"),
+    label: __('Enable review image'),
     checked: enableImage,
     onChange: function onChange() {
       return _setAttributes({
         enableImage: !enableImage
       });
     }
-  })), enableImage && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", null, __("Image size")), /*#__PURE__*/React.createElement("input", {
+  })), enableImage && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", null, __('Image size')), /*#__PURE__*/React.createElement("input", {
     type: "number",
     value: imageSize,
     onChange: function onChange(e) {
@@ -37938,60 +37939,60 @@ function ReviewMain(props) {
         imageSize: e.target.value
       });
     }
-  })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", null, __("Image position")), /*#__PURE__*/React.createElement(SelectControl, {
+  })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", null, __('Image position')), /*#__PURE__*/React.createElement(SelectControl, {
     value: imgPosition,
     onChange: function onChange(imgPosition) {
       return _setAttributes({
         imgPosition: imgPosition
       });
     },
-    options: ["left", "right"].concat(_toConsumableArray(enableDescription ? ["top", "bottom"] : [])).map(function (a) {
+    options: ['left', 'right'].concat(_toConsumableArray(enableDescription ? ['top', 'bottom'] : [])).map(function (a) {
       return {
         label: __(a),
         value: a
       };
     })
-  }))), (!enableReviewSchema || itemType !== "Course") && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
+  }))), (!enableReviewSchema || itemType !== 'Course') && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("label", {
     htmlFor: "ub-review-description-toggle"
-  }, __("Enable review description")), /*#__PURE__*/React.createElement(FormToggle, {
+  }, __('Enable review description')), /*#__PURE__*/React.createElement(FormToggle, {
     id: "ub-review-description-toggle",
-    label: __("Enable review description"),
+    label: __('Enable review description'),
     checked: enableDescription,
     onChange: function onChange() {
       _setAttributes({
         enableDescription: !enableDescription
       });
 
-      if (!enableDescription && ["top", "bottom"].includes(imgPosition)) {
+      if (!enableDescription && ['top', 'bottom'].includes(imgPosition)) {
         _setAttributes({
-          imgPosition: "right"
+          imgPosition: 'right'
         });
       }
     }
   }))), enableReviewSchema && /*#__PURE__*/React.createElement(React.Fragment, null, itemTypeExtras, /*#__PURE__*/React.createElement(TextControl, {
-    label: __("Review publisher"),
+    label: __('Review publisher'),
     value: reviewPublisher,
     onChange: function onChange(reviewPublisher) {
       return _setAttributes({
         reviewPublisher: reviewPublisher
       });
     }
-  }), /*#__PURE__*/React.createElement("p", null, __("Review publication date")), /*#__PURE__*/React.createElement(DatePicker, {
+  }), /*#__PURE__*/React.createElement("p", null, __('Review publication date')), /*#__PURE__*/React.createElement(DatePicker, {
     currentDate: reviewPublicationDate * 1000,
     onChange: function onChange(newDate) {
       return _setAttributes({
         reviewPublicationDate: Math.floor(Date.parse(newDate) / 1000)
       });
     }
-  }), ["Event", "Product", "SoftwareApplication"].includes(itemType) && /*#__PURE__*/React.createElement(PanelBody, {
-    title: __("Offer")
+  }), ['Event', 'Product', 'SoftwareApplication'].includes(itemType) && /*#__PURE__*/React.createElement(PanelBody, {
+    title: __('Offer')
   }, /*#__PURE__*/React.createElement(SelectControl, {
-    label: __("Offer Type"),
+    label: __('Offer Type'),
     value: offerType,
-    options: ["Offer", "Aggregate Offer"].map(function (a) {
+    options: ['Offer', 'Aggregate Offer'].map(function (a) {
       return {
         label: __(a),
-        value: a.replace(" ", "")
+        value: a.replace(' ', '')
       };
     }),
     onChange: function onChange(offerType) {
@@ -38000,15 +38001,15 @@ function ReviewMain(props) {
       });
     }
   }), /*#__PURE__*/React.createElement(TextControl, {
-    label: __("Offer Currency"),
+    label: __('Offer Currency'),
     value: offerCurrency,
     onChange: function onChange(offerCurrency) {
       return _setAttributes({
         offerCurrency: offerCurrency
       });
     }
-  }), offerType === "Offer" ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
-    label: __("Offer Price"),
+  }), offerType === 'Offer' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
+    label: __('Offer Price'),
     value: offerPriceRaw,
     onChange: function onChange(val) {
       if (!isNaN(Number(val))) {
@@ -38020,12 +38021,12 @@ function ReviewMain(props) {
       }
     }
   }), /*#__PURE__*/React.createElement(SelectControl, {
-    label: __("Offer Status"),
+    label: __('Offer Status'),
     value: offerStatus,
-    options: ["Discontinued", "In Stock", "In Store Only", "Limited Availability", "Online Only", "Out Of Stock", "Pre Order", "Pre Sale", "Sold Out"].map(function (a) {
+    options: ['Discontinued', 'In Stock', 'In Store Only', 'Limited Availability', 'Online Only', 'Out Of Stock', 'Pre Order', 'Pre Sale', 'Sold Out'].map(function (a) {
       return {
         label: __(a),
-        value: a.replace(" ", "")
+        value: a.replace(' ', '')
       };
     }),
     onChange: function onChange(offerStatus) {
@@ -38034,7 +38035,7 @@ function ReviewMain(props) {
       });
     }
   }), /*#__PURE__*/React.createElement(ToggleControl, {
-    label: __("Offer expiration"),
+    label: __('Offer expiration'),
     checked: offerExpiry > 0,
     onChange: function onChange() {
       return _setAttributes({
@@ -38050,7 +38051,7 @@ function ReviewMain(props) {
       });
     }
   })) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TextControl, {
-    label: __("Offer Count"),
+    label: __('Offer Count'),
     value: offerCount,
     onChange: function onChange(val) {
       return _setAttributes({
@@ -38081,10 +38082,10 @@ function ReviewMain(props) {
         });
       }
     }
-  })))))), isSelected && /*#__PURE__*/React.createElement(BlockControls, null, editable !== "" && /*#__PURE__*/React.createElement(ToolbarGroup, null, ["left", "center", "right", "justify"].map(function (a) {
+  })))))), isSelected && /*#__PURE__*/React.createElement(BlockControls, null, editable !== '' && /*#__PURE__*/React.createElement(ToolbarGroup, null, ['left', 'center', 'right', 'justify'].map(function (a) {
     return /*#__PURE__*/React.createElement(ToolbarButton, {
-      icon: "editor-".concat(a === "justify" ? a : "align" + a),
-      label: __((a !== "justify" ? "Align " : "") + a[0].toUpperCase() + a.slice(1)),
+      icon: "editor-".concat(a === 'justify' ? a : 'align' + a),
+      label: __((a !== 'justify' ? 'Align ' : '') + a[0].toUpperCase() + a.slice(1)),
       isActive: getCurrentAlignment(editable) === a,
       onClick: function onClick() {
         return setAlignment(editable, a);
@@ -38143,14 +38144,14 @@ function ReviewMain(props) {
   }));
 }
 
-registerBlockType("ub/review", {
-  title: __("Review"),
+(0,$Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_5__["default"])('ub/review', {
+  title: __('Review'),
   icon: _icon__WEBPACK_IMPORTED_MODULE_0__["default"],
-  category: "ultimateblocks",
-  keywords: [__("Review"), __("Ultimate Blocks")],
+  category: 'ultimateblocks',
+  keywords: [__('Review'), __('Ultimate Blocks')],
   attributes: defaultAttributes,
   edit: compose([withSelect(function (select, ownProps) {
-    var _ref2 = select("core/block-editor") || select("core/editor"),
+    var _ref2 = select('core/block-editor') || select('core/editor'),
         getBlock = _ref2.getBlock,
         getClientIdsWithDescendants = _ref2.getClientIdsWithDescendants;
 
@@ -48044,6 +48045,144 @@ var usePrevious = function usePrevious(value) {
 
 /***/ }),
 
+/***/ "./src/inc/registerPluginBlock.js":
+/*!****************************************!*\
+  !*** ./src/inc/registerPluginBlock.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var $BlockStores_mainStore_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $BlockStores/mainStore/index.js */ "./src/stores/mainStore/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+
+
+
+/**
+ * Register plugin block.
+ *
+ * @param {string} blockTypeId block type
+ * @param {Object} options     block options
+ */
+
+function registerPluginBlock(blockTypeId, options) {
+  var attributes = options.attributes; // attribute checking
+
+  if (!attributes || _typeof(attributes) !== 'object') {
+    throw new Error("invalid attribute is supplied for block type ".concat(blockTypeId));
+  } // filter block attributes
+
+
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)($BlockStores_mainStore_index_js__WEBPACK_IMPORTED_MODULE_2__["default"].storeName).applyPluginFilter("".concat(blockTypeId, "-attributes"), attributes, function (finalData) {
+    options.attributes = finalData;
+  });
+  (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(blockTypeId, options);
+}
+/**
+ * @module registerPluginBlock
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (registerPluginBlock);
+
+/***/ }),
+
+/***/ "./src/stores/mainStore/actions.js":
+/*!*****************************************!*\
+  !*** ./src/stores/mainStore/actions.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./src/stores/mainStore/types.js");
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * Store actions.
+ *
+ * @param {string} storeName store name
+ * @return {Object} action object
+ */
+
+var actions = function actions(storeName) {
+  /**
+   * Prepare hook name.
+   *
+   * @param {string} hookName name of hook
+   * @param {string} hookType type of hook, available values 'action', 'filter'
+   * @return {string} generated hook name
+   */
+  var preparePluginHookName = function preparePluginHookName(hookName, hookType) {
+    var availableHookTypes = ['action', 'filter'];
+    var finalHookType = availableHookTypes[0];
+
+    if (availableHookTypes.includes(hookType)) {
+      finalHookType = hookType;
+    }
+
+    return "".concat(storeName.toLowerCase(), "_").concat(finalHookType, "-").concat(hookName.replaceAll('/', '_'));
+  };
+
+  return {
+    /**
+     * Apply plugin filters.
+     *
+     * @param {string}   filterName name of filter
+     * @param {any}      filterData data to be filtered
+     * @param {Function} callback   callback function which will be called with filtered final data as argument
+     * @return {Object} action object
+     */
+    applyPluginFilter: function applyPluginFilter(filterName, filterData, callback) {
+      var finalFilterName = preparePluginHookName(filterName, 'filter');
+      var finalData = (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.applyFilters)(finalFilterName, filterData);
+
+      if (typeof callback === 'function') {
+        callback(finalData);
+      }
+
+      return {
+        type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].UN_AFFECTIVE
+      };
+    },
+
+    /**
+     * Add plugin filter.
+     *
+     * @param {string}   filterName filter name
+     * @param {Function} callback   callback function, will be called with current filtered data as first argument
+     * @return {Object} action object
+     */
+    addPluginFilter: function addPluginFilter(filterName, callback) {
+      var finalFilterName = preparePluginHookName(filterName, 'filter');
+
+      if (typeof callback !== 'function') {
+        throw new Error("invalid callback type supplied for filter ".concat(filterName));
+      }
+
+      (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)(finalFilterName, storeName, callback);
+      return {
+        type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].UN_AFFECTIVE
+      };
+    }
+  };
+};
+/**
+ * @module actions
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (actions);
+
+/***/ }),
+
 /***/ "./src/stores/mainStore/index.js":
 /*!***************************************!*\
   !*** ./src/stores/mainStore/index.js ***!
@@ -48056,6 +48195,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reducer */ "./src/stores/mainStore/reducer.js");
 /* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./selectors */ "./src/stores/mainStore/selectors.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./src/stores/mainStore/actions.js");
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! deepmerge */ "./node_modules/deepmerge/dist/cjs.js");
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(deepmerge__WEBPACK_IMPORTED_MODULE_4__);
+
+
 
 
 
@@ -48085,9 +48229,13 @@ function MainStore(storeName) {
 
   this.registerStore = function () {
     var extraState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var innerExtraState = {
+      storeName: _this.storeName
+    };
     var reducerOptions = {
-      reducer: (0,_reducer__WEBPACK_IMPORTED_MODULE_1__["default"])(extraState),
-      selectors: _selectors__WEBPACK_IMPORTED_MODULE_2__["default"]
+      reducer: (0,_reducer__WEBPACK_IMPORTED_MODULE_1__["default"])(deepmerge__WEBPACK_IMPORTED_MODULE_4___default()(innerExtraState, extraState)),
+      selectors: _selectors__WEBPACK_IMPORTED_MODULE_2__["default"],
+      actions: (0,_actions__WEBPACK_IMPORTED_MODULE_3__["default"])(_this.storeName)
     };
     _this.store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(_this.storeName, reducerOptions);
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.register)(_this.store);
@@ -48095,8 +48243,13 @@ function MainStore(storeName) {
 } // create and register plugin store
 
 
-var mainStoreObj = new MainStore('UltimateBlocks');
+var mainStoreObj = new MainStore('UltimateBlocksStore');
 mainStoreObj.registerStore();
+/**
+ * @module mainStoreObj
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = (mainStoreObj);
 
 /***/ }),
 
@@ -48148,8 +48301,14 @@ __webpack_require__.r(__webpack_exports__);
  * @type {Object}
  */
 var selectors = {
-  getMessage: function getMessage(state) {
-    return state.message;
+  /**
+   * Name of store.
+   *
+   * @param {Object} state store state
+   * @return {null | string} store name
+   */
+  getStoreName: function getStoreName(state) {
+    return state.storeName;
   }
 };
 /**
@@ -48178,7 +48337,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 var defaultState = {
-  message: 'test'
+  storeName: null
 };
 /**
  * Create state.
@@ -48196,6 +48355,25 @@ var createStore = function createStore() {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (createStore);
+
+/***/ }),
+
+/***/ "./src/stores/mainStore/types.js":
+/*!***************************************!*\
+  !*** ./src/stores/mainStore/types.js ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var ACTION_TYPES = {
+  UN_AFFECTIVE: 'unAffective'
+};
+/**
+ * @module types
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = (ACTION_TYPES);
 
 /***/ }),
 
@@ -60813,6 +60991,17 @@ module.exports = window["moment"];
 
 /***/ }),
 
+/***/ "@wordpress/blocks":
+/*!********************************!*\
+  !*** external ["wp","blocks"] ***!
+  \********************************/
+/***/ (function(module) {
+
+"use strict";
+module.exports = window["wp"]["blocks"];
+
+/***/ }),
+
 /***/ "@wordpress/data":
 /*!******************************!*\
   !*** external ["wp","data"] ***!
@@ -60821,6 +61010,17 @@ module.exports = window["moment"];
 
 "use strict";
 module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/hooks":
+/*!*******************************!*\
+  !*** external ["wp","hooks"] ***!
+  \*******************************/
+/***/ (function(module) {
+
+"use strict";
+module.exports = window["wp"]["hooks"];
 
 /***/ }),
 

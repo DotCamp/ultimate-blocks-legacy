@@ -4,8 +4,14 @@
  * @type {Object}
  */
 const selectors = {
-	getMessage(state) {
-		return state.message;
+	/**
+	 * Name of store.
+	 *
+	 * @param {Object} state store state
+	 * @return {null | string} store name
+	 */
+	getStoreName(state) {
+		return state.storeName;
 	},
 };
 

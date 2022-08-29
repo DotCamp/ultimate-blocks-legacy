@@ -6,7 +6,7 @@ import deepmerge from 'deepmerge';
  * @type {Object}
  */
 const defaultState = {
-	message: 'test',
+	storeName: null,
 };
 
 /**

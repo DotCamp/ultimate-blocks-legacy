@@ -14,6 +14,7 @@ module.exports = {
 		alias: {
 			...defaultConfig.resolve.alias,
 			$BlockStores: path.resolve(__dirname, 'src', 'stores'),
+			$Inc: path.resolve(__dirname, 'src', 'inc'),
 		},
 		extensions: [...defaultConfig.resolve.extensions, '.js'],
 	},

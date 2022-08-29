@@ -1,6 +1,8 @@
 import { createReduxStore, register } from '@wordpress/data';
 import reducer from './reducer';
 import selectors from './selectors';
+import actions from './actions';
+import deepmerge from 'deepmerge';
 
 /**
  * Main store for plugin.
@@ -25,9 +27,14 @@ function MainStore(storeName) {
 	 * @param {Object} [extraState={}] extra state to use
 	 */
 	this.registerStore = (extraState = {}) => {
+		const innerExtraState = {
+			storeName: this.storeName,
+		};
+
 		const reducerOptions = {
-			reducer: reducer(extraState),
+			reducer: reducer(deepmerge(innerExtraState, extraState)),
 			selectors,
+			actions: actions(this.storeName),
 		};
 
 		this.store = createReduxStore(this.storeName, reducerOptions);
@@ -37,5 +44,10 @@ function MainStore(storeName) {
 }
 
 // create and register plugin store
-const mainStoreObj = new MainStore('UltimateBlocks');
+const mainStoreObj = new MainStore('UltimateBlocksStore');
 mainStoreObj.registerStore();
+
+/**
+ * @module mainStoreObj
+ */
+export default mainStoreObj;
