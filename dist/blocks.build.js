@@ -48044,6 +48044,305 @@ var usePrevious = function usePrevious(value) {
 
 /***/ }),
 
+/***/ "./src/stores/mainStore/index.js":
+/*!***************************************!*\
+  !*** ./src/stores/mainStore/index.js ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reducer */ "./src/stores/mainStore/reducer.js");
+/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./selectors */ "./src/stores/mainStore/selectors.js");
+
+
+
+/**
+ * Main store for plugin.
+ *
+ * @param {string} storeName store name
+ * @function Object() { [native code] }
+ */
+
+function MainStore(storeName) {
+  var _this = this;
+
+  /**
+   * Name of the store.
+   * Will be used as an id to distinguish plugin store from other ones.
+   *
+   * @type {string}
+   */
+  this.storeName = storeName;
+  this.store = null;
+  /**
+   * Register store.
+   *
+   * @param {Object} [extraState={}] extra state to use
+   */
+
+  this.registerStore = function () {
+    var extraState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var reducerOptions = {
+      reducer: (0,_reducer__WEBPACK_IMPORTED_MODULE_1__["default"])(extraState),
+      selectors: _selectors__WEBPACK_IMPORTED_MODULE_2__["default"]
+    };
+    _this.store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(_this.storeName, reducerOptions);
+    (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.register)(_this.store);
+  };
+} // create and register plugin store
+
+
+var mainStoreObj = new MainStore('UltimateBlocks');
+mainStoreObj.registerStore();
+
+/***/ }),
+
+/***/ "./src/stores/mainStore/reducer.js":
+/*!*****************************************!*\
+  !*** ./src/stores/mainStore/reducer.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./src/stores/mainStore/state.js");
+
+/**
+ * Store reducer.
+ *
+ * @param {Object} [extraState={}] extra store state
+ * @return {Function} reducer function
+ */
+
+var reducer = function reducer(extraState) {
+  var DEFAULT_STATE = (0,_state__WEBPACK_IMPORTED_MODULE_0__["default"])(extraState);
+  return function () {
+    var storeState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+    var action = arguments.length > 1 ? arguments[1] : undefined;
+    return storeState;
+  };
+};
+/**
+ * @module reducer
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (reducer);
+
+/***/ }),
+
+/***/ "./src/stores/mainStore/selectors.js":
+/*!*******************************************!*\
+  !*** ./src/stores/mainStore/selectors.js ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * Store selectors.
+ *
+ * @type {Object}
+ */
+var selectors = {
+  getMessage: function getMessage(state) {
+    return state.message;
+  }
+};
+/**
+ * @module selectors
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = (selectors);
+
+/***/ }),
+
+/***/ "./src/stores/mainStore/state.js":
+/*!***************************************!*\
+  !*** ./src/stores/mainStore/state.js ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! deepmerge */ "./node_modules/deepmerge/dist/cjs.js");
+/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(deepmerge__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Default store state.
+ *
+ * @type {Object}
+ */
+
+var defaultState = {
+  message: 'test'
+};
+/**
+ * Create state.
+ *
+ * @param {Object} [extraState={}] extra state to use
+ */
+
+var createStore = function createStore() {
+  var extraState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return deepmerge__WEBPACK_IMPORTED_MODULE_0___default()(defaultState, extraState);
+};
+/**
+ * @module createStore
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (createStore);
+
+/***/ }),
+
+/***/ "./node_modules/deepmerge/dist/cjs.js":
+/*!********************************************!*\
+  !*** ./node_modules/deepmerge/dist/cjs.js ***!
+  \********************************************/
+/***/ (function(module) {
+
+"use strict";
+
+
+var isMergeableObject = function isMergeableObject(value) {
+	return isNonNullObject(value)
+		&& !isSpecial(value)
+};
+
+function isNonNullObject(value) {
+	return !!value && typeof value === 'object'
+}
+
+function isSpecial(value) {
+	var stringValue = Object.prototype.toString.call(value);
+
+	return stringValue === '[object RegExp]'
+		|| stringValue === '[object Date]'
+		|| isReactElement(value)
+}
+
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === 'function' && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for('react.element') : 0xeac7;
+
+function isReactElement(value) {
+	return value.$$typeof === REACT_ELEMENT_TYPE
+}
+
+function emptyTarget(val) {
+	return Array.isArray(val) ? [] : {}
+}
+
+function cloneUnlessOtherwiseSpecified(value, options) {
+	return (options.clone !== false && options.isMergeableObject(value))
+		? deepmerge(emptyTarget(value), value, options)
+		: value
+}
+
+function defaultArrayMerge(target, source, options) {
+	return target.concat(source).map(function(element) {
+		return cloneUnlessOtherwiseSpecified(element, options)
+	})
+}
+
+function getMergeFunction(key, options) {
+	if (!options.customMerge) {
+		return deepmerge
+	}
+	var customMerge = options.customMerge(key);
+	return typeof customMerge === 'function' ? customMerge : deepmerge
+}
+
+function getEnumerableOwnPropertySymbols(target) {
+	return Object.getOwnPropertySymbols
+		? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+			return target.propertyIsEnumerable(symbol)
+		})
+		: []
+}
+
+function getKeys(target) {
+	return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target))
+}
+
+function propertyIsOnObject(object, property) {
+	try {
+		return property in object
+	} catch(_) {
+		return false
+	}
+}
+
+// Protects from prototype poisoning and unexpected merging up the prototype chain.
+function propertyIsUnsafe(target, key) {
+	return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
+		&& !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
+			&& Object.propertyIsEnumerable.call(target, key)) // and also unsafe if they're nonenumerable.
+}
+
+function mergeObject(target, source, options) {
+	var destination = {};
+	if (options.isMergeableObject(target)) {
+		getKeys(target).forEach(function(key) {
+			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+		});
+	}
+	getKeys(source).forEach(function(key) {
+		if (propertyIsUnsafe(target, key)) {
+			return
+		}
+
+		if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
+			destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+		} else {
+			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+		}
+	});
+	return destination
+}
+
+function deepmerge(target, source, options) {
+	options = options || {};
+	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+	// cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
+	// implementations can use it. The caller may not replace it.
+	options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+
+	var sourceIsArray = Array.isArray(source);
+	var targetIsArray = Array.isArray(target);
+	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+
+	if (!sourceAndTargetTypesMatch) {
+		return cloneUnlessOtherwiseSpecified(source, options)
+	} else if (sourceIsArray) {
+		return options.arrayMerge(target, source, options)
+	} else {
+		return mergeObject(target, source, options)
+	}
+}
+
+deepmerge.all = function deepmergeAll(array, options) {
+	if (!Array.isArray(array)) {
+		throw new Error('first argument should be an array')
+	}
+
+	return array.reduce(function(prev, next) {
+		return deepmerge(prev, next, options)
+	}, {})
+};
+
+var deepmerge_1 = deepmerge;
+
+module.exports = deepmerge_1;
+
+
+/***/ }),
+
 /***/ "./node_modules/dom7/dom7.esm.js":
 /*!***************************************!*\
   !*** ./node_modules/dom7/dom7.esm.js ***!
@@ -60514,6 +60813,17 @@ module.exports = window["moment"];
 
 /***/ }),
 
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ (function(module) {
+
+"use strict";
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
@@ -61129,34 +61439,37 @@ var __webpack_exports__ = {};
   !*** ./src/blocks.js ***!
   \***********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _blocks_notification_box_block__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks/notification-box/block */ "./src/blocks/notification-box/block.js");
-/* harmony import */ var _blocks_testimonial_block__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./blocks/testimonial/block */ "./src/blocks/testimonial/block.js");
-/* harmony import */ var _blocks_call_to_action_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/call-to-action/block */ "./src/blocks/call-to-action/block.js");
-/* harmony import */ var _blocks_divider_block__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/divider/block */ "./src/blocks/divider/block.js");
-/* harmony import */ var _blocks_number_box_block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/number-box/block */ "./src/blocks/number-box/block.js");
-/* harmony import */ var _blocks_feature_box_block__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/feature-box/block */ "./src/blocks/feature-box/block.js");
-/* harmony import */ var _blocks_click_to_tweet_block__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/click-to-tweet/block */ "./src/blocks/click-to-tweet/block.js");
-/* harmony import */ var _blocks_social_share_block__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/social-share/block */ "./src/blocks/social-share/block.js");
-/* harmony import */ var _blocks_content_toggle_block__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/content-toggle/block */ "./src/blocks/content-toggle/block.js");
-/* harmony import */ var _blocks_content_toggle_components_panel__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/content-toggle/components/panel */ "./src/blocks/content-toggle/components/panel.js");
-/* harmony import */ var _blocks_button_block__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./blocks/button/block */ "./src/blocks/button/block.js");
-/* harmony import */ var _blocks_tabbed_content_block__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./blocks/tabbed-content/block */ "./src/blocks/tabbed-content/block.js");
-/* harmony import */ var _blocks_tabbed_content_components_tab__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./blocks/tabbed-content/components/tab */ "./src/blocks/tabbed-content/components/tab.js");
-/* harmony import */ var _blocks_star_rating_block__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./blocks/star-rating/block */ "./src/blocks/star-rating/block.js");
-/* harmony import */ var _blocks_table_of_contents_block__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./blocks/table-of-contents/block */ "./src/blocks/table-of-contents/block.js");
-/* harmony import */ var _blocks_progress_bar_block__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./blocks/progress-bar/block */ "./src/blocks/progress-bar/block.js");
-/* harmony import */ var _blocks_countdown_block__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./blocks/countdown/block */ "./src/blocks/countdown/block.js");
-/* harmony import */ var _blocks_review_block__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./blocks/review/block */ "./src/blocks/review/block.js");
-/* harmony import */ var _blocks_image_slider_block__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./blocks/image-slider/block */ "./src/blocks/image-slider/block.js");
-/* harmony import */ var _blocks_content_filter_block__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./blocks/content-filter/block */ "./src/blocks/content-filter/block.js");
-/* harmony import */ var _blocks_content_filter_components_content_filter_entry__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./blocks/content-filter/components/content-filter-entry */ "./src/blocks/content-filter/components/content-filter-entry.js");
-/* harmony import */ var _blocks_styled_box_block__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./blocks/styled-box/block */ "./src/blocks/styled-box/block.js");
-/* harmony import */ var _blocks_expand_block__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./blocks/expand/block */ "./src/blocks/expand/block.js");
-/* harmony import */ var _blocks_styled_list_block__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./blocks/styled-list/block */ "./src/blocks/styled-list/block.js");
-/* harmony import */ var _blocks_post_grid_block__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./blocks/post-grid/block */ "./src/blocks/post-grid/block.js");
-/* harmony import */ var _blocks_how_to_block__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./blocks/how-to/block */ "./src/blocks/how-to/block.js");
-/* harmony import */ var _blocks_advanced_heading_block__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./blocks/advanced-heading/block */ "./src/blocks/advanced-heading/block.js");
-/* harmony import */ var _blocks_advanced_video_block__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./blocks/advanced-video/block */ "./src/blocks/advanced-video/block.js");
+/* harmony import */ var $BlockStores_mainStore_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! $BlockStores/mainStore/index.js */ "./src/stores/mainStore/index.js");
+/* harmony import */ var _blocks_notification_box_block__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./blocks/notification-box/block */ "./src/blocks/notification-box/block.js");
+/* harmony import */ var _blocks_testimonial_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/testimonial/block */ "./src/blocks/testimonial/block.js");
+/* harmony import */ var _blocks_call_to_action_block__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/call-to-action/block */ "./src/blocks/call-to-action/block.js");
+/* harmony import */ var _blocks_divider_block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/divider/block */ "./src/blocks/divider/block.js");
+/* harmony import */ var _blocks_number_box_block__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/number-box/block */ "./src/blocks/number-box/block.js");
+/* harmony import */ var _blocks_feature_box_block__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/feature-box/block */ "./src/blocks/feature-box/block.js");
+/* harmony import */ var _blocks_click_to_tweet_block__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/click-to-tweet/block */ "./src/blocks/click-to-tweet/block.js");
+/* harmony import */ var _blocks_social_share_block__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/social-share/block */ "./src/blocks/social-share/block.js");
+/* harmony import */ var _blocks_content_toggle_block__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/content-toggle/block */ "./src/blocks/content-toggle/block.js");
+/* harmony import */ var _blocks_content_toggle_components_panel__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./blocks/content-toggle/components/panel */ "./src/blocks/content-toggle/components/panel.js");
+/* harmony import */ var _blocks_button_block__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./blocks/button/block */ "./src/blocks/button/block.js");
+/* harmony import */ var _blocks_tabbed_content_block__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./blocks/tabbed-content/block */ "./src/blocks/tabbed-content/block.js");
+/* harmony import */ var _blocks_tabbed_content_components_tab__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./blocks/tabbed-content/components/tab */ "./src/blocks/tabbed-content/components/tab.js");
+/* harmony import */ var _blocks_star_rating_block__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./blocks/star-rating/block */ "./src/blocks/star-rating/block.js");
+/* harmony import */ var _blocks_table_of_contents_block__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./blocks/table-of-contents/block */ "./src/blocks/table-of-contents/block.js");
+/* harmony import */ var _blocks_progress_bar_block__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./blocks/progress-bar/block */ "./src/blocks/progress-bar/block.js");
+/* harmony import */ var _blocks_countdown_block__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./blocks/countdown/block */ "./src/blocks/countdown/block.js");
+/* harmony import */ var _blocks_review_block__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./blocks/review/block */ "./src/blocks/review/block.js");
+/* harmony import */ var _blocks_image_slider_block__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./blocks/image-slider/block */ "./src/blocks/image-slider/block.js");
+/* harmony import */ var _blocks_content_filter_block__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./blocks/content-filter/block */ "./src/blocks/content-filter/block.js");
+/* harmony import */ var _blocks_content_filter_components_content_filter_entry__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./blocks/content-filter/components/content-filter-entry */ "./src/blocks/content-filter/components/content-filter-entry.js");
+/* harmony import */ var _blocks_styled_box_block__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./blocks/styled-box/block */ "./src/blocks/styled-box/block.js");
+/* harmony import */ var _blocks_expand_block__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./blocks/expand/block */ "./src/blocks/expand/block.js");
+/* harmony import */ var _blocks_styled_list_block__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./blocks/styled-list/block */ "./src/blocks/styled-list/block.js");
+/* harmony import */ var _blocks_post_grid_block__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./blocks/post-grid/block */ "./src/blocks/post-grid/block.js");
+/* harmony import */ var _blocks_how_to_block__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./blocks/how-to/block */ "./src/blocks/how-to/block.js");
+/* harmony import */ var _blocks_advanced_heading_block__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./blocks/advanced-heading/block */ "./src/blocks/advanced-heading/block.js");
+/* harmony import */ var _blocks_advanced_video_block__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./blocks/advanced-video/block */ "./src/blocks/advanced-video/block.js");
+// register main plugin store
+
 /**
  * Gutenberg Blocks
  *
@@ -61167,6 +61480,7 @@ __webpack_require__.r(__webpack_exports__);
  * All blocks should be included here since this is the file that
  * Webpack is compiling as the input file.
  */
+
 
 
 
