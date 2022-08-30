@@ -62,10 +62,7 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 		}
 	}, [ innerStatus ] );
 
-	const howToUse = () => {
-		// TODO [ErdemBircan] remove for production
-		console.log( `showing how-to for ${ blockId }` );
-	};
+	const howToUse = null;
 
 	return (
 		<div style={ blockStyle } className={ 'block-control' } data-enabled={ JSON.stringify( innerStatus ) } data-initial-animation={ JSON.stringify( initialAnimation.current ) }>
@@ -85,14 +82,14 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 			<div className={ 'block-info' }>
 				{
 					info.map( ( infoLine, index ) => {
-						return ( <div className={'info-line'} key={ index }>
+						return ( <div className={ 'info-line' } key={ index }>
 							{ infoLine[ 0 ].toUpperCase() + Array.from( infoLine ).splice( 1 ).join( '' ) }
 						</div> );
 					} )
 				}
 			</div>
 			<div className={ 'block-howto' }>
-				<MenuButton title={ 'How to Use' } status={ innerStatus } onClickHandler={ howToUse } />
+				<MenuButton title={ 'How to Use' } status={ howToUse !== null && innerStatus } onClickHandler={ howToUse } />
 			</div>
 		</div>
 	);

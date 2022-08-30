@@ -469,7 +469,8 @@
 }
 
 .ub-menu-button[data-enabled="false"] {
-  background-color: #938181;
+  cursor: default;
+  background-color: #938181 !important;
 }
 
 .ub-menu-button[data-enabled="true"]:active {

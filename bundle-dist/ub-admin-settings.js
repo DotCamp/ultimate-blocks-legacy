@@ -35479,10 +35479,7 @@ function _arrayWithHoles(arr) {
     }, [
         innerStatus
     ]);
-    var howToUse = function howToUse() {
-        // TODO [ErdemBircan] remove for production
-        console.log("showing how-to for ".concat(blockId));
-    };
+    var howToUse = null;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         style: blockStyle,
         className: "block-control",
@@ -35511,7 +35508,7 @@ function _arrayWithHoles(arr) {
         className: "block-howto"
     }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
         title: "How to Use",
-        status: innerStatus,
+        status: howToUse !== null && innerStatus,
         onClickHandler: howToUse
     })));
 }
