@@ -11,6 +11,16 @@
 			width: 100%;
 		}
 	}
+	&.ub-advanced-video-autofit-vimeo {
+		position: relative;
+		> iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
 }
 
 .ub-labelled-toggle {

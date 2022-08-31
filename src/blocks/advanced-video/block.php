@@ -17,7 +17,7 @@ function ub_render_advanced_video_block($attributes){
     '<div class="ub-advanced-video-embed' .
         ($autofit && in_array($videoSource, ['youtube', 'vimeo', 'dailymotion']) ? (' ub-advanced-video-autofit-' . $videoSource) : ''   ) . '"' .
         ($thumbnail !== '' && !in_array($videoSource, ['local', 'unknown', 'videopress']) ? ' hidden' : '') . '>'
-    . $videoEmbedCode . '</div></div>';
+    . $videoEmbedCode . ($autofit && $videoSource === 'vimeo' ? '<script src="https://player.vimeo.com/api/player.js"></script>' : '') . '</div></div>';
 }
 
 function ub_register_advanced_video_block() {

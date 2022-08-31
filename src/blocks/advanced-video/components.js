@@ -28,6 +28,9 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 				case "youtube":
 					newEmbedCode = embedCode.replace("<iframe", `<iframe ${arg}`);
 					break;
+				case "vimeo":
+					//handled by styles
+					break;
 				default:
 					console.log("can't add size");
 			}
@@ -94,6 +97,9 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 			switch (source) {
 				case "youtube":
 					newEmbedCode = embedCode.replace(`<iframe ${arg}`, "<iframe");
+					break;
+				case "vimeo":
+					//handled by styles
 					break;
 				default:
 					console.log("can't remove size");
@@ -316,6 +322,8 @@ export function AdvancedVideoBlock(props) {
 	}, []);
 
 	const {
+		blockID,
+
 		videoId,
 		url,
 		videoEmbedCode,
@@ -625,6 +633,9 @@ export function AdvancedVideoBlock(props) {
 													),
 												});
 
+												break;
+											case "vimeo":
+												//handled via styles
 												break;
 											default:
 												console.log("no valid source");
@@ -1792,6 +1803,7 @@ export function AdvancedVideoBlock(props) {
 				</>
 			)}
 			<div
+				id={`ub-advanced-video-${blockID}`}
 				className={`ub-advanced-video-container${
 					autofit
 						? ` ub-advanced-video-autofit${
@@ -1844,15 +1856,25 @@ export function AdvancedVideoBlock(props) {
 						: {}
 				)}
 			/>
-			{autofit && (
+			{autofit && videoSource === "youtube" && (
 				<style>
-					{`.ub-advanced-video-autofit-youtube{
+					{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-youtube{
 				aspect-ratio: ${origWidth}/${origHeight}
 			}
 			.ub-advanced-video-autofit-youtube iframe{
 				aspect-ratio: ${origWidth}/${origHeight}
 			}`}
 				</style>
+			)}
+			{autofit && videoSource === "vimeo" && (
+				<>
+					<style>
+						{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-vimeo{
+						padding: ${(origHeight / origWidth) * 100}% 0 0 0;
+					}`}
+					</style>
+					<script src="https://player.vimeo.com/api/player.js" />
+				</>
 			)}
 			{url !== "" && (
 				<div>
@@ -1865,6 +1887,7 @@ export function AdvancedVideoBlock(props) {
 								videoId: -1,
 								videoSource: "",
 								preserveAspectRatio: true,
+								autofit: false,
 								autoplay: false,
 								showPlayerControls: true,
 								startTime: 0,

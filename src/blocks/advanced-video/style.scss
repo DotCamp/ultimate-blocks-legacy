@@ -13,9 +13,21 @@
 	}
 }
 
-.ub-advanced-video-embed.ub-advanced-video-autofit-youtube {
-	width: 100%;
-	> iframe {
+.ub-advanced-video-embed {
+	&.ub-advanced-video-autofit-youtube {
 		width: 100%;
+		> iframe {
+			width: 100%;
+		}
+	}
+	&.ub-advanced-video-autofit-vimeo {
+		position: relative;
+		> iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
 	}
 }

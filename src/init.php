@@ -216,6 +216,11 @@ function ub_include_block_attribute_css() {
                                 'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
                             '}' ;
                         }
+                        else if($attributes['videoSource'] === 'vimeo'){
+                            $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-vimeo{' .
+                                'padding: ' . ($attributes['origHeight'] / $attributes['origWidth'] * 100) . '% 0 0 0;' .
+                            '}';
+                        }
                     }
 
                     if(json_encode(array_unique(array($attributes['topBorderSize'], $attributes['leftBorderSize'],
