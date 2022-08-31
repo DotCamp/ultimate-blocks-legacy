@@ -14,7 +14,9 @@ function ub_render_advanced_video_block($attributes){
             '<path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"/></g>' .
         '</svg></div>') : ''
             ) .
-    '<div class="ub-advanced-video-embed" '.($thumbnail !== '' && !in_array($videoSource, ['local', 'unknown', 'videopress']) ? 'hidden' : '').'>'
+    '<div class="ub-advanced-video-embed' .
+        ($autofit && in_array($videoSource, ['youtube', 'vimeo', 'dailymotion']) ? (' ub-advanced-video-autofit-' . $videoSource) : ''   ) . '"' .
+        ($thumbnail !== '' && !in_array($videoSource, ['local', 'unknown', 'videopress']) ? ' hidden' : '') . '>'
     . $videoEmbedCode . '</div></div>';
 }
 

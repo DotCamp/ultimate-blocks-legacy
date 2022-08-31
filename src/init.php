@@ -204,6 +204,20 @@ function ub_include_block_attribute_css() {
                 case 'ub/advanced-video':
                     $prefix = '#ub-advanced-video-' . $attributes['blockID'];
 
+                    if($attributes['autofit']){
+                        $blockStylesheets .= $prefix . '.ub-advanced-video-container{' .
+                            'width: 100%;' .
+                        '}';
+                        if($attributes['videoSource'] === 'youtube'){
+                            $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-youtube{' .
+                                'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
+                            '}' .
+                            $prefix . ' .ub-advanced-video-autofit-youtube > iframe{' .
+                                'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
+                            '}' ;
+                        }
+                    }
+
                     if(json_encode(array_unique(array($attributes['topBorderSize'], $attributes['leftBorderSize'],
                         $attributes['rightBorderSize'], $attributes['bottomBorderSize']))) !== '[0]' ){
                         

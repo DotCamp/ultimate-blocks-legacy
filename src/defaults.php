@@ -144,6 +144,18 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0,
             ),
+            'origHeight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'origWidth' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'autofit' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
 
             //begin border attributes for each side
             'topBorderSize' => array(

@@ -3,8 +3,14 @@
 	justify-content: space-evenly;
 }
 
-.wp.block > .ub-advanced-video-container {
+.wp-block > .ub-advanced-video-container {
 	width: initial;
+	&.ub-advanced-video-autofit-youtube {
+		width: 100%;
+		> iframe {
+			width: 100%;
+		}
+	}
 }
 
 .ub-labelled-toggle {

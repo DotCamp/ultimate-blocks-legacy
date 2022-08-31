@@ -17,134 +17,159 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 	let newEmbedCode = embedCode;
 	let regexPart = "";
 
+	const validSources = ["youtube", "dailymotion", "vimeo"];
+
+	const sizeRegex = /width="\d+" height="\d+"/;
+
 	if (mode === "add") {
-		if (source === "youtube") {
-			regexPart = "www\\.youtube\\.com\\/embed\\/[A-Za-z0-9-_]+";
-		} else if (source === "dailymotion") {
-			regexPart =
-				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9]+";
-		} else if (source === "vimeo") {
-			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+";
-		}
-
-		if (regexPart) {
-			const embedRegex = new RegExp(
-				[
-					regexPart,
-					'(\\?[A-Za-z_]+=[^&"#\\s]+(?:(?:&[A-Za-z_]+=[^&#"\\s]+)*))?(?:#[^&#"\\s]+)?',
-				].join("")
-			);
-
-			const embedArgs = embedRegex.exec(embedCode);
-
-			if (isTimeCode) {
-				//currently only for vimeo
-				const timecodeCanBeRemoved = /([^#]+)#.+/.exec(embedArgs[0]);
-
-				if (timecodeCanBeRemoved) {
-					newEmbedCode = embedCode.replace(
-						embedArgs[0],
-						`${timecodeCanBeRemoved[1]}#${arg}`
-					);
-				} else {
-					newEmbedCode = embedCode.replace(
-						embedArgs[0],
-						`${embedArgs[0]}#${arg}`
-					);
-				}
-			} else if (embedArgs && embedArgs[1]) {
-				if (!embedArgs[1].includes(arg)) {
-					newEmbedCode = embedCode.replace(
-						embedArgs[1],
-						`${embedArgs[1]}&${arg}`
-					);
-				}
-			} else {
-				newEmbedCode = embedCode.replace(
-					embedArgs[0],
-					`${embedArgs[0]}?${arg}`
-				);
+		if (validSources.includes(source) && embedCode.search(sizeRegex)) {
+			console.log("adding size");
+			switch (source) {
+				case "youtube":
+					newEmbedCode = embedCode.replace("<iframe", `<iframe ${arg}`);
+					break;
+				default:
+					console.log("can't add size");
 			}
 		} else {
-			const videoTag = /<video(?: .+?)*>/.exec(embedCode);
+			if (source === "youtube") {
+				regexPart = "www\\.youtube\\.com\\/embed\\/[A-Za-z0-9-_]+";
+			} else if (source === "dailymotion") {
+				regexPart =
+					"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9]+";
+			} else if (source === "vimeo") {
+				regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+";
+			}
 
-			newEmbedCode = embedCode.replace(
-				videoTag[0],
-				videoTag[0].replace("<video", `<video ${arg}`)
-			);
-		}
-	} else if (mode === "remove") {
-		if (source === "youtube") {
-			regexPart = "www\\.youtube\\.com\\/embed\\/[A-Za-z0-9-_]+\\?(";
-		} else if (source === "dailymotion") {
-			regexPart =
-				"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9-_]+\\?(";
-		} else if (source === "vimeo") {
-			regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+\\?(";
-		} else {
-			//check if this part is reachable
-			console.log("source is either local or unknown");
-		}
-
-		if (regexPart) {
-			const embedRegex = new RegExp(
-				[
-					regexPart,
-					arg,
-					'(?:&[A-Za-z_]+=[^&"\\s]+)?|[A-Za-z_]+=[^&"\\s]+?(?:(?:&[A-Za-z_]+=[^&"\\s]+?)*&',
-					arg,
-					"))",
-				].join(""),
-				"g"
-			);
-
-			const embedArgs = embedRegex.exec(newEmbedCode);
-			if (isTimeCode) {
-				//embedargs cannot be used. use another regex code. vimeo scenario
-				const vimeoTimeCode =
-					/https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
-						newEmbedCode
-					);
-
-				newEmbedCode = newEmbedCode.replace(
-					vimeoTimeCode[1],
-					vimeoTimeCode[1].replace(/#t=.+/, "")
+			if (regexPart) {
+				const embedRegex = new RegExp(
+					[
+						regexPart,
+						'(\\?[A-Za-z_]+=[^&"#\\s]+(?:(?:&[A-Za-z_]+=[^&#"\\s]+)*))?(?:#[^&#"\\s]+)?',
+					].join("")
 				);
-			} else {
-				if (embedArgs[1].includes(arg)) {
-					if (arg.length < embedArgs[1].length) {
-						let fullArg = arg;
 
-						if (embedArgs[1].indexOf(arg)) {
-							fullArg = "&" + arg;
-						} else {
-							fullArg = arg + "&";
-						}
+				const embedArgs = embedRegex.exec(embedCode);
 
+				if (isTimeCode) {
+					//currently only for vimeo
+					const timecodeCanBeRemoved = /([^#]+)#.+/.exec(embedArgs[0]);
+
+					if (timecodeCanBeRemoved) {
 						newEmbedCode = embedCode.replace(
-							embedArgs[1],
-							embedArgs[1].replace(fullArg, "")
+							embedArgs[0],
+							`${timecodeCanBeRemoved[1]}#${arg}`
 						);
 					} else {
 						newEmbedCode = embedCode.replace(
 							embedArgs[0],
-							embedArgs[0].replace(`?${arg}`, "")
+							`${embedArgs[0]}#${arg}`
 						);
 					}
+				} else if (embedArgs && embedArgs[1]) {
+					if (!embedArgs[1].includes(arg)) {
+						newEmbedCode = embedCode.replace(
+							embedArgs[1],
+							`${embedArgs[1]}&${arg}`
+						);
+					}
+				} else {
+					newEmbedCode = embedCode.replace(
+						embedArgs[0],
+						`${embedArgs[0]}?${arg}`
+					);
 				}
+			} else {
+				const videoTag = /<video(?: .+?)*>/.exec(embedCode);
+
+				newEmbedCode = embedCode.replace(
+					videoTag[0],
+					videoTag[0].replace("<video", `<video ${arg}`)
+				);
+			}
+		}
+	} else if (mode === "remove") {
+		if (validSources.includes(source) && embedCode.search(sizeRegex)) {
+			console.log("removing size");
+			switch (source) {
+				case "youtube":
+					newEmbedCode = embedCode.replace(`<iframe ${arg}`, "<iframe");
+					break;
+				default:
+					console.log("can't remove size");
 			}
 		} else {
-			const videoControlsRegex = new RegExp(
-				`<video(?: .+)* ${arg}(?: .+?)*?>`,
-				"g"
-			);
+			if (source === "youtube") {
+				regexPart = "www\\.youtube\\.com\\/embed\\/[A-Za-z0-9-_]+\\?(";
+			} else if (source === "dailymotion") {
+				regexPart =
+					"https:\\/\\/www\\.dailymotion\\.com\\/embed\\/video\\/[A-Za-z0-9-_]+\\?(";
+			} else if (source === "vimeo") {
+				regexPart = "https:\\/\\/player\\.vimeo\\.com\\/video\\/[0-9]+\\?(";
+			} else {
+				//check if this part is reachable
+				console.log("source is either local or unknown");
+			}
+			if (regexPart) {
+				const embedRegex = new RegExp(
+					[
+						regexPart,
+						arg,
+						'(?:&[A-Za-z_]+=[^&"\\s]+)?|[A-Za-z_]+=[^&"\\s]+?(?:(?:&[A-Za-z_]+=[^&"\\s]+?)*&',
+						arg,
+						"))",
+					].join(""),
+					"g"
+				);
 
-			const videoControlsMatch = videoControlsRegex.exec(embedCode);
+				const embedArgs = embedRegex.exec(newEmbedCode);
+				if (isTimeCode) {
+					//embedargs cannot be used. use another regex code. vimeo scenario
+					const vimeoTimeCode =
+						/https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
+							newEmbedCode
+						);
 
-			newEmbedCode = embedCode.replace(
-				videoControlsMatch[0],
-				videoControlsMatch[0].replace(` ${arg}`, "")
-			);
+					newEmbedCode = newEmbedCode.replace(
+						vimeoTimeCode[1],
+						vimeoTimeCode[1].replace(/#t=.+/, "")
+					);
+				} else {
+					if (embedArgs[1].includes(arg)) {
+						if (arg.length < embedArgs[1].length) {
+							let fullArg = arg;
+
+							if (embedArgs[1].indexOf(arg)) {
+								fullArg = "&" + arg;
+							} else {
+								fullArg = arg + "&";
+							}
+
+							newEmbedCode = embedCode.replace(
+								embedArgs[1],
+								embedArgs[1].replace(fullArg, "")
+							);
+						} else {
+							newEmbedCode = embedCode.replace(
+								embedArgs[0],
+								embedArgs[0].replace(`?${arg}`, "")
+							);
+						}
+					}
+				}
+			} else {
+				const videoControlsRegex = new RegExp(
+					`<video(?: .+)* ${arg}(?: .+?)*?>`,
+					"g"
+				);
+
+				const videoControlsMatch = videoControlsRegex.exec(embedCode);
+
+				newEmbedCode = embedCode.replace(
+					videoControlsMatch[0],
+					videoControlsMatch[0].replace(` ${arg}`, "")
+				);
+			}
 		}
 	}
 
@@ -294,7 +319,7 @@ export function AdvancedVideoBlock(props) {
 		videoId,
 		url,
 		videoEmbedCode,
-		width,
+
 		showPlayerControls,
 		topBorderSize,
 		leftBorderSize,
@@ -318,6 +343,8 @@ export function AdvancedVideoBlock(props) {
 		startTime,
 		autoplay,
 		preserveAspectRatio,
+		autofit,
+		width,
 		height,
 		origWidth,
 		origHeight,
@@ -384,21 +411,26 @@ export function AdvancedVideoBlock(props) {
 					.then((response) => {
 						response.json().then((data) => {
 							if (data.items.length) {
-								const { height: thumbHeight, width: thumbWidth } =
-									data.items[0].snippet.thumbnails.high;
-
 								let timePeriods = data.items[0].contentDetails.duration.match(
 									/(\d{1,2}(?:W|D|H|M|S))/g
 								);
+
+								const embedCode = data.items[0].player.embedHtml;
+
+								const parsedCode = /<iframe width="(\d+)" height="(\d+)/.exec(
+									embedCode
+								);
+
 								setAttributes({
 									url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
 									videoSource: "youtube",
 									videoEmbedCode: data.items[0].player.embedHtml,
-									origWidth: thumbWidth,
-									origHeight: thumbHeight,
-									width: Math.min(600, thumbWidth),
+									origWidth: parseInt(parsedCode[1]),
+									origHeight: parseInt(parsedCode[2]),
+									width: Math.min(600, parsedCode[1]),
 									height:
-										(thumbHeight * Math.min(600, thumbWidth)) / thumbWidth,
+										(parsedCode[2] * Math.min(600, parsedCode[1])) /
+										parsedCode[1],
 									videoLength: timePeriods.reduce((sum, part) => {
 										let multiplier = {
 											W: 604800,
@@ -514,6 +546,7 @@ export function AdvancedVideoBlock(props) {
 								const newHeight = Math.round(
 									(data.height * newWidth) / data.width
 								);
+
 								setAttributes({
 									url: `https://videopress.com/v/${data.guid}`,
 									videoEmbedCode: `<video controls width="${newWidth}" height="${newHeight}"><source src="${data.original}"></video>`,
@@ -571,107 +604,141 @@ export function AdvancedVideoBlock(props) {
 				{url !== "" && (
 					<>
 						<PanelBody title={__("Embedded video player settings")}>
-							<RangeControl
-								label={__("Video width (pixels)")}
-								value={width}
-								onChange={(newWidth) => {
-									setAttributes({ width: newWidth });
-
-									let newVideoEmbedCode = videoEmbedCode;
-
-									newVideoEmbedCode = newVideoEmbedCode.replace(
-										/width="[0-9]+"/,
-										`width="${newWidth}"`
-									);
-									if (videoSource === "facebook") {
-										newVideoEmbedCode = newVideoEmbedCode.replace(
-											/&width=[0-9]+/,
-											`width="${newWidth}"`
-										);
-									}
-
-									if (preserveAspectRatio) {
-										//get ratio between current width and current height, then recalculate height according to ratio
-										const newHeight = Math.round((height * newWidth) / width);
-										setAttributes({
-											height: newHeight,
-										});
-										newVideoEmbedCode = newVideoEmbedCode.replace(
-											/height="[0-9]+"/,
-											`height="${newHeight}"`
-										);
-										if (videoSource === "facebook") {
-											newVideoEmbedCode = newVideoEmbedCode.replace(
-												/&height=[0-9]+/,
-												`height="${newHeight}"`
-											);
-										}
-									}
-									setAttributes({ videoEmbedCode: newVideoEmbedCode });
-								}}
-								min={200}
-								max={1600}
-							/>
-							{!preserveAspectRatio && (
-								<RangeControl
-									label={__("Video height (pixels)")}
-									value={height}
-									onChange={(height) => {
-										let newVideoEmbedCode = videoEmbedCode;
-
-										newVideoEmbedCode = newVideoEmbedCode.replace(
-											/height="[0-9]+"/,
-											`height="${height}"`
-										);
-										if (videoSource === "facebook") {
-											newVideoEmbedCode = newVideoEmbedCode.replace(
-												/&height=[0-9]+/,
-												`height="${height}"`
-											);
-										}
-										setAttributes({
-											height,
-											videoEmbedCode: newVideoEmbedCode,
-										});
-									}}
-									min={200}
-									max={1600}
-								/>
-							)}
 							<div className="ub-labelled-toggle">
-								<p>{__("Preserve aspect ratio")}</p>
+								<p>{__("Autofit video embed")}</p>
 								<ToggleControl
-									checked={preserveAspectRatio}
+									checked={autofit}
 									onChange={() => {
-										setAttributes({
-											preserveAspectRatio: !preserveAspectRatio,
-										});
-										if (
-											!preserveAspectRatio &&
-											!["facebook", "unknown"].includes(videoSource)
-										) {
-											const newHeight = Math.round(
-												(origHeight * width) / origWidth
-											);
+										setAttributes({ autofit: !autofit });
+										switch (videoSource) {
+											case "youtube":
+												setAttributes({
+													videoEmbedCode: editEmbedArgs(
+														videoSource,
+														videoEmbedCode,
+														autofit ? "add" : "remove",
+														`width="${width}" height="${
+															preserveAspectRatio
+																? Math.round((width * origHeight) / origWidth)
+																: height
+														}"`
+													),
+												});
 
-											let newVideoEmbedCode = videoEmbedCode.replace(
-												/height="[0-9]+"/,
-												`height="${newHeight}"`
-											);
-											if (videoSource === "facebook") {
-												newVideoEmbedCode = newVideoEmbedCode.replace(
-													/&height=[0-9]+/,
-													`height="${newHeight}"`
-												);
-											}
-											setAttributes({
-												height: newHeight,
-												videoEmbedCode: newVideoEmbedCode,
-											});
+												break;
+											default:
+												console.log("no valid source");
 										}
 									}}
 								/>
 							</div>
+							{!autofit && (
+								<>
+									<RangeControl
+										label={__("Video width (pixels)")}
+										value={width}
+										onChange={(newWidth) => {
+											setAttributes({ width: newWidth });
+
+											let newVideoEmbedCode = videoEmbedCode;
+
+											newVideoEmbedCode = newVideoEmbedCode.replace(
+												/width="[0-9]+"/,
+												`width="${newWidth}"`
+											);
+											if (videoSource === "facebook") {
+												newVideoEmbedCode = newVideoEmbedCode.replace(
+													/&width=[0-9]+/,
+													`width="${newWidth}"`
+												);
+											}
+
+											if (preserveAspectRatio) {
+												//get ratio between current width and current height, then recalculate height according to ratio
+												const newHeight = Math.round(
+													(height * newWidth) / width
+												);
+												setAttributes({
+													height: newHeight,
+												});
+												newVideoEmbedCode = newVideoEmbedCode.replace(
+													/height="[0-9]+"/,
+													`height="${newHeight}"`
+												);
+												if (videoSource === "facebook") {
+													newVideoEmbedCode = newVideoEmbedCode.replace(
+														/&height=[0-9]+/,
+														`height="${newHeight}"`
+													);
+												}
+											}
+											setAttributes({ videoEmbedCode: newVideoEmbedCode });
+										}}
+										min={200}
+										max={1600}
+									/>
+									{!preserveAspectRatio && (
+										<RangeControl
+											label={__("Video height (pixels)")}
+											value={height}
+											onChange={(height) => {
+												let newVideoEmbedCode = videoEmbedCode;
+
+												newVideoEmbedCode = newVideoEmbedCode.replace(
+													/height="[0-9]+"/,
+													`height="${height}"`
+												);
+												if (videoSource === "facebook") {
+													newVideoEmbedCode = newVideoEmbedCode.replace(
+														/&height=[0-9]+/,
+														`height="${height}"`
+													);
+												}
+												setAttributes({
+													height,
+													videoEmbedCode: newVideoEmbedCode,
+												});
+											}}
+											min={200}
+											max={1600}
+										/>
+									)}
+									<div className="ub-labelled-toggle">
+										<p>{__("Preserve aspect ratio")}</p>
+										<ToggleControl
+											checked={preserveAspectRatio}
+											onChange={() => {
+												setAttributes({
+													preserveAspectRatio: !preserveAspectRatio,
+												});
+												if (
+													!preserveAspectRatio &&
+													!["facebook", "unknown"].includes(videoSource)
+												) {
+													const newHeight = Math.round(
+														(origHeight * width) / origWidth
+													);
+
+													let newVideoEmbedCode = videoEmbedCode.replace(
+														/height="[0-9]+"/,
+														`height="${newHeight}"`
+													);
+													if (videoSource === "facebook") {
+														newVideoEmbedCode = newVideoEmbedCode.replace(
+															/&height=[0-9]+/,
+															`height="${newHeight}"`
+														);
+													}
+													setAttributes({
+														height: newHeight,
+														videoEmbedCode: newVideoEmbedCode,
+													});
+												}
+											}}
+										/>
+									</div>
+								</>
+							)}
 							{/* SUPPORTED IN DAILYMOTION, YOUTUBE, LOCAL, DIRECT */}
 							{([
 								"local",
@@ -1725,14 +1792,22 @@ export function AdvancedVideoBlock(props) {
 				</>
 			)}
 			<div
-				className="ub-advanced-video-container"
+				className={`ub-advanced-video-container${
+					autofit
+						? ` ub-advanced-video-autofit${
+								["youtube", "dailymotion", "vimeo"].includes(videoSource)
+									? `-${videoSource}`
+									: ""
+						  }`
+						: ""
+				}`}
 				dangerouslySetInnerHTML={{
 					__html:
 						videoEmbedCode ||
 						"<p>If a valid video source is entered, the video should appear here</p>",
 				}}
 				style={Object.assign(
-					{ width: `${width}px` },
+					autofit ? {} : { width: `${width}px` },
 					[
 						topBorderSize,
 						leftBorderSize,
@@ -1769,6 +1844,16 @@ export function AdvancedVideoBlock(props) {
 						: {}
 				)}
 			/>
+			{autofit && (
+				<style>
+					{`.ub-advanced-video-autofit-youtube{
+				aspect-ratio: ${origWidth}/${origHeight}
+			}
+			.ub-advanced-video-autofit-youtube iframe{
+				aspect-ratio: ${origWidth}/${origHeight}
+			}`}
+				</style>
+			)}
 			{url !== "" && (
 				<div>
 					<p>{`${__("Video URL: ")}${url}`}</p>

@@ -12,3 +12,10 @@
 		transform: translate(-50%, -50%);
 	}
 }
+
+.ub-advanced-video-embed.ub-advanced-video-autofit-youtube {
+	width: 100%;
+	> iframe {
+		width: 100%;
+	}
+}
