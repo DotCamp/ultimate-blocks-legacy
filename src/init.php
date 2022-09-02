@@ -221,6 +221,11 @@ function ub_include_block_attribute_css() {
                                 'padding: ' . ($attributes['origHeight'] / $attributes['origWidth'] * 100) . '% 0 0 0;' .
                             '}';
                         }
+                        else if($attributes['videoSource'] === 'dailymotion'){
+                            $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-dailymotion{' .
+                                'padding-bottom: ' . ($attributes['origHeight'] / $attributes['origWidth'] * 100) . '%;' .
+                            '}';
+                        }
                     }
 
                     if(json_encode(array_unique(array($attributes['topBorderSize'], $attributes['leftBorderSize'],

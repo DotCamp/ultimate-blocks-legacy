@@ -1819,7 +1819,11 @@ export function AdvancedVideoBlock(props) {
 						"<p>If a valid video source is entered, the video should appear here</p>",
 				}}
 				style={Object.assign(
-					autofit ? {} : { width: `${width}px` },
+					autofit
+						? videoSource === "dailymotion"
+							? { paddingBottom: `${(origHeight / origWidth) * 100}%` }
+							: {}
+						: { width: `${width}px` },
 					[
 						topBorderSize,
 						leftBorderSize,
@@ -1859,19 +1863,19 @@ export function AdvancedVideoBlock(props) {
 			{autofit && videoSource === "youtube" && (
 				<style>
 					{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-youtube{
-				aspect-ratio: ${origWidth}/${origHeight}
-			}
-			.ub-advanced-video-autofit-youtube iframe{
-				aspect-ratio: ${origWidth}/${origHeight}
-			}`}
+						aspect-ratio: ${origWidth}/${origHeight}
+					}
+					#ub-advanced-video-${blockID}.ub-advanced-video-autofit-youtube iframe{
+						aspect-ratio: ${origWidth}/${origHeight}
+					}`}
 				</style>
 			)}
 			{autofit && videoSource === "vimeo" && (
 				<>
 					<style>
 						{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-vimeo{
-						padding: ${(origHeight / origWidth) * 100}% 0 0 0;
-					}`}
+							padding: ${(origHeight / origWidth) * 100}% 0 0 0;
+						}`}
 					</style>
 					<script src="https://player.vimeo.com/api/player.js" />
 				</>
