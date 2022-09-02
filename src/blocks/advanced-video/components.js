@@ -23,7 +23,6 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 
 	if (mode === "add") {
 		if (validSources.includes(source) && embedCode.search(sizeRegex)) {
-			console.log("adding size");
 			switch (source) {
 				case "youtube":
 					newEmbedCode = embedCode.replace("<iframe", `<iframe ${arg}`);
@@ -93,7 +92,6 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 		}
 	} else if (mode === "remove") {
 		if (validSources.includes(source) && embedCode.search(sizeRegex)) {
-			console.log("removing size");
 			switch (source) {
 				case "youtube":
 					newEmbedCode = embedCode.replace(`<iframe ${arg}`, "<iframe");
@@ -605,6 +603,42 @@ export function AdvancedVideoBlock(props) {
 			console.log("invalid input");
 		}
 	};
+
+	let autofitContainerStyle = {};
+	let extraEmbeds = null;
+
+	switch (videoSource) {
+		case "youtube":
+			autofitContainerStyle = Object.assign(
+				{},
+				{ aspectRatio: `${origWidth}/${origHeight}` }
+			);
+			extraEmbeds = (
+				<style>
+					{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-youtube iframe{
+						aspect-ratio: ${origWidth}/${origHeight}
+					}`}
+				</style>
+			);
+			break;
+		case "vimeo":
+			autofitContainerStyle = Object.assign(
+				{},
+				{ padding: `${(origHeight / origWidth) * 100}% 0 0 0` }
+			);
+			extraEmbeds = <script src="https://player.vimeo.com/api/player.js" />;
+			break;
+		case "dailymotion":
+			autofitContainerStyle = Object.assign(
+				{},
+				{ paddingBottom: `${(origHeight / origWidth) * 100}%` }
+			);
+			extraEmbeds = null;
+			break;
+		default:
+			autofitContainerStyle = {};
+			extraEmbeds = null;
+	}
 
 	return (
 		<>
@@ -1819,11 +1853,7 @@ export function AdvancedVideoBlock(props) {
 						"<p>If a valid video source is entered, the video should appear here</p>",
 				}}
 				style={Object.assign(
-					autofit
-						? videoSource === "dailymotion"
-							? { paddingBottom: `${(origHeight / origWidth) * 100}%` }
-							: {}
-						: { width: `${width}px` },
+					autofit ? autofitContainerStyle : { width: `${width}px` },
 					[
 						topBorderSize,
 						leftBorderSize,
@@ -1860,26 +1890,7 @@ export function AdvancedVideoBlock(props) {
 						: {}
 				)}
 			/>
-			{autofit && videoSource === "youtube" && (
-				<style>
-					{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-youtube{
-						aspect-ratio: ${origWidth}/${origHeight}
-					}
-					#ub-advanced-video-${blockID}.ub-advanced-video-autofit-youtube iframe{
-						aspect-ratio: ${origWidth}/${origHeight}
-					}`}
-				</style>
-			)}
-			{autofit && videoSource === "vimeo" && (
-				<>
-					<style>
-						{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-vimeo{
-							padding: ${(origHeight / origWidth) * 100}% 0 0 0;
-						}`}
-					</style>
-					<script src="https://player.vimeo.com/api/player.js" />
-				</>
-			)}
+			{autofit && extraEmbeds}
 			{url !== "" && (
 				<div>
 					<p>{`${__("Video URL: ")}${url}`}</p>

@@ -208,23 +208,27 @@ function ub_include_block_attribute_css() {
                         $blockStylesheets .= $prefix . '.ub-advanced-video-container{' .
                             'width: 100%;' .
                         '}';
-                        if($attributes['videoSource'] === 'youtube'){
-                            $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-youtube{' .
-                                'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
-                            '}' .
-                            $prefix . ' .ub-advanced-video-autofit-youtube > iframe{' .
-                                'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
-                            '}' ;
-                        }
-                        else if($attributes['videoSource'] === 'vimeo'){
-                            $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-vimeo{' .
-                                'padding: ' . ($attributes['origHeight'] / $attributes['origWidth'] * 100) . '% 0 0 0;' .
-                            '}';
-                        }
-                        else if($attributes['videoSource'] === 'dailymotion'){
-                            $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-dailymotion{' .
-                                'padding-bottom: ' . ($attributes['origHeight'] / $attributes['origWidth'] * 100) . '%;' .
-                            '}';
+                        switch($attributes['videoSource']){
+                            case 'youtube':
+                                $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-youtube{' .
+                                    'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
+                                '}' .
+                                $prefix . ' .ub-advanced-video-autofit-youtube > iframe{' .
+                                    'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
+                                '}' ;
+                                break;
+                            case 'vimeo':
+                                $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-vimeo{' .
+                                    'padding: ' . ($attributes['origHeight'] / $attributes['origWidth'] * 100) . '% 0 0 0;' .
+                                '}';
+                                break;
+                            case 'dailymotion':
+                                $blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-dailymotion{' .
+                                    'padding-bottom: ' . ($attributes['origHeight'] / $attributes['origWidth'] * 100) . '%;' .
+                                '}';
+                                break;
+                            default:
+                                $blockStylesheets .= '';
                         }
                     }
 
