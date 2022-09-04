@@ -182,7 +182,7 @@ registerBlockType("ub/advanced-video", {
 		},
 		width: {
 			type: "number",
-			default: 600,
+			default: 0,
 		},
 		origWidth: {
 			type: "number",
@@ -198,7 +198,7 @@ registerBlockType("ub/advanced-video", {
 		},
 		height: {
 			type: "number",
-			default: 450,
+			default: 0,
 		},
 		origHeight: {
 			type: "number",

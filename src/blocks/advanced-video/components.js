@@ -295,30 +295,6 @@ export function AdvancedVideoBlock(props) {
 
 	const { attributes, setAttributes, block } = props;
 
-	useEffect(() => {
-		const { startTime, blockID, shadow } = attributes;
-
-		if (
-			startTime !== 0 &&
-			[startTime_d, startTime_h, startTime_m, startTime_s].every((t) => t === 0)
-		) {
-			let st = convertFromSeconds(startTime);
-			setStartTimeStatus(true);
-			setStartTime_d(st.d);
-			setStartTime_h(st.h);
-			setStartTime_m(st.m);
-			setStartTime_s(st.s);
-		}
-
-		if (blockID === "") {
-			setAttributes({ blockID: block.clientId });
-		}
-
-		if (!useShadow && shadow[0].radius > 0) {
-			setShadowStatus(true);
-		}
-	}, []);
-
 	const {
 		blockID,
 
@@ -363,6 +339,36 @@ export function AdvancedVideoBlock(props) {
 		showInTablet,
 		showInMobile,
 	} = attributes;
+
+	useEffect(() => {
+		if (
+			startTime !== 0 &&
+			[startTime_d, startTime_h, startTime_m, startTime_s].every((t) => t === 0)
+		) {
+			let st = convertFromSeconds(startTime);
+			setStartTimeStatus(true);
+			setStartTime_d(st.d);
+			setStartTime_h(st.h);
+			setStartTime_m(st.m);
+			setStartTime_s(st.s);
+		}
+
+		if (blockID === "") {
+			setAttributes({ blockID: block.clientId });
+		} else if (blockID !== block.clientId) {
+			//patch for bug that set default width and height to 0 in frontend when width and height are unchanged in editor
+			if (width === 0) {
+				setAttributes({ width: 600 });
+			}
+			if (height === 0) {
+				setAttributes({ height: 450 });
+			}
+		}
+
+		if (!useShadow && shadow[0].radius > 0) {
+			setShadowStatus(true);
+		}
+	}, []);
 
 	const currentColor =
 		currentBorder === "top"
@@ -528,6 +534,8 @@ export function AdvancedVideoBlock(props) {
 									url: data.url,
 									videoEmbedCode: decodeURIComponent(data.embed_html),
 									videoSource: "dailymotion",
+									origHeight: data.height,
+									origWidth: data.width,
 									height: newHeight,
 									width: newWidth,
 									videoLength: data.duration,
@@ -669,6 +677,7 @@ export function AdvancedVideoBlock(props) {
 
 												break;
 											case "vimeo":
+											case "dailymotion":
 												//handled via styles
 												break;
 											default:
@@ -1298,6 +1307,7 @@ export function AdvancedVideoBlock(props) {
 											});
 											setCustomThumbnailStatus(true);
 											setImageURLInputStatus(false);
+											setImageURLInput("");
 										}}
 									>
 										{__("Replace")}
@@ -1940,6 +1950,9 @@ export function AdvancedVideoBlock(props) {
 							setStartTime_m(0);
 							setStartTime_s(0);
 							setShadowStatus(false);
+							setCustomThumbnailStatus(false);
+							setImageURLInputStatus(false);
+							setImageURLInput("");
 						}}
 					>
 						{__("Replace")}

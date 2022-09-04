@@ -230,6 +230,15 @@ function ub_include_block_attribute_css() {
                             default:
                                 $blockStylesheets .= '';
                         }
+                        if($attributes['thumbnail'] !== ''){
+                            $blockStylesheets .= $prefix . '.ub-advanced-video-container .ub-advanced-video-thumbnail{' .
+                                'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
+                            '}' .
+                            '.ub-advanced-video-container .ub-advanced-video-thumbnail-image{' .
+                                'width: 100%;' .
+                                'height: 100%;' .
+                            '}';
+                        }
                     }
 
                     if(json_encode(array_unique(array($attributes['topBorderSize'], $attributes['leftBorderSize'],
