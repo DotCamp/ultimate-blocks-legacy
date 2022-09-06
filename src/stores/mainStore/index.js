@@ -1,8 +1,9 @@
-import { createReduxStore, register } from '@wordpress/data';
+import { createReduxStore, register, dispatch } from '@wordpress/data';
 import reducer from './reducer';
 import selectors from './selectors';
 import actions from './actions';
 import deepmerge from 'deepmerge';
+import ManagerBase from '$Base/ManagerBase';
 
 /**
  * Main store for plugin.
@@ -10,23 +11,21 @@ import deepmerge from 'deepmerge';
  * @param {string} storeName store name
  * @function Object() { [native code] }
  */
-function MainStore(storeName) {
+class MainStore extends ManagerBase {
 	/**
 	 * Name of the store.
 	 * Will be used as an id to distinguish plugin store from other ones.
 	 *
-	 * @type {string}
+	 * @type {string|null}
 	 */
-	this.storeName = storeName;
-
-	this.store = null;
+	storeName = null;
 
 	/**
 	 * Register store.
 	 *
 	 * @param {Object} [extraState={}] extra state to use
 	 */
-	this.registerStore = (extraState = {}) => {
+	#registerStore = (extraState = {}) => {
 		const innerExtraState = {
 			storeName: this.storeName,
 		};
@@ -37,17 +36,46 @@ function MainStore(storeName) {
 			actions: actions(this.storeName),
 		};
 
-		this.store = createReduxStore(this.storeName, reducerOptions);
+		const generatedStore = createReduxStore(this.storeName, reducerOptions);
 
-		register(this.store);
+		register(generatedStore);
+	};
+
+	/**
+	 * Initialization logic for pro store.
+	 *
+	 * @param {string} storeName store name
+	 */
+	_initLogic(storeName) {
+		// store id for outside use to global context
+		const context = self || global;
+		context.ub_main_store_id = storeName;
+
+		this.storeName = storeName;
+		this.#registerStore();
+	}
+
+	/**
+	 * Get main store id.
+	 *
+	 * @return {string} store id
+	 */
+	getStoreId() {
+		const context = self || global;
+		return this.storeName ?? context.ub_main_store_id;
+	}
+
+	/**
+	 * Store action dispatch.
+	 *
+	 * @return {Object} object containing available store actions.
+	 */
+	dispatch = () => {
+		return dispatch(this.getStoreId());
 	};
 }
-
-// create and register plugin store
-const mainStoreObj = new MainStore('UltimateBlocksStore');
-mainStoreObj.registerStore();
 
 /**
  * @module mainStoreObj
  */
-export default mainStoreObj;
+export default new MainStore();

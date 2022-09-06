@@ -1,6 +1,3 @@
-// register main plugin store
-import '$BlockStores/mainStore/index.js';
-
 /**
  * Gutenberg Blocks
  *

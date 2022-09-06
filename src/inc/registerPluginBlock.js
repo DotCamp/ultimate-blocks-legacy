@@ -1,6 +1,6 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { dispatch } from '@wordpress/data';
 import MainStore from '$BlockStores/mainStore/index.js';
+
 /**
  * Register plugin block.
  *
@@ -18,7 +18,7 @@ function registerPluginBlock(blockTypeId, options) {
 	}
 
 	// filter block attributes
-	dispatch(MainStore.storeName).applyPluginFilter(
+	MainStore.dispatch().applyPluginFilter(
 		`${blockTypeId}-attributes`,
 		attributes,
 		(finalData) => {
