@@ -1021,7 +1021,7 @@ add_action('wp_head', 'ub_include_block_attribute_css');
  * @return void
  */
 function ultimate_blocks_priority_editor_assets(){
-	wp_enqueue_script('ultimate-blocks-priority-script', trailingslashit(ULTIMATE_BLOCKS_URL) . 'dist/priority.build.js', [], ULTIMATE_BLOCKS_VERSION, false );
+	wp_enqueue_script('ultimate-blocks-priority-script', trailingslashit(ULTIMATE_BLOCKS_URL) . 'dist/priority.build.js', ['wp-blocks'], ULTIMATE_BLOCKS_VERSION, false );
 }
 
 /**
