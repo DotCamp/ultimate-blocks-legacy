@@ -40,6 +40,26 @@ registerBlockType("ub/expand", {
 			type: "string",
 			default: "left",
 		},
+		allowScroll: {
+			type: "boolean",
+			default: false,
+		},
+		scrollOption: {
+			type: "string",
+			default: "auto", //other options: namedelement, fixedamount, off
+		},
+		scrollOffset: {
+			type: "number",
+			default: 0,
+		},
+		scrollTarget: {
+			type: "string",
+			default: "",
+		},
+		scrollTargetType: {
+			type: "string",
+			default: "id", //other types: class, element
+		},
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {

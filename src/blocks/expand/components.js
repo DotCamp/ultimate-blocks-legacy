@@ -2,7 +2,16 @@ import { useEffect } from "react";
 import { getDescendantBlocks } from "../../common";
 
 const { __ } = wp.i18n;
-const { InnerBlocks } = wp.blockEditor || wp.editor;
+const { InnerBlocks, InspectorControls } = wp.blockEditor || wp.editor;
+
+const {
+	PanelBody,
+	PanelRow,
+	SelectControl,
+	RangeControl,
+	TextControl,
+	ToggleControl,
+} = wp.components;
 const { useSelect } = wp.data;
 
 export function ExpandRoot(props) {
@@ -11,11 +20,19 @@ export function ExpandRoot(props) {
 		updateBlockAttributes,
 		attributes,
 		setAttributes,
+		isSelected,
 		getBlock,
 		getClientIdsWithDescendants,
 	} = props;
 
-	const { blockID } = attributes;
+	const {
+		blockID,
+		allowScroll,
+		scrollOption,
+		scrollOffset,
+		scrollTarget,
+		scrollTargetType,
+	} = attributes;
 
 	const selectedBlockID = useSelect((select) => {
 		return (
@@ -57,28 +74,100 @@ export function ExpandRoot(props) {
 	}
 
 	return (
-		<div className="ub-expand">
-			<InnerBlocks
-				templateLock={"all"}
-				template={[
-					[
-						"ub/expand-portion",
-						{
-							displayType: "partial",
-							clickText: showPreviewText,
-							isVisible: true,
-						},
-					],
-					[
-						"ub/expand-portion",
-						{
-							displayType: "full",
-							clickText: hidePreviewText,
-							isVisible: false,
-						},
-					],
-				]}
-			/>
-		</div>
+		<>
+			{isSelected && (
+				<InspectorControls>
+					<PanelBody title={__("Scroll Settings")}>
+						<PanelRow>
+							<label htmlFor="ub_expand_toggle_display">
+								{__("Allow scrolling")}
+							</label>
+							<ToggleControl
+								id="ub_expand_toggle_display"
+								checked={allowScroll}
+								onChange={() => setAttributes({ allowScroll: !allowScroll })}
+							/>
+						</PanelRow>
+						{allowScroll && (
+							<>
+								<SelectControl
+									label={__("Scroll offset adjustment")}
+									value={scrollOption}
+									options={[
+										{
+											label: __(
+												"Relative to first available fixed/sticky element"
+											),
+											value: "auto",
+										},
+										{
+											label: __("Relative to a specific element"),
+											value: "namedelement",
+										},
+										{ label: __("Fixed height"), value: "fixedamount" },
+									]}
+									onChange={(scrollOption) => setAttributes({ scrollOption })}
+								/>
+								{scrollOption === "namedelement" && (
+									<>
+										<SelectControl
+											label={__("Scroll reference name type")}
+											value={scrollTargetType}
+											options={["id", "class", "element"].map((a) => ({
+												label: __(a),
+												value: a,
+											}))}
+											onChange={(scrollTargetType) =>
+												setAttributes({ scrollTargetType })
+											}
+										/>
+										<TextControl
+											label={__("Reference element for scroll offset")}
+											value={scrollTarget}
+											onChange={(scrollTarget) =>
+												setAttributes({ scrollTarget })
+											}
+										/>
+									</>
+								)}
+								{scrollOption === "fixedamount" && (
+									<RangeControl
+										label={__("Scroll offset (pixels)")}
+										value={scrollOffset}
+										onChange={(scrollOffset) => setAttributes({ scrollOffset })}
+										min={0}
+										max={200}
+										allowReset
+									/>
+								)}
+							</>
+						)}
+					</PanelBody>
+				</InspectorControls>
+			)}
+			<div className="ub-expand">
+				<InnerBlocks
+					templateLock={"all"}
+					template={[
+						[
+							"ub/expand-portion",
+							{
+								displayType: "partial",
+								clickText: showPreviewText,
+								isVisible: true,
+							},
+						],
+						[
+							"ub/expand-portion",
+							{
+								displayType: "full",
+								clickText: hidePreviewText,
+								isVisible: false,
+							},
+						],
+					]}
+				/>
+			</div>
+		</>
 	);
 }

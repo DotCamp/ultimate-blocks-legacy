@@ -657,6 +657,26 @@ $defaultValues = array(
             'toggleAlign'=> array(
                 'type' => 'string',
                 'default' => 'left'
+            ),
+            'allowScroll' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'scrollOption' => array(
+                'type' => 'string',
+                'default' => 'auto' //other options: namedelement, fixedamount, off
+            ),
+            'scrollOffset' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'scrollTarget' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'scrollTargetType' => array(
+                'type' => 'string',
+                'default' => 'id' //other types: class, element
             )
         )
     ),

@@ -22,8 +22,25 @@ function ub_register_expand_portion_block($attributes){
 
 function ub_render_expand_block($attributes, $content){
     extract($attributes);
+
+    $scrollTargetPrefix = '';
+
+    switch($scrollTargetType){
+        case 'id':
+            $scrollTargetPrefix = '#';
+            break;
+        case 'class':
+            $scrollTargetPrefix = '.';
+            break;
+        case 'element':
+        default:
+            $scrollTargetPrefix = '';
+    }
+
     return '<div class="ub-expand '.(isset($className) ? ' ' . esc_attr($className) : '')
-    .'" id="ub-expand-'.$blockID.'">'.$content.'</div>';
+    
+    .'" id="ub-expand-'.$blockID.'"' .  ($allowScroll ? (' data-scroll-type="' . $scrollOption . '"' . ($scrollOption === 'fixedamount' ? ' data-scroll-amount="' . $scrollOffset . '"' : '')
+    . ($scrollOption === 'namedelement' ? ' data-scroll-target="' . $scrollTargetPrefix . $scrollTarget . '"' : '')) : '' ) . '>'.$content.'</div>';
 }
 
 function ub_register_expand_block($attributes){

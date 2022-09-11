@@ -35,7 +35,7 @@ Array.prototype.slice
 			}
 		}
 
-		const togglePanel = () => {
+		const togglePanel = (e) => {
 			const blockRoot = instance.closest(".ub-expand");
 			blockRoot
 				.querySelector(".ub-expand-partial .ub-expand-toggle-button")
@@ -47,7 +47,78 @@ Array.prototype.slice
 
 			expandingPart.classList.toggle("ub-hide");
 
-			if (!expandingPart.classList.contains("ub-hide")) {
+			if (expandingPart.classList.contains("ub-hide")) {
+				const expandRoot = e.target.parentElement.parentElement;
+
+				const rootPosition = expandRoot.getBoundingClientRect().top;
+
+				const expandScrollData = expandRoot.dataset;
+
+				if (rootPosition < 0) {
+					if ("scrollType" in expandScrollData) {
+						const { scrollType } = expandScrollData;
+						const offset =
+							scrollType === "fixedamount" ? expandScrollData.scrollAmount : 0;
+						const target =
+							scrollType === "namedelement"
+								? expandScrollData.scrollTarget
+								: "";
+						switch (scrollType) {
+							case "auto":
+								let probableHeaders;
+
+								try {
+									probableHeaders = document.elementsFromPoint(
+										window.innerWidth / 2,
+										0
+									);
+								} catch (e) {
+									probableHeaders = document.msElementsFromPoint(
+										window.innerWidth / 2,
+										0
+									);
+								}
+
+								const stickyHeaders = Array.prototype.slice
+									.call(probableHeaders)
+									.filter((e) =>
+										["fixed", "sticky"].includes(
+											window.getComputedStyle(e).position
+										)
+									);
+
+								const stickyHeaderHeights = stickyHeaders.map(
+									(h) => h.offsetHeight
+								);
+
+								window.scrollBy(
+									0,
+									rootPosition -
+										(stickyHeaders.length
+											? Math.max.apply(Math, stickyHeaderHeights)
+											: 0)
+								);
+								break;
+							case "fixedamount":
+								window.scrollBy(0, rootPosition - offset);
+								break;
+							case "namedelement":
+								window.scrollBy(
+									0,
+									rootPosition -
+										(document.querySelector(target)
+											? document.querySelector(target).offsetHeight
+											: 0)
+								);
+								break;
+							default:
+								window.scrollBy(0, rootPosition);
+						}
+					} else {
+						window.scrollBy(0, expandRoot.getBoundingClientRect().rootPosition);
+					}
+				}
+			} else {
 				Array.prototype.slice
 					.call(document.getElementsByClassName("ub_image_slider"))
 					.forEach((slider) => {
