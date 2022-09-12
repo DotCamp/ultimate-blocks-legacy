@@ -64,9 +64,10 @@ function ub_hashHeaderScroll(scrollType = "auto", target = "", offset = 0) {
 			case "namedelement":
 				window.scrollBy(
 					0,
-					deficit - document.querySelector(target)
-						? document.querySelector(target).offsetHeight
-						: 0
+					deficit -
+						(document.querySelector(target)
+							? document.querySelector(target).offsetHeight
+							: 0)
 				);
 				break;
 		}

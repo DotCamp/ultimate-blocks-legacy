@@ -58,7 +58,7 @@ function ub_hashHeaderScroll() {
         break;
 
       case "namedelement":
-        window.scrollBy(0, deficit - document.querySelector(target) ? document.querySelector(target).offsetHeight : 0);
+        window.scrollBy(0, deficit - (document.querySelector(target) ? document.querySelector(target).offsetHeight : 0));
         break;
     }
   }
