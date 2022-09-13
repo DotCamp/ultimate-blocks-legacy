@@ -35480,6 +35480,12 @@ function _arrayWithHoles(arr) {
         innerStatus
     ]);
     var howToUse = null;
+    /**
+   * Main visibility calculation for how to use button.
+   * @return {boolean} visibility status
+   */ var howToUseVisibility = function howToUseVisibility() {
+        return howToUse !== null;
+    };
     return /*#__PURE__*/ _react["default"].createElement("div", {
         style: blockStyle,
         className: "block-control",
@@ -35504,7 +35510,7 @@ function _arrayWithHoles(arr) {
             className: "info-line",
             key: index
         }, infoLine[0].toUpperCase() + Array.from(infoLine).splice(1).join(""));
-    })), /*#__PURE__*/ _react["default"].createElement("div", {
+    })), howToUseVisibility() && /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-howto"
     }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
         title: "How to Use",

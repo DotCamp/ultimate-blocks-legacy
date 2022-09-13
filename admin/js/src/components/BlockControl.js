@@ -64,6 +64,14 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 
 	const howToUse = null;
 
+	/**
+	 * Main visibility calculation for how to use button.
+	 * @return {boolean} visibility status
+	 */
+	const howToUseVisibility = () => {
+		return howToUse !== null;
+	};
+
 	return (
 		<div style={ blockStyle } className={ 'block-control' } data-enabled={ JSON.stringify( innerStatus ) } data-initial-animation={ JSON.stringify( initialAnimation.current ) }>
 			<div ref={ headerRef } className={ 'block-title' }>
@@ -88,9 +96,14 @@ function BlockControl( { title, blockId, status, iconElement, onStatusChange, in
 					} )
 				}
 			</div>
-			<div className={ 'block-howto' }>
-				<MenuButton title={ 'How to Use' } status={ howToUse !== null && innerStatus } onClickHandler={ howToUse } />
-			</div>
+			{
+				howToUseVisibility() && (
+					<div className={ 'block-howto' }>
+						<MenuButton title={ 'How to Use' } status={ howToUse !== null && innerStatus }
+							onClickHandler={ howToUse } />
+					</div>
+				)
+			}
 		</div>
 	);
 }
