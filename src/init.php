@@ -24,16 +24,16 @@ if ( !function_exists( 'get_current_screen' ) ) {
 function ub_check_is_gutenberg_page() {
 
 	// The Gutenberg plugin is on.
-    if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) { 
+    if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
         return true;
     }
-	
+
 	// Gutenberg page on WordPress 5+.
 	$current_screen = get_current_screen();
 	if ( $current_screen !== NULL && method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
         return true;
 	}
-	
+
     return false;
 
 }
@@ -74,7 +74,7 @@ function ub_load_assets() {
         $blockList = get_option( 'ultimate_blocks', false );
 
         foreach ( $blockList as $key => $block ) {
-            $blockDirName = strtolower(str_replace(' ', '-', 
+            $blockDirName = strtolower(str_replace(' ', '-',
             trim(preg_replace('/\(.+\)/', '', $blockList[ $key ]['label']))
                 ));
             $frontStyleLocation = $blockDir . $blockDirName . '/style.css';
@@ -109,20 +109,20 @@ function ub_load_assets() {
 }
 
 function ub_advanced_heading_add_assets (){
-	//always enqueue on editor, enqueue on frontend only when advanced heading is present 
-	
+	//always enqueue on editor, enqueue on frontend only when advanced heading is present
+
 	wp_enqueue_style('ultimate_blocks-advanced-heading-fonts',  'https://pagecdn.io/lib/easyfonts/fonts.css');
 }
 
 function ub_generate_widget_block_list($output = false){
     static $blockList = array();
     require_once plugin_dir_path(__FILE__) . 'common.php';
-        
+
     if(!$output){
         $widget_elements = get_option('widget_block');
         foreach( (array) $widget_elements as $key => $widget_element ) {
             if ( ! empty( $widget_element['content'] ) ) {
-                
+
                 $widget_blocks = ub_getPresentBlocks($widget_element['content']);
 
                 foreach( $widget_blocks as $block ){
@@ -169,7 +169,7 @@ function ultimate_blocks_cgb_block_assets() {
                 }
             }
         }
-        
+
     }
     elseif ( ub_check_is_gutenberg_page() ){
         ub_load_assets();
@@ -243,7 +243,7 @@ function ub_include_block_attribute_css() {
 
                     if(json_encode(array_unique(array($attributes['topBorderSize'], $attributes['leftBorderSize'],
                         $attributes['rightBorderSize'], $attributes['bottomBorderSize']))) !== '[0]' ){
-                        
+
                         $blockStylesheets .= $prefix . '{' .
                             ($attributes['topBorderSize'] > 0 ? 'border-top: ' . $attributes['topBorderSize'] . 'px ' . $attributes['topBorderStyle'] . ' ' . $attributes['topBorderColor'] . ';' . PHP_EOL : '') .
                             ($attributes['leftBorderSize'] > 0 ? 'border-left: ' . $attributes['leftBorderSize'] . 'px ' . $attributes['leftBorderStyle'] . ' ' . $attributes['leftBorderColor'] . ';' . PHP_EOL : '') .
@@ -314,29 +314,29 @@ function ub_include_block_attribute_css() {
                     if( !array_key_exists('buttons', $attributes) || count($attributes['buttons']) === 0 ){
                         $blockStylesheets .= $prefix . ' a{' . PHP_EOL;
                         if($attributes['buttonIsTransparent']){
-                            $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
+                            $blockStylesheets .= 'background-color: transparent;' . PHP_EOL .
                             'color: '.$attributes['buttonColor'].';' . PHP_EOL .
                             'border: 3px solid '.$attributes['buttonColor'].';';
                         }
                         else{
-                            $blockStylesheets .= 'background-color: '.$attributes['buttonColor'].';' . PHP_EOL . 
+                            $blockStylesheets .= 'background-color: '.$attributes['buttonColor'].';' . PHP_EOL .
                             'color: '.$attributes['buttonTextColor'].';' . PHP_EOL .
                             'border: none;';
                         }
                         $blockStylesheets .= 'border-radius: '.($attributes['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
-                        '}' . PHP_EOL . 
-    
+                        '}' . PHP_EOL .
+
                         $prefix . ' a:hover{' . PHP_EOL;
                         if($attributes['buttonIsTransparent']){
                             $blockStylesheets .= 'color: '.$attributes['buttonHoverColor'].';' . PHP_EOL .
                             'border: 3px solid '.$attributes['buttonHoverColor'].';';
                         }
                         else{
-                            $blockStylesheets .= 'background-color: '.$attributes['buttonHoverColor'].';' . PHP_EOL . 
+                            $blockStylesheets .= 'background-color: '.$attributes['buttonHoverColor'].';' . PHP_EOL .
                             'color: '.$attributes['buttonTextHoverColor'].';' . PHP_EOL .
                             'border: none;';
                         }
-                        $blockStylesheets .= '}' . PHP_EOL . 
+                        $blockStylesheets .= '}' . PHP_EOL .
                         $prefix. ' .ub-button-content-holder{' . PHP_EOL .
                             'flex-direction: '.($attributes['iconPosition'] === 'left'?'row':'row-reverse').';' . PHP_EOL .
                         '}' . PHP_EOL;
@@ -345,18 +345,18 @@ function ub_include_block_attribute_css() {
                         foreach($attributes['buttons'] as $key => $button){
                             $blockStylesheets .= $prefix . ' .ub-button-container:nth-child('.($key+1).') a{' . PHP_EOL;
                             if($attributes['buttons'][$key]['buttonIsTransparent']){
-                                $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
+                                $blockStylesheets .= 'background-color: transparent;' . PHP_EOL .
                                 'color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL .
                                 'border: 3px solid '.$attributes['buttons'][$key]['buttonColor'].';';
                             }
                             else{
-                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL . 
+                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL .
                                 'color: ' . ($attributes['buttons'][$key]['buttonTextColor'] ?: 'inherit') . ';' . PHP_EOL .
                                 'border: none;';
                             }
                             if($attributes['buttons'][$key]['buttonRounded']){
                                 if(array_key_exists('topLeftRadius', $button) && array_key_exists('topLeftRadiusUnit', $button) &&
-                                    array_key_exists('topRightRadius', $button) && array_key_exists('topRightRadiusUnit', $button) && 
+                                    array_key_exists('topRightRadius', $button) && array_key_exists('topRightRadiusUnit', $button) &&
                                     array_key_exists('bottomLeftRadius', $button) && array_key_exists('bottomLeftRadiusUnit', $button) &&
                                     array_key_exists('bottomRightRadius', $button) && array_key_exists('bottomRightRadiusUnit', $button)){
                                         if( count(array_unique( [ $button['topLeftRadius'], $button['topRightRadius'], $button['bottomLeftRadius'], $button['bottomRightRadius'] ] )) === 1
@@ -365,7 +365,7 @@ function ub_include_block_attribute_css() {
                                         }
                                         else{
                                             $blockStylesheets .= 'border-radius: ' . $button['topLeftRadius'] . $button['topLeftRadiusUnit'] . ' ' . $button['topRightRadius'] . $button['topRightRadiusUnit'] . ' ' .
-                                                    $button['bottomRightRadius'] . $button['bottomRightRadiusUnit'] . ' ' . $button['bottomLeftRadius'] . $button['bottomLeftRadiusUnit'] . ';'; 
+                                                    $button['bottomRightRadius'] . $button['bottomRightRadiusUnit'] . ' ' . $button['bottomLeftRadius'] . $button['bottomLeftRadiusUnit'] . ';';
                                         }
                                     }
                                 else{
@@ -385,11 +385,11 @@ function ub_include_block_attribute_css() {
                                 'border: 3px solid '.$attributes['buttons'][$key]['buttonHoverColor'].';';
                             }
                             else{
-                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonHoverColor'].';' . PHP_EOL . 
+                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonHoverColor'].';' . PHP_EOL .
                                 'color: '.$attributes['buttons'][$key]['buttonTextHoverColor'].';' . PHP_EOL .
                                 'border: none;';
                             }
-                            $blockStylesheets .= '}' . PHP_EOL . 
+                            $blockStylesheets .= '}' . PHP_EOL .
                             $prefix. ' .ub-button-container:nth-child('.($key+1).') .ub-button-content-holder{' . PHP_EOL .
                                 'flex-direction: '.($attributes['buttons'][$key]['iconPosition'] === 'left'?'row':'row-reverse').';' . PHP_EOL .
                             '}' . PHP_EOL;
@@ -400,15 +400,15 @@ function ub_include_block_attribute_css() {
                 case 'ub/call-to-action-block':
                     $prefix = '#ub_call_to_action_' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
-                        'background-color: '.$attributes['ctaBackgroundColor'].';' . PHP_EOL . 
-                        'border-width: '.$attributes['ctaBorderSize'].'px;' . PHP_EOL . 
+                        'background-color: '.$attributes['ctaBackgroundColor'].';' . PHP_EOL .
+                        'border-width: '.$attributes['ctaBorderSize'].'px;' . PHP_EOL .
                         'border-color: '.$attributes['ctaBorderColor'].';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_call_to_action_headline_text{' . PHP_EOL .
                         'font-size: '.$attributes['headFontSize'].'px;' . PHP_EOL .
                         'color: ' . ($attributes['headColor'] ?: "inherit") . ';' . PHP_EOL .
                         'text-align: '.$attributes['headAlign'].';' . PHP_EOL .
-                    '}' . PHP_EOL . 
+                    '}' . PHP_EOL .
                     $prefix . ' .ub_cta_content_text{' . PHP_EOL .
                         'font-size: '.$attributes['contentFontSize'].'px;' . PHP_EOL .
                         'color: ' . ($attributes['contentColor'] ?: "inherit") . ';' . PHP_EOL .
@@ -454,10 +454,10 @@ function ub_include_block_attribute_css() {
                         $prefix = '#ub-content-toggle-' . $attributes['blockID'];
                         $blockStylesheets .= $prefix . ' .wp-block-ub-content-toggle-accordion{' . PHP_EOL .
                             'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                        '}' . PHP_EOL . 
+                        '}' . PHP_EOL .
                         $prefix . ' .wp-block-ub-content-toggle-accordion-title-wrap{' . PHP_EOL .
                             'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                        '}' . PHP_EOL . 
+                        '}' . PHP_EOL .
                         $prefix . ' .wp-block-ub-content-toggle-accordion-title{' . PHP_EOL .
                             'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
                         '}' . PHP_EOL .
@@ -480,7 +480,7 @@ function ub_include_block_attribute_css() {
                     switch ($attributes['style']){
                         case 'Odometer':
                             $blockStylesheets .= $prefix . ' .ub-countdown-odometer-container{' . PHP_EOL .
-                                'grid-template-columns: ' . implode(' auto ', 
+                                'grid-template-columns: ' . implode(' auto ',
                                     array_fill(0, array_search($attributes['smallestUnit'], $timeUnits) - array_search($attributes['largestUnit'], $timeUnits) +1, '1fr')) . ';' . PHP_EOL .
                             '}';
                         break;
@@ -548,12 +548,12 @@ function ub_include_block_attribute_css() {
                     if($attributes['suppliesListStyle'] === 'none'){
                         $blockStylesheets .= $prefix . ' .ub_howto-supplies-list{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
-                        '}' . PHP_EOL;                        
+                        '}' . PHP_EOL;
                     }
                     if($attributes['toolsListStyle'] === 'none'){
                         $blockStylesheets .= $prefix . ' .ub_howto-tools-list{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
-                        '}' . PHP_EOL;                        
+                        '}' . PHP_EOL;
                     }
 
                     function ub_howto_getStepPic($step){
@@ -561,7 +561,7 @@ function ub_include_block_attribute_css() {
                     }
 
                     function ub_howto_generateStepPicStyle($stepPic){
-                        return 'width: '. $stepPic['width'] .'px;' . 
+                        return 'width: '. $stepPic['width'] .'px;' .
                         ($stepPic['float'] === 'left' ? 'padding-right: 10px;' : ($stepPic['float'] === 'right' ? 'padding-left: 10px;' : '') ) .
                         ($stepPic['float'] === 'none' ? '' : 'float: ' . $stepPic['float'] . ';');
                     }
@@ -605,7 +605,7 @@ function ub_include_block_attribute_css() {
 
                     if($attributes['finalImageWidth'] > 0){
                         $blockStylesheets .= $prefix . ' .ub_howto-yield-image-container{' .
-                            'width: ' . $attributes['finalImageWidth'] . 'px;' . 
+                            'width: ' . $attributes['finalImageWidth'] . 'px;' .
                             ($attributes['finalImageFloat'] === 'left' ? 'padding-right: 10px;' : ($attributes['finalImageFloat'] === 'right' ? 'padding-left: 10px;' : '') ) .
                             ($attributes['finalImageFloat'] === 'none' ? '' : 'float: ' . $attributes['finalImageFloat'] . ';');
                         '}';
@@ -659,7 +659,7 @@ function ub_include_block_attribute_css() {
                     $prefix = '#ub-progress-bar-'. $attributes['blockID'];
                     $blockStylesheets .=  $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
                         'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL . 
+                    '}' . PHP_EOL .
                     $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
                         'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL;
@@ -678,18 +678,18 @@ function ub_include_block_attribute_css() {
                             'height: ' . $attributes['circleSize'] . 'px;' . PHP_EOL . 'width: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
                             ( in_array($attributes['detailAlign'], ['left', 'right']) ? 'float: ' . $attributes['detailAlign'] : 'margin: auto' ) . ';' . PHP_EOL .
                         '}' . PHP_EOL .
-                        $prefix . ' .ub_progress-bar-circle-trail{' . PHP_EOL . 
-                            'stroke-dasharray: ' . $circlePathLength . 'px,' . $circlePathLength . 'px' . PHP_EOL . 
+                        $prefix . ' .ub_progress-bar-circle-trail{' . PHP_EOL .
+                            'stroke-dasharray: ' . $circlePathLength . 'px,' . $circlePathLength . 'px' . PHP_EOL .
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-circle-path{' . PHP_EOL .
                             'stroke-dasharray: 0px, ' . $circlePathLength . 'px' . PHP_EOL .
                         '}' . PHP_EOL .
-                        $prefix . ' .ub_progress-bar-label{' . PHP_EOL;                                
+                        $prefix . ' .ub_progress-bar-label{' . PHP_EOL;
                     }
                     $blockStylesheets .= 'visibility: hidden;' . PHP_EOL .
                                         'color: ' . ($attributes['labelColor'] ?: 'inherit') . ';'. PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . '.ub_progress-bar-filled .ub_progress-bar-label{' . PHP_EOL . 
+                    $prefix . '.ub_progress-bar-filled .ub_progress-bar-label{' . PHP_EOL .
                         'visibility: visible;' . PHP_EOL .
                     '}' . PHP_EOL;
                     if($attributes['barType'] === 'linear'){
@@ -699,29 +699,29 @@ function ub_include_block_attribute_css() {
                     else{
                         $strokeArcLength = $circlePathLength * $attributes['percentage'] / 100;
                         $blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-circle-path{' . PHP_EOL .
-                            'stroke-linecap: round;' . PHP_EOL . 
+                            'stroke-linecap: round;' . PHP_EOL .
                             'stroke-dasharray: '.$strokeArcLength.'px, '.$circlePathLength.'px;' . PHP_EOL;
                     }
                     $blockStylesheets .= '}';
                     break;
                 case 'ub/review':
                     $prefix = '#ub_review_' . $attributes['blockID'];
-                    $blockStylesheets .=  $prefix . ' .ub_review_item_name{' . PHP_EOL . 
+                    $blockStylesheets .=  $prefix . ' .ub_review_item_name{' . PHP_EOL .
                         'text-align: ' . $attributes['titleAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . ' .ub_review_author_name{' . PHP_EOL . 
+                    $prefix . ' .ub_review_author_name{' . PHP_EOL .
                         'text-align: ' . $attributes['authorAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . ' .ub_review_description{' . PHP_EOL . 
+                    $prefix . ' .ub_review_description{' . PHP_EOL .
                         'text-align: ' . $attributes['descriptionAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . ' .ub_review_cta_main{' . PHP_EOL . 
+                    $prefix . ' .ub_review_cta_main{' . PHP_EOL .
                         'justify-content: ' . $attributes['ctaAlignment'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . ' .ub_review_cta_main>a{' . PHP_EOL . 
+                    $prefix . ' .ub_review_cta_main>a{' . PHP_EOL .
                         'color: ' . ($attributes['callToActionForeColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . ' .ub_review_cta_btn{' . PHP_EOL . 
+                    $prefix . ' .ub_review_cta_btn{' . PHP_EOL .
                         'color: ' . ($attributes['callToActionForeColor'] ?: 'inherit') . ';' . PHP_EOL .
                         'border-color: ' . $attributes['callToActionBorderColor'] . ';' . PHP_EOL .
                         'background-color: ' . $attributes['callToActionBackColor'] . ';' . PHP_EOL .
@@ -805,7 +805,7 @@ function ub_include_block_attribute_css() {
                             'border: none;' . PHP_EOL .
                         '}';
                     }
-                    
+
                     if($attributes['iconShape'] === 'none'){
                         $blockStylesheets .= $prefix . ' .social-share-icons a{
                             background-color: transparent;
@@ -907,7 +907,7 @@ function ub_include_block_attribute_css() {
                         $prefix . ' li::before{' . PHP_EOL .
                             'top: ' . ($attributes['iconSize'] >= 5 ? 3 : ($attributes['iconSize'] < 3 ? 2 : 0)) . 'px;
                             font-size: 1em;
-                            height: ' . ((4 + $attributes['iconSize']) / 10) . 'em; 
+                            height: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
                             width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
                             background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
                             .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
@@ -944,7 +944,7 @@ function ub_include_block_attribute_css() {
                         ($attributes['tabStyle'] === 'underline' ? '' : 'background-color: ' . ($attributes['normalColor'] ? : 'inherit') . ';' . PHP_EOL) .
                         'border-color: lightgrey;' . PHP_EOL .
                         'color: ' . ($attributes['normalTitleColor'] ?: 'inherit') . ';' . PHP_EOL .
-                    '}' . PHP_EOL . 
+                    '}' . PHP_EOL .
                     $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap.active, ' .
                     $prefix . ' .wp-block-ub-tabbed-content-tab-title-vertical-wrap.active,' .
                     $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
@@ -958,7 +958,7 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .wp-block-ub-tabbed-content-tabs-title{' . PHP_EOL .
                         'justify-content: ' . ($attributes['tabsAlignment'] === 'center' ? 'center' :
                             'flex-' . ($attributes['tabsAlignment'] === 'left' ? 'start' : 'end' )) . ';' . PHP_EOL .
-                    '}' . PHP_EOL . 
+                    '}' . PHP_EOL .
                     $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle{' . PHP_EOL .
                         'background-color: ' . ($attributes['normalColor'] ?: 'transparent') . ';' . PHP_EOL .
                         'color: ' . ($attributes['normalTitleColor'] ?: 'inherit') . ';' . PHP_EOL .
@@ -988,7 +988,7 @@ function ub_include_block_attribute_css() {
                             'max-width: -moz-fit-content;' . PHP_EOL .
                         '}' . PHP_EOL .
                         $prefix . '.ub_table-of-contents-collapsed .ub_table-of-contents-header {' . PHP_EOL .
-                            'margin-bottom: 0;' . PHP_EOL . 
+                            'margin-bottom: 0;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
                     $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
@@ -1018,7 +1018,7 @@ function ub_include_block_attribute_css() {
                     if($attributes['listIconColor']){
                         $blockStylesheets .= $prefix . ' li{' . PHP_EOL .
                             'color: ' . $attributes['listIconColor'] . ';' . PHP_EOL . '}' . PHP_EOL;
-                    } 
+                    }
                     break;
                 case 'ub/testimonial':
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];
@@ -1047,11 +1047,19 @@ function ub_include_block_attribute_css() {
     ob_start(); ?>
 
 <style><?php echo($blockStylesheets); ?></style>
-    
+
     <?php
     ob_end_flush();
 }
 add_action('wp_head', 'ub_include_block_attribute_css');
+
+/**
+ * Enqueue assets which are important to be initialized before any version of plugin assets are.
+ * @return void
+ */
+function ultimate_blocks_priority_editor_assets(){
+	wp_enqueue_script('ultimate-blocks-priority-script', trailingslashit(ULTIMATE_BLOCKS_URL) . 'dist/priority.build.js', ['wp-blocks'], ULTIMATE_BLOCKS_VERSION, false );
+}
 
 /**
  * Enqueue Gutenberg block assets for backend editor.
@@ -1080,14 +1088,14 @@ function ultimate_blocks_cgb_editor_assets() {
 	);
 
     // Styles.
-    if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') && 
+    if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') &&
         get_option('ultimate_blocks_css_version') != Ultimate_Blocks_Constants::plugin_version()){
         $adminStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css', 'w');
         $blockDir = dirname(__DIR__) . '/src/blocks/';
         $blockList = get_option( 'ultimate_blocks', false );
 
         foreach ( $blockList as $key => $block ) {
-            $blockDirName = strtolower(str_replace(' ', '-', 
+            $blockDirName = strtolower(str_replace(' ', '-',
             trim(preg_replace('/\(.+\)/', '', $blockList[ $key ]['label']))
                 ));
             $adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
@@ -1114,6 +1122,9 @@ function ultimate_blocks_cgb_editor_assets() {
 		Ultimate_Blocks_Constants::plugin_version() // Version: latest version number
 	);
 } // End function ultimate_blocks_cgb_editor_assets().
+
+// Hook: Editor assets.
+add_action( 'enqueue_block_editor_assets', 'ultimate_blocks_priority_editor_assets', 1 );
 
 // Hook: Editor assets.
 add_action( 'enqueue_block_editor_assets', 'ultimate_blocks_cgb_editor_assets' );
