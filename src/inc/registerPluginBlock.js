@@ -17,14 +17,16 @@ function registerPluginBlock(blockTypeId, options) {
 		);
 	}
 
-	// filter block attributes
-	MainStore.dispatch().applyPluginFilter(
-		`${blockTypeId}-attributes`,
-		attributes,
-		(finalData) => {
-			options.attributes = finalData;
-		}
-	);
+	if (MainStore.isInitialized()) {
+		// filter block attributes
+		MainStore.dispatch().applyPluginFilter(
+			`${blockTypeId}-attributes`,
+			attributes,
+			(finalData) => {
+				options.attributes = finalData;
+			}
+		);
+	}
 
 	registerBlockType(blockTypeId, options);
 }
