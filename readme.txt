@@ -1,9 +1,9 @@
 === Ultimate Blocks - Gutenberg Blocks Plugin ===
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
-Tags: blocks, gutenberg blocks, gutenberg, editor
+Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,26 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.5.3 - September 19th, 2022 =
+
+Table of Contents - Hide everything except Allowed Headings in Table of Contents inspector by default.
+Table of Contents - Set color of show/hide button in ToC to color of title.
+Table of Contents - Fix issue with table of contents scrolling with reference element.
+Advanced Video - Add play button when using custom thumbnail in advanced video.
+Advanced Video - Fix issue with inserting URLs for custom thumbnails in advanced video.
+Advanced Video - Add option to make video automatically fit within its container.
+Button - Remove default nofollow from button links.
+Button - Fix Sponsored option not working for button links.
+Divider - Add option to convert core separator into divider.
+Expand - Add option to scroll show button of expand into view after clicking hide.
+Other - Fix styling for reusable blocks with more than one top-level block.
+Other - Revise block settings page.
+Other - Add option to rollback to older versions.
+
+## Expand
+
+Expand - Add option to scroll show button of expand into view after clicking hide.
 
 = 2.5.2 - July 25th, 2022 =
 
