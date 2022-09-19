@@ -1,19 +1,19 @@
-import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
+import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
 
 /**
  * Initial store state.
+ *
  * @type {Object}
  */
 const initialState = {
 	app: {
 		blockFilter: FILTER_TYPES._DEFAULT,
-		showBlockInfo: true,
+		showBlockInfo: false,
 	},
 	versionControl: {
 		currentVersion: '1.0.0',
 		versions: {},
-		ajax: {
-		},
+		ajax: {},
 	},
 };
 
