@@ -6,7 +6,7 @@
     "start": "concurrently -k \"wp-scripts start\" \"node recompileOnChange.js\"",
     "bundle_additional_watch": "parcel watch ./admin/js/src/*.js --dist-dir ./bundle-dist --no-hmr",
 	"bundle_additional_build": "parcel build ./admin/js/src/*.js --dist-dir ./bundle-dist --no-cache --no-source-maps",
-    "build": "wp-scripts build & node recompile.js & npm run bundle_additional_build"
+    "build": "wp-scripts build && node recompile.js && npm run bundle_additional_build"
   },
   "alias": {
     "$Containers": "./admin/js/src/containers",
