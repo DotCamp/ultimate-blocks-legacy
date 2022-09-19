@@ -154,7 +154,7 @@ $defaultValues = array(
             ),
             'autofit' => array(
                 'type' => 'boolean',
-                'default' => false,
+                'default' => true,
             ),
 
             //begin border attributes for each side
@@ -228,7 +228,7 @@ $defaultValues = array(
                 'default' => 0
             ),
             //end corner attributes
-            
+
             'showInDesktop' => array(
                 'type' => 'boolean',
                 'default' => true
@@ -1992,7 +1992,7 @@ $defaultValues = array(
             'useAnchors' => array(
                 'type' => 'boolean',
                 'default' => false
-            ), 
+            ),
             'tabsTitleAlignment' => array(
                 'type' => 'array',
                 'default' => array(),

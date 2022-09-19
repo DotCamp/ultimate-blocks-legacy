@@ -194,7 +194,7 @@ registerBlockType("ub/advanced-video", {
 		},
 		autofit: {
 			type: "boolean",
-			default: false,
+			default: true,
 		},
 		height: {
 			type: "number",
