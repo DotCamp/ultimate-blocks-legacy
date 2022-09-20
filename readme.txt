@@ -147,9 +147,6 @@ Expand - Add option to scroll show button of expand into view after clicking hid
 Other - Fix styling for reusable blocks with more than one top-level block.
 Other - Revise block settings page.
 Other - Add option to rollback to older versions.
-
-## Expand
-
 Expand - Add option to scroll show button of expand into view after clicking hide.
 
 = 2.5.2 - July 25th, 2022 =
