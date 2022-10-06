@@ -562,6 +562,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'useToggleInToC' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'border' => array(
 	            'type' => 'boolean',
 	            'default' => true

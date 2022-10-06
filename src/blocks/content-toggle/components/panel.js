@@ -26,6 +26,7 @@ const {
 	SelectControl,
 	ButtonGroup,
 	Button,
+	ToggleControl,
 	Dropdown,
 } = wp.components;
 
@@ -94,6 +95,10 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	useToggleInToC: {
+		type: "boolean",
+		default: false,
+	},
 	border: {
 		type: "boolean",
 		default: true,
@@ -122,6 +127,7 @@ function ContentTogglePanel(props) {
 			toggleColor,
 			toggleIcon,
 			toggleID,
+			useToggleInToC,
 			border,
 			showOnlyOne,
 			parentID,
@@ -313,7 +319,12 @@ function ContentTogglePanel(props) {
 							{ value: "p", label: __("P", "ultimate-blocks") },
 						]}
 						value={titleTag}
-						onChange={(titleTag) => setAttributes({ titleTag })}
+						onChange={(titleTag) => {
+							setAttributes({ titleTag });
+							if (titleTag === "p" && useToggleInToC) {
+								setAttributes({ useToggleInToC: false });
+							}
+						}}
 					/>
 				</div>
 				<PanelBody title={__("Toggle status icon", "ultimate-blocks")}>
@@ -386,28 +397,45 @@ function ContentTogglePanel(props) {
 				</PanelBody>
 			</InspectorControls>
 			<InspectorAdvancedControls>
-				<p>{__("Panel ID")}</p>
-				<input
-					type="text"
-					value={toggleID}
-					onChange={(e) => setAttributes({ toggleID: e.target.value })}
-				/>
-				<p class="ub-custom-id-input">
-					{__(
-						"Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.” Then, you’ll be able to link directly to this section of your page."
-					)}{" "}
-					<a
-						href="https://wordpress.org/support/article/page-jumps/"
-						target="_blank"
-						rel="external noreferrer noopener"
-					>
-						{__("Learn more about anchors")}
-						<span class="components-visually-hidden">
-							{__("(opens in a new tab)")}
-						</span>
-						<span class="dashicons-before dashicons-external" />
-					</a>
-				</p>
+				{!useToggleInToC && (
+					<>
+						<PanelRow>
+							<p>{__("Panel ID")}</p>
+							<input
+								type="text"
+								value={toggleID}
+								onChange={(e) => setAttributes({ toggleID: e.target.value })}
+							/>
+						</PanelRow>
+						<p class="ub-custom-id-input">
+							{__(
+								"Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.” Then, you’ll be able to link directly to this section of your page."
+							)}{" "}
+							<a
+								href="https://wordpress.org/support/article/page-jumps/"
+								target="_blank"
+								rel="external noreferrer noopener"
+							>
+								{__("Learn more about anchors")}
+								<span class="components-visually-hidden">
+									{__(" (opens in a new tab)")}
+								</span>
+								<span class="dashicons-before dashicons-external" />
+							</a>
+						</p>
+					</>
+				)}
+				{titleTag !== "p" && (
+					<PanelRow>
+						<p>{__("Use this panel in the Table of Contents")}</p>
+						<ToggleControl
+							checked={useToggleInToC}
+							onChange={() => {
+								setAttributes({ useToggleInToC: !useToggleInToC });
+							}}
+						/>
+					</PanelRow>
+				)}
 			</InspectorAdvancedControls>
 			<div
 				className={`wp-block-ub-content-toggle-accordion ${

@@ -137,18 +137,36 @@ class TableOfContents extends Component {
 							//also set elementID to generated anchor value
 							headings.push(newBlock);
 						}
+					} else if (block.name === "ub/content-toggle-panel-block") {
+						if (block.attributes.useToggleInToC) {
+							newBlock.attributes = Object.assign(
+								{},
+								{
+									content: blockAttributes.panelTitle,
+									level: Number(blockAttributes.titleTag.charAt(1)),
+									anchor: blockAttributes.toggleID,
+								}
+							);
+
+							headings.push(newBlock);
+						}
 					} else if (block.name === "core/nextpage") {
 						pageNum++;
-					} else if (block.innerBlocks.length > 0) {
-						let internalHeadings = getDescendantBlocks(block).filter((block) =>
-							[
-								"core/heading",
-								"kadence/advancedheading",
-								"themeisle-blocks/advanced-heading",
-								"uagb/advanced-heading",
-								"generateblocks/headline",
-								"ub/advanced-heading",
-							].includes(block.name)
+					}
+
+					if (block.innerBlocks.length > 0) {
+						let internalHeadings = getDescendantBlocks(block).filter(
+							(block) =>
+								[
+									"core/heading",
+									"kadence/advancedheading",
+									"themeisle-blocks/advanced-heading",
+									"uagb/advanced-heading",
+									"generateblocks/headline",
+									"ub/advanced-heading",
+								].includes(block.name) ||
+								(block.name === "ub/content-toggle-panel-block" &&
+									block.attributes.useToggleInToC)
 						);
 
 						if (internalHeadings.length > 0) {
@@ -188,6 +206,14 @@ class TableOfContents extends Component {
 												h.attributes.content
 											);
 										}
+										break;
+									case "ub/content-toggle-panel-block":
+										h.attributes.content = h.attributes.panelTitle;
+										h.attributes.level = Number(
+											blockAttributes.titleTag.charAt(1)
+										);
+										h.attributes.anchor = h.attributes.toggleID;
+
 										break;
 									default:
 										break;
@@ -265,6 +291,15 @@ class TableOfContents extends Component {
 					) {
 						updateBlockAttributes(heading.clientId, {
 							anchor: heading.anchor,
+						});
+					}
+
+					if (
+						heading.blockName === "ub/content-toggle-panel-block" &&
+						heading.anchor !== getBlock(heading.clientId).attributes.toggleID
+					) {
+						updateBlockAttributes(heading.clientId, {
+							toggleID: heading.anchor,
 						});
 					}
 				}
@@ -444,16 +479,20 @@ class TableOfContents extends Component {
 						}
 					});
 
-					deletionSpots.forEach((index) => {
-						if (index !== currentHeaders[index].index) {
-							//heading split, transfer extra attributes of old heading to first of two new ones
-							Object.assign(currentHeaders[currentHeaders[index].index], {
-								disabled: currentHeaders[index].disabled,
-								customContent: currentHeaders[index].customContent,
-							});
-						}
-						currentHeaders.splice(index, 1);
-					});
+					if (newIDs.length) {
+						deletionSpots.forEach((index) => {
+							if (index !== currentHeaders[index].index) {
+								//heading split, transfer extra attributes of old heading to first of two new ones
+								Object.assign(currentHeaders[currentHeaders[index].index], {
+									disabled: currentHeaders[index].disabled,
+									customContent: currentHeaders[index].customContent,
+								});
+							}
+							currentHeaders.splice(index, 1);
+						});
+					} else {
+						currentHeaders = [];
+					}
 				}
 				this.setState({ headers: currentHeaders });
 			}
