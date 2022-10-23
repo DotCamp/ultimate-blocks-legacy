@@ -54,7 +54,12 @@ trait Singleton_Trait {
 	 */
 	protected static final function create_instance( $constructor_args = [], $class_name = null ) {
 		if ( is_null( static::$instance ) ) {
-			$class_name       = class_exists( $class_name ) ? $class_name : __CLASS__;
+			$class_name = __CLASS__;
+
+			if ( ! is_null( $class_name ) ) {
+				$class_name = class_exists( $class_name ) ? $class_name : __CLASS__;
+			}
+
 			static::$instance = new $class_name( $constructor_args );
 		}
 	}
