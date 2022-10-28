@@ -213,7 +213,7 @@ export function PanelContent(props) {
 			}
 
 			setAttributes(initialColors);
-		} else {
+		} else if (block.innerBlocks.length) {
 			Object.assign(props.attributes, {
 				theme: block.innerBlocks[0].attributes.theme,
 				titleColor: block.innerBlocks[0].attributes.titleColor,
