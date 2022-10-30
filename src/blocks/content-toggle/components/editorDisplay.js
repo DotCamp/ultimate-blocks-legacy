@@ -235,22 +235,6 @@ export function PanelContent(props) {
 				removeBlock(block.clientId);
 				return null; //prevent block from being rendered to prevent error
 			} else {
-				insertBlock(
-					createBlock("ub/content-toggle-panel-block", {
-						theme: newColorDefaults.theme,
-						collapsed,
-						titleColor: newColorDefaults.titleColor,
-						titleLinkColor,
-						hasFAQSchema,
-						toggleLocation,
-						toggleColor,
-						toggleIcon,
-						border,
-						showOnlyOne,
-					}),
-					0,
-					block.clientId
-				);
 				setOldArrangement(Array.from(Array(panels.length).keys()));
 			}
 		}
@@ -837,6 +821,23 @@ export function PanelContent(props) {
 			)}
 			<div className={className} id={`ub-content-toggle-${blockID}`}>
 				<InnerBlocks
+					template={[
+						[
+							"ub/content-toggle-panel",
+							{
+								theme: newColorDefaults.theme,
+								collapsed,
+								titleColor: newColorDefaults.titleColor,
+								titleLinkColor,
+								hasFAQSchema,
+								toggleLocation,
+								toggleColor,
+								toggleIcon,
+								border,
+								showOnlyOne,
+							},
+						],
+					]}
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}
 				/>

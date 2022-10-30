@@ -458,7 +458,6 @@ function ContentTogglePanel(props) {
 						keepPlaceholderOnFocus={true}
 						unstableOnFocus={() => {
 							setPanelStatus(true);
-							selectBlock(blockParentId);
 						}}
 					/>
 					{toggleIcon !== "none" && (
@@ -492,7 +491,12 @@ function ContentTogglePanel(props) {
 				</div>
 				{showPanel && (
 					<div className="wp-block-ub-content-toggle-accordion-content-wrap">
-						<InnerBlocks templateLock={false} />
+						<InnerBlocks
+							templateLock={false}
+							template={[
+								["core/paragraph", { placeholder: __("Panel content") }],
+							]}
+						/>
 					</div>
 				)}
 				<div className="wp-block-ub-content-toggle-accordion-controls-top">
