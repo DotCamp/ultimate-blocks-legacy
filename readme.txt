@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
-Tested up to: 6.0
-Stable tag: 2.5.3
+Tested up to: 6.1
+Stable tag: 2.5.4
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -58,7 +58,7 @@ Add a review block with product name, features, summary, button and star rating.
 Add HowTo Schema with sections, steps and valid schema data.
 
 **Table of Contents Block**
-Generate a table of contents from your headings. 
+Generate a table of contents from your headings.
 
 **Tabbed Content Block**
 Add content in tabs in your posts/pages. This comes with a nice drag and drop feature to sort the tabs.
@@ -198,7 +198,7 @@ Expand - Add option to scroll show button of expand into view after clicking hid
 * Divider - Add option to adjust alignment.
 * Styled List - Remove backslashes from SVG code.
 
-= 2.4.14 = 
+= 2.4.14 =
 
 * FIX: Conflict in Content Toggle.
 * FIX: Conflict in Tabbed Content.
@@ -669,7 +669,7 @@ Release Date: November 25th, 2019
 * CHANGE: Removed aggregateRating and added review author property to Review Schema.
 * CHANGE: Display pointer when mouse hovers on button in Review block.
 
-= 2.1.7 = 
+= 2.1.7 =
 
 Release Date: November 5th, 2019
 
@@ -744,7 +744,7 @@ Release Date: September 9th, 2019
 * REMOVE: unnecessary dependancies from Image Slider frontend script.
 * IMPROVEMENT: Table of Content design when it's shown or hidden.
 
-= 2.1.3 = 
+= 2.1.3 =
 
 Release Date: August 27th, 2019
 
@@ -763,7 +763,7 @@ Release Date: August 23rd, 2019
 * FIX: Rendering icons when more than one Button Block has one icon set.
 * FIX: Bugs that prevented old Button and Review blocks from loading in WordPress 5.1 and older.
 * FIX: Content Toggle and Tabbed Content front-end scripts compatibility with Edge.
-* FIX: Override theme CSS for star color in Star Rating Block. 
+* FIX: Override theme CSS for star color in Star Rating Block.
 * FIX: Override theme CSS for button link underlines in Button and Call to Action Block.
 * FIX: Black outline in Notification Box Block.
 * IMPROVEMENT: Toggle events in Content Toggle and Table of Contents.
@@ -821,7 +821,7 @@ Release Date: July 17th, 2019
 * FIX: Issue with Table of Contents header anchors when headers are added, removed, or edited.
 * ADD: Support for Rank Math Table of Contents plugins list.
 
-= 2.0.0 = 
+= 2.0.0 =
 
 Release Date: June 10th, 2019
 
@@ -844,7 +844,7 @@ Release Date: June 10th, 2019
 * FIX: Issue with conversion of old data from Content Toggle and Tabbed Content in WordPress 5.2.
 * FIX: Countdown block refreshing issue on the front-end when in regular mode.
 
-= 1.1.8 = 
+= 1.1.8 =
 
 Release Date: April 23rd, 2019
 
@@ -859,7 +859,7 @@ Release Date: April 23rd, 2019
 * FIX: Forcing one column for Table of Contents on smaller screens.
 * FIX: Prevent Show/Hide button from taking focus away from Table of Contents.
 
-= 1.1.5 = 
+= 1.1.5 =
 
 Release Date: March 22nd, 2019
 
@@ -869,7 +869,7 @@ Release Date: March 22nd, 2019
 * NEW: Formatting and alignment options for Button, Call to Action, Content Toggle, Countdown, Feature Box, Number Box, Progress Bar, Review, Star Rating, and Testimonial block.
 * ADD: Missing Translation for Click to Tweet and Countdown block.
 
-= 1.1.4 = 
+= 1.1.4 =
 
 Release Date: February 28th, 2019
 
@@ -878,7 +878,7 @@ Release Date: February 28th, 2019
 * FIX: Dashboard background color issue.
 * FIX: Link issues on Button, Call to Action, Review Block.
 
-= 1.1.3 = 
+= 1.1.3 =
 
 Release Date: January 29th, 2019
 
