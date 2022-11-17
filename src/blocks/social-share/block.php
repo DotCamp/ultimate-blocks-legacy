@@ -94,7 +94,7 @@ function ub_get_facebook_icon( $attributes, $icon_size, $iconShape, $caption, $h
 
 	// Generate the Facebook URL.
     $facebook_url = 'https://www.facebook.com/sharer/sharer.php?u='
-        . rawurlencode( get_the_permalink() ) . '&title=' . get_the_title();
+        . rawurlencode( get_the_permalink() ) . '&title=' . rawurlencode( get_the_title() );
 
 	return ub_prepare_social_share_icon($facebook_icon, $iconShape, 'facebook', $facebook_url, $caption, $hasOutline);
 }
@@ -123,7 +123,7 @@ function ub_get_twitter_icon( $attributes, $icon_size, $iconShape, $caption, $ha
 	);
 
 	// Generate the Twitter URL.
-    $twitter_url = 'http://twitter.com/intent/tweet?url=' . rawurlencode( get_the_permalink() ) . '&text=' . get_the_title();
+    $twitter_url = 'http://twitter.com/intent/tweet?url=' . rawurlencode( get_the_permalink() ) . '&text=' . rawurlencode( get_the_title() );
 
 	return ub_prepare_social_share_icon($twitter_icon, $iconShape, 'twitter', $twitter_url, $caption, $hasOutline);
 }
@@ -194,7 +194,7 @@ function ub_get_pinterest_icon( $attributes, $icon_size, $iconShape, $caption, $
 	// Generate the Pinterest URL.
     $pinterest_url = 'https://pinterest.com/pin/create/button/?&url='
         . rawurlencode( get_the_permalink() )
-        . '&description=' . get_the_title()
+        . '&description=' . rawurlencode( get_the_title() )
         . '&media=' . $thumbnail;
 
 	return ub_prepare_social_share_icon($pinterest_icon, $iconShape, 'pinterest', $pinterest_url, $caption, $hasOutline);
@@ -227,7 +227,7 @@ function ub_get_reddit_icon( $attributes, $icon_size, $iconShape, $caption, $has
 	// Generate the Reddit URL.
     $reddit_url = 'http://www.reddit.com/submit?url='
         . rawurlencode( get_the_permalink() ) .
-        '&title=' . get_the_title();
+        '&title=' . rawurlencode( get_the_title() );
 
 	return ub_prepare_social_share_icon($reddit_icon, $iconShape, 'reddit', $reddit_url, $caption, $hasOutline);
 }
@@ -259,7 +259,7 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $iconShape, $caption, $has
 	// Generate the tumblr URL.
     $tumblr_url = 'https://www.tumblr.com/widgets/share/tool?canonicalUrl='
         . rawurlencode( get_the_permalink() )
-		. '&title=' . get_the_title();
+		. '&title=' . rawurlencode( get_the_title() );
 
 	return ub_prepare_social_share_icon($tumblr_icon, $iconShape, 'tumblr', $tumblr_url, $caption, $hasOutline);
 }
