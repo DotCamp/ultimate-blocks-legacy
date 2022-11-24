@@ -229,16 +229,6 @@ export function PanelContent(props) {
 			});
 		}
 
-		//initialize monitoring for child block arrangement
-		if (newArrangement.length === 0) {
-			if (oldArrangement.length > 0) {
-				removeBlock(block.clientId);
-				return null; //prevent block from being rendered to prevent error
-			} else {
-				setOldArrangement(Array.from(Array(panels.length).keys()));
-			}
-		}
-
 		//blockid initialization
 		if (blockID === "") {
 			setAttributes(
@@ -275,6 +265,7 @@ export function PanelContent(props) {
 	const [oldArrangement, setOldArrangement] = useState([]);
 	const [oldAttributeValues, setOldAttributeValues] = useState([]);
 	const [mainBlockSelected, setMainBlockSelectStatus] = useState(true);
+	const [firstPanelInserted, setFirstPanelInsertStatus] = useState(false);
 
 	const {
 		attributes: {
@@ -402,6 +393,42 @@ export function PanelContent(props) {
 		}
 	}, [newBlockTarget]);
 
+	if (newArrangement.length === 0) {
+		if (oldArrangement.length > 0) {
+			removeBlock(block.clientId);
+			return null; //prevent block from being rendered to prevent error
+		} else {
+			if (!firstPanelInserted) {
+				setFirstPanelInsertStatus(true);
+				setTimeout(() => {
+					insertBlock(
+						createBlock("ub/content-toggle-panel-block", {
+							theme: newColorDefaults.theme,
+							collapsed,
+							titleColor: newColorDefaults.titleColor,
+							titleLinkColor,
+							hasFAQSchema,
+							toggleLocation,
+							toggleColor,
+							toggleIcon,
+							border,
+							showOnlyOne,
+						}),
+						0,
+						block.clientId,
+						false
+					);
+				}, 40);
+			}
+
+			if (
+				JSON.stringify(oldArrangement) !==
+				JSON.stringify(Array.from(Array(panels.length).keys()))
+			) {
+				setOldArrangement(Array.from(Array(panels.length).keys()));
+			}
+		}
+	}
 	if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
 		//Fix indexes in case of rearrangments
 		if (newArrangement.length < oldArrangement.length && showOnlyOne) {
@@ -821,6 +848,7 @@ export function PanelContent(props) {
 			)}
 			<div className={className} id={`ub-content-toggle-${blockID}`}>
 				<InnerBlocks
+					/*BACK TO EMPTY TEMPLATE
 					template={[
 						[
 							"ub/content-toggle-panel",
@@ -837,7 +865,7 @@ export function PanelContent(props) {
 								showOnlyOne,
 							},
 						],
-					]}
+					]}*/
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}
 				/>
