@@ -25,7 +25,7 @@ function ub_filterJsonldString($string){
 
 function ub_render_review_block($attributes){
     require_once dirname(dirname(__DIR__)) . '/common.php';
-    
+
     extract($attributes);
     $parsedItems = isset($parts) ? $parts : json_decode($items, true);
 
@@ -51,10 +51,10 @@ function ub_render_review_block($attributes){
     $offerCode = '"offers":{
         "@type": "' . $offerType . '",
         "priceCurrency": "' . ub_filterJsonldString($offerCurrency) . '",' .
-            ($offerType === 'AggregateOffer' ? 
+            ($offerType === 'AggregateOffer' ?
                 '"lowPrice": "' . $offerLowPrice . '",
                 "highPrice": "' . $offerHighPrice . '",
-                "offerCount": "' . absint($offerCount) . '"' 
+                "offerCount": "' . absint($offerCount) . '"'
             : '"price": "' . $offerPrice . '",
                 "url": "' . esc_url($callToActionURL) . '"' .
                 ($offerExpiry > 0 ? (', "priceValidUntil": "' . date("Y-m-d", $offerExpiry) . '"') : '')).
@@ -114,14 +114,45 @@ function ub_render_review_block($attributes){
                             "operatingSystem": "' . ub_filterJsonldString($operatingSystem) . '",' . $offerCode;
         break;
         case 'MediaObject':
-            $itemExtras = $itemSubtype === 'VideoObject' ? 
-                    ('"uploadDate": "' . date("Y-m-d", $videoUploadDate) . '", 
+            $itemExtras = $itemSubtype === 'VideoObject' ?
+                    ('"uploadDate": "' . date("Y-m-d", $videoUploadDate) . '",
                     "contentUrl": "' . esc_url($videoURL) . '"') : '';
         break;
         default:
             $itemExtras = '';
         break;
     }
+
+	$schema_json_content = '{
+        "@context": "http://schema.org/",
+        "@type": "Review",' .
+        ($useSummary ? '"reviewBody": "' . ub_filterJsonldString($summaryDescription) . '",' : '') .
+        '"description": "' . ub_filterJsonldString($description) . '",
+        "itemReviewed": {
+            "@type":"' . ($itemSubsubtype ?: $itemSubtype ?: $itemType) . '",' .
+            ($itemName ? ('"name":"' . ub_filterJsonldString($itemName) . '",') : '') .
+            ($imgURL ? (($itemSubtype === 'VideoObject' ? '"thumbnailUrl' : '"image') . '": "' . esc_url($imgURL) . '",') : '') .
+            '"description": "' . ub_filterJsonldString($description) .'"'
+                . ($itemExtras === '' ? '' : ',' . $itemExtras ) .
+        '},
+        "reviewRating":{
+            "@type": "Rating",
+            "ratingValue": "' . ($average % 1 === 0 ? $average : number_format($average, 1, '.', '')) . '",
+            "bestRating": "' . ($valueType === 'star' ? $starCount : '100') . '"
+        },
+        "author":{
+            "@type": "Person",
+            "name": "'. ub_filterJsonldString($authorName) .'"
+        },
+        "publisher": "' . ub_filterJsonldString($reviewPublisher) . '",
+        "datePublished": "' . date("Y-m-d", $publicationDate) . '",
+        "url": "' . get_permalink() . '"
+    }';
+
+	// review schema filter hook
+	$schema_json_content = apply_filters('ultimate-blocks/filter/review_schema', $enableReviewSchema ? $schema_json_content : '', $attributes);
+
+	$schema_json_ld = ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">' .$schema_json_content . '</script>')) : '');
 
     return '<div class="ub_review_block' . (isset($className) ? ' ' . esc_attr($className) : '') .
                 '" id="ub_review_' . $blockID . '">
@@ -151,38 +182,14 @@ function ub_render_review_block($attributes){
                 <button class="ub_review_cta_btn"' . ($blockID === '' ? ' style="background-color: ' . $callToActionBackColor
                 . '; border-color: ' . $callToActionForeColor . '; color: ' . $callToActionForeColor . ';"' : '') . '>' .
                     ($callToActionText === '' ? 'Click here' : $callToActionText) . '</button></a></div>' : '') .
-                '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
-        "@context": "http://schema.org/",
-        "@type": "Review",' .
-        ($useSummary ? '"reviewBody": "' . ub_filterJsonldString($summaryDescription) . '",' : '') .
-        '"description": "' . ub_filterJsonldString($description) . '",
-        "itemReviewed": {
-            "@type":"' . ($itemSubsubtype ?: $itemSubtype ?: $itemType) . '",' .
-            ($itemName ? ('"name":"' . ub_filterJsonldString($itemName) . '",') : '') .
-            ($imgURL ? (($itemSubtype === 'VideoObject' ? '"thumbnailUrl' : '"image') . '": "' . esc_url($imgURL) . '",') : '') .
-            '"description": "' . ub_filterJsonldString($description) .'"'
-                . ($itemExtras === '' ? '' : ',' . $itemExtras ) .
-        '},
-        "reviewRating":{
-            "@type": "Rating",
-            "ratingValue": "' . ($average % 1 === 0 ? $average : number_format($average, 1, '.', '')) . '",
-            "bestRating": "' . ($valueType === 'star' ? $starCount : '100') . '"
-        },
-        "author":{
-            "@type": "Person",
-            "name": "'. ub_filterJsonldString($authorName) .'"
-        },
-        "publisher": "' . ub_filterJsonldString($reviewPublisher) . '",
-        "datePublished": "' . date("Y-m-d", $publicationDate) . '",
-        "url": "' . get_permalink() . '"
-    }</script>')) : '')
+                '</div></div>' . $schema_json_ld
     . '</div>';
 }
 
 function ub_register_review_block() {
 	if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/review', array(           
+		register_block_type( 'ub/review', array(
             'attributes' => $defaultValues['ub/review']['attributes'],
             'render_callback' => 'ub_render_review_block'));
     }
