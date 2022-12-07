@@ -364,7 +364,7 @@ function StyledBox(props) {
 					createBlock(
 						"ub/styled-box-numbered-box-column",
 						{
-							number: n,
+							number: String(n),
 							title: title[i],
 						},
 						[createBlock("core/paragraph", { content: text[i] })]
@@ -905,6 +905,10 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 	},
 
 	attributes: {
+		blockID: {
+			type: "string",
+			default: "",
+		},
 		number: {
 			type: "string",
 			default: "",
@@ -932,14 +936,19 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 	},
 
 	edit: withSelect((select, ownProps) => {
-		const { getBlock, getBlockIndex, getBlockRootClientId } =
-			select("core/block-editor") || select("core/editor");
+		const {
+			getBlock,
+			getBlockIndex,
+			getBlockRootClientId,
+			getClientIdsWithDescendants,
+		} = select("core/block-editor") || select("core/editor");
 
 		return {
 			block: getBlock(ownProps.clientId),
 			getBlock,
 			getBlockIndex,
 			getBlockRootClientId,
+			getClientIdsWithDescendants,
 		};
 	})(function (props) {
 		const {
@@ -949,9 +958,17 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 			getBlock,
 			getBlockIndex,
 			getBlockRootClientId,
+			getClientIdsWithDescendants,
 		} = props;
-		const { borderColor, numberColor, backColor, number, title, titleAlign } =
-			attributes;
+		const {
+			blockID,
+			borderColor,
+			numberColor,
+			backColor,
+			number,
+			title,
+			titleAlign,
+		} = attributes;
 
 		const {
 			outlineColor: parentOutlineColor,
@@ -969,6 +986,27 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 			if (backColor === "") {
 				setAttributes({ backColor: parentBackColor });
 			}
+			if (
+				blockID === "" &&
+				getClientIdsWithDescendants().some(
+					(ID) =>
+						"blockID" in getBlock(ID).attributes &&
+						getBlock(ID).attributes.blockID === props.attributes.blockID
+				) /* PREVENT AUTOMATIC SETTING OF NUMBER SINCE NUMBER BLOCK STARTED WITHOUT BLOCKID ATTRIBUTE */ &&
+				borderColor === "" &&
+				numberColor === "" &&
+				backColor === ""
+			) {
+				setAttributes({
+					blockID: block.clientId,
+					number: String(
+						getBlockIndex(
+							block.clientId,
+							getBlockRootClientId(block.clientId)
+						) + 1
+					),
+				});
+			}
 		}, []);
 
 		return (
@@ -985,9 +1023,6 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 								getBlockRootClientId(block.clientId)
 							) + 1
 						)}
-						keep
-						numerical
-						placeholders
 						className="ub-number-display"
 						style={{ color: numberColor }}
 						value={number}
