@@ -104,7 +104,7 @@ class Ultimate_Blocks_Version_Control {
 	 *
 	 * @return array versions info
 	 */
-	private final function get_plugin_versions_info() {
+	private function get_plugin_versions_info() {
 		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 		$plugin_remote_info = plugins_api( 'plugin_information', [
