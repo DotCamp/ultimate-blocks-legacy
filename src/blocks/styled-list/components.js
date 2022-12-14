@@ -3,6 +3,7 @@ const { loadPromise, models } = wp.api;
 const { createBlock } = wp.blocks;
 const {
 	RichText,
+	InnerBlocks,
 	InspectorControls,
 	ColorPalette,
 	AlignmentToolbar,
@@ -27,7 +28,7 @@ library.add(fas, fab);
 
 const allIcons = Object.assign(fas, fab);
 
-function EditorComponent(props) {
+export function OldEditorComponent(props) {
 	const [iconChoices, setIconChoices] = useState([]);
 	const [availableIcons, setAvailableIcons] = useState([]);
 	const [iconSearchTerm, setIconSearchTerm] = useState("");
@@ -182,6 +183,44 @@ function EditorComponent(props) {
 		}
 	}, [isSelected]);
 
+	function pairTags(openingTagLocs, closingTagLocs) {
+		let pairs = [];
+
+		if (openingTagLocs.length === closingTagLocs.length) {
+			pairs = openingTagLocs.map((o) => [o]);
+
+			closingTagLocs.forEach((tagLoc) => {
+				pairs[pairs.findLastIndex((a) => a[0] < tagLoc && a.length === 1)].push(
+					tagLoc
+				);
+			});
+		}
+
+		return pairs;
+	}
+
+	function listToArray(list) {
+		let itemArray = [];
+
+		list.forEach((item, i) => {
+			const subitems = list.filter(
+				(li) => li[0] > list[i][0] && li[1] < list[i][1]
+			);
+			const parentItems = list.filter(
+				(li) => li[0] < list[i][0] && li[1] > list[i][1]
+			);
+
+			if (!parentItems.length) {
+				itemArray.push(item);
+				if (subitems.length) {
+					itemArray.push(listToArray(subitems));
+				}
+			}
+		});
+
+		return itemArray;
+	}
+
 	useEffect(() => {
 		setAvailableIcons(
 			Object.keys(allIcons)
@@ -203,6 +242,42 @@ function EditorComponent(props) {
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
+
+		console.log(list);
+
+		let openingLiLocs = [...list.matchAll(/<li>/g)].map((l) => l.index);
+		let closingLiLocs = [...list.matchAll(/<\/li>/g)].map((l) => l.index);
+		let openingUlLocs = [...list.matchAll(/<ul>/g)].map((l) => l.index);
+		let closingUlLocs = [...list.matchAll(/<\/ul>/g)].map((l) => l.index);
+
+		let liLocs = pairTags(openingLiLocs, closingLiLocs);
+		let ulLocs = pairTags(openingUlLocs, closingUlLocs);
+
+		const nestedItems = listToArray(liLocs);
+
+		function renderItems(listArray) {
+			let items = [];
+
+			listArray.forEach((item) => {
+				if (Array.isArray(item[0])) {
+					items.push(renderItems(item));
+				} else {
+					items.push(
+						list.substring(
+							item[0] + 4,
+							Math.min(
+								item[1],
+								...openingUlLocs.filter((ul) => ul > item[0] && ul < item[1])
+							)
+						)
+					);
+				}
+			});
+
+			return items;
+		}
+
+		console.log(renderItems(nestedItems));
 	}, []);
 
 	if (
@@ -532,6 +607,278 @@ function EditorComponent(props) {
 					}}
 				/>
 			</div>
+		</>
+	);
+}
+
+function convertOldStyledList(list) {
+	let openingLiLocs = [...list.matchAll(/<li>/g)].map((l) => l.index);
+	let closingLiLocs = [...list.matchAll(/<\/li>/g)].map((l) => l.index);
+	let openingUlLocs = [...list.matchAll(/<ul>/g)].map((l) => l.index);
+	let closingUlLocs = [...list.matchAll(/<\/ul>/g)].map((l) => l.index);
+
+	let liLocs = pairTags(openingLiLocs, closingLiLocs);
+	let ulLocs = pairTags(openingUlLocs, closingUlLocs);
+
+	function pairTags(openingTagLocs, closingTagLocs) {
+		let pairs = [];
+
+		if (openingTagLocs.length === closingTagLocs.length) {
+			pairs = openingTagLocs.map((o) => [o]);
+
+			closingTagLocs.forEach((tagLoc) => {
+				pairs[pairs.findLastIndex((a) => a[0] < tagLoc && a.length === 1)].push(
+					tagLoc
+				);
+			});
+		}
+
+		return pairs;
+	}
+
+	function listToArray(list) {
+		let itemArray = [];
+
+		list.forEach((item, i) => {
+			const subitems = list.filter(
+				(li) => li[0] > list[i][0] && li[1] < list[i][1]
+			);
+			const parentItems = list.filter(
+				(li) => li[0] < list[i][0] && li[1] > list[i][1]
+			);
+
+			if (!parentItems.length) {
+				itemArray.push(item);
+				if (subitems.length) {
+					itemArray.push(listToArray(subitems));
+				}
+			}
+		});
+
+		return itemArray;
+	}
+
+	const nestedItems = listToArray(liLocs);
+
+	function renderItems(listArray) {
+		let items = [];
+
+		listArray.forEach((item) => {
+			if (Array.isArray(item[0])) {
+				items.push(renderItems(item));
+			} else {
+				items.push(
+					list.substring(
+						item[0] + 4,
+						Math.min(
+							item[1],
+							...openingUlLocs.filter((ul) => ul > item[0] && ul < item[1])
+						)
+					)
+				);
+			}
+		});
+
+		return items;
+	}
+
+	return renderItems(nestedItems);
+}
+
+function EditorComponent(props) {
+	//convert old version to new version
+
+	const {
+		isSelected,
+		block,
+		getBlock,
+		getBlockParents,
+		getClientIdsWithDescendants,
+		replaceInnerBlocks,
+		attributes,
+		setAttributes,
+	} = props;
+
+	const { blockID, list } = attributes;
+
+	useEffect(() => {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
+		}
+
+		const sampleString =
+			"<li>Item 1<ul><li>Subitem 1</li></ul></li><li>Item 2<ul><li>Subitem 2</li></ul></li><li>Item 3<ul><li>Subitem 3</li></ul></li>";
+
+		function convertListToBlocks(items) {
+			let blockArray = [];
+			items.forEach((item, i) => {
+				if (typeof item === "string") {
+					let childBlocks = [];
+					if (items.length > i && Array.isArray(items[i + 1])) {
+						childBlocks = convertListToBlocks(items[i + 1]);
+					}
+					console.log("checking for child blocks...");
+					console.log(childBlocks);
+					blockArray.push(
+						createBlock(
+							"ub/styled-list-item",
+							{ itemText: item },
+							childBlocks.length > 0
+								? [createBlock("ub/styled-list", {}, childBlocks)]
+								: []
+						)
+					);
+				}
+			});
+			return blockArray;
+		}
+
+		if (list !== "" && getBlockParents(block.clientId).length === 0) {
+			const oldListData = convertOldStyledList(list);
+			console.log(oldListData);
+
+			const convertedBlocks = convertListToBlocks(oldListData);
+			console.log(convertedBlocks);
+			replaceInnerBlocks(block.clientId, convertedBlocks);
+
+			setAttributes({ list: "" });
+		}
+	}, []);
+
+	return (
+		<>
+			{/*props.isSelected && getBlockParents(block.clientId).length === 0 && (
+				<InspectorControls>
+					<p>This should appear only in root</p>
+				</InspectorControls>
+			)*/}
+			<ul>
+				<InnerBlocks
+					template={[["ub/styled-list-item"]]} //initial content
+					templateLock={false}
+					allowedBlocks={["ub/styled-list-item"]}
+				/>
+			</ul>
+		</>
+	);
+}
+
+export function StyledListItem(props) {
+	const {
+		attributes,
+		setAttributes,
+		block,
+		getBlock,
+		getClientIdsWithDescendants,
+		getNextBlockClientId,
+		getPreviousBlockClientId,
+		removeBlock,
+		replaceBlocks,
+		updateBlockAttributes,
+	} = props;
+	const { blockID, itemText } = attributes;
+
+	useEffect(() => {
+		if (
+			blockID === "" ||
+			getClientIdsWithDescendants().some(
+				(ID) =>
+					"blockID" in getBlock(ID).attributes &&
+					getBlock(ID).attributes.blockID === blockID
+			)
+		) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, []);
+
+	return (
+		<>
+			<RichText
+				tagName="li"
+				value={itemText}
+				placeholder={"List item"}
+				keepPlaceholderOnFocus={true}
+				onChange={(itemText) => setAttributes({ itemText })}
+				/**
+					itemFragment
+						? createBlock("ub/new-styled-list", {
+								...attributes,
+								blockID: "",
+								itemText: itemFragment,
+						  })
+						: createBlock("core/paragraph") 
+				 */
+				onSplit={(itemFragment) => {
+					//no changes
+					console.log("splitting...");
+					console.log(itemFragment);
+					//return itemFragment;
+
+					console.log("getting current attributes...");
+					console.log(attributes);
+
+					const { blockID, itemText, ...filteredAttributes } = attributes;
+
+					console.log(filteredAttributes);
+
+					return createBlock("ub/styled-list-item", {
+						filteredAttributes,
+						blockID: "",
+						itemText: itemFragment,
+					});
+				}}
+				onReplace={(replacementBlocks) => {
+					console.log("replacing...");
+					console.log(replacementBlocks);
+
+					replaceBlocks(block.clientId, replacementBlocks);
+					//return replacementBlocks;
+				}}
+				onMerge={(mergeWithNext) => {
+					//useMerge
+					console.log("merging...");
+					console.log(mergeWithNext);
+					//true: new item merged into currentItem
+					//false: currentItem merged into new item
+					if (mergeWithNext) {
+						const targetBlock = getNextBlockClientId();
+
+						console.log(targetBlock);
+						console.log("getting details from merging target...");
+						console.log(getBlock(getNextBlockClientId()));
+						updateBlockAttributes(block.clientId, {
+							itemText: itemText + getBlock(targetBlock).attributes.itemText,
+						});
+
+						removeBlock(targetBlock);
+					} else {
+						console.log(getPreviousBlockClientId());
+
+						const targetBlock = getPreviousBlockClientId();
+
+						updateBlockAttributes(targetBlock, {
+							itemText: getBlock(targetBlock).attributes.itemText + itemText,
+						});
+
+						removeBlock(block.clientId);
+					}
+
+					return mergeWithNext;
+				}}
+			/>
+			{/* INSERT INNERBLOCKS HERE* */}
+			<InnerBlocks
+				template={[]} //initial content
+				templateLock={false}
+				allowedBlocks={["ub/new-styled-list"]}
+			/>
 		</>
 	);
 }
