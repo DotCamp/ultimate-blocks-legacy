@@ -89,7 +89,7 @@ const attributes = {
 	},
 	postTitleTag: {
 		type: "string",
-		default: "h4",
+		default: "h2",
 	},
 };
 
