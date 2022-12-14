@@ -39,7 +39,12 @@ class UltimateBlocks_Block_Category {
 	 * The Constructor.
 	 */
 	private function __construct() {
-		add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
+		if( array_key_exists( 'block_categories_all' , $GLOBALS['wp_filter']) ) {
+			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
+		}
+		else{
+			add_filter( 'block_categories', array( $this, 'block_categories' ) );
+		}
 	}
 
 	/**
