@@ -243,8 +243,6 @@ export function OldEditorComponent(props) {
 			setAttributes({ blockID: block.clientId });
 		}
 
-		console.log(list);
-
 		let openingLiLocs = [...list.matchAll(/<li>/g)].map((l) => l.index);
 		let closingLiLocs = [...list.matchAll(/<\/li>/g)].map((l) => l.index);
 		let openingUlLocs = [...list.matchAll(/<ul>/g)].map((l) => l.index);
@@ -276,8 +274,6 @@ export function OldEditorComponent(props) {
 
 			return items;
 		}
-
-		console.log(renderItems(nestedItems));
 	}, []);
 
 	if (
@@ -686,22 +682,39 @@ function convertOldStyledList(list) {
 }
 
 function EditorComponent(props) {
-	//convert old version to new version
+	const [iconChoices, setIconChoices] = useState([]);
+	const [availableIcons, setAvailableIcons] = useState([]);
+	const [iconSearchTerm, setIconSearchTerm] = useState("");
+	const [iconSearchResultsPage, setIconSearchResultsPage] = useState(0);
+	const [recentSelection, setRecentSelection] = useState("");
+	const [selectionTime, setSelectionTime] = useState(0);
+	const [setFontSize, toggleSetFontSize] = useState(false);
+	const [hasApiAccess, setHasApiAccess] = useState(false);
 
 	const {
 		isSelected,
 		block,
 		getBlock,
-		getBlockParents,
+		getBlockParentsByBlockName,
+		getClientIdsOfDescendants,
 		getClientIdsWithDescendants,
 		replaceInnerBlocks,
+		updateBlockAttributes,
 		attributes,
 		setAttributes,
 	} = props;
 
-	const { blockID, list } = attributes;
+	const { blockID, list, selectedIcon, iconColor, iconSize } = attributes;
 
 	useEffect(() => {
+		setAvailableIcons(
+			Object.keys(allIcons)
+				.sort()
+				.map((name) => allIcons[name])
+		);
+
+		loadIconList();
+
 		if (
 			blockID === "" ||
 			getClientIdsWithDescendants().some(
@@ -735,31 +748,350 @@ function EditorComponent(props) {
 			return blockArray;
 		}
 
-		if (list !== "" && getBlockParents(block.clientId).length === 0) {
+		if (
+			list !== "" &&
+			getBlockParentsByBlockName(block.clientId, [
+				"ub/styled-list",
+				"ub/styled-list-item",
+			]).length === 0
+		) {
 			const oldListData = convertOldStyledList(list);
 
 			const convertedBlocks = convertListToBlocks(oldListData);
-			console.log(convertedBlocks);
 			replaceInnerBlocks(block.clientId, convertedBlocks);
 
 			setAttributes({ list: "" });
 		}
 	}, []);
 
+	function loadIconList() {
+		const iconList = Object.keys(allIcons).sort();
+
+		//promise not being loaded
+		loadPromise.then(() => {
+			const settings = new models.Settings();
+
+			settings.fetch().then((response) => {
+				let frequentIcons = [];
+
+				if (response.ub_icon_choices !== "") {
+					const currentTime = ~~(Date.now() / 1000);
+
+					//trim old entries from frequenticons that are older than two weeks
+					frequentIcons = JSON.parse(response.ub_icon_choices)
+						.map((f) => ({
+							name: f.name,
+							selectionTime: f.selectionTime.filter(
+								(t) => t >= currentTime - 1209600
+							),
+						}))
+						.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
+				}
+				if (frequentIcons.length) {
+					setIconChoices(frequentIcons);
+
+					//check if anything from ub_icon_choices has been trimmed in frequentIcons
+					if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
+						const newIconArray = new models.Settings({
+							ub_icon_choices: JSON.stringify(frequentIcons),
+						});
+						newIconArray.save();
+					}
+
+					let icons = [];
+					let otherIcons = [];
+
+					[icons, otherIcons] = splitArray(
+						iconList.map((name) => allIcons[name]),
+						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
+					);
+
+					const frequentIconNames = frequentIcons.map((i) => i.name);
+
+					icons.sort(
+						(a, b) =>
+							frequentIconNames.indexOf(a.iconName) -
+							frequentIconNames.indexOf(b.iconName)
+					);
+
+					setAvailableIcons([...icons, ...otherIcons]);
+				}
+				setHasApiAccess(true);
+			});
+		});
+	}
+
+	function updateIconList() {
+		const prevIconMatch = iconChoices
+			.map((i) => i.name)
+			.indexOf(recentSelection);
+
+		let iconPrefs = [];
+
+		if (prevIconMatch > -1) {
+			let match = Object.assign({}, iconChoices[prevIconMatch]);
+
+			match.selectionTime = [selectionTime, ...match.selectionTime];
+
+			iconPrefs = [
+				match, //move matching element to head of array
+				...iconChoices.slice(0, prevIconMatch),
+				...iconChoices.slice(prevIconMatch + 1),
+			];
+		} else {
+			iconPrefs = [
+				{
+					name: recentSelection,
+					selectionTime: [selectionTime],
+				}, //add newest pick to head of array
+				...iconChoices,
+			];
+		}
+
+		//rearrange the icons
+
+		let icons = []; //most recent selection should always be first element of array
+		let otherIcons = [];
+		[icons, otherIcons] = splitArray(availableIcons, (icon) =>
+			iconPrefs.map((i) => i.name).includes(icon.iconName)
+		);
+
+		const iconPrefsName = iconPrefs.map((i) => i.name);
+
+		icons.sort(
+			(a, b) =>
+				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName)
+		);
+
+		setRecentSelection("");
+		setSelectionTime(0);
+		setIconChoices(iconPrefs);
+		setAvailableIcons([...icons, ...otherIcons]);
+
+		const newIconArray = new models.Settings({
+			ub_icon_choices: JSON.stringify(iconPrefs),
+		});
+
+		newIconArray.save();
+	}
+
+	useEffect(() => {
+		if (hasApiAccess) {
+			if (isSelected) {
+				loadIconList();
+			} else {
+				updateIconList();
+			}
+		}
+	}, [isSelected]);
+
+	function setAttributesToAllItems(newAttributes) {
+		const listItemBlocks = getClientIdsOfDescendants([block.clientId]).filter(
+			(ID) => getBlock(ID).name === "ub/styled-list-item"
+		);
+
+		updateBlockAttributes(listItemBlocks, newAttributes);
+	}
+
+	const iconListPage = splitArrayIntoChunks(
+		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
+		24
+	);
+
 	return (
 		<>
-			{/*props.isSelected && getBlockParents(block.clientId).length === 0 && (
-				<InspectorControls>
-					<p>This should appear only in root</p>
-				</InspectorControls>
-			)*/}
-			<ul>
+			{isSelected &&
+				getBlockParentsByBlockName(block.clientId, [
+					"ub/styled-list",
+					"ub/styled-list-item",
+				]).length === 0 && (
+					<InspectorControls>
+						<PanelBody title={__("Icon Options")}>
+							<div
+								style={{
+									display: "grid",
+									gridTemplateColumns: "5fr 1fr",
+								}}
+							>
+								<p>{__("Selected icon")}</p>
+
+								<Dropdown
+									position="bottom right"
+									renderToggle={({ isOpen, onToggle }) => (
+										<Button
+											label={__("Select icon for list")}
+											onClick={onToggle}
+											aria-expanded={isOpen}
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												height="30"
+												width="30"
+												viewBox={`0, 0, ${
+													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+														.icon[0]
+												},  ${
+													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+														.icon[1]
+												}`}
+											>
+												<path
+													fill={iconColor}
+													d={
+														allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+															.icon[4]
+													}
+												/>
+											</svg>
+										</Button>
+									)}
+									renderContent={() => (
+										<div>
+											<input
+												type="text"
+												value={iconSearchTerm}
+												onChange={(e) => {
+													setIconSearchTerm(e.target.value);
+													setIconSearchResultsPage(0);
+												}}
+											/>
+											<br />
+											{iconListPage.length > 0 && (
+												<div>
+													<button
+														onClick={() => {
+															if (iconSearchResultsPage > 0) {
+																setIconSearchResultsPage(
+																	iconSearchResultsPage - 1
+																);
+															}
+														}}
+													>
+														&lt;
+													</button>
+													<span>
+														{iconSearchResultsPage + 1}/{iconListPage.length}
+													</span>
+													<button
+														onClick={() => {
+															if (
+																iconSearchResultsPage <
+																iconListPage.length - 1
+															) {
+																setIconSearchResultsPage(
+																	iconSearchResultsPage + 1
+																);
+															}
+														}}
+													>
+														&gt;
+													</button>
+												</div>
+											)}
+
+											{iconListPage.length > 0 &&
+												iconListPage[iconSearchResultsPage].map((i) => (
+													<Button
+														className="ub-styled-list-available-icon"
+														icon={<FontAwesomeIcon icon={i} size="lg" />}
+														label={i.iconName}
+														onClick={() => {
+															if (selectedIcon !== i.iconName) {
+																setRecentSelection(i.iconName);
+																setSelectionTime(~~(Date.now() / 1000));
+
+																setAttributes({
+																	selectedIcon: i.iconName,
+																});
+
+																setAttributesToAllItems({
+																	selectedIcon: i.iconName,
+																});
+															}
+														}}
+													/>
+												))}
+										</div>
+									)}
+									onToggle={(isOpen) => {
+										if (!isOpen && recentSelection && hasApiAccess) {
+											updateIconList();
+										}
+									}}
+								/>
+							</div>
+							<p>
+								{__("Icon color")}
+								<span
+									id="ub-styled-list-selected-color"
+									class="component-color-indicator"
+									aria-label={`(Color: ${iconColor})`}
+									style={{ background: iconColor }}
+								/>
+							</p>
+							<ColorPalette
+								value={iconColor}
+								onChange={(iconColor) => {
+									if (iconColor.match(/#[0-9a-f]{6}/gi)) {
+										setAttributes({ iconColor });
+										setAttributesToAllItems({ iconColor });
+									} else {
+										const newIconColor =
+											iconColor.toLowerCase() in colorList
+												? colorList[iconColor.toLowerCase()]
+												: getComputedStyle(
+														document.documentElement
+												  ).getPropertyValue(
+														iconColor.substring(4, iconColor.length - 1)
+												  );
+
+										setAttributes({
+											iconColor: newIconColor,
+										});
+										setAttributesToAllItems({
+											iconColor: newIconColor,
+										});
+									}
+								}}
+							/>
+							<p>{__("Icon size")}</p>
+							<RangeControl
+								value={iconSize}
+								onChange={(iconSize) => {
+									setAttributes({ iconSize });
+									setAttributesToAllItems({ iconSize });
+								}}
+								min={1}
+								max={10}
+							/>
+						</PanelBody>
+					</InspectorControls>
+				)}
+			<ul className="ub_styled_list" id={`ub-styled-list-${blockID}`}>
 				<InnerBlocks
 					template={[["ub/styled-list-item"]]} //initial content
 					templateLock={false}
 					allowedBlocks={["ub/styled-list-item"]}
 				/>
 			</ul>
+			<style
+				dangerouslySetInnerHTML={{
+					__html: `#ub-styled-list-${blockID} li::before{
+                    top: ${iconSize >= 5 ? 3 : iconSize < 3 ? 2 : 0}px;
+                    height:${(4 + iconSize) / 10}em; 
+                    width:${(4 + iconSize) / 10}em; 
+                    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${
+											allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
+										} ${
+						allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
+					}' color='${
+						iconColor ? `%23${iconColor.slice(1)}` : "inherit"
+					}'><path fill='currentColor' d='${
+						allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
+					}'></path></svg>");
+				}`,
+				}}
+			/>
 		</>
 	);
 }
@@ -777,7 +1109,7 @@ export function StyledListItem(props) {
 		replaceBlocks,
 		updateBlockAttributes,
 	} = props;
-	const { blockID, itemText } = attributes;
+	const { blockID, itemText, iconSize, iconColor, selectedIcon } = attributes;
 
 	useEffect(() => {
 		if (
@@ -796,31 +1128,13 @@ export function StyledListItem(props) {
 		<>
 			<RichText
 				tagName="li"
+				id={`ub-styled-list-item-${blockID}`}
 				value={itemText}
 				placeholder={"List item"}
 				keepPlaceholderOnFocus={true}
 				onChange={(itemText) => setAttributes({ itemText })}
-				/**
-					itemFragment
-						? createBlock("ub/new-styled-list", {
-								...attributes,
-								blockID: "",
-								itemText: itemFragment,
-						  })
-						: createBlock("core/paragraph") 
-				 */
 				onSplit={(itemFragment) => {
-					//no changes
-					console.log("splitting...");
-					console.log(itemFragment);
-					//return itemFragment;
-
-					console.log("getting current attributes...");
-					console.log(attributes);
-
 					const { blockID, itemText, ...filteredAttributes } = attributes;
-
-					console.log(filteredAttributes);
 
 					return createBlock("ub/styled-list-item", {
 						filteredAttributes,
@@ -829,32 +1143,18 @@ export function StyledListItem(props) {
 					});
 				}}
 				onReplace={(replacementBlocks) => {
-					console.log("replacing...");
-					console.log(replacementBlocks);
-
 					replaceBlocks(block.clientId, replacementBlocks);
-					//return replacementBlocks;
 				}}
 				onMerge={(mergeWithNext) => {
-					//useMerge
-					console.log("merging...");
-					console.log(mergeWithNext);
-					//true: new item merged into currentItem
-					//false: currentItem merged into new item
 					if (mergeWithNext) {
 						const targetBlock = getNextBlockClientId();
 
-						console.log(targetBlock);
-						console.log("getting details from merging target...");
-						console.log(getBlock(getNextBlockClientId()));
 						updateBlockAttributes(block.clientId, {
 							itemText: itemText + getBlock(targetBlock).attributes.itemText,
 						});
 
 						removeBlock(targetBlock);
 					} else {
-						console.log(getPreviousBlockClientId());
-
 						const targetBlock = getPreviousBlockClientId();
 
 						updateBlockAttributes(targetBlock, {

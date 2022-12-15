@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 
-const { registerBlockType, createBlock } = wp.blocks;
+const { registerBlockType } = wp.blocks;
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 import icon, { listItemIcon } from "./icon";
@@ -104,17 +104,15 @@ registerBlockType("ub/styled-list", {
 			type: "text",
 			default: "",
 		},
-		/* MOVE TO CHILD BLOCKS
-
 		selectedIcon: {
 			type: "string",
 			default: "check",
-		},*/
+		},
 		alignment: {
 			type: "string",
 			default: "left",
 		},
-		/*MOVE TO CHILD BLOCKS
+
 		iconColor: {
 			type: "string",
 			default: "#000000",
@@ -123,7 +121,7 @@ registerBlockType("ub/styled-list", {
 			type: "number",
 			default: 5,
 		},
-		fontSize: {
+		/*fontSize: {
 			type: "number",
 			default: 0, //set to current style's font size when font size customization is enabled
 		},*/
@@ -144,21 +142,26 @@ registerBlockType("ub/styled-list", {
 	//insert transform method here
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getBlockParents, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+			const {
+				getBlock,
+				getBlockParentsByBlockName,
+				getClientIdsOfDescendants,
+				getClientIdsWithDescendants,
+			} = select("core/block-editor") || select("core/editor");
 
 			return {
 				block: getBlock(ownProps.clientId),
 				getBlock,
-				getBlockParents,
+				getBlockParentsByBlockName,
+				getClientIdsOfDescendants,
 				getClientIdsWithDescendants,
 			};
 		}),
 		withDispatch((dispatch) => {
-			const { replaceInnerBlocks } =
+			const { replaceInnerBlocks, updateBlockAttributes } =
 				dispatch("core/block-editor") || dispatch("core/editor");
 
-			return { replaceInnerBlocks };
+			return { replaceInnerBlocks, updateBlockAttributes };
 		}),
 	])(EditorComponent),
 	save: () => null,
