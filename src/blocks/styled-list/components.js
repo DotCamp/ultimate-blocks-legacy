@@ -713,9 +713,6 @@ function EditorComponent(props) {
 			setAttributes({ blockID: block.clientId });
 		}
 
-		const sampleString =
-			"<li>Item 1<ul><li>Subitem 1</li></ul></li><li>Item 2<ul><li>Subitem 2</li></ul></li><li>Item 3<ul><li>Subitem 3</li></ul></li>";
-
 		function convertListToBlocks(items) {
 			let blockArray = [];
 			items.forEach((item, i) => {
@@ -724,8 +721,6 @@ function EditorComponent(props) {
 					if (items.length > i && Array.isArray(items[i + 1])) {
 						childBlocks = convertListToBlocks(items[i + 1]);
 					}
-					console.log("checking for child blocks...");
-					console.log(childBlocks);
 					blockArray.push(
 						createBlock(
 							"ub/styled-list-item",
@@ -742,7 +737,6 @@ function EditorComponent(props) {
 
 		if (list !== "" && getBlockParents(block.clientId).length === 0) {
 			const oldListData = convertOldStyledList(list);
-			console.log(oldListData);
 
 			const convertedBlocks = convertListToBlocks(oldListData);
 			console.log(convertedBlocks);
@@ -877,7 +871,7 @@ export function StyledListItem(props) {
 			<InnerBlocks
 				template={[]} //initial content
 				templateLock={false}
-				allowedBlocks={["ub/new-styled-list"]}
+				allowedBlocks={["ub/styled-list"]}
 			/>
 		</>
 	);
