@@ -1103,7 +1103,9 @@ export function StyledListItem(props) {
 		block,
 		getBlock,
 		getBlockIndex,
+		currentBlockIndex,
 		getBlockParents,
+		listRootClientId,
 		getBlockParentsByBlockName,
 		getClientIdsWithDescendants,
 		getNextBlockClientId,
@@ -1129,6 +1131,89 @@ export function StyledListItem(props) {
 		}
 	}, []);
 
+	function outdentItem() {
+		//outdents current item by default, but should also allow outdenting other list item blocks
+
+		const ancestorItemsAndLists = getBlockParents(
+			listRootClientId,
+			true
+		).filter((b) =>
+			["ub/styled-list", "ub/styled-list-item"].includes(getBlock(b).name)
+		);
+
+		const listRoot = getBlock(listRootClientId);
+
+		if (ancestorItemsAndLists.length > 1) {
+			moveBlocksToPosition(
+				[block.clientId],
+
+				listRootClientId, //get block id of parent list block
+
+				ancestorItemsAndLists[1], //get block id of parent list of current parent list block
+
+				getBlockIndex(ancestorItemsAndLists[0]) + 1 //ensure indented item moves to just after the parent item of the parent list
+			);
+
+			if (currentBlockIndex < listRoot.innerBlocks.length - 1) {
+				const itemBlocksToTransfer = listRoot.innerBlocks
+					.slice(currentBlockIndex + 1, listRoot.innerBlocks.length)
+					.map((ib) => ib.clientId);
+
+				if (block.innerBlocks.length > 0) {
+					moveBlocksToPosition(
+						itemBlocksToTransfer,
+
+						listRootClientId,
+
+						block.innerBlocks[0].clientId,
+
+						block.innerBlocks[0].clientId.length
+					);
+				} else {
+					if (itemBlocksToTransfer.length === listRoot.innerBlocks.length - 1) {
+						//descendant-less first item of list gets outdented
+
+						moveBlocksToPosition(
+							[listRootClientId],
+							ancestorItemsAndLists[0],
+							block.clientId,
+							0
+						);
+					} else {
+						///middle item of list gets outdented
+
+						insertBlock(
+							createBlock("ub/styled-list", {}, []),
+							0,
+							block.clientId
+						);
+
+						setTimeout(() => {
+							moveBlocksToPosition(
+								itemBlocksToTransfer,
+
+								listRootClientId,
+
+								getBlock(block.clientId).innerBlocks[0].clientId,
+
+								0
+							);
+						}, 20);
+					}
+				}
+			} else {
+				console.log("last item. nothing else to do here");
+			}
+
+			if (getBlock(listRootClientId).innerBlocks.length === 0) {
+				//fresh value needed, do not substitute with listRoot
+				removeBlock(listRootClientId);
+			}
+		} else {
+			console.log("first item of outermost list. special handling needed");
+		}
+	}
+
 	return (
 		<>
 			<BlockControls>
@@ -1138,10 +1223,11 @@ export function StyledListItem(props) {
 						getBlockParentsByBlockName(block.clientId, ["ub/styled-list-item"])
 							.length === 0
 					}
+					onClick={outdentItem}
 				/>
 				<Button
 					icon="editor-indent"
-					disabled={getBlockIndex(block.clientId) === 0}
+					disabled={currentBlockIndex === 0}
 					onClick={() => {
 						if (
 							getBlock(getPreviousBlockClientId(block.clientId)).innerBlocks
@@ -1158,7 +1244,7 @@ export function StyledListItem(props) {
 							moveBlocksToPosition(
 								[block.clientId],
 
-								getBlockParents(block.clientId, true)[0], //get block id of parent list block
+								listRootClientId, //get block id of parent list block
 
 								getBlock(getPreviousBlockClientId(block.clientId))
 									.innerBlocks[0].clientId, //get block id of newly-created list subblock
@@ -1166,7 +1252,7 @@ export function StyledListItem(props) {
 								getBlock(getPreviousBlockClientId(block.clientId))
 									.innerBlocks[0].innerBlocks.length //ensure indented item moves to bottom of destination list
 							);
-						}, 50);
+						}, 20);
 					}}
 				/>
 			</BlockControls>
@@ -1198,15 +1284,23 @@ export function StyledListItem(props) {
 							itemText: itemText + getBlock(targetBlock).attributes.itemText,
 						});
 
+						//outdent child blocks, merge only with blocks on the same level
+
 						removeBlock(targetBlock);
 					} else {
-						const targetBlock = getPreviousBlockClientId();
+						if (currentBlockIndex > 0) {
+							const targetBlock = getPreviousBlockClientId(); //currently always merges into previous item of same sublist
 
-						updateBlockAttributes(targetBlock, {
-							itemText: getBlock(targetBlock).attributes.itemText + itemText,
-						});
+							updateBlockAttributes(targetBlock, {
+								itemText: getBlock(targetBlock).attributes.itemText + itemText,
+							});
 
-						removeBlock(block.clientId);
+							//also move subitems of soon-to-be-deleted block
+
+							removeBlock(block.clientId);
+						} else {
+							outdentItem();
+						}
 					}
 
 					return mergeWithNext;
