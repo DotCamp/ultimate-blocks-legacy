@@ -898,213 +898,218 @@ function EditorComponent(props) {
 		24
 	);
 
+	const isRootOfList =
+		getBlockParentsByBlockName(block.clientId, [
+			"ub/styled-list",
+			"ub/styled-list-item",
+		]).length === 0;
+
 	return (
 		<>
-			{isSelected &&
-				getBlockParentsByBlockName(block.clientId, [
-					"ub/styled-list",
-					"ub/styled-list-item",
-				]).length === 0 && (
-					<InspectorControls>
-						<PanelBody title={__("Icon Options")}>
-							<div
-								style={{
-									display: "grid",
-									gridTemplateColumns: "5fr 1fr",
-								}}
-							>
-								<p>{__("Selected icon")}</p>
+			{isSelected && isRootOfList && (
+				<InspectorControls>
+					<PanelBody title={__("Icon Options")}>
+						<div
+							style={{
+								display: "grid",
+								gridTemplateColumns: "5fr 1fr",
+							}}
+						>
+							<p>{__("Selected icon")}</p>
 
-								<Dropdown
-									position="bottom right"
-									renderToggle={({ isOpen, onToggle }) => (
-										<Button
-											label={__("Select icon for list")}
-											onClick={onToggle}
-											aria-expanded={isOpen}
+							<Dropdown
+								position="bottom right"
+								renderToggle={({ isOpen, onToggle }) => (
+									<Button
+										label={__("Select icon for list")}
+										onClick={onToggle}
+										aria-expanded={isOpen}
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											height="30"
+											width="30"
+											viewBox={`0, 0, ${
+												allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
+											},  ${
+												allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
+											}`}
 										>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												height="30"
-												width="30"
-												viewBox={`0, 0, ${
+											<path
+												fill={iconColor}
+												d={
 													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
-														.icon[0]
-												},  ${
-													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
-														.icon[1]
-												}`}
-											>
-												<path
-													fill={iconColor}
-													d={
-														allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
-															.icon[4]
-													}
-												/>
-											</svg>
-										</Button>
-									)}
-									renderContent={() => (
-										<div>
-											<input
-												type="text"
-												value={iconSearchTerm}
-												onChange={(e) => {
-													setIconSearchTerm(e.target.value);
-													setIconSearchResultsPage(0);
-												}}
+														.icon[4]
+												}
 											/>
-											<br />
-											{iconListPage.length > 0 && (
-												<div>
-													<button
-														onClick={() => {
-															if (iconSearchResultsPage > 0) {
-																setIconSearchResultsPage(
-																	iconSearchResultsPage - 1
-																);
-															}
-														}}
-													>
-														&lt;
-													</button>
-													<span>
-														{iconSearchResultsPage + 1}/{iconListPage.length}
-													</span>
-													<button
-														onClick={() => {
-															if (
-																iconSearchResultsPage <
-																iconListPage.length - 1
-															) {
-																setIconSearchResultsPage(
-																	iconSearchResultsPage + 1
-																);
-															}
-														}}
-													>
-														&gt;
-													</button>
-												</div>
-											)}
+										</svg>
+									</Button>
+								)}
+								renderContent={() => (
+									<div>
+										<input
+											type="text"
+											value={iconSearchTerm}
+											onChange={(e) => {
+												setIconSearchTerm(e.target.value);
+												setIconSearchResultsPage(0);
+											}}
+										/>
+										<br />
+										{iconListPage.length > 0 && (
+											<div>
+												<button
+													onClick={() => {
+														if (iconSearchResultsPage > 0) {
+															setIconSearchResultsPage(
+																iconSearchResultsPage - 1
+															);
+														}
+													}}
+												>
+													&lt;
+												</button>
+												<span>
+													{iconSearchResultsPage + 1}/{iconListPage.length}
+												</span>
+												<button
+													onClick={() => {
+														if (
+															iconSearchResultsPage <
+															iconListPage.length - 1
+														) {
+															setIconSearchResultsPage(
+																iconSearchResultsPage + 1
+															);
+														}
+													}}
+												>
+													&gt;
+												</button>
+											</div>
+										)}
 
-											{iconListPage.length > 0 &&
-												iconListPage[iconSearchResultsPage].map((i) => (
-													<Button
-														className="ub-styled-list-available-icon"
-														icon={<FontAwesomeIcon icon={i} size="lg" />}
-														label={i.iconName}
-														onClick={() => {
-															if (selectedIcon !== i.iconName) {
-																setRecentSelection(i.iconName);
-																setSelectionTime(~~(Date.now() / 1000));
+										{iconListPage.length > 0 &&
+											iconListPage[iconSearchResultsPage].map((i) => (
+												<Button
+													className="ub-styled-list-available-icon"
+													icon={<FontAwesomeIcon icon={i} size="lg" />}
+													label={i.iconName}
+													onClick={() => {
+														if (selectedIcon !== i.iconName) {
+															setRecentSelection(i.iconName);
+															setSelectionTime(~~(Date.now() / 1000));
 
-																setAttributes({
-																	selectedIcon: i.iconName,
-																});
+															setAttributes({
+																selectedIcon: i.iconName,
+															});
 
-																setAttributesToAllItems({
-																	selectedIcon: i.iconName,
-																});
-															}
-														}}
-													/>
-												))}
-										</div>
-									)}
-									onToggle={(isOpen) => {
-										if (!isOpen && recentSelection && hasApiAccess) {
-											updateIconList();
-										}
-									}}
-								/>
-							</div>
-							<p>
-								{__("Icon color")}
-								<span
-									id="ub-styled-list-selected-color"
-									class="component-color-indicator"
-									aria-label={`(Color: ${iconColor})`}
-									style={{ background: iconColor }}
-								/>
-							</p>
-							<ColorPalette
-								value={iconColor}
-								onChange={(iconColor) => {
-									if (iconColor.match(/#[0-9a-f]{6}/gi)) {
-										setAttributes({ iconColor });
-										setAttributesToAllItems({ iconColor });
-									} else {
-										const newIconColor =
-											iconColor.toLowerCase() in colorList
-												? colorList[iconColor.toLowerCase()]
-												: getComputedStyle(
-														document.documentElement
-												  ).getPropertyValue(
-														iconColor.substring(4, iconColor.length - 1)
-												  );
-
-										setAttributes({
-											iconColor: newIconColor,
-										});
-										setAttributesToAllItems({
-											iconColor: newIconColor,
-										});
+															setAttributesToAllItems({
+																selectedIcon: i.iconName,
+															});
+														}
+													}}
+												/>
+											))}
+									</div>
+								)}
+								onToggle={(isOpen) => {
+									if (!isOpen && recentSelection && hasApiAccess) {
+										updateIconList();
 									}
 								}}
 							/>
-							<p>{__("Icon size")}</p>
-							<RangeControl
-								value={iconSize}
-								onChange={(iconSize) => {
-									setAttributes({ iconSize });
-									setAttributesToAllItems({ iconSize });
-								}}
-								min={1}
-								max={10}
+						</div>
+						<p>
+							{__("Icon color")}
+							<span
+								id="ub-styled-list-selected-color"
+								class="component-color-indicator"
+								aria-label={`(Color: ${iconColor})`}
+								style={{ background: iconColor }}
 							/>
-						</PanelBody>
-					</InspectorControls>
-				)}
+						</p>
+						<ColorPalette
+							value={iconColor}
+							onChange={(iconColor) => {
+								if (iconColor.match(/#[0-9a-f]{6}/gi)) {
+									setAttributes({ iconColor });
+									setAttributesToAllItems({ iconColor });
+								} else {
+									const newIconColor =
+										iconColor.toLowerCase() in colorList
+											? colorList[iconColor.toLowerCase()]
+											: getComputedStyle(
+													document.documentElement
+											  ).getPropertyValue(
+													iconColor.substring(4, iconColor.length - 1)
+											  );
+
+									setAttributes({ iconColor: newIconColor });
+									setAttributesToAllItems({ iconColor: newIconColor });
+								}
+							}}
+						/>
+						<p>{__("Icon size")}</p>
+						<RangeControl
+							value={iconSize}
+							onChange={(iconSize) => {
+								setAttributes({ iconSize });
+								setAttributesToAllItems({ iconSize });
+							}}
+							min={1}
+							max={10}
+						/>
+					</PanelBody>
+				</InspectorControls>
+			)}
 			<ul className="ub_styled_list" id={`ub-styled-list-${blockID}`}>
 				<InnerBlocks
-					template={[["ub/styled-list-item"]]} //initial content
+					template={isRootOfList ? [["ub/styled-list-item"]] : []} //initial content
 					templateLock={false}
 					allowedBlocks={["ub/styled-list-item"]}
+					renderAppender={false}
 				/>
 			</ul>
-			<style
-				dangerouslySetInnerHTML={{
-					__html: `#ub-styled-list-${blockID} li::before{
+			{isRootOfList && (
+				<style
+					dangerouslySetInnerHTML={{
+						__html: `#ub-styled-list-${blockID} li::before{
                     top: ${iconSize >= 5 ? 3 : iconSize < 3 ? 2 : 0}px;
                     height:${(4 + iconSize) / 10}em; 
                     width:${(4 + iconSize) / 10}em; 
                     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${
 											allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
 										} ${
-						allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
-					}' color='${
-						iconColor ? `%23${iconColor.slice(1)}` : "inherit"
-					}'><path fill='currentColor' d='${
-						allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
-					}'></path></svg>");
+							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
+						}' color='${
+							iconColor ? `%23${iconColor.slice(1)}` : "inherit"
+						}'><path fill='currentColor' d='${
+							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
+						}'></path></svg>");
 				}`,
-				}}
-			/>
+					}}
+				/>
+			)}
 		</>
 	);
 }
 
 export function StyledListItem(props) {
 	const {
+		isSelected,
 		attributes,
 		setAttributes,
 		block,
 		getBlock,
+		getBlockIndex,
+		getBlockParents,
+		getBlockParentsByBlockName,
 		getClientIdsWithDescendants,
 		getNextBlockClientId,
 		getPreviousBlockClientId,
+		moveBlocksToPosition,
+		insertBlock,
 		removeBlock,
 		replaceBlocks,
 		updateBlockAttributes,
@@ -1126,6 +1131,46 @@ export function StyledListItem(props) {
 
 	return (
 		<>
+			<BlockControls>
+				<Button
+					icon="editor-outdent"
+					disabled={
+						getBlockParentsByBlockName(block.clientId, ["ub/styled-list-item"])
+							.length === 0
+					}
+				/>
+				<Button
+					icon="editor-indent"
+					disabled={getBlockIndex(block.clientId) === 0}
+					onClick={() => {
+						if (
+							getBlock(getPreviousBlockClientId(block.clientId)).innerBlocks
+								.length === 0
+						) {
+							insertBlock(
+								createBlock("ub/styled-list", {}, []),
+								0,
+								getPreviousBlockClientId(block.clientId)
+							);
+						}
+
+						setTimeout(() => {
+							moveBlocksToPosition(
+								[block.clientId],
+
+								getBlockParents(block.clientId, true)[0], //get block id of parent list block
+
+								getBlock(getPreviousBlockClientId(block.clientId))
+									.innerBlocks[0].clientId, //get block id of newly-created list subblock
+
+								getBlock(getPreviousBlockClientId(block.clientId))
+									.innerBlocks[0].innerBlocks.length //ensure indented item moves to bottom of destination list
+							);
+						}, 50);
+					}}
+				/>
+			</BlockControls>
+
 			<RichText
 				tagName="li"
 				id={`ub-styled-list-item-${blockID}`}
@@ -1172,6 +1217,7 @@ export function StyledListItem(props) {
 				template={[]} //initial content
 				templateLock={false}
 				allowedBlocks={["ub/styled-list"]}
+				renderAppender={false}
 			/>
 		</>
 	);

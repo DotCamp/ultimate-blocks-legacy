@@ -207,6 +207,9 @@ registerBlockType("ub/styled-list-item", {
 		withSelect((select, ownProps) => {
 			const {
 				getBlock,
+				getBlockIndex,
+				getBlockParents,
+				getBlockParentsByBlockName,
 				getClientIdsWithDescendants,
 				getNextBlockClientId,
 				getPreviousBlockClientId,
@@ -215,16 +218,30 @@ registerBlockType("ub/styled-list-item", {
 			return {
 				block: getBlock(ownProps.clientId),
 				getBlock,
+				getBlockIndex,
+				getBlockParents,
+				getBlockParentsByBlockName,
 				getClientIdsWithDescendants,
 				getNextBlockClientId,
 				getPreviousBlockClientId,
 			};
 		}),
 		withDispatch((dispatch) => {
-			const { removeBlock, replaceBlocks, updateBlockAttributes } =
-				dispatch("core/block-editor") || dispatch("core/editor");
+			const {
+				insertBlock,
+				moveBlocksToPosition,
+				removeBlock,
+				replaceBlocks,
+				updateBlockAttributes,
+			} = dispatch("core/block-editor") || dispatch("core/editor");
 
-			return { removeBlock, replaceBlocks, updateBlockAttributes };
+			return {
+				insertBlock,
+				moveBlocksToPosition,
+				removeBlock,
+				replaceBlocks,
+				updateBlockAttributes,
+			};
 		}),
 	])(StyledListItem),
 	save: () => null,
