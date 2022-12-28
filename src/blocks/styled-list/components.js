@@ -1163,11 +1163,11 @@ export function StyledListItem(props) {
 					moveBlocksToPosition(
 						itemBlocksToTransfer,
 
-						listRootClientId,
+						parentListId,
 
-						block.innerBlocks[0].clientId,
+						blockTarget.innerBlocks[0].clientId,
 
-						block.innerBlocks[0].clientId.length
+						blockTarget.innerBlocks[0].clientId.length
 					);
 				} else {
 					if (itemBlocksToTransfer.length === listRoot.innerBlocks.length - 1) {
@@ -1278,24 +1278,138 @@ export function StyledListItem(props) {
 				}}
 				onMerge={(mergeWithNext) => {
 					if (mergeWithNext) {
-						const targetBlock = getNextBlockClientId();
+						let targetBlock = "";
 
-						updateBlockAttributes(block.clientId, {
-							itemText: itemText + getBlock(targetBlock).attributes.itemText,
-						});
+						if (block.innerBlocks.length > 0) {
+							targetBlock = block.innerBlocks[0].innerBlocks[0].clientId;
 
-						//outdent child blocks, merge only with blocks on the same level
+							//move is being performed correctly, but a clone of moved block remains for some reasons
+							moveBlocksToPosition(
+								[targetBlock], //present
+								block.innerBlocks[0].clientId, //present
+								listRootClientId, //
+								currentBlockIndex + 1 //get target position
+							);
 
-						removeBlock(targetBlock);
+							if (
+								getBlock(block.clientId).innerBlocks[0].innerBlocks.length > 0
+							) {
+								moveBlocksToPosition(
+									[block.innerBlocks[0].clientId], //present
+									block.clientId, //present
+									targetBlock, //
+									0 //get target position
+								);
+							} else {
+								removeBlock(getBlock(block.clientId).innerBlocks[0].clientId);
+							}
+						} else {
+							const findNextItem = (id, ancestors) => {
+								if (
+									getBlockIndex(id) + 1 <
+									getBlock(ancestors[0]).innerBlocks.length
+								) {
+									return getBlock(ancestors[0]).innerBlocks[
+										getBlockIndex(id) + 1
+									].clientId;
+								} else {
+									if (ancestors.length === 1) {
+										return "";
+									} else {
+										return findNextItem(ancestors[1], ancestors.slice(2));
+									}
+								}
+							};
+
+							targetBlock = findNextItem(
+								block.clientId,
+								getBlockParents(block.clientId, true).filter((b) =>
+									["ub/styled-list", "ub/styled-list-item"].includes(
+										getBlock(b).name
+									)
+								)
+							);
+
+							if (![null, ""].includes(targetBlock)) {
+								const parentLists = getBlockParents(
+									block.clientId,
+									true
+								).filter((b) => getBlock(b).name === "ub/styled-list");
+
+								if (
+									getBlock(parentLists[0]).innerBlocks.filter(
+										(i) => i.clientId === targetBlock
+									).length > 0 ||
+									getBlock(
+										parentLists[parentLists.length - 1]
+									).innerBlocks.filter((i) => i.clientId === targetBlock)
+										.length > 0
+								) {
+									updateBlockAttributes(block.clientId, {
+										itemText:
+											itemText + getBlock(targetBlock).attributes.itemText,
+									});
+
+									//outdent child blocks, merge only with blocks on the same level
+
+									if (getBlock(targetBlock).innerBlocks.length > 0) {
+										if (targetBlock === getNextBlockClientId()) {
+											moveBlocksToPosition(
+												[getBlock(targetBlock).innerBlocks[0].clientId], //present
+												targetBlock, //source
+												block.clientId, //destination
+												0 //get target position
+											);
+										} else {
+											const targetListItem = getBlock(
+												getPreviousBlockClientId(targetBlock)
+											);
+
+											moveBlocksToPosition(
+												getBlock(targetBlock).innerBlocks[0].innerBlocks.map(
+													(ib) => ib.clientId
+												),
+												getBlock(targetBlock).innerBlocks[0].clientId,
+												targetListItem.innerBlocks[0].clientId,
+												targetListItem.innerBlocks[0].innerBlocks.length
+											);
+										}
+									}
+
+									removeBlock(targetBlock);
+								}
+							}
+						}
 					} else {
 						if (currentBlockIndex > 0) {
-							const targetBlock = getPreviousBlockClientId(); //currently always merges into previous item of same sublist
+							const findLastDescendant = (id) => {
+								const ib = getBlock(id).innerBlocks;
+
+								if (getBlock(id).innerBlocks.length === 0) {
+									return id;
+								} else {
+									return findLastDescendant(ib[ib.length - 1].clientId);
+								}
+							};
+
+							const targetBlock = findLastDescendant(
+								getPreviousBlockClientId()
+							);
 
 							updateBlockAttributes(targetBlock, {
 								itemText: getBlock(targetBlock).attributes.itemText + itemText,
 							});
 
 							//also move subitems of soon-to-be-deleted block
+
+							if (block.innerBlocks.length > 0) {
+								moveBlocksToPosition(
+									block.innerBlocks.map((ib) => ib.clientId),
+									block.clientId,
+									targetBlock,
+									getBlock(targetBlock).innerBlocks.length
+								);
+							}
 
 							removeBlock(block.clientId);
 						} else {
