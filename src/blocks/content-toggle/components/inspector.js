@@ -18,6 +18,7 @@ export default function Inspector(props) {
 			<PanelColorSettings
 				title={__("Color Scheme")}
 				initialOpen={false}
+				enableAlpha={true}
 				colorSettings={[
 					{
 						value: theme,

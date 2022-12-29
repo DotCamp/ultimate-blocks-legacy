@@ -547,6 +547,7 @@ export function PanelContent(props) {
 						<PanelColorSettings
 							title={__("Color Scheme")}
 							initialOpen={false}
+							enableAlpha={true}
 							colorSettings={[
 								{
 									value: theme,
