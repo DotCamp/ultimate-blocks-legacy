@@ -1887,7 +1887,7 @@ $defaultValues = array(
             ),
             'list' => array(
                 'type' => 'text',
-                'default' => '<li>Item 1</li><li>Item 2</li><li>Item 3</li>'
+                'default' => '' //phased out, formerly <li>Item 1</li><li>Item 2</li><li>Item 3</li>'
             ),
             'listItem' => array(
                 'type' => 'array',
@@ -1913,7 +1913,7 @@ $defaultValues = array(
             ),
             'fontSize' => array(
                 'type' => 'number',
-                'default' => 0
+                'default' => 0  //currently rendered unusable
             ),
             'itemSpacing' => array(
                 'type' => 'number',
@@ -1926,6 +1926,42 @@ $defaultValues = array(
             'maxMobileColumns' => array(
                 'type' => 'number',
                 'default' => 2
+            ),
+            'isRootList' => array(
+                'type' => 'boolean',
+                'default' => false
+            )
+        )
+    ),
+    'ub/styled-list-item' => array(
+        'attributes' => array(
+            'alignment' => array(
+                'type' => 'string',
+                'default' => 'left'
+            ),
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'itemText' => array(
+                'type' => 'text',
+                'default' => ''
+            ),
+            'selectedIcon' => array(
+                'type' => 'string',
+                'default' => 'check'
+            ),
+            'iconColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            ),
+            'iconSize' => array(
+                'type' => 'number',
+                'default' => 5
+            ),
+            'fontSize' => array(
+                'type' => 'number',
+                'default' => 0
             )
         )
     ),

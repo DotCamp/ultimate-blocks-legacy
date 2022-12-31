@@ -888,53 +888,57 @@ function ub_include_block_attribute_css() {
                     }
                     break;
                 case 'ub/styled-list':
-                    $prefix = '#ub_styled_list-' . $attributes['blockID'];
-                    if($attributes['iconSize'] < 3){
-                        $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
-                            'top: -0.1em;' . PHP_EOL .
-                        '}' . PHP_EOL;
-                    } elseif($attributes['iconSize'] >= 5){
-                        $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
-                            'top: 3px;' . PHP_EOL .
-                        '}' . PHP_EOL;
-                    }
-
-                    $iconData = Ultimate_Blocks_IconSet::generate_fontawesome_icon($attributes['selectedIcon']);
-
-                    $blockStylesheets .= $prefix . '{' . PHP_EOL .
-                        'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL .
-                        '}' . PHP_EOL .
-                        $prefix . ' li::before{' . PHP_EOL .
-                            'top: ' . ($attributes['iconSize'] >= 5 ? 3 : ($attributes['iconSize'] < 3 ? 2 : 0)) . 'px;
-                            font-size: 1em;
-                            height: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                            width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                            background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
-                            .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
-                        '}' .
-                        $prefix . ' li{' . PHP_EOL .
-                            'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .
-                            ($attributes['fontSize'] > 0 ? 'font-size: ' . ($attributes['fontSize']) . 'px;' . PHP_EOL : '') ;
-                    if($attributes['itemSpacing'] > 0){
-                            $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
-                        }' . PHP_EOL .
-                        $prefix . ' li>ul{' . PHP_EOL .
-                            'margin-top: '. $attributes['itemSpacing'] . 'px;';
-                    }
-                    $blockStylesheets .= '}';
-
-                    if($attributes['columns'] > 1){
-                        $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
-                            'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
-                        '}';
-                    }
-                    if($attributes['columns'] > $attributes['maxMobileColumns']){
-                        $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
-                            $prefix . '>ul{' . PHP_EOL .
-                                'grid-template-columns: ' . str_repeat('auto ', $attributes['maxMobileColumns'] - 1) . 'auto;' . PHP_EOL .
+                    if($attributes['list'] !== '' || $attributes['isRootList']){
+                        $prefix = '#ub_styled_list-' . $attributes['blockID'];
+                        if($attributes['iconSize'] < 3){
+                            $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
+                                'top: -0.1em;' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        } elseif($attributes['iconSize'] >= 5){
+                            $blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
+                                'top: 3px;' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+    
+                        $iconData = Ultimate_Blocks_IconSet::generate_fontawesome_icon($attributes['selectedIcon']);
+    
+                        $blockStylesheets .= $prefix . '{' . PHP_EOL .
+                            'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL .
                             '}' . PHP_EOL .
-                        '}';
+                            $prefix . ' li::before{' . PHP_EOL .
+                                'top: ' . ($attributes['iconSize'] >= 5 ? 3 : ($attributes['iconSize'] < 3 ? 2 : 0)) . 'px;
+                                font-size: 1em;
+                                height: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
+                                width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
+                                background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
+                                .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
+                            '}' .
+                            $prefix . ' li{' . PHP_EOL .
+                                'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .
+                                ($attributes['fontSize'] > 0 ? 'font-size: ' . ($attributes['fontSize']) . 'px;' . PHP_EOL : '') ;
+                        if($attributes['itemSpacing'] > 0){
+                                $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
+                            }' . PHP_EOL .
+                            $prefix . ' li>ul{' . PHP_EOL .
+                                'margin-top: '. $attributes['itemSpacing'] . 'px;';
+                        }
+                        $blockStylesheets .= '}';
+    
+                        if($attributes['columns'] > 1){
+                            $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
+                                'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
+                            '}';
+                        }
+                        if($attributes['columns'] > $attributes['maxMobileColumns']){
+                            $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
+                                $prefix . '>ul{' . PHP_EOL .
+                                    'grid-template-columns: ' . str_repeat('auto ', $attributes['maxMobileColumns'] - 1) . 'auto;' . PHP_EOL .
+                                '}' . PHP_EOL .
+                            '}';
+                        }
+    
                     }
+
 
                     break;
                 case 'ub/tabbed-content-block':

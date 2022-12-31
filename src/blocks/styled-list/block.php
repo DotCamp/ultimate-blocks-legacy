@@ -1,6 +1,6 @@
 <?php
 
-function ub_render_styled_list_block($attributes){
+function ub_render_styled_list_block($attributes, $contents){
     extract($attributes);
 
     $listItems = '';
@@ -64,9 +64,22 @@ function ub_render_styled_list_block($attributes){
         }
     }
 
-    return '<div class="ub_styled_list ' . (isset($className) ? ' ' . esc_attr($className) : '') .'"'
-            . ($blockID === '' ? '' : ' id="ub_styled_list-' . $blockID . '"').
-            '><ul class="fa-ul">' . $listItems . '</ul></div>';
+    if($list === ''){
+        return '<ul class="' . ($isRootList ?
+                            ('ub_styled_list' . (
+                                    isset($className) ? ' ' . esc_attr($className)
+                                    : '') .'"'
+                         . ($blockID === '' ? '' : ' id="ub_styled_list-' . $blockID . '"'))
+                         : 'ub_styled_list_sublist"').
+        '>' . $contents . '</ul>';
+
+    }
+    else{
+        return '<div class="ub_styled_list ' . (isset($className) ? ' ' . esc_attr($className) : '') .'"'
+        . ($blockID === '' ? '' : ' id="ub_styled_list-' . $blockID . '"').
+        '><ul class="fa-ul">' . $listItems . '</ul></div>';
+    }
+
 }
 
 function ub_register_styled_list_block() {
@@ -78,4 +91,19 @@ function ub_register_styled_list_block() {
 	}
 }
 
+function ub_render_styled_list_item_block($attributes, $contents){
+    extract($attributes);
+    return '<li class="ub_styled_list_item">' . $itemText . $contents . '</li>';
+}
+
+function ub_register_styled_list_item_block(){
+    if ( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
+        register_block_type( 'ub/styled-list-item', array(
+            'attributes' => $defaultValues['ub/styled-list-item']['attributes'],
+            'render_callback' => 'ub_render_styled_list_item_block'));
+	}
+}
+
 add_action('init', 'ub_register_styled_list_block');
+add_action('init', 'ub_register_styled_list_item_block');
