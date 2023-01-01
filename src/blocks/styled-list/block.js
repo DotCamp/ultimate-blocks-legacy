@@ -56,6 +56,14 @@ registerBlockType("ub/styled-list", {
 			type: "boolean",
 			default: false,
 		},
+		textColor:{
+			type: 'string',
+			default: ''
+		},
+		backgroundColor:{
+			type: 'string',
+			default: ''
+		}
 	},
 	keywords: [__("List"), __("Styled List"), __("Ultimate Blocks")],
 	//insert transform method here

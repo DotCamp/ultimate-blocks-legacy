@@ -1930,7 +1930,15 @@ $defaultValues = array(
             'isRootList' => array(
                 'type' => 'boolean',
                 'default' => false
-            )
+            ),
+            'textColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'backgroundColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
         )
     ),
     'ub/styled-list-item' => array(

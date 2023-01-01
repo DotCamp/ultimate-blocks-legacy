@@ -125,8 +125,16 @@ function EditorComponent(props) {
 		setAttributes,
 	} = props;
 
-	const { blockID, list, selectedIcon, iconColor, iconSize, isRootList } =
-		attributes;
+	const {
+		blockID,
+		list,
+		selectedIcon,
+		iconColor,
+		iconSize,
+		isRootList,
+		textColor,
+		backgroundColor,
+	} = attributes;
 
 	useEffect(() => {
 		setAvailableIcons(
@@ -335,6 +343,19 @@ function EditorComponent(props) {
 		<>
 			{isSelected && isRootOfList && (
 				<InspectorControls>
+					<PanelBody title={__("List Color Settings")}>
+						{/* PANELCONTROLSETTINGS HAS NO WAY FOR RESETTING COLOR TO BLANK */}
+						<p>{__("List Text Color")}</p>
+						<ColorPalette
+							value={textColor}
+							onChange={(textColor) => setAttributes({ textColor })}
+						/>
+						<p>{__("List Background Color")}</p>
+						<ColorPalette
+							value={backgroundColor}
+							onChange={(backgroundColor) => setAttributes({ backgroundColor })}
+						/>
+					</PanelBody>
 					<PanelBody title={__("Icon Options")}>
 						<div
 							style={{
@@ -490,7 +511,15 @@ function EditorComponent(props) {
 					</PanelBody>
 				</InspectorControls>
 			)}
-			<ul className="ub_styled_list" id={`ub-styled-list-${blockID}`}>
+			<ul
+				className="ub_styled_list"
+				id={`ub-styled-list-${blockID}`}
+				style={
+					isRootList
+						? { backgroundColor: backgroundColor, color: textColor }
+						: {}
+				}
+			>
 				<InnerBlocks
 					template={isRootOfList ? [["ub/styled-list-item"]] : []} //initial content
 					templateLock={false}

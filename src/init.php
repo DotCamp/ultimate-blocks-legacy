@@ -904,6 +904,9 @@ function ub_include_block_attribute_css() {
     
                         $blockStylesheets .= $prefix . '{' . PHP_EOL .
                             'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL .
+                            ($attributes['textColor'] === '' ? '': ('color: ' . $attributes['textColor'] . ';')) . PHP_EOL .
+                            ($attributes['backgroundColor'] === '' ? '': ('background-color: ' . $attributes['backgroundColor'] . ';')) . PHP_EOL .
+                            'padding-left: ' . ((6 + $attributes['iconSize']) / 10) . 'em;' . PHP_EOL .
                             '}' . PHP_EOL .
                             $prefix . ' li::before{' . PHP_EOL .
                                 'top: ' . ($attributes['iconSize'] >= 5 ? 3 : ($attributes['iconSize'] < 3 ? 2 : 0)) . 'px;
