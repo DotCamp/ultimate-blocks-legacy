@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
@@ -56,17 +56,55 @@ registerBlockType("ub/styled-list", {
 			type: "boolean",
 			default: false,
 		},
-		textColor:{
-			type: 'string',
-			default: ''
+		textColor: {
+			type: "string",
+			default: "",
 		},
-		backgroundColor:{
-			type: 'string',
-			default: ''
-		}
+		backgroundColor: {
+			type: "string",
+			default: "",
+		},
 	},
 	keywords: [__("List"), __("Styled List"), __("Ultimate Blocks")],
-	//insert transform method here
+	transforms: {
+		from: [
+			{
+				type: "block",
+				blocks: ["core/list"],
+				transform: (attributes, innerBlocks) => {
+					if (attributes.ordered) {
+						console.log("cannot be used for ordered lists");
+						return null;
+					} else {
+						const convertSubitems = (subitems) =>
+							subitems.map((subitem) =>
+								createBlock(
+									"ub/styled-list-item",
+									{
+										itemText: subitem.attributes.content,
+									},
+									subitem.innerBlocks.length > 0
+										? [
+												createBlock(
+													"ub/styled-list",
+													attributes,
+													convertSubitems(subitem.innerBlocks[0].innerBlocks)
+												),
+										  ]
+										: []
+								)
+							);
+
+						return createBlock(
+							"ub/styled-list",
+							attributes,
+							convertSubitems(innerBlocks)
+						);
+					}
+				},
+			},
+		],
+	},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const {

@@ -335,7 +335,6 @@ function EditorComponent(props) {
 		]).length === 0;
 
 	if (isRootList !== isRootOfList) {
-		console.log("flip needed");
 		setAttributes({ isRootList: isRootOfList });
 	}
 
