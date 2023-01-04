@@ -64,14 +64,15 @@ function ub_render_social_share_block( $attributes ) {
 function ub_prepare_social_share_icon($icon, $iconShape, $siteName, $link, $caption, $hasOutline){
 	if($hasOutline){
 		return '<a aria-label="' . $siteName . '-logo" target="_blank" rel="nofollow" href="' . esc_url($link) . '" class="ub-social-share-' . $siteName . '-container">
-		<span class="social-share-icon ub-social-share-' . $siteName . ' ' . $iconShape . '">' .
+		<span class="social-share-icon ub-social-share-' . $siteName . ($iconShape ? '' : ' ' . $iconShape) . '">' .
 		   $icon .
 		'</span>' .
 		( $caption ? ('<span>' . $caption . '</span>') : '' ) . '</a>';
 	}
 	else{
 		return ($caption ? ('<div class="ub-social-share-' . $siteName . '-container">') : '') .
-		'<a aria-label="' . $siteName . '-logo" target="_blank" rel="nofollow" href="' . esc_url($link) . '" class="social-share-icon ub-social-share-' . $siteName . ' ' . ($caption ? ' ' : 'ub-social-share-standalone-icon ') . $iconShape . '">'
+		'<a aria-label="' . $siteName . '-logo" target="_blank" rel="nofollow" href="' . esc_url($link) . '" class="social-share-icon ub-social-share-' . $siteName . ' ' . ($caption ? ' ' : 'ub-social-share-standalone-icon ') .
+			($iconShape === 'none' ? '' : ' ' . $iconShape) . '">'
         	. $icon . '</a>' . 
 		( $caption ? '<span><a aria-label="' . $siteName . '-logo" target="_blank" href="' . esc_url($link) . '">' . $caption . '</a></span></div>' : '' );
 	}
