@@ -513,11 +513,7 @@ function EditorComponent(props) {
 			<ul
 				className="ub_styled_list"
 				id={`ub-styled-list-${blockID}`}
-				style={
-					isRootList
-						? { backgroundColor: backgroundColor, color: textColor }
-						: {}
-				}
+				style={isRootList ? { backgroundColor: backgroundColor } : {}}
 			>
 				<InnerBlocks
 					template={isRootOfList ? [["ub/styled-list-item"]] : []} //initial content
@@ -542,7 +538,10 @@ function EditorComponent(props) {
 						}'><path fill='currentColor' d='${
 							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
 						}'></path></svg>");
-				}`,
+					}
+					#ub-styled-list-${blockID} li{
+						color: ${textColor};
+					}`,
 					}}
 				/>
 			)}
