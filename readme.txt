@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 2.5.4
+Stable tag: 2.5.5
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,32 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.5.5 - January 4th, 2022 =
+
+* Content Toggle - Fix issue with rendering panels.
+* Content Toggle - Allow setting transparency values to colors.
+* Post Grid - Fix title rendering.
+* Social Share - Sanitize post title before use in social share.
+* Styled Box - Ensure that number box columns have numbers by default.
+* Styled List - Convert block to new format that uses inner blocks.
+* Styled List - Add text color and background color properties to match the core list block's properties.
+* Styled List - Remove font size, item spacing, and columns properties due to incompatibility with new styled list format.
+* Tabbed Content - Remove border in vertical tabs while using pills and underline tab style.
+* Table of Contents - Prevent empty link array in Table of Contents from generating an error.
+* Image Slider - Load JavaScript file only when image slider is in use for better performance.
+* Other - Fix issue with deprecated filter on Wordpress 5.7 and older.
+* Other - Update FontAwesome to version 6.2.
+* Other - Remove final method warning.
+
+= 2.5.4 - November 7th, 2022 =
+
+* Content Toggle - Fix issue with content toggle panel insertion while the Gutenberg plugin is active.
+* Content Toggle - Allow using Content Toggle panel titles within Table of Contents.
+* Content Toggle - Increase space between plus/minus toggle icon and icon location switch in editor.
+* Content Toggle - Fix content toggle error when encountering instances w/ no child blocks.
+* Review - Fix issue with review block image size not being saved.
+* Other - Fix PHP deprecation issue.
 
 = 2.5.3 - September 19th, 2022 =
 
