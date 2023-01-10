@@ -1952,7 +1952,7 @@ $defaultValues = array(
                 'default' => ''
             ),
             'itemText' => array(
-                'type' => 'text',
+                'type' => 'string',
                 'default' => ''
             ),
             'selectedIcon' => array(
