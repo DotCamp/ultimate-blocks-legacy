@@ -12,3 +12,19 @@
 		width: 100%;
 	}
 }
+
+.block-editor-block-list__block.wp-block {
+	> ul,
+	&[data-type="ub/styled-list"],
+	&[data-type="ub/styled-list-item"] {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+.block-editor-inner-blocks
+	> .block-editor-block-list__layout
+	> [data-type="ub/styled-list"]
+	> ul {
+	padding-left: 2em;
+}
