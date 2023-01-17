@@ -131,6 +131,7 @@ function EditorComponent(props) {
 		selectedIcon,
 		iconColor,
 		iconSize,
+		itemSpacing,
 		isRootList,
 		textColor,
 		backgroundColor,
@@ -508,6 +509,15 @@ function EditorComponent(props) {
 							max={10}
 						/>
 					</PanelBody>
+					<PanelBody title={__("Other Options")}>
+						<p>{__("Item spacing (pixels)")}</p>
+						<RangeControl
+							value={itemSpacing}
+							onChange={(itemSpacing) => setAttributes({ itemSpacing })}
+							min={0}
+							max={50}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			)}
 			<ul
@@ -541,6 +551,12 @@ function EditorComponent(props) {
 					}
 					#ub-styled-list-${blockID} li{
 						color: ${textColor};
+					}
+					#ub-styled-list-${blockID} [data-type="ub/styled-list-item"]:not(:first-child){
+						margin-top: ${itemSpacing}px;
+					}
+					#ub-styled-list-${blockID} .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="ub/styled-list-item"]:first-child{
+						margin-top: ${itemSpacing}px;
 					}`,
 					}}
 				/>

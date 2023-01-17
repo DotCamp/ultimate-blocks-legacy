@@ -920,10 +920,20 @@ function ub_include_block_attribute_css() {
                                 'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .
                                 ($attributes['fontSize'] > 0 ? 'font-size: ' . ($attributes['fontSize']) . 'px;' . PHP_EOL : '') ;
                         if($attributes['itemSpacing'] > 0){
+                            if($attributes['list'] !== ''){
                                 $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
-                            }' . PHP_EOL .
-                            $prefix . ' li>ul{' . PHP_EOL .
-                                'margin-top: '. $attributes['itemSpacing'] . 'px;';
+                                    }' . PHP_EOL .
+                                $prefix . ' li>ul{' . PHP_EOL .
+                                    'margin-top: '. $attributes['itemSpacing'] . 'px;';
+                            }
+                            else{
+                                $blockStylesheets .= '}' .
+                                    $prefix . ' .ub_styled_list_item:not(:first-child){' .
+                                    'margin-top: ' . $attributes['itemSpacing'] . 'px;'.
+                                '}' .
+                                $prefix . ' .ub_styled_list_sublist > .ub_styled_list_item:first-child{' .
+                                    'margin-top: ' . $attributes['itemSpacing'] . 'px;';
+                            }
                         }
                         $blockStylesheets .= '}';
     
