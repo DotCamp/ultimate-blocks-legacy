@@ -135,6 +135,7 @@ function EditorComponent(props) {
 		isRootList,
 		textColor,
 		backgroundColor,
+		fontSize,
 	} = attributes;
 
 	useEffect(() => {
@@ -316,11 +317,11 @@ function EditorComponent(props) {
 		}
 	}, [isSelected]);
 
-	function setAttributesToAllItems(newAttributes) {
-		const listItemBlocks = getClientIdsOfDescendants([block.clientId]).filter(
-			(ID) => getBlock(ID).name === "ub/styled-list-item"
-		);
+	const listItemBlocks = getClientIdsOfDescendants([block.clientId]).filter(
+		(ID) => getBlock(ID).name === "ub/styled-list-item"
+	);
 
+	function setAttributesToAllItems(newAttributes) {
 		updateBlockAttributes(listItemBlocks, newAttributes);
 	}
 
@@ -517,6 +518,41 @@ function EditorComponent(props) {
 							min={0}
 							max={50}
 						/>
+						<ToggleControl
+							label={__("Customize font size")}
+							checked={setFontSize}
+							onChange={() => {
+								if (setFontSize) {
+									setAttributes({ fontSize: 0 });
+
+									//change font sizevalue of all list items to zero
+									updateBlockAttributes(listItemBlocks, {
+										fontSize: 0,
+									});
+								} else {
+									setAttributes({ fontSize: 10 });
+									//send signal to first child block to begin measuring
+									updateBlockAttributes(block.innerBlocks[0].clientId, {
+										fontSize: -1,
+									});
+								}
+								toggleSetFontSize(!setFontSize);
+							}}
+						/>
+						{setFontSize && (
+							<>
+								<p>{__("Font size (pixels)")}</p>
+								<RangeControl
+									value={fontSize}
+									onChange={(fontSize) => {
+										setAttributes({ fontSize });
+										updateBlockAttributes(listItemBlocks, { fontSize });
+									}}
+									min={10}
+									max={50}
+								/>
+							</>
+						)}
 					</PanelBody>
 				</InspectorControls>
 			)}
@@ -577,6 +613,7 @@ export function StyledListItem(props) {
 		getBlockParents,
 		listRootClientId,
 		getBlockParentsByBlockName,
+		getClientIdsOfDescendants,
 		getClientIdsWithDescendants,
 		getNextBlockClientId,
 		getPreviousBlockClientId,
@@ -586,7 +623,10 @@ export function StyledListItem(props) {
 		replaceBlocks,
 		updateBlockAttributes,
 	} = props;
-	const { blockID, itemText, iconSize, iconColor, selectedIcon } = attributes;
+	const { blockID, itemText, iconSize, iconColor, selectedIcon, fontSize } =
+		attributes;
+
+	const [useFontSize, toggleUseFontSize] = useState(false);
 
 	useEffect(() => {
 		if (
@@ -683,6 +723,28 @@ export function StyledListItem(props) {
 			console.log("first item of outermost list. special handling needed");
 		}
 	}
+
+	const parents = getBlockParentsByBlockName(block.clientId, [
+		"ub/styled-list",
+	]);
+
+	const listItemRef = useRef(null); //relocate
+
+	useEffect(() => {
+		if (fontSize === -1) {
+			const listItemBlocks = getClientIdsOfDescendants([parents[0]]).filter(
+				(ID) => getBlock(ID).name === "ub/styled-list-item"
+			);
+
+			updateBlockAttributes([parents[0], ...listItemBlocks], {
+				fontSize: parseInt(
+					getComputedStyle(listItemRef.current).fontSize.slice(0, -2)
+				),
+			});
+		} else {
+			toggleUseFontSize(fontSize > 0);
+		}
+	}, [fontSize]);
 
 	return (
 		<>
@@ -889,6 +951,10 @@ export function StyledListItem(props) {
 
 					return mergeWithNext;
 				}}
+				ref={
+					currentBlockIndex === 0 && parents.length === 1 ? listItemRef : null
+				}
+				style={useFontSize ? { fontSize: `${fontSize}px` } : null}
 			/>
 			{/* INSERT INNERBLOCKS HERE* */}
 			<InnerBlocks

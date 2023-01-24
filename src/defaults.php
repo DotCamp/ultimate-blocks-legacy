@@ -1913,7 +1913,7 @@ $defaultValues = array(
             ),
             'fontSize' => array(
                 'type' => 'number',
-                'default' => 0  //currently rendered unusable
+                'default' => 0
             ),
             'itemSpacing' => array(
                 'type' => 'number',
