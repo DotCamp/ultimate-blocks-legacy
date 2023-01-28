@@ -33618,6 +33618,48 @@ var version_1_1_4 = function version_1_1_4(props) {
 
 /***/ }),
 
+/***/ "./src/blocks/inner/icon-inner/block.js":
+/*!**********************************************!*\
+  !*** ./src/blocks/inner/icon-inner/block.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/registerPluginBlock */ "./src/inc/registerPluginBlock.js");
+
+
+/**
+ * Block attributes.
+ *
+ * @type {Object}
+ */
+
+var attributes = {
+  iconName: {
+    type: 'string',
+    "default": ''
+  }
+};
+(0,$Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_1__["default"])('ub-innerblock/icon', {
+  title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Icon', 'ultimate-blocks'),
+  category: 'ultimateblocks',
+  icon: 'tools',
+  attributes: {},
+  supports: {
+    inserter: false
+  },
+  edit: function edit() {
+    return /*#__PURE__*/React.createElement("i", null, "icon inner block");
+  },
+  save: function save() {// TODO [ErdemBircan] to be implemented
+  }
+});
+
+/***/ }),
+
 /***/ "./src/blocks/notification-box/block.js":
 /*!**********************************************!*\
   !*** ./src/blocks/notification-box/block.js ***!
@@ -61918,6 +61960,17 @@ module.exports = window["wp"]["hooks"];
 
 /***/ }),
 
+/***/ "@wordpress/i18n":
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+/***/ (function(module) {
+
+"use strict";
+module.exports = window["wp"]["i18n"];
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
@@ -62573,6 +62626,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_how_to_block__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./blocks/how-to/block */ "./src/blocks/how-to/block.js");
 /* harmony import */ var _blocks_advanced_heading_block__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./blocks/advanced-heading/block */ "./src/blocks/advanced-heading/block.js");
 /* harmony import */ var _blocks_advanced_video_block__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./blocks/advanced-video/block */ "./src/blocks/advanced-video/block.js");
+/* harmony import */ var _blocks_inner_icon_inner_block__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./blocks/inner/icon-inner/block */ "./src/blocks/inner/icon-inner/block.js");
 /**
  * Gutenberg Blocks
  *
@@ -62583,6 +62637,7 @@ __webpack_require__.r(__webpack_exports__);
  * All blocks should be included here since this is the file that
  * Webpack is compiling as the input file.
  */
+
 
 
 
