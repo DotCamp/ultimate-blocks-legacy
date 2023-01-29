@@ -2233,6 +2233,10 @@ $defaultValues = array(
 			'iconName' => [
 				'type'    => 'string',
 				'default' => ''
+			],
+			'size'     => [
+				'type'    => 'number',
+				'default' => 30
 			]
 		]
 	]

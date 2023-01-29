@@ -32674,6 +32674,172 @@ var icon = /*#__PURE__*/React.createElement("svg", {
 
 /***/ }),
 
+/***/ "./src/blocks/icon-inner/block.js":
+/*!****************************************!*\
+  !*** ./src/blocks/icon-inner/block.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/registerPluginBlock */ "./src/inc/registerPluginBlock.js");
+/* harmony import */ var _components_UbIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/UbIcon */ "./src/blocks/icon-inner/components/UbIcon.js");
+
+
+
+(0,$Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_1__["default"])('ub/icon-innerblock', {
+  title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Icon', 'ultimate-blocks'),
+  category: 'ultimateblocks',
+  icon: 'dashicons-admin-tools',
+  supports: {
+    inserter: true
+  },
+  edit: function edit(props) {
+    var attributes = props.attributes,
+        setAttributes = props.setAttributes;
+    var iconName = attributes.iconName,
+        size = attributes.size;
+    return /*#__PURE__*/React.createElement(_components_UbIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      size: size,
+      iconName: iconName,
+      setAttributes: setAttributes
+    });
+  },
+  save: function save() {
+    return /*#__PURE__*/React.createElement("i", null, "icon inner block");
+  }
+});
+
+/***/ }),
+
+/***/ "./src/blocks/icon-inner/components/UbIcon.js":
+/*!****************************************************!*\
+  !*** ./src/blocks/icon-inner/components/UbIcon.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _UbIconComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UbIconComponent */ "./src/blocks/icon-inner/components/UbIconComponent.js");
+/* harmony import */ var _UbIconInspector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UbIconInspector */ "./src/blocks/icon-inner/components/UbIconInspector.js");
+
+
+
+/**
+ * Icon main component.
+ *
+ * @param {Object}   props               component properties
+ * @param {string}   props.iconName      icon name
+ * @param {Function} props.setAttributes block attribute update function
+ * @param {number}   props.size          icon size
+ * @function Object() { [native code] }
+ */
+
+function UbIcon(_ref) {
+  var iconName = _ref.iconName,
+      size = _ref.size,
+      setAttributes = _ref.setAttributes;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UbIconComponent__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    iconName: iconName,
+    size: size
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UbIconInspector__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+}
+/**
+ * @module UbIcon
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UbIcon);
+
+/***/ }),
+
+/***/ "./src/blocks/icon-inner/components/UbIconComponent.js":
+/*!*************************************************************!*\
+  !*** ./src/blocks/icon-inner/components/UbIconComponent.js ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Ub icon editor component.
+ *
+ * @param {Object} props          component properties
+ * @param {string} props.iconName icon name
+ * @param {number} props.size     icon size in px
+ * @function Object() { [native code] }
+ */
+
+function UbIconComponent(_ref) {
+  var iconName = _ref.iconName,
+      size = _ref.size;
+
+  /**
+   * Whether component is empty or not.
+   *
+   * @return {boolean} empty status
+   */
+  var isEmpty = function isEmpty() {
+    return !iconName || iconName === '';
+  };
+
+  var wrapperStyles = function wrapperStyles() {
+    return {
+      width: "".concat(size, "px"),
+      height: "".concat(size, "px")
+    };
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: wrapperStyles(),
+    "data-empty": isEmpty(),
+    className: 'ultimate-blocks-icon-component'
+  });
+}
+/**
+ * @module UbIconEditor
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UbIconComponent);
+
+/***/ }),
+
+/***/ "./src/blocks/icon-inner/components/UbIconInspector.js":
+/*!*************************************************************!*\
+  !*** ./src/blocks/icon-inner/components/UbIconInspector.js ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Ub icon inspector component.
+ */
+
+function UbIconInspector() {
+  // TODO [ErdemBircan] to be implemented
+  return null;
+}
+/**
+ * @module UbIconEditor
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UbIconInspector);
+
+/***/ }),
+
 /***/ "./src/blocks/image-slider/block.js":
 /*!******************************************!*\
   !*** ./src/blocks/image-slider/block.js ***!
@@ -33520,35 +33686,6 @@ var version_1_1_4 = function version_1_1_4(props) {
     }));
   })));
 };
-
-/***/ }),
-
-/***/ "./src/blocks/inner/icon-inner/block.js":
-/*!**********************************************!*\
-  !*** ./src/blocks/inner/icon-inner/block.js ***!
-  \**********************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var $Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/registerPluginBlock */ "./src/inc/registerPluginBlock.js");
-
-
-(0,$Inc_registerPluginBlock__WEBPACK_IMPORTED_MODULE_1__["default"])('ub/icon-innerblock', {
-  title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Icon', 'ultimate-blocks'),
-  category: 'ultimateblocks',
-  icon: 'tools',
-  supports: {
-    inserter: true
-  },
-  edit: function edit() {
-    return /*#__PURE__*/React.createElement("i", null, "icon inner block");
-  },
-  save: function save() {// TODO [ErdemBircan] to be implemented
-  }
-});
 
 /***/ }),
 
@@ -48809,7 +48946,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 /**
  * Register plugin block.
  *
- * `attributes` key can be omitted from `option` to use block attributes registered on backend with `register_block_type` WordPress function.
+ * `attributes` key can be omitted from `options` to use block attributes registered on backend with `register_block_type` WordPress function.
  *
  * @param {string} blockTypeId block type
  * @param {Object} options     block options
@@ -61992,7 +62129,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_how_to_block__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./blocks/how-to/block */ "./src/blocks/how-to/block.js");
 /* harmony import */ var _blocks_advanced_heading_block__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./blocks/advanced-heading/block */ "./src/blocks/advanced-heading/block.js");
 /* harmony import */ var _blocks_advanced_video_block__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./blocks/advanced-video/block */ "./src/blocks/advanced-video/block.js");
-/* harmony import */ var _blocks_inner_icon_inner_block__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./blocks/inner/icon-inner/block */ "./src/blocks/inner/icon-inner/block.js");
+/* harmony import */ var _blocks_icon_inner_block__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./blocks/icon-inner/block */ "./src/blocks/icon-inner/block.js");
 /**
  * Gutenberg Blocks
  *

@@ -39,4 +39,4 @@ import './blocks/how-to/block';
 import './blocks/advanced-heading/block';
 import './blocks/advanced-video/block';
 
-import './blocks/inner/icon-inner/block';
+import './blocks/icon-inner/block';

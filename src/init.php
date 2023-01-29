@@ -1273,4 +1273,4 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/advanced-video/block.php';
  * Innerblocks.
  */
 // icon innerblock
-require_once plugin_dir_path( __FILE__ ) . 'blocks/inner/icon-inner/block.php';
+require_once plugin_dir_path( __FILE__ ) . 'blocks/icon-inner/block.php';

@@ -3,7 +3,7 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Register plugin block.
  *
- * `attributes` key can be omitted from `option` to use block attributes registered on backend with `register_block_type` WordPress function.
+ * `attributes` key can be omitted from `options` to use block attributes registered on backend with `register_block_type` WordPress function.
  *
  * @param {string} blockTypeId block type
  * @param {Object} options     block options
