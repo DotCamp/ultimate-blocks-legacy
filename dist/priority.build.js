@@ -305,8 +305,15 @@ var MainStore = /*#__PURE__*/function (_ManagerBase) {
       var context = self || __webpack_require__.g;
       context.ub_main_store_id = storeName;
       this.storeName = storeName;
+      var _ubPriorityData = ubPriorityData,
+          blockAttributes = _ubPriorityData.blockAttributes;
 
-      _classPrivateFieldGet(this, _registerStore).call(this);
+      _classPrivateFieldGet(this, _registerStore).call(this, {
+        blockAttributes: blockAttributes
+      }); // attach this instance to global context for outside usage
+
+
+      context.ubMainStore = this;
     }
     /**
      * Get main store id.
@@ -323,9 +330,20 @@ var MainStore = /*#__PURE__*/function (_ManagerBase) {
       return (_this$storeName = this.storeName) !== null && _this$storeName !== void 0 ? _this$storeName : context.ub_main_store_id;
     }
     /**
+     * Store selector
+     *
+     * @return {Object} object containing available store selectors
+     */
+
+  }, {
+    key: "select",
+    value: function select() {
+      return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)(this.getStoreId());
+    }
+    /**
      * Store action dispatch.
      *
-     * @return {Object} object containing available store actions.
+     * @return {Object} object containing available store actions
      */
 
   }]);
@@ -395,6 +413,17 @@ var selectors = {
    */
   getStoreName: function getStoreName(state) {
     return state.storeName;
+  },
+
+  /**
+   * Get default attributes for target block type.
+   *
+   * @param {Object} state     store state
+   * @param {string} blockType block type
+   * @return {Array | null} block default attributes
+   */
+  getBlockDefaultAttributes: function getBlockDefaultAttributes(state, blockType) {
+    return state.blockAttributes[blockType];
   }
 };
 /**

@@ -1,25 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import registerPluginBlock from '$Inc/registerPluginBlock';
 
-/**
- * Block attributes.
- *
- * @type {Object}
- */
-const attributes = {
-	iconName: {
-		type: 'string',
-		default: '',
-	},
-};
-
-registerPluginBlock('ub-innerblock/icon', {
+registerPluginBlock('ub/icon-innerblock', {
 	title: __('Icon', 'ultimate-blocks'),
 	category: 'ultimateblocks',
 	icon: 'tools',
-	attributes: {},
 	supports: {
-		inserter: false,
+		inserter: true,
 	},
 	edit: () => {
 		return <i>icon inner block</i>;

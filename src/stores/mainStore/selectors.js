@@ -13,6 +13,17 @@ const selectors = {
 	getStoreName(state) {
 		return state.storeName;
 	},
+
+	/**
+	 * Get default attributes for target block type.
+	 *
+	 * @param {Object} state     store state
+	 * @param {string} blockType block type
+	 * @return {Array | null} block default attributes
+	 */
+	getBlockDefaultAttributes(state, blockType) {
+		return state.blockAttributes[blockType];
+	},
 };
 
 /**

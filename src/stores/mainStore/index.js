@@ -1,4 +1,4 @@
-import { createReduxStore, register, dispatch } from '@wordpress/data';
+import { createReduxStore, register, dispatch, select } from '@wordpress/data';
 import reducer from './reducer';
 import selectors from './selectors';
 import actions from './actions';
@@ -52,7 +52,13 @@ class MainStore extends ManagerBase {
 		context.ub_main_store_id = storeName;
 
 		this.storeName = storeName;
-		this.#registerStore();
+
+		const { blockAttributes } = ubPriorityData;
+
+		this.#registerStore({ blockAttributes });
+
+		// attach this instance to global context for outside usage
+		context.ubMainStore = this;
 	}
 
 	/**
@@ -66,9 +72,18 @@ class MainStore extends ManagerBase {
 	}
 
 	/**
+	 * Store selector
+	 *
+	 * @return {Object} object containing available store selectors
+	 */
+	select() {
+		return select(this.getStoreId());
+	}
+
+	/**
 	 * Store action dispatch.
 	 *
-	 * @return {Object} object containing available store actions.
+	 * @return {Object} object containing available store actions
 	 */
 	dispatch = () => {
 		return dispatch(this.getStoreId());

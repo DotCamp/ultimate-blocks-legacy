@@ -2228,7 +2228,7 @@ $defaultValues = array(
 			)
 		)
 	),
-	'ub-innerblock/icon'           => [
+	'ub/icon-innerblock'            => [
 		'attributes' => [
 			'iconName' => [
 				'type'    => 'string',

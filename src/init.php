@@ -1093,6 +1093,10 @@ function ultimate_blocks_priority_editor_assets() {
 	wp_enqueue_script( 'ultimate-blocks-priority-script',
 			trailingslashit( ULTIMATE_BLOCKS_URL ) . 'dist/priority.build.js', [ 'wp-blocks' ], ULTIMATE_BLOCKS_VERSION,
 			false );
+
+	$priority_data = apply_filters('ub/filter/priority-editor-data', []);
+
+	wp_localize_script('ultimate-blocks-priority-script', 'ubPriorityData', $priority_data);
 }
 
 /**
@@ -1113,6 +1117,10 @@ function ultimate_blocks_cgb_editor_assets() {
 			array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-api' ), // Dependencies, defined above.
 			Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
+
+	$editor_client_data = apply_filters( 'ub/filter/editor-client-data', [] );
+
+	wp_localize_script( 'ultimate_blocks-cgb-block-js', 'ubEditorClientData', $editor_client_data );
 
 	wp_enqueue_script(
 			'ultimate_blocks-cgb-deactivator-js', // Handle.

@@ -1,5 +1,6 @@
 <?php
 
+use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\Ultimate_Blocks_Version_Control;
 
 /**
@@ -163,6 +164,11 @@ class Ultimate_Blocks {
 
 		// initialize version control manager
 		Ultimate_Blocks_Version_Control::init();
+
+		// initialize editor data manager
+		Editor_Data_Manager::init();
+
+
 	}
 
 	/**
