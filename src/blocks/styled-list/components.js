@@ -847,7 +847,11 @@ export function StyledListItem(props) {
 						itemText: itemFragment,
 					});
 				}}
-				onReplace={(replacementBlocks) => {
+				onReplace={(replacements) => {
+					let replacementBlocks = [...replacements];
+					replacementBlocks[replacementBlocks.length - 1].innerBlocks =
+						block.innerBlocks;
+
 					replaceBlocks(block.clientId, replacementBlocks);
 				}}
 				onMerge={(mergeWithNext) => {
