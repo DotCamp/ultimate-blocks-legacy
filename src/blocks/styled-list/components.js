@@ -136,6 +136,8 @@ function EditorComponent(props) {
 		textColor,
 		backgroundColor,
 		fontSize,
+		columns,
+		maxMobileColumns,
 	} = attributes;
 
 	useEffect(() => {
@@ -511,6 +513,31 @@ function EditorComponent(props) {
 						/>
 					</PanelBody>
 					<PanelBody title={__("Other Options")}>
+						<p>{__("Number of columns")}</p>
+						<RangeControl
+							value={columns}
+							onChange={(columns) => {
+								setAttributes({ columns });
+								if (columns <= maxMobileColumns) {
+									setAttributes({ maxMobileColumns: columns });
+								}
+							}}
+							min={1}
+							max={4}
+						/>
+						{columns > 1 && (
+							<>
+								<p>{__("Number of columns in mobile")}</p>
+								<RangeControl
+									value={maxMobileColumns}
+									onChange={(maxMobileColumns) =>
+										setAttributes({ maxMobileColumns })
+									}
+									min={1}
+									max={columns}
+								/>
+							</>
+						)}
 						<p>{__("Item spacing (pixels)")}</p>
 						<RangeControl
 							value={itemSpacing}
@@ -593,6 +620,9 @@ function EditorComponent(props) {
 					}
 					#ub-styled-list-${blockID} .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="ub/styled-list-item"]:first-child{
 						margin-top: ${itemSpacing}px;
+					}
+					#ub-styled-list-${blockID}  > .block-editor-inner-blocks > .block-editor-block-list__layout{
+						column-count: ${columns};
 					}`,
 					}}
 				/>

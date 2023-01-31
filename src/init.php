@@ -937,17 +937,33 @@ function ub_include_block_attribute_css() {
                         }
                         $blockStylesheets .= '}';
     
-                        if($attributes['columns'] > 1){
-                            $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
-                                'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
-                            '}';
+                        if($attributes['list'] === ''){
+                            if($attributes['columns'] > 1){
+                                $blockStylesheets .= 'ul' . $prefix . '{' . PHP_EOL .
+                                    'column-count: ' .  $attributes['columns'] . ';' . PHP_EOL .
+                                '}';
+                            }
+                            if($attributes['columns'] > $attributes['maxMobileColumns']){
+                                $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
+                                    'ul' . $prefix . '{' . PHP_EOL .
+                                        'column-count: ' . $attributes['maxMobileColumns'] . ';' . PHP_EOL .
+                                    '}' . PHP_EOL .
+                                '}';
+                            }
                         }
-                        if($attributes['columns'] > $attributes['maxMobileColumns']){
-                            $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
-                                $prefix . '>ul{' . PHP_EOL .
-                                    'grid-template-columns: ' . str_repeat('auto ', $attributes['maxMobileColumns'] - 1) . 'auto;' . PHP_EOL .
-                                '}' . PHP_EOL .
-                            '}';
+                        else{
+                            if($attributes['columns'] > 1){
+                                $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
+                                    'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
+                                '}';
+                            }
+                            if($attributes['columns'] > $attributes['maxMobileColumns']){
+                                $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
+                                    $prefix . '>ul{' . PHP_EOL .
+                                        'grid-template-columns: ' . str_repeat('auto ', $attributes['maxMobileColumns'] - 1) . 'auto;' . PHP_EOL .
+                                    '}' . PHP_EOL .
+                                '}';
+                            }
                         }
     
                     }
