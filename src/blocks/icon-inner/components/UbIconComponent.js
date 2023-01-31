@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  * Ub icon editor component.
@@ -6,16 +7,17 @@ import React from 'react';
  * @param {Object} props          component properties
  * @param {string} props.iconName icon name
  * @param {number} props.size     icon size in px
+ * @param {string} props.prefix   icon prefix
  * @function Object() { [native code] }
  */
-function UbIconComponent({ iconName, size }) {
+function UbIconComponent({ iconName, size, prefix }) {
 	/**
 	 * Whether component is empty or not.
 	 *
 	 * @return {boolean} empty status
 	 */
 	const isEmpty = () => {
-		return !iconName || iconName === '';
+		return !prefix || !iconName || iconName === '';
 	};
 
 	const wrapperStyles = () => {
@@ -30,7 +32,14 @@ function UbIconComponent({ iconName, size }) {
 			style={wrapperStyles()}
 			data-empty={isEmpty()}
 			className={'ultimate-blocks-icon-component'}
-		></div>
+		>
+			{!isEmpty() && (
+				<FontAwesomeIcon
+					className={'ultimate-blocks-icon-component-svg-base'}
+					icon={[prefix, iconName]}
+				/>
+			)}
+		</div>
 	);
 }
 

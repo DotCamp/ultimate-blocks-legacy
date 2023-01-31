@@ -1,5 +1,12 @@
+@import '../../common';
+@import '../../../admin/css/src/base/colors';
+
 .ultimate-blocks-icon-component {
-  &[data-empty=true] {
-	border: 1px dotted black;
+  @extend %default-transition;
+  @extend %pointer;
+  @include dotted-border($gray-600, 6, 1);
+
+  &:hover {
+	animation: linearGradientMove .3s infinite linear;
   }
 }

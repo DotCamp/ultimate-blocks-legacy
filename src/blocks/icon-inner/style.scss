@@ -1,2 +1,10 @@
+@import '../../../admin/css/src/base/common';
+
+
 .ultimate-blocks-icon-component {
+  @extend %flex-center-all;
+
+  .ultimate-blocks-icon-component-svg-base {
+	@extend %size-full;
+  }
 }

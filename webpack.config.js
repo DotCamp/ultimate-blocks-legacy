@@ -17,6 +17,7 @@ module.exports = {
 			$BlockStores: path.resolve(__dirname, 'src', 'stores'),
 			$Inc: path.resolve(__dirname, 'src', 'inc'),
 			$Base: path.resolve(__dirname, 'src', 'base'),
+			$Library: path.resolve(__dirname, 'library'),
 		},
 		extensions: [...defaultConfig.resolve.extensions, '.js'],
 	},

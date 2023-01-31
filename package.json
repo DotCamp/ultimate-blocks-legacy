@@ -13,7 +13,8 @@
     "$Components": "./admin/js/src/components",
     "$HOC": "./admin/js/src/hoc",
     "$Stores": "./admin/js/src/stores",
-    "$Styles": "./admin/css/src/"
+    "$Styles": "./admin/css/src/",
+	"$Library": "./library"
   },
   "dependencies": {
     "@babel/core": "^7.18.2",
