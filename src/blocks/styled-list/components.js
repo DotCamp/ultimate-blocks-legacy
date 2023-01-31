@@ -138,6 +138,7 @@ function EditorComponent(props) {
 		fontSize,
 		columns,
 		maxMobileColumns,
+		alignment,
 	} = attributes;
 
 	useEffect(() => {
@@ -583,6 +584,14 @@ function EditorComponent(props) {
 					</PanelBody>
 				</InspectorControls>
 			)}
+			{isSelected && isRootList && (
+				<BlockControls>
+					<AlignmentToolbar
+						value={alignment}
+						onChange={(value) => setAttributes({ alignment: value })}
+					/>
+				</BlockControls>
+			)}
 			<ul
 				className="ub_styled_list"
 				id={`ub-styled-list-${blockID}`}
@@ -623,6 +632,9 @@ function EditorComponent(props) {
 					}
 					#ub-styled-list-${blockID}  > .block-editor-inner-blocks > .block-editor-block-list__layout{
 						column-count: ${columns};
+					}
+					#ub-styled-list-${blockID} {
+						text-align: ${alignment};
 					}`,
 					}}
 				/>
