@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-import UbIconComponent from './UbIconComponent';
 import UbIconInspector from './UbIconInspector';
-import { getIconPrefix } from '../inc/iconOperations';
+import { UbIconComponent } from '$Library/ub-common/Components';
 
 /**
  * Icon main component.
@@ -15,11 +14,7 @@ import { getIconPrefix } from '../inc/iconOperations';
 function UbIcon({ iconName, size, setAttributes }) {
 	return (
 		<Fragment>
-			<UbIconComponent
-				prefix={getIconPrefix(iconName)}
-				iconName={iconName}
-				size={size}
-			/>
+			<UbIconComponent iconName={iconName} size={size} />
 			<UbIconInspector
 				iconName={iconName}
 				setAttributes={setAttributes}

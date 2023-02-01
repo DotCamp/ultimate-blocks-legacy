@@ -67,18 +67,3 @@
 %pointer {
   cursor: pointer;
 }
-
-@mixin dotted-border($color, $dotWidth, $dotHeight){
-  background: linear-gradient(90deg, #{$color} 50%, transparent 0) repeat-x,
-  linear-gradient(90deg, #{$color} 50%, transparent 0) repeat-x,
-  linear-gradient(0deg, #{$color} 50%, transparent 0) repeat-y,
-  linear-gradient(0deg, #{$color} 50%, transparent 0) repeat-y;
-  background-size: #{$dotWidth}px #{$dotHeight}px, #{$dotWidth}px #{$dotHeight}px, #{$dotHeight}px #{$dotWidth}px, #{$dotHeight}px #{$dotWidth}px;
-  background-position: 0 0, 0 100%, 0 0, 100% 0;
-}
-
-@keyframes linearGradientMove {
-  100% {
-	background-position: 6px 0, -6px 100%, 0 -6px, 100% 6px;
-  }
-}

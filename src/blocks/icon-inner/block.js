@@ -1,8 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import registerPluginBlock from '$Inc/registerPluginBlock';
 import UbIcon from './components/UbIcon';
-import UbIconComponent from './components/UbIconComponent';
-import { getIconPrefix } from './inc/iconOperations';
+import { UbIconComponent } from '$Library/ub-common/Components';
 
 registerPluginBlock('ub/icon-innerblock', {
 	title: __('Icon', 'ultimate-blocks'),
@@ -26,12 +25,6 @@ registerPluginBlock('ub/icon-innerblock', {
 	save: ({ attributes }) => {
 		const { iconName, size } = attributes;
 
-		return (
-			<UbIconComponent
-				prefix={getIconPrefix(iconName)}
-				iconName={iconName}
-				size={size}
-			/>
-		);
+		return <UbIconComponent iconName={iconName} size={size} />;
 	},
 });
