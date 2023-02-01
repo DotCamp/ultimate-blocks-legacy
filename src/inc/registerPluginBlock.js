@@ -1,23 +1,30 @@
 import { registerBlockType } from '@wordpress/blocks';
-import MainStore from '$BlockStores/mainStore/index.js';
 
 /**
  * Register plugin block.
+ *
+ * `attributes` key can be omitted from `options` to use block attributes registered on backend with `register_block_type` WordPress function.
  *
  * @param {string} blockTypeId block type
  * @param {Object} options     block options
  */
 function registerPluginBlock(blockTypeId, options) {
-	const { attributes } = options;
+	let { attributes } = options;
 
 	// attribute checking
 	if (!attributes || typeof attributes !== 'object') {
-		throw new Error(
-			`invalid attribute is supplied for block type ${blockTypeId}`
-		);
+		attributes = {};
 	}
 
-	if (MainStore.isInitialized()) {
+	const context = self || global;
+	const MainStore = context.ubMainStore;
+
+	if (MainStore && MainStore.isInitialized()) {
+		const defaultBlockAttributes =
+			MainStore.select().getBlockDefaultAttributes(blockTypeId);
+
+		attributes = { ...defaultBlockAttributes, ...attributes };
+
 		// filter block attributes
 		MainStore.dispatch().applyPluginFilter(
 			`${blockTypeId}-attributes`,

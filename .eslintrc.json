@@ -22,6 +22,7 @@
 	}
   },
   "globals": {
-	"self": true
+	"self": true,
+	"ubPriorityData": true
   }
 }
