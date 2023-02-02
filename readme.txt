@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 2.5.5
+Stable tag: 2.5.6
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -132,7 +132,16 @@ That's it. You're done!
 
 == Changelog ==
 
-= 2.5.5 - January 4th, 2022 =
+= 2.5.6 - February 2nd, 2023 =
+
+* Social share - Fix icon shape display when outline is enabled.
+* Styled list - Fix color rendering while in Astra theme.
+* Styled list - Ensure consistent styled list margins and paddings across themes.
+* Styled list - Restore options to set spacing, font size, columns, and alignment.
+* Styled list - Prevent subitems from being deleted when the parent item is being split.
+* Other - Fix deprecated block_categories check.
+
+= 2.5.5 - January 4th, 2023 =
 
 * Content Toggle - Fix issue with rendering panels.
 * Content Toggle - Allow setting transparency values to colors.
