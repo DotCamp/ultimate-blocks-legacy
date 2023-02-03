@@ -932,7 +932,6 @@ function ub_include_block_attribute_css() {
 											 $prefix . ' li::before{' . PHP_EOL .
 											 'top: ' . ( $attributes['iconSize'] >= 5 ? 3 : ( $attributes['iconSize'] < 3 ? 2 : 0 ) ) . 'px;
                                 font-size: 1em;
-<<<<<<< HEAD
                                 height: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
                                 width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
                                 background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
