@@ -10,7 +10,6 @@ const {
 	PanelBody,
 	SelectControl,
 	ToggleControl,
-	QueryControls,
 	TextControl,
 	RangeControl,
 } = wp.components;
@@ -111,6 +110,7 @@ export default function Inspector(props) {
 	const [tagsList, setTagsList] = useState([]);
 	const [authorsList, setAuthorsList] = useState([]);
 	const [stillMounted, setStillMounted] = useState(false);
+	const [orderDropdownVal, setOrderDropdownval] = useState(0);
 
 	const {
 		attributes: {
@@ -127,7 +127,8 @@ export default function Inspector(props) {
 			amountPosts,
 			postLayout,
 			columns,
-			categories,
+			categories, //old stringified list
+			excludedCategories,
 			categoryArray,
 			orderBy,
 			order,
@@ -182,6 +183,16 @@ export default function Inspector(props) {
 		}
 	}, [stillMounted]);
 
+	useEffect(() => {
+		//initialize orderDropdownVal
+		if (orderBy === "title") {
+			setOrderDropdownval(order === "asc" ? 2 : 3);
+		}
+		if (orderBy === "date") {
+			setOrderDropdownval(order === "desc" ? 0 : 1);
+		}
+	}, []);
+
 	const hasPosts = Array.isArray(posts) && posts.length;
 
 	// Post type options
@@ -196,47 +207,6 @@ export default function Inspector(props) {
 			[category.name]: category,
 		}),
 		{}
-	);
-
-	const queryControlPanel = QueryControls.toString().includes(
-		"selectedCategories"
-	) ? (
-		<QueryControls
-			{...{ order, orderBy }}
-			numberOfItems={amountPosts}
-			categorySuggestions={categorySuggestions}
-			selectedCategories={categoryArray}
-			onOrderChange={(value) => setAttributes({ order: value })}
-			onOrderByChange={(value) => setAttributes({ orderBy: value })}
-			onCategoryChange={(tokens) => {
-				const suggestions = categoriesList.reduce(
-					(accumulator, category) => ({
-						...accumulator,
-						[category.name]: category,
-					}),
-					{}
-				);
-				const allCategories = tokens.map((token) =>
-					typeof token === "string" ? suggestions[token] : token
-				);
-				setAttributes({ categoryArray: allCategories });
-			}}
-			onNumberOfItemsChange={(value) => setAttributes({ amountPosts: value })}
-		/>
-	) : (
-		<QueryControls
-			{...{ order, orderBy }}
-			numberOfItems={amountPosts}
-			categoriesList={categoriesList}
-			categorySuggestions={categoriesList}
-			selectedCategories={categories}
-			onOrderChange={(value) => setAttributes({ order: value })}
-			onOrderByChange={(value) => setAttributes({ orderBy: value })}
-			onCategoryChange={(value) =>
-				setAttributes({ categories: "" !== value ? value : undefined })
-			}
-			onNumberOfItemsChange={(value) => setAttributes({ amountPosts: value })}
-		/>
 	);
 
 	return (
@@ -299,8 +269,9 @@ export default function Inspector(props) {
 						}
 					}}
 				/>
-				{queryControlPanel}
-				<p>{__("Tags")}</p>
+				<label className="components-truncate components-text components-input-control__label">
+					{__("Tags")}
+				</label>
 				{tagArray && (
 					<div className="ub-autocomplete-container">
 						{tagsList
@@ -331,6 +302,127 @@ export default function Inspector(props) {
 							setAttributes({ tagArray: [...tagArray, item.value] });
 						}
 					}}
+				/>
+				<SelectControl
+					label={__("Order By", "ultimate-blocks")}
+					options={[
+						__("Newest to oldest"),
+						__("Oldest to newest"),
+						__("A → Z"),
+						__("Z → A"),
+					].map((a, i) => ({ value: i, label: a }))}
+					value={orderDropdownVal}
+					onChange={(newDropVal) => {
+						setOrderDropdownval(newDropVal);
+						setAttributes({
+							order: newDropVal % 3 === 0 ? "desc" : "asc",
+							orderBy: newDropVal > 1 ? "title" : "date",
+						});
+					}}
+				/>
+
+				<label className="components-truncate components-text components-input-control__label">
+					{__("Included Categories")}
+				</label>
+				{categoryArray && (
+					<div className="ub-autocomplete-container">
+						{categoriesList
+							.filter((c) => categoryArray.map((ca) => ca.id).includes(c.id))
+							.map((c) => (
+								<span className="ub-autocomplete-selection">
+									{c.name}
+									<span
+										className="dashicons dashicons-dismiss"
+										onClick={() =>
+											setAttributes({
+												categoryArray: categoryArray.filter(
+													(sel) => sel.id !== c.id
+												),
+											})
+										}
+									/>
+								</span>
+							))}
+					</div>
+				)}
+				<Autocomplete
+					className="ub-autocomplete-list"
+					list={categoriesList
+						.filter(
+							(cur) => !excludedCategories.some((other) => cur.id === other.id)
+						)
+						.filter(
+							(cur) => !categoryArray.some((other) => cur.id === other.id)
+						)
+						.map((c) => ({ label: c.name, value: c.id }))}
+					selection={categoryArray}
+					addToSelection={(item) => {
+						//use full object for full compatibility with querycontrols
+						if (!categoryArray.includes(item.value)) {
+							setAttributes({
+								categoryArray: [
+									...categoryArray,
+									...categoriesList.filter((cat) => cat.id === item.value),
+								],
+							});
+						}
+					}}
+				/>
+
+				<label className="components-truncate components-text components-input-control__label">
+					{__("Excluded Categories")}
+				</label>
+				{excludedCategories && (
+					<div className="ub-autocomplete-container">
+						{categoriesList
+							.filter((c) =>
+								excludedCategories.map((ca) => ca.id).includes(c.id)
+							)
+							.map((c) => (
+								<span className="ub-autocomplete-selection">
+									{c.name}
+									<span
+										className="dashicons dashicons-dismiss"
+										onClick={() => {
+											setAttributes({
+												excludedCategories: excludedCategories.filter(
+													(sel) => sel.id !== c.id
+												),
+											});
+										}}
+									/>
+								</span>
+							))}
+					</div>
+				)}
+				<Autocomplete
+					className="ub-autocomplete-list"
+					list={categoriesList
+						.filter(
+							(cur) => !excludedCategories.some((other) => cur.id === other.id)
+						)
+						.filter(
+							(cur) => !categoryArray.some((other) => cur.id === other.id)
+						)
+						.map((c) => ({ label: c.name, value: c.id }))}
+					selection={excludedCategories}
+					addToSelection={(item) => {
+						if (!excludedCategories.includes(item.value)) {
+							setAttributes({
+								excludedCategories: [
+									...excludedCategories,
+									...categoriesList.filter((cat) => cat.id === item.value),
+								],
+							});
+						}
+					}}
+				/>
+				<RangeControl
+					label={__("Number of items")}
+					value={amountPosts}
+					onChange={(amountPosts) => setAttributes({ amountPosts })}
+					min={1}
+					max={100}
 				/>
 			</PanelBody>
 			{Array.isArray(posts) && posts.length > 0 && (

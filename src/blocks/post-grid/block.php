@@ -13,8 +13,12 @@ function ub_query_post( $attributes ){
      */
     global $post;
 
-    $categories = isset($attributes['categories']) && $attributes['categories'] != '' ? $attributes['categories'] :
-                    (isset($attributes['categoryArray']) ? join(',',array_map(function($c){return $c['id'];}, $attributes['categoryArray'])) : '');
+    $includedCategories = isset($attributes['categories']) && $attributes['categories'] != '' ? $attributes['categories'] :
+                    (isset($attributes['categoryArray']) ?
+                        join(',',array_map(function($c){return $c['id'];}, $attributes['categoryArray'])) : '');
+    
+    $excludedCategories = isset($attributes['excludedCategories']) ?
+                join(',',array_map(function($c){return $c['id'];}, $attributes['excludedCategories'])) : '';
 
     /* Setup the query */
     $post_query = new WP_Query(
@@ -23,7 +27,8 @@ function ub_query_post( $attributes ){
             'post_status' => 'publish',
             'order' => $attributes['order'],
             'orderby' => $attributes['orderBy'],
-            'cat' => $categories,
+            'cat' => $includedCategories,
+            'category__not_in' => $excludedCategories,
             'offset' => $attributes['offset'],
             'post_type' => 'post',
             'ignore_sticky_posts' => 1,

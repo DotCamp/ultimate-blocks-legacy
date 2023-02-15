@@ -67,6 +67,10 @@ const attributes = {
 		type: "array",
 		default: [],
 	},
+	excludedCategories: {
+		type: "array",
+		default: [],
+	},
 	tagArray: {
 		type: "array",
 		default: [],

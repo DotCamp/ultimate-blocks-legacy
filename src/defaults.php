@@ -1204,6 +1204,10 @@ $defaultValues = array(
 				'type'    => 'array',
 				'default' => [],
 			),
+			'excludedCategories'		   => array(
+				'type' => 'array',
+				'default' => [],
+			),
 			'className'                    => array(
 				'type'    => 'string',
 				'default' => ''
