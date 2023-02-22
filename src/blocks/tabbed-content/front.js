@@ -134,6 +134,12 @@ function ub_handleTabEvent(tab) {
 						embeddedContent.style.removeProperty("width");
 						embeddedContent.style.removeProperty("height");
 					});
+
+				history.replaceState(
+					{ page: history.length },
+					document.getElementsByTagName("title")[0].innerHTML,
+					`#${tabContent.dataset.tabAnchor}`
+				); //doesn't trigger window.onhashchange
 			} else {
 				tabContent.classList.remove("active");
 				tabContent.classList.add("ub-hide");
