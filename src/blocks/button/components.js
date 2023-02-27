@@ -254,7 +254,7 @@ export const inspectorControls = (props) => {
 	return (
 		buttons.length > 0 && (
 			<InspectorControls>
-				<PanelBody title={__("Button Size", "ultimate-blocks")}>
+				<PanelBody title={__("Size", "ultimate-blocks")} initialOpen={true}>
 					<div className="ub-button-group">
 						<ButtonGroup aria-label={__("Button Size", "ultimate-blocks")}>
 							{Object.keys(BUTTON_SIZES).map((b) => (
@@ -280,7 +280,7 @@ export const inspectorControls = (props) => {
 						</ButtonGroup>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Button Width", "ultimate-blocks")}>
+				<PanelBody title={__("Width", "ultimate-blocks")} initialOpen={true}>
 					<div className="ub-button-group">
 						<ButtonGroup aria-label={__("Button Width", "ultimate-blocks")}>
 							{Object.keys(BUTTON_WIDTHS).map((b) => (
@@ -306,7 +306,7 @@ export const inspectorControls = (props) => {
 						</ButtonGroup>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Border Settings", "ultimate-blocks")}>
+				<PanelBody title={__("Border", "ultimate-blocks")} initialOpen={false}>
 					<ToggleControl
 						label={__("Rounded", "ultimate-blocks")}
 						checked={buttons[activeButtonIndex].buttonRounded}
@@ -375,7 +375,7 @@ export const inspectorControls = (props) => {
 					</PanelBody>
 				)}
 
-				<PanelBody title={__("Button Icon", "ultimate-blocks")}>
+				<PanelBody title={__("Icon", "ultimate-blocks")} initialOpen={false}>
 					<div className="ub-button-grid">
 						<p>{__("Selected icon", "ultimate-blocks")}</p>
 						<div className="ub-button-grid-selector">
@@ -513,8 +513,8 @@ export const inspectorControls = (props) => {
 					/>
 				</PanelBody>
 				<PanelBody
-					title={__("Button Colors", "ultimate-blocks")}
-					initialOpen={true}
+					title={__("Colors", "ultimate-blocks")}
+					initialOpen={false}
 				>
 					<ToggleControl
 						label={__("Transparent", "ultimate-blocks")}
@@ -533,6 +533,7 @@ export const inspectorControls = (props) => {
 						}
 					/>
 					<TabPanel
+						className="ub-tab-panel"
 						tabs={[
 							{
 								name: "buttoncolor",
@@ -1258,7 +1259,7 @@ export function EditorComponent(props) {
 				<InspectorControls>
 					{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
 						<>
-							<PanelBody title={__("Button Size", "ultimate-blocks")}>
+							<PanelBody title={__("Size", "ultimate-blocks")} initialOpen={true}>
 								<div className="ub-button-group">
 									<ButtonGroup
 										aria-label={__("Button Size", "ultimate-blocks")}
@@ -1286,7 +1287,7 @@ export function EditorComponent(props) {
 									</ButtonGroup>
 								</div>
 							</PanelBody>
-							<PanelBody title={__("Button Width", "ultimate-blocks")}>
+							<PanelBody title={__("Width", "ultimate-blocks")} initialOpen={true}>
 								<div className="ub-button-group">
 									<ButtonGroup
 										aria-label={__("Button Width", "ultimate-blocks")}
@@ -1316,7 +1317,47 @@ export function EditorComponent(props) {
 									</ButtonGroup>
 								</div>
 							</PanelBody>
-							<PanelBody title={__("Border Settings", "ultimate-blocks")}>
+							<PanelBody
+								title={__("Colors", "ultimate-blocks")}
+								initialOpen={false}
+							>
+								<ToggleControl
+									label={__("Transparent", "ultimate-blocks")}
+									checked={buttons[activeButtonIndex].buttonIsTransparent}
+									onChange={() =>
+										setAttributes({
+											buttons: [
+												...buttons.slice(0, activeButtonIndex),
+												Object.assign({}, buttons[activeButtonIndex], {
+													buttonIsTransparent:
+														!buttons[activeButtonIndex].buttonIsTransparent,
+												}),
+												...buttons.slice(activeButtonIndex + 1),
+											],
+										})
+									}
+								/>
+								<TabPanel
+									className="ub-tab-panels"
+									tabs={[
+										{
+											name: "buttoncolor",
+											title: __("Normal"),
+										},
+										{
+											name: "buttonhovercolor",
+											title: __("Hover"),
+										},
+									]}
+								>
+									{(tab) =>
+										tab.name === "buttoncolor"
+											? normalColorPanels
+											: hoverColorPanels
+									}
+								</TabPanel>
+							</PanelBody>
+							<PanelBody title={__("Border", "ultimate-blocks")} initialOpen={false}>
 								<ToggleControl
 									label={__("Rounded", "ultimate-blocks")}
 									checked={buttons[activeButtonIndex].buttonRounded}
@@ -1690,7 +1731,7 @@ export function EditorComponent(props) {
 									</>
 								)}
 							</PanelBody>
-							<PanelBody title={__("Button Icon", "ultimate-blocks")}>
+							<PanelBody title={__("Icon", "ultimate-blocks")} initialOpen={false}>
 								<div className="ub-button-grid">
 									<p>{__("Selected icon", "ultimate-blocks")}</p>
 									<div className="ub-button-grid-selector">
@@ -1936,45 +1977,6 @@ export function EditorComponent(props) {
 										)}
 									</>
 								)}
-							</PanelBody>
-							<PanelBody
-								title={__("Button Colors", "ultimate-blocks")}
-								initialOpen={true}
-							>
-								<ToggleControl
-									label={__("Transparent", "ultimate-blocks")}
-									checked={buttons[activeButtonIndex].buttonIsTransparent}
-									onChange={() =>
-										setAttributes({
-											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													buttonIsTransparent:
-														!buttons[activeButtonIndex].buttonIsTransparent,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
-											],
-										})
-									}
-								/>
-								<TabPanel
-									tabs={[
-										{
-											name: "buttoncolor",
-											title: __("Normal"),
-										},
-										{
-											name: "buttonhovercolor",
-											title: __("Hover"),
-										},
-									]}
-								>
-									{(tab) =>
-										tab.name === "buttoncolor"
-											? normalColorPanels
-											: hoverColorPanels
-									}
-								</TabPanel>
 							</PanelBody>
 						</>
 					)}
