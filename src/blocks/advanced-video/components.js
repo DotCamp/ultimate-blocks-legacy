@@ -653,7 +653,7 @@ export function AdvancedVideoBlock(props) {
 			<InspectorControls>
 				{url !== "" && (
 					<>
-						<PanelBody title={__("Embedded video player settings")}>
+						<PanelBody title={__("General")} initialOpen={true}>
 							<div className="ub-labelled-toggle">
 								<p>{__("Autofit video embed")}</p>
 								<ToggleControl
@@ -1314,34 +1314,8 @@ export function AdvancedVideoBlock(props) {
 									</button>
 								</>
 							)}
-
-							<p>{__("Toggle visibility")}</p>
-							<Button
-								isPrimary={showInDesktop}
-								isSecondary={!showInDesktop}
-								icon="desktop"
-								showTooltip={true}
-								label={"Desktop"}
-								onClick={() => setAttributes({ showInDesktop: !showInDesktop })}
-							/>
-							<Button
-								isPrimary={showInTablet}
-								isSecondary={!showInTablet}
-								icon="tablet"
-								showTooltip={true}
-								label={"Tablet"}
-								onClick={() => setAttributes({ showInTablet: !showInTablet })}
-							/>
-							<Button
-								isPrimary={showInMobile}
-								isSecondary={!showInMobile}
-								icon="smartphone"
-								showTooltip={true}
-								label={"Mobile"}
-								onClick={() => setAttributes({ showInMobile: !showInMobile })}
-							/>
 						</PanelBody>
-						<PanelBody title={__("Border settings")}>
+						<PanelBody title={__("Border")} initialOpen={false}>
 							<div className="ub-labelled-toggle">
 								<p>{__("Use a border")}</p>
 								<ToggleControl
@@ -1673,7 +1647,7 @@ export function AdvancedVideoBlock(props) {
 								</>
 							)}
 						</PanelBody>
-						<PanelBody title={__("Shadow settings")}>
+						<PanelBody title={__("Shadow")} initialOpen={false}>
 							<PanelRow>
 								<p>{__("Include a shadow")}</p>
 								<ToggleControl
@@ -1766,12 +1740,39 @@ export function AdvancedVideoBlock(props) {
 								</>
 							)}
 						</PanelBody>
+						<PanelBody title={__("Visibility")} initialOpen={false}>
+							<p>{__("Toggle visibility")}</p>
+							<Button
+								isPrimary={showInDesktop}
+								isSecondary={!showInDesktop}
+								icon="desktop"
+								showTooltip={true}
+								label={"Desktop"}
+								onClick={() => setAttributes({ showInDesktop: !showInDesktop })}
+							/>
+							<Button
+								isPrimary={showInTablet}
+								isSecondary={!showInTablet}
+								icon="tablet"
+								showTooltip={true}
+								label={"Tablet"}
+								onClick={() => setAttributes({ showInTablet: !showInTablet })}
+							/>
+							<Button
+								isPrimary={showInMobile}
+								isSecondary={!showInMobile}
+								icon="smartphone"
+								showTooltip={true}
+								label={"Mobile"}
+								onClick={() => setAttributes({ showInMobile: !showInMobile })}
+							/>
+						</PanelBody>
 					</>
 				)}
 			</InspectorControls>
 			{url === "" && (
 				<>
-					<div>{__("Select video source")}</div>
+					<div>{__("Select Video Source")}</div>
 
 					<div className="ub-advanced-video-input-choices">
 						<MediaUploadCheck>
@@ -1810,7 +1811,7 @@ export function AdvancedVideoBlock(props) {
 								value={videoId}
 								render={({ open }) => (
 									<Button isPrimary icon="video-alt2" onClick={open}>
-										{__("Upload local video")}
+										{__("Upload Local Video")}
 									</Button>
 								)}
 							/>
@@ -1821,14 +1822,14 @@ export function AdvancedVideoBlock(props) {
 							icon="embed-video"
 							onClick={() => setVideoURLStatus(!enterVideoURL)}
 						>
-							{__("Insert video URL")}
+							{__("Insert Video URL")}
 						</Button>
 					</div>
 					{enterVideoURL && (
 						<div className="ub-advanced-video-url-input">
 							<input
 								type="url"
-								placeholder={__("Insert video URL")}
+								placeholder={__("Insert Video URL")}
 								value={videoURLInput}
 								onChange={(e) => setVideoURLInput(e.target.value)}
 								onKeyDown={(e) => {
