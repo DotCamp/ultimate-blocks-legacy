@@ -96,8 +96,8 @@ const AdvancedHeadingEdit = ({
 		<>
 			<InspectorControls>
 				<PanelBody
-					title={__("Heading Settings", "ultimate-blocks")}
-					intialOpen={false}
+					title={__("General", "ultimate-blocks")}
+					intialOpen={true}
 				>
 					{/* Heading Level */}
 					<p>{__("Heading Level", "ultimate-blocks")}</p>
@@ -124,23 +124,8 @@ const AdvancedHeadingEdit = ({
 						onChange={(alignment) => setAttributes({ alignment })}
 						isCollapsed={false}
 					/>
-					{/* Background & Text Color */}
-					<PanelColorSettings
-						title={__("Colors", "ultimate-blocks")}
-						colorSettings={[
-							{
-								value: textColor,
-								onChange: (textColor) => setAttributes({ textColor }),
-								label: __("Heading Text Color", "ultimate-blocks"),
-							},
-							{
-								value: backgroundColor,
-								onChange: (backgroundColor) =>
-									setAttributes({ backgroundColor }),
-								label: __("Heading Background Color", "ultimate-blocks"),
-							},
-						]}
-					/>
+				</PanelBody>
+				<PanelBody title={__("Typography", "ultimate-blocks")} initialOpen={false}>
 					{/* Font Size */}
 					<RangeControl
 						label={__("Font Size", "ultimate-blocks")}
@@ -149,11 +134,6 @@ const AdvancedHeadingEdit = ({
 						min={12}
 						max={100}
 					/>
-				</PanelBody>
-				<PanelBody
-					title={__("Typography Settings", "ultimate-blocks")}
-					intialOpen={false}
-				>
 					{/* Text Transform */}
 					<SelectControl
 						label={__("Text Transform", "ultimate-blocks")}
@@ -190,6 +170,25 @@ const AdvancedHeadingEdit = ({
 						onChange={(lineHeight) => setAttributes({ lineHeight })}
 						min={10}
 						max={120}
+					/>
+				</PanelBody>
+				<PanelBody title={__("Colors", "ultimate-blocks")} initialOpen={false}>
+					{/* Background & Text Color */}
+					<PanelColorSettings
+						title={__("Colors", "ultimate-blocks")}
+						colorSettings={[
+							{
+								value: textColor,
+								onChange: (textColor) => setAttributes({ textColor }),
+								label: __("Heading Text Color", "ultimate-blocks"),
+							},
+							{
+								value: backgroundColor,
+								onChange: (backgroundColor) =>
+									setAttributes({ backgroundColor }),
+								label: __("Heading Background Color", "ultimate-blocks"),
+							},
+						]}
 					/>
 				</PanelBody>
 			</InspectorControls>
