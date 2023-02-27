@@ -585,7 +585,36 @@ export function PanelContent(props) {
 							/>
 						</PanelRow>
 					</PanelBody>
-					<PanelBody title={__("Initial State")} initialOpen={true}>
+					<PanelBody title={__("Panel Title")} initialOpen={false}>
+						<div
+							style={{
+								display: "grid",
+								gridTemplateColumns: "5fr 1fr",
+								padding: "0 16px",
+							}}
+						>
+							<p>{__("Select Heading Tag", "ultimate-blocks")}</p>
+							<SelectControl
+								options={[
+									{ value: "h1", label: __("H1", "ultimate-blocks") },
+									{ value: "h2", label: __("H2", "ultimate-blocks") },
+									{ value: "h3", label: __("H3", "ultimate-blocks") },
+									{ value: "h4", label: __("H4", "ultimate-blocks") },
+									{ value: "h5", label: __("H5", "ultimate-blocks") },
+									{ value: "h6", label: __("H6", "ultimate-blocks") },
+									{ value: "p", label: __("P", "ultimate-blocks") },
+								]}
+								value={titleTag}
+								onChange={(titleTag) => {
+									setAttributes({ titleTag });
+									panels.forEach((panel) =>
+										updateBlockAttributes(panel.clientId, { titleTag })
+									);
+								}}
+							/>
+						</div>
+					</PanelBody>
+					<PanelBody title={__("Toggle State")} initialOpen={false}>
 						<PanelRow>
 							<label htmlFor="ub-content-toggle-set-individually">
 								{__("Set toggle status for each panel individually")}
@@ -713,7 +742,7 @@ export function PanelContent(props) {
 								</PanelRow>
 							)}
 					</PanelBody>
-					<PanelBody title={__("FAQ Schema")} initialOpen={true}>
+					<PanelBody title={__("FAQ Schema")} initialOpen={false}>
 						<PanelRow>
 							<label htmlFor="ub-content-toggle-faq-schema">
 								{__("Enable FAQ Schema")}
@@ -733,34 +762,8 @@ export function PanelContent(props) {
 							/>
 						</PanelRow>
 					</PanelBody>
-					<div
-						style={{
-							display: "grid",
-							gridTemplateColumns: "5fr 1fr",
-							padding: "0 16px",
-						}}
-					>
-						<p>{__("Select Heading Tag", "ultimate-blocks")}</p>
-						<SelectControl
-							options={[
-								{ value: "h1", label: __("H1", "ultimate-blocks") },
-								{ value: "h2", label: __("H2", "ultimate-blocks") },
-								{ value: "h3", label: __("H3", "ultimate-blocks") },
-								{ value: "h4", label: __("H4", "ultimate-blocks") },
-								{ value: "h5", label: __("H5", "ultimate-blocks") },
-								{ value: "h6", label: __("H6", "ultimate-blocks") },
-								{ value: "p", label: __("P", "ultimate-blocks") },
-							]}
-							value={titleTag}
-							onChange={(titleTag) => {
-								setAttributes({ titleTag });
-								panels.forEach((panel) =>
-									updateBlockAttributes(panel.clientId, { titleTag })
-								);
-							}}
-						/>
-					</div>
-					<PanelBody title={__("Toggle status icon", "ultimate-blocks")}>
+					
+					<PanelBody title={__("Toggle Status Icon", "ultimate-blocks")} initialOpen={false}>
 						{toggleIcon !== "none" && (
 							<PanelRow>
 								<label htmlFor="ub-content-toggle-status-location">

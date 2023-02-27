@@ -37,7 +37,7 @@ export default function Inspector(props) {
 					},
 				]}
 			/>
-			<PanelBody title={__("Initial State")} initialOpen={true}>
+			<PanelBody title={__("Toggle State")} initialOpen={true}>
 				<PanelRow>
 					<label htmlFor="ub-content-toggle-state">{__("Collapsed")}</label>
 					<FormToggle
