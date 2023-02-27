@@ -68,7 +68,19 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
-				<PanelBody title={__("Tab style")}>
+				<PanelBody title={__("Tab Style")} initialOpen={true}>
+					<PanelColorSettings
+						title={__("Tab Colors")}
+						initialOpen={true}
+						colorSettings={
+							tabStyle === "underline" &&
+							![tabletTabDisplay, mobileTabDisplay].includes("accordion")
+								? tabColorPanels.slice(2)
+								: tabColorPanels
+						}
+					/>
+				</PanelBody>
+				<PanelBody title={__("Tab Type")} initialOpen={false}>
 					<RadioControl
 						selected={tabStyle}
 						options={["tabs", "pills", "underline"].map((a) => ({
@@ -78,17 +90,7 @@ export default class Inspector extends Component {
 						onChange={(tabStyle) => setAttributes({ tabStyle })}
 					/>
 				</PanelBody>
-				<PanelColorSettings
-					title={__("Tab Colors")}
-					initialOpen={true}
-					colorSettings={
-						tabStyle === "underline" &&
-						![tabletTabDisplay, mobileTabDisplay].includes("accordion")
-							? tabColorPanels.slice(2)
-							: tabColorPanels
-					}
-				/>
-				<PanelBody title={__("Tab Layout")}>
+				<PanelBody title={__("Tab Layout")} initialOpen={false}>
 					<PanelRow>
 						<label>{__("Mode")}</label>
 						<ButtonGroup style={{ paddingBottom: "10px" }}>
@@ -205,7 +207,7 @@ export default class Inspector extends Component {
 						</PanelRow>
 					)}
 				</PanelBody>
-				<PanelBody title={__("Tab Anchors")}>
+				<PanelBody title={__("Tab Anchors")} initialOpen={false}>
 					<ToggleControl
 						label={__("Use tab anchors")}
 						checked={useAnchors}
