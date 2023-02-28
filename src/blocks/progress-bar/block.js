@@ -117,7 +117,7 @@ function ProgressBarMain(props) {
 			)}
 			{isSelected && (
 				<InspectorControls>
-					<PanelBody title={__("Style")}>
+					<PanelBody title={__("General")}>
 						<PanelRow>
 							<p>{__("Progress Bar Type")}</p>
 							<ButtonGroup>
@@ -158,7 +158,7 @@ function ProgressBarMain(props) {
 							/>
 						)}
 					</PanelBody>
-					<PanelBody title={__("Value")}>
+					<PanelBody title={__("Value")} initialOpen={false}>
 						<RangeControl
 							className="ub_progress_bar_value"
 							value={percentage}
@@ -168,28 +168,30 @@ function ProgressBarMain(props) {
 							allowReset
 						/>
 					</PanelBody>
-					<PanelColorSettings
-						title={__("Color")}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: barColor,
-								onChange: (barColor) => setAttributes({ barColor }),
-								label: "Progress Bar Color",
-							},
-							{
-								value: barBackgroundColor,
-								onChange: (barBackgroundColor) =>
-									setAttributes({ barBackgroundColor }),
-								label: "Background Bar Color",
-							},
-							{
-								value: labelColor,
-								onChange: (labelColor) => setAttributes({ labelColor }),
-								label: "Label Color",
-							},
-						]}
-					/>
+					<PanelBody title={__("Style")} initialOpen={false}>
+						<PanelColorSettings
+							title={__("Color")}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: barColor,
+									onChange: (barColor) => setAttributes({ barColor }),
+									label: "Progress Bar Color",
+								},
+								{
+									value: barBackgroundColor,
+									onChange: (barBackgroundColor) =>
+										setAttributes({ barBackgroundColor }),
+									label: "Background Bar Color",
+								},
+								{
+									value: labelColor,
+									onChange: (labelColor) => setAttributes({ labelColor }),
+									label: "Label Color",
+								},
+							]}
+						/>
+					</PanelBody>
 				</InspectorControls>
 			)}
 			<div className="ub_progress-bar">

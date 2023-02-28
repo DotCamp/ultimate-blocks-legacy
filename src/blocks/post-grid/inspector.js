@@ -241,7 +241,7 @@ export default function Inspector(props) {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Post Grid Settings", "ultimate-blocks")}>
+			<PanelBody title={__("General", "ultimate-blocks")}>
 				{Array.isArray(posts) && posts.length > 0 && (
 					<>
 						<SelectControl
@@ -265,6 +265,8 @@ export default function Inspector(props) {
 						)}
 					</>
 				)}
+			</PanelBody>
+			<PanelBody title={__("Query", "ultimate-blocks")} initialOpen={false}>
 				<p>{__("Authors")}</p>
 				{authorArray && (
 					<div className="ub-autocomplete-container">
@@ -332,7 +334,7 @@ export default function Inspector(props) {
 				/>
 			</PanelBody>
 			{Array.isArray(posts) && posts.length > 0 && (
-				<PanelBody title={__("Post Grid Content", "ultimate-blocks")}>
+				<PanelBody title={__("Display", "ultimate-blocks")} initialOpen={false}>
 					<ToggleControl
 						label={__("Display Featured Image", "ultimate-blocks")}
 						checked={checkPostImage}
