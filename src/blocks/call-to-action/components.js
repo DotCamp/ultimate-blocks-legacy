@@ -92,7 +92,7 @@ export const inspectorControls = (props) => {
 	return (
 		<InspectorControls>
 			<PanelColorSettings
-				title={__("Color Settings", "ultimate-blocks")}
+				title={__("Color", "ultimate-blocks")}
 				initialOpen={false}
 				colorSettings={[
 					{
@@ -110,7 +110,7 @@ export const inspectorControls = (props) => {
 			/>
 
 			<PanelBody
-				title={__("Headline Settings", "ultimate-blocks")}
+				title={__("Headline", "ultimate-blocks")}
 				initialOpen={false}
 			>
 				<RangeControl
@@ -156,7 +156,7 @@ export const inspectorControls = (props) => {
 			</PanelBody>
 
 			<PanelBody
-				title={__("Content Settings", "ultimate-blocks")}
+				title={__("Content", "ultimate-blocks")}
 				initialOpen={false}
 			>
 				<RangeControl
@@ -186,7 +186,7 @@ export const inspectorControls = (props) => {
 			</PanelBody>
 
 			<PanelBody
-				title={__("Button Settings", "ultimate-blocks")}
+				title={__("Button", "ultimate-blocks")}
 				initialOpen={false}
 			>
 				<RangeControl
@@ -239,7 +239,7 @@ export const inspectorControls = (props) => {
 				/>
 			</PanelBody>
 			<PanelBody
-				title={__("Link Settings", "ultimate-blocks")}
+				title={__("Link", "ultimate-blocks")}
 				initialOpen={false}
 			>
 				<CheckboxControl
