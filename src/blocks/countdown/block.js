@@ -96,7 +96,7 @@ function CountdownMain(props) {
 							}}
 						/>
 					</PanelBody>
-					<PanelBody title={__("Unit display")}>
+					<PanelBody title={__("Unit display")} initialOpen={false}>
 						<SelectControl
 							label={__("Largest unit")}
 							value={largestUnit}

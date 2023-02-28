@@ -84,7 +84,7 @@ function InspectorPanel(props) {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("How To Settings")}>
+			<PanelBody title={__("General")}>
 				<ToggleControl
 					label={__("Use sections")}
 					checked={useSections}
@@ -215,7 +215,7 @@ function InspectorPanel(props) {
 				</PanelBody>
 			)}
 			{advancedMode && includeSuppliesList && (
-				<PanelBody title={__("Supplies list settings")}>
+				<PanelBody title={__("Supplies List")}>
 					<ToggleControl
 						label={__("Enable adding image for each supply")}
 						checked={addSupplyImages}
@@ -235,7 +235,7 @@ function InspectorPanel(props) {
 				</PanelBody>
 			)}
 			{advancedMode && includeToolsList && (
-				<PanelBody title={__("Tools list settings")}>
+				<PanelBody title={__("Tools List")}>
 					<ToggleControl
 						label={__("Enable adding image for each tool")}
 						checked={addToolImages}
@@ -252,9 +252,9 @@ function InspectorPanel(props) {
 					/>
 				</PanelBody>
 			)}
-			<PanelBody title={__("Tag Settings")}>
+			<PanelBody title={__("Title Tags")}>
 				<SelectControl
-					label={__("Howto title tag")}
+					label={__("HowTo title tag")}
 					value={firstLevelTag}
 					options={tagList.map((tag) => ({ label: __(tag), value: tag }))}
 					onChange={(firstLevelTag) => setAttributes({ firstLevelTag })}
