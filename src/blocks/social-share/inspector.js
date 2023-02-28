@@ -37,7 +37,7 @@ export default function Inspector(props) {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Size")} initialOpen={false}>
+			<PanelBody title={__("Size")} initialOpen={true}>
 				<RadioControl
 					label="Select Size"
 					selected={iconSize}
