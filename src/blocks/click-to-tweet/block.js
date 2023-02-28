@@ -55,7 +55,7 @@ function ClickToTweet(props) {
 		<>
 			{isSelected && (
 				<InspectorControls>
-					<PanelBody title={__("Click to Tweet Settings")}>
+					<PanelBody title={__("General")}>
 						<TextControl
 							label={__("Twitter Username")}
 							placeholder="@"
@@ -71,6 +71,8 @@ function ClickToTweet(props) {
 							beforeIcon="editor-textcolor"
 							allowReset
 						/>
+					</PanelBody>
+					<PanelBody title={__("Colors")} initialOpen={false}>
 						<PanelColorSettings
 							title={__("Color Scheme")}
 							initialOpen={false}
