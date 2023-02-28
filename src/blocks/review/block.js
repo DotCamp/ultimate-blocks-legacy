@@ -1225,7 +1225,7 @@ function ReviewMain(props) {
 		<>
 			{isSelected && (
 				<InspectorControls>
-					<PanelBody title={__("Review item rating format")}>
+					<PanelBody title={__("Rating Format")}>
 						<RadioControl
 							selected={valueType}
 							options={["star", "percent"].map((a) => ({
@@ -1252,7 +1252,7 @@ function ReviewMain(props) {
 						/>
 					</PanelBody>
 
-					<PanelBody title={__("Value settings")} initialOpen={false}>
+					<PanelBody title={__("Set Value")} initialOpen={false}>
 						{editedStar > -1 && (
 							<RangeControl
 								label={__(
@@ -1278,6 +1278,9 @@ function ReviewMain(props) {
 								step={valueType === "star" ? 0.1 : 1}
 							/>
 						)}
+						<p>{__("This lets you set the value for whichever feature list item you are currently editing.")}</p>
+					</PanelBody>
+					<PanelBody title={__("Colors")} initialOpen={false}>
 						{valueType === "star" ? (
 							<PanelColorSettings
 								title={__("Star Colors")}
@@ -1322,32 +1325,32 @@ function ReviewMain(props) {
 								]}
 							/>
 						)}
+						<PanelColorSettings
+							title={__("Button Colors")}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: callToActionBackColor,
+									onChange: (colorValue) =>
+										setAttributes({ callToActionBackColor: colorValue }),
+									label: __("Button Background"),
+								},
+								{
+									value: callToActionBorderColor,
+									onChange: (colorValue) =>
+										setAttributes({ callToActionBorderColor: colorValue }),
+									label: __("Button Border Color"),
+								},
+								{
+									value: callToActionForeColor,
+									onChange: (colorValue) =>
+										setAttributes({ callToActionForeColor: colorValue }),
+									label: __("Button Text Color"),
+								},
+							]}
+						/>
 					</PanelBody>
-					<PanelColorSettings
-						title={__("Button Colors")}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: callToActionBackColor,
-								onChange: (colorValue) =>
-									setAttributes({ callToActionBackColor: colorValue }),
-								label: __("Button Background"),
-							},
-							{
-								value: callToActionBorderColor,
-								onChange: (colorValue) =>
-									setAttributes({ callToActionBorderColor: colorValue }),
-								label: __("Button Border Color"),
-							},
-							{
-								value: callToActionForeColor,
-								onChange: (colorValue) =>
-									setAttributes({ callToActionForeColor: colorValue }),
-								label: __("Button Text Color"),
-							},
-						]}
-					/>
-					<PanelBody title={__("Call to Action button")} initialOpen={true}>
+					<PanelBody title={__("CTA Button")} initialOpen={false}>
 						<PanelRow>
 							<label htmlFor="ub-review-cta-enable">{__("Enable")}</label>
 							<FormToggle
@@ -1440,7 +1443,7 @@ function ReviewMain(props) {
 							</>
 						)}
 					</PanelBody>
-					<PanelBody title={__("Review schema")} initialOpen={true}>
+					<PanelBody title={__("Review Schema")} initialOpen={false}>
 						<PanelRow>
 							<label htmlFor="ub-review-schema-toggle">
 								{__("Enable review schema")}
