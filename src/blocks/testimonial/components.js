@@ -60,18 +60,19 @@ export const inspectorControls = (props) => {
 	const { backgroundColor, textColor, textSize } = attributes;
 	return (
 		<InspectorControls>
-			<PanelColorSettings
-				title={__("Background Color")}
-				initialOpen={true}
-				colorSettings={[
-					{
-						value: backgroundColor,
-						onChange: (backgroundColor) => setAttributes({ backgroundColor }),
-						label: "",
-					},
-				]}
-			/>
-			<PanelBody title={__("Testimonial Body")}>
+			
+			<PanelBody title={__("General")}>
+				<PanelColorSettings
+					title={__("Background Color")}
+					initialOpen={true}
+					colorSettings={[
+						{
+							value: backgroundColor,
+							onChange: (backgroundColor) => setAttributes({ backgroundColor }),
+							label: "",
+						},
+					]}
+				/>
 				<p>
 					{__("Font Color")}
 					{textColor && (

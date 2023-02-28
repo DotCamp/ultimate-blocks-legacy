@@ -347,20 +347,7 @@ function EditorComponent(props) {
 		<>
 			{isSelected && isRootOfList && (
 				<InspectorControls>
-					<PanelBody title={__("List Color Settings")}>
-						{/* PANELCONTROLSETTINGS HAS NO WAY FOR RESETTING COLOR TO BLANK */}
-						<p>{__("List Text Color")}</p>
-						<ColorPalette
-							value={textColor}
-							onChange={(textColor) => setAttributes({ textColor })}
-						/>
-						<p>{__("List Background Color")}</p>
-						<ColorPalette
-							value={backgroundColor}
-							onChange={(backgroundColor) => setAttributes({ backgroundColor })}
-						/>
-					</PanelBody>
-					<PanelBody title={__("Icon Options")}>
+					<PanelBody title={__("Icon")} initialOpen={true}>
 						<div
 							style={{
 								display: "grid",
@@ -513,7 +500,20 @@ function EditorComponent(props) {
 							max={10}
 						/>
 					</PanelBody>
-					<PanelBody title={__("Other Options")}>
+					<PanelBody title={__("Color")} initialOpen={false}>
+						{/* PANELCONTROLSETTINGS HAS NO WAY FOR RESETTING COLOR TO BLANK */}
+						<p>{__("List Text Color")}</p>
+						<ColorPalette
+							value={textColor}
+							onChange={(textColor) => setAttributes({ textColor })}
+						/>
+						<p>{__("List Background Color")}</p>
+						<ColorPalette
+							value={backgroundColor}
+							onChange={(backgroundColor) => setAttributes({ backgroundColor })}
+						/>
+					</PanelBody>
+					<PanelBody title={__("Additional")} initialOpen={false}>
 						<p>{__("Number of columns")}</p>
 						<RangeControl
 							value={columns}

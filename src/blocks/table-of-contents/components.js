@@ -736,47 +736,99 @@ export const inspectorControls = (props) => {
 					))}
 				</div>
 			</PanelBody>
-
-			<PanelColorSettings
-				title={__("Color Settings")}
-				initialOpen={false}
-				colorSettings={[
-					{
-						value: titleColor,
-						onChange: (titleColor) => setAttributes({ titleColor }),
-						label: __("Title Color"),
-					},
-					{
-						value: titleBackgroundColor,
-						onChange: (titleBackgroundColor) =>
-							setAttributes({ titleBackgroundColor }),
-						label: __("Title Background Color"),
-					},
-					{
-						value: listColor,
-						onChange: (listColor) => setAttributes({ listColor }),
-						label: __("List Color"),
-					},
-					{
-						value: listBackgroundColor,
-						onChange: (listBackgroundColor) =>
-							setAttributes({ listBackgroundColor }),
-						label: __("List Background Color"),
-					},
-					...[
-						listStyle !== "plain"
-							? {
-									value: listIconColor,
-									onChange: (listIconColor) => setAttributes({ listIconColor }),
-									label:
-										listStyle === "numbered"
-											? __("Item number color")
-											: __("List icon color"),
-							  }
-							: [],
-					],
-				]}
-			/>
+			<PanelBody title={__("Colors")} initialOpen={false}>
+				<PanelColorSettings
+					title={__("Color Settings")}
+					initialOpen={false}
+					colorSettings={[
+						{
+							value: titleColor,
+							onChange: (titleColor) => setAttributes({ titleColor }),
+							label: __("Title Color"),
+						},
+						{
+							value: titleBackgroundColor,
+							onChange: (titleBackgroundColor) =>
+								setAttributes({ titleBackgroundColor }),
+							label: __("Title Background Color"),
+						},
+						{
+							value: listColor,
+							onChange: (listColor) => setAttributes({ listColor }),
+							label: __("List Color"),
+						},
+						{
+							value: listBackgroundColor,
+							onChange: (listBackgroundColor) =>
+								setAttributes({ listBackgroundColor }),
+							label: __("List Background Color"),
+						},
+						...[
+							listStyle !== "plain"
+								? {
+										value: listIconColor,
+										onChange: (listIconColor) => setAttributes({ listIconColor }),
+										label:
+											listStyle === "numbered"
+												? __("Item number color")
+												: __("List icon color"),
+								}
+								: [],
+						],
+					]}
+				/>
+			</PanelBody>
+			<PanelBody title={__("Layout")} initialOpen={false}>
+				<PanelRow>
+					<p>{__("Columns")}</p>
+					<ToolbarGroup>
+						<ToolbarButton
+							className={"ub_toc_column_selector"}
+							icon={oneColumnIcon}
+							label={__("One column")}
+							isPrimary={numColumns === 1}
+							onClick={() => setAttributes({ numColumns: 1 })}
+						/>
+						<ToolbarButton
+							className={"ub_toc_column_selector"}
+							icon={twoColumnsIcon}
+							label={__("Two columns")}
+							isPrimary={numColumns === 2}
+							onClick={() => setAttributes({ numColumns: 2 })}
+						/>
+						<ToolbarButton
+							className={"ub_toc_column_selector"}
+							icon={threeColumnsIcon}
+							label={__("Three columns")}
+							isPrimary={numColumns === 3}
+							onClick={() => setAttributes({ numColumns: 3 })}
+						/>
+					</ToolbarGroup>
+				</PanelRow>
+				<PanelRow>
+					<p>{__("List type")}</p>
+					<ToolbarGroup>
+						<ToolbarButton
+							icon="editor-ul"
+							label={__("Bulleted list")}
+							isPrimary={listStyle === "bulleted"}
+							onClick={() => setAttributes({ listStyle: "bulleted" })}
+						/>
+						<ToolbarButton
+							icon="editor-ol"
+							label={__("Numbered list")}
+							isPrimary={listStyle === "numbered"}
+							onClick={() => setAttributes({ listStyle: "numbered" })}
+						/>
+						<ToolbarButton
+							icon={plainList}
+							label={__("Plain list")}
+							isPrimary={listStyle === "plain"}
+							onClick={() => setAttributes({ listStyle: "plain" })}
+						/>
+					</ToolbarGroup>
+				</PanelRow>
+			</PanelBody>
 			<PanelBody title={__("Collapsible")} initialOpen={false}>
 				<PanelRow>
 					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
@@ -829,80 +881,7 @@ export const inspectorControls = (props) => {
 					</>
 				)}
 			</PanelBody>
-			<PanelBody title={__("Body")} initialOpen={false}>
-				<PanelRow>
-					<p>{__("Columns")}</p>
-					<ToolbarGroup>
-						<ToolbarButton
-							className={"ub_toc_column_selector"}
-							icon={oneColumnIcon}
-							label={__("One column")}
-							isPrimary={numColumns === 1}
-							onClick={() => setAttributes({ numColumns: 1 })}
-						/>
-						<ToolbarButton
-							className={"ub_toc_column_selector"}
-							icon={twoColumnsIcon}
-							label={__("Two columns")}
-							isPrimary={numColumns === 2}
-							onClick={() => setAttributes({ numColumns: 2 })}
-						/>
-						<ToolbarButton
-							className={"ub_toc_column_selector"}
-							icon={threeColumnsIcon}
-							label={__("Three columns")}
-							isPrimary={numColumns === 3}
-							onClick={() => setAttributes({ numColumns: 3 })}
-						/>
-					</ToolbarGroup>
-				</PanelRow>
-				<PanelRow>
-					<p>{__("List type")}</p>
-					<ToolbarGroup>
-						<ToolbarButton
-							icon="editor-ul"
-							label={__("Bulleted list")}
-							isPrimary={listStyle === "bulleted"}
-							onClick={() => setAttributes({ listStyle: "bulleted" })}
-						/>
-						<ToolbarButton
-							icon="editor-ol"
-							label={__("Numbered list")}
-							isPrimary={listStyle === "numbered"}
-							onClick={() => setAttributes({ listStyle: "numbered" })}
-						/>
-						<ToolbarButton
-							icon={plainList}
-							label={__("Plain list")}
-							isPrimary={listStyle === "plain"}
-							onClick={() => setAttributes({ listStyle: "plain" })}
-						/>
-					</ToolbarGroup>
-				</PanelRow>
-			</PanelBody>
-			<PanelBody title={__("Additional Settings")} initialOpen={false}>
-				<PanelRow>
-					<label htmlFor="ub_toc_enable_latin_conversion">
-						{__("Romanize anchor links")}
-					</label>
-					<ToggleControl
-						id="ub_toc_enable_latin_conversion"
-						checked={allowToLatin}
-						onChange={(e) => setAttributes({ allowToLatin: e })}
-					/>
-				</PanelRow>
-				<PanelRow>
-					<label htmlFor="ub_toc_toggle_diacritics">
-						{__("Remove diacritics from anchor links")}
-					</label>
-					<ToggleControl
-						id="ub_toc_toggle_diacritics"
-						checked={removeDiacritics}
-						onChange={(removeDiacritics) => setAttributes({ removeDiacritics })}
-					/>
-				</PanelRow>
-			</PanelBody>
-			<PanelBody title={__("Scroll Settings")} initialOpen={false}>
+			<PanelBody title={__("Scroll")} initialOpen={false}>
 				<SelectControl
 					label={__("Scroll offset adjustment")}
 					value={scrollOption}
@@ -965,6 +944,28 @@ export const inspectorControls = (props) => {
 								});
 							});
 						}}
+					/>
+				</PanelRow>
+			</PanelBody>
+			<PanelBody title={__("Additional")} initialOpen={false}>
+				<PanelRow>
+					<label htmlFor="ub_toc_enable_latin_conversion">
+						{__("Romanize anchor links")}
+					</label>
+					<ToggleControl
+						id="ub_toc_enable_latin_conversion"
+						checked={allowToLatin}
+						onChange={(e) => setAttributes({ allowToLatin: e })}
+					/>
+				</PanelRow>
+				<PanelRow>
+					<label htmlFor="ub_toc_toggle_diacritics">
+						{__("Remove diacritics from anchor links")}
+					</label>
+					<ToggleControl
+						id="ub_toc_toggle_diacritics"
+						checked={removeDiacritics}
+						onChange={(removeDiacritics) => setAttributes({ removeDiacritics })}
 					/>
 				</PanelRow>
 			</PanelBody>
