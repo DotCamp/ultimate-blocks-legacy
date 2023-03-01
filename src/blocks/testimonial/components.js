@@ -6,7 +6,6 @@ const {
 	MediaUpload,
 	InspectorControls,
 	ColorPalette,
-	PanelColorSettings,
 } = wp.blockEditor || wp.editor;
 
 const { Button, PanelBody, RangeControl, ToolbarGroup, ToolbarButton } =
@@ -60,30 +59,19 @@ export const inspectorControls = (props) => {
 	const { backgroundColor, textColor, textSize } = attributes;
 	return (
 		<InspectorControls>
-			
 			<PanelBody title={__("General")}>
-				<PanelColorSettings
-					title={__("Background Color")}
-					initialOpen={true}
-					colorSettings={[
-						{
-							value: backgroundColor,
-							onChange: (backgroundColor) => setAttributes({ backgroundColor }),
-							label: "",
-						},
-					]}
-				/>
-				<p>
-					{__("Font Color")}
-					{textColor && (
-						<span
-							class="component-color-indicator"
-							aria-label={`(Color: ${textColor})`}
-							style={{ background: textColor }}
-						/>
-					)}
-				</p>
+				<label for="ub-testimonial-bgcolor-select">
+					{__("Background Color")}
+				</label>
 				<ColorPalette
+					id="ub-testimonial-bgcolor-select"
+					value={backgroundColor}
+					onChange={(backgroundColor) => setAttributes({ backgroundColor })}
+					allowReset
+				/>
+				<label for="ub-testimonial-textcolor-select">{__("Font Color")}</label>
+				<ColorPalette
+					id="ub-testimonial-textcolor-select"
 					value={textColor}
 					onChange={(textColor) => setAttributes({ textColor })}
 					allowReset
