@@ -198,11 +198,16 @@ registerBlockType("ub/star-rating", {
 
 registerBlockType("ub/star-rating-block", {
 	title: __("Star Rating"),
+	description: __("Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.", "ultimate-blocks"),
 	icon: BlockIcon,
 	category: "ultimateblocks",
-
+	keywords: [__("star rating"), __("review"), __("Ultimate Blocks")],
 	attributes,
-
+	example: {
+		attributes: {
+			selectedStars: 4
+		}
+	},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
