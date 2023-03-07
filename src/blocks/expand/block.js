@@ -17,6 +17,7 @@ const { compose } = wp.compose;
 
 registerBlockType("ub/expand", {
 	title: __("Expand"),
+	description: __("Expand Block lets you add expandable content. You can hide some part of your content initially. Upon clicking on ‘Show More’ it will show.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [
@@ -61,6 +62,7 @@ registerBlockType("ub/expand", {
 			default: "id", //other types: class, element
 		},
 	},
+	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const {
