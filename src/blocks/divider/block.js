@@ -202,11 +202,18 @@ function DividerBlock(props) {
 
 registerBlockType("ub/divider", {
 	title: __("Divider"),
+	description: __("Add custom divider between your blocks. Customize the color, size, everything.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Divider"), __("Separator"), __("Ultimate Blocks")],
 	attributes,
-
+	example: {
+		attributes: {
+			borderSize: '4',
+			borderStyle: 'dashed',
+			borderColor: '#f63d3d'
+		}
+	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
