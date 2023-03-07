@@ -222,6 +222,7 @@ function ProgressBarMain(props) {
 
 registerBlockType("ub/progress-bar", {
 	title: __("Progress Bar"),
+	description: __("Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.","ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Progress Bar"), __("Ultimate Blocks")],
@@ -268,7 +269,12 @@ registerBlockType("ub/progress-bar", {
 			default: "",
 		},
 	},
-
+	example: {
+		attributes: {
+			barColor: '#f63d3d',
+			barThickness: 2
+		}
+	},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
