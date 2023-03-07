@@ -55,10 +55,6 @@ function ub_render_content_filter_block($attributes, $content){
 
     $filterList = '';
 
-	print "<pre>";
-print_r($newFilterArray);
-print "</pre>";
-
     foreach((array)$newFilterArray as $key1 => $filterGroup){
         $filterList .= '<div class="ub-content-filter-category"
         data-canUseMultiple="' . json_encode($filterGroup['canUseMultiple']) . '">

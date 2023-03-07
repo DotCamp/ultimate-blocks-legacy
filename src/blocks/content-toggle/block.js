@@ -216,6 +216,7 @@ registerBlockType("ub/content-toggle", {
 
 registerBlockType("ub/content-toggle-block", {
 	title: __("Content Toggle"),
+	description: __("Add contents in accordions. Let visitors expand them and show the content.","ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [
@@ -224,7 +225,7 @@ registerBlockType("ub/content-toggle-block", {
 		__("Ultimate Blocks"),
 		__("FAQ"),
 	],
-
+	example: {},
 	attributes,
 
 	transforms: {
