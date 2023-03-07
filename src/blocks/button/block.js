@@ -330,6 +330,7 @@ registerBlockType("ub/button-block", {
 
 registerBlockType("ub/button", {
 	title: __("Button (Improved)", "ultimate-blocks"),
+	description: __("Add amazing buttons that convert more. Comes with an option to add multiple buttons.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	attributes,
@@ -338,6 +339,12 @@ registerBlockType("ub/button", {
 		__("Buttons", "ultimate-blocks"),
 		__("Ultimate Blocks", "ultimate-blocks"),
 	],
+	example: {
+		attributes: {
+			buttonColor: '#f01313',
+			size: 'medium'
+		}
+	},
 	edit: withSelect((select, ownProps) => {
 		const {
 			getBlock,
