@@ -721,6 +721,7 @@ function StyledBox(props) {
 
 registerBlockType("ub/styled-box", {
 	title: __("Styled Box"),
+	description: __("Add styled box like – Notification box, Number box, Feature box in your content. ", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	attributes: {
@@ -789,7 +790,7 @@ registerBlockType("ub/styled-box", {
 			default: "",
 		},
 	},
-
+	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
