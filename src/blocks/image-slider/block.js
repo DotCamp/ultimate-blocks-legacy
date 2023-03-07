@@ -599,11 +599,12 @@ function ImageSliderMain(props) {
 
 registerBlockType("ub/image-slider", {
 	title: __("Image Slider"),
+	description: __("Add a lightweight, simple image slider in your post. Comes with additional settings.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Image Slider"), __("Slideshow"), __("Ultimate Blocks")],
 	attributes,
-
+	example: {},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
