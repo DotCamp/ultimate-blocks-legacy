@@ -291,6 +291,7 @@ function SocialShareMain(props) {
 
 registerBlockType("ub/social-share", {
 	title: __("Social Share"),
+	description: __("Add social share buttons in your posts and pages with this block.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("social"), __("share"), __("Ultimate Blocks")],
@@ -383,7 +384,7 @@ registerBlockType("ub/social-share", {
 			default: "", //when turned on, default value should be #cccccc
 		},
 	},
-
+	example: {},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
