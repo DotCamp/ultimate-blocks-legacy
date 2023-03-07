@@ -67,6 +67,7 @@ const attributes = {
 
 registerBlockType("ub/advanced-heading", {
 	title: __("Advanced Heading", "ultimate-blocks"),
+	description: __("Add advanced headings with more style and customizations.", "ultimate-blocks"),
 	icon,
 	category: "ultimateblocks",
 	keywords: [
