@@ -9,6 +9,7 @@ import EditorComponent, { StyledListItem } from "./components";
 
 registerBlockType("ub/styled-list", {
 	title: __("Styled List"),
+	description: __("This block lets you add a styled list in your post or pages. Instead of bullets you can use various icons as your list style type. ","ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	attributes: {
@@ -105,6 +106,7 @@ registerBlockType("ub/styled-list", {
 			},
 		],
 	},
+	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const {
