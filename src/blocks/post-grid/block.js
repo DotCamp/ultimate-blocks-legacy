@@ -50,6 +50,7 @@ export default registerBlockType("ub/post-grid", {
 	},
 	example: {
 		attributes: {
+			postImageWidth: 85,
 			amountPosts: 2
 		}
 	},

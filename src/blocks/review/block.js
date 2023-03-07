@@ -1833,10 +1833,12 @@ function ReviewMain(props) {
 
 registerPluginBlock("ub/review", {
 	title: __("Review"),
+	description: __("Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.","ultimate-blocks"),
 	icon,
 	category: "ultimateblocks",
 	keywords: [__("Review"), __("Ultimate Blocks")],
 	attributes: defaultAttributes,
+	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
