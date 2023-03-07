@@ -193,6 +193,7 @@ function CountdownMain(props) {
 
 registerBlockType("ub/countdown", {
 	title: __("Countdown"),
+	description: __("Add a countdown in your post/pages. Comes with three different styles.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Countdown"), __("Timer"), __("Ultimate Blocks")],
@@ -234,7 +235,7 @@ registerBlockType("ub/countdown", {
 			default: "second",
 		},
 	},
-
+	example: {},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
