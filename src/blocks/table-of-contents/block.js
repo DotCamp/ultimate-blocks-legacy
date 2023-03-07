@@ -140,7 +140,6 @@ registerBlockType("ub/table-of-contents", {
 	keywords: [__("Table of Contents"), __("Ultimate Blocks")],
 
 	attributes: oldAttributes,
-
 	supports: {
 		inserter: false,
 	},
@@ -305,6 +304,7 @@ registerBlockType("ub/table-of-contents", {
 
 registerBlockType("ub/table-of-contents-block", {
 	title: __("Table of Contents"),
+	description: __("Give visitors a better naviation of your post with a Table of Contents.","ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Table of Contents"), __("Ultimate Blocks")],
@@ -312,6 +312,7 @@ registerBlockType("ub/table-of-contents-block", {
 	supports: {
 		reusable: false,
 	},
+	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
