@@ -119,6 +119,7 @@ function ClickToTweet(props) {
 
 registerBlockType("ub/click-to-tweet", {
 	title: __("Click to Tweet"),
+	description: __("Add tweetable content with this easy to use block.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Click to tweet"), __("Twitter"), __("Ultimate Blocks")],
@@ -147,6 +148,11 @@ registerBlockType("ub/click-to-tweet", {
 			type: "string",
 			default: "#CCCCCC",
 		},
+	},
+	example: {
+		attributes: {
+			ubTweet: "Ultimate Blocks helps you create better and engaging content with Gutenberg."
+		}
 	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
