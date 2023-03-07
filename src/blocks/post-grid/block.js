@@ -23,7 +23,7 @@ const filterObjectAttributes = (obj, condition) =>
 export default registerBlockType("ub/post-grid", {
 	title: __("Post Grid", "ultimate-blocks"),
 	description: __(
-		"Add a grid or list of customizable posts.",
+		"Add a list or grid of your posts. Comes with options to change categories, order and many more.",
 		"ultimate-blocks"
 	),
 	icon: icons,
@@ -48,7 +48,11 @@ export default registerBlockType("ub/post-grid", {
 			return { "data-align": wrapAlignment };
 		}
 	},
-
+	example: {
+		attributes: {
+			amountPosts: 2
+		}
+	},
 	edit: withSelect((select, props) => {
 		const {
 			order,
