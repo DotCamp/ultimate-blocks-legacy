@@ -63,7 +63,6 @@ registerBlockType("ub/content-filter", {
 	keywords: [__("Filtering")],
 	attributes,
 	supports: { inserter: false },
-
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
@@ -141,11 +140,19 @@ registerBlockType("ub/content-filter", {
 
 registerBlockType("ub/content-filter-block", {
 	title: __("Content Filter"),
+	description: __("Content Filter lets your visitors filter the content based on different filters.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Filtering")],
 	attributes,
-
+	example: {
+		attributes: {
+			filterArray: [
+				{ category: 'First Category', filters: ['Filter One', ' Filter Two'], canUseMultiple: true },
+				{ category: 'Second Category', filters: ['Filter One', ' Filter Two'], canUseMultiple: false }
+			]
+		}
+	},
 	transforms: {
 		to: [
 			{
