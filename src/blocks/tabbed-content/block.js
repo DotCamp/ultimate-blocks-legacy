@@ -263,6 +263,7 @@ registerBlockType("ub/tabbed-content", {
 
 registerBlockType("ub/tabbed-content-block", {
 	title: __("Tabbed Content"),
+	description: __("Add tabbed content in your posts/pages with this block.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Tabbed Content"), __("Tabs"), __("Ultimate Blocks")],
@@ -270,7 +271,7 @@ registerBlockType("ub/tabbed-content-block", {
 	supports: {
 		align: ["wide", "full"],
 	},
-
+	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getSelectedBlock, getClientIdsWithDescendants } =
