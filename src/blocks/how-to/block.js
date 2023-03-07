@@ -180,6 +180,7 @@ const attributes = {
 
 registerBlockType("ub/how-to", {
 	title: __("How To"),
+	description: __("Add HowTo Schema with sections, steps and valid schema data.", "ultimate-blocks"),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Tutorial"), __("How To"), __("Ultimate Blocks")],
@@ -187,6 +188,7 @@ registerBlockType("ub/how-to", {
 	supports: {
 		multiple: false,
 	},
+	example: {},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
