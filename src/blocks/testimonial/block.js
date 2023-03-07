@@ -246,10 +246,11 @@ registerBlockType("ub/testimonial-block", {
 registerBlockType("ub/testimonial", {
 	title: __("Testimonial"),
 	icon: icons.testimonial,
+	description: __("Nice, simple testimonial box with option to add image, name, role of the testimonial author.", "ultimate-blocks"),
 	category: "ultimateblocks",
 	keywords: [__("testimonial"), __("quotes"), __("Ultimate Blocks")],
 	attributes,
-
+	example: {},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
