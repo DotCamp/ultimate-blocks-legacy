@@ -76,6 +76,15 @@ registerBlockType("ub/advanced-heading", {
 	],
 	attributes,
 	transforms,
+	example: {
+		attributes: {
+			level: 'h1',
+			content: 'Ultimate Blocks Advanced Heading',
+			alignment: 'center',
+			textColor: 'red',
+			fontFamily: 'inherit'
+		},
+	},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");
