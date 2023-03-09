@@ -110,7 +110,7 @@ const attributes = {
 };
 
 function ContentTogglePanel(props) {
-	const [showPanel, setPanelStatus] = useState(false);
+	const [showPanel, setPanelStatus] = useState(true);
 
 	const {
 		attributes: {
@@ -330,7 +330,10 @@ function ContentTogglePanel(props) {
 						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__("Toggle Status Icon", "ultimate-blocks")} initialOpen={false}>
+				<PanelBody
+					title={__("Toggle Status Icon", "ultimate-blocks")}
+					initialOpen={false}
+				>
 					{toggleIcon !== "none" && (
 						<PanelRow>
 							<label htmlFor="ub-content-toggle-status-location">

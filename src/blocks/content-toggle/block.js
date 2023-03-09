@@ -216,7 +216,10 @@ registerBlockType("ub/content-toggle", {
 
 registerBlockType("ub/content-toggle-block", {
 	title: __("Content Toggle"),
-	description: __("Add contents in accordions. Let visitors expand them and show the content.","ultimate-blocks"),
+	description: __(
+		"Add contents in accordions. Let visitors expand them and show the content.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [
@@ -259,12 +262,18 @@ registerBlockType("ub/content-toggle-block", {
 			};
 		}),
 		withDispatch((dispatch) => {
-			const { updateBlockAttributes, insertBlock, removeBlock, selectBlock } =
-				dispatch("core/block-editor") || dispatch("core/editor");
+			const {
+				updateBlockAttributes,
+				insertBlock,
+				insertBlocks,
+				removeBlock,
+				selectBlock,
+			} = dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,
 				insertBlock,
+				insertBlocks,
 				removeBlock,
 				selectBlock,
 			};

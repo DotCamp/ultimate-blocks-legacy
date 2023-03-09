@@ -291,6 +291,7 @@ export function PanelContent(props) {
 		updateBlockAttributes,
 		selectBlock,
 		insertBlock,
+		insertBlocks,
 		removeBlock,
 		selectedBlock,
 		block,
@@ -401,19 +402,31 @@ export function PanelContent(props) {
 			if (!firstPanelInserted) {
 				setFirstPanelInsertStatus(true);
 				setTimeout(() => {
-					insertBlock(
-						createBlock("ub/content-toggle-panel-block", {
-							theme: newColorDefaults.theme,
-							collapsed,
-							titleColor: newColorDefaults.titleColor,
-							titleLinkColor,
-							hasFAQSchema,
-							toggleLocation,
-							toggleColor,
-							toggleIcon,
-							border,
-							showOnlyOne,
-						}),
+					const defaultPanelSettings = {
+						theme: newColorDefaults.theme,
+						collapsed,
+						titleColor: newColorDefaults.titleColor,
+						titleLinkColor,
+						hasFAQSchema,
+						toggleLocation,
+						toggleColor,
+						toggleIcon,
+						border,
+						showOnlyOne,
+					};
+
+					insertBlocks(
+						[
+							//needs to be created separately to prevent duplicates
+							createBlock(
+								"ub/content-toggle-panel-block",
+								defaultPanelSettings
+							),
+							createBlock(
+								"ub/content-toggle-panel-block",
+								defaultPanelSettings
+							),
+						],
 						0,
 						block.clientId,
 						false
@@ -762,8 +775,11 @@ export function PanelContent(props) {
 							/>
 						</PanelRow>
 					</PanelBody>
-					
-					<PanelBody title={__("Toggle Status Icon", "ultimate-blocks")} initialOpen={false}>
+
+					<PanelBody
+						title={__("Toggle Status Icon", "ultimate-blocks")}
+						initialOpen={false}
+					>
 						{toggleIcon !== "none" && (
 							<PanelRow>
 								<label htmlFor="ub-content-toggle-status-location">
