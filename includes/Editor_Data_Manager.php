@@ -4,6 +4,8 @@ namespace Ultimate_Blocks\includes;
 
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use function add_filter;
+use function apply_filters;
+use function wp_localize_script;
 
 /**
  * Manager responsible for extra data to be used in client editor.
@@ -18,26 +20,67 @@ class Editor_Data_Manager {
 	public $registered_plugin_block_attributes = [];
 
 	/**
+	 * Filter hook name for client priority data.
+	 * @var string
+	 */
+	private $editor_priority_data_filter_hook = 'ub/filter/priority-editor-data';
+
+	/**
+	 * Object name of priority data in editor.
+	 * @var string
+	 */
+	private $editor_priority_data_object_name = 'ubPriorityData';
+
+	/**
 	 * Main process that will be called during initialization of manager.
 	 *
 	 * @return void
 	 */
 	protected function init_process() {
 		add_filter( 'register_block_type_args', [ $this, 'block_registered_args' ], 100, 2 );
-		add_filter( 'ub/filter/priority-editor-data', [ $this, 'add_editor_data' ] );
 	}
 
 	/**
-	 * Add data to editor
+	 * Add priority data.
 	 *
-	 * @param array $editor_data editor data
+	 * This function will add given data to already localized base data for priority scripts.
 	 *
-	 * @return array editor data
+	 * @param array $data data to be added
+	 *
+	 * @return void
 	 */
-	public function add_editor_data( $editor_data ) {
-		$editor_data['blockAttributes'] = $this->registered_plugin_block_attributes;
+	public function add_priority_data( $data ) {
+		add_filter( $this->editor_priority_data_filter_hook, function ( $priority_data ) use ( $data ) {
+			return array_merge_recursive( $priority_data, $data );
+		} );
+	}
 
-		return $editor_data;
+	/**
+	 * Attach priority data to script.
+	 *
+	 * @param array $base_data base data to start
+	 * @param string $script_handler script handler name which this data will be attached
+	 *
+	 * @return void
+	 */
+	public function attach_priority_data( $base_data, $script_handler ) {
+		$base_data     = $this->generate_priority_base_data( $base_data );
+		$priority_data = apply_filters( $this->editor_priority_data_filter_hook, $base_data );
+
+		wp_localize_script( $script_handler, $this->editor_priority_data_object_name, $priority_data );
+	}
+
+	/**
+	 * Generate base startup data for priority data.
+	 *
+	 * @return array priority base data
+	 */
+	public function generate_priority_base_data( $base_data ) {
+		$base_extra_data = [
+			'blockAttributes' => $this->registered_plugin_block_attributes,
+		];
+
+		return array_merge_recursive( $base_data, $base_extra_data );
 	}
 
 	/**

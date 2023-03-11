@@ -9,6 +9,8 @@
  */
 
 // Exit if accessed directly.
+use Ultimate_Blocks\includes\Editor_Data_Manager;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -950,62 +952,63 @@ function ub_include_block_attribute_css() {
 											 $prefix . ' li::before{' . PHP_EOL .
 											 'top: ' . ( $attributes['iconSize'] >= 5 ? 3 : ( $attributes['iconSize'] < 3 ? 2 : 0 ) ) . 'px;
                                 font-size: 1em;
-                                height: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                                width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                                background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
-                                .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
-                            '}' .
-                            $prefix . ' li{' . PHP_EOL .
-                                'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .
-                                ($attributes['fontSize'] > 0 ? 'font-size: ' . ($attributes['fontSize']) . 'px;' . PHP_EOL : '') ;
-                        if($attributes['itemSpacing'] > 0){
-                            if($attributes['list'] !== ''){
-                                $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
+                                height: ' . ( ( 4 + $attributes['iconSize'] ) / 10 ) . 'em;
+                                width: ' . ( ( 4 + $attributes['iconSize'] ) / 10 ) . 'em;
+                                background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0] . ' ' . $iconData[1]
+											 . '"><path fill="%23' . substr( $attributes['iconColor'],
+										1 ) . '" d="' . $iconData[2] . '"></path></svg>\');' . PHP_EOL .
+											 '}' .
+											 $prefix . ' li{' . PHP_EOL .
+											 'text-indent: -' . ( 0.4 + $attributes['iconSize'] * 0.1 ) . 'em;' . PHP_EOL .
+											 ( $attributes['fontSize'] > 0 ? 'font-size: ' . ( $attributes['fontSize'] ) . 'px;' . PHP_EOL : '' );
+						if ( $attributes['itemSpacing'] > 0 ) {
+							if ( $attributes['list'] !== '' ) {
+								$blockStylesheets .= 'margin-bottom: ' . $attributes['itemSpacing'] . 'px;
                                     }' . PHP_EOL .
-                                $prefix . ' li>ul{' . PHP_EOL .
-                                    'margin-top: '. $attributes['itemSpacing'] . 'px;';
-                            }
-                            else{
-                                $blockStylesheets .= '}' .
-                                    $prefix . ' .ub_styled_list_item:not(:first-child){' .
-                                    'margin-top: ' . $attributes['itemSpacing'] . 'px;'.
-                                '}' .
-                                $prefix . ' .ub_styled_list_sublist > .ub_styled_list_item:first-child{' .
-                                    'margin-top: ' . $attributes['itemSpacing'] . 'px;';
-                            }
-                        }
-                        $blockStylesheets .= '}';
+													 $prefix . ' li>ul{' . PHP_EOL .
+													 'margin-top: ' . $attributes['itemSpacing'] . 'px;';
+							} else {
+								$blockStylesheets .= '}' .
+													 $prefix . ' .ub_styled_list_item:not(:first-child){' .
+													 'margin-top: ' . $attributes['itemSpacing'] . 'px;' .
+													 '}' .
+													 $prefix . ' .ub_styled_list_sublist > .ub_styled_list_item:first-child{' .
+													 'margin-top: ' . $attributes['itemSpacing'] . 'px;';
+							}
+						}
+						$blockStylesheets .= '}';
 
-                        if($attributes['list'] === ''){
-                            if($attributes['columns'] > 1){
-                                $blockStylesheets .= 'ul' . $prefix . '{' . PHP_EOL .
-                                    'column-count: ' .  $attributes['columns'] . ';' . PHP_EOL .
-                                '}';
-                            }
-                            if($attributes['columns'] > $attributes['maxMobileColumns']){
-                                $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
-                                    'ul' . $prefix . '{' . PHP_EOL .
-                                        'column-count: ' . $attributes['maxMobileColumns'] . ';' . PHP_EOL .
-                                    '}' . PHP_EOL .
-                                '}';
-                            }
-                        }
-                        else{
-                            if($attributes['columns'] > 1){
-                                $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
-                                    'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
-                                '}';
-                            }
-                            if($attributes['columns'] > $attributes['maxMobileColumns']){
-                                $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
-                                    $prefix . '>ul{' . PHP_EOL .
-                                        'grid-template-columns: ' . str_repeat('auto ', $attributes['maxMobileColumns'] - 1) . 'auto;' . PHP_EOL .
-                                    '}' . PHP_EOL .
-                                '}';
-                            }
-                        }
+						if ( $attributes['list'] === '' ) {
+							if ( $attributes['columns'] > 1 ) {
+								$blockStylesheets .= 'ul' . $prefix . '{' . PHP_EOL .
+													 'column-count: ' . $attributes['columns'] . ';' . PHP_EOL .
+													 '}';
+							}
+							if ( $attributes['columns'] > $attributes['maxMobileColumns'] ) {
+								$blockStylesheets .= '@media (max-width: 599px){' . PHP_EOL .
+													 'ul' . $prefix . '{' . PHP_EOL .
+													 'column-count: ' . $attributes['maxMobileColumns'] . ';' . PHP_EOL .
+													 '}' . PHP_EOL .
+													 '}';
+							}
+						} else {
+							if ( $attributes['columns'] > 1 ) {
+								$blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
+													 'grid-template-columns: ' . str_repeat( 'auto ',
+												$attributes['columns'] - 1 ) . 'auto;' . PHP_EOL .
+													 '}';
+							}
+							if ( $attributes['columns'] > $attributes['maxMobileColumns'] ) {
+								$blockStylesheets .= '@media (max-width: 599px){' . PHP_EOL .
+													 $prefix . '>ul{' . PHP_EOL .
+													 'grid-template-columns: ' . str_repeat( 'auto ',
+												$attributes['maxMobileColumns'] - 1 ) . 'auto;' . PHP_EOL .
+													 '}' . PHP_EOL .
+													 '}';
+							}
+						}
 
-                    }
+					}
 
 					break;
 				case 'ub/tabbed-content-block':
@@ -1134,9 +1137,7 @@ function ultimate_blocks_priority_editor_assets() {
 			trailingslashit( ULTIMATE_BLOCKS_URL ) . 'dist/priority.build.js', [ 'wp-blocks' ], ULTIMATE_BLOCKS_VERSION,
 			false );
 
-	$priority_data = apply_filters('ub/filter/priority-editor-data', []);
-
-	wp_localize_script('ultimate-blocks-priority-script', 'ubPriorityData', $priority_data);
+	Editor_Data_Manager::get_instance()->attach_priority_data( [], 'ultimate-blocks-priority-script' );
 }
 
 /**

@@ -167,8 +167,6 @@ class Ultimate_Blocks {
 
 		// initialize editor data manager
 		Editor_Data_Manager::init();
-
-
 	}
 
 	/**
