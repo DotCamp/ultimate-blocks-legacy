@@ -53,9 +53,14 @@ class MainStore extends ManagerBase {
 
 		this.storeName = storeName;
 
-		const { blockAttributes } = ubPriorityData;
+		const { blockAttributes, upsellExtensionData, proStatus } =
+			ubPriorityData;
 
-		this.#registerStore({ blockAttributes });
+		this.#registerStore({
+			blockAttributes,
+			upsellExtensionData,
+			proStatus: JSON.parse(proStatus),
+		});
 
 		// attach this instance to global context for outside usage
 		context.ubMainStore = this;

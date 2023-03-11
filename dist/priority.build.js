@@ -306,10 +306,14 @@ var MainStore = /*#__PURE__*/function (_ManagerBase) {
       context.ub_main_store_id = storeName;
       this.storeName = storeName;
       var _ubPriorityData = ubPriorityData,
-          blockAttributes = _ubPriorityData.blockAttributes;
+          blockAttributes = _ubPriorityData.blockAttributes,
+          upsellExtensionData = _ubPriorityData.upsellExtensionData,
+          proStatus = _ubPriorityData.proStatus;
 
       _classPrivateFieldGet(this, _registerStore).call(this, {
-        blockAttributes: blockAttributes
+        blockAttributes: blockAttributes,
+        upsellExtensionData: upsellExtensionData,
+        proStatus: JSON.parse(proStatus)
       }); // attach this instance to global context for outside usage
 
 
@@ -399,11 +403,31 @@ var reducer = function reducer(extraState) {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Get block upsell data
+ *
+ * @param {Object}      state            store state
+ * @param {string}      blockType        block type
+ * @param {string|null} [featureId=null] feature id, if null is supplied, all upsell data associated with the block will be returned
+ *
+ * @return {Object | Array} block upsell data
+ */
+
+var getBlockUpsellData = function getBlockUpsellData(state, blockType) {
+  var featureId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  var blockUpsellData = state.upsellExtensionData[blockType];
+  return featureId ? blockUpsellData[featureId] : blockUpsellData;
+};
 /**
  * Store selectors.
  *
  * @type {Object}
  */
+
+
 var selectors = {
   /**
    * Name of store.
@@ -420,10 +444,44 @@ var selectors = {
    *
    * @param {Object} state     store state
    * @param {string} blockType block type
+   *
    * @return {Array | null} block default attributes
    */
   getBlockDefaultAttributes: function getBlockDefaultAttributes(state, blockType) {
     return state.blockAttributes[blockType];
+  },
+  getBlockUpsellData: getBlockUpsellData,
+
+  /**
+   * Get upsell data for currently active block.
+   *
+   * @param {Object}      state            store state
+   * @param {string|null} [featureId=null] feature id, if null is supplied, all upsell data associated with the block will be returned
+   *
+   * @return {Array|null} active block upsell data
+   */
+  getUpsellDataActiveBlock: function getUpsellDataActiveBlock(state) {
+    var _select$getSelectedBl;
+
+    var featureId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var currentBlockType = (_select$getSelectedBl = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)('core/block-editor').getSelectedBlock()) === null || _select$getSelectedBl === void 0 ? void 0 : _select$getSelectedBl.name;
+
+    if (currentBlockType) {
+      return getBlockUpsellData(state, currentBlockType, featureId);
+    }
+
+    return null;
+  },
+
+  /**
+   * Get plugin pro status.
+   *
+   * @param {Object} state store state
+   *
+   * @return {boolean} pro status
+   */
+  getProStatus: function getProStatus(state) {
+    return state.proStatus;
   }
 };
 /**

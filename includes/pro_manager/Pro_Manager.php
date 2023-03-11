@@ -47,5 +47,9 @@ class Pro_Manager {
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_priority_data( $this->prepare_priority_upsell_data() );
 		}
+
+		Editor_Data_Manager::get_instance()->add_priority_data( [
+			'proStatus' => json_encode( $this->is_pro() )
+		] );
 	}
 }
