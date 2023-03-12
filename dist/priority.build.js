@@ -103,7 +103,10 @@ var ManagerBase = /*#__PURE__*/function () {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var $Base_ManagerBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! $Base/ManagerBase */ "./src/base/ManagerBase.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom */ "react-dom");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $Base_ManagerBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Base/ManagerBase */ "./src/base/ManagerBase.js");
+/* harmony import */ var $Inc_components_Upsell_UpsellMain__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellMain */ "./src/inc/components/Upsell/UpsellMain.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -127,6 +130,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
+
+
 /**
  * Editor upsell manager.
  */
@@ -144,18 +149,55 @@ var UpsellManager = /*#__PURE__*/function (_ManagerBase) {
 
   _createClass(UpsellManager, [{
     key: "_initLogic",
-    value: function _initLogic() {// TODO [ErdemBircan] mount react component
+    value: function _initLogic() {
+      document.addEventListener('DOMContentLoaded', function () {
+        var range = document.createRange();
+        range.setStart(document.body, 0);
+        var containerStringified = '<div id="ubUpsellContainer"></div>';
+        var containerFragment = range.createContextualFragment(containerStringified);
+        document.body.appendChild(containerFragment);
+        var container = document.querySelector('#ubUpsellContainer');
+        (0,react_dom__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement($Inc_components_Upsell_UpsellMain__WEBPACK_IMPORTED_MODULE_2__["default"], null), container);
+      });
     }
   }]);
 
   return UpsellManager;
-}($Base_ManagerBase__WEBPACK_IMPORTED_MODULE_0__["default"]);
+}($Base_ManagerBase__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /**
  * @module UpsellManager
  */
 
 
 /* harmony default export */ __webpack_exports__["default"] = (new UpsellManager());
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/UpsellMain.js":
+/*!*************************************************!*\
+  !*** ./src/inc/components/Upsell/UpsellMain.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Main container for upsell manager component.
+ *
+ * @function Object() { [native code] }
+ */
+
+function UpsellMain() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "upsell main");
+}
+/**
+ * @module UpsellMain
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UpsellMain);
 
 /***/ }),
 
@@ -751,6 +793,26 @@ var deepmerge_1 = deepmerge;
 
 module.exports = deepmerge_1;
 
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ (function(module) {
+
+module.exports = window["React"];
+
+/***/ }),
+
+/***/ "react-dom":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ (function(module) {
+
+module.exports = window["ReactDOM"];
 
 /***/ }),
 
