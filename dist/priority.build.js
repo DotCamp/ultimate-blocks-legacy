@@ -182,22 +182,151 @@ var UpsellManager = /*#__PURE__*/function (_ManagerBase) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
 
 /**
  * Main container for upsell manager component.
  *
+ * @param {Object}        props                 component properties
+ * @param {string | null} props.activeBlock     type of currently active block on editor
+ * @param {null | Object} props.blockUpsellData active block upsell data
  * @function Object() { [native code] }
  */
 
-function UpsellMain() {
+function UpsellMain(_ref) {
+  var activeBlock = _ref.activeBlock,
+      blockUpsellData = _ref.blockUpsellData;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      summaryVisibility = _useState2[0],
+      setSummaryVisibility = _useState2[1];
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "upsell main");
-}
-/**
+} // selector mapping for core stores
+
+
+var coreWithSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.withSelect)(function (select) {
+  var _getSelectedBlock;
+
+  var _select = select('core/block-editor'),
+      getSelectedBlock = _select.getSelectedBlock;
+
+  return {
+    activeBlock: (_getSelectedBlock = getSelectedBlock()) === null || _getSelectedBlock === void 0 ? void 0 : _getSelectedBlock.name
+  };
+})(UpsellMain); // selector mapping for plugin main store
+
+var mainStoreSelectMapping = function mainStoreSelectMapping(namespacedSelect) {
+  var getUpsellDataActiveBlock = namespacedSelect.getUpsellDataActiveBlock;
+  return {
+    blockUpsellData: getUpsellDataActiveBlock()
+  };
+};
+/*
  * @module UpsellMain
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (UpsellMain);
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(mainStoreSelectMapping, null)(coreWithSelect));
+
+/***/ }),
+
+/***/ "./src/stores/StoreHelpers.js":
+/*!************************************!*\
+  !*** ./src/stores/StoreHelpers.js ***!
+  \************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createNamespacedHelpers": function() { return /* binding */ createNamespacedHelpers; },
+/* harmony export */   "connectWithStore": function() { return /* binding */ connectWithStore; }
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * Create namespaced store helpers.
+ *
+ * @param {string} storeNamespace store namespace
+ * @return {Object} namespaced helpers
+ */
+
+var createNamespacedHelpers = function createNamespacedHelpers(storeNamespace) {
+  var namespacedWithDispatch = function namespacedWithDispatch(callback) {
+    return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.withDispatch)(function (dispatch, ownProps, _ref) {
+      var select = _ref.select;
+      var namespacedDispatch = dispatch(storeNamespace);
+      var namespacedSelect = select(storeNamespace);
+      return callback(namespacedDispatch, namespacedSelect);
+    });
+  };
+
+  var namespacedWithSelect = function namespacedWithSelect(callback) {
+    return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.withSelect)(function (select, ownProps, registry) {
+      var namespacedSelect = select(storeNamespace);
+      return callback(namespacedSelect, ownProps, registry);
+    });
+  };
+
+  return {
+    namespacedWithDispatch: namespacedWithDispatch,
+    namespacedWithSelect: namespacedWithSelect
+  };
+};
+/**
+ * HOC for connecting components with data stores.
+ *
+ * @param {string}   storeNamespace store namespace
+ * @param {Function} selectMapping  select mapping
+ * @param {Function} actionMapping  action mapping
+ * @return {Function} composed HOC function
+ */
+
+var connectWithStore = function connectWithStore(storeNamespace, selectMapping, actionMapping) {
+  // generate namespaced helpers for related store
+  var _createNamespacedHelp = createNamespacedHelpers(storeNamespace),
+      namespacedWithDispatch = _createNamespacedHelp.namespacedWithDispatch,
+      namespacedWithSelect = _createNamespacedHelp.namespacedWithSelect;
+
+  var applySelect = function applySelect(props) {
+    return props;
+  };
+
+  if (selectMapping) {
+    applySelect = namespacedWithSelect(selectMapping);
+  }
+
+  var applyAction = function applyAction(props) {
+    return props;
+  };
+
+  if (actionMapping) {
+    applyAction = namespacedWithDispatch(actionMapping);
+  }
+
+  return (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.compose)(applySelect, applyAction);
+};
 
 /***/ }),
 
@@ -288,6 +417,35 @@ var actions = function actions(storeName) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (actions);
+
+/***/ }),
+
+/***/ "./src/stores/mainStore/hoc/connectWithMainStore.js":
+/*!**********************************************************!*\
+  !*** ./src/stores/mainStore/hoc/connectWithMainStore.js ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var $BlockStores_StoreHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! $BlockStores/StoreHelpers */ "./src/stores/StoreHelpers.js");
+
+/**
+ * Connect with main editor store.
+ *
+ * @param {Function} selectMapping selector mapping
+ * @param {Function} actionMapping action mapping
+ * @return {Function} hoc function
+ */
+
+function connectWithMainStore(selectMapping, actionMapping) {
+  return (0,$BlockStores_StoreHelpers__WEBPACK_IMPORTED_MODULE_0__.connectWithStore)('ub/main', selectMapping, actionMapping);
+}
+/**
+ * @module connectWithMainStore
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (connectWithMainStore);
 
 /***/ }),
 
@@ -813,6 +971,16 @@ module.exports = window["React"];
 /***/ (function(module) {
 
 module.exports = window["ReactDOM"];
+
+/***/ }),
+
+/***/ "@wordpress/compose":
+/*!*********************************!*\
+  !*** external ["wp","compose"] ***!
+  \*********************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["compose"];
 
 /***/ }),
 
