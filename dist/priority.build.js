@@ -2,6 +2,143 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./library/ub-common/.Chunks/e2c2858e.js":
+/*!***********************************************!*\
+  !*** ./library/ub-common/.Chunks/e2c2858e.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function s(i, e) {
+  var t = i;
+  var n = e;
+  this.getId = function () {
+    return t;
+  }, this.getTimeoutId = function () {
+    return n;
+  }, this.updateTimeoutId = function (o) {
+    n = o;
+  };
+}
+
+function c() {
+  var _this = this;
+
+  var i = [];
+  this.updateRegistry = function (e, t) {
+    _this.getRegistryItem(e).updateTimeoutId(t);
+  }, this.getRegistryItem = function (e) {
+    var _i$filter = i.filter(function (n) {
+      return n.getId() === e;
+    }),
+        _i$filter2 = _slicedToArray(_i$filter, 1),
+        t = _i$filter2[0];
+
+    return t || (t = new s(e, 0), i.push(t)), t;
+  };
+}
+
+function g() {
+  var i = new c();
+
+  function e(t, n, o) {
+    var r = i.getRegistryItem(o);
+    clearTimeout(r.getTimeoutId());
+    var u = setTimeout(function () {
+      t();
+    }, n);
+    r.updateTimeoutId(u);
+  }
+
+  return e;
+}
+
+var I = g();
+
+function m(i, e, t) {
+  return {
+    name: i,
+    slug: e,
+    size: t
+  };
+}
+
+exports.Debouncer = I;
+exports.IconSizeDefinition = m;
+
+/***/ }),
+
+/***/ "./library/ub-common/Inc/index.js":
+/*!****************************************!*\
+  !*** ./library/ub-common/Inc/index.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+Object.defineProperty(exports, Symbol.toStringTag, {
+  value: "Module"
+});
+
+var p = __webpack_require__(/*! ../.Chunks/e2c2858e.js */ "./library/ub-common/.Chunks/e2c2858e.js"),
+    a = __webpack_require__(/*! @wordpress/data */ "@wordpress/data"),
+    d = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose"),
+    h = function h(c) {
+  return {
+    namespacedWithDispatch: function namespacedWithDispatch(n) {
+      return a.withDispatch(function (i, o, _ref) {
+        var t = _ref.select;
+        var e = i(c),
+            l = t(c);
+        return n(e, l);
+      });
+    },
+    namespacedWithSelect: function namespacedWithSelect(n) {
+      return a.withSelect(function (i, o, t) {
+        var e = i(c);
+        return n(e, o, t);
+      });
+    }
+  };
+},
+    u = function u(c, r, s) {
+  var _h = h(c),
+      n = _h.namespacedWithDispatch,
+      i = _h.namespacedWithSelect;
+
+  var o = function o(e) {
+    return e;
+  };
+
+  r && (o = i(r));
+
+  var t = function t(e) {
+    return e;
+  };
+
+  return s && (t = n(s)), d.compose(o, t);
+};
+
+exports.Debouncer = p.Debouncer;
+exports.IconSizeDefinition = p.IconSizeDefinition;
+exports.connectWithStore = u;
+exports.createNamespacedHelpers = h;
+
+/***/ }),
+
 /***/ "./src/base/ManagerBase.js":
 /*!*********************************!*\
   !*** ./src/base/ManagerBase.js ***!
@@ -248,88 +385,6 @@ var mainStoreSelectMapping = function mainStoreSelectMapping(namespacedSelect) {
 
 /***/ }),
 
-/***/ "./src/stores/StoreHelpers.js":
-/*!************************************!*\
-  !*** ./src/stores/StoreHelpers.js ***!
-  \************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createNamespacedHelpers": function() { return /* binding */ createNamespacedHelpers; },
-/* harmony export */   "connectWithStore": function() { return /* binding */ connectWithStore; }
-/* harmony export */ });
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-
-
-/**
- * Create namespaced store helpers.
- *
- * @param {string} storeNamespace store namespace
- * @return {Object} namespaced helpers
- */
-
-var createNamespacedHelpers = function createNamespacedHelpers(storeNamespace) {
-  var namespacedWithDispatch = function namespacedWithDispatch(callback) {
-    return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.withDispatch)(function (dispatch, ownProps, _ref) {
-      var select = _ref.select;
-      var namespacedDispatch = dispatch(storeNamespace);
-      var namespacedSelect = select(storeNamespace);
-      return callback(namespacedDispatch, namespacedSelect);
-    });
-  };
-
-  var namespacedWithSelect = function namespacedWithSelect(callback) {
-    return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.withSelect)(function (select, ownProps, registry) {
-      var namespacedSelect = select(storeNamespace);
-      return callback(namespacedSelect, ownProps, registry);
-    });
-  };
-
-  return {
-    namespacedWithDispatch: namespacedWithDispatch,
-    namespacedWithSelect: namespacedWithSelect
-  };
-};
-/**
- * HOC for connecting components with data stores.
- *
- * @param {string}   storeNamespace store namespace
- * @param {Function} selectMapping  select mapping
- * @param {Function} actionMapping  action mapping
- * @return {Function} composed HOC function
- */
-
-var connectWithStore = function connectWithStore(storeNamespace, selectMapping, actionMapping) {
-  // generate namespaced helpers for related store
-  var _createNamespacedHelp = createNamespacedHelpers(storeNamespace),
-      namespacedWithDispatch = _createNamespacedHelp.namespacedWithDispatch,
-      namespacedWithSelect = _createNamespacedHelp.namespacedWithSelect;
-
-  var applySelect = function applySelect(props) {
-    return props;
-  };
-
-  if (selectMapping) {
-    applySelect = namespacedWithSelect(selectMapping);
-  }
-
-  var applyAction = function applyAction(props) {
-    return props;
-  };
-
-  if (actionMapping) {
-    applyAction = namespacedWithDispatch(actionMapping);
-  }
-
-  return (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.compose)(applySelect, applyAction);
-};
-
-/***/ }),
-
 /***/ "./src/stores/mainStore/actions.js":
 /*!*****************************************!*\
   !*** ./src/stores/mainStore/actions.js ***!
@@ -427,7 +482,8 @@ var actions = function actions(storeName) {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var $BlockStores_StoreHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! $BlockStores/StoreHelpers */ "./src/stores/StoreHelpers.js");
+/* harmony import */ var $Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! $Library/ub-common/Inc */ "./library/ub-common/Inc/index.js");
+/* harmony import */ var $Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n($Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
  * Connect with main editor store.
@@ -438,7 +494,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function connectWithMainStore(selectMapping, actionMapping) {
-  return (0,$BlockStores_StoreHelpers__WEBPACK_IMPORTED_MODULE_0__.connectWithStore)('ub/main', selectMapping, actionMapping);
+  return (0,$Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_0__.connectWithStore)('ub/main', selectMapping, actionMapping);
 }
 /**
  * @module connectWithMainStore

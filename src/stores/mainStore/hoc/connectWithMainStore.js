@@ -1,4 +1,4 @@
-import { connectWithStore } from '$BlockStores/StoreHelpers';
+import { connectWithStore } from '$Library/ub-common/Inc';
 
 /**
  * Connect with main editor store.
