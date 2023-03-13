@@ -409,7 +409,7 @@ class Ultimate_Blocks_Admin {
 		$datetime1    = new DateTime( $install_date );
 		$datetime2    = new DateTime( $display_date );
 		$diff_intrval = round( ( $datetime2->format( 'U' ) - $datetime1->format( 'U' ) ) / ( 60 * 60 * 24 ) );
-		if ( $diff_intrval >= 14 && get_option( 'UltimateBlocks_review_notify' ) == "no" ) {
+		if ( $diff_intrval >= 21 && get_option( 'UltimateBlocks_review_notify' ) == "no" ) {
 			?>
 			<div class="UltimateBlocks-review-notice notice notice-info">
 				<p style="font-size: 14px;">
