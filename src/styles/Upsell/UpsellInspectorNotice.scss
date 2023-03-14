@@ -1,0 +1,28 @@
+@import './UpsellTheme.scss';
+@import '../base/__colors.scss';
+@import '../base/__common.scss';
+
+.ub-upsell-inspector-notice {
+  @extend %pointer;
+  width: 100%;
+  background-color: $soft_red;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: auto 1fr;
+  padding: 15px;
+  grid-gap: 5px;
+  color: $text_red;
+  font-size: 15px;
+  border: 1px solid $gutenberg_gray;
+
+  .ub-upsell-notice-icon-container {
+	width: 50px;
+	height: 50px;
+  }
+
+  .ub-upsell-notice {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+  }
+}

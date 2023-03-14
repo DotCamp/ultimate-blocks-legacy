@@ -70,6 +70,26 @@ const selectors = {
 	getProStatus(state) {
 		return state.proStatus;
 	},
+	/**
+	 * Get plugin asset urls.
+	 *
+	 * @param {Object} state    store state
+	 * @param {string} assetKey key value of target asset
+	 *
+	 * @return {boolean} asset url
+	 */
+	getAssets(state, assetKey) {
+		return state.assets[assetKey];
+	},
+	/**
+	 * Get logo url.
+	 *
+	 * @param {Object} state store state
+	 * @return {string} logo url
+	 */
+	getLogoUrl(state) {
+		return state.assets.logoUrl;
+	},
 };
 
 /**
