@@ -7,3 +7,9 @@
 %text-no-select {
   user-select: none;
 }
+
+%flex-center-all {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

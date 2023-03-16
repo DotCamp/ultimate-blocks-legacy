@@ -17245,7 +17245,12 @@ var UpsellManager = /*#__PURE__*/function (_ManagerBase) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+/* harmony import */ var $Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $Inc/components/Upsell/VitalizeText */ "./src/inc/components/Upsell/VitalizeText.js");
+
+
 
 
 /**
@@ -17261,7 +17266,8 @@ function UpsellInspectorNotice(_ref) {
   var blockTitle = _ref.blockTitle,
       logoUrl = _ref.logoUrl;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: 'ub-upsell-inspector-notice'
+    className: 'ub-upsell-inspector-notice',
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('click for more info', 'ultimate-blocks')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: 'ub-upsell-notice-icon-container'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -17269,7 +17275,7 @@ function UpsellInspectorNotice(_ref) {
     src: logoUrl
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: 'ub-upsell-notice'
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, blockTitle), " has ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "PRO"), " enhancements.")));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__["default"], null, blockTitle), " has", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__["default"], null, "PRO"), " enhancements.")));
 } // main store selector mapping
 
 
@@ -17284,7 +17290,7 @@ var selectMapping = function selectMapping(namespacedSelect) {
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_1__["default"])(selectMapping, null)(UpsellInspectorNotice));
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(selectMapping, null)(UpsellInspectorNotice));
 
 /***/ }),
 
@@ -17340,21 +17346,86 @@ function UpsellMain(_ref) {
       _useState2 = _slicedToArray(_useState, 2),
       summaryVisibility = _useState2[0],
       setSummaryVisibility = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(48),
+      _useState4 = _slicedToArray(_useState3, 2),
+      stickyTabbing = _useState4[0],
+      setStickyTabbing = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      noticeWrapperNode = _useState6[0],
+      setNoticeWrapperNode = _useState6[1];
+
+  var noticeParentQuery = '.components-panel';
+  var onWrapRefChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (el) {
+    setNoticeWrapperNode(el);
+  }, []);
+  /**
+   * Calculate tabbed height distance.
+   *
+   * @return {number | null} height.
+   */
+
+  var calculateStickyTab = function calculateStickyTab() {
+    var editInspectorHeader = document.querySelector('.edit-post-sidebar__panel-tabs');
+
+    if (editInspectorHeader) {
+      var _editInspectorHeader$ = editInspectorHeader.getBoundingClientRect(),
+          headerHeight = _editInspectorHeader$.height;
+
+      return headerHeight;
+    }
+
+    return null;
+  };
+  /**
+   * Reorder notice component in DOM to first place in its container element to maintain its visual functionality.
+   */
+
+
+  var reOrderNotice = function reOrderNotice() {
+    if (noticeWrapperNode) {
+      var noticeParent = document.querySelector(noticeParentQuery);
+
+      if (noticeParent) {
+        noticeParent.insertAdjacentElement('afterbegin', noticeWrapperNode);
+      }
+    }
+  };
   /**
    * useEffect hook.
    */
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    reOrderNotice();
+  }, [noticeWrapperNode]);
+  /**
+   * useEffect hook.
+   */
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (activeBlock && blockUpsellData) {
       setSummaryVisibility(true);
+      var headerHeight = calculateStickyTab();
+
+      if (headerHeight !== null) {
+        setStickyTabbing(headerHeight);
+      }
     } else {
       setSummaryVisibility(false);
     }
   }, [activeBlock, blockUpsellData]);
   return summaryVisibility && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_3__.PortalBase, {
-    targetQuery: '.components-panel'
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellInspectorNotice__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    targetQuery: noticeParentQuery
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      top: "".concat(stickyTabbing, "px")
+    },
+    className: 'ub-upsell-inspector-notice-wrapper',
+    ref: onWrapRefChange
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellInspectorNotice__WEBPACK_IMPORTED_MODULE_4__["default"], {
     blockTitle: activeBlockTitle
   })));
 } // selector mapping for core stores
@@ -17387,6 +17458,40 @@ var mainStoreSelectMapping = function mainStoreSelectMapping(namespacedSelect) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(mainStoreSelectMapping, null)(coreWithSelect));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/VitalizeText.js":
+/*!***************************************************!*\
+  !*** ./src/inc/components/Upsell/VitalizeText.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Vitalize text.
+ *
+ * @param {Object}                        props          component properties
+ * @param {Array | JSX.Element | string } props.children component children
+ * @function Object() { [native code] }
+ */
+
+function VitalizeText(_ref) {
+  var children = _ref.children;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: 'ub-upsell-vitalize-text'
+  }, children);
+}
+/**
+ * @module VitalizeText
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (VitalizeText);
 
 /***/ }),
 

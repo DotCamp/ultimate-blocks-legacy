@@ -1,5 +1,7 @@
 import React from 'react';
+import { __ } from '@wordpress/i18n';
 import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
+import VitalizeText from '$Inc/components/Upsell/VitalizeText';
 
 /**
  * Upsell inspector notice for pro features available for current active block.
@@ -11,13 +13,17 @@ import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStor
  */
 function UpsellInspectorNotice({ blockTitle, logoUrl }) {
 	return (
-		<div className={'ub-upsell-inspector-notice'}>
+		<div
+			className={'ub-upsell-inspector-notice'}
+			title={__('click for more info', 'ultimate-blocks')}
+		>
 			<div className={'ub-upsell-notice-icon-container'}>
 				<img alt={'ub logo'} src={logoUrl} />
 			</div>
 			<div className={'ub-upsell-notice'}>
 				<span>
-					<span>{blockTitle}</span> has <span>PRO</span> enhancements.
+					<VitalizeText>{blockTitle}</VitalizeText> has{' '}
+					<VitalizeText>PRO</VitalizeText> enhancements.
 				</span>
 			</div>
 		</div>

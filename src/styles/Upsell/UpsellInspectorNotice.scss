@@ -21,8 +21,7 @@
   }
 
   .ub-upsell-notice {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	@extend %flex-center-all;
+	justify-content: flex-start !important;
   }
 }

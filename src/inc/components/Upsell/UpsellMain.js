@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
 import { PortalBase } from '$Library/ub-common/Components';
@@ -15,6 +15,57 @@ import UpsellInspectorNotice from '$Inc/components/Upsell/UpsellInspectorNotice'
  */
 function UpsellMain({ activeBlock, activeBlockTitle, blockUpsellData }) {
 	const [summaryVisibility, setSummaryVisibility] = useState(false);
+	const [stickyTabbing, setStickyTabbing] = useState(48);
+	const [noticeWrapperNode, setNoticeWrapperNode] = useState(null);
+
+	const noticeParentQuery = '.components-panel';
+
+	const onWrapRefChange = useCallback((el) => {
+		setNoticeWrapperNode(el);
+	}, []);
+
+	/**
+	 * Calculate tabbed height distance.
+	 *
+	 * @return {number | null} height.
+	 */
+	const calculateStickyTab = () => {
+		const editInspectorHeader = document.querySelector(
+			'.edit-post-sidebar__panel-tabs'
+		);
+
+		if (editInspectorHeader) {
+			const { height: headerHeight } =
+				editInspectorHeader.getBoundingClientRect();
+
+			return headerHeight;
+		}
+
+		return null;
+	};
+
+	/**
+	 * Reorder notice component in DOM to first place in its container element to maintain its visual functionality.
+	 */
+	const reOrderNotice = () => {
+		if (noticeWrapperNode) {
+			const noticeParent = document.querySelector(noticeParentQuery);
+
+			if (noticeParent) {
+				noticeParent.insertAdjacentElement(
+					'afterbegin',
+					noticeWrapperNode
+				);
+			}
+		}
+	};
+
+	/**
+	 * useEffect hook.
+	 */
+	useEffect(() => {
+		reOrderNotice();
+	}, [noticeWrapperNode]);
 
 	/**
 	 * useEffect hook.
@@ -22,6 +73,12 @@ function UpsellMain({ activeBlock, activeBlockTitle, blockUpsellData }) {
 	useEffect(() => {
 		if (activeBlock && blockUpsellData) {
 			setSummaryVisibility(true);
+
+			const headerHeight = calculateStickyTab();
+
+			if (headerHeight !== null) {
+				setStickyTabbing(headerHeight);
+			}
 		} else {
 			setSummaryVisibility(false);
 		}
@@ -29,8 +86,14 @@ function UpsellMain({ activeBlock, activeBlockTitle, blockUpsellData }) {
 
 	return (
 		summaryVisibility && (
-			<PortalBase targetQuery={'.components-panel'}>
-				<div>
+			<PortalBase targetQuery={noticeParentQuery}>
+				<div
+					style={{
+						top: `${stickyTabbing}px`,
+					}}
+					className={'ub-upsell-inspector-notice-wrapper'}
+					ref={onWrapRefChange}
+				>
 					<UpsellInspectorNotice blockTitle={activeBlockTitle} />
 				</div>
 			</PortalBase>
