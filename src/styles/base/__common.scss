@@ -1,3 +1,5 @@
+@import './__colors.scss';
+
 // common style rules
 
 %pointer {
@@ -10,6 +12,14 @@
 
 %flex-center-all {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+}
+
+%gutenberg-sidebar-default-borders {
+  border: 1px solid $gutenberg_gray;
+}
+
+%default-border-radius {
+  border-radius: 3px;
 }

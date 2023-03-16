@@ -17235,6 +17235,52 @@ var UpsellManager = /*#__PURE__*/function (_ManagerBase) {
 
 /***/ }),
 
+/***/ "./src/inc/components/Upsell/ActiveBlockIcon.js":
+/*!******************************************************!*\
+  !*** ./src/inc/components/Upsell/ActiveBlockIcon.js ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+
+
+/**
+ * Component for displaying active block's icon component.
+ *
+ * @param {Object} props            component properties
+ * @param {Object} props.iconObject icon object, will be supplied via HOC
+ * @function Object() { [native code] }
+ */
+
+function ActiveBlockIcon(_ref) {
+  var iconObject = _ref.iconObject;
+  var type = iconObject.type,
+      props = iconObject.props;
+  return /*#__PURE__*/React.createElement("div", {
+    className: 'ub-active-block-icon'
+  }, /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(type, props));
+} // selector mapping for main store
+
+
+var mainSelectMapping = function mainSelectMapping(namespacedSelect) {
+  var getActiveBlockIconObject = namespacedSelect.getActiveBlockIconObject;
+  return {
+    iconObject: getActiveBlockIconObject()
+  };
+};
+/**
+ * @module ActiveBlockIcon
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_1__["default"])(mainSelectMapping, null)(ActiveBlockIcon));
+
+/***/ }),
+
 /***/ "./src/inc/components/Upsell/UpsellInspectorNotice.js":
 /*!************************************************************!*\
   !*** ./src/inc/components/Upsell/UpsellInspectorNotice.js ***!
@@ -17249,6 +17295,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
 /* harmony import */ var $Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $Inc/components/Upsell/VitalizeText */ "./src/inc/components/Upsell/VitalizeText.js");
+/* harmony import */ var $BlockStores_mainStore_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! $BlockStores/mainStore/actions */ "./src/stores/mainStore/actions.js");
+
 
 
 
@@ -17256,26 +17304,33 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Upsell inspector notice for pro features available for current active block.
  *
- * @param {Object} props            component properties
- * @param {string} props.blockTitle block title
- * @param {string} props.logoUrl    logo url, will be supplied via HOC
+ * @param {Object}   props            component properties
+ * @param {string}   props.blockTitle block title
+ * @param {string}   props.logoUrl    logo url, will be supplied via HOC
+ * @param {Function} props.showInfo   show info for block extension features
  * @function Object() { [native code] }
  */
 
 function UpsellInspectorNotice(_ref) {
   var blockTitle = _ref.blockTitle,
-      logoUrl = _ref.logoUrl;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: 'ub-upsell-inspector-notice',
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('click for more info', 'ultimate-blocks')
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: 'ub-upsell-notice-icon-container'
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    alt: 'ub logo',
-    src: logoUrl
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: 'ub-upsell-notice'
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__["default"], null, blockTitle), " has", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__["default"], null, "PRO"), " enhancements.")));
+      logoUrl = _ref.logoUrl,
+      showInfo = _ref.showInfo;
+  return (
+    /*#__PURE__*/
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: 'ub-upsell-inspector-notice',
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('click for more info', 'ultimate-blocks'),
+      onClick: showInfo
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: 'ub-upsell-notice-icon-container'
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+      alt: 'ub logo',
+      src: logoUrl
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: 'ub-upsell-notice'
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__["default"], null, blockTitle), " has", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_3__["default"], null, "PRO"), " enhancements.")))
+  );
 } // main store selector mapping
 
 
@@ -17284,13 +17339,22 @@ var selectMapping = function selectMapping(namespacedSelect) {
   return {
     logoUrl: getLogoUrl()
   };
+}; // main store action mapping
+
+
+var actionMapping = function actionMapping(namespacedDispatch) {
+  return {
+    showInfo: function showInfo() {
+      return (0,$BlockStores_mainStore_actions__WEBPACK_IMPORTED_MODULE_4__.showExtensionInfo)(namespacedDispatch)();
+    }
+  };
 };
 /**
  * @module UpsellInspectorNotice
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(selectMapping, null)(UpsellInspectorNotice));
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(selectMapping, actionMapping)(UpsellInspectorNotice));
 
 /***/ }),
 
@@ -17310,6 +17374,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var $Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $Library/ub-common/Components */ "./library/ub-common/Components/index.js");
 /* harmony import */ var $Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var $Inc_components_Upsell_UpsellInspectorNotice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellInspectorNotice */ "./src/inc/components/Upsell/UpsellInspectorNotice.js");
+/* harmony import */ var $Inc_components_Upsell_UpsellModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellModal */ "./src/inc/components/Upsell/UpsellModal.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -17321,6 +17386,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -17417,7 +17483,7 @@ function UpsellMain(_ref) {
       setSummaryVisibility(false);
     }
   }, [activeBlock, blockUpsellData]);
-  return summaryVisibility && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_3__.PortalBase, {
+  return summaryVisibility && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_3__.PortalBase, {
     targetQuery: noticeParentQuery
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
@@ -17427,7 +17493,7 @@ function UpsellMain(_ref) {
     ref: onWrapRefChange
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellInspectorNotice__WEBPACK_IMPORTED_MODULE_4__["default"], {
     blockTitle: activeBlockTitle
-  })));
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellModal__WEBPACK_IMPORTED_MODULE_5__["default"], null));
 } // selector mapping for core stores
 
 
@@ -17458,6 +17524,249 @@ var mainStoreSelectMapping = function mainStoreSelectMapping(namespacedSelect) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(mainStoreSelectMapping, null)(coreWithSelect));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/UpsellModal.js":
+/*!**************************************************!*\
+  !*** ./src/inc/components/Upsell/UpsellModal.js ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+/* harmony import */ var $BlockStores_mainStore_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $BlockStores/mainStore/actions */ "./src/stores/mainStore/actions.js");
+/* harmony import */ var $Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! $Inc/components/Upsell/VitalizeText */ "./src/inc/components/Upsell/VitalizeText.js");
+/* harmony import */ var $Inc_components_Upsell_ActiveBlockIcon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! $Inc/components/Upsell/ActiveBlockIcon */ "./src/inc/components/Upsell/ActiveBlockIcon.js");
+/* harmony import */ var $Inc_components_Upsell_UpsellModalContent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellModalContent */ "./src/inc/components/Upsell/UpsellModalContent.js");
+/* harmony import */ var $Inc_components_Upsell_UpsellModalButton__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellModalButton */ "./src/inc/components/Upsell/UpsellModalButton.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+/**
+ * Upsell modal component.
+ *
+ * @param {Object}   props                 component properties
+ * @param {boolean}  props.modalVisibility modal visibility status, will be supplied via HOC
+ * @param {Function} props.closeModal      close modal window, will be supplied via HOC
+ * @param {Object}   props.upsellData      upsell data to show
+ * @function Object() { [native code] }
+ */
+
+function UpsellModal(_ref) {
+  var modalVisibility = _ref.modalVisibility,
+      closeModal = _ref.closeModal,
+      upsellData = _ref.upsellData;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      dataIndex = _useState2[0],
+      setDataIndex = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      allData = _useState4[0],
+      setAllData = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      currentData = _useState6[0],
+      setCurrentData = _useState6[1];
+  /**
+   * useEffect hook.
+   */
+
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (upsellData && _typeof(upsellData) === 'object') {
+      var upsellDataValues = Object.values(upsellData);
+      setAllData(upsellDataValues);
+      setCurrentData(upsellDataValues[0]);
+    }
+
+    setDataIndex(0);
+  }, [upsellData]);
+  /**
+   * useEffect hook.
+   */
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setCurrentData(allData[dataIndex]);
+  }, [dataIndex, allData]);
+  return modalVisibility && currentData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: 'ub-upsells-modal-wrapper'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: 'ub-upsells-modal-main-window'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: 'ub-upsells-modal-header'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_ActiveBlockIcon__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_VitalizeText__WEBPACK_IMPORTED_MODULE_4__["default"], null, currentData.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellModalContent__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    ssUrl: currentData.imageUrl,
+    description: currentData.description
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: 'ub-upsells-modal-footer'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellModalButton__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    clickHandler: closeModal
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Close', 'ultimate-blocks')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellModalButton__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    clickHandler: function clickHandler() {},
+    type: $Inc_components_Upsell_UpsellModalButton__WEBPACK_IMPORTED_MODULE_7__.modalButtonTypes.PRIO
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Buy PRO', 'ultimate-blocks')))));
+} // main store selector mapping
+
+
+var mainStoreSelectMapping = function mainStoreSelectMapping(namespacedSelect) {
+  var upsellModalVisibilityStatus = namespacedSelect.upsellModalVisibilityStatus,
+      getUpsellTargetExtensionInfoShow = namespacedSelect.getUpsellTargetExtensionInfoShow,
+      getUpsellDataActiveBlock = namespacedSelect.getUpsellDataActiveBlock;
+  return {
+    modalVisibility: upsellModalVisibilityStatus(),
+    upsellData: getUpsellDataActiveBlock(getUpsellTargetExtensionInfoShow())
+  };
+}; // main store action mapping
+
+
+var mainStoreActionMapping = function mainStoreActionMapping(namespacedDispatch) {
+  return {
+    closeModal: (0,$BlockStores_mainStore_actions__WEBPACK_IMPORTED_MODULE_3__.hideUpsellModal)(namespacedDispatch)
+  };
+};
+/**
+ * @module UpsellModal
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(mainStoreSelectMapping, mainStoreActionMapping)(UpsellModal));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/UpsellModalButton.js":
+/*!********************************************************!*\
+  !*** ./src/inc/components/Upsell/UpsellModalButton.js ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "modalButtonTypes": function() { return /* binding */ modalButtonTypes; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Modal button types.
+ *
+ * @type {{PRIO: string, BASIC: string}}
+ */
+
+var modalButtonTypes = {
+  BASIC: 'basic',
+  PRIO: 'prio'
+};
+/**
+ * Button component for upsell modal.
+ *
+ * @param {Object}                       props              component properties
+ * @param {Array | JSX.Element | string} props.children     component children
+ * @param {Function}                     props.clickHandler button click handler
+ * @param {string}                       [props.type=basic] button type
+ * @function Object() { [native code] }
+ */
+
+function UpsellModalButton(_ref) {
+  var children = _ref.children,
+      clickHandler = _ref.clickHandler,
+      _ref$type = _ref.type,
+      type = _ref$type === void 0 ? modalButtonTypes.BASIC : _ref$type;
+  return (
+    /*#__PURE__*/
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      "data-ub-upsell-button-type": type,
+      className: 'ub-upsell-modal-button',
+      onClick: function onClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        clickHandler(e);
+      }
+    }, children)
+  );
+}
+/**
+ * @module UpsellModalButton
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UpsellModalButton);
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/UpsellModalContent.js":
+/*!*********************************************************!*\
+  !*** ./src/inc/components/Upsell/UpsellModalContent.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * Upsell modal content component.
+ *
+ * @param {Object} props             component properties
+ * @param {string} props.ssUrl       screenshot url
+ * @param {string} props.description content description
+ * @function Object() { [native code] }
+ */
+
+function UpsellModalContent(_ref) {
+  var ssUrl = _ref.ssUrl,
+      description = _ref.description;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: 'ub-upsells-modal-content'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: 'ub-upsells-modal-content-image'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    alt: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('feature sample screenshot'),
+    src: ssUrl
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: 'ub-upsells-modal-content-description'
+  }, description));
+}
+/**
+ * @module UpsellModalContent
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UpsellModalContent);
 
 /***/ }),
 
@@ -17503,9 +17812,17 @@ function VitalizeText(_ref) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hideUpsellModal": function() { return /* binding */ hideUpsellModal; },
+/* harmony export */   "showUpsellModal": function() { return /* binding */ showUpsellModal; },
+/* harmony export */   "showExtensionInfo": function() { return /* binding */ showExtensionInfo; }
+/* harmony export */ });
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./src/stores/mainStore/types.js");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /**
@@ -17574,13 +17891,105 @@ var actions = function actions(storeName) {
       return {
         type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].UN_AFFECTIVE
       };
+    },
+
+    /**
+     * Set visibility status of upsell modal window.
+     *
+     * @param {boolean} visibilityStatus visibility status
+     */
+    setUpsellModalVisibility: function setUpsellModalVisibility(visibilityStatus) {
+      return {
+        type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].UPSELL_MODAL_VISIBILITY,
+        payload: visibilityStatus
+      };
+    },
+
+    /**
+     * Set extension id for info summary.
+     *
+     * @param {string|null} extensionId extension feature id
+     */
+    setTargetExtensionForInfoShow: function setTargetExtensionForInfoShow() {
+      var extensionId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      return {
+        type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].UPSELL_EXTENSION_INFO_SHOW,
+        payload: extensionId
+      };
+    },
+
+    /**
+     * Set target block for info summary.
+     *
+     * @param {string|null} blockId block id
+     */
+    setTargetBlockForInfoShow: function setTargetBlockForInfoShow() {
+      var blockId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      return {
+        type: _types__WEBPACK_IMPORTED_MODULE_0__["default"].TARGET_BLOCK_INFO_SHOW,
+        payload: blockId
+      };
     }
+  };
+};
+/**
+ * Hide upsell modal window.
+ *
+ * @param {Function} namespacedDispatch store namespaced dispatch
+ */
+
+
+var hideUpsellModal = function hideUpsellModal(namespacedDispatch) {
+  return function () {
+    var setUpsellModalVisibility = namespacedDispatch.setUpsellModalVisibility;
+    var setTargetExtensionForInfoShow = namespacedDispatch.setTargetExtensionForInfoShow,
+        setTargetBlockForInfoShow = namespacedDispatch.setTargetBlockForInfoShow;
+    setUpsellModalVisibility(false); // reset extension feature/target block
+
+    setTargetExtensionForInfoShow(null);
+    setTargetBlockForInfoShow(null);
+  };
+};
+/**
+ * Show upsell modal window.
+ *
+ * @param {Function} namespacedDispatch store namespaced dispatch
+ */
+
+var showUpsellModal = function showUpsellModal(namespacedDispatch) {
+  return function () {
+    var setUpsellModalVisibility = namespacedDispatch.setUpsellModalVisibility;
+    setUpsellModalVisibility(true);
+  };
+};
+/**
+ * Show target extension info in a modal window.
+ *
+ * @param {Function} namespacedDispatch store namespaced dispatch
+ * @return {(function())|*} action function
+ */
+
+var showExtensionInfo = function showExtensionInfo(namespacedDispatch) {
+  return function () {
+    var extensionFeatureId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var targetBlockType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var setTargetExtensionForInfoShow = namespacedDispatch.setTargetExtensionForInfoShow,
+        setTargetBlockForInfoShow = namespacedDispatch.setTargetBlockForInfoShow; // if no target block is supplied, current active block will be used
+
+    if (!targetBlockType) {
+      var _select$getSelectedBl;
+
+      targetBlockType = (_select$getSelectedBl = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.select)('core/block-editor').getSelectedBlock()) === null || _select$getSelectedBl === void 0 ? void 0 : _select$getSelectedBl.name;
+    }
+
+    setTargetExtensionForInfoShow(extensionFeatureId);
+    setTargetBlockForInfoShow(targetBlockType);
+    showUpsellModal(namespacedDispatch)();
   };
 };
 /**
  * @module actions
  */
-
 
 /* harmony default export */ __webpack_exports__["default"] = (actions);
 
@@ -17744,8 +18153,10 @@ var MainStore = /*#__PURE__*/function (_ManagerBase) {
           assets = _ubPriorityData.assets;
 
       _classPrivateFieldGet(this, _registerStore).call(this, {
+        upsells: {
+          extensionData: upsellExtensionData
+        },
         blockAttributes: blockAttributes,
-        upsellExtensionData: upsellExtensionData,
         proStatus: JSON.parse(proStatus),
         assets: assets
       }); // attach this instance to global context for outside usage
@@ -17806,6 +18217,14 @@ var MainStore = /*#__PURE__*/function (_ManagerBase) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./src/stores/mainStore/state.js");
+/* harmony import */ var $BlockStores_mainStore_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $BlockStores/mainStore/types */ "./src/stores/mainStore/types.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 /**
  * Store reducer.
@@ -17818,8 +18237,45 @@ var reducer = function reducer(extraState) {
   var DEFAULT_STATE = (0,_state__WEBPACK_IMPORTED_MODULE_0__["default"])(extraState);
   return function () {
     var storeState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-    var action = arguments.length > 1 ? arguments[1] : undefined;
-    return storeState;
+
+    var _ref = arguments.length > 1 ? arguments[1] : undefined,
+        type = _ref.type,
+        payload = _ref.payload;
+
+    switch (type) {
+      case $BlockStores_mainStore_types__WEBPACK_IMPORTED_MODULE_1__["default"].UPSELL_MODAL_VISIBILITY:
+        return _objectSpread(_objectSpread({}, storeState), {}, {
+          app: _objectSpread(_objectSpread({}, storeState.app), {}, {
+            upsell: _objectSpread(_objectSpread({}, storeState.app.upsell), {}, {
+              upsellModalVisibility: payload
+            })
+          })
+        });
+
+      case $BlockStores_mainStore_types__WEBPACK_IMPORTED_MODULE_1__["default"].UPSELL_EXTENSION_INFO_SHOW:
+        return _objectSpread(_objectSpread({}, storeState), {}, {
+          app: _objectSpread(_objectSpread({}, storeState.app), {}, {
+            upsell: _objectSpread(_objectSpread({}, storeState.app.upsell), {}, {
+              targetExtensionInfoShow: payload
+            })
+          })
+        });
+
+      case $BlockStores_mainStore_types__WEBPACK_IMPORTED_MODULE_1__["default"].TARGET_BLOCK_INFO_SHOW:
+        return _objectSpread(_objectSpread({}, storeState), {}, {
+          app: _objectSpread(_objectSpread({}, storeState.app), {}, {
+            upsell: _objectSpread(_objectSpread({}, storeState.app.upsell), {}, {
+              targetBlockInfoShow: payload
+            })
+          })
+        });
+
+      case $BlockStores_mainStore_types__WEBPACK_IMPORTED_MODULE_1__["default"].UN_AFFECTIVE:
+        return storeState;
+
+      default:
+        return storeState;
+    }
   };
 };
 /**
@@ -17854,7 +18310,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var getBlockUpsellData = function getBlockUpsellData(state, blockType) {
   var featureId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  var blockUpsellData = state.upsellExtensionData[blockType];
+  var blockUpsellData = state.upsells.extensionData[blockType];
   return featureId ? blockUpsellData[featureId] : blockUpsellData;
 };
 /**
@@ -17940,6 +18396,44 @@ var selectors = {
    */
   getLogoUrl: function getLogoUrl(state) {
     return state.assets.logoUrl;
+  },
+
+  /**
+   * Get upsell modal visibility status.
+   *
+   * @param {Object} state store state
+   * @return {string} visibility
+   */
+  upsellModalVisibilityStatus: function upsellModalVisibilityStatus(state) {
+    return state.app.upsell.upsellModalVisibility;
+  },
+
+  /**
+   * Get target extension id to show its info.
+   *
+   * @param {Object} state store state
+   * @return {string|null} target extension info show id
+   */
+  getUpsellTargetExtensionInfoShow: function getUpsellTargetExtensionInfoShow(state) {
+    return state.app.upsell.targetExtensionInfoShow;
+  },
+
+  /**
+   * Get block icon object of active block
+   *
+   * @return {Object} icon object
+   */
+  getActiveBlockIconObject: function getActiveBlockIconObject() {
+    var _getSelectedBlock, _blockOptions$icon;
+
+    var _select = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)('core/blocks'),
+        getBlockType = _select.getBlockType;
+
+    var _select2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)('core/block-editor'),
+        getSelectedBlock = _select2.getSelectedBlock;
+
+    var blockOptions = getBlockType((_getSelectedBlock = getSelectedBlock()) === null || _getSelectedBlock === void 0 ? void 0 : _getSelectedBlock.name);
+    return blockOptions === null || blockOptions === void 0 ? void 0 : (_blockOptions$icon = blockOptions.icon) === null || _blockOptions$icon === void 0 ? void 0 : _blockOptions$icon.src;
   }
 };
 /**
@@ -17968,7 +18462,14 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 var defaultState = {
-  storeName: null
+  storeName: null,
+  app: {
+    upsell: {
+      upsellModalVisibility: false,
+      targetExtensionInfoShow: null,
+      targetBlockInfoShow: null
+    }
+  }
 };
 /**
  * Create state.
@@ -17998,7 +18499,10 @@ var createStore = function createStore() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var ACTION_TYPES = {
-  UN_AFFECTIVE: 'unAffective'
+  UN_AFFECTIVE: 'unAffective',
+  UPSELL_MODAL_VISIBILITY: 'upsellModalVisibility',
+  UPSELL_EXTENSION_INFO_SHOW: 'upsellExtensionInfoShow',
+  TARGET_BLOCK_INFO_SHOW: 'upsellTargetBlockInfoShow'
 };
 /**
  * @module types

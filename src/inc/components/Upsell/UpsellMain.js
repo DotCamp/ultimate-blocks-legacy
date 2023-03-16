@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { withSelect } from '@wordpress/data';
 import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
 import { PortalBase } from '$Library/ub-common/Components';
 import UpsellInspectorNotice from '$Inc/components/Upsell/UpsellInspectorNotice';
+import UpsellModal from '$Inc/components/Upsell/UpsellModal';
 
 /**
  * Main container for upsell manager component.
@@ -86,17 +87,20 @@ function UpsellMain({ activeBlock, activeBlockTitle, blockUpsellData }) {
 
 	return (
 		summaryVisibility && (
-			<PortalBase targetQuery={noticeParentQuery}>
-				<div
-					style={{
-						top: `${stickyTabbing}px`,
-					}}
-					className={'ub-upsell-inspector-notice-wrapper'}
-					ref={onWrapRefChange}
-				>
-					<UpsellInspectorNotice blockTitle={activeBlockTitle} />
-				</div>
-			</PortalBase>
+			<Fragment>
+				<PortalBase targetQuery={noticeParentQuery}>
+					<div
+						style={{
+							top: `${stickyTabbing}px`,
+						}}
+						className={'ub-upsell-inspector-notice-wrapper'}
+						ref={onWrapRefChange}
+					>
+						<UpsellInspectorNotice blockTitle={activeBlockTitle} />
+					</div>
+				</PortalBase>
+				<UpsellModal />
+			</Fragment>
 		)
 	);
 }

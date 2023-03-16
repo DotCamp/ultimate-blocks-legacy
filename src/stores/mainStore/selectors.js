@@ -10,7 +10,7 @@ import { select } from '@wordpress/data';
  * @return {Object | Array} block upsell data
  */
 const getBlockUpsellData = (state, blockType, featureId = null) => {
-	const blockUpsellData = state.upsellExtensionData[blockType];
+	const blockUpsellData = state.upsells.extensionData[blockType];
 	return featureId ? blockUpsellData[featureId] : blockUpsellData;
 };
 
@@ -29,7 +29,6 @@ const selectors = {
 	getStoreName(state) {
 		return state.storeName;
 	},
-
 	/**
 	 * Get default attributes for target block type.
 	 *
@@ -89,6 +88,37 @@ const selectors = {
 	 */
 	getLogoUrl(state) {
 		return state.assets.logoUrl;
+	},
+	/**
+	 * Get upsell modal visibility status.
+	 *
+	 * @param {Object} state store state
+	 * @return {string} visibility
+	 */
+	upsellModalVisibilityStatus(state) {
+		return state.app.upsell.upsellModalVisibility;
+	},
+	/**
+	 * Get target extension id to show its info.
+	 *
+	 * @param {Object} state store state
+	 * @return {string|null} target extension info show id
+	 */
+	getUpsellTargetExtensionInfoShow(state) {
+		return state.app.upsell.targetExtensionInfoShow;
+	},
+	/**
+	 * Get block icon object of active block
+	 *
+	 * @return {Object} icon object
+	 */
+	getActiveBlockIconObject() {
+		const { getBlockType } = select('core/blocks');
+		const { getSelectedBlock } = select('core/block-editor');
+
+		const blockOptions = getBlockType(getSelectedBlock()?.name);
+
+		return blockOptions?.icon?.src;
 	},
 };
 

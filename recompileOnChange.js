@@ -168,7 +168,7 @@ function checkFile(path) {
 }
 
 chokidar
-	.watch(["./src/*.scss", "./src/blocks/**/*.scss"], {
+	.watch(["./src/*.scss", "./src/blocks/**/*.scss", "./src/styles/**/*.scss"], {
 		ignoreInitial: true
 	})
 	.on("change", path => checkFile(path))

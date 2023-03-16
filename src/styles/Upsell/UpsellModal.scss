@@ -1,0 +1,77 @@
+@import '../base/__common.scss';
+@import '../base/__colors.scss';
+@import './UpsellTheme.scss';
+
+.ub-upsells-modal-wrapper {
+  @extend %flex-center-all;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+
+  .ub-upsells-modal-main-window {
+	@extend %gutenberg-sidebar-default-borders;
+	@extend %default-border-radius;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: minmax(min-content, max-content) auto minmax(min-content, max-content);
+	grid-gap: 10px;
+	background-color: $white;
+	width: 440px;
+	max-width: 440px;
+	overflow: hidden;
+	font-size: 14px;
+
+	.ub-upsells-modal-header {
+	  @extend %flex-center-all;
+	  @extend %text-no-select;
+	  background-color: $soft_red;
+	  padding: 9px;
+	  font-size: 15px;
+	  color: $text_red;
+
+	  & > div {
+		padding: 0 5px;
+	  }
+	}
+
+	.ub-upsells-modal-content {
+	  display: grid;
+	  grid-template-columns: auto 1fr;
+	  grid-template-rows: 1fr;
+	  grid-gap: 20px;
+	  padding: 15px 35px;
+	  justify-content: center;
+	  align-items: center;
+
+	  .ub-upsells-modal-content-image {
+		@extend %default-border-radius;
+		@extend %gutenberg-sidebar-default-borders;
+		@extend %flex-center-all;
+		width: 150px;
+		height: 150px;
+		background-color: #F1F0F0;
+		padding: 5px;
+
+		img {
+		  width: 100%;
+		  height: 100%;
+		  object-fit: contain;
+		}
+	  }
+
+	  .ub-upsells-modal-content-description {
+	  }
+	}
+
+	.ub-upsells-modal-footer {
+	  padding: 0 10px 10px 10px;
+	  @extend %flex-center-all;
+	  justify-content: space-evenly !important;
+	  flex-direction: row;
+	}
+  }
+}

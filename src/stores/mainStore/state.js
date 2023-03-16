@@ -7,6 +7,13 @@ import deepmerge from 'deepmerge';
  */
 const defaultState = {
 	storeName: null,
+	app: {
+		upsell: {
+			upsellModalVisibility: false,
+			targetExtensionInfoShow: null,
+			targetBlockInfoShow: null,
+		},
+	},
 };
 
 /**

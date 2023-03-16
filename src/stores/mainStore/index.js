@@ -57,8 +57,10 @@ class MainStore extends ManagerBase {
 			ubPriorityData;
 
 		this.#registerStore({
+			upsells: {
+				extensionData: upsellExtensionData,
+			},
 			blockAttributes,
-			upsellExtensionData,
 			proStatus: JSON.parse(proStatus),
 			assets,
 		});

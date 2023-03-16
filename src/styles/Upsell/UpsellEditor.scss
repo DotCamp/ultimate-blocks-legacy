@@ -1,6 +1,9 @@
 // all editor related upsell styles
 
 @import "./UpsellInspectorNotice.scss";
+@import "./UpsellModal.scss";
+@import "../base/__common.scss";
+@import "../base/__colors.scss";
 
 .ub-upsell-vitalize-text {
   font-weight: bold !important;
@@ -14,3 +17,23 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
+
+.ub-active-block-icon {
+  @extend %flex-center-all;
+}
+
+.ub-upsell-modal-button {
+  @extend %gutenberg-sidebar-default-borders;
+  @extend %flex-center-all;
+  @extend %default-border-radius;
+  @extend %pointer;
+  padding: 5px 10px;
+  margin: 5px 10px;
+  background-color: $white;
+
+  &[data-ub-upsell-button-type=prio] {
+	background-color: #3B82F6 !important;
+	color: $white !important;
+  }
+}
+
