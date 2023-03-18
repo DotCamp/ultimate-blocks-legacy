@@ -11,7 +11,9 @@ import { select } from '@wordpress/data';
  */
 const getBlockUpsellData = (state, blockType, featureId = null) => {
 	const blockUpsellData = state.upsells.extensionData[blockType];
-	return featureId ? blockUpsellData[featureId] : blockUpsellData;
+	return featureId
+		? { featureId: blockUpsellData[featureId] }
+		: blockUpsellData;
 };
 
 /**

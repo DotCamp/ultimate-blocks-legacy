@@ -1,0 +1,46 @@
+@import '../base/__common.scss';
+@import '../base/__colors.scss';
+@import './UpsellTheme.scss';
+
+.ub-upsell-control-wrapper {
+  @extend %gutenberg-sidebar-default-borders;
+  @extend %pointer;
+  border-left: none !important;
+  border-right: none !important;
+  position: relative;
+  margin: 0 -16px;
+  padding: 16px;
+
+  .components-base-control {
+	margin-bottom: 0 !important;
+  }
+
+  .ub-upsell-control-wrapper-overlay {
+	@extend %absolute-overlay;
+	background-color: rgba(255, 255, 255, 0.7);
+	z-index: 10;
+  }
+
+  .ub-upsell-control-wrapper-lock {
+	@extend %absolute-overlay;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	z-index: 11;
+	color: $plugin-red;
+
+	.ub-upsell-control-wrapper-lock-container {
+	  @extend %flex-center-all;
+	  @extend %gutenberg-sidebar-default-borders;
+	  @extend %shadow-md;
+	  @include size(30);
+	  padding: 5px;
+	  background-color: $soft_red;
+	  border-radius: 5px 0 0 5px;
+
+	  svg {
+		@extend %size-full;
+	  }
+	}
+  }
+}

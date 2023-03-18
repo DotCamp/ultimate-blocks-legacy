@@ -47,3 +47,10 @@
 %basic-click {
   animation: basic-click 0.2s ease-out;
 }
+
+%absolute-overlay {
+  @extend %size-full;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

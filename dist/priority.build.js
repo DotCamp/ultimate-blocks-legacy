@@ -18913,7 +18913,9 @@ __webpack_require__.r(__webpack_exports__);
 var getBlockUpsellData = function getBlockUpsellData(state, blockType) {
   var featureId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   var blockUpsellData = state.upsells.extensionData[blockType];
-  return featureId ? blockUpsellData[featureId] : blockUpsellData;
+  return featureId ? {
+    featureId: blockUpsellData[featureId]
+  } : blockUpsellData;
 };
 /**
  * Store selectors.
