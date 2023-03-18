@@ -95,10 +95,7 @@ const AdvancedHeadingEdit = ({
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody
-					title={__("General", "ultimate-blocks")}
-					intialOpen={true}
-				>
+				<PanelBody title={__("General", "ultimate-blocks")} intialOpen={true}>
 					{/* Heading Level */}
 					<p>{__("Heading Level", "ultimate-blocks")}</p>
 					<ButtonGroup aria-label={__("Heading Level", "ultimate-blocks")}>
@@ -125,7 +122,10 @@ const AdvancedHeadingEdit = ({
 						isCollapsed={false}
 					/>
 				</PanelBody>
-				<PanelBody title={__("Typography", "ultimate-blocks")} initialOpen={false}>
+				<PanelBody
+					title={__("Typography", "ultimate-blocks")}
+					initialOpen={false}
+				>
 					{/* Font Size */}
 					<RangeControl
 						label={__("Font Size", "ultimate-blocks")}
@@ -222,6 +222,10 @@ const AdvancedHeadingEdit = ({
 					)}
 				</DropdownMenu>
 			</BlockControls>
+			<link
+				rel="stylesheet"
+				href={`https://fonts.googleapis.com/css?family=${fontFamily}`}
+			/>
 			<RichText
 				ref={elementRef}
 				tagName={level || "h2"}
