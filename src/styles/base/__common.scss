@@ -27,3 +27,23 @@
 %shadow-md {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
+
+%size-full {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin size($val) {
+  width: #{$val}px;
+  height: #{$val}px;
+}
+
+@keyframes basic-click {
+  100% {
+	transform: scale(0.8);
+  }
+}
+
+%basic-click {
+  animation: basic-click 0.2s ease-out;
+}

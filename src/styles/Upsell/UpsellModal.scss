@@ -12,6 +12,30 @@
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(5px);
 
+  .ub-upsells-modal-navigation {
+	@extend %flex-center-all;
+	@extend %pointer;
+	@include size(50);
+	margin: 30px;
+	color: $white;
+
+	&[data-ub-nav-disabled=true] {
+	  pointer-events: none;
+
+	  svg {
+		display: none
+	  }
+	}
+
+	&:active {
+	  @extend %basic-click;
+	}
+
+	svg {
+	  @extend %size-full;
+	}
+  }
+
   .ub-upsells-modal-main-window {
 	@extend %gutenberg-sidebar-default-borders;
 	@extend %default-border-radius;

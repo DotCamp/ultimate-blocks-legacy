@@ -8,20 +8,64 @@ import UpsellModalContent from '$Inc/components/Upsell/UpsellModalContent';
 import UpsellModalButton, {
 	modalButtonTypes,
 } from '$Inc/components/Upsell/UpsellModalButton';
+import ModalNavigation, {
+	navigationType,
+} from '$Inc/components/Upsell/ModalNavigation';
 
 /**
  * Upsell modal component.
  *
- * @param {Object}   props                 component properties
- * @param {boolean}  props.modalVisibility modal visibility status, will be supplied via HOC
- * @param {Function} props.closeModal      close modal window, will be supplied via HOC
- * @param {Object}   props.upsellData      upsell data to show
+ * @param {Object}   props                  component properties
+ * @param {boolean}  props.modalVisibility  modal visibility status, will be supplied via HOC
+ * @param {Function} props.closeModal       close modal window, will be supplied via HOC
+ * @param {Object}   props.upsellData       upsell data to show, will be supplied via HOC
+ * @param {string}   props.defaultFeatureSs default feature screenshot for empty replacements, will be supplied via HOC
  * @function Object() { [native code] }
  */
-function UpsellModal({ modalVisibility, closeModal, upsellData }) {
+function UpsellModal({
+	modalVisibility,
+	closeModal,
+	upsellData,
+	defaultFeatureSs,
+}) {
 	const [dataIndex, setDataIndex] = useState(0);
 	const [allData, setAllData] = useState([]);
 	const [currentData, setCurrentData] = useState(null);
+
+	/**
+	 * Pre-check for increment/decrement operations.
+	 *
+	 * @param {number} amount amount
+	 * @return {boolean} pre operation status
+	 */
+	const preIncDecCheck = (amount) => {
+		const finalIndex = dataIndex + amount;
+
+		return finalIndex >= 0 && finalIndex !== allData.length;
+	};
+
+	/**
+	 * Increment/decrement index.
+	 *
+	 * @param {number} amount amount
+	 */
+	const incDecIndex = (amount) => {
+		const finalIndex = dataIndex + amount;
+
+		if (preIncDecCheck(amount)) {
+			setDataIndex(finalIndex);
+		}
+	};
+
+	/**
+	 * Navigation button status.
+	 *
+	 * @param {number} amount assigned increment/decrement amount
+	 * @return {boolean} status
+	 */
+	const navStatus = (amount) => {
+		return allData.length > 1 && preIncDecCheck(amount);
+	};
 
 	/**
 	 * useEffect hook.
@@ -41,6 +85,14 @@ function UpsellModal({ modalVisibility, closeModal, upsellData }) {
 	 * useEffect hook.
 	 */
 	useEffect(() => {
+		// reset data index on visibility changes
+		setDataIndex(0);
+	}, [modalVisibility]);
+
+	/**
+	 * useEffect hook.
+	 */
+	useEffect(() => {
 		setCurrentData(allData[dataIndex]);
 	}, [dataIndex, allData]);
 
@@ -48,13 +100,18 @@ function UpsellModal({ modalVisibility, closeModal, upsellData }) {
 		modalVisibility &&
 		currentData && (
 			<div className={'ub-upsells-modal-wrapper'}>
+				<ModalNavigation
+					clickHandler={() => incDecIndex(-1)}
+					type={navigationType.LEFT}
+					disable={!navStatus(-1)}
+				/>
 				<div className={'ub-upsells-modal-main-window'}>
 					<div className={'ub-upsells-modal-header'}>
 						<ActiveBlockIcon />
 						<VitalizeText>{currentData.name}</VitalizeText>
 					</div>
 					<UpsellModalContent
-						ssUrl={currentData.imageUrl}
+						ssUrl={currentData.imageUrl || defaultFeatureSs}
 						description={currentData.description}
 					/>
 					<div className={'ub-upsells-modal-footer'}>
@@ -70,6 +127,11 @@ function UpsellModal({ modalVisibility, closeModal, upsellData }) {
 						</UpsellModalButton>
 					</div>
 				</div>
+				<ModalNavigation
+					clickHandler={() => incDecIndex(1)}
+					type={navigationType.RIGHT}
+					disable={!navStatus(1)}
+				/>
 			</div>
 		)
 	);
@@ -81,6 +143,7 @@ const mainStoreSelectMapping = (namespacedSelect) => {
 		upsellModalVisibilityStatus,
 		getUpsellTargetExtensionInfoShow,
 		getUpsellDataActiveBlock,
+		getLogoUrl,
 	} = namespacedSelect;
 
 	return {
@@ -88,6 +151,7 @@ const mainStoreSelectMapping = (namespacedSelect) => {
 		upsellData: getUpsellDataActiveBlock(
 			getUpsellTargetExtensionInfoShow()
 		),
+		defaultFeatureSs: getLogoUrl(),
 	};
 };
 
