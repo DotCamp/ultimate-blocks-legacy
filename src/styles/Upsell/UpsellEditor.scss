@@ -10,11 +10,11 @@
 }
 
 .ub-upsell-inspector-notice-wrapper {
+  @extend %shadow-md;
   position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 
@@ -27,12 +27,13 @@
   @extend %flex-center-all;
   @extend %default-border-radius;
   @extend %pointer;
+  @extend %shadow-md;
   padding: 5px 10px;
   margin: 5px 10px;
   background-color: $white;
 
   &[data-ub-upsell-button-type=prio] {
-	background-color: #3B82F6 !important;
+	background-color: $blue-500 !important;
 	color: $white !important;
   }
 }
