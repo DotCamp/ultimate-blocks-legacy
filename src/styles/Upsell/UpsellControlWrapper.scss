@@ -3,7 +3,7 @@
 @import './UpsellTheme.scss';
 
 .ub-upsell-control-wrapper {
-  @extend %gutenberg-sidebar-default-borders;
+  //@extend %gutenberg-sidebar-default-borders;
   @extend %pointer;
   border-left: none !important;
   border-right: none !important;
@@ -17,7 +17,7 @@
 
   .ub-upsell-control-wrapper-overlay {
 	@extend %absolute-overlay;
-	background-color: rgba(255, 255, 255, 0.7);
+	background-color: rgba(255, 255, 255, 0.6);
 	z-index: 10;
   }
 

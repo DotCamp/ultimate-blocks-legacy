@@ -71,8 +71,28 @@ export default class Inspector extends Component {
 			<InspectorControls>
 				<PanelBody title={__('General', 'ultimate-blocks')}>
 					<UpsellToggleControl
+						label={__(
+							'Tab title secondary text',
+							'ultimate-blocks'
+						)}
+						featureId={'titleSecondaryText'}
+					/>
+					<UpsellToggleControl
 						label={__('Tab title icons', 'ultimate-blocks')}
 						featureId={'titleIcon'}
+					/>
+				</PanelBody>
+				<PanelBody title={__('Call to Action', 'ultimate-blocks')}>
+					<UpsellToggleControl
+						label={__(
+							'Convert current tab into call to action',
+							'ultimate-blocks'
+						)}
+						help={__(
+							'Call to action tab will direct your users to assigned url instead of showing a tab content.',
+							'ultimate-blocks'
+						)}
+						featureId={'callToAction'}
 					/>
 				</PanelBody>
 				<PanelBody title={__('Tab Style')} initialOpen={true}>
