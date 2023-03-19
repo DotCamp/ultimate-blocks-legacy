@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 2.5.6
+Stable tag: 2.5.7
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,15 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.5.7 - March 19th, 2023 =
+
+* Advanced Heading - Fix Google Fonts embed.
+* Content Toggle - Set number of initial panels to 2.
+* Post Grid - Add way to exclude categories.
+* Tabbed Content - Save last-selected tab in browser history.
+* Other - Added block previews.
+* Other - Improved block options.
 
 = 2.5.6 - February 2nd, 2023 =
 
