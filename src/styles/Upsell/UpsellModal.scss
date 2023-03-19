@@ -2,6 +2,12 @@
 @import '../base/__colors.scss';
 @import './UpsellTheme.scss';
 
+@keyframes blur-anim {
+  100% {
+	backdrop-filter: blur(5px);
+  }
+}
+
 .ub-upsells-modal-wrapper {
   @extend %flex-center-all;
   position: fixed;
@@ -10,9 +16,10 @@
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
+  animation: blur-anim 0.2s ease-out forwards;
 
   .ub-upsells-modal-navigation {
+	@extend %appear-anim;
 	@extend %flex-center-all;
 	@extend %pointer;
 	@include size(50);
@@ -37,6 +44,7 @@
   }
 
   .ub-upsells-modal-main-window {
+	@extend %appear-anim;
 	@extend %gutenberg-sidebar-default-borders;
 	@extend %default-border-radius;
 	display: grid;

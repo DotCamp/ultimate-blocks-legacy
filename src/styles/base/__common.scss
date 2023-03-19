@@ -54,3 +54,16 @@
   top: 0;
   left: 0;
 }
+
+@keyframes appear {
+  0% {
+	opacity: 0;
+  }
+  100% {
+	opacity: 1;
+  }
+}
+
+%appear-anim {
+  animation: appear 0.2s ease-out forwards;
+}
