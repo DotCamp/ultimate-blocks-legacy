@@ -20,6 +20,7 @@ import ModalNavigation, {
  * @param {Function} props.closeModal       close modal window, will be supplied via HOC
  * @param {Object}   props.upsellData       upsell data to show, will be supplied via HOC
  * @param {string}   props.defaultFeatureSs default feature screenshot for empty replacements, will be supplied via HOC
+ * @param {string}   props.proUrl           pro url, will be supplied via HOC
  * @function Object() { [native code] }
  */
 function UpsellModal({
@@ -27,6 +28,7 @@ function UpsellModal({
 	closeModal,
 	upsellData,
 	defaultFeatureSs,
+	proUrl,
 }) {
 	const [dataIndex, setDataIndex] = useState(0);
 	const [allData, setAllData] = useState([]);
@@ -65,6 +67,13 @@ function UpsellModal({
 	 */
 	const navStatus = (amount) => {
 		return allData.length > 1 && preIncDecCheck(amount);
+	};
+
+	/**
+	 * Direct current page to pro url.
+	 */
+	const directToProUrl = () => {
+		window.open(proUrl, '_blank');
 	};
 
 	/**
@@ -118,9 +127,8 @@ function UpsellModal({
 						<UpsellModalButton clickHandler={closeModal}>
 							{__('Close', 'ultimate-blocks')}
 						</UpsellModalButton>
-
 						<UpsellModalButton
-							clickHandler={() => {}}
+							clickHandler={directToProUrl}
 							type={modalButtonTypes.PRIO}
 						>
 							{__('Buy PRO', 'ultimate-blocks')}
@@ -144,6 +152,7 @@ const mainStoreSelectMapping = (namespacedSelect) => {
 		getUpsellTargetExtensionInfoShow,
 		getUpsellDataActiveBlock,
 		getLogoUrl,
+		getAssets,
 	} = namespacedSelect;
 
 	return {
@@ -152,6 +161,7 @@ const mainStoreSelectMapping = (namespacedSelect) => {
 			getUpsellTargetExtensionInfoShow()
 		),
 		defaultFeatureSs: getLogoUrl(),
+		proUrl: getAssets('proUrl'),
 	};
 };
 

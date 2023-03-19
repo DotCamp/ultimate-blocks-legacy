@@ -18116,6 +18116,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  * @param {Function} props.closeModal       close modal window, will be supplied via HOC
  * @param {Object}   props.upsellData       upsell data to show, will be supplied via HOC
  * @param {string}   props.defaultFeatureSs default feature screenshot for empty replacements, will be supplied via HOC
+ * @param {string}   props.proUrl           pro url, will be supplied via HOC
  * @function Object() { [native code] }
  */
 
@@ -18123,7 +18124,8 @@ function UpsellModal(_ref) {
   var modalVisibility = _ref.modalVisibility,
       closeModal = _ref.closeModal,
       upsellData = _ref.upsellData,
-      defaultFeatureSs = _ref.defaultFeatureSs;
+      defaultFeatureSs = _ref.defaultFeatureSs,
+      proUrl = _ref.proUrl;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
       _useState2 = _slicedToArray(_useState, 2),
@@ -18177,6 +18179,14 @@ function UpsellModal(_ref) {
     return allData.length > 1 && preIncDecCheck(amount);
   };
   /**
+   * Direct current page to pro url.
+   */
+
+
+  var directToProUrl = function directToProUrl() {
+    window.open(proUrl, '_blank');
+  };
+  /**
    * useEffect hook.
    */
 
@@ -18225,7 +18235,7 @@ function UpsellModal(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellModalButton__WEBPACK_IMPORTED_MODULE_7__["default"], {
     clickHandler: closeModal
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Close', 'ultimate-blocks')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellModalButton__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    clickHandler: function clickHandler() {},
+    clickHandler: directToProUrl,
     type: $Inc_components_Upsell_UpsellModalButton__WEBPACK_IMPORTED_MODULE_7__.modalButtonTypes.PRIO
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Buy PRO', 'ultimate-blocks')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_ModalNavigation__WEBPACK_IMPORTED_MODULE_8__["default"], {
     clickHandler: function clickHandler() {
@@ -18241,11 +18251,13 @@ var mainStoreSelectMapping = function mainStoreSelectMapping(namespacedSelect) {
   var upsellModalVisibilityStatus = namespacedSelect.upsellModalVisibilityStatus,
       getUpsellTargetExtensionInfoShow = namespacedSelect.getUpsellTargetExtensionInfoShow,
       getUpsellDataActiveBlock = namespacedSelect.getUpsellDataActiveBlock,
-      getLogoUrl = namespacedSelect.getLogoUrl;
+      getLogoUrl = namespacedSelect.getLogoUrl,
+      getAssets = namespacedSelect.getAssets;
   return {
     modalVisibility: upsellModalVisibilityStatus(),
     upsellData: getUpsellDataActiveBlock(getUpsellTargetExtensionInfoShow()),
-    defaultFeatureSs: getLogoUrl()
+    defaultFeatureSs: getLogoUrl(),
+    proUrl: getAssets('proUrl')
   };
 }; // main store action mapping
 
