@@ -19,11 +19,13 @@
         <h5><?php esc_html_e( 'Essential Collection of Blocks for Block Editor', 'ultimate-blocks' ); ?></h5>
     </div>
     <div class="ub-intro">
-        <p style="font-size: 25px; font-weight: bold"><?php esc_html_e( "Ultimate Blocks plugin makes building content in WordPress a breeze!", 'ultimate-blocks' ); ?></p>
-		<p><?php esc_html_e( "With its cool customizable blocks, like table of contents, tabbed content,", 'ultimate-blocks');?><br>
-		<?php esc_html_e( "content toggle and buttons, you can create engaging and attractive content in no time.", "ultimate-blocks" ); ?></p>
-		<p><?php esc_html_e( "Plus, it's SEO-friendly, so your content stays fresh and easy to find.", "ultimate-blocks");?></p>
+        <p style="font-size: 25px; font-weight: bold; margin-top: 0;"><?php esc_html_e( "Ultimate Blocks plugin makes building content in WordPress a breeze!", 'ultimate-blocks' ); ?></p>
+		<p><?php esc_html_e( "With its cool customizable blocks, like table of contents, tabbed content,", 'ultimate-blocks');?>
+		<?php esc_html_e( "content toggle and buttons, you can create engaging and attractive content in no time.", "ultimate-blocks" ); ?>
+		<?php esc_html_e( "Plus, it's SEO-friendly, so your content stays fresh and easy to find.", "ultimate-blocks");?></p>
 		<p><?php esc_html_e( "Say hello to a better online presence with Ultimate Blocks!", "ultimate-blocks");?></p>
+		<p><?php esc_html_e( "Here's a short video showing how you can get started with Ultimate Blocks.", "ultimate-blocks");?></p>
+		<iframe class="ub-welcome-youtube-video" src="https://www.youtube.com/embed/SDnYi50Vxus" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         <h2><span class="color-red"><?php esc_html_e( '22 awesome blocks.', 'ultimate-blocks' ); ?></span> <?php esc_html_e( 'More in the making...', 'ultimate-blocks' ); ?></h2>
         <div class="ub-button-wrap ultimate-blocks-clear">
             <div class="left">

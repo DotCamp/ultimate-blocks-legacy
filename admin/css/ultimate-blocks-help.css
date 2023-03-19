@@ -192,3 +192,8 @@ a.ultimate-blocks-btn-grey:hover {
     white-space: nowrap;
     box-shadow: none;
 }
+
+.ub-welcome-youtube-video {
+	aspect-ratio: 16 / 9;
+	width: 100%;
+}
