@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { PanelBody } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import UpsellToggleControl from '$Inc/components/Upsell/Controls/UpsellToggleControl';
+import UpsellInspectorPanelBody from '$Inc/components/Upsell/UpsellInspectorPanelBody';
 
 /**
  * Upsell dummy inspector controls for tabbed content block.
@@ -11,10 +11,7 @@ import UpsellToggleControl from '$Inc/components/Upsell/Controls/UpsellToggleCon
 function UpsellInspectorDummy() {
 	return (
 		<Fragment>
-			<PanelBody
-				initialOpen={false}
-				title={__('General', 'ultimate-blocks')}
-			>
+			<UpsellInspectorPanelBody title={__('General', 'ultimate-blocks')}>
 				<UpsellToggleControl
 					label={__('Tab title secondary text', 'ultimate-blocks')}
 					featureId={'titleSecondaryText'}
@@ -23,9 +20,8 @@ function UpsellInspectorDummy() {
 					label={__('Tab title icons', 'ultimate-blocks')}
 					featureId={'titleIcon'}
 				/>
-			</PanelBody>
-			<PanelBody
-				initialOpen={false}
+			</UpsellInspectorPanelBody>
+			<UpsellInspectorPanelBody
 				title={__('Call to Action', 'ultimate-blocks')}
 			>
 				<UpsellToggleControl
@@ -39,7 +35,7 @@ function UpsellInspectorDummy() {
 					)}
 					featureId={'callToAction'}
 				/>
-			</PanelBody>
+			</UpsellInspectorPanelBody>
 		</Fragment>
 	);
 }

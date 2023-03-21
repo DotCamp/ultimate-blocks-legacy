@@ -3,7 +3,6 @@ import {
 	verticalTabIcon,
 	accordionIcon,
 } from '../icons/icon';
-import UpsellToggleControl from '$Inc/components/Upsell/Controls/UpsellToggleControl';
 import UpsellInspectorDummy from './UpsellInspectorDummy';
 
 const { __ } = wp.i18n;
