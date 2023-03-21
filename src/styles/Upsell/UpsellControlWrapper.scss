@@ -31,11 +31,11 @@
 
 	.ub-upsell-control-wrapper-lock-container {
 	  @extend %flex-center-all;
+	  @extend %shadow;
 	  @include size(30);
-	  box-shadow: -4px 0px 6px -1px rgb(0 0 0 / 0.1), -2px 0px 4px -2px rgb(0 0 0 / 0.1);
 	  border: 1px solid $gray-300;
 	  padding: 5px;
-	  background-color: $gray-200;
+	  background-color: $gray-100;
 	  border-radius: 5px 0 0 5px;
 
 	  svg {
