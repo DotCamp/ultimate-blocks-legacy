@@ -3,6 +3,7 @@
 @import "./UpsellInspectorNotice.scss";
 @import "./UpsellModal.scss";
 @import "./UpsellControlWrapper.scss";
+@import "./UpsellTheme.scss";
 @import "../base/__common.scss";
 @import "../base/__colors.scss";
 
@@ -12,7 +13,7 @@
 
 .ub-upsell-inspector-notice-wrapper {
   position: sticky;
-  bottom:0;
+  bottom: 0;
   left: 0;
   z-index: 13;
   box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
@@ -35,6 +36,13 @@
   &[data-ub-upsell-button-type=prio] {
 	background-color: $blue-500 !important;
 	color: $white !important;
+  }
+}
+
+.ub-upsell-pro-panel {
+  .components-panel__body-toggle {
+	color: $text_red !important;
+	font-weight: bold !important;
   }
 }
 
