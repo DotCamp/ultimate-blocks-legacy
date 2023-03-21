@@ -17860,11 +17860,7 @@ function UpsellInspectorNotice(_ref) {
     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: 'ub-upsell-inspector-notice',
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('click for more info', 'ultimate-blocks'),
-      onClick: function onClick() {
-        // TODO [ErdemBircan] remove for production
-        console.log('clicked');
-        showInfo();
-      }
+      onClick: showInfo
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: 'ub-upsell-notice-icon-container'
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
