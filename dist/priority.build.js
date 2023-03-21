@@ -17860,7 +17860,11 @@ function UpsellInspectorNotice(_ref) {
     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: 'ub-upsell-inspector-notice',
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('click for more info', 'ultimate-blocks'),
-      onClick: showInfo
+      onClick: function onClick() {
+        // TODO [ErdemBircan] remove for production
+        console.log('clicked');
+        showInfo();
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: 'ub-upsell-notice-icon-container'
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -17952,59 +17956,20 @@ function UpsellMain(_ref) {
       summaryVisibility = _useState2[0],
       setSummaryVisibility = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(48),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState4 = _slicedToArray(_useState3, 2),
-      stickyTabbing = _useState4[0],
-      setStickyTabbing = _useState4[1];
+      noticeWrapperNode = _useState4[0],
+      setNoticeWrapperNode = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState6 = _slicedToArray(_useState5, 2),
-      noticeWrapperNode = _useState6[0],
-      setNoticeWrapperNode = _useState6[1];
-
-  var noticeParentQuery = '.components-panel';
+  var noticeParentQuery = '.interface-complementary-area';
   var onWrapRefChange = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (el) {
     setNoticeWrapperNode(el);
   }, []);
   /**
-   * Calculate tabbed height distance.
-   *
-   * @return {number | null} height.
-   */
-
-  var calculateStickyTab = function calculateStickyTab() {
-    var editInspectorHeader = document.querySelector('.edit-post-sidebar__panel-tabs');
-
-    if (editInspectorHeader) {
-      var _editInspectorHeader$ = editInspectorHeader.getBoundingClientRect(),
-          headerHeight = _editInspectorHeader$.height;
-
-      return headerHeight;
-    }
-
-    return null;
-  };
-  /**
-   * Reorder notice component in DOM to first place in its container element to maintain its visual functionality.
-   */
-
-
-  var reOrderNotice = function reOrderNotice() {
-    if (noticeWrapperNode) {
-      var noticeParent = document.querySelector(noticeParentQuery);
-
-      if (noticeParent) {
-        noticeParent.insertAdjacentElement('afterbegin', noticeWrapperNode);
-      }
-    }
-  };
-  /**
    * useEffect hook.
    */
 
-
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    reOrderNotice();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {// reOrderNotice();
   }, [noticeWrapperNode]);
   /**
    * useEffect hook.
@@ -18013,11 +17978,6 @@ function UpsellMain(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (activeBlock && blockUpsellData) {
       setSummaryVisibility(true);
-      var headerHeight = calculateStickyTab();
-
-      if (headerHeight !== null) {
-        setStickyTabbing(headerHeight);
-      }
     } else {
       setSummaryVisibility(false);
     }
@@ -18025,9 +17985,6 @@ function UpsellMain(_ref) {
   return summaryVisibility && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_3__.PortalBase, {
     targetQuery: noticeParentQuery
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      top: "".concat(stickyTabbing, "px")
-    },
     className: 'ub-upsell-inspector-notice-wrapper',
     ref: onWrapRefChange
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellInspectorNotice__WEBPACK_IMPORTED_MODULE_4__["default"], {

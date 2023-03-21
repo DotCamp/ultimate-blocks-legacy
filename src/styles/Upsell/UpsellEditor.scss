@@ -11,12 +11,11 @@
 }
 
 .ub-upsell-inspector-notice-wrapper {
-  @extend %shadow-md;
   position: sticky;
-  top: 0;
+  bottom:0;
   left: 0;
-  width: 100%;
   z-index: 13;
+  box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .ub-active-block-icon {

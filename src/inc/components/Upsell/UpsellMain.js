@@ -16,56 +16,19 @@ import UpsellModal from '$Inc/components/Upsell/UpsellModal';
  */
 function UpsellMain({ activeBlock, activeBlockTitle, blockUpsellData }) {
 	const [summaryVisibility, setSummaryVisibility] = useState(false);
-	const [stickyTabbing, setStickyTabbing] = useState(48);
 	const [noticeWrapperNode, setNoticeWrapperNode] = useState(null);
 
-	const noticeParentQuery = '.components-panel';
+	const noticeParentQuery = '.interface-complementary-area';
 
 	const onWrapRefChange = useCallback((el) => {
 		setNoticeWrapperNode(el);
 	}, []);
 
 	/**
-	 * Calculate tabbed height distance.
-	 *
-	 * @return {number | null} height.
-	 */
-	const calculateStickyTab = () => {
-		const editInspectorHeader = document.querySelector(
-			'.edit-post-sidebar__panel-tabs'
-		);
-
-		if (editInspectorHeader) {
-			const { height: headerHeight } =
-				editInspectorHeader.getBoundingClientRect();
-
-			return headerHeight;
-		}
-
-		return null;
-	};
-
-	/**
-	 * Reorder notice component in DOM to first place in its container element to maintain its visual functionality.
-	 */
-	const reOrderNotice = () => {
-		if (noticeWrapperNode) {
-			const noticeParent = document.querySelector(noticeParentQuery);
-
-			if (noticeParent) {
-				noticeParent.insertAdjacentElement(
-					'afterbegin',
-					noticeWrapperNode
-				);
-			}
-		}
-	};
-
-	/**
 	 * useEffect hook.
 	 */
 	useEffect(() => {
-		reOrderNotice();
+		// reOrderNotice();
 	}, [noticeWrapperNode]);
 
 	/**
@@ -74,12 +37,6 @@ function UpsellMain({ activeBlock, activeBlockTitle, blockUpsellData }) {
 	useEffect(() => {
 		if (activeBlock && blockUpsellData) {
 			setSummaryVisibility(true);
-
-			const headerHeight = calculateStickyTab();
-
-			if (headerHeight !== null) {
-				setStickyTabbing(headerHeight);
-			}
 		} else {
 			setSummaryVisibility(false);
 		}
@@ -90,9 +47,6 @@ function UpsellMain({ activeBlock, activeBlockTitle, blockUpsellData }) {
 			<Fragment>
 				<PortalBase targetQuery={noticeParentQuery}>
 					<div
-						style={{
-							top: `${stickyTabbing}px`,
-						}}
 						className={'ub-upsell-inspector-notice-wrapper'}
 						ref={onWrapRefChange}
 					>

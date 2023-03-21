@@ -19,7 +19,11 @@ function UpsellInspectorNotice({ blockTitle, logoUrl, showInfo }) {
 		<div
 			className={'ub-upsell-inspector-notice'}
 			title={__('click for more info', 'ultimate-blocks')}
-			onClick={showInfo}
+			onClick={() => {
+				// TODO [ErdemBircan] remove for production
+				console.log('clicked');
+				showInfo();
+			}}
 		>
 			<div className={'ub-upsell-notice-icon-container'}>
 				<img alt={'ub logo'} src={logoUrl} />
