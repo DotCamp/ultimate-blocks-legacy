@@ -114,13 +114,18 @@ abstract class Pro_Extension_Upsell {
 			// automatically search for a fitting image file under asset folders
 			if ( isset( $matches[1] ) ) {
 				$target_extension_upsell_dir_name = $matches[1];
-				$relative_path_to_file            = sprintf( '%s/img/%s/%s.png',
-					self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH, $target_extension_upsell_dir_name, $upsell_feature_id );
+				$allowed_file_extensions          = [ 'png', 'gif' ];
 
-				$image_path = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $relative_path_to_file );
+				foreach ( $allowed_file_extensions as $extension ) {
+					$relative_path_to_file = sprintf( '%s/img/%s/%s.%s',
+						self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH, $target_extension_upsell_dir_name,
+						$upsell_feature_id, $extension );
 
-				if ( $wp_filesystem->exists( $image_path ) && $wp_filesystem->is_file( $image_path ) ) {
-					$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $relative_path_to_file );
+					$image_path = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $relative_path_to_file );
+
+					if ( $wp_filesystem->exists( $image_path ) && $wp_filesystem->is_file( $image_path ) ) {
+						$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $relative_path_to_file );
+					}
 				}
 			}
 		}

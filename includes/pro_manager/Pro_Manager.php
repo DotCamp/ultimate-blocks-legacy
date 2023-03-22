@@ -5,6 +5,7 @@ namespace Ultimate_Blocks\includes\pro_manager;
 
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
+use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 
 /**
@@ -19,7 +20,7 @@ class Pro_Manager {
 	 */
 	public function is_pro() {
 		// TODO [ErdemBircan] implement real check logic after provider implementation
-		return function_exists('Ultimate_Blocks_Pro\Ultimate_Blocks_Pro_init');
+		return function_exists( 'Ultimate_Blocks_Pro\Ultimate_Blocks_Pro_init' );
 	}
 
 	/**
@@ -31,7 +32,11 @@ class Pro_Manager {
 		$tabbed_content_upsell      = new Tabbed_Content_Extension( 'ub/tabbed-content-block' );
 		$tabbed_content_upsell_data = $tabbed_content_upsell->get_upsell_data();
 
-		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data );
+		// Button extension
+		$button_upsell      = new Button_Extension( 'ub/button' );
+		$button_upsell_data = $button_upsell->get_upsell_data();
+
+		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data );
 
 		return [
 			'upsellExtensionData' => $final_upsell_extension_data
@@ -52,7 +57,7 @@ class Pro_Manager {
 			'proStatus' => json_encode( $this->is_pro() ),
 			'assets'    => [
 				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/icon-128x128.png',
-				'proUrl' => 'https://www.google.com/'
+				'proUrl'  => 'https://www.google.com/'
 			]
 		] );
 	}
