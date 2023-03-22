@@ -9,12 +9,12 @@ import UpsellControlWrapper from '$Inc/components/Upsell/Controls/UpsellControlW
  */
 const withUpsellControlWrapper =
 	(Component) =>
-	({ label, featureId, help = '' }) => {
+	({ label, featureId, help = '', options = [] }) => {
 		const defaultProps = {
 			onChange: () => {},
 		};
 
-		const finalProps = { ...defaultProps, label, help };
+		const finalProps = { ...defaultProps, label, help, options };
 
 		return (
 			<UpsellControlWrapper featureId={featureId}>
