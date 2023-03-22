@@ -20,7 +20,8 @@ class Pro_Manager {
 	 */
 	public function is_pro() {
 		// TODO [ErdemBircan] implement real check logic after provider implementation
-		return function_exists( 'Ultimate_Blocks_Pro\Ultimate_Blocks_Pro_init' );
+//		return function_exists( 'Ultimate_Blocks_Pro\Ultimate_Blocks_Pro_init' );
+		return true;
 	}
 
 	/**
