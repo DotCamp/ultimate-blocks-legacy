@@ -39,9 +39,21 @@ abstract class Pro_Extension_Upsell {
 
 	/**
 	 * Use generate_upsell_data inside this function to generate your extension upsell data.
+	 *
+	 * Returned data array structure:
+	 *
+	 *  [
+	 *      [ feature_id =>
+	 *          [feature_name, feature_description, feature_screenshot(can be omitted for auto search)]
+	 *      ],
+	 *      ...
+	 *  ]
+	 *
+	 *  Beside feature_id, remaining data should match arguments of `generate_upsell_data` method.
+	 *
+	 * @return array data
 	 */
 	public abstract function add_upsell_data();
-
 
 	/**
 	 * Get extension upsell data
@@ -50,12 +62,18 @@ abstract class Pro_Extension_Upsell {
 	public final function get_upsell_data() {
 		// add upsell data only once and generate them for the first time if none is available at the time this function is called
 		if ( ! is_array( $this->upsell_data ) ) {
-			$this->add_upsell_data();
+			$extension_upsell_data = $this->add_upsell_data();
+
+			if ( is_array( $extension_upsell_data ) ) {
+				foreach ( $extension_upsell_data as $feature_id => $feature_data ) {
+					call_user_func_array( [ $this, 'generate_upsell_data' ],
+						array_merge( [ $feature_id ], $feature_data ) );
+				}
+			}
 		}
 
 		return [ $this->block_id => $this->upsell_data ];
 	}
-
 
 	/**
 	 * Generate upsell data for various extension functionality.
