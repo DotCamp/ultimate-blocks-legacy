@@ -29,15 +29,15 @@ class Tabbed_Content_Extension extends Pro_Extension_Upsell {
 		return [
 			'callToAction'       => [
 				__( 'Call to Action', 'ultimate-blocks' ),
-				__( 'Turn your tabs into links for quick and easy URL interactions.', 'ultimate-blocks' )
+				__( "Transform your tab headers into clickable buttons that redirect to your desired web page  and simplify your visitors's journey by directing them straight to your desired pages.", 'ultimate-blocks' )
 			],
 			'titleSecondaryText' => [
 				__( 'Tab Title Secondary Text', 'ultimate-blocks' ),
-				__( 'Add secondary text to add more context to your titles.', 'ultimate-blocks' )
+				__( "Elevate your website's user experience with secondary tab headers, allowing for easy differentiation between tabs and ensuring your users find the content they need quickly and efficiently.", 'ultimate-blocks' )
 			],
 			'titleIcon'          => [
 				__( 'Tab Title Icons', 'ultimate-blocks' ),
-				__( 'Add icons to your tab titles.', 'ultimate-blocks' )
+				__( "Add icons to your tab headers, making it easier for your users to quickly identify and navigate to the content they're looking for.", 'ultimate-blocks' )
 			]
 		];
 	}
