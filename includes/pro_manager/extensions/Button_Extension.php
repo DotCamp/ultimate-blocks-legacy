@@ -29,7 +29,7 @@ class Button_Extension extends Pro_Extension_Upsell {
 		return [
 			'transitionAnimation' => [
 				__( 'Transition Animation', 'ultimate-blocks' ),
-				__( 'Add hover animations to your buttons.', 'ultimate-blocks' )
+				__( 'Add hover animation feature and increase engagement by adding visual cues that entice users to click on your call-to-action buttons.', 'ultimate-blocks' )
 			]
 		];
 	}
