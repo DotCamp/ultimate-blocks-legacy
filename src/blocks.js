@@ -40,3 +40,7 @@ import './blocks/advanced-heading/block';
 import './blocks/advanced-video/block';
 
 import './blocks/icon-inner/block';
+
+import UpsellManager from '$Inc/UpsellManager';
+
+UpsellManager.addDummyInspectorControls();

@@ -56,7 +56,9 @@ const selectors = {
 
 			if (blockUpsellData && blockUpsellData.featureData) {
 				const { featureData } = blockUpsellData;
-				return featureId ? featureData[featureId] : featureData;
+				return featureId
+					? { featureId: featureData[featureId] }
+					: featureData;
 			}
 		}
 

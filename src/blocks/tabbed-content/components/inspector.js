@@ -3,7 +3,6 @@ import {
 	verticalTabIcon,
 	accordionIcon,
 } from '../icons/icon';
-import UpsellInspectorDummy from '$Inc/components/Upsell/UpsellInspectorDummy';
 
 const { __ } = wp.i18n;
 const { Component } = wp.element;
@@ -272,7 +271,6 @@ export default class Inspector extends Component {
 						/>
 					)}
 				</PanelBody>
-				<UpsellInspectorDummy />
 			</InspectorControls>
 		);
 	}

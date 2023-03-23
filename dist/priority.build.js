@@ -17617,6 +17617,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var $Base_ManagerBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Base/ManagerBase */ "./src/base/ManagerBase.js");
 /* harmony import */ var $Inc_components_Upsell_UpsellMain__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellMain */ "./src/inc/components/Upsell/UpsellMain.js");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var $Inc_components_Upsell_UpsellInspectorDummy__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellInspectorDummy */ "./src/inc/components/Upsell/UpsellInspectorDummy.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -17638,6 +17647,11 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
 
 
 
@@ -17669,6 +17683,20 @@ var UpsellManager = /*#__PURE__*/function (_ManagerBase) {
         var container = document.querySelector('#ubUpsellContainer');
         (0,react_dom__WEBPACK_IMPORTED_MODULE_0__.render)( /*#__PURE__*/React.createElement($Inc_components_Upsell_UpsellMain__WEBPACK_IMPORTED_MODULE_2__["default"], null), container);
       });
+    }
+    /**
+     * Add dummy inspector controls to sidebar.
+     */
+
+  }, {
+    key: "addDummyInspectorControls",
+    value: function addDummyInspectorControls() {
+      var withInspectorControls = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.createHigherOrderComponent)(function (BlockEdit) {
+        return function (props) {
+          return /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_4__.Fragment, null, /*#__PURE__*/React.createElement(BlockEdit, props), /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.InspectorControls, null, /*#__PURE__*/React.createElement($Inc_components_Upsell_UpsellInspectorDummy__WEBPACK_IMPORTED_MODULE_7__["default"], null)));
+        };
+      }, 'withTestControls');
+      (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_5__.addFilter)('editor.BlockEdit', 'ub/test', withInspectorControls);
     }
   }]);
 
@@ -17726,6 +17754,229 @@ var mainSelectMapping = function mainSelectMapping(namespacedSelect) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_1__["default"])(mainSelectMapping, null)(ActiveBlockIcon));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/Controls/UpsellControlSelector.js":
+/*!*********************************************************************!*\
+  !*** ./src/inc/components/Upsell/Controls/UpsellControlSelector.js ***!
+  \*********************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $Inc_components_Upsell_UpsellInspectorPanelBody__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellInspectorPanelBody */ "./src/inc/components/Upsell/UpsellInspectorPanelBody.js");
+/* harmony import */ var $Inc_components_Upsell_Controls_UpsellToggleControl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellToggleControl */ "./src/inc/components/Upsell/Controls/UpsellToggleControl.js");
+/* harmony import */ var $Inc_components_Upsell_Controls_UpsellSelectControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellSelectControl */ "./src/inc/components/Upsell/Controls/UpsellSelectControl.js");
+var _excluded = ["type"];
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+
+/**
+ *	Dummy control types.
+ *
+ * @type {{PANEL: string, TOGGLE: string, SELECT: string}}
+ */
+
+var DUMMY_CONTROL_TYPES = {
+  PANEL: 'panel',
+  TOGGLE: 'toggle',
+  SELECT: 'select'
+};
+/**
+ * Component for selecting dummy controls.
+ *
+ * @param {Object} props             component properties
+ * @param {Object} props.controlData control data
+ * @function Object() { [native code] }
+ */
+
+function UpsellControlSelector(_ref) {
+  var controlData = _ref.controlData;
+
+  var renderDummyControl = function renderDummyControl() {
+    var type = controlData.type,
+        propsRest = _objectWithoutProperties(controlData, _excluded);
+
+    var TargetDummyControl;
+
+    switch (type) {
+      case DUMMY_CONTROL_TYPES.PANEL:
+        TargetDummyControl = $Inc_components_Upsell_UpsellInspectorPanelBody__WEBPACK_IMPORTED_MODULE_1__["default"];
+        break;
+
+      case DUMMY_CONTROL_TYPES.TOGGLE:
+        TargetDummyControl = $Inc_components_Upsell_Controls_UpsellToggleControl__WEBPACK_IMPORTED_MODULE_2__["default"];
+        break;
+
+      case DUMMY_CONTROL_TYPES.SELECT:
+        TargetDummyControl = $Inc_components_Upsell_Controls_UpsellSelectControl__WEBPACK_IMPORTED_MODULE_3__["default"];
+        break;
+
+      default:
+        TargetDummyControl = null;
+        break;
+    }
+
+    return TargetDummyControl ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TargetDummyControl, propsRest) : null;
+  };
+
+  return renderDummyControl();
+}
+/**
+ * @module UpsellControlSelector
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UpsellControlSelector);
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/Controls/UpsellControlWrapper.js":
+/*!********************************************************************!*\
+  !*** ./src/inc/components/Upsell/Controls/UpsellControlWrapper.js ***!
+  \********************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var $BlockStores_mainStore_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $BlockStores/mainStore/actions */ "./src/stores/mainStore/actions.js");
+/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+
+
+
+
+
+/**
+ * Upsell control wrapper component.
+ *
+ * @param {Object}              props           component properties
+ * @param {Array | JSX.Element} props.children  component children
+ * @param {string}              props.featureId feature id
+ * @param {Function}            props.showModal show modal, will be supplied by HOC
+ * @function Object() { [native code] }
+ */
+
+function UpsellControlWrapper(_ref) {
+  var children = _ref.children,
+      featureId = _ref.featureId,
+      showModal = _ref.showModal;
+  return (
+    /*#__PURE__*/
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: 'ub-upsell-control-wrapper',
+      onClick: function onClick() {
+        return showModal(featureId);
+      },
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('click for more info', 'ultimate-blocks')
+    }, children, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: 'ub-upsell-control-wrapper-lock'
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: 'ub-upsell-control-wrapper-lock-container'
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+      icon: "fa-solid fa-lock"
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: 'ub-upsell-control-wrapper-overlay'
+    }))
+  );
+} // main store action mapping
+
+
+var mainStoreActionMap = function mainStoreActionMap(namespacedDispatch) {
+  return {
+    showModal: (0,$BlockStores_mainStore_actions__WEBPACK_IMPORTED_MODULE_3__.showExtensionInfo)(namespacedDispatch)
+  };
+};
+/**
+ * @module UpsellControlWrapper
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_4__["default"])(null, mainStoreActionMap)(UpsellControlWrapper));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/Controls/UpsellSelectControl.js":
+/*!*******************************************************************!*\
+  !*** ./src/inc/components/Upsell/Controls/UpsellSelectControl.js ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var $Inc_hoc_withUpsellControlWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/hoc/withUpsellControlWrapper */ "./src/inc/hoc/withUpsellControlWrapper.js");
+
+
+
+/**
+ * Select control for upsell features.
+ *
+ * @param {Object} props component properties
+ * @function Object() { [native code] }
+ */
+
+function UpsellSelectControl(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, props);
+}
+/**
+ * @module UpsellToggleControl
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$Inc_hoc_withUpsellControlWrapper__WEBPACK_IMPORTED_MODULE_2__["default"])(UpsellSelectControl));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/Controls/UpsellToggleControl.js":
+/*!*******************************************************************!*\
+  !*** ./src/inc/components/Upsell/Controls/UpsellToggleControl.js ***!
+  \*******************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var $Inc_hoc_withUpsellControlWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/hoc/withUpsellControlWrapper */ "./src/inc/hoc/withUpsellControlWrapper.js");
+
+
+
+/**
+ * Toggle control for upsell features.
+ *
+ * @param {Object} props component properties
+ * @function Object() { [native code] }
+ */
+
+function UpsellToggleControl(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, props);
+}
+/**
+ * @module UpsellToggleControl
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$Inc_hoc_withUpsellControlWrapper__WEBPACK_IMPORTED_MODULE_2__["default"])(UpsellToggleControl));
 
 /***/ }),
 
@@ -17820,6 +18071,57 @@ function ModalNavigation(_ref) {
 
 /***/ }),
 
+/***/ "./src/inc/components/Upsell/UpsellInspectorDummy.js":
+/*!***********************************************************!*\
+  !*** ./src/inc/components/Upsell/UpsellInspectorDummy.js ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $Inc_components_Upsell_UpsellProPanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellProPanel */ "./src/inc/components/Upsell/UpsellProPanel.js");
+/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+/* harmony import */ var $Inc_components_Upsell_Controls_UpsellControlSelector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellControlSelector */ "./src/inc/components/Upsell/Controls/UpsellControlSelector.js");
+
+
+
+
+/**
+ * Upsell dummy inspector wrapper for side panel.
+ *
+ * @param {Object}       props              component properties
+ * @param {Array | null} props.controlsData dummy controls data, will be supplied via HOC
+ * @function Object() { [native code] }
+ */
+
+function UpsellInspectorDummy(_ref) {
+  var controlsData = _ref.controlsData;
+  return controlsData && Array.isArray(controlsData) && controlsData.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellProPanel__WEBPACK_IMPORTED_MODULE_1__["default"], null, controlsData.map(function (data) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_Controls_UpsellControlSelector__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      key: data.featureId,
+      controlData: data
+    });
+  }));
+} // main store select mapping
+
+
+var selectMapping = function selectMapping(namespacedSelect) {
+  var getUpsellDummyControlDataActiveBlock = namespacedSelect.getUpsellDummyControlDataActiveBlock;
+  return {
+    controlsData: getUpsellDummyControlDataActiveBlock()
+  };
+};
+/**
+ * @module UpsellInspectorDummy
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(selectMapping, null)(UpsellInspectorDummy));
+
+/***/ }),
+
 /***/ "./src/inc/components/Upsell/UpsellInspectorNotice.js":
 /*!************************************************************!*\
   !*** ./src/inc/components/Upsell/UpsellInspectorNotice.js ***!
@@ -17894,6 +18196,53 @@ var actionMapping = function actionMapping(namespacedDispatch) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_2__["default"])(selectMapping, actionMapping)(UpsellInspectorNotice));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/UpsellInspectorPanelBody.js":
+/*!***************************************************************!*\
+  !*** ./src/inc/components/Upsell/UpsellInspectorPanelBody.js ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var $Inc_components_Upsell_Controls_UpsellControlSelector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellControlSelector */ "./src/inc/components/Upsell/Controls/UpsellControlSelector.js");
+
+
+
+/**
+ * General inspector panel body dedicated only to hold upsell controls.
+ *
+ * @param {Object} props             component properties
+ * @param {string} props.label       panel title
+ * @param {Array}  props.contentData content data for dummy controls inside this panel
+ * @function Object() { [native code] }
+ */
+
+function UpsellInspectorPanelBody(_ref) {
+  var label = _ref.label,
+      contentData = _ref.contentData;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+    initialOpen: false,
+    title: label
+  }, contentData.map(function (data) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_Controls_UpsellControlSelector__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: data.featureId,
+      controlData: data
+    });
+  }));
+}
+/**
+ * @module UpsellInspectorPanelBody.
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (UpsellInspectorPanelBody);
 
 /***/ }),
 
@@ -18337,6 +18686,60 @@ function UpsellModalContent(_ref) {
 
 /***/ }),
 
+/***/ "./src/inc/components/Upsell/UpsellProPanel.js":
+/*!*****************************************************!*\
+  !*** ./src/inc/components/Upsell/UpsellProPanel.js ***!
+  \*****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var $BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $BlockStores/mainStore/hoc/connectWithMainStore */ "./src/stores/mainStore/hoc/connectWithMainStore.js");
+
+
+
+
+/**
+ * Pro panel container for inspector upsell controls and panel bodies.
+ *
+ * @param {Object}                          props           component properties
+ * @param {JSX.Element | Function | Array } props.children  component children
+ * @param {boolean}                         props.proStatus plugin pro status, will be supplied via HOC
+ * @function Object() { [native code] }
+ */
+
+function UpsellProPanel(_ref) {
+  var proStatus = _ref.proStatus,
+      children = _ref.children;
+  return !proStatus && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    className: 'ub-upsell-pro-panel',
+    initialOpen: false,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('PRO', 'ultimate-blocks')
+  }, children);
+} // main store select mapping
+
+
+var selectMapping = function selectMapping(namespacedSelect) {
+  var getProStatus = namespacedSelect.getProStatus;
+  return {
+    proStatus: getProStatus()
+  };
+};
+/**
+ * @module UpsellProPanel
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_3__["default"])(selectMapping, null)(UpsellProPanel));
+
+/***/ }),
+
 /***/ "./src/inc/components/Upsell/VitalizeText.js":
 /*!***************************************************!*\
   !*** ./src/inc/components/Upsell/VitalizeText.js ***!
@@ -18368,6 +18771,64 @@ function VitalizeText(_ref) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (VitalizeText);
+
+/***/ }),
+
+/***/ "./src/inc/hoc/withUpsellControlWrapper.js":
+/*!*************************************************!*\
+  !*** ./src/inc/hoc/withUpsellControlWrapper.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $Inc_components_Upsell_Controls_UpsellControlWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellControlWrapper */ "./src/inc/components/Upsell/Controls/UpsellControlWrapper.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/**
+ * HOC for adding wrapper and default props to target component.
+ *
+ * @param {JSX.Element | Function} Component target component to be wrapped
+ * @return {(function(*))|*} wrapped component
+ */
+
+var withUpsellControlWrapper = function withUpsellControlWrapper(Component) {
+  return function (_ref) {
+    var label = _ref.label,
+        featureId = _ref.featureId,
+        _ref$help = _ref.help,
+        help = _ref$help === void 0 ? '' : _ref$help,
+        _ref$options = _ref.options,
+        options = _ref$options === void 0 ? [] : _ref$options;
+    var defaultProps = {
+      onChange: function onChange() {}
+    };
+
+    var finalProps = _objectSpread(_objectSpread({}, defaultProps), {}, {
+      label: label,
+      help: help,
+      options: options
+    });
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_Controls_UpsellControlWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      featureId: featureId
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Component, finalProps));
+  };
+};
+/**
+ * @module withUpsellControlWrapper
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (withUpsellControlWrapper);
 
 /***/ }),
 
@@ -18927,7 +19388,9 @@ var selectors = {
 
       if (blockUpsellData && blockUpsellData.featureData) {
         var featureData = blockUpsellData.featureData;
-        return featureId ? featureData[featureId] : featureData;
+        return featureId ? {
+          featureId: featureData[featureId]
+        } : featureData;
       }
     }
 

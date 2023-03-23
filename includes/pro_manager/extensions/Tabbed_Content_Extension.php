@@ -72,9 +72,10 @@ class Tabbed_Content_Extension extends Pro_Extension_Upsell {
 
 
 		return [
-			Pro_Editor_Control_Data::generate_panel_data( 'general', __( 'General', 'ultimate-blocks' ),
+			Pro_Editor_Control_Data::generate_panel_data( 'generalPanel', __( 'General', 'ultimate-blocks' ),
 				$general_content_data ),
-			Pro_Editor_Control_Data::generate_panel_data( 'callToAction', __( 'Call to Action', 'ultimate-blocks' ),
+			Pro_Editor_Control_Data::generate_panel_data( 'callToActionPanel',
+				__( 'Call to Action', 'ultimate-blocks' ),
 				$cta_content_data )
 		];
 	}

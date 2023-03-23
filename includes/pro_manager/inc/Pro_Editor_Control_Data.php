@@ -28,9 +28,9 @@ class Pro_Editor_Control_Data {
 	public static function generate_base_data( $feature_id, $control_type, $title ) {
 
 		return [
-			'id'    => $feature_id,
-			'type'  => $control_type,
-			'title' => $title,
+			'featureId' => $feature_id,
+			'type'      => $control_type,
+			'label'     => $title,
 		];
 	}
 
@@ -75,6 +75,6 @@ class Pro_Editor_Control_Data {
 	public static function generate_panel_data( $feature_id, $title, $content ) {
 		$base_data = static::generate_base_data( $feature_id, self::UB_PRO_EDITOR_CONTROL_TYPES['PANEL'], $title );
 
-		return array_merge( $base_data, [ 'content' => $content ] );
+		return array_merge( $base_data, [ 'contentData' => $content ] );
 	}
 }

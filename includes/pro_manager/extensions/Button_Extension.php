@@ -33,4 +33,6 @@ class Button_Extension extends Pro_Extension_Upsell {
 			]
 		];
 	}
+
+
 }

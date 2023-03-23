@@ -8,7 +8,6 @@ import {
 
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import UpsellInspectorDummy from "./components/UpsellInspectorDummy";
 
 const {
 	BlockControls,
@@ -1981,7 +1980,6 @@ export function EditorComponent(props) {
 							</PanelBody>
 						</>
 					)}
-					<UpsellInspectorDummy />
 				</InspectorControls>
 			}
 			{

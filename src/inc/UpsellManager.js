@@ -1,6 +1,11 @@
 import { render } from 'react-dom';
 import ManagerBase from '$Base/ManagerBase';
 import UpsellMain from '$Inc/components/Upsell/UpsellMain';
+import { createHigherOrderComponent } from '@wordpress/compose';
+import { Fragment } from 'react';
+import { addFilter } from '@wordpress/hooks';
+import { InspectorControls } from '@wordpress/block-editor';
+import UpsellInspectorDummy from '$Inc/components/Upsell/UpsellInspectorDummy';
 
 /**
  * Editor upsell manager.
@@ -20,6 +25,27 @@ class UpsellManager extends ManagerBase {
 			const container = document.querySelector('#ubUpsellContainer');
 			render(<UpsellMain />, container);
 		});
+	}
+
+	/**
+	 * Add dummy inspector controls to sidebar.
+	 */
+	addDummyInspectorControls() {
+		const withInspectorControls = createHigherOrderComponent(
+			(BlockEdit) => (props) => {
+				return (
+					<Fragment>
+						<BlockEdit {...props} />
+						<InspectorControls>
+							<UpsellInspectorDummy />
+						</InspectorControls>
+					</Fragment>
+				);
+			},
+			'withTestControls'
+		);
+
+		addFilter('editor.BlockEdit', 'ub/test', withInspectorControls);
 	}
 }
 
