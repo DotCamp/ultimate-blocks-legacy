@@ -14,6 +14,7 @@ class Pro_Editor_Control_Data {
 		'PANEL'  => 'panel',
 		'TOGGLE' => 'toggle',
 		'SELECT' => 'select',
+		'COLOR'  => 'color',
 	];
 
 	/**
@@ -42,6 +43,37 @@ class Pro_Editor_Control_Data {
 	 *
 	 * @return array editor control data
 	 */
+	public static function generate_color_control_data( $feature_id, $title, $color_settings ) {
+		$base_data = static::generate_base_data( $feature_id, self::UB_PRO_EDITOR_CONTROL_TYPES['COLOR'], $title );
+
+		return array_merge( $base_data, [ 'title' => $title, 'colorSettings' => $color_settings ] );
+	}
+
+	/**
+	 * Generate color setting for color control data.
+	 *
+	 * @param string $label settings label
+	 * @param string $color_value color value in hex
+	 *
+	 * @return array color setting
+	 */
+	public static function generate_color_setting( $label, $color_value ) {
+
+		return [
+			'label' => $label,
+			'value' => $color_value
+		];
+	}
+
+
+	/**
+	 * Generate upsell dummy control data.
+	 *
+	 * @param string $feature_id feature id
+	 * @param string $title control title
+	 *
+	 * @return array editor control data
+	 */
 	public static function generate_toggle_control_data( $feature_id, $title, $help = '' ) {
 		$base_data = static::generate_base_data( $feature_id, self::UB_PRO_EDITOR_CONTROL_TYPES['TOGGLE'], $title );
 
@@ -60,7 +92,15 @@ class Pro_Editor_Control_Data {
 	public static function generate_select_control_data( $feature_id, $title, $options ) {
 		$base_data = static::generate_base_data( $feature_id, self::UB_PRO_EDITOR_CONTROL_TYPES['SELECT'], $title );
 
-		return array_merge( $base_data, [ 'options' => $options ] );
+		$final_options = array_reduce( $options, function ( $carry, $current ) {
+			$carry[] = [
+				'label' => $current
+			];
+
+			return $carry;
+		}, [] );
+
+		return array_merge( $base_data, [ 'options' => $final_options ] );
 	}
 
 	/**
