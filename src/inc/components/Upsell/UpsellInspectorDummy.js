@@ -8,10 +8,12 @@ import UpsellControlSelector from '$Inc/components/Upsell/Controls/UpsellControl
  *
  * @param {Object}       props              component properties
  * @param {Array | null} props.controlsData dummy controls data, will be supplied via HOC
+ * @param {boolean}      props.proStatus    plugin pro status, will be supplied via HOC
  * @function Object() { [native code] }
  */
-function UpsellInspectorDummy({ controlsData }) {
+function UpsellInspectorDummy({ controlsData, proStatus }) {
 	return (
+		!proStatus &&
 		controlsData &&
 		Array.isArray(controlsData) &&
 		controlsData.length > 0 && (
@@ -29,9 +31,13 @@ function UpsellInspectorDummy({ controlsData }) {
 
 // main store select mapping
 const selectMapping = (namespacedSelect) => {
-	const { getUpsellDummyControlDataActiveBlock } = namespacedSelect;
+	const { getUpsellDummyControlDataActiveBlock, getProStatus } =
+		namespacedSelect;
 
-	return { controlsData: getUpsellDummyControlDataActiveBlock() };
+	return {
+		controlsData: getUpsellDummyControlDataActiveBlock(),
+		proStatus: getProStatus(),
+	};
 };
 
 /**

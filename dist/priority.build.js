@@ -17696,7 +17696,12 @@ var UpsellManager = /*#__PURE__*/function (_ManagerBase) {
           return /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_4__.Fragment, null, /*#__PURE__*/React.createElement(BlockEdit, props), /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__.InspectorControls, null, /*#__PURE__*/React.createElement($Inc_components_Upsell_UpsellInspectorDummy__WEBPACK_IMPORTED_MODULE_7__["default"], null)));
         };
       }, 'withTestControls');
-      (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_5__.addFilter)('editor.BlockEdit', 'ub/test', withInspectorControls);
+      var context = __webpack_require__.g || self;
+      var proStatus = context.ubMainStore.select().getProStatus();
+
+      if (!proStatus) {
+        (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_5__.addFilter)('editor.BlockEdit', 'ub/test', withInspectorControls);
+      }
     }
   }]);
 
@@ -17781,8 +17786,6 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function UpsellColorControl(props) {
-  // TODO [ErdemBircan] remove for production
-  console.log(props);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.PanelColorSettings, props);
 }
 /**
@@ -18137,12 +18140,14 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @param {Object}       props              component properties
  * @param {Array | null} props.controlsData dummy controls data, will be supplied via HOC
+ * @param {boolean}      props.proStatus    plugin pro status, will be supplied via HOC
  * @function Object() { [native code] }
  */
 
 function UpsellInspectorDummy(_ref) {
-  var controlsData = _ref.controlsData;
-  return controlsData && Array.isArray(controlsData) && controlsData.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellProPanel__WEBPACK_IMPORTED_MODULE_1__["default"], null, controlsData.map(function (data) {
+  var controlsData = _ref.controlsData,
+      proStatus = _ref.proStatus;
+  return !proStatus && controlsData && Array.isArray(controlsData) && controlsData.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_UpsellProPanel__WEBPACK_IMPORTED_MODULE_1__["default"], null, controlsData.map(function (data) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_Controls_UpsellControlSelector__WEBPACK_IMPORTED_MODULE_3__["default"], {
       key: data.featureId,
       controlData: data
@@ -18152,9 +18157,11 @@ function UpsellInspectorDummy(_ref) {
 
 
 var selectMapping = function selectMapping(namespacedSelect) {
-  var getUpsellDummyControlDataActiveBlock = namespacedSelect.getUpsellDummyControlDataActiveBlock;
+  var getUpsellDummyControlDataActiveBlock = namespacedSelect.getUpsellDummyControlDataActiveBlock,
+      getProStatus = namespacedSelect.getProStatus;
   return {
-    controlsData: getUpsellDummyControlDataActiveBlock()
+    controlsData: getUpsellDummyControlDataActiveBlock(),
+    proStatus: getProStatus()
   };
 };
 /**

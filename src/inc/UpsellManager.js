@@ -45,7 +45,12 @@ class UpsellManager extends ManagerBase {
 			'withTestControls'
 		);
 
-		addFilter('editor.BlockEdit', 'ub/test', withInspectorControls);
+		const context = global || self;
+		const proStatus = context.ubMainStore.select().getProStatus();
+
+		if (!proStatus) {
+			addFilter('editor.BlockEdit', 'ub/test', withInspectorControls);
+		}
 	}
 }
 

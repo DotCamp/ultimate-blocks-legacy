@@ -8,8 +8,6 @@ import { PanelColorSettings } from '@wordpress/block-editor';
  * @function Object() { [native code] }
  */
 function UpsellColorControl(props) {
-// TODO [ErdemBircan] remove for production
-console.log(props)	;
 	return <PanelColorSettings {...props} />;
 }
 
