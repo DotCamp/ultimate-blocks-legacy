@@ -6,6 +6,7 @@ namespace Ultimate_Blocks\includes\pro_manager;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
+use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 
 /**
@@ -36,7 +37,12 @@ class Pro_Manager {
 		$button_upsell      = new Button_Extension( 'ub/button' );
 		$button_upsell_data = $button_upsell->get_upsell_data();
 
-		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data );
+		// Content toggle extension
+		$content_toggle_upsell = new Content_Toggle_Extension( 'ub/content-toggle-block' );
+		$content_toggle_data   = $content_toggle_upsell->get_upsell_data();
+
+		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data,
+			$content_toggle_data );
 
 		return [
 			'upsellExtensionData' => $final_upsell_extension_data

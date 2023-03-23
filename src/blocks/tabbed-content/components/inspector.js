@@ -3,7 +3,7 @@ import {
 	verticalTabIcon,
 	accordionIcon,
 } from '../icons/icon';
-import UpsellInspectorDummy from './UpsellInspectorDummy';
+import UpsellInspectorDummy from '$Inc/components/Upsell/UpsellInspectorDummy';
 
 const { __ } = wp.i18n;
 const { Component } = wp.element;

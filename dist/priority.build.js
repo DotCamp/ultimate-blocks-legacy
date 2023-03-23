@@ -18868,19 +18868,14 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Get block upsell data
  *
- * @param {Object}      state            store state
- * @param {string}      blockType        block type
- * @param {string|null} [featureId=null] feature id, if null is supplied, all upsell data associated with the block will be returned
+ * @param {Object} state     store state
+ * @param {string} blockType block type
  *
  * @return {Object | Array} block upsell data
  */
 
 var getBlockUpsellData = function getBlockUpsellData(state, blockType) {
-  var featureId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  var blockUpsellData = state.upsells.extensionData[blockType];
-  return featureId ? {
-    featureId: blockUpsellData[featureId]
-  } : blockUpsellData;
+  return state.upsells.extensionData[blockType];
 };
 /**
  * Store selectors.
@@ -18928,7 +18923,35 @@ var selectors = {
     var currentBlockType = (_select$getSelectedBl = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)('core/block-editor').getSelectedBlock()) === null || _select$getSelectedBl === void 0 ? void 0 : _select$getSelectedBl.name;
 
     if (currentBlockType) {
-      return getBlockUpsellData(state, currentBlockType, featureId);
+      var blockUpsellData = getBlockUpsellData(state, currentBlockType);
+
+      if (blockUpsellData && blockUpsellData.featureData) {
+        var featureData = blockUpsellData.featureData;
+        return featureId ? featureData[featureId] : featureData;
+      }
+    }
+
+    return null;
+  },
+
+  /**
+   * Get upsell data for currently active block.
+   *
+   * @param {Object} state store state
+   *
+   * @return {Array|null} active block upsell data
+   */
+  getUpsellDummyControlDataActiveBlock: function getUpsellDummyControlDataActiveBlock(state) {
+    var _select$getSelectedBl2;
+
+    var currentBlockType = (_select$getSelectedBl2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.select)('core/block-editor').getSelectedBlock()) === null || _select$getSelectedBl2 === void 0 ? void 0 : _select$getSelectedBl2.name;
+
+    if (currentBlockType) {
+      var blockUpsellData = getBlockUpsellData(state, currentBlockType);
+
+      if (blockUpsellData) {
+        return blockUpsellData.dummyControlsData;
+      }
     }
 
     return null;

@@ -3,17 +3,13 @@ import { select } from '@wordpress/data';
 /**
  * Get block upsell data
  *
- * @param {Object}      state            store state
- * @param {string}      blockType        block type
- * @param {string|null} [featureId=null] feature id, if null is supplied, all upsell data associated with the block will be returned
+ * @param {Object} state     store state
+ * @param {string} blockType block type
  *
  * @return {Object | Array} block upsell data
  */
-const getBlockUpsellData = (state, blockType, featureId = null) => {
-	const blockUpsellData = state.upsells.extensionData[blockType];
-	return featureId
-		? { featureId: blockUpsellData[featureId] }
-		: blockUpsellData;
+const getBlockUpsellData = (state, blockType) => {
+	return state.upsells.extensionData[blockType];
 };
 
 /**
@@ -56,7 +52,33 @@ const selectors = {
 			select('core/block-editor').getSelectedBlock()?.name;
 
 		if (currentBlockType) {
-			return getBlockUpsellData(state, currentBlockType, featureId);
+			const blockUpsellData = getBlockUpsellData(state, currentBlockType);
+
+			if (blockUpsellData && blockUpsellData.featureData) {
+				const { featureData } = blockUpsellData;
+				return featureId ? featureData[featureId] : featureData;
+			}
+		}
+
+		return null;
+	},
+	/**
+	 * Get upsell data for currently active block.
+	 *
+	 * @param {Object} state store state
+	 *
+	 * @return {Array|null} active block upsell data
+	 */
+	getUpsellDummyControlDataActiveBlock(state) {
+		const currentBlockType =
+			select('core/block-editor').getSelectedBlock()?.name;
+
+		if (currentBlockType) {
+			const blockUpsellData = getBlockUpsellData(state, currentBlockType);
+
+			if (blockUpsellData) {
+				return blockUpsellData.dummyControlsData;
+			}
 		}
 
 		return null;

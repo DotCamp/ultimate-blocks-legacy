@@ -56,7 +56,19 @@ abstract class Pro_Extension_Upsell {
 	public abstract function add_upsell_data();
 
 	/**
-	 * Get extension upsell data
+	 * Add data for editor sidebar upsell dummy controls.
+	 *
+	 * Override this function to actually send data, default is an empty array.
+	 *
+	 * @return array editor control data
+	 */
+	public function add_editor_dummy_control_data() {
+		return [];
+	}
+
+	/**
+	 * Get extension upsell data.
+	 *
 	 * @return array upsell data
 	 */
 	public final function get_upsell_data() {
@@ -72,7 +84,12 @@ abstract class Pro_Extension_Upsell {
 			}
 		}
 
-		return [ $this->block_id => $this->upsell_data ];
+		return [
+			$this->block_id => [
+				'featureData'       => $this->upsell_data,
+				'dummyControlsData' => $this->add_editor_dummy_control_data()
+			]
+		];
 	}
 
 	/**
