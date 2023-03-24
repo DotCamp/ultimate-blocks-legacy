@@ -49,11 +49,6 @@ class Review_Extension extends Pro_Extension_Upsell {
 	 * @return array editor control data
 	 */
 	public function add_editor_dummy_control_data() {
-		$pros_cons_panel_content = [
-			Pro_Editor_Control_Data::generate_toggle_control_data( 'prosCons',
-				__( 'Enable Pros/Cons', 'ultimate-blocks' ) ),
-		];
-
 		$pros_cons_panel_layout_content = [
 			Pro_Editor_Control_Data::generate_button_group_control_data( 'prosConsGraphLayout', [
 				__( 'Basic', 'ultimate-blocks' ),
@@ -62,12 +57,18 @@ class Review_Extension extends Pro_Extension_Upsell {
 			] ),
 		];
 
-		return [
-			Pro_Editor_Control_Data::generate_panel_data( 'prosConsPanel', __( 'Pros/Cons', 'ultimate-blocks' ),
-				$pros_cons_panel_content ),
+		$pros_cons_panel_content = [
+			Pro_Editor_Control_Data::generate_toggle_control_data( 'prosCons',
+				__( 'Enable Pros/Cons', 'ultimate-blocks' ) ),
 			Pro_Editor_Control_Data::generate_panel_data( 'prosConsPanelLayout',
 				__( 'Layouts', 'ultimate-blocks' ),
 				$pros_cons_panel_layout_content ),
+		];
+
+
+		return [
+			Pro_Editor_Control_Data::generate_panel_data( 'prosConsPanel', __( 'Pros/Cons', 'ultimate-blocks' ),
+				$pros_cons_panel_content ),
 		];
 	}
 }

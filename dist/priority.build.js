@@ -17799,17 +17799,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var $Inc_hoc_withUpsellControlWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/hoc/withUpsellControlWrapper */ "./src/inc/hoc/withUpsellControlWrapper.js");
+/* harmony import */ var $Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Library/ub-common/Components */ "./library/ub-common/Components/index.js");
+/* harmony import */ var $Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /**
  * Button Group for upsell features.
  *
- * @param {Object} props component properties
+ * @param {Object} props                   component properties
+ * @param {Array}  [props.buttonLabels=[]] button labels
  * @function Object() { [native code] }
  */
 
-function UpsellButtonGroupControl(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", null, "here");
+function UpsellButtonGroupControl(_ref) {
+  var _ref$buttonLabels = _ref.buttonLabels,
+      buttonLabels = _ref$buttonLabels === void 0 ? [] : _ref$buttonLabels;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2__.BlackWhiteButtonGroup, null, buttonLabels.map(function (label, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2__.BlackWhiteButton, {
+      key: index
+    }, label);
+  }));
 }
 /**
  * @module UpsellButtonGroupControl
