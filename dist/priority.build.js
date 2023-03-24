@@ -17811,11 +17811,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var $Inc_components_Upsell_Controls_UpsellToggleControl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellToggleControl */ "./src/inc/components/Upsell/Controls/UpsellToggleControl.js");
 /* harmony import */ var $Inc_components_Upsell_Controls_UpsellSelectControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellSelectControl */ "./src/inc/components/Upsell/Controls/UpsellSelectControl.js");
 /* harmony import */ var $Inc_components_Upsell_Controls_UpsellColorControl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellColorControl */ "./src/inc/components/Upsell/Controls/UpsellColorControl.js");
+/* harmony import */ var $Inc_components_Upsell_Controls_UpsellIconControl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! $Inc/components/Upsell/Controls/UpsellIconControl */ "./src/inc/components/Upsell/Controls/UpsellIconControl.js");
 var _excluded = ["type"];
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 
 
 
@@ -17832,7 +17834,8 @@ var DUMMY_CONTROL_TYPES = {
   PANEL: 'panel',
   TOGGLE: 'toggle',
   SELECT: 'select',
-  COLOR: 'color'
+  COLOR: 'color',
+  ICON: 'icon'
 };
 /**
  * Component for selecting dummy controls.
@@ -17866,6 +17869,10 @@ function UpsellControlSelector(_ref) {
 
       case DUMMY_CONTROL_TYPES.COLOR:
         TargetDummyControl = $Inc_components_Upsell_Controls_UpsellColorControl__WEBPACK_IMPORTED_MODULE_4__["default"];
+        break;
+
+      case DUMMY_CONTROL_TYPES.ICON:
+        TargetDummyControl = $Inc_components_Upsell_Controls_UpsellIconControl__WEBPACK_IMPORTED_MODULE_5__["default"];
         break;
 
       default:
@@ -17954,6 +17961,41 @@ var mainStoreActionMap = function mainStoreActionMap(namespacedDispatch) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ((0,$BlockStores_mainStore_hoc_connectWithMainStore__WEBPACK_IMPORTED_MODULE_4__["default"])(null, mainStoreActionMap)(UpsellControlWrapper));
+
+/***/ }),
+
+/***/ "./src/inc/components/Upsell/Controls/UpsellIconControl.js":
+/*!*****************************************************************!*\
+  !*** ./src/inc/components/Upsell/Controls/UpsellIconControl.js ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var $Inc_hoc_withUpsellControlWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Inc/hoc/withUpsellControlWrapper */ "./src/inc/hoc/withUpsellControlWrapper.js");
+/* harmony import */ var $Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Library/ub-common/Components */ "./library/ub-common/Components/index.js");
+/* harmony import */ var $Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+/**
+ * Icon control for upsell features.
+ *
+ * @param {Object} props component properties
+ * @function Object() { [native code] }
+ */
+
+function UpsellIconControl(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Library_ub_common_Components__WEBPACK_IMPORTED_MODULE_2__.IconControl, props);
+}
+/**
+ * @module UpsellIconControl
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = ((0,$Inc_hoc_withUpsellControlWrapper__WEBPACK_IMPORTED_MODULE_1__["default"])(UpsellIconControl));
 
 /***/ }),
 
@@ -18862,7 +18904,9 @@ var withUpsellControlWrapper = function withUpsellControlWrapper(Component) {
         _ref$colorSettings = _ref.colorSettings,
         colorSettings = _ref$colorSettings === void 0 ? [] : _ref$colorSettings,
         _ref$title = _ref.title,
-        title = _ref$title === void 0 ? '' : _ref$title;
+        title = _ref$title === void 0 ? '' : _ref$title,
+        _ref$selectedIcon = _ref.selectedIcon,
+        selectedIcon = _ref$selectedIcon === void 0 ? '' : _ref$selectedIcon;
     var defaultProps = {
       onChange: function onChange() {}
     };
@@ -18872,7 +18916,8 @@ var withUpsellControlWrapper = function withUpsellControlWrapper(Component) {
       title: title,
       help: help,
       options: options,
-      colorSettings: colorSettings
+      colorSettings: colorSettings,
+      selectedIcon: selectedIcon
     });
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement($Inc_components_Upsell_Controls_UpsellControlWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {

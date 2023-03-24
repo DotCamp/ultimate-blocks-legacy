@@ -15,6 +15,7 @@ class Pro_Editor_Control_Data {
 		'TOGGLE' => 'toggle',
 		'SELECT' => 'select',
 		'COLOR'  => 'color',
+		'ICON'   => 'icon',
 	];
 
 	/**
@@ -63,6 +64,21 @@ class Pro_Editor_Control_Data {
 			'label' => $label,
 			'value' => $color_value
 		];
+	}
+
+	/**
+	 * Generate upsell icon dummy control data.
+	 *
+	 * @param string $feature_id feature id
+	 * @param string $title control title
+	 * @param string $icon_name icon name
+	 *
+	 * @return array editor control data
+	 */
+	public static function generate_icon_control_data( $feature_id, $title, $icon_name = 'star' ) {
+		$base_data = static::generate_base_data( $feature_id, self::UB_PRO_EDITOR_CONTROL_TYPES['ICON'], $title );
+
+		return array_merge( $base_data, [ 'selectedIcon' => $icon_name ] );
 	}
 
 

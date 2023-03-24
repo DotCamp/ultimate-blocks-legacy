@@ -7,6 +7,7 @@ use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
+use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 
 /**
@@ -41,8 +42,12 @@ class Pro_Manager {
 		$content_toggle_upsell = new Content_Toggle_Extension( 'ub/content-toggle-block' );
 		$content_toggle_data   = $content_toggle_upsell->get_upsell_data();
 
+		// Divider extension
+		$divider_upsell      = new Divider_Extension( 'ub/divider' );
+		$divider_upsell_data = $divider_upsell->get_upsell_data();
+
 		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data,
-			$content_toggle_data );
+			$content_toggle_data, $divider_upsell_data );
 
 		return [
 			'upsellExtensionData' => $final_upsell_extension_data

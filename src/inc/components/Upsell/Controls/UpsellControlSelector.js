@@ -3,6 +3,7 @@ import UpsellInspectorPanelBody from '$Inc/components/Upsell/UpsellInspectorPane
 import UpsellToggleControl from '$Inc/components/Upsell/Controls/UpsellToggleControl';
 import UpsellSelectControl from '$Inc/components/Upsell/Controls/UpsellSelectControl';
 import UpsellColorControl from '$Inc/components/Upsell/Controls/UpsellColorControl';
+import UpsellIconControl from '$Inc/components/Upsell/Controls/UpsellIconControl';
 
 /**
  *	Dummy control types.
@@ -14,6 +15,7 @@ const DUMMY_CONTROL_TYPES = {
 	TOGGLE: 'toggle',
 	SELECT: 'select',
 	COLOR: 'color',
+	ICON: 'icon',
 };
 
 /**
@@ -41,6 +43,9 @@ function UpsellControlSelector({ controlData }) {
 				break;
 			case DUMMY_CONTROL_TYPES.COLOR:
 				TargetDummyControl = UpsellColorControl;
+				break;
+			case DUMMY_CONTROL_TYPES.ICON:
+				TargetDummyControl = UpsellIconControl;
 				break;
 			default:
 				TargetDummyControl = null;
