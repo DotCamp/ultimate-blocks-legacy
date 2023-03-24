@@ -18,6 +18,10 @@
   background-color: rgba(0, 0, 0, 0.6);
   animation: blur-anim 0.2s ease-out forwards;
 
+  &, & * {
+	box-sizing: border-box;
+  }
+
   .ub-upsells-modal-navigation {
 	@extend %appear-anim;
 	@extend %flex-center-all;
@@ -72,8 +76,8 @@
 
 	.ub-upsells-modal-content {
 	  display: grid;
-	  grid-template-columns: auto 1fr;
-	  grid-template-rows: 1fr;
+	  grid-template-columns: 1fr;
+	  grid-template-rows: auto 1fr;
 	  grid-gap: 20px;
 	  padding: 15px 35px;
 	  justify-content: center;
@@ -83,7 +87,7 @@
 		@extend %default-border-radius;
 		@extend %gutenberg-sidebar-default-borders;
 		@extend %flex-center-all;
-		width: 160px;
+		width: 100%;
 		height: 160px;
 		background-color: $gray-200;
 		padding: 5px;
@@ -91,11 +95,13 @@
 		img {
 		  width: 100%;
 		  height: 100%;
-		  object-fit: contain;
+		  object-fit: scale-down;
 		}
 	  }
 
 	  .ub-upsells-modal-content-description {
+		@extend %flex-center-all;
+		text-align: center;
 	  }
 	}
 
