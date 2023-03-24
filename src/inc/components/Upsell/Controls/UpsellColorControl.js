@@ -1,6 +1,7 @@
 import React from 'react';
 import withUpsellControlWrapper from '$Inc/hoc/withUpsellControlWrapper';
 import { PanelColorSettings } from '@wordpress/block-editor';
+
 /**
  * Color control for upsell features.
  *

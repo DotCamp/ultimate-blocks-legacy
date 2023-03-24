@@ -17,6 +17,7 @@ const withUpsellControlWrapper =
 		colorSettings = [],
 		title = '',
 		selectedIcon = '',
+		buttonLabels = [],
 	}) => {
 		const defaultProps = {
 			onChange: () => {},
@@ -30,6 +31,7 @@ const withUpsellControlWrapper =
 			options,
 			colorSettings,
 			selectedIcon,
+			buttonLabels,
 		};
 
 		return (

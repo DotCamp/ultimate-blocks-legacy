@@ -4,6 +4,7 @@ import UpsellToggleControl from '$Inc/components/Upsell/Controls/UpsellToggleCon
 import UpsellSelectControl from '$Inc/components/Upsell/Controls/UpsellSelectControl';
 import UpsellColorControl from '$Inc/components/Upsell/Controls/UpsellColorControl';
 import UpsellIconControl from '$Inc/components/Upsell/Controls/UpsellIconControl';
+import UpsellButtonGroupControl from '$Inc/components/Upsell/Controls/UpsellButtonGroupControl';
 
 /**
  *	Dummy control types.
@@ -16,6 +17,7 @@ const DUMMY_CONTROL_TYPES = {
 	SELECT: 'select',
 	COLOR: 'color',
 	ICON: 'icon',
+	BUTTON_GROUP: 'button_group',
 };
 
 /**
@@ -46,6 +48,9 @@ function UpsellControlSelector({ controlData }) {
 				break;
 			case DUMMY_CONTROL_TYPES.ICON:
 				TargetDummyControl = UpsellIconControl;
+				break;
+			case DUMMY_CONTROL_TYPES.BUTTON_GROUP:
+				TargetDummyControl = UpsellButtonGroupControl;
 				break;
 			default:
 				TargetDummyControl = null;

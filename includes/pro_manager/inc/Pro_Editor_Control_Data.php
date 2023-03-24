@@ -11,11 +11,12 @@ class Pro_Editor_Control_Data {
 	 * Editor control types.
 	 */
 	const UB_PRO_EDITOR_CONTROL_TYPES = [
-		'PANEL'  => 'panel',
-		'TOGGLE' => 'toggle',
-		'SELECT' => 'select',
-		'COLOR'  => 'color',
-		'ICON'   => 'icon',
+		'PANEL'        => 'panel',
+		'TOGGLE'       => 'toggle',
+		'SELECT'       => 'select',
+		'COLOR'        => 'color',
+		'ICON'         => 'icon',
+		'BUTTON_GROUP' => 'button_group',
 	];
 
 	/**
@@ -34,6 +35,20 @@ class Pro_Editor_Control_Data {
 			'type'      => $control_type,
 			'label'     => $title,
 		];
+	}
+
+	/**
+	 * Generate upsell button group dummy control data.
+	 *
+	 * @param string $feature_id feature id
+	 * @param array $button_labels button labels
+	 *
+	 * @return array editor control data
+	 */
+	public static function generate_button_group_control_data( $feature_id, $button_labels ) {
+		$base_data = static::generate_base_data( $feature_id, self::UB_PRO_EDITOR_CONTROL_TYPES['BUTTON_GROUP'], '__' );
+
+		return array_merge( $base_data, [ 'buttonLabels' => $button_labels ] );
 	}
 
 	/**
