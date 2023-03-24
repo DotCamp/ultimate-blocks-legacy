@@ -9,6 +9,7 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Expand_Extension;
+use Ultimate_Blocks\includes\pro_manager\extensions\Image_Slider_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 
 /**
@@ -51,8 +52,12 @@ class Pro_Manager {
 		$expand_upsell      = new Expand_Extension( 'ub/expand' );
 		$expand_upsell_data = $expand_upsell->get_upsell_data();
 
+		// Image slider extension
+		$image_slider_upsell      = new Image_Slider_Extension( 'ub/image-slider' );
+		$image_slider_upsell_data = $image_slider_upsell->get_upsell_data();
+
 		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data,
-			$content_toggle_data, $divider_upsell_data, $expand_upsell_data );
+			$content_toggle_data, $divider_upsell_data, $expand_upsell_data, $image_slider_upsell_data );
 
 		return [
 			'upsellExtensionData' => $final_upsell_extension_data
