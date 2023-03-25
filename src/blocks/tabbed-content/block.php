@@ -124,15 +124,6 @@ function ub_tabbed_content_add_frontend_assets() {
                 Ultimate_Blocks_Constants::plugin_version(),
                 true
             );
-            if(!wp_script_is('ultimate_blocks-scrollby-polyfill', 'queue')){
-                wp_enqueue_script(
-                    'ultimate_blocks-scrollby-polyfill',
-                    plugins_url( 'scrollby-polyfill.js', dirname( __FILE__ ) ),
-                    array(),
-                    Ultimate_Blocks_Constants::plugin_version(),
-                    true
-                );
-            }
             break;
         }
     }
