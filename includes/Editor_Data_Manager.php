@@ -26,6 +26,18 @@ class Editor_Data_Manager {
 	private $editor_priority_data_filter_hook = 'ub/filter/priority-editor-data';
 
 	/**
+	 * Filter hook name for client data.
+	 * @var string
+	 */
+	private $editor_data_filter_hook = 'ub/filter/editor-client-data';
+
+	/**
+	 * Object name of data in editor.
+	 * @var string
+	 */
+	private $editor_data_object_name = 'ubEditorClientData';
+
+	/**
 	 * Object name of priority data in editor.
 	 * @var string
 	 */
@@ -53,6 +65,33 @@ class Editor_Data_Manager {
 		add_filter( $this->editor_priority_data_filter_hook, function ( $priority_data ) use ( $data ) {
 			return array_merge_recursive( $priority_data, $data );
 		} );
+	}
+
+	/**
+	 * Add editor data.
+	 *
+	 * @param array $data data to be added
+	 *
+	 * @return void
+	 */
+	public function add_editor_data( $data ) {
+		add_filter( $this->editor_data_filter_hook, function ( $editor_data ) use ( $data ) {
+			return array_merge_recursive( $editor_data, $data );
+		} );
+	}
+
+	/**
+	 * Attach editor data to script.
+	 *
+	 * @param array $base_data base data to start
+	 * @param string $script_handler script handler name which this data will be attached
+	 *
+	 * @return void
+	 */
+	public function attach_editor_data( $base_data, $script_handler ) {
+		$editor_data = apply_filters( $this->editor_data_filter_hook, $base_data );
+
+		wp_localize_script( $script_handler, $this->editor_data_object_name, $editor_data );
 	}
 
 	/**
