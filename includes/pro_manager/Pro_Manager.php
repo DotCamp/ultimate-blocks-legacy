@@ -46,6 +46,10 @@ class Pro_Manager {
 		$content_toggle_upsell = new Content_Toggle_Extension( 'ub/content-toggle-block' );
 		$content_toggle_data   = $content_toggle_upsell->get_upsell_data();
 
+		// Content toggle panel extension
+		$content_toggle_panel_upsell = new Content_Toggle_Extension( 'ub/content-toggle-panel-block' );
+		$content_toggle_panel_data   = $content_toggle_panel_upsell->get_upsell_data();
+
 		// Divider extension
 		$divider_upsell      = new Divider_Extension( 'ub/divider' );
 		$divider_upsell_data = $divider_upsell->get_upsell_data();
@@ -67,7 +71,8 @@ class Pro_Manager {
 		$table_of_contents_upsell_data = $table_of_contents_upsell->get_upsell_data();
 
 		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data,
-			$content_toggle_data, $divider_upsell_data, $expand_upsell_data, $image_slider_upsell_data,
+			$content_toggle_data, $content_toggle_panel_data, $divider_upsell_data, $expand_upsell_data,
+			$image_slider_upsell_data,
 			$review_upsell_data, $table_of_contents_upsell_data );
 
 		return [
