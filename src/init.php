@@ -111,11 +111,14 @@ function ub_load_assets() {
 	);
 }
 
-function ub_advanced_heading_add_assets($fontList) {
+function ub_advanced_heading_add_assets( $fontList ) {
 
-	$fontNames = join("|", array_filter($fontList, function($item){ return $item !== 'Default';}));
+	$fontNames = join( "|", array_filter( $fontList, function ( $item ) {
+		return $item !== 'Default';
+	} ) );
 
-	wp_enqueue_style( 'ultimate_blocks-advanced-heading-fonts', 'https://fonts.googleapis.com/css?family=' . $fontNames );
+	wp_enqueue_style( 'ultimate_blocks-advanced-heading-fonts',
+			'https://fonts.googleapis.com/css?family=' . $fontNames );
 }
 
 function ub_generate_widget_block_list( $output = false ) {
@@ -155,14 +158,15 @@ function ultimate_blocks_cgb_block_assets() {
 		foreach ( $widget_blocks as $block ) {
 			if ( strpos( $block['blockName'], 'ub/' ) === 0 ) {
 
-				if(!$main_assets_loaded){
+				if ( ! $main_assets_loaded ) {
 					ub_load_assets();
 					$main_assets_loaded = true;
 				}
 
 				if ( strpos( $block['blockName'], 'ub/advanced-heading' ) === 0 ) {
-					if($block['attrs']['fontFamily'] !== $defaultFont && !in_array($block['attrs']['fontFamily'], $advanced_heading_font_list)){
-						array_push($advanced_heading_font_list, $block['attrs']['fontFamily']);
+					if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
+									$advanced_heading_font_list ) ) {
+						array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
 					}
 				}
 			}
@@ -174,14 +178,15 @@ function ultimate_blocks_cgb_block_assets() {
 			foreach ( $presentBlocks as $block ) {
 				if ( strpos( $block['blockName'], 'ub/' ) === 0 ) {
 
-					if(!$main_assets_loaded){
+					if ( ! $main_assets_loaded ) {
 						ub_load_assets();
 						$main_assets_loaded = true;
 					}
 
 					if ( strpos( $block['blockName'], 'ub/advanced-heading' ) === 0 ) {
-						if($block['attrs']['fontFamily'] !== $defaultFont && !in_array($block['attrs']['fontFamily'], $advanced_heading_font_list)){
-							array_push($advanced_heading_font_list, $block['attrs']['fontFamily']);
+						if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
+										$advanced_heading_font_list ) ) {
+							array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
 						}
 
 					}
@@ -189,8 +194,8 @@ function ultimate_blocks_cgb_block_assets() {
 			}
 		}
 
-		if(count($advanced_heading_font_list) > 0){
-			ub_advanced_heading_add_assets($advanced_heading_font_list);
+		if ( count( $advanced_heading_font_list ) > 0 ) {
+			ub_advanced_heading_add_assets( $advanced_heading_font_list );
 		}
 
 	} elseif ( ub_check_is_gutenberg_page() ) {
@@ -1159,9 +1164,10 @@ function ultimate_blocks_cgb_editor_assets() {
 			Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
-	$editor_client_data = apply_filters( 'ub/filter/editor-client-data', [] );
-
-	wp_localize_script( 'ultimate_blocks-cgb-block-js', 'ubEditorClientData', $editor_client_data );
+//	$editor_client_data = apply_filters( 'ub/filter/editor-client-data', [] );
+//
+//	wp_localize_script( 'ultimate_blocks-cgb-block-js', 'ubEditorClientData', $editor_client_data );
+	Editor_Data_Manager::get_instance()->attach_editor_data( [], 'ultimate_blocks-cgb-block-js' );
 
 	wp_enqueue_script(
 			'ultimate_blocks-cgb-deactivator-js', // Handle.
