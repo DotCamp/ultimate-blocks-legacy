@@ -228,7 +228,7 @@ registerBlockType("ub/content-toggle-block", {
 		__("Ultimate Blocks"),
 		__("FAQ"),
 	],
-	example: {},
+	example: { attributes: { titleLinkColor: "invalid" } }, //indicator for displaying in preview
 	attributes,
 
 	transforms: {

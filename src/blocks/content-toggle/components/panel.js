@@ -110,7 +110,7 @@ const attributes = {
 };
 
 function ContentTogglePanel(props) {
-	const [showPanel, setPanelStatus] = useState(true);
+	const [showPanel, setPanelStatus] = useState(false);
 
 	const {
 		attributes: {
@@ -150,8 +150,8 @@ function ContentTogglePanel(props) {
 	}
 
 	useEffect(() => {
-		if (props.attributes.showOnlyOne && props.attributes.collapsed) {
-			setPanelStatus(false);
+		if (blockParent.attributes.titleLinkColor === "invalid") {
+			setPanelStatus(true);
 		}
 	}, []);
 
