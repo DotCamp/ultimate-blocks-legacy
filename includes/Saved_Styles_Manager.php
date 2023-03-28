@@ -4,6 +4,7 @@ namespace Ultimate_Blocks\includes;
 
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\common\factory\Rest_Response_Factory;
+use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
 use WP_Error;
 use WP_REST_Request;
 use function add_action;
@@ -42,10 +43,25 @@ class Saved_Styles_Manager {
 	 * @return void
 	 */
 	protected function init_process() {
-		add_action( 'rest_api_init', [ $this, 'register_rest_endpoints' ] );
+		$pro_status = Pro_Manager::get_instance()->is_pro();
 
-		// queue frontend data after related settings are registered since we will be using those on frontend data
-		add_action( 'admin_init', [ $this, 'add_frontend_data' ] );
+		if ( ! $pro_status ) {
+			add_action( 'rest_api_init', [
+				$this,
+				'register_rest_endpoints'
+			] );// queue frontend data after related settings are registered since we will be using those on frontend data
+			add_action( 'admin_init', [ $this, 'add_frontend_data' ] );// init hook
+			add_action( 'init', [ $this, 'init_hook_callback' ] );
+		}
+	}
+
+	/**
+	 * Init callback hook for functionality depends on functions that are called on it.
+	 * @return void
+	 */
+	public function init_hook_callback() {
+		// initialize static styles manager
+		Static_Styles_Manager::init();
 	}
 
 	/**
@@ -67,7 +83,7 @@ class Saved_Styles_Manager {
 			]
 		];
 
-		// ub-pro/filter/savedStylesFrontendData filter hook
+		// ultimate-blocks/filter/savedStylesFrontendData filter hook
 		$saved_styles_data = apply_filters( 'ultimate-blocks/filter/savedStylesFrontendData', $saved_styles_data );
 
 		Editor_Data_Manager::get_instance()->add_editor_data( [ 'savedStyles' => $saved_styles_data ] );
