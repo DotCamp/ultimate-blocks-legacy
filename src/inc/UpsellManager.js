@@ -1,5 +1,5 @@
 import { render } from 'react-dom';
-import ManagerBase from '$Base/ManagerBase';
+import { ManagerBase } from '$Library/ub-common/Inc';
 import UpsellMain from '$Inc/components/Upsell/UpsellMain';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { Fragment } from 'react';

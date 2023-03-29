@@ -17486,148 +17486,160 @@ exports.UbIconComponent = Yt;
 "use strict";
 
 
-Object.defineProperty(exports, Symbol.toStringTag, {
-  value: "Module"
-});
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-var p = __webpack_require__(/*! ../.Chunks/e2c2858e.js */ "./library/ub-common/.Chunks/e2c2858e.js"),
-    a = __webpack_require__(/*! @wordpress/data */ "@wordpress/data"),
-    d = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose"),
-    h = function h(c) {
-  return {
-    namespacedWithDispatch: function namespacedWithDispatch(n) {
-      return a.withDispatch(function (i, o, _ref) {
-        var t = _ref.select;
-        var e = i(c),
-            l = t(c);
-        return n(e, l);
-      });
-    },
-    namespacedWithSelect: function namespacedWithSelect(n) {
-      return a.withSelect(function (i, o, t) {
-        var e = i(c);
-        return n(e, o, t);
-      });
-    }
-  };
-},
-    u = function u(c, r, s) {
-  var _h = h(c),
-      n = _h.namespacedWithDispatch,
-      i = _h.namespacedWithSelect;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-  var o = function o(e) {
-    return e;
-  };
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-  r && (o = i(r));
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-  var t = function t(e) {
-    return e;
-  };
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
 
-  return s && (t = n(s)), d.compose(o, t);
-};
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-exports.Debouncer = p.Debouncer;
-exports.IconSizeDefinition = p.IconSizeDefinition;
-exports.connectWithStore = u;
-exports.createNamespacedHelpers = h;
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-/***/ }),
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-/***/ "./src/base/ManagerBase.js":
-/*!*********************************!*\
-  !*** ./src/base/ManagerBase.js ***!
-  \*********************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+var u = function u(e, n, t) {
+  if (!n.has(e)) throw TypeError("Cannot " + t);
+};
 
-function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+var d = function d(e, n, t) {
+  return u(e, n, "read from private field"), t ? t.call(e) : n.get(e);
+},
+    h = function h(e, n, t) {
+  if (n.has(e)) throw TypeError("Cannot add the same private member more than once");
+  n instanceof WeakSet ? n.add(e) : n.set(e, t);
+},
+    p = function p(e, n, t, i) {
+  return u(e, n, "write to private field"), i ? i.call(e, t) : n.set(e, t), t;
+};
 
-function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+Object.defineProperty(exports, Symbol.toStringTag, {
+  value: "Module"
+});
 
-function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+var D = __webpack_require__(/*! ../.Chunks/e2c2858e.js */ "./library/ub-common/.Chunks/e2c2858e.js"),
+    m = __webpack_require__(/*! @wordpress/data */ "@wordpress/data"),
+    W = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose"),
+    S = function S(e) {
+  return {
+    namespacedWithDispatch: function namespacedWithDispatch(i) {
+      return m.withDispatch(function (s, r, _ref) {
+        var c = _ref.select;
+        var a = s(e),
+            g = c(e);
+        return i(a, g);
+      });
+    },
+    namespacedWithSelect: function namespacedWithSelect(i) {
+      return m.withSelect(function (s, r, c) {
+        var a = s(e);
+        return i(a, r, c);
+      });
+    }
+  };
+},
+    w = function w(e, n, t) {
+  var _S = S(e),
+      i = _S.namespacedWithDispatch,
+      s = _S.namespacedWithSelect;
 
-function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+  var r = function r(a) {
+    return a;
+  };
 
-function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+  n && (r = s(n));
 
-function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+  var c = function c(a) {
+    return a;
+  };
 
-var _initialized = /*#__PURE__*/new WeakMap();
+  return t && (c = i(t)), W.compose(r, c);
+};
 
-/**
- * Manager base abstract class.
- *
- * Implement `initLogic` function to comply.
- */
-var ManagerBase = /*#__PURE__*/function () {
-  function ManagerBase() {
-    _classCallCheck(this, ManagerBase);
+var o;
 
-    _classPrivateFieldInitSpec(this, _initialized, {
-      writable: true,
-      value: false
-    });
+var f = /*#__PURE__*/function () {
+  function f() {
+    _classCallCheck(this, f);
+
+    h(this, o, !1);
   }
 
-  _createClass(ManagerBase, [{
+  _createClass(f, [{
     key: "isInitialized",
-    value:
-    /**
-     * Get initialization status of manager.
-     *
-     * @return {boolean} initialization status
-     */
-    function isInitialized() {
-      return _classPrivateFieldGet(this, _initialized);
+    value: function isInitialized() {
+      return d(this, o);
     }
-    /**
-     * Initialization logic.
-     *
-     * @abstract
-     */
-
   }, {
     key: "_initLogic",
     value: function _initLogic() {
-      throw new Error('initLogic function is not implemented at extended class');
+      throw new Error("initLogic function is not implemented at extended class");
     }
-    /**
-     * Initialize manager instance.
-     */
-
   }, {
     key: "init",
     value: function init() {
-      if (!this.isInitialized()) {
-        var _this$_initLogic;
+      var _this$_initLogic;
 
-        (_this$_initLogic = this._initLogic).call.apply(_this$_initLogic, [this].concat(Array.prototype.slice.call(arguments)));
-
-        _classPrivateFieldSet(this, _initialized, true);
-      }
+      this.isInitialized() || ((_this$_initLogic = this._initLogic).call.apply(_this$_initLogic, [this].concat(Array.prototype.slice.call(arguments))), p(this, o, !0));
     }
   }]);
 
-  return ManagerBase;
+  return f;
 }();
-/**
- * @module ManagerBase
- */
 
+o = new WeakMap();
+var l;
 
-/* harmony default export */ __webpack_exports__["default"] = (ManagerBase);
+var z = /*#__PURE__*/function (_f) {
+  _inherits(z, _f);
+
+  var _super = _createSuper(z);
+
+  function z() {
+    var _this;
+
+    _classCallCheck(this, z);
+
+    _this = _super.apply(this, arguments);
+    h(_assertThisInitialized(_this), l, null);
+    return _this;
+  }
+
+  _createClass(z, [{
+    key: "_initLogic",
+    value: function _initLogic(t) {
+      var i = self || __webpack_require__.g;
+      p(this, l, i[t] || {}), i[t] = void 0;
+    }
+  }, {
+    key: "getDataProperty",
+    value: function getDataProperty(t) {
+      var i = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      return d(this, l)[t] || i;
+    }
+  }]);
+
+  return z;
+}(f);
+
+l = new WeakMap();
+var I = new z();
+exports.Debouncer = D.Debouncer;
+exports.IconSizeDefinition = D.IconSizeDefinition;
+exports.FrontendDataManager = I;
+exports.ManagerBase = f;
+exports.connectWithStore = w;
+exports.createNamespacedHelpers = S;
 
 /***/ }),
 
@@ -17641,7 +17653,8 @@ var ManagerBase = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom */ "react-dom");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var $Base_ManagerBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Base/ManagerBase */ "./src/base/ManagerBase.js");
+/* harmony import */ var $Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! $Library/ub-common/Inc */ "./library/ub-common/Inc/index.js");
+/* harmony import */ var $Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n($Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var $Inc_components_Upsell_UpsellMain__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! $Inc/components/Upsell/UpsellMain */ "./src/inc/components/Upsell/UpsellMain.js");
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
@@ -17732,7 +17745,7 @@ var UpsellManager = /*#__PURE__*/function (_ManagerBase) {
   }]);
 
   return UpsellManager;
-}($Base_ManagerBase__WEBPACK_IMPORTED_MODULE_1__["default"]);
+}($Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_1__.ManagerBase);
 /**
  * @module UpsellManager
  */
@@ -19249,7 +19262,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./src/stores/mainStore/actions.js");
 /* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! deepmerge */ "./node_modules/deepmerge/dist/cjs.js");
 /* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(deepmerge__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var $Base_ManagerBase__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! $Base/ManagerBase */ "./src/base/ManagerBase.js");
+/* harmony import */ var $Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! $Library/ub-common/Inc */ "./library/ub-common/Inc/index.js");
+/* harmony import */ var $Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n($Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19406,7 +19420,7 @@ var MainStore = /*#__PURE__*/function (_ManagerBase) {
   }]);
 
   return MainStore;
-}($Base_ManagerBase__WEBPACK_IMPORTED_MODULE_5__["default"]);
+}($Library_ub_common_Inc__WEBPACK_IMPORTED_MODULE_5__.ManagerBase);
 /**
  * @module mainStoreObj
  */

@@ -3,7 +3,7 @@ import reducer from './reducer';
 import selectors from './selectors';
 import actions from './actions';
 import deepmerge from 'deepmerge';
-import ManagerBase from '$Base/ManagerBase';
+import { ManagerBase } from '$Library/ub-common/Inc';
 
 /**
  * Main store for plugin.
