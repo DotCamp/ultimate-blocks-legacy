@@ -89,6 +89,8 @@ class Editor_Data_Manager {
 	 * @return void
 	 */
 	public function attach_editor_data( $base_data, $script_handler ) {
+		// add priority related data to base data too since there might be components that are using it
+		$base_data   = $this->generate_priority_base_data( $base_data );
 		$editor_data = apply_filters( $this->editor_data_filter_hook, $base_data );
 
 		wp_localize_script( $script_handler, $this->editor_data_object_name, $editor_data );
