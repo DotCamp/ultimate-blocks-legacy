@@ -5,7 +5,7 @@
  */
 import { FrontendDataManager } from '$Library/ub-common/Inc';
 import MainStore from '$BlockStores/mainStore';
-import UpsellManager from '$Inc/managers/UpsellManager';
+import ProManager from '$Inc/managers/ProManager';
 
 // initialize frontend data manager
 FrontendDataManager.init('ubEditorClientData');
@@ -13,9 +13,5 @@ FrontendDataManager.init('ubEditorClientData');
 // initialize main plugin store
 MainStore.init('ub/main');
 
-const proStatus = MainStore.select().getProStatus();
-if (!proStatus) {
-	// only initialize upsell manager if pro version is not available
-	UpsellManager.init();
-	UpsellManager.addDummyInspectorControls();
-}
+// initialize pro manager
+ProManager.init();

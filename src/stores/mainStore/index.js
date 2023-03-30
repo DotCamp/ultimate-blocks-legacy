@@ -8,8 +8,8 @@ import deepmerge from 'deepmerge';
 /**
  * Main store for plugin.
  *
- * @param {string} storeName store name
- * @function Object() { [native code] }
+ * Depends on:
+ * - FrontendDataManager
  */
 class MainStore extends ManagerBase {
 	/**
