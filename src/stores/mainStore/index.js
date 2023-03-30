@@ -8,7 +8,7 @@ import deepmerge from 'deepmerge';
 /**
  * Main store for plugin.
  *
- * Depends on:
+ * Depends on initializations of:
  * - FrontendDataManager
  */
 class MainStore extends ManagerBase {

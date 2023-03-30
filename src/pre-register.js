@@ -5,7 +5,7 @@
  */
 import { FrontendDataManager } from '$Library/ub-common/Inc';
 import MainStore from '$BlockStores/mainStore';
-import ProManager from '$Inc/managers/ProManager';
+import ProManager from '$Manager/ProManager';
 
 // initialize frontend data manager
 FrontendDataManager.init('ubEditorClientData');

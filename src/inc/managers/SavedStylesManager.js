@@ -1,10 +1,17 @@
 import { select, dispatch } from '@wordpress/data';
-import { ManagerBase, FrontendDataManager } from '$Library/ub-common/Inc';
-import SavedStylesStore from '@Stores/savedStyles';
-import HookManager, { hookTypes } from '@Managers/HookManager';
+import {
+	ManagerBase,
+	FrontendDataManager,
+	HookManager,
+	hookTypes,
+} from '$Library/ub-common/Inc';
+import SavedStylesStore from '$BlockStores/savedStyles';
 
 /**
  * Saved styles manager for frontend.
+ *
+ * Depends on initializations of:
+ * - FrontendDataManager
  */
 class SavedStylesManager extends ManagerBase {
 	/**

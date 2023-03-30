@@ -2,8 +2,8 @@ import apiFetch from '@wordpress/api-fetch';
 import { dispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import { v4 as uuidV4 } from 'uuid';
-import types from '@Stores/savedStyles/types';
-import { getRenderedPreview } from '@Stores/savedStyles/selectors';
+import types from '$BlockStores/savedStyles/types';
+import { getRenderedPreview } from '$BlockStores/savedStyles/selectors';
 
 /**
  * Store actions.

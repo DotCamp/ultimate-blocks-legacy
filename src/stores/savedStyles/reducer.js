@@ -1,5 +1,5 @@
-import createStoreState from '@Stores/savedStyles/state';
-import types from '@Stores/savedStyles/types';
+import createStoreState from '$BlockStores/savedStyles/state';
+import types from '$BlockStores/savedStyles/types';
 
 /**
  * Store reducers.

@@ -1,11 +1,12 @@
 import { ManagerBase } from '$Library/ub-common/Inc';
 import MainStore from '$BlockStores/mainStore';
-import UpsellManager from '$Inc/managers/UpsellManager';
+import UpsellManager from '$Manager/UpsellManager';
+import SavedStylesManager from '$Manager/SavedStylesManager';
 
 /**
  * Manager for handling pro features of plugin on editor side.
  *
- * Depends on:
+ * Depends on initializations of:
  * - MainStore
  */
 class ProManager extends ManagerBase {
@@ -28,6 +29,9 @@ class ProManager extends ManagerBase {
 			// initialize upsell manager
 			UpsellManager.init();
 			UpsellManager.addDummyInspectorControls();
+
+			// initialize saved styles manager
+			SavedStylesManager.init();
 		}
 	}
 }

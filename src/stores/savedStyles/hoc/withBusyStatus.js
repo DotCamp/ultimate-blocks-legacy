@@ -1,8 +1,8 @@
-import { connectWithStore } from '@Stores/StoreHelpers';
-import SavedStylesManager from '@Managers/SavedStylesManager';
+import { connectWithStore } from '$Library/ub-common/Inc';
+import SavedStylesManager from '$Manager/SavedStylesManager';
 
 // select mappings
-const selectMapping = ( { busyState } ) => {
+const selectMapping = ({ busyState }) => {
 	return { busyStatus: busyState() };
 };
 
