@@ -1,4 +1,4 @@
-import { ManagerBase } from '$Library/ub-common/Inc';
+import { ManagerBase, registerPreviewManager } from '$Library/ub-common/Inc';
 import MainStore from '$BlockStores/mainStore';
 import UpsellManager from '$Manager/UpsellManager';
 import SavedStylesManager from '$Manager/SavedStylesManager';
@@ -29,6 +29,9 @@ class ProManager extends ManagerBase {
 			// initialize upsell manager
 			UpsellManager.init();
 			UpsellManager.addDummyInspectorControls();
+
+			// register preview manager block
+			registerPreviewManager();
 
 			// initialize saved styles manager
 			SavedStylesManager.init();
