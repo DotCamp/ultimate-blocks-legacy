@@ -119,7 +119,7 @@ function SelectedSavedStyleControls({
 	 */
 	function staticStyleDisabledStatus() {
 		if (selectedItemId && selectedItemId.startsWith('ub-dev')) {
-			return UB_PRO_ENV === 'production';
+			return UB_ENV === 'production';
 		}
 		return false;
 	}

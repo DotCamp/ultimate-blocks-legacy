@@ -3,6 +3,7 @@ const path = require('path');
 const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 
 module.exports = {
 	...defaultConfig,
@@ -27,6 +28,9 @@ module.exports = {
 			(p) => !(p instanceof CleanWebpackPlugin)
 		),
 		new IgnoreEmitPlugin(['blocks.build.asset.php', /\.map$/]),
+		new DefinePlugin({
+			UB_ENV: JSON.stringify(defaultConfig.mode),
+		}),
 	],
 	output: {
 		filename: '[name].build.js',

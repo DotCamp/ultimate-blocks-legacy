@@ -55,7 +55,7 @@ function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
 				>
 					{__('Save', 'ultimate-blocks-pro')}
 				</Button>
-				{UB_PRO_ENV !== 'production' && (
+				{UB_ENV !== 'production' && (
 					<Button
 						disabled={buttonDisabledStatus()}
 						isSmall={true}
