@@ -7,6 +7,8 @@ import UpsellSelectControl from '$Inc/components/Upsell/Controls/UpsellSelectCon
 /**
  * Upsell dummy inspector controls for button block.
  *
+ * @deprecated
+ *
  * @function Object() { [native code] }
  */
 function UpsellInspectorDummy() {

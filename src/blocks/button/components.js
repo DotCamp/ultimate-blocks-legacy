@@ -1,13 +1,14 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from 'react';
 import {
 	generateIcon,
 	dashesToCamelcase,
 	splitArrayIntoChunks,
 	splitArray,
-} from "../../common";
+} from '../../common';
 
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { fab } from "@fortawesome/free-brands-svg-icons";
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import SavedStylesInspectorPanel from '$Inc/components/SavedStyles/SavedStylesInspectorPanel';
 
 const {
 	BlockControls,
@@ -39,35 +40,35 @@ export const allIcons = Object.assign(fas, fab);
 export const presetIconSize = { small: 25, medium: 30, large: 35, larger: 40 };
 
 export const defaultButtonProps = {
-	buttonText: "Button Text",
-	url: "",
-	size: "medium",
-	buttonColor: "#313131",
-	buttonHoverColor: "#313131",
-	buttonTextColor: "#ffffff",
-	buttonTextHoverColor: "#ffffff",
+	buttonText: 'Button Text',
+	url: '',
+	size: 'medium',
+	buttonColor: '#313131',
+	buttonHoverColor: '#313131',
+	buttonTextColor: '#ffffff',
+	buttonTextHoverColor: '#ffffff',
 	buttonRounded: true,
 	buttonRadius: 10, //retained for compatibility
-	buttonRadiusUnit: "px", //retained for compatibility
+	buttonRadiusUnit: 'px', //retained for compatibility
 
 	topLeftRadius: 10,
-	topLeftRadiusUnit: "px",
+	topLeftRadiusUnit: 'px',
 	topRightRadius: 10,
-	topRightRadiusUnit: "px",
+	topRightRadiusUnit: 'px',
 	bottomLeftRadius: 10,
-	bottomLeftRadiusUnit: "px",
+	bottomLeftRadiusUnit: 'px',
 	bottomRightRadius: 10,
-	bottomRightRadiusUnit: "px",
+	bottomRightRadiusUnit: 'px',
 
-	chosenIcon: "",
-	iconPosition: "left",
+	chosenIcon: '',
+	iconPosition: 'left',
 	iconSize: 0,
-	iconUnit: "px",
+	iconUnit: 'px',
 	buttonIsTransparent: false,
 	addNofollow: false,
 	openInNewTab: true,
 	addSponsored: false,
-	buttonWidth: "flex",
+	buttonWidth: 'flex',
 };
 
 //commented out in old button block
@@ -83,13 +84,15 @@ export const blockControls = (props) => {
 			<BlockControls>
 				<BlockAlignmentToolbar
 					value={align}
-					onChange={(newAlignment) => setAttributes({ align: newAlignment })}
-					controls={["left", "center", "right"]}
+					onChange={(newAlignment) =>
+						setAttributes({ align: newAlignment })
+					}
+					controls={['left', 'center', 'right']}
 				/>
 				<ToolbarGroup>
 					<ToolbarButton
 						icon="admin-links"
-						label={__("Add button link")}
+						label={__('Add button link')}
 						onClick={() => toggleLinkInput(true)}
 					/>
 				</ToolbarGroup>
@@ -101,16 +104,16 @@ export const blockControls = (props) => {
 //commented out in old button block
 export const inspectorControls = (props) => {
 	const BUTTON_SIZES = {
-		small: __("S", "ultimate-blocks"),
-		medium: __("M", "ultimate-blocks"),
-		large: __("L", "ultimate-blocks"),
-		larger: __("XL", "ultimate-blocks"),
+		small: __('S', 'ultimate-blocks'),
+		medium: __('M', 'ultimate-blocks'),
+		large: __('L', 'ultimate-blocks'),
+		larger: __('XL', 'ultimate-blocks'),
 	};
 
 	const BUTTON_WIDTHS = {
-		fixed: __("Fixed", "ultimate-blocks"),
-		flex: __("Flexible", "ultimate-blocks"),
-		full: __("Full", "ultimate-blocks"),
+		fixed: __('Fixed', 'ultimate-blocks'),
+		flex: __('Flexible', 'ultimate-blocks'),
+		full: __('Full', 'ultimate-blocks'),
 	};
 
 	const {
@@ -132,10 +135,10 @@ export const inspectorControls = (props) => {
 	const normalColorPanels = buttons.length && activeButtonIndex > -1 && (
 		<>
 			<p>
-				{__("Button Color", "ultimate-blocks")}
+				{__('Button Color', 'ultimate-blocks')}
 				{buttons[activeButtonIndex].buttonColor && (
 					<span
-						class="component-color-indicator"
+						className="component-color-indicator"
 						aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
 						style={{
 							background: buttons[activeButtonIndex].buttonColor,
@@ -160,13 +163,15 @@ export const inspectorControls = (props) => {
 			{!buttons[activeButtonIndex].buttonIsTransparent && (
 				<>
 					<p>
-						{__("Button Text Color", "ultimate-blocks")}
+						{__('Button Text Color', 'ultimate-blocks')}
 						{buttons[activeButtonIndex].buttonTextColor && (
 							<span
-								class="component-color-indicator"
+								className="component-color-indicator"
 								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextColor,
+									background:
+										buttons[activeButtonIndex]
+											.buttonTextColor,
 								}}
 							/>
 						)}
@@ -177,9 +182,13 @@ export const inspectorControls = (props) => {
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonTextColor: colorValue,
-									}),
+									Object.assign(
+										{},
+										buttons[activeButtonIndex],
+										{
+											buttonTextColor: colorValue,
+										}
+									),
 									...buttons.slice(activeButtonIndex + 1),
 								],
 							})
@@ -193,13 +202,14 @@ export const inspectorControls = (props) => {
 	const hoverColorPanels = buttons.length && activeButtonIndex > -1 && (
 		<>
 			<p>
-				{__("Button Color", "ultimate-blocks")}
+				{__('Button Color', 'ultimate-blocks')}
 				{buttons[activeButtonIndex].buttonHoverColor && (
 					<span
-						class="component-color-indicator"
+						className="component-color-indicator"
 						aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
 						style={{
-							background: buttons[activeButtonIndex].buttonHoverColor,
+							background:
+								buttons[activeButtonIndex].buttonHoverColor,
 						}}
 					/>
 				)}
@@ -221,13 +231,15 @@ export const inspectorControls = (props) => {
 			{!buttons[activeButtonIndex].buttonIsTransparent && (
 				<>
 					<p>
-						{__("Button Text Color", "ultimate-blocks")}
+						{__('Button Text Color', 'ultimate-blocks')}
 						{buttons[activeButtonIndex].buttonTextHoverColor && (
 							<span
-								class="component-color-indicator"
+								className="component-color-indicator"
 								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextHoverColor,
+									background:
+										buttons[activeButtonIndex]
+											.buttonTextHoverColor,
 								}}
 							/>
 						)}
@@ -238,9 +250,13 @@ export const inspectorControls = (props) => {
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonTextHoverColor: colorValue,
-									}),
+									Object.assign(
+										{},
+										buttons[activeButtonIndex],
+										{
+											buttonTextHoverColor: colorValue,
+										}
+									),
 									...buttons.slice(activeButtonIndex + 1),
 								],
 							})
@@ -254,22 +270,96 @@ export const inspectorControls = (props) => {
 	return (
 		buttons.length > 0 && (
 			<InspectorControls>
-				<PanelBody title={__("Size", "ultimate-blocks")} initialOpen={true}>
+				<SavedStylesInspectorPanel
+					attributes={buttons[activeButtonIndex]}
+					defaultAttributes={(() => {
+						// eslint-disable-next-line no-unused-vars
+						const { buttonText, url, ...rest } = defaultButtonProps;
+
+						return rest;
+					})()}
+					attributesToSave={(() => {
+						// eslint-disable-next-line no-unused-vars
+						const { buttonText, url, ...rest } = defaultButtonProps;
+						return Object.keys(rest).filter((key) => {
+							return Object.prototype.hasOwnProperty.call(
+								rest,
+								key
+							);
+						});
+					})()}
+					setAttribute={(styleObject) => {
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								{
+									...buttons[activeButtonIndex],
+									...styleObject,
+								},
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						});
+					}}
+					previewAttributeCallback={(attr, styleName) => {
+						return {
+							buttons: [{ ...attr, buttonText: styleName }],
+						};
+					}}
+					previewElementCallback={(el) => {
+						if (el && typeof el.querySelector === 'function') {
+							const plusButton = el.querySelector('button');
+
+							const textEditor = el.querySelector(
+								'div[role="textbox"]'
+							);
+							if (textEditor) {
+								// disable in-place text editor
+								textEditor.setAttribute(
+									'contenteditable',
+									false
+								);
+							}
+
+							el.removeChild(plusButton);
+						}
+
+						return el;
+					}}
+				/>
+				<PanelBody
+					title={__('Size', 'ultimate-blocks')}
+					initialOpen={true}
+				>
 					<div className="ub-button-group">
-						<ButtonGroup aria-label={__("Button Size", "ultimate-blocks")}>
+						<ButtonGroup
+							aria-label={__('Button Size', 'ultimate-blocks')}
+						>
 							{Object.keys(BUTTON_SIZES).map((b) => (
 								<Button
 									isLarge
-									isPrimary={buttons[activeButtonIndex].size === b}
-									aria-pressed={buttons[activeButtonIndex].size === b}
+									isPrimary={
+										buttons[activeButtonIndex].size === b
+									}
+									aria-pressed={
+										buttons[activeButtonIndex].size === b
+									}
 									onClick={() =>
 										setAttributes({
 											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													size: b,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
+												...buttons.slice(
+													0,
+													activeButtonIndex
+												),
+												Object.assign(
+													{},
+													buttons[activeButtonIndex],
+													{
+														size: b,
+													}
+												),
+												...buttons.slice(
+													activeButtonIndex + 1
+												),
 											],
 										})
 									}
@@ -280,22 +370,42 @@ export const inspectorControls = (props) => {
 						</ButtonGroup>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Width", "ultimate-blocks")} initialOpen={true}>
+				<PanelBody
+					title={__('Width', 'ultimate-blocks')}
+					initialOpen={true}
+				>
 					<div className="ub-button-group">
-						<ButtonGroup aria-label={__("Button Width", "ultimate-blocks")}>
+						<ButtonGroup
+							aria-label={__('Button Width', 'ultimate-blocks')}
+						>
 							{Object.keys(BUTTON_WIDTHS).map((b) => (
 								<Button
 									isLarge
-									isPrimary={buttons[activeButtonIndex].buttonWidth === b}
-									aria-pressed={buttons[activeButtonIndex].buttonWidth === b}
+									isPrimary={
+										buttons[activeButtonIndex]
+											.buttonWidth === b
+									}
+									aria-pressed={
+										buttons[activeButtonIndex]
+											.buttonWidth === b
+									}
 									onClick={() =>
 										setAttributes({
 											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													buttonWidth: b,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
+												...buttons.slice(
+													0,
+													activeButtonIndex
+												),
+												Object.assign(
+													{},
+													buttons[activeButtonIndex],
+													{
+														buttonWidth: b,
+													}
+												),
+												...buttons.slice(
+													activeButtonIndex + 1
+												),
 											],
 										})
 									}
@@ -306,17 +416,26 @@ export const inspectorControls = (props) => {
 						</ButtonGroup>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Border", "ultimate-blocks")} initialOpen={false}>
+				<PanelBody
+					title={__('Border', 'ultimate-blocks')}
+					initialOpen={false}
+				>
 					<ToggleControl
-						label={__("Rounded", "ultimate-blocks")}
+						label={__('Rounded', 'ultimate-blocks')}
 						checked={buttons[activeButtonIndex].buttonRounded}
 						onChange={() =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonRounded: !buttons[activeButtonIndex].buttonRounded,
-									}),
+									Object.assign(
+										{},
+										buttons[activeButtonIndex],
+										{
+											buttonRounded:
+												!buttons[activeButtonIndex]
+													.buttonRounded,
+										}
+									),
 									...buttons.slice(activeButtonIndex + 1),
 								],
 							})
@@ -324,19 +443,28 @@ export const inspectorControls = (props) => {
 					/>
 				</PanelBody>
 				{buttons[activeButtonIndex].buttonRounded && (
-					<PanelBody title={__("Button Radius", "ultimate-blocks")}>
+					<PanelBody title={__('Button Radius', 'ultimate-blocks')}>
 						<div id="ub-button-radius-panel">
 							<RangeControl
-								label={__("Button Radius")}
+								label={__('Button Radius')}
 								value={buttons[activeButtonIndex].buttonRadius}
 								onChange={(value) =>
 									setAttributes({
 										buttons: [
-											...buttons.slice(0, activeButtonIndex),
-											Object.assign({}, buttons[activeButtonIndex], {
-												buttonRadius: value,
-											}),
-											...buttons.slice(activeButtonIndex + 1),
+											...buttons.slice(
+												0,
+												activeButtonIndex
+											),
+											Object.assign(
+												{},
+												buttons[activeButtonIndex],
+												{
+													buttonRadius: value,
+												}
+											),
+											...buttons.slice(
+												activeButtonIndex + 1
+											),
 										],
 									})
 								}
@@ -344,25 +472,41 @@ export const inspectorControls = (props) => {
 								max={100}
 							/>
 							<ButtonGroup
-								aria-label={__("Button Radius Unit", "ultimate-blocks")}
+								aria-label={__(
+									'Button Radius Unit',
+									'ultimate-blocks'
+								)}
 							>
-								{["px", "%"].map((b) => (
+								{['px', '%'].map((b) => (
 									<Button
 										isLarge
 										isPrimary={
-											buttons[activeButtonIndex].buttonRadiusUnit === b
+											buttons[activeButtonIndex]
+												.buttonRadiusUnit === b
 										}
 										aria-pressed={
-											buttons[activeButtonIndex].buttonRadiusUnit === b
+											buttons[activeButtonIndex]
+												.buttonRadiusUnit === b
 										}
 										onClick={() =>
 											setAttributes({
 												buttons: [
-													...buttons.slice(0, activeButtonIndex),
-													Object.assign({}, buttons[activeButtonIndex], {
-														buttonRadiusUnit: b,
-													}),
-													...buttons.slice(activeButtonIndex + 1),
+													...buttons.slice(
+														0,
+														activeButtonIndex
+													),
+													Object.assign(
+														{},
+														buttons[
+															activeButtonIndex
+														],
+														{
+															buttonRadiusUnit: b,
+														}
+													),
+													...buttons.slice(
+														activeButtonIndex + 1
+													),
 												],
 											})
 										}
@@ -375,9 +519,12 @@ export const inspectorControls = (props) => {
 					</PanelBody>
 				)}
 
-				<PanelBody title={__("Icon", "ultimate-blocks")} initialOpen={false}>
+				<PanelBody
+					title={__('Icon', 'ultimate-blocks')}
+					initialOpen={false}
+				>
 					<div className="ub-button-grid">
-						<p>{__("Selected icon", "ultimate-blocks")}</p>
+						<p>{__('Selected icon', 'ultimate-blocks')}</p>
 						<div className="ub-button-grid-selector">
 							<Dropdown
 								position="bottom right"
@@ -385,17 +532,23 @@ export const inspectorControls = (props) => {
 									<Button
 										className="ub-button-icon-select"
 										icon={
-											buttons[activeButtonIndex].chosenIcon !== "" &&
+											buttons[activeButtonIndex]
+												.chosenIcon !== '' &&
 											generateIcon(
 												allIcons[
 													`fa${dashesToCamelcase(
-														buttons[activeButtonIndex].chosenIcon
+														buttons[
+															activeButtonIndex
+														].chosenIcon
 													)}`
 												],
 												35
 											)
 										}
-										label={__("Open icon selection dialog", "ultimate-blocks")}
+										label={__(
+											'Open icon selection dialog',
+											'ultimate-blocks'
+										)}
 										onClick={onToggle}
 										aria-expanded={isOpen}
 									/>
@@ -407,25 +560,43 @@ export const inspectorControls = (props) => {
 											value={iconSearchTerm}
 											onChange={(e) => {
 												setIconSearchResultsPage(0);
-												setIconSearchTerm(e.target.value);
+												setIconSearchTerm(
+													e.target.value
+												);
 											}}
 										/>
-										{iconSearchTerm === "" && (
+										{iconSearchTerm === '' && (
 											<Button
 												className="ub-button-available-icon"
 												onClick={() =>
 													setAttributes({
 														buttons: [
-															...buttons.slice(0, activeButtonIndex),
-															Object.assign({}, buttons[activeButtonIndex], {
-																chosenIcon: "",
-															}),
-															...buttons.slice(activeButtonIndex + 1),
+															...buttons.slice(
+																0,
+																activeButtonIndex
+															),
+															Object.assign(
+																{},
+																buttons[
+																	activeButtonIndex
+																],
+																{
+																	chosenIcon:
+																		'',
+																}
+															),
+															...buttons.slice(
+																activeButtonIndex +
+																	1
+															),
 														],
 													})
 												}
 											>
-												{__("No icon", "ultimate-blocks")}
+												{__(
+													'No icon',
+													'ultimate-blocks'
+												)}
 											</Button>
 										)}
 										<br />
@@ -433,9 +604,13 @@ export const inspectorControls = (props) => {
 											<div>
 												<button
 													onClick={() => {
-														if (iconSearchResultsPage > 0) {
+														if (
+															iconSearchResultsPage >
+															0
+														) {
 															setIconSearchResultsPage(
-																iconSearchResultsPage - 1
+																iconSearchResultsPage -
+																	1
 															);
 														}
 													}}
@@ -443,16 +618,19 @@ export const inspectorControls = (props) => {
 													&lt;
 												</button>
 												<span>
-													{iconSearchResultsPage + 1}/{iconListPage.length}
+													{iconSearchResultsPage + 1}/
+													{iconListPage.length}
 												</span>
 												<button
 													onClick={() => {
 														if (
 															iconSearchResultsPage <
-															iconListPage.length - 1
+															iconListPage.length -
+																1
 														) {
 															setIconSearchResultsPage(
-																iconSearchResultsPage + 1
+																iconSearchResultsPage +
+																	1
 															);
 														}
 													}}
@@ -462,7 +640,9 @@ export const inspectorControls = (props) => {
 											</div>
 										)}
 										{iconListPage.length > 0 &&
-											iconListPage[iconSearchResultsPage].map((i) => (
+											iconListPage[
+												iconSearchResultsPage
+											].map((i) => (
 												<Button
 													className="ub-button-available-icon"
 													icon={generateIcon(i, 35)}
@@ -470,11 +650,24 @@ export const inspectorControls = (props) => {
 													onClick={() =>
 														setAttributes({
 															buttons: [
-																...buttons.slice(0, activeButtonIndex),
-																Object.assign({}, buttons[activeButtonIndex], {
-																	chosenIcon: i.iconName,
-																}),
-																...buttons.slice(activeButtonIndex + 1),
+																...buttons.slice(
+																	0,
+																	activeButtonIndex
+																),
+																Object.assign(
+																	{},
+																	buttons[
+																		activeButtonIndex
+																	],
+																	{
+																		chosenIcon:
+																			i.iconName,
+																	}
+																),
+																...buttons.slice(
+																	activeButtonIndex +
+																		1
+																),
 															],
 														})
 													}
@@ -487,25 +680,29 @@ export const inspectorControls = (props) => {
 					</div>
 					<RadioControl
 						className="ub-button-icon-position"
-						label={__("Icon position")}
+						label={__('Icon position')}
 						selected={buttons[activeButtonIndex].iconPosition}
 						options={[
 							{
-								label: __("Left", "ultimate-blocks"),
-								value: "left",
+								label: __('Left', 'ultimate-blocks'),
+								value: 'left',
 							},
 							{
-								label: __("Right", "ultimate-blocks"),
-								value: "right",
+								label: __('Right', 'ultimate-blocks'),
+								value: 'right',
 							},
 						]}
 						onChange={(pos) =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										iconPosition: pos,
-									}),
+									Object.assign(
+										{},
+										buttons[activeButtonIndex],
+										{
+											iconPosition: pos,
+										}
+									),
 									...buttons.slice(activeButtonIndex + 1),
 								],
 							})
@@ -513,20 +710,25 @@ export const inspectorControls = (props) => {
 					/>
 				</PanelBody>
 				<PanelBody
-					title={__("Colors", "ultimate-blocks")}
+					title={__('Colors', 'ultimate-blocks')}
 					initialOpen={false}
 				>
 					<ToggleControl
-						label={__("Transparent", "ultimate-blocks")}
+						label={__('Transparent', 'ultimate-blocks')}
 						checked={buttons[activeButtonIndex].buttonIsTransparent}
 						onChange={() =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonIsTransparent:
-											!buttons[activeButtonIndex].buttonIsTransparent,
-									}),
+									Object.assign(
+										{},
+										buttons[activeButtonIndex],
+										{
+											buttonIsTransparent:
+												!buttons[activeButtonIndex]
+													.buttonIsTransparent,
+										}
+									),
 									...buttons.slice(activeButtonIndex + 1),
 								],
 							})
@@ -536,17 +738,19 @@ export const inspectorControls = (props) => {
 						className="ub-tab-panel"
 						tabs={[
 							{
-								name: "buttoncolor",
-								title: __("Normal"),
+								name: 'buttoncolor',
+								title: __('Normal'),
 							},
 							{
-								name: "buttonhovercolor",
-								title: __("Hover"),
+								name: 'buttonhovercolor',
+								title: __('Hover'),
 							},
 						]}
 					>
 						{(tab) =>
-							tab.name === "buttoncolor" ? normalColorPanels : hoverColorPanels
+							tab.name === 'buttoncolor'
+								? normalColorPanels
+								: hoverColorPanels
 						}
 					</TabPanel>
 				</PanelBody>
@@ -564,8 +768,8 @@ function useOutsideAlerter(ref, triggerOn, triggerOff) {
 				ref.current &&
 				!ref.current.contains(event.target) &&
 				!(
-					classList.contains("block-editor-url-input__suggestion") ||
-					classList.contains("block-editor-url-input__suggestions")
+					classList.contains('block-editor-url-input__suggestion') ||
+					classList.contains('block-editor-url-input__suggestions')
 				)
 			) {
 				triggerOff();
@@ -573,12 +777,12 @@ function useOutsideAlerter(ref, triggerOn, triggerOff) {
 		}
 
 		// Bind the event listener
-		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener('mousedown', handleClickOutside);
 		//document.addEventListener("keydown", handleKeypress); //is this needed? probably not
 		//props.showLinkInput();
 		return () => {
 			// Unbind the event listener on clean up
-			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener('mousedown', handleClickOutside);
 			//document.removeEventListener("keydown", handleKeypress);
 		};
 	}, [triggerOn]);
@@ -602,7 +806,7 @@ function OutsideAlerter(props) {
 const URLInputBox = (props) => {
 	const { attributes, setAttributes, index, visibilityTrigger } = props;
 	const { buttons } = attributes;
-	const [currentURL, setCurrentURL] = useState("");
+	const [currentURL, setCurrentURL] = useState('');
 
 	useEffect(() => {
 		setCurrentURL(buttons[index].url);
@@ -644,9 +848,9 @@ const URLInputBox = (props) => {
 								onChange={(e) => setCurrentURL(e.target.value)}
 							/>*/}
 					<Button
-						icon={"editor-break"}
-						label={__("Apply", "ultimate-blocks")}
-						type={"submit"}
+						icon={'editor-break'}
+						label={__('Apply', 'ultimate-blocks')}
+						type={'submit'}
 						/*onClick={() =>
 
 							}*/
@@ -654,7 +858,7 @@ const URLInputBox = (props) => {
 				</form>
 			</div>
 			<CheckboxControl
-				label={__("Open Link in New Tab", "ultimate-blocks")}
+				label={__('Open Link in New Tab', 'ultimate-blocks')}
 				checked={buttons[index].openInNewTab}
 				onChange={() =>
 					setAttributes({
@@ -669,7 +873,7 @@ const URLInputBox = (props) => {
 				}
 			/>
 			<CheckboxControl
-				label={__("Add Nofollow to Link", "ultimate-blocks")}
+				label={__('Add Nofollow to Link', 'ultimate-blocks')}
 				checked={buttons[index].addNofollow}
 				onChange={() =>
 					setAttributes({
@@ -684,7 +888,7 @@ const URLInputBox = (props) => {
 				}
 			/>
 			<CheckboxControl
-				label={__("Mark link as sponsored", "ultimate-blocks")}
+				label={__('Mark link as sponsored', 'ultimate-blocks')}
 				checked={buttons[index].addSponsored}
 				onChange={() =>
 					setAttributes({
@@ -717,23 +921,28 @@ export const editorDisplay = (props) => {
 
 	return (
 		<div className={`ub-buttons align-button-${align}`}>
-			{typeof buttons !== "undefined" && (
+			{typeof buttons !== 'undefined' && (
 				<>
 					{buttons.map((b, i) => (
 						<div
 							className={`ub-button-container${
-								b.buttonWidth === "full" ? " ub-button-full-container" : ""
+								b.buttonWidth === 'full'
+									? ' ub-button-full-container'
+									: ''
 							}`}
 						>
 							{buttons.length > 1 && (
 								<div className="ub-button-delete">
 									<span
-										title={__("Delete This Button")}
+										title={__('Delete This Button')}
 										onClick={() => {
 											setActiveButtonIndex(
 												activeButtonIndex > i
 													? activeButtonIndex - 1
-													: Math.min(activeButtonIndex, buttons.length - 2)
+													: Math.min(
+															activeButtonIndex,
+															buttons.length - 2
+													  )
 											);
 											setAttributes({
 												buttons: [
@@ -742,24 +951,26 @@ export const editorDisplay = (props) => {
 												],
 											});
 										}}
-										class="dashicons dashicons-dismiss"
+										className="dashicons dashicons-dismiss"
 									/>
 								</div>
 							)}
 							<div
-								className={`ub-button-block-main ub-button-${b.size} ${
-									b.buttonWidth === "full"
-										? "ub-button-full-width"
-										: b.buttonWidth === "flex"
+								className={`ub-button-block-main ub-button-${
+									b.size
+								} ${
+									b.buttonWidth === 'full'
+										? 'ub-button-full-width'
+										: b.buttonWidth === 'flex'
 										? `ub-button-flex-${b.size}`
-										: ""
+										: ''
 								}`}
 								onMouseEnter={() => setHoveredButton(i)}
 								onMouseLeave={() => setHoveredButton(-1)}
 								onClick={() => setActiveButtonIndex(i)}
 								style={{
 									backgroundColor: b.buttonIsTransparent
-										? "transparent"
+										? 'transparent'
 										: hoveredButton === i
 										? b.buttonHoverColor
 										: b.buttonColor,
@@ -767,14 +978,19 @@ export const editorDisplay = (props) => {
 										hoveredButton === i
 											? b.buttonIsTransparent
 												? b.buttonHoverColor
-												: b.buttonTextHoverColor || "inherit"
+												: b.buttonTextHoverColor ||
+												  'inherit'
 											: b.buttonIsTransparent
 											? b.buttonColor
-											: b.buttonTextColor || "inherit",
+											: b.buttonTextColor || 'inherit',
 									borderRadius: b.buttonRounded
-										? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
-										: "0",
-									borderStyle: b.buttonIsTransparent ? "solid" : "none",
+										? `${b.buttonRadius || 10}${
+												b.buttonRadiusUnit || 'px'
+										  }`
+										: '0',
+									borderStyle: b.buttonIsTransparent
+										? 'solid'
+										: 'none',
 									borderColor: b.buttonIsTransparent
 										? hoveredButton === i
 											? b.buttonHoverColor
@@ -782,7 +998,7 @@ export const editorDisplay = (props) => {
 										: null,
 									boxShadow:
 										isSelected && activeButtonIndex === i
-											? "0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 -10px 8px 0 rgba(0, 0, 0, 0.2)"
+											? '0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 -10px 8px 0 rgba(0, 0, 0, 0.2)'
 											: null,
 								}}
 							>
@@ -790,40 +1006,57 @@ export const editorDisplay = (props) => {
 									className="ub-button-content-holder"
 									style={{
 										flexDirection:
-											b.iconPosition === "left" ? "row" : "row-reverse",
+											b.iconPosition === 'left'
+												? 'row'
+												: 'row-reverse',
 									}}
 								>
-									{b.chosenIcon !== "" &&
+									{b.chosenIcon !== '' &&
 										allIcons.hasOwnProperty(
-											`fa${dashesToCamelcase(b.chosenIcon)}`
+											`fa${dashesToCamelcase(
+												b.chosenIcon
+											)}`
 										) && (
 											<div className="ub-button-icon-holder">
 												{generateIcon(
-													allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
+													allIcons[
+														`fa${dashesToCamelcase(
+															b.chosenIcon
+														)}`
+													],
 													presetIconSize[b.size]
 												)}
 											</div>
 										)}
 									<RichText
 										className="ub-button-block-btn"
-										placeholder={__("Button Text", "ultimate-blocks")}
+										placeholder={__(
+											'Button Text',
+											'ultimate-blocks'
+										)}
 										onChange={(value) =>
 											setAttributes({
 												buttons: [
 													...buttons.slice(0, i),
-													Object.assign({}, buttons[i], {
-														buttonText: value,
-													}),
+													Object.assign(
+														{},
+														buttons[i],
+														{
+															buttonText: value,
+														}
+													),
 													...buttons.slice(i + 1),
 												],
 											})
 										}
-										unstableOnFocus={() => setActiveButtonIndex(i)}
+										unstableOnFocus={() =>
+											setActiveButtonIndex(i)
+										}
 										value={b.buttonText}
 										allowedFormats={[
-											"core/bold",
-											"core/italic",
-											"core/strikethrough",
+											'core/bold',
+											'core/italic',
+											'core/strikethrough',
 										]}
 										keepPlaceholderOnFocus={true}
 									/>
@@ -842,7 +1075,9 @@ export const editorDisplay = (props) => {
 					))}
 					<button
 						onClick={() => {
-							setAttributes({ buttons: [...buttons, defaultButtonProps] });
+							setAttributes({
+								buttons: [...buttons, defaultButtonProps],
+							});
 							setActiveButtonIndex(buttons.length);
 						}}
 					>
@@ -887,23 +1122,23 @@ export function EditorComponent(props) {
 	const [enableLinkInput, setLinkInputStatus] = useState(false);
 	const [hoveredButton, setHoveredButton] = useState(-1);
 	const [iconChoices, setIconChoices] = useState([]);
-	const [iconSearchTerm, setIconSearchTerm] = useState("");
+	const [iconSearchTerm, setIconSearchTerm] = useState('');
 	const [iconSearchResultsPage, setIconSearchResultsPage] = useState(0);
-	const [recentSelection, setRecentSelection] = useState("");
+	const [recentSelection, setRecentSelection] = useState('');
 	const [hasApiAccess, setApiStatus] = useState(false);
 	const [selectionTime, setSelectionTime] = useState(-1);
-	const [currentCorner, setCurrentCorner] = useState("all");
+	const [currentCorner, setCurrentCorner] = useState('all');
 
-	if (blockID === "") {
-		setAttributes({ blockID: block.clientId, align: "center" });
+	if (blockID === '') {
+		setAttributes({ blockID: block.clientId, align: 'center' });
 	} else {
-		if (align === "") {
-			setAttributes({ align: "center" });
+		if (align === '') {
+			setAttributes({ align: 'center' });
 		}
 		if (
 			getClientIdsWithDescendants().some(
 				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
+					'blockID' in getBlock(ID).attributes &&
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
@@ -916,16 +1151,16 @@ export function EditorComponent(props) {
 	}
 
 	const BUTTON_SIZES = {
-		small: __("S", "ultimate-blocks"),
-		medium: __("M", "ultimate-blocks"),
-		large: __("L", "ultimate-blocks"),
-		larger: __("XL", "ultimate-blocks"),
+		small: __('S', 'ultimate-blocks'),
+		medium: __('M', 'ultimate-blocks'),
+		large: __('L', 'ultimate-blocks'),
+		larger: __('XL', 'ultimate-blocks'),
 	};
 
 	const BUTTON_WIDTHS = {
-		fixed: __("Fixed", "ultimate-blocks"),
-		flex: __("Flexible", "ultimate-blocks"),
-		full: __("Full", "ultimate-blocks"),
+		fixed: __('Fixed', 'ultimate-blocks'),
+		flex: __('Flexible', 'ultimate-blocks'),
+		full: __('Full', 'ultimate-blocks'),
 	};
 
 	const iconListPage = splitArrayIntoChunks(
@@ -936,10 +1171,10 @@ export function EditorComponent(props) {
 	const normalColorPanels = buttons.length && activeButtonIndex > -1 && (
 		<>
 			<p>
-				{__("Button Color", "ultimate-blocks")}
+				{__('Button Color', 'ultimate-blocks')}
 				{buttons[activeButtonIndex].buttonColor && (
 					<span
-						class="component-color-indicator"
+						className="component-color-indicator"
 						aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
 						style={{
 							background: buttons[activeButtonIndex].buttonColor,
@@ -964,13 +1199,15 @@ export function EditorComponent(props) {
 			{!buttons[activeButtonIndex].buttonIsTransparent && (
 				<>
 					<p>
-						{__("Button Text Color", "ultimate-blocks")}
+						{__('Button Text Color', 'ultimate-blocks')}
 						{buttons[activeButtonIndex].buttonTextColor && (
 							<span
-								class="component-color-indicator"
+								className="component-color-indicator"
 								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextColor,
+									background:
+										buttons[activeButtonIndex]
+											.buttonTextColor,
 								}}
 							/>
 						)}
@@ -981,9 +1218,13 @@ export function EditorComponent(props) {
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonTextColor: colorValue,
-									}),
+									Object.assign(
+										{},
+										buttons[activeButtonIndex],
+										{
+											buttonTextColor: colorValue,
+										}
+									),
 									...buttons.slice(activeButtonIndex + 1),
 								],
 							})
@@ -997,13 +1238,14 @@ export function EditorComponent(props) {
 	const hoverColorPanels = buttons.length && activeButtonIndex > -1 && (
 		<>
 			<p>
-				{__("Button Color", "ultimate-blocks")}
+				{__('Button Color', 'ultimate-blocks')}
 				{buttons[activeButtonIndex].buttonHoverColor && (
 					<span
-						class="component-color-indicator"
+						className="component-color-indicator"
 						aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
 						style={{
-							background: buttons[activeButtonIndex].buttonHoverColor,
+							background:
+								buttons[activeButtonIndex].buttonHoverColor,
 						}}
 					/>
 				)}
@@ -1025,13 +1267,15 @@ export function EditorComponent(props) {
 			{!buttons[activeButtonIndex].buttonIsTransparent && (
 				<>
 					<p>
-						{__("Button Text Color", "ultimate-blocks")}
+						{__('Button Text Color', 'ultimate-blocks')}
 						{buttons[activeButtonIndex].buttonTextHoverColor && (
 							<span
-								class="component-color-indicator"
+								className="component-color-indicator"
 								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextHoverColor,
+									background:
+										buttons[activeButtonIndex]
+											.buttonTextHoverColor,
 								}}
 							/>
 						)}
@@ -1042,9 +1286,13 @@ export function EditorComponent(props) {
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonTextHoverColor: colorValue,
-									}),
+									Object.assign(
+										{},
+										buttons[activeButtonIndex],
+										{
+											buttonTextHoverColor: colorValue,
+										}
+									),
 									...buttons.slice(activeButtonIndex + 1),
 								],
 							})
@@ -1065,7 +1313,7 @@ export function EditorComponent(props) {
 			settings.fetch().then((response) => {
 				let frequentIcons = [];
 
-				if (response.ub_icon_choices !== "") {
+				if (response.ub_icon_choices !== '') {
 					const currentTime = ~~(Date.now() / 1000);
 
 					//trim old entries from frequenticons that are older than two weeks
@@ -1082,7 +1330,10 @@ export function EditorComponent(props) {
 					setIconChoices(frequentIcons);
 
 					//check if anything from ub_icon_choices has been trimmed in frequentIcons
-					if (JSON.stringify(frequentIcons) !== response.ub_icon_choices) {
+					if (
+						JSON.stringify(frequentIcons) !==
+						response.ub_icon_choices
+					) {
 						const newIconArray = new models.Settings({
 							ub_icon_choices: JSON.stringify(frequentIcons),
 						});
@@ -1094,7 +1345,10 @@ export function EditorComponent(props) {
 
 					[icons, otherIcons] = splitArray(
 						iconList.map((name) => allIcons[name]),
-						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
+						(icon) =>
+							frequentIcons
+								.map((i) => i.name)
+								.includes(icon.iconName)
 					);
 
 					const frequentIconNames = frequentIcons.map((i) => i.name);
@@ -1120,7 +1374,7 @@ export function EditorComponent(props) {
 		let iconPrefs = [];
 
 		if (prevIconMatch > -1) {
-			let match = Object.assign({}, iconChoices[prevIconMatch]);
+			const match = Object.assign({}, iconChoices[prevIconMatch]);
 
 			match.selectionTime = [selectionTime, ...match.selectionTime];
 
@@ -1151,10 +1405,11 @@ export function EditorComponent(props) {
 
 		icons.sort(
 			(a, b) =>
-				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName)
+				iconPrefsName.indexOf(a.iconName) -
+				iconPrefsName.indexOf(b.iconName)
 		);
 
-		setRecentSelection("");
+		setRecentSelection('');
 		setSelectionTime(0);
 		setIconChoices(iconPrefs);
 		setAvailableIcons([...icons, ...otherIcons]);
@@ -1197,11 +1452,11 @@ export function EditorComponent(props) {
 				],
 			});
 		} else {
-			let newButtons = JSON.parse(JSON.stringify(buttons));
+			const newButtons = JSON.parse(JSON.stringify(buttons));
 			let cornersNotSet = false;
 
 			newButtons.forEach((b) => {
-				if (!b.hasOwnProperty("topLeftRadius")) {
+				if (!b.hasOwnProperty('topLeftRadius')) {
 					if (!cornersNotSet) {
 						cornersNotSet = true;
 					}
@@ -1217,12 +1472,14 @@ export function EditorComponent(props) {
 					b.bottomRightRadiusUnit = b.buttonRadiusUnit;
 
 					b.iconSize = 0;
-					b.iconUnit = "px";
+					b.iconUnit = 'px';
 				}
 			});
 
 			if (cornersNotSet) {
-				setAttributes({ buttons: JSON.parse(JSON.stringify(newButtons)) });
+				setAttributes({
+					buttons: JSON.parse(JSON.stringify(newButtons)),
+				});
 			}
 		}
 	}, []);
@@ -1243,13 +1500,15 @@ export function EditorComponent(props) {
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={align}
-						onChange={(newAlignment) => setAttributes({ align: newAlignment })}
-						controls={["left", "center", "right"]}
+						onChange={(newAlignment) =>
+							setAttributes({ align: newAlignment })
+						}
+						controls={['left', 'center', 'right']}
 					/>
 					<ToolbarGroup>
 						<ToolbarButton
 							icon="admin-links"
-							label={__("Add button link")}
+							label={__('Add button link')}
 							onClick={() => setLinkInputStatus(true)}
 						/>
 					</ToolbarGroup>
@@ -1257,729 +1516,1275 @@ export function EditorComponent(props) {
 			)}
 			{
 				<InspectorControls>
-					{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
-						<>
-							<PanelBody title={__("Size", "ultimate-blocks")} initialOpen={true}>
-								<div className="ub-button-group">
-									<ButtonGroup
-										aria-label={__("Button Size", "ultimate-blocks")}
-									>
-										{Object.keys(BUTTON_SIZES).map((b) => (
-											<Button
-												isLarge
-												isPrimary={buttons[activeButtonIndex].size === b}
-												aria-pressed={buttons[activeButtonIndex].size === b}
-												onClick={() =>
-													setAttributes({
-														buttons: [
-															...buttons.slice(0, activeButtonIndex),
-															Object.assign({}, buttons[activeButtonIndex], {
-																size: b,
-															}),
-															...buttons.slice(activeButtonIndex + 1),
-														],
-													})
-												}
-											>
-												{BUTTON_SIZES[b]}
-											</Button>
-										))}
-									</ButtonGroup>
-								</div>
-							</PanelBody>
-							<PanelBody title={__("Width", "ultimate-blocks")} initialOpen={true}>
-								<div className="ub-button-group">
-									<ButtonGroup
-										aria-label={__("Button Width", "ultimate-blocks")}
-									>
-										{Object.keys(BUTTON_WIDTHS).map((b) => (
-											<Button
-												isLarge
-												isPrimary={buttons[activeButtonIndex].buttonWidth === b}
-												aria-pressed={
-													buttons[activeButtonIndex].buttonWidth === b
-												}
-												onClick={() =>
-													setAttributes({
-														buttons: [
-															...buttons.slice(0, activeButtonIndex),
-															Object.assign({}, buttons[activeButtonIndex], {
-																buttonWidth: b,
-															}),
-															...buttons.slice(activeButtonIndex + 1),
-														],
-													})
-												}
-											>
-												{BUTTON_WIDTHS[b]}
-											</Button>
-										))}
-									</ButtonGroup>
-								</div>
-							</PanelBody>
-							<PanelBody
-								title={__("Colors", "ultimate-blocks")}
-								initialOpen={false}
-							>
-								<ToggleControl
-									label={__("Transparent", "ultimate-blocks")}
-									checked={buttons[activeButtonIndex].buttonIsTransparent}
-									onChange={() =>
-										setAttributes({
-											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													buttonIsTransparent:
-														!buttons[activeButtonIndex].buttonIsTransparent,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
-											],
-										})
-									}
-								/>
-								<TabPanel
-									className="ub-tab-panels"
-									tabs={[
-										{
-											name: "buttoncolor",
-											title: __("Normal"),
-										},
-										{
-											name: "buttonhovercolor",
-											title: __("Hover"),
-										},
-									]}
+					{isSelected &&
+						buttons.length > 0 &&
+						activeButtonIndex > -1 && (
+							<>
+								<PanelBody
+									title={__('Size', 'ultimate-blocks')}
+									initialOpen={true}
 								>
-									{(tab) =>
-										tab.name === "buttoncolor"
-											? normalColorPanels
-											: hoverColorPanels
-									}
-								</TabPanel>
-							</PanelBody>
-							<PanelBody title={__("Border", "ultimate-blocks")} initialOpen={false}>
-								<ToggleControl
-									label={__("Rounded", "ultimate-blocks")}
-									checked={buttons[activeButtonIndex].buttonRounded}
-									onChange={() => {
-										setAttributes({
-											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													buttonRounded:
-														!buttons[activeButtonIndex].buttonRounded,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
-											],
-										});
-										setCurrentCorner("all");
-									}}
-								/>
-								{buttons[activeButtonIndex].buttonRounded && (
-									<>
-										<div className="ub-indicator-grid">
-											{/* FIRST ROW */}
-											<div
-												className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-right-border"
-												style={{
-													borderTop: `2px solid ${
-														currentCorner === "topleft" ? "blue" : "black"
-													}`,
-													borderLeft: `2px solid ${
-														currentCorner === "topleft" ? "blue" : "black"
-													}`,
-												}}
-												onClick={() => setCurrentCorner("topleft")}
-											/>
-											<div className="ub-indicator-grid-cell" />
-											<div
-												className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-left-border"
-												style={{
-													borderTop: `2px solid ${
-														currentCorner === "topright" ? "blue" : "black"
-													}`,
-													borderRight: `2px solid ${
-														currentCorner === "topright" ? "blue" : "black"
-													}`,
-												}}
-												onClick={() => setCurrentCorner("topright")}
-											></div>
-											{/* SECOND ROW */}
-											<div className="ub-indicator-grid-cell" />
-											<div
-												className="ub-indicator-grid-cell"
-												style={{
-													border: `2px solid ${
-														currentCorner === "all" ? "blue" : "black"
-													}`,
-												}}
-												onClick={() => {
-													if (currentCorner !== "all") {
-														let commonRadius = 0;
-														let commonUnit = "px";
-
-														switch (currentCorner) {
-															case "topleft":
-																commonRadius =
-																	buttons[activeButtonIndex].topLeftRadius;
-																commonUnit =
-																	buttons[activeButtonIndex].topLeftRadiusUnit;
-																break;
-															case "topright":
-																commonRadius =
-																	buttons[activeButtonIndex].topRightRadius;
-																commonUnit =
-																	buttons[activeButtonIndex].topRightRadiusUnit;
-																break;
-															case "bottomleft":
-																commonRadius =
-																	buttons[activeButtonIndex].bottomLeftRadius;
-																commonUnit =
-																	buttons[activeButtonIndex]
-																		.bottomLeftRadiusUnit;
-																break;
-															case "bottomright":
-																commonRadius =
-																	buttons[activeButtonIndex].bottomRightRadius;
-																commonUnit =
-																	buttons[activeButtonIndex]
-																		.bottomLeftRadiusUnit;
-																break;
-														}
-
-														setAttributes({
-															buttons: [
-																...buttons.slice(0, activeButtonIndex),
-																Object.assign({}, buttons[activeButtonIndex], {
-																	topLeftRadius: commonRadius,
-																	topRightRadius: commonRadius,
-																	bottomLeftRadius: commonRadius,
-																	bottomRightRadius: commonRadius,
-																	topLeftRadiusUnit: commonUnit,
-																	topRightRadiusUnit: commonUnit,
-																	bottomLeftRadiusUnit: commonUnit,
-																	bottomRightRadiusUnit: commonUnit,
-																}),
-																...buttons.slice(activeButtonIndex + 1),
-															],
-														});
-													}
-													setCurrentCorner("all");
-												}}
-											></div>
-											<div className="ub-indicator-grid-cell" />
-											{/* THIRD ROW */}
-											<div
-												className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-right-border"
-												style={{
-													borderBottom: `2px solid ${
-														currentCorner === "bottomleft" ? "blue" : "black"
-													}`,
-													borderLeft: `2px solid ${
-														currentCorner === "bottomleft" ? "blue" : "black"
-													}`,
-												}}
-												onClick={() => setCurrentCorner("bottomleft")}
-											/>
-											<div className="ub-indicator-grid-cell" />
-											<div
-												className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-left-border"
-												style={{
-													borderBottom: `2px solid ${
-														currentCorner === "bottomright" ? "blue" : "black"
-													}`,
-													borderRight: `2px solid ${
-														currentCorner === "bottomright" ? "blue" : "black"
-													}`,
-												}}
-												onClick={() => setCurrentCorner("bottomright")}
-											></div>
-										</div>
-										<div id="ub-button-radius-panel">
-											<RangeControl
-												label={__("Button Radius")}
-												value={
-													currentCorner === "topleft"
-														? buttons[activeButtonIndex].topLeftRadius
-														: currentCorner === "topright"
-														? buttons[activeButtonIndex].topRightRadius
-														: currentCorner === "bottomleft"
-														? buttons[activeButtonIndex].bottomLeftRadius
-														: buttons[activeButtonIndex].bottomRightRadius
-												}
-												onChange={(value) => {
-													switch (currentCorner) {
-														case "topleft":
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			topLeftRadius: value,
-																		}
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															});
-															break;
-														case "topright":
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			topRightRadius: value,
-																		}
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															});
-															break;
-														case "bottomleft":
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			bottomLeftRadius: value,
-																		}
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															});
-															break;
-														case "bottomright":
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			bottomRightRadius: value,
-																		}
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															});
-															break;
-														default:
-														case "all":
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			buttonRadius: value,
-																			topLeftRadius: value,
-																			topRightRadius: value,
-																			bottomLeftRadius: value,
-																			bottomRightRadius: value,
-																		}
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															});
-															break;
-													}
-												}}
-												min={1}
-												max={100}
-												step={
-													(currentCorner === "topleft"
-														? buttons[activeButtonIndex].topLeftRadiusUnit
-														: currentCorner === "topright"
-														? buttons[activeButtonIndex].topRightRadiusUnit
-														: currentCorner === "bottomleft"
-														? buttons[activeButtonIndex].bottomLeftRadiusUnit
-														: buttons[activeButtonIndex]
-																.bottomRightRadiusUnit) === "em"
-														? 0.1
-														: 1
-												}
-											/>
-											<ButtonGroup
-												aria-label={__("Button Radius Unit", "ultimate-blocks")}
-											>
-												{["px", "%", "em"].map((b) => (
+									<div className="ub-button-group">
+										<ButtonGroup
+											aria-label={__(
+												'Button Size',
+												'ultimate-blocks'
+											)}
+										>
+											{Object.keys(BUTTON_SIZES).map(
+												(b) => (
 													<Button
 														isLarge
 														isPrimary={
-															currentCorner === "topleft"
-																? buttons[activeButtonIndex]
-																		.topLeftRadiusUnit === b
-																: currentCorner === "topright"
-																? buttons[activeButtonIndex]
-																		.topRightRadiusUnit === b
-																: currentCorner === "bottomleft"
-																? buttons[activeButtonIndex]
-																		.bottomLeftRadiusUnit === b
-																: buttons[activeButtonIndex]
-																		.bottomRightRadiusUnit === b
+															buttons[
+																activeButtonIndex
+															].size === b
 														}
 														aria-pressed={
-															currentCorner === "topleft"
-																? buttons[activeButtonIndex]
-																		.topLeftRadiusUnit === b
-																: currentCorner === "topright"
-																? buttons[activeButtonIndex]
-																		.topRightRadiusUnit === b
-																: currentCorner === "bottomleft"
-																? buttons[activeButtonIndex]
-																		.bottomLeftRadiusUnit === b
-																: buttons[activeButtonIndex]
-																		.bottomRightRadiusUnit === b
+															buttons[
+																activeButtonIndex
+															].size === b
 														}
-														onClick={() => {
-															switch (currentCorner) {
-																case "topleft":
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					topLeftRadiusUnit: b,
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
+														onClick={() =>
+															setAttributes({
+																buttons: [
+																	...buttons.slice(
+																		0,
+																		activeButtonIndex
+																	),
+																	Object.assign(
+																		{},
+																		buttons[
+																			activeButtonIndex
 																		],
-																	});
-																	break;
-																case "topright":
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					topRightRadiusUnit: b,
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
-																		],
-																	});
-																	break;
-																case "bottomleft":
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					bottomLeftRadiusUnit: b,
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
-																		],
-																	});
-																	break;
-																case "bottomright":
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					bottomRightRadiusUnit: b,
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
-																		],
-																	});
-																	break;
-																default:
-																case "all":
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					buttonRadiusUnit: b,
-																					topLeftRadiusUnit: b,
-																					topRightRadiusUnit: b,
-																					bottomLeftRadiusUnit: b,
-																					bottomRightRadiusUnit: b,
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
-																		],
-																	});
-																	break;
-															}
-														}}
+																		{
+																			size: b,
+																		}
+																	),
+																	...buttons.slice(
+																		activeButtonIndex +
+																			1
+																	),
+																],
+															})
+														}
 													>
-														{b}
+														{BUTTON_SIZES[b]}
 													</Button>
-												))}
-											</ButtonGroup>
-										</div>
-									</>
-								)}
-							</PanelBody>
-							<PanelBody title={__("Icon", "ultimate-blocks")} initialOpen={false}>
-								<div className="ub-button-grid">
-									<p>{__("Selected icon", "ultimate-blocks")}</p>
-									<div className="ub-button-grid-selector">
-										<Dropdown
-											position="bottom right"
-											renderToggle={({ isOpen, onToggle }) => (
-												<Button
-													className="ub-button-icon-select"
-													icon={
-														buttons[activeButtonIndex].chosenIcon !== "" &&
-														generateIcon(
-															allIcons[
-																`fa${dashesToCamelcase(
-																	buttons[activeButtonIndex].chosenIcon
-																)}`
-															],
-															35
+												)
+											)}
+										</ButtonGroup>
+									</div>
+								</PanelBody>
+								<PanelBody
+									title={__('Width', 'ultimate-blocks')}
+									initialOpen={true}
+								>
+									<div className="ub-button-group">
+										<ButtonGroup
+											aria-label={__(
+												'Button Width',
+												'ultimate-blocks'
+											)}
+										>
+											{Object.keys(BUTTON_WIDTHS).map(
+												(b) => (
+													<Button
+														isLarge
+														isPrimary={
+															buttons[
+																activeButtonIndex
+															].buttonWidth === b
+														}
+														aria-pressed={
+															buttons[
+																activeButtonIndex
+															].buttonWidth === b
+														}
+														onClick={() =>
+															setAttributes({
+																buttons: [
+																	...buttons.slice(
+																		0,
+																		activeButtonIndex
+																	),
+																	Object.assign(
+																		{},
+																		buttons[
+																			activeButtonIndex
+																		],
+																		{
+																			buttonWidth:
+																				b,
+																		}
+																	),
+																	...buttons.slice(
+																		activeButtonIndex +
+																			1
+																	),
+																],
+															})
+														}
+													>
+														{BUTTON_WIDTHS[b]}
+													</Button>
+												)
+											)}
+										</ButtonGroup>
+									</div>
+								</PanelBody>
+								<PanelBody
+									title={__('Colors', 'ultimate-blocks')}
+									initialOpen={false}
+								>
+									<ToggleControl
+										label={__(
+											'Transparent',
+											'ultimate-blocks'
+										)}
+										checked={
+											buttons[activeButtonIndex]
+												.buttonIsTransparent
+										}
+										onChange={() =>
+											setAttributes({
+												buttons: [
+													...buttons.slice(
+														0,
+														activeButtonIndex
+													),
+													Object.assign(
+														{},
+														buttons[
+															activeButtonIndex
+														],
+														{
+															buttonIsTransparent:
+																!buttons[
+																	activeButtonIndex
+																]
+																	.buttonIsTransparent,
+														}
+													),
+													...buttons.slice(
+														activeButtonIndex + 1
+													),
+												],
+											})
+										}
+									/>
+									<TabPanel
+										className="ub-tab-panels"
+										tabs={[
+											{
+												name: 'buttoncolor',
+												title: __('Normal'),
+											},
+											{
+												name: 'buttonhovercolor',
+												title: __('Hover'),
+											},
+										]}
+									>
+										{(tab) =>
+											tab.name === 'buttoncolor'
+												? normalColorPanels
+												: hoverColorPanels
+										}
+									</TabPanel>
+								</PanelBody>
+								<PanelBody
+									title={__('Border', 'ultimate-blocks')}
+									initialOpen={false}
+								>
+									<ToggleControl
+										label={__('Rounded', 'ultimate-blocks')}
+										checked={
+											buttons[activeButtonIndex]
+												.buttonRounded
+										}
+										onChange={() => {
+											setAttributes({
+												buttons: [
+													...buttons.slice(
+														0,
+														activeButtonIndex
+													),
+													Object.assign(
+														{},
+														buttons[
+															activeButtonIndex
+														],
+														{
+															buttonRounded:
+																!buttons[
+																	activeButtonIndex
+																].buttonRounded,
+														}
+													),
+													...buttons.slice(
+														activeButtonIndex + 1
+													),
+												],
+											});
+											setCurrentCorner('all');
+										}}
+									/>
+									{buttons[activeButtonIndex]
+										.buttonRounded && (
+										<>
+											<div className="ub-indicator-grid">
+												{/* FIRST ROW */}
+												<div
+													className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-right-border"
+													style={{
+														borderTop: `2px solid ${
+															currentCorner ===
+															'topleft'
+																? 'blue'
+																: 'black'
+														}`,
+														borderLeft: `2px solid ${
+															currentCorner ===
+															'topleft'
+																? 'blue'
+																: 'black'
+														}`,
+													}}
+													onClick={() =>
+														setCurrentCorner(
+															'topleft'
 														)
 													}
-													label={__(
-														"Open icon selection dialog",
-														"ultimate-blocks"
-													)}
-													onClick={onToggle}
-													aria-expanded={isOpen}
 												/>
-											)}
-											renderContent={() => (
-												<div>
-													<input
-														type="text"
-														value={iconSearchTerm}
-														onChange={(e) => {
-															setIconSearchTerm(e.target.value);
-															setIconSearchResultsPage(0);
-														}}
-													/>
-													{iconSearchTerm === "" && (
-														<Button
-															className="ub-button-available-icon"
-															onClick={() => {
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				chosenIcon: "",
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																});
-																setRecentSelection("");
-															}}
-														>
-															{__("No icon", "ultimate-blocks")}
-														</Button>
-													)}
-													<br />
-													{iconListPage.length > 0 && (
-														<div>
-															<button
-																onClick={() => {
-																	if (iconSearchResultsPage > 0) {
-																		setIconSearchResultsPage(
-																			iconSearchResultsPage - 1
-																		);
-																	}
-																}}
-															>
-																&lt;
-															</button>
-															<span>
-																{iconSearchResultsPage + 1}/
-																{iconListPage.length}
-															</span>
-															<button
-																onClick={() => {
-																	if (
-																		iconSearchResultsPage <
-																		iconListPage.length - 1
-																	) {
-																		setIconSearchResultsPage(
-																			iconSearchResultsPage + 1
-																		);
-																	}
-																}}
-															>
-																&gt;
-															</button>
-														</div>
-													)}
-													{iconListPage.length > 0 &&
-														iconListPage[iconSearchResultsPage].map((i) => (
-															<Button
-																className="ub-button-available-icon"
-																icon={generateIcon(i, 35)}
-																label={i.iconName}
-																onClick={() => {
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					chosenIcon: i.iconName,
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
+												<div className="ub-indicator-grid-cell" />
+												<div
+													className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-left-border"
+													style={{
+														borderTop: `2px solid ${
+															currentCorner ===
+															'topright'
+																? 'blue'
+																: 'black'
+														}`,
+														borderRight: `2px solid ${
+															currentCorner ===
+															'topright'
+																? 'blue'
+																: 'black'
+														}`,
+													}}
+													onClick={() =>
+														setCurrentCorner(
+															'topright'
+														)
+													}
+												></div>
+												{/* SECOND ROW */}
+												<div className="ub-indicator-grid-cell" />
+												<div
+													className="ub-indicator-grid-cell"
+													style={{
+														border: `2px solid ${
+															currentCorner ===
+															'all'
+																? 'blue'
+																: 'black'
+														}`,
+													}}
+													onClick={() => {
+														if (
+															currentCorner !==
+															'all'
+														) {
+															let commonRadius = 0;
+															let commonUnit =
+																'px';
+
+															switch (
+																currentCorner
+															) {
+																case 'topleft':
+																	commonRadius =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.topLeftRadius;
+																	commonUnit =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.topLeftRadiusUnit;
+																	break;
+																case 'topright':
+																	commonRadius =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.topRightRadius;
+																	commonUnit =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.topRightRadiusUnit;
+																	break;
+																case 'bottomleft':
+																	commonRadius =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.bottomLeftRadius;
+																	commonUnit =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.bottomLeftRadiusUnit;
+																	break;
+																case 'bottomright':
+																	commonRadius =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.bottomRightRadius;
+																	commonUnit =
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.bottomLeftRadiusUnit;
+																	break;
+															}
+
+															setAttributes({
+																buttons: [
+																	...buttons.slice(
+																		0,
+																		activeButtonIndex
+																	),
+																	Object.assign(
+																		{},
+																		buttons[
+																			activeButtonIndex
 																		],
-																	});
-																	setRecentSelection(i.iconName);
-																	setSelectionTime(~~(Date.now() / 1000));
-																}}
-															/>
-														))}
-												</div>
-											)}
-											onToggle={(isOpen) => {
-												if (!isOpen && recentSelection && hasApiAccess) {
-													updateIconList();
-												}
-											}}
-										/>
-									</div>
-								</div>
-								<RadioControl
-									className="ub-button-icon-position"
-									label={__("Icon position")}
-									selected={buttons[activeButtonIndex].iconPosition}
-									options={[
-										{
-											label: __("Left", "ultimate-blocks"),
-											value: "left",
-										},
-										{
-											label: __("Right", "ultimate-blocks"),
-											value: "right",
-										},
-									]}
-									onChange={(pos) =>
-										setAttributes({
-											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													iconPosition: pos,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
-											],
-										})
-									}
-								/>
-								{buttons[activeButtonIndex].chosenIcon !== "" && (
-									<>
-										<ToggleControl
-											label={__("Change icon size", "ultimate-blocks")}
-											checked={buttons[activeButtonIndex].iconSize > 0}
-											onChange={(isOn) => {
-												let newAttributes = { iconUnit: "px" };
-
-												if (isOn) {
-													newAttributes = Object.assign({}, newAttributes, {
-														iconSize:
-															presetIconSize[buttons[activeButtonIndex].size],
-													});
-												} else {
-													newAttributes = Object.assign({}, newAttributes, {
-														iconSize: 0,
-													});
-												}
-
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, activeButtonIndex),
-														Object.assign(
-															{},
-															buttons[activeButtonIndex],
-															newAttributes
-														),
-														...buttons.slice(activeButtonIndex + 1),
-													],
-												});
-											}}
-										/>
-										{buttons[activeButtonIndex].iconSize > 0 && (
+																		{
+																			topLeftRadius:
+																				commonRadius,
+																			topRightRadius:
+																				commonRadius,
+																			bottomLeftRadius:
+																				commonRadius,
+																			bottomRightRadius:
+																				commonRadius,
+																			topLeftRadiusUnit:
+																				commonUnit,
+																			topRightRadiusUnit:
+																				commonUnit,
+																			bottomLeftRadiusUnit:
+																				commonUnit,
+																			bottomRightRadiusUnit:
+																				commonUnit,
+																		}
+																	),
+																	...buttons.slice(
+																		activeButtonIndex +
+																			1
+																	),
+																],
+															});
+														}
+														setCurrentCorner('all');
+													}}
+												></div>
+												<div className="ub-indicator-grid-cell" />
+												{/* THIRD ROW */}
+												<div
+													className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-right-border"
+													style={{
+														borderBottom: `2px solid ${
+															currentCorner ===
+															'bottomleft'
+																? 'blue'
+																: 'black'
+														}`,
+														borderLeft: `2px solid ${
+															currentCorner ===
+															'bottomleft'
+																? 'blue'
+																: 'black'
+														}`,
+													}}
+													onClick={() =>
+														setCurrentCorner(
+															'bottomleft'
+														)
+													}
+												/>
+												<div className="ub-indicator-grid-cell" />
+												<div
+													className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-left-border"
+													style={{
+														borderBottom: `2px solid ${
+															currentCorner ===
+															'bottomright'
+																? 'blue'
+																: 'black'
+														}`,
+														borderRight: `2px solid ${
+															currentCorner ===
+															'bottomright'
+																? 'blue'
+																: 'black'
+														}`,
+													}}
+													onClick={() =>
+														setCurrentCorner(
+															'bottomright'
+														)
+													}
+												></div>
+											</div>
 											<div id="ub-button-radius-panel">
 												<RangeControl
-													label={__("Icon size")}
-													value={buttons[activeButtonIndex].iconSize}
+													label={__('Button Radius')}
+													value={
+														currentCorner ===
+														'topleft'
+															? buttons[
+																	activeButtonIndex
+															  ].topLeftRadius
+															: currentCorner ===
+															  'topright'
+															? buttons[
+																	activeButtonIndex
+															  ].topRightRadius
+															: currentCorner ===
+															  'bottomleft'
+															? buttons[
+																	activeButtonIndex
+															  ].bottomLeftRadius
+															: buttons[
+																	activeButtonIndex
+															  ]
+																	.bottomRightRadius
+													}
+													onChange={(value) => {
+														switch (currentCorner) {
+															case 'topleft':
+																setAttributes({
+																	buttons: [
+																		...buttons.slice(
+																			0,
+																			activeButtonIndex
+																		),
+																		Object.assign(
+																			{},
+																			buttons[
+																				activeButtonIndex
+																			],
+																			{
+																				topLeftRadius:
+																					value,
+																			}
+																		),
+																		...buttons.slice(
+																			activeButtonIndex +
+																				1
+																		),
+																	],
+																});
+																break;
+															case 'topright':
+																setAttributes({
+																	buttons: [
+																		...buttons.slice(
+																			0,
+																			activeButtonIndex
+																		),
+																		Object.assign(
+																			{},
+																			buttons[
+																				activeButtonIndex
+																			],
+																			{
+																				topRightRadius:
+																					value,
+																			}
+																		),
+																		...buttons.slice(
+																			activeButtonIndex +
+																				1
+																		),
+																	],
+																});
+																break;
+															case 'bottomleft':
+																setAttributes({
+																	buttons: [
+																		...buttons.slice(
+																			0,
+																			activeButtonIndex
+																		),
+																		Object.assign(
+																			{},
+																			buttons[
+																				activeButtonIndex
+																			],
+																			{
+																				bottomLeftRadius:
+																					value,
+																			}
+																		),
+																		...buttons.slice(
+																			activeButtonIndex +
+																				1
+																		),
+																	],
+																});
+																break;
+															case 'bottomright':
+																setAttributes({
+																	buttons: [
+																		...buttons.slice(
+																			0,
+																			activeButtonIndex
+																		),
+																		Object.assign(
+																			{},
+																			buttons[
+																				activeButtonIndex
+																			],
+																			{
+																				bottomRightRadius:
+																					value,
+																			}
+																		),
+																		...buttons.slice(
+																			activeButtonIndex +
+																				1
+																		),
+																	],
+																});
+																break;
+															default:
+															case 'all':
+																setAttributes({
+																	buttons: [
+																		...buttons.slice(
+																			0,
+																			activeButtonIndex
+																		),
+																		Object.assign(
+																			{},
+																			buttons[
+																				activeButtonIndex
+																			],
+																			{
+																				buttonRadius:
+																					value,
+																				topLeftRadius:
+																					value,
+																				topRightRadius:
+																					value,
+																				bottomLeftRadius:
+																					value,
+																				bottomRightRadius:
+																					value,
+																			}
+																		),
+																		...buttons.slice(
+																			activeButtonIndex +
+																				1
+																		),
+																	],
+																});
+																break;
+														}
+													}}
+													min={1}
+													max={100}
 													step={
-														buttons[activeButtonIndex].iconUnit === "em"
+														(currentCorner ===
+														'topleft'
+															? buttons[
+																	activeButtonIndex
+															  ]
+																	.topLeftRadiusUnit
+															: currentCorner ===
+															  'topright'
+															? buttons[
+																	activeButtonIndex
+															  ]
+																	.topRightRadiusUnit
+															: currentCorner ===
+															  'bottomleft'
+															? buttons[
+																	activeButtonIndex
+															  ]
+																	.bottomLeftRadiusUnit
+															: buttons[
+																	activeButtonIndex
+															  ]
+																	.bottomRightRadiusUnit) ===
+														'em'
 															? 0.1
 															: 1
 													}
-													onChange={(value) =>
-														setAttributes({
-															buttons: [
-																...buttons.slice(0, activeButtonIndex),
-																Object.assign({}, buttons[activeButtonIndex], {
-																	iconSize: value,
-																}),
-																...buttons.slice(activeButtonIndex + 1),
-															],
-														})
-													}
 												/>
 												<ButtonGroup
-													aria-label={__("Button Size Unit", "ultimate-blocks")}
+													aria-label={__(
+														'Button Radius Unit',
+														'ultimate-blocks'
+													)}
 												>
-													{["px", "em"].map((b) => (
-														<Button
-															isLarge
-															isPrimary={
-																b === buttons[activeButtonIndex].iconUnit
-															}
-															aria-pressed={
-																b === buttons[activeButtonIndex].iconUnit
-															}
-															onClick={() =>
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				iconUnit: b,
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																})
-															}
-														>
-															{b}
-														</Button>
-													))}
+													{['px', '%', 'em'].map(
+														(b) => (
+															<Button
+																isLarge
+																isPrimary={
+																	currentCorner ===
+																	'topleft'
+																		? buttons[
+																				activeButtonIndex
+																		  ]
+																				.topLeftRadiusUnit ===
+																		  b
+																		: currentCorner ===
+																		  'topright'
+																		? buttons[
+																				activeButtonIndex
+																		  ]
+																				.topRightRadiusUnit ===
+																		  b
+																		: currentCorner ===
+																		  'bottomleft'
+																		? buttons[
+																				activeButtonIndex
+																		  ]
+																				.bottomLeftRadiusUnit ===
+																		  b
+																		: buttons[
+																				activeButtonIndex
+																		  ]
+																				.bottomRightRadiusUnit ===
+																		  b
+																}
+																aria-pressed={
+																	currentCorner ===
+																	'topleft'
+																		? buttons[
+																				activeButtonIndex
+																		  ]
+																				.topLeftRadiusUnit ===
+																		  b
+																		: currentCorner ===
+																		  'topright'
+																		? buttons[
+																				activeButtonIndex
+																		  ]
+																				.topRightRadiusUnit ===
+																		  b
+																		: currentCorner ===
+																		  'bottomleft'
+																		? buttons[
+																				activeButtonIndex
+																		  ]
+																				.bottomLeftRadiusUnit ===
+																		  b
+																		: buttons[
+																				activeButtonIndex
+																		  ]
+																				.bottomRightRadiusUnit ===
+																		  b
+																}
+																onClick={() => {
+																	switch (
+																		currentCorner
+																	) {
+																		case 'topleft':
+																			setAttributes(
+																				{
+																					buttons:
+																						[
+																							...buttons.slice(
+																								0,
+																								activeButtonIndex
+																							),
+																							Object.assign(
+																								{},
+																								buttons[
+																									activeButtonIndex
+																								],
+																								{
+																									topLeftRadiusUnit:
+																										b,
+																								}
+																							),
+																							...buttons.slice(
+																								activeButtonIndex +
+																									1
+																							),
+																						],
+																				}
+																			);
+																			break;
+																		case 'topright':
+																			setAttributes(
+																				{
+																					buttons:
+																						[
+																							...buttons.slice(
+																								0,
+																								activeButtonIndex
+																							),
+																							Object.assign(
+																								{},
+																								buttons[
+																									activeButtonIndex
+																								],
+																								{
+																									topRightRadiusUnit:
+																										b,
+																								}
+																							),
+																							...buttons.slice(
+																								activeButtonIndex +
+																									1
+																							),
+																						],
+																				}
+																			);
+																			break;
+																		case 'bottomleft':
+																			setAttributes(
+																				{
+																					buttons:
+																						[
+																							...buttons.slice(
+																								0,
+																								activeButtonIndex
+																							),
+																							Object.assign(
+																								{},
+																								buttons[
+																									activeButtonIndex
+																								],
+																								{
+																									bottomLeftRadiusUnit:
+																										b,
+																								}
+																							),
+																							...buttons.slice(
+																								activeButtonIndex +
+																									1
+																							),
+																						],
+																				}
+																			);
+																			break;
+																		case 'bottomright':
+																			setAttributes(
+																				{
+																					buttons:
+																						[
+																							...buttons.slice(
+																								0,
+																								activeButtonIndex
+																							),
+																							Object.assign(
+																								{},
+																								buttons[
+																									activeButtonIndex
+																								],
+																								{
+																									bottomRightRadiusUnit:
+																										b,
+																								}
+																							),
+																							...buttons.slice(
+																								activeButtonIndex +
+																									1
+																							),
+																						],
+																				}
+																			);
+																			break;
+																		default:
+																		case 'all':
+																			setAttributes(
+																				{
+																					buttons:
+																						[
+																							...buttons.slice(
+																								0,
+																								activeButtonIndex
+																							),
+																							Object.assign(
+																								{},
+																								buttons[
+																									activeButtonIndex
+																								],
+																								{
+																									buttonRadiusUnit:
+																										b,
+																									topLeftRadiusUnit:
+																										b,
+																									topRightRadiusUnit:
+																										b,
+																									bottomLeftRadiusUnit:
+																										b,
+																									bottomRightRadiusUnit:
+																										b,
+																								}
+																							),
+																							...buttons.slice(
+																								activeButtonIndex +
+																									1
+																							),
+																						],
+																				}
+																			);
+																			break;
+																	}
+																}}
+															>
+																{b}
+															</Button>
+														)
+													)}
 												</ButtonGroup>
 											</div>
-										)}
-									</>
-								)}
-							</PanelBody>
-						</>
-					)}
+										</>
+									)}
+								</PanelBody>
+								<PanelBody
+									title={__('Icon', 'ultimate-blocks')}
+									initialOpen={false}
+								>
+									<div className="ub-button-grid">
+										<p>
+											{__(
+												'Selected icon',
+												'ultimate-blocks'
+											)}
+										</p>
+										<div className="ub-button-grid-selector">
+											<Dropdown
+												position="bottom right"
+												renderToggle={({
+													isOpen,
+													onToggle,
+												}) => (
+													<Button
+														className="ub-button-icon-select"
+														icon={
+															buttons[
+																activeButtonIndex
+															].chosenIcon !==
+																'' &&
+															generateIcon(
+																allIcons[
+																	`fa${dashesToCamelcase(
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.chosenIcon
+																	)}`
+																],
+																35
+															)
+														}
+														label={__(
+															'Open icon selection dialog',
+															'ultimate-blocks'
+														)}
+														onClick={onToggle}
+														aria-expanded={isOpen}
+													/>
+												)}
+												renderContent={() => (
+													<div>
+														<input
+															type="text"
+															value={
+																iconSearchTerm
+															}
+															onChange={(e) => {
+																setIconSearchTerm(
+																	e.target
+																		.value
+																);
+																setIconSearchResultsPage(
+																	0
+																);
+															}}
+														/>
+														{iconSearchTerm ===
+															'' && (
+															<Button
+																className="ub-button-available-icon"
+																onClick={() => {
+																	setAttributes(
+																		{
+																			buttons:
+																				[
+																					...buttons.slice(
+																						0,
+																						activeButtonIndex
+																					),
+																					Object.assign(
+																						{},
+																						buttons[
+																							activeButtonIndex
+																						],
+																						{
+																							chosenIcon:
+																								'',
+																						}
+																					),
+																					...buttons.slice(
+																						activeButtonIndex +
+																							1
+																					),
+																				],
+																		}
+																	);
+																	setRecentSelection(
+																		''
+																	);
+																}}
+															>
+																{__(
+																	'No icon',
+																	'ultimate-blocks'
+																)}
+															</Button>
+														)}
+														<br />
+														{iconListPage.length >
+															0 && (
+															<div>
+																<button
+																	onClick={() => {
+																		if (
+																			iconSearchResultsPage >
+																			0
+																		) {
+																			setIconSearchResultsPage(
+																				iconSearchResultsPage -
+																					1
+																			);
+																		}
+																	}}
+																>
+																	&lt;
+																</button>
+																<span>
+																	{iconSearchResultsPage +
+																		1}
+																	/
+																	{
+																		iconListPage.length
+																	}
+																</span>
+																<button
+																	onClick={() => {
+																		if (
+																			iconSearchResultsPage <
+																			iconListPage.length -
+																				1
+																		) {
+																			setIconSearchResultsPage(
+																				iconSearchResultsPage +
+																					1
+																			);
+																		}
+																	}}
+																>
+																	&gt;
+																</button>
+															</div>
+														)}
+														{iconListPage.length >
+															0 &&
+															iconListPage[
+																iconSearchResultsPage
+															].map((i) => (
+																<Button
+																	className="ub-button-available-icon"
+																	icon={generateIcon(
+																		i,
+																		35
+																	)}
+																	label={
+																		i.iconName
+																	}
+																	onClick={() => {
+																		setAttributes(
+																			{
+																				buttons:
+																					[
+																						...buttons.slice(
+																							0,
+																							activeButtonIndex
+																						),
+																						Object.assign(
+																							{},
+																							buttons[
+																								activeButtonIndex
+																							],
+																							{
+																								chosenIcon:
+																									i.iconName,
+																							}
+																						),
+																						...buttons.slice(
+																							activeButtonIndex +
+																								1
+																						),
+																					],
+																			}
+																		);
+																		setRecentSelection(
+																			i.iconName
+																		);
+																		setSelectionTime(
+																			~~(
+																				Date.now() /
+																				1000
+																			)
+																		);
+																	}}
+																/>
+															))}
+													</div>
+												)}
+												onToggle={(isOpen) => {
+													if (
+														!isOpen &&
+														recentSelection &&
+														hasApiAccess
+													) {
+														updateIconList();
+													}
+												}}
+											/>
+										</div>
+									</div>
+									<RadioControl
+										className="ub-button-icon-position"
+										label={__('Icon position')}
+										selected={
+											buttons[activeButtonIndex]
+												.iconPosition
+										}
+										options={[
+											{
+												label: __(
+													'Left',
+													'ultimate-blocks'
+												),
+												value: 'left',
+											},
+											{
+												label: __(
+													'Right',
+													'ultimate-blocks'
+												),
+												value: 'right',
+											},
+										]}
+										onChange={(pos) =>
+											setAttributes({
+												buttons: [
+													...buttons.slice(
+														0,
+														activeButtonIndex
+													),
+													Object.assign(
+														{},
+														buttons[
+															activeButtonIndex
+														],
+														{
+															iconPosition: pos,
+														}
+													),
+													...buttons.slice(
+														activeButtonIndex + 1
+													),
+												],
+											})
+										}
+									/>
+									{buttons[activeButtonIndex].chosenIcon !==
+										'' && (
+										<>
+											<ToggleControl
+												label={__(
+													'Change icon size',
+													'ultimate-blocks'
+												)}
+												checked={
+													buttons[activeButtonIndex]
+														.iconSize > 0
+												}
+												onChange={(isOn) => {
+													let newAttributes = {
+														iconUnit: 'px',
+													};
+
+													if (isOn) {
+														newAttributes =
+															Object.assign(
+																{},
+																newAttributes,
+																{
+																	iconSize:
+																		presetIconSize[
+																			buttons[
+																				activeButtonIndex
+																			]
+																				.size
+																		],
+																}
+															);
+													} else {
+														newAttributes =
+															Object.assign(
+																{},
+																newAttributes,
+																{
+																	iconSize: 0,
+																}
+															);
+													}
+
+													setAttributes({
+														buttons: [
+															...buttons.slice(
+																0,
+																activeButtonIndex
+															),
+															Object.assign(
+																{},
+																buttons[
+																	activeButtonIndex
+																],
+																newAttributes
+															),
+															...buttons.slice(
+																activeButtonIndex +
+																	1
+															),
+														],
+													});
+												}}
+											/>
+											{buttons[activeButtonIndex]
+												.iconSize > 0 && (
+												<div id="ub-button-radius-panel">
+													<RangeControl
+														label={__('Icon size')}
+														value={
+															buttons[
+																activeButtonIndex
+															].iconSize
+														}
+														step={
+															buttons[
+																activeButtonIndex
+															].iconUnit === 'em'
+																? 0.1
+																: 1
+														}
+														onChange={(value) =>
+															setAttributes({
+																buttons: [
+																	...buttons.slice(
+																		0,
+																		activeButtonIndex
+																	),
+																	Object.assign(
+																		{},
+																		buttons[
+																			activeButtonIndex
+																		],
+																		{
+																			iconSize:
+																				value,
+																		}
+																	),
+																	...buttons.slice(
+																		activeButtonIndex +
+																			1
+																	),
+																],
+															})
+														}
+													/>
+													<ButtonGroup
+														aria-label={__(
+															'Button Size Unit',
+															'ultimate-blocks'
+														)}
+													>
+														{['px', 'em'].map(
+															(b) => (
+																<Button
+																	isLarge
+																	isPrimary={
+																		b ===
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.iconUnit
+																	}
+																	aria-pressed={
+																		b ===
+																		buttons[
+																			activeButtonIndex
+																		]
+																			.iconUnit
+																	}
+																	onClick={() =>
+																		setAttributes(
+																			{
+																				buttons:
+																					[
+																						...buttons.slice(
+																							0,
+																							activeButtonIndex
+																						),
+																						Object.assign(
+																							{},
+																							buttons[
+																								activeButtonIndex
+																							],
+																							{
+																								iconUnit:
+																									b,
+																							}
+																						),
+																						...buttons.slice(
+																							activeButtonIndex +
+																								1
+																						),
+																					],
+																			}
+																		)
+																	}
+																>
+																	{b}
+																</Button>
+															)
+														)}
+													</ButtonGroup>
+												</div>
+											)}
+										</>
+									)}
+								</PanelBody>
+							</>
+						)}
 				</InspectorControls>
 			}
 			{
@@ -1987,18 +2792,23 @@ export function EditorComponent(props) {
 					{buttons.map((b, i) => (
 						<div
 							className={`ub-button-container${
-								b.buttonWidth === "full" ? " ub-button-full-container" : ""
+								b.buttonWidth === 'full'
+									? ' ub-button-full-container'
+									: ''
 							}`}
 						>
 							{buttons.length > 1 && (
 								<div className="ub-button-delete">
 									<span
-										title={__("Delete This Button")}
+										title={__('Delete This Button')}
 										onClick={() => {
 											setActiveButtonIndex(
 												activeButtonIndex > i
 													? activeButtonIndex - 1
-													: Math.min(activeButtonIndex, buttons.length - 2)
+													: Math.min(
+															activeButtonIndex,
+															buttons.length - 2
+													  )
 											);
 
 											setAttributes({
@@ -2008,24 +2818,26 @@ export function EditorComponent(props) {
 												],
 											});
 										}}
-										class="dashicons dashicons-dismiss"
+										className="dashicons dashicons-dismiss"
 									/>
 								</div>
 							)}
 							<div
-								className={`ub-button-block-main ub-button-${b.size} ${
-									b.buttonWidth === "full"
-										? "ub-button-full-width"
-										: b.buttonWidth === "flex"
+								className={`ub-button-block-main ub-button-${
+									b.size
+								} ${
+									b.buttonWidth === 'full'
+										? 'ub-button-full-width'
+										: b.buttonWidth === 'flex'
 										? `ub-button-flex-${b.size}`
-										: ""
+										: ''
 								}`}
 								onMouseEnter={() => setHoveredButton(i)}
 								onMouseLeave={() => setHoveredButton(-1)}
 								onClick={() => setActiveButtonIndex(i)}
 								style={{
 									backgroundColor: b.buttonIsTransparent
-										? "transparent"
+										? 'transparent'
 										: hoveredButton === i
 										? b.buttonHoverColor
 										: b.buttonColor,
@@ -2033,10 +2845,11 @@ export function EditorComponent(props) {
 										hoveredButton === i
 											? b.buttonIsTransparent
 												? b.buttonHoverColor
-												: b.buttonTextHoverColor || "inherit"
+												: b.buttonTextHoverColor ||
+												  'inherit'
 											: b.buttonIsTransparent
 											? b.buttonColor
-											: b.buttonTextColor || "inherit",
+											: b.buttonTextColor || 'inherit',
 									borderRadius: b.buttonRounded
 										? [
 												...new Set([
@@ -2054,10 +2867,14 @@ export function EditorComponent(props) {
 													b.bottomRightRadiusUnit,
 												]),
 										  ].length === 1
-											? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
+											? `${b.buttonRadius || 10}${
+													b.buttonRadiusUnit || 'px'
+											  }`
 											: `${b.topLeftRadius}${b.topLeftRadiusUnit} ${b.topRightRadius}${b.topRightRadiusUnit} ${b.bottomRightRadius}${b.bottomRightRadiusUnit} ${b.bottomLeftRadius}${b.bottomLeftRadiusUnit}`
-										: "0",
-									borderStyle: b.buttonIsTransparent ? "solid" : "none",
+										: '0',
+									borderStyle: b.buttonIsTransparent
+										? 'solid'
+										: 'none',
 									borderColor: b.buttonIsTransparent
 										? hoveredButton === i
 											? b.buttonHoverColor
@@ -2065,7 +2882,7 @@ export function EditorComponent(props) {
 										: null,
 									boxShadow:
 										isSelected && activeButtonIndex === i
-											? "0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 -10px 8px 0 rgba(0, 0, 0, 0.2)"
+											? '0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 -10px 8px 0 rgba(0, 0, 0, 0.2)'
 											: null,
 								}}
 							>
@@ -2073,41 +2890,59 @@ export function EditorComponent(props) {
 									className="ub-button-content-holder"
 									style={{
 										flexDirection:
-											b.iconPosition === "left" ? "row" : "row-reverse",
+											b.iconPosition === 'left'
+												? 'row'
+												: 'row-reverse',
 									}}
 								>
-									{b.chosenIcon !== "" &&
+									{b.chosenIcon !== '' &&
 										allIcons.hasOwnProperty(
-											`fa${dashesToCamelcase(b.chosenIcon)}`
+											`fa${dashesToCamelcase(
+												b.chosenIcon
+											)}`
 										) && (
 											<div className="ub-button-icon-holder">
 												{generateIcon(
-													allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
-													b.iconSize || presetIconSize[b.size],
-													b.iconUnit || "px"
+													allIcons[
+														`fa${dashesToCamelcase(
+															b.chosenIcon
+														)}`
+													],
+													b.iconSize ||
+														presetIconSize[b.size],
+													b.iconUnit || 'px'
 												)}
 											</div>
 										)}
 									<RichText
 										className="ub-button-block-btn"
-										placeholder={__("Button Text", "ultimate-blocks")}
+										placeholder={__(
+											'Button Text',
+											'ultimate-blocks'
+										)}
 										onChange={(value) =>
 											setAttributes({
 												buttons: [
 													...buttons.slice(0, i),
-													Object.assign({}, buttons[i], {
-														buttonText: value,
-													}),
+													Object.assign(
+														{},
+														buttons[i],
+														{
+															buttonText: value,
+														}
+													),
 													...buttons.slice(i + 1),
 												],
 											})
 										}
-										unstableOnFocus={() => setActiveButtonIndex(i)}
+										unstableOnFocus={() =>
+											setActiveButtonIndex(i)
+										}
 										value={b.buttonText}
 										allowedFormats={[
-											"core/bold",
-											"core/italic",
-											"core/strikethrough",
+											'core/bold',
+											'core/italic',
+											'core/strikethrough',
 										]}
 										keepPlaceholderOnFocus={true}
 									/>
@@ -2118,11 +2953,15 @@ export function EditorComponent(props) {
 									<OutsideAlerter
 										className="ub_button_popover"
 										visibilityTrigger={enableLinkInput}
-										hideLinkInput={() => setLinkInputStatus(false)}
+										hideLinkInput={() =>
+											setLinkInputStatus(false)
+										}
 									>
 										<div className="ub_button_url_input">
 											<form
-												onSubmit={(event) => event.preventDefault()}
+												onSubmit={(event) =>
+													event.preventDefault()
+												}
 												className={`editor-format-toolbar__link-modal-line ub_button_input_box flex-container`}
 											>
 												<URLInput
@@ -2132,62 +2971,101 @@ export function EditorComponent(props) {
 													onChange={(value) =>
 														setAttributes({
 															buttons: [
-																...buttons.slice(0, i),
-																Object.assign({}, buttons[i], {
-																	url: value,
-																}),
-																...buttons.slice(i + 1),
+																...buttons.slice(
+																	0,
+																	i
+																),
+																Object.assign(
+																	{},
+																	buttons[i],
+																	{
+																		url: value,
+																	}
+																),
+																...buttons.slice(
+																	i + 1
+																),
 															],
 														})
 													}
 												/>
 												<Button
-													icon={"editor-break"}
-													label={__("Apply", "ultimate-blocks")}
-													type={"submit"}
+													icon={'editor-break'}
+													label={__(
+														'Apply',
+														'ultimate-blocks'
+													)}
+													type={'submit'}
 												/>
 											</form>
 										</div>
 										<CheckboxControl
-											label={__("Open Link in New Tab", "ultimate-blocks")}
+											label={__(
+												'Open Link in New Tab',
+												'ultimate-blocks'
+											)}
 											checked={buttons[i].openInNewTab}
 											onChange={() =>
 												setAttributes({
 													buttons: [
 														...buttons.slice(0, i),
-														Object.assign({}, buttons[i], {
-															openInNewTab: !buttons[i].openInNewTab,
-														}),
+														Object.assign(
+															{},
+															buttons[i],
+															{
+																openInNewTab:
+																	!buttons[i]
+																		.openInNewTab,
+															}
+														),
 														...buttons.slice(i + 1),
 													],
 												})
 											}
 										/>
 										<CheckboxControl
-											label={__("Add Nofollow to Link", "ultimate-blocks")}
+											label={__(
+												'Add Nofollow to Link',
+												'ultimate-blocks'
+											)}
 											checked={buttons[i].addNofollow}
 											onChange={() =>
 												setAttributes({
 													buttons: [
 														...buttons.slice(0, i),
-														Object.assign({}, buttons[i], {
-															addNofollow: !buttons[i].addNofollow,
-														}),
+														Object.assign(
+															{},
+															buttons[i],
+															{
+																addNofollow:
+																	!buttons[i]
+																		.addNofollow,
+															}
+														),
 														...buttons.slice(i + 1),
 													],
 												})
 											}
 										/>
 										<CheckboxControl
-											label={__("Mark link as sponsored", "ultimate-blocks")}
+											label={__(
+												'Mark link as sponsored',
+												'ultimate-blocks'
+											)}
 											checked={buttons[i].addSponsored}
 											onChange={() =>
 												setAttributes({
 													buttons: [
 														...buttons.slice(0, i),
-														Object.assign({}, buttons[i], {
-															addSponsored: !buttons[i].addSponsored,
-														}),
+														Object.assign(
+															{},
+															buttons[i],
+															{
+																addSponsored:
+																	!buttons[i]
+																		.addSponsored,
+															}
+														),
 														...buttons.slice(i + 1),
 													],
 												})
