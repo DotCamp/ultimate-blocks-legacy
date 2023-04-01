@@ -5,11 +5,11 @@ import {
 	deleteStyle,
 	setStyleAsDefaultThunk,
 	updateStyleTitleAction,
-} from '@Stores/savedStyles/actions';
-import { getComponentDefaultStyle } from '@Stores/savedStyles/selectors';
-import { connectWithStore } from '@Stores/StoreHelpers';
-import SavedStylesManager from '@Managers/SavedStylesManager';
-import withBusyStatus from '@Stores/savedStyles/hoc/withBusyStatus';
+} from '$BlockStores/savedStyles/actions';
+import { getComponentDefaultStyle } from '$BlockStores/savedStyles/selectors';
+import { connectWithStore } from '$Library/ub-common/Inc';
+import SavedStylesManager from '$Manager/SavedStylesManager';
+import withBusyStatus from '$BlockStores/savedStyles/hoc/withBusyStatus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
@@ -29,7 +29,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  * @param {Function}      props.updateStyleTitle    update title of currently selected style
  * @class
  */
-function SelectedSavedStyleControls( {
+function SelectedSavedStyleControls({
 	deleteStyle,
 	selectedItemId,
 	busyStatus,
@@ -41,14 +41,14 @@ function SelectedSavedStyleControls( {
 	removeDefaultStyle,
 	selectedStyleName,
 	updateStyleTitle,
-} ) {
-	const [ titleEditStatus, setTitleEditStatus ] = useState( false );
-	const [ editedTitle, setEditedTitle ] = useState( selectedStyleName );
+}) {
+	const [titleEditStatus, setTitleEditStatus] = useState(false);
+	const [editedTitle, setEditedTitle] = useState(selectedStyleName);
 
-	useEffect( () => {
-		setTitleEditStatus( false );
-		setEditedTitle( selectedStyleName );
-	}, [ selectedStyleName ] );
+	useEffect(() => {
+		setTitleEditStatus(false);
+		setEditedTitle(selectedStyleName);
+	}, [selectedStyleName]);
 
 	/**
 	 * Generic disabled status.
@@ -94,22 +94,22 @@ function SelectedSavedStyleControls( {
 	 * Save updated style title to server.
 	 */
 	function updateStyleTitleToServer() {
-		if ( titleEditStatus && selectedStyleName !== editedTitle ) {
-			updateStyleTitle( selectedItemId, editedTitle );
+		if (titleEditStatus && selectedStyleName !== editedTitle) {
+			updateStyleTitle(selectedItemId, editedTitle);
 		}
-		setTitleEditStatus( false );
+		setTitleEditStatus(false);
 	}
 
 	/**
 	 * Start title edit operation.
 	 */
 	function startTitleEdit() {
-		if ( ! staticStyleDisabledStatus() ) {
-			if ( titleEditStatus && selectedStyleName !== editedTitle ) {
+		if (!staticStyleDisabledStatus()) {
+			if (titleEditStatus && selectedStyleName !== editedTitle) {
 				updateStyleTitleToServer();
 			} else {
-				setEditedTitle( selectedStyleName );
-				setTitleEditStatus( ! titleEditStatus );
+				setEditedTitle(selectedStyleName);
+				setTitleEditStatus(!titleEditStatus);
 			}
 		}
 	}
@@ -118,92 +118,90 @@ function SelectedSavedStyleControls( {
 	 * Static style disabled status.
 	 */
 	function staticStyleDisabledStatus() {
-		if ( selectedItemId && selectedItemId.startsWith( 'ub-dev' ) ) {
+		if (selectedItemId && selectedItemId.startsWith('ub-dev')) {
 			return UB_PRO_ENV === 'production';
 		}
 		return false;
 	}
 
 	return (
-		<div className={ 'selected-saved-style-controls' }>
-			<div className={ 'title-wrapper' }>
-				<div className={ 'style-title' }>
+		<div className={'selected-saved-style-controls'}>
+			<div className={'title-wrapper'}>
+				<div className={'style-title'}>
 					<input
-						className={ 'title-input' }
-						type={ 'text' }
-						value={ editedTitle }
-						onChange={ ( e ) =>
-							setEditedTitle( e.target.value.trim() )
-						}
-						onKeyDown={ ( e ) => {
-							if ( e.code === 'Enter' ) {
+						className={'title-input'}
+						type={'text'}
+						value={editedTitle}
+						onChange={(e) => setEditedTitle(e.target.value.trim())}
+						onKeyDown={(e) => {
+							if (e.code === 'Enter') {
 								updateStyleTitleToServer();
 							}
-						} }
-						disabled={ ! titleEditStatus }
+						}}
+						disabled={!titleEditStatus}
 					/>
 				</div>
-				<div className={ 'edit-icon' }>
-					{ ! staticStyleDisabledStatus() && (
+				<div className={'edit-icon'}>
+					{!staticStyleDisabledStatus() && (
 						<FontAwesomeIcon
-							icon={ 'pen' }
-							onClick={ startTitleEdit }
+							icon={'pen'}
+							onClick={startTitleEdit}
 						/>
-					) }
+					)}
 				</div>
 			</div>
 			<Button
-				className={ 'ub-pro-saved-styles-listing-delete-button' }
+				className={'ub-pro-saved-styles-listing-delete-button'}
 				disabled={
 					staticStyleDisabledStatus() || genericDisabledStatus()
 				}
-				isSmall={ true }
-				variant={ 'secondary' }
-				onClick={ deleteStyle }
-				isDestructive={ true }
+				isSmall={true}
+				variant={'secondary'}
+				onClick={deleteStyle}
+				isDestructive={true}
 			>
-				{ __( 'Delete', 'ultimate-blocks-pro' ) }
+				{__('Delete', 'ultimate-blocks-pro')}
 			</Button>
 			<Button
-				className={ 'ub-pro-saved-styles-listing-update-button' }
-				disabled={ staticStyleDisabledStatus() || isApplyDisabled() }
-				isSmall={ true }
-				variant={ 'secondary' }
-				onClick={ () => updateStyleFunction( selectedItemId ) }
+				className={'ub-pro-saved-styles-listing-update-button'}
+				disabled={staticStyleDisabledStatus() || isApplyDisabled()}
+				isSmall={true}
+				variant={'secondary'}
+				onClick={() => updateStyleFunction(selectedItemId)}
 			>
-				{ __( 'Update', 'ultimate-blocks-pro' ) }
+				{__('Update', 'ultimate-blocks-pro')}
 			</Button>
 			<Button
-				className={ 'ub-pro-saved-styles-listing-apply-button' }
-				disabled={ isApplyDisabled() }
-				isSmall={ true }
-				variant={ 'primary' }
-				onClick={ applyStyle }
+				className={'ub-pro-saved-styles-listing-apply-button'}
+				disabled={isApplyDisabled()}
+				isSmall={true}
+				variant={'primary'}
+				onClick={applyStyle}
 			>
-				{ __( 'Apply', 'ultimate-blocks-pro' ) }
+				{__('Apply', 'ultimate-blocks-pro')}
 			</Button>
 
-			{ isRemoveDefaultEnabled() ? (
+			{isRemoveDefaultEnabled() ? (
 				<Button
-					className={ 'ub-pro-saved-styles-listing-default-button' }
-					isSmall={ true }
-					variant={ 'primary' }
-					isDestructive={ true }
-					onClick={ removeDefaultStyle }
+					className={'ub-pro-saved-styles-listing-default-button'}
+					isSmall={true}
+					variant={'primary'}
+					isDestructive={true}
+					onClick={removeDefaultStyle}
 				>
-					{ __( 'Remove Default Style', 'ultimate-blocks-pro' ) }
+					{__('Remove Default Style', 'ultimate-blocks-pro')}
 				</Button>
 			) : (
 				<Button
-					className={ 'ub-pro-saved-styles-listing-default-button' }
-					disabled={ isDefaultDisabled() }
-					isSmall={ true }
-					variant={ 'primary' }
-					onClick={ setDefaultStyle }
+					className={'ub-pro-saved-styles-listing-default-button'}
+					disabled={isDefaultDisabled()}
+					isSmall={true}
+					variant={'primary'}
+					onClick={setDefaultStyle}
 				>
-					{ __( 'Set as Default Style', 'ultimate-blocks-pro' ) }
+					{__('Set as Default Style', 'ultimate-blocks-pro')}
 				</Button>
-			) }
+			)}
 		</div>
 	);
 }
@@ -214,17 +212,14 @@ function SelectedSavedStyleControls( {
  * @param {Object} storeSelect namespaced store select object
  * @return {Object} selection mapping
  */
-const selectMapping = ( storeSelect ) => {
-	const {
-		getSelectedItemId,
-		getActiveItemId,
-		getComponentStyleName,
-	} = storeSelect;
+const selectMapping = (storeSelect) => {
+	const { getSelectedItemId, getActiveItemId, getComponentStyleName } =
+		storeSelect;
 	return {
 		selectedItemId: getSelectedItemId(),
 		activeItemId: getActiveItemId(),
-		defaultStyleId: getComponentDefaultStyle( storeSelect ),
-		selectedStyleName: getComponentStyleName( getSelectedItemId() ),
+		defaultStyleId: getComponentDefaultStyle(storeSelect),
+		selectedStyleName: getComponentStyleName(getSelectedItemId()),
 	};
 };
 
@@ -235,18 +230,18 @@ const selectMapping = ( storeSelect ) => {
  * @param {Object} storeSelect   namespaced store select object
  * @return {Object} action mapping
  */
-const actionMapping = ( storeDispatch, storeSelect ) => {
+const actionMapping = (storeDispatch, storeSelect) => {
 	const { getSelectedItemId } = storeSelect;
 	return {
-		updateStyleTitle: updateStyleTitleAction( storeDispatch, storeSelect ),
-		deleteStyle: deleteStyle( storeDispatch, storeSelect ),
+		updateStyleTitle: updateStyleTitleAction(storeDispatch, storeSelect),
+		deleteStyle: deleteStyle(storeDispatch, storeSelect),
 		setDefaultStyle: () =>
 			setStyleAsDefaultThunk(
 				storeDispatch,
 				storeSelect
-			)( getSelectedItemId() ),
+			)(getSelectedItemId()),
 		removeDefaultStyle: () =>
-			setStyleAsDefaultThunk( storeDispatch, storeSelect )( null ),
+			setStyleAsDefaultThunk(storeDispatch, storeSelect)(null),
 	};
 };
 
@@ -257,4 +252,4 @@ export default connectWithStore(
 	SavedStylesManager.storeNamespace,
 	selectMapping,
 	actionMapping
-)( withBusyStatus( SelectedSavedStyleControls ) );
+)(withBusyStatus(SelectedSavedStyleControls));

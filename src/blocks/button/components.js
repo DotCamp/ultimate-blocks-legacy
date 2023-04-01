@@ -1520,6 +1520,86 @@ export function EditorComponent(props) {
 						buttons.length > 0 &&
 						activeButtonIndex > -1 && (
 							<>
+								<SavedStylesInspectorPanel
+									attributes={buttons[activeButtonIndex]}
+									defaultAttributes={(() => {
+										// eslint-disable-next-line no-unused-vars
+										const { buttonText, url, ...rest } =
+											defaultButtonProps;
+
+										return rest;
+									})()}
+									attributesToSave={(() => {
+										// eslint-disable-next-line no-unused-vars
+										const { buttonText, url, ...rest } =
+											defaultButtonProps;
+										return Object.keys(rest).filter(
+											(key) => {
+												return Object.prototype.hasOwnProperty.call(
+													rest,
+													key
+												);
+											}
+										);
+									})()}
+									setAttribute={(styleObject) => {
+										setAttributes({
+											buttons: [
+												...buttons.slice(
+													0,
+													activeButtonIndex
+												),
+												{
+													...buttons[
+														activeButtonIndex
+													],
+													...styleObject,
+												},
+												...buttons.slice(
+													activeButtonIndex + 1
+												),
+											],
+										});
+									}}
+									previewAttributeCallback={(
+										attr,
+										styleName
+									) => {
+										return {
+											buttons: [
+												{
+													...attr,
+													buttonText: styleName,
+												},
+											],
+										};
+									}}
+									previewElementCallback={(el) => {
+										if (
+											el &&
+											typeof el.querySelector ===
+												'function'
+										) {
+											const plusButton =
+												el.querySelector('button');
+
+											const textEditor = el.querySelector(
+												'div[role="textbox"]'
+											);
+											if (textEditor) {
+												// disable in-place text editor
+												textEditor.setAttribute(
+													'contenteditable',
+													false
+												);
+											}
+
+											el.removeChild(plusButton);
+										}
+
+										return el;
+									}}
+								/>
 								<PanelBody
 									title={__('Size', 'ultimate-blocks')}
 									initialOpen={true}

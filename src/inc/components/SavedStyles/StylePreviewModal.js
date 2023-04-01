@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Spinner } from '@wordpress/components';
-import PortalBase from '@Components/SavedStyles/PortalBase';
-import { connectWithStore } from '@Stores/StoreHelpers';
-import SavedStylesManager from '@Managers/SavedStylesManager';
-import { decidePreviewBackground } from '@Stores/savedStyles/actions';
+import { PortalBase } from '$Library/ub-common/Components';
+import { connectWithStore } from '$Library/ub-common/Inc';
+import SavedStylesManager from '$Manager/SavedStylesManager';
+import { decidePreviewBackground } from '$BlockStores/savedStyles/actions';
 
 /**
  * Style preview modal component.
