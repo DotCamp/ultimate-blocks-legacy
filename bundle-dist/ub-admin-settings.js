@@ -41093,7 +41093,7 @@ function getMergeFunction(key, options) {
 }
 function getEnumerableOwnPropertySymbols(target) {
     return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
-        return target.propertyIsEnumerable(symbol);
+        return Object.propertyIsEnumerable.call(target, symbol);
     }) : [];
 }
 function getKeys(target) {

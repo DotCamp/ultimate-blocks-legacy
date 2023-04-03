@@ -52,7 +52,7 @@ function SavedStyleListItem({
 	/**
 	 * useEffect hook
 	 */
-	useEffect(async () => {
+	useEffect(() => {
 		if (showPreview()) {
 			// queue render operation to not block main thread
 			setTimeout(() => {

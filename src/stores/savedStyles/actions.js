@@ -703,12 +703,7 @@ const generatePreviewViaBlock = async (select, styleId) => {
 	const { clientId: targetClientId } = targetBlock;
 
 	// insert replica of block with applied saved style
-	await dispatch('core/block-editor').insertBlock(
-		targetBlock,
-		0,
-		pProviderId,
-		false
-	);
+	await dispatch('core/block-editor').insertBlock(targetBlock, 0, '', false);
 
 	const targetBlockElement = document.querySelector(
 		`#block-${targetClientId}`
@@ -724,9 +719,14 @@ const generatePreviewViaBlock = async (select, styleId) => {
 
 		// remove container block and clean any left over
 		await dispatch('core/block-editor').removeBlock(pProviderId, false);
+		await dispatch('core/block-editor').removeBlock(targetClientId, false);
 
 		return generatedPreview;
 	}
+
+	// remove container block and clean any left over
+	await dispatch('core/block-editor').removeBlock(pProviderId, false);
+	await dispatch('core/block-editor').removeBlock(targetClientId, false);
 
 	return null;
 };
