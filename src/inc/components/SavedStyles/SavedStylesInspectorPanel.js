@@ -269,7 +269,7 @@ function SavedStylesInspectorPanel({
 	}, [markedAttributes]);
 
 	return (
-		<PanelBody title={__('Styles', 'ultimate-blocks-pro')}>
+		<PanelBody title={__('Styles', 'ultimate-blocks')}>
 			<div className={'ub-pro-saved-styles-inspector-wrapper'}>
 				<SavedStylesListing
 					styles={componentStyles}
