@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^1.8.4",
+    "@wordpress/api-fetch": "^6.27.0",
     "@wordpress/block-editor": "^11.2.0",
     "@wordpress/blocks": "^11.15.0",
     "@wordpress/components": "^23.2.0",
