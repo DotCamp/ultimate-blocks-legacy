@@ -152,24 +152,22 @@ function SelectedSavedStyleControls({
 			</div>
 			<Button
 				className={'ub-pro-saved-styles-listing-delete-button'}
-				disabled={
-					staticStyleDisabledStatus() || genericDisabledStatus()
-				}
+				disabled={staticStyleDisabledStatus()}
 				isSmall={true}
 				variant={'secondary'}
 				onClick={deleteStyle}
 				isDestructive={true}
 			>
-				{__('Delete', 'ultimate-blocks-pro')}
+				{__('Delete', 'ultimate-blocks')}
 			</Button>
 			<Button
 				className={'ub-pro-saved-styles-listing-update-button'}
-				disabled={staticStyleDisabledStatus() || isApplyDisabled()}
+				disabled={staticStyleDisabledStatus()}
 				isSmall={true}
 				variant={'secondary'}
 				onClick={() => updateStyleFunction(selectedItemId)}
 			>
-				{__('Update', 'ultimate-blocks-pro')}
+				{__('Update', 'ultimate-blocks')}
 			</Button>
 			<Button
 				className={'ub-pro-saved-styles-listing-apply-button'}
@@ -178,7 +176,7 @@ function SelectedSavedStyleControls({
 				variant={'primary'}
 				onClick={applyStyle}
 			>
-				{__('Apply', 'ultimate-blocks-pro')}
+				{__('Apply', 'ultimate-blocks')}
 			</Button>
 
 			{isRemoveDefaultEnabled() ? (
@@ -189,17 +187,17 @@ function SelectedSavedStyleControls({
 					isDestructive={true}
 					onClick={removeDefaultStyle}
 				>
-					{__('Remove Default Style', 'ultimate-blocks-pro')}
+					{__('Remove Default Style', 'ultimate-blocks')}
 				</Button>
 			) : (
 				<Button
 					className={'ub-pro-saved-styles-listing-default-button'}
-					disabled={isDefaultDisabled()}
+					disabled={true}
 					isSmall={true}
 					variant={'primary'}
 					onClick={setDefaultStyle}
 				>
-					{__('Set as Default Style', 'ultimate-blocks-pro')}
+					{__('Set as Default Style', 'ultimate-blocks')}
 				</Button>
 			)}
 		</div>

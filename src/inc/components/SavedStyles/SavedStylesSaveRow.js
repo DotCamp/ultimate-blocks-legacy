@@ -48,7 +48,7 @@ function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
 					onInput={(val) => setNewStyleName(val)}
 				/>
 				<Button
-					disabled={buttonDisabledStatus()}
+					disabled={true}
 					isSmall={true}
 					isPrimary={true}
 					onClick={() => saveCurrentStyle(false)}
