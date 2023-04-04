@@ -55,10 +55,9 @@ function SavedStyleListItem({
 	useEffect(() => {
 		if (showPreview()) {
 			// queue render operation to not block main thread
-			setTimeout(() => {
-				getPreview(id).then((html) => {
-					setHtmlPreview(html);
-				});
+			setTimeout(async () => {
+				const html = await getPreview(id);
+				setHtmlPreview(html);
 			}, 10);
 		}
 	}, [showPreview(), renderedComponents]);

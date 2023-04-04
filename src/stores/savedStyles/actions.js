@@ -687,6 +687,17 @@ const generatePreviewViaBlock = async (select, styleId) => {
 		false
 	);
 
+	// workaround for dispatch async issue
+	const waitTime = () => {
+		return new Promise((res) => {
+			setTimeout(() => {
+				res();
+			}, 0);
+		});
+	};
+
+	await waitTime();
+
 	const currentActiveBlockType = getComponentTypeFromStyleId(styleId);
 
 	// decide preview block type. If not overridden, use currently active block's type
@@ -703,7 +714,12 @@ const generatePreviewViaBlock = async (select, styleId) => {
 	const { clientId: targetClientId } = targetBlock;
 
 	// insert replica of block with applied saved style
-	await dispatch('core/block-editor').insertBlock(targetBlock, 0, '', false);
+	await dispatch('core/block-editor').insertBlock(
+		targetBlock,
+		0,
+		pProviderId,
+		false
+	);
 
 	const targetBlockElement = document.querySelector(
 		`#block-${targetClientId}`
@@ -719,14 +735,12 @@ const generatePreviewViaBlock = async (select, styleId) => {
 
 		// remove container block and clean any left over
 		await dispatch('core/block-editor').removeBlock(pProviderId, false);
-		await dispatch('core/block-editor').removeBlock(targetClientId, false);
 
 		return generatedPreview;
 	}
 
 	// remove container block and clean any left over
 	await dispatch('core/block-editor').removeBlock(pProviderId, false);
-	await dispatch('core/block-editor').removeBlock(targetClientId, false);
 
 	return null;
 };
