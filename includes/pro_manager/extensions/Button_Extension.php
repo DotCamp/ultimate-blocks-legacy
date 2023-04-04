@@ -27,13 +27,16 @@ class Button_Extension extends Pro_Extension_Upsell {
 	 * @return array data
 	 */
 	public function add_upsell_data() {
-		return [
+		$base_data = [
 			'transitionAnimation' => [
 				__( 'Transition Animation', 'ultimate-blocks' ),
 				__( 'Add hover animation feature and increase engagement by adding visual cues that entice users to click on your call-to-action buttons.',
 					'ultimate-blocks' )
 			]
 		];
+
+		// add saved styles upsell data too
+		return Saved_Styles_Common::inject_upsell_data( $base_data );
 	}
 
 	/**
@@ -55,6 +58,4 @@ class Button_Extension extends Pro_Extension_Upsell {
 				$colors_panel_content )
 		];
 	}
-
-
 }
