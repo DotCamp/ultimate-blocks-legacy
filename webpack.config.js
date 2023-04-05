@@ -29,7 +29,9 @@ module.exports = {
 		),
 		new IgnoreEmitPlugin(['blocks.build.asset.php', /\.map$/]),
 		new DefinePlugin({
-			UB_ENV: JSON.stringify(defaultConfig.mode),
+			// TODO [ErdemBircan] uncomment after testing
+			// UB_ENV: JSON.stringify(defaultConfig.mode),
+			UB_ENV: JSON.stringify('production'),
 		}),
 	],
 	output: {
