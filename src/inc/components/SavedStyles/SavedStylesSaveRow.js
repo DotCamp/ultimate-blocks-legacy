@@ -3,6 +3,7 @@ import { Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import UbProInspectorTextInput from '$Inc/components/SavedStyles/UbProInspectorTextInput';
 import withBusyStatus from '$BlockStores/savedStyles/hoc/withBusyStatus';
+import SavedStylesAdvancedButton from '$Inc/components/SavedStyles/SavedStylesAdvancedButton';
 
 /**
  * Button row container for saved style listing operations.
@@ -35,27 +36,30 @@ function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
 		saveFunction(newStyleName, isStatic);
 	};
 
+	/**
+	 * Check if we are in production environment.
+	 *
+	 * @type {boolean}
+	 */
+	const envProdCheck = UB_ENV === 'production';
+
 	return (
 		<div className={'ub-pro-saved-styles-save-current-button-row'}>
 			<div className={'save-row'}>
 				<UbProInspectorTextInput
-					disabled={disabled}
-					placeholder={__(
-						'save current style',
-						'ultimate-blocks-pro'
-					)}
+					disabled={envProdCheck}
+					placeholder={__('save current style', 'ultimate-blocks')}
 					value={newStyleName}
 					onInput={(val) => setNewStyleName(val)}
 				/>
-				<Button
+				<SavedStylesAdvancedButton
 					disabled={true}
 					isSmall={true}
 					isPrimary={true}
-					onClick={() => saveCurrentStyle(false)}
 				>
-					{__('Save', 'ultimate-blocks-pro')}
-				</Button>
-				{UB_ENV !== 'production' && (
+					{__('Save', 'ultimate-blocks')}
+				</SavedStylesAdvancedButton>
+				{!envProdCheck && (
 					<Button
 						disabled={buttonDisabledStatus()}
 						isSmall={true}
@@ -63,7 +67,7 @@ function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
 						onClick={() => saveCurrentStyle(true)}
 						className={'save-to-file'}
 					>
-						{__('Save to File', 'ultimate-blocks-pro')}
+						{__('Save to File', 'ultimate-blocks')}
 					</Button>
 				)}
 			</div>

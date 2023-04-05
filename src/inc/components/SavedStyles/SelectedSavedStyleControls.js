@@ -11,6 +11,7 @@ import { connectWithStore } from '$Library/ub-common/Inc';
 import SavedStylesManager from '$Manager/SavedStylesManager';
 import withBusyStatus from '$BlockStores/savedStyles/hoc/withBusyStatus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SavedStylesAdvancedButton from '$Inc/components/SavedStyles/SavedStylesAdvancedButton';
 
 /**
  * Control wrapper for selected styles.
@@ -150,8 +151,10 @@ function SelectedSavedStyleControls({
 					)}
 				</div>
 			</div>
-			<Button
+			<SavedStylesAdvancedButton
+				isUpsell={staticStyleDisabledStatus()}
 				className={'ub-pro-saved-styles-listing-delete-button'}
+				containerClassName={'ub-pro-saved-styles-listing-delete-button'}
 				disabled={staticStyleDisabledStatus()}
 				isSmall={true}
 				variant={'secondary'}
@@ -159,16 +162,18 @@ function SelectedSavedStyleControls({
 				isDestructive={true}
 			>
 				{__('Delete', 'ultimate-blocks')}
-			</Button>
-			<Button
+			</SavedStylesAdvancedButton>
+			<SavedStylesAdvancedButton
 				className={'ub-pro-saved-styles-listing-update-button'}
+				containerClassName={'ub-pro-saved-styles-listing-update-button'}
 				disabled={staticStyleDisabledStatus()}
+				isUpsell={staticStyleDisabledStatus()}
 				isSmall={true}
 				variant={'secondary'}
 				onClick={() => updateStyleFunction(selectedItemId)}
 			>
 				{__('Update', 'ultimate-blocks')}
-			</Button>
+			</SavedStylesAdvancedButton>
 			<Button
 				className={'ub-pro-saved-styles-listing-apply-button'}
 				disabled={isApplyDisabled()}
@@ -178,28 +183,17 @@ function SelectedSavedStyleControls({
 			>
 				{__('Apply', 'ultimate-blocks')}
 			</Button>
-
-			{isRemoveDefaultEnabled() ? (
-				<Button
-					className={'ub-pro-saved-styles-listing-default-button'}
-					isSmall={true}
-					variant={'primary'}
-					isDestructive={true}
-					onClick={removeDefaultStyle}
-				>
-					{__('Remove Default Style', 'ultimate-blocks')}
-				</Button>
-			) : (
-				<Button
-					className={'ub-pro-saved-styles-listing-default-button'}
-					disabled={true}
-					isSmall={true}
-					variant={'primary'}
-					onClick={setDefaultStyle}
-				>
-					{__('Set as Default Style', 'ultimate-blocks')}
-				</Button>
-			)}
+			<SavedStylesAdvancedButton
+				className={'ub-pro-saved-styles-listing-default-button'}
+				containerClassName={
+					'ub-pro-saved-styles-listing-default-button'
+				}
+				disabled={true}
+				isSmall={true}
+				variant={'primary'}
+			>
+				{__('Set as Default Style', 'ultimate-blocks')}
+			</SavedStylesAdvancedButton>
 		</div>
 	);
 }
@@ -229,15 +223,10 @@ const selectMapping = (storeSelect) => {
  * @return {Object} action mapping
  */
 const actionMapping = (storeDispatch, storeSelect) => {
-	const { getSelectedItemId } = storeSelect;
 	return {
 		updateStyleTitle: updateStyleTitleAction(storeDispatch, storeSelect),
 		deleteStyle: deleteStyle(storeDispatch, storeSelect),
-		setDefaultStyle: () =>
-			setStyleAsDefaultThunk(
-				storeDispatch,
-				storeSelect
-			)(getSelectedItemId()),
+		setDefaultStyle: () => {},
 		removeDefaultStyle: () =>
 			setStyleAsDefaultThunk(storeDispatch, storeSelect)(null),
 	};
