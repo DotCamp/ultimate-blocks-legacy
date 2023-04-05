@@ -3,6 +3,7 @@ import { Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import UbProInspectorTextInput from '$Inc/components/SavedStyles/UbProInspectorTextInput';
 import withBusyStatus from '$BlockStores/savedStyles/hoc/withBusyStatus';
+import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
 import SavedStylesAdvancedButton from '$Inc/components/SavedStyles/SavedStylesAdvancedButton';
 
 /**
@@ -11,10 +12,15 @@ import SavedStylesAdvancedButton from '$Inc/components/SavedStyles/SavedStylesAd
  * @param {Object}   props                    component properties
  * @param {boolean}  [props.busyStatus=false] disabled status
  * @param {Function} props.saveFunction       save function
+ * @param {boolean}  props.prodStatus         plugin production status, will be supplied via HOC
  * @return {JSX.Element} saved styles button row component
  * @class
  */
-function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
+function SavedStylesSaveRow({
+	busyStatus: disabled = false,
+	saveFunction,
+	prodStatus,
+}) {
 	const [newStyleName, setNewStyleName] = useState('');
 
 	/**
@@ -36,18 +42,11 @@ function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
 		saveFunction(newStyleName, isStatic);
 	};
 
-	/**
-	 * Check if we are in production environment.
-	 *
-	 * @type {boolean}
-	 */
-	const envProdCheck = UB_ENV === 'production';
-
 	return (
 		<div className={'ub-pro-saved-styles-save-current-button-row'}>
 			<div className={'save-row'}>
 				<UbProInspectorTextInput
-					disabled={envProdCheck}
+					disabled={prodStatus}
 					placeholder={__('save current style', 'ultimate-blocks')}
 					value={newStyleName}
 					onInput={(val) => setNewStyleName(val)}
@@ -59,7 +58,7 @@ function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
 				>
 					{__('Save', 'ultimate-blocks')}
 				</SavedStylesAdvancedButton>
-				{!envProdCheck && (
+				{!prodStatus && (
 					<Button
 						disabled={buttonDisabledStatus()}
 						isSmall={true}
@@ -75,7 +74,19 @@ function SavedStylesSaveRow({ busyStatus: disabled = false, saveFunction }) {
 	);
 }
 
+// selector mapping for main store
+const mainStoreSelectorMapping = (namespacedSelect) => {
+	const { inProduction } = namespacedSelect;
+
+	return {
+		prodStatus: inProduction(),
+	};
+};
+
 /**
  * @module SavedStylesSaveRow
  */
-export default withBusyStatus(SavedStylesSaveRow);
+export default connectWithMainStore(
+	mainStoreSelectorMapping,
+	null
+)(withBusyStatus(SavedStylesSaveRow));

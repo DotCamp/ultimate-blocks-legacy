@@ -6,6 +6,7 @@ import {
 	updateStyleTitleAction,
 } from '$BlockStores/savedStyles/actions';
 import { connectWithStore } from '$Library/ub-common/Inc';
+import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
 import SavedStylesManager from '$Manager/SavedStylesManager';
 import withBusyStatus from '$BlockStores/savedStyles/hoc/withBusyStatus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +24,7 @@ import SavedStylesAdvancedButton from '$Inc/components/SavedStyles/SavedStylesAd
  * @param {Function}      props.applyStyle          apply currently selected style to active block
  * @param {string | null} props.selectedStyleName   name of selected style
  * @param {Function}      props.updateStyleTitle    update title of currently selected style
+ * @param {boolean}       props.prodStatus          plugin production status, will be supplied via HOC
  * @class
  */
 function SelectedSavedStyleControls({
@@ -35,6 +37,7 @@ function SelectedSavedStyleControls({
 	applyStyle,
 	selectedStyleName,
 	updateStyleTitle,
+	prodStatus,
 }) {
 	const [titleEditStatus, setTitleEditStatus] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(selectedStyleName);
@@ -86,7 +89,7 @@ function SelectedSavedStyleControls({
 	 */
 	function staticStyleDisabledStatus() {
 		if (selectedItemId && selectedItemId.startsWith('ub-dev')) {
-			return UB_ENV === 'production';
+			return prodStatus;
 		}
 		return false;
 	}
@@ -194,11 +197,25 @@ const actionMapping = (storeDispatch, storeSelect) => {
 	};
 };
 
+// select mapping for main store
+const mainStoreSelectMapping = (namespacedSelect) => {
+	const { inProduction } = namespacedSelect;
+
+	return {
+		prodStatus: inProduction(),
+	};
+};
+
 /**
  * @module SelectedStyleControls
  */
-export default connectWithStore(
-	SavedStylesManager.storeNamespace,
-	selectMapping,
-	actionMapping
-)(withBusyStatus(SelectedSavedStyleControls));
+export default connectWithMainStore(
+	mainStoreSelectMapping,
+	null
+)(
+	connectWithStore(
+		SavedStylesManager.storeNamespace,
+		selectMapping,
+		actionMapping
+	)(withBusyStatus(SelectedSavedStyleControls))
+);
