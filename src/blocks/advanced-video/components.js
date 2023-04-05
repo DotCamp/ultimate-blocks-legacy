@@ -650,7 +650,7 @@ export function AdvancedVideoBlock(props) {
 
 	return (
 		<>
-			<InspectorControls>
+			<InspectorControls group="settings">
 				{url !== "" && (
 					<>
 						<PanelBody title={__("General")} initialOpen={true}>
@@ -1315,7 +1315,38 @@ export function AdvancedVideoBlock(props) {
 								</>
 							)}
 						</PanelBody>
-						<PanelBody title={__("Border")} initialOpen={false}>
+						<PanelBody title={__("Responsive Settings")} initialOpen={false}>
+							<p>{__("Toggle visibility For Devices")}</p>
+							<Button
+								isPrimary={showInDesktop}
+								isSecondary={!showInDesktop}
+								icon="desktop"
+								showTooltip={true}
+								label={"Desktop"}
+								onClick={() => setAttributes({ showInDesktop: !showInDesktop })}
+							/>
+							<Button
+								isPrimary={showInTablet}
+								isSecondary={!showInTablet}
+								icon="tablet"
+								showTooltip={true}
+								label={"Tablet"}
+								onClick={() => setAttributes({ showInTablet: !showInTablet })}
+							/>
+							<Button
+								isPrimary={showInMobile}
+								isSecondary={!showInMobile}
+								icon="smartphone"
+								showTooltip={true}
+								label={"Mobile"}
+								onClick={() => setAttributes({ showInMobile: !showInMobile })}
+							/>
+						</PanelBody>
+					</>
+				)}
+			</InspectorControls>
+			<InspectorControls group="styles">
+				<PanelBody title={__("Border")} initialOpen={true}>
 							<div className="ub-labelled-toggle">
 								<p>{__("Use a border")}</p>
 								<ToggleControl
@@ -1740,35 +1771,6 @@ export function AdvancedVideoBlock(props) {
 								</>
 							)}
 						</PanelBody>
-						<PanelBody title={__("Visibility")} initialOpen={false}>
-							<p>{__("Toggle visibility")}</p>
-							<Button
-								isPrimary={showInDesktop}
-								isSecondary={!showInDesktop}
-								icon="desktop"
-								showTooltip={true}
-								label={"Desktop"}
-								onClick={() => setAttributes({ showInDesktop: !showInDesktop })}
-							/>
-							<Button
-								isPrimary={showInTablet}
-								isSecondary={!showInTablet}
-								icon="tablet"
-								showTooltip={true}
-								label={"Tablet"}
-								onClick={() => setAttributes({ showInTablet: !showInTablet })}
-							/>
-							<Button
-								isPrimary={showInMobile}
-								isSecondary={!showInMobile}
-								icon="smartphone"
-								showTooltip={true}
-								label={"Mobile"}
-								onClick={() => setAttributes({ showInMobile: !showInMobile })}
-							/>
-						</PanelBody>
-					</>
-				)}
 			</InspectorControls>
 			{url === "" && (
 				<>
