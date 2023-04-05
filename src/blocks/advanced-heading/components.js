@@ -94,7 +94,7 @@ const AdvancedHeadingEdit = ({
 
 	return (
 		<>
-			<InspectorControls>
+			<InspectorControls group="settings">
 				<PanelBody title={__("General", "ultimate-blocks")} intialOpen={true}>
 					{/* Heading Level */}
 					<p>{__("Heading Level", "ultimate-blocks")}</p>
@@ -120,6 +120,27 @@ const AdvancedHeadingEdit = ({
 						value={alignment}
 						onChange={(alignment) => setAttributes({ alignment })}
 						isCollapsed={false}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="styles">
+				<PanelBody title={__("Colors", "ultimate-blocks")} initialOpen={true}>
+					{/* Background & Text Color */}
+					<PanelColorSettings
+						title={__("Heading Colors", "ultimate-blocks")}
+						colorSettings={[
+							{
+								value: textColor,
+								onChange: (textColor) => setAttributes({ textColor }),
+								label: __("Heading Text Color", "ultimate-blocks"),
+							},
+							{
+								value: backgroundColor,
+								onChange: (backgroundColor) =>
+									setAttributes({ backgroundColor }),
+								label: __("Heading Background Color", "ultimate-blocks"),
+							},
+						]}
 					/>
 				</PanelBody>
 				<PanelBody
@@ -170,25 +191,6 @@ const AdvancedHeadingEdit = ({
 						onChange={(lineHeight) => setAttributes({ lineHeight })}
 						min={10}
 						max={120}
-					/>
-				</PanelBody>
-				<PanelBody title={__("Colors", "ultimate-blocks")} initialOpen={false}>
-					{/* Background & Text Color */}
-					<PanelColorSettings
-						title={__("Colors", "ultimate-blocks")}
-						colorSettings={[
-							{
-								value: textColor,
-								onChange: (textColor) => setAttributes({ textColor }),
-								label: __("Heading Text Color", "ultimate-blocks"),
-							},
-							{
-								value: backgroundColor,
-								onChange: (backgroundColor) =>
-									setAttributes({ backgroundColor }),
-								label: __("Heading Background Color", "ultimate-blocks"),
-							},
-						]}
 					/>
 				</PanelBody>
 			</InspectorControls>
