@@ -1256,7 +1256,8 @@ export function EditorComponent(props) {
 				</BlockControls>
 			)}
 			{
-				<InspectorControls>
+			<>
+				<InspectorControls group="settings">
 					{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
 						<>
 							<PanelBody title={__("Size", "ultimate-blocks")} initialOpen={true}>
@@ -1317,9 +1318,262 @@ export function EditorComponent(props) {
 									</ButtonGroup>
 								</div>
 							</PanelBody>
+							<PanelBody title={__("Icon", "ultimate-blocks")} initialOpen={true}>
+								<div className="ub-button-grid">
+									<p>{__("Selected icon", "ultimate-blocks")}</p>
+									<div className="ub-button-grid-selector">
+										<Dropdown
+											position="bottom right"
+											renderToggle={({ isOpen, onToggle }) => (
+												<Button
+													className="ub-button-icon-select"
+													icon={
+														buttons[activeButtonIndex].chosenIcon !== "" &&
+														generateIcon(
+															allIcons[
+																`fa${dashesToCamelcase(
+																	buttons[activeButtonIndex].chosenIcon
+																)}`
+															],
+															35
+														)
+													}
+													label={__(
+														"Open icon selection dialog",
+														"ultimate-blocks"
+													)}
+													onClick={onToggle}
+													aria-expanded={isOpen}
+												/>
+											)}
+											renderContent={() => (
+												<div>
+													<input
+														type="text"
+														value={iconSearchTerm}
+														onChange={(e) => {
+															setIconSearchTerm(e.target.value);
+															setIconSearchResultsPage(0);
+														}}
+													/>
+													{iconSearchTerm === "" && (
+														<Button
+															className="ub-button-available-icon"
+															onClick={() => {
+																setAttributes({
+																	buttons: [
+																		...buttons.slice(0, activeButtonIndex),
+																		Object.assign(
+																			{},
+																			buttons[activeButtonIndex],
+																			{
+																				chosenIcon: "",
+																			}
+																		),
+																		...buttons.slice(activeButtonIndex + 1),
+																	],
+																});
+																setRecentSelection("");
+															}}
+														>
+															{__("No icon", "ultimate-blocks")}
+														</Button>
+													)}
+													<br />
+													{iconListPage.length > 0 && (
+														<div>
+															<button
+																onClick={() => {
+																	if (iconSearchResultsPage > 0) {
+																		setIconSearchResultsPage(
+																			iconSearchResultsPage - 1
+																		);
+																	}
+																}}
+															>
+																&lt;
+															</button>
+															<span>
+																{iconSearchResultsPage + 1}/
+																{iconListPage.length}
+															</span>
+															<button
+																onClick={() => {
+																	if (
+																		iconSearchResultsPage <
+																		iconListPage.length - 1
+																	) {
+																		setIconSearchResultsPage(
+																			iconSearchResultsPage + 1
+																		);
+																	}
+																}}
+															>
+																&gt;
+															</button>
+														</div>
+													)}
+													{iconListPage.length > 0 &&
+														iconListPage[iconSearchResultsPage].map((i) => (
+															<Button
+																className="ub-button-available-icon"
+																icon={generateIcon(i, 35)}
+																label={i.iconName}
+																onClick={() => {
+																	setAttributes({
+																		buttons: [
+																			...buttons.slice(0, activeButtonIndex),
+																			Object.assign(
+																				{},
+																				buttons[activeButtonIndex],
+																				{
+																					chosenIcon: i.iconName,
+																				}
+																			),
+																			...buttons.slice(activeButtonIndex + 1),
+																		],
+																	});
+																	setRecentSelection(i.iconName);
+																	setSelectionTime(~~(Date.now() / 1000));
+																}}
+															/>
+														))}
+												</div>
+											)}
+											onToggle={(isOpen) => {
+												if (!isOpen && recentSelection && hasApiAccess) {
+													updateIconList();
+												}
+											}}
+										/>
+									</div>
+								</div>
+								<RadioControl
+									className="ub-button-icon-position"
+									label={__("Icon position")}
+									selected={buttons[activeButtonIndex].iconPosition}
+									options={[
+										{
+											label: __("Left", "ultimate-blocks"),
+											value: "left",
+										},
+										{
+											label: __("Right", "ultimate-blocks"),
+											value: "right",
+										},
+									]}
+									onChange={(pos) =>
+										setAttributes({
+											buttons: [
+												...buttons.slice(0, activeButtonIndex),
+												Object.assign({}, buttons[activeButtonIndex], {
+													iconPosition: pos,
+												}),
+												...buttons.slice(activeButtonIndex + 1),
+											],
+										})
+									}
+								/>
+								{buttons[activeButtonIndex].chosenIcon !== "" && (
+									<>
+										<ToggleControl
+											label={__("Change icon size", "ultimate-blocks")}
+											checked={buttons[activeButtonIndex].iconSize > 0}
+											onChange={(isOn) => {
+												let newAttributes = { iconUnit: "px" };
+
+												if (isOn) {
+													newAttributes = Object.assign({}, newAttributes, {
+														iconSize:
+															presetIconSize[buttons[activeButtonIndex].size],
+													});
+												} else {
+													newAttributes = Object.assign({}, newAttributes, {
+														iconSize: 0,
+													});
+												}
+
+												setAttributes({
+													buttons: [
+														...buttons.slice(0, activeButtonIndex),
+														Object.assign(
+															{},
+															buttons[activeButtonIndex],
+															newAttributes
+														),
+														...buttons.slice(activeButtonIndex + 1),
+													],
+												});
+											}}
+										/>
+										{buttons[activeButtonIndex].iconSize > 0 && (
+											<div id="ub-button-radius-panel">
+												<RangeControl
+													label={__("Icon size")}
+													value={buttons[activeButtonIndex].iconSize}
+													step={
+														buttons[activeButtonIndex].iconUnit === "em"
+															? 0.1
+															: 1
+													}
+													onChange={(value) =>
+														setAttributes({
+															buttons: [
+																...buttons.slice(0, activeButtonIndex),
+																Object.assign({}, buttons[activeButtonIndex], {
+																	iconSize: value,
+																}),
+																...buttons.slice(activeButtonIndex + 1),
+															],
+														})
+													}
+												/>
+												<ButtonGroup
+													aria-label={__("Button Size Unit", "ultimate-blocks")}
+												>
+													{["px", "em"].map((b) => (
+														<Button
+															isLarge
+															isPrimary={
+																b === buttons[activeButtonIndex].iconUnit
+															}
+															aria-pressed={
+																b === buttons[activeButtonIndex].iconUnit
+															}
+															onClick={() =>
+																setAttributes({
+																	buttons: [
+																		...buttons.slice(0, activeButtonIndex),
+																		Object.assign(
+																			{},
+																			buttons[activeButtonIndex],
+																			{
+																				iconUnit: b,
+																			}
+																		),
+																		...buttons.slice(activeButtonIndex + 1),
+																	],
+																})
+															}
+														>
+															{b}
+														</Button>
+													))}
+												</ButtonGroup>
+											</div>
+										)}
+									</>
+								)}
+							</PanelBody>
+						</>
+					)}
+				</InspectorControls>
+				<InspectorControls group="styles">
+					{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
+						<>
 							<PanelBody
 								title={__("Colors", "ultimate-blocks")}
-								initialOpen={false}
+								initialOpen={true}
 							>
 								<ToggleControl
 									label={__("Transparent", "ultimate-blocks")}
@@ -1731,256 +1985,10 @@ export function EditorComponent(props) {
 									</>
 								)}
 							</PanelBody>
-							<PanelBody title={__("Icon", "ultimate-blocks")} initialOpen={false}>
-								<div className="ub-button-grid">
-									<p>{__("Selected icon", "ultimate-blocks")}</p>
-									<div className="ub-button-grid-selector">
-										<Dropdown
-											position="bottom right"
-											renderToggle={({ isOpen, onToggle }) => (
-												<Button
-													className="ub-button-icon-select"
-													icon={
-														buttons[activeButtonIndex].chosenIcon !== "" &&
-														generateIcon(
-															allIcons[
-																`fa${dashesToCamelcase(
-																	buttons[activeButtonIndex].chosenIcon
-																)}`
-															],
-															35
-														)
-													}
-													label={__(
-														"Open icon selection dialog",
-														"ultimate-blocks"
-													)}
-													onClick={onToggle}
-													aria-expanded={isOpen}
-												/>
-											)}
-											renderContent={() => (
-												<div>
-													<input
-														type="text"
-														value={iconSearchTerm}
-														onChange={(e) => {
-															setIconSearchTerm(e.target.value);
-															setIconSearchResultsPage(0);
-														}}
-													/>
-													{iconSearchTerm === "" && (
-														<Button
-															className="ub-button-available-icon"
-															onClick={() => {
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				chosenIcon: "",
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																});
-																setRecentSelection("");
-															}}
-														>
-															{__("No icon", "ultimate-blocks")}
-														</Button>
-													)}
-													<br />
-													{iconListPage.length > 0 && (
-														<div>
-															<button
-																onClick={() => {
-																	if (iconSearchResultsPage > 0) {
-																		setIconSearchResultsPage(
-																			iconSearchResultsPage - 1
-																		);
-																	}
-																}}
-															>
-																&lt;
-															</button>
-															<span>
-																{iconSearchResultsPage + 1}/
-																{iconListPage.length}
-															</span>
-															<button
-																onClick={() => {
-																	if (
-																		iconSearchResultsPage <
-																		iconListPage.length - 1
-																	) {
-																		setIconSearchResultsPage(
-																			iconSearchResultsPage + 1
-																		);
-																	}
-																}}
-															>
-																&gt;
-															</button>
-														</div>
-													)}
-													{iconListPage.length > 0 &&
-														iconListPage[iconSearchResultsPage].map((i) => (
-															<Button
-																className="ub-button-available-icon"
-																icon={generateIcon(i, 35)}
-																label={i.iconName}
-																onClick={() => {
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					chosenIcon: i.iconName,
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
-																		],
-																	});
-																	setRecentSelection(i.iconName);
-																	setSelectionTime(~~(Date.now() / 1000));
-																}}
-															/>
-														))}
-												</div>
-											)}
-											onToggle={(isOpen) => {
-												if (!isOpen && recentSelection && hasApiAccess) {
-													updateIconList();
-												}
-											}}
-										/>
-									</div>
-								</div>
-								<RadioControl
-									className="ub-button-icon-position"
-									label={__("Icon position")}
-									selected={buttons[activeButtonIndex].iconPosition}
-									options={[
-										{
-											label: __("Left", "ultimate-blocks"),
-											value: "left",
-										},
-										{
-											label: __("Right", "ultimate-blocks"),
-											value: "right",
-										},
-									]}
-									onChange={(pos) =>
-										setAttributes({
-											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													iconPosition: pos,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
-											],
-										})
-									}
-								/>
-								{buttons[activeButtonIndex].chosenIcon !== "" && (
-									<>
-										<ToggleControl
-											label={__("Change icon size", "ultimate-blocks")}
-											checked={buttons[activeButtonIndex].iconSize > 0}
-											onChange={(isOn) => {
-												let newAttributes = { iconUnit: "px" };
-
-												if (isOn) {
-													newAttributes = Object.assign({}, newAttributes, {
-														iconSize:
-															presetIconSize[buttons[activeButtonIndex].size],
-													});
-												} else {
-													newAttributes = Object.assign({}, newAttributes, {
-														iconSize: 0,
-													});
-												}
-
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, activeButtonIndex),
-														Object.assign(
-															{},
-															buttons[activeButtonIndex],
-															newAttributes
-														),
-														...buttons.slice(activeButtonIndex + 1),
-													],
-												});
-											}}
-										/>
-										{buttons[activeButtonIndex].iconSize > 0 && (
-											<div id="ub-button-radius-panel">
-												<RangeControl
-													label={__("Icon size")}
-													value={buttons[activeButtonIndex].iconSize}
-													step={
-														buttons[activeButtonIndex].iconUnit === "em"
-															? 0.1
-															: 1
-													}
-													onChange={(value) =>
-														setAttributes({
-															buttons: [
-																...buttons.slice(0, activeButtonIndex),
-																Object.assign({}, buttons[activeButtonIndex], {
-																	iconSize: value,
-																}),
-																...buttons.slice(activeButtonIndex + 1),
-															],
-														})
-													}
-												/>
-												<ButtonGroup
-													aria-label={__("Button Size Unit", "ultimate-blocks")}
-												>
-													{["px", "em"].map((b) => (
-														<Button
-															isLarge
-															isPrimary={
-																b === buttons[activeButtonIndex].iconUnit
-															}
-															aria-pressed={
-																b === buttons[activeButtonIndex].iconUnit
-															}
-															onClick={() =>
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				iconUnit: b,
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																})
-															}
-														>
-															{b}
-														</Button>
-													))}
-												</ButtonGroup>
-											</div>
-										)}
-									</>
-								)}
-							</PanelBody>
 						</>
-					)}
+					)}							
 				</InspectorControls>
+			</>	
 			}
 			{
 				<div className={`ub-buttons align-button-${align}`}>
