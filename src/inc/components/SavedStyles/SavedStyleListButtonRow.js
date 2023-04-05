@@ -27,7 +27,7 @@ function SavedStyleListButtonRow( {
 					isPrimary={ isShowPreviewsEnabled }
 					aria-pressed={ isShowPreviewsEnabled }
 					onClick={ () => setShowPreviewStatus( true ) }
-					title={ __( 'show previews', 'ultimate-blocks-pro' ) }
+					title={ __( 'show previews', 'ultimate-blocks' ) }
 				>
 					<FontAwesomeIcon icon={ 'eye' } />
 				</Button>
@@ -37,7 +37,7 @@ function SavedStyleListButtonRow( {
 					isPrimary={ ! isShowPreviewsEnabled }
 					aria-pressed={ ! isShowPreviewsEnabled }
 					onClick={ () => setShowPreviewStatus( false ) }
-					title={ __( 'show listing', 'ultimate-blocks-pro' ) }
+					title={ __( 'show listing', 'ultimate-blocks' ) }
 				>
 					<FontAwesomeIcon icon={ 'list-ul' } />
 				</Button>

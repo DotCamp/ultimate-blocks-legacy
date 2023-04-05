@@ -84,7 +84,7 @@ function SavedStyleItemCardContainer({
 			>
 				<Overlay>
 					<div className={'ub-pro-inactive-text'}>
-						{__('no saved style found', 'ultimate-blocks-pro')}
+						{__('no saved style found', 'ultimate-blocks')}
 					</div>
 				</Overlay>
 			</CSSTransition>

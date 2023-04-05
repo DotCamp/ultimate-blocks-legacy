@@ -11,7 +11,7 @@ function DefaultItemIndicator() {
 	return (
 		<div
 			className={ 'default-item-indicator-wrapper' }
-			title={ __( 'default style', 'ultimate-blocks-pro' ) }
+			title={ __( 'default style', 'ultimate-blocks' ) }
 		>
 			<FontAwesomeIcon icon="dot-circle" />
 		</div>

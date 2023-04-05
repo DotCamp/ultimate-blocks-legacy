@@ -16,7 +16,7 @@ function SavedStylesListingFilter({ value, onInput, busyStatus }) {
 	return (
 		<div className={'ub-pro-saved-styles-listing-filter'}>
 			<UbProInspectorTextInput
-				placeholder={__('Filter styles', 'ultimate-blocks-pro')}
+				placeholder={__('Filter styles', 'ultimate-blocks')}
 				value={value}
 				onInput={onInput}
 				disabled={busyStatus}

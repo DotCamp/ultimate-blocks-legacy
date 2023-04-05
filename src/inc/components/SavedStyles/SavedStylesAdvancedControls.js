@@ -27,7 +27,7 @@ function SavedStylesAdvancedControls({
 	return (
 		<Panel className={'advanced-controls'}>
 			<PanelBody
-				title={__('Advanced', 'ultimate-blocks-pro')}
+				title={__('Advanced', 'ultimate-blocks')}
 				initialOpen={panelVisibility}
 				onToggle={setVisibility}
 				className={'advanced-controls-panel-body'}
