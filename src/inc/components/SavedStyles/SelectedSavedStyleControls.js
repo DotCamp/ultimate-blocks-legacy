@@ -3,10 +3,8 @@ import { Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import {
 	deleteStyle,
-	setStyleAsDefaultThunk,
 	updateStyleTitleAction,
 } from '$BlockStores/savedStyles/actions';
-import { getComponentDefaultStyle } from '$BlockStores/savedStyles/selectors';
 import { connectWithStore } from '$Library/ub-common/Inc';
 import SavedStylesManager from '$Manager/SavedStylesManager';
 import withBusyStatus from '$BlockStores/savedStyles/hoc/withBusyStatus';
@@ -23,23 +21,18 @@ import SavedStylesAdvancedButton from '$Inc/components/SavedStyles/SavedStylesAd
  * @param {Function}      props.updateStyleFunction update selected style item with current component styles
  * @param {string|null}   props.activeItemId        currently active style id, will be supplied via HOC
  * @param {Function}      props.applyStyle          apply currently selected style to active block
- * @param {string | null} props.defaultStyleId      default style id for current block
- * @param {Function}      props.setDefaultStyle     set selected style as default for current block
- * @param {Function}      props.removeDefaultStyle  unmark selected style as default for current block
  * @param {string | null} props.selectedStyleName   name of selected style
  * @param {Function}      props.updateStyleTitle    update title of currently selected style
  * @class
  */
 function SelectedSavedStyleControls({
+	// eslint-disable-next-line no-shadow
 	deleteStyle,
 	selectedItemId,
 	busyStatus,
 	updateStyleFunction,
 	activeItemId,
 	applyStyle,
-	defaultStyleId,
-	setDefaultStyle,
-	removeDefaultStyle,
 	selectedStyleName,
 	updateStyleTitle,
 }) {
@@ -52,15 +45,6 @@ function SelectedSavedStyleControls({
 	}, [selectedStyleName]);
 
 	/**
-	 * Generic disabled status.
-	 *
-	 * @return {boolean} disabled status
-	 */
-	function genericDisabledStatus() {
-		return busyStatus || selectedItemId === null;
-	}
-
-	/**
 	 * Disabled status for apply operation.
 	 *
 	 * @return {boolean} disabled status
@@ -71,24 +55,6 @@ function SelectedSavedStyleControls({
 			selectedItemId === activeItemId ||
 			selectedItemId === null
 		);
-	}
-
-	/**
-	 * Disabled status for setting default style operation.
-	 *
-	 * @return {boolean} disabled status
-	 */
-	function isDefaultDisabled() {
-		return genericDisabledStatus() || selectedItemId === defaultStyleId;
-	}
-
-	/**
-	 * Remove default functionality status.
-	 *
-	 * @return {boolean} status
-	 */
-	function isRemoveDefaultEnabled() {
-		return selectedItemId && selectedItemId === defaultStyleId;
 	}
 
 	/**
@@ -210,7 +176,6 @@ const selectMapping = (storeSelect) => {
 	return {
 		selectedItemId: getSelectedItemId(),
 		activeItemId: getActiveItemId(),
-		defaultStyleId: getComponentDefaultStyle(storeSelect),
 		selectedStyleName: getComponentStyleName(getSelectedItemId()),
 	};
 };
@@ -226,9 +191,6 @@ const actionMapping = (storeDispatch, storeSelect) => {
 	return {
 		updateStyleTitle: updateStyleTitleAction(storeDispatch, storeSelect),
 		deleteStyle: deleteStyle(storeDispatch, storeSelect),
-		setDefaultStyle: () => {},
-		removeDefaultStyle: () =>
-			setStyleAsDefaultThunk(storeDispatch, storeSelect)(null),
 	};
 };
 
