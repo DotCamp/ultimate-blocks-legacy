@@ -51,17 +51,6 @@ function SavedStylesListing({
 	 * `useEffect` React hook.
 	 */
 	useEffect(() => {
-		// only set selected item to active item if it has a valid id
-		if (activeItemId) {
-			// set selected item to changed active item
-			setSelectedItemId(activeItemId);
-		}
-	}, [activeItemId]);
-
-	/**
-	 * `useEffect` React hook.
-	 */
-	useEffect(() => {
 		const filteredStyleList = Object.keys(styles).reduce(
 			(carry, styleId) => {
 				if (Object.prototype.hasOwnProperty.call(styles, styleId)) {
