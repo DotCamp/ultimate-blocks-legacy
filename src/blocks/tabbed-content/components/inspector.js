@@ -3,6 +3,7 @@ import {
 	verticalTabIcon,
 	accordionIcon,
 } from '../icons/icon';
+import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
 
 const { __ } = wp.i18n;
 const { Component } = wp.element;
@@ -68,6 +69,75 @@ export default class Inspector extends Component {
 
 		return (
 			<InspectorControls>
+				<SavedStylesInspector
+					attributes={(() => {
+						/* eslint-disable no-unused-vars */
+						const {
+							blockID,
+							activeTab,
+							id,
+							activeControl,
+							...rest
+						} = attributes;
+						/* eslint-enable no-unused-vars */
+
+						return rest;
+					})()}
+					setAttribute={setAttributes}
+					previewAttributeCallback={(attr) => attr}
+					previewElementCallback={(el) => {
+						const isVertical = el.querySelector('.vertical-holder');
+
+						if (!isVertical) {
+							const horizontalTabs = Array.from(
+								el.querySelectorAll(
+									'.wp-block-ub-tabbed-content-tabs-title .wp-block-ub-tabbed-content-tab-title-wrap'
+								)
+							);
+
+							if (horizontalTabs.length > 0) {
+								const tabAddButton = horizontalTabs.pop();
+								tabAddButton.parentNode.removeChild(
+									tabAddButton
+								);
+							}
+						} else {
+							const verticalTabs = Array.from(
+								el.querySelectorAll(
+									'.wp-block-ub-tabbed-content-tabs-title-vertical-tab .wp-block-ub-tabbed-content-tab-title-vertical-wrap'
+								)
+							);
+
+							if (verticalTabs.length > 0) {
+								const verticalTabAddButton = verticalTabs.pop();
+								verticalTabAddButton.parentNode.removeChild(
+									verticalTabAddButton
+								);
+							}
+
+							const verticalTabHolder = el.querySelector(
+								'.vertical-tab-width'
+							);
+
+							if (verticalTabHolder) {
+								verticalTabHolder.style.width = 'fit-content';
+							}
+						}
+
+						const tabContentContainer = el.querySelector(
+							'.block-editor-inner-blocks'
+						);
+
+						if (tabContentContainer) {
+							tabContentContainer.innerHTML = `<p>${__(
+								'Tab Content',
+								'ultimate-blocks-pro'
+							)}</p>`;
+						}
+
+						return el;
+					}}
+				/>
 				<PanelBody title={__('Tab Style')} initialOpen={true}>
 					<PanelColorSettings
 						title={__('Tab Colors')}
