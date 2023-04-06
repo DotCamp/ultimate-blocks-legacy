@@ -28,7 +28,7 @@ class Tabbed_Content_Extension extends Pro_Extension_Upsell {
 	 * @return array data
 	 */
 	public function add_upsell_data() {
-		return [
+		$base_data = [
 			'callToAction'       => [
 				__( 'Call to Action', 'ultimate-blocks' ),
 				__( "Transform your tab headers into clickable buttons that redirect to your desired web page  and simplify your visitors's journey by directing them straight to your desired pages.",
@@ -45,6 +45,8 @@ class Tabbed_Content_Extension extends Pro_Extension_Upsell {
 					'ultimate-blocks' )
 			]
 		];
+
+		return Saved_Styles_Common::inject_upsell_data( $base_data );
 	}
 
 	/**

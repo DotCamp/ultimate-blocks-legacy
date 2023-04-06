@@ -23,6 +23,7 @@
   },
   "globals": {
 	"self": true,
-	"ubPriorityData": true
+	"ubPriorityData": true,
+	"UB_ENV": true
   }
 }

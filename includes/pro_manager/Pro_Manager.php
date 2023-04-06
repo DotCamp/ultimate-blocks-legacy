@@ -87,10 +87,10 @@ class Pro_Manager {
 	 */
 	protected function init_process() {
 		if ( ! $this->is_pro() ) {
-			Editor_Data_Manager::get_instance()->add_priority_data( $this->prepare_priority_upsell_data() );
+			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
 		}
 
-		Editor_Data_Manager::get_instance()->add_priority_data( [
+		Editor_Data_Manager::get_instance()->add_editor_data( [
 			'proStatus' => json_encode( $this->is_pro() ),
 			'assets'    => [
 				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/icon-128x128.png',

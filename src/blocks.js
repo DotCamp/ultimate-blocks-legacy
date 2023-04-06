@@ -9,6 +9,8 @@
  * Webpack is compiling as the input file.
  */
 
+import './pre-register';
+
 import './blocks/notification-box/block';
 import './blocks/testimonial/block';
 import './blocks/call-to-action/block';
@@ -40,7 +42,3 @@ import './blocks/advanced-heading/block';
 import './blocks/advanced-video/block';
 
 import './blocks/icon-inner/block';
-
-import UpsellManager from '$Inc/UpsellManager';
-
-UpsellManager.addDummyInspectorControls();

@@ -1,0 +1,38 @@
+@import './__saved-styles-colors.sass';
+@import '../__common.scss';
+
+//region DEFAULTS
+$default-border-color: $sa-gray-400;
+$color-positive: $green-400;
+$color-inactive: $sa-gray-600;
+
+$border-radius: 2px;
+
+$font-size: 95%;
+
+//endregion
+
+
+//region MIXINS
+@mixin default-border($b_color: $default-border-color, $line_width: 1px) {
+	border: $line_width solid $b_color !important;
+}
+
+//endregion
+
+
+//region EXTENDS
+%rounded-corner {
+	border-radius: $border-radius !important;
+}
+
+%inspector-font-size {
+	font-size: $font-size;
+}
+
+%active-item-presentation {
+	@extend %shadow-lg;
+	transform: scale(1.1);
+}
+
+//endregion

@@ -27,7 +27,7 @@ class Content_Toggle_Extension extends Pro_Extension_Upsell {
 	 * @return array data
 	 */
 	public function add_upsell_data() {
-		return [
+		$base_data = [
 			'search'         => [
 				__( 'Content Search', 'ultimate-blocks' ),
 				__( "Add a search bar feature that lets your users effortlessly search within your minimized content.",
@@ -44,6 +44,8 @@ class Content_Toggle_Extension extends Pro_Extension_Upsell {
 					'ultimate-blocks' )
 			],
 		];
+
+		return Saved_Styles_Common::inject_upsell_data( $base_data );
 	}
 
 	/**

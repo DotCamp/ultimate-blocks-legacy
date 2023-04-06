@@ -146,6 +146,15 @@ const selectors = {
 
 		return blockOptions?.icon?.src;
 	},
+	/**
+	 * Are we in production mode?
+	 *
+	 * @param {Object} state store state
+	 * @return {boolean} production mode status
+	 */
+	inProduction(state) {
+		return state.mode === 'production';
+	},
 };
 
 /**

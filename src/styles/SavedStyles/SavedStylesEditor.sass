@@ -1,0 +1,350 @@
+@import '../base/themes/__saved-styles-colors.sass'
+@import '../base/themes/__saved-styles-inspector-theme.scss'
+@import '../base/__common.scss'
+
+.ub-pro-saved-styles-inspector-wrapper
+	@extend %border-box
+	display: grid
+	grid-template-columns: 1fr
+	grid-template-rows: repeat(3, auto)
+	grid-template-areas: 'listing' 'advancedControls'
+	justify-content: center
+	align-content: center
+	grid-gap: 10px
+
+	*
+		@extend %inspector-font-size
+		@extend %border-box
+
+	.ub-pro-saved-styles-inspector-listing-parent
+		grid-area: listing
+		display: grid
+		grid-template-columns: 1fr
+		grid-template-rows: repeat(3, auto)
+		grid-template-areas: 'filter' 'itemCards' 'buttonRow'
+		grid-gap: 5px
+		justify-content: center
+		justify-items: center
+		align-content: center
+		align-items: center
+
+		.ub-pro-saved-styles-listing-button-row
+			grid-area: buttonRow
+			margin: 10px
+
+
+		.ub-pro-saved-styles-listing-filter
+			grid-area: filter
+
+
+		.ub-pro-saved-styles-inspector-listing-wrapper
+			grid-area: itemCards
+			width: 100%
+			height: 150px
+			max-height: 200px
+
+			.listing
+				@extend %rounded-corner
+				@extend %flex-center-all
+				@include default-border()
+				@extend .ub-pro-disabled
+				background-color: $sa-gray-100
+				position: relative
+				flex-direction: row
+				flex-wrap: wrap
+				width: 100%
+				height: 150px
+				max-height: 200px
+				overflow: auto
+				overflow-x: hidden
+				align-items: flex-start
+				scroll-behavior: smooth
+
+				&[data-show-previews=false]
+					align-items: center !important
+					padding: 5px
+
+				.list-item-preview-container
+					@extend %flex-center-all
+					@include basic-transition(filter)
+					@include default-border($sa-gray-400, 1px)
+					width: 100%
+					max-width: 100%
+					background-color: $white
+					order: 10
+					display: grid
+					grid-template-columns: 1fr
+					grid-template-rows: 1fr
+					grid-template-areas: 'content'
+					justify-content: center
+					justify-items: center
+					align-items: center
+					height: 90px
+					max-height: 90px
+
+					&[data-default='true'] .click-overlay .default-item-indicator-wrapper
+						display: grid
+
+					.click-overlay
+						grid-area: content
+						width: 100%
+						height: 100%
+						z-index: 100
+						cursor: pointer
+						position: relative
+
+						.default-item-indicator-wrapper
+							@extend %flex-center-all
+							display: none
+							position: absolute
+							top: 5px
+							right: 5px
+							width: 20px
+							height: 20px
+
+							svg
+								width: 100%
+								height: 100%
+								color: $green-500
+
+					.preview-content
+						@extend %flex-center-all
+						position: relative
+						grid-area: content
+						padding: 5px 0
+						overflow: hidden
+
+						*
+							pointer-events: none !important
+
+						& > div
+							margin: 0 !important
+
+						a
+							text-decoration: none
+							color: inherit
+
+					&[data-active="true"]
+						//order: 0
+						background-color: $blue-100
+
+					&[data-selected="true"]
+						@include default-border($wordpress-admin-main, 1px)
+
+						& > *
+							@include basic-transition(filter)
+							@extend %filter-shadow
+
+
+				.pill-list-item
+					@include default-border($sa-gray-400)
+					@include basic-transition()
+					border-radius: 5px
+					padding: 5px 10px
+					background-color: $sa-gray-300
+					cursor: pointer
+					margin: 5px 10px
+					font-size: 100% !important
+					order: 10
+
+					&[data-active="true"]
+						background-color: $wordpress-admin-main
+						color: $white
+						order: 0
+
+					&:not([data-active="true"])[data-default="true"]
+						background-color: $green-500
+						color: $white
+						order: 1
+
+					&[data-disabled="true"]
+						@include default-border($sa-gray-300)
+						@extend .ub-pro-inactive-text
+						background-color: $sa-gray-200
+						pointer-events: none
+
+					&:not([data-disabled="true"]):hover
+						@extend %active-item-presentation
+
+					&:not([data-disabled="true"]):focus
+						@extend %active-item-presentation
+
+					&[data-selected="true"]
+						@extend %active-item-presentation
+						@include default-border($wordpress-admin-main)
+
+					.matched-title-base
+						color: $sa-gray-500
+
+						.matched-title
+							font-size: inherit !important
+							vertical-align: center
+							font-weight: bold
+							color: $logo-color
+
+
+	.advanced-controls
+		grid-area: advancedControls
+
+		.components-panel__body-toggle
+			border-bottom: 1px solid $wordpress-gray
+
+		.advanced-controls-panel-body
+			border-bottom: 1px solid $wordpress-gray
+			margin: 0 -16px
+
+			.inner-wrapper
+				@extend %flex-center-all
+				flex-direction: column
+
+				.selected-saved-style-controls
+					grid-area: buttonRow
+					width: fit-content
+					display: grid
+					grid-template-columns: repeat(6, 1fr)
+					grid-template-rows: repeat(3, 1fr)
+					grid-template-areas: 't t t t t t' 'a a b b c c' 'd d d d d d'
+					justify-content: center
+					justify-items: center
+					align-content: center
+
+					& > *
+						margin: 5px 5px
+
+					.title-wrapper
+						@extend %flex-center-all
+						grid-area: t
+						width: 100%
+						color: $wordpress-admin-main
+						font-weight: bold
+						font-size: 120%
+
+						&:hover
+							.edit-icon
+								visibility: visible
+								pointer-events: all
+
+						.style-title
+							.title-input
+								text-align: center
+								border: none !important
+								border-bottom: 1px solid $wordpress-admin-main !important
+								border-radius: 0 !important
+								box-shadow: none !important
+								font-weight: bold
+								width: 100%
+
+								&:disabled
+									color: inherit !important
+									border: none !important
+									border-bottom: none !important
+									font-weight: inherit !important
+
+						.edit-icon
+							margin: 0 5px
+							visibility: collapse
+							pointer-events: none
+							cursor: pointer
+
+
+					.ub-pro-saved-styles-listing-delete-button
+						grid-area: a
+
+					.ub-pro-saved-styles-listing-update-button
+						grid-area: b
+
+					.ub-pro-saved-styles-listing-apply-button
+						grid-area: c
+
+					.ub-pro-saved-styles-listing-default-button
+						width: fit-content
+						grid-area: d
+
+				.ub-pro-saved-styles-save-current-button-row
+					@extend %flex-center-all
+					flex-flow: column
+					width: 100%
+					margin-top: 30px
+
+					.save-row
+						@extend %flex-center-all
+
+						.save-to-file
+							margin: 5px
+
+					.ub-dev-static-style-tools
+						margin: 20px 0
+						width: 100%
+						padding: 10px 0
+						border: dashed $wordpress-admin-main
+						border-width: 1px 0 1px 0
+
+						.title
+							cursor: default
+							font-weight: bold
+							font-size: 110% !important
+							color: $wordpress-admin-main
+							padding: 5px 0
+							text-decoration: underline
+
+						.tools-wrapper
+							width: 100%
+							padding: 5px
+
+.ub-pro-inactive-text
+	@extend %inspector-font-size
+	color: $color-inactive
+	pointer-events: none
+
+.ub-pro-inspector-text-input
+	@extend .ub-pro-disabled
+	@include default-border()
+	@extend %inspector-font-size
+	@extend %rounded-corner
+	padding: 0 3px !important
+	min-height: fit-content !important
+	margin: 0 5px
+	text-align: center
+
+.ub-pro-disabled
+	&[disabled], &[data-disabled='true']
+		@include default-border($gray-400)
+
+.ub-pro-style-preview-modal
+	@extend %basic-appear
+	@include default-border()
+	width: 300px
+	max-width: 300px
+	position: absolute
+	right: 16px
+	display: grid
+	grid-template-columns: 1fr
+	grid-template-rows: 144px auto
+	background-color: $white
+
+	.preview-container
+		@extend %flex-center-all
+		background-color: #F0F0F0
+		overflow: hidden
+
+		.page-simulation
+			@extend %flex-center-all
+			width: 100%
+			height: 100%
+			min-height: 50%
+
+			.block-preview-content
+				@extend %flex-center-all
+				padding: 7px
+
+	.title-container
+		@extend %flex-center-all
+		font-size: 13px
+		font-weight: bold
+		padding: 15px
+
+
+.ub-saved-styles-advanced-button
+	@extend %pointer
+	position: relative
+

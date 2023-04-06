@@ -7,6 +7,7 @@ import deepmerge from 'deepmerge';
  */
 const defaultState = {
 	storeName: null,
+	mode: UB_ENV,
 	app: {
 		upsell: {
 			upsellModalVisibility: false,
