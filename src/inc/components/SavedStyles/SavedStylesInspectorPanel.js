@@ -80,6 +80,7 @@ function SavedStylesInspectorPanel({
 	setStartupBlockIds,
 	previewsEnabled = true,
 	setPreviewsEnabledStatus,
+	setSelectedItemId,
 }) {
 	const [markedAttributes, setMarkedAttributes] = useState(
 		prepareFinalAttributes()
@@ -247,6 +248,10 @@ function SavedStylesInspectorPanel({
 	 * `useEffect` React hook.
 	 */
 	useEffect(() => {
+		// reset selected item
+		setSelectedItemId(null);
+
+		// calculate and update active style id
 		setActiveStyleId(calculateActiveStyleId());
 
 		// apply default style to subcomponents
@@ -297,6 +302,7 @@ const actionMapping = (storeDispatch, storeSelect) => {
 		setRenderPreviewBlockType,
 		setStartupBlockIds,
 		setPreviewsEnabledStatus,
+		setSelectedItemId,
 	} = storeDispatch;
 	return {
 		saveCurrentStyle: saveStyle(storeDispatch, storeSelect),
@@ -312,6 +318,7 @@ const actionMapping = (storeDispatch, storeSelect) => {
 		setActiveStyleId: setActiveItemId,
 		setStartupBlockIds,
 		setPreviewsEnabledStatus,
+		setSelectedItemId,
 	};
 };
 
