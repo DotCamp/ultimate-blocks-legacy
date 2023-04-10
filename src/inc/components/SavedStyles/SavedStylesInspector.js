@@ -8,7 +8,7 @@ import SavedStylesInspectorPanel from '$Inc/components/SavedStyles/SavedStylesIn
  * This component will automatically check for pro version to decide visibility of base version of saved styles inspector panel.
  *
  * @param {Object}        props                               component properties
- *
+ * @param {string | null} [props.overrideBlockType=null]      override to use given block type instead of currently active block type
  * @param {string}        props.blockType                     target component type, will be supplied via HOC
  * @param {Object}        props.componentStyles               all available component styles, will be supplied via HOC
  * @param {Function}      props.saveCurrentStyle              save current style, will be supplied via HOC

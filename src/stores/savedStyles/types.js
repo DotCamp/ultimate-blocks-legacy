@@ -21,6 +21,7 @@ const types = {
 	SET_PAGE_BACKGROUND_COLOR: 'setPageBackgroundColor',
 	SET_STARTUP_BLOCK_IDS: 'setStartupBlockIds',
 	SET_PREVIEW_ENABLED_STATUS: 'setPreviewEnabledStatus',
+	SET_CURRENT_BLOCK_TYPE_OVERRIDE: 'setCurrentBlockTypeOverride',
 };
 
 /**

@@ -15,6 +15,7 @@ const defaultState = {
 		forceActiveBlockForRender: false,
 	},
 	app: {
+		currentBlockTypeOverride: null,
 		startupBlockIds: [],
 		busy: false,
 		advancedControlsVisible: false,

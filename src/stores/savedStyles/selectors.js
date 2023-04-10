@@ -261,6 +261,15 @@ const selectors = {
 	isPreviewsEnabled(state) {
 		return state.renderProps.previewsEnabled;
 	},
+	/**
+	 * Get current block type override.
+	 *
+	 * @param {Object} state store state
+	 * @return {string} current block type override
+	 */
+	getCurrentBlockTypeOverride(state) {
+		return state.app.currentBlockTypeOverride;
+	},
 };
 
 /**

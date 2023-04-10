@@ -232,6 +232,17 @@ const actions = {
 			status,
 		};
 	},
+	/**
+	 * Set current block type override.
+	 *
+	 * @param {string} blockType block type
+	 */
+	setCurrentBlockTypeOverride(blockType) {
+		return {
+			type: types.SET_CURRENT_BLOCK_TYPE_OVERRIDE,
+			blockType,
+		};
+	},
 };
 
 /**

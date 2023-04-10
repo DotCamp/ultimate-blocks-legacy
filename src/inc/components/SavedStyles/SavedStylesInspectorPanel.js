@@ -20,6 +20,7 @@ import SavedStylesAdvancedControls from '$Inc/components/SavedStyles/SavedStyles
  * Saved styles inspector panel control container.
  *
  * @param {Object}        props                               component properties
+ * @param {string | null} [props.overrideBlockType=null]      override to use given block type instead of currently active block type
  * @param {string}        props.blockType                     target component type, will be supplied via HOC
  * @param {Object}        props.componentStyles               all available component styles, will be supplied via HOC
  * @param {Function}      props.saveCurrentStyle              save current style, will be supplied via HOC
@@ -47,11 +48,13 @@ import SavedStylesAdvancedControls from '$Inc/components/SavedStyles/SavedStyles
  * @param {Function}      props.setStartupBlockIds            set startup block ids, will be supplied via HOC
  * @param {boolean}       [props.previewsEnabled=true]        status of preview displays
  * @param {Function}      props.setPreviewsEnabledStatus      set status of preview displays, will be supplied via HOC
+ * @param {Function}      props.setCurrentBlockTypeOverride   set current block type override, will be supplied via HOC
  * @return {JSX.Element} saved styles panel component
  * @class
  */
 
 function SavedStylesInspectorPanel({
+	overrideBlockType = null,
 	blockType,
 	componentStyles,
 	saveCurrentStyle,
@@ -81,6 +84,7 @@ function SavedStylesInspectorPanel({
 	previewsEnabled = true,
 	setPreviewsEnabledStatus,
 	setSelectedItemId,
+	setCurrentBlockTypeOverride,
 }) {
 	const [markedAttributes, setMarkedAttributes] = useState(
 		prepareFinalAttributes()
@@ -206,6 +210,13 @@ function SavedStylesInspectorPanel({
 	 * `useEffect` React hook.
 	 */
 	useEffect(() => {
+		setCurrentBlockTypeOverride(overrideBlockType);
+	}, []);
+
+	/**
+	 * `useEffect` React hook.
+	 */
+	useEffect(() => {
 		setPreviewsEnabledStatus(previewsEnabled);
 	}, [previewsEnabled]);
 
@@ -303,6 +314,7 @@ const actionMapping = (storeDispatch, storeSelect) => {
 		setStartupBlockIds,
 		setPreviewsEnabledStatus,
 		setSelectedItemId,
+		setCurrentBlockTypeOverride,
 	} = storeDispatch;
 	return {
 		saveCurrentStyle: saveStyle(storeDispatch, storeSelect),
@@ -319,6 +331,7 @@ const actionMapping = (storeDispatch, storeSelect) => {
 		setStartupBlockIds,
 		setPreviewsEnabledStatus,
 		setSelectedItemId,
+		setCurrentBlockTypeOverride,
 	};
 };
 

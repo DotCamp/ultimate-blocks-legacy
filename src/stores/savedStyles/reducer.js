@@ -243,6 +243,18 @@ const reducer = (extraState = {}) => {
 						},
 					};
 				})();
+			case types.SET_CURRENT_BLOCK_TYPE_OVERRIDE:
+				return (() => {
+					const { blockType } = action;
+
+					return {
+						...storeState,
+						app: {
+							...storeState.app,
+							currentBlockTypeOverride: blockType,
+						},
+					};
+				})();
 		}
 
 		return storeState;
