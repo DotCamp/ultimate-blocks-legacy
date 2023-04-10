@@ -1,5 +1,6 @@
 import { select } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
+import SavedStylesManager from '$Manager/SavedStylesManager';
 
 /**
  * Store selectors.
@@ -85,10 +86,18 @@ const selectors = {
 	/**
 	 * Get block type.
 	 *
+	 * If block type is not overridden, it will return the block type of the currently active block in the editor.
+	 *
+	 * @param {Object} state store object
+	 *
 	 * @return {string} block type
 	 */
-	getBlockType() {
-		return select('core/block-editor').getSelectedBlock().name;
+	getBlockType(state) {
+		const { currentBlockTypeOverride } = state.app;
+
+		return currentBlockTypeOverride
+			? currentBlockTypeOverride
+			: select('core/block-editor').getSelectedBlock().name;
 	},
 	/**
 	 * Get current active block id.
@@ -281,7 +290,7 @@ const selectors = {
  * @return {string} current block type
  */
 function getBlockTypeExternal() {
-	return select('core/block-editor').getSelectedBlock().name;
+	return select(SavedStylesManager.storeNamespace).getBlockType();
 }
 
 /**

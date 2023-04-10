@@ -572,9 +572,21 @@ export function PanelContent(props) {
 			{isSelected && (
 				<InspectorControls>
 					<SavedStylesInspector
-						overrideBlockType={'ub/content-toggle-block'}
+						overrideBlockType={'ub/content-toggle-panel-block'}
 						attributes={props.attributes}
-						setAttribute={setAttributes}
+						setAttribute={(attrs) => {
+							// update block and its innerblock panel attributes
+							setAttributes(attrs);
+
+							if (panels && Array.isArray(panels)) {
+								panels.forEach((panel) => {
+									updateBlockAttributes(
+										panel.clientId,
+										attrs
+									);
+								});
+							}
+						}}
 						attributesToSave={(() => {
 							const excludeList = ['index', 'parent', 'parentID'];
 
