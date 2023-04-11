@@ -4,6 +4,7 @@ import icons from '../icons/icons';
 import { panel_version_1_1_9 } from '../oldVersions';
 import { useState, useEffect } from 'react';
 import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
+import ProManager from '$Manager/ProManager';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -755,16 +756,22 @@ registerBlockType('ub/content-toggle-panel-block', {
 	save: () => <InnerBlocks.Content />,
 });
 
-// block for preview purposes
-registerBlockType('ub/content-toggle-panel-block-preview', {
-	title: __('Content Toggle Panel Preview - Internal Use', 'ultimate-blocks'),
-	icon,
-	category: 'ultimateblocks',
-	attributes,
-	supports: {
-		inserter: false,
-		reusable: false,
-	},
-	edit: composedEdit(ContentTogglePanel),
-	save: () => null,
-});
+// only register the preview block if the pro version is not active
+if (!ProManager.proStatus()) {
+	// block for preview purposes
+	registerBlockType('ub/content-toggle-panel-block-preview', {
+		title: __(
+			'Content Toggle Panel Preview - Internal Use',
+			'ultimate-blocks'
+		),
+		icon,
+		category: 'ultimateblocks',
+		attributes,
+		supports: {
+			inserter: false,
+			reusable: false,
+		},
+		edit: composedEdit(ContentTogglePanel),
+		save: () => null,
+	});
+}
