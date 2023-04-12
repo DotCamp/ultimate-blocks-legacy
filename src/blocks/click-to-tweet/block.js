@@ -54,43 +54,49 @@ function ClickToTweet(props) {
 	return (
 		<>
 			{isSelected && (
-				<InspectorControls>
-					<PanelBody title={__("General")}>
-						<TextControl
-							label={__("Twitter Username")}
-							placeholder="@"
-							value={ubVia}
-							onChange={(value) => setAttributes({ ubVia: value })}
-						/>
-						<RangeControl
-							label={__("Font Size")}
-							value={tweetFontSize}
-							onChange={(value) => setAttributes({ tweetFontSize: value })}
-							min={10}
-							max={200}
-							beforeIcon="editor-textcolor"
-							allowReset
-						/>
-					</PanelBody>
-					<PanelBody title={__("Colors")} initialOpen={false}>
-						<PanelColorSettings
-							title={__("Color Scheme")}
-							initialOpen={false}
-							colorSettings={[
-								{
-									value: tweetColor,
-									onChange: (tweetColor) => setAttributes({ tweetColor }),
-									label: __("Tweet Color"),
-								},
-								{
-									value: borderColor,
-									onChange: (borderColor) => setAttributes({ borderColor }),
-									label: __("Border Color"),
-								},
-							]}
-						/>
-					</PanelBody>
-				</InspectorControls>
+				<>
+					<InspectorControls group="settings">
+						<PanelBody title={__("General")}>
+							<TextControl
+								label={__("Twitter Username")}
+								placeholder="@"
+								value={ubVia}
+								onChange={(value) => setAttributes({ ubVia: value })}
+							/>
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="styles">
+						<PanelBody title={__("General")}>
+							<RangeControl
+								label={__("Font Size")}
+								value={tweetFontSize}
+								onChange={(value) => setAttributes({ tweetFontSize: value })}
+								min={10}
+								max={200}
+								beforeIcon="editor-textcolor"
+								allowReset
+							/>
+						</PanelBody>
+						<PanelBody title={__("Colors")} initialOpen={false}>
+							<PanelColorSettings
+								title={__("Color Scheme")}
+								initialOpen={false}
+								colorSettings={[
+									{
+										value: tweetColor,
+										onChange: (tweetColor) => setAttributes({ tweetColor }),
+										label: __("Tweet Color"),
+									},
+									{
+										value: borderColor,
+										onChange: (borderColor) => setAttributes({ borderColor }),
+										label: __("Border Color"),
+									},
+								]}
+							/>
+						</PanelBody>
+					</InspectorControls>
+				</>
 			)}
 			<div className={props.className}>
 				<div className="ub_click_to_tweet" style={{ borderColor: borderColor }}>
@@ -119,7 +125,10 @@ function ClickToTweet(props) {
 
 registerBlockType("ub/click-to-tweet", {
 	title: __("Click to Tweet"),
-	description: __("Add tweetable content with this easy to use block.", "ultimate-blocks"),
+	description: __(
+		"Add tweetable content with this easy to use block.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Click to tweet"), __("Twitter"), __("Ultimate Blocks")],
@@ -151,8 +160,9 @@ registerBlockType("ub/click-to-tweet", {
 	},
 	example: {
 		attributes: {
-			ubTweet: "Ultimate Blocks helps you create better and engaging content with Gutenberg."
-		}
+			ubTweet:
+				"Ultimate Blocks helps you create better and engaging content with Gutenberg.",
+		},
 	},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
