@@ -530,93 +530,97 @@ export function NewPanelContent(props) {
 	return (
 		<>
 			{isSelected && (
-				<InspectorControls>
-					<PanelColorSettings
-						title={__("Filter Colors")}
-						initialOpen={false}
-						colorSettings={[
-							{
-								value: buttonColor,
-								onChange: (colorValue) => {
-									setAttributes({ buttonColor: colorValue });
-									block.innerBlocks.forEach((panel) =>
-										updateBlockAttributes(panel.clientId, {
-											buttonColor: colorValue,
-										})
-									);
-								},
-								label: __("Filter Tag Color"),
-							},
-							{
-								value: buttonTextColor,
-								onChange: (colorValue) => {
-									setAttributes({ buttonTextColor: colorValue });
-									block.innerBlocks.forEach((panel) =>
-										updateBlockAttributes(panel.clientId, {
-											buttonTextColor: colorValue,
-										})
-									);
-								},
-								label: __("Filter Tag Text Color"),
-							},
-							{
-								value: activeButtonColor,
-								onChange: (colorValue) =>
-									setAttributes({ activeButtonColor: colorValue }),
-								label: __("Active Filter Tag Color"),
-							},
-							{
-								value: activeButtonTextColor,
-								onChange: (colorValue) =>
-									setAttributes({ activeButtonTextColor: colorValue }),
-								label: __("Active Filter Tag Text Color"),
-							},
-						]}
-					/>
-					<PanelBody title={__("Panel Visibility")} initialOpen={false}>
-						<ToggleControl
-							label={__("Initially show all content panels")}
-							checked={initiallyShowAll}
-							onChange={() => {
-								setAttributes({ initiallyShowAll: !initiallyShowAll });
+				<>
+					<InspectorControls group="settings">
+						<PanelBody title={__("Panel Visibility")} initialOpen={false}>
+							<ToggleControl
+								label={__("Initially show all content panels")}
+								checked={initiallyShowAll}
+								onChange={() => {
+									setAttributes({ initiallyShowAll: !initiallyShowAll });
 
-								block.innerBlocks.forEach((panel) => {
-									updateBlockAttributes(panel.clientId, {
-										initiallyShow: !initiallyShowAll,
+									block.innerBlocks.forEach((panel) => {
+										updateBlockAttributes(panel.clientId, {
+											initiallyShow: !initiallyShowAll,
+										});
 									});
-								});
-							}}
-						/>
-						<RadioControl
-							label={__("Filter options")}
-							selected={matchingOption}
-							options={[
-								{ label: __("Match all filters"), value: "matchAll" },
-								{ label: __("Match any filter"), value: "matchAny" },
+								}}
+							/>
+							<RadioControl
+								label={__("Filter options")}
+								selected={matchingOption}
+								options={[
+									{ label: __("Match all filters"), value: "matchAll" },
+									{ label: __("Match any filter"), value: "matchAny" },
+								]}
+								onChange={(matchingOption) => setAttributes({ matchingOption })}
+							/>
+						</PanelBody>
+						{/*<PanelBody title="Reset Button" initialOpen={false}>
+							<CheckboxControl
+								label={__('Allow Resetting of Filter Selection')}
+								checked={allowReset}
+								onChange={() =>
+									setAttributes({ allowReset: !allowReset })
+								}
+							/>
+							{allowReset && (
+								<TextControl
+									label={__('Reset button text')}
+									placeholder="Reset button text"
+									value={resetButtonLabel}
+									onChange={value =>
+										setAttributes({ resetButtonLabel: value })
+									}
+								/>
+							)}
+						</PanelBody>*/}
+					</InspectorControls>
+					<InspectorControls group="styles">
+						<PanelColorSettings
+							title={__("Filter Colors")}
+							initialOpen={false}
+							colorSettings={[
+								{
+									value: buttonColor,
+									onChange: (colorValue) => {
+										setAttributes({ buttonColor: colorValue });
+										block.innerBlocks.forEach((panel) =>
+											updateBlockAttributes(panel.clientId, {
+												buttonColor: colorValue,
+											})
+										);
+									},
+									label: __("Filter Tag Color"),
+								},
+								{
+									value: buttonTextColor,
+									onChange: (colorValue) => {
+										setAttributes({ buttonTextColor: colorValue });
+										block.innerBlocks.forEach((panel) =>
+											updateBlockAttributes(panel.clientId, {
+												buttonTextColor: colorValue,
+											})
+										);
+									},
+									label: __("Filter Tag Text Color"),
+								},
+								{
+									value: activeButtonColor,
+									onChange: (colorValue) =>
+										setAttributes({ activeButtonColor: colorValue }),
+									label: __("Active Filter Tag Color"),
+								},
+								{
+									value: activeButtonTextColor,
+									onChange: (colorValue) =>
+										setAttributes({ activeButtonTextColor: colorValue }),
+									label: __("Active Filter Tag Text Color"),
+								},
 							]}
-							onChange={(matchingOption) => setAttributes({ matchingOption })}
 						/>
-					</PanelBody>
-					{/*<PanelBody title="Reset Button" initialOpen={false}>
-					<CheckboxControl
-						label={__('Allow Resetting of Filter Selection')}
-						checked={allowReset}
-						onChange={() =>
-							setAttributes({ allowReset: !allowReset })
-						}
-					/>
-					{allowReset && (
-						<TextControl
-							label={__('Reset button text')}
-							placeholder="Reset button text"
-							value={resetButtonLabel}
-							onChange={value =>
-								setAttributes({ resetButtonLabel: value })
-							}
-						/>
-					)}
-				</PanelBody>*/}
-				</InspectorControls>
+					</InspectorControls>
+				</>
 			)}
 			<div className="ub-content-filter-main">
 				{filterArray.length > 0 &&
