@@ -1,4 +1,4 @@
-import { select, dispatch } from '@wordpress/data';
+import {select, dispatch} from '@wordpress/data';
 import {
 	ManagerBase,
 	FrontendDataManager,
@@ -35,8 +35,15 @@ class SavedStylesManager extends ManagerBase {
 	 * @return {Object} persistent state
 	 */
 	#preparePersistentState() {
-		const savedStylesData =
+		let savedStylesData =
 			FrontendDataManager.getDataProperty('savedStyles');
+
+		// in order to get various block info (icon, name, description, etc), we register our blocks on settings page too, but since no style data will be shared with that script, we need to check and overwrite this data here to not break settings page functionality
+		if (!savedStylesData) {
+			savedStylesData = {
+				saved: {},
+			};
+		}
 
 		if (savedStylesData.saved.styles) {
 			savedStylesData.saved.styles = JSON.parse(
@@ -72,7 +79,7 @@ class SavedStylesManager extends ManagerBase {
 			savedStylesData.saved.defaultStyles = {};
 		}
 
-		return { ...savedStylesData };
+		return {...savedStylesData};
 	}
 
 	/**
@@ -90,7 +97,7 @@ class SavedStylesManager extends ManagerBase {
 			hookTypes.filters.ADD_SUB_COMPONENT,
 			'savedStylesManagerSubComponentAdd',
 			(defaultProps) => {
-				return { ...defaultProps, applyDefaultStyle: true };
+				return {...defaultProps, applyDefaultStyle: true};
 			}
 		);
 	}

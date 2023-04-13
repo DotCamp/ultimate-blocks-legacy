@@ -36,7 +36,8 @@ const selectors = {
 	 * @return {Array | null} block default attributes
 	 */
 	getBlockDefaultAttributes(state, blockType) {
-		return state.blockAttributes[blockType];
+		// should check for the availability of blockAttributes property since that property might not be available in some cases (e.g., being used in plugin settings page)
+		return state.blockAttributes?.[blockType];
 	},
 	getBlockUpsellData,
 	/**
