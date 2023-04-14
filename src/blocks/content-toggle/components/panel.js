@@ -163,45 +163,7 @@ function ContentTogglePanel(props) {
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={__("Style")}>
-					<PanelColorSettings
-						title={__("Color Scheme")}
-						initialOpen={false}
-						enableAlpha={true}
-						colorSettings={[
-							{
-								value: theme,
-								onChange: (value) => setAttributes({ theme: value }),
-								label: __("Container Color"),
-							},
-							{
-								value: titleColor,
-								onChange: (value) => setAttributes({ titleColor: value }),
-								label: __("Title Color"),
-							},
-							{
-								value: titleLinkColor,
-								onChange: (value) => setAttributes({ titleLinkColor: value }),
-								label: __("Title link Color"),
-							},
-							{
-								value: toggleColor,
-								onChange: (value) => setAttributes({ toggleColor: value }),
-								label: __("Toggle Icon Color"),
-							},
-						]}
-					/>
-					<PanelRow>
-						<label htmlFor="ub-content-toggle-border">{__("Border")}</label>
-						<FormToggle
-							id="ub-content-toggle-border"
-							label={__("Enable border")}
-							checked={border}
-							onChange={() => setAttributes({ border: !border })}
-						/>
-					</PanelRow>
-				</PanelBody>
+			<InspectorControls group="settings">
 				<PanelBody title={__("Panel Title")} initialOpen={false}>
 					<div
 						style={{
@@ -327,6 +289,46 @@ function ContentTogglePanel(props) {
 							label={__("Enable FAQ Schema")}
 							checked={hasFAQSchema}
 							onChange={() => setAttributes({ hasFAQSchema: !hasFAQSchema })}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="styles">
+				<PanelBody title={__("Style")}>
+					<PanelColorSettings
+						title={__("Color Scheme")}
+						initialOpen={false}
+						enableAlpha={true}
+						colorSettings={[
+							{
+								value: theme,
+								onChange: (value) => setAttributes({ theme: value }),
+								label: __("Container Color"),
+							},
+							{
+								value: titleColor,
+								onChange: (value) => setAttributes({ titleColor: value }),
+								label: __("Title Color"),
+							},
+							{
+								value: titleLinkColor,
+								onChange: (value) => setAttributes({ titleLinkColor: value }),
+								label: __("Title link Color"),
+							},
+							{
+								value: toggleColor,
+								onChange: (value) => setAttributes({ toggleColor: value }),
+								label: __("Toggle Icon Color"),
+							},
+						]}
+					/>
+					<PanelRow>
+						<label htmlFor="ub-content-toggle-border">{__("Border")}</label>
+						<FormToggle
+							id="ub-content-toggle-border"
+							label={__("Enable border")}
+							checked={border}
+							onChange={() => setAttributes({ border: !border })}
 						/>
 					</PanelRow>
 				</PanelBody>
