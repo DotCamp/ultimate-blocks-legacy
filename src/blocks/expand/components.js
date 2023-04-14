@@ -76,7 +76,7 @@ export function ExpandRoot(props) {
 	return (
 		<>
 			{isSelected && (
-				<InspectorControls>
+				<InspectorControls group="settings">
 					<PanelBody title={__("Scroll Settings")}>
 						<PanelRow>
 							<label htmlFor="ub_expand_toggle_display">
