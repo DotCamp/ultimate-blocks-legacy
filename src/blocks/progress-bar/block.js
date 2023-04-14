@@ -116,83 +116,87 @@ function ProgressBarMain(props) {
 				</BlockControls>
 			)}
 			{isSelected && (
-				<InspectorControls>
-					<PanelBody title={__("General")}>
-						<PanelRow>
-							<p>{__("Progress Bar Type")}</p>
-							<ButtonGroup>
-								<Button
-									isPressed={barType === "linear"}
-									showTooltip={true}
-									label={__("Horizontal")}
-									onClick={() => setAttributes({ barType: "linear" })}
-								>
-									<LinearProgressIcon size={30} />
-								</Button>
-								<Button
-									isPressed={barType === "circular"}
-									showTooltip={true}
-									label={__("Circular")}
-									onClick={() => setAttributes({ barType: "circular" })}
-								>
-									<CircProgressIcon size={30} />
-								</Button>
-							</ButtonGroup>
-						</PanelRow>
-						<RangeControl
-							label={__("Thickness")}
-							value={barThickness}
-							onChange={(value) => setAttributes({ barThickness: value })}
-							min={1}
-							max={5}
-							allowReset
-						/>
-						{barType === "circular" && (
+				<>
+					<InspectorControls>
+						<PanelBody title={__("General")}>
+							<PanelRow>
+								<p>{__("Progress Bar Type")}</p>
+								<ButtonGroup>
+									<Button
+										isPressed={barType === "linear"}
+										showTooltip={true}
+										label={__("Horizontal")}
+										onClick={() => setAttributes({ barType: "linear" })}
+									>
+										<LinearProgressIcon size={30} />
+									</Button>
+									<Button
+										isPressed={barType === "circular"}
+										showTooltip={true}
+										label={__("Circular")}
+										onClick={() => setAttributes({ barType: "circular" })}
+									>
+										<CircProgressIcon size={30} />
+									</Button>
+								</ButtonGroup>
+							</PanelRow>
+						</PanelBody>
+						<PanelBody title={__("Value")} initialOpen={false}>
 							<RangeControl
-								label={__("Circle size")}
-								value={circleSize}
-								onChange={(value) => setAttributes({ circleSize: value })}
-								min={50}
-								max={600}
+								className="ub_progress_bar_value"
+								value={percentage}
+								onChange={(value) => setAttributes({ percentage: value })}
+								min={0}
+								max={100}
 								allowReset
 							/>
-						)}
-					</PanelBody>
-					<PanelBody title={__("Value")} initialOpen={false}>
-						<RangeControl
-							className="ub_progress_bar_value"
-							value={percentage}
-							onChange={(value) => setAttributes({ percentage: value })}
-							min={0}
-							max={100}
-							allowReset
-						/>
-					</PanelBody>
-					<PanelBody title={__("Style")} initialOpen={false}>
-						<PanelColorSettings
-							title={__("Color")}
-							initialOpen={false}
-							colorSettings={[
-								{
-									value: barColor,
-									onChange: (barColor) => setAttributes({ barColor }),
-									label: "Progress Bar Color",
-								},
-								{
-									value: barBackgroundColor,
-									onChange: (barBackgroundColor) =>
-										setAttributes({ barBackgroundColor }),
-									label: "Background Bar Color",
-								},
-								{
-									value: labelColor,
-									onChange: (labelColor) => setAttributes({ labelColor }),
-									label: "Label Color",
-								},
-							]}
-						/>
-					</PanelBody>
-				</InspectorControls>
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="styles">
+						<PanelBody title={__("Style")}>
+							<RangeControl
+								label={__("Thickness")}
+								value={barThickness}
+								onChange={(value) => setAttributes({ barThickness: value })}
+								min={1}
+								max={5}
+								allowReset
+							/>
+							{barType === "circular" && (
+								<RangeControl
+									label={__("Circle size")}
+									value={circleSize}
+									onChange={(value) => setAttributes({ circleSize: value })}
+									min={50}
+									max={600}
+									allowReset
+								/>
+							)}
+							<PanelColorSettings
+								title={__("Color")}
+								initialOpen={false}
+								colorSettings={[
+									{
+										value: barColor,
+										onChange: (barColor) => setAttributes({ barColor }),
+										label: "Progress Bar Color",
+									},
+									{
+										value: barBackgroundColor,
+										onChange: (barBackgroundColor) =>
+											setAttributes({ barBackgroundColor }),
+										label: "Background Bar Color",
+									},
+									{
+										value: labelColor,
+										onChange: (labelColor) => setAttributes({ labelColor }),
+										label: "Label Color",
+									},
+								]}
+							/>
+						</PanelBody>
+					</InspectorControls>
+				</>
 			)}
 			<div className="ub_progress-bar">
 				<div className="ub_progress-bar-text">
@@ -222,7 +226,10 @@ function ProgressBarMain(props) {
 
 registerBlockType("ub/progress-bar", {
 	title: __("Progress Bar"),
-	description: __("Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.","ultimate-blocks"),
+	description: __(
+		"Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Progress Bar"), __("Ultimate Blocks")],
@@ -271,9 +278,9 @@ registerBlockType("ub/progress-bar", {
 	},
 	example: {
 		attributes: {
-			barColor: '#f63d3d',
-			barThickness: 2
-		}
+			barColor: "#f63d3d",
+			barThickness: 2,
+		},
 	},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
