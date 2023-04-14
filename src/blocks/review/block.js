@@ -1224,547 +1224,565 @@ function ReviewMain(props) {
 	return (
 		<>
 			{isSelected && (
-				<InspectorControls>
-					<PanelBody title={__("Rating Format")}>
-						<RadioControl
-							selected={valueType}
-							options={["star", "percent"].map((a) => ({
-								label: __(a),
-								value: a,
-							}))}
-							onChange={(newValueType) => {
-								const factor = 100 / starCount;
-								setAttributes({
-									valueType: newValueType,
-									parts: parts.map((p) => ({
-										label: p.label,
-										value:
-											valueType === "star"
-												? p.value * factor
-												: p.value / factor,
-									})),
-									activePercentBarColor:
-										valueType === "star" && !activePercentBarColor
-											? "#f63d3d"
-											: activePercentBarColor,
-								});
-							}}
-						/>
-					</PanelBody>
-
-					<PanelBody title={__("Set Value")} initialOpen={false}>
-						{editedStar > -1 && (
-							<RangeControl
-								label={__(
-									`Value for ${
-										parser.parseFromString(parts[editedStar].label, "text/html")
-											.body.textContent || "current feature"
-									}`
-								)}
-								value={parts[editedStar].value}
-								onChange={(newValue) => {
+				<>
+					<InspectorControls group="settings">
+						<PanelBody title={__("Rating Format")}>
+							<RadioControl
+								selected={valueType}
+								options={["star", "percent"].map((a) => ({
+									label: __(a),
+									value: a,
+								}))}
+								onChange={(newValueType) => {
+									const factor = 100 / starCount;
 									setAttributes({
-										parts: [
-											...parts.slice(0, editedStar),
-											Object.assign({}, parts[editedStar], {
-												value: newValue,
-											}),
-											...parts.slice(editedStar + 1),
-										],
+										valueType: newValueType,
+										parts: parts.map((p) => ({
+											label: p.label,
+											value:
+												valueType === "star"
+													? p.value * factor
+													: p.value / factor,
+										})),
+										activePercentBarColor:
+											valueType === "star" && !activePercentBarColor
+												? "#f63d3d"
+												: activePercentBarColor,
 									});
 								}}
-								min={valueType === "star" ? 0 : 1}
-								max={valueType === "star" ? starCount : 100}
-								step={valueType === "star" ? 0.1 : 1}
 							/>
-						)}
-						<p>{__("This lets you set the value for whichever feature list item you are currently editing.")}</p>
-					</PanelBody>
-					<PanelBody title={__("Colors")} initialOpen={false}>
-						{valueType === "star" ? (
-							<PanelColorSettings
-								title={__("Star Colors")}
-								initialOpen={true}
-								colorSettings={[
-									{
-										value: activeStarColor,
-										onChange: (colorValue) =>
-											setAttributes({ activeStarColor: colorValue }),
-										label: __("Active Star Color"),
-									},
-									{
-										value: inactiveStarColor,
-										onChange: (colorValue) =>
-											setAttributes({ inactiveStarColor: colorValue }),
-										label: __("Inactive Star Color"),
-									},
-									{
-										value: starOutlineColor,
-										onChange: (colorValue) =>
-											setAttributes({ starOutlineColor: colorValue }),
-										label: __("Star Outline Color"),
-									},
-								]}
-							/>
-						) : (
-							<PanelColorSettings
-								title={__("Percentage Bar Colors")}
-								colorSettings={[
-									{
-										value: activePercentBarColor,
-										onChange: (colorValue) =>
-											setAttributes({ activePercentBarColor: colorValue }),
-										label: __("Main Color"),
-									},
-									{
-										value: percentBarColor,
-										onChange: (colorValue) =>
-											setAttributes({ percentBarColor: colorValue }),
-										label: __("Background Color"),
-									},
-								]}
-							/>
-						)}
-						<PanelColorSettings
-							title={__("Button Colors")}
-							initialOpen={false}
-							colorSettings={[
-								{
-									value: callToActionBackColor,
-									onChange: (colorValue) =>
-										setAttributes({ callToActionBackColor: colorValue }),
-									label: __("Button Background"),
-								},
-								{
-									value: callToActionBorderColor,
-									onChange: (colorValue) =>
-										setAttributes({ callToActionBorderColor: colorValue }),
-									label: __("Button Border Color"),
-								},
-								{
-									value: callToActionForeColor,
-									onChange: (colorValue) =>
-										setAttributes({ callToActionForeColor: colorValue }),
-									label: __("Button Text Color"),
-								},
-							]}
-						/>
-					</PanelBody>
-					<PanelBody title={__("CTA Button")} initialOpen={false}>
-						<PanelRow>
-							<label htmlFor="ub-review-cta-enable">{__("Enable")}</label>
-							<FormToggle
-								id="ub-review-cta-enable"
-								label={__("Enable")}
-								checked={enableCTA}
-								onChange={() => setAttributes({ enableCTA: !enableCTA })}
-							/>
-						</PanelRow>
-						{enableCTA && (
-							<>
-								<PanelRow>
-									<label htmlFor="ub-review-cta-nofollow">
-										{__("Add nofollow")}
-									</label>
-									<FormToggle
-										id="ub-review-cta-nofollow"
-										label={__("Add nofollow")}
-										checked={ctaNoFollow}
-										onChange={() =>
-											setAttributes({ ctaNoFollow: !ctaNoFollow })
-										}
-									/>
-								</PanelRow>
-								<PanelRow>
-									<label htmlFor="ub-review-cta-openinnewtab">
-										{__("Open link in new tab")}
-									</label>
-									<FormToggle
-										id="ub-review-cta-openinnewtab"
-										label={__("Open link in new tab")}
-										checked={ctaOpenInNewTab}
-										onChange={() =>
-											setAttributes({ ctaOpenInNewTab: !ctaOpenInNewTab })
-										}
-									/>
-								</PanelRow>
-								<PanelRow>
-									<label htmlFor="ub-review-cta-issponsored">
-										{__("Mark link as sponsored")}
-									</label>
-									<FormToggle
-										id="ub-review-cta-issponsored"
-										label={__("Mark link as sponsored")}
-										checked={ctaIsSponsored}
-										onChange={() =>
-											setAttributes({ ctaIsSponsored: !ctaIsSponsored })
-										}
-									/>
-								</PanelRow>
-								<PanelRow>
-									<label>{__("Alignment")}</label>
-									<ButtonGroup>
-										{["left", "center", "right"].map((a) => (
-											<Button
-												icon={`align-${a}`}
-												isPrimary={ctaAlignment === a}
-												onClick={() => setAttributes({ ctaAlignment: a })}
-											/>
-										))}
-									</ButtonGroup>
-								</PanelRow>
-								<PanelRow>
-									<label htmlFor="ub-review-cta-changefontsize">
-										{__("Change font size")}
-									</label>
-									<FormToggle
-										id="ub-review-cta-changefontsize"
-										label={__("Change font size")}
-										checked={setCTAFontSize}
-										onChange={() => {
-											toggleSetCTAFontSize(!setCTAFontSize);
-											if (setCTAFontSize) {
-												setAttributes({ callToActionFontSize: 0 });
-											}
-										}}
-									/>
-								</PanelRow>
-								{setCTAFontSize && (
-									<RangeControl
-										label={__("Font size")}
-										value={callToActionFontSize}
-										onChange={(callToActionFontSize) =>
-											setAttributes({ callToActionFontSize })
-										}
-										min={6}
-										max={50}
-									/>
-								)}
-							</>
-						)}
-					</PanelBody>
-					<PanelBody title={__("Review Schema")} initialOpen={false}>
-						<PanelRow>
-							<label htmlFor="ub-review-schema-toggle">
-								{__("Enable review schema")}
-							</label>
-							<FormToggle
-								id="ub-review-schema-toggle"
-								label={__("Enable review schema")}
-								checked={enableReviewSchema}
-								onChange={() => {
-									let newAttributes = {
-										enableReviewSchema: !enableReviewSchema,
-									};
-									if (enableReviewSchema) {
-										newAttributes = Object.assign(newAttributes, {
-											enableImage: false,
-											enableDescription: false,
+						</PanelBody>
+
+						<PanelBody title={__("Set Value")} initialOpen={false}>
+							{editedStar > -1 && (
+								<RangeControl
+									label={__(
+										`Value for ${
+											parser.parseFromString(
+												parts[editedStar].label,
+												"text/html"
+											).body.textContent || "current feature"
+										}`
+									)}
+									value={parts[editedStar].value}
+									onChange={(newValue) => {
+										setAttributes({
+											parts: [
+												...parts.slice(0, editedStar),
+												Object.assign({}, parts[editedStar], {
+													value: newValue,
+												}),
+												...parts.slice(editedStar + 1),
+											],
 										});
-									}
-									setAttributes(newAttributes);
-								}}
-							/>
-						</PanelRow>
-						<PanelRow>
-							<label htmlFor="ub-review-summary-toggle">
-								{__("Use review summary")}
-							</label>
-							<FormToggle
-								id="ub-review-summary-toggle"
-								label={__("Use review summary")}
-								checked={useSummary}
-								onChange={() => setAttributes({ useSummary: !useSummary })}
-							/>
-						</PanelRow>
-						{enableReviewSchema && (
-							<>
-								<SelectControl
-									label={__("Item type")}
-									value={itemType}
-									onChange={(itemType) => {
-										setAttributes({ itemType });
-										if (itemType === "Movie") {
-											setAttributes({ enableImage: true });
-										}
-										if (itemType === "Course") {
-											setAttributes({ enableDescription: true });
-										}
-										if (
-											!subtypeCategories.hasOwnProperty(itemType) ||
-											!subtypeCategories[itemType].includes(itemSubtype)
-										) {
-											setAttributes({
-												itemSubtype: "",
-												itemSubsubtype: "",
-											});
-										}
 									}}
-									options={[
-										"Book",
-										"Course",
-										"CreativeWorkSeason",
-										"CreativeWorkSeries",
-										"Episode",
-										"Event",
-										"Game",
-										"LocalBusiness",
-										"MediaObject",
-										"Movie",
-										"MusicPlaylist",
-										"MusicRecording",
-										"Organization",
-										"Product",
-										"SoftwareApplication",
-									].map((a) => ({ label: a, value: a }))}
+									min={valueType === "star" ? 0 : 1}
+									max={valueType === "star" ? starCount : 100}
+									step={valueType === "star" ? 0.1 : 1}
 								/>
-								{subtypeCategories.hasOwnProperty(itemType) && (
-									<SelectControl
-										label={__("Item subtype")}
-										value={itemSubtype}
-										onChange={(itemSubtype) => {
-											setAttributes({ itemSubtype });
-											if (itemSubtype === "VideoObject") {
-												setAttributes({ enableImage: true });
-											}
-											if (
-												!subsubtypes.hasOwnProperty(itemSubtype) ||
-												!subsubtypes[itemSubtype].includes(itemSubsubtype)
-											) {
-												setAttributes({ itemSubsubtype: "" });
-											}
-										}}
-										options={["", ...subtypeCategories[itemType]].map((a) => ({
-											label: a,
-											value: a,
-										}))}
-									/>
-								)}
-								{subsubtypes.hasOwnProperty(itemSubtype) && (
-									<SelectControl
-										label={__("Item subsubtype")}
-										value={itemSubsubtype}
-										onChange={(itemSubsubtype) =>
-											setAttributes({ itemSubsubtype })
-										}
-										options={["", ...subsubtypes[itemSubtype]].map((a) => ({
-											label: a,
-											value: a,
-										}))}
-									/>
-								)}
-							</>
-						)}
-						<>
-							{!(
-								enableReviewSchema &&
-								(itemType === "Movie" || itemSubtype === "VideoObject")
-							) && (
-								//images are required for these item types and optional for the rest
-								<PanelRow>
-									<label htmlFor="ub-review-image-toggle">
-										{__("Enable review image")}
-									</label>
-									<FormToggle
-										id="ub-review-image-toggle"
-										label={__("Enable review image")}
-										checked={enableImage}
-										onChange={() =>
-											setAttributes({ enableImage: !enableImage })
-										}
-									/>
-								</PanelRow>
 							)}
-							{enableImage && (
+							<p>
+								{__(
+									"This lets you set the value for whichever feature list item you are currently editing."
+								)}
+							</p>
+						</PanelBody>
+
+						<PanelBody title={__("CTA Button")} initialOpen={false}>
+							<PanelRow>
+								<label htmlFor="ub-review-cta-enable">{__("Enable")}</label>
+								<FormToggle
+									id="ub-review-cta-enable"
+									label={__("Enable")}
+									checked={enableCTA}
+									onChange={() => setAttributes({ enableCTA: !enableCTA })}
+								/>
+							</PanelRow>
+							{enableCTA && (
 								<>
 									<PanelRow>
-										<label>{__("Image size")}</label>
-										<input
-											type="number"
-											value={imageSize}
-											onChange={(e) =>
-												setAttributes({ imageSize: Number(e.target.value) })
+										<label htmlFor="ub-review-cta-nofollow">
+											{__("Add nofollow")}
+										</label>
+										<FormToggle
+											id="ub-review-cta-nofollow"
+											label={__("Add nofollow")}
+											checked={ctaNoFollow}
+											onChange={() =>
+												setAttributes({ ctaNoFollow: !ctaNoFollow })
 											}
 										/>
 									</PanelRow>
 									<PanelRow>
-										<label>{__("Image position")}</label>
+										<label htmlFor="ub-review-cta-openinnewtab">
+											{__("Open link in new tab")}
+										</label>
+										<FormToggle
+											id="ub-review-cta-openinnewtab"
+											label={__("Open link in new tab")}
+											checked={ctaOpenInNewTab}
+											onChange={() =>
+												setAttributes({ ctaOpenInNewTab: !ctaOpenInNewTab })
+											}
+										/>
+									</PanelRow>
+									<PanelRow>
+										<label htmlFor="ub-review-cta-issponsored">
+											{__("Mark link as sponsored")}
+										</label>
+										<FormToggle
+											id="ub-review-cta-issponsored"
+											label={__("Mark link as sponsored")}
+											checked={ctaIsSponsored}
+											onChange={() =>
+												setAttributes({ ctaIsSponsored: !ctaIsSponsored })
+											}
+										/>
+									</PanelRow>
+									<PanelRow>
+										<label>{__("Alignment")}</label>
+										<ButtonGroup>
+											{["left", "center", "right"].map((a) => (
+												<Button
+													icon={`align-${a}`}
+													isPrimary={ctaAlignment === a}
+													onClick={() => setAttributes({ ctaAlignment: a })}
+												/>
+											))}
+										</ButtonGroup>
+									</PanelRow>
+									<PanelRow>
+										<label htmlFor="ub-review-cta-changefontsize">
+											{__("Change font size")}
+										</label>
+										<FormToggle
+											id="ub-review-cta-changefontsize"
+											label={__("Change font size")}
+											checked={setCTAFontSize}
+											onChange={() => {
+												toggleSetCTAFontSize(!setCTAFontSize);
+												if (setCTAFontSize) {
+													setAttributes({ callToActionFontSize: 0 });
+												}
+											}}
+										/>
+									</PanelRow>
+									{setCTAFontSize && (
+										<RangeControl
+											label={__("Font size")}
+											value={callToActionFontSize}
+											onChange={(callToActionFontSize) =>
+												setAttributes({ callToActionFontSize })
+											}
+											min={6}
+											max={50}
+										/>
+									)}
+								</>
+							)}
+						</PanelBody>
+						<PanelBody title={__("Review Schema")} initialOpen={false}>
+							<PanelRow>
+								<label htmlFor="ub-review-schema-toggle">
+									{__("Enable review schema")}
+								</label>
+								<FormToggle
+									id="ub-review-schema-toggle"
+									label={__("Enable review schema")}
+									checked={enableReviewSchema}
+									onChange={() => {
+										let newAttributes = {
+											enableReviewSchema: !enableReviewSchema,
+										};
+										if (enableReviewSchema) {
+											newAttributes = Object.assign(newAttributes, {
+												enableImage: false,
+												enableDescription: false,
+											});
+										}
+										setAttributes(newAttributes);
+									}}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<label htmlFor="ub-review-summary-toggle">
+									{__("Use review summary")}
+								</label>
+								<FormToggle
+									id="ub-review-summary-toggle"
+									label={__("Use review summary")}
+									checked={useSummary}
+									onChange={() => setAttributes({ useSummary: !useSummary })}
+								/>
+							</PanelRow>
+							{enableReviewSchema && (
+								<>
+									<SelectControl
+										label={__("Item type")}
+										value={itemType}
+										onChange={(itemType) => {
+											setAttributes({ itemType });
+											if (itemType === "Movie") {
+												setAttributes({ enableImage: true });
+											}
+											if (itemType === "Course") {
+												setAttributes({ enableDescription: true });
+											}
+											if (
+												!subtypeCategories.hasOwnProperty(itemType) ||
+												!subtypeCategories[itemType].includes(itemSubtype)
+											) {
+												setAttributes({
+													itemSubtype: "",
+													itemSubsubtype: "",
+												});
+											}
+										}}
+										options={[
+											"Book",
+											"Course",
+											"CreativeWorkSeason",
+											"CreativeWorkSeries",
+											"Episode",
+											"Event",
+											"Game",
+											"LocalBusiness",
+											"MediaObject",
+											"Movie",
+											"MusicPlaylist",
+											"MusicRecording",
+											"Organization",
+											"Product",
+											"SoftwareApplication",
+										].map((a) => ({ label: a, value: a }))}
+									/>
+									{subtypeCategories.hasOwnProperty(itemType) && (
 										<SelectControl
-											value={imgPosition}
-											onChange={(imgPosition) => setAttributes({ imgPosition })}
-											options={[
-												"left",
-												"right",
-												...(enableDescription ? ["top", "bottom"] : []),
-											].map((a) => ({
-												label: __(a),
+											label={__("Item subtype")}
+											value={itemSubtype}
+											onChange={(itemSubtype) => {
+												setAttributes({ itemSubtype });
+												if (itemSubtype === "VideoObject") {
+													setAttributes({ enableImage: true });
+												}
+												if (
+													!subsubtypes.hasOwnProperty(itemSubtype) ||
+													!subsubtypes[itemSubtype].includes(itemSubsubtype)
+												) {
+													setAttributes({ itemSubsubtype: "" });
+												}
+											}}
+											options={["", ...subtypeCategories[itemType]].map(
+												(a) => ({
+													label: a,
+													value: a,
+												})
+											)}
+										/>
+									)}
+									{subsubtypes.hasOwnProperty(itemSubtype) && (
+										<SelectControl
+											label={__("Item subsubtype")}
+											value={itemSubsubtype}
+											onChange={(itemSubsubtype) =>
+												setAttributes({ itemSubsubtype })
+											}
+											options={["", ...subsubtypes[itemSubtype]].map((a) => ({
+												label: a,
 												value: a,
 											}))}
 										/>
-									</PanelRow>
+									)}
 								</>
 							)}
-							{(!enableReviewSchema || itemType !== "Course") && (
-								<PanelRow>
-									<label htmlFor="ub-review-description-toggle">
-										{__("Enable review description")}
-									</label>
-									<FormToggle
-										id="ub-review-description-toggle"
-										label={__("Enable review description")}
-										checked={enableDescription}
-										onChange={() => {
-											setAttributes({ enableDescription: !enableDescription });
-											if (
-												!enableDescription &&
-												["top", "bottom"].includes(imgPosition)
-											) {
-												setAttributes({ imgPosition: "right" });
-											}
-										}}
-									/>
-								</PanelRow>
-							)}
-						</>
-						{enableReviewSchema && (
 							<>
-								{itemTypeExtras}
-								<TextControl
-									label={__("Review publisher")}
-									value={reviewPublisher}
-									onChange={(reviewPublisher) =>
-										setAttributes({ reviewPublisher })
-									}
-								/>
-								<p>{__("Review publication date")}</p>
-								<DatePicker
-									currentDate={reviewPublicationDate * 1000}
-									onChange={(newDate) =>
-										setAttributes({
-											reviewPublicationDate: Math.floor(
-												Date.parse(newDate) / 1000
-											),
-										})
-									}
-								/>
-								{["Event", "Product", "SoftwareApplication"].includes(
-									itemType
+								{!(
+									enableReviewSchema &&
+									(itemType === "Movie" || itemSubtype === "VideoObject")
 								) && (
-									<PanelBody title={__("Offer")}>
-										<SelectControl
-											label={__("Offer Type")}
-											value={offerType}
-											options={["Offer", "Aggregate Offer"].map((a) => ({
-												label: __(a),
-												value: a.replace(" ", ""),
-											}))}
-											onChange={(offerType) => setAttributes({ offerType })}
-										/>
-										<TextControl
-											label={__("Offer Currency")}
-											value={offerCurrency}
-											onChange={(offerCurrency) =>
-												setAttributes({ offerCurrency })
+									//images are required for these item types and optional for the rest
+									<PanelRow>
+										<label htmlFor="ub-review-image-toggle">
+											{__("Enable review image")}
+										</label>
+										<FormToggle
+											id="ub-review-image-toggle"
+											label={__("Enable review image")}
+											checked={enableImage}
+											onChange={() =>
+												setAttributes({ enableImage: !enableImage })
 											}
 										/>
-										{offerType === "Offer" ? (
-											<>
-												<TextControl
-													label={__("Offer Price")}
-													value={offerPriceRaw}
-													onChange={(val) => {
-														if (!isNaN(Number(val))) {
-															setAttributes({ offerPrice: Number(val) });
-															setOfferPriceRaw(val);
+									</PanelRow>
+								)}
+								{enableImage && (
+									<>
+										<PanelRow>
+											<label>{__("Image size")}</label>
+											<input
+												type="number"
+												value={imageSize}
+												onChange={(e) =>
+													setAttributes({ imageSize: Number(e.target.value) })
+												}
+											/>
+										</PanelRow>
+										<PanelRow>
+											<label>{__("Image position")}</label>
+											<SelectControl
+												value={imgPosition}
+												onChange={(imgPosition) =>
+													setAttributes({ imgPosition })
+												}
+												options={[
+													"left",
+													"right",
+													...(enableDescription ? ["top", "bottom"] : []),
+												].map((a) => ({
+													label: __(a),
+													value: a,
+												}))}
+											/>
+										</PanelRow>
+									</>
+								)}
+								{(!enableReviewSchema || itemType !== "Course") && (
+									<PanelRow>
+										<label htmlFor="ub-review-description-toggle">
+											{__("Enable review description")}
+										</label>
+										<FormToggle
+											id="ub-review-description-toggle"
+											label={__("Enable review description")}
+											checked={enableDescription}
+											onChange={() => {
+												setAttributes({
+													enableDescription: !enableDescription,
+												});
+												if (
+													!enableDescription &&
+													["top", "bottom"].includes(imgPosition)
+												) {
+													setAttributes({ imgPosition: "right" });
+												}
+											}}
+										/>
+									</PanelRow>
+								)}
+							</>
+							{enableReviewSchema && (
+								<>
+									{itemTypeExtras}
+									<TextControl
+										label={__("Review publisher")}
+										value={reviewPublisher}
+										onChange={(reviewPublisher) =>
+											setAttributes({ reviewPublisher })
+										}
+									/>
+									<p>{__("Review publication date")}</p>
+									<DatePicker
+										currentDate={reviewPublicationDate * 1000}
+										onChange={(newDate) =>
+											setAttributes({
+												reviewPublicationDate: Math.floor(
+													Date.parse(newDate) / 1000
+												),
+											})
+										}
+									/>
+									{["Event", "Product", "SoftwareApplication"].includes(
+										itemType
+									) && (
+										<PanelBody title={__("Offer")}>
+											<SelectControl
+												label={__("Offer Type")}
+												value={offerType}
+												options={["Offer", "Aggregate Offer"].map((a) => ({
+													label: __(a),
+													value: a.replace(" ", ""),
+												}))}
+												onChange={(offerType) => setAttributes({ offerType })}
+											/>
+											<TextControl
+												label={__("Offer Currency")}
+												value={offerCurrency}
+												onChange={(offerCurrency) =>
+													setAttributes({ offerCurrency })
+												}
+											/>
+											{offerType === "Offer" ? (
+												<>
+													<TextControl
+														label={__("Offer Price")}
+														value={offerPriceRaw}
+														onChange={(val) => {
+															if (!isNaN(Number(val))) {
+																setAttributes({ offerPrice: Number(val) });
+																setOfferPriceRaw(val);
+															}
+														}}
+													/>
+													<SelectControl
+														label={__("Offer Status")}
+														value={offerStatus}
+														options={[
+															"Discontinued",
+															"In Stock",
+															"In Store Only",
+															"Limited Availability",
+															"Online Only",
+															"Out Of Stock",
+															"Pre Order",
+															"Pre Sale",
+															"Sold Out",
+														].map((a) => ({
+															label: __(a),
+															value: a.replace(" ", ""),
+														}))}
+														onChange={(offerStatus) =>
+															setAttributes({ offerStatus })
 														}
-													}}
-												/>
-												<SelectControl
-													label={__("Offer Status")}
-													value={offerStatus}
-													options={[
-														"Discontinued",
-														"In Stock",
-														"In Store Only",
-														"Limited Availability",
-														"Online Only",
-														"Out Of Stock",
-														"Pre Order",
-														"Pre Sale",
-														"Sold Out",
-													].map((a) => ({
-														label: __(a),
-														value: a.replace(" ", ""),
-													}))}
-													onChange={(offerStatus) =>
-														setAttributes({ offerStatus })
-													}
-												/>
-												<ToggleControl
-													label={__("Offer expiration")}
-													checked={offerExpiry > 0}
-													onChange={() =>
-														setAttributes({
-															offerExpiry: offerExpiry
-																? 0
-																: 60 * (10080 + Math.ceil(Date.now() / 60000)), //default to one week from Date.now() when enabled
-														})
-													}
-												/>
-												{offerExpiry > 0 && (
-													<DatePicker
-														currentDate={offerExpiry * 1000}
-														onChange={(newDate) =>
+													/>
+													<ToggleControl
+														label={__("Offer expiration")}
+														checked={offerExpiry > 0}
+														onChange={() =>
 															setAttributes({
-																offerExpiry: Math.floor(
-																	Date.parse(newDate) / 1000
-																),
+																offerExpiry: offerExpiry
+																	? 0
+																	: 60 *
+																	  (10080 + Math.ceil(Date.now() / 60000)), //default to one week from Date.now() when enabled
 															})
 														}
 													/>
-												)}
-											</>
-										) : (
-											<>
-												<TextControl
-													label={__("Offer Count")}
-													value={offerCount}
-													onChange={(val) =>
-														setAttributes({ offerCount: Number(val) })
-													}
-												/>
-												<TextControl
-													label={__(
-														`Lowest Available Price (${offerCurrency})`
+													{offerExpiry > 0 && (
+														<DatePicker
+															currentDate={offerExpiry * 1000}
+															onChange={(newDate) =>
+																setAttributes({
+																	offerExpiry: Math.floor(
+																		Date.parse(newDate) / 1000
+																	),
+																})
+															}
+														/>
 													)}
-													value={offerLowPriceRaw}
-													onChange={(val) => {
-														if (!isNaN(val)) {
-															setOfferLowPriceRaw(val);
-															setAttributes({ offerLowPrice: Number(val) });
+												</>
+											) : (
+												<>
+													<TextControl
+														label={__("Offer Count")}
+														value={offerCount}
+														onChange={(val) =>
+															setAttributes({ offerCount: Number(val) })
 														}
-													}}
-												/>
-												<TextControl
-													label={__(
-														`Highest Available Price (${offerCurrency})`
-													)}
-													value={offerHighPriceRaw}
-													onChange={(val) => {
-														if (!isNaN(val)) {
-															setOfferHighPriceRaw(val);
-															setAttributes({ offerHighPrice: Number(val) });
-														}
-													}}
-												/>
-											</>
-										)}
-									</PanelBody>
-								)}
-							</>
-						)}
-					</PanelBody>
-				</InspectorControls>
+													/>
+													<TextControl
+														label={__(
+															`Lowest Available Price (${offerCurrency})`
+														)}
+														value={offerLowPriceRaw}
+														onChange={(val) => {
+															if (!isNaN(val)) {
+																setOfferLowPriceRaw(val);
+																setAttributes({ offerLowPrice: Number(val) });
+															}
+														}}
+													/>
+													<TextControl
+														label={__(
+															`Highest Available Price (${offerCurrency})`
+														)}
+														value={offerHighPriceRaw}
+														onChange={(val) => {
+															if (!isNaN(val)) {
+																setOfferHighPriceRaw(val);
+																setAttributes({ offerHighPrice: Number(val) });
+															}
+														}}
+													/>
+												</>
+											)}
+										</PanelBody>
+									)}
+								</>
+							)}
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="styles">
+						<PanelBody title={__("Colors")}>
+							{valueType === "star" ? (
+								<PanelColorSettings
+									title={__("Star Colors")}
+									initialOpen={true}
+									colorSettings={[
+										{
+											value: activeStarColor,
+											onChange: (colorValue) =>
+												setAttributes({ activeStarColor: colorValue }),
+											label: __("Active Star Color"),
+										},
+										{
+											value: inactiveStarColor,
+											onChange: (colorValue) =>
+												setAttributes({ inactiveStarColor: colorValue }),
+											label: __("Inactive Star Color"),
+										},
+										{
+											value: starOutlineColor,
+											onChange: (colorValue) =>
+												setAttributes({ starOutlineColor: colorValue }),
+											label: __("Star Outline Color"),
+										},
+									]}
+								/>
+							) : (
+								<PanelColorSettings
+									title={__("Percentage Bar Colors")}
+									colorSettings={[
+										{
+											value: activePercentBarColor,
+											onChange: (colorValue) =>
+												setAttributes({ activePercentBarColor: colorValue }),
+											label: __("Main Color"),
+										},
+										{
+											value: percentBarColor,
+											onChange: (colorValue) =>
+												setAttributes({ percentBarColor: colorValue }),
+											label: __("Background Color"),
+										},
+									]}
+								/>
+							)}
+							<PanelColorSettings
+								title={__("Button Colors")}
+								initialOpen={false}
+								colorSettings={[
+									{
+										value: callToActionBackColor,
+										onChange: (colorValue) =>
+											setAttributes({ callToActionBackColor: colorValue }),
+										label: __("Button Background"),
+									},
+									{
+										value: callToActionBorderColor,
+										onChange: (colorValue) =>
+											setAttributes({ callToActionBorderColor: colorValue }),
+										label: __("Button Border Color"),
+									},
+									{
+										value: callToActionForeColor,
+										onChange: (colorValue) =>
+											setAttributes({ callToActionForeColor: colorValue }),
+										label: __("Button Text Color"),
+									},
+								]}
+							/>
+						</PanelBody>
+					</InspectorControls>
+				</>
 			)}
 			{isSelected && (
 				<BlockControls>
@@ -1833,7 +1851,10 @@ function ReviewMain(props) {
 
 registerPluginBlock("ub/review", {
 	title: __("Review"),
-	description: __("Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.","ultimate-blocks"),
+	description: __(
+		"Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.",
+		"ultimate-blocks"
+	),
 	icon,
 	category: "ultimateblocks",
 	keywords: [__("Review"), __("Ultimate Blocks")],
