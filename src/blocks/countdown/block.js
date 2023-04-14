@@ -62,71 +62,76 @@ function CountdownMain(props) {
 	return (
 		<>
 			{isSelected && (
-				<InspectorControls>
-					{style === "Circular" && (
-						<PanelBody title={__("Circle style")}>
-							<PanelColorSettings
-								title={__("Color")}
-								initialOpen={true}
-								colorSettings={[
-									{
-										value: circleColor,
-										onChange: (colorValue) =>
-											setAttributes({ circleColor: colorValue }),
-										label: "",
-									},
-								]}
-							/>
-							<RangeControl
-								label={__("Size")}
-								value={circleSize}
-								onChange={(circleSize) => setAttributes({ circleSize })}
-								min={30}
-								max={100}
+				<>
+					<InspectorControls group="settings">
+						<PanelBody title={__("Timer expiration")}>
+							<DateTimePicker
+								currentDate={endDate * 1000}
+								onChange={(value) => {
+									setAttributes({
+										endDate: Math.floor(Date.parse(value) / 1000),
+									});
+								}}
 							/>
 						</PanelBody>
+						<PanelBody title={__("Displaying unit")} initialOpen={false}>
+							<SelectControl
+								label={__("Largest unit")}
+								value={largestUnit}
+								options={timeUnits
+									.filter((_, i) => timeUnits.indexOf(smallestUnit) > i)
+									.map((timeUnit) => ({
+										label: __(timeUnit),
+										value: timeUnit,
+									}))}
+								onChange={(largestUnit) => {
+									setAttributes({ largestUnit });
+									setForceUpdate(true);
+								}}
+							/>
+							<SelectControl
+								label={__("Smallest unit")}
+								value={smallestUnit}
+								options={timeUnits
+									.filter((_, i) => timeUnits.indexOf(largestUnit) < i)
+									.map((timeUnit) => ({
+										label: __(timeUnit),
+										value: timeUnit,
+									}))}
+								onChange={(smallestUnit) => {
+									setAttributes({ smallestUnit });
+									setForceUpdate(true);
+								}}
+							/>
+						</PanelBody>
+					</InspectorControls>
+
+					{style === "Circular" && (
+						<InspectorControls group="styles">
+							<PanelBody title={__("Circle style")}>
+								<PanelColorSettings
+									title={__("Color")}
+									initialOpen={true}
+									colorSettings={[
+										{
+											value: circleColor,
+											onChange: (colorValue) =>
+												setAttributes({ circleColor: colorValue }),
+											label: "",
+										},
+									]}
+								/>
+								<RangeControl
+									label={__("Size")}
+									value={circleSize}
+									onChange={(circleSize) => setAttributes({ circleSize })}
+									min={30}
+									max={100}
+								/>
+							</PanelBody>
+						</InspectorControls>
 					)}
-					<PanelBody title={__("Timer expiration")}>
-						<DateTimePicker
-							currentDate={endDate * 1000}
-							onChange={(value) => {
-								setAttributes({
-									endDate: Math.floor(Date.parse(value) / 1000),
-								});
-							}}
-						/>
-					</PanelBody>
-					<PanelBody title={__("Unit display")} initialOpen={false}>
-						<SelectControl
-							label={__("Largest unit")}
-							value={largestUnit}
-							options={timeUnits
-								.filter((_, i) => timeUnits.indexOf(smallestUnit) > i)
-								.map((timeUnit) => ({
-									label: __(timeUnit),
-									value: timeUnit,
-								}))}
-							onChange={(largestUnit) => {
-								setAttributes({ largestUnit });
-								setForceUpdate(true);
-							}}
-						/>
-						<SelectControl
-							label={__("Smallest unit")}
-							value={smallestUnit}
-							options={timeUnits
-								.filter((_, i) => timeUnits.indexOf(largestUnit) < i)
-								.map((timeUnit) => ({
-									label: __(timeUnit),
-									value: timeUnit,
-								}))}
-							onChange={(smallestUnit) => {
-								setAttributes({ smallestUnit });
-								setForceUpdate(true);
-							}}
-						/>
-					</PanelBody>
-				</InspectorControls>
+				</>
 			)}
 			{isSelected && (
 				<BlockControls>
