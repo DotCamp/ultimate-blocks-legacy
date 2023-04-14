@@ -243,190 +243,197 @@ function ImageSliderMain(props) {
 				</BlockControls>
 			)}
 			{isSelected && imageArray.length > 0 && (
-				<InspectorControls>
-					<PanelBody title={__("Slider Settings")} initialOpen={false}>
-						<ToggleControl
-							label={__("Wrap around")}
-							checked={wrapsAround}
-							onChange={() => {
-								setAttributes({ wrapsAround: !wrapsAround });
-								setComponentKey(componentKey + 1);
-							}}
-						/>
-						<ToggleControl
-							label={__("Allow dragging")}
-							checked={isDraggable}
-							onChange={() => {
-								setAttributes({ isDraggable: !isDraggable });
-								setComponentKey(componentKey + 1);
-							}}
-						/>
-						<ToggleControl
-							label={__("Use pagination")}
-							checked={usePagination}
-							onChange={() => {
-								setAttributes({ usePagination: !usePagination });
-								setComponentKey(componentKey + 1);
-							}}
-						/>
-						{usePagination && (
-							<SelectControl
-								label={__("Pagination type")}
-								value={paginationType}
-								options={["bullets", "fraction", "progressbar"].map((o) => ({
-									label: __(o),
-									value: o,
-								}))}
-								onChange={(paginationType) => {
-									setAttributes({ paginationType });
-									setComponentKey(componentKey + 1);
-								}}
-							/>
-						)}
-						<SelectControl
-							label={__("Transition")}
-							value={transition}
-							options={["slide", "fade", "cube", "coverflow", "flip"].map(
-								(o) => ({
-									label: __(o),
-									value: o,
-								})
-							)}
-							onChange={(transition) => {
-								setAttributes({ transition });
-								setComponentKey(componentKey + 1);
-							}}
-						/>
-						{["cube", "coverflow", "flip"].includes(transition) && (
+				<>
+					<InspectorControls group="settings">
+						<PanelBody title={__("Slider Settings")}>
 							<ToggleControl
-								label={__("Enable slide shadows")}
-								checked={slideShadows}
+								label={__("Wrap around")}
+								checked={wrapsAround}
 								onChange={() => {
-									setAttributes({ slideShadows: !slideShadows });
+									setAttributes({ wrapsAround: !wrapsAround });
 									setComponentKey(componentKey + 1);
 								}}
 							/>
-						)}
-						{transition === "coverflow" && (
-							<>
-								<RangeControl
-									label={__("Slide rotation")}
-									value={rotate}
-									onChange={(rotate) => {
-										setAttributes({ rotate });
-										setComponentKey(componentKey + 1);
-									}}
-									min={0}
-									max={180} //change if this proves to be excessive
-								/>
-								<RangeControl
-									label={__("Stretch space")}
-									value={stretch}
-									onChange={(stretch) => {
-										setAttributes({ stretch });
-										setComponentKey(componentKey + 1);
-									}}
-									min={0}
-									max={180} //change if this proves to be excessive
-								/>
-								<RangeControl
-									label={__("Depth offset")}
-									value={depth}
-									onChange={(depth) => {
-										setAttributes({ depth });
-										setComponentKey(componentKey + 1);
-									}}
-									min={0}
-									max={200}
-								/>
-								<RangeControl
-									label={__("Effect multiplier")}
-									value={modifier}
-									onChange={(modifier) => {
-										setAttributes({ modifier });
-										setComponentKey(componentKey + 1);
-									}}
-									min={0}
-									max={3} //change if this proves to be excessive
-									step={0.05}
-								/>
-							</>
-						)}
-						{transition === "cube" && (
-							<>
-								<ToggleControl
-									label={__("Enable main slider shadow")}
-									checked={shadow}
-									onChange={() => {
-										setAttributes({ shadow: !shadow });
+							<ToggleControl
+								label={__("Allow dragging")}
+								checked={isDraggable}
+								onChange={() => {
+									setAttributes({ isDraggable: !isDraggable });
+									setComponentKey(componentKey + 1);
+								}}
+							/>
+							<ToggleControl
+								label={__("Use pagination")}
+								checked={usePagination}
+								onChange={() => {
+									setAttributes({ usePagination: !usePagination });
+									setComponentKey(componentKey + 1);
+								}}
+							/>
+							{usePagination && (
+								<SelectControl
+									label={__("Pagination type")}
+									value={paginationType}
+									options={["bullets", "fraction", "progressbar"].map((o) => ({
+										label: __(o),
+										value: o,
+									}))}
+									onChange={(paginationType) => {
+										setAttributes({ paginationType });
 										setComponentKey(componentKey + 1);
 									}}
 								/>
+							)}
+
+							<ToggleControl
+								label={__("Enable autoplay")}
+								checked={autoplays}
+								onChange={() => {
+									setAttributes({ autoplays: !autoplays });
+									setComponentKey(componentKey + 1);
+								}}
+							/>
+							{autoplays && (
 								<RangeControl
-									label={__("Shadow offset")}
-									value={shadowOffset}
-									onChange={(shadowOffset) => {
-										setAttributes({ shadowOffset });
+									label={__("Autoplay duration (seconds)")}
+									value={autoplayDuration}
+									onChange={(value) => {
+										setAttributes({ autoplayDuration: value });
 										setComponentKey(componentKey + 1);
 									}}
 									min={1}
-									max={100}
+									max={10}
 								/>
-								<RangeControl
-									label={__("Shadow scale")}
-									value={shadowScale}
-									onChange={(shadowScale) => {
-										setAttributes({ shadowScale });
+							)}
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="styles">
+						<PanelBody title={__("Slider Settings")}>
+							<SelectControl
+								label={__("Transition")}
+								value={transition}
+								options={["slide", "fade", "cube", "coverflow", "flip"].map(
+									(o) => ({
+										label: __(o),
+										value: o,
+									})
+								)}
+								onChange={(transition) => {
+									setAttributes({ transition });
+									setComponentKey(componentKey + 1);
+								}}
+							/>
+							{["cube", "coverflow", "flip"].includes(transition) && (
+								<ToggleControl
+									label={__("Enable slide shadows")}
+									checked={slideShadows}
+									onChange={() => {
+										setAttributes({ slideShadows: !slideShadows });
 										setComponentKey(componentKey + 1);
 									}}
-									min={0}
-									max={2}
-									scale={0.01}
 								/>
-							</>
-						)}
-						{transition === "flip" && (
-							<ToggleControl
-								label={__("Limit rotation")}
-								checked={limitRotation}
-								onChange={() => {
-									setAttributes({ limitRotation: !limitRotation });
-									setComponentKey(componentKey + 1);
-								}}
-							/>
-						)}
-						<ToggleControl
-							label={__("Enable autoplay")}
-							checked={autoplays}
-							onChange={() => {
-								setAttributes({ autoplays: !autoplays });
-								setComponentKey(componentKey + 1);
-							}}
-						/>
-						{autoplays && (
+							)}
+							{transition === "coverflow" && (
+								<>
+									<RangeControl
+										label={__("Slide rotation")}
+										value={rotate}
+										onChange={(rotate) => {
+											setAttributes({ rotate });
+											setComponentKey(componentKey + 1);
+										}}
+										min={0}
+										max={180} //change if this proves to be excessive
+									/>
+									<RangeControl
+										label={__("Stretch space")}
+										value={stretch}
+										onChange={(stretch) => {
+											setAttributes({ stretch });
+											setComponentKey(componentKey + 1);
+										}}
+										min={0}
+										max={180} //change if this proves to be excessive
+									/>
+									<RangeControl
+										label={__("Depth offset")}
+										value={depth}
+										onChange={(depth) => {
+											setAttributes({ depth });
+											setComponentKey(componentKey + 1);
+										}}
+										min={0}
+										max={200}
+									/>
+									<RangeControl
+										label={__("Effect multiplier")}
+										value={modifier}
+										onChange={(modifier) => {
+											setAttributes({ modifier });
+											setComponentKey(componentKey + 1);
+										}}
+										min={0}
+										max={3} //change if this proves to be excessive
+										step={0.05}
+									/>
+								</>
+							)}
+							{transition === "cube" && (
+								<>
+									<ToggleControl
+										label={__("Enable main slider shadow")}
+										checked={shadow}
+										onChange={() => {
+											setAttributes({ shadow: !shadow });
+											setComponentKey(componentKey + 1);
+										}}
+									/>
+									<RangeControl
+										label={__("Shadow offset")}
+										value={shadowOffset}
+										onChange={(shadowOffset) => {
+											setAttributes({ shadowOffset });
+											setComponentKey(componentKey + 1);
+										}}
+										min={1}
+										max={100}
+									/>
+									<RangeControl
+										label={__("Shadow scale")}
+										value={shadowScale}
+										onChange={(shadowScale) => {
+											setAttributes({ shadowScale });
+											setComponentKey(componentKey + 1);
+										}}
+										min={0}
+										max={2}
+										scale={0.01}
+									/>
+								</>
+							)}
+							{transition === "flip" && (
+								<ToggleControl
+									label={__("Limit rotation")}
+									checked={limitRotation}
+									onChange={() => {
+										setAttributes({ limitRotation: !limitRotation });
+										setComponentKey(componentKey + 1);
+									}}
+								/>
+							)}
 							<RangeControl
-								label={__("Autoplay duration (seconds)")}
-								value={autoplayDuration}
-								onChange={(value) => {
-									setAttributes({ autoplayDuration: value });
-									setComponentKey(componentKey + 1);
+								label={__("Height")}
+								value={sliderHeight}
+								onChange={(newHeight) => {
+									setAttributes({ sliderHeight: newHeight });
+									setComponentKey(componentKey + 1); //ensure proper placement of arrows and page dots
 								}}
-								min={1}
-								max={10}
+								min={200}
+								max={500}
 							/>
-						)}
-						<RangeControl
-							label={__("Height")}
-							value={sliderHeight}
-							onChange={(newHeight) => {
-								setAttributes({ sliderHeight: newHeight });
-								setComponentKey(componentKey + 1); //ensure proper placement of arrows and page dots
-							}}
-							min={200}
-							max={500}
-						/>
-					</PanelBody>
-				</InspectorControls>
+						</PanelBody>
+					</InspectorControls>
+				</>
 			)}
 
 			<div
@@ -599,7 +606,10 @@ function ImageSliderMain(props) {
 
 registerBlockType("ub/image-slider", {
 	title: __("Image Slider"),
-	description: __("Add a lightweight, simple image slider in your post. Comes with additional settings.", "ultimate-blocks"),
+	description: __(
+		"Add a lightweight, simple image slider in your post. Comes with additional settings.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Image Slider"), __("Slideshow"), __("Ultimate Blocks")],
