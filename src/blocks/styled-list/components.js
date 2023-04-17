@@ -346,243 +346,253 @@ function EditorComponent(props) {
 	return (
 		<>
 			{isSelected && isRootOfList && (
-				<InspectorControls>
-					<PanelBody title={__("Icon")} initialOpen={true}>
-						<div
-							style={{
-								display: "grid",
-								gridTemplateColumns: "5fr 1fr",
-							}}
-						>
-							<p>{__("Selected icon")}</p>
+				<>
+					<InspectorControls group="settings">
+						<PanelBody title={__("Icon")} initialOpen={true}>
+							<div
+								style={{
+									display: "grid",
+									gridTemplateColumns: "5fr 1fr",
+								}}
+							>
+								<p>{__("Selected icon")}</p>
 
-							<Dropdown
-								position="bottom right"
-								renderToggle={({ isOpen, onToggle }) => (
-									<Button
-										label={__("Select icon for list")}
-										onClick={onToggle}
-										aria-expanded={isOpen}
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											height="30"
-											width="30"
-											viewBox={`0, 0, ${
-												allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
-											},  ${
-												allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
-											}`}
+								<Dropdown
+									position="bottom right"
+									renderToggle={({ isOpen, onToggle }) => (
+										<Button
+											label={__("Select icon for list")}
+											onClick={onToggle}
+											aria-expanded={isOpen}
 										>
-											<path
-												fill={iconColor}
-												d={
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												height="30"
+												width="30"
+												viewBox={`0, 0, ${
 													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
-														.icon[4]
-												}
-											/>
-										</svg>
-									</Button>
-								)}
-								renderContent={() => (
-									<div>
-										<input
-											type="text"
-											value={iconSearchTerm}
-											onChange={(e) => {
-												setIconSearchTerm(e.target.value);
-												setIconSearchResultsPage(0);
-											}}
-										/>
-										<br />
-										{iconListPage.length > 0 && (
-											<div>
-												<button
-													onClick={() => {
-														if (iconSearchResultsPage > 0) {
-															setIconSearchResultsPage(
-																iconSearchResultsPage - 1
-															);
-														}
-													}}
-												>
-													&lt;
-												</button>
-												<span>
-													{iconSearchResultsPage + 1}/{iconListPage.length}
-												</span>
-												<button
-													onClick={() => {
-														if (
-															iconSearchResultsPage <
-															iconListPage.length - 1
-														) {
-															setIconSearchResultsPage(
-																iconSearchResultsPage + 1
-															);
-														}
-													}}
-												>
-													&gt;
-												</button>
-											</div>
-										)}
-
-										{iconListPage.length > 0 &&
-											iconListPage[iconSearchResultsPage].map((i) => (
-												<Button
-													className="ub-styled-list-available-icon"
-													icon={<FontAwesomeIcon icon={i} size="lg" />}
-													label={i.iconName}
-													onClick={() => {
-														if (selectedIcon !== i.iconName) {
-															setRecentSelection(i.iconName);
-															setSelectionTime(~~(Date.now() / 1000));
-
-															setAttributes({
-																selectedIcon: i.iconName,
-															});
-
-															setAttributesToAllItems({
-																selectedIcon: i.iconName,
-															});
-														}
-													}}
+														.icon[0]
+												},  ${
+													allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+														.icon[1]
+												}`}
+											>
+												<path
+													fill={iconColor}
+													d={
+														allIcons[`fa${dashesToCamelcase(selectedIcon)}`]
+															.icon[4]
+													}
 												/>
-											))}
-									</div>
-								)}
-								onToggle={(isOpen) => {
-									if (!isOpen && recentSelection && hasApiAccess) {
-										updateIconList();
+											</svg>
+										</Button>
+									)}
+									renderContent={() => (
+										<div>
+											<input
+												type="text"
+												value={iconSearchTerm}
+												onChange={(e) => {
+													setIconSearchTerm(e.target.value);
+													setIconSearchResultsPage(0);
+												}}
+											/>
+											<br />
+											{iconListPage.length > 0 && (
+												<div>
+													<button
+														onClick={() => {
+															if (iconSearchResultsPage > 0) {
+																setIconSearchResultsPage(
+																	iconSearchResultsPage - 1
+																);
+															}
+														}}
+													>
+														&lt;
+													</button>
+													<span>
+														{iconSearchResultsPage + 1}/{iconListPage.length}
+													</span>
+													<button
+														onClick={() => {
+															if (
+																iconSearchResultsPage <
+																iconListPage.length - 1
+															) {
+																setIconSearchResultsPage(
+																	iconSearchResultsPage + 1
+																);
+															}
+														}}
+													>
+														&gt;
+													</button>
+												</div>
+											)}
+
+											{iconListPage.length > 0 &&
+												iconListPage[iconSearchResultsPage].map((i) => (
+													<Button
+														className="ub-styled-list-available-icon"
+														icon={<FontAwesomeIcon icon={i} size="lg" />}
+														label={i.iconName}
+														onClick={() => {
+															if (selectedIcon !== i.iconName) {
+																setRecentSelection(i.iconName);
+																setSelectionTime(~~(Date.now() / 1000));
+
+																setAttributes({
+																	selectedIcon: i.iconName,
+																});
+
+																setAttributesToAllItems({
+																	selectedIcon: i.iconName,
+																});
+															}
+														}}
+													/>
+												))}
+										</div>
+									)}
+									onToggle={(isOpen) => {
+										if (!isOpen && recentSelection && hasApiAccess) {
+											updateIconList();
+										}
+									}}
+								/>
+							</div>
+
+							<p>{__("Icon size")}</p>
+							<RangeControl
+								value={iconSize}
+								onChange={(iconSize) => {
+									setAttributes({ iconSize });
+									setAttributesToAllItems({ iconSize });
+								}}
+								min={1}
+								max={10}
+							/>
+						</PanelBody>
+
+						<PanelBody title={__("Additional")} initialOpen={false}>
+							<p>{__("Number of columns")}</p>
+							<RangeControl
+								value={columns}
+								onChange={(columns) => {
+									setAttributes({ columns });
+									if (columns <= maxMobileColumns) {
+										setAttributes({ maxMobileColumns: columns });
+									}
+								}}
+								min={1}
+								max={4}
+							/>
+							{columns > 1 && (
+								<>
+									<p>{__("Number of columns in mobile")}</p>
+									<RangeControl
+										value={maxMobileColumns}
+										onChange={(maxMobileColumns) =>
+											setAttributes({ maxMobileColumns })
+										}
+										min={1}
+										max={columns}
+									/>
+								</>
+							)}
+							<p>{__("Item spacing (pixels)")}</p>
+							<RangeControl
+								value={itemSpacing}
+								onChange={(itemSpacing) => setAttributes({ itemSpacing })}
+								min={0}
+								max={50}
+							/>
+							<ToggleControl
+								label={__("Customize font size")}
+								checked={setFontSize}
+								onChange={() => {
+									if (setFontSize) {
+										setAttributes({ fontSize: 0 });
+
+										//change font sizevalue of all list items to zero
+										updateBlockAttributes(listItemBlocks, {
+											fontSize: 0,
+										});
+									} else {
+										setAttributes({ fontSize: 10 });
+										//send signal to first child block to begin measuring
+										updateBlockAttributes(block.innerBlocks[0].clientId, {
+											fontSize: -1,
+										});
+									}
+									toggleSetFontSize(!setFontSize);
+								}}
+							/>
+							{setFontSize && (
+								<>
+									<p>{__("Font size (pixels)")}</p>
+									<RangeControl
+										value={fontSize}
+										onChange={(fontSize) => {
+											setAttributes({ fontSize });
+											updateBlockAttributes(listItemBlocks, { fontSize });
+										}}
+										min={10}
+										max={50}
+									/>
+								</>
+							)}
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="styles">
+						<PanelBody title={__("Color")}>
+							{/* PANELCONTROLSETTINGS HAS NO WAY FOR RESETTING COLOR TO BLANK */}
+							<p>
+								{__("Icon color")}
+								<span
+									id="ub-styled-list-selected-color"
+									class="component-color-indicator"
+									aria-label={`(Color: ${iconColor})`}
+									style={{ background: iconColor }}
+								/>
+							</p>
+							<ColorPalette
+								value={iconColor}
+								onChange={(iconColor) => {
+									if (iconColor.match(/#[0-9a-f]{6}/gi)) {
+										setAttributes({ iconColor });
+										setAttributesToAllItems({ iconColor });
+									} else {
+										const newIconColor =
+											iconColor.toLowerCase() in colorList
+												? colorList[iconColor.toLowerCase()]
+												: getComputedStyle(
+														document.documentElement
+												  ).getPropertyValue(
+														iconColor.substring(4, iconColor.length - 1)
+												  );
+
+										setAttributes({ iconColor: newIconColor });
+										setAttributesToAllItems({ iconColor: newIconColor });
 									}
 								}}
 							/>
-						</div>
-						<p>
-							{__("Icon color")}
-							<span
-								id="ub-styled-list-selected-color"
-								class="component-color-indicator"
-								aria-label={`(Color: ${iconColor})`}
-								style={{ background: iconColor }}
+							<p>{__("List Text Color")}</p>
+							<ColorPalette
+								value={textColor}
+								onChange={(textColor) => setAttributes({ textColor })}
 							/>
-						</p>
-						<ColorPalette
-							value={iconColor}
-							onChange={(iconColor) => {
-								if (iconColor.match(/#[0-9a-f]{6}/gi)) {
-									setAttributes({ iconColor });
-									setAttributesToAllItems({ iconColor });
-								} else {
-									const newIconColor =
-										iconColor.toLowerCase() in colorList
-											? colorList[iconColor.toLowerCase()]
-											: getComputedStyle(
-													document.documentElement
-											  ).getPropertyValue(
-													iconColor.substring(4, iconColor.length - 1)
-											  );
-
-									setAttributes({ iconColor: newIconColor });
-									setAttributesToAllItems({ iconColor: newIconColor });
+							<p>{__("List Background Color")}</p>
+							<ColorPalette
+								value={backgroundColor}
+								onChange={(backgroundColor) =>
+									setAttributes({ backgroundColor })
 								}
-							}}
-						/>
-						<p>{__("Icon size")}</p>
-						<RangeControl
-							value={iconSize}
-							onChange={(iconSize) => {
-								setAttributes({ iconSize });
-								setAttributesToAllItems({ iconSize });
-							}}
-							min={1}
-							max={10}
-						/>
-					</PanelBody>
-					<PanelBody title={__("Color")} initialOpen={false}>
-						{/* PANELCONTROLSETTINGS HAS NO WAY FOR RESETTING COLOR TO BLANK */}
-						<p>{__("List Text Color")}</p>
-						<ColorPalette
-							value={textColor}
-							onChange={(textColor) => setAttributes({ textColor })}
-						/>
-						<p>{__("List Background Color")}</p>
-						<ColorPalette
-							value={backgroundColor}
-							onChange={(backgroundColor) => setAttributes({ backgroundColor })}
-						/>
-					</PanelBody>
-					<PanelBody title={__("Additional")} initialOpen={false}>
-						<p>{__("Number of columns")}</p>
-						<RangeControl
-							value={columns}
-							onChange={(columns) => {
-								setAttributes({ columns });
-								if (columns <= maxMobileColumns) {
-									setAttributes({ maxMobileColumns: columns });
-								}
-							}}
-							min={1}
-							max={4}
-						/>
-						{columns > 1 && (
-							<>
-								<p>{__("Number of columns in mobile")}</p>
-								<RangeControl
-									value={maxMobileColumns}
-									onChange={(maxMobileColumns) =>
-										setAttributes({ maxMobileColumns })
-									}
-									min={1}
-									max={columns}
-								/>
-							</>
-						)}
-						<p>{__("Item spacing (pixels)")}</p>
-						<RangeControl
-							value={itemSpacing}
-							onChange={(itemSpacing) => setAttributes({ itemSpacing })}
-							min={0}
-							max={50}
-						/>
-						<ToggleControl
-							label={__("Customize font size")}
-							checked={setFontSize}
-							onChange={() => {
-								if (setFontSize) {
-									setAttributes({ fontSize: 0 });
-
-									//change font sizevalue of all list items to zero
-									updateBlockAttributes(listItemBlocks, {
-										fontSize: 0,
-									});
-								} else {
-									setAttributes({ fontSize: 10 });
-									//send signal to first child block to begin measuring
-									updateBlockAttributes(block.innerBlocks[0].clientId, {
-										fontSize: -1,
-									});
-								}
-								toggleSetFontSize(!setFontSize);
-							}}
-						/>
-						{setFontSize && (
-							<>
-								<p>{__("Font size (pixels)")}</p>
-								<RangeControl
-									value={fontSize}
-									onChange={(fontSize) => {
-										setAttributes({ fontSize });
-										updateBlockAttributes(listItemBlocks, { fontSize });
-									}}
-									min={10}
-									max={50}
-								/>
-							</>
-						)}
-					</PanelBody>
-				</InspectorControls>
+							/>
+						</PanelBody>
+					</InspectorControls>
+				</>
 			)}
 			{isSelected && isRootList && (
 				<BlockControls>
