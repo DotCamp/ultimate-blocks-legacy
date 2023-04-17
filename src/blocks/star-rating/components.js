@@ -44,69 +44,75 @@ export const inspectorControls = (props) => {
 	const { starCount, starSize, starColor, selectedStars, reviewTextColor } =
 		attributes;
 	return (
-		<InspectorControls>
-			<PanelBody title={__("General")} initialOpen={true}>
-				<RangeControl
-					label={__("Star size")}
-					value={starSize}
-					onChange={(value) => setAttributes({ starSize: value })}
-					min={10}
-					max={30}
-					beforeIcon="editor-contract"
-					afterIcon="editor-expand"
-				/>
-				<RangeControl
-					label={__("Number of stars")}
-					value={starCount}
-					onChange={(value) =>
-						setAttributes({
-							starCount: value,
-							selectedStars: value < selectedStars ? value : selectedStars,
-						})
-					}
-					min={5}
-					max={10}
-					beforeIcon="star-empty"
-				/>
-				<RangeControl
-					label={__("Star value")}
-					value={selectedStars}
-					onChange={(selectedStars) => setAttributes({ selectedStars })}
-					min={0.1}
-					max={starCount}
-					step={0.1}
-					beforeIcon="star-half"
-				/>
-			</PanelBody>
-			<PanelBody title={__("Colors")} initialOpen={false}>
-				<p>
-					{__("Star Color")}
-					<span
-						class="component-color-indicator"
-						aria-label={`(Color: ${starColor})`}
-						style={{ background: starColor }}
+		<>
+			<InspectorControls group="settings">
+				<PanelBody title={__("General")} initialOpen={true}>
+					<RangeControl
+						label={__("Number of stars")}
+						value={starCount}
+						onChange={(value) =>
+							setAttributes({
+								starCount: value,
+								selectedStars: value < selectedStars ? value : selectedStars,
+							})
+						}
+						min={5}
+						max={10}
+						beforeIcon="star-empty"
 					/>
-				</p>
-				<ColorPalette
-					value={starColor}
-					onChange={(colorValue) => setAttributes({ starColor: colorValue })}
-				/>
-				<p>
-					{__("Text Color")}
-					{reviewTextColor && (
+					<RangeControl
+						label={__("Star value")}
+						value={selectedStars}
+						onChange={(selectedStars) => setAttributes({ selectedStars })}
+						min={0.1}
+						max={starCount}
+						step={0.1}
+						beforeIcon="star-half"
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="styles">
+				<PanelBody title={__("General")} initialOpen={true}>
+					<RangeControl
+						label={__("Star size")}
+						value={starSize}
+						onChange={(value) => setAttributes({ starSize: value })}
+						min={10}
+						max={30}
+						beforeIcon="editor-contract"
+						afterIcon="editor-expand"
+					/>
+				</PanelBody>
+				<PanelBody title={__("Colors")}>
+					<p>
+						{__("Star Color")}
 						<span
 							class="component-color-indicator"
-							aria-label={`(Color: ${reviewTextColor})`}
-							style={{ background: reviewTextColor }}
+							aria-label={`(Color: ${starColor})`}
+							style={{ background: starColor }}
 						/>
-					)}
-				</p>
-				<ColorPalette
-					value={reviewTextColor}
-					onChange={(reviewTextColor) => setAttributes({ reviewTextColor })}
-				/>
-			</PanelBody>
-		</InspectorControls>
+					</p>
+					<ColorPalette
+						value={starColor}
+						onChange={(colorValue) => setAttributes({ starColor: colorValue })}
+					/>
+					<p>
+						{__("Text Color")}
+						{reviewTextColor && (
+							<span
+								class="component-color-indicator"
+								aria-label={`(Color: ${reviewTextColor})`}
+								style={{ background: reviewTextColor }}
+							/>
+						)}
+					</p>
+					<ColorPalette
+						value={reviewTextColor}
+						onChange={(reviewTextColor) => setAttributes({ reviewTextColor })}
+					/>
+				</PanelBody>
+			</InspectorControls>
+		</>
 	);
 };
 
