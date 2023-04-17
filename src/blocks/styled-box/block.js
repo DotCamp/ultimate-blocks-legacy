@@ -693,24 +693,31 @@ function StyledBox(props) {
 				</BlockControls>
 			)}
 			{isSelected && (
-				<InspectorControls>
-					{mode !== "" && (
-						<PanelBody>
-							<SelectControl
-								label="Select mode"
-								value={mode}
-								options={["number", "notification", "feature", "bordered"].map(
-									(a) => ({
+				<>
+					<InspectorControls group="settings">
+						{mode !== "" && (
+							<PanelBody>
+								<SelectControl
+									label="Select mode"
+									value={mode}
+									options={[
+										"number",
+										"notification",
+										"feature",
+										"bordered",
+									].map((a) => ({
 										label: `${a[0].toUpperCase() + a.slice(1)} box`,
 										value: a,
-									})
-								)}
-								onChange={(selection) => setAttributes({ mode: selection })}
-							/>
-						</PanelBody>
-					)}
-					{inspectorExtras}
-				</InspectorControls>
+									}))}
+									onChange={(selection) => setAttributes({ mode: selection })}
+								/>
+							</PanelBody>
+						)}
+					</InspectorControls>
+					<InspectorControls group="styles">
+						{inspectorExtras}
+					</InspectorControls>
+				</>
 			)}
 			<div className={`ub-styled-box ub-${mode}-box`} style={extraStyles}>
 				{renderedBlock}
@@ -721,7 +728,10 @@ function StyledBox(props) {
 
 registerBlockType("ub/styled-box", {
 	title: __("Styled Box"),
-	description: __("Add styled box like – Notification box, Number box, Feature box in your content. ", "ultimate-blocks"),
+	description: __(
+		"Add styled box like – Notification box, Number box, Feature box in your content. ",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	attributes: {
