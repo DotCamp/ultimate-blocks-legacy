@@ -716,260 +716,272 @@ export const inspectorControls = (props) => {
 	const { getBlocks } = select("core/block-editor") || select("core/editor");
 
 	return (
-		<InspectorControls>
-			<PanelBody title={__("Allowed Headings")}>
-				<div className="ub_toc_heading_selection">
-					{allowedHeaders.map((a, i) => (
-						<CheckboxControl
-							label={`H${i + 1}`}
-							checked={a}
-							onChange={() =>
+		<>
+			<InspectorControls group="settings">
+				<PanelBody title={__("Allowed Headings")}>
+					<div className="ub_toc_heading_selection">
+						{allowedHeaders.map((a, i) => (
+							<CheckboxControl
+								label={`H${i + 1}`}
+								checked={a}
+								onChange={() =>
+									setAttributes({
+										allowedHeaders: [
+											...allowedHeaders.slice(0, i),
+											!allowedHeaders[i],
+											...allowedHeaders.slice(i + 1),
+										],
+									})
+								}
+							/>
+						))}
+					</div>
+				</PanelBody>
+
+				<PanelBody title={__("Layout")} initialOpen={false}>
+					<PanelRow>
+						<p>{__("Columns")}</p>
+						<ToolbarGroup>
+							<ToolbarButton
+								className={"ub_toc_column_selector"}
+								icon={oneColumnIcon}
+								label={__("One column")}
+								isPrimary={numColumns === 1}
+								onClick={() => setAttributes({ numColumns: 1 })}
+							/>
+							<ToolbarButton
+								className={"ub_toc_column_selector"}
+								icon={twoColumnsIcon}
+								label={__("Two columns")}
+								isPrimary={numColumns === 2}
+								onClick={() => setAttributes({ numColumns: 2 })}
+							/>
+							<ToolbarButton
+								className={"ub_toc_column_selector"}
+								icon={threeColumnsIcon}
+								label={__("Three columns")}
+								isPrimary={numColumns === 3}
+								onClick={() => setAttributes({ numColumns: 3 })}
+							/>
+						</ToolbarGroup>
+					</PanelRow>
+					<PanelRow>
+						<p>{__("List type")}</p>
+						<ToolbarGroup>
+							<ToolbarButton
+								icon="editor-ul"
+								label={__("Bulleted list")}
+								isPrimary={listStyle === "bulleted"}
+								onClick={() => setAttributes({ listStyle: "bulleted" })}
+							/>
+							<ToolbarButton
+								icon="editor-ol"
+								label={__("Numbered list")}
+								isPrimary={listStyle === "numbered"}
+								onClick={() => setAttributes({ listStyle: "numbered" })}
+							/>
+							<ToolbarButton
+								icon={plainList}
+								label={__("Plain list")}
+								isPrimary={listStyle === "plain"}
+								onClick={() => setAttributes({ listStyle: "plain" })}
+							/>
+						</ToolbarGroup>
+					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__("Collapsible")} initialOpen={false}>
+					<PanelRow>
+						<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
+						<ToggleControl
+							id="ub_toc_toggle_display"
+							checked={allowToCHiding}
+							onChange={(allowToCHiding) =>
 								setAttributes({
-									allowedHeaders: [
-										...allowedHeaders.slice(0, i),
-										!allowedHeaders[i],
-										...allowedHeaders.slice(i + 1),
-									],
+									allowToCHiding,
+									showList: allowToCHiding ? showList : true,
+									hideOnMobile: false,
 								})
 							}
 						/>
-					))}
-				</div>
-			</PanelBody>
-			<PanelBody title={__("Colors")} initialOpen={false}>
-				<PanelColorSettings
-					title={__("Color Settings")}
-					initialOpen={false}
-					colorSettings={[
-						{
-							value: titleColor,
-							onChange: (titleColor) => setAttributes({ titleColor }),
-							label: __("Title Color"),
-						},
-						{
-							value: titleBackgroundColor,
-							onChange: (titleBackgroundColor) =>
-								setAttributes({ titleBackgroundColor }),
-							label: __("Title Background Color"),
-						},
-						{
-							value: listColor,
-							onChange: (listColor) => setAttributes({ listColor }),
-							label: __("List Color"),
-						},
-						{
-							value: listBackgroundColor,
-							onChange: (listBackgroundColor) =>
-								setAttributes({ listBackgroundColor }),
-							label: __("List Background Color"),
-						},
-						...[
-							listStyle !== "plain"
-								? {
-										value: listIconColor,
-										onChange: (listIconColor) => setAttributes({ listIconColor }),
-										label:
-											listStyle === "numbered"
-												? __("Item number color")
-												: __("List icon color"),
-								}
-								: [],
-						],
-					]}
-				/>
-			</PanelBody>
-			<PanelBody title={__("Layout")} initialOpen={false}>
-				<PanelRow>
-					<p>{__("Columns")}</p>
-					<ToolbarGroup>
-						<ToolbarButton
-							className={"ub_toc_column_selector"}
-							icon={oneColumnIcon}
-							label={__("One column")}
-							isPrimary={numColumns === 1}
-							onClick={() => setAttributes({ numColumns: 1 })}
-						/>
-						<ToolbarButton
-							className={"ub_toc_column_selector"}
-							icon={twoColumnsIcon}
-							label={__("Two columns")}
-							isPrimary={numColumns === 2}
-							onClick={() => setAttributes({ numColumns: 2 })}
-						/>
-						<ToolbarButton
-							className={"ub_toc_column_selector"}
-							icon={threeColumnsIcon}
-							label={__("Three columns")}
-							isPrimary={numColumns === 3}
-							onClick={() => setAttributes({ numColumns: 3 })}
-						/>
-					</ToolbarGroup>
-				</PanelRow>
-				<PanelRow>
-					<p>{__("List type")}</p>
-					<ToolbarGroup>
-						<ToolbarButton
-							icon="editor-ul"
-							label={__("Bulleted list")}
-							isPrimary={listStyle === "bulleted"}
-							onClick={() => setAttributes({ listStyle: "bulleted" })}
-						/>
-						<ToolbarButton
-							icon="editor-ol"
-							label={__("Numbered list")}
-							isPrimary={listStyle === "numbered"}
-							onClick={() => setAttributes({ listStyle: "numbered" })}
-						/>
-						<ToolbarButton
-							icon={plainList}
-							label={__("Plain list")}
-							isPrimary={listStyle === "plain"}
-							onClick={() => setAttributes({ listStyle: "plain" })}
-						/>
-					</ToolbarGroup>
-				</PanelRow>
-			</PanelBody>
-			<PanelBody title={__("Collapsible")} initialOpen={false}>
-				<PanelRow>
-					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
-					<ToggleControl
-						id="ub_toc_toggle_display"
-						checked={allowToCHiding}
-						onChange={(allowToCHiding) =>
-							setAttributes({
-								allowToCHiding,
-								showList: allowToCHiding ? showList : true,
-								hideOnMobile: false,
-							})
-						}
+					</PanelRow>
+					{allowToCHiding && (
+						<>
+							<PanelRow>
+								<TextControl
+									label={__("Show text")}
+									value={showText}
+									onChange={(showText) => setAttributes({ showText })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__("Hide text")}
+									value={hideText}
+									onChange={(hideText) => setAttributes({ hideText })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
+								<ToggleControl
+									id="ub_show_toc"
+									checked={showList}
+									onChange={() => setAttributes({ showList: !showList })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<label htmlFor="ub_hide_on_mobile">
+									{__("Initial Hide on Mobile")}
+								</label>
+								<ToggleControl
+									id="ub_hide_on_mobile"
+									checked={hideOnMobile}
+									onChange={() =>
+										setAttributes({ hideOnMobile: !hideOnMobile })
+									}
+								/>
+							</PanelRow>
+						</>
+					)}
+				</PanelBody>
+				<PanelBody title={__("Scroll")} initialOpen={false}>
+					<SelectControl
+						label={__("Scroll offset adjustment")}
+						value={scrollOption}
+						options={[
+							{
+								label: __("Relative to first available fixed/sticky element"),
+								value: "auto",
+							},
+							{
+								label: __("Relative to a specific element"),
+								value: "namedelement",
+							},
+							{ label: __("Fixed height"), value: "fixedamount" },
+							{ label: __("No adjustments"), value: "off" },
+						]}
+						onChange={(scrollOption) => setAttributes({ scrollOption })}
 					/>
-				</PanelRow>
-				{allowToCHiding && (
-					<>
-						<PanelRow>
+					{scrollOption === "namedelement" && (
+						<>
+							<SelectControl
+								label={__("Scroll reference name type")}
+								value={scrollTargetType}
+								options={["id", "class", "element"].map((a) => ({
+									label: __(a),
+									value: a,
+								}))}
+								onChange={(scrollTargetType) =>
+									setAttributes({ scrollTargetType })
+								}
+							/>
 							<TextControl
-								label={__("Show text")}
-								value={showText}
-								onChange={(showText) => setAttributes({ showText })}
+								label={__("Reference element for scroll offset")}
+								value={scrollTarget}
+								onChange={(scrollTarget) => setAttributes({ scrollTarget })}
 							/>
-						</PanelRow>
-						<PanelRow>
-							<TextControl
-								label={__("Hide text")}
-								value={hideText}
-								onChange={(hideText) => setAttributes({ hideText })}
-							/>
-						</PanelRow>
-						<PanelRow>
-							<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
-							<ToggleControl
-								id="ub_show_toc"
-								checked={showList}
-								onChange={() => setAttributes({ showList: !showList })}
-							/>
-						</PanelRow>
-						<PanelRow>
-							<label htmlFor="ub_hide_on_mobile">
-								{__("Initial Hide on Mobile")}
-							</label>
-							<ToggleControl
-								id="ub_hide_on_mobile"
-								checked={hideOnMobile}
-								onChange={() => setAttributes({ hideOnMobile: !hideOnMobile })}
-							/>
-						</PanelRow>
-					</>
-				)}
-			</PanelBody>
-			<PanelBody title={__("Scroll")} initialOpen={false}>
-				<SelectControl
-					label={__("Scroll offset adjustment")}
-					value={scrollOption}
-					options={[
-						{
-							label: __("Relative to first available fixed/sticky element"),
-							value: "auto",
-						},
-						{
-							label: __("Relative to a specific element"),
-							value: "namedelement",
-						},
-						{ label: __("Fixed height"), value: "fixedamount" },
-						{ label: __("No adjustments"), value: "off" },
-					]}
-					onChange={(scrollOption) => setAttributes({ scrollOption })}
-				/>
-				{scrollOption === "namedelement" && (
-					<>
-						<SelectControl
-							label={__("Scroll reference name type")}
-							value={scrollTargetType}
-							options={["id", "class", "element"].map((a) => ({
-								label: __(a),
-								value: a,
-							}))}
-							onChange={(scrollTargetType) =>
-								setAttributes({ scrollTargetType })
+						</>
+					)}
+					{scrollOption === "fixedamount" && (
+						<RangeControl
+							label={__("Scroll offset (pixels)")}
+							value={scrollOffset}
+							onChange={(scrollOffset) => setAttributes({ scrollOffset })}
+							min={0}
+							max={200}
+							allowReset
+						/>
+					)}
+					<PanelRow>
+						<label htmlFor="ub_toc_scroll">
+							{__("Enable smooth scrolling")}
+						</label>
+						<ToggleControl
+							id="ub_toc_scroll"
+							checked={enableSmoothScroll}
+							onChange={() => {
+								const tocInstances = getBlocks().filter(
+									(block) => block.name === "ub/table-of-contents-block"
+								);
+								tocInstances.forEach((instance) => {
+									updateBlockAttributes(instance.clientId, {
+										enableSmoothScroll: !enableSmoothScroll,
+									});
+								});
+							}}
+						/>
+					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__("Additional")} initialOpen={false}>
+					<PanelRow>
+						<label htmlFor="ub_toc_enable_latin_conversion">
+							{__("Romanize anchor links")}
+						</label>
+						<ToggleControl
+							id="ub_toc_enable_latin_conversion"
+							checked={allowToLatin}
+							onChange={(e) => setAttributes({ allowToLatin: e })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<label htmlFor="ub_toc_toggle_diacritics">
+							{__("Remove diacritics from anchor links")}
+						</label>
+						<ToggleControl
+							id="ub_toc_toggle_diacritics"
+							checked={removeDiacritics}
+							onChange={(removeDiacritics) =>
+								setAttributes({ removeDiacritics })
 							}
 						/>
-						<TextControl
-							label={__("Reference element for scroll offset")}
-							value={scrollTarget}
-							onChange={(scrollTarget) => setAttributes({ scrollTarget })}
-						/>
-					</>
-				)}
-				{scrollOption === "fixedamount" && (
-					<RangeControl
-						label={__("Scroll offset (pixels)")}
-						value={scrollOffset}
-						onChange={(scrollOffset) => setAttributes({ scrollOffset })}
-						min={0}
-						max={200}
-						allowReset
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="styles">
+				<PanelBody title={__("Colors")}>
+					<PanelColorSettings
+						title={__("Color Settings")}
+						initialOpen={false}
+						colorSettings={[
+							{
+								value: titleColor,
+								onChange: (titleColor) => setAttributes({ titleColor }),
+								label: __("Title Color"),
+							},
+							{
+								value: titleBackgroundColor,
+								onChange: (titleBackgroundColor) =>
+									setAttributes({ titleBackgroundColor }),
+								label: __("Title Background Color"),
+							},
+							{
+								value: listColor,
+								onChange: (listColor) => setAttributes({ listColor }),
+								label: __("List Color"),
+							},
+							{
+								value: listBackgroundColor,
+								onChange: (listBackgroundColor) =>
+									setAttributes({ listBackgroundColor }),
+								label: __("List Background Color"),
+							},
+							...[
+								listStyle !== "plain"
+									? {
+											value: listIconColor,
+											onChange: (listIconColor) =>
+												setAttributes({ listIconColor }),
+											label:
+												listStyle === "numbered"
+													? __("Item number color")
+													: __("List icon color"),
+									  }
+									: [],
+							],
+						]}
 					/>
-				)}
-				<PanelRow>
-					<label htmlFor="ub_toc_scroll">{__("Enable smooth scrolling")}</label>
-					<ToggleControl
-						id="ub_toc_scroll"
-						checked={enableSmoothScroll}
-						onChange={() => {
-							const tocInstances = getBlocks().filter(
-								(block) => block.name === "ub/table-of-contents-block"
-							);
-							tocInstances.forEach((instance) => {
-								updateBlockAttributes(instance.clientId, {
-									enableSmoothScroll: !enableSmoothScroll,
-								});
-							});
-						}}
-					/>
-				</PanelRow>
-			</PanelBody>
-			<PanelBody title={__("Additional")} initialOpen={false}>
-				<PanelRow>
-					<label htmlFor="ub_toc_enable_latin_conversion">
-						{__("Romanize anchor links")}
-					</label>
-					<ToggleControl
-						id="ub_toc_enable_latin_conversion"
-						checked={allowToLatin}
-						onChange={(e) => setAttributes({ allowToLatin: e })}
-					/>
-				</PanelRow>
-				<PanelRow>
-					<label htmlFor="ub_toc_toggle_diacritics">
-						{__("Remove diacritics from anchor links")}
-					</label>
-					<ToggleControl
-						id="ub_toc_toggle_diacritics"
-						checked={removeDiacritics}
-						onChange={(removeDiacritics) => setAttributes({ removeDiacritics })}
-					/>
-				</PanelRow>
-			</PanelBody>
-		</InspectorControls>
+				</PanelBody>
+			</InspectorControls>
+		</>
 	);
 };
 
