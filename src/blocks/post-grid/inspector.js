@@ -210,7 +210,7 @@ export default function Inspector(props) {
 	);
 
 	return (
-		<InspectorControls>
+		<InspectorControls group="settings">
 			<PanelBody title={__("General", "ultimate-blocks")}>
 				{Array.isArray(posts) && posts.length > 0 && (
 					<>

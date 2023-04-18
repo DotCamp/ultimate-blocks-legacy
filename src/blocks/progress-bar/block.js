@@ -117,7 +117,7 @@ function ProgressBarMain(props) {
 			)}
 			{isSelected && (
 				<>
-					<InspectorControls>
+					<InspectorControls group="settings">
 						<PanelBody title={__("General")}>
 							<PanelRow>
 								<p>{__("Progress Bar Type")}</p>

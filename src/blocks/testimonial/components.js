@@ -58,7 +58,7 @@ export const inspectorControls = (props) => {
 
 	const { backgroundColor, textColor, textSize } = attributes;
 	return (
-		<InspectorControls>
+		<InspectorControls group="styles">
 			<PanelBody title={__("General")}>
 				<label for="ub-testimonial-bgcolor-select">
 					{__("Background Color")}
