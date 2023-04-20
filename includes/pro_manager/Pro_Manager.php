@@ -11,6 +11,7 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Expand_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Image_Slider_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Review_Extension;
+use Ultimate_Blocks\includes\pro_manager\extensions\Social_Share_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Table_Of_Contents_Extension;
 
@@ -70,10 +71,14 @@ class Pro_Manager {
 		$table_of_contents_upsell      = new Table_Of_Contents_Extension( 'ub/table-of-contents-block' );
 		$table_of_contents_upsell_data = $table_of_contents_upsell->get_upsell_data();
 
+		// Social share extension
+		$social_share_upsell      = new Social_Share_Extension( 'ub/social-share' );
+		$social_share_upsell_data = $social_share_upsell->get_upsell_data();
+
 		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data,
 			$content_toggle_data, $content_toggle_panel_data, $divider_upsell_data, $expand_upsell_data,
 			$image_slider_upsell_data,
-			$review_upsell_data, $table_of_contents_upsell_data );
+			$review_upsell_data, $table_of_contents_upsell_data, $social_share_upsell_data );
 
 		return [
 			'upsellExtensionData' => $final_upsell_extension_data
