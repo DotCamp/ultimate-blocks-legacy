@@ -4,8 +4,9 @@ import {
 	upgradeButtonLabel,
 	getDescendantBlocks,
 	objectsMatch,
-} from "../../../common";
-import icons from "../icons/icons";
+} from '../../../common';
+import icons from '../icons/icons';
+import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
 
 const objectsNewChange = (obj1, obj2) => {
 	let diff = {};
@@ -738,6 +739,46 @@ export function PanelContent(props) {
 						</PanelBody>
 					</InspectorControls>
 					<InspectorControls group="styles">
+						<SavedStylesInspector
+							overrideBlockType={'ub/content-toggle-panel-block'}
+							attributes={props.attributes}
+							setAttribute={(attrs) => {
+								// update block and its innerblock panel attributes
+								setAttributes(attrs);
+
+								if (panels && Array.isArray(panels)) {
+									panels.forEach((panel) => {
+										updateBlockAttributes(
+											panel.clientId,
+											attrs
+										);
+									});
+								}
+							}}
+							attributesToSave={(() => {
+								const excludeList = ['index', 'parent', 'parentID'];
+
+								return Object.keys(props.attributes).filter(
+									(key) => {
+										return (
+											Object.prototype.hasOwnProperty.call(
+												props.attributes,
+												key
+											) && !excludeList.includes(key)
+										);
+									}
+								);
+							})()}
+							previewAttributeCallback={(attr) => {
+								// eslint-disable-next-line no-unused-vars
+								const { parent, parentID, ...rest } = attr;
+								return rest;
+							}}
+							previewElementCallback={(el) => el}
+							previewBlockType={
+								'ub/content-toggle-panel-block-preview'
+							}
+						/>
 						<PanelBody title={__("Style")}>
 							<PanelColorSettings
 								title={__("Color Scheme")}

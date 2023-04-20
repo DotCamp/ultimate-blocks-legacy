@@ -1,5 +1,1 @@
-// register main plugin store
-import MainStore from '$BlockStores/mainStore';
-
-// initialize main plugin store
-MainStore.init('ub/main');
+// for functionality with priority over any other ones

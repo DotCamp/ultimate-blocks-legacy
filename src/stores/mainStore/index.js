@@ -1,15 +1,15 @@
 import { createReduxStore, register, dispatch, select } from '@wordpress/data';
+import { FrontendDataManager, ManagerBase } from '$Library/ub-common/Inc';
 import reducer from './reducer';
 import selectors from './selectors';
 import actions from './actions';
 import deepmerge from 'deepmerge';
-import ManagerBase from '$Base/ManagerBase';
 
 /**
  * Main store for plugin.
  *
- * @param {string} storeName store name
- * @function Object() { [native code] }
+ * Depends on initializations of:
+ * - FrontendDataManager
  */
 class MainStore extends ManagerBase {
 	/**
@@ -53,9 +53,22 @@ class MainStore extends ManagerBase {
 
 		this.storeName = storeName;
 
-		const { blockAttributes } = ubPriorityData;
+		const blockAttributes =
+			FrontendDataManager.getDataProperty('blockAttributes');
+		const upsellExtensionData = FrontendDataManager.getDataProperty(
+			'upsellExtensionData'
+		);
+		const proStatus = FrontendDataManager.getDataProperty('proStatus');
+		const assets = FrontendDataManager.getDataProperty('assets');
 
-		this.#registerStore({ blockAttributes });
+		this.#registerStore({
+			upsells: {
+				extensionData: upsellExtensionData,
+			},
+			blockAttributes,
+			proStatus: JSON.parse(proStatus),
+			assets,
+		});
 
 		// attach this instance to global context for outside usage
 		context.ubMainStore = this;

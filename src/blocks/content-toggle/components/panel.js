@@ -1,8 +1,10 @@
 import icon from "../icons/icon";
 import icons from "../icons/icons";
 
-import { panel_version_1_1_9 } from "../oldVersions";
-import { useState, useEffect } from "react";
+import { panel_version_1_1_9 } from '../oldVersions';
+import { useState, useEffect } from 'react';
+import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
+import ProManager from '$Manager/ProManager';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -294,6 +296,29 @@ function ContentTogglePanel(props) {
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">
+				<SavedStylesInspector
+					attributes={props.attributes}
+					setAttribute={setAttributes}
+					attributesToSave={(() => {
+						const excludeList = ['index', 'parent', 'parentID'];
+
+						return Object.keys(props.attributes).filter((key) => {
+							return (
+								Object.prototype.hasOwnProperty.call(
+									props.attributes,
+									key
+								) && !excludeList.includes(key)
+							);
+						});
+					})()}
+					previewAttributeCallback={(attr) => {
+						// eslint-disable-next-line no-unused-vars
+						const { parent, parentID, ...rest } = attr;
+						return rest;
+					}}
+					previewElementCallback={(el) => el}
+					previewBlockType={'ub/content-toggle-panel-block-preview'}
+				/>
 				<PanelBody title={__("Style")}>
 					<PanelColorSettings
 						title={__("Color Scheme")}
@@ -607,35 +632,57 @@ registerBlockType("ub/content-toggle-panel", {
 	],
 });
 
-registerBlockType("ub/content-toggle-panel-block", {
-	title: __("Content Toggle Panel"),
-	parent: ["ub/content-toggle-block"],
-	icon: icon,
-	category: "ultimateblocks",
+const composedEdit = compose([
+	withSelect((select, ownProps) => {
+		const { getBlock, getBlockRootClientId } =
+			select('core/block-editor') || select('core/editor');
+		const { clientId } = ownProps;
+
+		return {
+			block: getBlock(clientId),
+			blockParent: getBlock(getBlockRootClientId(clientId)),
+			blockParentId: getBlockRootClientId(clientId),
+		};
+	}),
+	withDispatch((dispatch) => {
+		const { updateBlockAttributes, removeBlock, selectBlock } =
+			dispatch('core/block-editor') || dispatch('core/editor');
+
+		return { updateBlockAttributes, removeBlock, selectBlock };
+	}),
+]);
+
+registerBlockType('ub/content-toggle-panel-block', {
+	title: __('Content Toggle Panel'),
+	parent: ['ub/content-toggle-block'],
+	icon,
+	category: 'ultimateblocks',
 	attributes,
 	supports: {
 		inserter: false,
 		reusable: false,
 	},
 
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getBlockRootClientId } =
-				select("core/block-editor") || select("core/editor");
-			const { clientId } = ownProps;
-
-			return {
-				block: getBlock(clientId),
-				blockParent: getBlock(getBlockRootClientId(clientId)),
-				blockParentId: getBlockRootClientId(clientId),
-			};
-		}),
-		withDispatch((dispatch) => {
-			const { updateBlockAttributes, removeBlock, selectBlock } =
-				dispatch("core/block-editor") || dispatch("core/editor");
-
-			return { updateBlockAttributes, removeBlock, selectBlock };
-		}),
-	])(ContentTogglePanel),
+	edit: composedEdit(ContentTogglePanel),
 	save: () => <InnerBlocks.Content />,
 });
+
+// only register the preview block if the pro version is not active
+if (!ProManager.proStatus()) {
+	// block for preview purposes
+	registerBlockType('ub/content-toggle-panel-block-preview', {
+		title: __(
+			'Content Toggle Panel Preview - Internal Use',
+			'ultimate-blocks'
+		),
+		icon,
+		category: 'ultimateblocks',
+		attributes,
+		supports: {
+			inserter: false,
+			reusable: false,
+		},
+		edit: composedEdit(ContentTogglePanel),
+		save: () => null,
+	});
+}

@@ -3,14 +3,15 @@ import {
 	twoColumnsIcon,
 	threeColumnsIcon,
 	plainList,
-} from "./icon";
-import { Component } from "react";
-import { getDescendantBlocks, mergeRichTextArray } from "../../common";
-import toLatin from "./localToLatin";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import filterDiacritics from "./removeDiacritics";
+} from './icon';
+import { Component } from 'react';
+import { getDescendantBlocks, mergeRichTextArray } from '../../common';
+import toLatin from './localToLatin';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import filterDiacritics from './removeDiacritics';
+import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
 
 library.add(faEye, faEyeSlash);
 
@@ -937,6 +938,18 @@ export const inspectorControls = (props) => {
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">
+				<SavedStylesInspector
+					attributes={() => {
+						// eslint-disable-next-line no-unused-vars
+						const { blockID, title, ...rest } = attributes;
+
+						return rest;
+					}}
+					setAttribute={setAttributes}
+					previewAttributeCallback={(attr) => attr}
+					previewElementCallback={(el) => el}
+					previewsEnabled={false}
+				/>
 				<PanelBody title={__("Colors")}>
 					<PanelColorSettings
 						title={__("Color Settings")}

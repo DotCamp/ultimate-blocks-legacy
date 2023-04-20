@@ -9,6 +9,8 @@
  */
 
 // Exit if accessed directly.
+use Ultimate_Blocks\includes\Editor_Data_Manager;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -109,11 +111,14 @@ function ub_load_assets() {
 	);
 }
 
-function ub_advanced_heading_add_assets($fontList) {
+function ub_advanced_heading_add_assets( $fontList ) {
 
-	$fontNames = join("|", array_filter($fontList, function($item){ return $item !== 'Default';}));
+	$fontNames = join( "|", array_filter( $fontList, function ( $item ) {
+		return $item !== 'Default';
+	} ) );
 
-	wp_enqueue_style( 'ultimate_blocks-advanced-heading-fonts', 'https://fonts.googleapis.com/css?family=' . $fontNames );
+	wp_enqueue_style( 'ultimate_blocks-advanced-heading-fonts',
+			'https://fonts.googleapis.com/css?family=' . $fontNames );
 }
 
 function ub_generate_widget_block_list( $output = false ) {
@@ -153,14 +158,15 @@ function ultimate_blocks_cgb_block_assets() {
 		foreach ( $widget_blocks as $block ) {
 			if ( strpos( $block['blockName'], 'ub/' ) === 0 ) {
 
-				if(!$main_assets_loaded){
+				if ( ! $main_assets_loaded ) {
 					ub_load_assets();
 					$main_assets_loaded = true;
 				}
 
 				if ( strpos( $block['blockName'], 'ub/advanced-heading' ) === 0 ) {
-					if($block['attrs']['fontFamily'] !== $defaultFont && !in_array($block['attrs']['fontFamily'], $advanced_heading_font_list)){
-						array_push($advanced_heading_font_list, $block['attrs']['fontFamily']);
+					if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
+									$advanced_heading_font_list ) ) {
+						array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
 					}
 				}
 			}
@@ -172,14 +178,15 @@ function ultimate_blocks_cgb_block_assets() {
 			foreach ( $presentBlocks as $block ) {
 				if ( strpos( $block['blockName'], 'ub/' ) === 0 ) {
 
-					if(!$main_assets_loaded){
+					if ( ! $main_assets_loaded ) {
 						ub_load_assets();
 						$main_assets_loaded = true;
 					}
 
 					if ( strpos( $block['blockName'], 'ub/advanced-heading' ) === 0 ) {
-						if($block['attrs']['fontFamily'] !== $defaultFont && !in_array($block['attrs']['fontFamily'], $advanced_heading_font_list)){
-							array_push($advanced_heading_font_list, $block['attrs']['fontFamily']);
+						if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
+										$advanced_heading_font_list ) ) {
+							array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
 						}
 
 					}
@@ -187,8 +194,8 @@ function ultimate_blocks_cgb_block_assets() {
 			}
 		}
 
-		if(count($advanced_heading_font_list) > 0){
-			ub_advanced_heading_add_assets($advanced_heading_font_list);
+		if ( count( $advanced_heading_font_list ) > 0 ) {
+			ub_advanced_heading_add_assets( $advanced_heading_font_list );
 		}
 
 	} elseif ( ub_check_is_gutenberg_page() ) {
@@ -950,62 +957,63 @@ function ub_include_block_attribute_css() {
 											 $prefix . ' li::before{' . PHP_EOL .
 											 'top: ' . ( $attributes['iconSize'] >= 5 ? 3 : ( $attributes['iconSize'] < 3 ? 2 : 0 ) ) . 'px;
                                 font-size: 1em;
-                                height: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                                width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                                background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
-                                .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
-                            '}' .
-                            $prefix . ' li{' . PHP_EOL .
-                                'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .
-                                ($attributes['fontSize'] > 0 ? 'font-size: ' . ($attributes['fontSize']) . 'px;' . PHP_EOL : '') ;
-                        if($attributes['itemSpacing'] > 0){
-                            if($attributes['list'] !== ''){
-                                $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
+                                height: ' . ( ( 4 + $attributes['iconSize'] ) / 10 ) . 'em;
+                                width: ' . ( ( 4 + $attributes['iconSize'] ) / 10 ) . 'em;
+                                background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0] . ' ' . $iconData[1]
+											 . '"><path fill="%23' . substr( $attributes['iconColor'],
+										1 ) . '" d="' . $iconData[2] . '"></path></svg>\');' . PHP_EOL .
+											 '}' .
+											 $prefix . ' li{' . PHP_EOL .
+											 'text-indent: -' . ( 0.4 + $attributes['iconSize'] * 0.1 ) . 'em;' . PHP_EOL .
+											 ( $attributes['fontSize'] > 0 ? 'font-size: ' . ( $attributes['fontSize'] ) . 'px;' . PHP_EOL : '' );
+						if ( $attributes['itemSpacing'] > 0 ) {
+							if ( $attributes['list'] !== '' ) {
+								$blockStylesheets .= 'margin-bottom: ' . $attributes['itemSpacing'] . 'px;
                                     }' . PHP_EOL .
-                                $prefix . ' li>ul{' . PHP_EOL .
-                                    'margin-top: '. $attributes['itemSpacing'] . 'px;';
-                            }
-                            else{
-                                $blockStylesheets .= '}' .
-                                    $prefix . ' .ub_styled_list_item:not(:first-child){' .
-                                    'margin-top: ' . $attributes['itemSpacing'] . 'px;'.
-                                '}' .
-                                $prefix . ' .ub_styled_list_sublist > .ub_styled_list_item:first-child{' .
-                                    'margin-top: ' . $attributes['itemSpacing'] . 'px;';
-                            }
-                        }
-                        $blockStylesheets .= '}';
+													 $prefix . ' li>ul{' . PHP_EOL .
+													 'margin-top: ' . $attributes['itemSpacing'] . 'px;';
+							} else {
+								$blockStylesheets .= '}' .
+													 $prefix . ' .ub_styled_list_item:not(:first-child){' .
+													 'margin-top: ' . $attributes['itemSpacing'] . 'px;' .
+													 '}' .
+													 $prefix . ' .ub_styled_list_sublist > .ub_styled_list_item:first-child{' .
+													 'margin-top: ' . $attributes['itemSpacing'] . 'px;';
+							}
+						}
+						$blockStylesheets .= '}';
 
-                        if($attributes['list'] === ''){
-                            if($attributes['columns'] > 1){
-                                $blockStylesheets .= 'ul' . $prefix . '{' . PHP_EOL .
-                                    'column-count: ' .  $attributes['columns'] . ';' . PHP_EOL .
-                                '}';
-                            }
-                            if($attributes['columns'] > $attributes['maxMobileColumns']){
-                                $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
-                                    'ul' . $prefix . '{' . PHP_EOL .
-                                        'column-count: ' . $attributes['maxMobileColumns'] . ';' . PHP_EOL .
-                                    '}' . PHP_EOL .
-                                '}';
-                            }
-                        }
-                        else{
-                            if($attributes['columns'] > 1){
-                                $blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
-                                    'grid-template-columns: ' . str_repeat('auto ', $attributes['columns'] - 1) . 'auto;' . PHP_EOL .
-                                '}';
-                            }
-                            if($attributes['columns'] > $attributes['maxMobileColumns']){
-                                $blockStylesheets .= '@media (max-width: 599px){' .  PHP_EOL.
-                                    $prefix . '>ul{' . PHP_EOL .
-                                        'grid-template-columns: ' . str_repeat('auto ', $attributes['maxMobileColumns'] - 1) . 'auto;' . PHP_EOL .
-                                    '}' . PHP_EOL .
-                                '}';
-                            }
-                        }
+						if ( $attributes['list'] === '' ) {
+							if ( $attributes['columns'] > 1 ) {
+								$blockStylesheets .= 'ul' . $prefix . '{' . PHP_EOL .
+													 'column-count: ' . $attributes['columns'] . ';' . PHP_EOL .
+													 '}';
+							}
+							if ( $attributes['columns'] > $attributes['maxMobileColumns'] ) {
+								$blockStylesheets .= '@media (max-width: 599px){' . PHP_EOL .
+													 'ul' . $prefix . '{' . PHP_EOL .
+													 'column-count: ' . $attributes['maxMobileColumns'] . ';' . PHP_EOL .
+													 '}' . PHP_EOL .
+													 '}';
+							}
+						} else {
+							if ( $attributes['columns'] > 1 ) {
+								$blockStylesheets .= $prefix . '>ul{' . PHP_EOL .
+													 'grid-template-columns: ' . str_repeat( 'auto ',
+												$attributes['columns'] - 1 ) . 'auto;' . PHP_EOL .
+													 '}';
+							}
+							if ( $attributes['columns'] > $attributes['maxMobileColumns'] ) {
+								$blockStylesheets .= '@media (max-width: 599px){' . PHP_EOL .
+													 $prefix . '>ul{' . PHP_EOL .
+													 'grid-template-columns: ' . str_repeat( 'auto ',
+												$attributes['maxMobileColumns'] - 1 ) . 'auto;' . PHP_EOL .
+													 '}' . PHP_EOL .
+													 '}';
+							}
+						}
 
-                    }
+					}
 
 					break;
 				case 'ub/tabbed-content-block':
@@ -1134,9 +1142,7 @@ function ultimate_blocks_priority_editor_assets() {
 			trailingslashit( ULTIMATE_BLOCKS_URL ) . 'dist/priority.build.js', [ 'wp-blocks' ], ULTIMATE_BLOCKS_VERSION,
 			false );
 
-	$priority_data = apply_filters('ub/filter/priority-editor-data', []);
-
-	wp_localize_script('ultimate-blocks-priority-script', 'ubPriorityData', $priority_data);
+	Editor_Data_Manager::get_instance()->attach_priority_data( [], 'ultimate-blocks-priority-script' );
 }
 
 /**
@@ -1158,9 +1164,10 @@ function ultimate_blocks_cgb_editor_assets() {
 			Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
-	$editor_client_data = apply_filters( 'ub/filter/editor-client-data', [] );
-
-	wp_localize_script( 'ultimate_blocks-cgb-block-js', 'ubEditorClientData', $editor_client_data );
+//	$editor_client_data = apply_filters( 'ub/filter/editor-client-data', [] );
+//
+//	wp_localize_script( 'ultimate_blocks-cgb-block-js', 'ubEditorClientData', $editor_client_data );
+	Editor_Data_Manager::get_instance()->attach_editor_data( [], 'ultimate_blocks-cgb-block-js' );
 
 	wp_enqueue_script(
 			'ultimate_blocks-cgb-deactivator-js', // Handle.

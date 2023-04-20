@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
 /**
  * Internal block libraries
  */
@@ -240,6 +241,16 @@ export default function Inspector(props) {
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">
+				<SavedStylesInspector
+					attributes={(() => {
+						// eslint-disable-next-line no-unused-vars
+						const { blockID, ...rest } = attributes;
+						return rest;
+					})()}
+					setAttribute={setAttributes}
+					previewAttributeCallback={(attr) => attr}
+					previewElementCallback={(el) => el}
+				/>
 				<PanelBody title={__("Size")} initialOpen={true}>
 					<RadioControl
 						label="Select Size"

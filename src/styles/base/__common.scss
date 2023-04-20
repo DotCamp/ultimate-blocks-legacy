@@ -1,0 +1,148 @@
+@import './__colors.scss';
+
+/**
+ * Common styles
+ */
+
+//region Mixins
+@mixin size($val) {
+  width: #{$val}px;
+  height: #{$val}px;
+}
+
+@mixin basic-transition($target: all) {
+  transition: $target 0.2s ease-out;
+}
+//endregion
+
+
+//region Extends
+%pointer {
+  cursor: pointer;
+}
+
+%text-no-select {
+  user-select: none;
+}
+
+%flex-center-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%gutenberg-sidebar-default-borders {
+  border: 1px solid $gutenberg_gray;
+}
+
+%default-border-radius {
+  border-radius: 3px;
+}
+
+%shadow {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+%shadow-md {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+%size-full {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes basic-click {
+  100% {
+	transform: scale(0.8);
+  }
+}
+
+%basic-click {
+  animation: basic-click 0.2s ease-out;
+}
+
+%absolute-overlay {
+  @extend %size-full;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes appear {
+  0% {
+	opacity: 0;
+  }
+  100% {
+	opacity: 1;
+  }
+}
+
+%appear-anim {
+  animation: appear 0.2s ease-out forwards;
+}
+
+%shadow-lg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+%filter-shadow {
+  filter: drop-shadow(2px 5px 3px hsla(0, 0%, 0%, 0.2));
+}
+
+%border-box {
+  box-sizing: border-box;
+}
+
+%basic-appear {
+  animation: basic-appear 0.2s ease-out forwards;
+}
+
+//endregion
+
+
+//region BasicTransition
+.ub-pro-basic-transition-enter {
+  opacity: 0;
+}
+
+.ub-pro-basic-transition-enter-active {
+  @include basic-transition(opacity);
+  opacity: 1;
+}
+
+.ub-pro-basic-transition-exit {
+  opacity: 1;
+}
+
+.ub-pro-basic-transition-exit-active {
+  @include basic-transition(opacity);
+  opacity: 0;
+}
+
+//endregion
+
+@keyframes basic-appear {
+  from {
+	opacity: 0;
+  }
+  to {
+	opacity: 1;
+  }
+}
+
+.ub-pro-overlay {
+  @extend %flex-center-all;
+  @extend %size-full;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ub-spinner-overlay-container {
+  svg {
+	width: 25px;
+	height: 25px;
+	color: $wordpress-admin-main;
+  }
+}
