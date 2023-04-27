@@ -52,6 +52,7 @@
     "@wordpress/scripts": "^23.2.0",
     "concurrently": "^7.2.1",
     "css-loader": "^6.7.1",
+    "eslint-import-resolver-custom-alias": "^1.3.0",
     "eslint-import-resolver-webpack": "^0.13.2",
     "gulp": "^4.0.2",
     "gulp-notify": "^4.0.0",

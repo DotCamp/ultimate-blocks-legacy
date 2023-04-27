@@ -23,8 +23,10 @@ import VersionControl from '$Components/VersionControl';
 function MenuHeader({ logoUrl, toggleShowInfoStatus, blockInfoShowStatus }) {
 	return (
 		<div className={'menu-header'}>
-			<div className={'logo-container'}>
-				<img alt={'plugin logo'} src={logoUrl} />
+			<div className={'left-container'}>
+				<div className={'logo-container'}>
+					<img alt={'plugin logo'} src={logoUrl} />
+				</div>
 			</div>
 			<div className={'right-container'}>
 				<RightContainerItem>
