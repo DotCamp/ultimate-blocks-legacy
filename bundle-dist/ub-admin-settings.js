@@ -25294,10 +25294,11 @@ exports["default"] = _default;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getLogo = exports.getAjaxInfo = exports["default"] = void 0;
+exports.getLogo = exports.getAsset = exports.getAjaxInfo = exports["default"] = void 0;
 var _toolkit = require("@reduxjs/toolkit");
 /**
  * Options for asset store slice
+ *
  * @type {Object}
  */ var assetsSliceOptions = {
     name: "assets",
@@ -25309,22 +25310,36 @@ var _toolkit = require("@reduxjs/toolkit");
 var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
 /**
  * Get logo url.
+ *
  * @param {Object} state store state
- * @returns {string} logo url
+ * @return {string} logo url
  */ var getLogo = function getLogo(state) {
     return state.assets.logo;
 };
 /**
  * Get ajax information.
+ *
  * @param {Object} state store state
- * @returns {Object} ajax information
+ * @return {Object} ajax information
  */ exports.getLogo = getLogo;
 var getAjaxInfo = function getAjaxInfo(state) {
     return state.assets.ajax;
 };
 /**
- * @module assetsSlice
+ * Get asset with given id.
+ *
+ * @param {Object} state store state
+ * @return {function(string): string|number} function to get asset
  */ exports.getAjaxInfo = getAjaxInfo;
+var getAsset = function getAsset(state) {
+    return function(assetId) {
+        var _state$assets;
+        return (_state$assets = state.assets) === null || _state$assets === void 0 ? void 0 : _state$assets[assetId];
+    };
+};
+/**
+ * @module assetsSlice
+ */ exports.getAsset = getAsset;
 var _default = assetsSlice.reducer;
 exports["default"] = _default;
 

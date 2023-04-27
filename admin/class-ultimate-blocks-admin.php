@@ -59,6 +59,12 @@ class Ultimate_Blocks_Admin {
 	private $plugin_url;
 
 	/**
+	 * Pro sub menu slug.
+	 * @var string
+	 */
+	private $pro_menu_slug = 'ultimate-blocks-settings-pro';
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.2
@@ -90,7 +96,7 @@ class Ultimate_Blocks_Admin {
 		$nav_container_classname = 'ub-pro-settings-menu-nav-container';
 
 		if ( isset( $submenu['ultimate-blocks-settings'] ) ) {
-			$index = array_search( 'ultimate-blocks-settings-pro',
+			$index = array_search( $this->pro_menu_slug,
 				array_column( $submenu['ultimate-blocks-settings'], 2 ) );
 
 			// assign empty string if no other classes are assigned
@@ -114,14 +120,15 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function add_settings_menu_data( $data ) {
 		$data['assets'] = [
-			'logo' => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png',
-			'ajax' => [
+			'logo'        => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png',
+			'ajax'        => [
 				'toggleStatus' => [
 					"url"    => get_admin_url( null, 'admin-ajax.php' ),
 					'action' => 'toggle_block_status',
 					'nonce'  => wp_create_nonce( 'toggle_block_status' )
 				]
-			]
+			],
+			'proMenuSlug' => $this->pro_menu_slug
 		];
 
 		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-menu-info.php';
@@ -130,7 +137,6 @@ class Ultimate_Blocks_Admin {
 			'statusData' => get_option( 'ultimate_blocks', false ),
 			'info'       => $block_menu_infos
 		];
-
 
 		return $data;
 	}
@@ -231,7 +237,7 @@ class Ultimate_Blocks_Admin {
 			'PRO',
 			'PRO',
 			'manage_options',
-			'ultimate-blocks-settings-pro',
+			$this->pro_menu_slug,
 			array( $this, 'main_menu_template_cb' )
 		);
 
