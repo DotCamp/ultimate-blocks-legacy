@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addFilter, applyFilters } from '@wordpress/hooks';
+import { withHookManager } from '$Library/ub-common/Inc';
 import Route from '$Components/Route';
 
 /**
@@ -7,10 +7,11 @@ import Route from '$Components/Route';
  *
  * Router children components should be Route components. Else those will who are not will be ignored.
  *
- * @param {Object}               props          component properties
- * @param {Array<Route> | Route} props.children component route children
+ * @param {Object}               props              component properties
+ * @param {Array<Route> | Route} props.children     component route children
+ * @param {Function}             props.applyFilters apply filters, will be supplied via HOC
  */
-function Router({ children }) {
+function Router({ children, applyFilters }) {
 	const [CurrentRouteContent, setCurrentRouteContent] = useState(null);
 
 	// url search parameter for page property
@@ -70,4 +71,4 @@ function Router({ children }) {
 /**
  * @module Router
  */
-export default Router;
+export default withHookManager(Router);

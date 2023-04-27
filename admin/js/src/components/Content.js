@@ -15,7 +15,9 @@ function Content() {
 				<MainContent />
 			</Route>
 			<Route pageParameter={'ultimate-blocks-settings-pro'}>
-				<i>pro settings for base version</i>
+				<div>
+					<i>pro settings for base version</i>
+				</div>
 			</Route>
 		</Router>
 	);
