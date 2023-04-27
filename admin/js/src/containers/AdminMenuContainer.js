@@ -1,18 +1,19 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import MenuHeader from "$Components/MenuHeader";
-import MenuContent from "$Components/MenuContent";
+import MenuHeader from '$Components/MenuHeader';
+import Content from '$Components/Content';
 
 /**
  * Container for admin menu.
- * @returns {JSX.Element} container component
- * @constructor
+ *
+ * @return {JSX.Element} container component
+ * @function Object() { [native code] }
  */
 function AdminMenuContainer() {
 	return (
-		<div className={ 'ub-admin-menu-container' }>
+		<div className={'ub-admin-menu-container'}>
 			<MenuHeader />
-			<MenuContent />
+			<Content />
 		</div>
 	);
 }
@@ -21,4 +22,3 @@ function AdminMenuContainer() {
  * @module AdminMenuContainer
  */
 export default AdminMenuContainer;
-
