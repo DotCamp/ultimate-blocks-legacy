@@ -29,7 +29,9 @@ function Router({ children, applyFilters }) {
 		setCurrentPageParameter(page);
 	}, []);
 
-	// filter out non-Route components in useEffect hook at every children change
+	/**
+	 * useEffect hook.
+	 */
 	useEffect(() => {
 		const filteredChildren = React.Children.toArray(children).filter(
 			(child) => child.type === Route

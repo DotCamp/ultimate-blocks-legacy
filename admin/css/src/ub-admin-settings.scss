@@ -274,6 +274,24 @@
 				}
 			}
 		}
+
+		.pro-content {
+			@extend %flex-center-all;
+			flex-direction: column;
+
+			.content-phrase {
+				margin-top: 0 !important;
+			}
+
+			.ub-pro-content-main {
+				@extend %default-transition;
+				font-size: 1.2rem;
+
+				&:hover {
+					transform: scale(1.2);
+				}
+			}
+		}
 	}
 
 	.ub-toggle-control {
@@ -504,13 +522,8 @@
 }
 
 .ub-pro-settings-menu-nav-container {
-	@extend %default-transition;
 	color: $gold !important;
 	font-weight: bold !important;
-
-	&:hover {
-		font-size: 105% !important;
-	}
 }
 
 .text-indicate {

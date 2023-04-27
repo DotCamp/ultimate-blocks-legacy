@@ -7,73 +7,82 @@ $screen-xl: 1280px;
 $screen-2xl: 1536px;
 
 @mixin screen-max($max) {
-  @media screen and (max-width: $max - 1) {
-	@content
-  }
+	@media screen and (max-width: $max - 1) {
+		@content
+	}
 }
 
 %size-full {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 %unselectable {
-  user-select: none;
+	user-select: none;
 }
 
 %box-shadow-lg {
-  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25)
+	box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25)
 }
 
 %box-shadow-md {
-  box-shadow: 0 6px 8px -4px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 6px 8px -4px rgba(0, 0, 0, 0.25);
 }
 
 %flex-center-all {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 %flex-center-all-row {
-  @extend %flex-center-all;
-  flex-wrap: nowrap;
-  flex-direction: row;
+	@extend %flex-center-all;
+	flex-wrap: nowrap;
+	flex-direction: row;
 }
 
 %default-transition {
-  transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
 }
 
 %default-border {
-  border: 1px solid $border-color;
+	border: 1px solid $border-color;
 }
 
 %pill {
-  border-radius: 999px;
+	border-radius: 999px;
 }
 
 %pointer {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 @mixin size($val) {
-  width: #{$val}px;
-  height: #{$val}px;
+	width: #{$val}px;
+	height: #{$val}px;
 }
 
 .ub-positive-color {
-  color: $positive;
+	color: $positive;
 }
 
 .ub-negative-color {
-  color: $negative;
+	color: $negative;
 }
 
 .ub-positive-bg {
-  background-color: $positive !important;
+	background-color: $positive !important;
 }
 
 .ub-negative-bg {
-  background-color: $negative !important;
+	background-color: $negative !important;
+}
+
+.ub-strip-anchor {
+	text-decoration: none !important;
+
+	&:hover {
+		color: inherit !important;
+		text-decoration: none !important;
+	}
 }
