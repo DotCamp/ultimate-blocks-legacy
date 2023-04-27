@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addFilter, applyFilters } from '@wordpress/hooks';
 import Route from '$Components/Route';
 
 /**
@@ -40,15 +41,27 @@ function Router({ children }) {
 	 * useEffect hook.
 	 */
 	useEffect(() => {
-		const matchedRoute = routeChildren.reduce((carry, RouteInstance) => {
-			if (RouteInstance?.props?.pageParameter === currentPageParameter) {
-				carry = RouteInstance;
-			}
+		const matchedRouteContent = routeChildren.reduce(
+			(carry, RouteInstance) => {
+				if (
+					RouteInstance?.props?.pageParameter === currentPageParameter
+				) {
+					carry = RouteInstance?.props?.children;
+				}
 
-			return carry;
-		}, null);
+				return carry;
+			},
+			null
+		);
 
-		setCurrentRouteContent(matchedRoute?.props?.children);
+		// filter matched route content
+		const finalMatchedRoute = applyFilters(
+			'ubSettingsMenuRouteMatched',
+			matchedRouteContent,
+			currentPageParameter
+		);
+
+		setCurrentRouteContent(finalMatchedRoute);
 	}, [currentPageParameter, routeChildren]);
 
 	return CurrentRouteContent;

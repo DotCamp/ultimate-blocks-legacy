@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from '$Components/Router';
 import Route from '$Components/Route';
+import MainContent from '$Components/MainContent';
 
 /**
  * Content of menu page.
@@ -10,11 +11,11 @@ import Route from '$Components/Route';
 function Content() {
 	return (
 		<Router>
-			<Route pageParameter={'ultimate-blocks-settings-pro'}>
-				<i>pro version</i>
-			</Route>
 			<Route pageParameter={'ultimate-blocks-settings'}>
-				<i>base version</i>
+				<MainContent />
+			</Route>
+			<Route pageParameter={'ultimate-blocks-settings-pro'}>
+				<i>pro settings for base version</i>
 			</Route>
 		</Router>
 	);
