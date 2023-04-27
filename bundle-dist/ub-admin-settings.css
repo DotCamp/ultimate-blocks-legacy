@@ -27,7 +27,7 @@
   flex-flow: row;
 }
 
-.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon[data-in-progress="true"] .version-icon-inner-wrapper, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle {
+.ub-pro-settings-menu-nav-container, .ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon[data-in-progress="true"] .version-icon-inner-wrapper, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle {
   transition: all .2s ease-out;
 }
 
@@ -475,6 +475,15 @@
 
 .ub-menu-button[data-enabled="true"]:active {
   transform: scale(.8);
+}
+
+.ub-pro-settings-menu-nav-container {
+  color: gold !important;
+  font-weight: bold !important;
+}
+
+.ub-pro-settings-menu-nav-container:hover {
+  font-size: 105% !important;
 }
 
 /*# sourceMappingURL=ub-admin-settings.css.map */
