@@ -1,24 +1,16 @@
-// eslint-disable-next-line no-unused-vars
 import React from 'react';
-import TextIndicate from "$Components/TextIndicate";
 
 /**
  * Content phrase component.
  *
- * @constructor
+ * @param {Object}                       props          component properties
+ * @param {JSX.Element | Array | string} props.children component children
  */
-function ContentPhrase() {
-	return (
-		<div className={ 'content-phrase' }>
-			<div className={ 'line-wrapper' }>
-				<TextIndicate>Manage</TextIndicate> Your <TextIndicate>Blocks</TextIndicate> As
-			</div>
-			<div className={ 'line-wrapper' }>Your <TextIndicate>Preferences</TextIndicate></div>
-		</div>
-	);
+function ContentPhrase({ children }) {
+	return <div className={'content-phrase'}>{children} </div>;
 }
 
 /**
- * @module ContentPhrase;
+ * @module ContentPhrase
  */
 export default ContentPhrase;

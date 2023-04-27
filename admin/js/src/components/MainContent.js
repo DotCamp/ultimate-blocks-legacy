@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import ContentPhrase from '$Components/ContentPhrase';
+import MainContentPhrase from '$Components/MainContentPhrase';
 import BlockStatusFilterControl from '$Components/BlockStatusFilterControl';
 import {
 	getBlockFilter,
@@ -21,7 +21,7 @@ import BlockControlsContainer from '$Components/BlockControlsContainer';
 function MainContent({ blockFilter, setBlockFilterValue }) {
 	return (
 		<div className={'menu-content'}>
-			<ContentPhrase />
+			<MainContentPhrase />
 			<BlockStatusFilterControl
 				filterVal={blockFilter}
 				onFilterChanged={setBlockFilterValue}

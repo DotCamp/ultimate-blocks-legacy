@@ -120,24 +120,6 @@
 			justify-items: center;
 			overflow: auto;
 
-			.content-phrase {
-				@extend %flex-center-all;
-				@extend %unselectable;
-				flex-direction: column;
-				font-size: $phrase-font-size;
-				margin: 60px 0;
-
-				.line-wrapper {
-					margin: 15px 0;
-					font-weight: 400;
-				}
-
-				.text-indicate {
-					color: $red-500;
-					font-weight: 500;
-				}
-			}
-
 			.block-status-filter-control {
 				@extend %default-border;
 				@extend %pill;
@@ -324,7 +306,18 @@
 		}
 	}
 
+	.content-phrase {
+		@extend %flex-center-all;
+		@extend %unselectable;
+		flex-direction: column;
+		font-size: $phrase-font-size;
+		margin: 60px 0;
 
+		.line-wrapper {
+			margin: 15px 0;
+			font-weight: 400;
+		}
+	}
 }
 
 .block-control-transition-enter {
@@ -518,4 +511,9 @@
 	&:hover {
 		font-size: 105% !important;
 	}
+}
+
+.text-indicate {
+	color: $red-500;
+	font-weight: 500;
 }
