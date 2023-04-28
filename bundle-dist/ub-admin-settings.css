@@ -398,9 +398,9 @@
 
 .version-control-popup {
   z-index: 10000;
-  background-color: #000000b3;
   font-family: Lato, sans-serif;
-  font-size: 1rem;
+  font-size: rem;
+  background-color: #000000b3;
   position: fixed;
   inset: 0;
 }
