@@ -221,6 +221,10 @@ class Ultimate_Blocks_Admin {
 
 		global $menu_page;
 		global $ub_pro_page;
+		global $ub_pro_page_slug;
+
+		// assign pro page slug to global context
+		$ub_pro_page_slug = $this->pro_menu_slug;
 
 		$menu_page = add_menu_page(
 			'Ultimate Blocks Settings',

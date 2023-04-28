@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { withHookManager } from '$Library/ub-common/Inc';
 import Route from '$Components/Route';
+
+// use global hook methods to broadcast and listen events on document level
+const { applyFilters } = wp.hooks;
 
 /**
  * Router for different menu content.
  *
  * Router children components should be Route components. Else those will who are not will be ignored.
  *
- * @param {Object}               props              component properties
- * @param {Array<Route> | Route} props.children     component route children
- * @param {Function}             props.applyFilters apply filters, will be supplied via HOC
+ * @param {Object}               props          component properties
+ * @param {Array<Route> | Route} props.children component route children
  */
-function Router({ children, applyFilters }) {
+function Router({ children }) {
 	const [CurrentRouteContent, setCurrentRouteContent] = useState(null);
 
 	// url search parameter for page property
@@ -73,4 +74,4 @@ function Router({ children, applyFilters }) {
 /**
  * @module Router
  */
-export default withHookManager(Router);
+export default Router;
