@@ -35458,7 +35458,120 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(MainContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","$Components/BlockStatusFilterControl":"hebBQ","$Stores/settings-menu/slices/app":"c28DV","$HOC/withStore":"kWmDy","$Components/BlockControlsContainer":"e69CO","$Components/MainContentPhrase":"4cIcG"}],"e69CO":[function(require,module,exports) {
+},{"react":"21dqq","$Components/MainContentPhrase":"4cIcG","$Components/BlockStatusFilterControl":"hebBQ","$Stores/settings-menu/slices/app":"c28DV","$HOC/withStore":"kWmDy","$Components/BlockControlsContainer":"e69CO"}],"4cIcG":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _TextIndicate = _interopRequireDefault(require("$Components/TextIndicate"));
+var _ContentPhrase = _interopRequireDefault(require("$Components/ContentPhrase"));
+var _LineWrapper = _interopRequireDefault(require("$Components/LineWrapper"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Content phrase component.
+ *
+ * @function Object() { [native code] }
+ */ function MainContentPhrase() {
+    return /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Manage"), " Your", " ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Blocks"), " As"), /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, "Your ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Preferences")));
+}
+/**
+ * @module MainContentPhrase
+ */ var _default = MainContentPhrase;
+exports["default"] = _default;
+
+},{"react":"21dqq","$Components/TextIndicate":"3mATT","$Components/ContentPhrase":"fjblj","$Components/LineWrapper":"20Yro"}],"3mATT":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Component for indicating given text.
+ * @param {Object} props component properties
+ * @param {React.ElementType} children children
+ * @constructor
+ */ function TextIndicate(_ref) {
+    var children = _ref.children;
+    return /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "text-indicate"
+    }, children);
+}
+/**
+ * @module TextIndicate
+ */ var _default = TextIndicate;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"fjblj":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Content phrase component.
+ *
+ * @param {Object}                       props          component properties
+ * @param {JSX.Element | Array | string} props.children component children
+ */ function ContentPhrase(_ref) {
+    var children = _ref.children;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "content-phrase"
+    }, children, " ");
+}
+/**
+ * @module ContentPhrase
+ */ var _default = ContentPhrase;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"20Yro":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Line wrapper component.
+ *
+ * @param {Object}                       props          component properties
+ * @param {JSX.Element | Array | string} props.children component children
+ */ function LineWrapper(_ref) {
+    var children = _ref.children;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "line-wrapper"
+    }, children, " ");
+}
+/**
+ * @module LineWrapper
+ */ var _default = LineWrapper;
+exports["default"] = _default;
+
+},{"react":"21dqq"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -41037,119 +41150,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
 /**
  * @module VisibilityWrapper
  */ var _default = VisibilityWrapper;
-exports["default"] = _default;
-
-},{"react":"21dqq"}],"4cIcG":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-var _TextIndicate = _interopRequireDefault(require("$Components/TextIndicate"));
-var _ContentPhrase = _interopRequireDefault(require("$Components/ContentPhrase"));
-var _LineWrapper = _interopRequireDefault(require("$Components/LineWrapper"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Content phrase component.
- *
- * @function Object() { [native code] }
- */ function MainContentPhrase() {
-    return /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Manage"), " Your", " ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Blocks"), " As"), /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, "Your ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Preferences")));
-}
-/**
- * @module MainContentPhrase
- */ var _default = MainContentPhrase;
-exports["default"] = _default;
-
-},{"react":"21dqq","$Components/TextIndicate":"3mATT","$Components/ContentPhrase":"fjblj","$Components/LineWrapper":"20Yro"}],"3mATT":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Component for indicating given text.
- * @param {Object} props component properties
- * @param {React.ElementType} children children
- * @constructor
- */ function TextIndicate(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "text-indicate"
-    }, children);
-}
-/**
- * @module TextIndicate
- */ var _default = TextIndicate;
-exports["default"] = _default;
-
-},{"react":"21dqq"}],"fjblj":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Content phrase component.
- *
- * @param {Object}                       props          component properties
- * @param {JSX.Element | Array | string} props.children component children
- */ function ContentPhrase(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "content-phrase"
-    }, children, " ");
-}
-/**
- * @module ContentPhrase
- */ var _default = ContentPhrase;
-exports["default"] = _default;
-
-},{"react":"21dqq"}],"20Yro":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Line wrapper component.
- *
- * @param {Object}                       props          component properties
- * @param {JSX.Element | Array | string} props.children component children
- */ function LineWrapper(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "line-wrapper"
-    }, children, " ");
-}
-/**
- * @module LineWrapper
- */ var _default = LineWrapper;
 exports["default"] = _default;
 
 },{"react":"21dqq"}],"8s4i0":[function(require,module,exports) {
