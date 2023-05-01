@@ -26,8 +26,8 @@ class Pro_Manager {
 	 * @return boolean pro status
 	 */
 	public function is_pro() {
-		// TODO [ErdemBircan] implement real check logic after provider implementation
-		return function_exists( 'Ultimate_Blocks_Pro\Ultimate_Blocks_Pro_init' );
+		// check if ULTIMATE_BLOCKS_PRO_LICENSE is defined and its value is true
+		return defined( 'ULTIMATE_BLOCKS_PRO_LICENSE' ) && ULTIMATE_BLOCKS_PRO_LICENSE;
 	}
 
 	/**

@@ -43,7 +43,7 @@ define( 'ULTIMATE_BLOCKS_URL', Ultimate_Blocks_Constants::plugin_url() );
  */
 define( 'ULTIMATE_BLOCKS_TEXT_DOMAIN', Ultimate_Blocks_Constants::text_domain() );
 
-require_once trailingslashit(ULTIMATE_BLOCKS_PATH) . 'vendor/autoload.php';
+require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'vendor/autoload.php';
 
 /**
  * Block Initializer.
@@ -91,7 +91,7 @@ if ( ! function_exists( 'ub_safe_welcome_redirect' ) ) {
 		wp_safe_redirect( add_query_arg(
 			array(
 				'page' => 'ultimate-blocks-help'
-				),
+			),
 			admin_url( 'admin.php' )
 		) );
 
@@ -120,4 +120,5 @@ function run_ultimate_blocks() {
 	$plugin->run();
 
 }
-run_ultimate_blocks();
+
+add_action( 'plugins_loaded', 'run_ultimate_blocks', 10, 1 );
