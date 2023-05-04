@@ -219,25 +219,27 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function register_admin_menus() {
 
+		// assign global variables
 		global $menu_page;
+		global $menu_page_slug;
 		global $ub_pro_page;
 		global $ub_pro_page_slug;
 
-		// assign pro page slug to global context
 		$ub_pro_page_slug = $this->pro_menu_slug;
+		$menu_page_slug   = 'ultimate-blocks-settings';
 
 		$menu_page = add_menu_page(
 			'Ultimate Blocks Settings',
 			'Ultimate Blocks',
 			'manage_options',
-			'ultimate-blocks-settings',
+			$menu_page_slug,
 			array( $this, 'main_menu_template_cb' ),
 			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.svg'
 		);
 
 		// sub menu for pro related settings
 		$ub_pro_page = add_submenu_page(
-			'ultimate-blocks-settings',
+			$menu_page_slug,
 			'PRO',
 			'PRO',
 			'manage_options',
