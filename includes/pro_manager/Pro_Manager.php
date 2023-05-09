@@ -3,8 +3,10 @@
 namespace Ultimate_Blocks\includes\pro_manager;
 
 
+use Freemius;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
+use Ultimate_Blocks\includes\Env_Manager;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
@@ -29,6 +31,54 @@ class Pro_Manager {
 		// check if ULTIMATE_BLOCKS_PRO_LICENSE is defined and its value is true
 		return defined( 'ULTIMATE_BLOCKS_PRO_LICENSE' ) && ULTIMATE_BLOCKS_PRO_LICENSE;
 	}
+
+	/**
+	 * Initialize freemius.
+	 *
+	 * @return void
+	 */
+	private function init_freemius() {
+		$this->ub_pro_fs();
+	}
+
+	/**
+	 * Get freemius instance.
+	 *
+	 * This function will initialize freemius if not already initialized.
+	 *
+	 * @return Freemius freemius instance
+	 */
+	private function ub_pro_fs() {
+		global $ub_fs;
+		if ( ! isset( $ub_fs ) ) {
+			// Include Freemius SDK.
+			require_once ULTIMATE_BLOCKS_PATH . 'library/freemius/start.php';
+
+			$ub_fs = fs_dynamic_init( [
+				'id'                  => '1798',
+				'slug'                => 'ultimate-blocks',
+				'premium_slug'        => 'ultimate-blocks-pro',
+				'type'                => 'plugin',
+				'public_key'          => 'pk_bd3d3c8e255543256632fd4bb9842',
+				'is_premium'          => false,
+				'premium_suffix'      => 'pro',
+				'has_premium_version' => false,
+				'has_paid_plans'      => false,
+				'has_addons'          => true,
+				'menu'                => [
+					'slug'       => 'ultimate-blocks-settings',
+					'first-path' => 'admin.php?page=ultimate-blocks-help',
+					'account'    => true,
+					'contact'    => false,
+					'support'    => false,
+				],
+				'secret_key'          => Env_Manager::get( 'FS_SECRET_KEY' ),
+			] );
+		}
+
+		return $ub_fs;
+	}
+
 
 	/**
 	 * Prepare upsell related extension data.
@@ -91,6 +141,8 @@ class Pro_Manager {
 	 * @return void
 	 */
 	protected function init_process() {
+		$this->init_freemius();
+
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
 		}

@@ -1,6 +1,7 @@
 <?php
 
 use Ultimate_Blocks\includes\Editor_Data_Manager;
+use Ultimate_Blocks\includes\Env_Manager;
 use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
 use Ultimate_Blocks\includes\Saved_Styles_Manager;
 use Ultimate_Blocks\includes\Ultimate_Blocks_Version_Control;
@@ -163,6 +164,9 @@ class Ultimate_Blocks {
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'UltimateBlocks_review_notice' );
 		$this->loader->add_action( 'wp_ajax_UltimateBlocksReviewNoticeHide', $plugin_admin,
 			'UltimateBlocks_hide_review_notify' );
+
+		// initialize env manager
+		Env_Manager::init();
 
 		// initialize version control manager
 		Ultimate_Blocks_Version_Control::init();

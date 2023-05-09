@@ -3,7 +3,9 @@
   "description": "Ultimate blocks",
   "type": "project",
   "license": "GPL3+",
-  "require": {},
+  "require": {
+    "vlucas/phpdotenv": "^5.5"
+  },
   "autoload": {
 	"psr-4": {
 	  "Ultimate_Blocks\\": "./"

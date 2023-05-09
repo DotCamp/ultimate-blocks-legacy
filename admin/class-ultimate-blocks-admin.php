@@ -79,7 +79,8 @@ class Ultimate_Blocks_Admin {
 		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_settings_menu_data' ], 1, 1 );
 
 		// add pro submenu dashboard nav button class
-		add_filter( 'add_menu_classes', [ $this, 'pro_submenu_nav_class' ], 10, 1 );
+		// @deprecated
+//		add_filter( 'add_menu_classes', [ $this, 'pro_submenu_nav_class' ], 10, 1 );
 	}
 
 	/**
@@ -238,14 +239,15 @@ class Ultimate_Blocks_Admin {
 		);
 
 		// sub menu for pro related settings
-		$ub_pro_page = add_submenu_page(
-			$menu_page_slug,
-			'PRO',
-			'PRO',
-			'manage_options',
-			$this->pro_menu_slug,
-			array( $this, 'main_menu_template_cb' )
-		);
+		// @deprecated
+//		$ub_pro_page = add_submenu_page(
+//			$menu_page_slug,
+//			'PRO',
+//			'PRO',
+//			'manage_options',
+//			$this->pro_menu_slug,
+//			array( $this, 'main_menu_template_cb' )
+//		);
 
 	}
 
