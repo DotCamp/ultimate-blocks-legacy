@@ -34,22 +34,13 @@ class Pro_Manager {
 	}
 
 	/**
-	 * Initialize freemius.
-	 *
-	 * @return void
-	 */
-	private function init_freemius() {
-		$this->ub_fs();
-	}
-
-	/**
 	 * Get freemius instance.
 	 *
 	 * This function will initialize freemius if not already initialized.
 	 *
 	 * @return Freemius freemius instance
 	 */
-	private function ub_fs() {
+	public static function init_freemius() {
 		global $ub_fs;
 		if ( ! isset( $ub_fs ) ) {
 			// Include Freemius SDK.
@@ -144,8 +135,6 @@ class Pro_Manager {
 	 * @return void
 	 */
 	protected function init_process() {
-		$this->init_freemius();
-
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
 		}

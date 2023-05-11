@@ -15,6 +15,8 @@
  */
 
 // Exit if accessed directly.
+use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -120,5 +122,7 @@ function run_ultimate_blocks() {
 	$plugin->run();
 
 }
+
+Pro_Manager::init_freemius();
 
 add_action( 'plugins_loaded', 'run_ultimate_blocks', 10, 1 );
