@@ -16,6 +16,7 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Review_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Social_Share_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Table_Of_Contents_Extension;
+use function do_action;
 
 /**
  * Manager for handling features based on availability of pro version from base version.
@@ -38,7 +39,7 @@ class Pro_Manager {
 	 * @return void
 	 */
 	private function init_freemius() {
-		$this->ub_pro_fs();
+		$this->ub_fs();
 	}
 
 	/**
@@ -48,7 +49,7 @@ class Pro_Manager {
 	 *
 	 * @return Freemius freemius instance
 	 */
-	private function ub_pro_fs() {
+	private function ub_fs() {
 		global $ub_fs;
 		if ( ! isset( $ub_fs ) ) {
 			// Include Freemius SDK.
@@ -74,6 +75,8 @@ class Pro_Manager {
 				],
 				'secret_key'          => Env_Manager::get( 'FS_SECRET_KEY' ),
 			] );
+
+			do_action( 'ub_fs_loaded' );
 		}
 
 		return $ub_fs;
