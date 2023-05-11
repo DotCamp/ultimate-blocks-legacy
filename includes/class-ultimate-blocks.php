@@ -165,9 +165,6 @@ class Ultimate_Blocks {
 		$this->loader->add_action( 'wp_ajax_UltimateBlocksReviewNoticeHide', $plugin_admin,
 			'UltimateBlocks_hide_review_notify' );
 
-		// initialize env manager
-		Env_Manager::init();
-
 		// initialize version control manager
 		Ultimate_Blocks_Version_Control::init();
 
