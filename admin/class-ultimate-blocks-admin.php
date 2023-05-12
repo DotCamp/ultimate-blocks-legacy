@@ -10,6 +10,8 @@
  * @subpackage Ultimate_Blocks/admin
  */
 
+use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -238,17 +240,18 @@ class Ultimate_Blocks_Admin {
 			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.svg'
 		);
 
-		// sub menu for pro related settings
-		// @deprecated
-//		$ub_pro_page = add_submenu_page(
-//			$menu_page_slug,
-//			'PRO',
-//			'PRO',
-//			'manage_options',
-//			$this->pro_menu_slug,
-//			array( $this, 'main_menu_template_cb' )
-//		);
-
+		// only add pro upsell submenu if pro is not active
+		if ( ! Pro_Manager::get_instance()->is_pro() ) {
+			// sub menu for pro related settings
+			$ub_pro_page = add_submenu_page(
+				$menu_page_slug,
+				'PRO',
+				'PRO',
+				'manage_options',
+				$this->pro_menu_slug,
+				array( $this, 'main_menu_template_cb' )
+			);
+		}
 	}
 
 	/**
