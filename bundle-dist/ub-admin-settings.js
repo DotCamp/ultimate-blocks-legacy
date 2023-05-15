@@ -41163,6 +41163,8 @@ var _ContentPhrase = _interopRequireDefault(require("$Components/ContentPhrase")
 var _LineWrapper = _interopRequireDefault(require("$Components/LineWrapper"));
 var _TextIndicate = _interopRequireDefault(require("$Components/TextIndicate"));
 var _AnimationAppear = _interopRequireDefault(require("$Components/AnimationAppear"));
+var _assets = require("$Stores/settings-menu/slices/assets");
+var _withStore = _interopRequireDefault(require("$HOC/withStore"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -41170,7 +41172,11 @@ function _interopRequireDefault(obj) {
 }
 /**
  * Pro content component.
- */ function ProContent() {
+ *
+ * @param {Object} props           component properties
+ * @param {string} props.proBuyUrl url for pro buy page
+ */ function ProContent(_ref) {
+    var proBuyUrl = _ref.proBuyUrl;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "pro-content"
     }, /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
@@ -41183,17 +41189,21 @@ function _interopRequireDefault(obj) {
         className: "ub-pro-content-main"
     }, "Get", " ", /*#__PURE__*/ _react["default"].createElement("a", {
         className: "ub-strip-anchor",
-        href: "https://ultimateblocks.com",
-        target: "_blank",
+        href: proBuyUrl,
         rel: "noreferrer"
     }, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Ultimate Blocks Pro")), " ", "Now!")));
-}
+} // store select mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        proBuyUrl: selector(_assets.getAsset)("proBuyUrl")
+    };
+};
 /**
  * @module ProContent
- */ var _default = ProContent;
+ */ var _default = (0, _withStore["default"])(ProContent, selectMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","$Components/ContentPhrase":"fjblj","$Components/LineWrapper":"20Yro","$Components/TextIndicate":"3mATT","$Components/AnimationAppear":"i35LA"}],"i35LA":[function(require,module,exports) {
+},{"react":"21dqq","$Components/ContentPhrase":"fjblj","$Components/LineWrapper":"20Yro","$Components/TextIndicate":"3mATT","$Components/AnimationAppear":"i35LA","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/assets":"9SnHn"}],"i35LA":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

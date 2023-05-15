@@ -3,11 +3,16 @@ import ContentPhrase from '$Components/ContentPhrase';
 import LineWrapper from '$Components/LineWrapper';
 import TextIndicate from '$Components/TextIndicate';
 import AnimationAppear from '$Components/AnimationAppear';
+import { getAsset } from '$Stores/settings-menu/slices/assets';
+import withStore from '$HOC/withStore';
 
 /**
  * Pro content component.
+ *
+ * @param {Object} props           component properties
+ * @param {string} props.proBuyUrl url for pro buy page
  */
-function ProContent() {
+function ProContent({ proBuyUrl }) {
 	return (
 		<div className={'pro-content'}>
 			<ContentPhrase>
@@ -27,8 +32,7 @@ function ProContent() {
 					Get{' '}
 					<a
 						className={'ub-strip-anchor'}
-						href={'https://ultimateblocks.com'}
-						target={'_blank'}
+						href={proBuyUrl}
 						rel="noreferrer"
 					>
 						<TextIndicate>Ultimate Blocks Pro</TextIndicate>
@@ -40,7 +44,14 @@ function ProContent() {
 	);
 }
 
+// store select mapping
+const selectMapping = (selector) => {
+	return {
+		proBuyUrl: selector(getAsset)('proBuyUrl'),
+	};
+};
+
 /**
  * @module ProContent
  */
-export default ProContent;
+export default withStore(ProContent, selectMapping);

@@ -47,6 +47,8 @@ class Pro_Manager {
 			add_action( 'admin_enqueue_scripts', [ $this, 'menu_operations' ], 10, 1 );
 		}
 
+		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_menu_data' ], 10, 1 );
+
 		Editor_Data_Manager::get_instance()->add_editor_data( [
 			'proStatus' => json_encode( $this->is_pro() ),
 			'assets'    => [
@@ -54,6 +56,32 @@ class Pro_Manager {
 				'proUrl'  => 'https://ultimateblocks.com/'
 			]
 		] );
+	}
+
+	/**
+	 * Add menu data.
+	 *
+	 * @param array $menu_data menu data
+	 *
+	 * @return array menu data
+	 */
+	public static function add_menu_data( $menu_data ) {
+		global $menu_page_slug;
+
+		if ( ! isset( $menu_data['assets'] ) ) {
+			$menu_data['assets'] = [];
+		}
+
+		$assets = [
+			'proBuyUrl' => add_query_arg( [
+				'page' => $menu_page_slug . '-addons'
+			], admin_url( 'admin.php' ) ),
+		];
+
+		// merge assets
+		$menu_data['assets'] = array_merge( $menu_data['assets'], $assets );
+
+		return $menu_data;
 	}
 
 	/**
