@@ -16,13 +16,62 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Review_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Social_Share_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Table_Of_Contents_Extension;
+use function add_action;
+use function add_filter;
 use function do_action;
+use function get_transient;
+use function set_transient;
 
 /**
  * Manager for handling features based on availability of pro version from base version.
  */
 class Pro_Manager {
 	use Manager_Base_Trait;
+
+	/**
+	 * Transient key for dashboard sidebar notification.
+	 */
+	const DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY = 'ultimate_blocks_dashboard_sidebar_notification';
+
+	/**
+	 * Main process that will be called during initialization of manager.
+	 *
+	 * @return void
+	 */
+	protected function init_process() {
+		// only start this operations if pro version is not available
+		if ( ! $this->is_pro() ) {
+			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
+
+			add_filter( 'add_menu_classes', [ $this, 'pro_dashboard_sidebar_notifications' ], 10, 1 );
+			add_action( 'admin_enqueue_scripts', [ $this, 'menu_operations' ], 10, 1 );
+		}
+
+		Editor_Data_Manager::get_instance()->add_editor_data( [
+			'proStatus' => json_encode( $this->is_pro() ),
+			'assets'    => [
+				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/icon-128x128.png',
+				'proUrl'  => 'https://ultimateblocks.com/'
+			]
+		] );
+	}
+
+	/**
+	 * Menu related operations.
+	 *
+	 * @param string $hook current menu hook
+	 *
+	 * @return void
+	 */
+	public function menu_operations( $hook ) {
+		global $ub_pro_page;
+
+		// check if current page is pro dashboard page
+		if ( $hook === $ub_pro_page ) {
+			// don't show pro admin notifications for a month
+			set_transient( self::DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY, true, 60 * 60 * 24 * 30 );
+		}
+	}
 
 	/**
 	 * Get pro status of plugin.
@@ -130,21 +179,56 @@ class Pro_Manager {
 	}
 
 	/**
-	 * Main process that will be called during initialization of manager.
+	 * Add notification to sidebar menu title.
 	 *
-	 * @return void
+	 * @param string $original_title title
+	 *
+	 * @return string modified title
 	 */
-	protected function init_process() {
-		if ( ! $this->is_pro() ) {
-			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
+	private function generate_title_with_notification( $original_title ) {
+		return sprintf( '%s<span class="update-plugins" style="background-color: #EAB308 !important; text-shadow: ">
+<span>💡</span></span>', $original_title );
+	}
+
+	/**
+	 * Add sidebar notifications to menu.
+	 *
+	 * @param array $menu menu array
+	 *
+	 * @return array menu array
+	 */
+	public function pro_dashboard_sidebar_notifications( $menu ) {
+		global $submenu;
+		global $menu_page_slug;
+		global $ub_pro_page_slug;
+
+		// check if notification is already shown
+		$notification_status = get_transient( self::DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY );
+
+		if ( ! $notification_status && isset( $submenu ) ) {
+			if ( isset( $submenu[ $menu_page_slug ] ) ) {
+				// add to submenu
+				$index = array_search( $ub_pro_page_slug, array_column( $submenu[ $menu_page_slug ], 2 ) );
+
+				if ( $index !== false ) {
+					$original_pro_title                      = $submenu[ $menu_page_slug ][ $index ][0];
+					$original_pro_title                      = $this->generate_title_with_notification( $original_pro_title );
+					$submenu[ $menu_page_slug ][ $index ][0] = $original_pro_title;
+				}
+
+				// add to menu
+				$index = array_search( $menu_page_slug, array_column( $menu, 2 ) );
+				if ( $index !== false ) {
+					$menu_key       = array_keys( $menu )[ $index ];
+					$original_title = $menu[ $menu_key ][0];
+
+					$original_title       = $this->generate_title_with_notification( $original_title );
+					$menu[ $menu_key ][0] = $original_title;
+				}
+			}
 		}
 
-		Editor_Data_Manager::get_instance()->add_editor_data( [
-			'proStatus' => json_encode( $this->is_pro() ),
-			'assets'    => [
-				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/icon-128x128.png',
-				'proUrl'  => 'https://www.google.com/'
-			]
-		] );
+		return $menu;
 	}
+
 }
