@@ -2,11 +2,15 @@
 
 namespace Ultimate_Blocks\includes;
 
-use Exception;
 use WP_Error;
 use WP_Upgrader_Skin;
 
 require_once( ABSPATH . '/wp-admin/includes/class-wp-upgrader-skin.php' );
+
+// if called directly, abort process
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 /**
  * Class Version_Control_Upgrader_Skin
@@ -65,9 +69,10 @@ class Version_Control_Upgrader_Skin extends WP_Upgrader_Skin {
 	 */
 	public function after() {
 		if ( count( $this->errors ) > 0 ) {
+			header( 'Content-Type: text/plain-text' );
 
-			$error_message =  join( ',', $this->errors );
-			throw new Exception($error_message);
+			echo join( ',', $this->errors );
+			die();
 		}
 	}
 
