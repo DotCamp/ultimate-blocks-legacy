@@ -2,12 +2,11 @@
 
 namespace Ultimate_Blocks\includes;
 
-use stdClass;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use WP_Error;
-use function add_action;
 use function add_filter;
 use function delete_transient;
+use function get_transient;
 use function is_wp_error;
 use function set_transient;
 
@@ -34,6 +33,16 @@ class Version_Sync_Manager {
 	 * Seconds in an hour
 	 */
 	const HOUR_IN_SECONDS = 60 * 60;
+
+	/**
+	 * Error transient key.
+	 */
+	const VERSION_SYNC_ERROR_TRANSIENT_KEY = 'ultimate-blocks-version-sync-error';
+
+	/**
+	 * Version sync trigger key for upgrader skin.
+	 */
+	const UB_VERSION_SYNC_TRIGGER = 'ub-version-sync-trigger';
 
 	/**
 	 * Main process that will be called during initialization of manager.
@@ -94,8 +103,8 @@ class Version_Sync_Manager {
 			if ( property_exists( $upgrader_skin, 'plugin_info' ) ) {
 				$plugin_info = (array) $upgrader_skin->plugin_info;
 
-				// short circuit sub calling if current install process marked as not to trigger version sync manager
-				if ( isset( $plugin_info['wptb-version-sync-trigger'] ) && $plugin_info['wptb-version-sync-trigger'] === false ) {
+				// short circuit sub calling if current installation process marked as not to trigger version sync manager
+				if ( isset( $plugin_info[ self::UB_VERSION_SYNC_TRIGGER ] ) && $plugin_info[ self::UB_VERSION_SYNC_TRIGGER ] === false ) {
 					return $final_status;
 				}
 
@@ -113,7 +122,7 @@ class Version_Sync_Manager {
 				// for WP versions 4.9-5.0.2 there is no hook extra argument for this callback hook, so there is no need to check hook_extra
 				//			$slug = static::parse_slug_from_relative_path( $hook_extra['plugin'] );
 
-				// only continue logic operations if slug of plugin that is currently being on install process is a subscribed one
+				// only continue logic operations if slug of plugin that is currently being on installation process is a subscribed one
 				if ( static::is_subscribed( $slug ) ) {
 					// get subscriber context of the addon currently in install process
 					$active_sub = static::get_subscriber( $slug );
@@ -126,7 +135,7 @@ class Version_Sync_Manager {
 							return $final_status;
 						}
 
-						// filter subscriber array to get all subscribers except the one currently target of the install process
+						// filter subscriber array to get all subscribers except the one currently target of the installation process
 						$other_subs = array_filter( static::$subscribers, function ( $sub_id ) use ( $slug ) {
 							return $sub_id !== $slug;
 
@@ -186,6 +195,7 @@ class Version_Sync_Manager {
 	 * @param Object $instance subscriber class instance
 	 */
 	public static function subscribe( $slug, $instance ) {
+		// TODO [ErdemBircan] adapt this to new version sync base
 		// TODO [erdembircan] after v1.3.4, change it to only base version
 		if ( is_subclass_of( $instance,
 				'\WP_Table_Builder\Inc\Admin\Base\Version_Sync_Base' ) || is_subclass_of( $instance,
@@ -198,11 +208,11 @@ class Version_Sync_Manager {
 	 * Show admin error messages at admin notice board.
 	 */
 	public static function show_error_message() {
-		$error_message = get_transient( 'wptb-version-sync-error-message' );
+		$error_message = get_transient( self::VERSION_SYNC_ERROR_TRANSIENT_KEY );
 
 		if ( $error_message !== false ) {
 			Admin_Notices_Manager::show_notice( $error_message, Admin_Notices_Manager::ERROR );
-			delete_transient( 'wptb-version-sync-error-message' );
+			delete_transient( self::VERSION_SYNC_ERROR_TRANSIENT_KEY );
 		}
 	}
 
@@ -212,6 +222,6 @@ class Version_Sync_Manager {
 	 * @param string $message message
 	 */
 	private static function set_admin_error_notice( $message ) {
-		set_transient( 'wptb-version-sync-error-message', $message, self::HOUR_IN_SECONDS );
+		set_transient( self::VERSION_SYNC_ERROR_TRANSIENT_KEY, $message, self::HOUR_IN_SECONDS );
 	}
 }
