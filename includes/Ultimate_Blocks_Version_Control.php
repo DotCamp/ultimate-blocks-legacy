@@ -4,10 +4,8 @@ namespace Ultimate_Blocks\includes;
 
 use Exception;
 use Plugin_Upgrader;
-use stdClass;
 use Ultimate_Blocks\includes\common\traits\Ajax_Response_Trait;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
-use WP_Error;
 use function activate_plugin;
 use function add_filter;
 use function check_ajax_referer;
@@ -53,11 +51,11 @@ class Ultimate_Blocks_Version_Control {
 				$target_version         = $_POST['version'];
 				$current_plugin_version = $this->current_plugin_version();
 
-				if($target_version === $current_plugin_version){
-					throw new Exception(esc_html__('You are on the same plugin version.', 'ultimate-blocks'));
+				if ( $target_version === $current_plugin_version ) {
+					throw new Exception( esc_html__( 'You are on the same plugin version.', 'ultimate-blocks' ) );
 				}
 
-				$available_versions     = $this->get_plugin_versions_info();
+				$available_versions = $this->get_plugin_versions_info();
 
 				if ( ! in_array( $target_version, array_keys( $available_versions ) ) ) {
 					throw new Exception( esc_html__( 'Target version is out of bounds.', 'ultimate-blocks' ) );
