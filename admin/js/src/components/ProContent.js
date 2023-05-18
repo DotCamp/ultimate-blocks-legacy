@@ -18,7 +18,7 @@ function ProContent({ proBuyUrl }) {
 			<ContentPhrase>
 				<AnimationAppear delay={100}>
 					<LineWrapper>
-						<TextIndicate>Best</TextIndicate> Block Plugin
+						<TextIndicate>Best</TextIndicate> Blocks Plugin
 					</LineWrapper>
 				</AnimationAppear>
 				<AnimationAppear delay={600}>

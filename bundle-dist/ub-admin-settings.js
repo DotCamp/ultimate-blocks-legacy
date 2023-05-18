@@ -41181,7 +41181,7 @@ function _interopRequireDefault(obj) {
         className: "pro-content"
     }, /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
         delay: 100
-    }, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Best"), " Block Plugin")), /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Best"), " Blocks Plugin")), /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
         delay: 600
     }, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, "Just Got Even ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Better.")))), /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
         delay: 1400
@@ -41203,7 +41203,7 @@ var selectMapping = function selectMapping(selector) {
  */ var _default = (0, _withStore["default"])(ProContent, selectMapping);
 exports["default"] = _default;
 
-},{"react":"21dqq","$Components/ContentPhrase":"fjblj","$Components/LineWrapper":"20Yro","$Components/TextIndicate":"3mATT","$Components/AnimationAppear":"i35LA","$HOC/withStore":"kWmDy","$Stores/settings-menu/slices/assets":"9SnHn"}],"i35LA":[function(require,module,exports) {
+},{"react":"21dqq","$Components/ContentPhrase":"fjblj","$Components/LineWrapper":"20Yro","$Components/TextIndicate":"3mATT","$Components/AnimationAppear":"i35LA","$Stores/settings-menu/slices/assets":"9SnHn","$HOC/withStore":"kWmDy"}],"i35LA":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
