@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.2
-Stable tag: 2.5.8
+Stable tag: 2.5.9
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -132,7 +132,11 @@ That's it. You're done!
 
 == Changelog ==
 
-= 2.5.8 - March 27th, 2023 = 
+= 2.5.9 =
+
+* NEW: Pro version release.
+
+= 2.5.8 - March 27th, 2023 =
 
 * NEW: Compatibility with WordPress 6.2.
 * NEW: Ultimate Blocks now appear in the new Style Book.
