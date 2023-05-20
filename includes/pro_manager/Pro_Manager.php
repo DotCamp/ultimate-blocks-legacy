@@ -53,7 +53,7 @@ class Pro_Manager {
 			'proStatus' => json_encode( $this->is_pro() ),
 			'assets'    => [
 				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/icon-128x128.png',
-				'proUrl'  => 'https://ultimateblocks.com/'
+				'proUrl'  => 'https://ultimateblocks.com/pricing/'
 			]
 		] );
 	}
@@ -66,16 +66,12 @@ class Pro_Manager {
 	 * @return array menu data
 	 */
 	public static function add_menu_data( $menu_data ) {
-		global $menu_page_slug;
-
 		if ( ! isset( $menu_data['assets'] ) ) {
 			$menu_data['assets'] = [];
 		}
 
 		$assets = [
-			'proBuyUrl' => add_query_arg( [
-				'page' => $menu_page_slug . '-addons'
-			], admin_url( 'admin.php' ) ),
+			'proBuyUrl' => 'https://ultimateblocks.com/pricing/'
 		];
 
 		// merge assets
