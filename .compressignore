@@ -10,5 +10,6 @@ composer.json
 composer.lock
 **/*.scss
 **/*.sass
+**/*.map
 admin/js/src/
 src/**/!(front.build).js
