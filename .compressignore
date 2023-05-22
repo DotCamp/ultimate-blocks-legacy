@@ -1,0 +1,14 @@
+babel.config.js
+package.json
+package-lock.json
+pluginCompress.js
+README.md
+recompile.js
+recompileOnChange.js
+webpack.config.js
+composer.json
+composer.lock
+**/*.scss
+**/*.sass
+admin/js/src/
+src/**/!(front.build).js
