@@ -4,6 +4,7 @@ const ft = require('fancy-terminal');
 const process = require('process');
 const path = require('path');
 const archiver = require('archiver');
+const { version } = require('./package.json');
 
 /**
  * Get current time in nanoseconds.
@@ -83,8 +84,24 @@ const generateIgnoreList = () => {
 		});
 };
 
-const outputPath = path.resolve(__dirname, 'ultimate-blocks.zip');
+/**
+ * Write version info to a JSON file.
+ *
+ * @param {string} outputPath path to version info file
+ */
+const writeVersionInfo = (outputPath) => {
+	const writeData = { version };
+	fs.writeFileSync(
+		path.join(outputPath, 'version.json'),
+		JSON.stringify(writeData)
+	);
+};
+
+const outputPath = path.resolve(__dirname, 'zip');
+const targetFileName = process.argv[process.argv.length - 1];
+const zipOutputPath = path.join(outputPath, targetFileName);
 const ignoreList = generateIgnoreList();
 
 // compress plugin
-compress(outputPath, ignoreList);
+compress(zipOutputPath, ignoreList);
+writeVersionInfo(outputPath);
