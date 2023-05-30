@@ -742,7 +742,9 @@ export function PanelContent(props) {
 						<SavedStylesInspector
 							overrideBlockType={'ub/content-toggle-panel-block'}
 							attributes={props.attributes}
-							setAttribute={(attrs) => {
+							setAttribute={(allAttrs) => {
+								const { panelTitle, ...attrs } = allAttrs;
+
 								// update block and its innerblock panel attributes
 								setAttributes(attrs);
 

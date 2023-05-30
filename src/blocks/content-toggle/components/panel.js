@@ -298,7 +298,12 @@ function ContentTogglePanel(props) {
 			<InspectorControls group="styles">
 				<SavedStylesInspector
 					attributes={props.attributes}
-					setAttribute={setAttributes}
+					setAttribute={(allAttrs) => {
+						const { panelTitle, ...attrs } = allAttrs;
+
+						// update block and its innerblock panel attributes
+						setAttributes(attrs);
+					}}
 					attributesToSave={(() => {
 						const excludeList = ['index', 'parent', 'parentID'];
 
