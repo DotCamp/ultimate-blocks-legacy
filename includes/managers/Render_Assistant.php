@@ -51,7 +51,7 @@ class Render_Assistant {
 					}, [] );
 
 				// inject default block attributes into supplied ones
-				$block['attrs'] = array_merge( $block['attrs'], $parsed_default_attrs );
+				$block['attrs'] = array_merge( $parsed_default_attrs, $block['attrs'] );
 			}
 		}
 
