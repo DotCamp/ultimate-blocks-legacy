@@ -6,11 +6,12 @@
  */
 
 //Import Icon
-import icon from "./icons/icon";
+import icon from './icons/icon';
 
-import { version_1_1_2 } from "./oldVersions";
+import { version_1_1_2 } from './oldVersions';
 
-import { useEffect } from "react";
+import { Fragment, useEffect } from 'react';
+import { PanelColorSettings } from '@wordpress/block-editor';
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -30,32 +31,32 @@ const { withSelect } = wp.data;
 
 const attributes = {
 	blockID: {
-		type: "string",
-		default: "",
+		type: 'string',
+		default: '',
 	},
 	borderSize: {
-		type: "number",
+		type: 'number',
 		default: 2,
 	},
 	borderStyle: {
-		type: "string",
-		default: "solid",
+		type: 'string',
+		default: 'solid',
 	},
 	borderColor: {
-		type: "string",
-		default: "#ccc",
+		type: 'string',
+		default: '#ccc',
 	},
 	borderHeight: {
-		type: "number",
+		type: 'number',
 		default: 20,
 	},
 	width: {
-		type: "number",
+		type: 'number',
 		default: 100,
 	},
 	alignment: {
-		type: "string",
-		default: "center",
+		type: 'string',
+		default: 'center',
 	},
 };
 /**
@@ -66,8 +67,8 @@ const attributes = {
  * editor interface where blocks are implemented.
  *
  * @link https://wordpress.org/gutenberg/handbook/block-api/
- * @param  {string}   name     Block name.
- * @param  {Object}   settings Block settings.
+ * @param {string} name     Block name.
+ * @param {Object} settings Block settings.
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
@@ -93,10 +94,10 @@ function DividerBlock(props) {
 
 	useEffect(() => {
 		if (
-			blockID === "" ||
+			blockID === '' ||
 			getClientIdsWithDescendants().some(
 				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
+					'blockID' in getBlock(ID).attributes &&
 					getBlock(ID).attributes.blockID === blockID
 			)
 		) {
@@ -107,76 +108,112 @@ function DividerBlock(props) {
 	return (
 		<>
 			{isSelected && (
-				<InspectorControls group="styles">
-					<PanelBody title={__("Divider Settings")}>
-						<RangeControl
-							label={__("Thickness")}
-							value={borderSize}
-							onChange={(value) => setAttributes({ borderSize: value })}
-							min={1}
-							max={20}
-							beforeIcon="minus"
-							allowReset
-						/>
-
-						<RangeControl
-							label={__("Height")}
-							value={borderHeight}
-							onChange={(value) => setAttributes({ borderHeight: value })}
-							min={10}
-							max={200}
-							beforeIcon="minus"
-							allowReset
-						/>
-						<RangeControl
-							label={__("Width")}
-							value={width}
-							onChange={(value) => setAttributes({ width: value })}
-							min={0}
-							max={100}
-							allowReset
-						/>
-						<PanelRow>
-							<p>{__("Alignment")}</p>
-							{width < 100 && (
-								<ButtonGroup>
-									{["left", "center", "right"].map((a) => (
-										<Button
-											icon={`align-${a}`}
-											isPressed={alignment === a}
-											onClick={() => setAttributes({ alignment: a })}
-										/>
-									))}
-								</ButtonGroup>
-							)}
-						</PanelRow>
-						<p>
-							{__("Color")}
-							<span
-								class="component-color-indicator"
-								aria-label={`(Color: ${borderColor})`}
-								style={{ background: borderColor }}
+				<Fragment>
+					<InspectorControls>
+						<PanelBody title={__('Line Settings')}>
+							<RangeControl
+								label={__('Thickness')}
+								value={borderSize}
+								onChange={(value) =>
+									setAttributes({ borderSize: value })
+								}
+								min={1}
+								max={20}
+								beforeIcon="minus"
+								allowReset
 							/>
-						</p>
-						<ColorPalette
-							value={borderColor}
-							onChange={(borderColor) => setAttributes({ borderColor })}
-							allowReset
-						/>
 
-						<p>{__("Style")}</p>
-						<SelectControl
-							options={["solid", "dotted", "dashed"].map((o) => ({
-								value: o,
-								label: __(o),
-							}))}
-							value={borderStyle}
-							onChange={(borderStyle) => {
-								setAttributes({ borderStyle });
-							}}
-						/>
-					</PanelBody>
-				</InspectorControls>
+							<RangeControl
+								label={__('Height')}
+								value={borderHeight}
+								onChange={(value) =>
+									setAttributes({ borderHeight: value })
+								}
+								min={10}
+								max={200}
+								beforeIcon="minus"
+								allowReset
+							/>
+							<RangeControl
+								label={__('Width')}
+								value={width}
+								onChange={(value) =>
+									setAttributes({ width: value })
+								}
+								min={0}
+								max={100}
+								allowReset
+							/>
+							<PanelRow>
+								<p>{__('Alignment')}</p>
+								{width < 100 && (
+									<ButtonGroup>
+										{['left', 'center', 'right'].map(
+											(a) => (
+												<Button
+													icon={`align-${a}`}
+													isPressed={alignment === a}
+													onClick={() =>
+														setAttributes({
+															alignment: a,
+														})
+													}
+												/>
+											)
+										)}
+									</ButtonGroup>
+								)}
+							</PanelRow>
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="styles">
+						<PanelBody
+							initialOpen={false}
+							title={__('Divider', 'ultimate-blocks')}
+						>
+							<SelectControl
+								label={__('Line type')}
+								value={borderStyle}
+								options={[
+									{
+										value: 'solid',
+										label: __('solid', 'ultimate-blocks'),
+									},
+									{
+										value: 'dotted',
+										label: __('dotted', 'ultimate-blocks'),
+									},
+									{
+										value: 'dashed',
+										label: __('dashed', 'ultimate-blocks'),
+									},
+								]}
+								onChange={(typeVal) =>
+									setAttributes({ borderStyle: typeVal })
+								}
+							/>
+						</PanelBody>
+						<PanelBody
+							initialOpen={false}
+							title={__('Colors', 'ultimate-blocks')}
+						>
+							<PanelColorSettings
+								title={__('Line', 'ultimate-blocks')}
+								initialOpen={true}
+								colorSettings={[
+									{
+										value: borderColor,
+										onChange: (colorVal) =>
+											setAttributes({
+												borderColor: colorVal,
+											}),
+										label: __('Main', 'ultimate-blocks'),
+									},
+								]}
+							></PanelColorSettings>
+						</PanelBody>
+					</InspectorControls>
+				</Fragment>
 			)}
 			<div className={className}>
 				<div
@@ -184,14 +221,14 @@ function DividerBlock(props) {
 					style={Object.assign(
 						{
 							borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
-							marginTop: borderHeight + "px",
-							marginBottom: borderHeight + "px",
-							width: width + "%",
+							marginTop: borderHeight + 'px',
+							marginBottom: borderHeight + 'px',
+							width: width + '%',
 						},
-						alignment === "left"
-							? { marginLeft: "0" }
-							: alignment === "right"
-							? { marginRight: "0" }
+						alignment === 'left'
+							? { marginLeft: '0' }
+							: alignment === 'right'
+							? { marginRight: '0' }
 							: {}
 					)}
 				/>
@@ -200,21 +237,21 @@ function DividerBlock(props) {
 	);
 }
 
-registerBlockType("ub/divider", {
-	title: __("Divider"),
+registerBlockType('ub/divider', {
+	title: __('Divider'),
 	description: __(
-		"Add custom divider between your blocks. Customize the color, size, everything.",
-		"ultimate-blocks"
+		'Add custom divider between your blocks. Customize the color, size, everything.',
+		'ultimate-blocks'
 	),
-	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Divider"), __("Separator"), __("Ultimate Blocks")],
+	icon,
+	category: 'ultimateblocks',
+	keywords: [__('Divider'), __('Separator'), __('Ultimate Blocks')],
 	attributes,
 	example: {
 		attributes: {
-			borderSize: "4",
-			borderStyle: "dashed",
-			borderColor: "#f63d3d",
+			borderSize: '4',
+			borderStyle: 'dashed',
+			borderColor: '#f63d3d',
 		},
 	},
 	/**
@@ -227,7 +264,7 @@ registerBlockType("ub/divider", {
 	 */
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
+			select('core/block-editor') || select('core/editor');
 
 		return {
 			block: getBlock(ownProps.clientId),
@@ -239,14 +276,15 @@ registerBlockType("ub/divider", {
 	transforms: {
 		from: [
 			{
-				type: "block",
-				blocks: "core/separator",
+				type: 'block',
+				blocks: 'core/separator',
 				transform: (attributes) =>
 					createBlock(
-						"ub/divider",
-						"style" in attributes
+						'ub/divider',
+						'style' in attributes
 							? {
-									borderColor: attributes.style.color.background,
+									borderColor:
+										attributes.style.color.background,
 							  }
 							: {}
 					),
