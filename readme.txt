@@ -135,6 +135,33 @@ That's it. You're done!
 = 3.0.0 =
 
 * NEW: Pro version release.
+* NEW: Saved styles preview for supported blocks.
+* PRO: NEW: Saved styles for supported blocks. Save/apply/set default styles for supported blocks.
+* PRO: NEW: Button
+    - Hover animations.
+* PRO: NEW: Content Toggle
+    - Search functionality within content.
+    - Search summary to display amount of results matched.
+    - Highlight color to indicate matched search results inside content toggle.
+* PRO: NEW: Divider
+    - Icons for divider elements.
+* PRO: NEW: Expand
+    - Fade animation for smooth transitions.
+* PRO: NEW: Image slider
+    - Thumbnails for images.
+* PRO: NEW: Review
+    - Pros/Cons tables for reviews.
+    - Different layouts for pros/cons tables(table, data-driven-graph).
+* PRO: NEW: Tabbed content.
+    - Call to action headers.
+    - Secondary informative text for tab headers.
+    - Tab header icons.
+* PRO: NEW: Tabbed content.
+    - Call to action headers.
+    - Secondary informative text for tab headers.
+    - Tab header icons.
+* PRO: NEW: Table of contents.
+    - Section icons.
 
 = 2.5.8 - March 27th, 2023 =
 
