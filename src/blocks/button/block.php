@@ -33,7 +33,7 @@ function ub_buttons_parse($b){
     ($buttonWidth === 'full' ? ' ub-button-full-width' :
         ($buttonWidth === 'flex' ? ' ub-button-flex-'. $size : '')) . '" role="button">
     <div class="ub-button-content-holder">'.
-        ($chosenIcon !== '' ? '<span class="ub-button-icon-holder">' . 
+        (($chosenIcon !== '' && !is_null($chosenIcon))? '<span class="ub-button-icon-holder">' .
         '<svg xmlns="http://www.w3.org/2000/svg"' .
         'height="' . ($iconSize ? : $presetIconSize[$size]) . ($iconUnit === 'em' ? 'em':'') .
         '", width="' . ($iconSize ? : $presetIconSize[$size]) . ($iconUnit === 'em' ? 'em' :'') . '"' .
