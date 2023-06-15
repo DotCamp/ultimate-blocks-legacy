@@ -12,6 +12,5 @@ composer.lock
 **/*.sass
 **/*.map
 admin/js/src/
-src/**/!(front.build).js
-src/**/!(swiper-bundle).js
+src/**/!(front.build|swiper-bundle).js
 zip/
