@@ -13,4 +13,5 @@ composer.lock
 **/*.map
 admin/js/src/
 src/**/!(front.build).js
+scr/**/swiper-bundle.js
 zip/
