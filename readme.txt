@@ -132,6 +132,11 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.1 =
+
+* PRO: FIX: Some of client libraries not being included in plugin zip file.
+* PRO: FIX: Tabbed content saved styles overwriting none style related block attributes.
+
 = 3.0.0 =
 
 * NEW: Pro version release.
