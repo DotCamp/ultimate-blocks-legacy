@@ -35,6 +35,9 @@ class Ultimate_Blocks_Version_Control extends Version_Sync_Base {
 	protected function init_process() {
 		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_settings_menu_data' ] );
 		add_action( 'wp_ajax_' . self::VERSION_ROLLBACK_AJAX_ACTION, [ $this, 'ajax_version_rollback' ] );
+
+		// subscribe to version sync
+		$this->subscribe_to_version_sync();
 	}
 
 	/**
