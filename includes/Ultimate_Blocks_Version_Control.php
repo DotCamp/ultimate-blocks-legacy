@@ -4,8 +4,10 @@ namespace Ultimate_Blocks\includes;
 
 use Exception;
 use Plugin_Upgrader;
+use Ultimate_Blocks\includes\common\base\Version_Sync_Base;
 use Ultimate_Blocks\includes\common\traits\Ajax_Response_Trait;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
+use WP_Error;
 use function activate_plugin;
 use function add_filter;
 use function check_ajax_referer;
@@ -19,7 +21,7 @@ use function wp_create_nonce;
 /**
  * Manager responsible for version related operations.
  */
-class Ultimate_Blocks_Version_Control {
+class Ultimate_Blocks_Version_Control extends Version_Sync_Base {
 	use Manager_Base_Trait;
 	use Ajax_Response_Trait;
 
@@ -152,5 +154,95 @@ class Ultimate_Blocks_Version_Control {
 		];
 
 		return $data;
+	}
+
+	/**
+	 * Get slug of plugin/addon used in its distribution API.
+	 * @return string slug
+	 */
+	public function get_version_slug() {
+		return 'ultimate-blocks';
+	}
+
+	/**
+	 * Get text domain of the plugin.
+	 *
+	 * It will be used for ajax upgraders to identify our plugin since slug is not supplied in plugin info property of that upgrader skin.
+	 * @return string
+	 */
+	public function get_text_domain() {
+		return 'ultimate-blocks';
+	}
+
+	/**
+	 * Parse version number from package url.
+	 *
+	 * @param string $package package url
+	 *
+	 * @return string|null version number
+	 */
+	public function parse_version_from_package( $package ) {
+		$parsed_version = null;
+		$match          = [];
+
+		preg_match( '/^.+(?:ultimate-blocks)\.(.+)(?:\..+)$/', $package, $match );
+
+		if ( $match[1] ) {
+			$parsed_version = $match[1];
+		}
+
+		return $parsed_version;
+	}
+
+	/**
+	 * Plugin __FILE__
+	 * @return string plugin file
+	 */
+	public function plugin_file() {
+		return ULTIMATE_BLOCKS_PLUGIN_FILE;
+	}
+
+	/**
+	 * Callback hook for version sync manager when a subscriber attempted an installation operation.
+	 *
+	 * @param string $slug subscriber slug
+	 * @param string $version version to install
+	 *
+	 * @return false|WP_Error false to permit install(I know, but it is what it is) or WP_Error to cancel it
+	 */
+	public function version_sync_logic( $slug, $version ) {
+		$final_status = false;
+
+		if ( $slug === 'ultimate-blocks-pro' ) {
+			$final_status = $this->generic_sync_logic( $slug, $version );
+		}
+
+		return $final_status;
+	}
+
+	/**
+	 * Plugin specific logic for fetching versions and their info.
+	 *
+	 * Use plugin version for keys and info for their values. Use 'url' property key for download link.
+	 * @return array|WP_Error versions array
+	 */
+	protected function get_plugin_versions() {
+		require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+
+		$versions = new WP_Error( 501,
+			esc_html__( 'An error occurred while fetching wp-table-builder versions, please try again later',
+				'wp-table-builder' ) );
+
+		$info = (array) plugins_api( 'plugin_information', [ 'slug' => $this->get_version_slug() ] );
+
+		if ( isset( $info['versions'] ) ) {
+			$versions = array_reduce( array_keys( $info['versions'] ), function ( $carry, $key ) use ( $info ) {
+				$carry[ $key ] = [ 'url' => $info['versions'] [ $key ] ];
+
+				return $carry;
+			}, [] );
+		}
+
+		return $versions;
 	}
 }

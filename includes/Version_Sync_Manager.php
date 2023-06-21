@@ -198,7 +198,7 @@ class Version_Sync_Manager {
 		// TODO [ErdemBircan] adapt this to new version sync base
 		// TODO [erdembircan] after v1.3.4, change it to only base version
 		if ( is_subclass_of( $instance,
-				'\WP_Table_Builder\Inc\Admin\Base\Version_Sync_Base' ) || is_subclass_of( $instance,
+				'\Ultimate_Blocks\includes\common\base\Version_Sync_Base' ) || is_subclass_of( $instance,
 				'\WP_Table_Builder_Pro\Inc\Admin\Base\Version_Sync_Base' ) ) {
 			static::$subscribers[ $slug ] = $instance;
 		}
