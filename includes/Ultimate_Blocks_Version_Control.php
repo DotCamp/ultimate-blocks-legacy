@@ -70,9 +70,14 @@ class Ultimate_Blocks_Version_Control extends Version_Sync_Base {
 				require_once( ABSPATH . 'wp-admin/includes/misc.php' );
 				require_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
 				require_once( ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php' );
+				require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+
+				$plugin_remote_info = plugins_api( 'plugin_information', [
+					'slug' => $this->get_version_slug(),
+				] );
 
 				$download_url = $available_versions[ $target_version ];
-				$upgrader     = new Plugin_Upgrader( new Version_Control_Upgrader_Skin( [] ) );
+				$upgrader     = new Plugin_Upgrader( new Version_Control_Upgrader_Skin( [], $plugin_remote_info ) );
 
 				add_filter( 'upgrader_package_options', function ( $options ) use ( $target_version ) {
 					$options['abort_if_destination_exists'] = false;

@@ -16,7 +16,6 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Version_Control_Upgrader_Skin
  *
  * Upgrader skin for version rollback and version sync operations.
- * @package WP_Table_Builder\Inc\Admin\Managers
  */
 class Version_Control_Upgrader_Skin extends WP_Upgrader_Skin {
 	/**
