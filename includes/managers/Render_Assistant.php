@@ -29,7 +29,7 @@ class Render_Assistant {
 	 */
 	public function inject_render_data( $block ) {
 		$block_name      = $block['blockName'];
-		$is_plugin_block = preg_match( '/^ub\/(.+)$/', $block_name );
+		$is_plugin_block = ! is_null( $block_name ) && preg_match( '/^ub\/(.+)$/', $block_name );
 
 		// only inject render data to plugin blocks
 		if ( $is_plugin_block ) {
