@@ -89,7 +89,7 @@ class Static_Styles_Manager {
 			$decoded_static_styles = json_decode( base64_decode( $static_styles ), true );
 		}
 
-		$decoded_saved_styles = json_decode( base64_decode( $saved_styles ), true );
+		$decoded_saved_styles = is_null( $saved_styles ) ? null : json_decode( base64_decode( $saved_styles ), true );
 
 		$final_styles = [];
 		if ( ! is_null( $decoded_saved_styles ) ) {
