@@ -89,11 +89,12 @@ const generateIgnoreList = () => {
  *
  * @param {string} outputPath path to version info file
  */
-const writeVersionInfo = (outputPath) => {
-	const writeData = { version };
+const writeFileInfo = (outputPath) => {
+	const currentEnv = process.env.NODE_ENV || 'development';
+	const writeData = { version, mode: currentEnv };
 	fs.writeFileSync(
-		path.join(outputPath, 'version.json'),
-		JSON.stringify(writeData)
+		path.join(outputPath, 'info.json'),
+		JSON.stringify(writeData, null, 2)
 	);
 };
 
@@ -104,4 +105,4 @@ const ignoreList = generateIgnoreList();
 
 // compress plugin
 compress(zipOutputPath, ignoreList);
-writeVersionInfo(outputPath);
+writeFileInfo(outputPath);

@@ -6,8 +6,9 @@
 		"start": "concurrently -k \"wp-scripts start\" \"node recompileOnChange.js\"",
 		"bundle_additional_watch": "parcel watch ./admin/js/src/*.js --dist-dir ./bundle-dist --no-hmr",
 		"bundle_additional_build": "parcel build ./admin/js/src/*.js --dist-dir ./bundle-dist --no-cache --no-source-maps",
-		"build": "wp-scripts build && node recompile.js && npm run bundle_additional_build && npm run compress-plugin",
-		"compress-plugin": "node ./pluginCompress.js ultimate-blocks.zip"
+		"build": "wp-scripts build && node recompile.js && npm run bundle_additional_build && npm run compress-plugin-prod",
+		"compress-plugin-dev": "cross-env NODE_ENV=development node ./pluginCompress.js ultimate-blocks.zip",
+		"compress-plugin-prod": "cross-env NODE_ENV=production node ./pluginCompress.js ultimate-blocks.zip"
 	},
 	"alias": {
 		"$Containers": "./admin/js/src/containers",
@@ -53,6 +54,7 @@
 		"@wordpress/scripts": "^23.2.0",
 		"archiver": "^5.3.1",
 		"concurrently": "^7.2.1",
+		"cross-env": "^7.0.3",
 		"css-loader": "^6.7.1",
 		"eslint-import-resolver-custom-alias": "^1.3.0",
 		"eslint-import-resolver-webpack": "^0.13.2",
