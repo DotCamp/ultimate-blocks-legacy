@@ -196,7 +196,8 @@ class Version_Sync_Manager {
 	 */
 	public static function subscribe( $slug, $instance ) {
 		if ( is_subclass_of( $instance,
-			'\Ultimate_Blocks\includes\common\base\Version_Sync_Base' ) ) {
+				'\Ultimate_Blocks\includes\common\base\Version_Sync_Base' ) || is_subclass_of( $instance,
+				'\Ultimate_Blocks_Pro\Inc\Common\Base\Version_Sync_Base' ) ) {
 			static::$subscribers[ $slug ] = $instance;
 		}
 	}
