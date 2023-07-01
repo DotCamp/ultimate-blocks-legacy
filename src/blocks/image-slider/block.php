@@ -52,13 +52,12 @@ function ub_register_image_slider_block(){
 }
 
 function ub_image_slider_add_frontend_assets() {
+	wp_register_script(
+		'ultimate_blocks-swiper',
+		plugins_url( '/swiper-bundle.js', __FILE__ ),
+		array(),
+		Ultimate_Blocks_Constants::plugin_version());
     if ( has_block( 'ub/image-slider' ) ) {
-        wp_register_script(
-            'ultimate_blocks-swiper',
-            plugins_url( '/swiper-bundle.js', __FILE__ ),
-            array(),
-            Ultimate_Blocks_Constants::plugin_version());
-
         wp_enqueue_script(
             'ultimate_blocks-image-slider-init-script',
             plugins_url( '/front.build.js', __FILE__ ),

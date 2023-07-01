@@ -138,6 +138,7 @@ That's it. You're done!
 * FIX: PHP 8.1 compatibility updates.
 * PRO: FIX: Some client libraries not being included in plugin zip file.
 * PRO: FIX: Tabbed content saved styles overwriting none style related block attributes.
+* PRO: FIX: Image slider dependency not being available.
 
 = 3.0.0 =
 
