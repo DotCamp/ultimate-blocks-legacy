@@ -134,7 +134,9 @@ That's it. You're done!
 
 = 3.0.1 =
 
-* PRO: FIX: Some of client libraries not being included in plugin zip file.
+* IMPROVE: Version synchronization.
+* FIX: PHP 8.1 compatibility updates.
+* PRO: FIX: Some client libraries not being included in plugin zip file.
 * PRO: FIX: Tabbed content saved styles overwriting none style related block attributes.
 
 = 3.0.0 =
