@@ -1,6 +1,6 @@
 {
 	"name": "ultimate-blocks",
-	"version": "3.0.1-dev",
+	"version": "3.0.1",
 	"private": true,
 	"scripts": {
 		"start": "concurrently -k \"wp-scripts start\" \"node recompileOnChange.js\"",
