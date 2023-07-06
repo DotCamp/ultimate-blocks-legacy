@@ -43,7 +43,9 @@ class Pro_Manager {
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
 
-			add_filter( 'add_menu_classes', [ $this, 'pro_dashboard_sidebar_notifications' ], 10, 1 );
+			// @deprecated removed for better user experience
+//			add_filter( 'add_menu_classes', [ $this, 'pro_dashboard_sidebar_notifications' ], 10, 1 );
+
 			add_action( 'admin_enqueue_scripts', [ $this, 'menu_operations' ], 10, 1 );
 		}
 
