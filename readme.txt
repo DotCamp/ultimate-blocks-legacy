@@ -139,6 +139,7 @@ That's it. You're done!
 * PRO: FIX: Some client libraries not being included in plugin zip file.
 * PRO: FIX: Tabbed content saved styles overwriting none style related block attributes.
 * PRO: FIX: Image slider dependency not being available.
+* PRO: FIX: Assigned default styles being applied to previously inserted blocks on edit.
 
 = 3.0.0 =
 
