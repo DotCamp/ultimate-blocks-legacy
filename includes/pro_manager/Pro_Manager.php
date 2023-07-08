@@ -136,7 +136,7 @@ class Pro_Manager {
 					'slug'       => 'ultimate-blocks-settings',
 					'first-path' => 'admin.php?page=ultimate-blocks-help',
 					'account'    => true,
-					'contact'    => false,
+					'contact'    => true,
 					'support'    => false,
 				],
 				'secret_key'          => Env_Manager::get( 'FS_SECRET_KEY' ),
