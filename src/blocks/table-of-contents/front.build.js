@@ -3,35 +3,28 @@
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
-
 if (!Element.prototype.closest) {
   Element.prototype.closest = function (s) {
     var el = this;
-
     do {
       if (el.matches(s)) return el;
       el = el.parentElement || el.parentNode;
     } while (el !== null && el.nodeType === 1);
-
     return null;
   };
 }
-
 function ub_hashHeaderScroll() {
   var scrollType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "auto";
   var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
   var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-
   if (window.location.hash) {
     var targetHeading = document.getElementById(window.location.hash.slice(1));
     var probableHeaders;
-
     try {
       probableHeaders = document.elementsFromPoint(window.innerWidth / 2, 0);
     } catch (e) {
       probableHeaders = document.msElementsFromPoint(window.innerWidth / 2, 0);
     }
-
     var stickyHeaders = Array.prototype.slice.call(probableHeaders).filter(function (e) {
       return ["fixed", "sticky"].includes(window.getComputedStyle(e).position);
     });
@@ -39,40 +32,32 @@ function ub_hashHeaderScroll() {
       return h.offsetHeight;
     });
     var deficit = targetHeading.getBoundingClientRect().y || targetHeading.getBoundingClientRect().top;
-
     switch (scrollType) {
       default:
         window.scrollBy(0, deficit);
         break;
-
       case "off":
         window.scrollBy(0, deficit);
         break;
-
       case "auto":
         window.scrollBy(0, deficit - (stickyHeaders.length ? Math.max.apply(Math, stickyHeaderHeights) : 0));
         break;
-
       case "fixedamount":
         window.scrollBy(0, deficit - offset);
         break;
-
       case "namedelement":
         window.scrollBy(0, deficit - (document.querySelector(target) ? document.querySelector(target).offsetHeight : 0));
         break;
     }
   }
 }
-
 document.addEventListener("DOMContentLoaded", function () {
   var instances = [];
-
   if (document.getElementById("ub_table-of-contents-toggle-link")) {
     instances.push(document.getElementById("ub_table-of-contents-toggle-link"));
   } else {
     instances = Array.prototype.slice.call(document.getElementsByClassName("ub_table-of-contents-toggle-link"));
   }
-
   instances.forEach(function (instance) {
     var block = instance.closest(".ub_table-of-contents");
     var tocContainer = block.querySelector(".ub_table-of-contents-container");
@@ -85,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var hideButton = block.getAttribute("data-hidetext") || "hide";
     tocContainer.removeAttribute("style");
     var padding = 60;
-
     function mobileEvent(mql) {
       if (mql.matches) {
         if (!tocMain.classList.contains("ub_table-of-contents-collapsed")) {
@@ -101,23 +85,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     }
-
     var mobileQuery = window.matchMedia("(max-width: 800px)");
-
     if (JSON.parse(block.getAttribute("data-initiallyhideonmobile"))) {
       mobileQuery.addListener(mobileEvent);
     }
-
     instance.addEventListener("click", function (event) {
       event.preventDefault();
       var curWidth = block.offsetWidth;
-
       if (block.classList.contains("ub_table-of-contents-collapsed")) {
         //begin showing
         tocExtraContainer.classList.remove("ub-hide");
         tocContainer.classList.remove("ub-hide");
         var targetHeight = tocExtraContainer.offsetHeight + padding / 2; //doesn't include padding
-
         tocContainer.classList.add("ub-hiding");
         tocExtraContainer.classList.add("ub-hiding");
         mainStyle.width = "".concat(curWidth, "px"); //also take into account number of columns
@@ -167,12 +146,13 @@ document.addEventListener("DOMContentLoaded", function () {
             width: "0"
           });
           block.classList.add("ub_table-of-contents-collapsed");
-          padding = parseInt(getComputedStyle(tocExtraContainer).paddingLeft.slice(0, -2)) + parseInt(getComputedStyle(tocExtraContainer).paddingRight.slice(0, -2)); //measure width of toc title + toggle button, then use it as width of block
+          padding = parseInt(getComputedStyle(tocExtraContainer).paddingLeft.slice(0, -2)) + parseInt(getComputedStyle(tocExtraContainer).paddingRight.slice(0, -2));
+
+          //measure width of toc title + toggle button, then use it as width of block
 
           mainStyle.width = "".concat(5 + padding + instance.closest(".ub_table-of-contents-header-container").scrollWidth, "px");
         }, 50);
       }
-
       instance.innerHTML = tocContainer.classList.contains("ub-hiding") ? hideButton : showButton;
       mobileQuery.removeListener(mobileEvent);
     });
@@ -183,18 +163,14 @@ document.addEventListener("DOMContentLoaded", function () {
         tocContainer.classList.add("ub-hide");
         tocExtraContainer.classList.remove("ub-hiding");
         tocExtraContainer.classList.add("ub-hide");
-
         if (containerStyle.display === "block") {
           containerStyle.display = "";
         }
-
         if (extraContainerStyle.display === "block") {
           extraContainerStyle.display = "";
         }
-
         mainStyle.minWidth = "";
       }
-
       Object.assign(containerStyle, {
         height: "",
         width: ""
@@ -206,10 +182,8 @@ document.addEventListener("DOMContentLoaded", function () {
       mainStyle.width = "";
     });
   });
-
   if (window.location.hash) {
     var sourceToC = document.querySelector(".ub_table-of-contents");
-
     if (sourceToC) {
       var type = sourceToC.dataset.scrolltype;
       var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
@@ -220,10 +194,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-
 window.onhashchange = function () {
   var sourceToC = document.querySelector(".ub_table-of-contents");
-
   if (sourceToC) {
     var type = sourceToC.dataset.scrolltype;
     var offset = type === "fixedamount" ? sourceToC.dataset.scrollamount : 0;
@@ -231,13 +203,11 @@ window.onhashchange = function () {
     ub_hashHeaderScroll(type, target, offset);
   }
 };
-
 Array.prototype.slice.call(document.querySelectorAll(".ub_table-of-contents-container li > a")).forEach(function (link) {
   link.addEventListener("click", function (e) {
     var hashlessLink = link.href.replace(link.hash, "");
     var targetPageNumber = /[?&]page=\d+/g.exec(hashlessLink);
     var currentPageNumber = /[?&]page=\d+/g.exec(window.location.search);
-
     if (window.location.href.includes(hashlessLink) && (currentPageNumber === null || targetPageNumber && currentPageNumber[0] === targetPageNumber[0])) {
       var tocData = link.closest(".ub_table-of-contents").dataset;
       var type = tocData.scrolltype;

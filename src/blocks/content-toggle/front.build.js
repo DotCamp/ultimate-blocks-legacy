@@ -3,7 +3,6 @@
 function convertToPixels(amount, unit) {
   return unit === "%" ? amount / 100 * window.innerWidth : amount;
 }
-
 function togglePanel(target) {
   var topPadding = 0;
   var topPaddingUnit = "";
@@ -12,7 +11,6 @@ function togglePanel(target) {
   var indicator = target.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
   var panelContent = target.nextElementSibling;
   var toggleContainer = target.parentElement.parentElement;
-
   if (panelContent.classList.contains("ub-hide")) {
     var panelStyle = getComputedStyle(panelContent);
     var topUnitMatch = /[^\d.]/g.exec(panelStyle.paddingTop);
@@ -23,7 +21,6 @@ function togglePanel(target) {
     bottomPaddingUnit = panelStyle.paddingBottom.slice(bottomUnitMatch.index);
     panelContent.classList.remove("ub-hide");
     panelContent.classList.add("ub-hiding");
-
     if ("showonlyone" in toggleContainer.dataset && toggleContainer.dataset.showonlyone) {
       var siblingToggles = Array.prototype.slice.call(toggleContainer.children).map(function (p) {
         return p.children[0];
@@ -33,7 +30,6 @@ function togglePanel(target) {
       siblingToggles.forEach(function (siblingToggle) {
         var siblingContent = siblingToggle.nextElementSibling;
         var siblingIndicator = siblingToggle.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
-
         if (!siblingContent.classList.contains("ub-hide")) {
           if (siblingIndicator) siblingIndicator.classList.remove("open");
           siblingContent.classList.add("ub-toggle-transition");
@@ -48,7 +44,6 @@ function togglePanel(target) {
   } else {
     panelContent.style.height = getComputedStyle(panelContent).height;
   }
-
   panelContent.classList.add("ub-toggle-transition");
   if (indicator) indicator.classList.toggle("open");
   setTimeout(function () {
@@ -77,7 +72,6 @@ function togglePanel(target) {
     embeddedContent.style.removeProperty("height");
   });
 }
-
 Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-toggle")).forEach(function (toggleContainer) {
   var toggleHeads = Array.prototype.slice.call(toggleContainer.children).map(function (toggle) {
     return toggle.children[0];
@@ -90,48 +84,40 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
         e.preventDefault();
         toggleHeads[i - 1].focus();
       }
-
       if (e.key === "ArrowDown" && i < toggleHeads.length - 1) {
         e.preventDefault();
         toggleHeads[i + 1].focus();
       }
-
       if ([" ", "Enter"].indexOf(e.key) > -1) {
         e.preventDefault();
         togglePanel(toggleHead);
       }
-
       if (e.key === "Home" && i > 0) {
         e.preventDefault();
         toggleHeads[0].focus();
       }
-
       if (e.key === "End" && i < toggleHeads.length - 1) {
         e.preventDefault();
         toggleHeads[toggleHeads.length - 1].focus();
       }
     });
   });
-
   if (!toggleContainer.hasAttribute("data-preventcollapse")) {
     var parentIsHidden = false;
     var parentClassIsHidden = false;
     var targetElement = toggleContainer;
-
     while (!(parentIsHidden || parentClassIsHidden) && targetElement.parentElement.tagName !== "BODY") {
       targetElement = targetElement.parentElement;
-
       if (targetElement.style.display === "none") {
         parentIsHidden = true;
       }
-
       if (getComputedStyle(targetElement).display === "none") {
         parentClassIsHidden = true;
       }
     }
-
     if (parentClassIsHidden || parentIsHidden) {
-      toggleContainer.parentElement.style.setProperty("display", "block", //make the parent block display to give way for height measurements
+      toggleContainer.parentElement.style.setProperty("display", "block",
+      //make the parent block display to give way for height measurements
       "important" //just in case blocks from other plugins use !important
       );
     }
@@ -149,7 +135,6 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
       panelContent.addEventListener("transitionend", function () {
         panelContent.classList.remove("ub-toggle-transition");
         panelContent.previousElementSibling.setAttribute("aria-expanded", panelContent.offsetHeight !== 0);
-
         if (panelContent.offsetHeight === 0) {
           panelContent.classList.add("ub-hide");
         } else {
@@ -159,16 +144,15 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
             paddingBottom: ""
           });
         }
-
         panelContent.classList.remove("ub-hiding");
       });
       panelContent.removeAttribute("style");
-    }); //hide the parent element again;
+    });
 
+    //hide the parent element again;
     if (parentIsHidden) {
       toggleContainer.parentElement.style.display = "none";
     }
-
     if (parentClassIsHidden) {
       toggleContainer.parentElement.style.display = "";
     }
@@ -179,7 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.innerWidth < 700 && JSON.parse(toggleContainer.dataset.mobilecollapse)) {
       Array.prototype.slice.call(toggleContainer.children).forEach(function (child) {
         var panel = child.children[0].nextElementSibling;
-
         if (!panel.classList.contains("ub-hide")) {
           togglePanel(child.children[0]);
         }

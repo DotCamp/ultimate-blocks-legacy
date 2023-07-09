@@ -2243,5 +2243,21 @@ $defaultValues = array(
 				'default' => 30
 			]
 		]
-	]
+	],
+	'ub/icon'            => array(
+		'attributes' => array(
+			'iconName' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'svgIcon'  => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'size'     => array(
+				'type'    => 'number',
+				'default' => 30
+			)
+		)
+	)
 );

@@ -1,6 +1,7 @@
 "use strict";
 
 /* eslint-disable */
+
 Array.prototype.slice.call(document.getElementsByClassName("ub-button-block-main")).forEach(function (instance) {
   if (instance.hasAttribute("data-defaultcolor")) {
     instance.addEventListener("mouseenter", function () {
