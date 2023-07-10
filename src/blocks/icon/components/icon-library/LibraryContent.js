@@ -16,7 +16,6 @@ function Content(props) {
 
 	const { mainCategoryFilter, onSelect, subCategoryFilter, search, value } =
 		props;
-	console.log(value);
 	useEffect(() => {
 		const iconObj = ultimateIcons.find(
 			(obj) => obj.type === mainCategoryFilter

@@ -8,8 +8,8 @@
 			fill: var(--ub-icon-color);
 			background: var(--ub-icon-bg-color);
 			&:hover {
-				fill: var(--ub-icon-hover-color);
-				background: var(--ub-icon-bg-hover-color);
+				fill: var(--ub-icon-hover-color, var(--ub-icon-color));
+				background: var(--ub-icon-bg-hover-color, var(--ub-icon-bg-color));
 			}
 		}
 	}

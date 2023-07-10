@@ -52,6 +52,15 @@ const attributes = {
 		type: "string",
 		default: "",
 	},
+	linkUrl: {
+		type: "string",
+	},
+	linkRel: {
+		type: "string",
+	},
+	linkTarget: {
+		type: "string",
+	},
 };
 registerPluginBlock("ub/icon", {
 	title: __("Icon", "ultimate-blocks"),
@@ -60,7 +69,7 @@ registerPluginBlock("ub/icon", {
 	attributes,
 	supports: {
 		html: false,
-		align: true,
+		align: ["wide", "full"],
 		anchor: true,
 	},
 	edit: Edit,

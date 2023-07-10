@@ -9,6 +9,7 @@ import {
 	useBlockEditContext,
 	JustifyContentControl,
 } from "@wordpress/block-editor";
+import CustomLinkControl from "./components/LinkControl";
 
 function CustomBlockControls({ onSelect }) {
 	const { clientId } = useBlockEditContext();
@@ -31,6 +32,10 @@ function CustomBlockControls({ onSelect }) {
 					}}
 				/>
 			</ToolbarGroup>
+			<CustomLinkControl
+				attributes={attributes}
+				setAttributes={setAttributes}
+			/>
 			<ToolbarGroup>
 				<ToolbarButton onClick={onSelect}>
 					{__("Replace Icon", "ultimate-blocks")}

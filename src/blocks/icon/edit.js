@@ -1,20 +1,19 @@
 /**
  * WordPress Dependencies
  */
+import { isEmpty } from "lodash";
 import { __ } from "@wordpress/i18n";
 import { useState } from "@wordpress/element";
+import { Modal } from "@wordpress/components";
 /**
  * Custom Imports
  */
-import Placeholder from "./components/Placeholder";
-import { Modal } from "@wordpress/components";
-import { invoke, get, isEmpty } from "lodash";
-
-import IconsLibrary from "./components/icon-library";
 import { ultimateIcons } from "./icons";
-import CustomBlockControls from "./block-controls";
-import CustomInspectorControls from "./inspector";
 import { getStyles } from "./get-styles";
+import CustomInspectorControls from "./inspector";
+import CustomBlockControls from "./block-controls";
+import Placeholder from "./components/Placeholder";
+import IconsLibrary from "./components/icon-library";
 
 function Edit(props) {
 	const [isLibraryOpen, setLibraryOpen] = useState(false);

@@ -2285,7 +2285,19 @@ $defaultValues = array(
 			'justification' 	=> array(
 				'type'		=> "string",
 				'default'		=> ''
-			)
+			),
+			'linkUrl' => array(
+				'type' => 'string',
+				'default'	=> ''
+			),
+			'linkRel' => array(
+				'type' => 'string',
+				'default'	=> ''
+			),
+			'linkTarget' => array(
+				'type' => 'string',
+				'default'	=> ''
+			),
 		)
 	)
 );
