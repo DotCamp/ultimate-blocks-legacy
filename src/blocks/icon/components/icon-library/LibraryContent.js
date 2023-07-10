@@ -16,7 +16,7 @@ function Content(props) {
 
 	const { mainCategoryFilter, onSelect, subCategoryFilter, search, value } =
 		props;
-
+	console.log(value);
 	useEffect(() => {
 		const iconObj = ultimateIcons.find(
 			(obj) => obj.type === mainCategoryFilter
@@ -55,7 +55,7 @@ function Content(props) {
 							key={icon?.name}
 							className="ub_icon_library_item"
 							onClick={() =>
-								onSelect({ iconName: icon.name, type: mainCategoryFilter})
+								onSelect({ iconName: icon.name, type: mainCategoryFilter })
 							}
 							isPressed={icon?.name === value}
 						>

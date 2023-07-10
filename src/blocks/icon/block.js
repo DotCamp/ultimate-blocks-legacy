@@ -21,8 +21,36 @@ const attributes = {
 		default: "",
 	},
 	size: {
-		type: "number",
-		default: 30,
+		type: "string",
+		default: "40px",
+	},
+	iconColor: {
+		type: "string",
+		default: null,
+	},
+	iconHoverColor: {
+		type: "string",
+		default: null,
+	},
+	iconBackground: {
+		type: "string",
+		default: null,
+	},
+	iconHoverBackground: {
+		type: "string",
+		default: null,
+	},
+	iconGradientBackground: {
+		type: "string",
+		default: null,
+	},
+	iconHoverGradientBackground: {
+		type: "string",
+		default: null,
+	},
+	justification: {
+		type: "string",
+		default: "",
 	},
 };
 registerPluginBlock("ub/icon", {
@@ -30,6 +58,11 @@ registerPluginBlock("ub/icon", {
 	category: "ultimateblocks",
 	icon: blockIcon,
 	attributes,
+	supports: {
+		html: false,
+		align: true,
+		anchor: true,
+	},
 	edit: Edit,
 	save: Save,
 });

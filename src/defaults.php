@@ -2255,8 +2255,36 @@ $defaultValues = array(
 				'default' => ''
 			),
 			'size'     => array(
-				'type'    => 'number',
-				'default' => 30
+				'type'    => 'string',
+				'default' => "40px"
+			),
+			'iconColor' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconHoverColor' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconHoverBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconGradientBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconHoverGradientBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'justification' 	=> array(
+				'type'		=> "string",
+				'default'		=> ''
 			)
 		)
 	)

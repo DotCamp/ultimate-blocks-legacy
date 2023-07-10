@@ -13,6 +13,8 @@ import { invoke, get, isEmpty } from "lodash";
 import IconsLibrary from "./components/icon-library";
 import { ultimateIcons } from "./icons";
 import CustomBlockControls from "./block-controls";
+import CustomInspectorControls from "./inspector";
+import { getStyles } from "./get-styles";
 
 function Edit(props) {
 	const [isLibraryOpen, setLibraryOpen] = useState(false);
@@ -28,8 +30,10 @@ function Edit(props) {
 			?.icons?.find((ic) => ic.name === icon.iconName) ?? "";
 	const hasIcon = !isEmpty(icon);
 
+	const blockStyles = getStyles(props.attributes);
+
 	return (
-		<div className={className}>
+		<div className={className} style={blockStyles}>
 			{!hasIcon && isEmpty(svgIcon) && (
 				<Placeholder setLibraryOpen={setLibraryOpen} />
 			)}
@@ -42,7 +46,7 @@ function Edit(props) {
 					onRequestClose={() => setLibraryOpen(false)}
 				>
 					<IconsLibrary
-						value={icon?.name}
+						value={finalIcon?.name}
 						onSelect={(newIcon) => {
 							setAttributes({ icon: newIcon });
 							setLibraryOpen(false);
@@ -51,6 +55,7 @@ function Edit(props) {
 				</Modal>
 			)}
 			{hasIcon && <CustomBlockControls onSelect={() => setLibraryOpen(true)} />}
+			<CustomInspectorControls {...props} />
 		</div>
 	);
 }
