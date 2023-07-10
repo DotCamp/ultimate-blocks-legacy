@@ -42,4 +42,4 @@ import "./blocks/advanced-heading/block";
 import "./blocks/advanced-video/block";
 
 import "./blocks/icon-inner/block";
-import "./blocks/icon-block/block";
+import "./blocks/icon/block";

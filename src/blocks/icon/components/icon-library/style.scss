@@ -1,0 +1,84 @@
+.ub_icons_library_modal {
+	.components-modal__content {
+		overflow: hidden;
+		padding: 0 0px 32px 32px !important;
+
+		.ub_icons_library {
+			display: grid;
+			grid-gap: 15px;
+			grid-template-columns: 1fr 4fr;
+			margin-top: 3px;
+			.ub_icon_library_content_wrapper {
+				overflow: auto;
+				max-height: calc(90vh - 100px);
+				text-align: center;
+				padding-bottom: 15px;
+				.ub_icon_library_content {
+					&:not(.no-results) {
+						display: grid;
+						padding-right: 15px;
+						padding-bottom: 10px;
+						grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+					}
+
+					.ub_icon_library_item {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						height: 70px;
+						flex-direction: column;
+						svg {
+							width: 24px;
+						}
+						&:focus {
+							border: 1px solid #000;
+						}
+
+						&:hover {
+							border: 1px solid #000;
+						}
+					}
+				}
+			}
+
+			.ub_icons_library_sidebar {
+				position: sticky;
+				top: 0;
+
+				.ub_icons_library_sidebar_item_group {
+					overflow-y: auto;
+					padding: 10px;
+					max-height: calc(90vh - 155px);
+
+					.ub_icons_library_sidebar_item > .components-menu-item__item {
+						width: 100%;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+					}
+				}
+			}
+		}
+	}
+
+	/**Media query***/
+
+	$small: 600px;
+
+	@media (max-width: $small) {
+		.components-modal__content {
+			padding: 0 32px 32px 32px !important;
+			overflow: auto;
+			.ub_icons_library {
+				display: grid;
+				grid-template-columns: repeat(1, 1fr);
+				.ub_icons_library_sidebar {
+					position: relative;
+				}
+				.ub_icon_library_content {
+					max-height: 100% !important;
+				}
+			}
+		}
+	}
+}
