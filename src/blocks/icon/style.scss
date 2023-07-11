@@ -3,10 +3,12 @@
 		display: flex;
 		justify-content: var(--ub-icon-justification);
 		svg {
+			fill: var(--ub-icon-color);
+			color: var(--ub-icon-color);
 			width: var(--ub-icon-size, 40px);
 			height: var(--ub-icon-size, 40px);
-			fill: var(--ub-icon-color);
 			background: var(--ub-icon-bg-color);
+
 			&:hover {
 				fill: var(--ub-icon-hover-color, var(--ub-icon-color));
 				background: var(--ub-icon-bg-hover-color, var(--ub-icon-bg-color));

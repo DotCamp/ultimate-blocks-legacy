@@ -3,13 +3,15 @@
  */
 import { __ } from "@wordpress/i18n";
 import { Placeholder as WPPlaceHolder, Button } from "@wordpress/components";
+import { useSelect, useDispatch } from "@wordpress/data";
+import { useBlockEditContext } from "@wordpress/block-editor";
+
 /**
  * Custom import
  */
 import { blockIcon } from "../icons/block-icon";
 function Placeholder(props) {
-	const { setLibraryOpen } = props;
-
+	const { setLibraryOpen, setCustomInserterOpen } = props;
 	return (
 		<WPPlaceHolder
 			icon={blockIcon}
@@ -23,6 +25,9 @@ function Placeholder(props) {
 			<div className="ub_placeholder_inner_wrapper">
 				<Button variant="primary" onClick={() => setLibraryOpen(true)}>
 					{__("Icon Library", "ultimate-blocks")}
+				</Button>
+				<Button variant="tertiary" onClick={() => setCustomInserterOpen(true)}>
+					{__("Insert Custom SVG", "ultimate-blocks")}
 				</Button>
 			</div>
 		</WPPlaceHolder>

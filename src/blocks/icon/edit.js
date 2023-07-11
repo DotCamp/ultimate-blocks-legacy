@@ -14,29 +14,49 @@ import CustomInspectorControls from "./inspector";
 import CustomBlockControls from "./block-controls";
 import Placeholder from "./components/Placeholder";
 import IconsLibrary from "./components/icon-library";
+import CustomInserterModal from "./components/CustomSvgInserter";
 
 function Edit(props) {
 	const [isLibraryOpen, setLibraryOpen] = useState(false);
+	const [isCustomInserterOpen, setCustomInserterOpen] = useState(false);
 	const {
 		className,
 		setAttributes,
 		attributes: { icon, svgIcon },
 	} = props;
-
-	const finalIcon =
-		ultimateIcons
-			.find((obj) => obj.type === icon?.type)
-			?.icons?.find((ic) => ic.name === icon.iconName) ?? "";
 	const hasIcon = !isEmpty(icon);
+	const hasSVGIcon = !isEmpty(svgIcon);
+
+	const finalIcon = hasIcon
+		? ultimateIcons
+				.find((obj) => obj.type === icon?.type)
+				?.icons?.find((ic) => ic.name === icon.iconName)?.icon ?? ""
+		: svgIcon;
 
 	const blockStyles = getStyles(props.attributes);
 
+	const customInserterProps = {
+		attributes: props.attributes,
+		setAttributes,
+		isCustomInserterOpen,
+		setCustomInserterOpen,
+	};
+
 	return (
 		<div className={className} style={blockStyles}>
-			{!hasIcon && isEmpty(svgIcon) && (
-				<Placeholder setLibraryOpen={setLibraryOpen} />
+			{!hasIcon && !hasSVGIcon && (
+				<Placeholder
+					setCustomInserterOpen={setCustomInserterOpen}
+					setLibraryOpen={setLibraryOpen}
+				/>
 			)}
-			{hasIcon && <div className="ub_icon">{finalIcon?.icon}</div>}
+			{hasSVGIcon && (
+				<div
+					className="ub_icon"
+					dangerouslySetInnerHTML={{ __html: finalIcon }}
+				></div>
+			)}
+			{hasIcon && <div className="ub_icon">{finalIcon}</div>}
 			{isLibraryOpen && (
 				<Modal
 					isFullScreen
@@ -53,7 +73,10 @@ function Edit(props) {
 					/>
 				</Modal>
 			)}
-			{hasIcon && <CustomBlockControls onSelect={() => setLibraryOpen(true)} />}
+			{isCustomInserterOpen && <CustomInserterModal {...customInserterProps} />}
+			{(hasIcon || hasSVGIcon) && (
+				<CustomBlockControls onSelect={() => setLibraryOpen(true)} />
+			)}
 			<CustomInspectorControls {...props} />
 		</div>
 	);

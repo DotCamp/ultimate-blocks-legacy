@@ -1315,6 +1315,9 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/advanced-heading/block.php';
 // Advanced Video
 require_once plugin_dir_path( __FILE__ ) . 'blocks/advanced-video/block.php';
 
+// Icon
+require_once plugin_dir_path( __FILE__ ) . 'blocks/icon/block.php';
+
 
 /**
  * Innerblocks.
