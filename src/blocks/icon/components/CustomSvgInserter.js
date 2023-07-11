@@ -35,8 +35,8 @@ export default function CustomInserterModal(props) {
 	function insertCustomIcon() {
 		if (isSVG) {
 			setAttributes({
-				svgIcon: customIcon,
 				icon: {},
+				svgIcon: customIcon,
 			});
 			setCustomInserterOpen(false);
 		}

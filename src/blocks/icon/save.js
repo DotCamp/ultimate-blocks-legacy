@@ -4,12 +4,16 @@ import { getStyles } from "./get-styles";
 
 function Save(props) {
 	const {
-		attributes: { icon, linkTarget, linkUrl, linkRel },
+		attributes: { icon, linkTarget, linkUrl, linkRel, svgIcon },
 	} = props;
-	const finalIcon =
-		ultimateIcons
-			.find((obj) => obj.type === icon?.type)
-			?.icons?.find((ic) => ic.name === icon.iconName) ?? "";
+	const hasIcon = !isEmpty(icon);
+	const hasSVGIcon = !isEmpty(svgIcon);
+
+	const finalIcon = hasIcon
+		? ultimateIcons
+				.find((obj) => obj.type === icon?.type)
+				?.icons?.find((ic) => ic.name === icon.iconName)?.icon ?? ""
+		: svgIcon;
 
 	const blockStyles = getStyles(props.attributes);
 
@@ -23,11 +27,21 @@ function Save(props) {
 		  };
 	return (
 		<div className={props.className} style={blockStyles}>
-			{!isEmpty(icon) && (
+			{hasIcon && (
 				<div className="ub_icon">
 					<Tag className="ub_icon_wrapper" {...anchorAttributes}>
-						{finalIcon?.icon}
+						{finalIcon}
 					</Tag>
+				</div>
+			)}
+
+			{hasSVGIcon && !hasIcon && (
+				<div className="ub_icon">
+					<Tag
+						{...anchorAttributes}
+						className="ub_icon_wrapper"
+						dangerouslySetInnerHTML={{ __html: finalIcon }}
+					></Tag>
 				</div>
 			)}
 		</div>

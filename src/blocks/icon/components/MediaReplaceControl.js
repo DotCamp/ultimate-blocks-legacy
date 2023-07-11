@@ -1,69 +1,56 @@
-function MediaReplaceControl() {
+/**
+ * WordPress dependencies
+ */
+import { __ } from "@wordpress/i18n";
+import { MenuGroup, MenuItem, DropdownMenu } from "@wordpress/components";
+import { code } from "@wordpress/icons";
+import { blockIcon } from "../icons/block-icon";
+
+function IconReplaceControl({ onReset, onLibraryOpen, onCustomInserterOpen }) {
 	return (
-		<Dropdown
-			popoverProps={popoverProps}
-			contentClassName="block-editor-media-replace-flow__options"
-			renderToggle={({ isOpen, onToggle }) => (
-				<ToolbarButton
-					ref={editMediaButtonRef}
-					aria-expanded={isOpen}
-					aria-haspopup="true"
-					onClick={onToggle}
-					onKeyDown={openOnArrowDown}
-				>
-					{name}
-				</ToolbarButton>
-			)}
-			renderContent={({ onClose }) => (
+		<DropdownMenu
+			icon=""
+			popoverProps={{
+				className: "outermost-ultimate-blocks__replace-popover is-alternate",
+			}}
+			text={__("Replace", "ultimate-blocks")}
+		>
+			{({ onClose }) => (
 				<>
-					<NavigableMenu className="block-editor-media-replace-flow__media-upload-menu">
-						<MediaUploadCheck>
-							<MediaUpload
-								gallery={gallery}
-								addToGallery={addToGallery}
-								multiple={multiple}
-								value={multiple ? mediaIds : mediaId}
-								onSelect={(media) => selectMedia(media, onClose)}
-								allowedTypes={allowedTypes}
-								render={({ open }) => (
-									<MenuItem icon={mediaIcon} onClick={open}>
-										{__("Open Media Library")}
-									</MenuItem>
-								)}
-							/>
-							<FormFileUpload
-								onChange={(event) => {
-									uploadFiles(event, onClose);
-								}}
-								accept={accept}
-								multiple={multiple}
-								render={({ openFileDialog }) => {
-									return (
-										<MenuItem
-											icon={upload}
-											onClick={() => {
-												openFileDialog();
-											}}
-										>
-											{__("Upload")}
-										</MenuItem>
-									);
-								}}
-							/>
-						</MediaUploadCheck>
-						{onToggleFeaturedImage && (
-							<MenuItem
-								icon={postFeaturedImage}
-								onClick={onToggleFeaturedImage}
-								isPressed={useFeaturedImage}
-							>
-								{__("Use featured image")}
-							</MenuItem>
-						)}
-						{children}
-					</NavigableMenu>
+					<MenuGroup>
+						<MenuItem
+							onClick={() => {
+								onLibraryOpen();
+								onClose(true);
+							}}
+							icon={blockIcon}
+						>
+							{__("Open Icon Library", "ultimate-blocks")}
+						</MenuItem>
+
+						<MenuItem
+							onClick={() => {
+								onCustomInserterOpen();
+								onClose(true);
+							}}
+							icon={code}
+						>
+							{__("Change Custom SVG", "ultimate-blocks")}
+						</MenuItem>
+					</MenuGroup>
+					<MenuGroup>
+						<MenuItem
+							onClick={() => {
+								onReset();
+								onClose(true);
+							}}
+						>
+							{__("Clear icon", "ultimate-blocks")}
+						</MenuItem>
+					</MenuGroup>
 				</>
 			)}
-		/>
+		</DropdownMenu>
 	);
 }
+export default IconReplaceControl;

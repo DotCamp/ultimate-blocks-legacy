@@ -50,7 +50,7 @@ function Edit(props) {
 					setLibraryOpen={setLibraryOpen}
 				/>
 			)}
-			{hasSVGIcon && (
+			{hasSVGIcon && !hasIcon && (
 				<div
 					className="ub_icon"
 					dangerouslySetInnerHTML={{ __html: finalIcon }}
@@ -67,7 +67,7 @@ function Edit(props) {
 					<IconsLibrary
 						value={finalIcon?.name}
 						onSelect={(newIcon) => {
-							setAttributes({ icon: newIcon });
+							setAttributes({ icon: newIcon, svgIcon: "" });
 							setLibraryOpen(false);
 						}}
 					/>
@@ -75,7 +75,16 @@ function Edit(props) {
 			)}
 			{isCustomInserterOpen && <CustomInserterModal {...customInserterProps} />}
 			{(hasIcon || hasSVGIcon) && (
-				<CustomBlockControls onSelect={() => setLibraryOpen(true)} />
+				<CustomBlockControls
+					onReset={() =>
+						setAttributes({
+							icon: {},
+							svgIcon: "",
+						})
+					}
+					onLibraryOpen={() => setLibraryOpen(true)}
+					onCustomInserterOpen={() => setCustomInserterOpen(true)}
+				/>
 			)}
 			<CustomInspectorControls {...props} />
 		</div>

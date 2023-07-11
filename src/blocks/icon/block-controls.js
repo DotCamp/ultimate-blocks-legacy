@@ -10,8 +10,9 @@ import {
 	JustifyContentControl,
 } from "@wordpress/block-editor";
 import CustomLinkControl from "./components/LinkControl";
+import IconReplaceControl from "./components/MediaReplaceControl";
 
-function CustomBlockControls({ onSelect }) {
+function CustomBlockControls({ onReset, onLibraryOpen, onCustomInserterOpen }) {
 	const { clientId } = useBlockEditContext();
 
 	const block = useSelect((select) =>
@@ -37,9 +38,11 @@ function CustomBlockControls({ onSelect }) {
 				setAttributes={setAttributes}
 			/>
 			<ToolbarGroup>
-				<ToolbarButton onClick={onSelect}>
-					{__("Replace Icon", "ultimate-blocks")}
-				</ToolbarButton>
+				<IconReplaceControl
+					onReset={onReset}
+					onLibraryOpen={onLibraryOpen}
+					onCustomInserterOpen={onCustomInserterOpen}
+				/>
 			</ToolbarGroup>
 		</BlockControls>
 	);
