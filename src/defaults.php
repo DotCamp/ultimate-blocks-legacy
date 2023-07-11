@@ -2284,7 +2284,7 @@ $defaultValues = array(
 			),
 			'justification' 	=> array(
 				'type'		=> "string",
-				'default'		=> ''
+				'default'		=> 'center'
 			),
 			'linkUrl' => array(
 				'type' => 'string',

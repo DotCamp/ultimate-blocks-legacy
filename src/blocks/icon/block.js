@@ -50,7 +50,7 @@ const attributes = {
 	},
 	justification: {
 		type: "string",
-		default: "",
+		default: "center",
 	},
 	linkUrl: {
 		type: "string",
