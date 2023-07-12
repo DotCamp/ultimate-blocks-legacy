@@ -31,7 +31,7 @@ const ActivateBlockOnStartup = (props) => {
  * @param {Function} Component target block component
  * @return {function(*): *} generated component
  */
-const withActiveBlockOnStartup = (Component) => (props) => {
+const withActivateBlockOnStartup = (Component) => (props) => {
 	return (
 		<DevelopmentComponent>
 			<ActivateBlockOnStartup {...props}>
@@ -44,4 +44,4 @@ const withActiveBlockOnStartup = (Component) => (props) => {
 /**
  * @module ActivateBlockOnStartup
  */
-export default withActiveBlockOnStartup;
+export default withActivateBlockOnStartup;
