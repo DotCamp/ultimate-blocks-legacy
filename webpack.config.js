@@ -3,9 +3,13 @@ const path = require('path');
 const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { DefinePlugin } = require('webpack');
+const DevelopmentComponentIgnore = require('./src/__development/webpack/plugin/DevelopmentComponentIgnore');
 
-module.exports = {
+const prodPlugins = [new DevelopmentComponentIgnore(['DevelopmentComponent'])];
+
+let customConfig = {
 	...defaultConfig,
 	entry: {
 		blocks: path.resolve(process.cwd(), 'src', 'blocks.js'),
@@ -37,3 +41,13 @@ module.exports = {
 		filename: '[name].build.js',
 	},
 };
+
+// assign production mode related properties to config
+if (defaultConfig.mode === 'production') {
+	customConfig = {
+		...customConfig,
+		plugins: [...customConfig.plugins, ...prodPlugins],
+	};
+}
+
+module.exports = customConfig;
