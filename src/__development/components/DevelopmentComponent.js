@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { modeCheckDev } from '$Inc/helpers/modeCheck';
 
 /**
  * DEVELOPMENT
@@ -9,8 +10,6 @@ import React, { useEffect } from 'react';
  * @param {Function | Array | JSX.Element} props.children component children
  */
 function DevelopmentComponent({ children }) {
-	const isDevelopment = UB_ENV && UB_ENV === 'development';
-
 	/**
 	 * useEffect hook
 	 */
@@ -26,7 +25,7 @@ function DevelopmentComponent({ children }) {
 		if (React.isValidElement(child)) {
 			return React.cloneElement(child, {
 				...child.props,
-				isDevelopment,
+				isDevelopment: modeCheckDev(),
 			});
 		}
 		return child;

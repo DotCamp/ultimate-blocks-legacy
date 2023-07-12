@@ -1,4 +1,5 @@
 import deepmerge from 'deepmerge';
+import { currentMode } from '$Inc/helpers/modeCheck';
 
 /**
  * Default store state.
@@ -7,7 +8,7 @@ import deepmerge from 'deepmerge';
  */
 const defaultState = {
 	storeName: null,
-	mode: UB_ENV,
+	mode: currentMode(),
 	app: {
 		upsell: {
 			upsellModalVisibility: false,
