@@ -20,6 +20,7 @@ module.exports = {
 			$Base: path.resolve(__dirname, 'src', 'base'),
 			$Library: path.resolve(__dirname, 'library'),
 			$Manager: path.resolve(__dirname, 'src', 'inc', 'managers'),
+			$Development: path.resolve(__dirname, 'src', '__development'),
 		},
 		extensions: [...defaultConfig.resolve.extensions, '.js'],
 	},
