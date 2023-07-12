@@ -2298,6 +2298,10 @@ $defaultValues = array(
 				'type' => 'string',
 				'default'	=> ''
 			),
+			'iconRotation' => array(
+				'type' => 'number',
+				'default'	=> 0
+			),
 		)
 	)
 );

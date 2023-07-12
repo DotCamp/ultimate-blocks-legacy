@@ -4,34 +4,43 @@
 import { isEmpty } from "lodash";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
-import { SearchControl, MenuGroup, MenuItem } from "@wordpress/components";
 import { ultimateIcons } from "../../icons";
+import {
+	SearchControl,
+	MenuGroup,
+	MenuItem,
+	PanelBody,
+} from "@wordpress/components";
 
 function Sidebar(props) {
 	const {
 		search,
 		setSearch,
 		subCategoryFilter,
-		setSubCategoryFilter,
 		mainCategoryFilter,
+		setSubCategoryFilter,
+		setMainCategoryFilter,
 	} = props;
 
-	const iconObj = ultimateIcons.find((obj) => obj.type === mainCategoryFilter);
-	const preparedIconsCategories = iconObj?.categories?.map((category) => {
-		const categoryName = category?.name;
-		const categoryIcons = iconObj?.icons.filter((icon) => {
-			return icon?.categories?.includes(categoryName);
+	const preparedIconPacks = ultimateIcons.map((iconPack) => {
+		const categories = iconPack?.categories;
+		const allCategories = categories?.map((category) => {
+			const categoryName = category?.name;
+			const categoryIcons = iconPack?.icons.filter((icon) => {
+				return icon?.categories?.includes(categoryName);
+			});
+			return { ...category, count: categoryIcons.length };
 		});
-		return { ...category, count: categoryIcons.length };
-	});
-	preparedIconsCategories.unshift({
-		name: "all",
-		title: "All",
-		count: iconObj?.icons.length,
+		allCategories.unshift({
+			name: "all-" + iconPack?.type,
+			title: "All",
+			count: iconPack?.icons.length,
+		});
+		return { ...iconPack, categories: allCategories };
 	});
 
 	useEffect(() => {
-		setSubCategoryFilter(preparedIconsCategories[0]?.name);
+		setSubCategoryFilter(preparedIconPacks[0]?.categories?.[0]?.name);
 	}, []);
 
 	return (
@@ -44,21 +53,28 @@ function Sidebar(props) {
 				placeholder={__("Search Icon", "ultimate-blocks")}
 			/>
 
-			{!isEmpty(preparedIconsCategories) && (
+			{!isEmpty(preparedIconPacks) && (
 				<MenuGroup className="ub_icons_library_sidebar_item_group">
-					{preparedIconsCategories.map((category, index) => {
+					{preparedIconPacks.map((iconPack, index) => {
 						return (
-							<MenuItem
-								key={index}
-								className="ub_icons_library_sidebar_item"
-								isPressed={subCategoryFilter === category?.name}
-								onClick={() => {
-									setSubCategoryFilter(category?.name);
-								}}
-							>
-								<span>{category?.title}</span>
-								<span>{category?.count}</span>
-							</MenuItem>
+							<PanelBody title={iconPack?.title} initialOpen={index === 0}>
+								{iconPack?.categories.map((category) => {
+									return (
+										<MenuItem
+											key={category?.name}
+											className="ub_icons_library_sidebar_item"
+											isPressed={subCategoryFilter === category?.name}
+											onClick={() => {
+												setSubCategoryFilter(category?.name);
+												setMainCategoryFilter(iconPack?.type);
+											}}
+										>
+											<span>{category?.title}</span>
+											<span>{category?.count}</span>
+										</MenuItem>
+									);
+								})}
+							</PanelBody>
 						);
 					})}
 				</MenuGroup>

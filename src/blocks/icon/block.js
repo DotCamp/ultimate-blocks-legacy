@@ -61,6 +61,10 @@ const attributes = {
 	linkTarget: {
 		type: "string",
 	},
+	iconRotation: {
+		type: "number",
+		default: 0,
+	},
 };
 registerPluginBlock("ub/icon", {
 	title: __("Icon", "ultimate-blocks"),

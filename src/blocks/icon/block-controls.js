@@ -3,7 +3,7 @@
  */
 import { __ } from "@wordpress/i18n";
 import { useDispatch, useSelect } from "@wordpress/data";
-import { ToolbarGroup, ToolbarButton } from "@wordpress/components";
+import { ToolbarGroup, ToolbarDropdownMenu } from "@wordpress/components";
 import {
 	BlockControls,
 	useBlockEditContext,

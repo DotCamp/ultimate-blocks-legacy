@@ -8,7 +8,6 @@ export const blockIcon = (
 		xmlns="http://www.w3.org/2000/svg"
 		version="1.1"
 		xmlnsXlink="http://www.w3.org/1999/xlink"
-		// xmlns:svgjs="http://svgjs.com/svgjs"
 		width="512"
 		height="512"
 		x="0"

@@ -8,6 +8,7 @@
 			width: var(--ub-icon-size, 40px);
 			height: var(--ub-icon-size, 40px);
 			background: var(--ub-icon-bg-color);
+			transform: var(--ub-icon-rotation);
 			&:hover {
 				fill: var(--ub-icon-hover-color, var(--ub-icon-color));
 				background: var(--ub-icon-bg-hover-color, var(--ub-icon-bg-color));

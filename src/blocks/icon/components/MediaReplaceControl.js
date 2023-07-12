@@ -2,7 +2,12 @@
  * WordPress dependencies
  */
 import { __ } from "@wordpress/i18n";
-import { MenuGroup, MenuItem, DropdownMenu } from "@wordpress/components";
+import {
+	MenuGroup,
+	MenuItem,
+	DropdownMenu,
+	ToolbarDropdownMenu,
+} from "@wordpress/components";
 import { code } from "@wordpress/icons";
 import { blockIcon } from "../icons/block-icon";
 

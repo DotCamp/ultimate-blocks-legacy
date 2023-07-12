@@ -1,7 +1,7 @@
 /**
  * WordPress Dependencies
  */
-import { isUndefined, trim, isEmpty, omitBy } from "lodash";
+import { isUndefined, trim, isEmpty, omitBy, isNumber } from "lodash";
 /**
  *
  * @param {Array} attributes
@@ -10,7 +10,12 @@ import { isUndefined, trim, isEmpty, omitBy } from "lodash";
  */
 
 export function getStyles(attributes) {
+	const rotation = isNumber(attributes?.iconRotation)
+		? `rotate(${attributes.iconRotation}deg)`
+		: "";
+
 	let styles = {
+		"--ub-icon-rotation": rotation,
 		"--ub-icon-size": attributes?.size,
 		"--ub-icon-color": attributes?.iconColor,
 		"--ub-icon-bg-color": !isEmpty(attributes?.iconBackground)

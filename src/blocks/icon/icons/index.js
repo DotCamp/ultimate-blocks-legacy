@@ -289,6 +289,7 @@ import {
 	yelp,
 	youtube,
 } from "./wordpress/social";
+import { fontAwesomeCategories, fontAwesomeIcons } from "./font-awesome";
 
 // Temporary icon specifications that are not yet in the NPM package.
 import { commentEditLink, sparkles } from "./wordpress/temp";
@@ -423,7 +424,7 @@ const wordpressSocialIcons = [
 	{
 		name: "mail",
 		title: "Mail",
-		keywords: ["email", "e-mail"],
+		categories: ["email", "e-mail"],
 		icon: mail,
 	},
 	{
@@ -1544,7 +1545,7 @@ const wordpressIcons = [
 		name: "reset",
 		title: __("Reset", "ultimate-blocks"),
 		icon: reset,
-		keywords: ["minus"],
+		categories: ["minus"],
 	},
 	{
 		name: "resizeCornerNE",
@@ -1584,7 +1585,7 @@ const wordpressIcons = [
 		name: "search",
 		title: __("Search", "ultimate-blocks"),
 		icon: search,
-		keywords: ["magnifying glass"],
+		categories: ["magnifying glass"],
 	},
 	{
 		name: "separator",
@@ -1666,7 +1667,7 @@ const wordpressIcons = [
 		name: "shipping",
 		title: __("Shipping", "ultimate-blocks"),
 		icon: shipping,
-		keywords: ["truck"],
+		categories: ["truck"],
 	},
 	{
 		name: "stretchWide",
@@ -1902,5 +1903,12 @@ export const ultimateIcons = [
 				title: __("Media", "ultimate-blocks"),
 			},
 		],
+	},
+	{
+		isDefault: false,
+		type: "font-awesome",
+		title: __("Font Awesome", "ultimate-blocks"),
+		icons: fontAwesomeIcons,
+		categories: fontAwesomeCategories,
 	},
 ];
