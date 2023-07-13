@@ -332,7 +332,7 @@ registerBlockType('ub/progress-bar', {
 			getBlock,
 			getClientIdsWithDescendants,
 		};
-	})(ActivateBlockOnStartup(ProgressBarMain)),
+	})(ProgressBarMain),
 
 	save: () => null,
 });
