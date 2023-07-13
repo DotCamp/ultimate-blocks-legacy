@@ -10,7 +10,6 @@ const { withSelect } = wp.data;
 import Circle from './Circle';
 import Line from './Line';
 import { useEffect } from 'react';
-import ActivateBlockOnStartup from '$Development/components/ActivateBlockOnStartup';
 import {
 	TextControl,
 	Button,
