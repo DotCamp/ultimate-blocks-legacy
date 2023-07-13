@@ -31,29 +31,28 @@ class DevelopmentComponentIgnorePlugin {
 
 				const foundComponents = [];
 				const hasDevelopmentComponent = [...modules].reduce(
-					(module, carry) => {
+					(carry, module) => {
 						const pattern = new RegExp(
 							`import (${this.ignoreList.join('|')})`
 						);
 
-						let match = null;
 						if (
 							module.originalSource &&
 							typeof module.originalSource === 'function' &&
 							module.originalSource()
 						) {
-							match = pattern.exec(
+							const match = pattern.exec(
 								module.originalSource().source()
 							);
-						}
 
-						if (match) {
-							const targetResourceFile = module.resource;
-							foundComponents.push([
-								targetResourceFile,
-								match[1],
-							]);
-							carry = true;
+							if (match) {
+								const targetResourceFile = module.resource;
+								foundComponents.push([
+									targetResourceFile,
+									match[1],
+								]);
+								carry = true;
+							}
 						}
 
 						return carry;
