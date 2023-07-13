@@ -5,24 +5,23 @@ const { registerBlockType } = wp.blocks;
 const { BlockControls, InspectorControls, PanelColorSettings, RichText } =
 	wp.blockEditor || wp.editor;
 
-const {
-	Button,
-	ButtonGroup,
-	ToolbarGroup,
-	ToolbarItem,
-	ToolbarButton,
-	RangeControl,
-	PanelBody,
-	PanelRow,
-	ToolbarDropdownMenu,
-} = wp.components;
-
 const { withSelect } = wp.data;
 
 import Circle from './Circle';
 import Line from './Line';
 import { useEffect } from 'react';
 import ActivateBlockOnStartup from '$Development/components/ActivateBlockOnStartup';
+import {
+	TextControl,
+	Button,
+	ButtonGroup,
+	ToolbarGroup,
+	ToolbarButton,
+	RangeControl,
+	PanelBody,
+	PanelRow,
+	ToolbarDropdownMenu,
+} from '@wordpress/components';
 
 function ProgressBarMain(props) {
 	const {
@@ -97,18 +96,31 @@ function ProgressBarMain(props) {
 						</ToolbarButton>
 					</ToolbarGroup>
 					<ToolbarGroup>
-						<div>
-							<i>range control</i>
+						<div
+							className={'ub_progress_bar_range_toolbar_wrapper'}
+						>
+							<RangeControl
+								className="ub_progress_bar_value"
+								value={percentage}
+								onChange={(value) =>
+									setAttributes({ percentage: value })
+								}
+								min={0}
+								max={100}
+							/>
+							<TextControl
+								className={'ub_progress_bar_range_number_input'}
+								value={percentage}
+								type={'number'}
+								onChange={(value) =>
+									setAttributes({
+										percentage: Number.parseInt(value),
+									})
+								}
+								min={0}
+								max={100}
+							/>
 						</div>
-						{/*<ToolbarItem*/}
-						{/*	as={RangeControl}*/}
-						{/*	// className="ub_progress_bar_value"*/}
-						{/*	value={percentage}*/}
-						{/*	onChange={(value) => setAttributes({ percentage: value })}*/}
-						{/*	min={0}*/}
-						{/*	max={100}*/}
-						{/*	allowReset*/}
-						{/*/>*/}
 					</ToolbarGroup>
 					<ToolbarDropdownMenu
 						icon={`editor-${
