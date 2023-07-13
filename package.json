@@ -3,7 +3,7 @@
 	"version": "3.0.1",
 	"private": true,
 	"scripts": {
-		"start": "concurrently -k \"wp-scripts start\" \"node recompileOnChange.js\"",
+		"start": "concurrently -k -c 'blue,yellow,green' -n 'gutenberg,recompile,bundle' 'wp-scripts start' 'node recompileOnChange.js' 'npm run bundle_additional_watch'",
 		"bundle_additional_watch": "parcel watch ./admin/js/src/*.js --dist-dir ./bundle-dist --no-hmr",
 		"bundle_additional_build": "parcel build ./admin/js/src/*.js --dist-dir ./bundle-dist --no-cache --no-source-maps",
 		"build": "wp-scripts build && node recompile.js && npm run bundle_additional_build && npm run compress-plugin-prod",

@@ -12,5 +12,6 @@ composer.lock
 **/*.sass
 **/*.map
 admin/js/src/
+src/__development/
 src/**/!(front.build|swiper-bundle|scrollby-polyfill).js
 zip/

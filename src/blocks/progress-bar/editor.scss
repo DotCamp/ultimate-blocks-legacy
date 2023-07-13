@@ -1,11 +1,47 @@
+@import '../../styles/base/__common.scss';
+
 .ub_progress_bar_value {
 	padding-left: 5px;
 	transform: translateY(5px);
+
 	button {
 		display: none;
 	}
+
 	.components-range-control__wrapper {
 		width: 100px;
+	}
+}
+
+.ub_progress_bar_range_toolbar_wrapper {
+	@extend %flex-center-all;
+
+	.ub_progress_bar_value {
+		.components-range-control__thumb-wrapper {
+			pointer-events: none !important;
+
+			* {
+				pointer-events: none !important;
+			}
+		}
+
+		.components-range-control__number {
+			display: none;
+		}
+	}
+
+	.ub_progress_bar_range_number_input {
+		@extend %flex-center-all;
+		height: 100%;
+		padding: 5px;
+
+		.components-base-control__field {
+			margin-bottom: 0 !important;
+		}
+
+		input {
+			width: 60px !important;
+		}
 	}
 }
 
