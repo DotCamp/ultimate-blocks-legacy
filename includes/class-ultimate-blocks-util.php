@@ -140,7 +140,12 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Testimonial',
 				'name'   => 'ub/testimonial',
 				'active' => true,
-			)
+		  ),
+            array(
+				'label'  => 'Icon',
+				'name'   => 'ub/icon',
+				'active' => true,
+		 )
 		];
 	}
 
