@@ -5,7 +5,7 @@ const icon = (
 		width="20"
 		height="20"
 	>
-		<path d="M0,0v60h60V0H0z M51,32H9v-4h42V32z" fill="#f63d3d" />
+		<path d="M0,0v60h60V0H0z M51,32H9v-4h42V32z" fill="#e11b4c" />
 	</svg>
 );
 
