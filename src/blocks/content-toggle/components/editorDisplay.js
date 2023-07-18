@@ -190,7 +190,7 @@ export function OldPanelContent(props) {
 }
 
 const oldColorDefaults = {
-	theme: "#f63d3d",
+	theme: "#e11b4c",
 	titleColor: "#ffffff",
 };
 
