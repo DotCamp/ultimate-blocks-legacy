@@ -322,7 +322,7 @@ registerBlockType("ub/call-to-action-block", {
 			ub_call_to_action_headline_text: "Get Ultimate Blocks Now",
 			ub_cta_content_text: "Ultimate Blocks helps you create better and engaging content with Gutenberg.",
 			ub_cta_button_text: "Download Now",
-			buttonColor: "#f63d3d",
+			buttonColor: "#e11b4c",
 			buttonTextColor: "#ffffff"
 		}
 	},
