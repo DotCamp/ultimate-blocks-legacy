@@ -251,7 +251,7 @@ registerBlockType('ub/divider', {
 		attributes: {
 			borderSize: '4',
 			borderStyle: 'dashed',
-			borderColor: '#f63d3d',
+			borderColor: '#e11b4c',
 		},
 	},
 	/**
