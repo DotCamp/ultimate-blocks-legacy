@@ -133,7 +133,7 @@ const defaultAttributes = {
 	},
 	callToActionBackColor: {
 		type: "string",
-		default: "#f63d3d",
+		default: "#e11b4c",
 	},
 	callToActionBorderColor: {
 		type: "string",
@@ -1246,7 +1246,7 @@ function ReviewMain(props) {
 										})),
 										activePercentBarColor:
 											valueType === "star" && !activePercentBarColor
-												? "#f63d3d"
+												? "#e11b4c"
 												: activePercentBarColor,
 									});
 								}}

@@ -37,7 +37,7 @@ const oldAttributes = {
 	},
 	callToActionBackColor: {
 		type: "string",
-		default: "#f63d3d",
+		default: "#e11b4c",
 	},
 	callToActionForeColor: {
 		type: "string",
