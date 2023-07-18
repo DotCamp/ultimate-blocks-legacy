@@ -12,6 +12,8 @@ Custom Gutenberg Blocks for Bloggers and Marketers. Create Better Content With G
 
 == Description ==
 
+[Get Pro](https://ultimateblocks.com/pricing/) | [Documentation](https://ultimateblocks.com/docs/)
+
 Ultimate Blocks is a Gutenberg blocks Plugin for bloggers and marketers. Our goal is to make it insanely easy for you to create better and engaging content with Gutenberg.
 
 Ultimate Blocks currently includes the following blocks:
@@ -134,6 +136,7 @@ That's it. You're done!
 
 = 3.0.1 =
 
+* NEW: Icon Block.
 * IMPROVE: Version synchronization.
 * FIX: PHP 8.1 compatibility updates.
 * FIX: Progress bar toolbar range control not working.
