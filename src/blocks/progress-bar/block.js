@@ -318,7 +318,7 @@ registerBlockType('ub/progress-bar', {
 	},
 	example: {
 		attributes: {
-			barColor: '#f63d3d',
+			barColor: '#e11b4c',
 			barThickness: 2,
 		},
 	},
