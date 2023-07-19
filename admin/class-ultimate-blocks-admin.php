@@ -123,7 +123,7 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function add_settings_menu_data( $data ) {
 		$data['assets'] = [
-			'logo'        => trailingslashit( $this->plugin_url ) . 'admin/images/banners/ultimate_blocks_logo.png',
+			'logo'        => trailingslashit( $this->plugin_url ) . 'admin/images/logos/menu-icon-colored.svg',
 			'ajax'        => [
 				'toggleStatus' => [
 					"url"    => get_admin_url( null, 'admin-ajax.php' ),

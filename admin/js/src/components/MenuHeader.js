@@ -20,24 +20,29 @@ import VersionControl from '$Components/VersionControl';
  * @return {JSX.Element} component
  * @function Object() { [native code] }
  */
-function MenuHeader({ logoUrl, toggleShowInfoStatus, blockInfoShowStatus }) {
+function MenuHeader( { logoUrl, toggleShowInfoStatus, blockInfoShowStatus } ) {
 	return (
-		<div className={'menu-header'}>
-			<div className={'left-container'}>
-				<div className={'logo-container'}>
-					<img alt={'plugin logo'} src={logoUrl} />
+		<div className={ 'menu-header' }>
+			<div className={ 'left-container' }>
+				<div className={ 'logo-container' }>
+					<img alt={ 'plugin logo' } src={ logoUrl } />
+					<div className={ 'ub-plugin-logo-text' }>
+						Ultimate Blocks
+					</div>
 				</div>
 			</div>
-			<div className={'right-container'}>
+			<div className={ 'right-container' }>
 				<RightContainerItem>
 					<VersionControl />
 				</RightContainerItem>
 				<RightContainerItem>
-					{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+					{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */ }
 					<div
-						onClick={toggleShowInfoStatus}
-						className={'blog-info-toggle'}
-						data-light-it-up={JSON.stringify(!blockInfoShowStatus)}
+						onClick={ toggleShowInfoStatus }
+						className={ 'blog-info-toggle' }
+						data-light-it-up={ JSON.stringify(
+							! blockInfoShowStatus
+						) }
 					>
 						<FontAwesomeIcon icon="fa-solid fa-lightbulb" />
 					</div>
@@ -47,10 +52,10 @@ function MenuHeader({ logoUrl, toggleShowInfoStatus, blockInfoShowStatus }) {
 	);
 }
 
-const selectMapping = (select) => {
+const selectMapping = ( select ) => {
 	return {
-		logoUrl: select(getLogo),
-		blockInfoShowStatus: select(getBlockInfoShowStatus),
+		logoUrl: select( getLogo ),
+		blockInfoShowStatus: select( getBlockInfoShowStatus ),
 	};
 };
 
@@ -63,4 +68,4 @@ const actionMapping = () => {
 /**
  * @module MenuHeader
  */
-export default withStore(MenuHeader, selectMapping, actionMapping);
+export default withStore( MenuHeader, selectMapping, actionMapping );

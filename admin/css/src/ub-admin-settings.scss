@@ -34,10 +34,20 @@
 			background-color: $gray-100;
 
 			.logo-container {
+				@extend %flex-center-all;
+				@extend %unselectable;
+				flex-direction: row;
 				height: $logo-height;
 
 				img {
 					height: 100%;
+				}
+
+				.ub-plugin-logo-text {
+					font-weight: bold;
+					margin: 0 5px;
+					font-size: 1.6rem;
+
 				}
 			}
 
