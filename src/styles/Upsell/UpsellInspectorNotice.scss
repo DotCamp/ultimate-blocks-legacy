@@ -3,25 +3,31 @@
 @import '../base/__common.scss';
 
 .ub-upsell-inspector-notice {
-  @extend %pointer;
-  @extend %gutenberg-sidebar-default-borders;
-  width: 100%;
-  background-color: $soft_red;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: auto 1fr;
-  padding: 15px;
-  grid-gap: 5px;
-  color: $text_red;
-  font-size: 15px;
+	@extend %pointer;
+	@extend %gutenberg-sidebar-default-borders;
+	width: 100%;
+	background-color: $soft_red;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: auto 1fr;
+	padding: 15px;
+	grid-gap: 5px;
+	color: $text_red;
+	font-size: 15px;
 
-  .ub-upsell-notice-icon-container {
-	width: 50px;
-	height: 50px;
-  }
+	.ub-upsell-notice-icon-container {
+		@extend %flex-center-all;
+		width: 50px;
+		height: 50px;
 
-  .ub-upsell-notice {
-	@extend %flex-center-all;
-	justify-content: flex-start !important;
-  }
+		img {
+			width: auto;
+			height: 100%;
+		}
+	}
+
+	.ub-upsell-notice {
+		@extend %flex-center-all;
+		justify-content: flex-start !important;
+	}
 }

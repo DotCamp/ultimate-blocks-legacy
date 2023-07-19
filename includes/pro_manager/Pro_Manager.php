@@ -54,7 +54,7 @@ class Pro_Manager {
 		Editor_Data_Manager::get_instance()->add_editor_data( [
 			'proStatus' => json_encode( $this->is_pro() ),
 			'assets'    => [
-				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/icon-128x128.png',
+				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/menu-icon-colored.svg',
 				'proUrl'  => 'https://ultimateblocks.com/pricing/'
 			]
 		] );
