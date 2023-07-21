@@ -5,7 +5,7 @@ function ub_render_table_of_contents_block($attributes){
     $linkArray = json_decode($links, true);
 
     $filteredHeaders = $linkArray ? (array_values(array_filter($linkArray, function ($header) use ($allowedHeaders){
-        return $allowedHeaders[$header['level'] - 1] && 
+        return $allowedHeaders[$header['level'] - 1] &&
            (!array_key_exists("disabled",  $header) || (array_key_exists("disabled",  $header) && !$header['disabled']));
         }))) : [];
 
@@ -102,16 +102,16 @@ function ub_render_table_of_contents_block($attributes){
     else if ($scrollTargetType === 'class'){
         $targetType = '.';
     }
-    
+
     return '<div class="ub_table-of-contents' . (isset($className) ? ' ' . esc_attr($className) : '')
-                . (!$showList && strlen($title) > 0 ? ' ub_table-of-contents-collapsed' : '' ) .
+                . (!$showList ? ' ub_table-of-contents-collapsed' : '' ) .
                 '" data-showtext="' . ($showText ?: __('show', 'ultimate-blocks') ) . '" data-hidetext="' . ($hideText ?: __('hide', 'ultimate-blocks'))
                 . '" data-scrolltype="' . $scrollOption . '"' . ($scrollOption === 'fixedamount' ? ' data-scrollamount="' . $scrollOffset . '"' : '')
                 . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . $scrollTarget . '"' : '')
                 . ($blockID === '' ? '' : ' id="ub_table-of-contents-' . $blockID . '"') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
                     data-initiallyshow="' . json_encode($showList) . '">'.
-                (strlen($title) > 0 ? ('<div class="ub_table-of-contents-header-container"><div class="ub_table-of-contents-header">
-                    <div class="ub_table-of-contents-title">'. $title . '</div>' . 
+                (('<div class="ub_table-of-contents-header-container"><div class="ub_table-of-contents-header">
+                    <div class="ub_table-of-contents-title">'. $title . '</div>' .
                     ($allowToCHiding ?
                     '<div class="ub_table-of-contents-header-toggle">
                         <div class="ub_table-of-contents-toggle">
@@ -119,10 +119,9 @@ function ub_render_table_of_contents_block($attributes){
                             ( $showList ? ($hideText ?: __('hide', 'ultimate-blocks'))
                              : ($showText ?: __('show', 'ultimate-blocks')) )
                             .'</a>]</div></div>' : '')
-                . '</div></div>') : '')
+                . '</div></div>'))
                 . '<div class="ub_table-of-contents-extra-container"><div class="ub_table-of-contents-container ub_table-of-contents-' .
-                    $numColumns . '-column ' . ($showList || strlen($title) === 0 ||
-                    (strlen($title) === 1 && $title[0] === '') ? '' : 'ub-hide') . '">' .
+                    $numColumns . '-column ' . ($showList ? '' : 'ub-hide') . '">' .
                 ($listStyle === 'numbered' ? '<ol>' :  '<ul'. ($listStyle === 'plain' && $blockID === '' ? ' style="list-style: none;"' : '') . '>')
                 . $listItems .
                 ($listStyle === 'numbered' ? '</ol>' : '</ul>')
