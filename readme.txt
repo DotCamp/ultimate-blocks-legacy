@@ -134,6 +134,13 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.2 =
+
+* FIX: Table of contents block
+	- Toggle buttons not visible if no title is assigned to block.
+	- Hide animation not being smooth.
+	- Initial hide is not working on frontend.
+
 = 3.0.1 =
 
 * NEW: Icon Block.
