@@ -8,6 +8,11 @@
 	margin-top: 20px;
 	margin-bottom: 20px;
 	display: grid;
+
+	* {
+		box-sizing: border-box;
+	}
+
 	ul,
 	ol {
 		margin-bottom: 0;
