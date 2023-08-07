@@ -140,6 +140,7 @@ That's it. You're done!
 	- Toggle buttons not visible if no title is assigned to block.
 	- Hide animation not being smooth.
 	- Initial hide is not working on frontend.
+* PRO: IMPROVE: Fade when minimized now supports different page backgrounds.
 
 = 3.0.1 =
 
