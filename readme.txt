@@ -2,7 +2,7 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: 3.0.2-dev
 Requires PHP: 5.6
 License: GPL3+
@@ -136,6 +136,7 @@ That's it. You're done!
 
 = 3.0.2 =
 
+* NEW: Compatibility with WordPress 6.3.
 * FIX: Table of contents block
 	- Toggle buttons not visible if no title is assigned to block.
 	- Hide animation not being smooth.
