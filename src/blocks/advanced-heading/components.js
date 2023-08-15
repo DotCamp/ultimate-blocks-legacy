@@ -78,15 +78,6 @@ const AdvancedHeadingEdit = ({
 			if (!level) {
 				setAttributes({ level: "h1" });
 			}
-			if (
-				getClientIdsWithDescendants().some(
-					(ID) =>
-						"blockID" in getBlock(ID).attributes &&
-						getBlock(ID).attributes.blockID === blockID
-				)
-			) {
-				setAttributes({ blockID: block.clientId });
-			}
 		}
 	}, [elementRef]);
 

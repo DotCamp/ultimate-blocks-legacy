@@ -40,14 +40,6 @@ function ClickToTweet(props) {
 	useEffect(() => {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
 
