@@ -113,7 +113,8 @@ abstract class Pro_Extension_Upsell {
 		if ( ! function_exists( 'WP_Filesystem' ) ) {
 			require_once( trailingslashit( ABSPATH ) . '/wp-admin/includes/file.php' );
 		}
-		WP_Filesystem( true );
+
+		WP_Filesystem();
 
 		$image_url = null;
 

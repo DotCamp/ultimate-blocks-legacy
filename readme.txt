@@ -137,6 +137,7 @@ That's it. You're done!
 = 3.0.2 =
 
 * NEW: Compatibility with WordPress 6.3.
+* FIX: Filesystem read permission issue on update for some server installations.
 * FIX: Table of contents block
 	- Toggle buttons not visible if no title is assigned to block.
 	- Hide animation not being smooth.
