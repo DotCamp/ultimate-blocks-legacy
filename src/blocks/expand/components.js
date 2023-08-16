@@ -42,13 +42,7 @@ export function ExpandRoot(props) {
 
 	useEffect(() => {
 		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					ID !== block.clientId &&
-					getBlock(ID).attributes.blockID === blockID
-			)
+			blockID === ""
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
