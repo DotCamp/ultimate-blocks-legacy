@@ -183,12 +183,7 @@ function ImageSliderMain(props) {
 	const captionArray = descriptions;
 
 	if (
-		blockID === "" ||
-		getClientIdsWithDescendants().some(
-			(ID) =>
-				"blockID" in getBlock(ID).attributes &&
-				getBlock(ID).attributes.blockID === blockID
-		)
+		blockID === ""
 	) {
 		setAttributes({ blockID: block.clientId });
 	} else if (!showPageDots && usePagination) {
