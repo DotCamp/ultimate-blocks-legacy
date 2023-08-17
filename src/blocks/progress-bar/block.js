@@ -50,15 +50,6 @@ function ProgressBarMain(props) {
 			if (percentage === -1) {
 				setAttributes({ percentage: 25 });
 			}
-			if (
-				getClientIdsWithDescendants().some(
-					(ID) =>
-						'blockID' in getBlock(ID).attributes &&
-						getBlock(ID).attributes.blockID === blockID
-				)
-			) {
-				setAttributes({ blockID: block.clientId });
-			}
 		}
 	}, []);
 
