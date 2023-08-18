@@ -554,12 +554,7 @@ export class TabHolder extends Component {
 		}
 
 		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === attributes.blockID
-			)
+			blockID === ""
 		) {
 			setAttributes({ blockID: this.props.block.clientId });
 		}
