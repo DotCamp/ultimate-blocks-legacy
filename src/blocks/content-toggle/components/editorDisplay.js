@@ -235,14 +235,6 @@ export function PanelContent(props) {
 			setAttributes(
 				Object.assign({ blockID: block.clientId }, newColorDefaults)
 			);
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
 		}
 
 		//initialize variable for monitoring changes in child block attributes
