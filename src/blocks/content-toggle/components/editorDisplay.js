@@ -362,6 +362,7 @@ export function PanelContent(props) {
 		blockID ? oldColorDefaults : newColorDefaults
 	);
 
+// TODO [ErdemBircan] possible culprit
 	useEffect(() => {
 		if (newBlockTarget.length > 0) {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -908,24 +909,6 @@ export function PanelContent(props) {
 			)}
 			<div className={className} id={`ub-content-toggle-${blockID}`}>
 				<InnerBlocks
-					/*BACK TO EMPTY TEMPLATE
-					template={[
-						[
-							"ub/content-toggle-panel",
-							{
-								theme: newColorDefaults.theme,
-								collapsed,
-								titleColor: newColorDefaults.titleColor,
-								titleLinkColor,
-								hasFAQSchema,
-								toggleLocation,
-								toggleColor,
-								toggleIcon,
-								border,
-								showOnlyOne,
-							},
-						],
-					]}*/
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}
 				/>
