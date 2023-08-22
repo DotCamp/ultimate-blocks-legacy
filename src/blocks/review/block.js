@@ -485,15 +485,6 @@ function ReviewMain(props) {
 				activeStarColor: "#f7b708",
 			});
 		} else {
-			if (
-				getClientIdsWithDescendants().some(
-					(ID) =>
-						"blockID" in getBlock(ID).attributes &&
-						getBlock(ID).attributes.blockID === blockID
-				)
-			) {
-				Object.assign(initialAttributes, { blockID: block.clientId });
-			}
 			if (starOutlineColor === "") {
 				Object.assign(initialAttributes, {
 					starOutlineColor: "#000000",

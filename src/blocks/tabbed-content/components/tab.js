@@ -1,4 +1,5 @@
 import icon from "../icons/icon";
+import {useEffect} from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -79,9 +80,11 @@ registerBlockType("ub/tab-block", {
 		const { blockParentId, setAttributes } = props;
 		const { parentID, isActive } = props.attributes;
 
-		if (parentID === "" || parentID !== blockParentId) {
-			setAttributes({ parentID: blockParentId });
-		}
+		// @deprecated
+		// if (parentID === "" || parentID !== blockParentId) {
+		// 	setAttributes({ parentID: blockParentId });
+		// }
+
 		return (
 			<div style={{ display: isActive ? "block" : "none" }}>
 				<InnerBlocks

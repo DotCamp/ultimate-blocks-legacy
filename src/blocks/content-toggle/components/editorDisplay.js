@@ -235,14 +235,6 @@ export function PanelContent(props) {
 			setAttributes(
 				Object.assign({ blockID: block.clientId }, newColorDefaults)
 			);
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
 		}
 
 		//initialize variable for monitoring changes in child block attributes
@@ -443,6 +435,7 @@ export function PanelContent(props) {
 			}
 		}
 	}
+
 	if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
 		//Fix indexes in case of rearrangments
 		if (newArrangement.length < oldArrangement.length && showOnlyOne) {
@@ -459,7 +452,8 @@ export function PanelContent(props) {
 		panels.forEach((panel, i) =>
 			updateBlockAttributes(panel.clientId, {
 				index: i,
-				parent: block.clientId,
+				// @deprecated
+				// parent: block.clientId,
 			})
 		);
 		setOldArrangement(newArrangement);
@@ -916,24 +910,6 @@ export function PanelContent(props) {
 			)}
 			<div className={className} id={`ub-content-toggle-${blockID}`}>
 				<InnerBlocks
-					/*BACK TO EMPTY TEMPLATE
-					template={[
-						[
-							"ub/content-toggle-panel",
-							{
-								theme: newColorDefaults.theme,
-								collapsed,
-								titleColor: newColorDefaults.titleColor,
-								titleLinkColor,
-								hasFAQSchema,
-								toggleLocation,
-								toggleColor,
-								toggleIcon,
-								border,
-								showOnlyOne,
-							},
-						],
-					]}*/
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}
 				/>

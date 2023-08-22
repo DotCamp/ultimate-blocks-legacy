@@ -151,12 +151,7 @@ function EditorComponent(props) {
 		loadIconList();
 
 		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
+			blockID === ""
 		) {
 			setAttributes({ blockID: block.clientId });
 		}
@@ -619,8 +614,8 @@ function EditorComponent(props) {
 					dangerouslySetInnerHTML={{
 						__html: `#ub-styled-list-${blockID} li::before{
                     top: ${iconSize >= 5 ? 3 : iconSize < 3 ? 2 : 0}px;
-                    height:${(4 + iconSize) / 10}em; 
-                    width:${(4 + iconSize) / 10}em; 
+                    height:${(4 + iconSize) / 10}em;
+                    width:${(4 + iconSize) / 10}em;
                     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${
 											allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
 										} ${
@@ -682,12 +677,7 @@ export function StyledListItem(props) {
 
 	useEffect(() => {
 		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
+			blockID === ""
 		) {
 			setAttributes({ blockID: block.clientId });
 		}

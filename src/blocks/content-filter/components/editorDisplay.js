@@ -516,14 +516,6 @@ export function NewPanelContent(props) {
 				matchingOption: "matchAny",
 				activeButtonTextColor: "#ffffff",
 			});
-		} else if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === props.attributes.blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
 

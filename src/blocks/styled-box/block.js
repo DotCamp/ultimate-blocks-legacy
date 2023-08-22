@@ -82,12 +82,7 @@ function StyledBox(props) {
 
 	useEffect(() => {
 		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === props.attributes.blockID
-			)
+			blockID === ""
 		) {
 			setAttributes({
 				blockID: block.clientId,
@@ -999,11 +994,7 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 			}
 			if (
 				blockID === "" &&
-				getClientIdsWithDescendants().some(
-					(ID) =>
-						"blockID" in getBlock(ID).attributes &&
-						getBlock(ID).attributes.blockID === props.attributes.blockID
-				) /* PREVENT AUTOMATIC SETTING OF NUMBER SINCE NUMBER BLOCK STARTED WITHOUT BLOCKID ATTRIBUTE */ &&
+				 /* PREVENT AUTOMATIC SETTING OF NUMBER SINCE NUMBER BLOCK STARTED WITHOUT BLOCKID ATTRIBUTE */
 				borderColor === "" &&
 				numberColor === "" &&
 				backColor === ""

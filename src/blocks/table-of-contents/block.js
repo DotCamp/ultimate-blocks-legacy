@@ -336,12 +336,7 @@ registerBlockType("ub/table-of-contents-block", {
 		const [canRemoveItemFocus, toggleCanRemoveItemFocus] = useState(false);
 
 		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
+			blockID === ""
 		) {
 			props.setAttributes({ blockID: block.clientId });
 		}

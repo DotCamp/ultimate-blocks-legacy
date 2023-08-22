@@ -901,15 +901,6 @@ export function EditorComponent(props) {
 		if (align === "") {
 			setAttributes({ align: "center" });
 		}
-		if (
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
 	}
 
 	if (!isSelected && enableLinkInput) {

@@ -137,7 +137,9 @@ That's it. You're done!
 = 3.0.2 =
 
 * NEW: Compatibility with WordPress 6.3.
+* FIX: An issue with block pattern previews causing errors.
 * FIX: Filesystem read permission issue on update for some server installations.
+* FIX: An empty image slider block causing errors on post save operations.
 * FIX: Table of contents block
 	- Toggle buttons not visible if no title is assigned to block.
 	- Hide animation not being smooth.
