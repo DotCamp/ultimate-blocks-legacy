@@ -435,13 +435,14 @@ export function PanelContent(props) {
 			}
 		}
 	}
+
 	if (!newArrangement.every((item, i) => item === oldArrangement[i])) {
 		//Fix indexes in case of rearrangments
 		if (newArrangement.length < oldArrangement.length && showOnlyOne) {
 			if (!panels.map((p) => p.attributes.collapsed).includes(false)) {
 				oldArrangement.forEach((i) => {
 					if (!newArrangement.includes(i)) {
-						updateBlockAttributes(panels[Math.max(0, i - 1)].clientId, {
+						updateBlockAttributes(panels[Math.max(1, i - 1)].clientId, {
 							collapsed: false,
 						});
 					}
@@ -451,7 +452,8 @@ export function PanelContent(props) {
 		panels.forEach((panel, i) =>
 			updateBlockAttributes(panel.clientId, {
 				index: i,
-				parent: block.clientId,
+				// @deprecated
+				// parent: block.clientId,
 			})
 		);
 		setOldArrangement(newArrangement);
@@ -908,24 +910,6 @@ export function PanelContent(props) {
 			)}
 			<div className={className} id={`ub-content-toggle-${blockID}`}>
 				<InnerBlocks
-					/*BACK TO EMPTY TEMPLATE
-					template={[
-						[
-							"ub/content-toggle-panel",
-							{
-								theme: newColorDefaults.theme,
-								collapsed,
-								titleColor: newColorDefaults.titleColor,
-								titleLinkColor,
-								hasFAQSchema,
-								toggleLocation,
-								toggleColor,
-								toggleIcon,
-								border,
-								showOnlyOne,
-							},
-						],
-					]}*/
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}
 				/>

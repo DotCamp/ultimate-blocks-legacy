@@ -147,9 +147,10 @@ function ContentTogglePanel(props) {
 		right: __("Right", "ultimate-blocks"),
 	};
 
-	if (parentID === "" || parentID !== blockParentId) {
-		setAttributes({ parentID: blockParentId });
-	}
+	// @deprecated
+	// if (parentID === "" || parentID !== blockParentId) {
+	// 	setAttributes({ parentID: blockParentId });
+	// }
 
 	useEffect(() => {
 		if (blockParent.attributes.titleLinkColor === "invalid") {
@@ -488,7 +489,7 @@ function ContentTogglePanel(props) {
 					<RichText
 						tagName={titleTag}
 						style={{ color: titleColor }}
-						className={`wp-block-ub-content-toggle-accordion-title ub-accordion-title-${parentID}`}
+						className={`wp-block-ub-content-toggle-accordion-title ub-accordion-title-${blockParentId}`}
 						value={panelTitle}
 						allowedFormats={["core/bold", "core/italic", "core/link"]}
 						onChange={(value) => setAttributes({ panelTitle: value })}
