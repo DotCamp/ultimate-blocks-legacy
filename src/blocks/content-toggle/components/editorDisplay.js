@@ -442,7 +442,7 @@ export function PanelContent(props) {
 			if (!panels.map((p) => p.attributes.collapsed).includes(false)) {
 				oldArrangement.forEach((i) => {
 					if (!newArrangement.includes(i)) {
-						updateBlockAttributes(panels[Math.max(1, i - 1)].clientId, {
+						updateBlockAttributes(panels[Math.max(0, i - 1)].clientId, {
 							collapsed: false,
 						});
 					}
