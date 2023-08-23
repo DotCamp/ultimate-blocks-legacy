@@ -190,6 +190,9 @@ Array.prototype.slice
 				.forEach((instance) => {
 					const panelContent = instance.nextElementSibling;
 
+					if (instance.parentElement.getAttribute("id")) {
+						togglePanel(instance);
+					}
 					instance.addEventListener("click", function (e) {
 						e.stopImmediatePropagation();
 						togglePanel(instance);

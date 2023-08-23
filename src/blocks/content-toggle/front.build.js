@@ -128,6 +128,9 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
       return toggle && toggle.classList.contains("wp-block-ub-content-toggle-accordion-title-wrap");
     }).forEach(function (instance) {
       var panelContent = instance.nextElementSibling;
+      if (instance.parentElement.getAttribute("id")) {
+        togglePanel(instance);
+      }
       instance.addEventListener("click", function (e) {
         e.stopImmediatePropagation();
         togglePanel(instance);

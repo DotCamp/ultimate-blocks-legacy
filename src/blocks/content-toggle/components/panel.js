@@ -1,10 +1,10 @@
 import icon from "../icons/icon";
 import icons from "../icons/icons";
 
-import { panel_version_1_1_9 } from '../oldVersions';
-import { useState, useEffect } from 'react';
-import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
-import ProManager from '$Manager/ProManager';
+import { panel_version_1_1_9 } from "../oldVersions";
+import { useState, useEffect } from "react";
+import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
+import ProManager from "$Manager/ProManager";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -306,14 +306,12 @@ function ContentTogglePanel(props) {
 						setAttributes(attrs);
 					}}
 					attributesToSave={(() => {
-						const excludeList = ['index', 'parent', 'parentID'];
+						const excludeList = ["index", "parent", "parentID"];
 
 						return Object.keys(props.attributes).filter((key) => {
 							return (
-								Object.prototype.hasOwnProperty.call(
-									props.attributes,
-									key
-								) && !excludeList.includes(key)
+								Object.prototype.hasOwnProperty.call(props.attributes, key) &&
+								!excludeList.includes(key)
 							);
 						});
 					})()}
@@ -323,7 +321,7 @@ function ContentTogglePanel(props) {
 						return rest;
 					}}
 					previewElementCallback={(el) => el}
-					previewBlockType={'ub/content-toggle-panel-block-preview'}
+					previewBlockType={"ub/content-toggle-panel-block-preview"}
 				/>
 				<PanelBody title={__("Style")}>
 					<PanelColorSettings
@@ -641,7 +639,7 @@ registerBlockType("ub/content-toggle-panel", {
 const composedEdit = compose([
 	withSelect((select, ownProps) => {
 		const { getBlock, getBlockRootClientId } =
-			select('core/block-editor') || select('core/editor');
+			select("core/block-editor") || select("core/editor");
 		const { clientId } = ownProps;
 
 		return {
@@ -652,17 +650,17 @@ const composedEdit = compose([
 	}),
 	withDispatch((dispatch) => {
 		const { updateBlockAttributes, removeBlock, selectBlock } =
-			dispatch('core/block-editor') || dispatch('core/editor');
+			dispatch("core/block-editor") || dispatch("core/editor");
 
 		return { updateBlockAttributes, removeBlock, selectBlock };
 	}),
 ]);
 
-registerBlockType('ub/content-toggle-panel-block', {
-	title: __('Content Toggle Panel'),
-	parent: ['ub/content-toggle-block'],
+registerBlockType("ub/content-toggle-panel-block", {
+	title: __("Content Toggle Panel"),
+	parent: ["ub/content-toggle-block"],
 	icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	attributes,
 	supports: {
 		inserter: false,
@@ -676,13 +674,10 @@ registerBlockType('ub/content-toggle-panel-block', {
 // only register the preview block if the pro version is not active
 if (!ProManager.proStatus()) {
 	// block for preview purposes
-	registerBlockType('ub/content-toggle-panel-block-preview', {
-		title: __(
-			'Content Toggle Panel Preview - Internal Use',
-			'ultimate-blocks'
-		),
+	registerBlockType("ub/content-toggle-panel-block-preview", {
+		title: __("Content Toggle Panel Preview - Internal Use", "ultimate-blocks"),
 		icon,
-		category: 'ultimateblocks',
+		category: "ultimateblocks",
 		attributes,
 		supports: {
 			inserter: false,
