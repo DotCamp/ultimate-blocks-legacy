@@ -590,7 +590,8 @@ registerBlockType("ub/content-toggle-panel", {
 		}),
 	])(ContentTogglePanel),
 	save(props) {
-		const { theme, collapsed, titleColor, panelTitle } = props.attributes;
+		const { theme, collapsed, titleColor, panelTitle, index, parentID } =
+			props.attributes;
 		const classNamePrefix = "wp-block-ub-content-toggle";
 		return (
 			<div
@@ -598,6 +599,9 @@ registerBlockType("ub/content-toggle-panel", {
 				className={`${classNamePrefix}-accordion`}
 			>
 				<div
+					aria-expanded={collapsed}
+					tabIndex={0}
+					aria-controls={`ub-content-toggle-panel-${index}-${parentID}`}
 					className={`${classNamePrefix}-accordion-title-wrap`}
 					style={{ backgroundColor: theme }}
 				>
@@ -615,12 +619,16 @@ registerBlockType("ub/content-toggle-panel", {
 					/>
 				</div>
 				<div
+					role="region"
+					id={`ub-content-toggle-panel-${index}-${parentID}`}
 					style={{
 						height: collapsed ? "0" : "",
 						paddingTop: collapsed ? "0" : "",
 						paddingBottom: collapsed ? "0" : "",
 					}}
-					className={`${classNamePrefix}-accordion-content-wrap`}
+					className={`${classNamePrefix}-accordion-content-wrap${
+						collapsed ? " ub-hide" : ""
+					}`}
 				>
 					<InnerBlocks.Content />
 				</div>
