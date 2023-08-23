@@ -189,8 +189,9 @@ Array.prototype.slice
 				)
 				.forEach((instance) => {
 					const panelContent = instance.nextElementSibling;
-
-					if (instance.parentElement.getAttribute("id")) {
+					const panelId = instance.parentElement.getAttribute("id");
+					const hash = location.hash.substring(1);
+					if (panelId && panelId === hash) {
 						togglePanel(instance);
 					}
 					instance.addEventListener("click", function (e) {
