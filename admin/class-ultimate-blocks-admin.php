@@ -205,10 +205,13 @@ class Ultimate_Blocks_Admin {
 				'wp-api'
 			], $this->version, true );
 
+		// ub/action/settings_menu_block_registry action hook
+		do_action( 'ub/action/settings_menu_block_registry' );
+
 		wp_enqueue_script( $this->plugin_name,
 			trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.js', [], $this->version, true );
 
-
+		// ub/filter/admin_settings_menu_data filter hook
 		$frontend_script_data = apply_filters( 'ub/filter/admin_settings_menu_data', [] );
 
 		wp_localize_script( $this->plugin_name, 'ubAdminMenuData', $frontend_script_data );
