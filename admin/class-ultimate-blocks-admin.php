@@ -79,40 +79,7 @@ class Ultimate_Blocks_Admin {
 		$this->plugin_url  = ULTIMATE_BLOCKS_URL;
 
 		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_settings_menu_data' ], 1, 1 );
-
-		// add pro submenu dashboard nav button class
-		// @deprecated
-//		add_filter( 'add_menu_classes', [ $this, 'pro_submenu_nav_class' ], 10, 1 );
 	}
-
-	/**
-	 * Add pro submenu nav class.
-	 *
-	 * @param array $menu menu array
-	 *
-	 * @return array menu array
-	 */
-	public function pro_submenu_nav_class( $menu ) {
-		global $submenu;
-
-		// default class name for pro nav container
-		$nav_container_classname = 'ub-pro-settings-menu-nav-container';
-
-		if ( isset( $submenu['ultimate-blocks-settings'] ) ) {
-			$index = array_search( $this->pro_menu_slug,
-				array_column( $submenu['ultimate-blocks-settings'], 2 ) );
-
-			// assign empty string if no other classes are assigned
-			if ( ! isset( $submenu['ultimate-blocks-settings'][ $index ][4] ) ) {
-				$submenu['ultimate-blocks-settings'][ $index ][4] = '';
-			}
-
-			$submenu['ultimate-blocks-settings'][ $index ][4] .= $nav_container_classname;
-		}
-
-		return $menu;
-	}
-
 
 	/**
 	 * Add data for admin settings menu frontend.
