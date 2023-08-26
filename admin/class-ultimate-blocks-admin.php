@@ -250,6 +250,8 @@ class Ultimate_Blocks_Admin {
 
 		$enable = sanitize_text_field( $_POST['enable'] );
 
+		do_action( 'ub/action/block_toggle_ajax_before_exist_check', $block_name, rest_sanitize_boolean( $enable ) );
+
 		if ( ! $this->block_exists( $block_name ) ) {
 			wp_send_json_error( array(
 				'error_message' => 'Unknown block name',
