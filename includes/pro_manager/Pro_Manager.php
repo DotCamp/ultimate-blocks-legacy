@@ -43,9 +43,6 @@ class Pro_Manager {
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
 
-			// @deprecated removed for better user experience
-//			add_filter( 'add_menu_classes', [ $this, 'pro_dashboard_sidebar_notifications' ], 10, 1 );
-
 			add_action( 'admin_enqueue_scripts', [ $this, 'menu_operations' ], 10, 1 );
 		}
 
@@ -215,46 +212,4 @@ class Pro_Manager {
 		return sprintf( '%s<span class="update-plugins" style="background-color: #EAB308 !important; text-shadow: ">
 <span>💡</span></span>', $original_title );
 	}
-
-	/**
-	 * Add sidebar notifications to menu.
-	 *
-	 * @param array $menu menu array
-	 *
-	 * @return array menu array
-	 */
-	public function pro_dashboard_sidebar_notifications( $menu ) {
-		global $submenu;
-		global $menu_page_slug;
-		global $ub_pro_page_slug;
-
-		// check if notification is already shown
-		$notification_status = get_transient( self::DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY );
-
-		if ( ! $notification_status && isset( $submenu ) ) {
-			if ( isset( $submenu[ $menu_page_slug ] ) ) {
-				// add to submenu
-				$index = array_search( $ub_pro_page_slug, array_column( $submenu[ $menu_page_slug ], 2 ) );
-
-				if ( $index !== false ) {
-					$original_pro_title                      = $submenu[ $menu_page_slug ][ $index ][0];
-					$original_pro_title                      = $this->generate_title_with_notification( $original_pro_title );
-					$submenu[ $menu_page_slug ][ $index ][0] = $original_pro_title;
-				}
-
-				// add to menu
-				$index = array_search( $menu_page_slug, array_column( $menu, 2 ) );
-				if ( $index !== false ) {
-					$menu_key       = array_keys( $menu )[ $index ];
-					$original_title = $menu[ $menu_key ][0];
-
-					$original_title       = $this->generate_title_with_notification( $original_title );
-					$menu[ $menu_key ][0] = $original_title;
-				}
-			}
-		}
-
-		return $menu;
-	}
-
 }
