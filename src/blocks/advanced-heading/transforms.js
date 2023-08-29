@@ -45,6 +45,19 @@ const transforms = {
 					}),
 				}),
 		},
+		{
+			type: "block",
+			blocks: ["core/paragraph"],
+			transform: (attributes) =>
+				createBlock("ub/advanced-heading", {
+					content: attributes.content,
+					level: `h2`,
+					alignment: attributes.align,
+					...(attributes.hasOwnProperty("style") && {
+						fontWeight: attributes.style.typography.fontWeight,
+					}),
+				}),
+		},
 	],
 };
 
