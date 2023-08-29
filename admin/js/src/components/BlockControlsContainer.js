@@ -48,12 +48,13 @@ function BlockControlsContainer( {
 
 	useEffect( () => {
 		const sortedBlocks = [ ...blocks ].sort( ( a, b ) => {
-			const aName = a.title;
-			const bName = b.title;
+			const aName = a.title.toLowerCase();
+			const bName = b.title.toLowerCase();
 
 			if ( aName < bName ) {
 				return -1;
-			} else if ( aName > bName ) {
+			}
+			if ( aName > bName ) {
 				return 1;
 			}
 

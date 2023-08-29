@@ -10,7 +10,7 @@ import React, { createElement } from 'react';
 const withIcon = ( BaseComponent ) => ( props ) => {
 	let iconElement = 'x';
 	if ( ! props.iconObject || typeof props.iconObject !== 'object' ) {
-		throw new Error( 'invalid type of icon object is supplied to withIcon HOC' );
+		// throw new Error( 'invalid type of icon object is supplied to withIcon HOC' );
 	} else {
 		const { iconObject } = props;
 		const { type, props: iconProps } = iconObject;

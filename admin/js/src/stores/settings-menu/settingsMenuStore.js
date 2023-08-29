@@ -64,7 +64,7 @@ function generateBlockInfoObject(
 	return {
 		name,
 		title,
-		info,
+		info: Array.isArray( info ) ? info : [ info ],
 		icon,
 		active,
 		pro,
@@ -124,10 +124,13 @@ function createStore() {
 	const { blocks: proBlocks } = appData.upsells;
 	const proBlockUpsell = prepareProOnlyBlockUpsellData( proBlocks );
 
+	// all blocks available including upsell versions of pro blocks
+	const allRegistered = [ ...reducedBlocks, ...proBlockUpsell ];
+
 	let preloadedState = {
 		assets: appData.assets,
 		blocks: {
-			registered: [ ...reducedBlocks, ...proBlockUpsell ],
+			registered: allRegistered,
 		},
 		versionControl: appData.versionControl,
 	};

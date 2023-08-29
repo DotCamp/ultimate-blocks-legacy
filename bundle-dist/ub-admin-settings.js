@@ -36050,10 +36050,10 @@ function _arrayWithHoles(arr) {
     var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
     (0, _react.useEffect)(function() {
         var sortedBlocks = _toConsumableArray(blocks).sort(function(a, b) {
-            var aName = a.title;
-            var bName = b.title;
+            var aName = a.title.toLowerCase();
+            var bName = b.title.toLowerCase();
             if (aName < bName) return -1;
-            else if (aName > bName) return 1;
+            if (aName > bName) return 1;
             return 0;
         });
         setInnerBlocks(sortedBlocks);
@@ -36466,7 +36466,7 @@ function _typeof(obj) {
  */ var withIcon = function withIcon(BaseComponent) {
     return function(props) {
         var iconElement = "x";
-        if (!props.iconObject || _typeof(props.iconObject) !== "object") throw new Error("invalid type of icon object is supplied to withIcon HOC");
+        if (!props.iconObject || _typeof(props.iconObject) !== "object") ;
         else {
             var iconObject = props.iconObject;
             var type = iconObject.type, iconProps = iconObject.props;
@@ -41909,7 +41909,9 @@ function _toPrimitive(input, hint) {
     return {
         name: name,
         title: title,
-        info: info,
+        info: Array.isArray(info) ? info : [
+            info
+        ],
         icon: icon,
         active: active,
         pro: pro
@@ -41946,10 +41948,12 @@ function _toPrimitive(input, hint) {
     }, []);
     var proBlocks = appData.upsells.blocks;
     var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
+    // all blocks available including upsell versions of pro blocks
+    var allRegistered = [].concat(_toConsumableArray(reducedBlocks), _toConsumableArray(proBlockUpsell));
     var preloadedState = {
         assets: appData.assets,
         blocks: {
-            registered: [].concat(_toConsumableArray(reducedBlocks), _toConsumableArray(proBlockUpsell))
+            registered: allRegistered
         },
         versionControl: appData.versionControl
     };
