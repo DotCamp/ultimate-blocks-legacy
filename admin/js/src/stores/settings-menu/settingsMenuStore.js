@@ -32,7 +32,7 @@ function prepareProOnlyBlockUpsellData( proOnlyBlockList ) {
 					blockName,
 					title,
 					info,
-					'<i>here</i>',
+					icon,
 					false,
 					true
 				)

@@ -36462,12 +36462,17 @@ function _typeof(obj) {
  * Hoc for creating and adding icon element by using Gutenberg block icon attribute object.
  *
  * @param {React.ElementType} BaseComponent target component
- * @returns {Function} function to use as HOC
+ * @return {Function} function to use as HOC
  */ var withIcon = function withIcon(BaseComponent) {
     return function(props) {
         var iconElement = "x";
-        if (!props.iconObject || _typeof(props.iconObject) !== "object") ;
-        else {
+        if (!props.iconObject) throw new Error("invalid type of icon object is supplied to withIcon HOC");
+        else if (typeof props.iconObject === "string") iconElement = /*#__PURE__*/ _react["default"].createElement("span", {
+            dangerouslySetInnerHTML: {
+                __html: props.iconObject
+            }
+        });
+        else if (_typeof(props.iconObject) === "object") {
             var iconObject = props.iconObject;
             var type = iconObject.type, iconProps = iconObject.props;
             iconElement = /*#__PURE__*/ (0, _react.createElement)(type, iconProps);
@@ -41890,7 +41895,7 @@ function _toPrimitive(input, hint) {
         return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
     }).reduce(function(carry, blockName) {
         var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon;
-        carry.push(generateBlockInfoObject(blockName, title, info, "<i>here</i>", false, true));
+        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true));
         return carry;
     }, []);
 }
