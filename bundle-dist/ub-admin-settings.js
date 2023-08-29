@@ -36195,16 +36195,17 @@ function _arrayWithHoles(arr) {
  * Menu block control component.
  *
  * This control will be used for both enabling/disabling blocks and showing info about them.
- * @constructor
  *
- * @param {Object} props component properties
- * @param {String} props.title block title
- * @param {String} props.blockId registry id of block
- * @param {Boolean} props.status block status
- * @param {HTMLElement} props.iconElement icon element, will be supplied via HOC
- * @param {Function} props.onStatusChange callback for status change event
- * @param {Array} props.info information about block and its usage
- * @param {Boolean} props.blockInfoShowStatus block info show status, will be supplied via HOC
+ * @class
+ *
+ * @param {Object}      props                     component properties
+ * @param {string}      props.title               block title
+ * @param {string}      props.blockId             registry id of block
+ * @param {boolean}     props.status              block status
+ * @param {HTMLElement} props.iconElement         icon element, will be supplied via HOC
+ * @param {Function}    props.onStatusChange      callback for status change event
+ * @param {Array}       props.info                information about block and its usage
+ * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
  *
  */ function BlockControl(_ref) {
     var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus;
@@ -36244,6 +36245,7 @@ function _arrayWithHoles(arr) {
     var howToUse = null;
     /**
    * Main visibility calculation for how to use button.
+   *
    * @return {boolean} visibility status
    */ var howToUseVisibility = function howToUseVisibility() {
         return howToUse !== null;
@@ -36260,7 +36262,9 @@ function _arrayWithHoles(arr) {
         className: "block-title-left-container"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-icon"
-    }, iconElement), title), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, iconElement), /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "title-text"
+    }, title)), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
     }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
         onStatusChange: setInnerStatus,

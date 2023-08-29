@@ -301,6 +301,10 @@
   height: 20px;
 }
 
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-text {
+  text-transform: capitalize;
+}
+
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto {
   grid-area: howTo;
   padding: 20px;
