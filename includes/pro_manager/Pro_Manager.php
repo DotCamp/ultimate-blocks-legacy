@@ -7,6 +7,7 @@ use Freemius;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\Env_Manager;
+use Ultimate_Blocks\includes\pro_manager\blocks\coupon\Coupon_Pro_Block;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
@@ -32,6 +33,14 @@ class Pro_Manager {
 	 * Transient key for dashboard sidebar notification.
 	 */
 	const DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY = 'ultimate_blocks_dashboard_sidebar_notification';
+
+	/**
+	 * List of upsells to pro only blocks.
+	 * @var array
+	 */
+	private $pro_block_upsells = [
+		Coupon_Pro_Block::class
+	];
 
 	/**
 	 * Main process that will be called during initialization of manager.
@@ -64,7 +73,7 @@ class Pro_Manager {
 	 *
 	 * @return array menu data
 	 */
-	public static function add_menu_data( $menu_data ) {
+	public function add_menu_data( $menu_data ) {
 		if ( ! isset( $menu_data['assets'] ) ) {
 			$menu_data['assets'] = [];
 		}
@@ -76,7 +85,34 @@ class Pro_Manager {
 		// merge assets
 		$menu_data['assets'] = array_merge( $menu_data['assets'], $assets );
 
+		$this->add_menu_upsell_data( $menu_data );
+
 		return $menu_data;
+	}
+
+	/**
+	 * Add upsell data.
+	 *
+	 * @param array $menu_data menu data
+	 *
+	 * @return void
+	 */
+	private function add_menu_upsell_data( &$menu_data ) {
+		// add base structure and default values for upsell data
+		if ( ! isset( $menu_data['upsells'] ) ) {
+			$menu_data['upsells'] = [
+				'blocks' => []
+			];
+		}
+	}
+
+	/**
+	 * Prepare data related to pro only blocks
+	 *
+	 * @return array pro block data
+	 */
+	private function prepare_pro_block_upsell_data() {
+
 	}
 
 	/**
@@ -199,6 +235,14 @@ class Pro_Manager {
 		return [
 			'upsellExtensionData' => $final_upsell_extension_data
 		];
+	}
+
+	/**
+	 * Prepare data for pro only block upsells.
+	 * @return void
+	 */
+	private function prepare_pro_only_block_upsell_data() {
+
 	}
 
 	/**
