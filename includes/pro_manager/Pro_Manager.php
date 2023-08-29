@@ -7,6 +7,7 @@ use Freemius;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\Env_Manager;
+use Ultimate_Blocks\includes\pro_manager\base\Pro_Block_Upsell;
 use Ultimate_Blocks\includes\pro_manager\blocks\coupon\Coupon_Pro_Block;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
@@ -104,6 +105,8 @@ class Pro_Manager {
 				'blocks' => []
 			];
 		}
+
+		$menu_data['upsells']['blocks'] = $this->prepare_pro_block_upsell_data();
 	}
 
 	/**
@@ -112,7 +115,21 @@ class Pro_Manager {
 	 * @return array pro block data
 	 */
 	private function prepare_pro_block_upsell_data() {
+		$upsell_data = [];
 
+		foreach ( $this->pro_block_upsells as $pro_upsell_class ) {
+			if ( in_array( Pro_Block_Upsell::class, class_parents( $pro_upsell_class ) ) ) {
+				$block_upsell_instance = new $pro_upsell_class();
+
+				$upsell_data[ $block_upsell_instance->block_name() ] = [
+					'label' => $block_upsell_instance->block_label(),
+					'desc'  => $block_upsell_instance->block_description(),
+					'icon'  => $block_upsell_instance->block_icon(),
+				];
+			}
+		}
+
+		return $upsell_data;
 	}
 
 	/**
