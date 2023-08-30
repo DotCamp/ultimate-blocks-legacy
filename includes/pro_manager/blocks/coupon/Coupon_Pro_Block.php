@@ -37,7 +37,7 @@ class Coupon_Pro_Block extends Pro_Block_Upsell {
 	 * @return null | string;
 	 */
 	public function block_icon() {
-		require_once( __DIR__ . '/icon.php' );
+		require( __DIR__ . '/icon.php' );
 
 		return $coupon_block_icon;
 	}
