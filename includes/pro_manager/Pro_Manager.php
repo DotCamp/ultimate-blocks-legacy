@@ -5,6 +5,7 @@ namespace Ultimate_Blocks\includes\pro_manager;
 
 use DOMDocument;
 use DOMNode;
+use Exception;
 use Freemius;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
@@ -20,6 +21,9 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Review_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Social_Share_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Table_Of_Contents_Extension;
+use Ultimate_Blocks\includes\svg_sanitizer\DomDocumentLoadHtmlException;
+use Ultimate_Blocks\includes\svg_sanitizer\Svg_Sanitizer;
+use Ultimate_Blocks\includes\svg_sanitizer\SvgSanitizeInvalidRootElement;
 use function add_action;
 use function add_filter;
 use function do_action;
@@ -112,62 +116,6 @@ class Pro_Manager {
 	}
 
 	/**
-	 * Check svg node for sanitization.
-	 *
-	 * @param DOMNode $target_node target node to check
-	 * @param array $removal_list list to add nodes to be removed
-	 *
-	 * @return void
-	 */
-	private function check_svg_node( $target_node, &$removal_list ) {
-		$allowed_tags = [ 'g', 'path' ];
-
-		$type = $target_node->nodeName;
-		if ( ! in_array( $type, $allowed_tags ) ) {
-			$removal_list[] = $target_node;
-		} else {
-			$child_nodes = $target_node->childNodes;
-			if ( sizeof( $child_nodes ) > 0 ) {
-				foreach ( $child_nodes as $child_node ) {
-					$this->check_svg_node( $child_node, $removal_list );
-				}
-			}
-		}
-	}
-
-	private function sanitize_svg( $svg_string ) {
-		$block_icon = $svg_string;
-
-		$dom_handler = new DOMDocument();
-		$load_status = @$dom_handler->loadHTML( $block_icon,
-			LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED );
-
-		$to_be_removed_nodes = [];
-
-		if ( $load_status ) {
-			if ( $dom_handler->documentElement->tagName === 'svg' ) {
-				$allowed_tags = [ 'g', 'path' ];
-				foreach ( $dom_handler->documentElement->childNodes as $child_node ) {
-					$this->check_svg_node( $child_node, $to_be_removed_nodes );
-				}
-
-				foreach ( $to_be_removed_nodes as $node ) {
-					$node->parentNode->removeChild( $node );
-				}
-
-				$block_icon = $dom_handler->saveHTML();
-
-			} else {
-				$block_icon = '';
-			}
-		} else {
-			$block_icon = '';
-		}
-
-		return $block_icon;
-	}
-
-	/**
 	 * Prepare data related to pro only blocks
 	 *
 	 * @return array pro block data
@@ -179,15 +127,19 @@ class Pro_Manager {
 			if ( in_array( Pro_Block_Upsell::class, class_parents( $pro_upsell_class ) ) ) {
 				$block_upsell_instance = new $pro_upsell_class();
 
-				$block_icon = $this->sanitize_svg( preg_replace( '/\s+/', ' ',
-					str_replace( [ "\r", "\n" ], '', $block_upsell_instance->block_icon() ) ) );
+				// sanitize block icon
+				$svg_sanitizer = new Svg_Sanitizer( $block_upsell_instance->block_icon() );
+				try {
+					$block_icon = $svg_sanitizer->sanitize();
+				} catch ( Exception $e ) {
+					$block_icon = '';
+				}
 
 				$upsell_data[ $block_upsell_instance->block_name() ] = [
 					'label' => $block_upsell_instance->block_label(),
 					'desc'  => $block_upsell_instance->block_description(),
 					'icon'  => $block_icon,
 				];
-
 			}
 		}
 

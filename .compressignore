@@ -21,4 +21,5 @@ vendor/phar-io/
 vendor/phpunit/
 vendor/sebastian/
 vendor/theseer/
+__tests__/
 zip/

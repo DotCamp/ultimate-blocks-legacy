@@ -4,7 +4,9 @@
 	"type": "project",
 	"license": "GPL3+",
 	"require": {
-		"vlucas/phpdotenv": "^5.5"
+		"vlucas/phpdotenv": "^5.5",
+		"ext-dom": "*",
+		"ext-libxml": "*"
 	},
 	"autoload": {
 		"psr-4": {
