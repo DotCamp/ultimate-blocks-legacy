@@ -101,14 +101,21 @@ function ub_load_assets() {
 		ub_update_css_version( 'frontend' );
 	}
 
+	#TODO Temporary
 	wp_enqueue_style(
-			'ultimate_blocks-cgb-style-css', // Handle.
-			file_exists( wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css' ) ?
-					content_url( '/uploads/ultimate-blocks/blocks.style.build.css' ) :
-					plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-			array(), // Dependency to include the CSS after it.
-			Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+		'ultimate_blocks-cgb-style-css', // Handle.
+		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+		array(), // Dependency to include the CSS after it.
+		uniqid()  // Version: latest version number.
 	);
+	// wp_enqueue_style(
+	// 		'ultimate_blocks-cgb-style-css', // Handle.
+	// 		file_exists( wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css' ) ?
+	// 				content_url( '/uploads/ultimate-blocks/blocks.style.build.css' ) :
+	// 				plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+	// 		array(), // Dependency to include the CSS after it.
+	// 		Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+	// );
 }
 
 function ub_advanced_heading_add_assets( $fontList ) {

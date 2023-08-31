@@ -1345,6 +1345,14 @@ $defaultValues = array(
 			'labelColor'         => array(
 				'type'    => 'string',
 				'default' => ''
+			),
+			'percentagePosition' => array(
+				'type'    => 'string',
+				'default' => 'bottom'
+			),
+			'isStripe'         	 => array(
+				'type'    => 'boolean',
+				'default' => false
 			)
 		)
 	),
