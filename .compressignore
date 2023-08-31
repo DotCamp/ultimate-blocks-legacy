@@ -22,4 +22,5 @@ vendor/phpunit/
 vendor/sebastian/
 vendor/theseer/
 __tests__/
+phpunit.xml
 zip/

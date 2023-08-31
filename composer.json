@@ -3,6 +3,9 @@
 	"description": "Ultimate blocks",
 	"type": "project",
 	"license": "GPL3+",
+	"scripts": {
+		"test_unit" : "phpunit"
+	},
 	"require": {
 		"vlucas/phpdotenv": "^5.5",
 		"ext-dom": "*",
