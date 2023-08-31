@@ -1,11 +1,9 @@
 <?php
 
-namespace Ultimate_Blocks\__tests__\php\unit\includes\svg_sanitizer;
+namespace Ultimate_Blocks\includes\svg_sanitizer;
 
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Ultimate_Blocks\__tests__\php\test_bases\TestBase;
-use Ultimate_Blocks\includes\svg_sanitizer\Svg_Sanitizer;
-use Ultimate_Blocks\includes\svg_sanitizer\SvgSanitizeInvalidRootElement;
 
 /**
  * Svg_Sanitizer class tests.
