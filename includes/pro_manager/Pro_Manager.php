@@ -99,7 +99,7 @@ class Pro_Manager {
 
 		// merge assets
 		$menu_data['assets'] = array_merge( $menu_data['assets'], $assets );
-		$menu_data['app'] = array_merge( $menu_data['app'], $app );
+		$menu_data['app']    = array_merge( $menu_data['app'], $app );
 
 		$this->add_menu_upsell_data( $menu_data );
 
@@ -121,7 +121,10 @@ class Pro_Manager {
 			];
 		}
 
-		$menu_data['upsells']['blocks'] = $this->prepare_pro_block_upsell_data();
+		// only populate data if plugin is not on pro version
+		if ( ! $this->is_pro() ) {
+			$menu_data['upsells']['blocks'] = $this->prepare_pro_block_upsell_data();
+		}
 	}
 
 	/**
