@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
-import initialState from "$Stores/settings-menu/initialState";
+import { createSlice } from '@reduxjs/toolkit';
+import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
+import initialState from '$Stores/settings-menu/initialState';
 
 /**
  * App slice options
+ *
  * @type {Object}
  */
 const appSliceOptions = {
@@ -13,9 +14,9 @@ const appSliceOptions = {
 		/**
 		 * Set current filter value.
 		 *
-		 * @param {Object} state slice state
-		 * @param {Object} props reducer properties
-		 * @param {String} props.payload filter value
+		 * @param {Object} state         slice state
+		 * @param {Object} props         reducer properties
+		 * @param {string} props.payload filter value
 		 */
 		setBlockFilter( state, { payload } ) {
 			if ( Object.values( FILTER_TYPES ).includes( payload ) ) {
@@ -41,8 +42,9 @@ export const { setBlockFilter, toggleShowBlockInfo } = appSlice.actions;
 
 /**
  * Get all application options.
+ *
  * @param {Object} state store state
- * @returns {Object} options
+ * @return {Object} options
  */
 export const getAllAppOptions = ( state ) => {
 	return state.app;
@@ -50,8 +52,9 @@ export const getAllAppOptions = ( state ) => {
 
 /**
  * Get current block filter.
+ *
  * @param {Object} state store state
- * @returns {String} filter value
+ * @return {string} filter value
  */
 export const getBlockFilter = ( state ) => {
 	return state.app.blockFilter;
@@ -59,11 +62,22 @@ export const getBlockFilter = ( state ) => {
 
 /**
  * Get block extra info show status.
+ *
  * @param {Object} state store state
- * @returns {Boolean} status
+ * @return {boolean} status
  */
 export const getBlockInfoShowStatus = ( state ) => {
 	return state.app.showBlockInfo;
+};
+
+/**
+ * Get plugin pro status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */
+export const getProStatus = ( state ) => {
+	return state.app.isPro;
 };
 
 /**

@@ -3,7 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import ToggleControl from '$Components/ToggleControl';
 import MenuButton from '$Components/MenuButton';
 import withIcon from '$HOC/withIcon';
-import { getBlockInfoShowStatus } from '$Stores/settings-menu/slices/app';
+import {
+	getBlockInfoShowStatus,
+	getProStatus,
+} from '$Stores/settings-menu/slices/app';
 import withStore from '$HOC/withStore';
 
 /**
@@ -21,7 +24,8 @@ import withStore from '$HOC/withStore';
  * @param {Function}    props.onStatusChange      callback for status change event
  * @param {Array}       props.info                information about block and its usage
  * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
- *
+ * @param {boolean}     props.proBlock            block belongs to pro version
+ * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
  */
 function BlockControl( {
 	title,
@@ -31,6 +35,8 @@ function BlockControl( {
 	onStatusChange,
 	info,
 	blockInfoShowStatus,
+	proBlock,
+	proStatus,
 } ) {
 	const initialRender = useRef( true );
 	const initialAnimation = useRef( true );
@@ -42,6 +48,9 @@ function BlockControl( {
 	const [ headerHeight, setHeaderHeight ] = useState( 0 );
 
 	const headerRef = useRef();
+
+	/* useEffect block */
+
 	useEffect( () => {
 		const { height } = headerRef.current.getBoundingClientRect();
 		setHeaderHeight( height );
@@ -52,6 +61,12 @@ function BlockControl( {
 			height: blockInfoShowStatus ? '' : `${ headerHeight }px`,
 		} );
 	}, [ headerHeight ] );
+
+	useEffect( () => {
+		if ( proBlock && ! proStatus && innerStatus ) {
+			setInnerStatus( false );
+		}
+	}, [ innerStatus ] );
 
 	useEffect( () => {
 		setBlockStyle( {
@@ -72,6 +87,8 @@ function BlockControl( {
 			onStatusChange( blockId, innerStatus );
 		}
 	}, [ innerStatus ] );
+
+	/* useEffect block end */
 
 	const howToUse = null;
 
@@ -96,12 +113,16 @@ function BlockControl( {
 			<div ref={ headerRef } className={ 'block-title' }>
 				<div className={ 'block-title-left-container' }>
 					<div className={ 'title-icon' }>{ iconElement }</div>
-					<span className={ 'title-text' }>{ title }</span>
+					<span className={ 'title-text' }>
+						{ title }
+						{ proBlock && <span>PRO</span> }
+					</span>
 				</div>
 				<div className={ 'block-title-right-container' }>
 					<ToggleControl
 						onStatusChange={ setInnerStatus }
 						status={ innerStatus }
+						disabled={ proBlock && ! proStatus }
 					/>
 				</div>
 			</div>
@@ -131,6 +152,7 @@ function BlockControl( {
 const selectMapping = ( select ) => {
 	return {
 		blockInfoShowStatus: select( getBlockInfoShowStatus ),
+		proStatus: select( getProStatus ),
 	};
 };
 

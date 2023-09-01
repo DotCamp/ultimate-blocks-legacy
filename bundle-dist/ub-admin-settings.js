@@ -29598,7 +29598,7 @@ exports.default = thunk;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getProStatus = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
 var _toolkit = require("ab983f5a897f990a");
 var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
 var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
@@ -29609,6 +29609,7 @@ function _interopRequireDefault(obj) {
 }
 /**
  * App slice options
+ *
  * @type {Object}
  */ var appSliceOptions = {
     name: "app",
@@ -29617,9 +29618,9 @@ function _interopRequireDefault(obj) {
         /**
      * Set current filter value.
      *
-     * @param {Object} state slice state
-     * @param {Object} props reducer properties
-     * @param {String} props.payload filter value
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload filter value
      */ setBlockFilter: function setBlockFilter(state, _ref) {
             var payload = _ref.payload;
             if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
@@ -29638,8 +29639,9 @@ var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
 var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo;
 /**
  * Get all application options.
+ *
  * @param {Object} state store state
- * @returns {Object} options
+ * @return {Object} options
  */ exports.toggleShowBlockInfo = toggleShowBlockInfo;
 exports.setBlockFilter = setBlockFilter;
 var getAllAppOptions = function getAllAppOptions(state) {
@@ -29647,23 +29649,34 @@ var getAllAppOptions = function getAllAppOptions(state) {
 };
 /**
  * Get current block filter.
+ *
  * @param {Object} state store state
- * @returns {String} filter value
+ * @return {string} filter value
  */ exports.getAllAppOptions = getAllAppOptions;
 var getBlockFilter = function getBlockFilter(state) {
     return state.app.blockFilter;
 };
 /**
  * Get block extra info show status.
+ *
  * @param {Object} state store state
- * @returns {Boolean} status
+ * @return {boolean} status
  */ exports.getBlockFilter = getBlockFilter;
 var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
     return state.app.showBlockInfo;
 };
 /**
- * @module appSlice
+ * Get plugin pro status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
  */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
+var getProStatus = function getProStatus(state) {
+    return state.app.isPro;
+};
+/**
+ * @module appSlice
+ */ exports.getProStatus = getProStatus;
 var _default = appSlice.reducer;
 exports["default"] = _default;
 
@@ -30037,7 +30050,8 @@ var _BlockStatusFilterControl = require("865a04ed337dccab");
  */ var initialState = {
     app: {
         blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
-        showBlockInfo: false
+        showBlockInfo: false,
+        isPro: false
     },
     versionControl: {
         currentVersion: "1.0.0",
@@ -36030,24 +36044,34 @@ function _arrayWithHoles(arr) {
  * @param {Object}   props                component properties
  * @param {Object}   props.blocks         menu data, will be supplied via HOC
  * @param {Object}   props.blockFilter    current filter for block status, will be supplied via HOC
- * @param            props.dispatch
+ * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
+ * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
  */ function BlockControlsContainer(_ref) {
-    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus;
-    /**
-   * Handle block status change
-   *
-   * @param {string}  blockId target id
-   * @param {boolean} status  status value
-   */ var handleBlockStatusChange = function handleBlockStatusChange(blockId, status) {
-        setBlockStatus({
-            id: blockId,
-            status: status
-        });
-        dispatch(_actions.toggleBlockStatus)(blockId, status);
-    };
+    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus;
     var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
+    /**
+   * Handle block status change.
+   *
+   * @param {boolean} proBlock is calling block belongs to pro version of the plugin
+   */ var handleBlockStatusChange = function handleBlockStatusChange(proBlock) {
+        return function(blockId, status) {
+            if (proBlock && !proStatus) {
+                setBlockStatus({
+                    id: blockId,
+                    status: false
+                });
+                return;
+            }
+            setBlockStatus({
+                id: blockId,
+                status: status
+            });
+            dispatch(_actions.toggleBlockStatus)(blockId, status);
+        };
+    };
+    // useEffect hook
     (0, _react.useEffect)(function() {
         var sortedBlocks = _toConsumableArray(blocks).sort(function(a, b) {
             var aName = a.title.toLowerCase();
@@ -36064,7 +36088,7 @@ function _arrayWithHoles(arr) {
         className: "controls-container",
         "data-show-info": JSON.stringify(showInfoStatus)
     }, innerBlocks.map(function(_ref2) {
-        var title = _ref2.title, name = _ref2.name, icon = _ref2.icon, active = _ref2.active, info = _ref2.info;
+        var title = _ref2.title, name = _ref2.name, icon = _ref2.icon, active = _ref2.active, info = _ref2.info, pro = _ref2.pro;
         var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
         var visibilityStatus = blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
         return /*#__PURE__*/ _react["default"].createElement(_VisibilityWrapper["default"], {
@@ -36075,8 +36099,9 @@ function _arrayWithHoles(arr) {
             blockId: name,
             status: active,
             iconObject: icon,
-            onStatusChange: handleBlockStatusChange,
-            info: info
+            onStatusChange: handleBlockStatusChange(pro),
+            info: info,
+            proBlock: pro
         }));
     }));
 }
@@ -36084,7 +36109,8 @@ var selectMapping = function selectMapping(selector) {
     return {
         blocks: selector(_blocks.getBlocks),
         blockFilter: selector(_app.getBlockFilter),
-        showInfoStatus: selector(_app.getBlockInfoShowStatus)
+        showInfoStatus: selector(_app.getBlockInfoShowStatus),
+        proStatus: selector(_app.getProStatus)
     };
 };
 var actionMapping = function actionMapping() {
@@ -36206,16 +36232,17 @@ function _arrayWithHoles(arr) {
  * @param {Function}    props.onStatusChange      callback for status change event
  * @param {Array}       props.info                information about block and its usage
  * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
- *
+ * @param {boolean}     props.proBlock            block belongs to pro version
+ * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
  */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus;
     var initialRender = (0, _react.useRef)(true);
     var initialAnimation = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
     var _useState3 = (0, _react.useState)({}), _useState4 = _slicedToArray(_useState3, 2), blockStyle = _useState4[0], setBlockStyle = _useState4[1];
     var _useState5 = (0, _react.useState)(0), _useState6 = _slicedToArray(_useState5, 2), headerHeight = _useState6[0], setHeaderHeight = _useState6[1];
     var headerRef = (0, _react.useRef)();
-    (0, _react.useEffect)(function() {
+    /* useEffect block */ (0, _react.useEffect)(function() {
         var _headerRef$current$ge = headerRef.current.getBoundingClientRect(), height = _headerRef$current$ge.height;
         setHeaderHeight(height);
     }, []);
@@ -36225,6 +36252,11 @@ function _arrayWithHoles(arr) {
         });
     }, [
         headerHeight
+    ]);
+    (0, _react.useEffect)(function() {
+        if (proBlock && !proStatus && innerStatus) setInnerStatus(false);
+    }, [
+        innerStatus
     ]);
     (0, _react.useEffect)(function() {
         setBlockStyle({
@@ -36242,7 +36274,7 @@ function _arrayWithHoles(arr) {
     }, [
         innerStatus
     ]);
-    var howToUse = null;
+    /* useEffect block end */ var howToUse = null;
     /**
    * Main visibility calculation for how to use button.
    *
@@ -36264,11 +36296,12 @@ function _arrayWithHoles(arr) {
         className: "title-icon"
     }, iconElement), /*#__PURE__*/ _react["default"].createElement("span", {
         className: "title-text"
-    }, title)), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, title, proBlock && /*#__PURE__*/ _react["default"].createElement("span", null, "PRO"))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
     }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
         onStatusChange: setInnerStatus,
-        status: innerStatus
+        status: innerStatus,
+        disabled: proBlock && !proStatus
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-info"
     }, info.map(function(infoLine, index) {
@@ -36286,7 +36319,8 @@ function _arrayWithHoles(arr) {
 }
 var selectMapping = function selectMapping(select) {
     return {
-        blockInfoShowStatus: select(_app.getBlockInfoShowStatus)
+        blockInfoShowStatus: select(_app.getBlockInfoShowStatus),
+        proStatus: select(_app.getProStatus)
     };
 };
 /**
@@ -36381,12 +36415,13 @@ function _arrayWithHoles(arr) {
 /**
  * Toggle control component.
  *
- * @constructor
- * @param {Object} props component properties
- * @param {Boolean} props.status control status
+ * @class
+ * @param {Object}   props                component properties
+ * @param {boolean}  props.status         control status
+ * @param {boolean}  props.disabled       control disabled status
  * @param {Function} props.onStatusChange status changed callback
  */ function ToggleControl(_ref) {
-    var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange;
+    var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange, _ref$disabled = _ref.disabled, disabled = _ref$disabled === void 0 ? false : _ref$disabled;
     var initialRender = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
     (0, _react.useEffect)(function() {
@@ -36398,7 +36433,7 @@ function _arrayWithHoles(arr) {
     return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
     _react["default"].createElement("div", {
         onClick: function onClick() {
-            return setInnerStatus(!innerStatus);
+            if (!disabled) setInnerStatus(!innerStatus);
         },
         className: "ub-toggle-control",
         "data-enabled": JSON.stringify(innerStatus)
