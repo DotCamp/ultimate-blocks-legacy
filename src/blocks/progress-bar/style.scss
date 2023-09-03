@@ -68,7 +68,8 @@
 			}
 		}
 	}
-	&.is-style-ub-progress-bar-circle-wrapper {
+	&.is-style-ub-progress-bar-circle-wrapper,
+	&.is-style-ub-progress-bar-half-circle-wrapper {
 		.ub_progress-bar-label {
 			position: relative;
 			top: 50%;

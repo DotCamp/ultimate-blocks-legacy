@@ -716,8 +716,8 @@ function ub_include_block_attribute_css() {
 					break;
 				case 'ub/progress-bar':
 					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];					
-					$is_style_circle = isset($attributes['className']) && 'is-style-ub-progress-bar-circle-wrapper' === $attributes['className'];
-					$is_style_half_circle = isset($attributes['className']) && 'is-style-ub-progress-bar-half-circle-wrapper' === $attributes['className'];
+					$is_style_circle = strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false;
+					$is_style_half_circle = strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false;
 
 					$blockStylesheets .= $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
 										 'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
@@ -749,6 +749,26 @@ function ub_include_block_attribute_css() {
 											 'stroke-dasharray: 0px, ' . $circlePathLength . 'px' . PHP_EOL .
 											 '}' . PHP_EOL .
 											 $prefix . ' .ub_progress-bar-label{' . PHP_EOL;
+					} else if($is_style_half_circle){
+						    	$halfCircleRadius = 50 - ($attributes['barThickness'] + 2) / 2;
+							$halfCirclePathLength = $halfCircleRadius * M_PI;
+							$halfCircleStrokeArcLength = ($halfCirclePathLength * $attributes['percentage']) / 100; // Half of the percentage for a half circle
+
+							$blockStylesheets .= '#ub-progress-bar-' . $attributes['blockID'] . ' .ub_progress-bar-container{' . PHP_EOL .
+								'height: ' . $attributes['circleSize'] . 'px;' . PHP_EOL . 'width: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
+								(in_array($attributes['detailAlign'], [
+									'left',
+									'right'
+								]) ? 'float: ' . $attributes['detailAlign'] : 'margin: auto') . ';' . PHP_EOL .
+								'}' . PHP_EOL .
+								$prefix . ' .ub_progress-bar-circle-trail{' . PHP_EOL .
+								'stroke-dasharray: ' . $halfCirclePathLength . 'px,' . $halfCirclePathLength . 'px' . PHP_EOL .
+								'}' . PHP_EOL .
+								$prefix . ' .ub_progress-bar-circle-path{' . PHP_EOL .
+								'stroke-dasharray: 0px, ' . $halfCirclePathLength . 'px;' . PHP_EOL .
+								'stroke-linecap: round;' . PHP_EOL .
+								'}' . PHP_EOL;
+
 					}
 					$blockStylesheets .= 'visibility: hidden;' . PHP_EOL .
 										 'color: ' . ( $attributes['labelColor'] ?: 'inherit' ) . ';' . PHP_EOL .
@@ -764,7 +784,16 @@ function ub_include_block_attribute_css() {
 						$blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-circle-path{' . PHP_EOL .
 											 'stroke-linecap: round;' . PHP_EOL .
 											 'stroke-dasharray: ' . $strokeArcLength . 'px, ' . $circlePathLength . 'px;' . PHP_EOL;
+					} else if ($is_style_half_circle){
+						$halfCircleRadius = 50 - ($attributes['barThickness'] + 2) / 2;
+						$halfCirclePathLength = $halfCircleRadius * M_PI;
+						$halfCircleStrokeArcLength = ($halfCirclePathLength * $attributes['percentage']) / 100; // Half of the percentage for a half circle
+						// Code for half circle style
+						$blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-circle-path{' . PHP_EOL .
+							'stroke-linecap: round;' . PHP_EOL .
+							'stroke-dasharray: ' . $halfCircleStrokeArcLength . 'px, ' . $halfCirclePathLength . 'px;' . PHP_EOL;
 					}
+
 					$blockStylesheets .= '}';
 					break;
 				case 'ub/review':

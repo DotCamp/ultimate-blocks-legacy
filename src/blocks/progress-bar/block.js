@@ -28,6 +28,7 @@ import {
 	CustomToggleGroupControl,
 } from "../../components";
 import { getStyles } from "./get-styles";
+import HalfCircle from "./HalfCircle";
 
 function ProgressBarMain(props) {
 	const {
@@ -197,9 +198,8 @@ function ProgressBarMain(props) {
 								label={__("Stripe", "ultimate-blocks")}
 								onChange={() => setAttributes({ isStripe: !isStripe })}
 							/>
-						</PanelBody>
-						<PanelBody title={__("Value")} initialOpen={false}>
 							<RangeControl
+								label={__("Value", "ultimate-blocks")}
 								className="ub_progress_bar_value"
 								value={percentage}
 								onChange={(value) => setAttributes({ percentage: value })}
@@ -255,12 +255,14 @@ function ProgressBarMain(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
-					<InspectorControls group="border">
-						<BorderRadiusControl
-							attrKey="barBorderRadius"
-							label={__("Bar Border Radius", "ultimate-blocks")}
-						/>
-					</InspectorControls>
+					{!isStyleCircle && !isStyleHalfCircle && (
+						<InspectorControls group="border">
+							<BorderRadiusControl
+								attrKey="barBorderRadius"
+								label={__("Bar Border Radius", "ultimate-blocks")}
+							/>
+						</InspectorControls>
+					)}
 				</>
 			)}
 			<div className={`ub_progress-bar ${className}`} style={styles}>
@@ -281,6 +283,13 @@ function ProgressBarMain(props) {
 						)}
 						{isStyleCircle && (
 							<Circle
+								{...progressBarAttributes}
+								alignment={detailAlign}
+								size={circleSize}
+							/>
+						)}
+						{isStyleHalfCircle && (
+							<HalfCircle
 								{...progressBarAttributes}
 								alignment={detailAlign}
 								size={circleSize}

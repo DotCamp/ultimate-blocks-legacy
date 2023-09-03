@@ -27,8 +27,8 @@ function ub_render_progress_bar_block($attributes){
     $blockName = 'ub_progress-bar';
     $chosenProgressBar = '';
 
-    $is_style_circle = isset($className) && 'is-style-ub-progress-bar-circle-wrapper' === $className;
-    $is_style_half_circle = isset($className) && 'is-style-ub-progress-bar-half-circle-wrapper' === $className;
+    $is_style_circle = strpos($className, "is-style-ub-progress-bar-circle-wrapper") !== false;
+    $is_style_half_circle = strpos($className, "is-style-ub-progress-bar-half-circle-wrapper") !== false;
 
     $percentage_position = $attributes['percentagePosition'];
     $is_stripe = $attributes['isStripe'];
@@ -74,7 +74,24 @@ function ub_render_progress_bar_block($attributes){
                 ($blockID === '' ? ' style="stroke-dasharray: ' . $strokeArcLength . 'px, ' . $circlePathLength . 'px"':'').'/>
         </svg>
         <div class="' . $blockName . '-label">' . $percentage . '%</div></div>';
-    }
+    } else if ($is_style_half_circle){
+        $halfCircleRadius = 50 - ($barThickness + 2) / 2;
+        $halfCirclePathLength = $halfCircleRadius * M_PI;
+        $halfCircleStrokeArcLength = ($halfCirclePathLength * $percentage) / 100;
+        $halfCircleProgressBarPath = 'M 50,50 m -' . $halfCircleRadius . ',0 ' .
+            'a ' . $halfCircleRadius . ',' . $halfCircleRadius . ' 0 1 1 ' . ($halfCircleRadius * 2) . ',0';
+
+        $chosenProgressBar = '<div class="' . $blockName . '-container" ' . ($blockID === '' ? 'style="height: ' . $circleSize . 'px; width: ' . $circleSize . 'px;"' : 'id="' . $blockID . '"') . '>
+            <svg class="' . $blockName . '-circle" height="' . $circleSize . '" width="' . $circleSize . '" viewBox="0 0 100 100">
+                <path class="' . $blockName . '-circle-trail" d="' . $halfCircleProgressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . ($barThickness + 2) . '"'. 
+                ($blockID === '' ? ' style="stroke-dasharray: ' . $halfCirclePathLength . 'px,' . $halfCirclePathLength . 'px"':'') . '/>
+                <path class="' . $blockName . '-circle-path" d="' . $halfCircleProgressBarPath . '" stroke="' . $barColor . '"
+                    stroke-width="' . ($barThickness + 2) . '" stroke-linecap="butt"'.
+                    ($blockID === '' ? ' style="stroke-dasharray: ' . $halfCircleStrokeArcLength . 'px, ' . $halfCirclePathLength . 'px"':'').'/>
+            </svg>
+            <div class="' . $blockName . '-label">' . $percentage . '%</div></div>';
+
+        }
     
     $block_styles = ub_progress_bar_styles($attributes);
 
