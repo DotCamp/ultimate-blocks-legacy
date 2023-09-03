@@ -767,7 +767,7 @@ function ub_include_block_attribute_css() {
 								$prefix . ' .ub_progress-bar-circle-path{' . PHP_EOL .
 								'stroke-dasharray: 0px, ' . $halfCirclePathLength . 'px;' . PHP_EOL .
 								'stroke-linecap: round;' . PHP_EOL .
-								'}' . PHP_EOL;
+								'}' . PHP_EOL . '.ub_progress-bar-label{' . PHP_EOL;
 
 					}
 					$blockStylesheets .= 'visibility: hidden;' . PHP_EOL .
