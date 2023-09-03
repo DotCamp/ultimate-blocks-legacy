@@ -27,6 +27,9 @@ function ub_render_progress_bar_block($attributes){
     $blockName = 'ub_progress-bar';
     $chosenProgressBar = '';
 
+    $is_style_circle = isset($className) && 'is-style-ub-progress-bar-circle-wrapper' === $className;
+    $is_style_half_circle = isset($className) && 'is-style-ub-progress-bar-half-circle-wrapper' === $className;
+
     $percentage_position = $attributes['percentagePosition'];
     $is_stripe = $attributes['isStripe'];
 
@@ -43,7 +46,7 @@ function ub_render_progress_bar_block($attributes){
 			<div class="ub_progress-bar-line-stripe" ></div>
 		</foreignObject>' : '';
     
-    if($barType === 'linear'){
+    if(!$is_style_circle && !$is_style_half_circle){
         $progressBarPath = 'M' . ($barThickness / 2) . ',' . ($barThickness / 2)
                             . 'L' . (100 - $barThickness / 2) . ',' . ($barThickness / 2);
         $chosenProgressBar = '<div class="' . $blockName . '-container' . $inside_percentage . $stripe_style . '" id="' . $blockID . '">
@@ -54,7 +57,7 @@ function ub_render_progress_bar_block($attributes){
                 ' . $stripe_element . '
         </svg>' . $bottom_percentage;
     }
-    else {
+    else if ($is_style_circle) {
         $circleRadius = 50 - ($barThickness + 3) / 2;
         $circlePathLength = $circleRadius * M_PI * 2;
         $progressBarPath = 'M 50,50 m 0,' . (-$circleRadius).

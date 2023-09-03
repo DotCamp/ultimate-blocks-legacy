@@ -7,6 +7,7 @@ const { BlockControls, InspectorControls, PanelColorSettings, RichText } =
 
 const { withSelect } = wp.data;
 
+import "./blocks-styles";
 import Circle from "./Circle";
 import Line from "./Line";
 import { useEffect } from "react";
@@ -50,8 +51,8 @@ function ProgressBarMain(props) {
 		block,
 		getBlock,
 		getClientIdsWithDescendants,
+		className,
 	} = props;
-
 	useEffect(() => {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId, percentage: 75 });
@@ -87,11 +88,19 @@ function ProgressBarMain(props) {
 		},
 	];
 	const styles = getStyles(props.attributes);
+	const isStyleCircle = className
+		.split(" ")
+		.includes("is-style-ub-progress-bar-circle-wrapper");
+	const isStyleHalfCircle = className
+		.split(" ")
+		.includes("is-style-ub-progress-bar-half-circle-wrapper");
 
 	return (
 		<>
 			{isSelected && (
 				<BlockControls>
+					{/* 
+					 Convert into styles api
 					<ToolbarGroup>
 						<ToolbarButton
 							isPressed={barType === "linear"}
@@ -109,7 +118,7 @@ function ProgressBarMain(props) {
 						>
 							<CircProgressIcon />
 						</ToolbarButton>
-					</ToolbarGroup>
+					</ToolbarGroup> */}
 					<ToolbarGroup>
 						<div className={"ub_progress_bar_range_toolbar_wrapper"}>
 							<RangeControl
@@ -148,6 +157,8 @@ function ProgressBarMain(props) {
 				<>
 					<InspectorControls group="settings">
 						<PanelBody title={__("General")}>
+							{/* 
+							 Convert into styles api
 							<PanelRow>
 								<p>{__("Progress Bar Type")}</p>
 								<ButtonGroup>
@@ -172,13 +183,15 @@ function ProgressBarMain(props) {
 										<CircProgressIcon size={30} />
 									</Button>
 								</ButtonGroup>
-							</PanelRow>
+							</PanelRow> */}
 							<br />
-							<CustomToggleGroupControl
-								label={__("Percentage Position", "ultimate-blocks")}
-								attributeKey="percentagePosition"
-								options={percentagePositionOptions}
-							/>
+							{!isStyleCircle && !isStyleHalfCircle && (
+								<CustomToggleGroupControl
+									label={__("Percentage Position", "ultimate-blocks")}
+									attributeKey="percentagePosition"
+									options={percentagePositionOptions}
+								/>
+							)}
 							<ToggleControl
 								checked={isStripe}
 								label={__("Stripe", "ultimate-blocks")}
@@ -206,7 +219,7 @@ function ProgressBarMain(props) {
 								max={5}
 								allowReset
 							/>
-							{barType === "circular" && (
+							{(isStyleCircle || isStyleHalfCircle) && (
 								<RangeControl
 									label={__("Circle size")}
 									value={circleSize}
@@ -250,7 +263,7 @@ function ProgressBarMain(props) {
 					</InspectorControls>
 				</>
 			)}
-			<div className="ub_progress-bar" style={styles}>
+			<div className={`ub_progress-bar ${className}`} style={styles}>
 				<div className="ub_progress-bar-text">
 					<RichText
 						tagName="p"
@@ -261,16 +274,20 @@ function ProgressBarMain(props) {
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
-				{percentage > -1 && //linear progress bar fails to render properly unless a value of 0 or greater is inputted
-					(barType === "linear" ? (
-						<Line {...progressBarAttributes} />
-					) : (
-						<Circle
-							{...progressBarAttributes}
-							alignment={detailAlign}
-							size={circleSize}
-						/>
-					))}
+				{percentage > -1 && ( //linear progress bar fails to render properly unless a value of 0 or greater is inputted
+					<>
+						{!isStyleCircle && !isStyleHalfCircle && (
+							<Line {...progressBarAttributes} />
+						)}
+						{isStyleCircle && (
+							<Circle
+								{...progressBarAttributes}
+								alignment={detailAlign}
+								size={circleSize}
+							/>
+						)}
+					</>
+				)}
 			</div>
 		</>
 	);
