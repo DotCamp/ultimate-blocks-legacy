@@ -4,7 +4,7 @@
   height: 100%;
 }
 
-.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-id, .version-control-popup .modal-container .version-content .version-warning, .ub-admin-menu-wrapper .content-phrase, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-text, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container {
+.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-id, .version-control-popup .modal-container .version-content .version-warning, .ub-admin-menu-wrapper .content-phrase, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-text, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container {
   -webkit-user-select: none;
   user-select: none;
 }
@@ -39,7 +39,7 @@
   border-radius: 999px;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-button {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .blog-info-toggle, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .version-control-button {
   cursor: pointer;
 }
 
@@ -308,6 +308,17 @@
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-text .pro-block-card-title-suffix {
   margin: 0 5px;
   font-weight: bold;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button {
+  color: #e11b4c;
+  background: #fff;
+  border-radius: 100%;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button svg {
+  width: 25px;
+  height: 25px;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto {

@@ -9,6 +9,7 @@ import {
 } from '$Stores/settings-menu/slices/app';
 import withStore from '$HOC/withStore';
 import ProBlockCardTitle from '$Components/ProBlockCardTitle';
+import BlockCardProInfoControl from '$Components/BlockCardProInfoControl';
 
 /**
  * Menu block control component.
@@ -120,11 +121,15 @@ function BlockControl( {
 					</span>
 				</div>
 				<div className={ 'block-title-right-container' }>
-					<ToggleControl
-						onStatusChange={ setInnerStatus }
-						status={ innerStatus }
-						disabled={ proBlock && ! proStatus }
-					/>
+					{ proBlock && ! proStatus ? (
+						<BlockCardProInfoControl />
+					) : (
+						<ToggleControl
+							onStatusChange={ setInnerStatus }
+							status={ innerStatus }
+							disabled={ proBlock && ! proStatus }
+						/>
+					) }
 				</div>
 			</div>
 			<div className={ 'block-info' }>

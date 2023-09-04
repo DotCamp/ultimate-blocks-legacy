@@ -283,6 +283,20 @@
 								}
 							}
 						}
+
+						.block-title-right-container {
+							.pro-block-card-info-button {
+								color: $red-500;
+								background: white;
+								border-radius: 100%;
+								@extend %pointer;
+
+								svg {
+									@include size(25);
+									@extend %unselectable;
+								}
+							}
+						}
 					}
 
 					.block-howto {

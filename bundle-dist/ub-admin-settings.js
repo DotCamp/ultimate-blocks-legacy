@@ -36186,6 +36186,7 @@ var _withIcon = _interopRequireDefault(require("b72ddce4d4e282b6"));
 var _app = require("5b211ce3bfe7b54");
 var _withStore = _interopRequireDefault(require("52f11184f548186d"));
 var _ProBlockCardTitle = _interopRequireDefault(require("dbbae5f431af94c6"));
+var _BlockCardProInfoControl = _interopRequireDefault(require("227934c51c676839"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36343,7 +36344,7 @@ function _arrayWithHoles(arr) {
         isPro: proBlock
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
+    }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], null) : /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
         onStatusChange: setInnerStatus,
         status: innerStatus,
         disabled: proBlock && !proStatus
@@ -36373,7 +36374,7 @@ var selectMapping = function selectMapping(select) {
  */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping);
 exports["default"] = _default;
 
-},{"9eede5ed96c6db50":"21dqq","1b0c26986e628874":"a7r96","17219fdafae6194a":"cbTU3","b72ddce4d4e282b6":"l4uaA","5b211ce3bfe7b54":"c28DV","52f11184f548186d":"kWmDy","dbbae5f431af94c6":"jiOgy"}],"a7r96":[function(require,module,exports) {
+},{"9eede5ed96c6db50":"21dqq","1b0c26986e628874":"a7r96","17219fdafae6194a":"cbTU3","b72ddce4d4e282b6":"l4uaA","5b211ce3bfe7b54":"c28DV","52f11184f548186d":"kWmDy","dbbae5f431af94c6":"jiOgy","227934c51c676839":"3ptTq"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36599,7 +36600,34 @@ function _interopRequireDefault(obj) {
  */ var _default = ProBlockCardTitle;
 exports["default"] = _default;
 
-},{"cdc71d453835317a":"21dqq"}],"ohEvx":[function(require,module,exports) {
+},{"cdc71d453835317a":"21dqq"}],"3ptTq":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("39aebd33bd221f16"));
+var _reactFontawesome = require("6df61aa983d49f0c");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Info control for pro block cards.
+ */ function BlockCardProInfoControl() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "pro-block-card-info-button"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-circle-info"
+    }));
+}
+/**
+ * @module BlockCardProInfoControl
+ */ var _default = BlockCardProInfoControl;
+exports["default"] = _default;
+
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"ohEvx":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
