@@ -7,6 +7,7 @@ import versionControlSlice from '$Stores/settings-menu/slices/versionControl';
 import deepmerge from 'deepmerge';
 import initialState from '$Stores/settings-menu/initialState';
 import { getLocalStorage } from '$Components/LocalStorageProvider';
+import pluginStatusSlice from '$Stores/settings-menu/slices/pluginStatus';
 
 /**
  * Prepare data for pro only block upsells.
@@ -148,6 +149,7 @@ function createStore() {
 			registered: allRegistered,
 		},
 		versionControl: appData.versionControl,
+		pluginStatus: appData.pluginStatus,
 	};
 
 	// merge with default store state
@@ -162,6 +164,7 @@ function createStore() {
 			app: appSlice,
 			blocks: blocksSlice,
 			versionControl: versionControlSlice,
+			pluginStatus: pluginStatusSlice,
 		},
 		middleware: ( getDefaultMiddleware ) =>
 			getDefaultMiddleware( {

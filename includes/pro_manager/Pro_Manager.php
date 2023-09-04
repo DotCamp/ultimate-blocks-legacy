@@ -85,9 +85,13 @@ class Pro_Manager {
 			$menu_data['assets'] = [];
 		}
 
-		if ( ! isset( $menu_data['app'] ) ) {
-			$menu_data['app'] = [];
+		if ( ! isset( $menu_data['pluginStatus'] ) ) {
+			$menu_data['pluginStatus'] = [];
 		}
+
+		$menu_data['pluginStatus'] = array_merge($menu_data['pluginStatus'], [
+			'isPro' => $this->is_pro()
+		]);
 
 		$assets = [
 			'proBuyUrl' => 'https://ultimateblocks.com/pricing/'

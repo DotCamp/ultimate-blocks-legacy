@@ -29602,6 +29602,7 @@ exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getProStatus = ex
 var _toolkit = require("ab983f5a897f990a");
 var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
 var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
+var _pluginStatus = require("e269b2e53b452f29");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -29672,7 +29673,9 @@ var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
  * @return {boolean} status
  */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
 var getProStatus = function getProStatus(state) {
-    return true;
+    // backward compatibility update
+    // use isPluginPro selector in pluginStatus slice for future implementations
+    return (0, _pluginStatus.isPluginPro)(state);
 };
 /**
  * @module appSlice
@@ -29680,7 +29683,7 @@ var getProStatus = function getProStatus(state) {
 var _default = appSlice.reducer;
 exports["default"] = _default;
 
-},{"ab983f5a897f990a":"lL1Ef","7f7e6a0fd711ec7a":"hebBQ","9a4bb996a84b7c56":"3xPpL"}],"hebBQ":[function(require,module,exports) {
+},{"ab983f5a897f990a":"lL1Ef","7f7e6a0fd711ec7a":"hebBQ","9a4bb996a84b7c56":"3xPpL","e269b2e53b452f29":"fi8Oa"}],"hebBQ":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -30056,6 +30059,9 @@ var _BlockStatusFilterControl = require("865a04ed337dccab");
         currentVersion: "1.0.0",
         versions: {},
         ajax: {}
+    },
+    pluginStatus: {
+        isPro: false
     }
 };
 /**
@@ -30063,7 +30069,44 @@ var _BlockStatusFilterControl = require("865a04ed337dccab");
  */ var _default = initialState;
 exports["default"] = _default;
 
-},{"865a04ed337dccab":"hebBQ"}],"clIT3":[function(require,module,exports) {
+},{"865a04ed337dccab":"hebBQ"}],"fi8Oa":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.isPluginPro = exports["default"] = void 0;
+var _initialState = _interopRequireDefault(require("6e475e3a68ded05b"));
+var _toolkit = require("acd9b64a16908024");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Plugin status slice.
+ *
+ * @type {Object}
+ */ var pluginStatusSliceOptions = {
+    name: "pluginStatus",
+    initialState: _initialState["default"].pluginStatus,
+    reducers: {}
+};
+var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
+/**
+ * Get plugin pro status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} plugin pro status
+ */ var isPluginPro = function isPluginPro(state) {
+    return state.pluginStatus.isPro;
+};
+/**
+ * @module pluginStatusSlice
+ */ exports.isPluginPro = isPluginPro;
+var _default = pluginStatusSlice.reducer;
+exports["default"] = _default;
+
+},{"6e475e3a68ded05b":"3xPpL","acd9b64a16908024":"lL1Ef"}],"clIT3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FontAwesomeIcon", ()=>FontAwesomeIcon);
@@ -41869,6 +41912,7 @@ var _versionControl = _interopRequireDefault(require("3142590e179e9a7a"));
 var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
 var _initialState = _interopRequireDefault(require("2948990e65501539"));
 var _LocalStorageProvider = require("121248d6c6f26fb");
+var _pluginStatus = _interopRequireDefault(require("6f45c3ea2f5cedb9"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -42015,7 +42059,8 @@ function _toPrimitive(input, hint) {
         blocks: {
             registered: allRegistered
         },
-        versionControl: appData.versionControl
+        versionControl: appData.versionControl,
+        pluginStatus: appData.pluginStatus
     };
     // merge with default store state
     preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
@@ -42026,7 +42071,8 @@ function _toPrimitive(input, hint) {
             assets: _assets["default"],
             app: _app["default"],
             blocks: _blocks["default"],
-            versionControl: _versionControl["default"]
+            versionControl: _versionControl["default"],
+            pluginStatus: _pluginStatus["default"]
         },
         middleware: function middleware(getDefaultMiddleware) {
             return getDefaultMiddleware({
@@ -42041,7 +42087,7 @@ function _toPrimitive(input, hint) {
  */ var _default = createStore;
 exports["default"] = _default;
 
-},{"953ee9eab3e8c345":"lL1Ef","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","61d1115f3d5c796e":"ck1Q2","2948990e65501539":"3xPpL","121248d6c6f26fb":"1Y8eP","c515c572c6ab551c":"21dqq"}],"ck1Q2":[function(require,module,exports) {
+},{"953ee9eab3e8c345":"lL1Ef","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","61d1115f3d5c796e":"ck1Q2","2948990e65501539":"3xPpL","121248d6c6f26fb":"1Y8eP","c515c572c6ab551c":"21dqq","6f45c3ea2f5cedb9":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
 "use strict";
 var isMergeableObject = function isMergeableObject(value) {
     return isNonNullObject(value) && !isSpecial(value);

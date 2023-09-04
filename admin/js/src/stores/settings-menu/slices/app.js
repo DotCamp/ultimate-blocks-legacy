@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
 import initialState from '$Stores/settings-menu/initialState';
+import { isPluginPro } from '$Stores/settings-menu/slices/pluginStatus';
 
 /**
  * App slice options
@@ -77,7 +78,9 @@ export const getBlockInfoShowStatus = ( state ) => {
  * @return {boolean} status
  */
 export const getProStatus = ( state ) => {
-	return true;
+	// backward compatibility update
+	// use isPluginPro selector in pluginStatus slice for future implementations
+	return isPluginPro( state );
 };
 
 /**

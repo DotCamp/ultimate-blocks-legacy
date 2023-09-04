@@ -15,6 +15,9 @@ const initialState = {
 		versions: {},
 		ajax: {},
 	},
+	pluginStatus: {
+		isPro: false,
+	},
 };
 
 /**
