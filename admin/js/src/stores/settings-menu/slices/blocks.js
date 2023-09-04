@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import block from "../../../../../../src/blocks/post-grid/block";
+import { createSlice } from '@reduxjs/toolkit';
 
 /**
  * Block slice options
+ *
  * @type {Object}
  */
 const blocksSliceOptions = {
@@ -13,8 +13,9 @@ const blocksSliceOptions = {
 	reducers: {
 		/**
 		 * Set active status of target block.
-		 * @param {Object} state store state
-		 * @param {Object} props action props
+		 *
+		 * @param {Object} state         store state
+		 * @param {Object} props         action props
 		 * @param {Object} props.payload action payload
 		 */
 		setBlockActiveStatus( state, { payload } ) {
@@ -44,6 +45,7 @@ export const { setBlockActiveStatus } = blocksSlice.actions;
 
 /**
  * Get registered plugin blocks.
+ *
  * @param {Object} state store state
  * @return {Array} blocks
  */
