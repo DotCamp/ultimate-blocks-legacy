@@ -34,6 +34,9 @@ const appSliceOptions = {
 		toggleShowBlockInfo( state ) {
 			state.showBlockInfo = ! state.showBlockInfo;
 		},
+		showBlockModal( state, { payload } ) {
+			state.upsellPopup.targetBlock = payload.blockType;
+		},
 	},
 };
 
@@ -81,6 +84,16 @@ export const getProStatus = ( state ) => {
 	// backward compatibility update
 	// use isPluginPro selector in pluginStatus slice for future implementations
 	return isPluginPro( state );
+};
+
+/**
+ * Get target block type to show in modal.
+ *
+ * @param {Object} state store state
+ * @return {null | string} block type, null for no selected blocks
+ */
+export const getModalTargetBlockType = ( state ) => {
+	return state.app.upsellPopup.targetBlock;
 };
 
 /**

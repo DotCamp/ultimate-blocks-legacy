@@ -29598,7 +29598,7 @@ exports.default = thunk;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getProStatus = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getProStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
 var _toolkit = require("ab983f5a897f990a");
 var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
 var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
@@ -29633,6 +29633,10 @@ function _interopRequireDefault(obj) {
      * @param {Object} state slice state
      */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
             state.showBlockInfo = !state.showBlockInfo;
+        },
+        showBlockModal: function showBlockModal(state, _ref2) {
+            var payload = _ref2.payload;
+            state.upsellPopup.targetBlock = payload.blockType;
         }
     }
 };
@@ -29678,8 +29682,17 @@ var getProStatus = function getProStatus(state) {
     return (0, _pluginStatus.isPluginPro)(state);
 };
 /**
- * @module appSlice
+ * Get target block type to show in modal.
+ *
+ * @param {Object} state store state
+ * @return {null | string} block type, null for no selected blocks
  */ exports.getProStatus = getProStatus;
+var getModalTargetBlockType = function getModalTargetBlockType(state) {
+    return state.app.upsellPopup.targetBlock;
+};
+/**
+ * @module appSlice
+ */ exports.getModalTargetBlockType = getModalTargetBlockType;
 var _default = appSlice.reducer;
 exports["default"] = _default;
 
@@ -30046,6 +30059,40 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _BlockStatusFilterControl = require("865a04ed337dccab");
+var _LocalStorageProvider = require("38bf8676f7b978");
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
 /**
  * Initial store state.
  *
@@ -30053,7 +30100,11 @@ var _BlockStatusFilterControl = require("865a04ed337dccab");
  */ var initialState = {
     app: {
         blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
-        showBlockInfo: false
+        showBlockInfo: false,
+        upsellPopup: _defineProperty({
+            show: false,
+            targetBlock: null
+        }, _LocalStorageProvider.NO_LOCAL_STORAGE_PROP, true)
     },
     versionControl: {
         currentVersion: "1.0.0",
@@ -30069,7 +30120,190 @@ var _BlockStatusFilterControl = require("865a04ed337dccab");
  */ var _default = initialState;
 exports["default"] = _default;
 
-},{"865a04ed337dccab":"hebBQ"}],"fi8Oa":[function(require,module,exports) {
+},{"865a04ed337dccab":"hebBQ","38bf8676f7b978":"1Y8eP"}],"1Y8eP":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getLocalStorage = exports["default"] = exports.NO_LOCAL_STORAGE_PROP = void 0;
+var _react = _interopRequireWildcard(require("421e80768cf9dbf7"));
+var _withStore = _interopRequireDefault(require("c42512238b4a67cb"));
+var _app = require("3d485e567681faf5");
+var _excluded = [
+    "version"
+];
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+} // eslint-disable-next-line no-unused-vars
+// local storage key
+var storageKey = "ubMenuData";
+// local storage data version
+var localStorageVersion = "1.1";
+/**
+ * Property key to check if target key will not be written to local storage
+ *
+ * @type {string}
+ */ var NO_LOCAL_STORAGE_PROP = "__no_local_storage";
+/**
+ * Strip keys marked as not to write to local storage.
+ *
+ * @param {Object} data target data
+ *
+ * @return {Object} stripped data
+ */ exports.NO_LOCAL_STORAGE_PROP = NO_LOCAL_STORAGE_PROP;
+var stripNoLocalStorageMarked = function stripNoLocalStorageMarked(data) {
+    var stripKeys = [];
+    /**
+   * Find marked property paths
+   *
+   * @param {any}    targetObject      target object, if no object is supplied to checking will be done
+   * @param {string} currentObjectPath path to current key
+   */ function findStripPaths(targetObject) {
+        var currentObjectPath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+        if (_typeof(targetObject) === "object") {
+            if (targetObject[NO_LOCAL_STORAGE_PROP]) stripKeys.push(currentObjectPath);
+            else Object.keys(targetObject).filter(function(k) {
+                return Object.prototype.hasOwnProperty.call(targetObject, k);
+            })// eslint-disable-next-line array-callback-return
+            .map(function(tKey) {
+                findStripPaths(targetObject[tKey], "".concat(currentObjectPath === "" ? "" : "".concat(currentObjectPath, ".")).concat(tKey));
+            });
+        }
+    }
+    findStripPaths(data);
+    // eslint-disable-next-line array-callback-return
+    stripKeys.map(function(keyPath) {
+        var pathSegments = keyPath.split(".");
+        var lastSegment = pathSegments.pop();
+        var lastParentContainer = data;
+        // eslint-disable-next-line array-callback-return
+        pathSegments.map(function(pS) {
+            lastParentContainer = lastParentContainer[pS];
+        });
+        delete lastParentContainer[lastSegment];
+    });
+    return data;
+};
+/**
+ * Get localStorage data for settings menu
+ *
+ * @return {Object} menu data
+ */ var getLocalStorage = function getLocalStorage() {
+    var data = localStorage.getItem(storageKey);
+    if (data) {
+        var localData = JSON.parse(data);
+        // check version of local data against current local storage version
+        // if a stale version is found, don't use it
+        if (localData.version && localData.version === localStorageVersion) {
+            var version = localData.version, rest = _objectWithoutProperties(localData, _excluded);
+            return stripNoLocalStorageMarked(rest);
+        }
+    }
+    return {};
+};
+exports.getLocalStorage = getLocalStorage;
+var writeToLocalStorage = function writeToLocalStorage(callback) {
+    var dataToWrite = callback(getLocalStorage());
+    // add local storage data version
+    dataToWrite.version = localStorageVersion;
+    localStorage.setItem(storageKey, JSON.stringify(dataToWrite));
+};
+/**
+ * Local storage provider.
+ *
+ * This component will watch store state changes and write those to localStorage.
+ *
+ * @class
+ *
+ * @param {Object}            props          component properties
+ * @param {React.ElementType} props.children component children
+ * @param {Object}            props.appState store application state, will be supplied via HOC
+ */ function LocalStorageProvider(_ref) {
+    var children = _ref.children, appState = _ref.appState;
+    (0, _react.useEffect)(function() {
+        writeToLocalStorage(function(currentData) {
+            currentData.app = appState;
+            return currentData;
+        });
+    }, [
+        appState
+    ]);
+    return children;
+}
+var selectMapping = function selectMapping(select) {
+    return {
+        appState: select(_app.getAllAppOptions)
+    };
+};
+/**
+ * @module LocalStorageProvider
+ */ var _default = (0, _withStore["default"])(LocalStorageProvider, selectMapping);
+exports["default"] = _default;
+
+},{"421e80768cf9dbf7":"21dqq","c42512238b4a67cb":"kWmDy","3d485e567681faf5":"c28DV"}],"fi8Oa":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -35819,6 +36053,7 @@ var _BlockStatusFilterControl = _interopRequireDefault(require("2e00797ed85de1fc
 var _app = require("6a858ee2b47a0742");
 var _withStore = _interopRequireDefault(require("ef9d048bd156dfff"));
 var _BlockControlsContainer = _interopRequireDefault(require("6c1c5810e800620a"));
+var _UpsellModal = _interopRequireDefault(require("3f28255ca34ce83f"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -35837,7 +36072,7 @@ function _interopRequireDefault(obj) {
     var blockFilter = _ref.blockFilter, setBlockFilterValue = _ref.setBlockFilterValue;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "menu-content"
-    }, /*#__PURE__*/ _react["default"].createElement(_MainContentPhrase["default"], null), /*#__PURE__*/ _react["default"].createElement(_BlockStatusFilterControl["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModal["default"], null), /*#__PURE__*/ _react["default"].createElement(_MainContentPhrase["default"], null), /*#__PURE__*/ _react["default"].createElement(_BlockStatusFilterControl["default"], {
         filterVal: blockFilter,
         onFilterChanged: setBlockFilterValue
     }), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null));
@@ -35857,7 +36092,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(MainContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"5d2ddbf58417e472":"21dqq","8ae3459855e11b74":"4cIcG","2e00797ed85de1fc":"hebBQ","6a858ee2b47a0742":"c28DV","ef9d048bd156dfff":"kWmDy","6c1c5810e800620a":"e69CO"}],"4cIcG":[function(require,module,exports) {
+},{"5d2ddbf58417e472":"21dqq","8ae3459855e11b74":"4cIcG","2e00797ed85de1fc":"hebBQ","6a858ee2b47a0742":"c28DV","ef9d048bd156dfff":"kWmDy","6c1c5810e800620a":"e69CO","3f28255ca34ce83f":"2B1RE"}],"4cIcG":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36778,7 +37013,40 @@ function _interopRequireWildcard(obj, nodeInterop) {
  */ var _default = VisibilityWrapper;
 exports["default"] = _default;
 
-},{"97c658a0a38c9755":"21dqq"}],"8s4i0":[function(require,module,exports) {
+},{"97c658a0a38c9755":"21dqq"}],"2B1RE":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("e7701eb20ffe2542"));
+var _app = require("29d43af0b2d9fc14");
+var _withStore = _interopRequireDefault(require("8fe9fbe4a71a61e8"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * For testing purposes only.
+ *
+ * @param root0
+ * @param root0.targetBlock
+ */ function UpsellModal(_ref) {
+    var targetBlock = _ref.targetBlock;
+    return /*#__PURE__*/ _react["default"].createElement("i", null, targetBlock);
+}
+var selectMapping = function selectMapping(select) {
+    return {
+        targetBlock: select(_app.getModalTargetBlockType)
+    };
+};
+/**
+ * @module UpsellModal
+ */ var _default = (0, _withStore["default"])(UpsellModal, selectMapping);
+exports["default"] = _default;
+
+},{"e7701eb20ffe2542":"21dqq","29d43af0b2d9fc14":"c28DV","8fe9fbe4a71a61e8":"kWmDy"}],"8s4i0":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37277,144 +37545,6 @@ deepmerge.all = function deepmergeAll(array, options) {
 var deepmerge_1 = deepmerge;
 module.exports = deepmerge_1;
 
-},{}],"1Y8eP":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getLocalStorage = exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("421e80768cf9dbf7"));
-var _withStore = _interopRequireDefault(require("c42512238b4a67cb"));
-var _app = require("3d485e567681faf5");
-var _excluded = [
-    "version"
-]; // eslint-disable-next-line no-unused-vars
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {};
-    var target = _objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for(i = 0; i < sourceSymbolKeys.length; i++){
-            key = sourceSymbolKeys[i];
-            if (excluded.indexOf(key) >= 0) continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-            target[key] = source[key];
-        }
-    }
-    return target;
-}
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-// local storage key
-var storageKey = "ubMenuData";
-// local storage data version
-var localStorageVersion = "1.0";
-/**
- * Get localStorage data for settings menu
- *
- * @return {Object} menu data
- */ var getLocalStorage = function getLocalStorage() {
-    var data = localStorage.getItem(storageKey);
-    if (data) {
-        var localData = JSON.parse(data);
-        // check version of local data against current local storage version
-        // if a stale version is found, don't use it
-        if (localData.version && localData.version === localStorageVersion) {
-            var version = localData.version, rest = _objectWithoutProperties(localData, _excluded);
-            return rest;
-        }
-    }
-    return {};
-};
-exports.getLocalStorage = getLocalStorage;
-var writeToLocalStorage = function writeToLocalStorage(callback) {
-    var dataToWrite = callback(getLocalStorage());
-    // add local storage data version
-    dataToWrite.version = localStorageVersion;
-    localStorage.setItem(storageKey, JSON.stringify(dataToWrite));
-};
-/**
- * Local storage provider.
- *
- * This component will watch store state changes and write those to localStorage.
- *
- * @class
- *
- * @param {Object}            props          component properties
- * @param {React.ElementType} props.children component children
- * @param {Object}            props.appState store application state, will be supplied via HOC
- */ function LocalStorageProvider(_ref) {
-    var children = _ref.children, appState = _ref.appState;
-    (0, _react.useEffect)(function() {
-        writeToLocalStorage(function(currentData) {
-            currentData.app = appState;
-            return currentData;
-        });
-    }, [
-        appState
-    ]);
-    return children;
-}
-var selectMapping = function selectMapping(select) {
-    return {
-        appState: select(_app.getAllAppOptions)
-    };
-};
-/**
- * @module LocalStorageProvider
- */ var _default = (0, _withStore["default"])(LocalStorageProvider, selectMapping);
-exports["default"] = _default;
-
-},{"421e80768cf9dbf7":"21dqq","c42512238b4a67cb":"kWmDy","3d485e567681faf5":"c28DV"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
+},{}]},["eQDYk"], "eQDYk", "parcelRequire065b")
 
 //# sourceMappingURL=ub-admin-settings.js.map
