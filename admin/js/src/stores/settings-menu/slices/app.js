@@ -77,7 +77,7 @@ export const getBlockInfoShowStatus = ( state ) => {
  * @return {boolean} status
  */
 export const getProStatus = ( state ) => {
-	return state.app.isPro;
+	return true;
 };
 
 /**

@@ -64,7 +64,7 @@ function BlockControl( {
 	}, [ headerHeight ] );
 
 	useEffect( () => {
-		if ( proBlock && ! proStatus && innerStatus ) {
+		if ( proBlock && ! proStatus ) {
 			setInnerStatus( false );
 		}
 	}, [ innerStatus ] );

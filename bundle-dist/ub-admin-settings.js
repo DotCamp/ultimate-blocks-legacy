@@ -29672,7 +29672,7 @@ var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
  * @return {boolean} status
  */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
 var getProStatus = function getProStatus(state) {
-    return state.app.isPro;
+    return true;
 };
 /**
  * @module appSlice
@@ -30050,8 +30050,7 @@ var _BlockStatusFilterControl = require("865a04ed337dccab");
  */ var initialState = {
     app: {
         blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
-        showBlockInfo: false,
-        isPro: false
+        showBlockInfo: false
     },
     versionControl: {
         currentVersion: "1.0.0",
@@ -36255,7 +36254,7 @@ function _arrayWithHoles(arr) {
         headerHeight
     ]);
     (0, _react.useEffect)(function() {
-        if (proBlock && !proStatus && innerStatus) setInnerStatus(false);
+        if (proBlock && !proStatus) setInnerStatus(false);
     }, [
         innerStatus
     ]);
@@ -41883,31 +41882,6 @@ function _typeof(obj) {
         return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     }, _typeof(obj);
 }
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
 function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
@@ -42023,8 +41997,19 @@ function _toPrimitive(input, hint) {
     }, []);
     var proBlocks = appData.upsells.blocks;
     var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
-    // all blocks available including upsell versions of pro blocks
-    var allRegistered = [].concat(_toConsumableArray(reducedBlocks), _toConsumableArray(proBlockUpsell));
+    // all blocks available including upsell versions of pro blocks or pro blocks themselves
+    var allRegistered = proBlockUpsell.reduce(function(carry, current) {
+        var proBlockName = current.name;
+        //check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
+        // if not inject the upsell data to current block list
+        var registeredProBlock = carry.find(function(_ref2) {
+            var name = _ref2.name;
+            return name === proBlockName;
+        });
+        if (registeredProBlock) registeredProBlock.pro = true;
+        else carry.push(current);
+        return carry;
+    }, reducedBlocks);
     var preloadedState = {
         assets: appData.assets,
         blocks: {
@@ -42164,6 +42149,9 @@ exports.getLocalStorage = exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("421e80768cf9dbf7"));
 var _withStore = _interopRequireDefault(require("c42512238b4a67cb"));
 var _app = require("3d485e567681faf5");
+var _excluded = [
+    "version"
+]; // eslint-disable-next-line no-unused-vars
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -42195,30 +42183,71 @@ function _interopRequireWildcard(obj, nodeInterop) {
     if (cache) cache.set(obj, newObj);
     return newObj;
 }
-// eslint-disable-next-line no-unused-vars
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+// local storage key
 var storageKey = "ubMenuData";
+// local storage data version
+var localStorageVersion = "1.0";
 /**
  * Get localStorage data for settings menu
+ *
  * @return {Object} menu data
  */ var getLocalStorage = function getLocalStorage() {
     var data = localStorage.getItem(storageKey);
-    if (data) return JSON.parse(data);
+    if (data) {
+        var localData = JSON.parse(data);
+        // check version of local data against current local storage version
+        // if a stale version is found, don't use it
+        if (localData.version && localData.version === localStorageVersion) {
+            var version = localData.version, rest = _objectWithoutProperties(localData, _excluded);
+            return rest;
+        }
+    }
     return {};
 };
 exports.getLocalStorage = getLocalStorage;
 var writeToLocalStorage = function writeToLocalStorage(callback) {
     var dataToWrite = callback(getLocalStorage());
+    // add local storage data version
+    dataToWrite.version = localStorageVersion;
     localStorage.setItem(storageKey, JSON.stringify(dataToWrite));
 };
 /**
  * Local storage provider.
  *
  * This component will watch store state changes and write those to localStorage.
- * @constructor
  *
- * @param {Object} props component properties
+ * @class
+ *
+ * @param {Object}            props          component properties
  * @param {React.ElementType} props.children component children
- * @param {Object} props.appState store application state, will be supplied via HOC
+ * @param {Object}            props.appState store application state, will be supplied via HOC
  */ function LocalStorageProvider(_ref) {
     var children = _ref.children, appState = _ref.appState;
     (0, _react.useEffect)(function() {

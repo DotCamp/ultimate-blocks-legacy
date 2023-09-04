@@ -124,8 +124,23 @@ function createStore() {
 	const { blocks: proBlocks } = appData.upsells;
 	const proBlockUpsell = prepareProOnlyBlockUpsellData( proBlocks );
 
-	// all blocks available including upsell versions of pro blocks
-	const allRegistered = [ ...reducedBlocks, ...proBlockUpsell ];
+	// all blocks available including upsell versions of pro blocks or pro blocks themselves
+	const allRegistered = proBlockUpsell.reduce( ( carry, current ) => {
+		const { name: proBlockName } = current;
+
+		//check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
+		// if not inject the upsell data to current block list
+		const registeredProBlock = carry.find(
+			( { name } ) => name === proBlockName
+		);
+		if ( registeredProBlock ) {
+			registeredProBlock.pro = true;
+		} else {
+			carry.push( current );
+		}
+
+		return carry;
+	}, reducedBlocks );
 
 	let preloadedState = {
 		assets: appData.assets,
