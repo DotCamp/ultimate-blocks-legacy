@@ -1,5 +1,8 @@
 import React from 'react';
-import { getModalTargetBlockType } from '$Stores/settings-menu/slices/app';
+import {
+	getModalTargetBlockType,
+	getModalVisibilityStatus,
+} from '$Stores/settings-menu/slices/app';
 import withStore from '$HOC/withStore';
 
 /**
@@ -7,14 +10,16 @@ import withStore from '$HOC/withStore';
  *
  * @param root0
  * @param root0.targetBlock
+ * @param root0.visibility
  */
-function UpsellModal( { targetBlock } ) {
-	return <i>{ targetBlock }</i>;
+function UpsellModal( { targetBlock, visibility } ) {
+	return visibility && <i>{ targetBlock }</i>;
 }
 
 const selectMapping = ( select ) => {
 	return {
 		targetBlock: select( getModalTargetBlockType ),
+		visibility: select( getModalVisibilityStatus ),
 	};
 };
 

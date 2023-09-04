@@ -34,15 +34,24 @@ const appSliceOptions = {
 		toggleShowBlockInfo( state ) {
 			state.showBlockInfo = ! state.showBlockInfo;
 		},
-		showBlockModal( state, { payload } ) {
-			state.upsellPopup.targetBlock = payload.blockType;
+		/**
+		 * Show upsell modal for target block type.
+		 *
+		 * @param {Object} state         slice state
+		 * @param {Object} props         reducer properties
+		 * @param {string} props.payload target block type
+		 */
+		showProBlockUpsellModal( state, { payload } ) {
+			state.upsellPopup.show = true;
+			state.upsellPopup.targetBlock = payload;
 		},
 	},
 };
 
 const appSlice = createSlice( appSliceOptions );
 
-export const { setBlockFilter, toggleShowBlockInfo } = appSlice.actions;
+export const { setBlockFilter, toggleShowBlockInfo, showProBlockUpsellModal } =
+	appSlice.actions;
 
 /**
  * Get all application options.
@@ -77,12 +86,13 @@ export const getBlockInfoShowStatus = ( state ) => {
 /**
  * Get plugin pro status.
  *
+ * @deprecated
+ * use isPluginPro selector in pluginStatus slice for future implementations
+ *
  * @param {Object} state store state
  * @return {boolean} status
  */
 export const getProStatus = ( state ) => {
-	// backward compatibility update
-	// use isPluginPro selector in pluginStatus slice for future implementations
 	return isPluginPro( state );
 };
 
@@ -94,6 +104,16 @@ export const getProStatus = ( state ) => {
  */
 export const getModalTargetBlockType = ( state ) => {
 	return state.app.upsellPopup.targetBlock;
+};
+
+/**
+ * Get modal visibility status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} visibility status
+ */
+export const getModalVisibilityStatus = ( state ) => {
+	return state.app.upsellPopup.show;
 };
 
 /**

@@ -6,6 +6,7 @@ import withIcon from '$HOC/withIcon';
 import {
 	getBlockInfoShowStatus,
 	getProStatus,
+	showProBlockUpsellModal,
 } from '$Stores/settings-menu/slices/app';
 import withStore from '$HOC/withStore';
 import ProBlockCardTitle from '$Components/ProBlockCardTitle';
@@ -28,6 +29,7 @@ import BlockCardProInfoControl from '$Components/BlockCardProInfoControl';
  * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
  * @param {boolean}     props.proBlock            block belongs to pro version
  * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
+ * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
  */
 function BlockControl( {
 	title,
@@ -39,6 +41,7 @@ function BlockControl( {
 	blockInfoShowStatus,
 	proBlock,
 	proStatus,
+	showUpsell,
 } ) {
 	const initialRender = useRef( true );
 	const initialAnimation = useRef( true );
@@ -122,7 +125,12 @@ function BlockControl( {
 				</div>
 				<div className={ 'block-title-right-container' }>
 					{ proBlock && ! proStatus ? (
-						<BlockCardProInfoControl />
+						<BlockCardProInfoControl
+							handleClick={ ( e ) => {
+								e.preventDefault();
+								showUpsell( blockId );
+							} }
+						/>
 					) : (
 						<ToggleControl
 							onStatusChange={ setInnerStatus }
@@ -162,7 +170,15 @@ const selectMapping = ( select ) => {
 	};
 };
 
+const actionMapping = () => {
+	return { showUpsell: showProBlockUpsellModal };
+};
+
 /**
  * @module BlockControl
  */
-export default withStore( withIcon( BlockControl ), selectMapping );
+export default withStore(
+	withIcon( BlockControl ),
+	selectMapping,
+	actionMapping
+);

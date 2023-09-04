@@ -25480,10 +25480,11 @@ function _typeof(obj) {
 }
 /**
  * HOC for adding store related properties to components
- * @param {React.ElementType | Object} BaseComponent target component
- * @param {Function | null} [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
- * @param {Function | null} [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
- * @returns {Function} HOC function
+ *
+ * @param {React.ElementType | Object} BaseComponent        target component
+ * @param {Function | null}            [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
+ * @param {Function | null}            [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
+ * @return {Function} HOC function
  */ var withStore = function withStore(BaseComponent) {
     var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var actionMapping = arguments.length > 2 ? arguments[2] : undefined;
@@ -29598,7 +29599,7 @@ exports.default = thunk;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.setBlockFilter = exports.getProStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
 var _toolkit = require("ab983f5a897f990a");
 var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
 var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
@@ -29634,20 +29635,28 @@ function _interopRequireDefault(obj) {
      */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
             state.showBlockInfo = !state.showBlockInfo;
         },
-        showBlockModal: function showBlockModal(state, _ref2) {
+        /**
+     * Show upsell modal for target block type.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload target block type
+     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref2) {
             var payload = _ref2.payload;
-            state.upsellPopup.targetBlock = payload.blockType;
+            state.upsellPopup.show = true;
+            state.upsellPopup.targetBlock = payload;
         }
     }
 };
 var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
-var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo;
+var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal;
 /**
  * Get all application options.
  *
  * @param {Object} state store state
  * @return {Object} options
- */ exports.toggleShowBlockInfo = toggleShowBlockInfo;
+ */ exports.showProBlockUpsellModal = showProBlockUpsellModal;
+exports.toggleShowBlockInfo = toggleShowBlockInfo;
 exports.setBlockFilter = setBlockFilter;
 var getAllAppOptions = function getAllAppOptions(state) {
     return state.app;
@@ -29673,12 +29682,13 @@ var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
 /**
  * Get plugin pro status.
  *
+ * @deprecated
+ * use isPluginPro selector in pluginStatus slice for future implementations
+ *
  * @param {Object} state store state
  * @return {boolean} status
  */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
 var getProStatus = function getProStatus(state) {
-    // backward compatibility update
-    // use isPluginPro selector in pluginStatus slice for future implementations
     return (0, _pluginStatus.isPluginPro)(state);
 };
 /**
@@ -29691,8 +29701,17 @@ var getModalTargetBlockType = function getModalTargetBlockType(state) {
     return state.app.upsellPopup.targetBlock;
 };
 /**
- * @module appSlice
+ * Get modal visibility status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} visibility status
  */ exports.getModalTargetBlockType = getModalTargetBlockType;
+var getModalVisibilityStatus = function getModalVisibilityStatus(state) {
+    return state.app.upsellPopup.show;
+};
+/**
+ * @module appSlice
+ */ exports.getModalVisibilityStatus = getModalVisibilityStatus;
 var _default = appSlice.reducer;
 exports["default"] = _default;
 
@@ -36513,8 +36532,9 @@ function _arrayWithHoles(arr) {
  * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
  * @param {boolean}     props.proBlock            block belongs to pro version
  * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
+ * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
  */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
     var initialRender = (0, _react.useRef)(true);
     var initialAnimation = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
@@ -36579,7 +36599,12 @@ function _arrayWithHoles(arr) {
         isPro: proBlock
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
-    }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], null) : /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
+    }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], {
+        handleClick: function handleClick(e) {
+            e.preventDefault();
+            showUpsell(blockId);
+        }
+    }) : /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
         onStatusChange: setInnerStatus,
         status: innerStatus,
         disabled: proBlock && !proStatus
@@ -36604,9 +36629,14 @@ var selectMapping = function selectMapping(select) {
         proStatus: select(_app.getProStatus)
     };
 };
+var actionMapping = function actionMapping() {
+    return {
+        showUpsell: _app.showProBlockUpsellModal
+    };
+};
 /**
  * @module BlockControl
- */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping);
+ */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping, actionMapping);
 exports["default"] = _default;
 
 },{"9eede5ed96c6db50":"21dqq","1b0c26986e628874":"a7r96","17219fdafae6194a":"cbTU3","b72ddce4d4e282b6":"l4uaA","5b211ce3bfe7b54":"c28DV","52f11184f548186d":"kWmDy","dbbae5f431af94c6":"jiOgy","227934c51c676839":"3ptTq"}],"a7r96":[function(require,module,exports) {
@@ -36849,10 +36879,15 @@ function _interopRequireDefault(obj) {
     };
 }
 /**
- * Info control for pro block cards.
- */ function BlockCardProInfoControl() {
+ * Info control button for pro block cards.
+ *
+ * @param {Object}   props             component properties
+ * @param {Function} props.handleClick click callback
+ */ function BlockCardProInfoControl(_ref) {
+    var handleClick = _ref.handleClick;
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "pro-block-card-info-button"
+        className: "pro-block-card-info-button",
+        onClick: handleClick
     }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: "fa-solid fa-circle-info"
     }));
@@ -37032,13 +37067,15 @@ function _interopRequireDefault(obj) {
  *
  * @param root0
  * @param root0.targetBlock
+ * @param root0.visibility
  */ function UpsellModal(_ref) {
-    var targetBlock = _ref.targetBlock;
-    return /*#__PURE__*/ _react["default"].createElement("i", null, targetBlock);
+    var targetBlock = _ref.targetBlock, visibility = _ref.visibility;
+    return visibility && /*#__PURE__*/ _react["default"].createElement("i", null, targetBlock);
 }
 var selectMapping = function selectMapping(select) {
     return {
-        targetBlock: select(_app.getModalTargetBlockType)
+        targetBlock: select(_app.getModalTargetBlockType),
+        visibility: select(_app.getModalVisibilityStatus)
     };
 };
 /**

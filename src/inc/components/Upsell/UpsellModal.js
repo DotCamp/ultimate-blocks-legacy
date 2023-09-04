@@ -23,16 +23,16 @@ import ModalNavigation, {
  * @param {string}   props.proUrl           pro url, will be supplied via HOC
  * @function Object() { [native code] }
  */
-function UpsellModal({
+function UpsellModal( {
 	modalVisibility,
 	closeModal,
 	upsellData,
 	defaultFeatureSs,
 	proUrl,
-}) {
-	const [dataIndex, setDataIndex] = useState(0);
-	const [allData, setAllData] = useState([]);
-	const [currentData, setCurrentData] = useState(null);
+} ) {
+	const [ dataIndex, setDataIndex ] = useState( 0 );
+	const [ allData, setAllData ] = useState( [] );
+	const [ currentData, setCurrentData ] = useState( null );
 
 	/**
 	 * Pre-check for increment/decrement operations.
@@ -40,7 +40,7 @@ function UpsellModal({
 	 * @param {number} amount amount
 	 * @return {boolean} pre operation status
 	 */
-	const preIncDecCheck = (amount) => {
+	const preIncDecCheck = ( amount ) => {
 		const finalIndex = dataIndex + amount;
 
 		return finalIndex >= 0 && finalIndex !== allData.length;
@@ -51,11 +51,11 @@ function UpsellModal({
 	 *
 	 * @param {number} amount amount
 	 */
-	const incDecIndex = (amount) => {
+	const incDecIndex = ( amount ) => {
 		const finalIndex = dataIndex + amount;
 
-		if (preIncDecCheck(amount)) {
-			setDataIndex(finalIndex);
+		if ( preIncDecCheck( amount ) ) {
+			setDataIndex( finalIndex );
 		}
 	};
 
@@ -65,80 +65,80 @@ function UpsellModal({
 	 * @param {number} amount assigned increment/decrement amount
 	 * @return {boolean} status
 	 */
-	const navStatus = (amount) => {
-		return allData.length > 1 && preIncDecCheck(amount);
+	const navStatus = ( amount ) => {
+		return allData.length > 1 && preIncDecCheck( amount );
 	};
 
 	/**
 	 * Direct current page to pro url.
 	 */
 	const directToProUrl = () => {
-		window.open(proUrl, '_blank');
+		window.open( proUrl, '_blank' );
 	};
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
-		if (upsellData && typeof upsellData === 'object') {
-			const upsellDataValues = Object.values(upsellData);
-			setAllData(upsellDataValues);
+	useEffect( () => {
+		if ( upsellData && typeof upsellData === 'object' ) {
+			const upsellDataValues = Object.values( upsellData );
+			setAllData( upsellDataValues );
 
-			setCurrentData(upsellDataValues[0]);
+			setCurrentData( upsellDataValues[ 0 ] );
 		}
 
-		setDataIndex(0);
-	}, [upsellData]);
+		setDataIndex( 0 );
+	}, [ upsellData ] );
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
+	useEffect( () => {
 		// reset data index on visibility changes
-		setDataIndex(0);
-	}, [modalVisibility]);
+		setDataIndex( 0 );
+	}, [ modalVisibility ] );
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
-		setCurrentData(allData[dataIndex]);
-	}, [dataIndex, allData]);
+	useEffect( () => {
+		setCurrentData( allData[ dataIndex ] );
+	}, [ dataIndex, allData ] );
 
 	return (
 		modalVisibility &&
 		currentData && (
-			<div className={'ub-upsells-modal-wrapper'}>
+			<div className={ 'ub-upsells-modal-wrapper' }>
 				<ModalNavigation
-					clickHandler={() => incDecIndex(-1)}
-					type={navigationType.LEFT}
-					disable={!navStatus(-1)}
+					clickHandler={ () => incDecIndex( -1 ) }
+					type={ navigationType.LEFT }
+					disable={ ! navStatus( -1 ) }
 				/>
-				<div className={'ub-upsells-modal-main-window'}>
-					<div className={'ub-upsells-modal-header'}>
+				<div className={ 'ub-upsells-modal-main-window' }>
+					<div className={ 'ub-upsells-modal-header' }>
 						<ActiveBlockIcon />
-						<VitalizeText>{currentData.name}</VitalizeText>
+						<VitalizeText>{ currentData.name }</VitalizeText>
 					</div>
 					<UpsellModalContent
-						ssUrl={currentData.imageUrl || defaultFeatureSs}
-						description={currentData.description}
+						ssUrl={ currentData.imageUrl || defaultFeatureSs }
+						description={ currentData.description }
 					/>
-					<div className={'ub-upsells-modal-footer'}>
-						<UpsellModalButton clickHandler={closeModal}>
-							{__('Close', 'ultimate-blocks')}
+					<div className={ 'ub-upsells-modal-footer' }>
+						<UpsellModalButton clickHandler={ closeModal }>
+							{ __( 'Close', 'ultimate-blocks' ) }
 						</UpsellModalButton>
 						<UpsellModalButton
-							clickHandler={directToProUrl}
-							type={modalButtonTypes.PRIO}
+							clickHandler={ directToProUrl }
+							type={ modalButtonTypes.PRIO }
 						>
-							{__('Buy PRO', 'ultimate-blocks')}
+							{ __( 'Buy PRO', 'ultimate-blocks' ) }
 						</UpsellModalButton>
 					</div>
 				</div>
 				<ModalNavigation
-					clickHandler={() => incDecIndex(1)}
-					type={navigationType.RIGHT}
-					disable={!navStatus(1)}
+					clickHandler={ () => incDecIndex( 1 ) }
+					type={ navigationType.RIGHT }
+					disable={ ! navStatus( 1 ) }
 				/>
 			</div>
 		)
@@ -146,7 +146,7 @@ function UpsellModal({
 }
 
 // main store selector mapping
-const mainStoreSelectMapping = (namespacedSelect) => {
+const mainStoreSelectMapping = ( namespacedSelect ) => {
 	const {
 		upsellModalVisibilityStatus,
 		getUpsellTargetExtensionInfoShow,
@@ -161,14 +161,14 @@ const mainStoreSelectMapping = (namespacedSelect) => {
 			getUpsellTargetExtensionInfoShow()
 		),
 		defaultFeatureSs: getLogoUrl(),
-		proUrl: getAssets('proUrl'),
+		proUrl: getAssets( 'proUrl' ),
 	};
 };
 
 // main store action mapping
-const mainStoreActionMapping = (namespacedDispatch) => {
+const mainStoreActionMapping = ( namespacedDispatch ) => {
 	return {
-		closeModal: hideUpsellModal(namespacedDispatch),
+		closeModal: hideUpsellModal( namespacedDispatch ),
 	};
 };
 
@@ -178,4 +178,4 @@ const mainStoreActionMapping = (namespacedDispatch) => {
 export default connectWithMainStore(
 	mainStoreSelectMapping,
 	mainStoreActionMapping
-)(UpsellModal);
+)( UpsellModal );
