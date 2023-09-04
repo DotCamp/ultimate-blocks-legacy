@@ -305,6 +305,11 @@
   text-transform: capitalize;
 }
 
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-text .pro-block-card-title-suffix {
+  margin: 0 5px;
+  font-weight: bold;
+}
+
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto {
   grid-area: howTo;
   padding: 20px;

@@ -36143,6 +36143,7 @@ var _MenuButton = _interopRequireDefault(require("17219fdafae6194a"));
 var _withIcon = _interopRequireDefault(require("b72ddce4d4e282b6"));
 var _app = require("5b211ce3bfe7b54");
 var _withStore = _interopRequireDefault(require("52f11184f548186d"));
+var _ProBlockCardTitle = _interopRequireDefault(require("dbbae5f431af94c6"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36296,7 +36297,9 @@ function _arrayWithHoles(arr) {
         className: "title-icon"
     }, iconElement), /*#__PURE__*/ _react["default"].createElement("span", {
         className: "title-text"
-    }, title, proBlock && /*#__PURE__*/ _react["default"].createElement("span", null, "PRO"))), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, title, /*#__PURE__*/ _react["default"].createElement(_ProBlockCardTitle["default"], {
+        isPro: proBlock
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
     }, /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
         onStatusChange: setInnerStatus,
@@ -36328,7 +36331,7 @@ var selectMapping = function selectMapping(select) {
  */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping);
 exports["default"] = _default;
 
-},{"9eede5ed96c6db50":"21dqq","1b0c26986e628874":"a7r96","17219fdafae6194a":"cbTU3","b72ddce4d4e282b6":"l4uaA","5b211ce3bfe7b54":"c28DV","52f11184f548186d":"kWmDy"}],"a7r96":[function(require,module,exports) {
+},{"9eede5ed96c6db50":"21dqq","1b0c26986e628874":"a7r96","17219fdafae6194a":"cbTU3","b72ddce4d4e282b6":"l4uaA","5b211ce3bfe7b54":"c28DV","52f11184f548186d":"kWmDy","dbbae5f431af94c6":"jiOgy"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36526,7 +36529,35 @@ function _typeof(obj) {
  */ var _default = withIcon;
 exports["default"] = _default;
 
-},{"5165ebf1e519bb99":"21dqq"}],"ohEvx":[function(require,module,exports) {
+},{"5165ebf1e519bb99":"21dqq"}],"jiOgy":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("cdc71d453835317a"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Pro block card control title.
+ *
+ * @param {Object}  props       component properties
+ * @param {boolean} props.isPro block pro status
+ */ function ProBlockCardTitle(_ref) {
+    var isPro = _ref.isPro;
+    return isPro && /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "pro-block-card-title-suffix"
+    }, "PRO");
+}
+/**
+ * @module CouponCardProTitle
+ */ var _default = ProBlockCardTitle;
+exports["default"] = _default;
+
+},{"cdc71d453835317a":"21dqq"}],"ohEvx":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

@@ -8,6 +8,7 @@ import {
 	getProStatus,
 } from '$Stores/settings-menu/slices/app';
 import withStore from '$HOC/withStore';
+import ProBlockCardTitle from '$Components/ProBlockCardTitle';
 
 /**
  * Menu block control component.
@@ -115,7 +116,7 @@ function BlockControl( {
 					<div className={ 'title-icon' }>{ iconElement }</div>
 					<span className={ 'title-text' }>
 						{ title }
-						{ proBlock && <span>PRO</span> }
+						<ProBlockCardTitle isPro={ proBlock } />
 					</span>
 				</div>
 				<div className={ 'block-title-right-container' }>
