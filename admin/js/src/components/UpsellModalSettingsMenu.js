@@ -53,12 +53,22 @@ function UpsellModalSettingsMenu( {
 		return prepareUpsellData( targetBlockObj );
 	}, [ targetBlock ] );
 
+	const currentBlockIcon = useMemo( () => {
+		if ( currentUpsellData ) {
+			const [ { icon } ] = Object.values( currentUpsellData );
+			return icon;
+		}
+
+		return null;
+	}, [ currentUpsellData ] );
+
 	return (
 		<UpsellModalBase
 			upsellData={ currentUpsellData }
 			modalVisibility={ visibility }
 			closeModal={ closeModalWindow }
 			proUrl={ proBuyUrl }
+			targetBlockIcon={ currentBlockIcon }
 		/>
 	);
 }

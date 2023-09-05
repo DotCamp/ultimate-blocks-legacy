@@ -37121,6 +37121,49 @@ function _interopRequireWildcard(obj, nodeInterop) {
     if (cache) cache.set(obj, newObj);
     return newObj;
 }
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
 function _defineProperty(obj, key, value) {
     key = _toPropertyKey(key);
     if (key in obj) Object.defineProperty(obj, key, {
@@ -37187,11 +37230,21 @@ function _typeof(obj) {
     }, [
         targetBlock
     ]);
+    var currentBlockIcon = (0, _react.useMemo)(function() {
+        if (currentUpsellData) {
+            var _Object$values = Object.values(currentUpsellData), _Object$values2 = _slicedToArray(_Object$values, 1), icon = _Object$values2[0].icon;
+            return icon;
+        }
+        return null;
+    }, [
+        currentUpsellData
+    ]);
     return /*#__PURE__*/ _react["default"].createElement(_UpsellModalBase["default"], {
         upsellData: currentUpsellData,
         modalVisibility: visibility,
         closeModal: closeModalWindow,
-        proUrl: proBuyUrl
+        proUrl: proBuyUrl,
+        targetBlockIcon: currentBlockIcon
     });
 }
 // store select mapping
@@ -37456,23 +37509,44 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = require("2ce8023ec6e51515");
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 /**
  * Component for displaying active block's icon component.
  *
- * @param {Object} props            component properties
- * @param {Object} props.iconObject icon object, will be supplied via HOC
+ * @param {Object}          props            component properties
+ * @param {Object | string} props.iconObject icon object or a string representation of it
  * @function Object() { [native code] }
  */ function ActiveBlockIcon(_ref) {
     var iconObject = _ref.iconObject;
-    // TODO [ErdemBircan] remove after testing
-    // const { type, props } = iconObject;
-    //
-    // return (
-    // 	<div className={ 'ub-active-block-icon' }>
-    // 		{ createElement( type, props ) }
-    // 	</div>
-    // );
-    return "i";
+    var iconElement = (0, _react.useMemo)(function() {
+        if (iconObject) switch(_typeof(iconObject)){
+            case "object":
+                var type = iconObject.type, props = iconObject.props;
+                return /*#__PURE__*/ (0, _react.createElement)(type, props);
+            case "string":
+                return /*#__PURE__*/ React.createElement("span", {
+                    className: "ub-active-block-icon-from-string",
+                    dangerouslySetInnerHTML: {
+                        __html: iconObject
+                    }
+                });
+            default:
+                return "?";
+        }
+        return "?";
+    }, [
+        iconObject
+    ]);
+    return /*#__PURE__*/ React.createElement("div", {
+        className: "ub-active-block-icon"
+    }, iconElement);
 }
 /**
  * @module ActiveBlockIcon
@@ -38032,8 +38106,6 @@ function _toPrimitive(input, hint) {
     var appData = _objectSpread({}, ubAdminMenuData);
     // eslint-disable-next-line no-undef
     ubAdminMenuData = null;
-    // TODO [ErdemBircan] remove for production
-    console.log(appData);
     // add block infos to context data
     var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
     var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
