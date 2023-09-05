@@ -89,9 +89,9 @@ class Pro_Manager {
 			$menu_data['pluginStatus'] = [];
 		}
 
-		$menu_data['pluginStatus'] = array_merge($menu_data['pluginStatus'], [
+		$menu_data['pluginStatus'] = array_merge( $menu_data['pluginStatus'], [
 			'isPro' => $this->is_pro()
-		]);
+		] );
 
 		$assets = [
 			'proBuyUrl' => 'https://ultimateblocks.com/pricing/'
@@ -144,9 +144,10 @@ class Pro_Manager {
 				}
 
 				$upsell_data[ $block_upsell_instance->block_name() ] = [
-					'label' => $block_upsell_instance->block_label(),
-					'desc'  => $block_upsell_instance->block_description(),
-					'icon'  => $block_icon,
+					'label'      => $block_upsell_instance->block_label(),
+					'desc'       => $block_upsell_instance->block_description(),
+					'icon'       => $block_icon,
+					'screenshot' => $block_upsell_instance->block_upsell_screenshot()
 				];
 			}
 		}

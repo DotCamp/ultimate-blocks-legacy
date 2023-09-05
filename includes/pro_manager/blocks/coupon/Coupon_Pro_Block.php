@@ -4,6 +4,7 @@ namespace Ultimate_Blocks\includes\pro_manager\blocks\coupon;
 
 use Ultimate_Blocks\includes\pro_manager\base\Pro_Block_Upsell;
 use function esc_html__;
+use function trailingslashit;
 
 /**
  * Coupon pro block upsell.
@@ -48,5 +49,13 @@ class Coupon_Pro_Block extends Pro_Block_Upsell {
 	 */
 	public function block_description() {
 		return esc_html__( 'Enhance engagement and sales by easily displaying enticing discounts.' );
+	}
+
+	/**
+	 * Pro block screenshot image url location.
+	 * @return string image url location
+	 */
+	public function block_upsell_screenshot() {
+		return trailingslashit( ULTIMATE_BLOCKS_URL ) . 'includes/pro_manager/blocks/coupon/assets/coupon-ss.png';
 	}
 }

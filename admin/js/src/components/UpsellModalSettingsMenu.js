@@ -33,13 +33,13 @@ function UpsellModalSettingsMenu( {
 	 */
 	const prepareUpsellData = ( blockObject ) => {
 		if ( blockObject && typeof blockObject === 'object' ) {
-			const { name, title, info, icon } = blockObject;
+			const { name, title, info, icon, screenshotUrl } = blockObject;
 
 			return {
 				[ name ]: {
 					name: title,
 					description: Array.isArray( info ) ? info[ 0 ] : info,
-					imageUrl: null,
+					imageUrl: screenshotUrl,
 					icon,
 				},
 			};

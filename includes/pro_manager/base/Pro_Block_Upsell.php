@@ -35,4 +35,11 @@ abstract class Pro_Block_Upsell {
 	 * @return string
 	 */
 	public abstract function block_description();
+
+	/**
+	 * Pro block screenshot image url location.
+	 * @return string image url location
+	 */
+	public abstract function block_upsell_screenshot();
+
 }

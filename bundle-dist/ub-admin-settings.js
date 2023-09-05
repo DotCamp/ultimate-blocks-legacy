@@ -37214,11 +37214,11 @@ function _typeof(obj) {
    * @param {Object} blockObject block object
    */ var prepareUpsellData = function prepareUpsellData(blockObject) {
         if (blockObject && _typeof(blockObject) === "object") {
-            var name = blockObject.name, title = blockObject.title, info = blockObject.info, icon = blockObject.icon;
+            var name = blockObject.name, title = blockObject.title, info = blockObject.info, icon = blockObject.icon, screenshotUrl = blockObject.screenshotUrl;
             return _defineProperty({}, name, {
                 name: title,
                 description: Array.isArray(info) ? info[0] : info,
-                imageUrl: null,
+                imageUrl: screenshotUrl,
                 icon: icon
             });
         }
@@ -38069,23 +38069,25 @@ function _toPrimitive(input, hint) {
     return Object.keys(proOnlyBlockList).filter(function(key) {
         return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
     }).reduce(function(carry, blockName) {
-        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon;
-        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true));
+        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon, screenshot = _proOnlyBlockList$blo.screenshot;
+        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true, screenshot));
         return carry;
     }, []);
 }
 /**
  * Generate block info object compatible with settings menu store.
  *
- * @param {string}            name        block registry name
- * @param {string}            title       block title
- * @param {string}            info        block info
- * @param {React.ElementType} icon        icon element
- * @param {boolean}           active      active status
- * @param {boolean}           [pro=false] block pro status
+ * @param {string}            name                 block registry name
+ * @param {string}            title                block title
+ * @param {string}            info                 block info
+ * @param {React.ElementType} icon                 icon element
+ * @param {boolean}           active               active status
+ * @param {boolean}           [pro=false]          block pro status
+ * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
  * @return {Object} block info object
  */ function generateBlockInfoObject(name, title, info, icon, active) {
     var pro = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+    var screenshotUrl = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
     return {
         name: name,
         title: title,
@@ -38094,7 +38096,8 @@ function _toPrimitive(input, hint) {
         ],
         icon: icon,
         active: active,
-        pro: pro
+        pro: pro,
+        screenshotUrl: screenshotUrl
     };
 }
 /**

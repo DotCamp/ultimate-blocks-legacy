@@ -26,6 +26,7 @@ function prepareProOnlyBlockUpsellData( proOnlyBlockList ) {
 				desc: info,
 				label: title,
 				icon,
+				screenshot,
 			} = proOnlyBlockList[ blockName ];
 
 			carry.push(
@@ -35,7 +36,8 @@ function prepareProOnlyBlockUpsellData( proOnlyBlockList ) {
 					info,
 					icon,
 					false,
-					true
+					true,
+					screenshot
 				)
 			);
 
@@ -46,12 +48,13 @@ function prepareProOnlyBlockUpsellData( proOnlyBlockList ) {
 /**
  * Generate block info object compatible with settings menu store.
  *
- * @param {string}            name        block registry name
- * @param {string}            title       block title
- * @param {string}            info        block info
- * @param {React.ElementType} icon        icon element
- * @param {boolean}           active      active status
- * @param {boolean}           [pro=false] block pro status
+ * @param {string}            name                 block registry name
+ * @param {string}            title                block title
+ * @param {string}            info                 block info
+ * @param {React.ElementType} icon                 icon element
+ * @param {boolean}           active               active status
+ * @param {boolean}           [pro=false]          block pro status
+ * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
  * @return {Object} block info object
  */
 function generateBlockInfoObject(
@@ -60,7 +63,8 @@ function generateBlockInfoObject(
 	info,
 	icon,
 	active,
-	pro = false
+	pro = false,
+	screenshotUrl = null
 ) {
 	return {
 		name,
@@ -69,6 +73,7 @@ function generateBlockInfoObject(
 		icon,
 		active,
 		pro,
+		screenshotUrl,
 	};
 }
 
