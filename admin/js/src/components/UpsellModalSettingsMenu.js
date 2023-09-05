@@ -14,7 +14,20 @@ import UpsellModalBase from '$EditorComponents/Upsell/UpsellModalBase';
  * @param {boolean} props.visibility  modal visibility status
  */
 function UpsellModalSettingsMenu( { targetBlock, visibility } ) {
-	return <UpsellModalBase modalVisibility={ visibility } />;
+	const testData = {
+		'ub/coupon': {
+			name: 'Coupon',
+			description: 'test description',
+			imageUrl: null,
+		},
+	};
+
+	return (
+		<UpsellModalBase
+			upsellData={ testData }
+			modalVisibility={ visibility }
+		/>
+	);
 }
 
 // store select mapping

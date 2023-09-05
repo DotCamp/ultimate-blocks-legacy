@@ -37071,7 +37071,15 @@ function _interopRequireDefault(obj) {
  * @param {boolean} props.visibility  modal visibility status
  */ function UpsellModalSettingsMenu(_ref) {
     var targetBlock = _ref.targetBlock, visibility = _ref.visibility;
+    var testData = {
+        "ub/coupon": {
+            name: "Coupon",
+            description: "test description",
+            imageUrl: null
+        }
+    };
     return /*#__PURE__*/ _react["default"].createElement(_UpsellModalBase["default"], {
+        upsellData: testData,
         modalVisibility: visibility
     });
 }
@@ -37337,10 +37345,15 @@ var _react = require("2ce8023ec6e51515");
  * @function Object() { [native code] }
  */ function ActiveBlockIcon(_ref) {
     var iconObject = _ref.iconObject;
-    var type = iconObject.type, props = iconObject.props;
-    return /*#__PURE__*/ React.createElement("div", {
-        className: "ub-active-block-icon"
-    }, /*#__PURE__*/ (0, _react.createElement)(type, props));
+    // TODO [ErdemBircan] remove after testing
+    // const { type, props } = iconObject;
+    //
+    // return (
+    // 	<div className={ 'ub-active-block-icon' }>
+    // 		{ createElement( type, props ) }
+    // 	</div>
+    // );
+    return "i";
 }
 /**
  * @module ActiveBlockIcon

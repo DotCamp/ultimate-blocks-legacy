@@ -8,13 +8,15 @@ import { createElement } from 'react';
  * @function Object() { [native code] }
  */
 function ActiveBlockIcon( { iconObject } ) {
-	const { type, props } = iconObject;
-
-	return (
-		<div className={ 'ub-active-block-icon' }>
-			{ createElement( type, props ) }
-		</div>
-	);
+	// TODO [ErdemBircan] remove after testing
+	// const { type, props } = iconObject;
+	//
+	// return (
+	// 	<div className={ 'ub-active-block-icon' }>
+	// 		{ createElement( type, props ) }
+	// 	</div>
+	// );
+	return 'i';
 }
 
 /**
