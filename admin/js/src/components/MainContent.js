@@ -8,7 +8,7 @@ import {
 } from '$Stores/settings-menu/slices/app';
 import withStore from '$HOC/withStore';
 import BlockControlsContainer from '$Components/BlockControlsContainer';
-import UpsellModal from '$Components/UpsellModal';
+import UpsellModalSettingsMenu from '$Components/UpsellModalSettingsMenu';
 
 /**
  * Menu content component.
@@ -22,7 +22,7 @@ import UpsellModal from '$Components/UpsellModal';
 function MainContent( { blockFilter, setBlockFilterValue } ) {
 	return (
 		<div className={ 'menu-content' }>
-			<UpsellModal />
+			<UpsellModalSettingsMenu />
 			<MainContentPhrase />
 			<BlockStatusFilterControl
 				filterVal={ blockFilter }

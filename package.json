@@ -16,7 +16,8 @@
 		"$HOC": "./admin/js/src/hoc",
 		"$Stores": "./admin/js/src/stores",
 		"$Styles": "./admin/css/src/",
-		"$Library": "./library"
+		"$Library": "./library",
+		"$EditorComponents": "./src/inc/components"
 	},
 	"dependencies": {
 		"@babel/core": "^7.18.2",

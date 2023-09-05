@@ -12,6 +12,7 @@ import UpsellModalBase from '$Inc/components/Upsell/UpsellModalBase';
  * @param {Object}   props.upsellData       upsell data to show, will be supplied via HOC
  * @param {string}   props.defaultFeatureSs default feature screenshot for empty replacements, will be supplied via HOC
  * @param {string}   props.proUrl           pro url, will be supplied via HOC
+ * @param {Object}   props.activeBlockIcon  active block icon object
  * @function Object() { [native code] }
  */
 function UpsellModalEditor( {
@@ -20,6 +21,7 @@ function UpsellModalEditor( {
 	upsellData,
 	defaultFeatureSs,
 	proUrl,
+	activeBlockIcon,
 } ) {
 	return (
 		<UpsellModalBase
@@ -28,6 +30,7 @@ function UpsellModalEditor( {
 			upsellData={ upsellData }
 			defaultFeatureSs={ defaultFeatureSs }
 			proUrl={ proUrl }
+			targetBlockIcon={ activeBlockIcon }
 		/>
 	);
 }
@@ -40,6 +43,7 @@ const mainStoreSelectMapping = ( namespacedSelect ) => {
 		getUpsellDataActiveBlock,
 		getLogoUrl,
 		getAssets,
+		getActiveBlockIconObject,
 	} = namespacedSelect;
 
 	return {
@@ -49,6 +53,7 @@ const mainStoreSelectMapping = ( namespacedSelect ) => {
 		),
 		defaultFeatureSs: getLogoUrl(),
 		proUrl: getAssets( 'proUrl' ),
+		activeBlockIcon: getActiveBlockIconObject(),
 	};
 };
 

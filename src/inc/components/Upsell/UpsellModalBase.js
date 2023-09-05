@@ -15,6 +15,7 @@ import ModalNavigation, { navigationType } from './ModalNavigation';
  * @param {Object}   props.upsellData       upsell data to show, will be supplied via HOC
  * @param {string}   props.defaultFeatureSs default feature screenshot for empty replacements, will be supplied via HOC
  * @param {string}   props.proUrl           pro url, will be supplied via HOC
+ * @param {Object}   props.targetBlockIcon  block icon object for target block
  * @function Object() { [native code] }
  */
 function UpsellModalBase( {
@@ -23,6 +24,7 @@ function UpsellModalBase( {
 	upsellData,
 	defaultFeatureSs,
 	proUrl,
+	targetBlockIcon,
 } ) {
 	const [ dataIndex, setDataIndex ] = useState( 0 );
 	const [ allData, setAllData ] = useState( [] );
@@ -110,7 +112,7 @@ function UpsellModalBase( {
 				/>
 				<div className={ 'ub-upsells-modal-main-window' }>
 					<div className={ 'ub-upsells-modal-header' }>
-						<ActiveBlockIcon />
+						<ActiveBlockIcon iconObject={ targetBlockIcon } />
 						<VitalizeText>{ currentData.name }</VitalizeText>
 					</div>
 					<UpsellModalContent
