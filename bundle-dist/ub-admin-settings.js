@@ -25459,7 +25459,13 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
+var _react = _interopRequireDefault(require("ca9ac1a3bee33d8c"));
 var _reactRedux = require("979f6ff1f26c3159");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
 function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function(target) {
         for(var i = 1; i < arguments.length; i++){
@@ -25510,7 +25516,7 @@ function _typeof(obj) {
                 return carry;
             }, {});
         }
-        return /*#__PURE__*/ React.createElement(BaseComponent, _extends({}, props, selections, actions, {
+        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, selections, actions, {
             selector: _reactRedux.useSelector,
             dispatch: dispatch
         }));
@@ -25521,7 +25527,7 @@ function _typeof(obj) {
  */ var _default = withStore;
 exports["default"] = _default;
 
-},{"979f6ff1f26c3159":"bdVon"}],"9SnHn":[function(require,module,exports) {
+},{"979f6ff1f26c3159":"bdVon","ca9ac1a3bee33d8c":"21dqq"}],"9SnHn":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -29599,7 +29605,7 @@ exports.default = thunk;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
 var _toolkit = require("ab983f5a897f990a");
 var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
 var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
@@ -29645,17 +29651,26 @@ function _interopRequireDefault(obj) {
             var payload = _ref2.payload;
             state.upsellPopup.show = true;
             state.upsellPopup.targetBlock = payload;
+        },
+        /**
+     * Hide upsell modal for target block type.
+     *
+     * @param {Object} state slice state
+     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
+            state.upsellPopup.show = false;
+            state.upsellPopup.targetBlock = null;
         }
     }
 };
 var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
-var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal;
+var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal;
 /**
  * Get all application options.
  *
  * @param {Object} state store state
  * @return {Object} options
- */ exports.showProBlockUpsellModal = showProBlockUpsellModal;
+ */ exports.hideProBlockUpsellModal = hideProBlockUpsellModal;
+exports.showProBlockUpsellModal = showProBlockUpsellModal;
 exports.toggleShowBlockInfo = toggleShowBlockInfo;
 exports.setBlockFilter = setBlockFilter;
 var getAllAppOptions = function getAllAppOptions(state) {
@@ -37064,13 +37079,14 @@ function _interopRequireDefault(obj) {
     };
 }
 /**
- * For testing purposes only.
+ * Upsell modal window for settings menu.
  *
- * @param {Object}  props             component properties
- * @param {string}  props.targetBlock target block id
- * @param {boolean} props.visibility  modal visibility status
+ * @param {Object}   props                  component properties
+ * @param {string}   props.targetBlock      target block id
+ * @param {boolean}  props.visibility       modal visibility status, will be supplied via HOC
+ * @param {Function} props.closeModalWindow close modal window, will be supplied via HOC
  */ function UpsellModalSettingsMenu(_ref) {
-    var targetBlock = _ref.targetBlock, visibility = _ref.visibility;
+    var targetBlock = _ref.targetBlock, visibility = _ref.visibility, closeModalWindow = _ref.closeModalWindow;
     var testData = {
         "ub/coupon": {
             name: "Coupon",
@@ -37080,7 +37096,8 @@ function _interopRequireDefault(obj) {
     };
     return /*#__PURE__*/ _react["default"].createElement(_UpsellModalBase["default"], {
         upsellData: testData,
-        modalVisibility: visibility
+        modalVisibility: visibility,
+        closeModal: closeModalWindow
     });
 }
 // store select mapping
@@ -37090,9 +37107,15 @@ var selectMapping = function selectMapping(select) {
         visibility: select(_app.getModalVisibilityStatus)
     };
 };
+// store action mapping
+var actionMapping = function actionMapping() {
+    return {
+        closeModalWindow: _app.hideProBlockUpsellModal
+    };
+};
 /**
  * @module UpsellModal
- */ var _default = (0, _withStore["default"])(UpsellModalSettingsMenu, selectMapping);
+ */ var _default = (0, _withStore["default"])(UpsellModalSettingsMenu, selectMapping, actionMapping);
 exports["default"] = _default;
 
 },{"77d3d7818e219afe":"21dqq","17f1518f4b326f9f":"c28DV","7b5b96d0062dc014":"kWmDy","38467a7e7a604605":"lUoek"}],"lUoek":[function(require,module,exports) {

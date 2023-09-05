@@ -45,13 +45,26 @@ const appSliceOptions = {
 			state.upsellPopup.show = true;
 			state.upsellPopup.targetBlock = payload;
 		},
+		/**
+		 * Hide upsell modal for target block type.
+		 *
+		 * @param {Object} state slice state
+		 */
+		hideProBlockUpsellModal( state ) {
+			state.upsellPopup.show = false;
+			state.upsellPopup.targetBlock = null;
+		},
 	},
 };
 
 const appSlice = createSlice( appSliceOptions );
 
-export const { setBlockFilter, toggleShowBlockInfo, showProBlockUpsellModal } =
-	appSlice.actions;
+export const {
+	setBlockFilter,
+	toggleShowBlockInfo,
+	showProBlockUpsellModal,
+	hideProBlockUpsellModal,
+} = appSlice.actions;
 
 /**
  * Get all application options.
