@@ -36917,7 +36917,7 @@ exports["default"] = _default;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setBlockActiveStatus = exports.getBlocks = exports["default"] = void 0;
+exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
 var _toolkit = require("16834d59f055af3a");
 function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
@@ -36966,6 +36966,7 @@ function _arrayLikeToArray(arr, len) {
             var registered = state.registered;
             var uRegistered = _toConsumableArray(registered);
             var blockIndex = -1;
+            // eslint-disable-next-line array-callback-return
             uRegistered.map(function(bObj, index) {
                 if (bObj.name === id) blockIndex = index;
             });
@@ -36988,8 +36989,22 @@ var getBlocks = function getBlocks(state) {
     return state.blocks.registered;
 };
 /**
- * @module blocksSlice
+ * Get block object by given block type id.
+ *
+ * @param {Object} state store state
+ * @return {Object | undefined} block object or undefined if no target block is found
  */ exports.getBlocks = getBlocks;
+var getBlockById = function getBlockById(state) {
+    return function(blockId) {
+        return state.blocks.registered.find(function(_ref2) {
+            var name = _ref2.name;
+            return name === blockId;
+        });
+    };
+};
+/**
+ * @module blocksSlice
+ */ exports.getBlockById = getBlockById;
 var _default = blocksSlice.reducer;
 exports["default"] = _default;
 
@@ -37069,42 +37084,123 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("77d3d7818e219afe"));
+var _react = _interopRequireWildcard(require("77d3d7818e219afe"));
 var _app = require("17f1518f4b326f9f");
+var _blocks = require("5f8ac705794608a2");
 var _withStore = _interopRequireDefault(require("7b5b96d0062dc014"));
 var _UpsellModalBase = _interopRequireDefault(require("38467a7e7a604605"));
+var _assets = require("a4c1da9c67f823b");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 /**
  * Upsell modal window for settings menu.
  *
  * @param {Object}   props                  component properties
- * @param {string}   props.targetBlock      target block id
+ * @param {string}   props.targetBlock      target block id, will be supplied via HOC
  * @param {boolean}  props.visibility       modal visibility status, will be supplied via HOC
  * @param {Function} props.closeModalWindow close modal window, will be supplied via HOC
+ * @param {Function} props.getBlockObject   get block object, will be supplied via HOC
+ * @param {string}   props.proBuyUrl        url for pro buy page, will be supplied via HOC
  */ function UpsellModalSettingsMenu(_ref) {
-    var targetBlock = _ref.targetBlock, visibility = _ref.visibility, closeModalWindow = _ref.closeModalWindow;
-    var testData = {
-        "ub/coupon": {
-            name: "Coupon",
-            description: "test description",
-            imageUrl: null
+    var targetBlock = _ref.targetBlock, visibility = _ref.visibility, closeModalWindow = _ref.closeModalWindow, getBlockObject = _ref.getBlockObject, proBuyUrl = _ref.proBuyUrl;
+    /**
+   * Prepare modal upsell data to be compatible with modal base component.
+   *
+   * @param {Object} blockObject block object
+   */ var prepareUpsellData = function prepareUpsellData(blockObject) {
+        if (blockObject && _typeof(blockObject) === "object") {
+            var name = blockObject.name, title = blockObject.title, info = blockObject.info, icon = blockObject.icon;
+            return _defineProperty({}, name, {
+                name: title,
+                description: Array.isArray(info) ? info[0] : info,
+                imageUrl: null,
+                icon: icon
+            });
         }
+        return null;
     };
+    var currentUpsellData = (0, _react.useMemo)(function() {
+        var targetBlockObj = getBlockObject(targetBlock);
+        return prepareUpsellData(targetBlockObj);
+    }, [
+        targetBlock
+    ]);
     return /*#__PURE__*/ _react["default"].createElement(_UpsellModalBase["default"], {
-        upsellData: testData,
+        upsellData: currentUpsellData,
         modalVisibility: visibility,
-        closeModal: closeModalWindow
+        closeModal: closeModalWindow,
+        proUrl: proBuyUrl
     });
 }
 // store select mapping
 var selectMapping = function selectMapping(select) {
     return {
         targetBlock: select(_app.getModalTargetBlockType),
-        visibility: select(_app.getModalVisibilityStatus)
+        visibility: select(_app.getModalVisibilityStatus),
+        getBlockObject: select(_blocks.getBlockById),
+        proBuyUrl: select(_assets.getAsset)("proBuyUrl")
     };
 };
 // store action mapping
@@ -37118,7 +37214,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(UpsellModalSettingsMenu, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"77d3d7818e219afe":"21dqq","17f1518f4b326f9f":"c28DV","7b5b96d0062dc014":"kWmDy","38467a7e7a604605":"lUoek"}],"lUoek":[function(require,module,exports) {
+},{"77d3d7818e219afe":"21dqq","17f1518f4b326f9f":"c28DV","7b5b96d0062dc014":"kWmDy","38467a7e7a604605":"lUoek","5f8ac705794608a2":"ohEvx","a4c1da9c67f823b":"9SnHn"}],"lUoek":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37936,6 +38032,8 @@ function _toPrimitive(input, hint) {
     var appData = _objectSpread({}, ubAdminMenuData);
     // eslint-disable-next-line no-undef
     ubAdminMenuData = null;
+    // TODO [ErdemBircan] remove for production
+    console.log(appData);
     // add block infos to context data
     var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
     var registeredUbBlocks = registeredBlocks.filter(function(blockData) {

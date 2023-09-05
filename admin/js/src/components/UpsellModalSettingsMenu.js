@@ -1,38 +1,64 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
 	getModalTargetBlockType,
 	getModalVisibilityStatus,
 	hideProBlockUpsellModal,
 } from '$Stores/settings-menu/slices/app';
+import { getBlockById } from '$Stores/settings-menu/slices/blocks';
 import withStore from '$HOC/withStore';
 import UpsellModalBase from '$EditorComponents/Upsell/UpsellModalBase';
+import { getAsset } from '$Stores/settings-menu/slices/assets';
 
 /**
  * Upsell modal window for settings menu.
  *
  * @param {Object}   props                  component properties
- * @param {string}   props.targetBlock      target block id
+ * @param {string}   props.targetBlock      target block id, will be supplied via HOC
  * @param {boolean}  props.visibility       modal visibility status, will be supplied via HOC
  * @param {Function} props.closeModalWindow close modal window, will be supplied via HOC
+ * @param {Function} props.getBlockObject   get block object, will be supplied via HOC
+ * @param {string}   props.proBuyUrl        url for pro buy page, will be supplied via HOC
  */
 function UpsellModalSettingsMenu( {
 	targetBlock,
 	visibility,
 	closeModalWindow,
+	getBlockObject,
+	proBuyUrl,
 } ) {
-	const testData = {
-		'ub/coupon': {
-			name: 'Coupon',
-			description: 'test description',
-			imageUrl: null,
-		},
+	/**
+	 * Prepare modal upsell data to be compatible with modal base component.
+	 *
+	 * @param {Object} blockObject block object
+	 */
+	const prepareUpsellData = ( blockObject ) => {
+		if ( blockObject && typeof blockObject === 'object' ) {
+			const { name, title, info, icon } = blockObject;
+
+			return {
+				[ name ]: {
+					name: title,
+					description: Array.isArray( info ) ? info[ 0 ] : info,
+					imageUrl: null,
+					icon,
+				},
+			};
+		}
+
+		return null;
 	};
+
+	const currentUpsellData = useMemo( () => {
+		const targetBlockObj = getBlockObject( targetBlock );
+		return prepareUpsellData( targetBlockObj );
+	}, [ targetBlock ] );
 
 	return (
 		<UpsellModalBase
-			upsellData={ testData }
+			upsellData={ currentUpsellData }
 			modalVisibility={ visibility }
 			closeModal={ closeModalWindow }
+			proUrl={ proBuyUrl }
 		/>
 	);
 }
@@ -42,9 +68,10 @@ const selectMapping = ( select ) => {
 	return {
 		targetBlock: select( getModalTargetBlockType ),
 		visibility: select( getModalVisibilityStatus ),
+		getBlockObject: select( getBlockById ),
+		proBuyUrl: select( getAsset )( 'proBuyUrl' ),
 	};
 };
-
 // store action mapping
 const actionMapping = () => {
 	return {

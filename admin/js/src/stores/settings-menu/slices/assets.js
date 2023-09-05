@@ -13,7 +13,7 @@ const assetsSliceOptions = {
 	},
 };
 
-const assetsSlice = createSlice(assetsSliceOptions);
+const assetsSlice = createSlice( assetsSliceOptions );
 
 /**
  * Get logo url.
@@ -21,7 +21,7 @@ const assetsSlice = createSlice(assetsSliceOptions);
  * @param {Object} state store state
  * @return {string} logo url
  */
-export const getLogo = (state) => {
+export const getLogo = ( state ) => {
 	return state.assets.logo;
 };
 
@@ -31,7 +31,7 @@ export const getLogo = (state) => {
  * @param {Object} state store state
  * @return {Object} ajax information
  */
-export const getAjaxInfo = (state) => {
+export const getAjaxInfo = ( state ) => {
 	return state.assets.ajax;
 };
 
@@ -41,8 +41,8 @@ export const getAjaxInfo = (state) => {
  * @param {Object} state store state
  * @return {function(string): string|number} function to get asset
  */
-export const getAsset = (state) => (assetId) => {
-	return state.assets?.[assetId];
+export const getAsset = ( state ) => ( assetId ) => {
+	return state.assets?.[ assetId ];
 };
 
 /**

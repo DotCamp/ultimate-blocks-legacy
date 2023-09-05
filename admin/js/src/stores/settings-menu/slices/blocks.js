@@ -25,6 +25,7 @@ const blocksSliceOptions = {
 			const uRegistered = [ ...registered ];
 
 			let blockIndex = -1;
+			// eslint-disable-next-line array-callback-return
 			uRegistered.map( ( bObj, index ) => {
 				if ( bObj.name === id ) {
 					blockIndex = index;
@@ -51,6 +52,16 @@ export const { setBlockActiveStatus } = blocksSlice.actions;
  */
 export const getBlocks = ( state ) => {
 	return state.blocks.registered;
+};
+
+/**
+ * Get block object by given block type id.
+ *
+ * @param {Object} state store state
+ * @return {Object | undefined} block object or undefined if no target block is found
+ */
+export const getBlockById = ( state ) => ( blockId ) => {
+	return state.blocks.registered.find( ( { name } ) => name === blockId );
 };
 
 /**
