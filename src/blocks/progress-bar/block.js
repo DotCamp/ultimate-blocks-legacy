@@ -193,11 +193,13 @@ function ProgressBarMain(props) {
 									options={percentagePositionOptions}
 								/>
 							)}
-							<ToggleControl
-								checked={isStripe}
-								label={__("Stripe", "ultimate-blocks")}
-								onChange={() => setAttributes({ isStripe: !isStripe })}
-							/>
+							{!isStyleCircle && !isStyleHalfCircle && (
+								<ToggleControl
+									checked={isStripe}
+									label={__("Stripe", "ultimate-blocks")}
+									onChange={() => setAttributes({ isStripe: !isStripe })}
+								/>
+							)}
 							<RangeControl
 								label={__("Value", "ultimate-blocks")}
 								className="ub_progress_bar_value"
