@@ -21,6 +21,15 @@
 
 .ub-active-block-icon {
   @extend %flex-center-all;
+
+	.ub-active-block-icon-from-string {
+		@extend %flex-center-all;
+
+		svg {
+			width: 20px !important;
+			height: 20px !important;
+		}
+	}
 }
 
 .ub-upsell-modal-button {

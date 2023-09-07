@@ -1,14 +1,25 @@
 {
-  "name": "ultimate-blocks/ultimate-blocks",
-  "description": "Ultimate blocks",
-  "type": "project",
-  "license": "GPL3+",
-  "require": {
-    "vlucas/phpdotenv": "^5.5"
-  },
-  "autoload": {
-	"psr-4": {
-	  "Ultimate_Blocks\\": "./"
+	"name": "ultimate-blocks/ultimate-blocks",
+	"description": "Ultimate blocks",
+	"type": "project",
+	"license": "GPL3+",
+	"scripts": {
+		"test_unit" : "phpunit"
+	},
+	"require": {
+		"vlucas/phpdotenv": "^5.5",
+		"ext-dom": "*",
+		"ext-libxml": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Ultimate_Blocks\\": [
+				"./",
+				"./__tests__/php/unit"
+			]
+		}
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^10.3"
 	}
-  }
 }

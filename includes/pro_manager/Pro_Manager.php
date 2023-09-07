@@ -3,10 +3,15 @@
 namespace Ultimate_Blocks\includes\pro_manager;
 
 
+use DOMDocument;
+use DOMNode;
+use Exception;
 use Freemius;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\Env_Manager;
+use Ultimate_Blocks\includes\pro_manager\base\Pro_Block_Upsell;
+use Ultimate_Blocks\includes\pro_manager\blocks\coupon\Coupon_Pro_Block;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
@@ -16,6 +21,9 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Review_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Social_Share_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Table_Of_Contents_Extension;
+use Ultimate_Blocks\includes\svg_sanitizer\DomDocumentLoadHtmlException;
+use Ultimate_Blocks\includes\svg_sanitizer\Svg_Sanitizer;
+use Ultimate_Blocks\includes\svg_sanitizer\SvgSanitizeInvalidRootElement;
 use function add_action;
 use function add_filter;
 use function do_action;
@@ -34,6 +42,14 @@ class Pro_Manager {
 	const DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY = 'ultimate_blocks_dashboard_sidebar_notification';
 
 	/**
+	 * List of upsells to pro only blocks.
+	 * @var array
+	 */
+	private $pro_block_upsells = [
+		Coupon_Pro_Block::class
+	];
+
+	/**
 	 * Main process that will be called during initialization of manager.
 	 *
 	 * @return void
@@ -42,9 +58,6 @@ class Pro_Manager {
 		// only start this operations if pro version is not available
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
-
-			// @deprecated removed for better user experience
-//			add_filter( 'add_menu_classes', [ $this, 'pro_dashboard_sidebar_notifications' ], 10, 1 );
 
 			add_action( 'admin_enqueue_scripts', [ $this, 'menu_operations' ], 10, 1 );
 		}
@@ -67,10 +80,18 @@ class Pro_Manager {
 	 *
 	 * @return array menu data
 	 */
-	public static function add_menu_data( $menu_data ) {
+	public function add_menu_data( $menu_data ) {
 		if ( ! isset( $menu_data['assets'] ) ) {
 			$menu_data['assets'] = [];
 		}
+
+		if ( ! isset( $menu_data['pluginStatus'] ) ) {
+			$menu_data['pluginStatus'] = [];
+		}
+
+		$menu_data['pluginStatus'] = array_merge( $menu_data['pluginStatus'], [
+			'isPro' => $this->is_pro()
+		] );
 
 		$assets = [
 			'proBuyUrl' => 'https://ultimateblocks.com/pricing/'
@@ -79,7 +100,59 @@ class Pro_Manager {
 		// merge assets
 		$menu_data['assets'] = array_merge( $menu_data['assets'], $assets );
 
+		$this->add_menu_upsell_data( $menu_data );
+
 		return $menu_data;
+	}
+
+	/**
+	 * Add upsell data.
+	 *
+	 * @param array $menu_data menu data
+	 *
+	 * @return void
+	 */
+	private function add_menu_upsell_data( &$menu_data ) {
+		// add base structure and default values for upsell data
+		if ( ! isset( $menu_data['upsells'] ) ) {
+			$menu_data['upsells'] = [
+				'blocks' => []
+			];
+		}
+
+		$menu_data['upsells']['blocks'] = $this->prepare_pro_block_upsell_data();
+	}
+
+	/**
+	 * Prepare data related to pro only blocks
+	 *
+	 * @return array pro block data
+	 */
+	private function prepare_pro_block_upsell_data() {
+		$upsell_data = [];
+
+		foreach ( $this->pro_block_upsells as $pro_upsell_class ) {
+			if ( in_array( Pro_Block_Upsell::class, class_parents( $pro_upsell_class ) ) ) {
+				$block_upsell_instance = new $pro_upsell_class();
+
+				// sanitize block icon
+				$svg_sanitizer = new Svg_Sanitizer( $block_upsell_instance->block_icon() );
+				try {
+					$block_icon = $svg_sanitizer->sanitize();
+				} catch ( Exception $e ) {
+					$block_icon = '';
+				}
+
+				$upsell_data[ $block_upsell_instance->block_name() ] = [
+					'label'      => $block_upsell_instance->block_label(),
+					'desc'       => $block_upsell_instance->block_description(),
+					'icon'       => $block_icon,
+					'screenshot' => $block_upsell_instance->block_upsell_screenshot()
+				];
+			}
+		}
+
+		return $upsell_data;
 	}
 
 	/**
@@ -205,6 +278,14 @@ class Pro_Manager {
 	}
 
 	/**
+	 * Prepare data for pro only block upsells.
+	 * @return void
+	 */
+	private function prepare_pro_only_block_upsell_data() {
+
+	}
+
+	/**
 	 * Add notification to sidebar menu title.
 	 *
 	 * @param string $original_title title
@@ -215,46 +296,4 @@ class Pro_Manager {
 		return sprintf( '%s<span class="update-plugins" style="background-color: #EAB308 !important; text-shadow: ">
 <span>💡</span></span>', $original_title );
 	}
-
-	/**
-	 * Add sidebar notifications to menu.
-	 *
-	 * @param array $menu menu array
-	 *
-	 * @return array menu array
-	 */
-	public function pro_dashboard_sidebar_notifications( $menu ) {
-		global $submenu;
-		global $menu_page_slug;
-		global $ub_pro_page_slug;
-
-		// check if notification is already shown
-		$notification_status = get_transient( self::DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY );
-
-		if ( ! $notification_status && isset( $submenu ) ) {
-			if ( isset( $submenu[ $menu_page_slug ] ) ) {
-				// add to submenu
-				$index = array_search( $ub_pro_page_slug, array_column( $submenu[ $menu_page_slug ], 2 ) );
-
-				if ( $index !== false ) {
-					$original_pro_title                      = $submenu[ $menu_page_slug ][ $index ][0];
-					$original_pro_title                      = $this->generate_title_with_notification( $original_pro_title );
-					$submenu[ $menu_page_slug ][ $index ][0] = $original_pro_title;
-				}
-
-				// add to menu
-				$index = array_search( $menu_page_slug, array_column( $menu, 2 ) );
-				if ( $index !== false ) {
-					$menu_key       = array_keys( $menu )[ $index ];
-					$original_title = $menu[ $menu_key ][0];
-
-					$original_title       = $this->generate_title_with_notification( $original_title );
-					$menu[ $menu_key ][0] = $original_title;
-				}
-			}
-		}
-
-		return $menu;
-	}
-
 }

@@ -1,15 +1,15 @@
-const path = require('path');
+const path = require( 'path' );
 
-const packageJsonAliasMap = require(path.resolve('./package.json')).alias;
+const packageJsonAliasMap = require( path.resolve( './package.json' ) ).alias;
 
 module.exports = {
-	extends: ['plugin:@wordpress/eslint-plugin/recommended'],
-	plugins: ['import'],
+	extends: [ 'plugin:@wordpress/eslint-plugin/recommended' ],
+	plugins: [ 'import' ],
 	parser: '@babel/eslint-parser',
 	parserOptions: {
 		requireConfigFile: false,
 		babelOptions: {
-			presets: ['@babel/preset-react'],
+			presets: [ '@babel/preset-react' ],
 		},
 	},
 	settings: {
@@ -19,7 +19,7 @@ module.exports = {
 			},
 			'eslint-import-resolver-custom-alias': {
 				alias: packageJsonAliasMap,
-				extensions: ['.js', '.jsx'],
+				extensions: [ '.js', '.jsx' ],
 			},
 		},
 	},
@@ -27,5 +27,6 @@ module.exports = {
 		self: true,
 		ubPriorityData: true,
 		UB_ENV: true,
+		localStorage: true,
 	},
 };
