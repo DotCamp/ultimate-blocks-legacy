@@ -134,6 +134,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.3 =
+
+* PRO: IMPROVE: Ability to enable/disable pro blocks from plugin settings menu.
+
 = 3.0.2 =
 
 * NEW: Compatibility with WordPress 6.3.
