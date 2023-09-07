@@ -17,7 +17,10 @@ const { compose } = wp.compose;
 
 registerBlockType("ub/expand", {
 	title: __("Expand"),
-	description: __("Expand Block lets you add expandable content. You can hide some part of your content initially. Upon clicking on ‘Show More’ it will show.", "ultimate-blocks"),
+	description: __(
+		"Expand Block lets you add expandable content. You can hide some part of your content initially. Upon clicking on ‘Show More’ it will show.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [
@@ -62,7 +65,56 @@ registerBlockType("ub/expand", {
 			default: "id", //other types: class, element
 		},
 	},
-	example: {},
+	example: {
+		innerBlocks: [
+			{
+				name: "ub/expand-portion",
+				attributes: {
+					clickText: "show more",
+					displayType: "partial",
+					isVisible: true,
+					toggleAlign: "left",
+					parentID: "518fc740-808b-42ad-b0a8-20d7bf928215",
+				},
+				innerBlocks: [
+					{
+						name: "core/heading",
+						attributes: { content: "This part is initially shown" },
+					},
+					{
+						name: "core/paragraph",
+						attributes: {
+							content:
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ornare non magna sit amet dapibus. Vestibulum malesuada commodo nisl, nec consequat lectus molestie quis. Mauris ullamcorper orci fringilla lorem posuere, venenatis finibus felis volutpat. Morbi convallis ipsum id cursus efficitur. Cras tristique accumsan leo, sed venenatis nulla venenatis eget. Quisque et pretium dolor, vitae imperdiet tortor. Vestibulum quis elit id orci consequat tempor. Quisque nibh felis, pellentesque non dapibus eget, congue at urna.",
+						},
+					},
+				],
+			},
+			{
+				name: "ub/expand-portion",
+				attributes: {
+					clickText: "show less",
+					displayType: "full",
+					isVisible: false,
+					toggleAlign: "left",
+					parentID: "518fc740-808b-42ad-b0a8-20d7bf928215",
+				},
+				innerBlocks: [
+					{
+						name: "core/heading",
+						attributes: { content: "This part is not shown initially" },
+					},
+					{
+						name: "core/paragraph",
+						attributes: {
+							content:
+								"Nunc nec turpis posuere, pharetra erat ut, pretium lorem. Aliquam sagittis diam eget magna vehicula dictum nec eget diam. Sed vel lectus aliquam, convallis ligula at, elementum risus. Aliquam egestas aliquam efficitur. Integer pellentesque ipsum et sapien tempus tempor. Nullam auctor dictum ligula, vel gravida sem vulputate quis. In egestas nisl et lorem tristique egestas. Ut id magna laoreet, placerat urna ac, ultricies sapien. Praesent molestie ornare urna, sit amet volutpat quam. Proin fringilla nisi vel elit ultricies posuere. Pellentesque commodo vel nulla in aliquet.",
+						},
+					},
+				],
+			},
+		],
+	},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const {
