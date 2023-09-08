@@ -137,6 +137,18 @@ That's it. You're done!
 = 3.0.3 =
 
 * PRO: IMPROVE: Ability to enable/disable pro blocks from plugin settings menu.
+* PRO: NEW: Hidden coupon option for coupon block.
+* PRO: NEW: Pagination for grid block.
+* PRO: IMPROVE: Pros&Cons are now editable for tabbed content block.
+* PRO: IMPROVE: Normal and hover colors are seperated in coupon block.
+* PRO: FIX: Schema parsing error in review block.
+* IMPROVE: Advanced heading auto transformation.
+* IMPROVE: New controls for progress bar block.
+* NEW: Progress bar block styles API integration for line and circle conversions.
+* NEW: Half circle style for progress bar block.
+* FIX: An issue with icon block where some icons fail to load.
+* FIX: Content toggle not opens by default when a hash is passed.
+* FIX: First toggle panel not collapsing when block marked for toggle.
 
 = 3.0.2 =
 
