@@ -1,6 +1,6 @@
 {
 	"name": "ultimate-blocks",
-	"version": "3.0.3-dev",
+	"version": "3.0.3",
 	"private": true,
 	"scripts": {
 		"start": "concurrently -k -c 'blue,yellow,green' -n 'gutenberg,recompile,bundle' \"wp-scripts start\" \"node recompileOnChange.js\" \"npm run bundle_additional_watch\"",
