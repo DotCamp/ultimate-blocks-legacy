@@ -474,6 +474,9 @@ function ReviewMain(props) {
 				return descriptionAlign;
 		}
 	};
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	useEffect(() => {
 		const initialAttributes = {};
