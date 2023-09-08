@@ -27,8 +27,15 @@ export default function Line(props) {
 	const [indicator, setIndicator] = useState(0);
 	const [isActive, setIsActive] = useState(false);
 
-	const { barColor, barBackgroundColor, barThickness, percent, labelColor } =
-		props;
+	const {
+		barColor,
+		barBackgroundColor,
+		barThickness,
+		percent,
+		labelColor,
+		percentagePosition,
+		isStripe,
+	} = props;
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -47,8 +54,25 @@ export default function Line(props) {
 		100 - barThickness / 2
 	},${barThickness / 2}`;
 
+	const insideLabelClass =
+		percentagePosition === "inside" ? " ub_progress-bar-label-inside" : "";
+	const stripeStyleClass = isStripe ? " ub_progress-bar-stripe" : "";
 	return (
-		<div className="ub_progress-bar-container">
+		<div
+			className={`ub_progress-bar-container${insideLabelClass}${stripeStyleClass}`}
+		>
+			{percentagePosition === "top" && (
+				<div
+					className="ub_progress-bar-label"
+					style={{
+						width: `${percent}%`,
+						visibility: isActive ? "visible" : "hidden",
+						color: labelColor || "inherit",
+					}}
+				>
+					{percent}%
+				</div>
+			)}
 			<svg
 				className="ub_progress-bar-line"
 				viewBox={`0 0 100 ${barThickness}`}
@@ -67,17 +91,24 @@ export default function Line(props) {
 					strokeWidth={barThickness}
 					style={{ strokeDashoffset: `${100 - indicator}px` }}
 				/>
+				{isStripe && (
+					<foreignObject width="100%" height="100%">
+						<div className="ub_progress-bar-line-stripe" />
+					</foreignObject>
+				)}
 			</svg>
-			<div
-				className="ub_progress-bar-label"
-				style={{
-					width: `${percent}%`,
-					visibility: isActive ? "visible" : "hidden",
-					color: labelColor || "inherit",
-				}}
-			>
-				{percent}%
-			</div>
+			{(percentagePosition === "bottom" || percentagePosition === "inside") && (
+				<div
+					className="ub_progress-bar-label"
+					style={{
+						width: `${percent}%`,
+						visibility: isActive ? "visible" : "hidden",
+						color: labelColor || "inherit",
+					}}
+				>
+					{percent}%
+				</div>
+			)}
 		</div>
 	);
 }

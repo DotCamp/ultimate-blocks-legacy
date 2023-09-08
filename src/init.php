@@ -101,14 +101,21 @@ function ub_load_assets() {
 		ub_update_css_version( 'frontend' );
 	}
 
+	#TODO Temporary
 	wp_enqueue_style(
-			'ultimate_blocks-cgb-style-css', // Handle.
-			file_exists( wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css' ) ?
-					content_url( '/uploads/ultimate-blocks/blocks.style.build.css' ) :
-					plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-			array(), // Dependency to include the CSS after it.
-			Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+		'ultimate_blocks-cgb-style-css', // Handle.
+		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+		array(), // Dependency to include the CSS after it.
+		uniqid()  // Version: latest version number.
 	);
+	// wp_enqueue_style(
+	// 		'ultimate_blocks-cgb-style-css', // Handle.
+	// 		file_exists( wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css' ) ?
+	// 				content_url( '/uploads/ultimate-blocks/blocks.style.build.css' ) :
+	// 				plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+	// 		array(), // Dependency to include the CSS after it.
+	// 		Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+	// );
 }
 
 function ub_advanced_heading_add_assets( $fontList ) {
@@ -708,7 +715,10 @@ function ub_include_block_attribute_css() {
 										 '}';
 					break;
 				case 'ub/progress-bar':
-					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];
+					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];					
+					$is_style_circle = strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false;
+					$is_style_half_circle = strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false;
+
 					$blockStylesheets .= $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
 										 'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL .
@@ -716,13 +726,13 @@ function ub_include_block_attribute_css() {
 										 'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
 
-					if ( $attributes['barType'] === 'linear' ) {
+					if ( !$is_style_circle && !$is_style_half_circle ) {
 						$blockStylesheets .= $prefix . ' .ub_progress-bar-line-path{' . PHP_EOL .
 											 'stroke-dashoffset: 100px;' . PHP_EOL .
 											 '}' . PHP_EOL .
 											 $prefix . ' .ub_progress-bar-label{' . PHP_EOL .
 											 'width: ' . $attributes['percentage'] . '%;' . PHP_EOL;
-					} else {
+					} else if($is_style_circle) {
 						$circleRadius     = 50 - ( $attributes['barThickness'] + 3 ) / 2;
 						$circlePathLength = $circleRadius * M_PI * 2;
 						$blockStylesheets .= '#ub-progress-bar-' . $attributes['blockID'] . ' .ub_progress-bar-container{' . PHP_EOL .
@@ -739,6 +749,26 @@ function ub_include_block_attribute_css() {
 											 'stroke-dasharray: 0px, ' . $circlePathLength . 'px' . PHP_EOL .
 											 '}' . PHP_EOL .
 											 $prefix . ' .ub_progress-bar-label{' . PHP_EOL;
+					} else if($is_style_half_circle){
+						    	$halfCircleRadius = 50 - ($attributes['barThickness'] + 2) / 2;
+							$halfCirclePathLength = $halfCircleRadius * M_PI;
+							$halfCircleStrokeArcLength = ($halfCirclePathLength * $attributes['percentage']) / 100; // Half of the percentage for a half circle
+
+							$blockStylesheets .= '#ub-progress-bar-' . $attributes['blockID'] . ' .ub_progress-bar-container{' . PHP_EOL .
+								'height: ' . $attributes['circleSize'] . 'px;' . PHP_EOL . 'width: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
+								(in_array($attributes['detailAlign'], [
+									'left',
+									'right'
+								]) ? 'float: ' . $attributes['detailAlign'] : 'margin: auto') . ';' . PHP_EOL .
+								'}' . PHP_EOL .
+								$prefix . ' .ub_progress-bar-circle-trail{' . PHP_EOL .
+								'stroke-dasharray: ' . $halfCirclePathLength . 'px,' . $halfCirclePathLength . 'px' . PHP_EOL .
+								'}' . PHP_EOL .
+								$prefix . ' .ub_progress-bar-circle-path{' . PHP_EOL .
+								'stroke-dasharray: 0px, ' . $halfCirclePathLength . 'px;' . PHP_EOL .
+								'stroke-linecap: round;' . PHP_EOL .
+								'}' . PHP_EOL . '.ub_progress-bar-label{' . PHP_EOL;
+
 					}
 					$blockStylesheets .= 'visibility: hidden;' . PHP_EOL .
 										 'color: ' . ( $attributes['labelColor'] ?: 'inherit' ) . ';' . PHP_EOL .
@@ -746,15 +776,24 @@ function ub_include_block_attribute_css() {
 										 $prefix . '.ub_progress-bar-filled .ub_progress-bar-label{' . PHP_EOL .
 										 'visibility: visible;' . PHP_EOL .
 										 '}' . PHP_EOL;
-					if ( $attributes['barType'] === 'linear' ) {
+					if (  !$is_style_circle && !$is_style_half_circle  ) {
 						$blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-line-path{' . PHP_EOL .
 											 'stroke-dashoffset: ' . ( 100 - $attributes['percentage'] ) . 'px';
-					} else {
+					} else if($is_style_circle) {
 						$strokeArcLength  = $circlePathLength * $attributes['percentage'] / 100;
 						$blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-circle-path{' . PHP_EOL .
 											 'stroke-linecap: round;' . PHP_EOL .
 											 'stroke-dasharray: ' . $strokeArcLength . 'px, ' . $circlePathLength . 'px;' . PHP_EOL;
+					} else if ($is_style_half_circle){
+						$halfCircleRadius = 50 - ($attributes['barThickness'] + 2) / 2;
+						$halfCirclePathLength = $halfCircleRadius * M_PI;
+						$halfCircleStrokeArcLength = ($halfCirclePathLength * $attributes['percentage']) / 100; // Half of the percentage for a half circle
+						// Code for half circle style
+						$blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-circle-path{' . PHP_EOL .
+							'stroke-linecap: round;' . PHP_EOL .
+							'stroke-dasharray: ' . $halfCircleStrokeArcLength . 'px, ' . $halfCirclePathLength . 'px;' . PHP_EOL;
 					}
+
 					$blockStylesheets .= '}';
 					break;
 				case 'ub/review':

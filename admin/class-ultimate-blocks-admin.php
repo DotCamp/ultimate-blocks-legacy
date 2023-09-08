@@ -79,40 +79,7 @@ class Ultimate_Blocks_Admin {
 		$this->plugin_url  = ULTIMATE_BLOCKS_URL;
 
 		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_settings_menu_data' ], 1, 1 );
-
-		// add pro submenu dashboard nav button class
-		// @deprecated
-//		add_filter( 'add_menu_classes', [ $this, 'pro_submenu_nav_class' ], 10, 1 );
 	}
-
-	/**
-	 * Add pro submenu nav class.
-	 *
-	 * @param array $menu menu array
-	 *
-	 * @return array menu array
-	 */
-	public function pro_submenu_nav_class( $menu ) {
-		global $submenu;
-
-		// default class name for pro nav container
-		$nav_container_classname = 'ub-pro-settings-menu-nav-container';
-
-		if ( isset( $submenu['ultimate-blocks-settings'] ) ) {
-			$index = array_search( $this->pro_menu_slug,
-				array_column( $submenu['ultimate-blocks-settings'], 2 ) );
-
-			// assign empty string if no other classes are assigned
-			if ( ! isset( $submenu['ultimate-blocks-settings'][ $index ][4] ) ) {
-				$submenu['ultimate-blocks-settings'][ $index ][4] = '';
-			}
-
-			$submenu['ultimate-blocks-settings'][ $index ][4] .= $nav_container_classname;
-		}
-
-		return $menu;
-	}
-
 
 	/**
 	 * Add data for admin settings menu frontend.
@@ -205,10 +172,13 @@ class Ultimate_Blocks_Admin {
 				'wp-api'
 			], $this->version, true );
 
+		// ub/action/settings_menu_block_registry action hook
+		do_action( 'ub/action/settings_menu_block_registry' );
+
 		wp_enqueue_script( $this->plugin_name,
 			trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.js', [], $this->version, true );
 
-
+		// ub/filter/admin_settings_menu_data filter hook
 		$frontend_script_data = apply_filters( 'ub/filter/admin_settings_menu_data', [] );
 
 		wp_localize_script( $this->plugin_name, 'ubAdminMenuData', $frontend_script_data );
@@ -279,6 +249,8 @@ class Ultimate_Blocks_Admin {
 		$block_name = sanitize_text_field( $_POST['block_name'] );
 
 		$enable = sanitize_text_field( $_POST['enable'] );
+
+		do_action( 'ub/action/block_toggle_ajax_before_exist_check', $block_name, rest_sanitize_boolean( $enable ) );
 
 		if ( ! $this->block_exists( $block_name ) ) {
 			wp_send_json_error( array(

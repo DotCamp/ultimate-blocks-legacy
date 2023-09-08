@@ -3,7 +3,7 @@ import { withSelect } from '@wordpress/data';
 import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
 import { PortalBase } from '$Library/ub-common/Components';
 import UpsellInspectorNotice from '$Inc/components/Upsell/UpsellInspectorNotice';
-import UpsellModal from '$Inc/components/Upsell/UpsellModal';
+import UpsellModal from '$Inc/components/Upsell/UpsellModalEditor';
 
 /**
  * Main container for upsell manager component.

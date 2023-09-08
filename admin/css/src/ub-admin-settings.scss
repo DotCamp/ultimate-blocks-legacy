@@ -1,5 +1,7 @@
+@import "../../../src/styles/Upsell/UpsellModal";
 @import "./base/common";
 @import "./base/themes/admin-menu-theme";
+
 
 .ub-admin-menu-wrapper {
 	@extend %size-full;
@@ -271,6 +273,29 @@
 									* {
 										@extend %default-transition;
 									}
+								}
+							}
+
+							.title-text {
+								text-transform: capitalize;
+
+								.pro-block-card-title-suffix {
+									margin: 0 5px;
+									font-weight: bold;
+								}
+							}
+						}
+
+						.block-title-right-container {
+							.pro-block-card-info-button {
+								color: $red-500;
+								background: white;
+								border-radius: 100%;
+								@extend %pointer;
+
+								svg {
+									@include size(25);
+									@extend %unselectable;
 								}
 							}
 						}

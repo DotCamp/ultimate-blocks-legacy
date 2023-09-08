@@ -4,12 +4,17 @@ import React, { useEffect, useRef, useState } from 'react';
 /**
  * Toggle control component.
  *
- * @constructor
- * @param {Object} props component properties
- * @param {Boolean} props.status control status
+ * @class
+ * @param {Object}   props                component properties
+ * @param {boolean}  props.status         control status
+ * @param {boolean}  props.disabled       control disabled status
  * @param {Function} props.onStatusChange status changed callback
  */
-function ToggleControl( { status, onStatusChange = () => {} } ) {
+function ToggleControl( {
+	status,
+	onStatusChange = () => {},
+	disabled = false,
+} ) {
 	const initialRender = useRef( true );
 	const [ innerStatus, setInnerStatus ] = useState( status );
 
@@ -23,7 +28,15 @@ function ToggleControl( { status, onStatusChange = () => {} } ) {
 
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-		<div onClick={ () => setInnerStatus( ! innerStatus ) } className={ 'ub-toggle-control' } data-enabled={ JSON.stringify( innerStatus ) }>
+		<div
+			onClick={ () => {
+				if ( ! disabled ) {
+					setInnerStatus( ! innerStatus );
+				}
+			} }
+			className={ 'ub-toggle-control' }
+			data-enabled={ JSON.stringify( innerStatus ) }
+		>
 			<div className={ 'knob' }></div>
 		</div>
 	);

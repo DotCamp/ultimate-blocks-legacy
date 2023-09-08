@@ -1,9 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { FILTER_TYPES } from "$Components/BlockStatusFilterControl";
-import initialState from "$Stores/settings-menu/initialState";
+import { createSlice } from '@reduxjs/toolkit';
+import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
+import initialState from '$Stores/settings-menu/initialState';
+import { isPluginPro } from '$Stores/settings-menu/slices/pluginStatus';
 
 /**
  * App slice options
+ *
  * @type {Object}
  */
 const appSliceOptions = {
@@ -13,9 +15,9 @@ const appSliceOptions = {
 		/**
 		 * Set current filter value.
 		 *
-		 * @param {Object} state slice state
-		 * @param {Object} props reducer properties
-		 * @param {String} props.payload filter value
+		 * @param {Object} state         slice state
+		 * @param {Object} props         reducer properties
+		 * @param {string} props.payload filter value
 		 */
 		setBlockFilter( state, { payload } ) {
 			if ( Object.values( FILTER_TYPES ).includes( payload ) ) {
@@ -32,17 +34,43 @@ const appSliceOptions = {
 		toggleShowBlockInfo( state ) {
 			state.showBlockInfo = ! state.showBlockInfo;
 		},
+		/**
+		 * Show upsell modal for target block type.
+		 *
+		 * @param {Object} state         slice state
+		 * @param {Object} props         reducer properties
+		 * @param {string} props.payload target block type
+		 */
+		showProBlockUpsellModal( state, { payload } ) {
+			state.upsellPopup.show = true;
+			state.upsellPopup.targetBlock = payload;
+		},
+		/**
+		 * Hide upsell modal for target block type.
+		 *
+		 * @param {Object} state slice state
+		 */
+		hideProBlockUpsellModal( state ) {
+			state.upsellPopup.show = false;
+			state.upsellPopup.targetBlock = null;
+		},
 	},
 };
 
 const appSlice = createSlice( appSliceOptions );
 
-export const { setBlockFilter, toggleShowBlockInfo } = appSlice.actions;
+export const {
+	setBlockFilter,
+	toggleShowBlockInfo,
+	showProBlockUpsellModal,
+	hideProBlockUpsellModal,
+} = appSlice.actions;
 
 /**
  * Get all application options.
+ *
  * @param {Object} state store state
- * @returns {Object} options
+ * @return {Object} options
  */
 export const getAllAppOptions = ( state ) => {
 	return state.app;
@@ -50,8 +78,9 @@ export const getAllAppOptions = ( state ) => {
 
 /**
  * Get current block filter.
+ *
  * @param {Object} state store state
- * @returns {String} filter value
+ * @return {string} filter value
  */
 export const getBlockFilter = ( state ) => {
 	return state.app.blockFilter;
@@ -59,11 +88,45 @@ export const getBlockFilter = ( state ) => {
 
 /**
  * Get block extra info show status.
+ *
  * @param {Object} state store state
- * @returns {Boolean} status
+ * @return {boolean} status
  */
 export const getBlockInfoShowStatus = ( state ) => {
 	return state.app.showBlockInfo;
+};
+
+/**
+ * Get plugin pro status.
+ *
+ * @deprecated
+ * use isPluginPro selector in pluginStatus slice for future implementations
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */
+export const getProStatus = ( state ) => {
+	return isPluginPro( state );
+};
+
+/**
+ * Get target block type to show in modal.
+ *
+ * @param {Object} state store state
+ * @return {null | string} block type, null for no selected blocks
+ */
+export const getModalTargetBlockType = ( state ) => {
+	return state.app.upsellPopup.targetBlock;
+};
+
+/**
+ * Get modal visibility status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} visibility status
+ */
+export const getModalVisibilityStatus = ( state ) => {
+	return state.app.upsellPopup.show;
 };
 
 /**
