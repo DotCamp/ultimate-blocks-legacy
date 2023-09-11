@@ -151,6 +151,7 @@ That's it. You're done!
 * FIX: An issue with icon block where some icons fail to load.
 * FIX: Content toggle not opens by default when a hash is passed.
 * FIX: First toggle panel not collapsing when block marked for toggle.
+* FIX: Review block duplicate instance not working properly.
 
 = 3.0.2 =
 
