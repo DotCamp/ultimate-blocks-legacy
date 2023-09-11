@@ -15,12 +15,6 @@ admin/js/src/
 src/__development/
 src/**/!(front.build|swiper-bundle|scrollby-polyfill).js
 vendor/bin/
-vendor/myclabs/
-vendor/nikic/
-vendor/phar-io/
-vendor/phpunit/
-vendor/sebastian/
-vendor/theseer/
 __tests__/
 phpunit.xml
 zip/
