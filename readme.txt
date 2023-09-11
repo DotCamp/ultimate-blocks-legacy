@@ -142,6 +142,7 @@ That's it. You're done!
 * PRO: IMPROVE: Pros&Cons are now editable for tabbed content block.
 * PRO: IMPROVE: Normal and hover colors are seperated in coupon block.
 * PRO: FIX: Schema parsing error in review block.
+* PRO: FIX: Table of contents editor and client error.
 * IMPROVE: Advanced heading auto transformation.
 * IMPROVE: New controls for progress bar block.
 * NEW: Progress bar block styles API integration for line and circle conversions.
