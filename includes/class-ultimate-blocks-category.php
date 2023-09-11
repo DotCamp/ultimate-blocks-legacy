@@ -40,9 +40,9 @@ class UltimateBlocks_Block_Category {
 	 */
 	private function __construct() {
 		if ( version_compare( $GLOBALS['wp_version'], '5.8.0', '<' ) ) {
-			add_filter( 'block_categories', array( $this, 'block_categories' ) );
+			add_filter( 'block_categories', array( $this, 'block_categories' ), 9999999 );
 		} else {
-			add_filter( 'block_categories_all', array( $this, 'block_categories' ) );
+			add_filter( 'block_categories_all', array( $this, 'block_categories' ), 9999999 );
 		}
 	}
 
@@ -58,13 +58,13 @@ class UltimateBlocks_Block_Category {
 	public function block_categories( $categories ) {
 
 		return array_merge(
-			$categories,
 			array(
 				array(
 					'slug'  => 'ultimateblocks',
 					'title' => __( 'Ultimate Blocks', 'ultimate-blocks' ),
 				),
-			)
+			),
+			$categories,
 		);
 	}
 }
