@@ -18,6 +18,7 @@ Ultimate Blocks is a Gutenberg blocks Plugin for bloggers and marketers. Our goa
 
 Ultimate Blocks currently includes the following blocks:
 
+* Coupon (Availble in Pro) - [View Demo](https://ultimateblocks.com/coupon-block/) 
 * Content Filter - [View Demo](https://ultimateblocks.com/content-filter-block/)
 * Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.com/schema-review-block/)
 * HowTo Schema - [View Demo](https://ultimateblocks.com/howto-schema-block/)
