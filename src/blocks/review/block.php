@@ -95,7 +95,7 @@ function ub_render_review_block($attributes){
                             "' . ub_filterJsonldString($identifierType) . '": "' . ub_filterJsonldString($identifier) . '",' . $offerCode;
         break;
         case 'LocalBusiness':
-            $itemExtras =  isset($cuisines) ? ( '"servesCuisine":' . json_encode($cuisines) . ',') : '' .
+            $itemExtras =  isset($cuisines) && !empty($cuisines) ? ( '"servesCuisine":' . json_encode($cuisines) . ',') : '' .
                             '"address": "' . ub_filterJsonldString($address) . '",
                             "telephone": "' . ub_filterJsonldString($telephone) . '",
                             "priceRange": "' . ub_filterJsonldString($priceRange) . '",
