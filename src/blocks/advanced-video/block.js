@@ -1,5 +1,6 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
+const { createBlock } = wp.blocks;
 
 const { withSelect } = wp.data;
 
@@ -8,7 +9,10 @@ import { AdvancedVideoBlock } from "./components";
 
 registerBlockType("ub/advanced-video", {
 	title: __("Advanced Video"),
-	description: __("Better way to add video content with essential customization options.","ultimate-blocks"),
+	description: __(
+		"Better way to add video content with essential customization options.",
+		"ultimate-blocks"
+	),
 	icon,
 	category: "ultimateblocks",
 	keywords: [__("advanced video"), __("ultimate blocks")],
@@ -234,11 +238,16 @@ registerBlockType("ub/advanced-video", {
 				},
 			],
 		},
+		isTransformed: {
+			type: "boolean",
+			default: false,
+		},
 	},
 	example: {
 		attributes: {
-			videoEmbedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/SDnYi50Vxus?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
-		}
+			videoEmbedCode:
+				'<iframe width="560" height="315" src="https://www.youtube.com/embed/SDnYi50Vxus?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+		},
 	},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
@@ -251,5 +260,20 @@ registerBlockType("ub/advanced-video", {
 			getClientIdsWithDescendants,
 		};
 	})(AdvancedVideoBlock),
+	transforms: {
+		from: [
+			{
+				type: "block",
+				blocks: ["core/embed"],
+				transform: (attributes) =>
+					createBlock("ub/advanced-video", {
+						url: attributes.url,
+						autofit: true,
+						videoSource: attributes.providerNameSlug,
+						isTransformed: true,
+					}),
+			},
+		],
+	},
 	save: () => null,
 });

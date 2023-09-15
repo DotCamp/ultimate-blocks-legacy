@@ -274,7 +274,9 @@ function editThumbnail(source, embedCode, mode, thumbnailURL) {
 
 export function AdvancedVideoBlock(props) {
 	const [enterVideoURL, setVideoURLStatus] = useState(false);
-	const [videoURLInput, setVideoURLInput] = useState("");
+	const [videoURLInput, setVideoURLInput] = useState(
+		props.attributes.url ?? ""
+	);
 	const [allowCustomStartTime, setStartTimeStatus] = useState(false);
 	const [useCustomThumbnail, setCustomThumbnailStatus] = useState(false);
 	const [enterImageURL, setImageURLInputStatus] = useState(false);
@@ -338,6 +340,7 @@ export function AdvancedVideoBlock(props) {
 		showInDesktop,
 		showInTablet,
 		showInMobile,
+		isTransformed,
 	} = attributes;
 
 	useEffect(() => {
@@ -611,10 +614,14 @@ export function AdvancedVideoBlock(props) {
 			console.log("invalid input");
 		}
 	};
+	useEffect(() => {
+		if (isTransformed) {
+			checkVideoURLInput();
+		}
+	}, []);
 
 	let autofitContainerStyle = {};
 	let extraEmbeds = null;
-
 	switch (videoSource) {
 		case "youtube":
 			autofitContainerStyle = Object.assign(
@@ -1347,430 +1354,428 @@ export function AdvancedVideoBlock(props) {
 			</InspectorControls>
 			<InspectorControls group="styles">
 				<PanelBody title={__("Border")} initialOpen={true}>
-							<div className="ub-labelled-toggle">
-								<p>{__("Use a border")}</p>
-								<ToggleControl
-									checked={hasBorder}
-									onChange={() => {
-										if (!hasBorder) {
-											setAttributes({
-												borderSize: 1,
-												borderStyle: "solid",
-												borderColor: "#000000",
+					<div className="ub-labelled-toggle">
+						<p>{__("Use a border")}</p>
+						<ToggleControl
+							checked={hasBorder}
+							onChange={() => {
+								if (!hasBorder) {
+									setAttributes({
+										borderSize: 1,
+										borderStyle: "solid",
+										borderColor: "#000000",
 
-												topBorderSize: 1,
-												rightBorderSize: 1,
-												bottomBorderSize: 1,
-												leftBorderSize: 1,
+										topBorderSize: 1,
+										rightBorderSize: 1,
+										bottomBorderSize: 1,
+										leftBorderSize: 1,
 
-												topBorderStyle: "solid",
-												rightBorderStyle: "solid",
-												bottomBorderStyle: "solid",
-												leftBorderStyle: "solid",
+										topBorderStyle: "solid",
+										rightBorderStyle: "solid",
+										bottomBorderStyle: "solid",
+										leftBorderStyle: "solid",
 
-												topBorderColor: "#000000",
-												rightBorderColor: "#000000",
-												bottomBorderColor: "#000000",
-												leftBorderColor: "#000000",
+										topBorderColor: "#000000",
+										rightBorderColor: "#000000",
+										bottomBorderColor: "#000000",
+										leftBorderColor: "#000000",
 
-												topLeftRadius: 0,
-												topRightRadius: 0,
-												bottomLeftRadius: 0,
-												bottomRightRadius: 0,
-											});
-											setCurrentBorder("all");
-											setCurrentCorner("all");
-										} else {
-											setAttributes({
-												borderSize: 0,
-												borderStyle: "",
-												borderColor: "",
+										topLeftRadius: 0,
+										topRightRadius: 0,
+										bottomLeftRadius: 0,
+										bottomRightRadius: 0,
+									});
+									setCurrentBorder("all");
+									setCurrentCorner("all");
+								} else {
+									setAttributes({
+										borderSize: 0,
+										borderStyle: "",
+										borderColor: "",
 
-												topBorderSize: 0,
-												rightBorderSize: 0,
-												bottomBorderSize: 0,
-												leftBorderSize: 0,
+										topBorderSize: 0,
+										rightBorderSize: 0,
+										bottomBorderSize: 0,
+										leftBorderSize: 0,
 
-												topBorderStyle: "",
-												rightBorderStyle: "",
-												bottomBorderStyle: "",
-												leftBorderStyle: "",
+										topBorderStyle: "",
+										rightBorderStyle: "",
+										bottomBorderStyle: "",
+										leftBorderStyle: "",
 
-												topBorderColor: "",
-												rightBorderColor: "",
-												bottomBorderColor: "",
-												leftBorderColor: "",
-											});
-										}
+										topBorderColor: "",
+										rightBorderColor: "",
+										bottomBorderColor: "",
+										leftBorderColor: "",
+									});
+								}
+							}}
+						/>
+					</div>
+					{hasBorder && (
+						<>
+							<div className="ub-indicator-grid">
+								{/* FIRST ROW */}
+								<div className="ub-indicator-grid-cell" />
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-left-border ub-indicator-grid-right-border"
+									style={{
+										borderTop: `2px solid ${
+											currentBorder === "top" ? "blue" : "black"
+										}`,
 									}}
+									onClick={() => setCurrentBorder("top")}
+								></div>
+								<div className="ub-indicator-grid-cell" />
+								{/* SECOND ROW */}
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-bottom-border"
+									style={{
+										borderLeft: `2px solid ${
+											currentBorder === "left" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentBorder("left")}
 								/>
+								<div
+									className="ub-indicator-grid-cell"
+									style={{
+										border: `2px solid ${
+											currentBorder === "all" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentBorder("all")}
+								/>
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-bottom-border"
+									style={{
+										borderRight: `2px solid ${
+											currentBorder === "right" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentBorder("right")}
+								/>
+								{/* THIRD ROW */}
+								<div className="ub-indicator-grid-cell" />
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-left-border ub-indicator-grid-right-border"
+									style={{
+										borderBottom: `2px solid ${
+											currentBorder === "bottom" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentBorder("bottom")}
+								/>
+								<div className="ub-indicator-grid-cell" />
 							</div>
-							{hasBorder && (
-								<>
-									<div className="ub-indicator-grid">
-										{/* FIRST ROW */}
-										<div className="ub-indicator-grid-cell" />
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-left-border ub-indicator-grid-right-border"
-											style={{
-												borderTop: `2px solid ${
-													currentBorder === "top" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentBorder("top")}
-										></div>
-										<div className="ub-indicator-grid-cell" />
-										{/* SECOND ROW */}
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-bottom-border"
-											style={{
-												borderLeft: `2px solid ${
-													currentBorder === "left" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentBorder("left")}
-										/>
-										<div
-											className="ub-indicator-grid-cell"
-											style={{
-												border: `2px solid ${
-													currentBorder === "all" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentBorder("all")}
-										/>
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-bottom-border"
-											style={{
-												borderRight: `2px solid ${
-													currentBorder === "right" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentBorder("right")}
-										/>
-										{/* THIRD ROW */}
-										<div className="ub-indicator-grid-cell" />
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-left-border ub-indicator-grid-right-border"
-											style={{
-												borderBottom: `2px solid ${
-													currentBorder === "bottom" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentBorder("bottom")}
-										/>
-										<div className="ub-indicator-grid-cell" />
-									</div>
-									<RangeControl
-										label={__(
-											currentBorder === "all"
-												? "Border size (pixels)"
-												: "Border size of current side (pixels)"
-										)}
-										value={
-											currentBorder === "top"
-												? topBorderSize
-												: currentBorder === "left"
-												? leftBorderSize
-												: currentBorder === "right"
-												? rightBorderSize
-												: bottomBorderSize
-										}
-										onChange={(borderSize) => {
-											if (currentBorder === "all") {
-												setAttributes({
-													topBorderSize: borderSize,
-													leftBorderSize: borderSize,
-													rightBorderSize: borderSize,
-													bottomBorderSize: borderSize,
-												});
-											} else if (currentBorder === "top") {
-												setAttributes({ topBorderSize: borderSize });
-											} else if (currentBorder === "left") {
-												setAttributes({ leftBorderSize: borderSize });
-											} else if (currentBorder === "right") {
-												setAttributes({ rightBorderSize: borderSize });
-											} else if (currentBorder === "bottom") {
-												setAttributes({ bottomBorderSize: borderSize });
-											}
-										}}
-										min={
-											currentBorder === "all" ||
-											[
-												topBorderSize,
-												rightBorderSize,
-												bottomBorderSize,
-												leftBorderSize,
-											].filter((s) => s > 0).length > 1
-												? 0
-												: 1
-										}
-										max={30}
-									/>
-									<div className="ub-indicator-grid">
-										{/* FIRST ROW */}
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-right-border"
-											style={{
-												borderTop: `2px solid ${
-													currentCorner === "topleft" ? "blue" : "black"
-												}`,
-												borderLeft: `2px solid ${
-													currentCorner === "topleft" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentCorner("topleft")}
-										/>
-										<div className="ub-indicator-grid-cell" />
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-left-border"
-											style={{
-												borderTop: `2px solid ${
-													currentCorner === "topright" ? "blue" : "black"
-												}`,
-												borderRight: `2px solid ${
-													currentCorner === "topright" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentCorner("topright")}
-										></div>
-										{/* SECOND ROW */}
-										<div className="ub-indicator-grid-cell" />
-										<div
-											className="ub-indicator-grid-cell"
-											style={{
-												border: `2px solid ${
-													currentCorner === "all" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentCorner("all")}
-										></div>
-										<div className="ub-indicator-grid-cell" />
-										{/* THIRD ROW */}
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-right-border"
-											style={{
-												borderBottom: `2px solid ${
-													currentCorner === "bottomleft" ? "blue" : "black"
-												}`,
-												borderLeft: `2px solid ${
-													currentCorner === "bottomleft" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentCorner("bottomleft")}
-										/>
-										<div className="ub-indicator-grid-cell" />
-										<div
-											className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-left-border"
-											style={{
-												borderBottom: `2px solid ${
-													currentCorner === "bottomright" ? "blue" : "black"
-												}`,
-												borderRight: `2px solid ${
-													currentCorner === "bottomright" ? "blue" : "black"
-												}`,
-											}}
-											onClick={() => setCurrentCorner("bottomright")}
-										></div>
-									</div>
-									<RangeControl
-										label={__(
-											currentCorner === "all"
-												? "Border radius"
-												: "Border radius of current corner"
-										)}
-										value={
-											currentCorner === "topleft"
-												? topLeftRadius
-												: currentCorner === "topright"
-												? topRightRadius
-												: currentCorner === "bottomleft"
-												? bottomLeftRadius
-												: bottomRightRadius
-										}
-										onChange={(radius) => {
-											if (currentCorner === "all") {
-												setAttributes({
-													topLeftRadius: radius,
-													topRightRadius: radius,
-													bottomLeftRadius: radius,
-													bottomRightRadius: radius,
-												});
-											} else if (currentCorner === "topleft") {
-												setAttributes({ topLeftRadius: radius });
-											} else if (currentCorner === "topright") {
-												setAttributes({ topRightRadius: radius });
-											} else if (currentCorner === "bottomleft") {
-												setAttributes({ bottomLeftRadius: radius });
-											} else if (currentCorner === "bottomright") {
-												setAttributes({ bottomRightRadius: radius });
-											}
-										}}
-										min={0}
-										max={30}
-									/>
-									<SelectControl
-										label={__("Border Style")}
-										options={["solid", "dotted", "dashed"].map((o) => ({
-											value: o,
-											label: __(o),
-										}))}
-										value={
-											currentBorder === "top"
-												? topBorderStyle
-												: currentBorder === "left"
-												? leftBorderStyle
-												: currentBorder === "right"
-												? rightBorderStyle
-												: bottomBorderStyle
-										}
-										onChange={(borderStyle) => {
-											if (currentBorder === "all") {
-												setAttributes({
-													topBorderStyle: borderStyle,
-													leftBorderStyle: borderStyle,
-													rightBorderStyle: borderStyle,
-													bottomBorderStyle: borderStyle,
-												});
-											} else if (currentBorder === "top") {
-												setAttributes({ topBorderStyle: borderStyle });
-											} else if (currentBorder === "left") {
-												setAttributes({ leftBorderStyle: borderStyle });
-											} else if (currentBorder === "right") {
-												setAttributes({ rightBorderStyle: borderStyle });
-											} else if (currentBorder === "bottom") {
-												setAttributes({ bottomBorderStyle: borderStyle });
-											}
-										}}
-									/>
-									<p>
-										{__("Border Color")}
-										{currentColor && (
-											<span
-												class="component-color-indicator"
-												aria-label={`(Color: ${currentColor})`}
-												style={{ background: currentColor }}
-											/>
-										)}
-									</p>
-
-									<ColorPalette
-										value={currentColor}
-										onChange={(borderColor) => {
-											if (currentBorder === "all") {
-												setAttributes({
-													topBorderColor: borderColor,
-													leftBorderColor: borderColor,
-													rightBorderColor: borderColor,
-													bottomBorderColor: borderColor,
-												});
-											} else if (currentBorder === "top") {
-												setAttributes({ topBorderColor: borderColor });
-											} else if (currentBorder === "left") {
-												setAttributes({ leftBorderColor: borderColor });
-											} else if (currentBorder === "right") {
-												setAttributes({ rightBorderColor: borderColor });
-											} else if (currentBorder === "bottom") {
-												setAttributes({ bottomBorderColor: borderColor });
-											}
-										}}
-									/>
-								</>
-							)}
-						</PanelBody>
-						<PanelBody title={__("Shadow")} initialOpen={false}>
-							<PanelRow>
-								<p>{__("Include a shadow")}</p>
-								<ToggleControl
-									checked={useShadow}
-									onChange={() => {
-										setShadowStatus(!useShadow);
-										if (useShadow) {
-											setAttributes({
-												shadow: [
-													{
-														angle: 0,
-														radius: 0,
-														color: "#000000",
-														transparency: 0,
-														blur: 0,
-														spread: 0,
-													},
-												],
-											});
-										}
+							<RangeControl
+								label={__(
+									currentBorder === "all"
+										? "Border size (pixels)"
+										: "Border size of current side (pixels)"
+								)}
+								value={
+									currentBorder === "top"
+										? topBorderSize
+										: currentBorder === "left"
+										? leftBorderSize
+										: currentBorder === "right"
+										? rightBorderSize
+										: bottomBorderSize
+								}
+								onChange={(borderSize) => {
+									if (currentBorder === "all") {
+										setAttributes({
+											topBorderSize: borderSize,
+											leftBorderSize: borderSize,
+											rightBorderSize: borderSize,
+											bottomBorderSize: borderSize,
+										});
+									} else if (currentBorder === "top") {
+										setAttributes({ topBorderSize: borderSize });
+									} else if (currentBorder === "left") {
+										setAttributes({ leftBorderSize: borderSize });
+									} else if (currentBorder === "right") {
+										setAttributes({ rightBorderSize: borderSize });
+									} else if (currentBorder === "bottom") {
+										setAttributes({ bottomBorderSize: borderSize });
+									}
+								}}
+								min={
+									currentBorder === "all" ||
+									[
+										topBorderSize,
+										rightBorderSize,
+										bottomBorderSize,
+										leftBorderSize,
+									].filter((s) => s > 0).length > 1
+										? 0
+										: 1
+								}
+								max={30}
+							/>
+							<div className="ub-indicator-grid">
+								{/* FIRST ROW */}
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-right-border"
+									style={{
+										borderTop: `2px solid ${
+											currentCorner === "topleft" ? "blue" : "black"
+										}`,
+										borderLeft: `2px solid ${
+											currentCorner === "topleft" ? "blue" : "black"
+										}`,
 									}}
+									onClick={() => setCurrentCorner("topleft")}
 								/>
-							</PanelRow>
-							{useShadow && (
-								<>
-									<AnglePickerControl
-										label={__("Shadow angle")}
-										value={shadow[0].angle}
-										onChange={(angle) =>
-											setAttributes({
-												shadow: [Object.assign({}, shadow[0], { angle })],
-											})
-										}
+								<div className="ub-indicator-grid-cell" />
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-left-border"
+									style={{
+										borderTop: `2px solid ${
+											currentCorner === "topright" ? "blue" : "black"
+										}`,
+										borderRight: `2px solid ${
+											currentCorner === "topright" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentCorner("topright")}
+								></div>
+								{/* SECOND ROW */}
+								<div className="ub-indicator-grid-cell" />
+								<div
+									className="ub-indicator-grid-cell"
+									style={{
+										border: `2px solid ${
+											currentCorner === "all" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentCorner("all")}
+								></div>
+								<div className="ub-indicator-grid-cell" />
+								{/* THIRD ROW */}
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-right-border"
+									style={{
+										borderBottom: `2px solid ${
+											currentCorner === "bottomleft" ? "blue" : "black"
+										}`,
+										borderLeft: `2px solid ${
+											currentCorner === "bottomleft" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentCorner("bottomleft")}
+								/>
+								<div className="ub-indicator-grid-cell" />
+								<div
+									className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-left-border"
+									style={{
+										borderBottom: `2px solid ${
+											currentCorner === "bottomright" ? "blue" : "black"
+										}`,
+										borderRight: `2px solid ${
+											currentCorner === "bottomright" ? "blue" : "black"
+										}`,
+									}}
+									onClick={() => setCurrentCorner("bottomright")}
+								></div>
+							</div>
+							<RangeControl
+								label={__(
+									currentCorner === "all"
+										? "Border radius"
+										: "Border radius of current corner"
+								)}
+								value={
+									currentCorner === "topleft"
+										? topLeftRadius
+										: currentCorner === "topright"
+										? topRightRadius
+										: currentCorner === "bottomleft"
+										? bottomLeftRadius
+										: bottomRightRadius
+								}
+								onChange={(radius) => {
+									if (currentCorner === "all") {
+										setAttributes({
+											topLeftRadius: radius,
+											topRightRadius: radius,
+											bottomLeftRadius: radius,
+											bottomRightRadius: radius,
+										});
+									} else if (currentCorner === "topleft") {
+										setAttributes({ topLeftRadius: radius });
+									} else if (currentCorner === "topright") {
+										setAttributes({ topRightRadius: radius });
+									} else if (currentCorner === "bottomleft") {
+										setAttributes({ bottomLeftRadius: radius });
+									} else if (currentCorner === "bottomright") {
+										setAttributes({ bottomRightRadius: radius });
+									}
+								}}
+								min={0}
+								max={30}
+							/>
+							<SelectControl
+								label={__("Border Style")}
+								options={["solid", "dotted", "dashed"].map((o) => ({
+									value: o,
+									label: __(o),
+								}))}
+								value={
+									currentBorder === "top"
+										? topBorderStyle
+										: currentBorder === "left"
+										? leftBorderStyle
+										: currentBorder === "right"
+										? rightBorderStyle
+										: bottomBorderStyle
+								}
+								onChange={(borderStyle) => {
+									if (currentBorder === "all") {
+										setAttributes({
+											topBorderStyle: borderStyle,
+											leftBorderStyle: borderStyle,
+											rightBorderStyle: borderStyle,
+											bottomBorderStyle: borderStyle,
+										});
+									} else if (currentBorder === "top") {
+										setAttributes({ topBorderStyle: borderStyle });
+									} else if (currentBorder === "left") {
+										setAttributes({ leftBorderStyle: borderStyle });
+									} else if (currentBorder === "right") {
+										setAttributes({ rightBorderStyle: borderStyle });
+									} else if (currentBorder === "bottom") {
+										setAttributes({ bottomBorderStyle: borderStyle });
+									}
+								}}
+							/>
+							<p>
+								{__("Border Color")}
+								{currentColor && (
+									<span
+										class="component-color-indicator"
+										aria-label={`(Color: ${currentColor})`}
+										style={{ background: currentColor }}
 									/>
-									<RangeControl
-										label={__("Shadow radius (px)")}
-										value={shadow[0].radius}
-										onChange={(radius) =>
-											setAttributes({
-												shadow: [Object.assign({}, shadow[0], { radius })],
-											})
-										}
-										min={0}
-										max={100}
-									/>
-									<ColorPalette
-										value={shadow[0].color}
-										onChange={(color) =>
-											setAttributes({
-												shadow: [Object.assign({}, shadow[0], { color })],
-											})
-										}
-									/>
+								)}
+							</p>
 
-									<RangeControl
-										label={__("Shadow transparency")}
-										value={shadow[0].transparency}
-										onChange={(transparency) =>
-											setAttributes({
-												shadow: [
-													Object.assign({}, shadow[0], { transparency }),
-												],
-											})
-										}
-										min={0}
-										max={100}
-									/>
-									<RangeControl
-										label={__("Shadow blur radius (px)")}
-										value={shadow[0].blur}
-										onChange={(blur) =>
-											setAttributes({
-												shadow: [Object.assign({}, shadow[0], { blur })],
-											})
-										}
-										min={0}
-										max={100}
-									/>
-									<RangeControl
-										label={__("Shadow spread radius (px)")}
-										value={shadow[0].spread}
-										onChange={(spread) =>
-											setAttributes({
-												shadow: [Object.assign({}, shadow[0], { spread })],
-											})
-										}
-										min={-50}
-										max={50}
-									/>
-								</>
-							)}
-						</PanelBody>
+							<ColorPalette
+								value={currentColor}
+								onChange={(borderColor) => {
+									if (currentBorder === "all") {
+										setAttributes({
+											topBorderColor: borderColor,
+											leftBorderColor: borderColor,
+											rightBorderColor: borderColor,
+											bottomBorderColor: borderColor,
+										});
+									} else if (currentBorder === "top") {
+										setAttributes({ topBorderColor: borderColor });
+									} else if (currentBorder === "left") {
+										setAttributes({ leftBorderColor: borderColor });
+									} else if (currentBorder === "right") {
+										setAttributes({ rightBorderColor: borderColor });
+									} else if (currentBorder === "bottom") {
+										setAttributes({ bottomBorderColor: borderColor });
+									}
+								}}
+							/>
+						</>
+					)}
+				</PanelBody>
+				<PanelBody title={__("Shadow")} initialOpen={false}>
+					<PanelRow>
+						<p>{__("Include a shadow")}</p>
+						<ToggleControl
+							checked={useShadow}
+							onChange={() => {
+								setShadowStatus(!useShadow);
+								if (useShadow) {
+									setAttributes({
+										shadow: [
+											{
+												angle: 0,
+												radius: 0,
+												color: "#000000",
+												transparency: 0,
+												blur: 0,
+												spread: 0,
+											},
+										],
+									});
+								}
+							}}
+						/>
+					</PanelRow>
+					{useShadow && (
+						<>
+							<AnglePickerControl
+								label={__("Shadow angle")}
+								value={shadow[0].angle}
+								onChange={(angle) =>
+									setAttributes({
+										shadow: [Object.assign({}, shadow[0], { angle })],
+									})
+								}
+							/>
+							<RangeControl
+								label={__("Shadow radius (px)")}
+								value={shadow[0].radius}
+								onChange={(radius) =>
+									setAttributes({
+										shadow: [Object.assign({}, shadow[0], { radius })],
+									})
+								}
+								min={0}
+								max={100}
+							/>
+							<ColorPalette
+								value={shadow[0].color}
+								onChange={(color) =>
+									setAttributes({
+										shadow: [Object.assign({}, shadow[0], { color })],
+									})
+								}
+							/>
+
+							<RangeControl
+								label={__("Shadow transparency")}
+								value={shadow[0].transparency}
+								onChange={(transparency) =>
+									setAttributes({
+										shadow: [Object.assign({}, shadow[0], { transparency })],
+									})
+								}
+								min={0}
+								max={100}
+							/>
+							<RangeControl
+								label={__("Shadow blur radius (px)")}
+								value={shadow[0].blur}
+								onChange={(blur) =>
+									setAttributes({
+										shadow: [Object.assign({}, shadow[0], { blur })],
+									})
+								}
+								min={0}
+								max={100}
+							/>
+							<RangeControl
+								label={__("Shadow spread radius (px)")}
+								value={shadow[0].spread}
+								onChange={(spread) =>
+									setAttributes({
+										shadow: [Object.assign({}, shadow[0], { spread })],
+									})
+								}
+								min={-50}
+								max={50}
+							/>
+						</>
+					)}
+				</PanelBody>
 			</InspectorControls>
 			{url === "" && (
 				<>
