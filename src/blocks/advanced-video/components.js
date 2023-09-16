@@ -437,6 +437,7 @@ export function AdvancedVideoBlock(props) {
 								);
 
 								setAttributes({
+									channelId: data.items[0].snippet.channelId,
 									url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
 									videoSource: "youtube",
 									videoEmbedCode: data.items[0].player.embedHtml,

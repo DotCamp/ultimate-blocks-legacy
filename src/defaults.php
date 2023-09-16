@@ -240,7 +240,12 @@ $defaultValues = array(
 			'showInMobile'  => array(
 				'type'    => 'boolean',
 				'default' => true
+			),
+			'channelId'  => array(
+				'type'    => 'string',
+				'default' => ''
 			)
+
 		)
 	),
 	'ub/button'                     => array(

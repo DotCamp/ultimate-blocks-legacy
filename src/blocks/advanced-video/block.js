@@ -242,6 +242,10 @@ registerBlockType("ub/advanced-video", {
 			type: "boolean",
 			default: false,
 		},
+		channelId: {
+			type: "string",
+			default: "",
+		},
 	},
 	example: {
 		attributes: {
