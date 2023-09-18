@@ -18,7 +18,7 @@ Ultimate Blocks is a Gutenberg blocks Plugin for bloggers and marketers. Our goa
 
 Ultimate Blocks currently includes the following blocks:
 
-* Coupon (Available in Pro) - [View Demo](https://ultimateblocks.com/coupon-block/) 
+* Coupon (Available in Pro) - [View Demo](https://ultimateblocks.com/coupon-block/)
 * Content Filter - [View Demo](https://ultimateblocks.com/content-filter-block/)
 * Review (Schema Markup Enabled) - [View Demo](https://ultimateblocks.com/schema-review-block/)
 * HowTo Schema - [View Demo](https://ultimateblocks.com/howto-schema-block/)
@@ -134,6 +134,10 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 3.0.4 =
+
+* FIX: Content toggle block attributes not including parent block id.
 
 = 3.0.3 =
 
