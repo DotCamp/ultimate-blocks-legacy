@@ -151,7 +151,7 @@ function ub_generate_widget_block_list( $output = false ) {
 
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
-	if ( is_singular() and has_blocks() ) {
+	if ( has_blocks() ) {
 		require_once plugin_dir_path( __FILE__ ) . 'common.php';
 
 		$main_assets_loaded = false;
@@ -715,7 +715,7 @@ function ub_include_block_attribute_css() {
 										 '}';
 					break;
 				case 'ub/progress-bar':
-					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];					
+					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];
 					$is_style_circle = strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false;
 					$is_style_half_circle = strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false;
 
