@@ -430,8 +430,11 @@ export function AdvancedVideoBlock(props) {
 									/(\d{1,2}(?:W|D|H|M|S))/g
 								);
 
-								const embedCode = data.items[0].player.embedHtml;
-
+								let embedCode = data.items[0].player.embedHtml;
+								embedCode = embedCode.replace(
+									/height="[0-9]+%?"/,
+									`height="${height}"`
+								);
 								const parsedCode = /<iframe width="(\d+)" height="(\d+)/.exec(
 									embedCode
 								);
@@ -440,10 +443,10 @@ export function AdvancedVideoBlock(props) {
 									channelId: data.items[0].snippet.channelId,
 									url: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
 									videoSource: "youtube",
-									videoEmbedCode: data.items[0].player.embedHtml,
+									videoEmbedCode: embedCode,
 									origWidth: parseInt(parsedCode[1]),
 									origHeight: parseInt(parsedCode[2]),
-									width: Math.min(200, parsedCode[1]),
+									width: Math.min(100, parsedCode[1]),
 									height:
 										(parsedCode[2] * Math.min(200, parsedCode[1])) /
 										parsedCode[1],
@@ -724,12 +727,12 @@ export function AdvancedVideoBlock(props) {
 													height: newHeight,
 												});
 												newVideoEmbedCode = newVideoEmbedCode.replace(
-													/height="[0-9]+"/,
+													/height="[\d.]+"/,
 													`height="${newHeight}%"`
 												);
 												if (videoSource === "facebook") {
 													newVideoEmbedCode = newVideoEmbedCode.replace(
-														/&height=[0-9]+/,
+														/&height=[\d.]+/,
 														`height="${newHeight}%"`
 													);
 												}
@@ -747,13 +750,13 @@ export function AdvancedVideoBlock(props) {
 												let newVideoEmbedCode = videoEmbedCode;
 
 												newVideoEmbedCode = newVideoEmbedCode.replace(
-													/height="[0-9]+%?"/,
+													/height="[\d.]+%?"/,
 													`height="${height}"`
 												);
 
 												if (videoSource === "facebook") {
 													newVideoEmbedCode = newVideoEmbedCode.replace(
-														/&height=[0-9]+%?/,
+														/&height=[\d.]+%?/,
 														`height="${height}"`
 													);
 												}
@@ -1921,7 +1924,7 @@ export function AdvancedVideoBlock(props) {
 								videoEmbedCode: "",
 								videoId: -1,
 								videoSource: "",
-								preserveAspectRatio: true,
+								preserveAspectRatio: false,
 								autofit: false,
 								autoplay: false,
 								showPlayerControls: true,

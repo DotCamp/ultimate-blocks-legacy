@@ -195,7 +195,7 @@ registerBlockType("ub/advanced-video", {
 		},
 		preserveAspectRatio: {
 			type: "boolean",
-			default: true,
+			default: false,
 		},
 		autofit: {
 			type: "boolean",
@@ -203,7 +203,7 @@ registerBlockType("ub/advanced-video", {
 		},
 		height: {
 			type: "number",
-			default: 0,
+			default: 370,
 		},
 		origHeight: {
 			type: "number",
