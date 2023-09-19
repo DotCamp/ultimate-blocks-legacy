@@ -272,7 +272,7 @@ function editThumbnail(source, embedCode, mode, thumbnailURL) {
 		: embedCode;
 }
 
-export function AdvancedVideoBlock(props) {
+export function OldAdvancedVideoBlock(props) {
 	const [enterVideoURL, setVideoURLStatus] = useState(false);
 	const [videoURLInput, setVideoURLInput] = useState(
 		props.attributes.url ?? ""
@@ -443,9 +443,9 @@ export function AdvancedVideoBlock(props) {
 									videoEmbedCode: data.items[0].player.embedHtml,
 									origWidth: parseInt(parsedCode[1]),
 									origHeight: parseInt(parsedCode[2]),
-									width: Math.min(200, parsedCode[1]),
+									width: Math.min(600, parsedCode[1]),
 									height:
-										(parsedCode[2] * Math.min(200, parsedCode[1])) /
+										(parsedCode[2] * Math.min(600, parsedCode[1])) /
 										parsedCode[1],
 									videoLength: timePeriods.reduce((sum, part) => {
 										let multiplier = {
@@ -675,11 +675,11 @@ export function AdvancedVideoBlock(props) {
 														videoSource,
 														videoEmbedCode,
 														autofit ? "add" : "remove",
-														`width="100%" height="${
+														`width="${width}" height="${
 															preserveAspectRatio
 																? Math.round((width * origHeight) / origWidth)
 																: height
-														}%"`
+														}"`
 													),
 												});
 
@@ -697,7 +697,7 @@ export function AdvancedVideoBlock(props) {
 							{!autofit && (
 								<>
 									<RangeControl
-										label={__("Video width (percentage)")}
+										label={__("Video width (pixels)")}
 										value={width}
 										onChange={(newWidth) => {
 											setAttributes({ width: newWidth });
@@ -706,12 +706,12 @@ export function AdvancedVideoBlock(props) {
 
 											newVideoEmbedCode = newVideoEmbedCode.replace(
 												/width="[0-9]+"/,
-												`width="${newWidth}%"`
+												`width="${newWidth}"`
 											);
 											if (videoSource === "facebook") {
 												newVideoEmbedCode = newVideoEmbedCode.replace(
 													/&width=[0-9]+/,
-													`width="${newWidth}%"`
+													`width="${newWidth}"`
 												);
 											}
 
@@ -725,19 +725,19 @@ export function AdvancedVideoBlock(props) {
 												});
 												newVideoEmbedCode = newVideoEmbedCode.replace(
 													/height="[0-9]+"/,
-													`height="${newHeight}%"`
+													`height="${newHeight}"`
 												);
 												if (videoSource === "facebook") {
 													newVideoEmbedCode = newVideoEmbedCode.replace(
 														/&height=[0-9]+/,
-														`height="${newHeight}%"`
+														`height="${newHeight}"`
 													);
 												}
 											}
 											setAttributes({ videoEmbedCode: newVideoEmbedCode });
 										}}
-										min={0}
-										max={100}
+										min={200}
+										max={1600}
 									/>
 									{!preserveAspectRatio && (
 										<RangeControl
@@ -747,13 +747,12 @@ export function AdvancedVideoBlock(props) {
 												let newVideoEmbedCode = videoEmbedCode;
 
 												newVideoEmbedCode = newVideoEmbedCode.replace(
-													/height="[0-9]+%?"/,
+													/height="[0-9]+"/,
 													`height="${height}"`
 												);
-
 												if (videoSource === "facebook") {
 													newVideoEmbedCode = newVideoEmbedCode.replace(
-														/&height=[0-9]+%?/,
+														/&height=[0-9]+/,
 														`height="${height}"`
 													);
 												}
@@ -1873,7 +1872,7 @@ export function AdvancedVideoBlock(props) {
 						"<p>If a valid video source is entered, the video should appear here</p>",
 				}}
 				style={Object.assign(
-					autofit ? autofitContainerStyle : { width: `${width}%` },
+					autofit ? autofitContainerStyle : { width: `${width}px` },
 					[
 						topBorderSize,
 						leftBorderSize,

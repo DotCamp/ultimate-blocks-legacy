@@ -142,7 +142,7 @@ $defaultValues = array(
 			),
 			'width'                => array(
 				'type'    => 'number',
-				'default' => 0,
+				'default' => 100,
 			),
 			'origHeight'           => array(
 				'type'    => 'number',

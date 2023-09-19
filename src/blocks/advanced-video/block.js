@@ -187,7 +187,7 @@ registerBlockType("ub/advanced-video", {
 		},
 		width: {
 			type: "number",
-			default: 0,
+			default: 100,
 		},
 		origWidth: {
 			type: "number",
