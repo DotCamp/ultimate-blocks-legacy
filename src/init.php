@@ -105,7 +105,7 @@ function ub_load_assets() {
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-style-css', // Handle.
 		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-		array(), // Dependency to include the CSS after it.
+		array('dashicons'), // Dependency to include the CSS after it.
 		uniqid()  // Version: latest version number.
 	);
 	// wp_enqueue_style(
