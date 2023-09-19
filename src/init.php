@@ -217,7 +217,7 @@ function ub_include_block_attribute_css() {
 	require plugin_dir_path( __FILE__ ) . 'defaults.php';
 	require_once plugin_dir_path( __FILE__ ) . 'common.php';
 
-	$presentBlocks    = array_unique( array_merge( ub_getPresentBlocks(), ub_generate_widget_block_list( true ) ),
+	$presentBlocks    = array_unique( array_merge( ub_getPresentBlocks(), ub_generate_widget_block_list( true ), ub_getCurrentTemplateBlocks() ),
 			SORT_REGULAR );
 	$blockStylesheets = "";
 
