@@ -61,7 +61,7 @@
 	}
 }
 
-@media (width <= 480px) {
+@media (max-width: 480px) {
 	.ub_review_summary {
 		.ub_review_overall_value {
 			grid-template-columns: 1fr;
@@ -90,7 +90,7 @@
 	}
 }
 
-@media (width <= 280px) {
+@media (max-width: 280px) {
 	.ub_review_stars {
 		svg {
 			width: 15px;
