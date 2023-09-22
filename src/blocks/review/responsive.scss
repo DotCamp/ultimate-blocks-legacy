@@ -90,3 +90,12 @@
 	}
 }
 
+@media (width <= 280px) {
+	.ub_review_stars {
+		svg {
+			width: 15px;
+			height: 15px;
+		}
+	}
+}
+
