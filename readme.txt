@@ -137,6 +137,8 @@ That's it. You're done!
 
 = 3.0.4 =
 
+* PRO: IMPROVE: Responsive layout for review block.
+* IMPROVE: Responsive layout for review block.
 * FIX: Content toggle block attributes not including parent block id.
 
 = 3.0.3 =
