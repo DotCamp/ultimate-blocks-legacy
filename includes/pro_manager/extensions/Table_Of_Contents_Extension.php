@@ -32,6 +32,10 @@ class Table_Of_Contents_Extension extends Pro_Extension_Upsell {
 				__( 'Section Icons', 'ultimate-blocks' ),
 				__( "Add icons to your table of contents sections for better visual identification.",
 					'ultimate-blocks' )
+			],
+			'stickyTOC' => [
+				__( 'Sticky Table Of Content', "ultimate-blocks" ),
+				__( 'Make table of content sticky when it will scrolled up from the screen and very flexible to change its position left to right.', 'ultimate-blocks' )
 			]
 		];
 	}
@@ -44,15 +48,26 @@ class Table_Of_Contents_Extension extends Pro_Extension_Upsell {
 	 * @return array editor control data
 	 */
 	public function add_editor_dummy_control_data() {
+		$sticky_panel_controls = [
+			Pro_Editor_Control_Data::generate_toggle_control_data( 'stickyTOC',
+				__( 'Sticky', 'ultimate-blocks' ), 'book-bookmark' ),
+			Pro_Editor_Control_Data::generate_toggle_control_data( 'stickyTOC',
+				__( 'Hide On Mobile', 'ultimate-blocks' ) ),
+		];
 		$additional_settings_panel_controls = [
 			Pro_Editor_Control_Data::generate_icon_control_data( 'icon',
 				__( 'Current icon', 'ultimate-blocks' ), 'book-bookmark' ),
 		];
-
+		
 		return [
 			Pro_Editor_Control_Data::generate_panel_data( 'additionalSettingsPanel',
 				__( 'Additional Settings', 'ultimate-blocks' ),
 				$additional_settings_panel_controls ),
+			Pro_Editor_Control_Data::generate_panel_data( 
+				'stickyTOCPanel',
+				__( 'Sticky', 'ultimate-blocks' ),
+				$sticky_panel_controls 
+			),
 		];
 	}
 }
