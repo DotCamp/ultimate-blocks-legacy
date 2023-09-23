@@ -137,6 +137,12 @@ That's it. You're done!
 
 = 3.0.4 =
 
+* FIX: Schema parsing error in review block.
+* IMPROVE: Advanced video block width (pixel) to (percentage).
+* IMPROVE: Advanced video block transformation from embed block.
+* PRO: NEW: Advanced video channel details and Subscribe Button.
+* PRO: NEW: Fixed/Sticky Table of content block.
+* PRO: IMPROVE: Organize coupon block colors panel.
 * PRO: IMPROVE: Responsive layout for review block.
 * IMPROVE: Responsive layout for review block.
 * FIX: Content toggle block attributes not including parent block id.
