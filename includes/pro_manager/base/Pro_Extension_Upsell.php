@@ -4,7 +4,6 @@ namespace Ultimate_Blocks\includes\pro_manager\base;
 
 use Ultimate_Blocks\includes\managers\Ub_Fs_Handler;
 use function trailingslashit;
-use function WP_Filesystem;
 
 /**
  * Pro extension upsell.
@@ -111,7 +110,7 @@ abstract class Pro_Extension_Upsell {
 		$upsell_feature_id,
 		$upsell_name,
 		$description,
-		$upsell_img = null,
+		$upsell_img = null
 	) {
 		$image_url = null;
 
