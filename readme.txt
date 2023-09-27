@@ -138,6 +138,7 @@ That's it. You're done!
 = 3.0.4 =
 
 * FIX: Schema parsing error in review block.
+* FIX: File permission error affecting some server installations.
 * IMPROVE: Advanced video block width (pixel) to (percentage).
 * IMPROVE: Advanced video block transformation from embed block.
 * PRO: NEW: Advanced video channel details and Subscribe Button.
