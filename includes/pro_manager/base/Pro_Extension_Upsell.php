@@ -2,6 +2,7 @@
 
 namespace Ultimate_Blocks\includes\pro_manager\base;
 
+use Ultimate_Blocks\includes\managers\Ub_Fs_Handler;
 use function trailingslashit;
 use function WP_Filesystem;
 
@@ -66,12 +67,16 @@ abstract class Pro_Extension_Upsell {
 		return [];
 	}
 
+	public final function get_upsell_data() {
+		return Ub_Fs_Handler::with_filesystem( [ $this, 'get_upsell_data_logic' ] );
+	}
+
 	/**
 	 * Get extension upsell data.
 	 *
 	 * @return array upsell data
 	 */
-	public final function get_upsell_data() {
+	public function get_upsell_data_logic( $ub_filesystem = null ) {
 		// add upsell data only once and generate them for the first time if none is available at the time this function is called
 		if ( ! is_array( $this->upsell_data ) ) {
 			$extension_upsell_data = $this->add_upsell_data();
@@ -79,7 +84,7 @@ abstract class Pro_Extension_Upsell {
 			if ( is_array( $extension_upsell_data ) ) {
 				foreach ( $extension_upsell_data as $feature_id => $feature_data ) {
 					call_user_func_array( [ $this, 'generate_upsell_data' ],
-						array_merge( [ $feature_id ], $feature_data ) );
+						array_merge( [ $ub_filesystem, $feature_id ], $feature_data ) );
 				}
 			}
 		}
@@ -102,26 +107,20 @@ abstract class Pro_Extension_Upsell {
 	 *
 	 */
 	protected final function generate_upsell_data(
+		$ub_filesystem,
 		$upsell_feature_id,
 		$upsell_name,
 		$description,
-		$upsell_img = null
+		$upsell_img = null,
 	) {
-		global $wp_filesystem;
-
-		// set native filesystem
-		if ( ! function_exists( 'WP_Filesystem' ) ) {
-			require_once( trailingslashit( ABSPATH ) . '/wp-admin/includes/file.php' );
-		}
-
 		$image_url = null;
 
-		if ( WP_Filesystem()) {
+		if ( $ub_filesystem ) {
 			if ( ! is_null( $upsell_img ) ) {
 				$image_relative_path = self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH . '/img/' . $upsell_img;
 				$image_path          = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $image_relative_path );
 
-				if ( $wp_filesystem->exists( $image_path ) && $wp_filesystem->is_file( $image_path ) ) {
+				if ( $ub_filesystem->exists( $image_path ) && $ub_filesystem->is_file( $image_path ) ) {
 					$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $image_relative_path );
 				}
 			} else {
@@ -140,7 +139,7 @@ abstract class Pro_Extension_Upsell {
 
 						$image_path = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $relative_path_to_file );
 
-						if ( $wp_filesystem->exists( $image_path ) && $wp_filesystem->is_file( $image_path ) ) {
+						if ( $ub_filesystem->exists( $image_path ) && $ub_filesystem->is_file( $image_path ) ) {
 							$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $relative_path_to_file );
 						}
 					}
