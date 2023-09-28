@@ -137,16 +137,17 @@ That's it. You're done!
 
 = 3.0.4 =
 
-* FIX: Schema parsing error in review block.
-* FIX: File permission error affecting some server installations.
-* IMPROVE: Advanced video block width (pixel) to (percentage).
-* IMPROVE: Advanced video block transformation from embed block.
 * PRO: NEW: Advanced video channel details and Subscribe Button.
 * PRO: NEW: Fixed/Sticky Table of content block.
 * PRO: IMPROVE: Organize coupon block colors panel.
 * PRO: IMPROVE: Responsive layout for review block.
-* IMPROVE: Responsive layout for review block.
+* FIX: Schema parsing error in review block.
+* FIX: PHP8.2 deprecation warnings.
+* FIX: File permission error affecting some server installations.
 * FIX: Content toggle block attributes not including parent block id.
+* IMPROVE: Advanced video block width (pixel) to (percentage).
+* IMPROVE: Advanced video block transformation from embed block.
+* IMPROVE: Responsive layout for review block.
 
 = 3.0.3 =
 
