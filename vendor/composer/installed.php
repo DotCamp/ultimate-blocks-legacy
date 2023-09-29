@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'ultimate-blocks/ultimate-blocks',
-        'pretty_version' => 'dev-composer-workflow',
-        'version' => 'dev-composer-workflow',
-        'reference' => 'fe0ee1639760219e22bbfe367e6312750ae39bd1',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '870fb2ae1e5745292b2f6c1fb3534ed5090e5b83',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'ultimate-blocks/ultimate-blocks' => array(
-            'pretty_version' => 'dev-composer-workflow',
-            'version' => 'dev-composer-workflow',
-            'reference' => 'fe0ee1639760219e22bbfe367e6312750ae39bd1',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '870fb2ae1e5745292b2f6c1fb3534ed5090e5b83',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
