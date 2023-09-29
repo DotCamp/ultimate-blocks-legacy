@@ -11,6 +11,7 @@ use function WP_Filesystem;
  * Class to handle plugin filesystem operations.
  */
 class Ub_Fs_Handler {
+	const IDENTIFIER = 'ub_fs_handler';
 
 	/**
 	 * Add filter to filesystem method.
@@ -32,7 +33,7 @@ class Ub_Fs_Handler {
 	 */
 	private static function generate_args() {
 		return [
-			'ub_fs_handler' => true
+			self::IDENTIFIER => true
 		];
 	}
 
