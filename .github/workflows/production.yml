@@ -22,6 +22,24 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Remove PHP vendor directory
+        run: rm -rf vendor
+
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
+          mv composer.phar /usr/local/bin/composer
+
+      - name: Install composer non-dev dependencies
+        run: composer install --no-dev
+
       - name: Build
         run: |
           npm ci -f
