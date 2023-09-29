@@ -74,6 +74,7 @@ class Ub_Fs_Handler {
 			if ( ! function_exists( 'WP_Filesystem' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/file.php' );
 			}
+
 			// reset filesystem
 			WP_Filesystem();
 
