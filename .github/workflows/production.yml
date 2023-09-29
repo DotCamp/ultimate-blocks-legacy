@@ -2,7 +2,7 @@ name: Production Build
 
 on:
   push:
-    branches: [ master, composer-workflow ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
