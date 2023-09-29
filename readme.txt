@@ -141,6 +141,7 @@ That's it. You're done!
 * PRO: NEW: Fixed/Sticky Table of content block.
 * PRO: IMPROVE: Organize coupon block colors panel.
 * PRO: IMPROVE: Responsive layout for review block.
+* FIX: Table of contents links issue.
 * FIX: Schema parsing error in review block.
 * FIX: PHP8.2 deprecation warnings.
 * FIX: File permission error affecting some server installations.
