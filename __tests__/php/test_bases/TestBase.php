@@ -2,11 +2,15 @@
 
 namespace Ultimate_Blocks\__tests__\php\test_bases;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
+use Brain\Monkey;
 use ReflectionClass;
 use ReflectionException;
 
 class TestBase extends TestCase {
+	use MockeryPHPUnitIntegration;
+
 	/**
 	 * Call private method of an object.
 	 *
@@ -25,5 +29,16 @@ class TestBase extends TestCase {
 		$target_method->setAccessible( true );
 
 		return $target_method->invokeArgs( $is_static ? null : $class_or_object, $args );
+	}
+
+	protected function setUp():void {
+		parent::setUp();
+		Monkey\setUp();
+	}
+
+
+	protected function tearDown(): void {
+		Monkey\tearDown();
+		parent::tearDown();
 	}
 }

@@ -3,13 +3,43 @@
         'name' => 'ultimate-blocks/ultimate-blocks',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'dd722c07f6268f33ee47101904531a1efeff1abb',
+        'reference' => '133f39e6bb35ff8424e47796ee6e3237e9b7c66a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'antecedent/patchwork' => array(
+            'pretty_version' => '2.1.26',
+            'version' => '2.1.26.0',
+            'reference' => 'f2dae0851b2eae4c51969af740fdd0356d7f8f55',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../antecedent/patchwork',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'brain/monkey' => array(
+            'pretty_version' => '2.6.1',
+            'version' => '2.6.1.0',
+            'reference' => 'a31c84515bb0d49be9310f52ef1733980ea8ffbb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../brain/monkey',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'cordoval/hamcrest-php' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'davedevelopment/hamcrest-php' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.1',
             'version' => '1.1.1.0',
@@ -18,6 +48,30 @@
             'install_path' => __DIR__ . '/../graham-campbell/result-type',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'hamcrest/hamcrest-php' => array(
+            'pretty_version' => 'v2.0.1',
+            'version' => '2.0.1.0',
+            'reference' => '8c3d0a3f6af734494ad8f6fbbee0ba92422859f3',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../hamcrest/hamcrest-php',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'kodova/hamcrest-php' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'mockery/mockery' => array(
+            'pretty_version' => '1.6.6',
+            'version' => '1.6.6.0',
+            'reference' => 'b8e0bb7d8c604046539c1115994632c74dcb361e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mockery/mockery',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'myclabs/deep-copy' => array(
             'pretty_version' => '1.11.1',
@@ -292,7 +346,7 @@
         'ultimate-blocks/ultimate-blocks' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'dd722c07f6268f33ee47101904531a1efeff1abb',
+            'reference' => '133f39e6bb35ff8424e47796ee6e3237e9b7c66a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
