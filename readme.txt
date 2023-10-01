@@ -1,5 +1,5 @@
-=== Ultimate Blocks - Gutenberg Blocks Plugin ===
-Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
+=== Ultimate Blocks - WordPress Blocks Plugin ===
+Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.3
@@ -8,7 +8,7 @@ Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
-Custom Gutenberg Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
+Custom Gutenberg Blocks for Bloggers and Marketers. Create Better Content With The Block Editor.
 
 == Description ==
 
@@ -140,12 +140,6 @@ That's it. You're done!
 * FIX: Progress bar block duplicate instance not working properly.
 * FIX: Advanced video block height.
 * FIX: Schema parsing error in review block.
-* IMPROVE: Advanced video block width (pixel) to (percentage).
-* IMPROVE: Advanced video block transformation from embed block.
-* PRO: NEW: Advanced video channel details and Subscribe Button.
-* PRO: NEW: Fixed/Sticky Table of content block.
-* PRO: IMPROVE: Organize coupon block colors panel.
-* PRO: IMPROVE: Responsive layout for review block.
 * FIX: Table of contents links issue.
 * FIX: Schema parsing error in review block.
 * FIX: PHP8.2 deprecation warnings.
@@ -153,7 +147,13 @@ That's it. You're done!
 * FIX: Content toggle block attributes not including parent block id.
 * IMPROVE: Advanced video block width (pixel) to (percentage).
 * IMPROVE: Advanced video block transformation from embed block.
+* IMPROVE: Advanced video block width (pixel) to (percentage).
+* IMPROVE: Advanced video block transformation from embed block.
 * IMPROVE: Responsive layout for review block.
+* PRO: NEW: Advanced video channel details and Subscribe Button.
+* PRO: NEW: Fixed/Sticky Table of content block.
+* PRO: IMPROVE: Organize coupon block colors panel.
+* PRO: IMPROVE: Responsive layout for review block.
 
 = 3.0.3 =
 
