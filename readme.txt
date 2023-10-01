@@ -125,7 +125,7 @@ That's it. You're done!
 
 = I Need Help with Gutenberg =
 
-[Join Our Support Community](https://community.ultimateblocks.com/) or [Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/) and ask us. We will help you.
+[Join Our Support Community](https://ultimateblocks.com/community/) or [Join Our Facebook Group](https://www.facebook.com/groups/ultimateblocks/) and ask us. We will help you.
 
 == Screenshot ==
 
