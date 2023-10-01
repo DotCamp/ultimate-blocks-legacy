@@ -1,4 +1,5 @@
 import { convertFromSeconds } from "../../common";
+import { get } from "lodash";
 import { useState, useEffect } from "react";
 const { __ } = wp.i18n;
 const { MediaUpload, MediaUploadCheck, InspectorControls, ColorPalette } =
@@ -429,11 +430,24 @@ export function AdvancedVideoBlock(props) {
 								let timePeriods = data.items[0].contentDetails.duration.match(
 									/(\d{1,2}(?:W|D|H|M|S))/g
 								);
-
+								const videoHeight = get(
+									data.items[0],
+									"snippet.thumbnails.maxres.height",
+									get(data.items[0], "snippet.thumbnails.high.height", height)
+								);
+								const videoWidth = get(
+									data.items[0],
+									"snippet.thumbnails.maxres.width",
+									get(data.items[0], "snippet.thumbnails.high.width", width)
+								);
 								let embedCode = data.items[0].player.embedHtml;
 								embedCode = embedCode.replace(
 									/height="[0-9]+%?"/,
-									`height="${height}"`
+									`height="${videoHeight}"`
+								);
+								embedCode = embedCode.replace(
+									/width="[0-9]+%?"/,
+									`width="${videoWidth}"`
 								);
 								const parsedCode = /<iframe width="(\d+)" height="(\d+)/.exec(
 									embedCode
