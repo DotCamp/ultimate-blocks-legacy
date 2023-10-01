@@ -716,8 +716,8 @@ function ub_include_block_attribute_css() {
 					break;
 				case 'ub/progress-bar':
 					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];					
-					$is_style_circle = strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false;
-					$is_style_half_circle = strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false;
+					$is_style_circle = isset($attributes['className']) ? strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false : "";
+					$is_style_half_circle = isset($attributes['className']) ?  strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false : "";
 
 					$blockStylesheets .= $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
 										 'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .

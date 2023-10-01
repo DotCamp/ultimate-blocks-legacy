@@ -27,8 +27,8 @@ function ub_render_progress_bar_block($attributes){
     $blockName = 'ub_progress-bar';
     $chosenProgressBar = '';
 
-    $is_style_circle = strpos($className, "is-style-ub-progress-bar-circle-wrapper") !== false;
-    $is_style_half_circle = strpos($className, "is-style-ub-progress-bar-half-circle-wrapper") !== false;
+    $is_style_circle = isset($attributes['className']) ? strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false : "";
+    $is_style_half_circle = isset($attributes['className']) ? strpos($className, "is-style-ub-progress-bar-half-circle-wrapper") !== false : "";
 
     $percentage_position = $attributes['percentagePosition'];
     $is_stripe = $attributes['isStripe'];
