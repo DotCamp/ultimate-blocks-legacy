@@ -137,6 +137,7 @@ That's it. You're done!
 
 = 3.0.4 =
 
+* FIX: Progress bar block duplicate instance not working properly.
 * FIX: Advanced video block height.
 * FIX: Schema parsing error in review block.
 * IMPROVE: Advanced video block width (pixel) to (percentage).

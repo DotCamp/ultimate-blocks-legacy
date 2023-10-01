@@ -63,6 +63,9 @@ function ProgressBarMain(props) {
 			}
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	const progressBarAttributes = {
 		percent: percentage,
