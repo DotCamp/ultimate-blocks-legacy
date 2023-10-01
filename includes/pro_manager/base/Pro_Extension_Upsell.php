@@ -2,8 +2,8 @@
 
 namespace Ultimate_Blocks\includes\pro_manager\base;
 
+use Ultimate_Blocks\includes\managers\Ub_Fs_Handler;
 use function trailingslashit;
-use function WP_Filesystem;
 
 /**
  * Pro extension upsell.
@@ -66,12 +66,16 @@ abstract class Pro_Extension_Upsell {
 		return [];
 	}
 
+	public final function get_upsell_data() {
+		return Ub_Fs_Handler::with_filesystem( [ $this, 'get_upsell_data_logic' ] );
+	}
+
 	/**
 	 * Get extension upsell data.
 	 *
 	 * @return array upsell data
 	 */
-	public final function get_upsell_data() {
+	public function get_upsell_data_logic( $ub_filesystem = null ) {
 		// add upsell data only once and generate them for the first time if none is available at the time this function is called
 		if ( ! is_array( $this->upsell_data ) ) {
 			$extension_upsell_data = $this->add_upsell_data();
@@ -79,7 +83,7 @@ abstract class Pro_Extension_Upsell {
 			if ( is_array( $extension_upsell_data ) ) {
 				foreach ( $extension_upsell_data as $feature_id => $feature_data ) {
 					call_user_func_array( [ $this, 'generate_upsell_data' ],
-						array_merge( [ $feature_id ], $feature_data ) );
+						array_merge( [ $ub_filesystem, $feature_id ], $feature_data ) );
 				}
 			}
 		}
@@ -102,47 +106,41 @@ abstract class Pro_Extension_Upsell {
 	 *
 	 */
 	protected final function generate_upsell_data(
+		$ub_filesystem,
 		$upsell_feature_id,
 		$upsell_name,
 		$description,
 		$upsell_img = null
 	) {
-		global $wp_filesystem;
-
-		// set native filesystem
-		if ( ! function_exists( 'WP_Filesystem' ) ) {
-			require_once( trailingslashit( ABSPATH ) . '/wp-admin/includes/file.php' );
-		}
-
-		WP_Filesystem();
-
 		$image_url = null;
 
-		if ( ! is_null( $upsell_img ) ) {
-			$image_relative_path = self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH . '/img/' . $upsell_img;
-			$image_path          = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $image_relative_path );
+		if ( $ub_filesystem ) {
+			if ( ! is_null( $upsell_img ) ) {
+				$image_relative_path = self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH . '/img/' . $upsell_img;
+				$image_path          = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $image_relative_path );
 
-			if ( $wp_filesystem->exists( $image_path ) && $wp_filesystem->is_file( $image_path ) ) {
-				$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $image_relative_path );
-			}
-		} else {
-			$matches = [];
-			preg_match( '/^ub\/(.+)$/', $this->block_id, $matches );
+				if ( $ub_filesystem->exists( $image_path ) && $ub_filesystem->is_file( $image_path ) ) {
+					$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $image_relative_path );
+				}
+			} else {
+				$matches = [];
+				preg_match( '/^ub\/(.+)$/', $this->block_id, $matches );
 
-			// automatically search for a fitting image file under asset folders
-			if ( isset( $matches[1] ) ) {
-				$target_extension_upsell_dir_name = $matches[1];
-				$allowed_file_extensions          = [ 'png', 'gif' ];
+				// automatically search for a fitting image file under asset folders
+				if ( isset( $matches[1] ) ) {
+					$target_extension_upsell_dir_name = $matches[1];
+					$allowed_file_extensions          = [ 'png', 'gif' ];
 
-				foreach ( $allowed_file_extensions as $extension ) {
-					$relative_path_to_file = sprintf( '%s/img/%s/%s.%s',
-						self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH, $target_extension_upsell_dir_name,
-						$upsell_feature_id, $extension );
+					foreach ( $allowed_file_extensions as $extension ) {
+						$relative_path_to_file = sprintf( '%s/img/%s/%s.%s',
+							self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH, $target_extension_upsell_dir_name,
+							$upsell_feature_id, $extension );
 
-					$image_path = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $relative_path_to_file );
+						$image_path = path_join( trailingslashit( ULTIMATE_BLOCKS_PATH ), $relative_path_to_file );
 
-					if ( $wp_filesystem->exists( $image_path ) && $wp_filesystem->is_file( $image_path ) ) {
-						$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $relative_path_to_file );
+						if ( $ub_filesystem->exists( $image_path ) && $ub_filesystem->is_file( $image_path ) ) {
+							$image_url = path_join( trailingslashit( ULTIMATE_BLOCKS_URL ), $relative_path_to_file );
+						}
 					}
 				}
 			}

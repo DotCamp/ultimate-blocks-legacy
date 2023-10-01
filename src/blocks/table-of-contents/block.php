@@ -3,6 +3,7 @@
 function ub_render_table_of_contents_block($attributes){
     extract($attributes);
     $linkArray = json_decode($links, true);
+	$linkArray = is_null($linkArray) ? [] : $linkArray;
 
     $filteredHeaders = $linkArray ? (array_values(array_filter($linkArray, function ($header) use ($allowedHeaders){
         return $allowedHeaders[$header['level'] - 1] &&
