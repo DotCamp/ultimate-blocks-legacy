@@ -1,0 +1,38 @@
+name: Reusable Server Setup
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: Node version
+        default: 16.x
+        type: string
+        required: false
+      php-version:
+        description: PHP version
+        default: 8.2
+        type: string
+        required: false
+
+jobs:
+  server-setup:
+    name: Server Setup with PHP, NodeJs and Composer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php-version }}
+
+      - name: Setup Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
+          mv composer.phar /usr/local/bin/composer
