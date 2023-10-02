@@ -143,6 +143,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.5 =
+
+* FIX: An issue affecting servers with PHP version <7.3.
+
 = 3.0.4 =
 
 * FIX: Progress bar block duplicate instance not working properly.

@@ -64,7 +64,7 @@ class UltimateBlocks_Block_Category {
 					'title' => __( 'Ultimate Blocks', 'ultimate-blocks' ),
 				),
 			),
-			$categories,
+			$categories
 		);
 	}
 }
