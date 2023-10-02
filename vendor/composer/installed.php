@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'ultimate-blocks/ultimate-blocks',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'a685e4ef8959e168588fd542b03562e06ad3aafa',
+        'pretty_version' => 'dev-phpunit-workflow-implementation',
+        'version' => 'dev-phpunit-workflow-implementation',
+        'reference' => 'b704dd32432edb0d30408a4724fc6097007ef1ab',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'ultimate-blocks/ultimate-blocks' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'a685e4ef8959e168588fd542b03562e06ad3aafa',
+            'pretty_version' => 'dev-phpunit-workflow-implementation',
+            'version' => 'dev-phpunit-workflow-implementation',
+            'reference' => 'b704dd32432edb0d30408a4724fc6097007ef1ab',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
