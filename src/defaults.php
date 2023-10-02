@@ -1358,6 +1358,10 @@ $defaultValues = array(
 			'isStripe'         	 => array(
 				'type'    => 'boolean',
 				'default' => false
+			),
+			'showPercentage'         	 => array(
+				'type'    => 'boolean',
+				'default' => true
 			)
 		)
 	),

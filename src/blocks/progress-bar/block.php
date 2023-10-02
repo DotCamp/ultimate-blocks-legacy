@@ -30,6 +30,7 @@ function ub_render_progress_bar_block($attributes){
     $is_style_circle = isset($attributes['className']) ? strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false : "";
     $is_style_half_circle = isset($attributes['className']) ? strpos($className, "is-style-ub-progress-bar-half-circle-wrapper") !== false : "";
 
+    $show_percentage = $attributes['showPercentage'];
     $percentage_position = $attributes['percentagePosition'];
     $is_stripe = $attributes['isStripe'];
 
@@ -38,8 +39,8 @@ function ub_render_progress_bar_block($attributes){
     $inside_percentage = $percentage_position === 'inside' ? " ub_progress-bar-label-inside" : '';
     $stripe_style = $is_stripe ? " ub_progress-bar-stripe" : '';
 
-    $top_percentage = $percentage_position === 'top'  ? $percentage_text : "";
-    $bottom_percentage = $percentage_position === 'bottom' || $percentage_position === 'inside' ? $percentage_text : "";
+    $top_percentage = $show_percentage && $percentage_position === 'top'  ? $percentage_text : "";
+    $bottom_percentage = $show_percentage && ( $percentage_position === 'bottom' || $percentage_position === 'inside' ) ? $percentage_text : "";
 
     $stripe_element = $is_stripe ? 
         '<foreignObject width="100%" height="100%">
@@ -57,6 +58,9 @@ function ub_render_progress_bar_block($attributes){
                 ' . $stripe_element . '
         </svg>' . $bottom_percentage;
     }
+
+
+    
     else if ($is_style_circle) {
         $circleRadius = 50 - ($barThickness + 3) / 2;
         $circlePathLength = $circleRadius * M_PI * 2;
@@ -64,7 +68,7 @@ function ub_render_progress_bar_block($attributes){
                             'a ' . $circleRadius . ',' . $circleRadius . ' 0 1 1 0,' . (2 * $circleRadius).
                             'a ' . $circleRadius . ',' . $circleRadius . ' 0 1 1 0,' . (2 * -$circleRadius);
         $strokeArcLength = $circlePathLength * $percentage / 100;
-
+        $percentage = $show_percentage  ? '<div class="' . $blockName . '-label">' . $percentage . '%</div>' : '';
         $chosenProgressBar = '<div class="' . $blockName.'-container" ' . ($blockID === '' ? 'style="height: ' . $circleSize . 'px; width: ' . $circleSize . 'px;"' : 'id="' . $blockID . '"') . '>
         <svg class="' . $blockName . '-circle" height="' . $circleSize . '" width="' . $circleSize . '" viewBox = "0 0 100 100">
             <path class="' . $blockName . '-circle-trail" d="' . $progressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . ($barThickness + 2) . '"'.
@@ -73,13 +77,14 @@ function ub_render_progress_bar_block($attributes){
                 stroke-width="' . ($barThickness + 2) . '" stroke-linecap="butt"'.
                 ($blockID === '' ? ' style="stroke-dasharray: ' . $strokeArcLength . 'px, ' . $circlePathLength . 'px"':'').'/>
         </svg>
-        <div class="' . $blockName . '-label">' . $percentage . '%</div></div>';
+        ' . $percentage . '</div>';
     } else if ($is_style_half_circle){
         $halfCircleRadius = 50 - ($barThickness + 2) / 2;
         $halfCirclePathLength = $halfCircleRadius * M_PI;
         $halfCircleStrokeArcLength = ($halfCirclePathLength * $percentage) / 100;
         $halfCircleProgressBarPath = 'M 50,50 m -' . $halfCircleRadius . ',0 ' .
             'a ' . $halfCircleRadius . ',' . $halfCircleRadius . ' 0 1 1 ' . ($halfCircleRadius * 2) . ',0';
+        $percentage = $show_percentage  ? '<div class="' . $blockName . '-label">' . $percentage . '%</div>' : '';
 
         $chosenProgressBar = '<div class="' . $blockName . '-container" ' . ($blockID === '' ? 'style="height: ' . $circleSize . 'px; width: ' . $circleSize . 'px;"' : 'id="' . $blockID . '"') . '>
             <svg class="' . $blockName . '-circle" height="' . $circleSize . '" width="' . $circleSize . '" viewBox="0 0 100 100">
@@ -89,7 +94,7 @@ function ub_render_progress_bar_block($attributes){
                     stroke-width="' . ($barThickness + 2) . '" stroke-linecap="butt"'.
                     ($blockID === '' ? ' style="stroke-dasharray: ' . $halfCircleStrokeArcLength . 'px, ' . $halfCirclePathLength . 'px"':'').'/>
             </svg>
-            <div class="' . $blockName . '-label">' . $percentage . '%</div></div>';
+            ' . $percentage . '</div>';
 
         }
     

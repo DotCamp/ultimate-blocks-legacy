@@ -12,6 +12,7 @@ export default function HalfCircle(props) {
 		labelColor,
 		alignment,
 		size,
+		showPercentage,
 	} = props;
 
 	useEffect(() => {
@@ -73,15 +74,17 @@ export default function HalfCircle(props) {
 					}}
 				/>
 			</svg>
-			<div
-				className="ub_progress-bar-label"
-				style={{
-					visibility: isActive ? "visible" : "hidden",
-					color: labelColor || "inherit",
-				}}
-			>
-				{percent}%
-			</div>
+			{showPercentage && (
+				<div
+					className="ub_progress-bar-label"
+					style={{
+						visibility: isActive ? "visible" : "hidden",
+						color: labelColor || "inherit",
+					}}
+				>
+					{percent}%
+				</div>
+			)}
 		</div>
 	);
 }

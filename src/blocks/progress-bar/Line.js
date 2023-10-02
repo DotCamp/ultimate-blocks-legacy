@@ -35,6 +35,7 @@ export default function Line(props) {
 		labelColor,
 		percentagePosition,
 		isStripe,
+		showPercentage,
 	} = props;
 
 	useEffect(() => {
@@ -61,7 +62,7 @@ export default function Line(props) {
 		<div
 			className={`ub_progress-bar-container${insideLabelClass}${stripeStyleClass}`}
 		>
-			{percentagePosition === "top" && (
+			{percentagePosition === "top" && showPercentage && (
 				<div
 					className="ub_progress-bar-label"
 					style={{
@@ -97,18 +98,19 @@ export default function Line(props) {
 					</foreignObject>
 				)}
 			</svg>
-			{(percentagePosition === "bottom" || percentagePosition === "inside") && (
-				<div
-					className="ub_progress-bar-label"
-					style={{
-						width: `${percent}%`,
-						visibility: isActive ? "visible" : "hidden",
-						color: labelColor || "inherit",
-					}}
-				>
-					{percent}%
-				</div>
-			)}
+			{(percentagePosition === "bottom" || percentagePosition === "inside") &&
+				showPercentage && (
+					<div
+						className="ub_progress-bar-label"
+						style={{
+							width: `${percent}%`,
+							visibility: isActive ? "visible" : "hidden",
+							color: labelColor || "inherit",
+						}}
+					>
+						{percent}%
+					</div>
+				)}
 		</div>
 	);
 }

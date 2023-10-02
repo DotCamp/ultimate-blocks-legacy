@@ -46,6 +46,7 @@ function ProgressBarMain(props) {
 			percentagePosition,
 			barBorderRadius,
 			isStripe,
+			showPercentage,
 		},
 		isSelected,
 		setAttributes,
@@ -75,6 +76,7 @@ function ProgressBarMain(props) {
 		labelColor,
 		percentagePosition,
 		isStripe,
+		showPercentage,
 	};
 
 	const percentagePositionOptions = [
@@ -189,7 +191,14 @@ function ProgressBarMain(props) {
 								</ButtonGroup>
 							</PanelRow> */}
 							<br />
-							{!isStyleCircle && !isStyleHalfCircle && (
+							<ToggleControl
+								checked={showPercentage}
+								label={__("Show Percentage", "ultimate-blocks")}
+								onChange={() =>
+									setAttributes({ showPercentage: !showPercentage })
+								}
+							/>
+							{!isStyleCircle && !isStyleHalfCircle && showPercentage && (
 								<CustomToggleGroupControl
 									label={__("Percentage Position", "ultimate-blocks")}
 									attributeKey="percentagePosition"
@@ -365,6 +374,10 @@ registerBlockType("ub/progress-bar", {
 		isStripe: {
 			type: "boolean",
 			default: false,
+		},
+		showPercentage: {
+			type: "boolean",
+			default: true,
 		},
 		barBorderRadius: {
 			type: "object",
