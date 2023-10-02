@@ -2,8 +2,9 @@ name: Development Build
 
 on:
   push:
-    branches:
-      - phpunit-workflow-implementation
+    branches: [ "v*" ]
+  pull_request:
+    branches: [ "v*" ]
 
 jobs:
   branch-check:
@@ -31,25 +32,16 @@ jobs:
     needs: branch-check
 
   php-tests:
-    name: PHP Tests
+    uses: ./.github/workflows/php-tests-template.yml
     needs: server-setup
-    runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Clear vendor directory
-        run: rm -rf vendor
-
-      - name: Install composer dev dependencies
-        run: composer install
-
-      - name: Run PHP tests
-        run: composer test
+  js-tests:
+    uses: ./.github/workflows/js-tests-template.yml
+    needs: server-setup
 
   build:
     name: Build plugin for development
-    needs: php-tests
+    needs: [ php-tests , js-tests ]
     runs-on: ubuntu-latest
 
     steps:

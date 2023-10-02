@@ -7,43 +7,36 @@ on:
     branches: [ master ]
 
 jobs:
+  server-setup:
+    uses: ./.github/workflows/server-setup-template.yml
+    needs: branch-check
+
+  php-tests:
+    uses: ./.github/workflows/php-tests-template.yml
+    needs: server-setup
+
+  js-tests:
+    uses: ./.github/workflows/js-tests-template.yml
+    needs: server-setup
+
   build:
+    needs: [ php-tests , js-tests ]
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
-
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
-      - name: Remove PHP vendor directory
+      - name: Clear vendor directory
         run: rm -rf vendor
-
-      - name: Install Composer
-        run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php
-          php -r "unlink('composer-setup.php');"
-          mv composer.phar /usr/local/bin/composer
 
       - name: Install composer non-dev dependencies
         run: composer install --no-dev
 
-      - name: Build
-        run: |
-          npm ci -f
-          npm run build
+      - name: Install NPM dependencies
+        run: npm ci -f
+
+      - name: Build JS
+        run: npm run build
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
