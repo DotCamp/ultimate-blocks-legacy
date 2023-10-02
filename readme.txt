@@ -3,7 +3,7 @@ Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, 
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 3.0.4
+Stable tag: 3.0.5-dev
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -14,13 +14,13 @@ Custom Gutenberg Blocks for Bloggers and Marketers. Create Better Content With T
 
 [Get Pro](https://ultimateblocks.com/pricing/) | [Documentation](https://ultimateblocks.com/docs/)
 
-Ultimate Blocks is a powerhouse for bloggers and marketers using WordPress. It's not just a plugin, it's a toolkit to skyrocket user engagement and simplify content creation. 
+Ultimate Blocks is a powerhouse for bloggers and marketers using WordPress. It's not just a plugin, it's a toolkit to skyrocket user engagement and simplify content creation.
 
-With Ultimate Blocks, you're not just adding functionalities; you're crafting experiences. 
+With Ultimate Blocks, you're not just adding functionalities; you're crafting experiences.
 
-From interactive content filters, captivating call-to-actions, to social sharing made effortless, every block is a step towards a more engaging and visually appealing website. 
+From interactive content filters, captivating call-to-actions, to social sharing made effortless, every block is a step towards a more engaging and visually appealing website.
 
-It's about making every visit count, every interaction memorable, and every content piece a breeze to create and manage. 
+It's about making every visit count, every interaction memorable, and every content piece a breeze to create and manage.
 
 Transform your WordPress journey; let Ultimate Blocks be the catalyst for your website's success.
 
