@@ -1,1 +1,1 @@
-{"version":3,"file":"priority.build.js","mappings":";;;;;AAAA,sD","sources":["webpack://ultimate-blocks/./src/priority.js"],"sourcesContent":["// for functionality with priority over any other ones\r\n"],"names":[],"sourceRoot":""}
+{"version":3,"file":"priority.build.js","mappings":";;;;;AAAA,sD","sources":["webpack://ultimate-blocks/./src/priority.js"],"sourcesContent":["// for functionality with priority over any other ones\n"],"names":[],"sourceRoot":""}

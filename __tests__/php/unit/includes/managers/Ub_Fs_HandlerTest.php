@@ -4,6 +4,7 @@ namespace Ultimate_Blocks\includes\managers;
 
 use Ultimate_Blocks\__tests__\php\test_bases\TestBase;
 use Brain\Monkey\Functions;
+use Brain\Monkey\Filters;
 
 /**
  * Test class for Ub_Fs_Handler.
@@ -96,8 +97,18 @@ class Ub_Fs_HandlerTest extends TestBase {
 		/** Test:end */
 	}
 
-	public function testFilesystemMethodFilter(  ) {
-		$this->markTestIncomplete();
+	public function testFilesystemMethodFilter() {
+		Filters\expectApplied( 'filesystem_method' )
+			->once()
+			->andReturn( 'direct' );
+
+		apply_filters( 'filesystem_method', 'ftpext', [ Ub_Fs_Handler::IDENTIFIER => true ] );
+
+		Filters\expectApplied( 'filesystem_method' )
+			->once()
+			->andReturn( 'ftpext' );
+
+		apply_filters( 'filesystem_method', 'ftpext' );
 	}
 }
 
