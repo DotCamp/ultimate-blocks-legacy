@@ -1735,7 +1735,7 @@ $defaultValues = array(
 			),
 			'iconShape'          => array(
 				'type'    => 'string',
-				'default' => 'circle',
+				'default' => 'none',
 			),
 			'align'              => array(
 				'type'    => 'string',
@@ -1754,11 +1754,11 @@ $defaultValues = array(
 			),
 			'useCaptions'        => array(
 				'type'    => 'boolean',
-				'default' => false
+				'default' => true
 			),
 			'addOutline'         => array(
 				'type'    => 'boolean',
-				'default' => false
+				'default' => true
 			)
 		)
 	),

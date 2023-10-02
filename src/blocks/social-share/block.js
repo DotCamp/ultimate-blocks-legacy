@@ -221,9 +221,7 @@ function SocialShareMain(props) {
 	};
 
 	useEffect(() => {
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -286,7 +284,10 @@ function SocialShareMain(props) {
 
 registerBlockType("ub/social-share", {
 	title: __("Social Share"),
-	description: __("Add social share buttons in your posts and pages with this block.", "ultimate-blocks"),
+	description: __(
+		"Add social share buttons in your posts and pages with this block.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("social"), __("share"), __("Ultimate Blocks")],
@@ -349,7 +350,7 @@ registerBlockType("ub/social-share", {
 		},
 		iconShape: {
 			type: "string",
-			default: "circle", //available options: square, none
+			default: "none", //available options: square, none
 		},
 		align: {
 			type: "string",
@@ -368,11 +369,11 @@ registerBlockType("ub/social-share", {
 		},
 		useCaptions: {
 			type: "boolean",
-			default: false,
+			default: true,
 		},
 		addOutline: {
 			type: "boolean",
-			default: false, //default should be false
+			default: true, //default should be false
 		},
 		buttonColor: {
 			type: "string",
