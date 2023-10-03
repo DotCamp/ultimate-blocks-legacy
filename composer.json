@@ -5,7 +5,8 @@
 	"license": "GPL3+",
 	"scripts": {
 		"test": "phpunit",
-		"phpcs-check": "phpcs --standard=.phpcs.xml --extensions=php --ignore=vendor/*,node_modules/*,__tests__/* ."
+		"lint": "@phpcs-check",
+		"phpcs-check": "phpcs -p --standard=.phpcs.xml --extensions=php --ignore=vendor/*,node_modules/*,__tests__/*,dist/*,bundle-dist/*,zip/*,library/*,.parcel-cache/*,.idea/*,languages/*,src/common.php ."
 	},
 	"require": {
 		"vlucas/phpdotenv": "^5.5",
