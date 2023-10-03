@@ -2316,5 +2316,33 @@ $defaultValues = array(
 				'default'	=> 0
 			),
 		)
-	)
+		),
+		'ub/counter'	 => array(
+			'attributes' => array (
+				'startNumber' => array(
+					'type' => 'string',
+					'default' => '0'
+				),
+				'endNumber' => array(
+					'type' => 'string',
+					'default' => '500'
+				),
+				'prefix' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'suffix' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'animationDuration' => array(
+					'type' => 'number',
+					'default' => 2
+				),
+				'alignment' => array(
+					'type' => 'string',
+					'default' => 'center'
+				)
+			)
+		)
 );

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ub/counter",
+  "title": "Counter",
+  "category": "ultimateblocks",
+  "description": "Ultimate counter block.",
+  "keywords": [
+    "counter",
+    "ultimate counter"
+  ],
+  "attributes": {
+    "startNumber": {
+      "type": "string",
+      "default": "0"
+    },
+    "endNumber": {
+      "type": "string",
+      "default": "500"
+    },
+    "prefix": {
+      "type": "string",
+      "default": ""
+    },
+    "suffix": {
+      "type": "string",
+      "default": ""
+    },
+    "animationDuration": {
+      "type": "number",
+      "default": 2
+    },
+    "alignment": {
+      "type": "string",
+      "default": "center"
+    }
+  },
+  "supports": {
+    "align": true,
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "__experimentalFontFamily": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalFontStyle": true,
+      "__experimentalFontWeight": true,
+      "__experimentalLetterSpacing": true,
+      "__experimentalTextTransform": true,
+      "__experimentalDefaultControls": {
+        "fontSize": true
+      }
+    },
+    "color": {
+      "gradients": true,
+      "link": true,
+      "__experimentalDefaultControls": {
+        "background": true,
+        "text": true
+      }
+    }
+  },
+  "viewScript": [
+    "ub-counter-frontend-script"
+  ]
+}
