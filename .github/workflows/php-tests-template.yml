@@ -21,5 +21,5 @@ jobs:
       - name: Run PHP tests
         run: composer test
 
-      - name: Run PHP compatibility
+      - name: Check PHP compatibility
         run: composer run lint
