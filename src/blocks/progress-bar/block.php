@@ -15,10 +15,10 @@ function ub_generate_css_string($styles) {
 }
 function ub_progress_bar_styles($attributes){
     $styles = [
-        '--ub-bar-top-left-radius'      => $attributes['barBorderRadius']['topLeft'] ?? '',
-        '--ub-bar-top-right-radius'     => $attributes['barBorderRadius']['topRight'] ?? '',
-        '--ub-bar-bottom-left-radius'   => $attributes['barBorderRadius']['bottomLeft'] ?? '',
-        '--ub-bar-bottom-right-radius'  => $attributes['barBorderRadius']['bottomRight'] ?? '',
+        '--ub-bar-top-left-radius'      => isset( $attributes['barBorderRadius']['topLeft'] ) ? $attributes['barBorderRadius']['topLeft'] : '',
+        '--ub-bar-top-right-radius'     => isset( $attributes['barBorderRadius']['topRight'] ) ? $attributes['barBorderRadius']['topRight'] : '',
+        '--ub-bar-bottom-left-radius'   => isset( $attributes['barBorderRadius']['bottomLeft'] ) ? $attributes['barBorderRadius']['bottomLeft'] : '',
+        '--ub-bar-bottom-right-radius'  => isset( $attributes['barBorderRadius']['bottomRight'] ) ? $attributes['barBorderRadius']['bottomRight'] : '',
     ];
     return ub_generate_css_string($styles);
 }
@@ -41,11 +41,11 @@ function ub_render_progress_bar_block($attributes){
     $top_percentage = $percentage_position === 'top'  ? $percentage_text : "";
     $bottom_percentage = $percentage_position === 'bottom' || $percentage_position === 'inside' ? $percentage_text : "";
 
-    $stripe_element = $is_stripe ? 
+    $stripe_element = $is_stripe ?
         '<foreignObject width="100%" height="100%">
 			<div class="ub_progress-bar-line-stripe" ></div>
 		</foreignObject>' : '';
-    
+
     if(!$is_style_circle && !$is_style_half_circle){
         $progressBarPath = 'M' . ($barThickness / 2) . ',' . ($barThickness / 2)
                             . 'L' . (100 - $barThickness / 2) . ',' . ($barThickness / 2);
@@ -83,7 +83,7 @@ function ub_render_progress_bar_block($attributes){
 
         $chosenProgressBar = '<div class="' . $blockName . '-container" ' . ($blockID === '' ? 'style="height: ' . $circleSize . 'px; width: ' . $circleSize . 'px;"' : 'id="' . $blockID . '"') . '>
             <svg class="' . $blockName . '-circle" height="' . $circleSize . '" width="' . $circleSize . '" viewBox="0 0 100 100">
-                <path class="' . $blockName . '-circle-trail" d="' . $halfCircleProgressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . ($barThickness + 2) . '"'. 
+                <path class="' . $blockName . '-circle-trail" d="' . $halfCircleProgressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . ($barThickness + 2) . '"'.
                 ($blockID === '' ? ' style="stroke-dasharray: ' . $halfCirclePathLength . 'px,' . $halfCirclePathLength . 'px"':'') . '/>
                 <path class="' . $blockName . '-circle-path" d="' . $halfCircleProgressBarPath . '" stroke="' . $barColor . '"
                     stroke-width="' . ($barThickness + 2) . '" stroke-linecap="butt"'.
@@ -92,7 +92,7 @@ function ub_render_progress_bar_block($attributes){
             <div class="' . $blockName . '-label">' . $percentage . '%</div></div>';
 
         }
-    
+
     $block_styles = ub_progress_bar_styles($attributes);
 
     return '<div style="' . $block_styles . '" class="ub_progress-bar' . (isset($className) ? ' ' . esc_attr($className) : '').
