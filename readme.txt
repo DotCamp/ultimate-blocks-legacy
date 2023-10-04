@@ -143,6 +143,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.6 =
+
+* FIX: An issue affecting content toggle block for <WordPress5.9 servers.
+
 = 3.0.5 =
 
 * FIX: An issue affecting servers with PHP version <7.3.
