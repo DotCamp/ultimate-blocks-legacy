@@ -145,6 +145,7 @@ That's it. You're done!
 
 = 3.0.5 =
 
+* FIX: PHP warning in how to block.
 * FIX: An issue affecting servers with PHP version <7.3.
 
 = 3.0.4 =
