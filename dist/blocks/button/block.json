@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ub/button",
+  "title": "Button (Improved)",
+  "category": "ultimateblocks",
+  "description": "Add amazing buttons that convert more. Comes with an option to add multiple buttons.",
+  "keywords": [
+    "Button",
+    "Buttons",
+    "Ultimate Blocks"
+  ],
+  "attributes": {
+    "blockID": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Button Text"
+    },
+    "align": {
+      "type": "string",
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "size": {
+      "type": "string",
+      "default": "medium"
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": "#313131"
+    },
+    "buttonHoverColor": {
+      "type": "string",
+      "default": "#313131"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "buttonTextHoverColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "buttonRounded": {
+      "type": "boolean",
+      "default": true
+    },
+    "chosenIcon": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "left"
+    },
+    "buttonIsTransparent": {
+      "type": "boolean",
+      "default": false
+    },
+    "addNofollow": {
+      "type": "boolean",
+      "default": false
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonWidth": {
+      "type": "string",
+      "default": "flex"
+    },
+    "buttons": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "supports": {}
+}

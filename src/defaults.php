@@ -313,7 +313,11 @@ $defaultValues = array(
 			'buttonWidth'          => array(
 				'type'    => 'string',
 				'default' => 'fixed'
-			)
+			),
+			'buttons'			   => array(
+				'type'	=> 'array',
+				'default' => array()
+			),
 		)
 	),
 	'ub/call-to-action-block'       => array(
