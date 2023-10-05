@@ -358,7 +358,9 @@ function ub_merge_faqpages() {
  * @return array block context
  */
 function content_toggle_panel_context( $current_context, $current_block, $parent_block = null ) {
-	if ( 'ub/content-toggle-panel-block' === $current_block['blockName'] ) {
+	$target_content_toggle_parts = array( 'ub/content-toggle-panel-block', 'ub/content-toggle-panel' );
+
+	if ( in_array( $current_block['blockName'], $target_content_toggle_parts, true ) ) {
 		if ( ! isset( $current_context['parentID'] ) && ! is_null( $parent_block ) ) {
 			$current_context['parentID'] = $parent_block->parsed_block['attrs']['blockID'];
 		}
