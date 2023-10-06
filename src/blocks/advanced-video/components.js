@@ -1,9 +1,15 @@
 import { convertFromSeconds } from "../../common";
 import { get } from "lodash";
 import { useState, useEffect } from "react";
+import { useSelect } from "@wordpress/data";
 const { __ } = wp.i18n;
-const { MediaUpload, MediaUploadCheck, InspectorControls, ColorPalette } =
-	wp.blockEditor || wp.editor;
+const {
+	MediaUpload,
+	MediaUploadCheck,
+	InspectorControls,
+	ColorPalette,
+	useBlockProps,
+} = wp.blockEditor || wp.editor;
 const {
 	Button,
 	RangeControl,
@@ -295,16 +301,20 @@ export function AdvancedVideoBlock(props) {
 	const [currentBorder, setCurrentBorder] = useState("");
 	const [currentCorner, setCurrentCorner] = useState("");
 	const [useShadow, setShadowStatus] = useState(false);
+	const blockProps = useBlockProps();
+	const { attributes, setAttributes } = props;
+	const { block } = useSelect((select) => {
+		const { getBlock } = select("core/block-editor") || select("core/editor");
 
-	const { attributes, setAttributes, block } = props;
-
+		return {
+			block: getBlock(props.clientId),
+		};
+	});
 	const {
 		blockID,
-
 		videoId,
 		url,
 		videoEmbedCode,
-
 		showPlayerControls,
 		topBorderSize,
 		leftBorderSize,
@@ -1796,196 +1806,198 @@ export function AdvancedVideoBlock(props) {
 					)}
 				</PanelBody>
 			</InspectorControls>
-			{url === "" && (
-				<>
-					<div>{__("Select Video Source")}</div>
+			<div {...blockProps}>
+				{url === "" && (
+					<>
+						<div>{__("Select Video Source")}</div>
 
-					<div className="ub-advanced-video-input-choices">
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={(media) => {
-									const newWidth = Math.min(600, media.width);
-									const newHeight = Math.round(
-										(media.height * newWidth) / media.width
-									);
+						<div className="ub-advanced-video-input-choices">
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={(media) => {
+										const newWidth = Math.min(600, media.width);
+										const newHeight = Math.round(
+											(media.height * newWidth) / media.width
+										);
 
-									const timeUnits = media.fileLength
-										.split(":")
-										.map((t) => parseInt(t))
-										.reverse();
+										const timeUnits = media.fileLength
+											.split(":")
+											.map((t) => parseInt(t))
+											.reverse();
 
-									const conversionFactor = [1, 60, 3600, 86400];
+										const conversionFactor = [1, 60, 3600, 86400];
 
-									setAttributes({
-										videoId: media.id,
-										url: media.url,
-										width: newWidth,
-										height: newHeight,
-										videoLength: timeUnits.reduce(
-											(total, curr, i) => total + curr * conversionFactor[i],
-											0
-										),
-										videoEmbedCode: `<video ${
-											showPlayerControls ? "controls" : ""
-										} width="${newWidth}" height="${newHeight}"><source src="${
-											media.url
-										}"></video>`,
-										videoSource: "local",
-									});
-								}}
-								allowedTypes={["video"]}
-								value={videoId}
-								render={({ open }) => (
-									<Button isPrimary icon="video-alt2" onClick={open}>
-										{__("Upload Local Video")}
-									</Button>
-								)}
-							/>
-						</MediaUploadCheck>
+										setAttributes({
+											videoId: media.id,
+											url: media.url,
+											width: newWidth,
+											height: newHeight,
+											videoLength: timeUnits.reduce(
+												(total, curr, i) => total + curr * conversionFactor[i],
+												0
+											),
+											videoEmbedCode: `<video ${
+												showPlayerControls ? "controls" : ""
+											} width="${newWidth}" height="${newHeight}"><source src="${
+												media.url
+											}"></video>`,
+											videoSource: "local",
+										});
+									}}
+									allowedTypes={["video"]}
+									value={videoId}
+									render={({ open }) => (
+										<Button isPrimary icon="video-alt2" onClick={open}>
+											{__("Upload Local Video")}
+										</Button>
+									)}
+								/>
+							</MediaUploadCheck>
 
-						<Button
-							isPrimary
-							icon="embed-video"
-							onClick={() => setVideoURLStatus(!enterVideoURL)}
-						>
-							{__("Insert Video URL")}
-						</Button>
-					</div>
-					{enterVideoURL && (
-						<div className="ub-advanced-video-url-input">
-							<input
-								type="url"
-								placeholder={__("Insert Video URL")}
-								value={videoURLInput}
-								onChange={(e) => setVideoURLInput(e.target.value)}
-								onKeyDown={(e) => {
-									if (e.key === "Enter") {
-										checkVideoURLInput();
-									}
-								}}
-							/>
 							<Button
-								icon={"editor-break"}
-								label={__("Apply", "ultimate-blocks")}
-								onClick={checkVideoURLInput}
-							/>
+								isPrimary
+								icon="embed-video"
+								onClick={() => setVideoURLStatus(!enterVideoURL)}
+							>
+								{__("Insert Video URL")}
+							</Button>
 						</div>
-					)}
-				</>
-			)}
-			<div
-				id={`ub-advanced-video-${blockID}`}
-				className={`ub-advanced-video-container${
-					autofit
-						? ` ub-advanced-video-autofit${
-								["youtube", "dailymotion", "vimeo"].includes(videoSource)
-									? `-${videoSource}`
-									: ""
-						  }`
-						: ""
-				}`}
-				dangerouslySetInnerHTML={{
-					__html:
-						videoEmbedCode ||
-						"<p>If a valid video source is entered, the video should appear here</p>",
-				}}
-				style={Object.assign(
-					autofit ? autofitContainerStyle : { width: `${width}%` },
-					[
-						topBorderSize,
-						leftBorderSize,
-						rightBorderSize,
-						bottomBorderSize,
-					].filter((s) => s > 0).length > 0
-						? {
-								borderTop: `${topBorderSize}px ${topBorderStyle} ${topBorderColor}`,
-								borderLeft: `${leftBorderSize}px ${leftBorderStyle} ${leftBorderColor}`,
-								borderRight: `${rightBorderSize}px ${rightBorderStyle} ${rightBorderColor}`,
-								borderBottom: `${bottomBorderSize}px ${bottomBorderStyle} ${bottomBorderColor}`,
-								borderTopLeftRadius: `${topLeftRadius}px`,
-								borderTopRightRadius: `${topRightRadius}px`,
-								borderBottomLeftRadius: `${bottomLeftRadius}px`,
-								borderBottomRightRadius: `${bottomRightRadius}px`,
-						  }
-						: {},
-					shadow[0].radius > 0
-						? {
-								boxShadow: `${
-									shadow[0].radius *
-									Math.cos(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
-								}px ${
-									-shadow[0].radius *
-									Math.sin(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
-								}px ${shadow[0].blur}px ${shadow[0].spread}px rgba(${parseInt(
-									"0x" + shadow[0].color.substring(1, 3)
-								)}, ${parseInt(
-									"0x" + shadow[0].color.substring(3, 5)
-								)}, ${parseInt("0x" + shadow[0].color.substring(5, 7))}, ${
-									(100 - shadow[0].transparency) / 100
-								})`,
-						  }
-						: {}
+						{enterVideoURL && (
+							<div className="ub-advanced-video-url-input">
+								<input
+									type="url"
+									placeholder={__("Insert Video URL")}
+									value={videoURLInput}
+									onChange={(e) => setVideoURLInput(e.target.value)}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											checkVideoURLInput();
+										}
+									}}
+								/>
+								<Button
+									icon={"editor-break"}
+									label={__("Apply", "ultimate-blocks")}
+									onClick={checkVideoURLInput}
+								/>
+							</div>
+						)}
+					</>
 				)}
-			/>
-			{autofit && extraEmbeds}
-			{url !== "" && (
-				<div>
-					<p>{`${__("Video URL: ")}${url}`}</p>
-					<button
-						onClick={() => {
-							setAttributes({
-								url: "",
-								videoEmbedCode: "",
-								videoId: -1,
-								videoSource: "",
-								preserveAspectRatio: false,
-								autofit: false,
-								autoplay: false,
-								showPlayerControls: true,
-								startTime: 0,
-								mute: false,
-								loop: false,
-								thumbnail: "",
-								thumbnailId: -1,
+				<div
+					id={`ub-advanced-video-${blockID}`}
+					className={`ub-advanced-video-container${
+						autofit
+							? ` ub-advanced-video-autofit${
+									["youtube", "dailymotion", "vimeo"].includes(videoSource)
+										? `-${videoSource}`
+										: ""
+							  }`
+							: ""
+					}`}
+					dangerouslySetInnerHTML={{
+						__html:
+							videoEmbedCode ||
+							"<p>If a valid video source is entered, the video should appear here</p>",
+					}}
+					style={Object.assign(
+						autofit ? autofitContainerStyle : { width: `${width}%` },
+						[
+							topBorderSize,
+							leftBorderSize,
+							rightBorderSize,
+							bottomBorderSize,
+						].filter((s) => s > 0).length > 0
+							? {
+									borderTop: `${topBorderSize}px ${topBorderStyle} ${topBorderColor}`,
+									borderLeft: `${leftBorderSize}px ${leftBorderStyle} ${leftBorderColor}`,
+									borderRight: `${rightBorderSize}px ${rightBorderStyle} ${rightBorderColor}`,
+									borderBottom: `${bottomBorderSize}px ${bottomBorderStyle} ${bottomBorderColor}`,
+									borderTopLeftRadius: `${topLeftRadius}px`,
+									borderTopRightRadius: `${topRightRadius}px`,
+									borderBottomLeftRadius: `${bottomLeftRadius}px`,
+									borderBottomRightRadius: `${bottomRightRadius}px`,
+							  }
+							: {},
+						shadow[0].radius > 0
+							? {
+									boxShadow: `${
+										shadow[0].radius *
+										Math.cos(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
+									}px ${
+										-shadow[0].radius *
+										Math.sin(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
+									}px ${shadow[0].blur}px ${shadow[0].spread}px rgba(${parseInt(
+										"0x" + shadow[0].color.substring(1, 3)
+									)}, ${parseInt(
+										"0x" + shadow[0].color.substring(3, 5)
+									)}, ${parseInt("0x" + shadow[0].color.substring(5, 7))}, ${
+										(100 - shadow[0].transparency) / 100
+									})`,
+							  }
+							: {}
+					)}
+				/>
+				{autofit && extraEmbeds}
+				{url !== "" && (
+					<div>
+						<p>{`${__("Video URL: ")}${url}`}</p>
+						<button
+							onClick={() => {
+								setAttributes({
+									url: "",
+									videoEmbedCode: "",
+									videoId: -1,
+									videoSource: "",
+									preserveAspectRatio: false,
+									autofit: false,
+									autoplay: false,
+									showPlayerControls: true,
+									startTime: 0,
+									mute: false,
+									loop: false,
+									thumbnail: "",
+									thumbnailId: -1,
 
-								topBorderSize: 0,
-								leftBorderSize: 0,
-								rightBorderSize: 0,
-								bottomBorderSize: 0,
+									topBorderSize: 0,
+									leftBorderSize: 0,
+									rightBorderSize: 0,
+									bottomBorderSize: 0,
 
-								topBorderStyle: "",
-								leftBorderStyle: "",
-								rightBorderStyle: "",
-								bottomBorderStyle: "",
+									topBorderStyle: "",
+									leftBorderStyle: "",
+									rightBorderStyle: "",
+									bottomBorderStyle: "",
 
-								topBorderColor: "",
-								leftBorderColor: "",
-								rightBorderColor: "",
-								bottomBorderColor: "",
+									topBorderColor: "",
+									leftBorderColor: "",
+									rightBorderColor: "",
+									bottomBorderColor: "",
 
-								topLeftRadius: 0,
-								topRightRadius: 0,
-								bottomLeftRadius: 0,
-								bottomRightRadius: 0,
+									topLeftRadius: 0,
+									topRightRadius: 0,
+									bottomLeftRadius: 0,
+									bottomRightRadius: 0,
 
-								shadow: [Object.assign({}, shadow[0], { radius: 0 })],
-							});
-							setVideoURLInput("");
-							setStartTimeStatus(false);
-							setStartTime_d(0);
-							setStartTime_h(0);
-							setStartTime_m(0);
-							setStartTime_s(0);
-							setShadowStatus(false);
-							setCustomThumbnailStatus(false);
-							setImageURLInputStatus(false);
-							setImageURLInput("");
-						}}
-					>
-						{__("Replace")}
-					</button>
-				</div>
-			)}
+									shadow: [Object.assign({}, shadow[0], { radius: 0 })],
+								});
+								setVideoURLInput("");
+								setStartTimeStatus(false);
+								setStartTime_d(0);
+								setStartTime_h(0);
+								setStartTime_m(0);
+								setStartTime_s(0);
+								setShadowStatus(false);
+								setCustomThumbnailStatus(false);
+								setImageURLInputStatus(false);
+								setImageURLInput("");
+							}}
+						>
+							{__("Replace")}
+						</button>
+					</div>
+				)}
+			</div>
 		</>
 	);
 }

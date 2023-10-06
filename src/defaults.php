@@ -244,8 +244,20 @@ $defaultValues = array(
 			'channelId'  => array(
 				'type'    => 'string',
 				'default' => ''
+			),
+			'shadow'	   => array(
+				'type'	=> 'array',
+				'default' => array(
+					array(
+						"angle" => 0,
+						"radius" => 0,
+						"color" => "#000000",
+						"transparency" => 0,
+						"blur" => 0,
+						"spread" => 0
+					)
+				)
 			)
-
 		)
 	),
 	'ub/button'                     => array(
