@@ -5,6 +5,7 @@ const packageJsonAliasMap = require( path.resolve( './package.json' ) ).alias;
 module.exports = {
 	extends: [ 'plugin:@wordpress/eslint-plugin/recommended' ],
 	plugins: [ 'import' ],
+	ignorePatterns: [ 'node_modules/', 'dist/', 'bundle-dist/', 'vendor/' ],
 	parser: '@babel/eslint-parser',
 	parserOptions: {
 		requireConfigFile: false,

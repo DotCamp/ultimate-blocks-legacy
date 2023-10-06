@@ -10,7 +10,7 @@
 		"build": "wp-scripts build && node recompile.js && npm run bundle_additional_build && npm run compress-plugin-prod",
 		"compress-plugin-dev": "cross-env NODE_ENV=development node ./pluginCompress.js ultimate-blocks.zip",
 		"compress-plugin-prod": "cross-env NODE_ENV=production node ./pluginCompress.js ultimate-blocks.zip",
-		"lint:settings-menu": "eslint ./admin/js/src/",
+		"lint:settings-menu": "eslint ./admin/js/src/ --fix",
 		"lint": "concurrently 'npm run lint:settings-menu'"
 	},
 	"alias": {
@@ -21,6 +21,12 @@
 		"$Styles": "./admin/css/src/",
 		"$Library": "./library",
 		"$EditorComponents": "./src/inc/components"
+	},
+	"gitHooks": {
+		"pre-commit": "lint-staged"
+	},
+	"lint-staged": {
+		"./admin/js/src/**/*.js": "eslint --fix"
 	},
 	"dependencies": {
 		"@babel/core": "^7.18.2",
@@ -69,12 +75,14 @@
 		"gulp-sort": "^2.0.0",
 		"gulp-wp-pot": "^2.5.0",
 		"ignore-emit-webpack-plugin": "^2.0.6",
+		"lint-staged": "^14.0.1",
 		"mini-css-extract-plugin": "^2.6.0",
 		"parcel": "^2.7.0",
 		"path": "^0.12.7",
 		"postcss-loader": "^7.0.0",
 		"postcss-preset-env": "^7.7.0",
 		"sass": "^1.52.1",
-		"sass-loader": "^13.0.0"
+		"sass-loader": "^13.0.0",
+		"yorkie": "^2.0.0"
 	}
 }
