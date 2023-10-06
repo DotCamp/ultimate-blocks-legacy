@@ -35,6 +35,7 @@ import {
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { loadPromise, models } from "@wordpress/api";
+import { useSelect } from "@wordpress/data";
 
 export const allIcons = Object.assign(fas, fab);
 
@@ -130,23 +131,23 @@ export const inspectorControls = (props) => {
 		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
 		20
 	);
-	console.log(buttons, activeButtonIndex);
+
 	const normalColorPanels = buttons.length && activeButtonIndex > -1 && (
 		<>
 			<p>
 				{__("Button Color", "ultimate-blocks")}
-				{!isEmpty(buttons[activeButtonIndex].buttonColor) && (
+				{buttons[activeButtonIndex]?.buttonColor && (
 					<span
 						class="component-color-indicator"
-						aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
+						aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonColor})`}
 						style={{
-							background: buttons[activeButtonIndex].buttonColor,
+							background: buttons[activeButtonIndex]?.buttonColor,
 						}}
 					/>
 				)}
 			</p>
 			<ColorPalette
-				value={buttons[activeButtonIndex].buttonColor}
+				value={buttons[activeButtonIndex]?.buttonColor}
 				onChange={(colorValue) =>
 					setAttributes({
 						buttons: [
@@ -159,22 +160,22 @@ export const inspectorControls = (props) => {
 					})
 				}
 			/>
-			{!buttons[activeButtonIndex].buttonIsTransparent && (
+			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
 				<>
 					<p>
 						{__("Button Text Color", "ultimate-blocks")}
-						{buttons[activeButtonIndex].buttonTextColor && (
+						{buttons[activeButtonIndex]?.buttonTextColor && (
 							<span
 								class="component-color-indicator"
-								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
+								aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonTextColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextColor,
+									background: buttons[activeButtonIndex]?.buttonTextColor,
 								}}
 							/>
 						)}
 					</p>
 					<ColorPalette
-						value={buttons[activeButtonIndex].buttonTextColor}
+						value={buttons[activeButtonIndex]?.buttonTextColor}
 						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
@@ -196,18 +197,18 @@ export const inspectorControls = (props) => {
 		<>
 			<p>
 				{__("Button Color", "ultimate-blocks")}
-				{buttons[activeButtonIndex].buttonHoverColor && (
+				{buttons[activeButtonIndex]?.buttonHoverColor && (
 					<span
 						class="component-color-indicator"
-						aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
+						aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonHoverColor})`}
 						style={{
-							background: buttons[activeButtonIndex].buttonHoverColor,
+							background: buttons[activeButtonIndex]?.buttonHoverColor,
 						}}
 					/>
 				)}
 			</p>
 			<ColorPalette
-				value={buttons[activeButtonIndex].buttonHoverColor}
+				value={buttons[activeButtonIndex]?.buttonHoverColor}
 				onChange={(colorValue) =>
 					setAttributes({
 						buttons: [
@@ -220,22 +221,22 @@ export const inspectorControls = (props) => {
 					})
 				}
 			/>
-			{!buttons[activeButtonIndex].buttonIsTransparent && (
+			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
 				<>
 					<p>
 						{__("Button Text Color", "ultimate-blocks")}
-						{buttons[activeButtonIndex].buttonTextHoverColor && (
+						{buttons[activeButtonIndex]?.buttonTextHoverColor && (
 							<span
 								class="component-color-indicator"
-								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
+								aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonTextHoverColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextHoverColor,
+									background: buttons[activeButtonIndex]?.buttonTextHoverColor,
 								}}
 							/>
 						)}
 					</p>
 					<ColorPalette
-						value={buttons[activeButtonIndex].buttonTextHoverColor}
+						value={buttons[activeButtonIndex]?.buttonTextHoverColor}
 						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
@@ -517,14 +518,14 @@ export const inspectorControls = (props) => {
 				<PanelBody title={__("Colors", "ultimate-blocks")} initialOpen={false}>
 					<ToggleControl
 						label={__("Transparent", "ultimate-blocks")}
-						checked={buttons[activeButtonIndex].buttonIsTransparent}
+						checked={buttons[activeButtonIndex]?.buttonIsTransparent}
 						onChange={() =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
 									Object.assign({}, buttons[activeButtonIndex], {
 										buttonIsTransparent:
-											!buttons[activeButtonIndex].buttonIsTransparent,
+											!buttons[activeButtonIndex]?.buttonIsTransparent,
 									}),
 									...buttons.slice(activeButtonIndex + 1),
 								],
@@ -888,8 +889,8 @@ export function EditorComponent(props) {
 
 			return {
 				getBlock,
-				block: getBlock(ownProps.clientId),
-				parentID: getBlockRootClientId(ownProps.clientId),
+				block: getBlock(props.clientId),
+				parentID: getBlockRootClientId(props.clientId),
 				getClientIdsWithDescendants,
 				getBlocks,
 			};
@@ -940,18 +941,18 @@ export function EditorComponent(props) {
 		<>
 			<p>
 				{__("Button Color", "ultimate-blocks")}
-				{!isEmpty(buttons[activeButtonIndex].buttonColor) && (
+				{buttons[activeButtonIndex]?.buttonColor && (
 					<span
 						class="component-color-indicator"
-						aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
+						aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonColor})`}
 						style={{
-							background: buttons[activeButtonIndex].buttonColor,
+							background: buttons[activeButtonIndex]?.buttonColor,
 						}}
 					/>
 				)}
 			</p>
 			<ColorPalette
-				value={buttons[activeButtonIndex].buttonColor}
+				value={buttons[activeButtonIndex]?.buttonColor}
 				onChange={(colorValue) =>
 					setAttributes({
 						buttons: [
@@ -964,22 +965,22 @@ export function EditorComponent(props) {
 					})
 				}
 			/>
-			{!buttons[activeButtonIndex].buttonIsTransparent && (
+			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
 				<>
 					<p>
 						{__("Button Text Color", "ultimate-blocks")}
-						{buttons[activeButtonIndex].buttonTextColor && (
+						{buttons[activeButtonIndex]?.buttonTextColor && (
 							<span
 								class="component-color-indicator"
-								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
+								aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonTextColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextColor,
+									background: buttons[activeButtonIndex]?.buttonTextColor,
 								}}
 							/>
 						)}
 					</p>
 					<ColorPalette
-						value={buttons[activeButtonIndex].buttonTextColor}
+						value={buttons[activeButtonIndex]?.buttonTextColor}
 						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
@@ -1001,18 +1002,18 @@ export function EditorComponent(props) {
 		<>
 			<p>
 				{__("Button Color", "ultimate-blocks")}
-				{buttons[activeButtonIndex].buttonHoverColor && (
+				{buttons[activeButtonIndex]?.buttonHoverColor && (
 					<span
 						class="component-color-indicator"
-						aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
+						aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonHoverColor})`}
 						style={{
-							background: buttons[activeButtonIndex].buttonHoverColor,
+							background: buttons[activeButtonIndex]?.buttonHoverColor,
 						}}
 					/>
 				)}
 			</p>
 			<ColorPalette
-				value={buttons[activeButtonIndex].buttonHoverColor}
+				value={buttons[activeButtonIndex]?.buttonHoverColor}
 				onChange={(colorValue) =>
 					setAttributes({
 						buttons: [
@@ -1025,22 +1026,22 @@ export function EditorComponent(props) {
 					})
 				}
 			/>
-			{!buttons[activeButtonIndex].buttonIsTransparent && (
+			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
 				<>
 					<p>
 						{__("Button Text Color", "ultimate-blocks")}
-						{buttons[activeButtonIndex].buttonTextHoverColor && (
+						{buttons[activeButtonIndex]?.buttonTextHoverColor && (
 							<span
 								class="component-color-indicator"
-								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
+								aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonTextHoverColor})`}
 								style={{
-									background: buttons[activeButtonIndex].buttonTextHoverColor,
+									background: buttons[activeButtonIndex]?.buttonTextHoverColor,
 								}}
 							/>
 						)}
 					</p>
 					<ColorPalette
-						value={buttons[activeButtonIndex].buttonTextHoverColor}
+						value={buttons[activeButtonIndex]?.buttonTextHoverColor}
 						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
@@ -1653,14 +1654,14 @@ export function EditorComponent(props) {
 								>
 									<ToggleControl
 										label={__("Transparent", "ultimate-blocks")}
-										checked={buttons[activeButtonIndex].buttonIsTransparent}
+										checked={buttons[activeButtonIndex]?.buttonIsTransparent}
 										onChange={() =>
 											setAttributes({
 												buttons: [
 													...buttons.slice(0, activeButtonIndex),
 													Object.assign({}, buttons[activeButtonIndex], {
 														buttonIsTransparent:
-															!buttons[activeButtonIndex].buttonIsTransparent,
+															!buttons[activeButtonIndex]?.buttonIsTransparent,
 													}),
 													...buttons.slice(activeButtonIndex + 1),
 												],
