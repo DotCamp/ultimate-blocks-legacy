@@ -12,41 +12,41 @@ const { applyFilters } = wp.hooks;
  * @param {Object}               props          component properties
  * @param {Array<Route> | Route} props.children component route children
  */
-function Router({ children }) {
-	const [CurrentRouteContent, setCurrentRouteContent] = useState(null);
+function Router( { children } ) {
+	const [ CurrentRouteContent, setCurrentRouteContent ] = useState( null );
 
 	// url search parameter for page property
-	const [currentPageParameter, setCurrentPageParameter] = useState(null);
+	const [ currentPageParameter, setCurrentPageParameter ] = useState( null );
 
 	// filtered route children only consists of Route components
-	const [routeChildren, setRouteChildren] = useState([]);
+	const [ routeChildren, setRouteChildren ] = useState( [] );
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const page = urlParams.get('page');
-		setCurrentPageParameter(page);
-	}, []);
+	useEffect( () => {
+		const urlParams = new URLSearchParams( window.location.search );
+		const page = urlParams.get( 'page' );
+		setCurrentPageParameter( page );
+	}, [] );
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
-		const filteredChildren = React.Children.toArray(children).filter(
-			(child) => child.type === Route
+	useEffect( () => {
+		const filteredChildren = React.Children.toArray( children ).filter(
+			( child ) => child.type === Route
 		);
 
-		setRouteChildren(filteredChildren);
-	}, [children]);
+		setRouteChildren( filteredChildren );
+	}, [ children ] );
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
+	useEffect( () => {
 		const matchedRouteContent = routeChildren.reduce(
-			(carry, RouteInstance) => {
+			( carry, RouteInstance ) => {
 				if (
 					RouteInstance?.props?.pageParameter === currentPageParameter
 				) {
@@ -65,8 +65,8 @@ function Router({ children }) {
 			currentPageParameter
 		);
 
-		setCurrentRouteContent(finalMatchedRoute);
-	}, [currentPageParameter, routeChildren]);
+		setCurrentRouteContent( finalMatchedRoute );
+	}, [ currentPageParameter, routeChildren ] );
 
 	return CurrentRouteContent;
 }

@@ -12,10 +12,10 @@ import ProContent from '$Components/ProContent';
 function Content() {
 	return (
 		<Router>
-			<Route pageParameter={'ultimate-blocks-settings'}>
+			<Route pageParameter={ 'ultimate-blocks-settings' }>
 				<MainContent />
 			</Route>
-			<Route pageParameter={'ultimate-blocks-settings-pro'}>
+			<Route pageParameter={ 'ultimate-blocks-settings-pro' }>
 				<ProContent />
 			</Route>
 		</Router>

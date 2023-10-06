@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  */
 function BlockCardProInfoControl( { handleClick } ) {
 	return (
+		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
 		<div className={ 'pro-block-card-info-button' } onClick={ handleClick }>
 			<FontAwesomeIcon icon="fa-solid fa-circle-info" />
 		</div>

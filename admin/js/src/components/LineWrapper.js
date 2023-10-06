@@ -6,8 +6,8 @@ import React from 'react';
  * @param {Object}                       props          component properties
  * @param {JSX.Element | Array | string} props.children component children
  */
-function LineWrapper({ children }) {
-	return <div className={'line-wrapper'}>{children} </div>;
+function LineWrapper( { children } ) {
+	return <div className={ 'line-wrapper' }>{ children } </div>;
 }
 
 /**

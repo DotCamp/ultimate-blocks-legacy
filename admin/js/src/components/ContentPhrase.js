@@ -6,8 +6,8 @@ import React from 'react';
  * @param {Object}                       props          component properties
  * @param {JSX.Element | Array | string} props.children component children
  */
-function ContentPhrase({ children }) {
-	return <div className={'content-phrase'}>{children} </div>;
+function ContentPhrase( { children } ) {
+	return <div className={ 'content-phrase' }>{ children } </div>;
 }
 
 /**

@@ -43,6 +43,6 @@ function ToggleControl( {
 }
 
 /**
- * @module ToggleControl;
+ * @module ToggleControl
  */
 export default ToggleControl;

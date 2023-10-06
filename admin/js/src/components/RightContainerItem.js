@@ -4,16 +4,12 @@ import React from 'react';
 /**
  * Menu right container item.
  *
- * @param {Object} props component properties
- * @param {React.ElementType}  props.children component children
- * @constructor
+ * @param {Object}            props          component properties
+ * @param {React.ElementType} props.children component children
+ * @class
  */
 function RightContainerItem( { children } ) {
-	return (
-		<div className={ 'right-container-item' }>
-			{ children }
-		</div>
-	);
+	return <div className={ 'right-container-item' }>{ children }</div>;
 }
 
 /**
