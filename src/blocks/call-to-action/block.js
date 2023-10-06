@@ -16,6 +16,7 @@ import {
 	CallToAction,
 } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
+import metadata from "./block.json";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -37,101 +38,6 @@ const { compose } = wp.compose;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	ub_call_to_action_headline_text: {
-		type: "string",
-		default: "",
-	},
-	ub_cta_content_text: {
-		type: "string",
-		default: "",
-	},
-	ub_cta_button_text: {
-		type: "string",
-		default: "",
-	},
-	headFontSize: {
-		type: "number",
-		default: 30,
-	},
-	headColor: {
-		type: "string",
-		default: "",
-	},
-	headAlign: {
-		type: "string",
-		default: "center",
-	},
-	contentFontSize: {
-		type: "number",
-		default: 15,
-	},
-	contentColor: {
-		type: "string",
-		default: "",
-	},
-	buttonFontSize: {
-		type: "number",
-		default: 14,
-	},
-	buttonColor: {
-		type: "string",
-		default: "#E27330",
-	},
-	buttonTextColor: {
-		type: "string",
-		default: "",
-	},
-	buttonWidth: {
-		type: "number",
-		default: 250,
-	},
-	ctaBackgroundColor: {
-		type: "string",
-		default: "#f8f8f8",
-	},
-	ctaBorderColor: {
-		type: "string",
-		default: "#ECECEC",
-	},
-	ctaBorderSize: {
-		type: "number",
-		default: 2,
-	},
-	url: {
-		type: "string",
-		default: "",
-	},
-	contentAlign: {
-		type: "string",
-		default: "center",
-	},
-	addNofollow: {
-		type: "boolean",
-		default: false,
-	},
-	openInNewTab: {
-		type: "boolean",
-		default: false,
-	},
-	linkIsSponsored: {
-		type: "boolean",
-		default: false,
-	},
-	useHeadingTag: {
-		type: "boolean",
-		default: false,
-	},
-	selectedHeadingTag: {
-		type: "string",
-		default: "h2",
-	},
-};
 
 registerBlockType("ub/call-to-action", {
 	title: __("Call to Action", "ultimate-blocks"),
@@ -306,37 +212,18 @@ registerBlockType("ub/call-to-action", {
 	],
 });
 
-registerBlockType("ub/call-to-action-block", {
-	title: __("Call to Action", "ultimate-blocks"),
-	description: __("Draw attention of visitors to the important stuff with this simple yet effective Call to Action.", "ultimate-blocks"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [
-		__("call to action", "ultimate-blocks"),
-		__("conversion", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks"),
-	],
-	attributes,
 	example: {
 		attributes: {
 			ub_call_to_action_headline_text: "Get Ultimate Blocks Now",
-			ub_cta_content_text: "Ultimate Blocks helps you create better and engaging content with Gutenberg.",
+			ub_cta_content_text:
+				"Ultimate Blocks helps you create better and engaging content with Gutenberg.",
 			ub_cta_button_text: "Download Now",
 			buttonColor: "#e11b4c",
-			buttonTextColor: "#ffffff"
-		}
+			buttonTextColor: "#ffffff",
+		},
 	},
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
-
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
-			};
-		}),
-	])(CallToAction),
+	edit: CallToAction,
 	save: () => null,
 });
