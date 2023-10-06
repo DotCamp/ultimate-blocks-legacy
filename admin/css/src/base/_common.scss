@@ -86,3 +86,7 @@ $screen-2xl: 1536px;
 		text-decoration: none !important;
 	}
 }
+
+.ub-pointer {
+	@extend %pointer;
+}

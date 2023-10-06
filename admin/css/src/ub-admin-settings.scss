@@ -20,7 +20,7 @@
 		grid-template-rows: auto 1fr;
 
 		& > div {
-			padding: 0 100px 0 100px;
+			padding: 0 160px 0 160px;
 			@include screen-max($screen-2xl) {
 				padding: 0 50px 0 50px;
 			}
@@ -49,8 +49,7 @@
 				.ub-plugin-logo-text {
 					font-weight: bold;
 					margin: 0 5px;
-					font-size: 1.6rem;
-
+					font-size: 1.4rem;
 				}
 			}
 
@@ -61,7 +60,12 @@
 				.right-container-item {
 					@extend %flex-center-all;
 					height: 100%;
+
+					&:not(:first-child) {
+						margin-left: 24px;
+					}
 				}
+
 
 				.version-control-container {
 					@extend %flex-center-all-row;
@@ -94,18 +98,11 @@
 					}
 				}
 
-				.blog-info-toggle {
-					@extend %default-transition;
+				.share-node {
 					@extend %pointer;
-					padding: 5px;
-					color: $gray-300;
-
-					&[data-light-it-up='true'] {
-						color: $yellow-500;
-					}
 
 					& svg {
-						@include size(25);
+						@include size(16);
 					}
 				}
 			}

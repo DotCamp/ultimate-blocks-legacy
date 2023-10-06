@@ -25396,6 +25396,7 @@ var _withStore = _interopRequireDefault(require("8e13c56b0b23f46c"));
 var _assets = require("c7228a701ce4de72");
 var _RightContainerItem = _interopRequireDefault(require("80af8803c24a14fe"));
 var _VersionControl = _interopRequireDefault(require("8598ffd360f8ff2b"));
+var _reactFontawesome = require("3ee81ce64fbd9c46");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -25423,7 +25424,13 @@ function _interopRequireDefault(obj) {
         className: "ub-plugin-logo-text"
     }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null))));
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], {
+        classNames: [
+            "share-node"
+        ]
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-share-nodes"
+    }))));
 }
 var selectMapping = function selectMapping(select) {
     return {
@@ -25435,7 +25442,7 @@ var selectMapping = function selectMapping(select) {
  */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping);
 exports["default"] = _default;
 
-},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1","3ee81ce64fbd9c46":"clIT3"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -29594,17 +29601,44 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+} // eslint-disable-next-line no-unused-vars
 /**
  * Menu right container item.
  *
- * @param {Object}            props          component properties
- * @param {React.ElementType} props.children component children
+ * @param {Object}            props            component properties
+ * @param {React.ElementType} props.children   component children
+ * @param {Array}             props.classNames component class names
  * @class
  */ function RightContainerItem(_ref) {
-    var children = _ref.children;
+    var children = _ref.children, _ref$classNames = _ref.classNames, classNames = _ref$classNames === void 0 ? [] : _ref$classNames;
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "right-container-item"
+        className: [
+            "right-container-item"
+        ].concat(_toConsumableArray(classNames)).join(" ")
     }, children);
 }
 /**
