@@ -18,7 +18,6 @@ import VersionControl from '$Components/VersionControl';
  * @param {Function} props.toggleShowInfoStatus toggle showing block controls info, will be supplied via HOC
  * @param {boolean}  props.blockInfoShowStatus  status of showing extra block information, will be supplied via HOC
  * @return {JSX.Element} component
- * @function Object() { [native code] }
  */
 function MenuHeader( { logoUrl, toggleShowInfoStatus, blockInfoShowStatus } ) {
 	return (
@@ -34,18 +33,6 @@ function MenuHeader( { logoUrl, toggleShowInfoStatus, blockInfoShowStatus } ) {
 			<div className={ 'right-container' }>
 				<RightContainerItem>
 					<VersionControl />
-				</RightContainerItem>
-				<RightContainerItem>
-					{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */ }
-					<div
-						onClick={ toggleShowInfoStatus }
-						className={ 'blog-info-toggle' }
-						data-light-it-up={ JSON.stringify(
-							! blockInfoShowStatus
-						) }
-					>
-						<FontAwesomeIcon icon="fa-solid fa-lightbulb" />
-					</div>
 				</RightContainerItem>
 			</div>
 		</div>

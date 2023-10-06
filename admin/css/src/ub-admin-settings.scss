@@ -27,13 +27,14 @@
 		}
 
 		.menu-header {
-			padding-top: 10px;
-			padding-bottom: 10px;
-			@extend %box-shadow-lg;
+			@extend %default-border;
+			border-width: 0 0 1px 0;
+			height: $header_height;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			background-color: $gray-100;
+			background-color: $white;
+
 
 			.logo-container {
 				@extend %flex-center-all;
@@ -60,22 +61,18 @@
 				.right-container-item {
 					@extend %flex-center-all;
 					height: 100%;
-					padding: 0 10px;
-
-					&:not(.right-container-item:last-of-type) {
-						border-right: 2px solid $gray-300;
-					}
 				}
 
 				.version-control-container {
 					@extend %flex-center-all-row;
 
-					& > div {
-						padding: 0 5px;
-					}
-
-					.version-control-text {
-						@extend %unselectable;
+					.ub-header-version-info {
+						@extend %pointer;
+						background-color: $o_gray-50;
+						border-radius: 5px;
+						color: $text-faded-color;
+						font-size: $font-pill-size;
+						padding: 4px 12px;
 					}
 
 					.version-control-status-indicator {
@@ -93,16 +90,6 @@
 
 						&[data-level='high'] {
 							background-color: $red-500;
-						}
-					}
-
-					.version-control-button {
-						@extend %pointer;
-
-						&[data-disabled='true'] {
-							color: $gray-300;
-							cursor: default;
-							pointer-events: none;
 						}
 					}
 				}

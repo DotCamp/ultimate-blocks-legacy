@@ -1,10 +1,15 @@
 @import "../colors";
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
-// text
-$text-color: $gray-600;
-$font-family: 'Lato', sans-serif;
+// font
+$font-family: 'Inter', sans-serif;
+$text-color: $black;
+$text-faded-color: $o_gray-500;
+
+// font sizes
 $font-size: 1rem;
+$font-pill-size: 0.875rem;
+$phrase-font-size: 2.5rem;
 
 // block controls
 $block-control-padding: 20px;
@@ -25,9 +30,9 @@ $versions-icon-size: 2.5rem;
 $version-control-general-font-size: rem;
 
 // others
-$phrase-font-size: 2.5rem;
+$header_height: 80px;
 $logo-height: 40px;
-$border-color: #5F1717;
+$border-color: $o_gray-200;
 
 
 

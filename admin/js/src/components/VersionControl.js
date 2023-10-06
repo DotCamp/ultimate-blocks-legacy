@@ -10,6 +10,7 @@ import VersionControlPopup from '$Components/VersionControlPopup';
 import Portal from '$Components/Portal';
 import { rollbackToVersion } from '$Stores/settings-menu/actions';
 import { __ } from '@wordpress/i18n';
+import HeaderVersionInfo from '$Components/HeaderVersionInfo';
 
 /**
  * Version control component.
@@ -63,33 +64,7 @@ function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 
 	return (
 		<div className={ 'version-control-container' }>
-			<div
-				data-level={ versionLevel }
-				className={ 'version-control-status-indicator' }
-			></div>
-			<div>{ __( 'Version Control: ', 'ultimate-blocks-pro' ) }</div>
-			<div className={ 'version-control-list' }>
-				<select
-					value={ selectedVersion }
-					onChange={ ( e ) => setSelectedVersion( e.target.value ) }
-				>
-					{ sortedVersions.map( ( versionId ) => {
-						return (
-							<option key={ versionId } value={ versionId }>
-								{ versionId }
-							</option>
-						);
-					} ) }
-				</select>
-			</div>
-			{ /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */ }
-			<div
-				onClick={ () => setPopupVisibility( true ) }
-				className={ 'version-control-button' }
-				data-disabled={ JSON.stringify( buttonDisabledStatus() ) }
-			>
-				<FontAwesomeIcon icon="fa-solid fa-circle-chevron-left" />
-			</div>
+			<HeaderVersionInfo currentVersion={ pluginVersion } />
 			{ popupVisibility && (
 				<Portal target={ document.body }>
 					<VersionControlPopup
