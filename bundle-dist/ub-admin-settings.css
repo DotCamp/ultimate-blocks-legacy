@@ -277,6 +277,10 @@
   position: absolute;
 }
 
+.ub-admin-menu-wrapper, .ub-admin-menu-wrapper * {
+  box-sizing: border-box;
+}
+
 .ub-admin-menu-wrapper .ub-admin-menu-container {
   background-color: #fff;
   grid-template-rows: auto 1fr;

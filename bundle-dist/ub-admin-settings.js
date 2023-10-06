@@ -35544,8 +35544,16 @@ function _interopRequireDefault(obj) {
  * @function Object() { [native code] }
  */ function Content() {
     return /*#__PURE__*/ _react["default"].createElement(_Router["default"], null, /*#__PURE__*/ _react["default"].createElement(_Route["default"], {
-        pageParameter: "ultimate-blocks-settings"
-    }, /*#__PURE__*/ _react["default"].createElement(_MainContent["default"], null)));
+        pageParameter: "blocks"
+    }, /*#__PURE__*/ _react["default"].createElement(_MainContent["default"], null)), /*#__PURE__*/ _react["default"].createElement(_Route["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
+        style: {
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+        }
+    }, "404 Route Not Found")));
 }
 /**
  * @module Content
@@ -35678,12 +35686,8 @@ var applyFilters = wp.hooks.applyFilters;
     /**
    * useEffect hook.
    */ (0, _react.useEffect)(function() {
-        var matchedRouteContent = routeChildren.reduce(function(carry, RouteInstance) {
-            var _RouteInstance$props;
-            if ((RouteInstance === null || RouteInstance === void 0 || (_RouteInstance$props = RouteInstance.props) === null || _RouteInstance$props === void 0 ? void 0 : _RouteInstance$props.pageParameter) === currentPageParameter) {
-                var _RouteInstance$props2;
-                carry = RouteInstance === null || RouteInstance === void 0 || (_RouteInstance$props2 = RouteInstance.props) === null || _RouteInstance$props2 === void 0 ? void 0 : _RouteInstance$props2.children;
-            }
+        var matchedRouteContent = routeChildren.reduce(function(carry, RouteInstance, index) {
+            if (RouteInstance.props.pageParameter === currentPageParameter || index === routeChildren.length - 1) carry = RouteInstance.props.children;
             return carry;
         }, null);
         // filter matched route content
@@ -35717,9 +35721,10 @@ function _interopRequireDefault(obj) {
  * @param {Object}                       props                      component properties
  * @param {Array | JSX.Element | string} props.children             component children
  * @param {string | null}                [props.pageParameter=null] url page search parameter related to this route
+ * @param {string}                       props.pageTitle            title of target page
  */ // eslint-disable-next-line no-unused-vars
 function Route(_ref) {
-    var children = _ref.children, _ref$pageParameter = _ref.pageParameter, pageParameter = _ref$pageParameter === void 0 ? null : _ref$pageParameter;
+    var children = _ref.children, _ref$pageParameter = _ref.pageParameter, pageParameter = _ref$pageParameter === void 0 ? null : _ref$pageParameter, pageTitle = _ref.pageTitle;
     return null;
 }
 /**

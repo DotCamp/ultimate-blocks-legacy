@@ -5,9 +5,10 @@ import React from 'react';
  * @param {Object}                       props                      component properties
  * @param {Array | JSX.Element | string} props.children             component children
  * @param {string | null}                [props.pageParameter=null] url page search parameter related to this route
+ * @param {string}                       props.pageTitle            title of target page
  */
 // eslint-disable-next-line no-unused-vars
-function Route( { children, pageParameter = null } ) {
+function Route( { children, pageParameter = null, pageTitle } ) {
 	return null;
 }
 

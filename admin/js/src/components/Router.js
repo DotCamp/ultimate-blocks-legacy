@@ -46,11 +46,13 @@ function Router( { children } ) {
 	 */
 	useEffect( () => {
 		const matchedRouteContent = routeChildren.reduce(
-			( carry, RouteInstance ) => {
+			( carry, RouteInstance, index ) => {
 				if (
-					RouteInstance?.props?.pageParameter === currentPageParameter
+					RouteInstance.props.pageParameter ===
+						currentPageParameter ||
+					index === routeChildren.length - 1
 				) {
-					carry = RouteInstance?.props?.children;
+					carry = RouteInstance.props.children;
 				}
 
 				return carry;
