@@ -1,5 +1,4 @@
 import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
-import { NO_LOCAL_STORAGE_PROP } from '$Components/LocalStorageProvider';
 
 /**
  * Initial store state.
@@ -13,7 +12,6 @@ const initialState = {
 		upsellPopup: {
 			show: false,
 			targetBlock: null,
-			[ NO_LOCAL_STORAGE_PROP ]: true,
 		},
 	},
 	versionControl: {

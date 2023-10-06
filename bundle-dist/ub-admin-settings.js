@@ -151,7 +151,6 @@ var _AdminMenuContainer = _interopRequireDefault(require("5cdb128c8e3827eb"));
 require("600c2f9e1674370c");
 var _AdminMenuWrapper = _interopRequireDefault(require("d1ece749c706e412"));
 var _settingsMenuStore = _interopRequireDefault(require("2da12f694a741c54"));
-var _LocalStorageProvider = _interopRequireDefault(require("d795f4bb48d1079d"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -163,10 +162,10 @@ if (mountPoint) {
     var root = (0, _client.createRoot)(mountPoint);
     root.render(/*#__PURE__*/ _react["default"].createElement(_AdminMenuWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_reactRedux.Provider, {
         store: (0, _settingsMenuStore["default"])()
-    }, /*#__PURE__*/ _react["default"].createElement(_LocalStorageProvider["default"], null, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null)))));
+    }, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null))));
 } else throw new Error("no mount point found for settings menu");
 
-},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","5cdb128c8e3827eb":"7a8vF","600c2f9e1674370c":"cBeYy","d1ece749c706e412":"do7SF","2da12f694a741c54":"7VzQu","d795f4bb48d1079d":"1Y8eP"}],"21dqq":[function(require,module,exports) {
+},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","5cdb128c8e3827eb":"7a8vF","600c2f9e1674370c":"cBeYy","d1ece749c706e412":"do7SF","2da12f694a741c54":"7VzQu"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("a569817e6ea559f6");
 
@@ -25395,8 +25394,6 @@ exports["default"] = void 0;
 var _react = _interopRequireDefault(require("af8ddc31c52e60c1"));
 var _withStore = _interopRequireDefault(require("8e13c56b0b23f46c"));
 var _assets = require("c7228a701ce4de72");
-var _app = require("55c215141c2394e0");
-var _reactFontawesome = require("3ee81ce64fbd9c46");
 var _RightContainerItem = _interopRequireDefault(require("80af8803c24a14fe"));
 var _VersionControl = _interopRequireDefault(require("8598ffd360f8ff2b"));
 function _interopRequireDefault(obj) {
@@ -25408,13 +25405,11 @@ function _interopRequireDefault(obj) {
 /**
  * Settings menu header element.
  *
- * @param {Object}   props                      component properties
- * @param {string}   props.logoUrl              plugin logo url, will be supplied via HOC
- * @param {Function} props.toggleShowInfoStatus toggle showing block controls info, will be supplied via HOC
- * @param {boolean}  props.blockInfoShowStatus  status of showing extra block information, will be supplied via HOC
+ * @param {Object} props         component properties
+ * @param {string} props.logoUrl plugin logo url, will be supplied via HOC
  * @return {JSX.Element} component
  */ function MenuHeader(_ref) {
-    var logoUrl = _ref.logoUrl, toggleShowInfoStatus = _ref.toggleShowInfoStatus, blockInfoShowStatus = _ref.blockInfoShowStatus;
+    var logoUrl = _ref.logoUrl;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "menu-header"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
@@ -25432,21 +25427,15 @@ function _interopRequireDefault(obj) {
 }
 var selectMapping = function selectMapping(select) {
     return {
-        logoUrl: select(_assets.getLogo),
-        blockInfoShowStatus: select(_app.getBlockInfoShowStatus)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        toggleShowInfoStatus: _app.toggleShowBlockInfo
+        logoUrl: select(_assets.getLogo)
     };
 };
 /**
  * @module MenuHeader
- */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
+ */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping);
 exports["default"] = _default;
 
-},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1","55c215141c2394e0":"c28DV","3ee81ce64fbd9c46":"clIT3"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -33374,40 +33363,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _BlockStatusFilterControl = require("865a04ed337dccab");
-var _LocalStorageProvider = require("38bf8676f7b978");
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-function _defineProperty(obj, key, value) {
-    key = _toPropertyKey(key);
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _toPropertyKey(arg) {
-    var key = _toPrimitive(arg, "string");
-    return _typeof(key) === "symbol" ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-    if (_typeof(input) !== "object" || input === null) return input;
-    var prim = input[Symbol.toPrimitive];
-    if (prim !== undefined) {
-        var res = prim.call(input, hint || "default");
-        if (_typeof(res) !== "object") return res;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (hint === "string" ? String : Number)(input);
-}
 /**
  * Initial store state.
  *
@@ -33416,10 +33371,10 @@ function _toPrimitive(input, hint) {
     app: {
         blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
         showBlockInfo: false,
-        upsellPopup: _defineProperty({
+        upsellPopup: {
             show: false,
             targetBlock: null
-        }, _LocalStorageProvider.NO_LOCAL_STORAGE_PROP, true)
+        }
     },
     versionControl: {
         currentVersion: "1.0.0",
@@ -33435,7 +33390,7 @@ function _toPrimitive(input, hint) {
  */ var _default = initialState;
 exports["default"] = _default;
 
-},{"865a04ed337dccab":"hebBQ","38bf8676f7b978":"1Y8eP"}],"hebBQ":[function(require,module,exports) {
+},{"865a04ed337dccab":"hebBQ"}],"hebBQ":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -33797,357 +33752,7 @@ function ActiveFilterIndicator(_ref) {
  */ var _default = ActiveFilterIndicator;
 exports["default"] = _default;
 
-},{"bef92c9b301184af":"21dqq"}],"1Y8eP":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getLocalStorage = exports["default"] = exports.NO_LOCAL_STORAGE_PROP = void 0;
-var _react = _interopRequireWildcard(require("421e80768cf9dbf7"));
-var _withStore = _interopRequireDefault(require("c42512238b4a67cb"));
-var _app = require("3d485e567681faf5");
-var _excluded = [
-    "version"
-];
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {};
-    var target = _objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for(i = 0; i < sourceSymbolKeys.length; i++){
-            key = sourceSymbolKeys[i];
-            if (excluded.indexOf(key) >= 0) continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-            target[key] = source[key];
-        }
-    }
-    return target;
-}
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-} // eslint-disable-next-line no-unused-vars
-// local storage key
-var storageKey = "ubMenuData";
-// local storage data version
-var localStorageVersion = "1.1";
-/**
- * Property key to check if target key will not be written to local storage
- *
- * @type {string}
- */ var NO_LOCAL_STORAGE_PROP = "__no_local_storage";
-/**
- * Strip keys marked as not to write to local storage.
- *
- * @param {Object} data target data
- *
- * @return {Object} stripped data
- */ exports.NO_LOCAL_STORAGE_PROP = NO_LOCAL_STORAGE_PROP;
-var stripNoLocalStorageMarked = function stripNoLocalStorageMarked(data) {
-    var stripKeys = [];
-    /**
-   * Find marked property paths
-   *
-   * @param {any}    targetObject      target object, if no object is supplied to checking will be done
-   * @param {string} currentObjectPath path to current key
-   */ function findStripPaths(targetObject) {
-        var currentObjectPath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-        if (_typeof(targetObject) === "object") {
-            if (targetObject[NO_LOCAL_STORAGE_PROP]) stripKeys.push(currentObjectPath);
-            else Object.keys(targetObject).filter(function(k) {
-                return Object.prototype.hasOwnProperty.call(targetObject, k);
-            })// eslint-disable-next-line array-callback-return
-            .map(function(tKey) {
-                findStripPaths(targetObject[tKey], "".concat(currentObjectPath === "" ? "" : "".concat(currentObjectPath, ".")).concat(tKey));
-            });
-        }
-    }
-    findStripPaths(data);
-    // eslint-disable-next-line array-callback-return
-    stripKeys.map(function(keyPath) {
-        var pathSegments = keyPath.split(".");
-        var lastSegment = pathSegments.pop();
-        var lastParentContainer = data;
-        // eslint-disable-next-line array-callback-return
-        pathSegments.map(function(pS) {
-            lastParentContainer = lastParentContainer[pS];
-        });
-        delete lastParentContainer[lastSegment];
-    });
-    return data;
-};
-/**
- * Get localStorage data for settings menu
- *
- * @return {Object} menu data
- */ var getLocalStorage = function getLocalStorage() {
-    var data = localStorage.getItem(storageKey);
-    if (data) {
-        var localData = JSON.parse(data);
-        // check version of local data against current local storage version
-        // if a stale version is found, don't use it
-        if (localData.version && localData.version === localStorageVersion) {
-            var version = localData.version, rest = _objectWithoutProperties(localData, _excluded);
-            return stripNoLocalStorageMarked(rest);
-        }
-    }
-    return {};
-};
-exports.getLocalStorage = getLocalStorage;
-var writeToLocalStorage = function writeToLocalStorage(callback) {
-    var dataToWrite = callback(getLocalStorage());
-    // add local storage data version
-    dataToWrite.version = localStorageVersion;
-    localStorage.setItem(storageKey, JSON.stringify(dataToWrite));
-};
-/**
- * Local storage provider.
- *
- * This component will watch store state changes and write those to localStorage.
- *
- * @class
- *
- * @param {Object}            props          component properties
- * @param {React.ElementType} props.children component children
- * @param {Object}            props.appState store application state, will be supplied via HOC
- */ function LocalStorageProvider(_ref) {
-    var children = _ref.children, appState = _ref.appState;
-    (0, _react.useEffect)(function() {
-        writeToLocalStorage(function(currentData) {
-            currentData.app = appState;
-            return currentData;
-        });
-    }, [
-        appState
-    ]);
-    return children;
-}
-var selectMapping = function selectMapping(select) {
-    return {
-        appState: select(_app.getAllAppOptions)
-    };
-};
-/**
- * @module LocalStorageProvider
- */ var _default = (0, _withStore["default"])(LocalStorageProvider, selectMapping);
-exports["default"] = _default;
-
-},{"421e80768cf9dbf7":"21dqq","c42512238b4a67cb":"kWmDy","3d485e567681faf5":"c28DV"}],"c28DV":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
-var _toolkit = require("ab983f5a897f990a");
-var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
-var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
-var _pluginStatus = require("e269b2e53b452f29");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * App slice options
- *
- * @type {Object}
- */ var appSliceOptions = {
-    name: "app",
-    initialState: _initialState["default"].app,
-    reducers: {
-        /**
-     * Set current filter value.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload filter value
-     */ setBlockFilter: function setBlockFilter(state, _ref) {
-            var payload = _ref.payload;
-            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
-            else throw new Error("invalid block filter type supplied");
-        },
-        /**
-     * Toggle showing info section for block controls.
-     *
-     * @param {Object} state slice state
-     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
-            state.showBlockInfo = !state.showBlockInfo;
-        },
-        /**
-     * Show upsell modal for target block type.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload target block type
-     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref2) {
-            var payload = _ref2.payload;
-            state.upsellPopup.show = true;
-            state.upsellPopup.targetBlock = payload;
-        },
-        /**
-     * Hide upsell modal for target block type.
-     *
-     * @param {Object} state slice state
-     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
-            state.upsellPopup.show = false;
-            state.upsellPopup.targetBlock = null;
-        }
-    }
-};
-var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
-var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal;
-/**
- * Get all application options.
- *
- * @param {Object} state store state
- * @return {Object} options
- */ exports.hideProBlockUpsellModal = hideProBlockUpsellModal;
-exports.showProBlockUpsellModal = showProBlockUpsellModal;
-exports.toggleShowBlockInfo = toggleShowBlockInfo;
-exports.setBlockFilter = setBlockFilter;
-var getAllAppOptions = function getAllAppOptions(state) {
-    return state.app;
-};
-/**
- * Get current block filter.
- *
- * @param {Object} state store state
- * @return {string} filter value
- */ exports.getAllAppOptions = getAllAppOptions;
-var getBlockFilter = function getBlockFilter(state) {
-    return state.app.blockFilter;
-};
-/**
- * Get block extra info show status.
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ exports.getBlockFilter = getBlockFilter;
-var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
-    return state.app.showBlockInfo;
-};
-/**
- * Get plugin pro status.
- *
- * @deprecated
- * use isPluginPro selector in pluginStatus slice for future implementations
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
-var getProStatus = function getProStatus(state) {
-    return (0, _pluginStatus.isPluginPro)(state);
-};
-/**
- * Get target block type to show in modal.
- *
- * @param {Object} state store state
- * @return {null | string} block type, null for no selected blocks
- */ exports.getProStatus = getProStatus;
-var getModalTargetBlockType = function getModalTargetBlockType(state) {
-    return state.app.upsellPopup.targetBlock;
-};
-/**
- * Get modal visibility status.
- *
- * @param {Object} state store state
- * @return {boolean} visibility status
- */ exports.getModalTargetBlockType = getModalTargetBlockType;
-var getModalVisibilityStatus = function getModalVisibilityStatus(state) {
-    return state.app.upsellPopup.show;
-};
-/**
- * @module appSlice
- */ exports.getModalVisibilityStatus = getModalVisibilityStatus;
-var _default = appSlice.reducer;
-exports["default"] = _default;
-
-},{"ab983f5a897f990a":"lL1Ef","7f7e6a0fd711ec7a":"hebBQ","9a4bb996a84b7c56":"3xPpL","e269b2e53b452f29":"fi8Oa"}],"fi8Oa":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isPluginPro = exports["default"] = void 0;
-var _initialState = _interopRequireDefault(require("6e475e3a68ded05b"));
-var _toolkit = require("acd9b64a16908024");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Plugin status slice.
- *
- * @type {Object}
- */ var pluginStatusSliceOptions = {
-    name: "pluginStatus",
-    initialState: _initialState["default"].pluginStatus,
-    reducers: {}
-};
-var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
-/**
- * Get plugin pro status.
- *
- * @param {Object} state store state
- * @return {boolean} plugin pro status
- */ var isPluginPro = function isPluginPro(state) {
-    return state.pluginStatus.isPro;
-};
-/**
- * @module pluginStatusSlice
- */ exports.isPluginPro = isPluginPro;
-var _default = pluginStatusSlice.reducer;
-exports["default"] = _default;
-
-},{"6e475e3a68ded05b":"3xPpL","acd9b64a16908024":"lL1Ef"}],"k3f3V":[function(require,module,exports) {
+},{"bef92c9b301184af":"21dqq"}],"k3f3V":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36256,7 +35861,174 @@ function _interopRequireDefault(obj) {
  */ var _default = LineWrapper;
 exports["default"] = _default;
 
-},{"18ce4d49cfa79fa0":"21dqq"}],"e69CO":[function(require,module,exports) {
+},{"18ce4d49cfa79fa0":"21dqq"}],"c28DV":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+var _toolkit = require("ab983f5a897f990a");
+var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
+var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
+var _pluginStatus = require("e269b2e53b452f29");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * App slice options
+ *
+ * @type {Object}
+ */ var appSliceOptions = {
+    name: "app",
+    initialState: _initialState["default"].app,
+    reducers: {
+        /**
+     * Set current filter value.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload filter value
+     */ setBlockFilter: function setBlockFilter(state, _ref) {
+            var payload = _ref.payload;
+            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
+            else throw new Error("invalid block filter type supplied");
+        },
+        /**
+     * Toggle showing info section for block controls.
+     *
+     * @param {Object} state slice state
+     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
+            state.showBlockInfo = !state.showBlockInfo;
+        },
+        /**
+     * Show upsell modal for target block type.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload target block type
+     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref2) {
+            var payload = _ref2.payload;
+            state.upsellPopup.show = true;
+            state.upsellPopup.targetBlock = payload;
+        },
+        /**
+     * Hide upsell modal for target block type.
+     *
+     * @param {Object} state slice state
+     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
+            state.upsellPopup.show = false;
+            state.upsellPopup.targetBlock = null;
+        }
+    }
+};
+var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
+var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal;
+/**
+ * Get all application options.
+ *
+ * @param {Object} state store state
+ * @return {Object} options
+ */ exports.hideProBlockUpsellModal = hideProBlockUpsellModal;
+exports.showProBlockUpsellModal = showProBlockUpsellModal;
+exports.toggleShowBlockInfo = toggleShowBlockInfo;
+exports.setBlockFilter = setBlockFilter;
+var getAllAppOptions = function getAllAppOptions(state) {
+    return state.app;
+};
+/**
+ * Get current block filter.
+ *
+ * @param {Object} state store state
+ * @return {string} filter value
+ */ exports.getAllAppOptions = getAllAppOptions;
+var getBlockFilter = function getBlockFilter(state) {
+    return state.app.blockFilter;
+};
+/**
+ * Get block extra info show status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ exports.getBlockFilter = getBlockFilter;
+var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
+    return state.app.showBlockInfo;
+};
+/**
+ * Get plugin pro status.
+ *
+ * @deprecated
+ * use isPluginPro selector in pluginStatus slice for future implementations
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
+var getProStatus = function getProStatus(state) {
+    return (0, _pluginStatus.isPluginPro)(state);
+};
+/**
+ * Get target block type to show in modal.
+ *
+ * @param {Object} state store state
+ * @return {null | string} block type, null for no selected blocks
+ */ exports.getProStatus = getProStatus;
+var getModalTargetBlockType = function getModalTargetBlockType(state) {
+    return state.app.upsellPopup.targetBlock;
+};
+/**
+ * Get modal visibility status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} visibility status
+ */ exports.getModalTargetBlockType = getModalTargetBlockType;
+var getModalVisibilityStatus = function getModalVisibilityStatus(state) {
+    return state.app.upsellPopup.show;
+};
+/**
+ * @module appSlice
+ */ exports.getModalVisibilityStatus = getModalVisibilityStatus;
+var _default = appSlice.reducer;
+exports["default"] = _default;
+
+},{"ab983f5a897f990a":"lL1Ef","7f7e6a0fd711ec7a":"hebBQ","9a4bb996a84b7c56":"3xPpL","e269b2e53b452f29":"fi8Oa"}],"fi8Oa":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.isPluginPro = exports["default"] = void 0;
+var _initialState = _interopRequireDefault(require("6e475e3a68ded05b"));
+var _toolkit = require("acd9b64a16908024");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Plugin status slice.
+ *
+ * @type {Object}
+ */ var pluginStatusSliceOptions = {
+    name: "pluginStatus",
+    initialState: _initialState["default"].pluginStatus,
+    reducers: {}
+};
+var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
+/**
+ * Get plugin pro status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} plugin pro status
+ */ var isPluginPro = function isPluginPro(state) {
+    return state.pluginStatus.isPro;
+};
+/**
+ * @module pluginStatusSlice
+ */ exports.isPluginPro = isPluginPro;
+var _default = pluginStatusSlice.reducer;
+exports["default"] = _default;
+
+},{"6e475e3a68ded05b":"3xPpL","acd9b64a16908024":"lL1Ef"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -38017,7 +37789,6 @@ var _blocks = _interopRequireDefault(require("b60a84ccf937dbc7"));
 var _versionControl = _interopRequireDefault(require("3142590e179e9a7a"));
 var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
 var _initialState = _interopRequireDefault(require("2948990e65501539"));
-var _LocalStorageProvider = require("121248d6c6f26fb");
 var _pluginStatus = _interopRequireDefault(require("6f45c3ea2f5cedb9"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -38173,8 +37944,6 @@ function _toPrimitive(input, hint) {
     };
     // merge with default store state
     preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
-    // merge with localStorage data
-    preloadedState = (0, _deepmerge["default"])(preloadedState, (0, _LocalStorageProvider.getLocalStorage)());
     return (0, _toolkit.configureStore)({
         reducer: {
             assets: _assets["default"],
@@ -38196,7 +37965,7 @@ function _toPrimitive(input, hint) {
  */ var _default = createStore;
 exports["default"] = _default;
 
-},{"953ee9eab3e8c345":"lL1Ef","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","61d1115f3d5c796e":"ck1Q2","2948990e65501539":"3xPpL","121248d6c6f26fb":"1Y8eP","c515c572c6ab551c":"21dqq","6f45c3ea2f5cedb9":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
+},{"953ee9eab3e8c345":"lL1Ef","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","61d1115f3d5c796e":"ck1Q2","2948990e65501539":"3xPpL","c515c572c6ab551c":"21dqq","6f45c3ea2f5cedb9":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
 "use strict";
 var isMergeableObject = function isMergeableObject(value) {
     return isNonNullObject(value) && !isSpecial(value);
