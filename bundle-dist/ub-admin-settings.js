@@ -35533,7 +35533,6 @@ var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
 var _Router = _interopRequireDefault(require("9a2d6d0dc41c85c9"));
 var _Route = _interopRequireDefault(require("b127fa1ad03743f5"));
 var _MainContent = _interopRequireDefault(require("586edf6230ca7ca"));
-var _ProContent = _interopRequireDefault(require("e28b8717567bcc24"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -35546,16 +35545,14 @@ function _interopRequireDefault(obj) {
  */ function Content() {
     return /*#__PURE__*/ _react["default"].createElement(_Router["default"], null, /*#__PURE__*/ _react["default"].createElement(_Route["default"], {
         pageParameter: "ultimate-blocks-settings"
-    }, /*#__PURE__*/ _react["default"].createElement(_MainContent["default"], null)), /*#__PURE__*/ _react["default"].createElement(_Route["default"], {
-        pageParameter: "ultimate-blocks-settings-pro"
-    }, /*#__PURE__*/ _react["default"].createElement(_ProContent["default"], null)));
+    }, /*#__PURE__*/ _react["default"].createElement(_MainContent["default"], null)));
 }
 /**
  * @module Content
  */ var _default = Content;
 exports["default"] = _default;
 
-},{"65d54e961bcb15b7":"21dqq","9a2d6d0dc41c85c9":"35sjN","b127fa1ad03743f5":"cGcnR","586edf6230ca7ca":"iXkyr","e28b8717567bcc24":"8s4i0"}],"35sjN":[function(require,module,exports) {
+},{"65d54e961bcb15b7":"21dqq","9a2d6d0dc41c85c9":"35sjN","b127fa1ad03743f5":"cGcnR","586edf6230ca7ca":"iXkyr"}],"35sjN":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37590,155 +37587,7 @@ function ModalNavigation(_ref) {
  */ var _default = ModalNavigation;
 exports["default"] = _default;
 
-},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"8s4i0":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("8dd0d9c0cdd0b377"));
-var _ContentPhrase = _interopRequireDefault(require("59dc46a131e37ee7"));
-var _LineWrapper = _interopRequireDefault(require("21e5717ad6c1de1d"));
-var _TextIndicate = _interopRequireDefault(require("33bfb9cc0eb1daa4"));
-var _AnimationAppear = _interopRequireDefault(require("760f0dd3649ec9c5"));
-var _assets = require("c099935f2ce0e9ff");
-var _withStore = _interopRequireDefault(require("59887f56c035aa96"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Pro content component.
- *
- * @param {Object} props           component properties
- * @param {string} props.proBuyUrl url for pro buy page
- */ function ProContent(_ref) {
-    var proBuyUrl = _ref.proBuyUrl;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "pro-content"
-    }, /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
-        delay: 100
-    }, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Best"), " Blocks Plugin")), /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
-        delay: 600
-    }, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, "Just Got Even ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Better.")))), /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
-        delay: 1400
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-pro-content-main"
-    }, "Get", " ", /*#__PURE__*/ _react["default"].createElement("a", {
-        className: "ub-strip-anchor",
-        href: proBuyUrl,
-        rel: "noreferrer"
-    }, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Ultimate Blocks Pro")), " ", "Now!")));
-}
-// store select mapping
-var selectMapping = function selectMapping(selector) {
-    return {
-        proBuyUrl: selector(_assets.getAsset)("proBuyUrl")
-    };
-};
-/**
- * @module ProContent
- */ var _default = (0, _withStore["default"])(ProContent, selectMapping);
-exports["default"] = _default;
-
-},{"8dd0d9c0cdd0b377":"21dqq","59dc46a131e37ee7":"fjblj","21e5717ad6c1de1d":"20Yro","33bfb9cc0eb1daa4":"3mATT","760f0dd3649ec9c5":"i35LA","c099935f2ce0e9ff":"9SnHn","59887f56c035aa96":"kWmDy"}],"i35LA":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("93e7e03b609f21cb"));
-var _Animation = _interopRequireDefault(require("78c82fe59b9ca7c9"));
-var _excluded = [
-    "children"
-];
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {};
-    var target = _objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for(i = 0; i < sourceSymbolKeys.length; i++){
-            key = sourceSymbolKeys[i];
-            if (excluded.indexOf(key) >= 0) continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-            target[key] = source[key];
-        }
-    }
-    return target;
-}
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-/**
- * Animation appear component.
- *
- * This is a wrapper for Animation component. You can use its props for more customization.
- * `animationKeyframeName` is set to `appear` by default and will override any other value provided.
- *
- * @param {Object} props component properties
- */ function AnimationAppear(props) {
-    var children = props.children, rest = _objectWithoutProperties(props, _excluded);
-    rest.animationKeyframeName = "appear";
-    return /*#__PURE__*/ _react["default"].createElement(_Animation["default"], rest, children);
-}
-/**
- * @module AnimationAppear
- */ var _default = AnimationAppear;
-exports["default"] = _default;
-
-},{"93e7e03b609f21cb":"21dqq","78c82fe59b9ca7c9":"4lfcn"}],"4lfcn":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("52a04a243eca18a4"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Component for animating its children.
- *
- * This component relies on @keyframes animations.
- *
- * @param {Object}                       props                       component properties
- * @param {JSX.Element | Array | string} props.children              component children
- * @param {string}                       props.animationKeyframeName keyframe name
- * @param {number}                       [props.duration=1000]       duration in milliseconds
- * @param {number}                       [props.delay=0]             delay in milliseconds
- */ function Animation(_ref) {
-    var children = _ref.children, animationKeyframeName = _ref.animationKeyframeName, _ref$duration = _ref.duration, duration = _ref$duration === void 0 ? 1000 : _ref$duration, _ref$delay = _ref.delay, delay = _ref$delay === void 0 ? 0 : _ref$delay;
-    return /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "ub-animation",
-        style: {
-            animation: "".concat(animationKeyframeName, " ").concat(duration, "ms ease-out ").concat(delay, "ms both")
-        }
-    }, children);
-}
-/**
- * @module Animation
- */ var _default = Animation;
-exports["default"] = _default;
-
-},{"52a04a243eca18a4":"21dqq"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
