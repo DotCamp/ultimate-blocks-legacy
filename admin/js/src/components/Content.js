@@ -15,16 +15,8 @@ function Content() {
 				<MainContent />
 			</Route>
 			<Route>
-				<div
-					style={ {
-						width: '100%',
-						height: '100%',
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-					} }
-				>
-					404 Route Not Found
+				<div className={ 'route-404' }>
+					<h1>404</h1>
 				</div>
 			</Route>
 		</Router>

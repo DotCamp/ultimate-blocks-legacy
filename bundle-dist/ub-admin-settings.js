@@ -35546,14 +35546,8 @@ function _interopRequireDefault(obj) {
     return /*#__PURE__*/ _react["default"].createElement(_Router["default"], null, /*#__PURE__*/ _react["default"].createElement(_Route["default"], {
         pageParameter: "blocks"
     }, /*#__PURE__*/ _react["default"].createElement(_MainContent["default"], null)), /*#__PURE__*/ _react["default"].createElement(_Route["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
-        style: {
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        }
-    }, "404 Route Not Found")));
+        className: "route-404"
+    }, /*#__PURE__*/ _react["default"].createElement("h1", null, "404"))));
 }
 /**
  * @module Content

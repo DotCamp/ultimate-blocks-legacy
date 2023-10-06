@@ -112,6 +112,12 @@
 			}
 		}
 
+		.route-404 {
+			@extend %flex-center-all;
+			@extend %size-full;
+			box-sizing: border-box;
+		}
+
 		.menu-content {
 			display: grid;
 			grid-template-columns: 1fr;
@@ -320,6 +326,7 @@
 	.ub-toggle-control {
 		@extend %default-transition;
 		@extend %pill;
+		box-sizing: content-box;
 		position: relative;
 		width: 42px;
 		height: 20px;
