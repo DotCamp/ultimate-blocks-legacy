@@ -9,7 +9,7 @@ function ub_register_advanced_heading_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
 		register_block_type( 
-            'ub/advanced-heading', 
+            dirname(dirname(dirname(__DIR__))) . '/dist/blocks/advanced-heading', 
             array(
 			'attributes' => $defaultValues['ub/advanced-heading']['attributes'],
 			'render_callback' => 'ub_render_advanced_heading_block')

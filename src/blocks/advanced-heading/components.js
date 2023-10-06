@@ -1,5 +1,6 @@
 import "./formats/register-formats";
 import fontsList from "./fonts";
+import { useSelect } from "@wordpress/data";
 import {
 	textTransformOptions,
 	fontWeightOptions,
@@ -29,10 +30,8 @@ const { createBlock } = wp.blocks;
 const AdvancedHeadingEdit = ({
 	attributes,
 	setAttributes,
-	block,
-	getBlock,
-	getClientIdsWithDescendants,
 	onReplace,
+	clientId,
 }) => {
 	const {
 		blockID,
@@ -49,6 +48,13 @@ const AdvancedHeadingEdit = ({
 		lineHeight,
 	} = attributes;
 
+	const { block } = useSelect((select) => {
+		const { getBlock } = select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(clientId),
+		};
+	});
 	/* set default values for the style attributes */
 	const elementRef = createRef();
 	useEffect(() => {
