@@ -16,17 +16,17 @@ function ub_render_content_filter_entry_block($attributes, $content){
 
 function ub_register_content_filter_entry_block(){
     if ( function_exists( 'register_block_type' ) ) {
-        register_block_type( 'ub/content-filter-entry-block', array(
+        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/content-filter/components/block.json', array(
             'attributes' => array(
-                /*COMMENTED OUT TO PREVENT PHP ERRORS
+                // UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAKS.
                 'availableFilters' => array(
                     'type' => 'array',
                     'default' => array()//get list of filters from parent block
-                ),*/
-                /*'selectedFilters' => array(
+                ),
+                'selectedFilters' => array(
                     'type' => 'array',
                     'default' => array()
-                ),*/
+                ),
                 'buttonColor' => array(
                     'type' => 'string',
                     'default' => '#aaaaaa'
@@ -87,7 +87,7 @@ return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_a
 function ub_register_content_filter_block(){
     if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( 'ub/content-filter-block', array(
+        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/content-filter/block.json', array(
             'attributes' => $defaultValues['ub/content-filter-block']['attributes'],
                 'render_callback' => 'ub_render_content_filter_block'));
         

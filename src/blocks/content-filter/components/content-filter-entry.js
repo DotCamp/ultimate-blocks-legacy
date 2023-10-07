@@ -1,11 +1,10 @@
 import icon from "../icon";
 
 import { useEffect, useState, useRef } from "react";
-
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
-
-const { InnerBlocks } = wp.blockEditor || wp.editor;
+import metadata from "./block.json";
+import { __ } from "@wordpress/i18n";
+import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
+import { registerBlockType } from "@wordpress/blocks";
 
 function NewDropdown(props) {
 	const wrapperRef = useRef(null);
@@ -260,7 +259,7 @@ function ContentFilterEntry(props) {
 	}, [availableFilters, selectedFilters]);
 
 	return (
-		<div className="ub-content-filter-panel">
+		<div {...useBlockProps} className="ub-content-filter-panel">
 			<InnerBlocks templateLock={false} />
 			<div className="ub-content-assigned-filter-tag-area">
 				{tagList
@@ -376,38 +375,8 @@ registerBlockType("ub/content-filter-entry", {
 	},
 });
 
-registerBlockType("ub/content-filter-entry-block", {
-	title: __("Content Filter Entry"),
-	parent: __("ub/content-filter-block"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	attributes: {
-		availableFilters: {
-			type: "array",
-			default: [], //get list of filters from parent block
-		},
-		selectedFilters: {
-			type: "array",
-			default: [],
-		},
-		buttonColor: {
-			type: "string",
-			default: "#aaaaaa",
-		},
-		buttonTextColor: {
-			type: "string",
-			default: "#000000",
-		},
-		initiallyShow: {
-			type: "boolean",
-			default: true,
-		},
-	},
-	supports: {
-		inserter: false,
-		reusable: false,
-	},
-
 	edit: ContentFilterEntry,
 	save: () => <InnerBlocks.Content />,
 });

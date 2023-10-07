@@ -458,11 +458,11 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'filterArray' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'filterArray' => array(
+				'type' => 'array',
+				'default' => array()
+			),
 			'buttonColor'           => array(
 				'type'    => 'string',
 				'default' => '#eeeeee'

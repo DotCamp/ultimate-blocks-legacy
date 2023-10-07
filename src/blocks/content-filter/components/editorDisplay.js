@@ -1,9 +1,15 @@
-const { __ } = wp.i18n;
-const { createBlock } = wp.blocks;
-const { InspectorControls, PanelColorSettings, InnerBlocks, RichText } =
-	wp.blockEditor || wp.editor;
+import { __ } from "@wordpress/i18n";
+import { createBlock } from "@wordpress/blocks";
+import { useSelect, useDispatch } from "@wordpress/data";
+import {
+	InspectorControls,
+	PanelColorSettings,
+	InnerBlocks,
+	RichText,
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const { PanelBody, ToggleControl, RadioControl } = wp.components;
+import { PanelBody, ToggleControl, RadioControl } from "@wordpress/components";
 
 import { useEffect } from "react";
 import { upgradeButtonLabel } from "../../../common";
@@ -452,16 +458,7 @@ export function NewPanelContent(props) {
 		);
 	}
 
-	const {
-		isSelected,
-		attributes,
-		setAttributes,
-		block,
-		updateBlockAttributes,
-		insertBlock,
-		getBlock,
-		getClientIdsWithDescendants,
-	} = props;
+	const { isSelected, attributes, setAttributes } = props;
 	const {
 		filterArray,
 		buttonColor,
@@ -473,7 +470,24 @@ export function NewPanelContent(props) {
 		matchingOption,
 		//,allowReset,resetButtonLabel
 	} = attributes;
+	const blockProps = useBlockProps();
+	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
+		useSelect((select) => {
+			const {
+				getBlock,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+				getBlocks,
+			} = select("core/block-editor") || select("core/editor");
 
+			return {
+				getBlock,
+				block: getBlock(props.clientId),
+				parentID: getBlockRootClientId(props.clientId),
+				getClientIdsWithDescendants,
+				getBlocks,
+			};
+		});
 	const newChildBlock = createBlock("ub/content-filter-entry-block", {
 		availableFilters: filterArray,
 		selectedFilters: filterArray.map((category) =>
@@ -482,6 +496,8 @@ export function NewPanelContent(props) {
 		buttonTextColor: buttonTextColor,
 		buttonColor: buttonColor,
 	});
+	const { updateBlockAttributes, insertBlock } =
+		useDispatch("core/block-editor");
 
 	const newAvailableFilters = (item, pos) => [
 		...filterArray.slice(0, pos),
@@ -520,7 +536,7 @@ export function NewPanelContent(props) {
 	}, []);
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -803,6 +819,6 @@ export function NewPanelContent(props) {
 						</button>
 					)}
 			</div>
-		</>
+		</div>
 	);
 }
