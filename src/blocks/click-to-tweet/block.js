@@ -9,6 +9,7 @@ import {
 	RichText,
 	InspectorControls,
 	PanelColorSettings,
+	useBlockProps,
 } from "@wordpress/block-editor";
 import { TextControl, RangeControl, PanelBody } from "@wordpress/components";
 import { useSelect } from "@wordpress/data";
@@ -54,9 +55,9 @@ function ClickToTweet(props) {
 			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
 		}
 	}, []);
-
+	const blockProps = useBlockProps();
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -123,7 +124,7 @@ function ClickToTweet(props) {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

@@ -9,6 +9,7 @@ import {
 	URLInput,
 	BlockControls,
 	PanelColorSettings,
+	useBlockProps,
 } from "@wordpress/block-editor";
 
 import {
@@ -420,12 +421,12 @@ export function CallToAction(props) {
 	const [editable, setEditable] = useState("");
 
 	return (
-		<>
+		<div {...useBlockProps()}>
 			{isSelected && blockControls({ ...props, editable, setEditable })}
 			{isSelected && inspectorControls({ ...props, editable, setEditable })}
 			<div className={props.className}>
 				{editorDisplay({ ...props, editable, setEditable })}
 			</div>
-		</>
+		</div>
 	);
 }
