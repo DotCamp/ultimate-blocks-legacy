@@ -13,6 +13,9 @@ module.exports = {
 			presets: [ '@babel/preset-react' ],
 		},
 	},
+	rules: {
+		'import/no-extraneous-dependencies': [ 'off' ],
+	},
 	settings: {
 		'import/resolver': {
 			webpack: {
@@ -29,5 +32,8 @@ module.exports = {
 		ubPriorityData: true,
 		UB_ENV: true,
 		localStorage: true,
+		describe: true,
+		expect: true,
+		it: true,
 	},
 };

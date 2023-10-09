@@ -147,9 +147,9 @@
 var _react = _interopRequireDefault(require("f86067a0c42586c2"));
 var _reactRedux = require("6bb183c41f170262");
 var _client = require("dd04af2d01c62810");
-var _AdminMenuContainer = _interopRequireDefault(require("5cdb128c8e3827eb"));
-require("600c2f9e1674370c");
-var _AdminMenuWrapper = _interopRequireDefault(require("d1ece749c706e412"));
+var _AdminMenuContainer = _interopRequireDefault(require("5eabbf090be36ca7"));
+require("b134c17004fc38d7");
+var _AdminMenuWrapper = _interopRequireDefault(require("520d72c8a439ff41"));
 var _settingsMenuStore = _interopRequireDefault(require("2da12f694a741c54"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -165,7 +165,7 @@ if (mountPoint) {
     }, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null))));
 } else throw new Error("no mount point found for settings menu");
 
-},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","5cdb128c8e3827eb":"7a8vF","600c2f9e1674370c":"cBeYy","d1ece749c706e412":"do7SF","2da12f694a741c54":"7VzQu"}],"21dqq":[function(require,module,exports) {
+},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","2da12f694a741c54":"7VzQu","5eabbf090be36ca7":"7a8vF","b134c17004fc38d7":"cBeYy","520d72c8a439ff41":"do7SF"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("a569817e6ea559f6");
 
@@ -25355,115 +25355,25 @@ exports.hydrateRoot = function(c, h, o) {
     }
 };
 
-},{"aaccff5d309d9239":"j6uA9"}],"7a8vF":[function(require,module,exports) {
+},{"aaccff5d309d9239":"j6uA9"}],"7VzQu":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("455808d61ca3dd3"));
-var _MenuHeader = _interopRequireDefault(require("ac586035ebf11933"));
-var _Content = _interopRequireDefault(require("7343fefef4ac8988"));
+var _react = _interopRequireDefault(require("c515c572c6ab551c"));
+var _toolkit = require("953ee9eab3e8c345");
+var _assets = _interopRequireDefault(require("8c721e7e53326dbf"));
+var _app = _interopRequireDefault(require("4a75fc56b99646a3"));
+var _blocks = _interopRequireDefault(require("df36ccd063eba533"));
+var _versionControl = _interopRequireDefault(require("9bf24bb8ad1424ca"));
+var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
+var _initialState = _interopRequireDefault(require("9016861a8b48c99a"));
+var _pluginStatus = _interopRequireDefault(require("e241a936151f11bf"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Container for admin menu.
- *
- * @return {JSX.Element} container component
- * @function Object() { [native code] }
- */ function AdminMenuContainer() {
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-admin-menu-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
-}
-/**
- * @module AdminMenuContainer
- */ var _default = AdminMenuContainer;
-exports["default"] = _default;
-
-},{"455808d61ca3dd3":"21dqq","ac586035ebf11933":"kP7QS","7343fefef4ac8988":"12F8G"}],"kP7QS":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("af8ddc31c52e60c1"));
-var _withStore = _interopRequireDefault(require("8e13c56b0b23f46c"));
-var _assets = require("c7228a701ce4de72");
-var _RightContainerItem = _interopRequireDefault(require("80af8803c24a14fe"));
-var _VersionControl = _interopRequireDefault(require("8598ffd360f8ff2b"));
-var _reactFontawesome = require("3ee81ce64fbd9c46");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Settings menu header element.
- *
- * @param {Object} props         component properties
- * @param {string} props.logoUrl plugin logo url, will be supplied via HOC
- * @return {JSX.Element} component
- */ function MenuHeader(_ref) {
-    var logoUrl = _ref.logoUrl;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "menu-header"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "left-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "logo-container"
-    }, /*#__PURE__*/ _react["default"].createElement("img", {
-        alt: "plugin logo",
-        src: logoUrl
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-plugin-logo-text"
-    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], {
-        classNames: [
-            "share-node"
-        ]
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-share-nodes"
-    }))));
-}
-var selectMapping = function selectMapping(select) {
-    return {
-        logoUrl: select(_assets.getLogo)
-    };
-};
-/**
- * @module MenuHeader
- */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping);
-exports["default"] = _default;
-
-},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1","3ee81ce64fbd9c46":"clIT3"}],"kWmDy":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("ca9ac1a3bee33d8c"));
-var _reactRedux = require("979f6ff1f26c3159");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _extends() {
-    _extends = Object.assign ? Object.assign.bind() : function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
 }
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -25473,104 +25383,169 @@ function _typeof(obj) {
         return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     }, _typeof(obj);
 }
-/**
- * HOC for adding store related properties to components
- *
- * @param {React.ElementType | Object} BaseComponent        target component
- * @param {Function | null}            [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
- * @param {Function | null}            [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
- * @return {Function} HOC function
- */ var withStore = function withStore(BaseComponent) {
-    var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var actionMapping = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-    return function(props) {
-        // prepare selection mappings
-        var selections = {};
-        if (selectMapping && typeof selectMapping === "function") {
-            var selectorObject = selectMapping(_reactRedux.useSelector);
-            if (_typeof(selectorObject) === "object") selections = selectorObject;
-        }
-        var dispatch = (0, _reactRedux.useDispatch)();
-        // prepare action mappings
-        var actions = {};
-        if (actionMapping && typeof actionMapping === "function") {
-            var preActionObject = actionMapping(dispatch, _reactRedux.useSelector);
-            if (preActionObject && _typeof(preActionObject) === "object") actions = Object.keys(preActionObject).filter(function(key) {
-                return Object.prototype.hasOwnProperty.call(preActionObject, key);
-            }).reduce(function(carry, current) {
-                var actionCallback = preActionObject[current];
-                if (typeof actionCallback === "function") carry[current] = function(val) {
-                    dispatch(actionCallback(val));
-                };
-                return carry;
-            }, {});
-        }
-        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, selections, actions, {
-            selector: _reactRedux.useSelector,
-            dispatch: dispatch
-        }));
-    };
-};
-/**
- * @module withStore
- */ var _default = withStore;
-exports["default"] = _default;
-
-},{"979f6ff1f26c3159":"bdVon","ca9ac1a3bee33d8c":"21dqq"}],"9SnHn":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getLogo = exports.getAsset = exports.getAjaxInfo = exports["default"] = void 0;
-var _toolkit = require("b97968e375f86bd2");
-/**
- * Options for asset store slice
- *
- * @type {Object}
- */ var assetsSliceOptions = {
-    name: "assets",
-    initialState: {
-        logo: "",
-        ajax: {}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
     }
-};
-var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
 /**
- * Get logo url.
+ * Prepare data for pro only block upsells.
  *
- * @param {Object} state store state
- * @return {string} logo url
- */ var getLogo = function getLogo(state) {
-    return state.assets.logo;
-};
+ * @param {Object} proOnlyBlockList pro only block list
+ *
+ * @return {Array} pro block upsell data
+ */ function prepareProOnlyBlockUpsellData(proOnlyBlockList) {
+    return Object.keys(proOnlyBlockList).filter(function(key) {
+        return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
+    }).reduce(function(carry, blockName) {
+        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon, screenshot = _proOnlyBlockList$blo.screenshot;
+        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true, screenshot));
+        return carry;
+    }, []);
+}
 /**
- * Get ajax information.
+ * Generate block info object compatible with settings menu store.
  *
- * @param {Object} state store state
- * @return {Object} ajax information
- */ exports.getLogo = getLogo;
-var getAjaxInfo = function getAjaxInfo(state) {
-    return state.assets.ajax;
-};
-/**
- * Get asset with given id.
- *
- * @param {Object} state store state
- * @return {function(string): string|number} function to get asset
- */ exports.getAjaxInfo = getAjaxInfo;
-var getAsset = function getAsset(state) {
-    return function(assetId) {
-        var _state$assets;
-        return (_state$assets = state.assets) === null || _state$assets === void 0 ? void 0 : _state$assets[assetId];
+ * @param {string}            name                 block registry name
+ * @param {string}            title                block title
+ * @param {string}            info                 block info
+ * @param {React.ElementType} icon                 icon element
+ * @param {boolean}           active               active status
+ * @param {boolean}           [pro=false]          block pro status
+ * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
+ * @return {Object} block info object
+ */ function generateBlockInfoObject(name, title, info, icon, active) {
+    var pro = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+    var screenshotUrl = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+    return {
+        name: name,
+        title: title,
+        info: Array.isArray(info) ? info : [
+            info
+        ],
+        icon: icon,
+        active: active,
+        pro: pro,
+        screenshotUrl: screenshotUrl
     };
-};
+}
 /**
- * @module assetsSlice
- */ exports.getAsset = getAsset;
-var _default = assetsSlice.reducer;
+ * Create settings menu store.
+ *
+ * @return {Object} store
+ */ function createStore() {
+    // eslint-disable-next-line no-undef
+    var appData = _objectSpread({}, ubAdminMenuData);
+    // eslint-disable-next-line no-undef
+    ubAdminMenuData = null;
+    // add block infos to context data
+    var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
+    var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
+        return blockData.parent === undefined && blockData.supports.inserter === undefined;
+    });
+    var _appData$blocks = appData.blocks, statusData = _appData$blocks.statusData, info = _appData$blocks.info;
+    var reducedBlocks = registeredUbBlocks.reduce(function(carry, current) {
+        var icon = current.icon, currentName = current.name, title = current.title;
+        var blockStatus = false;
+        // eslint-disable-next-line array-callback-return,no-shadow
+        statusData.map(function(_ref) {
+            var name = _ref.name, active = _ref.active;
+            if (name === currentName) blockStatus = active;
+        });
+        var blockInfo = [];
+        if (info[currentName] && Array.isArray(info[currentName])) blockInfo = info[currentName];
+        var newBlockObject = generateBlockInfoObject(currentName, title, blockInfo, icon.src, blockStatus);
+        carry.push(newBlockObject);
+        return carry;
+    }, []);
+    var proBlocks = appData.upsells.blocks;
+    var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
+    // all blocks available including upsell versions of pro blocks or pro blocks themselves
+    var allRegistered = proBlockUpsell.reduce(function(carry, current) {
+        var proBlockName = current.name;
+        //check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
+        // if not inject the upsell data to current block list
+        var registeredProBlock = carry.find(function(_ref2) {
+            var name = _ref2.name;
+            return name === proBlockName;
+        });
+        if (registeredProBlock) registeredProBlock.pro = true;
+        else carry.push(current);
+        return carry;
+    }, reducedBlocks);
+    var preloadedState = {
+        assets: appData.assets,
+        blocks: {
+            registered: allRegistered
+        },
+        versionControl: appData.versionControl,
+        pluginStatus: appData.pluginStatus
+    };
+    // merge with default store state
+    preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
+    return (0, _toolkit.configureStore)({
+        reducer: {
+            assets: _assets["default"],
+            app: _app["default"],
+            blocks: _blocks["default"],
+            versionControl: _versionControl["default"],
+            pluginStatus: _pluginStatus["default"]
+        },
+        middleware: function middleware(getDefaultMiddleware) {
+            return getDefaultMiddleware({
+                serializableCheck: false
+            });
+        },
+        preloadedState: preloadedState
+    });
+}
+/**
+ * @module createStore
+ */ var _default = createStore;
 exports["default"] = _default;
 
-},{"b97968e375f86bd2":"lL1Ef"}],"lL1Ef":[function(require,module,exports) {
+},{"953ee9eab3e8c345":"lL1Ef","61d1115f3d5c796e":"ck1Q2","c515c572c6ab551c":"21dqq","8c721e7e53326dbf":"9SnHn","4a75fc56b99646a3":"c28DV","df36ccd063eba533":"ohEvx","9bf24bb8ad1424ca":"6jcRk","9016861a8b48c99a":"3xPpL","e241a936151f11bf":"fi8Oa"}],"lL1Ef":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "EnhancerArray", ()=>EnhancerArray);
@@ -29589,318 +29564,282 @@ var thunk = createThunkMiddleware(); // Attach the factory function so users can
 thunk.withExtraArgument = createThunkMiddleware;
 exports.default = thunk;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cm0ja":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ck1Q2":[function(require,module,exports) {
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("faa64fc16b5af6a7"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
+var isMergeableObject = function isMergeableObject(value) {
+    return isNonNullObject(value) && !isSpecial(value);
+};
+function isNonNullObject(value) {
+    return !!value && typeof value === "object";
 }
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+function isSpecial(value) {
+    var stringValue = Object.prototype.toString.call(value);
+    return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
 }
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === "function" && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 0xeac7;
+function isReactElement(value) {
+    return value.$$typeof === REACT_ELEMENT_TYPE;
 }
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+function emptyTarget(val) {
+    return Array.isArray(val) ? [] : {};
 }
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+function cloneUnlessOtherwiseSpecified(value, options) {
+    return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
 }
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+function defaultArrayMerge(target, source, options) {
+    return target.concat(source).map(function(element) {
+        return cloneUnlessOtherwiseSpecified(element, options);
+    });
 }
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Menu right container item.
- *
- * @param {Object}            props            component properties
- * @param {React.ElementType} props.children   component children
- * @param {Array}             props.classNames component class names
- * @class
- */ function RightContainerItem(_ref) {
-    var children = _ref.children, _ref$classNames = _ref.classNames, classNames = _ref$classNames === void 0 ? [] : _ref$classNames;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: [
-            "right-container-item"
-        ].concat(_toConsumableArray(classNames)).join(" ")
-    }, children);
+function getMergeFunction(key, options) {
+    if (!options.customMerge) return deepmerge;
+    var customMerge = options.customMerge(key);
+    return typeof customMerge === "function" ? customMerge : deepmerge;
 }
-/**
- * @module RightContainerItem
- */ var _default = RightContainerItem;
-exports["default"] = _default;
-
-},{"faa64fc16b5af6a7":"21dqq"}],"fUke1":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
+function getEnumerableOwnPropertySymbols(target) {
+    return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+        return Object.propertyIsEnumerable.call(target, symbol);
+    }) : [];
 }
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("b544b5ba9b277d21"));
-var _reactFontawesome = require("52f863744b6b5910");
-var _versionControl = require("9b50ed6d8d094f47");
-var _withStore = _interopRequireDefault(require("c5140aba68ba460b"));
-var _VersionControlPopup = _interopRequireDefault(require("d0153d3a47ae5f0a"));
-var _Portal = _interopRequireDefault(require("e20e8ee6922534f5"));
-var _actions = require("f76e893847a676c8");
-var _i18n = require("69ee0e54dc1b6df2");
-var _HeaderVersionInfo = _interopRequireDefault(require("ef5d3a16fe989b50"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
+function getKeys(target) {
+    return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
+function propertyIsOnObject(object, property) {
+    try {
+        return property in object;
+    } catch (_) {
+        return false;
     }
 }
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Version control component.
- *
- * @param {Object}   props               component properties
- * @param {string}   props.pluginVersion plugin version, will be supplied via HOC
- * @param {Object}   props.allVersions   available versions, will be supplied via HOC
- * @param {Function} props.dispatch      store dispatch function, will be supplied via HOC
- * @function Object() { [native code] }
- */ function VersionControl(_ref) {
-    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
-    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
-    var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
-    var _useState5 = (0, _react.useState)(false), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
-    /**
-   * Calculate button disabled status.
-   *
-   * @return {boolean} disabled status
-   */ var buttonDisabledStatus = function buttonDisabledStatus() {
-        return pluginVersion === selectedVersion;
-    };
-    var sortedVersions = allVersions.sort().reverse();
-    var versionsLength = sortedVersions.length;
-    /**
-   * Start version operation.
-   *
-   * @return {Promise} operation promise object
-   */ var startVersionOperation = function startVersionOperation() {
-        return dispatch(_actions.rollbackToVersion)(selectedVersion);
-    };
-    (0, _react.useEffect)(function() {
-        var levelBorder = versionsLength / 2;
-        var versionIndex = sortedVersions.indexOf(pluginVersion);
-        var calculatedLevel = // eslint-disable-next-line no-nested-ternary
-        versionIndex === 0 ? "none" : versionIndex > levelBorder || versionIndex < 0 ? "high" : "medium";
-        setVersionLevel(calculatedLevel);
-    }, [
-        selectedVersion
-    ]);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_HeaderVersionInfo["default"], {
-        currentVersion: pluginVersion
-    }), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
-        target: document.body
-    }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
-        onCloseHandler: function onCloseHandler() {
-            return setPopupVisibility(false);
-        },
-        from: pluginVersion,
-        to: selectedVersion,
-        onOperationStart: startVersionOperation
-    })));
+// Protects from prototype poisoning and unexpected merging up the prototype chain.
+function propertyIsUnsafe(target, key) {
+    return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
+     && !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
+     && Object.propertyIsEnumerable.call(target, key) // and also unsafe if they're nonenumerable.
+    );
 }
-/**
- * Store select mapping
- *
- * @param {Function} select store selector
- * @return {Object} select mapping
- */ var selectionMapping = function selectionMapping(select) {
-    return {
-        allVersions: select(_versionControl.versions),
-        pluginVersion: select(_versionControl.currentVersion)
-    };
+function mergeObject(target, source, options) {
+    var destination = {};
+    if (options.isMergeableObject(target)) getKeys(target).forEach(function(key) {
+        destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+    });
+    getKeys(source).forEach(function(key) {
+        if (propertyIsUnsafe(target, key)) return;
+        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+        else destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+    });
+    return destination;
+}
+function deepmerge(target, source, options) {
+    options = options || {};
+    options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+    options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+    // cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
+    // implementations can use it. The caller may not replace it.
+    options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+    var sourceIsArray = Array.isArray(source);
+    var targetIsArray = Array.isArray(target);
+    var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+    if (!sourceAndTargetTypesMatch) return cloneUnlessOtherwiseSpecified(source, options);
+    else if (sourceIsArray) return options.arrayMerge(target, source, options);
+    else return mergeObject(target, source, options);
+}
+deepmerge.all = function deepmergeAll(array, options) {
+    if (!Array.isArray(array)) throw new Error("first argument should be an array");
+    return array.reduce(function(prev, next) {
+        return deepmerge(prev, next, options);
+    }, {});
 };
-/**
- * @module VersionControl
- */ var _default = (0, _withStore["default"])(VersionControl, selectionMapping);
-exports["default"] = _default;
+var deepmerge_1 = deepmerge;
+module.exports = deepmerge_1;
 
-},{"b544b5ba9b277d21":"21dqq","9b50ed6d8d094f47":"6jcRk","c5140aba68ba460b":"kWmDy","d0153d3a47ae5f0a":"k3f3V","e20e8ee6922534f5":"hOoRN","f76e893847a676c8":"g3gW2","52f863744b6b5910":"clIT3","69ee0e54dc1b6df2":"7CyoE","ef5d3a16fe989b50":"lUMLC"}],"6jcRk":[function(require,module,exports) {
+},{}],"9SnHn":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
-var _initialState = _interopRequireDefault(require("b44b2e09241a652"));
-var _toolkit = require("b718c794e97d3789");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
+exports.getLogo = exports.getAsset = exports.getAjaxInfo = exports["default"] = void 0;
+var _toolkit = require("b97968e375f86bd2");
 /**
- * Version control slice options.
+ * Options for asset store slice
  *
  * @type {Object}
- */ var versionControlSliceOptions = {
-    name: "versionControl",
-    initialState: _initialState["default"].versionControl
-};
-var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
-/**
- * Get plugin current version.
- *
- * @param {Object} state store state
- * @return {string} current version
- */ var currentVersion = function currentVersion(state) {
-    return state.versionControl.currentVersion;
-};
-/**
- * Get plugin current version.
- *
- * @param {Object} state store state
- * @return {string} current version
- */ exports.currentVersion = currentVersion;
-var versions = function versions(state) {
-    return state.versionControl.versions;
-};
-/**
- * Get ajax operations info.
- *
- * @param {Object} state store state
- * @return {Object} ajax info
- */ exports.versions = versions;
-var ajaxInfo = function ajaxInfo(state) {
-    return state.versionControl.ajax;
-};
-/**
- * @module versionControlSlice
- */ exports.ajaxInfo = ajaxInfo;
-var _default = versionControlSlice.reducer;
-exports["default"] = _default;
-
-},{"b44b2e09241a652":"3xPpL","b718c794e97d3789":"lL1Ef"}],"3xPpL":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _BlockStatusFilterControl = require("865a04ed337dccab");
-/**
- * Initial store state.
- *
- * @type {Object}
- */ var initialState = {
-    app: {
-        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
-        showBlockInfo: false,
-        upsellPopup: {
-            show: false,
-            targetBlock: null
-        }
-    },
-    versionControl: {
-        currentVersion: "1.0.0",
-        versions: {},
+ */ var assetsSliceOptions = {
+    name: "assets",
+    initialState: {
+        logo: "",
         ajax: {}
-    },
-    pluginStatus: {
-        isPro: false
     }
 };
+var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
 /**
- * @module initialState
- */ var _default = initialState;
+ * Get logo url.
+ *
+ * @param {Object} state store state
+ * @return {string} logo url
+ */ var getLogo = function getLogo(state) {
+    return state.assets.logo;
+};
+/**
+ * Get ajax information.
+ *
+ * @param {Object} state store state
+ * @return {Object} ajax information
+ */ exports.getLogo = getLogo;
+var getAjaxInfo = function getAjaxInfo(state) {
+    return state.assets.ajax;
+};
+/**
+ * Get asset with given id.
+ *
+ * @param {Object} state store state
+ * @return {function(string): string|number} function to get asset
+ */ exports.getAjaxInfo = getAjaxInfo;
+var getAsset = function getAsset(state) {
+    return function(assetId) {
+        var _state$assets;
+        return (_state$assets = state.assets) === null || _state$assets === void 0 ? void 0 : _state$assets[assetId];
+    };
+};
+/**
+ * @module assetsSlice
+ */ exports.getAsset = getAsset;
+var _default = assetsSlice.reducer;
 exports["default"] = _default;
 
-},{"865a04ed337dccab":"hebBQ"}],"hebBQ":[function(require,module,exports) {
+},{"b97968e375f86bd2":"lL1Ef"}],"c28DV":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+var _toolkit = require("ab983f5a897f990a");
+var _BlockStatusFilterControl = require("1825a520c0dd5d34");
+var _initialState = _interopRequireDefault(require("d3df904bb6381f74"));
+var _pluginStatus = require("8a1fbc2fa50671c");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * App slice options
+ *
+ * @type {Object}
+ */ var appSliceOptions = {
+    name: "app",
+    initialState: _initialState["default"].app,
+    reducers: {
+        /**
+     * Set current filter value.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload filter value
+     */ setBlockFilter: function setBlockFilter(state, _ref) {
+            var payload = _ref.payload;
+            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
+            else throw new Error("invalid block filter type supplied");
+        },
+        /**
+     * Toggle showing info section for block controls.
+     *
+     * @param {Object} state slice state
+     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
+            state.showBlockInfo = !state.showBlockInfo;
+        },
+        /**
+     * Show upsell modal for target block type.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload target block type
+     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref2) {
+            var payload = _ref2.payload;
+            state.upsellPopup.show = true;
+            state.upsellPopup.targetBlock = payload;
+        },
+        /**
+     * Hide upsell modal for target block type.
+     *
+     * @param {Object} state slice state
+     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
+            state.upsellPopup.show = false;
+            state.upsellPopup.targetBlock = null;
+        }
+    }
+};
+var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
+var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal;
+/**
+ * Get all application options.
+ *
+ * @param {Object} state store state
+ * @return {Object} options
+ */ exports.hideProBlockUpsellModal = hideProBlockUpsellModal;
+exports.showProBlockUpsellModal = showProBlockUpsellModal;
+exports.toggleShowBlockInfo = toggleShowBlockInfo;
+exports.setBlockFilter = setBlockFilter;
+var getAllAppOptions = function getAllAppOptions(state) {
+    return state.app;
+};
+/**
+ * Get current block filter.
+ *
+ * @param {Object} state store state
+ * @return {string} filter value
+ */ exports.getAllAppOptions = getAllAppOptions;
+var getBlockFilter = function getBlockFilter(state) {
+    return state.app.blockFilter;
+};
+/**
+ * Get block extra info show status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ exports.getBlockFilter = getBlockFilter;
+var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
+    return state.app.showBlockInfo;
+};
+/**
+ * Get plugin pro status.
+ *
+ * @deprecated
+ * use isPluginPro selector in pluginStatus slice for future implementations
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
+var getProStatus = function getProStatus(state) {
+    return (0, _pluginStatus.isPluginPro)(state);
+};
+/**
+ * Get target block type to show in modal.
+ *
+ * @param {Object} state store state
+ * @return {null | string} block type, null for no selected blocks
+ */ exports.getProStatus = getProStatus;
+var getModalTargetBlockType = function getModalTargetBlockType(state) {
+    return state.app.upsellPopup.targetBlock;
+};
+/**
+ * Get modal visibility status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} visibility status
+ */ exports.getModalTargetBlockType = getModalTargetBlockType;
+var getModalVisibilityStatus = function getModalVisibilityStatus(state) {
+    return state.app.upsellPopup.show;
+};
+/**
+ * @module appSlice
+ */ exports.getModalVisibilityStatus = getModalVisibilityStatus;
+var _default = appSlice.reducer;
+exports["default"] = _default;
+
+},{"ab983f5a897f990a":"lL1Ef","1825a520c0dd5d34":"hebBQ","d3df904bb6381f74":"3xPpL","8a1fbc2fa50671c":"fi8Oa"}],"hebBQ":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -29915,8 +29854,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = exports.FILTER_TYPES = void 0;
 var _react = _interopRequireWildcard(require("fb0ab6d663b69039"));
-var _FilterControlItem = _interopRequireDefault(require("237052af7ccbb431"));
-var _ActiveFilterIndicator = _interopRequireWildcard(require("428d6f35def36fa7"));
+var _FilterControlItem = _interopRequireDefault(require("4d10d81e89281f53"));
+var _ActiveFilterIndicator = _interopRequireWildcard(require("6b5060870366082e"));
 var _excluded = [
     "_DEFAULT"
 ];
@@ -30093,7 +30032,7 @@ function BlockStatusFilterControl(_ref) {
  */ var _default = BlockStatusFilterControl;
 exports["default"] = _default;
 
-},{"fb0ab6d663b69039":"21dqq","237052af7ccbb431":"eozng","428d6f35def36fa7":"aWJJu"}],"eozng":[function(require,module,exports) {
+},{"fb0ab6d663b69039":"21dqq","4d10d81e89281f53":"eozng","6b5060870366082e":"aWJJu"}],"eozng":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -30262,7 +30201,446 @@ function ActiveFilterIndicator(_ref) {
  */ var _default = ActiveFilterIndicator;
 exports["default"] = _default;
 
-},{"bef92c9b301184af":"21dqq"}],"k3f3V":[function(require,module,exports) {
+},{"bef92c9b301184af":"21dqq"}],"3xPpL":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _BlockStatusFilterControl = require("fcdfedb923f0d687");
+/**
+ * Initial store state.
+ *
+ * @type {Object}
+ */ var initialState = {
+    app: {
+        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
+        showBlockInfo: false,
+        upsellPopup: {
+            show: false,
+            targetBlock: null
+        }
+    },
+    versionControl: {
+        currentVersion: "1.0.0",
+        versions: {},
+        ajax: {}
+    },
+    pluginStatus: {
+        isPro: false
+    }
+};
+/**
+ * @module initialState
+ */ var _default = initialState;
+exports["default"] = _default;
+
+},{"fcdfedb923f0d687":"hebBQ"}],"fi8Oa":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.isPluginPro = exports["default"] = void 0;
+var _initialState = _interopRequireDefault(require("ff3d5b2310f4f3d7"));
+var _toolkit = require("acd9b64a16908024");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Plugin status slice.
+ *
+ * @type {Object}
+ */ var pluginStatusSliceOptions = {
+    name: "pluginStatus",
+    initialState: _initialState["default"].pluginStatus,
+    reducers: {}
+};
+var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
+/**
+ * Get plugin pro status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} plugin pro status
+ */ var isPluginPro = function isPluginPro(state) {
+    return state.pluginStatus.isPro;
+};
+/**
+ * @module pluginStatusSlice
+ */ exports.isPluginPro = isPluginPro;
+var _default = pluginStatusSlice.reducer;
+exports["default"] = _default;
+
+},{"ff3d5b2310f4f3d7":"3xPpL","acd9b64a16908024":"lL1Ef"}],"ohEvx":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
+var _toolkit = require("16834d59f055af3a");
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+/**
+ * Block slice options
+ *
+ * @type {Object}
+ */ var blocksSliceOptions = {
+    name: "blocks",
+    initialState: {
+        registered: []
+    },
+    reducers: {
+        /**
+     * Set active status of target block.
+     *
+     * @param {Object} state         store state
+     * @param {Object} props         action props
+     * @param {Object} props.payload action payload
+     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
+            var payload = _ref.payload;
+            var id = payload.id, status = payload.status;
+            var registered = state.registered;
+            var uRegistered = _toConsumableArray(registered);
+            var blockIndex = -1;
+            // eslint-disable-next-line array-callback-return
+            uRegistered.map(function(bObj, index) {
+                if (bObj.name === id) blockIndex = index;
+            });
+            if (blockIndex >= 0) {
+                uRegistered[blockIndex].active = status;
+                state.registered = uRegistered;
+            }
+        }
+    }
+};
+var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
+var setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
+/**
+ * Get registered plugin blocks.
+ *
+ * @param {Object} state store state
+ * @return {Array} blocks
+ */ exports.setBlockActiveStatus = setBlockActiveStatus;
+var getBlocks = function getBlocks(state) {
+    return state.blocks.registered;
+};
+/**
+ * Get block object by given block type id.
+ *
+ * @param {Object} state store state
+ * @return {Object | undefined} block object or undefined if no target block is found
+ */ exports.getBlocks = getBlocks;
+var getBlockById = function getBlockById(state) {
+    return function(blockId) {
+        return state.blocks.registered.find(function(_ref2) {
+            var name = _ref2.name;
+            return name === blockId;
+        });
+    };
+};
+/**
+ * @module blocksSlice
+ */ exports.getBlockById = getBlockById;
+var _default = blocksSlice.reducer;
+exports["default"] = _default;
+
+},{"16834d59f055af3a":"lL1Ef"}],"6jcRk":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
+var _initialState = _interopRequireDefault(require("9089b07959d8d215"));
+var _toolkit = require("b718c794e97d3789");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Version control slice options.
+ *
+ * @type {Object}
+ */ var versionControlSliceOptions = {
+    name: "versionControl",
+    initialState: _initialState["default"].versionControl
+};
+var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
+/**
+ * Get plugin current version.
+ *
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var currentVersion = function currentVersion(state) {
+    return state.versionControl.currentVersion;
+};
+/**
+ * Get plugin current version.
+ *
+ * @param {Object} state store state
+ * @return {string} current version
+ */ exports.currentVersion = currentVersion;
+var versions = function versions(state) {
+    return state.versionControl.versions;
+};
+/**
+ * Get ajax operations info.
+ *
+ * @param {Object} state store state
+ * @return {Object} ajax info
+ */ exports.versions = versions;
+var ajaxInfo = function ajaxInfo(state) {
+    return state.versionControl.ajax;
+};
+/**
+ * @module versionControlSlice
+ */ exports.ajaxInfo = ajaxInfo;
+var _default = versionControlSlice.reducer;
+exports["default"] = _default;
+
+},{"9089b07959d8d215":"3xPpL","b718c794e97d3789":"lL1Ef"}],"7a8vF":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("455808d61ca3dd3"));
+var _MenuHeader = _interopRequireDefault(require("13ab014d28c1a042"));
+var _Content = _interopRequireDefault(require("46d090e981b08c24"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Container for admin menu.
+ *
+ * @return {JSX.Element} container component
+ * @function Object() { [native code] }
+ */ function AdminMenuContainer() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-admin-menu-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
+}
+/**
+ * @module AdminMenuContainer
+ */ var _default = AdminMenuContainer;
+exports["default"] = _default;
+
+},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G"}],"kP7QS":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("af8ddc31c52e60c1"));
+var _withStore = _interopRequireDefault(require("a360f5480afc451d"));
+var _assets = require("66544b766e488b05");
+var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
+var _VersionControl = _interopRequireDefault(require("9b060551899412e8"));
+var _reactFontawesome = require("3ee81ce64fbd9c46");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Settings menu header element.
+ *
+ * @param {Object} props         component properties
+ * @param {string} props.logoUrl plugin logo url, will be supplied via HOC
+ * @return {JSX.Element} component
+ */ function MenuHeader(_ref) {
+    var logoUrl = _ref.logoUrl;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "menu-header"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "left-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "logo-container"
+    }, /*#__PURE__*/ _react["default"].createElement("img", {
+        alt: "plugin logo",
+        src: logoUrl
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-plugin-logo-text"
+    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "right-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], {
+        classNames: [
+            "share-node"
+        ]
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-share-nodes"
+    }))));
+}
+var selectMapping = function selectMapping(select) {
+    return {
+        logoUrl: select(_assets.getLogo)
+    };
+};
+/**
+ * @module MenuHeader
+ */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping);
+exports["default"] = _default;
+
+},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3"}],"kWmDy":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("ca9ac1a3bee33d8c"));
+var _reactRedux = require("979f6ff1f26c3159");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+/**
+ * HOC for adding store related properties to components
+ *
+ * @param {React.ElementType | Object} BaseComponent        target component
+ * @param {Function | null}            [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
+ * @param {Function | null}            [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
+ * @return {Function} HOC function
+ */ var withStore = function withStore(BaseComponent) {
+    var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var actionMapping = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    return function(props) {
+        // prepare selection mappings
+        var selections = {};
+        if (selectMapping && typeof selectMapping === "function") {
+            var selectorObject = selectMapping(_reactRedux.useSelector);
+            if (_typeof(selectorObject) === "object") selections = selectorObject;
+        }
+        var dispatch = (0, _reactRedux.useDispatch)();
+        // prepare action mappings
+        var actions = {};
+        if (actionMapping && typeof actionMapping === "function") {
+            var preActionObject = actionMapping(dispatch, _reactRedux.useSelector);
+            if (preActionObject && _typeof(preActionObject) === "object") actions = Object.keys(preActionObject).filter(function(key) {
+                return Object.prototype.hasOwnProperty.call(preActionObject, key);
+            }).reduce(function(carry, current) {
+                var actionCallback = preActionObject[current];
+                if (typeof actionCallback === "function") carry[current] = function(val) {
+                    dispatch(actionCallback(val));
+                };
+                return carry;
+            }, {});
+        }
+        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, selections, actions, {
+            selector: _reactRedux.useSelector,
+            dispatch: dispatch
+        }));
+    };
+};
+/**
+ * @module withStore
+ */ var _default = withStore;
+exports["default"] = _default;
+
+},{"ca9ac1a3bee33d8c":"21dqq","979f6ff1f26c3159":"bdVon"}],"cm0ja":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("faa64fc16b5af6a7"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Menu right container item.
+ *
+ * @param {Object}            props            component properties
+ * @param {React.ElementType} props.children   component children
+ * @param {Array}             props.classNames component class names
+ * @class
+ */ function RightContainerItem(_ref) {
+    var children = _ref.children, _ref$classNames = _ref.classNames, classNames = _ref$classNames === void 0 ? [] : _ref$classNames;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: [
+            "right-container-item"
+        ].concat(_toConsumableArray(classNames)).join(" ")
+    }, children);
+}
+/**
+ * @module RightContainerItem
+ */ var _default = RightContainerItem;
+exports["default"] = _default;
+
+},{"faa64fc16b5af6a7":"21dqq"}],"fUke1":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -30276,10 +30654,20 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("3accbda3a85c85e3"));
-var _reactFontawesome = require("a3e43325b30d05e5");
-var _i18n = require("9945d4bf1472bc28");
-var _MenuButton = _interopRequireWildcard(require("83f559a99a61616d"));
+var _react = _interopRequireWildcard(require("b544b5ba9b277d21"));
+var _reactFontawesome = require("52f863744b6b5910");
+var _versionControl = require("9721fb4193a9924a");
+var _withStore = _interopRequireDefault(require("ed40d2d967989b24"));
+var _VersionControlPopup = _interopRequireDefault(require("9b2395a3b4ee2d26"));
+var _Portal = _interopRequireDefault(require("d6bde676cea9749"));
+var _actions = require("9202061521dcbd56");
+var _i18n = require("69ee0e54dc1b6df2");
+var _HeaderVersionInfo = _interopRequireDefault(require("e11ae307e3589951"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -30350,117 +30738,75 @@ function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
 } // eslint-disable-next-line no-unused-vars
 /**
- * Version control popup component.
+ * Version control component.
  *
- * @param {Object}   props                  component properties
- * @param {string}   props.from             current version
- * @param {string}   props.to               version to rollback
- * @param {Function} props.onCloseHandler   close popup callback
- * @param {Function} props.onOperationStart operation start callback
- * @param {number}   props.reloadDelay      automatic page reload delay in milliseconds
- * @class
- */ function VersionControlPopup(_ref) {
-    var from = _ref.from, to = _ref.to, onCloseHandler = _ref.onCloseHandler, onOperationStart = _ref.onOperationStart, _ref$reloadDelay = _ref.reloadDelay, reloadDelay = _ref$reloadDelay === void 0 ? 5000 : _ref$reloadDelay;
-    var OPERATION_STATUS_TYPES = {
-        NOT_STARTED: "notStarted",
-        STARTED: "started",
-        FINISHED: "finished"
-    };
-    var RESPONSE_TYPES = {
-        OK: "ok",
-        ERROR: "error"
-    };
+ * @param {Object}   props               component properties
+ * @param {string}   props.pluginVersion plugin version, will be supplied via HOC
+ * @param {Object}   props.allVersions   available versions, will be supplied via HOC
+ * @param {Function} props.dispatch      store dispatch function, will be supplied via HOC
+ * @function Object() { [native code] }
+ */ function VersionControl(_ref) {
+    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
+    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
+    var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
+    var _useState5 = (0, _react.useState)(false), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
     /**
-   * Generate response object.
+   * Calculate button disabled status.
    *
-   * @param {string} message     message
-   * @param {string} [type='ok'] response type.
-   * @return {Object} response object
-   */ var generateResponseObject = function generateResponseObject(message) {
-        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RESPONSE_TYPES.OK;
-        return {
-            type: type,
-            message: message
-        };
+   * @return {boolean} disabled status
+   */ var buttonDisabledStatus = function buttonDisabledStatus() {
+        return pluginVersion === selectedVersion;
     };
-    var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
-    var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
-    var _useState5 = (0, _react.useState)(generateResponseObject("")), _useState6 = _slicedToArray(_useState5, 2), responseObject = _useState6[0], setResponseObject = _useState6[1];
-    var isDowngrade = from > to;
-    var countdownToReload = (0, _react.useRef)(reloadDelay);
+    var sortedVersions = allVersions.sort().reverse();
+    var versionsLength = sortedVersions.length;
     /**
-   * Start rollback operation.
-   */ var startOperation = function startOperation() {
-        setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
-        onOperationStart().then(function(_ref2) {
-            var message = _ref2.message;
-            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.OK));
-        })["catch"](function(_ref3) {
-            var message = _ref3.message;
-            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.ERROR));
-        })["finally"](function() {
-            setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
-            reloadPage();
-        });
+   * Start version operation.
+   *
+   * @return {Promise} operation promise object
+   */ var startVersionOperation = function startVersionOperation() {
+        return dispatch(_actions.rollbackToVersion)(selectedVersion);
     };
-    /**
-   * Reload page after a designated amount of time.
-   */ var reloadPage = function reloadPage() {
-        var reloadIntervalId = setInterval(function() {
-            if (countdownToReload.current <= 0) {
-                window.location.reload();
-                clearInterval(reloadIntervalId);
-            } else {
-                countdownToReload.current = countdownToReload.current - 1000;
-                setReloadCountdown(countdownToReload.current / 1000);
-            }
-        }, 1000);
-    };
+    (0, _react.useEffect)(function() {
+        var levelBorder = versionsLength / 2;
+        var versionIndex = sortedVersions.indexOf(pluginVersion);
+        var calculatedLevel = // eslint-disable-next-line no-nested-ternary
+        versionIndex === 0 ? "none" : versionIndex > levelBorder || versionIndex < 0 ? "high" : "medium";
+        setVersionLevel(calculatedLevel);
+    }, [
+        selectedVersion
+    ]);
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-popup"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "modal-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "rollback-versions"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-id ".concat(isDowngrade ? "ub-positive-color" : "ub-negative-color")
-    }, from), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-icon",
-        "data-in-progress": JSON.stringify(operationStatus === OPERATION_STATUS_TYPES.STARTED)
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-icon-inner-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-right-long"
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-id ".concat(isDowngrade ? "ub-negative-color" : "ub-positive-color")
-    }, to)), operationStatus !== OPERATION_STATUS_TYPES.STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-content"
-    }, operationStatus === OPERATION_STATUS_TYPES.NOT_STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-warning"
-    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Older versions might be unstable. Do it on your own risk and create a backup.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-rollback-button-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        type: _MenuButton.BUTTON_TYPES.POSITIVE,
-        onClickHandler: startOperation,
-        status: true,
-        title: "Start"
-    }), /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        onClickHandler: onCloseHandler,
-        status: true,
-        title: "Close"
-    }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "operation-finished-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-response",
-        "data-resp-type": responseObject.type
-    }, responseObject.message), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now…", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
+        className: "version-control-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_HeaderVersionInfo["default"], {
+        currentVersion: pluginVersion
+    }), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
+        target: document.body
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
+        onCloseHandler: function onCloseHandler() {
+            return setPopupVisibility(false);
+        },
+        from: pluginVersion,
+        to: selectedVersion,
+        onOperationStart: startVersionOperation
+    })));
 }
 /**
- * @module VersionControlPopup
- */ var _default = VersionControlPopup;
+ * Store select mapping
+ *
+ * @param {Function} select store selector
+ * @return {Object} select mapping
+ */ var selectionMapping = function selectionMapping(select) {
+    return {
+        allVersions: select(_versionControl.versions),
+        pluginVersion: select(_versionControl.currentVersion)
+    };
+};
+/**
+ * @module VersionControl
+ */ var _default = (0, _withStore["default"])(VersionControl, selectionMapping);
 exports["default"] = _default;
 
-},{"3accbda3a85c85e3":"21dqq","a3e43325b30d05e5":"clIT3","9945d4bf1472bc28":"7CyoE","83f559a99a61616d":"cbTU3"}],"clIT3":[function(require,module,exports) {
+},{"b544b5ba9b277d21":"21dqq","52f863744b6b5910":"clIT3","9721fb4193a9924a":"6jcRk","ed40d2d967989b24":"kWmDy","9b2395a3b4ee2d26":"k3f3V","d6bde676cea9749":"hOoRN","9202061521dcbd56":"g3gW2","69ee0e54dc1b6df2":"7CyoE","e11ae307e3589951":"lUMLC"}],"clIT3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FontAwesomeIcon", ()=>FontAwesomeIcon);
@@ -33984,7 +34330,205 @@ printWarning = function(text) {
 };
 module.exports = checkPropTypes;
 
-},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"7CyoE":[function(require,module,exports) {
+},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"k3f3V":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("3accbda3a85c85e3"));
+var _reactFontawesome = require("a3e43325b30d05e5");
+var _i18n = require("9945d4bf1472bc28");
+var _MenuButton = _interopRequireWildcard(require("d5eedcb9ade3dcc8"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Version control popup component.
+ *
+ * @param {Object}   props                  component properties
+ * @param {string}   props.from             current version
+ * @param {string}   props.to               version to rollback
+ * @param {Function} props.onCloseHandler   close popup callback
+ * @param {Function} props.onOperationStart operation start callback
+ * @param {number}   props.reloadDelay      automatic page reload delay in milliseconds
+ * @class
+ */ function VersionControlPopup(_ref) {
+    var from = _ref.from, to = _ref.to, onCloseHandler = _ref.onCloseHandler, onOperationStart = _ref.onOperationStart, _ref$reloadDelay = _ref.reloadDelay, reloadDelay = _ref$reloadDelay === void 0 ? 5000 : _ref$reloadDelay;
+    var OPERATION_STATUS_TYPES = {
+        NOT_STARTED: "notStarted",
+        STARTED: "started",
+        FINISHED: "finished"
+    };
+    var RESPONSE_TYPES = {
+        OK: "ok",
+        ERROR: "error"
+    };
+    /**
+   * Generate response object.
+   *
+   * @param {string} message     message
+   * @param {string} [type='ok'] response type.
+   * @return {Object} response object
+   */ var generateResponseObject = function generateResponseObject(message) {
+        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RESPONSE_TYPES.OK;
+        return {
+            type: type,
+            message: message
+        };
+    };
+    var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
+    var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
+    var _useState5 = (0, _react.useState)(generateResponseObject("")), _useState6 = _slicedToArray(_useState5, 2), responseObject = _useState6[0], setResponseObject = _useState6[1];
+    var isDowngrade = from > to;
+    var countdownToReload = (0, _react.useRef)(reloadDelay);
+    /**
+   * Start rollback operation.
+   */ var startOperation = function startOperation() {
+        setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
+        onOperationStart().then(function(_ref2) {
+            var message = _ref2.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.OK));
+        })["catch"](function(_ref3) {
+            var message = _ref3.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.ERROR));
+        })["finally"](function() {
+            setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
+            reloadPage();
+        });
+    };
+    /**
+   * Reload page after a designated amount of time.
+   */ var reloadPage = function reloadPage() {
+        var reloadIntervalId = setInterval(function() {
+            if (countdownToReload.current <= 0) {
+                window.location.reload();
+                clearInterval(reloadIntervalId);
+            } else {
+                countdownToReload.current = countdownToReload.current - 1000;
+                setReloadCountdown(countdownToReload.current / 1000);
+            }
+        }, 1000);
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-popup"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "modal-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "rollback-versions"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-positive-color" : "ub-negative-color")
+    }, from), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon",
+        "data-in-progress": JSON.stringify(operationStatus === OPERATION_STATUS_TYPES.STARTED)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon-inner-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-right-long"
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-negative-color" : "ub-positive-color")
+    }, to)), operationStatus !== OPERATION_STATUS_TYPES.STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-content"
+    }, operationStatus === OPERATION_STATUS_TYPES.NOT_STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-warning"
+    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Older versions might be unstable. Do it on your own risk and create a backup.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-rollback-button-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        type: _MenuButton.BUTTON_TYPES.POSITIVE,
+        onClickHandler: startOperation,
+        status: true,
+        title: "Start"
+    }), /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        onClickHandler: onCloseHandler,
+        status: true,
+        title: "Close"
+    }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "operation-finished-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-response",
+        "data-resp-type": responseObject.type
+    }, responseObject.message), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now…", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
+}
+/**
+ * @module VersionControlPopup
+ */ var _default = VersionControlPopup;
+exports["default"] = _default;
+
+},{"3accbda3a85c85e3":"21dqq","a3e43325b30d05e5":"clIT3","9945d4bf1472bc28":"7CyoE","d5eedcb9ade3dcc8":"cbTU3"}],"7CyoE":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "sprintf", ()=>(0, _sprintf.sprintf));
@@ -35444,8 +35988,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.toggleBlockStatus = exports.rollbackToVersion = void 0;
-var _assets = require("4198c81d530cb024");
-var _versionControl = require("a0e796494feca4ed");
+var _assets = require("48e349588f046c5f");
+var _versionControl = require("a85ccb0efb87f164");
 /**
  * Toggle block status.
  *
@@ -35494,7 +36038,7 @@ var rollbackToVersion = function rollbackToVersion(dispatch, getState) {
 };
 exports.rollbackToVersion = rollbackToVersion;
 
-},{"4198c81d530cb024":"9SnHn","a0e796494feca4ed":"6jcRk"}],"lUMLC":[function(require,module,exports) {
+},{"48e349588f046c5f":"9SnHn","a85ccb0efb87f164":"6jcRk"}],"lUMLC":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -35530,9 +36074,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
-var _Router = _interopRequireDefault(require("9a2d6d0dc41c85c9"));
-var _Route = _interopRequireDefault(require("b127fa1ad03743f5"));
-var _MainContent = _interopRequireDefault(require("586edf6230ca7ca"));
+var _Router = _interopRequireDefault(require("8de1b2cbd2501a64"));
+var _Route = _interopRequireDefault(require("7d7c69d60f2ff7c"));
+var _MainContent = _interopRequireDefault(require("6de3156c550f640b"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -35554,7 +36098,7 @@ function _interopRequireDefault(obj) {
  */ var _default = Content;
 exports["default"] = _default;
 
-},{"65d54e961bcb15b7":"21dqq","9a2d6d0dc41c85c9":"35sjN","b127fa1ad03743f5":"cGcnR","586edf6230ca7ca":"iXkyr"}],"35sjN":[function(require,module,exports) {
+},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","7d7c69d60f2ff7c":"cGcnR","6de3156c550f640b":"iXkyr"}],"35sjN":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -35569,7 +36113,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("7733be7f93cb4ab5"));
-var _Route = _interopRequireDefault(require("9b98b9a0b18edc23"));
+var _Route = _interopRequireDefault(require("17f604c69878826e"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -35698,7 +36242,7 @@ var applyFilters = wp.hooks.applyFilters;
  */ var _default = Router;
 exports["default"] = _default;
 
-},{"7733be7f93cb4ab5":"21dqq","9b98b9a0b18edc23":"cGcnR"}],"cGcnR":[function(require,module,exports) {
+},{"7733be7f93cb4ab5":"21dqq","17f604c69878826e":"cGcnR"}],"cGcnR":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -35733,12 +36277,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("5d2ddbf58417e472"));
-var _MainContentPhrase = _interopRequireDefault(require("8ae3459855e11b74"));
-var _BlockStatusFilterControl = _interopRequireDefault(require("2e00797ed85de1fc"));
-var _app = require("6a858ee2b47a0742");
-var _withStore = _interopRequireDefault(require("ef9d048bd156dfff"));
-var _BlockControlsContainer = _interopRequireDefault(require("6c1c5810e800620a"));
-var _UpsellModalSettingsMenu = _interopRequireDefault(require("359c02ab072e372e"));
+var _MainContentPhrase = _interopRequireDefault(require("e40359c129338cd6"));
+var _BlockStatusFilterControl = _interopRequireDefault(require("507e640a31715558"));
+var _app = require("8d34ae96641ee80d");
+var _withStore = _interopRequireDefault(require("46478e9129ef590e"));
+var _BlockControlsContainer = _interopRequireDefault(require("7427bc97b230e435"));
+var _UpsellModalSettingsMenu = _interopRequireDefault(require("5f995c2a5a64062"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -35777,16 +36321,16 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(MainContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"5d2ddbf58417e472":"21dqq","8ae3459855e11b74":"4cIcG","2e00797ed85de1fc":"hebBQ","6a858ee2b47a0742":"c28DV","ef9d048bd156dfff":"kWmDy","6c1c5810e800620a":"e69CO","359c02ab072e372e":"l7D5t"}],"4cIcG":[function(require,module,exports) {
+},{"5d2ddbf58417e472":"21dqq","e40359c129338cd6":"4cIcG","507e640a31715558":"hebBQ","8d34ae96641ee80d":"c28DV","46478e9129ef590e":"kWmDy","7427bc97b230e435":"e69CO","5f995c2a5a64062":"l7D5t"}],"4cIcG":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("28e0584236cf3f46"));
-var _TextIndicate = _interopRequireDefault(require("4306d4d81d061f9c"));
-var _ContentPhrase = _interopRequireDefault(require("60dabfe10cad2e55"));
-var _LineWrapper = _interopRequireDefault(require("57fe786d24ada2bb"));
+var _TextIndicate = _interopRequireDefault(require("140d2e2011df5677"));
+var _ContentPhrase = _interopRequireDefault(require("2e2a0c26474b64ce"));
+var _LineWrapper = _interopRequireDefault(require("93bd497f938fea88"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -35805,7 +36349,7 @@ function _interopRequireDefault(obj) {
  */ var _default = MainContentPhrase;
 exports["default"] = _default;
 
-},{"28e0584236cf3f46":"21dqq","4306d4d81d061f9c":"3mATT","60dabfe10cad2e55":"fjblj","57fe786d24ada2bb":"20Yro"}],"3mATT":[function(require,module,exports) {
+},{"28e0584236cf3f46":"21dqq","140d2e2011df5677":"3mATT","2e2a0c26474b64ce":"fjblj","93bd497f938fea88":"20Yro"}],"3mATT":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -35891,174 +36435,7 @@ function _interopRequireDefault(obj) {
  */ var _default = LineWrapper;
 exports["default"] = _default;
 
-},{"18ce4d49cfa79fa0":"21dqq"}],"c28DV":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
-var _toolkit = require("ab983f5a897f990a");
-var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
-var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
-var _pluginStatus = require("e269b2e53b452f29");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * App slice options
- *
- * @type {Object}
- */ var appSliceOptions = {
-    name: "app",
-    initialState: _initialState["default"].app,
-    reducers: {
-        /**
-     * Set current filter value.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload filter value
-     */ setBlockFilter: function setBlockFilter(state, _ref) {
-            var payload = _ref.payload;
-            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
-            else throw new Error("invalid block filter type supplied");
-        },
-        /**
-     * Toggle showing info section for block controls.
-     *
-     * @param {Object} state slice state
-     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
-            state.showBlockInfo = !state.showBlockInfo;
-        },
-        /**
-     * Show upsell modal for target block type.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload target block type
-     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref2) {
-            var payload = _ref2.payload;
-            state.upsellPopup.show = true;
-            state.upsellPopup.targetBlock = payload;
-        },
-        /**
-     * Hide upsell modal for target block type.
-     *
-     * @param {Object} state slice state
-     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
-            state.upsellPopup.show = false;
-            state.upsellPopup.targetBlock = null;
-        }
-    }
-};
-var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
-var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal;
-/**
- * Get all application options.
- *
- * @param {Object} state store state
- * @return {Object} options
- */ exports.hideProBlockUpsellModal = hideProBlockUpsellModal;
-exports.showProBlockUpsellModal = showProBlockUpsellModal;
-exports.toggleShowBlockInfo = toggleShowBlockInfo;
-exports.setBlockFilter = setBlockFilter;
-var getAllAppOptions = function getAllAppOptions(state) {
-    return state.app;
-};
-/**
- * Get current block filter.
- *
- * @param {Object} state store state
- * @return {string} filter value
- */ exports.getAllAppOptions = getAllAppOptions;
-var getBlockFilter = function getBlockFilter(state) {
-    return state.app.blockFilter;
-};
-/**
- * Get block extra info show status.
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ exports.getBlockFilter = getBlockFilter;
-var getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
-    return state.app.showBlockInfo;
-};
-/**
- * Get plugin pro status.
- *
- * @deprecated
- * use isPluginPro selector in pluginStatus slice for future implementations
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ exports.getBlockInfoShowStatus = getBlockInfoShowStatus;
-var getProStatus = function getProStatus(state) {
-    return (0, _pluginStatus.isPluginPro)(state);
-};
-/**
- * Get target block type to show in modal.
- *
- * @param {Object} state store state
- * @return {null | string} block type, null for no selected blocks
- */ exports.getProStatus = getProStatus;
-var getModalTargetBlockType = function getModalTargetBlockType(state) {
-    return state.app.upsellPopup.targetBlock;
-};
-/**
- * Get modal visibility status.
- *
- * @param {Object} state store state
- * @return {boolean} visibility status
- */ exports.getModalTargetBlockType = getModalTargetBlockType;
-var getModalVisibilityStatus = function getModalVisibilityStatus(state) {
-    return state.app.upsellPopup.show;
-};
-/**
- * @module appSlice
- */ exports.getModalVisibilityStatus = getModalVisibilityStatus;
-var _default = appSlice.reducer;
-exports["default"] = _default;
-
-},{"ab983f5a897f990a":"lL1Ef","7f7e6a0fd711ec7a":"hebBQ","9a4bb996a84b7c56":"3xPpL","e269b2e53b452f29":"fi8Oa"}],"fi8Oa":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isPluginPro = exports["default"] = void 0;
-var _initialState = _interopRequireDefault(require("6e475e3a68ded05b"));
-var _toolkit = require("acd9b64a16908024");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Plugin status slice.
- *
- * @type {Object}
- */ var pluginStatusSliceOptions = {
-    name: "pluginStatus",
-    initialState: _initialState["default"].pluginStatus,
-    reducers: {}
-};
-var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
-/**
- * Get plugin pro status.
- *
- * @param {Object} state store state
- * @return {boolean} plugin pro status
- */ var isPluginPro = function isPluginPro(state) {
-    return state.pluginStatus.isPro;
-};
-/**
- * @module pluginStatusSlice
- */ exports.isPluginPro = isPluginPro;
-var _default = pluginStatusSlice.reducer;
-exports["default"] = _default;
-
-},{"6e475e3a68ded05b":"3xPpL","acd9b64a16908024":"lL1Ef"}],"e69CO":[function(require,module,exports) {
+},{"18ce4d49cfa79fa0":"21dqq"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36073,13 +36450,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("b5a991528cd4dfa6"));
-var _BlockControl = _interopRequireDefault(require("e07107cd8e40b547"));
-var _BlockStatusFilterControl = require("41e09f882ed3a36e");
-var _withStore = _interopRequireDefault(require("cff57247e47f94e0"));
-var _blocks = require("51bab9ad8cbd469f");
-var _app = require("26aa46f4e0966487");
-var _actions = require("8dc047c78d50bffc");
-var _VisibilityWrapper = _interopRequireDefault(require("299f2a282b479721"));
+var _BlockControl = _interopRequireDefault(require("3ffb3fee774ffe0e"));
+var _BlockStatusFilterControl = require("72db3cd1fd4e6f52");
+var _withStore = _interopRequireDefault(require("7adeb056d10afe38"));
+var _blocks = require("c1f3bf0e02707627");
+var _app = require("83bf9ee8271dd581");
+var _actions = require("f9b48c87aedbb427");
+var _VisibilityWrapper = _interopRequireDefault(require("627fdb5e223e1b97"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36253,7 +36630,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"b5a991528cd4dfa6":"21dqq","e07107cd8e40b547":"h5tMi","41e09f882ed3a36e":"hebBQ","cff57247e47f94e0":"kWmDy","51bab9ad8cbd469f":"ohEvx","26aa46f4e0966487":"c28DV","8dc047c78d50bffc":"g3gW2","299f2a282b479721":"azTGO"}],"h5tMi":[function(require,module,exports) {
+},{"b5a991528cd4dfa6":"21dqq","3ffb3fee774ffe0e":"h5tMi","72db3cd1fd4e6f52":"hebBQ","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","627fdb5e223e1b97":"azTGO"}],"h5tMi":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36268,13 +36645,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("9eede5ed96c6db50"));
-var _ToggleControl = _interopRequireDefault(require("1b0c26986e628874"));
-var _MenuButton = _interopRequireDefault(require("17219fdafae6194a"));
-var _withIcon = _interopRequireDefault(require("b72ddce4d4e282b6"));
-var _app = require("5b211ce3bfe7b54");
-var _withStore = _interopRequireDefault(require("52f11184f548186d"));
-var _ProBlockCardTitle = _interopRequireDefault(require("dbbae5f431af94c6"));
-var _BlockCardProInfoControl = _interopRequireDefault(require("227934c51c676839"));
+var _ToggleControl = _interopRequireDefault(require("235790c968bb3ece"));
+var _MenuButton = _interopRequireDefault(require("3537103df4eeb6b8"));
+var _withIcon = _interopRequireDefault(require("94998323feaef35f"));
+var _app = require("ed962dd8439ee4b7");
+var _withStore = _interopRequireDefault(require("fe5fa2b15de4f5ea"));
+var _ProBlockCardTitle = _interopRequireDefault(require("f55fe8e7dfe7e8a"));
+var _BlockCardProInfoControl = _interopRequireDefault(require("a559776a028ed995"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36473,7 +36850,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"9eede5ed96c6db50":"21dqq","1b0c26986e628874":"a7r96","17219fdafae6194a":"cbTU3","b72ddce4d4e282b6":"l4uaA","5b211ce3bfe7b54":"c28DV","52f11184f548186d":"kWmDy","dbbae5f431af94c6":"jiOgy","227934c51c676839":"3ptTq"}],"a7r96":[function(require,module,exports) {
+},{"9eede5ed96c6db50":"21dqq","235790c968bb3ece":"a7r96","3537103df4eeb6b8":"cbTU3","94998323feaef35f":"l4uaA","ed962dd8439ee4b7":"c28DV","fe5fa2b15de4f5ea":"kWmDy","f55fe8e7dfe7e8a":"jiOgy","a559776a028ed995":"3ptTq"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36732,103 +37109,7 @@ function _interopRequireDefault(obj) {
  */ var _default = BlockCardProInfoControl;
 exports["default"] = _default;
 
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"ohEvx":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
-var _toolkit = require("16834d59f055af3a");
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-/**
- * Block slice options
- *
- * @type {Object}
- */ var blocksSliceOptions = {
-    name: "blocks",
-    initialState: {
-        registered: []
-    },
-    reducers: {
-        /**
-     * Set active status of target block.
-     *
-     * @param {Object} state         store state
-     * @param {Object} props         action props
-     * @param {Object} props.payload action payload
-     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
-            var payload = _ref.payload;
-            var id = payload.id, status = payload.status;
-            var registered = state.registered;
-            var uRegistered = _toConsumableArray(registered);
-            var blockIndex = -1;
-            // eslint-disable-next-line array-callback-return
-            uRegistered.map(function(bObj, index) {
-                if (bObj.name === id) blockIndex = index;
-            });
-            if (blockIndex >= 0) {
-                uRegistered[blockIndex].active = status;
-                state.registered = uRegistered;
-            }
-        }
-    }
-};
-var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
-var setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
-/**
- * Get registered plugin blocks.
- *
- * @param {Object} state store state
- * @return {Array} blocks
- */ exports.setBlockActiveStatus = setBlockActiveStatus;
-var getBlocks = function getBlocks(state) {
-    return state.blocks.registered;
-};
-/**
- * Get block object by given block type id.
- *
- * @param {Object} state store state
- * @return {Object | undefined} block object or undefined if no target block is found
- */ exports.getBlocks = getBlocks;
-var getBlockById = function getBlockById(state) {
-    return function(blockId) {
-        return state.blocks.registered.find(function(_ref2) {
-            var name = _ref2.name;
-            return name === blockId;
-        });
-    };
-};
-/**
- * @module blocksSlice
- */ exports.getBlockById = getBlockById;
-var _default = blocksSlice.reducer;
-exports["default"] = _default;
-
-},{"16834d59f055af3a":"lL1Ef"}],"azTGO":[function(require,module,exports) {
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"azTGO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36905,11 +37186,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("77d3d7818e219afe"));
-var _app = require("17f1518f4b326f9f");
-var _blocks = require("5f8ac705794608a2");
-var _withStore = _interopRequireDefault(require("7b5b96d0062dc014"));
-var _UpsellModalBase = _interopRequireDefault(require("38467a7e7a604605"));
-var _assets = require("a4c1da9c67f823b");
+var _app = require("f56de1883a511d0d");
+var _blocks = require("4f679653ecb021b9");
+var _withStore = _interopRequireDefault(require("923351f2001a1473"));
+var _UpsellModalBase = _interopRequireDefault(require("e332c8e734debb56"));
+var _assets = require("c25dc389ac9526da");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37087,7 +37368,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(UpsellModalSettingsMenu, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"77d3d7818e219afe":"21dqq","17f1518f4b326f9f":"c28DV","7b5b96d0062dc014":"kWmDy","38467a7e7a604605":"lUoek","5f8ac705794608a2":"ohEvx","a4c1da9c67f823b":"9SnHn"}],"lUoek":[function(require,module,exports) {
+},{"77d3d7818e219afe":"21dqq","f56de1883a511d0d":"c28DV","4f679653ecb021b9":"ohEvx","923351f2001a1473":"kWmDy","e332c8e734debb56":"lUoek","c25dc389ac9526da":"9SnHn"}],"lUoek":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37657,287 +37938,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
  */ var _default = AdminMenuWrapper;
 exports["default"] = _default;
 
-},{"7a7fd8a69bf62f03":"21dqq"}],"7VzQu":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("c515c572c6ab551c"));
-var _toolkit = require("953ee9eab3e8c345");
-var _assets = _interopRequireDefault(require("ccfe05c780e0df68"));
-var _app = _interopRequireDefault(require("5fdbac5a3de76904"));
-var _blocks = _interopRequireDefault(require("b60a84ccf937dbc7"));
-var _versionControl = _interopRequireDefault(require("3142590e179e9a7a"));
-var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
-var _initialState = _interopRequireDefault(require("2948990e65501539"));
-var _pluginStatus = _interopRequireDefault(require("6f45c3ea2f5cedb9"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {};
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _defineProperty(obj, key, value) {
-    key = _toPropertyKey(key);
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _toPropertyKey(arg) {
-    var key = _toPrimitive(arg, "string");
-    return _typeof(key) === "symbol" ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-    if (_typeof(input) !== "object" || input === null) return input;
-    var prim = input[Symbol.toPrimitive];
-    if (prim !== undefined) {
-        var res = prim.call(input, hint || "default");
-        if (_typeof(res) !== "object") return res;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (hint === "string" ? String : Number)(input);
-}
-/**
- * Prepare data for pro only block upsells.
- *
- * @param {Object} proOnlyBlockList pro only block list
- *
- * @return {Array} pro block upsell data
- */ function prepareProOnlyBlockUpsellData(proOnlyBlockList) {
-    return Object.keys(proOnlyBlockList).filter(function(key) {
-        return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
-    }).reduce(function(carry, blockName) {
-        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon, screenshot = _proOnlyBlockList$blo.screenshot;
-        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true, screenshot));
-        return carry;
-    }, []);
-}
-/**
- * Generate block info object compatible with settings menu store.
- *
- * @param {string}            name                 block registry name
- * @param {string}            title                block title
- * @param {string}            info                 block info
- * @param {React.ElementType} icon                 icon element
- * @param {boolean}           active               active status
- * @param {boolean}           [pro=false]          block pro status
- * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
- * @return {Object} block info object
- */ function generateBlockInfoObject(name, title, info, icon, active) {
-    var pro = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-    var screenshotUrl = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
-    return {
-        name: name,
-        title: title,
-        info: Array.isArray(info) ? info : [
-            info
-        ],
-        icon: icon,
-        active: active,
-        pro: pro,
-        screenshotUrl: screenshotUrl
-    };
-}
-/**
- * Create settings menu store.
- *
- * @return {Object} store
- */ function createStore() {
-    // eslint-disable-next-line no-undef
-    var appData = _objectSpread({}, ubAdminMenuData);
-    // eslint-disable-next-line no-undef
-    ubAdminMenuData = null;
-    // add block infos to context data
-    var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
-    var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
-        return blockData.parent === undefined && blockData.supports.inserter === undefined;
-    });
-    var _appData$blocks = appData.blocks, statusData = _appData$blocks.statusData, info = _appData$blocks.info;
-    var reducedBlocks = registeredUbBlocks.reduce(function(carry, current) {
-        var icon = current.icon, currentName = current.name, title = current.title;
-        var blockStatus = false;
-        // eslint-disable-next-line array-callback-return,no-shadow
-        statusData.map(function(_ref) {
-            var name = _ref.name, active = _ref.active;
-            if (name === currentName) blockStatus = active;
-        });
-        var blockInfo = [];
-        if (info[currentName] && Array.isArray(info[currentName])) blockInfo = info[currentName];
-        var newBlockObject = generateBlockInfoObject(currentName, title, blockInfo, icon.src, blockStatus);
-        carry.push(newBlockObject);
-        return carry;
-    }, []);
-    var proBlocks = appData.upsells.blocks;
-    var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
-    // all blocks available including upsell versions of pro blocks or pro blocks themselves
-    var allRegistered = proBlockUpsell.reduce(function(carry, current) {
-        var proBlockName = current.name;
-        //check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
-        // if not inject the upsell data to current block list
-        var registeredProBlock = carry.find(function(_ref2) {
-            var name = _ref2.name;
-            return name === proBlockName;
-        });
-        if (registeredProBlock) registeredProBlock.pro = true;
-        else carry.push(current);
-        return carry;
-    }, reducedBlocks);
-    var preloadedState = {
-        assets: appData.assets,
-        blocks: {
-            registered: allRegistered
-        },
-        versionControl: appData.versionControl,
-        pluginStatus: appData.pluginStatus
-    };
-    // merge with default store state
-    preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
-    return (0, _toolkit.configureStore)({
-        reducer: {
-            assets: _assets["default"],
-            app: _app["default"],
-            blocks: _blocks["default"],
-            versionControl: _versionControl["default"],
-            pluginStatus: _pluginStatus["default"]
-        },
-        middleware: function middleware(getDefaultMiddleware) {
-            return getDefaultMiddleware({
-                serializableCheck: false
-            });
-        },
-        preloadedState: preloadedState
-    });
-}
-/**
- * @module createStore
- */ var _default = createStore;
-exports["default"] = _default;
-
-},{"953ee9eab3e8c345":"lL1Ef","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","61d1115f3d5c796e":"ck1Q2","2948990e65501539":"3xPpL","c515c572c6ab551c":"21dqq","6f45c3ea2f5cedb9":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
-"use strict";
-var isMergeableObject = function isMergeableObject(value) {
-    return isNonNullObject(value) && !isSpecial(value);
-};
-function isNonNullObject(value) {
-    return !!value && typeof value === "object";
-}
-function isSpecial(value) {
-    var stringValue = Object.prototype.toString.call(value);
-    return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
-}
-// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
-var canUseSymbol = typeof Symbol === "function" && Symbol.for;
-var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 0xeac7;
-function isReactElement(value) {
-    return value.$$typeof === REACT_ELEMENT_TYPE;
-}
-function emptyTarget(val) {
-    return Array.isArray(val) ? [] : {};
-}
-function cloneUnlessOtherwiseSpecified(value, options) {
-    return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
-}
-function defaultArrayMerge(target, source, options) {
-    return target.concat(source).map(function(element) {
-        return cloneUnlessOtherwiseSpecified(element, options);
-    });
-}
-function getMergeFunction(key, options) {
-    if (!options.customMerge) return deepmerge;
-    var customMerge = options.customMerge(key);
-    return typeof customMerge === "function" ? customMerge : deepmerge;
-}
-function getEnumerableOwnPropertySymbols(target) {
-    return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
-        return Object.propertyIsEnumerable.call(target, symbol);
-    }) : [];
-}
-function getKeys(target) {
-    return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
-}
-function propertyIsOnObject(object, property) {
-    try {
-        return property in object;
-    } catch (_) {
-        return false;
-    }
-}
-// Protects from prototype poisoning and unexpected merging up the prototype chain.
-function propertyIsUnsafe(target, key) {
-    return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
-     && !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
-     && Object.propertyIsEnumerable.call(target, key) // and also unsafe if they're nonenumerable.
-    );
-}
-function mergeObject(target, source, options) {
-    var destination = {};
-    if (options.isMergeableObject(target)) getKeys(target).forEach(function(key) {
-        destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
-    });
-    getKeys(source).forEach(function(key) {
-        if (propertyIsUnsafe(target, key)) return;
-        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
-        else destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-    });
-    return destination;
-}
-function deepmerge(target, source, options) {
-    options = options || {};
-    options.arrayMerge = options.arrayMerge || defaultArrayMerge;
-    options.isMergeableObject = options.isMergeableObject || isMergeableObject;
-    // cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
-    // implementations can use it. The caller may not replace it.
-    options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
-    var sourceIsArray = Array.isArray(source);
-    var targetIsArray = Array.isArray(target);
-    var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
-    if (!sourceAndTargetTypesMatch) return cloneUnlessOtherwiseSpecified(source, options);
-    else if (sourceIsArray) return options.arrayMerge(target, source, options);
-    else return mergeObject(target, source, options);
-}
-deepmerge.all = function deepmergeAll(array, options) {
-    if (!Array.isArray(array)) throw new Error("first argument should be an array");
-    return array.reduce(function(prev, next) {
-        return deepmerge(prev, next, options);
-    }, {});
-};
-var deepmerge_1 = deepmerge;
-module.exports = deepmerge_1;
-
-},{}]},["eQDYk"], "eQDYk", "parcelRequire065b")
+},{"7a7fd8a69bf62f03":"21dqq"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
 
 //# sourceMappingURL=ub-admin-settings.js.map
