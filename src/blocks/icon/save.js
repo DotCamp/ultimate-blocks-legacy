@@ -1,6 +1,7 @@
 import { isEmpty } from "lodash";
 import { ultimateIcons } from "./icons";
 import { getStyles } from "./get-styles";
+import { useBlockProps } from "@wordpress/block-editor";
 
 function Save(props) {
 	const {
@@ -8,7 +9,9 @@ function Save(props) {
 	} = props;
 	const hasIcon = !isEmpty(icon);
 	const hasSVGIcon = !isEmpty(svgIcon);
-
+	const blockProps = useBlockProps.save({
+		style: getStyles(props.attributes),
+	});
 	const finalIcon = hasIcon
 		? ultimateIcons
 				.find((obj) => obj.type === icon?.type)
@@ -26,7 +29,7 @@ function Save(props) {
 				target: linkTarget,
 		  };
 	return (
-		<div className={props.className} style={blockStyles}>
+		<div {...blockProps}>
 			{hasIcon && (
 				<div className="ub_icon">
 					<Tag className="ub_icon_wrapper" {...anchorAttributes}>

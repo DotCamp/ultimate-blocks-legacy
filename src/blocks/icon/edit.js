@@ -15,6 +15,7 @@ import CustomBlockControls from "./block-controls";
 import Placeholder from "./components/Placeholder";
 import IconsLibrary from "./components/icon-library";
 import CustomInserterModal from "./components/CustomSvgInserter";
+import { useBlockProps } from "@wordpress/block-editor";
 
 function Edit(props) {
 	const [isLibraryOpen, setLibraryOpen] = useState(false);
@@ -26,14 +27,14 @@ function Edit(props) {
 	} = props;
 	const hasIcon = !isEmpty(icon);
 	const hasSVGIcon = !isEmpty(svgIcon);
-
+	const blockProps = useBlockProps({
+		style: getStyles(props.attributes),
+	});
 	const finalIcon = hasIcon
 		? ultimateIcons
 				.find((obj) => obj.type === icon?.type)
 				?.icons?.find((ic) => ic.name === icon.iconName)?.icon ?? ""
 		: svgIcon;
-
-	const blockStyles = getStyles(props.attributes);
 
 	const customInserterProps = {
 		attributes: props.attributes,
@@ -43,7 +44,7 @@ function Edit(props) {
 	};
 
 	return (
-		<div className={className} style={blockStyles}>
+		<div {...blockProps}>
 			{!hasIcon && !hasSVGIcon && (
 				<Placeholder
 					setCustomInserterOpen={setCustomInserterOpen}

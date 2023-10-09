@@ -10,6 +10,7 @@ import registerPluginBlock from "$Inc/registerPluginBlock";
 import { blockIcon } from "./icons/block-icon";
 import Edit from "./edit";
 import Save from "./save";
+import metadata from "./block.json";
 
 const attributes = {
 	icon: {
@@ -66,16 +67,9 @@ const attributes = {
 		default: 0,
 	},
 };
-registerPluginBlock("ub/icon", {
-	title: __("Icon", "ultimate-blocks"),
-	category: "ultimateblocks",
+registerPluginBlock(metadata, {
 	icon: blockIcon,
 	attributes,
-	supports: {
-		html: false,
-		align: ["wide", "full"],
-		anchor: true,
-	},
 	edit: Edit,
 	save: Save,
 });

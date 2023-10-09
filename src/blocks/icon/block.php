@@ -10,7 +10,7 @@ function register_icon_block() {
 
 		$block_type_id = 'ub/icon';
 
-		register_block_type( $block_type_id, [
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/icon', [
 			'attributes'      => $defaultValues[ $block_type_id ]['attributes'],
 			'render_callback' => null
 		] );
