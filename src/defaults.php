@@ -851,11 +851,11 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required tools' )
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'tools' => array(
-                'type' => 'array',
-                'default' => array(),
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'tools' => array(
+				'type' => 'array',
+				'default' => array(),
+			),
 			'toolsListStyle'      => array(
 				'type'    => 'string',
 				'default' => 'none'
@@ -872,20 +872,25 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required supplies' )
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'supplies' => array(
-                'type' => 'array',
-                'default' => array(),
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'supplies' => array(
+				'type' => 'array',
+				'default' => array(),
+			),
 			'suppliesListStyle'   => array(
 				'type'    => 'string',
 				'default' => 'none'
 			),
-			/* COMMENTED OUT TO PREVENT PHP ERRORS
-            'section' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'section' => array(
+				'type' => 'array',
+				'default' => array(
+					array(
+						'sectionName' => '',
+						'steps' => array()
+					)
+				)
+			),
 			'sectionListStyle'    => array(
 				'type'    => 'string',
 				'default' => 'none'
