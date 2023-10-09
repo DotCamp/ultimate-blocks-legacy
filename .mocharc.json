@@ -1,0 +1,7 @@
+{
+	"recursive": true,
+	"require": [
+		"global-jsdom",
+		"./__tests__/js/test-inc/hooks.js"
+	]
+}
