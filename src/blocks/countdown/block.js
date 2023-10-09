@@ -7,30 +7,48 @@ import icon, {
 import Timer from "./components";
 
 import { useEffect, useState } from "react";
-
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
-const { InspectorControls, RichText, PanelColorSettings, BlockControls } =
-	wp.blockEditor || wp.editor;
-const {
+import metadata from "./block.json";
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
+import {
+	InspectorControls,
+	RichText,
+	PanelColorSettings,
+	BlockControls,
+	useBlockProps,
+} from "@wordpress/block-editor";
+import {
 	DateTimePicker,
 	PanelBody,
 	ToolbarGroup,
 	ToolbarButton,
 	SelectControl,
 	RangeControl,
-} = wp.components;
-const { withSelect } = wp.data;
+} from "@wordpress/components";
+import { useSelect } from "@wordpress/data";
 
 function CountdownMain(props) {
 	const [forceUpdate, setForceUpdate] = useState(false);
+	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
+		useSelect((select) => {
+			const {
+				getBlock,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+				getBlocks,
+			} = select("core/block-editor") || select("core/editor");
 
+			return {
+				getBlock,
+				block: getBlock(props.clientId),
+				parentID: getBlockRootClientId(props.clientId),
+				getClientIdsWithDescendants,
+				getBlocks,
+			};
+		});
 	const {
 		isSelected,
 		setAttributes,
-		block,
-		getBlock,
-		getClientIdsWithDescendants,
 		attributes: {
 			blockID,
 			style,
@@ -45,9 +63,7 @@ function CountdownMain(props) {
 	} = props;
 
 	useEffect(() => {
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
@@ -55,7 +71,7 @@ function CountdownMain(props) {
 	const timeUnits = ["week", "day", "hour", "minute", "second"];
 
 	return (
-		<>
+		<div {...useBlockProps()}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -187,65 +203,14 @@ function CountdownMain(props) {
 					keepPlaceholderOnFocus={true}
 				/>
 			</>
-		</>
+		</div>
 	);
 }
 
-registerBlockType("ub/countdown", {
-	title: __("Countdown"),
-	description: __("Add a countdown in your post/pages. Comes with three different styles.", "ultimate-blocks"),
+registerBlockType(metadata, {
 	icon: icon,
 	category: "ultimateblocks",
-	keywords: [__("Countdown"), __("Timer"), __("Ultimate Blocks")],
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		endDate: {
-			type: "number",
-			default: 60 * (1440 + Math.ceil(Date.now() / 60000)), // 24 hours from Date.now
-		},
-		style: {
-			type: "string",
-			default: "Odometer", //available types: Regular, Circular, Odometer
-		},
-		expiryMessage: {
-			type: "string",
-			default: "",
-		},
-		messageAlign: {
-			type: "string",
-			default: "left",
-		},
-		circleColor: {
-			type: "string",
-			default: "#2DB7F5",
-		},
-		circleSize: {
-			type: "number",
-			default: 70,
-		},
-		largestUnit: {
-			type: "string",
-			default: "week",
-		},
-		smallestUnit: {
-			type: "string",
-			default: "second",
-		},
-	},
 	example: {},
-	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
-
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
-		};
-	})(CountdownMain),
-
+	edit: CountdownMain,
 	save: () => null,
 });
