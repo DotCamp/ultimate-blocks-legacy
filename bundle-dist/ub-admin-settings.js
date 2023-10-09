@@ -30422,7 +30422,7 @@ var ajaxInfo = function ajaxInfo(state) {
 var _default = versionControlSlice.reducer;
 exports["default"] = _default;
 
-},{"9089b07959d8d215":"3xPpL","b718c794e97d3789":"lL1Ef"}],"7a8vF":[function(require,module,exports) {
+},{"b718c794e97d3789":"lL1Ef","9089b07959d8d215":"3xPpL"}],"7a8vF":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36188,17 +36188,19 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
 }
-// use global hook methods to broadcast and listen events on document level
-var applyFilters = wp.hooks.applyFilters;
 /**
  * Router for different menu content.
  *
- * Router children components should be Route components. Else those will who are not will be ignored.
+ * Router children components should be Route components. Else those who are not will be ignored.
+ *
+ * If no route matches, the last route will be shown. It can be used as 404 page.
  *
  * @param {Object}               props          component properties
  * @param {Array<Route> | Route} props.children component route children
  */ function Router(_ref) {
     var children = _ref.children;
+    // use global hook methods to broadcast and listen events on document level
+    var applyFilters = wp.hooks.applyFilters;
     var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), CurrentRouteContent = _useState2[0], setCurrentRouteContent = _useState2[1];
     // url search parameter for page property
     var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), currentPageParameter = _useState4[0], setCurrentPageParameter = _useState4[1];

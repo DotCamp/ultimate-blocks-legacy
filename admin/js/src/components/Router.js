@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Route from '$Components/Route';
 
-// use global hook methods to broadcast and listen events on document level
-const { applyFilters } = wp.hooks;
-
 /**
  * Router for different menu content.
  *
- * Router children components should be Route components. Else those will who are not will be ignored.
+ * Router children components should be Route components. Else those who are not will be ignored.
+ *
+ * If no route matches, the last route will be shown. It can be used as 404 page.
  *
  * @param {Object}               props          component properties
  * @param {Array<Route> | Route} props.children component route children
  */
 function Router( { children } ) {
+	// use global hook methods to broadcast and listen events on document level
+	const { applyFilters } = wp.hooks;
+
 	const [ CurrentRouteContent, setCurrentRouteContent ] = useState( null );
 
 	// url search parameter for page property

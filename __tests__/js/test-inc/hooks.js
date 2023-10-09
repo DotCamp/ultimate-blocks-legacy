@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const expect = require( 'chai' ).expect;
+const chai = require( 'chai' );
+const dirtyChai = require( 'dirty-chai' );
 const sinon = require( 'sinon' );
 const { cleanup } = require( '@testing-library/react' );
 
@@ -12,5 +13,6 @@ exports.mochaHooks = {
 
 exports.mochaGlobalSetup = () => {
 	const context = global || self;
-	context.expect = expect;
+	context.expect = chai.expect;
+	chai.use( dirtyChai );
 };
