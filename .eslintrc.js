@@ -27,6 +27,12 @@ module.exports = {
 			},
 		},
 	},
+	overrides: [
+		{
+			files: [ '__tests__/js/unit/**/*.js' ],
+			extends: [ 'plugin:testing-library/react' ],
+		},
+	],
 	globals: {
 		self: true,
 		ubPriorityData: true,
