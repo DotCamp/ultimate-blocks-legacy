@@ -66,6 +66,7 @@
 		"@babel/register": "^7.22.15",
 		"@parcel/transformer-sass": "^2.7.0",
 		"@testing-library/react": "^14.0.0",
+		"@testing-library/user-event": "^14.5.1",
 		"@wordpress/eslint-plugin": "^13.0.0",
 		"@wordpress/scripts": "^23.2.0",
 		"archiver": "^5.3.1",

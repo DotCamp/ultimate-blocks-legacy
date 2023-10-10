@@ -30486,6 +30486,8 @@ var _assets = require("66544b766e488b05");
 var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
 var _VersionControl = _interopRequireDefault(require("9b060551899412e8"));
 var _reactFontawesome = require("3ee81ce64fbd9c46");
+var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
+var _routes = require("e6bedbb7f240506c");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -30500,6 +30502,7 @@ function _interopRequireDefault(obj) {
  * @return {JSX.Element} component
  */ function MenuHeader(_ref) {
     var logoUrl = _ref.logoUrl;
+    var routeObjectsMinus404 = _routes.routeObjects.slice(0, _routes.routeObjects.length - 1);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "menu-header"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
@@ -30511,7 +30514,9 @@ function _interopRequireDefault(obj) {
         src: logoUrl
     }), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-plugin-logo-text"
-    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
+        routes: routeObjectsMinus404
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
     }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], {
         classNames: [
@@ -30531,7 +30536,7 @@ var selectMapping = function selectMapping(select) {
  */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping);
 exports["default"] = _default;
 
-},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36090,7 +36095,383 @@ function _interopRequireDefault(obj) {
  */ var _default = HeaderVersionInfo;
 exports["default"] = _default;
 
-},{"f952e3330057bbdf":"21dqq"}],"12F8G":[function(require,module,exports) {
+},{"f952e3330057bbdf":"21dqq"}],"26KBK":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("7a2a9df7dd1b261f"));
+var _Route = _interopRequireDefault(require("36d201ab1b1724f9"));
+var _NavigationHeaderButton = _interopRequireDefault(require("a76f8143b8f4b019"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Navigation component.
+ *
+ * @param {Object}       props        component properties
+ * @param {Array<Route>} props.routes routes array
+ * @class
+ */ function Navigation(_ref) {
+    var routes = _ref.routes;
+    var _useState = (0, _react.useState)({}), _useState2 = _slicedToArray(_useState, 2), calculatedStyle = _useState2[0], setCalculatedStyles = _useState2[1];
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        var style = {
+            gridTemplateColumns: "repeat(".concat(routes.length, ", minmax(0,1fr))")
+        };
+        setCalculatedStyles(style);
+    }, [
+        routes
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        style: calculatedStyle,
+        className: "ub-menu-navigation"
+    }, routes.map(function(routeObj) {
+        return /*#__PURE__*/ _react["default"].createElement(_NavigationHeaderButton["default"], {
+            key: routeObj.getPath(),
+            title: routeObj.getTitle(),
+            targetPath: routeObj.getPath()
+        });
+    }));
+}
+/**
+ * @module Navigation
+ */ var _default = Navigation;
+exports["default"] = _default;
+
+},{"7a2a9df7dd1b261f":"21dqq","36d201ab1b1724f9":"1QB0k","a76f8143b8f4b019":"fSOK5"}],"1QB0k":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.generateRouteArray = exports.defaultRouteOptions = exports["default"] = void 0;
+var _react = _interopRequireDefault(require("5d270e18e6865843"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
+/**
+ * Route default options.
+ *
+ * @type {Object}
+ */ var defaultRouteOptions = {
+    path: null,
+    title: "no_title",
+    element: null
+};
+/**
+ * Route object.
+ *
+ * @param {Object} options route options
+ * @class
+ */ exports.defaultRouteOptions = defaultRouteOptions;
+function Route(options) {
+    var _this = this;
+    var _defaultRouteOptions$ = _objectSpread(_objectSpread({}, defaultRouteOptions), options), path = _defaultRouteOptions$.path, title = _defaultRouteOptions$.title, element = _defaultRouteOptions$.element;
+    /**
+   * Get route path.
+   *
+   * @return {string} path
+   */ this.getPath = function() {
+        return path;
+    };
+    /**
+   * Get route title.
+   *
+   * @return {string} title
+   */ this.getTitle = function() {
+        return title;
+    };
+    /**
+   * Get route element.
+   *
+   * @return {Function} element
+   */ this.getElement = function() {
+        return element !== null && element !== void 0 ? element : /*#__PURE__*/ _react["default"].createElement("div", null, "no element defined for route [", _this.getPath(), "]");
+    };
+}
+/**
+ * Generate options array from settings objects.
+ *
+ * These settings objects should correspond to Route default options.
+ *
+ * @param {Array<Object>} optionsArray options array
+ * @return {Array<Route>} route object array
+ */ var generateRouteArray = function generateRouteArray(optionsArray) {
+    return optionsArray.map(function(options) {
+        return new Route(options);
+    });
+};
+/**
+ * @module Route
+ */ exports.generateRouteArray = generateRouteArray;
+var _default = Route;
+exports["default"] = _default;
+
+},{"5d270e18e6865843":"21dqq"}],"fSOK5":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("d5e65879509d9405"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Navigation header button component.
+ *
+ * @param {Object}   props                component properties
+ * @param {string}   props.title          button title
+ * @param {string}   props.targetPath     target path
+ * @param {Function} props.onClickHandler click handler, will call with targetPath as first argument
+ * @param {boolean}  props.isActive       button active status
+ * @class
+ */ function NavigationHeaderButton(_ref) {
+    var title = _ref.title, targetPath = _ref.targetPath, onClickHandler = _ref.onClickHandler, _ref$isActive = _ref.isActive, isActive = _ref$isActive === void 0 ? false : _ref$isActive;
+    var onClickHandlerDefault = function onClickHandlerDefault() {
+        return onClickHandler(targetPath);
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-active": isActive,
+        className: "ub-menu-navigation-header-button",
+        tabIndex: 0,
+        role: "button",
+        onClick: onClickHandlerDefault,
+        onKeyDown: onClickHandlerDefault
+    }, title);
+}
+/**
+ * @module NavigationHeaderButton
+ */ var _default = NavigationHeaderButton;
+exports["default"] = _default;
+
+},{"d5e65879509d9405":"21dqq"}],"c1gPj":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.routeObjects = exports["default"] = void 0;
+var _react = _interopRequireDefault(require("25b7dff849a65078"));
+var _Route = _interopRequireWildcard(require("37e7e71bbe49bcb5"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Routes for admin menu.
+ *
+ * @type {Array} routes array
+ */ var routes = [
+    {
+        path: "welcome",
+        title: "Welcome",
+        element: function element() {
+            return /*#__PURE__*/ _react["default"].createElement("div", null, "Welcome");
+        }
+    },
+    {
+        path: "blocks",
+        title: "Blocks",
+        element: /*#__PURE__*/ _react["default"].createElement("div", null, "Blocks")
+    },
+    {
+        path: "extensions",
+        title: "Extensions",
+        element: /*#__PURE__*/ _react["default"].createElement("div", null, "Extensions")
+    },
+    {
+        path: "404",
+        title: "404",
+        element: /*#__PURE__*/ _react["default"].createElement("div", null, "404")
+    }
+];
+/**
+ * Generated route objects array.
+ *
+ * @type {Array<Route>}
+ */ var routeObjects = (0, _Route.generateRouteArray)(routes);
+/**
+ * @module routes
+ */ exports.routeObjects = routeObjects;
+var _default = routes;
+exports["default"] = _default;
+
+},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k"}],"12F8G":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36256,164 +36637,7 @@ function _arrayWithHoles(arr) {
  */ var _default = Router;
 exports["default"] = _default;
 
-},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"1QB0k":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.generateRouteArray = exports.defaultRouteOptions = exports["default"] = void 0;
-var _react = _interopRequireDefault(require("5d270e18e6865843"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {};
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _defineProperty(obj, key, value) {
-    key = _toPropertyKey(key);
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _toPropertyKey(arg) {
-    var key = _toPrimitive(arg, "string");
-    return _typeof(key) === "symbol" ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-    if (_typeof(input) !== "object" || input === null) return input;
-    var prim = input[Symbol.toPrimitive];
-    if (prim !== undefined) {
-        var res = prim.call(input, hint || "default");
-        if (_typeof(res) !== "object") return res;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (hint === "string" ? String : Number)(input);
-}
-/**
- * Route default options.
- *
- * @type {Object}
- */ var defaultRouteOptions = {
-    path: null,
-    title: "no_title",
-    element: null
-};
-/**
- * Route object.
- *
- * @param {Object} options route options
- * @class
- */ exports.defaultRouteOptions = defaultRouteOptions;
-function Route(options) {
-    var _this = this;
-    var _defaultRouteOptions$ = _objectSpread(_objectSpread({}, defaultRouteOptions), options), path = _defaultRouteOptions$.path, title = _defaultRouteOptions$.title, element = _defaultRouteOptions$.element;
-    /**
-   * Get route path.
-   *
-   * @return {string} path
-   */ this.getPath = function() {
-        return path;
-    };
-    /**
-   * Get route title.
-   *
-   * @return {string} title
-   */ this.getTitle = function() {
-        return title;
-    };
-    /**
-   * Get route element.
-   *
-   * @return {Function} element
-   */ this.getElement = function() {
-        return element !== null && element !== void 0 ? element : /*#__PURE__*/ _react["default"].createElement("div", null, "no element defined for route [", _this.getPath(), "]");
-    };
-}
-/**
- * Generate options array from settings objects.
- *
- * These settings objects should correspond to Route default options.
- *
- * @param {Array<Object>} optionsArray options array
- * @return {Array<Route>} route object array
- */ var generateRouteArray = function generateRouteArray(optionsArray) {
-    return optionsArray.map(function(options) {
-        return new Route(options);
-    });
-};
-/**
- * @module Route
- */ exports.generateRouteArray = generateRouteArray;
-var _default = Route;
-exports["default"] = _default;
-
-},{"5d270e18e6865843":"21dqq"}],"c1gPj":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("25b7dff849a65078"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Routes for admin menu.
- *
- * @type {Array} routes array
- */ var routes = [
-    {
-        path: "welcome",
-        title: "Welcome",
-        element: function element() {
-            return /*#__PURE__*/ _react["default"].createElement("div", null, "Welcome");
-        }
-    },
-    {
-        path: "404",
-        title: "404",
-        element: /*#__PURE__*/ _react["default"].createElement("div", null, "404")
-    }
-];
-var _default = routes;
-exports["default"] = _default;
-
-},{"25b7dff849a65078":"21dqq"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

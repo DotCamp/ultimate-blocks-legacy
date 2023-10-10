@@ -111,6 +111,22 @@
 					}
 				}
 			}
+
+			.ub-menu-navigation {
+				height: 100%;
+				display: grid;
+				grid-template-rows: 1fr;
+				grid-template-columns: minmax(0, 1fr);
+
+				.ub-menu-navigation-header-button {
+					@extend %flex-center-all;
+					@extend %pointer;
+					@extend %size-full;
+					padding: 0 20px;
+					border: 1px solid red;
+					border-width: 0 0 2px 0;
+				}
+			}
 		}
 
 		.route-404 {

@@ -5,6 +5,8 @@ import { getLogo } from '$Stores/settings-menu/slices/assets';
 import RightContainerItem from '$Components/RightContainerItem';
 import VersionControl from '$Components/VersionControl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Navigation from '$Components/Navigation';
+import { routeObjects } from '$AdminInc/routes';
 
 /**
  * Settings menu header element.
@@ -14,6 +16,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  * @return {JSX.Element} component
  */
 function MenuHeader( { logoUrl } ) {
+	const routeObjectsMinus404 = routeObjects.slice(
+		0,
+		routeObjects.length - 1
+	);
+
 	return (
 		<div className={ 'menu-header' }>
 			<div className={ 'left-container' }>
@@ -24,6 +31,7 @@ function MenuHeader( { logoUrl } ) {
 					</div>
 				</div>
 			</div>
+			<Navigation routes={ routeObjectsMinus404 } />
 			<div className={ 'right-container' }>
 				<RightContainerItem>
 					<VersionControl />
