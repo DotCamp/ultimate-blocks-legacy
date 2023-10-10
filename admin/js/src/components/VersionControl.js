@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	currentVersion,
 	versions,
@@ -9,7 +8,6 @@ import withStore from '$HOC/withStore';
 import VersionControlPopup from '$Components/VersionControlPopup';
 import Portal from '$Components/Portal';
 import { rollbackToVersion } from '$Stores/settings-menu/actions';
-import { __ } from '@wordpress/i18n';
 import HeaderVersionInfo from '$Components/HeaderVersionInfo';
 
 /**
@@ -22,7 +20,9 @@ import HeaderVersionInfo from '$Components/HeaderVersionInfo';
  * @function Object() { [native code] }
  */
 function VersionControl( { pluginVersion, allVersions, dispatch } ) {
+	// eslint-disable-next-line no-unused-vars
 	const [ versionLevel, setVersionLevel ] = useState( 'none' );
+	// eslint-disable-next-line no-unused-vars
 	const [ selectedVersion, setSelectedVersion ] = useState( pluginVersion );
 	const [ popupVisibility, setPopupVisibility ] = useState( false );
 
@@ -31,6 +31,7 @@ function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 	 *
 	 * @return {boolean} disabled status
 	 */
+	// eslint-disable-next-line no-unused-vars
 	const buttonDisabledStatus = () => {
 		return pluginVersion === selectedVersion;
 	};

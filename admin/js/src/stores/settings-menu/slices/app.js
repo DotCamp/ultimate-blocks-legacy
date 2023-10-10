@@ -13,6 +13,16 @@ const appSliceOptions = {
 	initialState: initialState.app,
 	reducers: {
 		/**
+		 * Set current route path.
+		 *
+		 * @param {Object} state         slice state
+		 * @param {Object} props         reducer properties
+		 * @param {string} props.payload route path
+		 */
+		setCurrentRoutePath( state, { payload } ) {
+			state.router.current = payload;
+		},
+		/**
 		 * Set current filter value.
 		 *
 		 * @param {Object} state         slice state
@@ -127,6 +137,16 @@ export const getModalTargetBlockType = ( state ) => {
  */
 export const getModalVisibilityStatus = ( state ) => {
 	return state.app.upsellPopup.show;
+};
+
+/**
+ * Get current route path.
+ *
+ * @param {Object} state store state
+ * @return {string | null} route path
+ */
+export const getCurrentRoutePath = ( state ) => {
+	return state.app.router.current;
 };
 
 /**

@@ -13,6 +13,9 @@ const initialState = {
 			show: false,
 			targetBlock: null,
 		},
+		router: {
+			current: 'welcome',
+		},
 	},
 	versionControl: {
 		currentVersion: '1.0.0',

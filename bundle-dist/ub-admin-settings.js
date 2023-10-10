@@ -29714,7 +29714,7 @@ exports["default"] = _default;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getCurrentRoutePath = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
 var _toolkit = require("ab983f5a897f990a");
 var _BlockStatusFilterControl = require("1825a520c0dd5d34");
 var _initialState = _interopRequireDefault(require("d3df904bb6381f74"));
@@ -29733,13 +29733,23 @@ function _interopRequireDefault(obj) {
     initialState: _initialState["default"].app,
     reducers: {
         /**
+     * Set current route path.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload route path
+     */ setCurrentRoutePath: function setCurrentRoutePath(state, _ref) {
+            var payload = _ref.payload;
+            state.router.current = payload;
+        },
+        /**
      * Set current filter value.
      *
      * @param {Object} state         slice state
      * @param {Object} props         reducer properties
      * @param {string} props.payload filter value
-     */ setBlockFilter: function setBlockFilter(state, _ref) {
-            var payload = _ref.payload;
+     */ setBlockFilter: function setBlockFilter(state, _ref2) {
+            var payload = _ref2.payload;
             if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
             else throw new Error("invalid block filter type supplied");
         },
@@ -29756,8 +29766,8 @@ function _interopRequireDefault(obj) {
      * @param {Object} state         slice state
      * @param {Object} props         reducer properties
      * @param {string} props.payload target block type
-     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref2) {
-            var payload = _ref2.payload;
+     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref3) {
+            var payload = _ref3.payload;
             state.upsellPopup.show = true;
             state.upsellPopup.targetBlock = payload;
         },
@@ -29834,8 +29844,17 @@ var getModalVisibilityStatus = function getModalVisibilityStatus(state) {
     return state.app.upsellPopup.show;
 };
 /**
- * @module appSlice
+ * Get current route path.
+ *
+ * @param {Object} state store state
+ * @return {string | null} route path
  */ exports.getModalVisibilityStatus = getModalVisibilityStatus;
+var getCurrentRoutePath = function getCurrentRoutePath(state) {
+    return state.app.router.current;
+};
+/**
+ * @module appSlice
+ */ exports.getCurrentRoutePath = getCurrentRoutePath;
 var _default = appSlice.reducer;
 exports["default"] = _default;
 
@@ -30219,6 +30238,9 @@ var _BlockStatusFilterControl = require("fcdfedb923f0d687");
         upsellPopup: {
             show: false,
             targetBlock: null
+        },
+        router: {
+            current: "welcome"
         }
     },
     versionControl: {
@@ -30655,13 +30677,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("b544b5ba9b277d21"));
-var _reactFontawesome = require("52f863744b6b5910");
 var _versionControl = require("9721fb4193a9924a");
 var _withStore = _interopRequireDefault(require("ed40d2d967989b24"));
 var _VersionControlPopup = _interopRequireDefault(require("9b2395a3b4ee2d26"));
 var _Portal = _interopRequireDefault(require("d6bde676cea9749"));
 var _actions = require("9202061521dcbd56");
-var _i18n = require("69ee0e54dc1b6df2");
 var _HeaderVersionInfo = _interopRequireDefault(require("e11ae307e3589951"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -30747,14 +30767,17 @@ function _arrayWithHoles(arr) {
  * @function Object() { [native code] }
  */ function VersionControl(_ref) {
     var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
+    // eslint-disable-next-line no-unused-vars
     var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
+    // eslint-disable-next-line no-unused-vars
     var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
     var _useState5 = (0, _react.useState)(false), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
     /**
    * Calculate button disabled status.
    *
    * @return {boolean} disabled status
-   */ var buttonDisabledStatus = function buttonDisabledStatus() {
+   */ // eslint-disable-next-line no-unused-vars
+    var buttonDisabledStatus = function buttonDisabledStatus() {
         return pluginVersion === selectedVersion;
     };
     var sortedVersions = allVersions.sort().reverse();
@@ -30806,7 +30829,205 @@ function _arrayWithHoles(arr) {
  */ var _default = (0, _withStore["default"])(VersionControl, selectionMapping);
 exports["default"] = _default;
 
-},{"b544b5ba9b277d21":"21dqq","52f863744b6b5910":"clIT3","9721fb4193a9924a":"6jcRk","ed40d2d967989b24":"kWmDy","9b2395a3b4ee2d26":"k3f3V","d6bde676cea9749":"hOoRN","9202061521dcbd56":"g3gW2","69ee0e54dc1b6df2":"7CyoE","e11ae307e3589951":"lUMLC"}],"clIT3":[function(require,module,exports) {
+},{"b544b5ba9b277d21":"21dqq","9721fb4193a9924a":"6jcRk","ed40d2d967989b24":"kWmDy","9b2395a3b4ee2d26":"k3f3V","d6bde676cea9749":"hOoRN","9202061521dcbd56":"g3gW2","e11ae307e3589951":"lUMLC"}],"k3f3V":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("3accbda3a85c85e3"));
+var _reactFontawesome = require("a3e43325b30d05e5");
+var _i18n = require("9945d4bf1472bc28");
+var _MenuButton = _interopRequireWildcard(require("d5eedcb9ade3dcc8"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Version control popup component.
+ *
+ * @param {Object}   props                  component properties
+ * @param {string}   props.from             current version
+ * @param {string}   props.to               version to rollback
+ * @param {Function} props.onCloseHandler   close popup callback
+ * @param {Function} props.onOperationStart operation start callback
+ * @param {number}   props.reloadDelay      automatic page reload delay in milliseconds
+ * @class
+ */ function VersionControlPopup(_ref) {
+    var from = _ref.from, to = _ref.to, onCloseHandler = _ref.onCloseHandler, onOperationStart = _ref.onOperationStart, _ref$reloadDelay = _ref.reloadDelay, reloadDelay = _ref$reloadDelay === void 0 ? 5000 : _ref$reloadDelay;
+    var OPERATION_STATUS_TYPES = {
+        NOT_STARTED: "notStarted",
+        STARTED: "started",
+        FINISHED: "finished"
+    };
+    var RESPONSE_TYPES = {
+        OK: "ok",
+        ERROR: "error"
+    };
+    /**
+   * Generate response object.
+   *
+   * @param {string} message     message
+   * @param {string} [type='ok'] response type.
+   * @return {Object} response object
+   */ var generateResponseObject = function generateResponseObject(message) {
+        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RESPONSE_TYPES.OK;
+        return {
+            type: type,
+            message: message
+        };
+    };
+    var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
+    var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
+    var _useState5 = (0, _react.useState)(generateResponseObject("")), _useState6 = _slicedToArray(_useState5, 2), responseObject = _useState6[0], setResponseObject = _useState6[1];
+    var isDowngrade = from > to;
+    var countdownToReload = (0, _react.useRef)(reloadDelay);
+    /**
+   * Start rollback operation.
+   */ var startOperation = function startOperation() {
+        setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
+        onOperationStart().then(function(_ref2) {
+            var message = _ref2.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.OK));
+        })["catch"](function(_ref3) {
+            var message = _ref3.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.ERROR));
+        })["finally"](function() {
+            setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
+            reloadPage();
+        });
+    };
+    /**
+   * Reload page after a designated amount of time.
+   */ var reloadPage = function reloadPage() {
+        var reloadIntervalId = setInterval(function() {
+            if (countdownToReload.current <= 0) {
+                window.location.reload();
+                clearInterval(reloadIntervalId);
+            } else {
+                countdownToReload.current = countdownToReload.current - 1000;
+                setReloadCountdown(countdownToReload.current / 1000);
+            }
+        }, 1000);
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-popup"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "modal-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "rollback-versions"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-positive-color" : "ub-negative-color")
+    }, from), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon",
+        "data-in-progress": JSON.stringify(operationStatus === OPERATION_STATUS_TYPES.STARTED)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon-inner-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-right-long"
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-negative-color" : "ub-positive-color")
+    }, to)), operationStatus !== OPERATION_STATUS_TYPES.STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-content"
+    }, operationStatus === OPERATION_STATUS_TYPES.NOT_STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-warning"
+    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Older versions might be unstable. Do it on your own risk and create a backup.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-rollback-button-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        type: _MenuButton.BUTTON_TYPES.POSITIVE,
+        onClickHandler: startOperation,
+        status: true,
+        title: "Start"
+    }), /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        onClickHandler: onCloseHandler,
+        status: true,
+        title: "Close"
+    }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "operation-finished-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-response",
+        "data-resp-type": responseObject.type
+    }, responseObject.message), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now…", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
+}
+/**
+ * @module VersionControlPopup
+ */ var _default = VersionControlPopup;
+exports["default"] = _default;
+
+},{"3accbda3a85c85e3":"21dqq","a3e43325b30d05e5":"clIT3","9945d4bf1472bc28":"7CyoE","d5eedcb9ade3dcc8":"cbTU3"}],"clIT3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FontAwesomeIcon", ()=>FontAwesomeIcon);
@@ -34330,205 +34551,7 @@ printWarning = function(text) {
 };
 module.exports = checkPropTypes;
 
-},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"k3f3V":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("3accbda3a85c85e3"));
-var _reactFontawesome = require("a3e43325b30d05e5");
-var _i18n = require("9945d4bf1472bc28");
-var _MenuButton = _interopRequireWildcard(require("d5eedcb9ade3dcc8"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Version control popup component.
- *
- * @param {Object}   props                  component properties
- * @param {string}   props.from             current version
- * @param {string}   props.to               version to rollback
- * @param {Function} props.onCloseHandler   close popup callback
- * @param {Function} props.onOperationStart operation start callback
- * @param {number}   props.reloadDelay      automatic page reload delay in milliseconds
- * @class
- */ function VersionControlPopup(_ref) {
-    var from = _ref.from, to = _ref.to, onCloseHandler = _ref.onCloseHandler, onOperationStart = _ref.onOperationStart, _ref$reloadDelay = _ref.reloadDelay, reloadDelay = _ref$reloadDelay === void 0 ? 5000 : _ref$reloadDelay;
-    var OPERATION_STATUS_TYPES = {
-        NOT_STARTED: "notStarted",
-        STARTED: "started",
-        FINISHED: "finished"
-    };
-    var RESPONSE_TYPES = {
-        OK: "ok",
-        ERROR: "error"
-    };
-    /**
-   * Generate response object.
-   *
-   * @param {string} message     message
-   * @param {string} [type='ok'] response type.
-   * @return {Object} response object
-   */ var generateResponseObject = function generateResponseObject(message) {
-        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RESPONSE_TYPES.OK;
-        return {
-            type: type,
-            message: message
-        };
-    };
-    var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
-    var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
-    var _useState5 = (0, _react.useState)(generateResponseObject("")), _useState6 = _slicedToArray(_useState5, 2), responseObject = _useState6[0], setResponseObject = _useState6[1];
-    var isDowngrade = from > to;
-    var countdownToReload = (0, _react.useRef)(reloadDelay);
-    /**
-   * Start rollback operation.
-   */ var startOperation = function startOperation() {
-        setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
-        onOperationStart().then(function(_ref2) {
-            var message = _ref2.message;
-            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.OK));
-        })["catch"](function(_ref3) {
-            var message = _ref3.message;
-            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.ERROR));
-        })["finally"](function() {
-            setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
-            reloadPage();
-        });
-    };
-    /**
-   * Reload page after a designated amount of time.
-   */ var reloadPage = function reloadPage() {
-        var reloadIntervalId = setInterval(function() {
-            if (countdownToReload.current <= 0) {
-                window.location.reload();
-                clearInterval(reloadIntervalId);
-            } else {
-                countdownToReload.current = countdownToReload.current - 1000;
-                setReloadCountdown(countdownToReload.current / 1000);
-            }
-        }, 1000);
-    };
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-popup"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "modal-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "rollback-versions"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-id ".concat(isDowngrade ? "ub-positive-color" : "ub-negative-color")
-    }, from), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-icon",
-        "data-in-progress": JSON.stringify(operationStatus === OPERATION_STATUS_TYPES.STARTED)
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-icon-inner-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-right-long"
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-id ".concat(isDowngrade ? "ub-negative-color" : "ub-positive-color")
-    }, to)), operationStatus !== OPERATION_STATUS_TYPES.STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-content"
-    }, operationStatus === OPERATION_STATUS_TYPES.NOT_STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-warning"
-    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Older versions might be unstable. Do it on your own risk and create a backup.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-rollback-button-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        type: _MenuButton.BUTTON_TYPES.POSITIVE,
-        onClickHandler: startOperation,
-        status: true,
-        title: "Start"
-    }), /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        onClickHandler: onCloseHandler,
-        status: true,
-        title: "Close"
-    }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "operation-finished-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-response",
-        "data-resp-type": responseObject.type
-    }, responseObject.message), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now…", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
-}
-/**
- * @module VersionControlPopup
- */ var _default = VersionControlPopup;
-exports["default"] = _default;
-
-},{"3accbda3a85c85e3":"21dqq","a3e43325b30d05e5":"clIT3","9945d4bf1472bc28":"7CyoE","d5eedcb9ade3dcc8":"cbTU3"}],"7CyoE":[function(require,module,exports) {
+},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"7CyoE":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "sprintf", ()=>(0, _sprintf.sprintf));
@@ -36075,8 +36098,10 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
 var _Router = _interopRequireDefault(require("8de1b2cbd2501a64"));
-var _Route = _interopRequireDefault(require("7d7c69d60f2ff7c"));
-var _MainContent = _interopRequireDefault(require("6de3156c550f640b"));
+var _routes = _interopRequireDefault(require("aa3a9c83723e70f8"));
+var _Route = require("2923c6694567dc83");
+var _app = require("3a30469fb7d0d04");
+var _withStore = _interopRequireDefault(require("a56ec32b87f0edc3"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36085,20 +36110,28 @@ function _interopRequireDefault(obj) {
 /**
  * Contents of menu page.
  *
+ * @param {Object} props                  component properties
+ * @param {string} props.currentRoutePath current route path, will be supplied via HOC
  * @function Object() { [native code] }
- */ function Content() {
-    return /*#__PURE__*/ _react["default"].createElement(_Router["default"], null, /*#__PURE__*/ _react["default"].createElement(_Route["default"], {
-        pageParameter: "blocks"
-    }, /*#__PURE__*/ _react["default"].createElement(_MainContent["default"], null)), /*#__PURE__*/ _react["default"].createElement(_Route["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "route-404"
-    }, /*#__PURE__*/ _react["default"].createElement("h1", null, "404"))));
+ */ function Content(_ref) {
+    var currentRoutePath = _ref.currentRoutePath;
+    return /*#__PURE__*/ _react["default"].createElement(_Router["default"], {
+        routes: (0, _Route.generateRouteArray)(_routes["default"]),
+        currentRoutePath: currentRoutePath
+    });
 }
+// select mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        currentRoutePath: selector(_app.getCurrentRoutePath)
+    };
+};
 /**
  * @module Content
- */ var _default = Content;
+ */ var _default = (0, _withStore["default"])(Content, selectMapping);
 exports["default"] = _default;
 
-},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","7d7c69d60f2ff7c":"cGcnR","6de3156c550f640b":"iXkyr"}],"35sjN":[function(require,module,exports) {
+},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","aa3a9c83723e70f8":"c1gPj","2923c6694567dc83":"1QB0k","3a30469fb7d0d04":"c28DV","a56ec32b87f0edc3":"kWmDy"}],"35sjN":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36113,7 +36146,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("7733be7f93cb4ab5"));
-var _Route = _interopRequireDefault(require("17f604c69878826e"));
+var _Route = _interopRequireDefault(require("c443d35e86fea929"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36187,7 +36220,7 @@ function _iterableToArrayLimit(arr, i) {
 }
 function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
-}
+} // eslint-disable-next-line no-unused-vars
 /**
  * Router for different menu content.
  *
@@ -36195,47 +36228,26 @@ function _arrayWithHoles(arr) {
  *
  * If no route matches, the last route will be shown. It can be used as 404 page.
  *
- * @param {Object}               props          component properties
- * @param {Array<Route> | Route} props.children component route children
+ * @param {Object}       props                  component properties
+ * @param {Array<Route>} props.routes           routes array
+ * @param {string}       props.currentRoutePath current route path
  */ function Router(_ref) {
-    var children = _ref.children;
-    // use global hook methods to broadcast and listen events on document level
-    var applyFilters = wp.hooks.applyFilters;
+    var routes = _ref.routes, currentRoutePath = _ref.currentRoutePath;
     var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), CurrentRouteContent = _useState2[0], setCurrentRouteContent = _useState2[1];
-    // url search parameter for page property
-    var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), currentPageParameter = _useState4[0], setCurrentPageParameter = _useState4[1];
-    // filtered route children only consists of Route components
-    var _useState5 = (0, _react.useState)([]), _useState6 = _slicedToArray(_useState5, 2), routeChildren = _useState6[0], setRouteChildren = _useState6[1];
     /**
    * useEffect hook.
    */ (0, _react.useEffect)(function() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var page = urlParams.get("page");
-        setCurrentPageParameter(page);
-    }, []);
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        var filteredChildren = _react["default"].Children.toArray(children).filter(function(child) {
-            return child.type === _Route["default"];
+        var currentRoute = routes.find(function(route) {
+            return route.getPath() === currentRoutePath;
         });
-        setRouteChildren(filteredChildren);
+        if (currentRoute) setCurrentRouteContent(currentRoute.getElement());
+        else {
+            var lastRoute = routes[routes.length - 1];
+            setCurrentRouteContent(lastRoute.getElement());
+        }
     }, [
-        children
-    ]);
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        var matchedRouteContent = routeChildren.reduce(function(carry, RouteInstance, index) {
-            if (RouteInstance.props.pageParameter === currentPageParameter || index === routeChildren.length - 1) carry = RouteInstance.props.children;
-            return carry;
-        }, null);
-        // filter matched route content
-        var finalMatchedRoute = applyFilters("ubSettingsMenuRouteMatched", matchedRouteContent, currentPageParameter);
-        setCurrentRouteContent(finalMatchedRoute);
-    }, [
-        currentPageParameter,
-        routeChildren
+        currentRoutePath,
+        routes
     ]);
     return CurrentRouteContent;
 }
@@ -36244,201 +36256,18 @@ function _arrayWithHoles(arr) {
  */ var _default = Router;
 exports["default"] = _default;
 
-},{"7733be7f93cb4ab5":"21dqq","17f604c69878826e":"cGcnR"}],"cGcnR":[function(require,module,exports) {
+},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"1QB0k":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("65a9f2b8e9f9eaf2"));
+exports.generateRouteArray = exports.defaultRouteOptions = exports["default"] = void 0;
+var _react = _interopRequireDefault(require("5d270e18e6865843"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
-/**
- * @param {Object}                       props                      component properties
- * @param {Array | JSX.Element | string} props.children             component children
- * @param {string | null}                [props.pageParameter=null] url page search parameter related to this route
- * @param {string}                       props.pageTitle            title of target page
- */ // eslint-disable-next-line no-unused-vars
-function Route(_ref) {
-    var children = _ref.children, _ref$pageParameter = _ref.pageParameter, pageParameter = _ref$pageParameter === void 0 ? null : _ref$pageParameter, pageTitle = _ref.pageTitle;
-    return null;
-}
-/**
- * @module Route
- */ var _default = Route;
-exports["default"] = _default;
-
-},{"65a9f2b8e9f9eaf2":"21dqq"}],"iXkyr":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("5d2ddbf58417e472"));
-var _MainContentPhrase = _interopRequireDefault(require("e40359c129338cd6"));
-var _BlockStatusFilterControl = _interopRequireDefault(require("507e640a31715558"));
-var _app = require("8d34ae96641ee80d");
-var _withStore = _interopRequireDefault(require("46478e9129ef590e"));
-var _BlockControlsContainer = _interopRequireDefault(require("7427bc97b230e435"));
-var _UpsellModalSettingsMenu = _interopRequireDefault(require("5f995c2a5a64062"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Menu content component.
- *
- * @function Object() { [native code] }
- *
- * @param {Object}   props                     component properties
- * @param {string}   props.blockFilter         current block filter, will be supplied via HOC
- * @param {Function} props.setBlockFilterValue set block filter value for the app, will be supplied via HOC
- */ function MainContent(_ref) {
-    var blockFilter = _ref.blockFilter, setBlockFilterValue = _ref.setBlockFilterValue;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "menu-content"
-    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null), /*#__PURE__*/ _react["default"].createElement(_MainContentPhrase["default"], null), /*#__PURE__*/ _react["default"].createElement(_BlockStatusFilterControl["default"], {
-        filterVal: blockFilter,
-        onFilterChanged: setBlockFilterValue
-    }), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null));
-}
-var selectMapping = function selectMapping(selector) {
-    return {
-        blockFilter: selector(_app.getBlockFilter)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        setBlockFilterValue: _app.setBlockFilter
-    };
-};
-/**
- * @module MenuContent
- */ var _default = (0, _withStore["default"])(MainContent, selectMapping, actionMapping);
-exports["default"] = _default;
-
-},{"5d2ddbf58417e472":"21dqq","e40359c129338cd6":"4cIcG","507e640a31715558":"hebBQ","8d34ae96641ee80d":"c28DV","46478e9129ef590e":"kWmDy","7427bc97b230e435":"e69CO","5f995c2a5a64062":"l7D5t"}],"4cIcG":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("28e0584236cf3f46"));
-var _TextIndicate = _interopRequireDefault(require("140d2e2011df5677"));
-var _ContentPhrase = _interopRequireDefault(require("2e2a0c26474b64ce"));
-var _LineWrapper = _interopRequireDefault(require("93bd497f938fea88"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Content phrase component.
- *
- * @function Object() { [native code] }
- */ function MainContentPhrase() {
-    return /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Manage"), " Your", " ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Blocks"), " As"), /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, "Your ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Preferences")));
-}
-/**
- * @module MainContentPhrase
- */ var _default = MainContentPhrase;
-exports["default"] = _default;
-
-},{"28e0584236cf3f46":"21dqq","140d2e2011df5677":"3mATT","2e2a0c26474b64ce":"fjblj","93bd497f938fea88":"20Yro"}],"3mATT":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("c18f9f1ab85218de"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Component for indicating given text.
- *
- * @param {Object}            props          component properties
- * @param {React.ElementType} props.children children
- * @class
- */ function TextIndicate(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "text-indicate"
-    }, children);
-}
-/**
- * @module TextIndicate
- */ var _default = TextIndicate;
-exports["default"] = _default;
-
-},{"c18f9f1ab85218de":"21dqq"}],"fjblj":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("1e367e4f5689a5c7"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Content phrase component.
- *
- * @param {Object}                       props          component properties
- * @param {JSX.Element | Array | string} props.children component children
- */ function ContentPhrase(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "content-phrase"
-    }, children, " ");
-}
-/**
- * @module ContentPhrase
- */ var _default = ContentPhrase;
-exports["default"] = _default;
-
-},{"1e367e4f5689a5c7":"21dqq"}],"20Yro":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("18ce4d49cfa79fa0"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Line wrapper component.
- *
- * @param {Object}                       props          component properties
- * @param {JSX.Element | Array | string} props.children component children
- */ function LineWrapper(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "line-wrapper"
-    }, children, " ");
-}
-/**
- * @module LineWrapper
- */ var _default = LineWrapper;
-exports["default"] = _default;
-
-},{"18ce4d49cfa79fa0":"21dqq"}],"e69CO":[function(require,module,exports) {
-"use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
     return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
@@ -36447,825 +36276,26 @@ function _typeof(obj) {
         return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     }, _typeof(obj);
 }
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("b5a991528cd4dfa6"));
-var _BlockControl = _interopRequireDefault(require("3ffb3fee774ffe0e"));
-var _BlockStatusFilterControl = require("72db3cd1fd4e6f52");
-var _withStore = _interopRequireDefault(require("7adeb056d10afe38"));
-var _blocks = require("c1f3bf0e02707627");
-var _app = require("83bf9ee8271dd581");
-var _actions = require("f9b48c87aedbb427");
-var _VisibilityWrapper = _interopRequireDefault(require("627fdb5e223e1b97"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return keys;
 }
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Block controls container.
- *
- * @class
- *
- * @param {Object}   props                component properties
- * @param {Object}   props.blocks         menu data, will be supplied via HOC
- * @param {Object}   props.blockFilter    current filter for block status, will be supplied via HOC
- * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
- * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
- * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
- * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
- */ function BlockControlsContainer(_ref) {
-    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus;
-    var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
-    /**
-   * Handle block status change.
-   *
-   * @param {boolean} proBlock is calling block belongs to pro version of the plugin
-   */ var handleBlockStatusChange = function handleBlockStatusChange(proBlock) {
-        return function(blockId, status) {
-            if (proBlock && !proStatus) {
-                setBlockStatus({
-                    id: blockId,
-                    status: false
-                });
-                return;
-            }
-            setBlockStatus({
-                id: blockId,
-                status: status
-            });
-            dispatch(_actions.toggleBlockStatus)(blockId, status);
-        };
-    };
-    // useEffect hook
-    (0, _react.useEffect)(function() {
-        var sortedBlocks = _toConsumableArray(blocks).sort(function(a, b) {
-            var aName = a.title.toLowerCase();
-            var bName = b.title.toLowerCase();
-            if (aName < bName) return -1;
-            if (aName > bName) return 1;
-            return 0;
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
-        setInnerBlocks(sortedBlocks);
-    }, [
-        blocks
-    ]);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "controls-container",
-        "data-show-info": JSON.stringify(showInfoStatus)
-    }, innerBlocks.map(function(_ref2) {
-        var title = _ref2.title, name = _ref2.name, icon = _ref2.icon, active = _ref2.active, info = _ref2.info, pro = _ref2.pro;
-        var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
-        var visibilityStatus = blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
-        return /*#__PURE__*/ _react["default"].createElement(_VisibilityWrapper["default"], {
-            key: name,
-            visibilityStatus: visibilityStatus
-        }, /*#__PURE__*/ _react["default"].createElement(_BlockControl["default"], {
-            title: title,
-            blockId: name,
-            status: active,
-            iconObject: icon,
-            onStatusChange: handleBlockStatusChange(pro),
-            info: info,
-            proBlock: pro
-        }));
-    }));
-}
-var selectMapping = function selectMapping(selector) {
-    return {
-        blocks: selector(_blocks.getBlocks),
-        blockFilter: selector(_app.getBlockFilter),
-        showInfoStatus: selector(_app.getBlockInfoShowStatus),
-        proStatus: selector(_app.getProStatus)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        setBlockStatus: _blocks.setBlockActiveStatus
-    };
-};
-/**
- * @module BlockControlsContainer
- */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
-exports["default"] = _default;
-
-},{"b5a991528cd4dfa6":"21dqq","3ffb3fee774ffe0e":"h5tMi","72db3cd1fd4e6f52":"hebBQ","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","627fdb5e223e1b97":"azTGO"}],"h5tMi":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("9eede5ed96c6db50"));
-var _ToggleControl = _interopRequireDefault(require("235790c968bb3ece"));
-var _MenuButton = _interopRequireDefault(require("3537103df4eeb6b8"));
-var _withIcon = _interopRequireDefault(require("94998323feaef35f"));
-var _app = require("ed962dd8439ee4b7");
-var _withStore = _interopRequireDefault(require("fe5fa2b15de4f5ea"));
-var _ProBlockCardTitle = _interopRequireDefault(require("f55fe8e7dfe7e8a"));
-var _BlockCardProInfoControl = _interopRequireDefault(require("a559776a028ed995"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Menu block control component.
- *
- * This control will be used for both enabling/disabling blocks and showing info about them.
- *
- * @class
- *
- * @param {Object}      props                     component properties
- * @param {string}      props.title               block title
- * @param {string}      props.blockId             registry id of block
- * @param {boolean}     props.status              block status
- * @param {HTMLElement} props.iconElement         icon element, will be supplied via HOC
- * @param {Function}    props.onStatusChange      callback for status change event
- * @param {Array}       props.info                information about block and its usage
- * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
- * @param {boolean}     props.proBlock            block belongs to pro version
- * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
- * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
- */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
-    var initialRender = (0, _react.useRef)(true);
-    var initialAnimation = (0, _react.useRef)(true);
-    var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    var _useState3 = (0, _react.useState)({}), _useState4 = _slicedToArray(_useState3, 2), blockStyle = _useState4[0], setBlockStyle = _useState4[1];
-    var _useState5 = (0, _react.useState)(0), _useState6 = _slicedToArray(_useState5, 2), headerHeight = _useState6[0], setHeaderHeight = _useState6[1];
-    var headerRef = (0, _react.useRef)();
-    /* useEffect block */ (0, _react.useEffect)(function() {
-        var _headerRef$current$ge = headerRef.current.getBoundingClientRect(), height = _headerRef$current$ge.height;
-        setHeaderHeight(height);
-    }, []);
-    (0, _react.useEffect)(function() {
-        setBlockStyle({
-            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
-        });
-    }, [
-        headerHeight
-    ]);
-    (0, _react.useEffect)(function() {
-        if (proBlock && !proStatus) setInnerStatus(false);
-    }, [
-        innerStatus
-    ]);
-    (0, _react.useEffect)(function() {
-        setBlockStyle({
-            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
-        });
-        return function() {
-            if (blockInfoShowStatus !== undefined) initialAnimation.current = false;
-        };
-    }, [
-        blockInfoShowStatus
-    ]);
-    (0, _react.useEffect)(function() {
-        if (initialRender.current) initialRender.current = false;
-        else onStatusChange(blockId, innerStatus);
-    }, [
-        innerStatus
-    ]);
-    /* useEffect block end */ var howToUse = null;
-    /**
-   * Main visibility calculation for how to use button.
-   *
-   * @return {boolean} visibility status
-   */ var howToUseVisibility = function howToUseVisibility() {
-        return howToUse !== null;
-    };
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        style: blockStyle,
-        className: "block-control",
-        "data-enabled": JSON.stringify(innerStatus),
-        "data-initial-animation": JSON.stringify(initialAnimation.current)
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        ref: headerRef,
-        className: "block-title"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-title-left-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "title-icon"
-    }, iconElement), /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "title-text"
-    }, title, /*#__PURE__*/ _react["default"].createElement(_ProBlockCardTitle["default"], {
-        isPro: proBlock
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-title-right-container"
-    }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], {
-        handleClick: function handleClick(e) {
-            e.preventDefault();
-            showUpsell(blockId);
-        }
-    }) : /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
-        onStatusChange: setInnerStatus,
-        status: innerStatus,
-        disabled: proBlock && !proStatus
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-info"
-    }, info.map(function(infoLine, index) {
-        return /*#__PURE__*/ _react["default"].createElement("div", {
-            className: "info-line",
-            key: index
-        }, infoLine[0].toUpperCase() + Array.from(infoLine).splice(1).join(""));
-    })), howToUseVisibility() && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-howto"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        title: "How to Use",
-        status: howToUse !== null && innerStatus,
-        onClickHandler: howToUse
-    })));
-}
-var selectMapping = function selectMapping(select) {
-    return {
-        blockInfoShowStatus: select(_app.getBlockInfoShowStatus),
-        proStatus: select(_app.getProStatus)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        showUpsell: _app.showProBlockUpsellModal
-    };
-};
-/**
- * @module BlockControl
- */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping, actionMapping);
-exports["default"] = _default;
-
-},{"9eede5ed96c6db50":"21dqq","235790c968bb3ece":"a7r96","3537103df4eeb6b8":"cbTU3","94998323feaef35f":"l4uaA","ed962dd8439ee4b7":"c28DV","fe5fa2b15de4f5ea":"kWmDy","f55fe8e7dfe7e8a":"jiOgy","a559776a028ed995":"3ptTq"}],"a7r96":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("e3acc383ec34246"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Toggle control component.
- *
- * @class
- * @param {Object}   props                component properties
- * @param {boolean}  props.status         control status
- * @param {boolean}  props.disabled       control disabled status
- * @param {Function} props.onStatusChange status changed callback
- */ function ToggleControl(_ref) {
-    var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange, _ref$disabled = _ref.disabled, disabled = _ref$disabled === void 0 ? false : _ref$disabled;
-    var initialRender = (0, _react.useRef)(true);
-    var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    (0, _react.useEffect)(function() {
-        if (initialRender.current) initialRender.current = false;
-        else onStatusChange(innerStatus);
-    }, [
-        innerStatus
-    ]);
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    _react["default"].createElement("div", {
-        onClick: function onClick() {
-            if (!disabled) setInnerStatus(!innerStatus);
-        },
-        className: "ub-toggle-control",
-        "data-enabled": JSON.stringify(innerStatus)
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "knob"
-    })));
-}
-/**
- * @module ToggleControl
- */ var _default = ToggleControl;
-exports["default"] = _default;
-
-},{"e3acc383ec34246":"21dqq"}],"l4uaA":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("5165ebf1e519bb99"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _extends() {
-    _extends = Object.assign ? Object.assign.bind() : function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-} // eslint-disable-next-line no-unused-vars
-/**
- * Hoc for creating and adding icon element by using Gutenberg block icon attribute object.
- *
- * @param {React.ElementType} BaseComponent target component
- * @return {Function} function to use as HOC
- */ var withIcon = function withIcon(BaseComponent) {
-    return function(props) {
-        var iconElement = "x";
-        if (!props.iconObject) throw new Error("invalid type of icon object is supplied to withIcon HOC");
-        else if (typeof props.iconObject === "string") iconElement = /*#__PURE__*/ _react["default"].createElement("span", {
-            dangerouslySetInnerHTML: {
-                __html: props.iconObject
-            }
-        });
-        else if (_typeof(props.iconObject) === "object") {
-            var iconObject = props.iconObject;
-            var type = iconObject.type, iconProps = iconObject.props;
-            iconElement = /*#__PURE__*/ (0, _react.createElement)(type, iconProps);
-        }
-        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, {
-            iconElement: iconElement
-        }));
-    };
-};
-/**
- * @module withIcon
- */ var _default = withIcon;
-exports["default"] = _default;
-
-},{"5165ebf1e519bb99":"21dqq"}],"jiOgy":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("cdc71d453835317a"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Pro block card control title.
- *
- * @param {Object}  props       component properties
- * @param {boolean} props.isPro block pro status
- */ function ProBlockCardTitle(_ref) {
-    var isPro = _ref.isPro;
-    return isPro && /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "pro-block-card-title-suffix"
-    }, "PRO");
-}
-/**
- * @module CouponCardProTitle
- */ var _default = ProBlockCardTitle;
-exports["default"] = _default;
-
-},{"cdc71d453835317a":"21dqq"}],"3ptTq":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("39aebd33bd221f16"));
-var _reactFontawesome = require("6df61aa983d49f0c");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Info control button for pro block cards.
- *
- * @param {Object}   props             component properties
- * @param {Function} props.handleClick click callback
- */ function BlockCardProInfoControl(_ref) {
-    var handleClick = _ref.handleClick;
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    _react["default"].createElement("div", {
-        className: "pro-block-card-info-button",
-        onClick: handleClick
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-circle-info"
-    })));
-}
-/**
- * @module BlockCardProInfoControl
- */ var _default = BlockCardProInfoControl;
-exports["default"] = _default;
-
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"azTGO":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("97c658a0a38c9755"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Wrapper for handling visibility changes of its children.
- *
- * @param {Object}            props                  component properties
- * @param {React.ElementType} props.children         component children
- * @param {boolean}           props.visibilityStatus component visibility status
- *
- * @class
- */ function VisibilityWrapper(_ref) {
-    var children = _ref.children, visibilityStatus = _ref.visibilityStatus;
-    var wrapper = (0, _react.useRef)();
-    (0, _react.useEffect)(function() {
-        wrapper.current.addEventListener("animationend", function(_ref2) {
-            var animationName = _ref2.animationName;
-            wrapper.current.style.display = animationName === "disappear" ? "none" : "block";
-        });
-    }, []);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        ref: wrapper,
-        className: "visibility-wrapper",
-        "data-visible": JSON.stringify(visibilityStatus)
-    }, children);
-}
-/**
- * @module VisibilityWrapper
- */ var _default = VisibilityWrapper;
-exports["default"] = _default;
-
-},{"97c658a0a38c9755":"21dqq"}],"l7D5t":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("77d3d7818e219afe"));
-var _app = require("f56de1883a511d0d");
-var _blocks = require("4f679653ecb021b9");
-var _withStore = _interopRequireDefault(require("923351f2001a1473"));
-var _UpsellModalBase = _interopRequireDefault(require("e332c8e734debb56"));
-var _assets = require("c25dc389ac9526da");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
+    return target;
 }
 function _defineProperty(obj, key, value) {
     key = _toPropertyKey(key);
@@ -37292,584 +36322,98 @@ function _toPrimitive(input, hint) {
     }
     return (hint === "string" ? String : Number)(input);
 }
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
+/**
+ * Route default options.
+ *
+ * @type {Object}
+ */ var defaultRouteOptions = {
+    path: null,
+    title: "no_title",
+    element: null
+};
+/**
+ * Route object.
+ *
+ * @param {Object} options route options
+ * @class
+ */ exports.defaultRouteOptions = defaultRouteOptions;
+function Route(options) {
+    var _this = this;
+    var _defaultRouteOptions$ = _objectSpread(_objectSpread({}, defaultRouteOptions), options), path = _defaultRouteOptions$.path, title = _defaultRouteOptions$.title, element = _defaultRouteOptions$.element;
+    /**
+   * Get route path.
+   *
+   * @return {string} path
+   */ this.getPath = function() {
+        return path;
+    };
+    /**
+   * Get route title.
+   *
+   * @return {string} title
+   */ this.getTitle = function() {
+        return title;
+    };
+    /**
+   * Get route element.
+   *
+   * @return {Function} element
+   */ this.getElement = function() {
+        return element !== null && element !== void 0 ? element : /*#__PURE__*/ _react["default"].createElement("div", null, "no element defined for route [", _this.getPath(), "]");
+    };
 }
 /**
- * Upsell modal window for settings menu.
+ * Generate options array from settings objects.
  *
- * @param {Object}   props                  component properties
- * @param {string}   props.targetBlock      target block id, will be supplied via HOC
- * @param {boolean}  props.visibility       modal visibility status, will be supplied via HOC
- * @param {Function} props.closeModalWindow close modal window, will be supplied via HOC
- * @param {Function} props.getBlockObject   get block object, will be supplied via HOC
- * @param {string}   props.proBuyUrl        url for pro buy page, will be supplied via HOC
- */ function UpsellModalSettingsMenu(_ref) {
-    var targetBlock = _ref.targetBlock, visibility = _ref.visibility, closeModalWindow = _ref.closeModalWindow, getBlockObject = _ref.getBlockObject, proBuyUrl = _ref.proBuyUrl;
-    /**
-   * Prepare modal upsell data to be compatible with modal base component.
-   *
-   * @param {Object} blockObject block object
-   */ var prepareUpsellData = function prepareUpsellData(blockObject) {
-        if (blockObject && _typeof(blockObject) === "object") {
-            var name = blockObject.name, title = blockObject.title, info = blockObject.info, icon = blockObject.icon, screenshotUrl = blockObject.screenshotUrl;
-            return _defineProperty({}, name, {
-                name: title,
-                description: Array.isArray(info) ? info[0] : info,
-                imageUrl: screenshotUrl,
-                icon: icon
-            });
-        }
-        return null;
-    };
-    var currentUpsellData = (0, _react.useMemo)(function() {
-        var targetBlockObj = getBlockObject(targetBlock);
-        return prepareUpsellData(targetBlockObj);
-    }, [
-        targetBlock
-    ]);
-    var currentBlockIcon = (0, _react.useMemo)(function() {
-        if (currentUpsellData) {
-            var _Object$values = Object.values(currentUpsellData), _Object$values2 = _slicedToArray(_Object$values, 1), icon = _Object$values2[0].icon;
-            return icon;
-        }
-        return null;
-    }, [
-        currentUpsellData
-    ]);
-    return /*#__PURE__*/ _react["default"].createElement(_UpsellModalBase["default"], {
-        upsellData: currentUpsellData,
-        modalVisibility: visibility,
-        closeModal: closeModalWindow,
-        proUrl: proBuyUrl,
-        targetBlockIcon: currentBlockIcon
+ * These settings objects should correspond to Route default options.
+ *
+ * @param {Array<Object>} optionsArray options array
+ * @return {Array<Route>} route object array
+ */ var generateRouteArray = function generateRouteArray(optionsArray) {
+    return optionsArray.map(function(options) {
+        return new Route(options);
     });
-}
-// store select mapping
-var selectMapping = function selectMapping(select) {
-    return {
-        targetBlock: select(_app.getModalTargetBlockType),
-        visibility: select(_app.getModalVisibilityStatus),
-        getBlockObject: select(_blocks.getBlockById),
-        proBuyUrl: select(_assets.getAsset)("proBuyUrl")
-    };
-};
-// store action mapping
-var actionMapping = function actionMapping() {
-    return {
-        closeModalWindow: _app.hideProBlockUpsellModal
-    };
 };
 /**
- * @module UpsellModal
- */ var _default = (0, _withStore["default"])(UpsellModalSettingsMenu, selectMapping, actionMapping);
+ * @module Route
+ */ exports.generateRouteArray = generateRouteArray;
+var _default = Route;
 exports["default"] = _default;
 
-},{"77d3d7818e219afe":"21dqq","f56de1883a511d0d":"c28DV","4f679653ecb021b9":"ohEvx","923351f2001a1473":"kWmDy","e332c8e734debb56":"lUoek","c25dc389ac9526da":"9SnHn"}],"lUoek":[function(require,module,exports) {
+},{"5d270e18e6865843":"21dqq"}],"c1gPj":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("9d95accb31bc1a60"));
-var _i18n = require("e42a5324d5c26930");
-var _VitalizeText = _interopRequireDefault(require("a36d0a01e69a4318"));
-var _ActiveBlockIcon = _interopRequireDefault(require("805ff0c636fbd0c2"));
-var _UpsellModalContent = _interopRequireDefault(require("395f81ebd987280"));
-var _UpsellModalButton = _interopRequireWildcard(require("15339c3acdf9ced5"));
-var _ModalNavigation = _interopRequireWildcard(require("df6c9ea0fd14306e"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-}
-/**
- * Upsell modal component.
- *
- * @param {Object}   props                  component properties
- * @param {boolean}  props.modalVisibility  modal visibility status, will be supplied via HOC
- * @param {Function} props.closeModal       close modal window, will be supplied via HOC
- * @param {Object}   props.upsellData       upsell data to show, will be supplied via HOC
- * @param {string}   props.defaultFeatureSs default feature screenshot for empty replacements, will be supplied via HOC
- * @param {string}   props.proUrl           pro url, will be supplied via HOC
- * @param {Object}   props.targetBlockIcon  block icon object for target block
- * @function Object() { [native code] }
- */ function UpsellModalBase(_ref) {
-    var modalVisibility = _ref.modalVisibility, closeModal = _ref.closeModal, upsellData = _ref.upsellData, defaultFeatureSs = _ref.defaultFeatureSs, proUrl = _ref.proUrl, targetBlockIcon = _ref.targetBlockIcon;
-    var _useState = (0, _react.useState)(0), _useState2 = _slicedToArray(_useState, 2), dataIndex = _useState2[0], setDataIndex = _useState2[1];
-    var _useState3 = (0, _react.useState)([]), _useState4 = _slicedToArray(_useState3, 2), allData = _useState4[0], setAllData = _useState4[1];
-    var _useState5 = (0, _react.useState)(null), _useState6 = _slicedToArray(_useState5, 2), currentData = _useState6[0], setCurrentData = _useState6[1];
-    /**
-   * Pre-check for increment/decrement operations.
-   *
-   * @param {number} amount amount
-   * @return {boolean} pre operation status
-   */ var preIncDecCheck = function preIncDecCheck(amount) {
-        var finalIndex = dataIndex + amount;
-        return finalIndex >= 0 && finalIndex !== allData.length;
-    };
-    /**
-   * Increment/decrement index.
-   *
-   * @param {number} amount amount
-   */ var incDecIndex = function incDecIndex(amount) {
-        var finalIndex = dataIndex + amount;
-        if (preIncDecCheck(amount)) setDataIndex(finalIndex);
-    };
-    /**
-   * Navigation button status.
-   *
-   * @param {number} amount assigned increment/decrement amount
-   * @return {boolean} status
-   */ var navStatus = function navStatus(amount) {
-        return allData.length > 1 && preIncDecCheck(amount);
-    };
-    /**
-   * Direct current page to pro url.
-   */ var directToProUrl = function directToProUrl() {
-        window.open(proUrl, "_blank");
-    };
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        if (upsellData && _typeof(upsellData) === "object") {
-            var upsellDataValues = Object.values(upsellData);
-            setAllData(upsellDataValues);
-            setCurrentData(upsellDataValues[0]);
-        }
-        setDataIndex(0);
-    }, [
-        upsellData
-    ]);
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        // reset data index on visibility changes
-        setDataIndex(0);
-    }, [
-        modalVisibility
-    ]);
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        setCurrentData(allData[dataIndex]);
-    }, [
-        dataIndex,
-        allData
-    ]);
-    return modalVisibility && currentData && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-upsells-modal-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement(_ModalNavigation["default"], {
-        clickHandler: function clickHandler() {
-            return incDecIndex(-1);
-        },
-        type: _ModalNavigation.navigationType.LEFT,
-        disable: !navStatus(-1)
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-upsells-modal-main-window"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-upsells-modal-header"
-    }, /*#__PURE__*/ _react["default"].createElement(_ActiveBlockIcon["default"], {
-        iconObject: targetBlockIcon
-    }), /*#__PURE__*/ _react["default"].createElement(_VitalizeText["default"], null, currentData.name)), /*#__PURE__*/ _react["default"].createElement(_UpsellModalContent["default"], {
-        ssUrl: currentData.imageUrl || defaultFeatureSs,
-        description: currentData.description
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-upsells-modal-footer"
-    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalButton["default"], {
-        clickHandler: closeModal
-    }, (0, _i18n.__)("Close", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement(_UpsellModalButton["default"], {
-        clickHandler: directToProUrl,
-        type: _UpsellModalButton.modalButtonTypes.PRIO
-    }, (0, _i18n.__)("Buy PRO", "ultimate-blocks")))), /*#__PURE__*/ _react["default"].createElement(_ModalNavigation["default"], {
-        clickHandler: function clickHandler() {
-            return incDecIndex(1);
-        },
-        type: _ModalNavigation.navigationType.RIGHT,
-        disable: !navStatus(1)
-    }));
-}
-/**
- * @module UpsellModalBase
- */ var _default = UpsellModalBase;
-exports["default"] = _default;
-
-},{"9d95accb31bc1a60":"21dqq","e42a5324d5c26930":"7CyoE","a36d0a01e69a4318":"iN5Mi","805ff0c636fbd0c2":"1dLch","395f81ebd987280":"fyqwX","15339c3acdf9ced5":"kgQK9","df6c9ea0fd14306e":"9tuQW"}],"iN5Mi":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("d094a43779e3387a"));
+var _react = _interopRequireDefault(require("25b7dff849a65078"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
 /**
- * Vitalize text.
+ * Routes for admin menu.
  *
- * @param {Object}                        props          component properties
- * @param {Array | JSX.Element | string } props.children component children
- * @function Object() { [native code] }
- */ function VitalizeText(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "ub-upsell-vitalize-text"
-    }, children);
-}
-/**
- * @module VitalizeText
- */ var _default = VitalizeText;
-exports["default"] = _default;
-
-},{"d094a43779e3387a":"21dqq"}],"1dLch":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = require("2ce8023ec6e51515");
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-/**
- * Component for displaying active block's icon component.
- *
- * @param {Object}          props            component properties
- * @param {Object | string} props.iconObject icon object or a string representation of it
- * @function Object() { [native code] }
- */ function ActiveBlockIcon(_ref) {
-    var iconObject = _ref.iconObject;
-    var iconElement = (0, _react.useMemo)(function() {
-        if (iconObject) switch(_typeof(iconObject)){
-            case "object":
-                var type = iconObject.type, props = iconObject.props;
-                return /*#__PURE__*/ (0, _react.createElement)(type, props);
-            case "string":
-                return /*#__PURE__*/ React.createElement("span", {
-                    className: "ub-active-block-icon-from-string",
-                    dangerouslySetInnerHTML: {
-                        __html: iconObject
-                    }
-                });
-            default:
-                return "?";
+ * @type {Array} routes array
+ */ var routes = [
+    {
+        path: "welcome",
+        title: "Welcome",
+        element: function element() {
+            return /*#__PURE__*/ _react["default"].createElement("div", null, "Welcome");
         }
-        return "?";
-    }, [
-        iconObject
-    ]);
-    return /*#__PURE__*/ React.createElement("div", {
-        className: "ub-active-block-icon"
-    }, iconElement);
-}
-/**
- * @module ActiveBlockIcon
- */ var _default = ActiveBlockIcon;
-exports["default"] = _default;
-
-},{"2ce8023ec6e51515":"21dqq"}],"fyqwX":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("2abf63d328de5dcf"));
-var _i18n = require("33a8d9d556f77fb2");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Upsell modal content component.
- *
- * @param {Object} props             component properties
- * @param {string} props.ssUrl       screenshot url
- * @param {string} props.description content description
- * @function Object() { [native code] }
- */ function UpsellModalContent(_ref) {
-    var ssUrl = _ref.ssUrl, description = _ref.description;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-upsells-modal-content"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-upsells-modal-content-image"
-    }, /*#__PURE__*/ _react["default"].createElement("img", {
-        alt: (0, _i18n.__)("feature sample screenshot"),
-        src: ssUrl
-    })), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-upsells-modal-content-description"
-    }, description));
-}
-/**
- * @module UpsellModalContent
- */ var _default = UpsellModalContent;
-exports["default"] = _default;
-
-},{"2abf63d328de5dcf":"21dqq","33a8d9d556f77fb2":"7CyoE"}],"kgQK9":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.modalButtonTypes = exports["default"] = void 0;
-var _react = _interopRequireDefault(require("33d109c6bc5182c7"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Modal button types.
- *
- * @type {{PRIO: string, BASIC: string}}
- */ var modalButtonTypes = {
-    BASIC: "basic",
-    PRIO: "prio"
-};
-/**
- * Button component for upsell modal.
- *
- * @param {Object}                       props              component properties
- * @param {Array | JSX.Element | string} props.children     component children
- * @param {Function}                     props.clickHandler button click handler
- * @param {string}                       [props.type=basic] button type
- * @function Object() { [native code] }
- */ exports.modalButtonTypes = modalButtonTypes;
-function UpsellModalButton(_ref) {
-    var children = _ref.children, clickHandler = _ref.clickHandler, _ref$type = _ref.type, type = _ref$type === void 0 ? modalButtonTypes.BASIC : _ref$type;
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    _react["default"].createElement("div", {
-        "data-ub-upsell-button-type": type,
-        className: "ub-upsell-modal-button",
-        onClick: function onClick(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            clickHandler(e);
-        }
-    }, children));
-}
-/**
- * @module UpsellModalButton
- */ var _default = UpsellModalButton;
-exports["default"] = _default;
-
-},{"33d109c6bc5182c7":"21dqq"}],"9tuQW":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.navigationType = exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("7379d0f4387f2644"));
-var _reactFontawesome = require("9393b843392e049e");
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    },
+    {
+        path: "404",
+        title: "404",
+        element: /*#__PURE__*/ _react["default"].createElement("div", null, "404")
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-}
-/**
- * Navigation types.
- *
- * @type {{LEFT: string, RIGHT: string}}
- */ var navigationType = {
-    LEFT: "fa-solid fa-caret-left",
-    RIGHT: "fa-solid fa-caret-right"
-};
-/**
- * Modal navigation component.
- *
- * @param {Object}   props                 component properties
- * @param {string}   props.type            navigation type, use `navigationType` object for available type
- * @param {boolean}  [props.disable=false] disabled status
- * @param {Function} props.clickHandler    click handler
- * @function Object() { [native code] }
- */ exports.navigationType = navigationType;
-function ModalNavigation(_ref) {
-    var type = _ref.type, _ref$disable = _ref.disable, disable = _ref$disable === void 0 ? false : _ref$disable, clickHandler = _ref.clickHandler;
-    var _useState = (0, _react.useState)(type), _useState2 = _slicedToArray(_useState, 2), finalType = _useState2[0], setType = _useState2[1];
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        var navigationKeys = Object.values(navigationType);
-        // don't let unsupported navigation types to be selected
-        if (!navigationKeys.includes(type)) setType(navigationType.LEFT);
-    }, [
-        type
-    ]);
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    _react["default"].createElement("div", {
-        className: "ub-upsells-modal-navigation",
-        "data-ub-nav-disabled": disable,
-        onClick: clickHandler
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: finalType
-    })));
-}
-/**
- * @module ModalNavigation
- */ var _default = ModalNavigation;
+];
+var _default = routes;
 exports["default"] = _default;
 
-},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"25b7dff849a65078":"21dqq"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

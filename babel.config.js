@@ -10,6 +10,7 @@ module.exports = function ( api ) {
 					alias: {
 						$Containers: './admin/js/src/containers',
 						$Components: './admin/js/src/components',
+						$AdminInc: './admin/js/src/inc',
 						$HOC: './admin/js/src/hoc',
 						$Stores: './admin/js/src/stores',
 						$Styles: './admin/css/src/',

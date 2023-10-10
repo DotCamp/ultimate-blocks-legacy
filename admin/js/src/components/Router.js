@@ -1,5 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
-import Route from '$Components/Route';
+import Route from '$AdminInc/Route';
 
 /**
  * Router for different menu content.
@@ -8,69 +9,28 @@ import Route from '$Components/Route';
  *
  * If no route matches, the last route will be shown. It can be used as 404 page.
  *
- * @param {Object}               props          component properties
- * @param {Array<Route> | Route} props.children component route children
+ * @param {Object}       props                  component properties
+ * @param {Array<Route>} props.routes           routes array
+ * @param {string}       props.currentRoutePath current route path
  */
-function Router( { children } ) {
-	// use global hook methods to broadcast and listen events on document level
-	const { applyFilters } = wp.hooks;
-
+function Router( { routes, currentRoutePath } ) {
 	const [ CurrentRouteContent, setCurrentRouteContent ] = useState( null );
 
-	// url search parameter for page property
-	const [ currentPageParameter, setCurrentPageParameter ] = useState( null );
-
-	// filtered route children only consists of Route components
-	const [ routeChildren, setRouteChildren ] = useState( [] );
-
 	/**
 	 * useEffect hook.
 	 */
 	useEffect( () => {
-		const urlParams = new URLSearchParams( window.location.search );
-		const page = urlParams.get( 'page' );
-		setCurrentPageParameter( page );
-	}, [] );
+		const currentRoute = routes.find( ( route ) => {
+			return route.getPath() === currentRoutePath;
+		} );
 
-	/**
-	 * useEffect hook.
-	 */
-	useEffect( () => {
-		const filteredChildren = React.Children.toArray( children ).filter(
-			( child ) => child.type === Route
-		);
-
-		setRouteChildren( filteredChildren );
-	}, [ children ] );
-
-	/**
-	 * useEffect hook.
-	 */
-	useEffect( () => {
-		const matchedRouteContent = routeChildren.reduce(
-			( carry, RouteInstance, index ) => {
-				if (
-					RouteInstance.props.pageParameter ===
-						currentPageParameter ||
-					index === routeChildren.length - 1
-				) {
-					carry = RouteInstance.props.children;
-				}
-
-				return carry;
-			},
-			null
-		);
-
-		// filter matched route content
-		const finalMatchedRoute = applyFilters(
-			'ubSettingsMenuRouteMatched',
-			matchedRouteContent,
-			currentPageParameter
-		);
-
-		setCurrentRouteContent( finalMatchedRoute );
-	}, [ currentPageParameter, routeChildren ] );
+		if ( currentRoute ) {
+			setCurrentRouteContent( currentRoute.getElement() );
+		} else {
+			const lastRoute = routes[ routes.length - 1 ];
+			setCurrentRouteContent( lastRoute.getElement() );
+		}
+	}, [ currentRoutePath, routes ] );
 
 	return CurrentRouteContent;
 }

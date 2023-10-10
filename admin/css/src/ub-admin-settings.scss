@@ -32,6 +32,7 @@
 
 		.menu-header {
 			@extend %default-border;
+			margin-bottom: 40px;
 			border-width: 0 0 1px 0;
 			height: $header_height;
 			display: flex;

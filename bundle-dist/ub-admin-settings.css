@@ -304,6 +304,7 @@
   justify-content: space-between;
   align-items: center;
   height: 80px;
+  margin-bottom: 40px;
   display: flex;
 }
 
