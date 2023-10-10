@@ -4,6 +4,8 @@ import Route, { generateRouteArray } from '$AdminInc/Route';
 /**
  * Routes for admin menu.
  *
+ * Last route is reserved for 404 page.
+ *
  * @type {Array} routes array
  */
 const routes = [

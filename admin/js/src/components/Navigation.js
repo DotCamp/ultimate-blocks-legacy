@@ -5,11 +5,13 @@ import NavigationHeaderButton from '$Components/NavigationHeaderButton';
 /**
  * Navigation component.
  *
- * @param {Object}       props        component properties
- * @param {Array<Route>} props.routes routes array
+ * @param {Object}        props                  component properties
+ * @param {Array<Route>}  props.routes           routes array
+ * @param {string | null} props.currentRoutePath current route path
+ * @param {Function}      props.setRoute         set route path
  * @class
  */
-function Navigation( { routes } ) {
+function Navigation( { routes, currentRoutePath, setRoute } ) {
 	const [ calculatedStyle, setCalculatedStyles ] = useState( {} );
 
 	/**
@@ -30,6 +32,8 @@ function Navigation( { routes } ) {
 						key={ routeObj.getPath() }
 						title={ routeObj.getTitle() }
 						targetPath={ routeObj.getPath() }
+						isActive={ currentRoutePath === routeObj.getPath() }
+						onClickHandler={ setRoute }
 					/>
 				);
 			} ) }

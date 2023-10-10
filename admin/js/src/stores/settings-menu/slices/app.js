@@ -74,6 +74,7 @@ export const {
 	toggleShowBlockInfo,
 	showProBlockUpsellModal,
 	hideProBlockUpsellModal,
+	setCurrentRoutePath,
 } = appSlice.actions;
 
 /**

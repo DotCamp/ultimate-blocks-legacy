@@ -227,7 +227,7 @@
   flex-flow: row;
 }
 
-.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon[data-in-progress="true"] .version-icon-inner-wrapper, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content .ub-pro-content-main, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator {
+.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon[data-in-progress="true"] .version-icon-inner-wrapper, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content .ub-pro-content-main, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button {
   transition: all .2s ease-out;
 }
 
@@ -371,9 +371,13 @@
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button {
-  border: 0 solid red;
+  border: 0 solid #0000;
   border-bottom-width: 2px;
   padding: 0 20px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button[data-active="true"] {
+  border-color: #e11b4c;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .route-404 {

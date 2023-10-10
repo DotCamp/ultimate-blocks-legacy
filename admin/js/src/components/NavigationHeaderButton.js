@@ -21,6 +21,7 @@ function NavigationHeaderButton( {
 	return (
 		<div
 			data-active={ isActive }
+			data-path={ targetPath }
 			className={ 'ub-menu-navigation-header-button' }
 			tabIndex={ 0 }
 			role={ 'button' }

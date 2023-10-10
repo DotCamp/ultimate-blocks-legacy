@@ -119,12 +119,17 @@
 				grid-template-columns: minmax(0, 1fr);
 
 				.ub-menu-navigation-header-button {
+					@extend %default-transition;
 					@extend %flex-center-all;
 					@extend %pointer;
 					@extend %size-full;
 					padding: 0 20px;
-					border: 1px solid red;
+					border: solid rgba(0, 0, 0, 0);
 					border-width: 0 0 2px 0;
+
+					&[data-active=true] {
+						border-color: $red-500;
+					}
 				}
 			}
 		}

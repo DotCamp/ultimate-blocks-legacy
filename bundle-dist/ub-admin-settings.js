@@ -29714,7 +29714,7 @@ exports["default"] = _default;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getCurrentRoutePath = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setCurrentRoutePath = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getCurrentRoutePath = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
 var _toolkit = require("ab983f5a897f990a");
 var _BlockStatusFilterControl = require("1825a520c0dd5d34");
 var _initialState = _interopRequireDefault(require("d3df904bb6381f74"));
@@ -29782,13 +29782,14 @@ function _interopRequireDefault(obj) {
     }
 };
 var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
-var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal;
+var _appSlice$actions = appSlice.actions, setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal, setCurrentRoutePath = _appSlice$actions.setCurrentRoutePath;
 /**
  * Get all application options.
  *
  * @param {Object} state store state
  * @return {Object} options
- */ exports.hideProBlockUpsellModal = hideProBlockUpsellModal;
+ */ exports.setCurrentRoutePath = setCurrentRoutePath;
+exports.hideProBlockUpsellModal = hideProBlockUpsellModal;
 exports.showProBlockUpsellModal = showProBlockUpsellModal;
 exports.toggleShowBlockInfo = toggleShowBlockInfo;
 exports.setBlockFilter = setBlockFilter;
@@ -30476,11 +30477,19 @@ exports["default"] = _default;
 
 },{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G"}],"kP7QS":[function(require,module,exports) {
 "use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("af8ddc31c52e60c1"));
+var _react = _interopRequireWildcard(require("af8ddc31c52e60c1"));
 var _withStore = _interopRequireDefault(require("a360f5480afc451d"));
 var _assets = require("66544b766e488b05");
 var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
@@ -30488,21 +30497,51 @@ var _VersionControl = _interopRequireDefault(require("9b060551899412e8"));
 var _reactFontawesome = require("3ee81ce64fbd9c46");
 var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
 var _routes = require("e6bedbb7f240506c");
+var _app = require("e9c2c22a72a45548");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
 /**
  * Settings menu header element.
  *
- * @param {Object} props         component properties
- * @param {string} props.logoUrl plugin logo url, will be supplied via HOC
+ * @param {Object}   props                  component properties
+ * @param {string}   props.logoUrl          plugin logo url, will be supplied via HOC
+ * @param {string}   props.currentRoutePath current route path, will be supplied via HOC
+ * @param {Function} props.setRoute         set route path, will be supplied via HOC
  * @return {JSX.Element} component
  */ function MenuHeader(_ref) {
-    var logoUrl = _ref.logoUrl;
-    var routeObjectsMinus404 = _routes.routeObjects.slice(0, _routes.routeObjects.length - 1);
+    var logoUrl = _ref.logoUrl, currentRoutePath = _ref.currentRoutePath, setRoute = _ref.setRoute;
+    var routeObjectsMinus404 = (0, _react.useMemo)(function() {
+        return _routes.routeObjects.slice(0, _routes.routeObjects.length - 1);
+    }, []);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "menu-header"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
@@ -30515,7 +30554,9 @@ function _interopRequireDefault(obj) {
     }), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-plugin-logo-text"
     }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
-        routes: routeObjectsMinus404
+        routes: routeObjectsMinus404,
+        currentRoutePath: currentRoutePath,
+        setRoute: setRoute
     }), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
     }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], {
@@ -30526,17 +30567,25 @@ function _interopRequireDefault(obj) {
         icon: "fa-solid fa-share-nodes"
     }))));
 }
+// store select mapping
 var selectMapping = function selectMapping(select) {
     return {
-        logoUrl: select(_assets.getLogo)
+        logoUrl: select(_assets.getLogo),
+        currentRoutePath: select(_app.getCurrentRoutePath)
+    };
+};
+// store action mapping
+var actionMapping = function actionMapping() {
+    return {
+        setRoute: _app.setCurrentRoutePath
     };
 };
 /**
  * @module MenuHeader
- */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping);
+ */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36189,11 +36238,13 @@ function _arrayWithHoles(arr) {
 /**
  * Navigation component.
  *
- * @param {Object}       props        component properties
- * @param {Array<Route>} props.routes routes array
+ * @param {Object}        props                  component properties
+ * @param {Array<Route>}  props.routes           routes array
+ * @param {string | null} props.currentRoutePath current route path
+ * @param {Function}      props.setRoute         set route path
  * @class
  */ function Navigation(_ref) {
-    var routes = _ref.routes;
+    var routes = _ref.routes, currentRoutePath = _ref.currentRoutePath, setRoute = _ref.setRoute;
     var _useState = (0, _react.useState)({}), _useState2 = _slicedToArray(_useState, 2), calculatedStyle = _useState2[0], setCalculatedStyles = _useState2[1];
     /**
    * useEffect hook.
@@ -36212,7 +36263,9 @@ function _arrayWithHoles(arr) {
         return /*#__PURE__*/ _react["default"].createElement(_NavigationHeaderButton["default"], {
             key: routeObj.getPath(),
             title: routeObj.getTitle(),
-            targetPath: routeObj.getPath()
+            targetPath: routeObj.getPath(),
+            isActive: currentRoutePath === routeObj.getPath(),
+            onClickHandler: setRoute
         });
     }));
 }
@@ -36373,6 +36426,7 @@ function _interopRequireDefault(obj) {
     };
     return /*#__PURE__*/ _react["default"].createElement("div", {
         "data-active": isActive,
+        "data-path": targetPath,
         className: "ub-menu-navigation-header-button",
         tabIndex: 0,
         role: "button",
@@ -36434,6 +36488,8 @@ function _interopRequireDefault(obj) {
 }
 /**
  * Routes for admin menu.
+ *
+ * Last route is reserved for 404 page.
  *
  * @type {Array} routes array
  */ var routes = [
