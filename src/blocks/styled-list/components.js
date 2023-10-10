@@ -1,16 +1,23 @@
-const { __ } = wp.i18n;
-const { loadPromise, models } = wp.api;
-const { createBlock } = wp.blocks;
-const {
+import { __ } from "@wordpress/i18n";
+import { loadPromise, models } from "@wordpress/api";
+import { createBlock } from "@wordpress/blocks";
+import { useSelect, useDispatch } from "@wordpress/data";
+import {
 	RichText,
 	InnerBlocks,
 	InspectorControls,
 	ColorPalette,
 	AlignmentToolbar,
 	BlockControls,
-} = wp.blockEditor || wp.editor;
-const { Button, Dropdown, PanelBody, RangeControl, ToggleControl } =
-	wp.components;
+	useBlockProps,
+} from "@wordpress/block-editor";
+import {
+	Button,
+	Dropdown,
+	PanelBody,
+	RangeControl,
+	ToggleControl,
+} from "@wordpress/components";
 
 import {
 	dashesToCamelcase,
@@ -111,20 +118,32 @@ function EditorComponent(props) {
 	const [selectionTime, setSelectionTime] = useState(0);
 	const [setFontSize, toggleSetFontSize] = useState(false);
 	const [hasApiAccess, setHasApiAccess] = useState(false);
-
 	const {
-		isSelected,
 		block,
 		getBlock,
 		getBlockParentsByBlockName,
 		getClientIdsOfDescendants,
 		getClientIdsWithDescendants,
-		replaceInnerBlocks,
-		updateBlockAttributes,
-		attributes,
-		setAttributes,
-	} = props;
+	} = useSelect((select) => {
+		const {
+			getBlock,
+			getBlockParentsByBlockName,
+			getClientIdsOfDescendants,
+			getClientIdsWithDescendants,
+		} = select("core/block-editor");
 
+		return {
+			block: getBlock(props.clientId),
+			getBlock,
+			getBlockParentsByBlockName,
+			getClientIdsOfDescendants,
+			getClientIdsWithDescendants,
+		};
+	});
+	const { replaceInnerBlocks, updateBlockAttributes } =
+		useDispatch("core/block-editor");
+	const { isSelected, attributes, setAttributes } = props;
+	const blockProps = useBlockProps();
 	const {
 		blockID,
 		list,
@@ -150,9 +169,7 @@ function EditorComponent(props) {
 
 		loadIconList();
 
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 
@@ -339,7 +356,7 @@ function EditorComponent(props) {
 	}
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && isRootOfList && (
 				<>
 					<InspectorControls group="settings">
@@ -644,15 +661,22 @@ function EditorComponent(props) {
 					}}
 				/>
 			)}
-		</>
+		</div>
 	);
 }
 
 export function StyledListItem(props) {
+	const { isSelected, attributes, setAttributes } = props;
+	const { blockID, itemText, iconSize, iconColor, selectedIcon, fontSize } =
+		attributes;
 	const {
-		isSelected,
-		attributes,
-		setAttributes,
+		insertBlock,
+		moveBlocksToPosition,
+		removeBlock,
+		replaceBlocks,
+		updateBlockAttributes,
+	} = useDispatch("core/block-editor");
+	const {
 		block,
 		getBlock,
 		getBlockIndex,
@@ -664,21 +688,36 @@ export function StyledListItem(props) {
 		getClientIdsWithDescendants,
 		getNextBlockClientId,
 		getPreviousBlockClientId,
-		moveBlocksToPosition,
-		insertBlock,
-		removeBlock,
-		replaceBlocks,
-		updateBlockAttributes,
-	} = props;
-	const { blockID, itemText, iconSize, iconColor, selectedIcon, fontSize } =
-		attributes;
+	} = useSelect((select) => {
+		const {
+			getBlock,
+			getBlockIndex,
+			getBlockParents,
+			getBlockParentsByBlockName,
+			getClientIdsOfDescendants,
+			getClientIdsWithDescendants,
+			getNextBlockClientId,
+			getPreviousBlockClientId,
+		} = select("core/block-editor");
 
+		return {
+			block: getBlock(props.clientId),
+			getBlock,
+			getBlockIndex,
+			currentBlockIndex: getBlockIndex(props.clientId),
+			getBlockParents,
+			listRootClientId: getBlockParents(props.clientId, true)[0],
+			getBlockParentsByBlockName,
+			getClientIdsOfDescendants,
+			getClientIdsWithDescendants,
+			getNextBlockClientId,
+			getPreviousBlockClientId,
+		};
+	});
 	const [useFontSize, toggleUseFontSize] = useState(false);
 
 	useEffect(() => {
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
