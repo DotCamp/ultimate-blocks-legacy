@@ -25,12 +25,15 @@ class Ultimate_Counter {
           $suffix = $attributes['suffix'];
           $animation_duration = $attributes['animationDuration'];
           $alignment = $attributes['alignment'];
+          $label = $attributes['label'];
+          $label_position = $attributes['labelPosition'];
 
           $wrapper_attributes = get_block_wrapper_attributes(
                array(
                     'class' => 'ub_counter-container'
                )
           );
+          $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . esc_html($label) . '</span></div>';
           $block_content = sprintf(
                '<div %1$s>
                     <div
@@ -39,9 +42,13 @@ class Ultimate_Counter {
                          data-end_num="%4$s"
                          data-animation_duration="%5$s"
                     >
-                         <span class="ub_counter-prefix">%6$s</span>
-                         <span class="ub_counter-number">0</span>
-                         <span class="ub_counter-suffix">%7$s</span>
+                         %8$s
+                         <div class="ub_counter-number-wrapper">
+                              <span class="ub_counter-prefix">%6$s</span>
+                              <span class="ub_counter-number">0</span>
+                              <span class="ub_counter-suffix">%7$s</span>
+                         </div>
+                         %9$s
                     </div>
                </div>',
                $wrapper_attributes, // 1
@@ -50,7 +57,9 @@ class Ultimate_Counter {
                esc_attr( $end_number ), // 4
                esc_attr( $animation_duration ), // 5
                esc_html( $prefix ), // 6
-               esc_html( $suffix ) // 7
+               esc_html( $suffix ), // 7
+               $label_position === 'top' ? $label_markup : "", //8 
+               $label_position === 'bottom' ? $label_markup : "", //9 
           );
 
           return $block_content;

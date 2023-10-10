@@ -2342,7 +2342,15 @@ $defaultValues = array(
 				'alignment' => array(
 					'type' => 'string',
 					'default' => 'center'
-				)
+				),
+				'label' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'labelPosition' => array(
+					'type' => 'string',
+					'default' => 'bottom'
+				),
 			)
 		)
 );
