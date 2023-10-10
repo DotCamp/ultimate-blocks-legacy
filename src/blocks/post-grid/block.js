@@ -3,8 +3,7 @@ import icons from "./icons";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
-
-import attributes from "./attributes";
+import metadata from "./block.json";
 import PostGridBlock from "./editor";
 import Inspector from "./inspector";
 
@@ -20,20 +19,8 @@ const canSelectMultipleCategories =
 const filterObjectAttributes = (obj, condition) =>
 	Object.fromEntries(Object.entries(obj).filter(condition));
 
-export default registerBlockType("ub/post-grid", {
-	title: __("Post Grid", "ultimate-blocks"),
-	description: __(
-		"Add a list or grid of your posts. Comes with options to change categories, order and many more.",
-		"ultimate-blocks"
-	),
+export default registerBlockType(metadata, {
 	icon: icons,
-	category: "ultimateblocks",
-	keywords: [
-		__("post grid", "ultimate-blocks"),
-		__("posts", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks"),
-	],
-	attributes,
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -51,8 +38,8 @@ export default registerBlockType("ub/post-grid", {
 	example: {
 		attributes: {
 			postImageWidth: 85,
-			amountPosts: 2
-		}
+			amountPosts: 2,
+		},
 	},
 	edit: withSelect((select, props) => {
 		const {
