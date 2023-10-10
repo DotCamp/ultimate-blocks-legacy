@@ -1,5 +1,6 @@
 import React from 'react';
 import Route, { generateRouteArray } from '$AdminInc/Route';
+import WelcomeContent from '$Containers/WelcomeContent';
 
 /**
  * Routes for admin menu.
@@ -12,7 +13,7 @@ const routes = [
 	{
 		path: 'welcome',
 		title: 'Welcome',
-		element: () => <div>Welcome</div>,
+		element: <WelcomeContent />,
 	},
 	{
 		path: 'blocks',

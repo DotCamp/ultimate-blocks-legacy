@@ -1,6 +1,7 @@
 @import "../../../src/styles/Upsell/UpsellModal";
 @import "./base/common";
 @import "./base/themes/admin-menu-theme";
+@import "./inc/welcome-content-styles";
 
 
 .ub-admin-menu-wrapper {
@@ -8,7 +9,7 @@
 	font-family: $font-family;
 	font-size: $font-size;
 	position: absolute;
-	background-color: $gray-300;
+	background-color: $white;
 	color: $text-color;
 	z-index: 10;
 
@@ -32,7 +33,6 @@
 
 		.menu-header {
 			@extend %default-border;
-			margin-bottom: 40px;
 			border-width: 0 0 1px 0;
 			height: $header_height;
 			display: flex;
@@ -123,9 +123,12 @@
 					@extend %flex-center-all;
 					@extend %pointer;
 					@extend %size-full;
-					padding: 0 20px;
+					padding: 0 30px;
 					border: solid rgba(0, 0, 0, 0);
 					border-width: 0 0 2px 0;
+					@include screen-max($screen-xl) {
+						padding: 0 10px;
+					}
 
 					&[data-active=true] {
 						border-color: $red-500;
@@ -387,6 +390,11 @@
 			margin: 15px 0;
 			font-weight: 400;
 		}
+	}
+
+	.ub-router-content-wrapper {
+		padding-top: 40px !important;
+		overflow: auto;
 	}
 }
 

@@ -36455,6 +36455,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.routeObjects = exports["default"] = void 0;
 var _react = _interopRequireDefault(require("25b7dff849a65078"));
 var _Route = _interopRequireWildcard(require("37e7e71bbe49bcb5"));
+var _WelcomeContent = _interopRequireDefault(require("40693d5dca3c0dce"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -36496,9 +36497,7 @@ function _interopRequireDefault(obj) {
     {
         path: "welcome",
         title: "Welcome",
-        element: function element() {
-            return /*#__PURE__*/ _react["default"].createElement("div", null, "Welcome");
-        }
+        element: /*#__PURE__*/ _react["default"].createElement(_WelcomeContent["default"], null)
     },
     {
         path: "blocks",
@@ -36527,7 +36526,37 @@ function _interopRequireDefault(obj) {
 var _default = routes;
 exports["default"] = _default;
 
-},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k"}],"12F8G":[function(require,module,exports) {
+},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k","40693d5dca3c0dce":"7iM5R"}],"7iM5R":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("dca961e5c4865530"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Welcome content component.
+ *
+ * @class
+ */ function WelcomeContent() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-welcome-content"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-welcome-content__main"
+    }, "main"), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-welcome-content__right-sidebar"
+    }, "right sidebar"));
+}
+/**
+ * @module WelcomeContent
+ */ var _default = WelcomeContent;
+exports["default"] = _default;
+
+},{"dca961e5c4865530":"21dqq"}],"12F8G":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36686,7 +36715,10 @@ function _arrayWithHoles(arr) {
         currentRoutePath,
         routes
     ]);
-    return CurrentRouteContent;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-router-content-wrapper",
+        "data-route-path": currentRoutePath
+    }, CurrentRouteContent);
 }
 /**
  * @module Router

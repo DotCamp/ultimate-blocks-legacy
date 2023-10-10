@@ -32,7 +32,14 @@ function Router( { routes, currentRoutePath } ) {
 		}
 	}, [ currentRoutePath, routes ] );
 
-	return CurrentRouteContent;
+	return (
+		<div
+			className={ 'ub-router-content-wrapper' }
+			data-route-path={ currentRoutePath }
+		>
+			{ CurrentRouteContent }
+		</div>
+	);
 }
 
 /**
