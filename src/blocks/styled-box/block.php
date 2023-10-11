@@ -6,7 +6,7 @@ function ub_render_styled_box_bordered_content($attributes, $content){
 
 function ub_register_styled_box_bordered_box_block() {
 	if( function_exists( 'register_block_type' ) ) {
-		register_block_type( 'ub/styled-box-bordered-content', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/styled-box/styled-box-border/block.json', array(
             'attributes' => array(),
             'render_callback' => 'ub_render_styled_box_bordered_content')
         );
@@ -28,7 +28,7 @@ function ub_render_styled_box_numbered_box_column($attributes, $content){
 
 function ub_register_styled_box_numbered_box_column_block() {
 	if( function_exists( 'register_block_type' ) ) {
-		register_block_type( 'ub/styled-box-numbered-box-column', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/styled-box/styled-box-numbered-box-column/block.json', array(
             'attributes' => array(
                 'number' => array(
                     'type' => 'string',
@@ -107,7 +107,7 @@ function ub_render_styled_box_block($attributes, $content){
 function ub_register_styled_box_block() {
 	if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/styled-box', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/styled-box/block.json', array(
             'attributes' => $defaultValues['ub/styled-box']['attributes'],
             'render_callback' => 'ub_render_styled_box_block'));
     }

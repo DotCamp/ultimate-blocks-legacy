@@ -1,0 +1,44 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/styled-box-numbered-box-column",
+     "title": "Numbered Box Column",
+     "parent": [
+          "ub/styled-box"
+     ],
+     "category": "ultimateblocks",
+     "description": "",
+     "attributes": {
+          "blockID": {
+               "type": "string",
+               "default": ""
+          },
+          "number": {
+               "type": "string",
+               "default": ""
+          },
+          "title": {
+               "type": "string",
+               "default": ""
+          },
+          "titleAlign": {
+               "type": "string",
+               "default": "center"
+          },
+          "numberColor": {
+               "type": "string",
+               "default": ""
+          },
+          "backColor": {
+               "type": "string",
+               "default": ""
+          },
+          "borderColor": {
+               "type": "string",
+               "default": ""
+          }
+     },
+     "supports": {
+          "reusable": false
+     }
+}

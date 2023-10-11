@@ -1,0 +1,16 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/styled-box-notification-content",
+     "title": "Notification Box Content",
+     "parent": [
+          "ub/styled-box"
+     ],
+     "category": "ultimateblocks",
+     "description": "",
+     "attributes": {},
+     "supports": {
+          "inserter": false,
+          "reusable": false
+     }
+}

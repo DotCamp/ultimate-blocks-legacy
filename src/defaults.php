@@ -1868,50 +1868,50 @@ $defaultValues = array(
 					'type' => 'string'
 				)
 			),
-			/* COMMENTED OUT TO PREVENT PHP ERRORS
-            'image' => array(
-                'type' => 'array',
-                'default' => array(
-                    array(
-                        'id' => null,
-                        'alt' => null,
-                        'url' => null
-                    )
-                )
-            ),*/
-            'foreColor' => array(
-                'type' => 'string',
-                'default' => '#000000'
-            ),
-            'backColor' => array(
-                'type' => 'string',
-                'default' => '#CCCCCC'
-            ),
-            'boxColor' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'outlineColor' => array(
-                'type' => 'string',
-                'default' => '#000000'
-            ),
-            'outlineStyle' => array(
-                'type' => 'string',
-                'default' => 'solid'
-            ),
-            'outlineThickness' => array(
-                'type' => 'number',
-                'default' => 1
-            ),
-            'outlineRoundingRadius' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'outlineRadiusUnit' => array(
-                'type' => 'string',
-                'default' => 'percent'
-            )
-        )
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'image' => array(
+				'type' => 'array',
+				'default' => array(
+					array(
+					'id' => null,
+					'alt' => null,
+					'url' => null
+					)
+				)
+			),
+			'foreColor' => array(
+				'type' => 'string',
+				'default' => '#000000'
+			),
+			'backColor' => array(
+				'type' => 'string',
+				'default' => '#CCCCCC'
+			),
+			'boxColor' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'outlineColor' => array(
+				'type' => 'string',
+				'default' => '#000000'
+			),
+			'outlineStyle' => array(
+				'type' => 'string',
+				'default' => 'solid'
+			),
+			'outlineThickness' => array(
+				'type' => 'number',
+				'default' => 1
+			),
+			'outlineRoundingRadius' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'outlineRadiusUnit' => array(
+				'type' => 'string',
+				'default' => 'percent'
+			)
+        	)
     ),
     'ub/styled-list' => array(
         'attributes' => array(

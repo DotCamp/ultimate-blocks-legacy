@@ -1,28 +1,34 @@
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 
-const { registerBlockType, createBlock } = wp.blocks;
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-const {
+import {
 	RichText,
 	BlockControls,
 	MediaUpload,
 	InspectorControls,
 	PanelColorSettings,
 	InnerBlocks,
-} = wp.blockEditor || wp.editor;
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const {
+import {
 	ToolbarGroup,
 	ToolbarButton,
 	Button,
 	SelectControl,
 	PanelBody,
 	RangeControl,
-} = wp.components;
+} from "@wordpress/components";
 
 const { compose } = wp.compose;
 
-const { withSelect, withDispatch } = wp.data;
+import {
+	withSelect,
+	withDispatch,
+	useSelect,
+	useDispatch,
+} from "@wordpress/data";
 
 import { useState, useEffect } from "react";
 import icon, {
@@ -39,10 +45,39 @@ import icon, {
 	borderedBoxIcon,
 	error,
 } from "./icon";
+import metadata from "./block.json";
+import borderBoxMetaData from "./styled-box-border/block.json";
+import notificationBoxMetaData from "./styled-box-notification/block.json";
+import numberBoxMetaData from "./styled-box-number/block.json";
+import numberBoxColumnMetaData from "./styled-box-numbered-box-column/block.json";
 
 function StyledBox(props) {
 	const [editable, setEditable] = useState("");
+	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
+		useSelect((select) => {
+			const {
+				getBlock,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+				getBlocks,
+			} = select("core/block-editor") || select("core/editor");
 
+			return {
+				getBlock,
+				block: getBlock(props.clientId),
+				parentID: getBlockRootClientId(props.clientId),
+				getClientIdsWithDescendants,
+				getBlocks,
+			};
+		});
+	const {
+		insertBlock,
+		insertBlocks,
+		removeBlocks,
+		replaceInnerBlocks,
+		updateBlockAttributes,
+	} = useDispatch("core/block-editor");
+	const blockProps = useBlockProps();
 	const {
 		attributes: {
 			text,
@@ -62,16 +97,8 @@ function StyledBox(props) {
 			textAlign,
 			blockID,
 		},
-		block,
-		getBlock,
-		getClientIdsWithDescendants,
 		setAttributes,
 		isSelected,
-		insertBlock,
-		insertBlocks,
-		replaceInnerBlocks,
-		removeBlocks,
-		updateBlockAttributes,
 	} = props;
 
 	let renderedBlock;
@@ -81,9 +108,7 @@ function StyledBox(props) {
 	let blockToolbarExtras;
 
 	useEffect(() => {
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			setAttributes({
 				blockID: block.clientId,
 				outlineThickness: blockID === "" ? 3 : outlineThickness,
@@ -247,7 +272,7 @@ function StyledBox(props) {
 	} else if (mode === "feature") {
 		renderedBlock = Array(text.length)
 			.fill("")
-			.map((_, i) => (
+			?.map((_, i) => (
 				<div className="ub-feature">
 					{image[i] && image[i].id ? (
 						<>
@@ -645,7 +670,7 @@ function StyledBox(props) {
 	}
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<BlockControls>
 					{blockToolbarExtras}
@@ -717,113 +742,15 @@ function StyledBox(props) {
 			<div className={`ub-styled-box ub-${mode}-box`} style={extraStyles}>
 				{renderedBlock}
 			</div>
-		</>
+		</div>
 	);
 }
 
-registerBlockType("ub/styled-box", {
-	title: __("Styled Box"),
-	description: __(
-		"Add styled box like – Notification box, Number box, Feature box in your content. ",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon: icon,
 	category: "ultimateblocks",
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		text: {
-			type: "array",
-			default: [""],
-		},
-		textAlign: {
-			type: "array",
-			default: ["left"],
-		},
-		title: {
-			type: "array",
-			default: [""],
-		},
-		titleAlign: {
-			type: "array",
-			default: ["center"],
-		},
-		number: {
-			type: "array",
-			default: ["1", "2", "3"],
-		},
-		image: {
-			type: "array",
-			default: [{ id: null, alt: null, url: null }],
-		},
-		foreColor: {
-			type: "string",
-			default: "#000000",
-		},
-		backColor: {
-			type: "string",
-			default: "#CCCCCC",
-		},
-		boxColor: {
-			type: "string",
-			default: "",
-		},
-		outlineColor: {
-			type: "string",
-			default: "#000000",
-		},
-		outlineThickness: {
-			type: "number",
-			default: 0, //set to 3 for new inserts, but leave previously-inserted ones at 1
-		},
-		outlineStyle: {
-			type: "string",
-			default: "solid",
-		},
-		outlineRoundingRadius: {
-			type: "number",
-			default: 0,
-		},
-		outlineRadiusUnit: {
-			type: "string",
-			default: "percent", //other options: em, px
-		},
-		mode: {
-			type: "string",
-			default: "",
-		},
-	},
 	example: {},
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
-
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
-			};
-		}),
-		withDispatch((dispatch) => {
-			const {
-				insertBlock,
-				insertBlocks,
-				removeBlocks,
-				replaceInnerBlocks,
-				updateBlockAttributes,
-			} = dispatch("core/block-editor") || dispatch("core/editor");
-			return {
-				insertBlock,
-				insertBlocks,
-				removeBlocks,
-				replaceInnerBlocks,
-				updateBlockAttributes,
-			};
-		}),
-	])(StyledBox),
+	edit: StyledBox,
 
 	save: (props) =>
 		["bordered", "notification", "number"].includes(props.attributes.mode) ? (
@@ -831,38 +758,23 @@ registerBlockType("ub/styled-box", {
 		) : null,
 });
 
-registerBlockType("ub/styled-box-bordered-content", {
-	title: __("Bordered Box Content"),
-	parent: ["ub/styled-box"],
+registerBlockType(borderBoxMetaData, {
 	icon: icon,
-	category: "ultimateblocks",
-	supports: {
-		inserter: false,
-		reusable: false,
-	},
-
-	edit: () => (
+	edit: (props) => (
 		<InnerBlocks
 			templateLock={false}
 			template={[
 				["core/paragraph", { placeholder: "Enter content for bordered box" }],
 			]}
+			{...useBlockProps()}
 		/>
 	),
 
-	save: () => <InnerBlocks.Content />,
+	save: () => <InnerBlocks.Content {...useBlockProps.save()} />,
 });
 
-registerBlockType("ub/styled-box-notification-content", {
-	title: __("Notification Box Content"),
-	parent: ["ub/styled-box"],
+registerBlockType(notificationBoxMetaData, {
 	icon: icon,
-	category: "ultimateblocks",
-	supports: {
-		inserter: false,
-		reusable: false,
-	},
-
 	edit: () => (
 		<InnerBlocks
 			templateLock={false}
@@ -872,100 +784,32 @@ registerBlockType("ub/styled-box-notification-content", {
 					{ placeholder: __("Enter content for notification box") },
 				],
 			]}
+			{...useBlockProps()}
 		/>
 	),
 
-	save: () => <InnerBlocks.Content />,
+	save: () => <InnerBlocks.Content {...useBlockProps.save()} />,
 });
 
-registerBlockType("ub/styled-box-numbered-content", {
-	title: __("Numbered Box Content"),
-	parent: ["ub/styled-box"],
+registerBlockType(numberBoxMetaData, {
 	icon: icon,
-	category: "ultimateblocks",
-	supports: {
-		inserter: false,
-		reusable: false,
-	},
-
 	edit: () => (
 		<InnerBlocks
 			templateLock={false}
 			template={[
 				["core/paragraph", { placeholder: "Enter content for numbered box" }],
 			]}
+			{...useBlockProps()}
 		/>
 	),
 
-	save: () => <InnerBlocks.Content />,
+	save: () => <InnerBlocks.Content {...useBlockProps.save()} />,
 });
 
-registerBlockType("ub/styled-box-numbered-box-column", {
-	title: __("Numbered Box Column"),
-	parent: ["ub/styled-box"],
+registerBlockType(numberBoxColumnMetaData, {
 	icon: icon,
-	category: "ultimateblocks",
-	supports: {
-		//parent is alredy set, do not set inserter to false
-		reusable: false,
-	},
-
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		number: {
-			type: "string",
-			default: "",
-		},
-		title: {
-			type: "string",
-			default: "",
-		},
-		titleAlign: {
-			type: "string",
-			default: "center",
-		},
-		numberColor: {
-			type: "string",
-			default: "",
-		},
-		backColor: {
-			type: "string",
-			default: "",
-		},
-		borderColor: {
-			type: "string",
-			default: "",
-		},
-	},
-
-	edit: withSelect((select, ownProps) => {
-		const {
-			getBlock,
-			getBlockIndex,
-			getBlockRootClientId,
-			getClientIdsWithDescendants,
-		} = select("core/block-editor") || select("core/editor");
-
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getBlockIndex,
-			getBlockRootClientId,
-			getClientIdsWithDescendants,
-		};
-	})(function (props) {
-		const {
-			attributes,
-			setAttributes,
-			block,
-			getBlock,
-			getBlockIndex,
-			getBlockRootClientId,
-			getClientIdsWithDescendants,
-		} = props;
+	edit: function (props) {
+		const { attributes, setAttributes } = props;
 		const {
 			blockID,
 			borderColor,
@@ -975,7 +819,28 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 			title,
 			titleAlign,
 		} = attributes;
+		const {
+			block,
+			getBlock,
+			getBlockIndex,
+			getBlockRootClientId,
+			getClientIdsWithDescendants,
+		} = useSelect((select) => {
+			const {
+				getBlock,
+				getBlockIndex,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+			} = select("core/block-editor") || select("core/editor");
 
+			return {
+				block: getBlock(props.clientId),
+				getBlock,
+				getBlockIndex,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+			};
+		});
 		const {
 			outlineColor: parentOutlineColor,
 			foreColor: parentForeColor,
@@ -994,7 +859,7 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 			}
 			if (
 				blockID === "" &&
-				 /* PREVENT AUTOMATIC SETTING OF NUMBER SINCE NUMBER BLOCK STARTED WITHOUT BLOCKID ATTRIBUTE */
+				/* PREVENT AUTOMATIC SETTING OF NUMBER SINCE NUMBER BLOCK STARTED WITHOUT BLOCKID ATTRIBUTE */
 				borderColor === "" &&
 				numberColor === "" &&
 				backColor === ""
@@ -1012,7 +877,12 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 		}, []);
 
 		return (
-			<div className="ub-number-panel" style={{ borderColor: borderColor }}>
+			<div
+				{...useBlockProps({
+					className: "ub-number-panel",
+					style: { borderColor: borderColor },
+				})}
+			>
 				<div
 					className="ub-number-container"
 					style={{ backgroundColor: backColor }}
@@ -1052,7 +922,7 @@ registerBlockType("ub/styled-box-numbered-box-column", {
 				/>
 			</div>
 		);
-	}),
+	},
 
 	save: () => <InnerBlocks.Content />,
 });
