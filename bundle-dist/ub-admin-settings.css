@@ -297,10 +297,9 @@
 }
 
 .ub-welcome-content {
-  grid-gap: 30px;
-  grid-template: "main right_sidebar" 1fr
-  / 1fr .4fr;
-  display: grid;
+  align-items: flex-start;
+  gap: 32px;
+  display: flex;
 }
 
 .ub-welcome-content__main {
@@ -313,7 +312,13 @@
 }
 
 .ub-welcome-content__right-sidebar {
+  grid-gap: 24px;
+  flex-basis: 40%;
   grid-area: right_sidebar;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+  display: grid;
 }
 
 .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
@@ -390,7 +395,7 @@
   padding: 0 160px;
 }
 
-@media screen and (width <= 1535px) {
+@media screen and (width <= 1279px) {
   .ub-admin-menu-wrapper .ub-admin-menu-container > div {
     padding: 0 50px;
   }
@@ -461,6 +466,7 @@
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation {
+  grid-gap: 10px;
   grid-template-rows: 1fr;
   grid-template-columns: minmax(0, 1fr);
   height: 100%;
@@ -470,7 +476,7 @@
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button {
   border: 0 solid #0000;
   border-bottom-width: 2px;
-  padding: 0 30px;
+  padding: 0 10px;
 }
 
 @media screen and (width <= 1279px) {

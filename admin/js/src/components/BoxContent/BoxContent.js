@@ -49,7 +49,9 @@ function BoxContent( {
 				{ title && <BoxContentTitle>{ title }</BoxContentTitle> }
 				{ content && <BoxContentInc>{ content }</BoxContentInc> }
 			</div>
-			<div className={ 'ub-box-content-footer' }>{ children }</div>
+			{ children && (
+				<div className={ 'ub-box-content-footer' }>{ children }</div>
+			) }
 		</div>
 	);
 }

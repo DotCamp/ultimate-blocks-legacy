@@ -30309,6 +30309,10 @@ var defaultContent = (0, _i18n.__)("All the essential Gutenberg blocks you need 
     documentation: {
         title: (0, _i18n.__)("Documentation", "ultimate-blocks"),
         content: defaultContent
+    },
+    support: {
+        title: (0, _i18n.__)("Support", "ultimate-blocks"),
+        content: defaultContent
     }
 };
 /**
@@ -36620,11 +36624,13 @@ function _interopRequireDefault(obj) {
         allowFullScreen: true
     }))), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         size: _BoxContent.BoxContentSize.JUMBO,
-        contentId: "welcome"
+        contentId: "upgrade"
     })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__right-sidebar"
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "documentation"
+    }), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        contentId: "support"
     })));
 }
 /**
@@ -36859,7 +36865,7 @@ function BoxContent(_ref) {
         "data-size": size
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-box-content-title-inc-wrapper"
-    }, title && /*#__PURE__*/ _react["default"].createElement(_BoxContentTitle["default"], null, title), content && /*#__PURE__*/ _react["default"].createElement(_BoxContentInc["default"], null, content)), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, title && /*#__PURE__*/ _react["default"].createElement(_BoxContentTitle["default"], null, title), content && /*#__PURE__*/ _react["default"].createElement(_BoxContentInc["default"], null, content)), children && /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-box-content-footer"
     }, children));
 }

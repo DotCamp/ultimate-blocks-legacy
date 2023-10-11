@@ -29,11 +29,12 @@ function WelcomeContent() {
 				</BoxContentProvider>
 				<BoxContentProvider
 					size={ BoxContentSize.JUMBO }
-					contentId={ 'welcome' }
+					contentId={ 'upgrade' }
 				/>
 			</div>
 			<div className={ 'ub-welcome-content__right-sidebar' }>
 				<BoxContentProvider contentId={ 'documentation' } />
+				<BoxContentProvider contentId={ 'support' } />
 			</div>
 		</div>
 	);

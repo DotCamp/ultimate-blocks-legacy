@@ -27,7 +27,7 @@
 
 		& > div {
 			padding: 0 160px 0 160px;
-			@include screen-max($screen-2xl) {
+			@include screen-max($screen-xl) {
 				padding: 0 50px 0 50px;
 			}
 		}
@@ -118,13 +118,14 @@
 				display: grid;
 				grid-template-rows: 1fr;
 				grid-template-columns: minmax(0, 1fr);
+				grid-gap: 10px;
 
 				.ub-menu-navigation-header-button {
 					@extend %default-transition;
 					@extend %flex-center-all;
 					@extend %pointer;
 					@extend %size-full;
-					padding: 0 30px;
+					padding: 0 10px;
 					border: solid rgba(0, 0, 0, 0);
 					border-width: 0 0 2px 0;
 					@include screen-max($screen-xl) {

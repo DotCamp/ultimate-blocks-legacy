@@ -1,22 +1,26 @@
 @import "../base/common";
 
 .ub-welcome-content {
-	display: grid;
-	grid-template-rows: 1fr;
-	grid-template-columns: 1fr 0.4fr;
-	grid-template-areas: "main right_sidebar";
-	grid-gap: 30px;
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
 
-	&__main {
-		grid-area: main;
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: auto;
-		grid-auto-rows: auto;
-		grid-gap: 24px;
-	}
+  &__main {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
+    grid-gap: 24px;
+  }
 
-	&__right-sidebar {
-		grid-area: right_sidebar;
-	}
+  &__right-sidebar {
+    flex-basis: 40%;
+    grid-area: right_sidebar;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
+    grid-gap: 24px;
+  }
 }

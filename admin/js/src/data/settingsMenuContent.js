@@ -31,6 +31,10 @@ const contentData = {
 		title: __( 'Documentation', 'ultimate-blocks' ),
 		content: defaultContent,
 	},
+	support: {
+		title: __( 'Support', 'ultimate-blocks' ),
+		content: defaultContent,
+	},
 };
 
 /**
