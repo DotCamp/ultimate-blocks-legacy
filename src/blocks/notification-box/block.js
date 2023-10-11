@@ -17,32 +17,15 @@ import {
 } from "./oldVersions";
 import { blockControls, editorDisplay, upgradeToStyledBox } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
+import metadata from "./block.json";
 
-const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-const { RichText } = wp.blockEditor || wp.editor;
-const { compose } = wp.compose;
-const { withDispatch, withSelect } = wp.data;
-
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	ub_notify_info: {
-		type: "string",
-		default: "",
-	},
-	ub_selected_notify: {
-		type: "string",
-		default: "ub_notify_info",
-	},
-	align: {
-		type: "string",
-		default: "left",
-	},
-};
+import { RichText } from "@wordpress/block-editor";
+import { compose } from "@wordpress/compose";
+import { useSelect, withDispatch, withSelect } from "@wordpress/data";
+import { useDispatch } from "@wordpress/data";
 
 /**
  * Register: aa Gutenberg Block.
@@ -174,16 +157,8 @@ registerBlockType("ub/notification-box", {
 	],
 });
 
-registerBlockType("ub/notification-box-block", {
-	title: __("Notification Box"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("notification"), __("warning info"), __("Ultimate Blocks")],
-	attributes,
-	supports: {
-		inserter: false,
-	},
-
 	transforms: {
 		to: [
 			{
@@ -193,19 +168,12 @@ registerBlockType("ub/notification-box-block", {
 			},
 		],
 	},
-	edit: compose([
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
-		withDispatch((dispatch) => ({
-			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock,
-		})),
-	])(function (props) {
-		const { isSelected, className, block, replaceBlock, attributes } = props;
-
+	edit: function (props) {
+		const { isSelected, className, attributes } = props;
+		const block = useSelect((select) =>
+			select("core/block-editor").getBlock(props.clientId)
+		);
+		const { replaceBlock } = useDispatch("core/bock-editor");
 		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
@@ -223,6 +191,6 @@ registerBlockType("ub/notification-box-block", {
 				{editorDisplay(props)}
 			</div>,
 		];
-	}),
+	},
 	save: () => null,
 });

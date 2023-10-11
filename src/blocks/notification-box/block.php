@@ -13,7 +13,7 @@ function ub_render_notification_box_block($attributes){
 function ub_register_notification_box_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( 'ub/notification-box-block', array(
+        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/notification-box', array(
             'attributes' => $defaultValues['ub/notification-box-block']['attributes'],
 			'render_callback' => 'ub_render_notification_box_block'));
 	}
