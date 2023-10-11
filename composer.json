@@ -4,7 +4,9 @@
 	"type": "project",
 	"license": "GPL3+",
 	"scripts": {
-		"test": "phpunit"
+		"test": "phpunit",
+		"lint": "@phpcs-check",
+		"phpcs-check": "phpcs -p --standard=.phpcs.xml --extensions=php --ignore=vendor/*,node_modules/*,__tests__/*,dist/*,bundle-dist/*,zip/*,library/*,.parcel-cache/*,.idea/*,languages/*,src/common.php ."
 	},
 	"require": {
 		"vlucas/phpdotenv": "^5.5",
@@ -13,7 +15,9 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^10.3",
-		"brain/monkey": "^2.6"
+		"brain/monkey": "^2.6",
+		"wp-coding-standards/wpcs": "^3.0",
+		"phpcompatibility/phpcompatibility-wp": "*"
 	},
 	"autoload": {
 		"psr-4": {
@@ -21,6 +25,11 @@
 				"./",
 				"./__tests__/php/unit"
 			]
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	}
 }

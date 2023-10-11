@@ -143,8 +143,17 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.6 =
+
+* NEW: Counter block
+* PRO: IMPROVE: Content toggle blocks attributes including their parent IDs.
+* IMPROVE: Change default state of social share block.
+* IMPROVE: Change default state of content toggle block.
+* FIX: An issue affecting content toggle block for <WordPress5.9 servers.
+
 = 3.0.5 =
 
+* FIX: PHP warning in how to block.
 * FIX: An issue affecting servers with PHP version <7.3.
 
 = 3.0.4 =

@@ -20,3 +20,6 @@ jobs:
 
       - name: Run PHP tests
         run: composer test
+
+      - name: Check PHP compatibility
+        run: composer run lint
