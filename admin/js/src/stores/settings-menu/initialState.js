@@ -1,4 +1,5 @@
 import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
+import contentData from '$Data/settingsMenuContent';
 
 /**
  * Initial store state.
@@ -13,6 +14,7 @@ const initialState = {
 			show: false,
 			targetBlock: null,
 		},
+		content: contentData,
 		router: {
 			current: 'welcome',
 		},

@@ -11,6 +11,7 @@ module.exports = function ( api ) {
 						$Containers: './admin/js/src/containers',
 						$Components: './admin/js/src/components',
 						$AdminInc: './admin/js/src/inc',
+						$Data: './admin/js/src/data',
 						$HOC: './admin/js/src/hoc',
 						$Stores: './admin/js/src/stores',
 						$Styles: './admin/css/src/',

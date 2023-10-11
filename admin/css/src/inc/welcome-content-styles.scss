@@ -8,12 +8,10 @@
 	grid-gap: 30px;
 
 	&__main {
-		@extend %default-border;
 		grid-area: main;
 	}
 
 	&__right-sidebar {
-		@extend %default-border;
 		grid-area: right_sidebar;
 	}
 }

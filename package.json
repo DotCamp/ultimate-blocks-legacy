@@ -18,6 +18,7 @@
 	"alias": {
 		"$Containers": "./admin/js/src/containers",
 		"$Components": "./admin/js/src/components",
+		"$Data": "./admin/js/src/data",
 		"$AdminInc": "./admin/js/src/inc",
 		"$HOC": "./admin/js/src/hoc",
 		"$Stores": "./admin/js/src/stores",

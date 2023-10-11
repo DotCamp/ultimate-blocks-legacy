@@ -88,6 +88,16 @@ export const getAllAppOptions = ( state ) => {
 };
 
 /**
+ * Get content data.
+ *
+ * @param {Object} state store state
+ * @return {Object | null} options
+ */
+export const getContentData = ( state ) => ( contentId ) => {
+	return state.app.content[ contentId ] ?? null;
+};
+
+/**
  * Get current block filter.
  *
  * @param {Object} state store state

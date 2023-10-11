@@ -1,4 +1,5 @@
 import React from 'react';
+import BoxContent from '$Components/BoxContent/BoxContent';
 
 /**
  * Welcome content component.
@@ -8,7 +9,9 @@ import React from 'react';
 function WelcomeContent() {
 	return (
 		<div className={ 'ub-welcome-content' }>
-			<div className={ 'ub-welcome-content__main' }>main</div>
+			<div className={ 'ub-welcome-content__main' }>
+				<BoxContent />
+			</div>
 			<div className={ 'ub-welcome-content__right-sidebar' }>
 				right sidebar
 			</div>
