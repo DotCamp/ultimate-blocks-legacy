@@ -1,7 +1,39 @@
 @import "../base/colors";
+@import "../base/themes/admin-menu-theme";
 
 .ub-box-content {
-	padding: 32px 48px;
-	border: 1px solid $o_gray_200;
-	border-radius: 12px;
+  padding: 32px 48px;
+  border: 1px solid $o_gray_200;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  grid-gap: 24px;
+
+  &[data-size=normal] {
+    padding: 32px;
+    border: 1px solid $o_gray_200;
+    .ub-box-content-title {
+      @extend %h3-regular;
+    }
+  }
+
+
+  .ub-box-content-title-inc-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 8px;
+
+    .ub-box-content-title {
+      @extend %h2-regular;
+    }
+
+    .ub-box-content-inc {
+      @extend %p1-sub;
+    }
+  }
+
+  .ub-box-content-footer {
+  }
 }

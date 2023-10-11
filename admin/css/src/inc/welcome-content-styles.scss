@@ -9,6 +9,11 @@
 
 	&__main {
 		grid-area: main;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		grid-auto-rows: auto;
+		grid-gap: 24px;
 	}
 
 	&__right-sidebar {

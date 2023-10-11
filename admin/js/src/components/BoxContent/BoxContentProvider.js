@@ -11,8 +11,9 @@ import ContentNotFoundError from '$AdminInc/err/ContentNotFoundError';
  *
  * This component will fetch given data id from store and generate BoxContent component based on it.
  *
- * @param {Object} props           component properties
- * @param {string} props.contentId content id
+ * @param {Object} props                              component properties
+ * @param {string} props.contentId                    content id
+ * @param {string} [props.size=BoxContentSize.NORMAL] box content size
  */
 function BoxContentProvider( props ) {
 	const [ contentTitle, setTitle ] = useState( null );

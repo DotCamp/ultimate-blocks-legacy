@@ -34,5 +34,48 @@ $header_height: 80px;
 $logo-height: 40px;
 $border-color: $o_gray-200;
 
+%weight-normal {
+  font-weight: 400;
+}
 
+%weight-semi-bold {
+  font-weight: 500;
+}
 
+%weight-bold {
+  font-weight: 600;
+}
+
+%p1-regular {
+  @extend %weight-normal;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+%p2-regular {
+  @extend %weight-normal;
+  font-size: 0.875rem;
+  line-height: 1.0625rem;
+}
+
+%p1-sub {
+  @extend %p1-regular;
+  color: $o_gray-500;
+}
+
+%p2-semi-bold {
+  @extend %p2-regular;
+  @extend %weight-bold;
+}
+
+%h2-regular {
+  @extend %weight-bold;
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+
+%h3-regular {
+  @extend %weight-semi-bold;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+}

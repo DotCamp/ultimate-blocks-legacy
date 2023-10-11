@@ -30284,22 +30284,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _i18n = require("c755d53572817bf9");
+var defaultContent = (0, _i18n.__)("All the essential Gutenberg blocks you need in one plugin! Ultimate Blocks comes with blocks to take your content to the next level!", "ultimate-blocks");
 /**
  * Content text data for settings menu.
  *
  * This object will be used for easy management of content texts.
  *
  * Base data format:
- * 	content-key: {
- * 	    title => content title
- * 	    content => main content
- * 	}
+ *    content-key: {
+ *        title => content title
+ *        content => main content
+ *    }
  *
  * @type {Object}
  */ var contentData = {
     welcome: {
         title: (0, _i18n.__)("Welcome to Ultimate Blocks", "ultimate-blocks"),
-        content: (0, _i18n.__)("All the essential Gutenberg blocks you need in one plugin!Ultimate Blocks comes with blocks to take your content to the next level!", "ultimate-blocks")
+        content: defaultContent
+    },
+    upgrade: {
+        title: (0, _i18n.__)("Upgrade to Ultimate Blocks PRO!", "ultimate-blocks"),
+        content: defaultContent
+    },
+    documentation: {
+        title: (0, _i18n.__)("Documentation", "ultimate-blocks"),
+        content: defaultContent
     }
 };
 /**
@@ -36583,6 +36592,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("dca961e5c4865530"));
 var _BoxContentProvider = _interopRequireDefault(require("5f2023507ab10264"));
+var _BoxContent = require("a651961e91107bc2");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36598,17 +36608,31 @@ function _interopRequireDefault(obj) {
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__main"
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        size: _BoxContent.BoxContentSize.JUMBO,
+        contentId: "welcome"
+    }, /*#__PURE__*/ _react["default"].createElement("div", null, /*#__PURE__*/ _react["default"].createElement("iframe", {
+        width: "100%",
+        height: "315",
+        src: "https://www.youtube.com/embed/dQw4w9WgXcQ?si=jzY8QXe9R1hOO4Va",
+        title: "YouTube video player",
+        frameBorder: "0",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+        allowFullScreen: true
+    }))), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        size: _BoxContent.BoxContentSize.JUMBO,
         contentId: "welcome"
     })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__right-sidebar"
-    }, "right sidebar"));
+    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        contentId: "documentation"
+    })));
 }
 /**
  * @module WelcomeContent
  */ var _default = WelcomeContent;
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef"}],"cJGef":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs"}],"cJGef":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36749,8 +36773,9 @@ function _arrayWithHoles(arr) {
  *
  * This component will fetch given data id from store and generate BoxContent component based on it.
  *
- * @param {Object} props           component properties
- * @param {string} props.contentId content id
+ * @param {Object} props                              component properties
+ * @param {string} props.contentId                    content id
+ * @param {string} [props.size=BoxContentSize.NORMAL] box content size
  */ function BoxContentProvider(props) {
     var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), contentTitle = _useState2[0], setTitle = _useState2[1];
     var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), mainContent = _useState4[0], setContent = _useState4[1];
@@ -36790,7 +36815,7 @@ exports["default"] = _default;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports["default"] = exports.BoxContentLayout = void 0;
+exports["default"] = exports.BoxContentSize = exports.BoxContentLayout = void 0;
 var _react = _interopRequireDefault(require("78103c840baf22d"));
 var _BoxContentTitle = _interopRequireDefault(require("9665c6054d483950"));
 var _BoxContentInc = _interopRequireDefault(require("c7520bcfa88347e3"));
@@ -36799,9 +36824,22 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-var BoxContentLayout = {
+/**
+ * Box content layout types.
+ *
+ * @type {{VERTICAL: string, HORIZONTAL: string}}
+ */ var BoxContentLayout = {
     HORIZONTAL: "horizontal",
     VERTICAL: "vertical"
+};
+/**
+ * Box content size types.
+ *
+ * @type {{normal: string, JUMBO: string}}
+ */ exports.BoxContentLayout = BoxContentLayout;
+var BoxContentSize = {
+    JUMBO: "jumbo",
+    NORMAL: "normal"
 };
 /**
  * Box content component.
@@ -36810,14 +36848,20 @@ var BoxContentLayout = {
  * @param {string | null} props.title                              box title
  * @param {string | null} props.content                            box content
  * @param {string}        [props.layout=BoxContentLayout.VERTICAL] box layout, available values can be found in BoxContentLayout object
+ * @param {string}        [props.size=BoxContentLayout.NORMAL]     box size, available values can be found in BoxContentSize object
  * @param {Function}      props.children                           component children
- */ exports.BoxContentLayout = BoxContentLayout;
+ */ exports.BoxContentSize = BoxContentSize;
 function BoxContent(_ref) {
-    var _ref$title = _ref.title, title = _ref$title === void 0 ? null : _ref$title, _ref$content = _ref.content, content = _ref$content === void 0 ? null : _ref$content, _ref$layout = _ref.layout, layout = _ref$layout === void 0 ? BoxContentLayout.VERTICAL : _ref$layout, children = _ref.children;
+    var _ref$title = _ref.title, title = _ref$title === void 0 ? null : _ref$title, _ref$content = _ref.content, content = _ref$content === void 0 ? null : _ref$content, _ref$layout = _ref.layout, layout = _ref$layout === void 0 ? BoxContentLayout.VERTICAL : _ref$layout, _ref$size = _ref.size, size = _ref$size === void 0 ? BoxContentSize.NORMAL : _ref$size, children = _ref.children;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-box-content",
-        "data-layout": layout
-    }, title && /*#__PURE__*/ _react["default"].createElement(_BoxContentTitle["default"], null, title), content && /*#__PURE__*/ _react["default"].createElement(_BoxContentInc["default"], null, content), children);
+        "data-layout": layout,
+        "data-size": size
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-box-content-title-inc-wrapper"
+    }, title && /*#__PURE__*/ _react["default"].createElement(_BoxContentTitle["default"], null, title), content && /*#__PURE__*/ _react["default"].createElement(_BoxContentInc["default"], null, content)), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-box-content-footer"
+    }, children));
 }
 /**
  * @module BoxContent
