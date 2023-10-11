@@ -36582,7 +36582,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("dca961e5c4865530"));
-var _BoxContent = _interopRequireDefault(require("a651961e91107bc2"));
+var _BoxContentProvider = _interopRequireDefault(require("5f2023507ab10264"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36597,7 +36597,9 @@ function _interopRequireDefault(obj) {
         className: "ub-welcome-content"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__main"
-    }, /*#__PURE__*/ _react["default"].createElement(_BoxContent["default"], null)), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        contentId: "welcome"
+    })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__right-sidebar"
     }, "right sidebar"));
 }
@@ -36606,7 +36608,184 @@ function _interopRequireDefault(obj) {
  */ var _default = WelcomeContent;
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","a651961e91107bc2":"6zPRs"}],"6zPRs":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef"}],"cJGef":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("730e01bd5be97d72"));
+var _app = require("64466d1a627a4f4e");
+var _withStore = _interopRequireDefault(require("ab31c42385c46384"));
+var _BoxContent = _interopRequireDefault(require("ca0a15e451d0bd7e"));
+var _ContentNotFoundError = _interopRequireDefault(require("15b65ad0070fdb7f"));
+var _excluded = [
+    "contentId",
+    "getCData"
+];
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Box content provider component.
+ * Any BoxContent component property can be passed to this component. All will be reflected to generated one.
+ * Passing content related property will make this absolutely useless since it will be overwritten by fetched data.
+ *
+ * This component will fetch given data id from store and generate BoxContent component based on it.
+ *
+ * @param {Object} props           component properties
+ * @param {string} props.contentId content id
+ */ function BoxContentProvider(props) {
+    var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), contentTitle = _useState2[0], setTitle = _useState2[1];
+    var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), mainContent = _useState4[0], setContent = _useState4[1];
+    var _useState5 = (0, _react.useState)({}), _useState6 = _slicedToArray(_useState5, 2), rest = _useState6[0], setRest = _useState6[1];
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        var contentId = props.contentId, getCData = props.getCData, dataRest = _objectWithoutProperties(props, _excluded);
+        if (contentId) {
+            var cData = getCData(contentId);
+            if (cData) {
+                var title = cData.title, content = cData.content;
+                setTitle(title);
+                setContent(content);
+                setRest(dataRest);
+            } else throw new _ContentNotFoundError["default"](contentId);
+        }
+    }, []);
+    return /*#__PURE__*/ _react["default"].createElement(_BoxContent["default"], _extends({}, rest, {
+        title: contentTitle,
+        content: mainContent
+    }), props.children);
+}
+// store select mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        getCData: selector(_app.getContentData)
+    };
+};
+/**
+ * @module BoxContentProvider
+ */ var _default = (0, _withStore["default"])(BoxContentProvider, selectMapping);
+exports["default"] = _default;
+
+},{"730e01bd5be97d72":"21dqq","64466d1a627a4f4e":"c28DV","ab31c42385c46384":"kWmDy","ca0a15e451d0bd7e":"6zPRs","15b65ad0070fdb7f":"7XlRo"}],"6zPRs":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36702,7 +36881,27 @@ function _interopRequireDefault(obj) {
  */ var _default = BoxContentInc;
 exports["default"] = _default;
 
-},{"d372a6e72b3b4b4e":"21dqq"}],"12F8G":[function(require,module,exports) {
+},{"d372a6e72b3b4b4e":"21dqq"}],"7XlRo":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+/**
+ * ContentNotFoundError error.
+ *
+ * @param {string} contentKey target not found content key
+ */ function ContentNotFoundError(contentKey) {
+    this.name = "ContentNotFoundError";
+    this.message = "Content not found for key: [".concat(contentKey, "]");
+}
+ContentNotFoundError.prototype = Object.create(Error.prototype);
+/**
+ * @module ContentNotFound
+ */ var _default = ContentNotFoundError;
+exports["default"] = _default;
+
+},{}],"12F8G":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

@@ -6,13 +6,13 @@ import ContentNotFoundError from '$AdminInc/err/ContentNotFoundError';
 
 /**
  * Box content provider component.
+ * Any BoxContent component property can be passed to this component. All will be reflected to generated one.
+ * Passing content related property will make this absolutely useless since it will be overwritten by fetched data.
  *
  * This component will fetch given data id from store and generate BoxContent component based on it.
  *
- * @param {Object}   props                component properties
- * @param {string}   props.contentId      content id
- * @param {Function} props.getContentData get content data, will be supplied via HOC
- * @param {Function} props.children       component children, will be reflected to BoxContent component
+ * @param {Object} props           component properties
+ * @param {string} props.contentId content id
  */
 function BoxContentProvider( props ) {
 	const [ contentTitle, setTitle ] = useState( null );
@@ -23,24 +23,24 @@ function BoxContentProvider( props ) {
 	 * useEffect hook.
 	 */
 	useEffect( () => {
-		const { contentId } = props;
+		const { contentId, getCData, ...dataRest } = props;
 
 		if ( contentId ) {
-			const cData = getContentData( contentId );
+			const cData = getCData( contentId );
 
 			if ( cData ) {
-				const { title, content, ...dataRest } = cData;
+				const { title, content } = cData;
 				setTitle( title );
 				setContent( content );
 				setRest( dataRest );
+			} else {
+				throw new ContentNotFoundError( contentId );
 			}
-
-			throw new ContentNotFoundError( contentId );
 		}
 	}, [] );
 
 	return (
-		<BoxContent title={ contentTitle } content={ mainContent } { ...rest }>
+		<BoxContent { ...rest } title={ contentTitle } content={ mainContent }>
 			{ props.children }
 		</BoxContent>
 	);
@@ -49,7 +49,7 @@ function BoxContentProvider( props ) {
 // store select mapping
 const selectMapping = ( selector ) => {
 	return {
-		getContentData: selector( getContentData ),
+		getCData: selector( getContentData ),
 	};
 };
 

@@ -1,0 +1,60 @@
+import React from 'react';
+import sinon from 'sinon';
+import proxyquire from 'proxyquire';
+import { render, screen } from '@testing-library/react';
+import * as WithStoreModule from '$HOC/withStore';
+import ContentNotFoundError from '$AdminInc/err/ContentNotFoundError';
+
+beforeEach( () => {
+	proxyquire.noPreserveCache();
+} );
+
+describe( 'BoxContentProvider', () => {
+	it( 'should throw error for invalid content id', async () => {
+		const getCData = sinon.stub().returns( null );
+		sinon.stub( WithStoreModule, 'default' ).callsFake( ( Component ) => {
+			return ( props ) => {
+				return <Component { ...props } getCData={ getCData } />;
+			};
+		} );
+
+		const BoxContentProvider = proxyquire(
+			require.resolve( '$Components/BoxContent/BoxContentProvider' ),
+			{}
+		).default;
+
+		expect( () =>
+			render( <BoxContentProvider contentId={ 'non_existent' } /> )
+		).to.throw( ContentNotFoundError );
+	} );
+	it( 'should override supplied content properties with content data', async () => {
+		const testData = {
+			title: 'title overwrite',
+			content: 'content overwrite',
+		};
+
+		const getCData = sinon.stub().returns( testData );
+
+		sinon.stub( WithStoreModule, 'default' ).callsFake( ( Component ) => {
+			return ( props ) => (
+				<Component { ...props } getCData={ getCData } />
+			);
+		} );
+
+		const BoxContentProvider = proxyquire(
+			require.resolve( '$Components/BoxContent/BoxContentProvider' ),
+			{}
+		).default;
+
+		render(
+			<BoxContentProvider
+				title={ 'new title' }
+				content={ 'new content' }
+				contentId={ 'test' }
+			/>
+		);
+
+		expect( screen.getByText( testData.title ) ).to.be.ok();
+		expect( screen.getByText( testData.content ) ).to.be.ok();
+	} );
+} );

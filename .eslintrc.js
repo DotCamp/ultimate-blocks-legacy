@@ -31,6 +31,12 @@ module.exports = {
 		{
 			files: [ '__tests__/js/unit/**/*.js' ],
 			extends: [ 'plugin:testing-library/react' ],
+			globals: {
+				beforeEach: true,
+				describe: true,
+				expect: true,
+				it: true,
+			},
 		},
 	],
 	globals: {
@@ -38,8 +44,5 @@ module.exports = {
 		ubPriorityData: true,
 		UB_ENV: true,
 		localStorage: true,
-		describe: true,
-		expect: true,
-		it: true,
 	},
 };

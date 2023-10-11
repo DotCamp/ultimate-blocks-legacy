@@ -1,5 +1,5 @@
 import React from 'react';
-import BoxContent from '$Components/BoxContent/BoxContent';
+import BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 
 /**
  * Welcome content component.
@@ -10,7 +10,7 @@ function WelcomeContent() {
 	return (
 		<div className={ 'ub-welcome-content' }>
 			<div className={ 'ub-welcome-content__main' }>
-				<BoxContent />
+				<BoxContentProvider contentId={ 'welcome' } />
 			</div>
 			<div className={ 'ub-welcome-content__right-sidebar' }>
 				right sidebar
