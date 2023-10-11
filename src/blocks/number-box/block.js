@@ -17,96 +17,18 @@ import {
 	upgradeToStyledBox,
 } from "./components";
 import { useState } from "react";
+import metadata from "./block.json";
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
+import {
+	useSelect,
+	withDispatch,
+	withSelect,
+	useDispatch,
+} from "@wordpress/data";
 
-const { withDispatch, withSelect } = wp.data;
-
-const { compose } = wp.compose;
-
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	column: {
-		type: "string",
-		default: "2",
-	},
-	columnOneNumber: {
-		type: "string",
-		default: "",
-	},
-	columnTwoNumber: {
-		type: "string",
-		default: "",
-	},
-	columnThreeNumber: {
-		type: "string",
-		default: "",
-	},
-	columnOneTitle: {
-		type: "string",
-		default: "",
-	},
-	columnTwoTitle: {
-		type: "string",
-		default: "",
-	},
-	columnThreeTitle: {
-		type: "string",
-		default: "",
-	},
-	columnOneBody: {
-		type: "string",
-		default: "",
-	},
-	columnTwoBody: {
-		type: "string",
-		default: "",
-	},
-	columnThreeBody: {
-		type: "string",
-		default: "",
-	},
-	numberBackground: {
-		type: "string",
-		default: "#CCCCCC",
-	},
-	numberColor: {
-		type: "string",
-		default: "#000000",
-	},
-	borderColor: {
-		type: "string",
-		default: "#CCCCCC",
-	},
-	title1Align: {
-		type: "string",
-		default: "center",
-	},
-	title2Align: {
-		type: "string",
-		default: "center",
-	},
-	title3Align: {
-		type: "string",
-		default: "center",
-	},
-	body1Align: {
-		type: "string",
-		default: "left",
-	},
-	body2Align: {
-		type: "string",
-		default: "left",
-	},
-	body3Align: {
-		type: "string",
-		default: "left",
-	},
-};
+import { compose } from "@wordpress/compose";
 
 /**
  * Register: aa Gutenberg Block.
@@ -363,17 +285,8 @@ registerBlockType("ub/number-box", {
 	],
 });
 
-registerBlockType("ub/number-box-block", {
-	title: __("Number Box"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Number box"), __("Feature"), __("Ultimate Blocks")],
-	attributes,
-
-	supports: {
-		inserter: false,
-	},
-
 	transforms: {
 		to: [
 			{
@@ -384,19 +297,13 @@ registerBlockType("ub/number-box-block", {
 		],
 	},
 
-	edit: compose([
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
-		withDispatch((dispatch) => ({
-			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock,
-		})),
-	])(function (props) {
-		const { isSelected, block, replaceBlock, attributes } = props;
+	edit: function (props) {
+		const { isSelected, attributes } = props;
 		const [editable, setEditable] = useState("");
+		const block = useSelect((select) =>
+			select("core/block-editor").getBlock(props.clientId)
+		);
+		const { replaceBlock } = useDispatch("core/bock-editor");
 
 		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
@@ -418,6 +325,6 @@ registerBlockType("ub/number-box-block", {
 				{editorDisplay({ ...props, setEditable })}
 			</div>,
 		];
-	}),
+	},
 	save: () => null,
 });

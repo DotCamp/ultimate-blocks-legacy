@@ -1,0 +1,98 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ub/number-box-block",
+  "title": "Number Box",
+  "category": "ultimateblocks",
+  "description": "",
+  "keywords": [
+    "Number box",
+    "Feature",
+    "Ultimate Blocks"
+  ],
+  "attributes": {
+    "blockID": {
+      "type": "string",
+      "default": ""
+    },
+    "column": {
+      "type": "string",
+      "default": "2"
+    },
+    "columnOneNumber": {
+      "type": "string",
+      "default": ""
+    },
+    "columnTwoNumber": {
+      "type": "string",
+      "default": ""
+    },
+    "columnThreeNumber": {
+      "type": "string",
+      "default": ""
+    },
+    "columnOneTitle": {
+      "type": "string",
+      "default": ""
+    },
+    "columnTwoTitle": {
+      "type": "string",
+      "default": ""
+    },
+    "columnThreeTitle": {
+      "type": "string",
+      "default": ""
+    },
+    "columnOneBody": {
+      "type": "string",
+      "default": ""
+    },
+    "columnTwoBody": {
+      "type": "string",
+      "default": ""
+    },
+    "columnThreeBody": {
+      "type": "string",
+      "default": ""
+    },
+    "numberBackground": {
+      "type": "string",
+      "default": "#CCCCCC"
+    },
+    "numberColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "#CCCCCC"
+    },
+    "title1Align": {
+      "type": "string",
+      "default": "center"
+    },
+    "title2Align": {
+      "type": "string",
+      "default": "center"
+    },
+    "title3Align": {
+      "type": "string",
+      "default": "center"
+    },
+    "body1Align": {
+      "type": "string",
+      "default": "left"
+    },
+    "body2Align": {
+      "type": "string",
+      "default": "left"
+    },
+    "body3Align": {
+      "type": "string",
+      "default": "left"
+    }
+  },
+  "supports": {
+    "inserter": false
+  }
+}
