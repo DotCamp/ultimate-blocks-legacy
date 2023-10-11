@@ -22,7 +22,7 @@ import metadata from "./block.json";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-import { RichText } from "@wordpress/block-editor";
+import { RichText, useBlockProps } from "@wordpress/block-editor";
 import { compose } from "@wordpress/compose";
 import {
 	useSelect,
@@ -174,6 +174,8 @@ registerBlockType(metadata, {
 	},
 	edit: function (props) {
 		const { isSelected, className, attributes } = props;
+		const blockProps = useBlockProps();
+
 		const block = useSelect((select) =>
 			select("core/block-editor").getBlock(props.clientId)
 		);
@@ -184,7 +186,7 @@ registerBlockType(metadata, {
 
 		return [
 			isSelected && blockControls(props),
-			<div className={className}>
+			<div {...blockProps} className={className}>
 				<button
 					onClick={() =>
 						replaceBlock(block.clientId, upgradeToStyledBox(attributes))

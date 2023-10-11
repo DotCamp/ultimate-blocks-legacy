@@ -1,0 +1,110 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/feature-box-block",
+     "title": "Feature Box",
+     "category": "ultimateblocks",
+     "description": "",
+     "keywords": [
+          "Feature Box",
+          "Column",
+          "Ultimate Blocks"
+     ],
+     "attributes": {
+          "blockID": {
+               "type": "string",
+               "default": ""
+          },
+          "column": {
+               "type": "string",
+               "default": "2"
+          },
+          "columnOneTitle": {
+               "type": "string",
+               "default": "Title One"
+          },
+          "title1Align": {
+               "type": "string",
+               "default": "center"
+          },
+          "columnTwoTitle": {
+               "type": "string",
+               "default": "Title Two"
+          },
+          "title2Align": {
+               "type": "string",
+               "default": "center"
+          },
+          "columnThreeTitle": {
+               "type": "string",
+               "default": "Title Three"
+          },
+          "title3Align": {
+               "type": "string",
+               "default": "center"
+          },
+          "columnOneBody": {
+               "type": "string",
+               "default": "Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
+          },
+          "body1Align": {
+               "type": "string",
+               "default": "left"
+          },
+          "columnTwoBody": {
+               "type": "string",
+               "default": "Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
+          },
+          "body2Align": {
+               "type": "string",
+               "default": "left"
+          },
+          "columnThreeBody": {
+               "type": "string",
+               "default": "Gutenberg is really awesome! Ultimate Blocks makes it more awesome!"
+          },
+          "body3Align": {
+               "type": "string",
+               "default": "left"
+          },
+          "imgOneURL": {
+               "type": "string",
+               "default": ""
+          },
+          "imgOneID": {
+               "type": "number",
+               "default": null
+          },
+          "imgOneAlt": {
+               "type": "string",
+               "default": ""
+          },
+          "imgTwoURL": {
+               "type": "string",
+               "default": ""
+          },
+          "imgTwoID": {
+               "type": "number",
+               "default": null
+          },
+          "imgTwoAlt": {
+               "type": "string",
+               "default": ""
+          },
+          "imgThreeURL": {
+               "type": "string",
+               "default": ""
+          },
+          "imgThreeID": {
+               "type": "number",
+               "default": null
+          },
+          "imgThreeAlt": {
+               "type": "string",
+               "default": ""
+          }
+     },
+     "supports": {
+          "inserter": false
+     }
+}

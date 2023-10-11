@@ -29,6 +29,7 @@ import {
 } from "@wordpress/data";
 
 import { compose } from "@wordpress/compose";
+import { useBlockProps } from "@wordpress/block-editor";
 
 /**
  * Register: aa Gutenberg Block.
@@ -300,6 +301,8 @@ registerBlockType(metadata, {
 	edit: function (props) {
 		const { isSelected, attributes } = props;
 		const [editable, setEditable] = useState("");
+		const blockProps = useBlockProps();
+
 		const block = useSelect((select) =>
 			select("core/block-editor").getBlock(props.clientId)
 		);
@@ -314,7 +317,7 @@ registerBlockType(metadata, {
 
 			isSelected && inspectorControls(props),
 
-			<div className={props.className}>
+			<div {...blockProps} className={props.className}>
 				<button
 					onClick={() =>
 						replaceBlock(block.clientId, upgradeToStyledBox(attributes))

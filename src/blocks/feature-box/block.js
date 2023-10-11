@@ -7,116 +7,18 @@
 
 //Import Icon
 import icon from "./icons/icon";
-
+import metadata from "./block.json";
 import { version_1_1_2, version_1_1_5, oldAttributes } from "./oldVersions";
 import { blockControls, editorDisplay, upgradeToStyledBox } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
+import { useBlockProps } from "@wordpress/block-editor";
+import { __ } from "@wordpress/i18n";
 
-const { __ } = wp.i18n;
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-const { registerBlockType, createBlock } = wp.blocks;
+import { withDispatch, withSelect } from "@wordpress/data";
 
-const { withDispatch, withSelect } = wp.data;
-
-const { compose } = wp.compose;
-
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	column: {
-		type: "string",
-		default: "2",
-	},
-	columnOneTitle: {
-		type: "string",
-		default: "Title One",
-	},
-	title1Align: {
-		type: "string",
-		default: "center",
-	},
-	columnTwoTitle: {
-		type: "string",
-		default: "Title Two",
-	},
-	title2Align: {
-		type: "string",
-		default: "center",
-	},
-	columnThreeTitle: {
-		type: "string",
-		default: "Title Three",
-	},
-	title3Align: {
-		type: "string",
-		default: "center",
-	},
-	columnOneBody: {
-		type: "string",
-		default:
-			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!",
-	},
-	body1Align: {
-		type: "string",
-		default: "left",
-	},
-	columnTwoBody: {
-		type: "string",
-		default:
-			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!",
-	},
-	body2Align: {
-		type: "string",
-		default: "left",
-	},
-	columnThreeBody: {
-		type: "string",
-		default:
-			"Gutenberg is really awesome! Ultimate Blocks makes it more awesome!",
-	},
-	body3Align: {
-		type: "string",
-		default: "left",
-	},
-	imgOneURL: {
-		type: "string",
-		default: "",
-	},
-	imgOneID: {
-		type: "number",
-		default: null,
-	},
-	imgOneAlt: {
-		type: "string",
-		default: "",
-	},
-	imgTwoURL: {
-		type: "string",
-		default: "",
-	},
-	imgTwoID: {
-		type: "number",
-		default: null,
-	},
-	imgTwoAlt: {
-		type: "string",
-		default: "",
-	},
-	imgThreeURL: {
-		type: "string",
-		default: "",
-	},
-	imgThreeID: {
-		type: "number",
-		default: null,
-	},
-	imgThreeAlt: {
-		type: "string",
-		default: "",
-	},
-};
+import { compose } from "@wordpress/compose";
 
 /**
  * Register: aa Gutenberg Block.
@@ -332,12 +234,8 @@ registerBlockType("ub/feature-box", {
 	],
 });
 
-registerBlockType("ub/feature-box-block", {
-	title: __("Feature Box"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Feature Box"), __("Column"), __("Ultimate Blocks")],
-	attributes,
 	transforms: {
 		to: [
 			{
@@ -347,25 +245,17 @@ registerBlockType("ub/feature-box-block", {
 			},
 		],
 	},
-
 	supports: {
 		inserter: false,
 	},
-
-	edit: compose([
-		withSelect((select, ownProps) => ({
-			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
-			),
-		})),
-		withDispatch((dispatch) => ({
-			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
-				.replaceBlock,
-		})),
-	])(function (props) {
-		const { isSelected, block, replaceBlock, attributes } = props;
-
+	edit: function (props) {
+		const { isSelected, attributes } = props;
+		const blockProps = useBlockProps();
 		const [editable, setEditable] = useState("");
+		const block = useSelect((select) =>
+			select("core/block-editor").getBlock(props.clientId)
+		);
+		const { replaceBlock } = useDispatch("core/bock-editor");
 
 		if (attributes.blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
@@ -374,7 +264,7 @@ registerBlockType("ub/feature-box-block", {
 		return [
 			isSelected && blockControls({ ...props, editable, setEditable }),
 
-			<div className={props.className}>
+			<div {...blockProps} className={props.className}>
 				<button
 					onClick={() =>
 						replaceBlock(block.clientId, upgradeToStyledBox(attributes))
@@ -385,6 +275,6 @@ registerBlockType("ub/feature-box-block", {
 				{editorDisplay({ ...props, editable, setEditable })}
 			</div>,
 		];
-	}),
+	},
 	save: () => null,
 });
