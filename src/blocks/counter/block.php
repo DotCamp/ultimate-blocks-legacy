@@ -59,7 +59,7 @@ class Ultimate_Counter {
                esc_html( $prefix ), // 6
                esc_html( $suffix ), // 7
                $label_position === 'top' ? $label_markup : "", //8 
-               $label_position === 'bottom' ? $label_markup : "", //9 
+               $label_position === 'bottom' ? $label_markup : "" //9 
           );
 
           return $block_content;
