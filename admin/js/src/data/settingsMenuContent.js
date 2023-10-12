@@ -35,6 +35,10 @@ const contentData = {
 		title: __( 'Support', 'ultimate-blocks' ),
 		content: defaultContent,
 	},
+	community: {
+		title: __( 'Community', 'ultimate-blocks' ),
+		content: defaultContent,
+	},
 };
 
 /**

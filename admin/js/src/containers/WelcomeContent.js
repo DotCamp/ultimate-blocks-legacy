@@ -35,6 +35,7 @@ function WelcomeContent() {
 			<div className={ 'ub-welcome-content__right-sidebar' }>
 				<BoxContentProvider contentId={ 'documentation' } />
 				<BoxContentProvider contentId={ 'support' } />
+				<BoxContentProvider contentId={ 'community' } />
 			</div>
 		</div>
 	);

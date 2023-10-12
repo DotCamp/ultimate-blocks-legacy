@@ -30313,6 +30313,10 @@ var defaultContent = (0, _i18n.__)("All the essential Gutenberg blocks you need 
     support: {
         title: (0, _i18n.__)("Support", "ultimate-blocks"),
         content: defaultContent
+    },
+    community: {
+        title: (0, _i18n.__)("Community", "ultimate-blocks"),
+        content: defaultContent
     }
 };
 /**
@@ -36631,6 +36635,8 @@ function _interopRequireDefault(obj) {
         contentId: "documentation"
     }), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "support"
+    }), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        contentId: "community"
     })));
 }
 /**
