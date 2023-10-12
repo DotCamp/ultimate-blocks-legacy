@@ -3,16 +3,17 @@
 
 .ub-box-content {
   padding: 32px 48px;
-  border: 1px solid $o_gray_200;
+  border: 1px solid $o-gray-200;
   border-radius: 12px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
   grid-gap: 24px;
 
-  &[data-size=normal] {
+  &[data-size="normal"] {
     padding: 32px;
-    border: 1px solid $o_gray_200;
+    border: 1px solid $o-gray-200;
+
     .ub-box-content-title {
       @extend %h3-regular;
     }
@@ -32,8 +33,5 @@
     .ub-box-content-inc {
       @extend %p1-sub;
     }
-  }
-
-  .ub-box-content-footer {
   }
 }

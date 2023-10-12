@@ -22,11 +22,11 @@ $screen-2xl: 1536px;
 }
 
 %box-shadow-lg {
-	box-shadow: 0 1px 20px rgba(0, 0, 0, 0.25)
+	box-shadow: 0 1px 20px rgb(0 0 0 / 25%)
 }
 
 %box-shadow-md {
-	box-shadow: 0 6px 8px -4px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 6px 8px -4px rgb(0 0 0 / 25%);
 }
 
 %flex-center-all {
@@ -37,8 +37,8 @@ $screen-2xl: 1536px;
 
 %flex-center-all-row {
 	@extend %flex-center-all;
-	flex-wrap: nowrap;
-	flex-direction: row;
+
+	flex-flow: row nowrap;
 }
 
 %default-transition {
@@ -67,6 +67,10 @@ $screen-2xl: 1536px;
 }
 
 .ub-negative-color {
+	color: $negative;
+}
+
+%ub-negative-color {
 	color: $negative;
 }
 

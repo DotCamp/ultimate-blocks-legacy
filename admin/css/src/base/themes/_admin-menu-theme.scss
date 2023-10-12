@@ -1,10 +1,10 @@
 @import "../colors";
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import "https://fonts.googleapis.com/css2?family=Inter&display=swap";
 
 // font
 $font-family: 'Inter', sans-serif;
 $text-color: $black;
-$text-faded-color: $o_gray-500;
+$text-faded-color: $o-gray-500;
 
 // font sizes
 $font-size: 1rem;
@@ -24,15 +24,15 @@ $block-title-font-size: 1.2rem;
 $block-title-icon-size: 20px;
 
 // version control popup
-$version-control-popup-bg: rgba(0, 0, 0, 0.7);
+$version-control-popup-bg: rgb(0 0 0 / 70%);
 $versions-font-size: 2.5rem;
 $versions-icon-size: 2.5rem;
 $version-control-general-font-size: rem;
 
 // others
-$header_height: 80px;
+$header-height: 80px;
 $logo-height: 40px;
-$border-color: $o_gray-200;
+$border-color: $o-gray-200;
 
 %weight-normal {
   font-weight: 400;
@@ -48,19 +48,22 @@ $border-color: $o_gray-200;
 
 %p1-regular {
   @extend %weight-normal;
+
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
 %p2-regular {
   @extend %weight-normal;
+
   font-size: 0.875rem;
   line-height: 1.0625rem;
 }
 
 %p1-sub {
   @extend %p1-regular;
-  color: $o_gray-500;
+
+  color: $o-gray-500;
 }
 
 %p2-semi-bold {
@@ -70,12 +73,14 @@ $border-color: $o_gray-200;
 
 %h2-regular {
   @extend %weight-bold;
+
   font-size: 2rem;
   line-height: 2.5rem;
 }
 
 %h3-regular {
   @extend %weight-semi-bold;
+
   font-size: 1.75rem;
   line-height: 2.125rem;
 }
