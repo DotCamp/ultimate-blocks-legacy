@@ -594,6 +594,10 @@ $defaultValues = array(
 			'showOnlyOne'     => array(
 				'type'    => 'boolean',
 				'default' => false
+			),
+			'newBlockPosition' => array(
+				'type'    => 'string',
+				'default' => 'none'
 			)
 		)
 	),

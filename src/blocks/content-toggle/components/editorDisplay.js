@@ -4,9 +4,9 @@ import {
 	upgradeButtonLabel,
 	getDescendantBlocks,
 	objectsMatch,
-} from '../../../common';
-import icons from '../icons/icons';
-import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
+} from "../../../common";
+import icons from "../icons/icons";
+import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
 
 const objectsNewChange = (obj1, obj2) => {
 	let diff = {};
@@ -21,12 +21,16 @@ const objectsNewChange = (obj1, obj2) => {
 	return null;
 };
 
-const { __ } = wp.i18n;
-const { createBlock } = wp.blocks;
+import { __ } from "@wordpress/i18n";
+import { createBlock } from "@wordpress/blocks";
 
-const { InnerBlocks, InspectorControls, PanelColorSettings } =
-	wp.blockEditor || wp.editor;
-const {
+import {
+	InnerBlocks,
+	InspectorControls,
+	PanelColorSettings,
+	useBlockProps,
+} from "@wordpress/block-editor";
+import {
 	PanelBody,
 	PanelRow,
 	FormToggle,
@@ -34,7 +38,7 @@ const {
 	Button,
 	ButtonGroup,
 	Dropdown,
-} = wp.components;
+} from "@wordpress/components";
 
 export function OldPanelContent(props) {
 	const {
@@ -196,6 +200,7 @@ const oldColorDefaults = {
 
 export function PanelContent(props) {
 	const panels = props.block.innerBlocks;
+	const blockProps = useBlockProps();
 
 	const newArrangement = panels.map((panel) => panel.attributes.index);
 
@@ -548,7 +553,7 @@ export function PanelContent(props) {
 	}
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -734,7 +739,7 @@ export function PanelContent(props) {
 					</InspectorControls>
 					<InspectorControls group="styles">
 						<SavedStylesInspector
-							overrideBlockType={'ub/content-toggle-panel-block'}
+							overrideBlockType={"ub/content-toggle-panel-block"}
 							attributes={props.attributes}
 							setAttribute={(allAttrs) => {
 								const { panelTitle, ...attrs } = allAttrs;
@@ -744,26 +749,21 @@ export function PanelContent(props) {
 
 								if (panels && Array.isArray(panels)) {
 									panels.forEach((panel) => {
-										updateBlockAttributes(
-											panel.clientId,
-											attrs
-										);
+										updateBlockAttributes(panel.clientId, attrs);
 									});
 								}
 							}}
 							attributesToSave={(() => {
-								const excludeList = ['index', 'parent', 'parentID'];
+								const excludeList = ["index", "parent", "parentID"];
 
-								return Object.keys(props.attributes).filter(
-									(key) => {
-										return (
-											Object.prototype.hasOwnProperty.call(
-												props.attributes,
-												key
-											) && !excludeList.includes(key)
-										);
-									}
-								);
+								return Object.keys(props.attributes).filter((key) => {
+									return (
+										Object.prototype.hasOwnProperty.call(
+											props.attributes,
+											key
+										) && !excludeList.includes(key)
+									);
+								});
 							})()}
 							previewAttributeCallback={(attr) => {
 								// eslint-disable-next-line no-unused-vars
@@ -771,9 +771,7 @@ export function PanelContent(props) {
 								return rest;
 							}}
 							previewElementCallback={(el) => el}
-							previewBlockType={
-								'ub/content-toggle-panel-block-preview'
-							}
+							previewBlockType={"ub/content-toggle-panel-block-preview"}
 						/>
 						<PanelBody title={__("Style")}>
 							<PanelColorSettings
@@ -921,6 +919,6 @@ export function PanelContent(props) {
 					}}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }

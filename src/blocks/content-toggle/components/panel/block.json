@@ -1,0 +1,99 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/content-toggle-panel-block",
+     "title": "Content Toggle Panel",
+     "parent": [
+          "ub/content-toggle-block"
+     ],
+     "category": "ultimateblocks",
+     "description": "Add contents in accordions. Let visitors expand them and show the content.",
+     "keywords": [
+          "Content Accordion",
+          "Toggle Collapse",
+          "FAQ",
+          "Ultimate Blocks"
+     ],
+     "attributes": {
+          "index": {
+               "type": "number",
+               "default": 0
+          },
+          "parentID": {
+               "type": "string",
+               "default": ""
+          },
+          "theme": {
+               "type": "string",
+               "default": ""
+          },
+          "collapsed": {
+               "type": "boolean",
+               "default": false
+          },
+          "collapsedOnMobile": {
+               "type": "boolean",
+               "default": false
+          },
+          "hasFAQSchema": {
+               "type": "boolean",
+               "default": false
+          },
+          "titleColor": {
+               "type": "string",
+               "default": ""
+          },
+          "titleLinkColor": {
+               "type": "string",
+               "default": ""
+          },
+          "panelTitle": {
+               "type": "string",
+               "default": ""
+          },
+          "newBlockPosition": {
+               "type": "string",
+               "default": "none"
+          },
+          "titleTag": {
+               "type": "string",
+               "default": "p"
+          },
+          "preventCollapse": {
+               "type": "boolean",
+               "default": false
+          },
+          "toggleLocation": {
+               "type": "string",
+               "default": "right"
+          },
+          "toggleColor": {
+               "type": "string",
+               "default": "#000000"
+          },
+          "toggleIcon": {
+               "type": "string",
+               "default": "chevron"
+          },
+          "toggleID": {
+               "type": "string",
+               "default": ""
+          },
+          "useToggleInToC": {
+               "type": "boolean",
+               "default": false
+          },
+          "border": {
+               "type": "boolean",
+               "default": true
+          },
+          "showOnlyOne": {
+               "type": "boolean",
+               "default": false
+          }
+     },
+     "supports": {
+          "inserter": false,
+          "reusable": false
+     }
+}
