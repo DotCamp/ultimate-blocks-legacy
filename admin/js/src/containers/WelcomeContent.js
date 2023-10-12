@@ -15,15 +15,14 @@ function WelcomeContent() {
 					size={ BoxContentSize.JUMBO }
 					contentId={ 'welcome' }
 				>
-					<div>
+					<div style={ { borderRadius: '8px', overflow: 'hidden' } }>
 						<iframe
-							width="100%"
+							width="560"
 							height="315"
-							src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=jzY8QXe9R1hOO4Va"
+							src="https://www.youtube.com/embed/8FESaV5WE8A?si=Sy2LUgvsl13TENax"
 							title="YouTube video player"
 							frameBorder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowFullScreen
+							allow="picture-in-picture; web-share; fullscreen"
 						></iframe>
 					</div>
 				</BoxContentProvider>

@@ -30302,21 +30302,21 @@ var defaultContent = (0, _i18n.__)("All the essential Gutenberg blocks you need 
         title: (0, _i18n.__)("Welcome to Ultimate Blocks", "ultimate-blocks"),
         content: defaultContent
     },
-    upgrade: {
-        title: (0, _i18n.__)("Upgrade to Ultimate Blocks PRO!", "ultimate-blocks"),
-        content: defaultContent
-    },
     documentation: {
         title: (0, _i18n.__)("Documentation", "ultimate-blocks"),
-        content: defaultContent
+        content: (0, _i18n.__)("Find detailed documentation and usage instructions for all Ultimate Blocks features.", "ultimate-blocks")
     },
     support: {
         title: (0, _i18n.__)("Support", "ultimate-blocks"),
-        content: defaultContent
+        content: (0, _i18n.__)("Need help or have questions? Our support team is here to assist you.", "ultimate-blocks")
     },
     community: {
         title: (0, _i18n.__)("Community", "ultimate-blocks"),
-        content: defaultContent
+        content: (0, _i18n.__)("Join our community forums to connect with other users and share your experiences.", "ultimate-blocks")
+    },
+    upgrade: {
+        title: (0, _i18n.__)("Upgrade to Ultimate Blocks PRO!", "ultimate-blocks"),
+        content: (0, _i18n.__)("Unlock a world of enhanced capabilities and premium functionalities with Ultimate Blocks Pro. Upgrading allows you to access advanced tools and take your content to new heights. Experience the full potential of Ultimate Blocks Pro by upgrading now!", "ultimate-blocks")
     }
 };
 /**
@@ -36618,14 +36618,18 @@ function _interopRequireDefault(obj) {
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         size: _BoxContent.BoxContentSize.JUMBO,
         contentId: "welcome"
-    }, /*#__PURE__*/ _react["default"].createElement("div", null, /*#__PURE__*/ _react["default"].createElement("iframe", {
-        width: "100%",
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        style: {
+            borderRadius: "8px",
+            overflow: "hidden"
+        }
+    }, /*#__PURE__*/ _react["default"].createElement("iframe", {
+        width: "560",
         height: "315",
-        src: "https://www.youtube.com/embed/dQw4w9WgXcQ?si=jzY8QXe9R1hOO4Va",
+        src: "https://www.youtube.com/embed/8FESaV5WE8A?si=Sy2LUgvsl13TENax",
         title: "YouTube video player",
         frameBorder: "0",
-        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-        allowFullScreen: true
+        allow: "picture-in-picture; web-share; fullscreen"
     }))), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         size: _BoxContent.BoxContentSize.JUMBO,
         contentId: "upgrade"
