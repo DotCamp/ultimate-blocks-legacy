@@ -36680,7 +36680,11 @@ function _interopRequireDefault(obj) {
         type: _ButtonLink.ButtonLinkType.DEFAULT
     })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "community"
-    })));
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        title: (0, _i18n.__)("Facebook", "ultimate-blocks"),
+        type: _ButtonLink.ButtonLinkType.TEXT
+    }))));
 }
 /**
  * @module WelcomeContent

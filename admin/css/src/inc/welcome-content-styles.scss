@@ -6,7 +6,7 @@
   gap: 32px;
 
   &__main {
-    grid-area: main;
+    flex-basis: 40%;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
@@ -16,7 +16,6 @@
 
   &__right-sidebar {
     flex-basis: 40%;
-    grid-area: right_sidebar;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;

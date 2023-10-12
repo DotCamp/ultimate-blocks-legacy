@@ -14,6 +14,26 @@
   border: 1px solid $o-blue-100;
   color: $o-blue-500;
 
+  &[data-buttonlink-type="text"] {
+    color: $o-blue-300;
+    border: 0;
+    padding: 0;
+
+    &::before {
+      content: "|";
+      margin-right: 5px;
+    }
+
+    &:hover {
+      background-color: unset;
+      color: $o-blue-300;
+    }
+
+    &:active {
+      background-color: unset;
+    }
+  }
+
   &[data-buttonlink-type="primary"] {
     @extend %p2-bold;
 

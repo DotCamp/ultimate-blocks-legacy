@@ -46,7 +46,13 @@ function WelcomeContent() {
 						type={ ButtonLinkType.DEFAULT }
 					/>
 				</BoxContentProvider>
-				<BoxContentProvider contentId={ 'community' } />
+				<BoxContentProvider contentId={ 'community' }>
+					<ButtonLink
+						url={ 'https://ultimateblocks.com' }
+						title={ __( 'Facebook', 'ultimate-blocks' ) }
+						type={ ButtonLinkType.TEXT }
+					/>
+				</BoxContentProvider>
 			</div>
 		</div>
 	);
