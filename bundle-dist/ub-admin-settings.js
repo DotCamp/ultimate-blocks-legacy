@@ -36612,6 +36612,7 @@ var _BoxContentProvider = _interopRequireDefault(require("5f2023507ab10264"));
 var _BoxContent = require("a651961e91107bc2");
 var _YouTubeEmbed = _interopRequireDefault(require("6c04239ed429d27f"));
 var _ButtonLink = _interopRequireWildcard(require("3d8cac35ab8f5ccd"));
+var _ButtonLinkGroup = _interopRequireDefault(require("63cf395549eedb3"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -36680,18 +36681,26 @@ function _interopRequireDefault(obj) {
         type: _ButtonLink.ButtonLinkType.DEFAULT
     })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "community"
-    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLinkGroup["default"], null, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
         url: "https://ultimateblocks.com",
         title: (0, _i18n.__)("Facebook", "ultimate-blocks"),
         type: _ButtonLink.ButtonLinkType.TEXT
-    }))));
+    }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        title: (0, _i18n.__)("Twitter", "ultimate-blocks"),
+        type: _ButtonLink.ButtonLinkType.TEXT
+    }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        title: (0, _i18n.__)("YouTube", "ultimate-blocks"),
+        type: _ButtonLink.ButtonLinkType.TEXT
+    })))));
 }
 /**
  * @module WelcomeContent
  */ var _default = WelcomeContent;
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","ebd9e2ab5aeb8851":"7CyoE"}],"cJGef":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","ebd9e2ab5aeb8851":"7CyoE","63cf395549eedb3":"kKeXJ"}],"cJGef":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37232,7 +37241,36 @@ ButtonLinkNoUrlError.prototype = Object.create(Error.prototype);
  */ var _default = ButtonLinkNoUrlError;
 exports["default"] = _default;
 
-},{}],"12F8G":[function(require,module,exports) {
+},{}],"kKeXJ":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("6da5c65512b59431"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Button link group component.
+ *
+ * @param {Object}   props          component properties
+ * @param {Function} props.children component children
+ * @class
+ */ function ButtonLinkGroup(_ref) {
+    var children = _ref.children;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-button-link-group"
+    }, children);
+}
+/**
+ * @module ButtonLinkGroup
+ */ var _default = ButtonLinkGroup;
+exports["default"] = _default;
+
+},{"6da5c65512b59431":"21dqq"}],"12F8G":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

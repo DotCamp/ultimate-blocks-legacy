@@ -4,6 +4,7 @@ import BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 import { BoxContentSize } from '$Components/BoxContent/BoxContent';
 import YouTubeEmbed from '$Components/YouTubeEmbed';
 import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
+import ButtonLinkGroup from '$Components/ButtonLinkGroup';
 
 /**
  * Welcome content component.
@@ -47,11 +48,23 @@ function WelcomeContent() {
 					/>
 				</BoxContentProvider>
 				<BoxContentProvider contentId={ 'community' }>
-					<ButtonLink
-						url={ 'https://ultimateblocks.com' }
-						title={ __( 'Facebook', 'ultimate-blocks' ) }
-						type={ ButtonLinkType.TEXT }
-					/>
+					<ButtonLinkGroup>
+						<ButtonLink
+							url={ 'https://ultimateblocks.com' }
+							title={ __( 'Facebook', 'ultimate-blocks' ) }
+							type={ ButtonLinkType.TEXT }
+						/>
+						<ButtonLink
+							url={ 'https://ultimateblocks.com' }
+							title={ __( 'Twitter', 'ultimate-blocks' ) }
+							type={ ButtonLinkType.TEXT }
+						/>
+						<ButtonLink
+							url={ 'https://ultimateblocks.com' }
+							title={ __( 'YouTube', 'ultimate-blocks' ) }
+							type={ ButtonLinkType.TEXT }
+						/>
+					</ButtonLinkGroup>
 				</BoxContentProvider>
 			</div>
 		</div>

@@ -429,6 +429,14 @@
   transform: scale(.95);
 }
 
+.ub-button-link-group {
+  flex-flow: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+}
+
 .ub-admin-menu-wrapper {
   color: #000;
   z-index: 10;

@@ -60,3 +60,11 @@
     transform: scale(0.95);
   }
 }
+
+.ub-button-link-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row wrap;
+  gap: 5px;
+}
