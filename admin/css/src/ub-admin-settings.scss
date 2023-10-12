@@ -640,3 +640,10 @@
   color: $red-500;
   font-weight: 500;
 }
+
+.ub-youtube-embed {
+  @extend %default-border;
+
+  border-radius: 8px;
+  overflow: hidden;
+}

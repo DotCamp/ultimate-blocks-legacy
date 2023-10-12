@@ -1,6 +1,7 @@
 import React from 'react';
 import BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 import { BoxContentSize } from '$Components/BoxContent/BoxContent';
+import YouTubeEmbed from '$Components/YouTubeEmbed';
 
 /**
  * Welcome content component.
@@ -15,16 +16,7 @@ function WelcomeContent() {
 					size={ BoxContentSize.JUMBO }
 					contentId={ 'welcome' }
 				>
-					<div style={ { borderRadius: '8px', overflow: 'hidden' } }>
-						<iframe
-							width="560"
-							height="315"
-							src="https://www.youtube.com/embed/8FESaV5WE8A?si=Sy2LUgvsl13TENax"
-							title="YouTube video player"
-							frameBorder="0"
-							allow="picture-in-picture; web-share; fullscreen"
-						></iframe>
-					</div>
+					<YouTubeEmbed videoId={ '8FESaV5WE8A' } />
 				</BoxContentProvider>
 				<BoxContentProvider
 					size={ BoxContentSize.JUMBO }
