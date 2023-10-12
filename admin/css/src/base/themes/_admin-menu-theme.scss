@@ -60,6 +60,13 @@ $border-color: $o-gray-200;
   line-height: 1.0625rem;
 }
 
+%p3-regular {
+  @extend %weight-normal;
+
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+}
+
 %p1-sub {
   @extend %p1-regular;
 
@@ -70,6 +77,12 @@ $border-color: $o-gray-200;
   @extend %p2-regular;
   @extend %weight-bold;
 }
+
+%p3-bold {
+  @extend %p3-regular;
+  @extend %weight-bold;
+}
+
 
 %h2-regular {
   @extend %weight-bold;

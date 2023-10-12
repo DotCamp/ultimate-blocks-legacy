@@ -6,6 +6,13 @@ import ButtonLink from '$Components/ButtonLink';
 import ButtonLinkNoUrlError from '$AdminInc/err/ButtonLinkNoUrlError';
 
 describe( 'ButtonLink', () => {
+	it( 'should render with given title', () => {
+		const title = 'welcome';
+		render( <ButtonLink title={ title } url={ 'https://example.com' } /> );
+
+		const welcomeComponent = screen.getByText( title );
+		expect( welcomeComponent ).to.be.ok();
+	} );
 	it( 'should throw error on empty links', () => {
 		expect( () => render( <ButtonLink /> ) ).to.throw(
 			ButtonLinkNoUrlError

@@ -1,7 +1,9 @@
 import React from 'react';
+import { __ } from '@wordpress/i18n';
 import BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 import { BoxContentSize } from '$Components/BoxContent/BoxContent';
 import YouTubeEmbed from '$Components/YouTubeEmbed';
+import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
 
 /**
  * Welcome content component.
@@ -21,11 +23,29 @@ function WelcomeContent() {
 				<BoxContentProvider
 					size={ BoxContentSize.JUMBO }
 					contentId={ 'upgrade' }
-				/>
+				>
+					<ButtonLink
+						url={ 'https://ultimateblocks.com' }
+						title={ 'Get Ultimate Blocks PRO' }
+						type={ ButtonLinkType.PRIMARY }
+					/>
+				</BoxContentProvider>
 			</div>
 			<div className={ 'ub-welcome-content__right-sidebar' }>
-				<BoxContentProvider contentId={ 'documentation' } />
-				<BoxContentProvider contentId={ 'support' } />
+				<BoxContentProvider contentId={ 'documentation' }>
+					<ButtonLink
+						url={ 'https://ultimateblocks.com' }
+						title={ __( 'Visit Documents', 'ultimate-blocks' ) }
+						type={ ButtonLinkType.DEFAULT }
+					/>
+				</BoxContentProvider>
+				<BoxContentProvider contentId={ 'support' }>
+					<ButtonLink
+						url={ 'https://ultimateblocks.com/community/' }
+						title={ __( 'Support Forum', 'ultimate-blocks' ) }
+						type={ ButtonLinkType.DEFAULT }
+					/>
+				</BoxContentProvider>
 				<BoxContentProvider contentId={ 'community' } />
 			</div>
 		</div>

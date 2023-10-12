@@ -3,6 +3,7 @@
 @import "./base/themes/admin-menu-theme";
 @import "./inc/welcome-content-styles";
 @import "./inc/box-content";
+@import "./inc/button-link";
 
 
 .ub-admin-menu-wrapper {
@@ -642,6 +643,7 @@
 }
 
 .ub-youtube-embed {
+  @extend %flex-center-all;
   @extend %default-border;
 
   border-radius: 8px;

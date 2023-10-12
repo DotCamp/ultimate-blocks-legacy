@@ -1,0 +1,26 @@
+@use 'sass:color';
+@import '../base/colors';
+@import '../base/themes/admin-menu-theme';
+@import '../base/common';
+
+.ub-button-link {
+  @extend %p3-bold;
+  @extend %pointer;
+  @extend %default-transition;
+
+  border-radius: 5px;
+  width: fit-content;
+  padding: 8px 12px;
+  border: 1px solid $o-blue-100;
+  color: $o-blue-500;
+
+  &:hover {
+    background-color: color.adjust($o-blue-100, $lightness: -10%);
+    color: $white;
+  }
+
+  &:active {
+    background-color: color.adjust($o-blue-100, $lightness: -5%);
+    transform: scale(0.95);
+  }
+}

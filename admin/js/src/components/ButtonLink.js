@@ -6,7 +6,7 @@ import ButtonLinkNoUrlError from '$AdminInc/err/ButtonLinkNoUrlError';
  *
  * @type {{TEXT: string, PRIMARY: string, DEFAULT: string}}
  */
-const ButtonLinkType = {
+export const ButtonLinkType = {
 	TEXT: 'text',
 	DEFAULT: 'default',
 	PRIMARY: 'primary',
@@ -15,12 +15,13 @@ const ButtonLinkType = {
 /**
  * Button link component.
  *
- * @param {Object}         props      component properties
- * @param {string}         props.url  target url
- * @param {ButtonLinkType} props.type button link type
+ * @param {Object} props       component properties
+ * @param {string} props.url   target url
+ * @param {string} props.type  button link type, should be one of ButtonLinkType object values
+ * @param {string} props.title button title
  * @class
  */
-function ButtonLink( { url = null, type = ButtonLinkType.DEFAULT } ) {
+function ButtonLink( { title, url = null, type = ButtonLinkType.DEFAULT } ) {
 	/**
 	 * useEffect hook.
 	 */
@@ -40,10 +41,13 @@ function ButtonLink( { url = null, type = ButtonLinkType.DEFAULT } ) {
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
 		<div
+			className={ 'ub-button-link' }
 			data-buttonlink-type={ type }
 			onClick={ redirect }
 			role={ 'button' }
-		></div>
+		>
+			{ title }
+		</div>
 	);
 }
 

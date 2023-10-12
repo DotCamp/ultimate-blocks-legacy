@@ -36594,14 +36594,50 @@ exports["default"] = _default;
 
 },{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k","40693d5dca3c0dce":"7iM5R"}],"7iM5R":[function(require,module,exports) {
 "use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("dca961e5c4865530"));
+var _i18n = require("ebd9e2ab5aeb8851");
 var _BoxContentProvider = _interopRequireDefault(require("5f2023507ab10264"));
 var _BoxContent = require("a651961e91107bc2");
 var _YouTubeEmbed = _interopRequireDefault(require("6c04239ed429d27f"));
+var _ButtonLink = _interopRequireWildcard(require("3d8cac35ab8f5ccd"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36624,13 +36660,25 @@ function _interopRequireDefault(obj) {
     })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         size: _BoxContent.BoxContentSize.JUMBO,
         contentId: "upgrade"
-    })), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        title: "Get Ultimate Blocks PRO",
+        type: _ButtonLink.ButtonLinkType.PRIMARY
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__right-sidebar"
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "documentation"
-    }), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        title: (0, _i18n.__)("Visit Documents", "ultimate-blocks"),
+        type: _ButtonLink.ButtonLinkType.DEFAULT
+    })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "support"
-    }), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com/community/",
+        title: (0, _i18n.__)("Support Forum", "ultimate-blocks"),
+        type: _ButtonLink.ButtonLinkType.DEFAULT
+    })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "community"
     })));
 }
@@ -36639,7 +36687,7 @@ function _interopRequireDefault(obj) {
  */ var _default = WelcomeContent;
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se"}],"cJGef":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","ebd9e2ab5aeb8851":"7CyoE"}],"cJGef":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37072,7 +37120,115 @@ function _arrayWithHoles(arr) {
  */ var _default = YouTubeEmbed;
 exports["default"] = _default;
 
-},{"ad24d604b269b572":"21dqq"}],"12F8G":[function(require,module,exports) {
+},{"ad24d604b269b572":"21dqq"}],"dwYOq":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = exports.ButtonLinkType = void 0;
+var _react = _interopRequireWildcard(require("1a3b4cf49481b5b8"));
+var _ButtonLinkNoUrlError = _interopRequireDefault(require("8ac52384558a34b2"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+/**
+ * Button link type.
+ *
+ * @type {{TEXT: string, PRIMARY: string, DEFAULT: string}}
+ */ var ButtonLinkType = {
+    TEXT: "text",
+    DEFAULT: "default",
+    PRIMARY: "primary"
+};
+/**
+ * Button link component.
+ *
+ * @param {Object} props       component properties
+ * @param {string} props.url   target url
+ * @param {string} props.type  button link type, should be one of ButtonLinkType object values
+ * @param {string} props.title button title
+ * @class
+ */ exports.ButtonLinkType = ButtonLinkType;
+function ButtonLink(_ref) {
+    var title = _ref.title, _ref$url = _ref.url, url = _ref$url === void 0 ? null : _ref$url, _ref$type = _ref.type, type = _ref$type === void 0 ? ButtonLinkType.DEFAULT : _ref$type;
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        if (!url) throw new _ButtonLinkNoUrlError["default"]();
+    }, []);
+    /**
+   * Redirect to component url.
+   */ var redirect = function redirect() {
+        window.open(url, "_blank");
+    };
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
+    _react["default"].createElement("div", {
+        className: "ub-button-link",
+        "data-buttonlink-type": type,
+        onClick: redirect,
+        role: "button"
+    }, title));
+}
+/**
+ * @module ButtonLink
+ */ var _default = ButtonLink;
+exports["default"] = _default;
+
+},{"1a3b4cf49481b5b8":"21dqq","8ac52384558a34b2":"7DSi2"}],"7DSi2":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+/**
+ * ButtonLinkNoUrlError.
+ */ function ButtonLinkNoUrlError() {
+    this.name = "ButtonLinkNoUrlError";
+    this.message = "No URL is provided for ButtonLink component.";
+}
+ButtonLinkNoUrlError.prototype = Object.create(Error.prototype);
+/**
+ * @module ContentNotFound
+ */ var _default = ButtonLinkNoUrlError;
+exports["default"] = _default;
+
+},{}],"12F8G":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
