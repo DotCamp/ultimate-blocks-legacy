@@ -36657,6 +36657,7 @@ function _interopRequireDefault(obj) {
         size: _BoxContent.BoxContentSize.JUMBO,
         contentId: "welcome"
     }, /*#__PURE__*/ _react["default"].createElement(_YouTubeEmbed["default"], {
+        height: 315,
         videoId: "8FESaV5WE8A"
     })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         size: _BoxContent.BoxContentSize.JUMBO,
@@ -37109,8 +37110,8 @@ function _arrayWithHoles(arr) {
     var videoId = _ref.videoId, _ref$width = _ref.width, width = _ref$width === void 0 ? null : _ref$width, _ref$height = _ref.height, height = _ref$height === void 0 ? null : _ref$height;
     var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), embedUrl = _useState2[0], setEmbedUrl = _useState2[1];
     var defaults = {
-        width: 560,
-        height: 315
+        width: "100%",
+        height: "100%"
     };
     /**
    * useEffect hook.

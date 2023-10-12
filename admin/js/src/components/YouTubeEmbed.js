@@ -13,8 +13,8 @@ function YouTubeEmbed( { videoId, width = null, height = null } ) {
 	const [ embedUrl, setEmbedUrl ] = useState( null );
 
 	const defaults = {
-		width: 560,
-		height: 315,
+		width: '100%',
+		height: '100%',
 	};
 
 	/**

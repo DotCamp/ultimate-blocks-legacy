@@ -19,7 +19,7 @@ function WelcomeContent() {
 					size={ BoxContentSize.JUMBO }
 					contentId={ 'welcome' }
 				>
-					<YouTubeEmbed videoId={ '8FESaV5WE8A' } />
+					<YouTubeEmbed height={ 315 } videoId={ '8FESaV5WE8A' } />
 				</BoxContentProvider>
 				<BoxContentProvider
 					size={ BoxContentSize.JUMBO }
