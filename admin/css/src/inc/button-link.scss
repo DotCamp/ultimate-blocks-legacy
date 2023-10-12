@@ -14,13 +14,29 @@
   border: 1px solid $o-blue-100;
   color: $o-blue-500;
 
+  &[data-buttonlink-type="primary"] {
+    @extend %p2-bold;
+
+    color: $neutral-gray-50;
+    background-color: $red-500;
+    border: 0;
+
+    &:hover {
+      background-color: #F4406D;
+    }
+
+    &:active {
+      background-color: #991132;
+    }
+  }
+
   &:hover {
     background-color: color.adjust($o-blue-100, $lightness: -10%);
-    color: $white;
+    color: $neutral-gray-50;
   }
 
   &:active {
-    background-color: color.adjust($o-blue-100, $lightness: -5%);
+    background-color: color.adjust($o-blue-100, $lightness: -15%);
     transform: scale(0.95);
   }
 }

@@ -26,7 +26,7 @@ function WelcomeContent() {
 				>
 					<ButtonLink
 						url={ 'https://ultimateblocks.com' }
-						title={ 'Get Ultimate Blocks PRO' }
+						title={ 'GET ULTIMATE BLOCKS PRO' }
 						type={ ButtonLinkType.PRIMARY }
 					/>
 				</BoxContentProvider>

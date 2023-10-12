@@ -73,7 +73,7 @@ $border-color: $o-gray-200;
   color: $o-gray-500;
 }
 
-%p2-semi-bold {
+%p2-bold {
   @extend %p2-regular;
   @extend %weight-bold;
 }

@@ -36662,7 +36662,7 @@ function _interopRequireDefault(obj) {
         contentId: "upgrade"
     }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
         url: "https://ultimateblocks.com",
-        title: "Get Ultimate Blocks PRO",
+        title: "GET ULTIMATE BLOCKS PRO",
         type: _ButtonLink.ButtonLinkType.PRIMARY
     }))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__right-sidebar"

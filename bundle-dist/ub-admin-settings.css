@@ -203,7 +203,11 @@
   height: 20px !important;
 }
 
-.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title, .ub-button-link {
+.ub-button-link, .ub-button-link[data-buttonlink-type="primary"], .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
+  font-weight: 400;
+}
+
+.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title, .ub-button-link, .ub-button-link[data-buttonlink-type="primary"] {
   font-weight: 600;
 }
 
@@ -250,7 +254,7 @@
   display: grid;
 }
 
-.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc, .ub-button-link {
+.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc, .ub-button-link[data-buttonlink-type="primary"], .ub-button-link {
   font-weight: 400;
 }
 
@@ -276,7 +280,7 @@
   display: grid;
 }
 
-.ub-button-link, .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
+.ub-button-link[data-buttonlink-type="primary"], .ub-button-link, .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
   font-weight: 400;
 }
 
@@ -284,13 +288,18 @@
   font-weight: 500;
 }
 
-.ub-button-link, .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title {
+.ub-button-link[data-buttonlink-type="primary"], .ub-button-link, .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title {
   font-weight: 600;
 }
 
 .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.ub-button-link[data-buttonlink-type="primary"] {
+  font-size: .875rem;
+  line-height: 1.0625rem;
 }
 
 .ub-button-link {
@@ -386,13 +395,27 @@
   padding: 8px 12px;
 }
 
+.ub-button-link[data-buttonlink-type="primary"] {
+  color: #f8fafc;
+  background-color: #e11b4c;
+  border: 0;
+}
+
+.ub-button-link[data-buttonlink-type="primary"]:hover {
+  background-color: #f4406d;
+}
+
+.ub-button-link[data-buttonlink-type="primary"]:active {
+  background-color: #991132;
+}
+
 .ub-button-link:hover {
-  color: #fff;
+  color: #f8fafc;
   background-color: #90a8eb;
 }
 
 .ub-button-link:active {
-  background-color: #a5b9ef;
+  background-color: #7a97e8;
   transform: scale(.95);
 }
 
