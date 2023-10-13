@@ -31885,7 +31885,6 @@ exports["default"] = void 0;
 var _react = _interopRequireDefault(require("455808d61ca3dd3"));
 var _MenuHeader = _interopRequireDefault(require("13ab014d28c1a042"));
 var _Content = _interopRequireDefault(require("46d090e981b08c24"));
-var _ScreenCenterMarks = _interopRequireDefault(require("301449019d701bea"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -31900,14 +31899,14 @@ function _interopRequireDefault(obj) {
  */ function AdminMenuContainer() {
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-admin-menu-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_ScreenCenterMarks["default"], null), /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
 }
 /**
  * @module AdminMenuContainer
  */ var _default = AdminMenuContainer;
 exports["default"] = _default;
 
-},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G","301449019d701bea":"3i6kF"}],"kP7QS":[function(require,module,exports) {
+},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G"}],"kP7QS":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37441,37 +37440,7 @@ function _arrayWithHoles(arr) {
  */ var _default = Router;
 exports["default"] = _default;
 
-},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"3i6kF":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("c034a29ecbe77e79"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Component to show screen center marks for layout testing.
- *
- * @class
- */ function ScreenCenterMarks() {
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-screen-center"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-screen-center-vertical"
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-screen-center-horizontal"
-    }));
-}
-/**
- * @module ScreenCenterMarks
- */ var _default = ScreenCenterMarks;
-exports["default"] = _default;
-
-},{"c034a29ecbe77e79":"21dqq"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

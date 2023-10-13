@@ -513,14 +513,18 @@
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header {
   background-color: #fff;
   border-width: 0 0 1px;
-  justify-content: space-between;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "logo nav right";
   align-items: center;
   height: 80px;
-  display: flex;
+  display: grid;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container {
   flex-direction: row;
+  grid-area: logo;
+  justify-content: flex-start;
   height: 40px;
 }
 
@@ -534,7 +538,13 @@
   font-weight: bold;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
+  grid-area: right;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item {
   height: 100%;
 }
 
@@ -576,6 +586,7 @@
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation {
   grid-gap: 10px;
+  grid-area: nav;
   grid-template-rows: 1fr;
   grid-template-columns: minmax(0, 1fr);
   height: 100%;

@@ -55,11 +55,12 @@
 		.menu-header {
 			@extend %default-border;
 
+			display: grid;
+			grid-template: 1fr / repeat(3, minmax(0, 1fr));
+			grid-template-areas: "logo nav right";
+			align-items: center;
 			border-width: 0 0 1px;
 			height: $header-height;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
 			background-color: $white;
 
 
@@ -67,6 +68,9 @@
 				@extend %flex-center-all;
 				@extend %unselectable;
 
+
+				grid-area: logo;
+				justify-content: flex-start;
 				flex-direction: row;
 				height: $logo-height;
 
@@ -84,6 +88,8 @@
 			.right-container {
 				@extend %flex-center-all-row;
 
+				grid-area: right;
+				justify-content: flex-end;
 				height: 100%;
 
 				.right-container-item {
@@ -140,6 +146,7 @@
 			}
 
 			.ub-menu-navigation {
+				grid-area: nav;
 				height: 100%;
 				display: grid;
 				grid-template-rows: 1fr;
