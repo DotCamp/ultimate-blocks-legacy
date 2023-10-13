@@ -1,0 +1,48 @@
+@import "../base/common";
+
+.ub-menu-navigation {
+	height: 100%;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: minmax(0, 1fr);
+	grid-gap: 10px;
+	background-color: $white;
+
+	@include screen-max($screen-md2) {
+		display: none;
+		position: absolute;
+		height: auto;
+		left: 45px;
+		top: 100%;
+		grid-template-columns: 1fr !important;
+		border: 1px solid $border-color;
+		z-index: 10;
+
+		.ub-menu-navigation-header-button {
+			padding: 15px 10px !important;
+		}
+	}
+
+	.ub-menu-navigation-header-button {
+		@extend %default-transition;
+		@extend %flex-center-all;
+		@extend %pointer;
+		@extend %size-full;
+
+		padding: 0 10px;
+		border: solid rgb(0 0 0 / 0%);
+		border-width: 0 0 2px;
+
+		@include screen-max($screen-xl) {
+			padding: 0 10px;
+		}
+
+		&[data-active="true"] {
+			border-color: $red-500;
+		}
+
+		&:hover[data-active="false"] {
+			border-color: $border-color;
+		}
+	}
+}

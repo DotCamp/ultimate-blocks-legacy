@@ -5,6 +5,7 @@
 @import "./inc/box-content";
 @import "./inc/button-link";
 @import "./inc/screen-center-mark";
+@import "./inc/navigation";
 
 
 .ub-admin-menu-wrapper {
@@ -52,8 +53,20 @@
 			}
 		}
 
-		.menu-header {
+		.header-wrapper {
 			@extend %default-border;
+		}
+
+		.menu-header {
+			display: grid;
+			width: 100%;
+			position: relative;
+			grid-template: 1fr / repeat(3, minmax(0, 1fr));
+			grid-template-areas: "logo nav right";
+			align-items: center;
+			border-width: 0 0 1px;
+			height: $header-height;
+			background-color: $white;
 
 			@include screen-max($screen-md2) {
 				grid-template-areas: "hamburger logo right";
@@ -62,15 +75,6 @@
 					display: block !important;
 				}
 			}
-
-			display: grid;
-			grid-template: 1fr / repeat(3, minmax(0, 1fr));
-			grid-template-areas: "logo nav right";
-			align-items: center;
-			border-width: 0 0 1px;
-			height: $header-height;
-			background-color: $white;
-
 
 			.logo-container {
 				@extend %flex-center-all;
@@ -153,35 +157,12 @@
 				}
 			}
 
-			.ub-menu-navigation {
+			.ub-menu-navigation-wrapper {
 				grid-area: nav;
 				height: 100%;
-				display: grid;
-				grid-template-rows: 1fr;
-				grid-template-columns: minmax(0, 1fr);
-				grid-gap: 10px;
 
-				@include screen-max(850) {
+				@include screen-max($screen-md2) {
 					display: none;
-				}
-
-				.ub-menu-navigation-header-button {
-					@extend %default-transition;
-					@extend %flex-center-all;
-					@extend %pointer;
-					@extend %size-full;
-
-					padding: 0 10px;
-					border: solid rgb(0 0 0 / 0%);
-					border-width: 0 0 2px;
-
-					@include screen-max($screen-xl) {
-						padding: 0 10px;
-					}
-
-					&[data-active="true"] {
-						border-color: $red-500;
-					}
 				}
 			}
 

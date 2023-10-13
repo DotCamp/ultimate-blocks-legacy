@@ -5,6 +5,16 @@ import userEvent from '@testing-library/user-event';
 import proxyquire from 'proxyquire';
 import HamburgerMenu from '$Components/HamburgerMenu';
 
+const mockHamburgerMenu = () => {
+	proxyquire.noPreserveCache();
+
+	return proxyquire( require.resolve( '$Components/HamburgerMenu' ), {
+		'@fortawesome/react-fontawesome': {
+			FontAwesomeIcon: ( { icon } ) => <div>{ icon }</div>,
+		},
+	} ).default;
+};
+
 describe( 'HamburgerMenu', () => {
 	it( 'should use its callback property on click', async () => {
 		const clickHandler = sinon.spy();
@@ -29,16 +39,7 @@ describe( 'HamburgerMenu', () => {
 		expect( clickHandler.calledOnce ).to.be.false();
 	} );
 	it( 'should render correct icon with current status', () => {
-		proxyquire.noPreserveCache();
-
-		const MockedHamburgerMenu = proxyquire(
-			require.resolve( '$Components/HamburgerMenu' ),
-			{
-				'@fortawesome/react-fontawesome': {
-					FontAwesomeIcon: ( { icon } ) => <div>{ icon }</div>,
-				},
-			}
-		).default;
+		const MockedHamburgerMenu = mockHamburgerMenu();
 
 		const { unmount } = render(
 			<MockedHamburgerMenu status={ false } openIcon={ 'open' } />

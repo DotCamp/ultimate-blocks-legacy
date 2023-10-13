@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import withStore from '$HOC/withStore';
 import { getLogo } from '$Stores/settings-menu/slices/assets';
 import RightContainerItem from '$Components/RightContainerItem';
@@ -22,34 +22,52 @@ import HamburgerMenu from '$Components/HamburgerMenu';
  * @return {JSX.Element} component
  */
 function MenuHeader( { logoUrl, currentRoutePath, setRoute } ) {
+	// status of hamburger menu
+	const [ menuStatus, setMenuStatus ] = useState( false );
+
 	const routeObjectsMinus404 = useMemo(
 		() => routeObjects.slice( 0, routeObjects.length - 1 ),
 		[]
 	);
+
 	return (
-		<div className={ 'menu-header' }>
-			<div className={ 'left-container' }>
-				<div className={ 'logo-container' }>
-					<img alt={ 'plugin logo' } src={ logoUrl } />
-					<div className={ 'ub-plugin-logo-text' }>
-						Ultimate Blocks
+		<div className={ 'header-wrapper' }>
+			<div className={ 'menu-header' }>
+				<div className={ 'left-container' }>
+					<div className={ 'logo-container' }>
+						<img alt={ 'plugin logo' } src={ logoUrl } />
+						<div className={ 'ub-plugin-logo-text' }>
+							Ultimate Blocks
+						</div>
 					</div>
 				</div>
+				<div className={ 'ub-menu-navigation-wrapper' }>
+					<Navigation
+						routes={ routeObjectsMinus404 }
+						currentRoutePath={ currentRoutePath }
+						setRoute={ setRoute }
+					/>
+				</div>
+				<div className={ 'right-container' }>
+					<RightContainerItem>
+						<VersionControl />
+					</RightContainerItem>
+					<RightContainerItem classNames={ [ 'share-node' ] }>
+						<FontAwesomeIcon icon="fa-solid fa-share-nodes" />
+					</RightContainerItem>
+				</div>
+				<HamburgerMenu
+					clickHandler={ () => setMenuStatus( ! menuStatus ) }
+					status={ menuStatus }
+				/>
 			</div>
-			<Navigation
-				routes={ routeObjectsMinus404 }
-				currentRoutePath={ currentRoutePath }
-				setRoute={ setRoute }
-			/>
-			<div className={ 'right-container' }>
-				<RightContainerItem>
-					<VersionControl />
-				</RightContainerItem>
-				<RightContainerItem classNames={ [ 'share-node' ] }>
-					<FontAwesomeIcon icon="fa-solid fa-share-nodes" />
-				</RightContainerItem>
+			<div className={ 'dropdown-navigation' }>
+				<Navigation
+					routes={ routeObjectsMinus404 }
+					currentRoutePath={ currentRoutePath }
+					setRoute={ setRoute }
+				/>
 			</div>
-			<HamburgerMenu />
 		</div>
 	);
 }

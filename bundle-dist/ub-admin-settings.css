@@ -1,5 +1,5 @@
 @import "https://fonts.googleapis.com/css2?family=Inter&display=swap";
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .ub-header-version-info, .ub-button-link, .ub-pointer, .ub-upsell-modal-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .ub-header-version-info, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-pointer, .ub-upsell-modal-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation {
   cursor: pointer;
 }
 
@@ -8,7 +8,7 @@
   user-select: none;
 }
 
-.ub-youtube-embed, .ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon, .version-control-popup .modal-container .rollback-versions, .version-control-popup .modal-container .version-content .version-warning, .version-control-popup .modal-container .version-content > div > div, .version-control-popup .modal-container .version-content, .version-control-popup, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase, .version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container, .ub-active-block-icon .ub-active-block-icon-from-string, .ub-active-block-icon, .ub-upsell-modal-button, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-footer, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-description, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-image, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-header, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsells-modal-wrapper, .ub-pro-overlay {
+.ub-youtube-embed, .ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon, .version-control-popup .modal-container .rollback-versions, .version-control-popup .modal-container .version-content .version-warning, .version-control-popup .modal-container .version-content > div > div, .version-control-popup .modal-container .version-content, .version-control-popup, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase, .ub-menu-navigation .ub-menu-navigation-header-button, .version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container, .ub-active-block-icon .ub-active-block-icon-from-string, .ub-active-block-icon, .ub-upsell-modal-button, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-footer, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-description, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-image, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-header, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsells-modal-wrapper, .ub-pro-overlay {
   justify-content: center;
   align-items: center;
   display: flex;
@@ -23,7 +23,7 @@
   box-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container, .ub-admin-menu-wrapper, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation svg, .ub-pro-overlay {
+.ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container, .ub-admin-menu-wrapper, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation svg, .ub-pro-overlay {
   width: 100%;
   height: 100%;
 }
@@ -207,17 +207,13 @@
   font-weight: 400;
 }
 
-.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title, .ub-button-link, .ub-button-link[data-buttonlink-type="primary"] {
-  font-weight: 600;
-}
-
-.ub-youtube-embed, .ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon, .version-control-popup .modal-container .rollback-versions, .version-control-popup .modal-container .version-content .version-warning, .version-control-popup .modal-container .version-content > div > div, .version-control-popup .modal-container .version-content, .version-control-popup, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase, .version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container, .ub-pro-overlay, .ub-upsells-modal-wrapper, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-header, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-image, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-description, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-footer, .ub-upsell-modal-button, .ub-active-block-icon, .ub-active-block-icon .ub-active-block-icon-from-string {
+.ub-youtube-embed, .ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon, .version-control-popup .modal-container .rollback-versions, .version-control-popup .modal-container .version-content .version-warning, .version-control-popup .modal-container .version-content > div > div, .version-control-popup .modal-container .version-content, .version-control-popup, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase, .ub-menu-navigation .ub-menu-navigation-header-button, .version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container, .ub-pro-overlay, .ub-upsells-modal-wrapper, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-header, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-image, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-description, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-footer, .ub-upsell-modal-button, .ub-active-block-icon, .ub-active-block-icon .ub-active-block-icon-from-string {
   justify-content: center;
   align-items: center;
   display: flex;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .ub-header-version-info, .ub-button-link, .ub-pointer, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .ub-header-version-info, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-pointer, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button {
   cursor: pointer;
 }
 
@@ -283,110 +279,16 @@
   font-weight: 400;
 }
 
-.ub-box-content[data-size="normal"] .ub-box-content-title {
-  font-weight: 500;
-}
-
 .ub-button-link[data-buttonlink-type="primary"], .ub-button-link, .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title {
   font-weight: 600;
 }
 
-.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-
-.ub-button-link[data-buttonlink-type="primary"] {
-  font-size: .875rem;
-  line-height: 1.0625rem;
-}
-
-.ub-button-link {
-  font-size: .75rem;
-  line-height: 1.125rem;
-}
-
-.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
-  color: #64748b;
-}
-
-.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title {
-  font-size: 2rem;
-  line-height: 2.5rem;
-}
-
-.ub-box-content[data-size="normal"] .ub-box-content-title {
-  font-size: 1.75rem;
-  line-height: 2.125rem;
-}
-
-.ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container, .ub-admin-menu-wrapper, .ub-pro-overlay, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation svg {
-  width: 100%;
-  height: 100%;
-}
-
-.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-id, .version-control-popup .modal-container .version-content .version-warning, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase {
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control {
-  box-shadow: 0 6px 8px -4px #00000040;
-}
-
-.ub-youtube-embed, .ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon, .version-control-popup .modal-container .rollback-versions, .version-control-popup .modal-container .version-content .version-warning, .version-control-popup .modal-container .version-content > div > div, .version-control-popup .modal-container .version-content, .version-control-popup, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase, .ub-pro-overlay, .ub-upsells-modal-wrapper, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-header, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-image, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-description, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-footer, .ub-upsell-modal-button, .ub-active-block-icon, .ub-active-block-icon .ub-active-block-icon-from-string, .version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
-  flex-flow: row;
-}
-
-.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon[data-in-progress="true"] .version-icon-inner-wrapper, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content .ub-pro-content-main, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-button-link {
-  transition: all .2s ease-out;
-}
-
-.ub-youtube-embed, .version-control-popup .modal-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header {
-  border: 1px solid #e2e8f0;
-}
-
-.ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control {
-  border-radius: 999px;
-}
-
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .ub-header-version-info, .ub-button-link, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer {
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .ub-header-version-info, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer {
   cursor: pointer;
-}
-
-.ub-positive-color {
-  color: #22c55e;
 }
 
 .ub-negative-color, .version-control-popup .modal-container .version-content .operation-finished-wrapper .version-control-response[data-resp-type="error"] {
   color: #e11b4c;
-}
-
-.ub-positive-bg {
-  background-color: #22c55e !important;
-}
-
-.ub-negative-bg {
-  background-color: #e11b4c !important;
-}
-
-.ub-strip-anchor {
-  text-decoration: none !important;
-}
-
-.ub-strip-anchor:hover {
-  color: inherit !important;
-  text-decoration: none !important;
-}
-
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper:active, .ub-button-link:active {
-  transform: scale(.95);
 }
 
 .ub-button-link {
@@ -472,6 +374,162 @@
   padding: 0 !important;
 }
 
+.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc, .ub-button-link, .ub-button-link[data-buttonlink-type="primary"] {
+  font-weight: 400;
+}
+
+.ub-box-content[data-size="normal"] .ub-box-content-title {
+  font-weight: 500;
+}
+
+.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title, .ub-button-link, .ub-button-link[data-buttonlink-type="primary"] {
+  font-weight: 600;
+}
+
+.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.ub-button-link[data-buttonlink-type="primary"] {
+  font-size: .875rem;
+  line-height: 1.0625rem;
+}
+
+.ub-button-link {
+  font-size: .75rem;
+  line-height: 1.125rem;
+}
+
+.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc {
+  color: #64748b;
+}
+
+.ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-title {
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+
+.ub-box-content[data-size="normal"] .ub-box-content-title {
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container, .ub-admin-menu-wrapper, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-pro-overlay, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-id, .version-control-popup .modal-container .version-content .version-warning, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control {
+  box-shadow: 0 6px 8px -4px #00000040;
+}
+
+.ub-youtube-embed, .ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon, .version-control-popup .modal-container .rollback-versions, .version-control-popup .modal-container .version-content .version-warning, .version-control-popup .modal-container .version-content > div > div, .version-control-popup .modal-container .version-content, .version-control-popup, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-howto, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-info, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .route-404, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .right-container-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .logo-container, .ub-admin-menu-wrapper .content-phrase, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-pro-overlay, .ub-upsells-modal-wrapper, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-header, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-image, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-content .ub-upsells-modal-content-description, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window .ub-upsells-modal-footer, .ub-upsell-modal-button, .ub-active-block-icon, .ub-active-block-icon .ub-active-block-icon-from-string, .version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.version-control-popup .modal-container .version-content .version-rollback-button-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container {
+  flex-flow: row;
+}
+
+.ub-menu-button, .version-control-popup .modal-container .rollback-versions .version-icon[data-in-progress="true"] .version-icon-inner-wrapper, .ub-admin-menu-wrapper .ub-toggle-control .knob, .ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .pro-content .ub-pro-content-main, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg *, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon svg, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-left-container .title-icon, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .filter-control-item, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-button-link {
+  transition: all .2s ease-out;
+}
+
+.ub-youtube-embed, .version-control-popup .modal-container, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper {
+  border: 1px solid #e2e8f0;
+}
+
+.ub-admin-menu-wrapper .ub-toggle-control, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control .active-indicator, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .block-status-filter-control {
+  border-radius: 999px;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-content .controls-container .block-control .block-title .block-title-right-container .pro-block-card-info-button, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .right-container .version-control-container .ub-header-version-info, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer, .ub-button-link {
+  cursor: pointer;
+}
+
+.ub-positive-color {
+  color: #22c55e;
+}
+
+.ub-negative-color, .version-control-popup .modal-container .version-content .operation-finished-wrapper .version-control-response[data-resp-type="error"] {
+  color: #e11b4c;
+}
+
+.ub-positive-bg {
+  background-color: #22c55e !important;
+}
+
+.ub-negative-bg {
+  background-color: #e11b4c !important;
+}
+
+.ub-strip-anchor {
+  text-decoration: none !important;
+}
+
+.ub-strip-anchor:hover {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu-icon-wrapper:active, .ub-button-link:active {
+  transform: scale(.95);
+}
+
+.ub-menu-navigation {
+  grid-gap: 10px;
+  background-color: #fff;
+  grid-template-rows: 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  height: 100%;
+  display: grid;
+}
+
+@media screen and (width <= 849px) {
+  .ub-menu-navigation {
+    z-index: 10;
+    border: 1px solid #e2e8f0;
+    height: auto;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 45px;
+    grid-template-columns: 1fr !important;
+  }
+
+  .ub-menu-navigation .ub-menu-navigation-header-button {
+    padding: 15px 10px !important;
+  }
+}
+
+.ub-menu-navigation .ub-menu-navigation-header-button {
+  border: 0 solid #0000;
+  border-bottom-width: 2px;
+  padding: 0 10px;
+}
+
+@media screen and (width <= 1279px) {
+  .ub-menu-navigation .ub-menu-navigation-header-button {
+    padding: 0 10px;
+  }
+}
+
+.ub-menu-navigation .ub-menu-navigation-header-button[data-active="true"] {
+  border-color: #e11b4c;
+}
+
+.ub-menu-navigation .ub-menu-navigation-header-button:hover[data-active="false"] {
+  border-color: #e2e8f0;
+}
+
 .ub-admin-menu-wrapper {
   color: #000;
   z-index: 10;
@@ -521,8 +579,10 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-areas: "logo nav right";
   align-items: center;
+  width: 100%;
   height: 80px;
   display: grid;
+  position: relative;
 }
 
 @media screen and (width <= 849px) {
@@ -598,35 +658,15 @@
   height: 16px;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation {
-  grid-gap: 10px;
+.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation-wrapper {
   grid-area: nav;
-  grid-template-rows: 1fr;
-  grid-template-columns: minmax(0, 1fr);
   height: 100%;
-  display: grid;
 }
 
 @media screen and (width <= 849px) {
-  .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation {
+  .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation-wrapper {
     display: none;
   }
-}
-
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button {
-  border: 0 solid #0000;
-  border-bottom-width: 2px;
-  padding: 0 10px;
-}
-
-@media screen and (width <= 1279px) {
-  .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button {
-    padding: 0 10px;
-  }
-}
-
-.ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-menu-navigation .ub-menu-navigation-header-button[data-active="true"] {
-  border-color: #e11b4c;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .menu-header .ub-hamburger-menu {
