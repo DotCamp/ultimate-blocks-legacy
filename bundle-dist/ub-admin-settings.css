@@ -979,4 +979,8 @@
   overflow: hidden;
 }
 
+.appear-anim {
+  animation: .2s ease-out forwards appear;
+}
+
 /*# sourceMappingURL=ub-admin-settings.css.map */

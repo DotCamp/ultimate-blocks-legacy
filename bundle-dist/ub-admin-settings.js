@@ -37431,8 +37431,9 @@ function _arrayWithHoles(arr) {
         routes
     ]);
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-router-content-wrapper",
-        "data-route-path": currentRoutePath
+        className: "ub-router-content-wrapper appear-anim",
+        "data-route-path": currentRoutePath,
+        key: currentRoutePath
     }, CurrentRouteContent);
 }
 /**
