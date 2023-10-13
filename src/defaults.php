@@ -1023,21 +1023,21 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'pics' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'pics' => array(
+				'type' => 'array',
+				'default' => array()
+			),
 			//retained for reverse compatibility
 			'captions'         => array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'descriptions' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'descriptions' => array(
+				'type' => 'array',
+				'default' => array()
+			),
 			'wrapsAround'      => array(
 				'type'    => 'boolean',
 				'default' => true
