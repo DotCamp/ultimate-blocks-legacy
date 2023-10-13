@@ -723,6 +723,10 @@ $defaultValues = array(
 				'type'    => 'boolean',
 				'default' => false
 			),
+			'toggleAlign'   => array(
+				'type'    => 'string',
+				'default' => 'left'
+			),
 			'parentID'    => array(
 				'type'    => 'string',
 				'default' => ''
