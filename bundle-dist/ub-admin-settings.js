@@ -30317,6 +30317,10 @@ var defaultContent = (0, _i18n.__)("All the essential Gutenberg blocks you need 
     upgrade: {
         title: (0, _i18n.__)("Upgrade to Ultimate Blocks PRO!", "ultimate-blocks"),
         content: (0, _i18n.__)("Unlock a world of enhanced capabilities and premium functionalities with Ultimate Blocks Pro. Upgrading allows you to access advanced tools and take your content to new heights. Experience the full potential of Ultimate Blocks Pro by upgrading now!", "ultimate-blocks")
+    },
+    globalControl: {
+        title: (0, _i18n.__)("Global Control", "ultimate-blocks"),
+        content: (0, _i18n.__)("Our plugin's global control allows users to easily enable or disable all available blocks together, simplifying block management", "ultimate-blocks")
     }
 };
 /**
@@ -37336,11 +37340,49 @@ exports["default"] = _default;
 
 },{"6da5c65512b59431":"21dqq"}],"RcVav":[function(require,module,exports) {
 "use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("44b754e7f33ff5d6"));
+var _i18n = require("ccee3ff924ee68fd");
+var _BoxContentProvider = _interopRequireDefault(require("5d137a308a6dc4a1"));
+var _BoxContent = require("49772c2ff883b51c");
+var _ButtonLink = _interopRequireWildcard(require("1f27831d7ce0318c"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37353,14 +37395,25 @@ function _interopRequireDefault(obj) {
  */ function BlocksContent() {
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-blocks-content"
-    }, "Blocks content");
+    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        layout: _BoxContent.BoxContentLayout.HORIZONTAL,
+        contentId: "globalControl"
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        type: _ButtonLink.ButtonLinkType.DEFAULT,
+        title: (0, _i18n.__)("Activate All")
+    }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        type: _ButtonLink.ButtonLinkType.DEFAULT,
+        title: (0, _i18n.__)("Deactivate All")
+    })));
 }
 /**
  * @module BlocksContent
  */ var _default = BlocksContent;
 exports["default"] = _default;
 
-},{"44b754e7f33ff5d6":"21dqq"}],"gCgzB":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","ccee3ff924ee68fd":"7CyoE"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

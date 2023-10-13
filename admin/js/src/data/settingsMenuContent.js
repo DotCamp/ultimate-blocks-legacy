@@ -51,6 +51,13 @@ const contentData = {
 			'ultimate-blocks'
 		),
 	},
+	globalControl: {
+		title: __( 'Global Control', 'ultimate-blocks' ),
+		content: __(
+			"Our plugin's global control allows users to easily enable or disable all available blocks together, simplifying block management",
+			'ultimate-blocks'
+		),
+	},
 };
 
 /**
