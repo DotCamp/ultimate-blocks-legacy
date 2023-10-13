@@ -1,6 +1,7 @@
 import React from 'react';
 import Route, { generateRouteArray } from '$AdminInc/Route';
 import WelcomeContent from '$Containers/WelcomeContent';
+import BlocksContent from '$Containers/BlocksContent';
 
 /**
  * Routes for admin menu.
@@ -18,7 +19,7 @@ const routes = [
 	{
 		path: 'blocks',
 		title: 'Blocks',
-		element: <div>Blocks</div>,
+		element: <BlocksContent />,
 	},
 	{
 		path: 'extensions',

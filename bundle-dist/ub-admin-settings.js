@@ -36584,6 +36584,7 @@ exports.routeObjects = exports["default"] = void 0;
 var _react = _interopRequireDefault(require("25b7dff849a65078"));
 var _Route = _interopRequireWildcard(require("37e7e71bbe49bcb5"));
 var _WelcomeContent = _interopRequireDefault(require("40693d5dca3c0dce"));
+var _BlocksContent = _interopRequireDefault(require("f7b143816d73deb6"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -36630,7 +36631,7 @@ function _interopRequireDefault(obj) {
     {
         path: "blocks",
         title: "Blocks",
-        element: /*#__PURE__*/ _react["default"].createElement("div", null, "Blocks")
+        element: /*#__PURE__*/ _react["default"].createElement(_BlocksContent["default"], null)
     },
     {
         path: "extensions",
@@ -36654,7 +36655,7 @@ function _interopRequireDefault(obj) {
 var _default = routes;
 exports["default"] = _default;
 
-},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k","40693d5dca3c0dce":"7iM5R"}],"7iM5R":[function(require,module,exports) {
+},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k","40693d5dca3c0dce":"7iM5R","f7b143816d73deb6":"RcVav"}],"7iM5R":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37333,7 +37334,33 @@ function _interopRequireDefault(obj) {
  */ var _default = ButtonLinkGroup;
 exports["default"] = _default;
 
-},{"6da5c65512b59431":"21dqq"}],"gCgzB":[function(require,module,exports) {
+},{"6da5c65512b59431":"21dqq"}],"RcVav":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("44b754e7f33ff5d6"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Blocks content.
+ *
+ * @class
+ */ function BlocksContent() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-blocks-content"
+    }, "Blocks content");
+}
+/**
+ * @module BlocksContent
+ */ var _default = BlocksContent;
+exports["default"] = _default;
+
+},{"44b754e7f33ff5d6":"21dqq"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

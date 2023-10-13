@@ -2,6 +2,7 @@
 @import "./base/common";
 @import "./base/themes/admin-menu-theme";
 @import "./inc/welcome-content-styles";
+@import "./inc/blocks-content-styles";
 @import "./inc/box-content";
 @import "./inc/button-link";
 @import "./inc/screen-center-mark";
@@ -486,6 +487,7 @@
 		@extend %appear-anim;
 
 		display: flex;
+		justify-content: center;
 		align-items: flex-start;
 		padding-top: 40px !important;
 		padding-bottom: 40px !important;

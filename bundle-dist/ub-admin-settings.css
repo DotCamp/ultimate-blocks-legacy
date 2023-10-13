@@ -277,6 +277,10 @@
   }
 }
 
+.ub-blocks-content {
+  width: 100%;
+}
+
 .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc, .ub-button-link[data-buttonlink-type="primary"], .ub-button-link {
   font-weight: 400;
 }
@@ -930,6 +934,7 @@
 }
 
 .ub-admin-menu-wrapper .ub-router-content-wrapper {
+  justify-content: center;
   align-items: flex-start;
   display: flex;
   overflow: auto;
