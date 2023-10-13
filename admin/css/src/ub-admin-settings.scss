@@ -54,6 +54,7 @@
 		}
 
 		.header-wrapper {
+			@extend %flex-center-all;
 			@extend %default-border;
 
 			position: relative;
@@ -61,6 +62,7 @@
 			.menu-header {
 				display: grid;
 				width: 100%;
+				max-width: $main-wrapper-max-width;
 				position: relative;
 				grid-template: 1fr / repeat(3, minmax(0, 1fr));
 				grid-template-areas: "logo nav right";
@@ -483,9 +485,17 @@
 	.ub-router-content-wrapper {
 		@extend %appear-anim;
 
+		display: flex;
+		align-items: flex-start;
 		padding-top: 40px !important;
 		padding-bottom: 40px !important;
 		overflow: auto;
+
+
+		/* stylelint-disable-next-line no-descending-specificity */
+		& > div {
+			max-width: $main-wrapper-max-width;
+		}
 
 	}
 }

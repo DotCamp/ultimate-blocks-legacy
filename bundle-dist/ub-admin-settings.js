@@ -30260,7 +30260,7 @@ function _interopRequireDefault(obj) {
         },
         content: _settingsMenuContent["default"],
         router: {
-            current: "welcome"
+            current: "blocks"
         }
     },
     versionControl: {
