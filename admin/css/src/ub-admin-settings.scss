@@ -55,131 +55,166 @@
 
 		.header-wrapper {
 			@extend %default-border;
-		}
 
-		.menu-header {
-			display: grid;
-			width: 100%;
 			position: relative;
-			grid-template: 1fr / repeat(3, minmax(0, 1fr));
-			grid-template-areas: "logo nav right";
-			align-items: center;
-			border-width: 0 0 1px;
-			height: $header-height;
-			background-color: $white;
 
-			@include screen-max($screen-md2) {
-				grid-template-areas: "hamburger logo right";
-
-				.ub-hamburger-menu {
-					display: block !important;
-				}
-			}
-
-			.logo-container {
-				@extend %flex-center-all;
-				@extend %unselectable;
-
-
-				grid-area: logo;
-				justify-content: flex-start;
-				flex-direction: row;
-				height: $logo-height;
-
-				img {
-					height: 100%;
-				}
-
-				.ub-plugin-logo-text {
-					font-weight: bold;
-					margin: 0 5px;
-					font-size: 1.4rem;
-				}
-			}
-
-			.right-container {
-				@extend %flex-center-all-row;
-
-				grid-area: right;
-				justify-content: flex-end;
-				height: 100%;
-
-				.right-container-item {
-					@extend %flex-center-all;
-
-					height: 100%;
-
-					&:not(:first-child) {
-						margin-left: 24px;
-					}
-				}
-
-
-				.version-control-container {
-					@extend %flex-center-all-row;
-
-					.ub-header-version-info {
-						@extend %pointer;
-
-						background-color: $o-gray-50;
-						border-radius: 5px;
-						color: $text-faded-color;
-						font-size: $font-pill-size;
-						padding: 4px 12px;
-					}
-
-					.version-control-status-indicator {
-						@include size(15);
-
-						border-radius: 100%;
-						padding: 0 !important;
-
-						&[data-level='none'] {
-							background-color: $green-500;
-						}
-
-						&[data-level='medium'] {
-							background-color: $yellow-500;
-						}
-
-						&[data-level='high'] {
-							background-color: $red-500;
-						}
-					}
-				}
-
-				.share-node {
-					@extend %pointer;
-
-					& svg {
-						@include size(16);
-					}
-				}
-			}
-
-			.ub-menu-navigation-wrapper {
-				grid-area: nav;
-				height: 100%;
+			.menu-header {
+				display: grid;
+				width: 100%;
+				position: relative;
+				grid-template: 1fr / repeat(3, minmax(0, 1fr));
+				grid-template-areas: "logo nav right";
+				align-items: center;
+				border-width: 0 0 1px;
+				height: $header-height;
+				background-color: $white;
 
 				@include screen-max($screen-md2) {
+					grid-template-areas: "hamburger logo right";
+
+					.ub-hamburger-menu {
+						display: block !important;
+					}
+				}
+
+				.logo-container {
+					@extend %flex-center-all;
+					@extend %unselectable;
+
+
+					grid-area: logo;
+					justify-content: flex-start;
+					flex-direction: row;
+					height: $logo-height;
+
+					img {
+						height: 100%;
+					}
+
+					.ub-plugin-logo-text {
+						font-weight: bold;
+						margin: 0 5px;
+						font-size: 1.4rem;
+					}
+				}
+
+				.right-container {
+					@extend %flex-center-all-row;
+
+					grid-area: right;
+					justify-content: flex-end;
+					height: 100%;
+
+					.right-container-item {
+						@extend %flex-center-all;
+
+						height: 100%;
+
+						&:not(:first-child) {
+							margin-left: 24px;
+						}
+					}
+
+
+					.version-control-container {
+						@extend %flex-center-all-row;
+
+						.ub-header-version-info {
+							@extend %pointer;
+
+							background-color: $o-gray-50;
+							border-radius: 5px;
+							color: $text-faded-color;
+							font-size: $font-pill-size;
+							padding: 4px 12px;
+						}
+
+						.version-control-status-indicator {
+							@include size(15);
+
+							border-radius: 100%;
+							padding: 0 !important;
+
+							&[data-level='none'] {
+								background-color: $green-500;
+							}
+
+							&[data-level='medium'] {
+								background-color: $yellow-500;
+							}
+
+							&[data-level='high'] {
+								background-color: $red-500;
+							}
+						}
+					}
+
+					.share-node {
+						@extend %pointer;
+
+						& svg {
+							@include size(16);
+						}
+					}
+				}
+
+				.ub-menu-navigation-wrapper {
+					grid-area: nav;
+					height: 100%;
+
+					@include screen-max($screen-md2) {
+						display: none;
+					}
+				}
+
+				.ub-hamburger-menu {
+					grid-area: hamburger;
 					display: none;
+
+					&-icon-wrapper {
+						@extend %pointer;
+						@extend %ub-click;
+
+						width: fit-content;
+
+						/* stylelint-disable-next-line no-descending-specificity */
+						svg {
+							@include size(20);
+
+						}
+					}
 				}
 			}
 
-			.ub-hamburger-menu {
-				grid-area: hamburger;
+			.dropdown-navigation {
 				display: none;
 
-				&-icon-wrapper {
-					@extend %pointer;
-					@extend %ub-click;
+				.ub-menu-navigation {
+					@extend %default-transition;
+					@extend %shadow-md;
+				}
 
-					width: fit-content;
+				@include screen-max($screen-md2) {
+					display: block;
 
-					/* stylelint-disable-next-line no-descending-specificity */
-					svg {
-						@include size(20);
+					.ub-menu-navigation {
+						position: absolute;
+						height: auto;
+						left: -50%;
+						top: 100%;
+						grid-template-columns: 1fr !important;
+						border: 1px solid $border-color;
+						z-index: 10;
 
+						.ub-menu-navigation-header-button {
+							padding: 15px 10px !important;
+						}
+					}
+
+					&[data-menu-status="true"] {
+						.ub-menu-navigation {
+							left: 0 !important;
+						}
 					}
 				}
 			}

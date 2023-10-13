@@ -61,7 +61,10 @@ function MenuHeader( { logoUrl, currentRoutePath, setRoute } ) {
 					status={ menuStatus }
 				/>
 			</div>
-			<div className={ 'dropdown-navigation' }>
+			<div
+				className={ 'dropdown-navigation' }
+				data-menu-status={ menuStatus }
+			>
 				<Navigation
 					routes={ routeObjectsMinus404 }
 					currentRoutePath={ currentRoutePath }

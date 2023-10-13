@@ -32052,7 +32052,8 @@ function _arrayWithHoles(arr) {
         },
         status: menuStatus
     })), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "dropdown-navigation"
+        className: "dropdown-navigation",
+        "data-menu-status": menuStatus
     }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
         routes: routeObjectsMinus404,
         currentRoutePath: currentRoutePath,
