@@ -1,0 +1,44 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/divider",
+     "title": "Divider",
+     "category": "ultimateblocks",
+     "description": "Add custom divider between your blocks. Customize the color, size, everything.",
+     "keywords": [
+          "Divider",
+          "Separator",
+          "Ultimate Blocks"
+     ],
+     "attributes": {
+          "blockID": {
+               "type": "string",
+               "default": ""
+          },
+          "borderSize": {
+               "type": "number",
+               "default": 2
+          },
+          "borderStyle": {
+               "type": "string",
+               "default": "solid"
+          },
+          "borderColor": {
+               "type": "string",
+               "default": "#ccc"
+          },
+          "borderHeight": {
+               "type": "number",
+               "default": 20
+          },
+          "width": {
+               "type": "number",
+               "default": 100
+          },
+          "alignment": {
+               "type": "string",
+               "default": "center"
+          }
+     },
+     "supports": {}
+}

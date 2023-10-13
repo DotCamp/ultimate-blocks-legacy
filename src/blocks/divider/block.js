@@ -6,57 +6,57 @@
  */
 
 //Import Icon
-import icon from './icons/icon';
+import icon from "./icons/icon";
 
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2 } from "./oldVersions";
 
-import { Fragment, useEffect } from 'react';
-import { PanelColorSettings } from '@wordpress/block-editor';
+import { Fragment, useEffect } from "react";
+import { PanelColorSettings, useBlockProps } from "@wordpress/block-editor";
 
-const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
-
-const {
+import { InspectorControls, ColorPalette } from "@wordpress/blockEditor";
+import metadata from "./block.json";
+import {
 	PanelBody,
 	PanelRow,
 	RangeControl,
 	SelectControl,
 	Button,
 	ButtonGroup,
-} = wp.components;
+} from "@wordpress/components";
 
-const { withSelect } = wp.data;
+import { withSelect } from "@wordpress/data";
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: '',
+		type: "string",
+		default: "",
 	},
 	borderSize: {
-		type: 'number',
+		type: "number",
 		default: 2,
 	},
 	borderStyle: {
-		type: 'string',
-		default: 'solid',
+		type: "string",
+		default: "solid",
 	},
 	borderColor: {
-		type: 'string',
-		default: '#ccc',
+		type: "string",
+		default: "#ccc",
 	},
 	borderHeight: {
-		type: 'number',
+		type: "number",
 		default: 20,
 	},
 	width: {
-		type: 'number',
+		type: "number",
 		default: 100,
 	},
 	alignment: {
-		type: 'string',
-		default: 'center',
+		type: "string",
+		default: "center",
 	},
 };
 /**
@@ -91,27 +91,23 @@ function DividerBlock(props) {
 		getBlock,
 		getClientIdsWithDescendants,
 	} = props;
-
+	const blockProps = useBlockProps();
 	useEffect(() => {
-		if (
-			blockID === ''
-		) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<Fragment>
 					<InspectorControls>
-						<PanelBody title={__('Line Settings')}>
+						<PanelBody title={__("Line Settings")}>
 							<RangeControl
-								label={__('Thickness')}
+								label={__("Thickness")}
 								value={borderSize}
-								onChange={(value) =>
-									setAttributes({ borderSize: value })
-								}
+								onChange={(value) => setAttributes({ borderSize: value })}
 								min={1}
 								max={20}
 								beforeIcon="minus"
@@ -119,43 +115,37 @@ function DividerBlock(props) {
 							/>
 
 							<RangeControl
-								label={__('Height')}
+								label={__("Height")}
 								value={borderHeight}
-								onChange={(value) =>
-									setAttributes({ borderHeight: value })
-								}
+								onChange={(value) => setAttributes({ borderHeight: value })}
 								min={10}
 								max={200}
 								beforeIcon="minus"
 								allowReset
 							/>
 							<RangeControl
-								label={__('Width')}
+								label={__("Width")}
 								value={width}
-								onChange={(value) =>
-									setAttributes({ width: value })
-								}
+								onChange={(value) => setAttributes({ width: value })}
 								min={0}
 								max={100}
 								allowReset
 							/>
 							<PanelRow>
-								<p>{__('Alignment')}</p>
+								<p>{__("Alignment")}</p>
 								{width < 100 && (
 									<ButtonGroup>
-										{['left', 'center', 'right'].map(
-											(a) => (
-												<Button
-													icon={`align-${a}`}
-													isPressed={alignment === a}
-													onClick={() =>
-														setAttributes({
-															alignment: a,
-														})
-													}
-												/>
-											)
-										)}
+										{["left", "center", "right"].map((a) => (
+											<Button
+												icon={`align-${a}`}
+												isPressed={alignment === a}
+												onClick={() =>
+													setAttributes({
+														alignment: a,
+													})
+												}
+											/>
+										))}
 									</ButtonGroup>
 								)}
 							</PanelRow>
@@ -164,36 +154,34 @@ function DividerBlock(props) {
 					<InspectorControls group="styles">
 						<PanelBody
 							initialOpen={false}
-							title={__('Divider', 'ultimate-blocks')}
+							title={__("Divider", "ultimate-blocks")}
 						>
 							<SelectControl
-								label={__('Line type')}
+								label={__("Line type")}
 								value={borderStyle}
 								options={[
 									{
-										value: 'solid',
-										label: __('solid', 'ultimate-blocks'),
+										value: "solid",
+										label: __("solid", "ultimate-blocks"),
 									},
 									{
-										value: 'dotted',
-										label: __('dotted', 'ultimate-blocks'),
+										value: "dotted",
+										label: __("dotted", "ultimate-blocks"),
 									},
 									{
-										value: 'dashed',
-										label: __('dashed', 'ultimate-blocks'),
+										value: "dashed",
+										label: __("dashed", "ultimate-blocks"),
 									},
 								]}
-								onChange={(typeVal) =>
-									setAttributes({ borderStyle: typeVal })
-								}
+								onChange={(typeVal) => setAttributes({ borderStyle: typeVal })}
 							/>
 						</PanelBody>
 						<PanelBody
 							initialOpen={false}
-							title={__('Colors', 'ultimate-blocks')}
+							title={__("Colors", "ultimate-blocks")}
 						>
 							<PanelColorSettings
-								title={__('Line', 'ultimate-blocks')}
+								title={__("Line", "ultimate-blocks")}
 								initialOpen={true}
 								colorSettings={[
 									{
@@ -202,7 +190,7 @@ function DividerBlock(props) {
 											setAttributes({
 												borderColor: colorVal,
 											}),
-										label: __('Main', 'ultimate-blocks'),
+										label: __("Main", "ultimate-blocks"),
 									},
 								]}
 							></PanelColorSettings>
@@ -216,37 +204,29 @@ function DividerBlock(props) {
 					style={Object.assign(
 						{
 							borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
-							marginTop: borderHeight + 'px',
-							marginBottom: borderHeight + 'px',
-							width: width + '%',
+							marginTop: borderHeight + "px",
+							marginBottom: borderHeight + "px",
+							width: width + "%",
 						},
-						alignment === 'left'
-							? { marginLeft: '0' }
-							: alignment === 'right'
-							? { marginRight: '0' }
+						alignment === "left"
+							? { marginLeft: "0" }
+							: alignment === "right"
+							? { marginRight: "0" }
 							: {}
 					)}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }
 
-registerBlockType('ub/divider', {
-	title: __('Divider'),
-	description: __(
-		'Add custom divider between your blocks. Customize the color, size, everything.',
-		'ultimate-blocks'
-	),
+registerBlockType(metadata, {
 	icon,
-	category: 'ultimateblocks',
-	keywords: [__('Divider'), __('Separator'), __('Ultimate Blocks')],
-	attributes,
 	example: {
 		attributes: {
-			borderSize: '4',
-			borderStyle: 'dashed',
-			borderColor: '#e11b4c',
+			borderSize: "4",
+			borderStyle: "dashed",
+			borderColor: "#e11b4c",
 		},
 	},
 	/**
@@ -259,7 +239,7 @@ registerBlockType('ub/divider', {
 	 */
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
-			select('core/block-editor') || select('core/editor');
+			select("core/block-editor") || select("core/editor");
 
 		return {
 			block: getBlock(ownProps.clientId),
@@ -271,15 +251,14 @@ registerBlockType('ub/divider', {
 	transforms: {
 		from: [
 			{
-				type: 'block',
-				blocks: 'core/separator',
+				type: "block",
+				blocks: "core/separator",
 				transform: (attributes) =>
 					createBlock(
-						'ub/divider',
-						'style' in attributes
+						"ub/divider",
+						"style" in attributes
 							? {
-									borderColor:
-										attributes.style.color.background,
+									borderColor: attributes.style.color.background,
 							  }
 							: {}
 					),
