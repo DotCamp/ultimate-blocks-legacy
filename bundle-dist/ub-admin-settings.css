@@ -249,6 +249,34 @@
   display: grid;
 }
 
+@media screen and (width <= 639px) {
+  .ub-welcome-content__right-sidebar {
+    flex-flow: column !important;
+  }
+}
+
+@media screen and (width <= 849px) {
+  .ub-welcome-content {
+    flex-flow: wrap;
+  }
+
+  .ub-welcome-content__main {
+    flex-basis: 100%;
+  }
+
+  .ub-welcome-content__right-sidebar {
+    flex-flow: wrap;
+    flex-basis: 100%;
+    justify-content: center;
+    gap: 10px;
+    display: flex;
+  }
+
+  .ub-welcome-content__right-sidebar > div {
+    flex-basis: 40%;
+  }
+}
+
 .ub-box-content .ub-box-content-title-inc-wrapper .ub-box-content-inc, .ub-button-link[data-buttonlink-type="primary"], .ub-button-link {
   font-weight: 400;
 }
