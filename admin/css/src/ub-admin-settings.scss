@@ -55,6 +55,14 @@
 		.menu-header {
 			@extend %default-border;
 
+			@include screen-max($screen-md2) {
+				grid-template-areas: "hamburger logo right";
+
+				.ub-hamburger-menu {
+					display: block !important;
+				}
+			}
+
 			display: grid;
 			grid-template: 1fr / repeat(3, minmax(0, 1fr));
 			grid-template-areas: "logo nav right";
@@ -153,6 +161,10 @@
 				grid-template-columns: minmax(0, 1fr);
 				grid-gap: 10px;
 
+				@include screen-max(850) {
+					display: none;
+				}
+
 				.ub-menu-navigation-header-button {
 					@extend %default-transition;
 					@extend %flex-center-all;
@@ -169,6 +181,24 @@
 
 					&[data-active="true"] {
 						border-color: $red-500;
+					}
+				}
+			}
+
+			.ub-hamburger-menu {
+				grid-area: hamburger;
+				display: none;
+
+				&-icon-wrapper {
+					@extend %pointer;
+					@extend %ub-click;
+
+					width: fit-content;
+
+					/* stylelint-disable-next-line no-descending-specificity */
+					svg {
+						@include size(20);
+
 					}
 				}
 			}
@@ -435,6 +465,8 @@
 
 
 	.ub-router-content-wrapper {
+		@extend %appear-anim;
+
 		padding-top: 40px !important;
 		padding-bottom: 40px !important;
 		overflow: auto;
@@ -661,6 +693,6 @@
 	max-width: 560px;
 }
 
-.appear-anim {
+%appear-anim {
 	animation: appear 0.2s ease-out forwards;
 }

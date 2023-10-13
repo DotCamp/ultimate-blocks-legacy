@@ -10,6 +10,7 @@ import {
 	getCurrentRoutePath,
 	setCurrentRoutePath,
 } from '$Stores/settings-menu/slices/app';
+import HamburgerMenu from '$Components/HamburgerMenu';
 
 /**
  * Settings menu header element.
@@ -48,6 +49,7 @@ function MenuHeader( { logoUrl, currentRoutePath, setRoute } ) {
 					<FontAwesomeIcon icon="fa-solid fa-share-nodes" />
 				</RightContainerItem>
 			</div>
+			<HamburgerMenu />
 		</div>
 	);
 }

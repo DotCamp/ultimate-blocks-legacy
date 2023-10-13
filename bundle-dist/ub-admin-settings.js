@@ -31929,6 +31929,7 @@ var _reactFontawesome = require("3ee81ce64fbd9c46");
 var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
 var _routes = require("e6bedbb7f240506c");
 var _app = require("e9c2c22a72a45548");
+var _HamburgerMenu = _interopRequireDefault(require("9079f43f327521d8"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -31996,7 +31997,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
         ]
     }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: "fa-solid fa-share-nodes"
-    }))));
+    }))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], null));
 }
 // store select mapping
 var selectMapping = function selectMapping(select) {
@@ -32016,7 +32017,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37271,7 +37272,64 @@ function _interopRequireDefault(obj) {
  */ var _default = ButtonLinkGroup;
 exports["default"] = _default;
 
-},{"6da5c65512b59431":"21dqq"}],"12F8G":[function(require,module,exports) {
+},{"6da5c65512b59431":"21dqq"}],"gCgzB":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("1d07def39b714300"));
+var _reactFontawesome = require("5ae4c02c09b41c9b");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Hamburger menu component.
+ *
+ * @param {Object}   props              component properties
+ * @param {boolean}  props.status       menu status, whether it is open or not
+ * @param {Function} props.clickHandler click handler
+ * @param {string}   props.openIcon     open fontawesome icon
+ * @param {string}   props.closeIcon    close fontawesome icon
+ * @class
+ */ function HamburgerMenu(_ref) {
+    var _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status, clickHandler = _ref.clickHandler, _ref$openIcon = _ref.openIcon, openIcon = _ref$openIcon === void 0 ? "fa-solid fa-bars" : _ref$openIcon, _ref$closeIcon = _ref.closeIcon, closeIcon = _ref$closeIcon === void 0 ? "fa-solid fa-xmark" : _ref$closeIcon;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-hamburger-menu"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        tabIndex: 0,
+        onKeyDown: function onKeyDown(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                clickHandler();
+            }
+        },
+        role: "button",
+        className: "ub-hamburger-menu-icon-wrapper",
+        onClick: function onClick(e) {
+            e.preventDefault();
+            clickHandler();
+        }
+    }, !status ? /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-status": !status,
+        "data-menu-icon-id": "open"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: openIcon
+    })) : /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-status": status,
+        "data-menu-icon-id": "close"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: closeIcon
+    }))));
+}
+/**
+ * @module HamburgerMenu
+ */ var _default = HamburgerMenu;
+exports["default"] = _default;
+
+},{"1d07def39b714300":"21dqq","5ae4c02c09b41c9b":"clIT3"}],"12F8G":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37431,7 +37489,7 @@ function _arrayWithHoles(arr) {
         routes
     ]);
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-router-content-wrapper appear-anim",
+        className: "ub-router-content-wrapper",
         "data-route-path": currentRoutePath,
         key: currentRoutePath
     }, CurrentRouteContent);

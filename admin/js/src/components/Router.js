@@ -34,7 +34,7 @@ function Router( { routes, currentRoutePath } ) {
 
 	return (
 		<div
-			className={ 'ub-router-content-wrapper appear-anim' }
+			className={ 'ub-router-content-wrapper' }
 			data-route-path={ currentRoutePath }
 			key={ currentRoutePath }
 		>
