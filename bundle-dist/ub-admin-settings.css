@@ -237,6 +237,7 @@
 
 .ub-welcome-content__main {
   grid-gap: 24px;
+  flex-basis: 70%;
   grid-template-rows: auto;
   grid-template-columns: 1fr;
   grid-auto-rows: auto;
@@ -245,7 +246,7 @@
 
 .ub-welcome-content__right-sidebar {
   grid-gap: 24px;
-  flex-basis: 40%;
+  flex-basis: 30%;
   grid-template-rows: auto;
   grid-template-columns: 1fr;
   grid-auto-rows: auto;

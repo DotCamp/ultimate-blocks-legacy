@@ -5,20 +5,21 @@
   align-items: flex-start;
   gap: 32px;
 
-  &__main {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    grid-auto-rows: auto;
-    grid-gap: 24px;
-  }
+	&__main {
+		flex-basis: 70%;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		grid-auto-rows: auto;
+		grid-gap: 24px;
+	}
 
-  &__right-sidebar {
-    flex-basis: 40%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    grid-auto-rows: auto;
-    grid-gap: 24px;
-  }
+	&__right-sidebar {
+		flex-basis: 30%;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		grid-auto-rows: auto;
+		grid-gap: 24px;
+	}
 }
