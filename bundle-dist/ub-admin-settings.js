@@ -36680,6 +36680,7 @@ var _BoxContent = require("a651961e91107bc2");
 var _YouTubeEmbed = _interopRequireDefault(require("6c04239ed429d27f"));
 var _ButtonLink = _interopRequireWildcard(require("3d8cac35ab8f5ccd"));
 var _ButtonLinkGroup = _interopRequireDefault(require("63cf395549eedb3"));
+var _UpgradeBoxContent = _interopRequireDefault(require("d289a1448b74b0aa"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -36726,14 +36727,7 @@ function _interopRequireDefault(obj) {
     }, /*#__PURE__*/ _react["default"].createElement(_YouTubeEmbed["default"], {
         height: 315,
         videoId: "8FESaV5WE8A"
-    })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
-        size: _BoxContent.BoxContentSize.JUMBO,
-        contentId: "upgrade"
-    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
-        title: "GET ULTIMATE BLOCKS PRO",
-        type: _ButtonLink.ButtonLinkType.PRIMARY
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+    })), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], null)), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__right-sidebar"
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "documentation"
@@ -36768,7 +36762,7 @@ function _interopRequireDefault(obj) {
  */ var _default = WelcomeContent;
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","ebd9e2ab5aeb8851":"7CyoE","63cf395549eedb3":"kKeXJ"}],"cJGef":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","ebd9e2ab5aeb8851":"7CyoE","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy"}],"cJGef":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -36951,7 +36945,7 @@ exports["default"] = _default;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports["default"] = exports.BoxContentSize = exports.BoxContentLayout = void 0;
+exports["default"] = exports.BoxContentSize = exports.BoxContentLayout = exports.BoxContentAlign = void 0;
 var _react = _interopRequireDefault(require("78103c840baf22d"));
 var _BoxContentTitle = _interopRequireDefault(require("9665c6054d483950"));
 var _BoxContentInc = _interopRequireDefault(require("c7520bcfa88347e3"));
@@ -36978,6 +36972,15 @@ var BoxContentSize = {
     NORMAL: "normal"
 };
 /**
+ * Box content align types.
+ *
+ * @type {{CENTER: string, LEFT: string}}
+ */ exports.BoxContentSize = BoxContentSize;
+var BoxContentAlign = {
+    LEFT: "left",
+    CENTER: "center"
+};
+/**
  * Box content component.
  *
  * @param {Object}        props                                    component properties
@@ -36985,14 +36988,16 @@ var BoxContentSize = {
  * @param {string | null} props.content                            box content
  * @param {string}        [props.layout=BoxContentLayout.VERTICAL] box layout, available values can be found in BoxContentLayout object
  * @param {string}        [props.size=BoxContentLayout.NORMAL]     box size, available values can be found in BoxContentSize object
+ * @param {string}        [props.alignment=BoxContentAlign.LEFT]   box alignment, available values can be found in BoxContentAlign object
  * @param {Function}      props.children                           component children
- */ exports.BoxContentSize = BoxContentSize;
+ */ exports.BoxContentAlign = BoxContentAlign;
 function BoxContent(_ref) {
-    var _ref$title = _ref.title, title = _ref$title === void 0 ? null : _ref$title, _ref$content = _ref.content, content = _ref$content === void 0 ? null : _ref$content, _ref$layout = _ref.layout, layout = _ref$layout === void 0 ? BoxContentLayout.VERTICAL : _ref$layout, _ref$size = _ref.size, size = _ref$size === void 0 ? BoxContentSize.NORMAL : _ref$size, children = _ref.children;
+    var _ref$title = _ref.title, title = _ref$title === void 0 ? null : _ref$title, _ref$content = _ref.content, content = _ref$content === void 0 ? null : _ref$content, _ref$layout = _ref.layout, layout = _ref$layout === void 0 ? BoxContentLayout.VERTICAL : _ref$layout, _ref$size = _ref.size, size = _ref$size === void 0 ? BoxContentSize.NORMAL : _ref$size, _ref$alignment = _ref.alignment, alignment = _ref$alignment === void 0 ? BoxContentAlign.LEFT : _ref$alignment, children = _ref.children;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-box-content",
         "data-layout": layout,
-        "data-size": size
+        "data-size": size,
+        "data-alignment": alignment
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-box-content-title-inc-wrapper"
     }, title && /*#__PURE__*/ _react["default"].createElement(_BoxContentTitle["default"], null, title), content && /*#__PURE__*/ _react["default"].createElement(_BoxContentInc["default"], null, content)), children && /*#__PURE__*/ _react["default"].createElement("div", {
@@ -37347,7 +37352,86 @@ function _interopRequireDefault(obj) {
  */ var _default = ButtonLinkGroup;
 exports["default"] = _default;
 
-},{"6da5c65512b59431":"21dqq"}],"RcVav":[function(require,module,exports) {
+},{"6da5c65512b59431":"21dqq"}],"5Kpzy":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("480006c3894eb2e6"));
+var _BoxContentProvider = _interopRequireDefault(require("333b75359f8aeb24"));
+var _BoxContent = require("5fc542bc0160f31d");
+var _ButtonLink = _interopRequireWildcard(require("32c0cd98d40ea089"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+/**
+ * Box content for upgrade.
+ *
+ * @param {Object} props component properties, will be reflected to BoxContentProvider
+ * @class
+ */ function UpgradeBoxContent(props) {
+    return /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], _extends({
+        size: _BoxContent.BoxContentSize.JUMBO,
+        contentId: "upgrade"
+    }, props), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        url: "https://ultimateblocks.com",
+        title: "GET ULTIMATE BLOCKS PRO",
+        type: _ButtonLink.ButtonLinkType.PRIMARY
+    }));
+}
+/**
+ * @module UpgradeBoxContent
+ */ var _default = UpgradeBoxContent;
+exports["default"] = _default;
+
+},{"480006c3894eb2e6":"21dqq","333b75359f8aeb24":"cJGef","5fc542bc0160f31d":"6zPRs","32c0cd98d40ea089":"dwYOq"}],"RcVav":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37366,6 +37450,7 @@ var _i18n = require("ccee3ff924ee68fd");
 var _BoxContentProvider = _interopRequireDefault(require("5d137a308a6dc4a1"));
 var _BoxContent = require("49772c2ff883b51c");
 var _ButtonLink = _interopRequireWildcard(require("1f27831d7ce0318c"));
+var _UpgradeBoxContent = _interopRequireDefault(require("8b5f61fe76b9467a"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -37406,7 +37491,8 @@ function _interopRequireDefault(obj) {
         className: "ub-blocks-content"
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         layout: _BoxContent.BoxContentLayout.HORIZONTAL,
-        contentId: "globalControl"
+        contentId: "globalControl",
+        size: _BoxContent.BoxContentSize.JUMBO
     }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
         onClickHandler: function onClickHandler() {},
         type: _ButtonLink.ButtonLinkType.DEFAULT,
@@ -37415,14 +37501,16 @@ function _interopRequireDefault(obj) {
         onClickHandler: function onClickHandler() {},
         type: _ButtonLink.ButtonLinkType.DEFAULT,
         title: (0, _i18n.__)("Deactivate All")
-    })));
+    })), /*#__PURE__*/ _react["default"].createElement("div", null, /*#__PURE__*/ _react["default"].createElement("i", null, "blocks control")), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
+        alignment: _BoxContent.BoxContentAlign.CENTER
+    }));
 }
 /**
  * @module BlocksContent
  */ var _default = BlocksContent;
 exports["default"] = _default;
 
-},{"44b754e7f33ff5d6":"21dqq","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","ccee3ff924ee68fd":"7CyoE"}],"gCgzB":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","ccee3ff924ee68fd":"7CyoE","8b5f61fe76b9467a":"5Kpzy"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

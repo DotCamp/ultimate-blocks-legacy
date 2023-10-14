@@ -6,8 +6,6 @@ import proxyquire from 'proxyquire';
 import HamburgerMenu from '$Components/HamburgerMenu';
 
 const mockHamburgerMenu = () => {
-	proxyquire.noPreserveCache();
-
 	return proxyquire( require.resolve( '$Components/HamburgerMenu' ), {
 		'@fortawesome/react-fontawesome': {
 			FontAwesomeIcon: ( { icon } ) => <div>{ icon }</div>,

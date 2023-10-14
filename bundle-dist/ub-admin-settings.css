@@ -278,6 +278,7 @@
 }
 
 .ub-blocks-content {
+  flex-flow: column wrap;
   align-items: flex-start;
   gap: 36px;
   width: 100%;
@@ -313,6 +314,11 @@
   grid-template-rows: auto auto;
   grid-template-columns: 1fr;
   display: grid;
+}
+
+.ub-box-content[data-alignment="center"] {
+  text-align: center;
+  justify-items: center;
 }
 
 .ub-box-content .ub-box-content-footer {

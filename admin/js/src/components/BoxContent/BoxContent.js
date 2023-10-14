@@ -23,6 +23,16 @@ export const BoxContentSize = {
 };
 
 /**
+ * Box content align types.
+ *
+ * @type {{CENTER: string, LEFT: string}}
+ */
+export const BoxContentAlign = {
+	LEFT: 'left',
+	CENTER: 'center',
+};
+
+/**
  * Box content component.
  *
  * @param {Object}        props                                    component properties
@@ -30,6 +40,7 @@ export const BoxContentSize = {
  * @param {string | null} props.content                            box content
  * @param {string}        [props.layout=BoxContentLayout.VERTICAL] box layout, available values can be found in BoxContentLayout object
  * @param {string}        [props.size=BoxContentLayout.NORMAL]     box size, available values can be found in BoxContentSize object
+ * @param {string}        [props.alignment=BoxContentAlign.LEFT]   box alignment, available values can be found in BoxContentAlign object
  * @param {Function}      props.children                           component children
  */
 function BoxContent( {
@@ -37,6 +48,7 @@ function BoxContent( {
 	content = null,
 	layout = BoxContentLayout.VERTICAL,
 	size = BoxContentSize.NORMAL,
+	alignment = BoxContentAlign.LEFT,
 	children,
 } ) {
 	return (
@@ -44,6 +56,7 @@ function BoxContent( {
 			className={ 'ub-box-content' }
 			data-layout={ layout }
 			data-size={ size }
+			data-alignment={ alignment }
 		>
 			<div className={ 'ub-box-content-title-inc-wrapper' }>
 				{ title && <BoxContentTitle>{ title }</BoxContentTitle> }

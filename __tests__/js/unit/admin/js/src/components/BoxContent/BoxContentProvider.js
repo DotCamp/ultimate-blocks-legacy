@@ -5,10 +5,6 @@ import { render, screen } from '@testing-library/react';
 import * as WithStoreModule from '$HOC/withStore';
 import ContentNotFoundError from '$AdminInc/err/ContentNotFoundError';
 
-beforeEach( () => {
-	proxyquire.noPreserveCache();
-} );
-
 describe( 'BoxContentProvider', () => {
 	it( 'should throw error for invalid content id', async () => {
 		const getCData = sinon.stub().returns( null );

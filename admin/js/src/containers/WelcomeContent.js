@@ -5,6 +5,7 @@ import { BoxContentSize } from '$Components/BoxContent/BoxContent';
 import YouTubeEmbed from '$Components/YouTubeEmbed';
 import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
 import ButtonLinkGroup from '$Components/ButtonLinkGroup';
+import UpgradeBoxContent from '$Components/UpgradeBoxContent';
 
 /**
  * Welcome content component.
@@ -21,16 +22,7 @@ function WelcomeContent() {
 				>
 					<YouTubeEmbed height={ 315 } videoId={ '8FESaV5WE8A' } />
 				</BoxContentProvider>
-				<BoxContentProvider
-					size={ BoxContentSize.JUMBO }
-					contentId={ 'upgrade' }
-				>
-					<ButtonLink
-						url={ 'https://ultimateblocks.com' }
-						title={ 'GET ULTIMATE BLOCKS PRO' }
-						type={ ButtonLinkType.PRIMARY }
-					/>
-				</BoxContentProvider>
+				<UpgradeBoxContent />
 			</div>
 			<div className={ 'ub-welcome-content__right-sidebar' }>
 				<BoxContentProvider contentId={ 'documentation' }>

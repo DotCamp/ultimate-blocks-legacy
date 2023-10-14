@@ -1,8 +1,13 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 import BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
-import { BoxContentLayout } from '$Components/BoxContent/BoxContent';
+import {
+	BoxContentAlign,
+	BoxContentLayout,
+	BoxContentSize,
+} from '$Components/BoxContent/BoxContent';
 import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
+import UpgradeBoxContent from '$Components/UpgradeBoxContent';
 
 /**
  * Blocks content.
@@ -15,6 +20,7 @@ function BlocksContent() {
 			<BoxContentProvider
 				layout={ BoxContentLayout.HORIZONTAL }
 				contentId={ 'globalControl' }
+				size={ BoxContentSize.JUMBO }
 			>
 				<ButtonLink
 					onClickHandler={ () => {} }
@@ -27,6 +33,10 @@ function BlocksContent() {
 					title={ __( 'Deactivate All' ) }
 				/>
 			</BoxContentProvider>
+			<div>
+				<i>blocks control</i>
+			</div>
+			<UpgradeBoxContent alignment={ BoxContentAlign.CENTER } />
 		</div>
 	);
 }
