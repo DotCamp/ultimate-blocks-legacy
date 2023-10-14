@@ -1392,6 +1392,10 @@ $defaultValues = array(
 	),
 	'ub/review'                     => array(
 		'attributes' => array(
+			'ID'                 => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'blockID'                 => array(
 				'type'    => 'string',
 				'default' => ''
@@ -1536,6 +1540,15 @@ $defaultValues = array(
 			'ctaNoFollow'             => array(
 				'type'    => 'boolean',
 				'default' => true
+			),
+			'parts'             	=> array(
+				'type'    => 'array',
+				'default' => array(
+					array (
+						'label' => '',
+						'value' => 0
+					)
+				)
 			),
 			'ctaOpenInNewTab'         => array(
 				'type'    => 'boolean',
