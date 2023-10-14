@@ -132,7 +132,7 @@ function ub_render_table_of_contents_block($attributes){
 function ub_register_table_of_contents_block() {
 	if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/table-of-contents-block', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/table-of-contents/block.json', array(
             'attributes' => $defaultValues['ub/table-of-contents-block']['attributes'],
             'render_callback' => 'ub_render_table_of_contents_block'));
     }
