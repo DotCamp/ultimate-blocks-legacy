@@ -30,10 +30,12 @@ describe( 'ButtonLink', () => {
 	it( 'should use click handler if provided and ignore url', async () => {
 		const clickHandler = sinon.spy();
 
+		const mockedOpen = sinon.stub( window, 'open' );
 		render( <ButtonLink onClickHandler={ clickHandler } /> );
 
 		await userEvent.click( screen.getByRole( 'button' ) );
 
 		expect( clickHandler.calledOnce ).to.be.ok();
+		expect( mockedOpen.called ).to.not.be.ok();
 	} );
 } );

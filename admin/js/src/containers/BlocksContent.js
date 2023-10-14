@@ -17,12 +17,12 @@ function BlocksContent() {
 				contentId={ 'globalControl' }
 			>
 				<ButtonLink
-					url={ 'https://ultimateblocks.com' }
+					onClickHandler={ () => {} }
 					type={ ButtonLinkType.DEFAULT }
 					title={ __( 'Activate All' ) }
 				/>
 				<ButtonLink
-					url={ 'https://ultimateblocks.com' }
+					onClickHandler={ () => {} }
 					type={ ButtonLinkType.DEFAULT }
 					title={ __( 'Deactivate All' ) }
 				/>

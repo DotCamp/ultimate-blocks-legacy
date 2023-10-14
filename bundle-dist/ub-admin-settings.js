@@ -37408,11 +37408,11 @@ function _interopRequireDefault(obj) {
         layout: _BoxContent.BoxContentLayout.HORIZONTAL,
         contentId: "globalControl"
     }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
+        onClickHandler: function onClickHandler() {},
         type: _ButtonLink.ButtonLinkType.DEFAULT,
         title: (0, _i18n.__)("Activate All")
     }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
+        onClickHandler: function onClickHandler() {},
         type: _ButtonLink.ButtonLinkType.DEFAULT,
         title: (0, _i18n.__)("Deactivate All")
     })));
