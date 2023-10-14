@@ -1127,8 +1127,13 @@
 
 .ub-youtube-embed {
   border-radius: 8px;
+  width: 100%;
   max-width: 560px;
   overflow: hidden;
+}
+
+.ub-youtube-embed iframe {
+  width: 100%;
 }
 
 .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsells-modal-wrapper .ub-upsells-modal-main-window, .ub-admin-menu-wrapper .ub-router-content-wrapper {

@@ -30260,7 +30260,7 @@ function _interopRequireDefault(obj) {
         },
         content: _settingsMenuContent["default"],
         router: {
-            current: "blocks"
+            current: "welcome"
         }
     },
     versionControl: {
@@ -37182,8 +37182,8 @@ function _arrayWithHoles(arr) {
     var videoId = _ref.videoId, _ref$width = _ref.width, width = _ref$width === void 0 ? null : _ref$width, _ref$height = _ref.height, height = _ref$height === void 0 ? null : _ref$height;
     var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), embedUrl = _useState2[0], setEmbedUrl = _useState2[1];
     var defaults = {
-        width: "100%",
-        height: "100%"
+        width: "100",
+        height: "100"
     };
     /**
    * useEffect hook.
