@@ -3,10 +3,15 @@ import sinon from 'sinon';
 import { render, screen } from '@testing-library/react';
 import proxyquire from 'proxyquire';
 import * as BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
+import * as ProFilterModule from '$Components/ProFilter';
 
 describe( 'UpgradeBoxContent', () => {
 	it( 'should reflect given props to BoxContentProvider', () => {
 		const testMessage = 'test message';
+
+		sinon
+			.stub( ProFilterModule, 'default' )
+			.callsFake( ( { children } ) => children );
 
 		sinon
 			.stub( BoxContentProvider, 'default' )

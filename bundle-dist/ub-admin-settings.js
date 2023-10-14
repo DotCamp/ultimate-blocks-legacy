@@ -30260,7 +30260,7 @@ function _interopRequireDefault(obj) {
         },
         content: _settingsMenuContent["default"],
         router: {
-            current: "welcome"
+            current: "blocks"
         }
     },
     versionControl: {
@@ -37370,6 +37370,7 @@ var _react = _interopRequireDefault(require("480006c3894eb2e6"));
 var _BoxContentProvider = _interopRequireDefault(require("333b75359f8aeb24"));
 var _BoxContent = require("5fc542bc0160f31d");
 var _ButtonLink = _interopRequireWildcard(require("32c0cd98d40ea089"));
+var _ProFilter = _interopRequireDefault(require("e95e13826133d29b"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -37417,21 +37418,109 @@ function _extends() {
  * @param {Object} props component properties, will be reflected to BoxContentProvider
  * @class
  */ function UpgradeBoxContent(props) {
-    return /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], _extends({
+    return /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], {
+        invert: true
+    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], _extends({
         size: _BoxContent.BoxContentSize.JUMBO,
         contentId: "upgrade"
     }, props), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
         url: "https://ultimateblocks.com",
         title: "GET ULTIMATE BLOCKS PRO",
         type: _ButtonLink.ButtonLinkType.PRIMARY
-    }));
+    })));
 }
 /**
  * @module UpgradeBoxContent
  */ var _default = UpgradeBoxContent;
 exports["default"] = _default;
 
-},{"480006c3894eb2e6":"21dqq","333b75359f8aeb24":"cJGef","5fc542bc0160f31d":"6zPRs","32c0cd98d40ea089":"dwYOq"}],"RcVav":[function(require,module,exports) {
+},{"480006c3894eb2e6":"21dqq","333b75359f8aeb24":"cJGef","5fc542bc0160f31d":"6zPRs","32c0cd98d40ea089":"dwYOq","e95e13826133d29b":"gCmn9"}],"gCmn9":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = require("2055ed25896b5e32");
+var _pluginStatus = require("334986df8c04f427");
+var _withStore = _interopRequireDefault(require("d5fd30753a18d44e"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Component to filter its children based on pro version status of current plugin.
+ *
+ * @param {Object}                    props               component properties
+ * @param {boolean}                   props.proStatus     pro version status, will be supplied via HOC
+ * @param {Array | Function | string} props.children      component children
+ * @param {boolean}                   [props.invert=true] invert filter, if true, children will be rendered only if proStatus is false
+ * @class
+ */ function ProFilter(_ref) {
+    var proStatus = _ref.proStatus, children = _ref.children, _ref$invert = _ref.invert, invert = _ref$invert === void 0 ? true : _ref$invert;
+    var _useState = (0, _react.useState)(false), _useState2 = _slicedToArray(_useState, 2), finalStatus = _useState2[0], setFinalStatus = _useState2[1];
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        setFinalStatus(invert ? !proStatus : proStatus);
+    }, []);
+    return finalStatus && children;
+}
+// Store selection mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        proStatus: selector(_pluginStatus.isPluginPro)
+    };
+};
+/**
+ * @module ProFilter
+ */ var _default = (0, _withStore["default"])(ProFilter, selectMapping);
+exports["default"] = _default;
+
+},{"2055ed25896b5e32":"21dqq","334986df8c04f427":"fi8Oa","d5fd30753a18d44e":"kWmDy"}],"RcVav":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
