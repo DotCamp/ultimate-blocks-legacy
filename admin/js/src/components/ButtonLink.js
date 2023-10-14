@@ -15,18 +15,24 @@ export const ButtonLinkType = {
 /**
  * Button link component.
  *
- * @param {Object} props       component properties
- * @param {string} props.url   target url
- * @param {string} props.type  button link type, should be one of ButtonLinkType object values
- * @param {string} props.title button title
+ * @param {Object}   props                component properties
+ * @param {string}   props.url            target url
+ * @param {Function} props.onClickHandler click handler callback, if provided, url direction will be ignored
+ * @param {string}   props.type           button link type, should be one of ButtonLinkType object values
+ * @param {string}   props.title          button title
  * @class
  */
-function ButtonLink( { title, url = null, type = ButtonLinkType.DEFAULT } ) {
+function ButtonLink( {
+	title,
+	url = null,
+	onClickHandler = null,
+	type = ButtonLinkType.DEFAULT,
+} ) {
 	/**
 	 * useEffect hook.
 	 */
 	useEffect( () => {
-		if ( ! url ) {
+		if ( ! url && ! onClickHandler ) {
 			throw new ButtonLinkNoUrlError();
 		}
 	}, [] );
@@ -38,12 +44,25 @@ function ButtonLink( { title, url = null, type = ButtonLinkType.DEFAULT } ) {
 		window.open( url, '_blank' );
 	};
 
+	/**
+	 * Button clicked logic.
+	 *
+	 * @param {Event} e click event
+	 */
+	const buttonClicked = ( e ) => {
+		if ( onClickHandler && typeof onClickHandler === 'function' ) {
+			onClickHandler( e );
+		} else {
+			redirect();
+		}
+	};
+
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
 		<div
 			className={ 'ub-button-link' }
 			data-buttonlink-type={ type }
-			onClick={ redirect }
+			onClick={ buttonClicked }
 			role={ 'button' }
 		>
 			{ title }

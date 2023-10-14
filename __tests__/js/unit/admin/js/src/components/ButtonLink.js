@@ -27,4 +27,13 @@ describe( 'ButtonLink', () => {
 
 		expect( mockedOpen.withArgs( targetTestUrl ) ).to.be.ok();
 	} );
+	it( 'should use click handler if provided and ignore url', async () => {
+		const clickHandler = sinon.spy();
+
+		render( <ButtonLink onClickHandler={ clickHandler } /> );
+
+		await userEvent.click( screen.getByRole( 'button' ) );
+
+		expect( clickHandler.calledOnce ).to.be.ok();
+	} );
 } );

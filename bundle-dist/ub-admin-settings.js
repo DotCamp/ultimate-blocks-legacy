@@ -37260,29 +37260,38 @@ function _interopRequireWildcard(obj, nodeInterop) {
 /**
  * Button link component.
  *
- * @param {Object} props       component properties
- * @param {string} props.url   target url
- * @param {string} props.type  button link type, should be one of ButtonLinkType object values
- * @param {string} props.title button title
+ * @param {Object}   props                component properties
+ * @param {string}   props.url            target url
+ * @param {Function} props.onClickHandler click handler callback, if provided, url direction will be ignored
+ * @param {string}   props.type           button link type, should be one of ButtonLinkType object values
+ * @param {string}   props.title          button title
  * @class
  */ exports.ButtonLinkType = ButtonLinkType;
 function ButtonLink(_ref) {
-    var title = _ref.title, _ref$url = _ref.url, url = _ref$url === void 0 ? null : _ref$url, _ref$type = _ref.type, type = _ref$type === void 0 ? ButtonLinkType.DEFAULT : _ref$type;
+    var title = _ref.title, _ref$url = _ref.url, url = _ref$url === void 0 ? null : _ref$url, _ref$onClickHandler = _ref.onClickHandler, onClickHandler = _ref$onClickHandler === void 0 ? null : _ref$onClickHandler, _ref$type = _ref.type, type = _ref$type === void 0 ? ButtonLinkType.DEFAULT : _ref$type;
     /**
    * useEffect hook.
    */ (0, _react.useEffect)(function() {
-        if (!url) throw new _ButtonLinkNoUrlError["default"]();
+        if (!url && !onClickHandler) throw new _ButtonLinkNoUrlError["default"]();
     }, []);
     /**
    * Redirect to component url.
    */ var redirect = function redirect() {
         window.open(url, "_blank");
     };
+    /**
+   * Button clicked logic.
+   *
+   * @param {Event} e click event
+   */ var buttonClicked = function buttonClicked(e) {
+        if (onClickHandler && typeof onClickHandler === "function") onClickHandler(e);
+        else redirect();
+    };
     return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
     _react["default"].createElement("div", {
         className: "ub-button-link",
         "data-buttonlink-type": type,
-        onClick: redirect,
+        onClick: buttonClicked,
         role: "button"
     }, title));
 }
