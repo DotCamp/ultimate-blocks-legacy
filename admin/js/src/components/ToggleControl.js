@@ -27,7 +27,7 @@ function ToggleControl( {
 	}, [ innerStatus ] );
 
 	return (
-		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/interactive-supports-focus
 		<div
 			onClick={ () => {
 				if ( ! disabled ) {
@@ -36,6 +36,7 @@ function ToggleControl( {
 			} }
 			className={ 'ub-toggle-control' }
 			data-enabled={ JSON.stringify( innerStatus ) }
+			role={ 'button' }
 		>
 			<div className={ 'knob' }></div>
 		</div>

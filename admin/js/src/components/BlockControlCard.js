@@ -2,11 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ToggleControl from '$Components/ToggleControl';
 import withIcon from '$HOC/withIcon';
-import {
-	getProStatus,
-	showProBlockUpsellModal,
-} from '$Stores/settings-menu/slices/app';
-import withStore from '$HOC/withStore';
 import ProBlockCardTitle from '$Components/ProBlockCardTitle';
 import BlockCardProInfoControl from '$Components/BlockCardProInfoControl';
 
@@ -24,8 +19,8 @@ import BlockCardProInfoControl from '$Components/BlockCardProInfoControl';
  * @param {HTMLElement} props.iconElement    icon element, will be supplied via HOC
  * @param {Function}    props.onStatusChange callback for status change event
  * @param {boolean}     props.proBlock       block belongs to pro version
- * @param {boolean}     props.proStatus      plugin pro status, will be supplied via HOC
- * @param {Function}    props.showUpsell     set target block type for modal interface, will be supplied via HOC
+ * @param {boolean}     props.proStatus      plugin pro status
+ * @param {Function}    props.showUpsell     set target block type for modal interface
  */
 function BlockControlCard( {
 	title,
@@ -100,21 +95,7 @@ function BlockControlCard( {
 	);
 }
 
-const selectMapping = ( select ) => {
-	return {
-		proStatus: select( getProStatus ),
-	};
-};
-
-const actionMapping = () => {
-	return { showUpsell: showProBlockUpsellModal };
-};
-
 /**
  * @module BlockControl
  */
-export default withStore(
-	withIcon( BlockControlCard ),
-	selectMapping,
-	actionMapping
-);
+export default withIcon( BlockControlCard );

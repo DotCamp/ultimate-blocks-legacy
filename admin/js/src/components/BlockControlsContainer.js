@@ -9,6 +9,7 @@ import {
 import {
 	getBlockInfoShowStatus,
 	getProStatus,
+	showProBlockUpsellModal,
 } from '$Stores/settings-menu/slices/app';
 import { toggleBlockStatus } from '$Stores/settings-menu/actions';
 
@@ -23,6 +24,7 @@ import { toggleBlockStatus } from '$Stores/settings-menu/actions';
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
+ * @param {Function} props.showUpsell     set target block type for modal interface
  */
 function BlockControlsContainer( {
 	blocks,
@@ -30,6 +32,7 @@ function BlockControlsContainer( {
 	dispatch,
 	showInfoStatus,
 	proStatus,
+	showUpsell,
 } ) {
 	const [ innerBlocks, setInnerBlocks ] = useState( blocks );
 
@@ -83,6 +86,8 @@ function BlockControlsContainer( {
 						onStatusChange={ handleBlockStatusChange( pro ) }
 						info={ info }
 						proBlock={ pro }
+						showUpsell={ showUpsell }
+						proStatus={ proStatus }
 					/>
 				);
 			} ) }
@@ -98,6 +103,7 @@ const selectMapping = ( selector ) => ( {
 
 const actionMapping = () => ( {
 	setBlockStatus: setBlockActiveStatus,
+	showUpsell: showProBlockUpsellModal,
 } );
 
 /**

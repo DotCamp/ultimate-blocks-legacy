@@ -37721,8 +37721,9 @@ function _arrayWithHoles(arr) {
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
+ * @param {Function} props.showUpsell     set target block type for modal interface
  */ function BlockControlsContainer(_ref) {
-    var blocks = _ref.blocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus;
+    var blocks = _ref.blocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
     var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
     /**
    * Handle block status change.
@@ -37770,7 +37771,9 @@ function _arrayWithHoles(arr) {
             iconObject: icon,
             onStatusChange: handleBlockStatusChange(pro),
             info: info,
-            proBlock: pro
+            proBlock: pro,
+            showUpsell: showUpsell,
+            proStatus: proStatus
         });
     }));
 }
@@ -37783,7 +37786,8 @@ var selectMapping = function selectMapping(selector) {
 };
 var actionMapping = function actionMapping() {
     return {
-        setBlockStatus: _blocks.setBlockActiveStatus
+        setBlockStatus: _blocks.setBlockActiveStatus,
+        showUpsell: _app.showProBlockUpsellModal
     };
 };
 /**
@@ -37808,8 +37812,6 @@ exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("f1179290dae9242c"));
 var _ToggleControl = _interopRequireDefault(require("89dfa6c744ec7db7"));
 var _withIcon = _interopRequireDefault(require("29ed2e3a2621bd69"));
-var _app = require("1c3eba570bedba95");
-var _withStore = _interopRequireDefault(require("d493f9d6ba5cfcbe"));
 var _ProBlockCardTitle = _interopRequireDefault(require("df9306f30da80384"));
 var _BlockCardProInfoControl = _interopRequireDefault(require("2b37ac68aa8fa84e"));
 function _interopRequireDefault(obj) {
@@ -37900,8 +37902,8 @@ function _arrayWithHoles(arr) {
  * @param {HTMLElement} props.iconElement    icon element, will be supplied via HOC
  * @param {Function}    props.onStatusChange callback for status change event
  * @param {boolean}     props.proBlock       block belongs to pro version
- * @param {boolean}     props.proStatus      plugin pro status, will be supplied via HOC
- * @param {Function}    props.showUpsell     set target block type for modal interface, will be supplied via HOC
+ * @param {boolean}     props.proStatus      plugin pro status
+ * @param {Function}    props.showUpsell     set target block type for modal interface
  */ function BlockControlCard(_ref) {
     var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
     var initialRender = (0, _react.useRef)(true);
@@ -37947,22 +37949,12 @@ function _arrayWithHoles(arr) {
         disabled: proBlock && !proStatus
     }))));
 }
-var selectMapping = function selectMapping(select) {
-    return {
-        proStatus: select(_app.getProStatus)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        showUpsell: _app.showProBlockUpsellModal
-    };
-};
 /**
  * @module BlockControl
- */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControlCard), selectMapping, actionMapping);
+ */ var _default = (0, _withIcon["default"])(BlockControlCard);
 exports["default"] = _default;
 
-},{"f1179290dae9242c":"21dqq","89dfa6c744ec7db7":"a7r96","29ed2e3a2621bd69":"l4uaA","1c3eba570bedba95":"c28DV","d493f9d6ba5cfcbe":"kWmDy","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq"}],"a7r96":[function(require,module,exports) {
+},{"f1179290dae9242c":"21dqq","89dfa6c744ec7db7":"a7r96","29ed2e3a2621bd69":"l4uaA","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -38064,13 +38056,14 @@ function _arrayWithHoles(arr) {
     }, [
         innerStatus
     ]);
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/interactive-supports-focus
     _react["default"].createElement("div", {
         onClick: function onClick() {
             if (!disabled) setInnerStatus(!innerStatus);
         },
         className: "ub-toggle-control",
-        "data-enabled": JSON.stringify(innerStatus)
+        "data-enabled": JSON.stringify(innerStatus),
+        role: "button"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "knob"
     })));
@@ -38208,8 +38201,9 @@ function _interopRequireDefault(obj) {
  * @param {Function} props.handleClick click callback
  */ function BlockCardProInfoControl(_ref) {
     var handleClick = _ref.handleClick;
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/interactive-supports-focus
     _react["default"].createElement("div", {
+        role: "button",
         className: "pro-block-card-info-button",
         onClick: handleClick
     }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
