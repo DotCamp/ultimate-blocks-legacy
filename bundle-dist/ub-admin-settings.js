@@ -37619,7 +37619,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("b5a991528cd4dfa6"));
-var _BlockControl = _interopRequireDefault(require("3ffb3fee774ffe0e"));
+var _BlockControlCard = _interopRequireDefault(require("b8e47630259305db"));
 var _BlockStatusFilterControl = require("72db3cd1fd4e6f52");
 var _withStore = _interopRequireDefault(require("7adeb056d10afe38"));
 var _blocks = require("c1f3bf0e02707627");
@@ -37770,7 +37770,7 @@ function _arrayWithHoles(arr) {
         return /*#__PURE__*/ _react["default"].createElement(_VisibilityWrapper["default"], {
             key: name,
             visibilityStatus: visibilityStatus
-        }, /*#__PURE__*/ _react["default"].createElement(_BlockControl["default"], {
+        }, /*#__PURE__*/ _react["default"].createElement(_BlockControlCard["default"], {
             title: title,
             blockId: name,
             status: active,
@@ -37799,7 +37799,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"b5a991528cd4dfa6":"21dqq","3ffb3fee774ffe0e":"h5tMi","72db3cd1fd4e6f52":"hebBQ","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","627fdb5e223e1b97":"azTGO"}],"h5tMi":[function(require,module,exports) {
+},{"b5a991528cd4dfa6":"21dqq","72db3cd1fd4e6f52":"hebBQ","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","627fdb5e223e1b97":"azTGO","b8e47630259305db":"ejal0"}],"azTGO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37813,14 +37813,84 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("9eede5ed96c6db50"));
-var _ToggleControl = _interopRequireDefault(require("235790c968bb3ece"));
-var _MenuButton = _interopRequireDefault(require("3537103df4eeb6b8"));
-var _withIcon = _interopRequireDefault(require("94998323feaef35f"));
-var _app = require("ed962dd8439ee4b7");
-var _withStore = _interopRequireDefault(require("fe5fa2b15de4f5ea"));
-var _ProBlockCardTitle = _interopRequireDefault(require("f55fe8e7dfe7e8a"));
-var _BlockCardProInfoControl = _interopRequireDefault(require("a559776a028ed995"));
+var _react = _interopRequireWildcard(require("97c658a0a38c9755"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Wrapper for handling visibility changes of its children.
+ *
+ * @param {Object}            props                  component properties
+ * @param {React.ElementType} props.children         component children
+ * @param {boolean}           props.visibilityStatus component visibility status
+ *
+ * @class
+ */ function VisibilityWrapper(_ref) {
+    var children = _ref.children, visibilityStatus = _ref.visibilityStatus;
+    var wrapper = (0, _react.useRef)();
+    (0, _react.useEffect)(function() {
+        wrapper.current.addEventListener("animationend", function(_ref2) {
+            var animationName = _ref2.animationName;
+            wrapper.current.style.display = animationName === "disappear" ? "none" : "block";
+        });
+    }, []);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        ref: wrapper,
+        className: "visibility-wrapper",
+        "data-visible": JSON.stringify(visibilityStatus)
+    }, children);
+}
+/**
+ * @module VisibilityWrapper
+ */ var _default = VisibilityWrapper;
+exports["default"] = _default;
+
+},{"97c658a0a38c9755":"21dqq"}],"ejal0":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("f1179290dae9242c"));
+var _ToggleControl = _interopRequireDefault(require("89dfa6c744ec7db7"));
+var _MenuButton = _interopRequireDefault(require("e52a8a25be5ca2ba"));
+var _withIcon = _interopRequireDefault(require("29ed2e3a2621bd69"));
+var _app = require("1c3eba570bedba95");
+var _withStore = _interopRequireDefault(require("d493f9d6ba5cfcbe"));
+var _ProBlockCardTitle = _interopRequireDefault(require("df9306f30da80384"));
+var _BlockCardProInfoControl = _interopRequireDefault(require("2b37ac68aa8fa84e"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37913,7 +37983,7 @@ function _arrayWithHoles(arr) {
  * @param {boolean}     props.proBlock            block belongs to pro version
  * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
  * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
- */ function BlockControl(_ref) {
+ */ function BlockControlCard(_ref) {
     var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
     var initialRender = (0, _react.useRef)(true);
     var initialAnimation = (0, _react.useRef)(true);
@@ -38016,10 +38086,10 @@ var actionMapping = function actionMapping() {
 };
 /**
  * @module BlockControl
- */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping, actionMapping);
+ */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControlCard), selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"9eede5ed96c6db50":"21dqq","235790c968bb3ece":"a7r96","3537103df4eeb6b8":"cbTU3","94998323feaef35f":"l4uaA","ed962dd8439ee4b7":"c28DV","fe5fa2b15de4f5ea":"kWmDy","f55fe8e7dfe7e8a":"jiOgy","a559776a028ed995":"3ptTq"}],"a7r96":[function(require,module,exports) {
+},{"f1179290dae9242c":"21dqq","89dfa6c744ec7db7":"a7r96","e52a8a25be5ca2ba":"cbTU3","29ed2e3a2621bd69":"l4uaA","1c3eba570bedba95":"c28DV","d493f9d6ba5cfcbe":"kWmDy","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -38278,77 +38348,7 @@ function _interopRequireDefault(obj) {
  */ var _default = BlockCardProInfoControl;
 exports["default"] = _default;
 
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"azTGO":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("97c658a0a38c9755"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Wrapper for handling visibility changes of its children.
- *
- * @param {Object}            props                  component properties
- * @param {React.ElementType} props.children         component children
- * @param {boolean}           props.visibilityStatus component visibility status
- *
- * @class
- */ function VisibilityWrapper(_ref) {
-    var children = _ref.children, visibilityStatus = _ref.visibilityStatus;
-    var wrapper = (0, _react.useRef)();
-    (0, _react.useEffect)(function() {
-        wrapper.current.addEventListener("animationend", function(_ref2) {
-            var animationName = _ref2.animationName;
-            wrapper.current.style.display = animationName === "disappear" ? "none" : "block";
-        });
-    }, []);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        ref: wrapper,
-        className: "visibility-wrapper",
-        "data-visible": JSON.stringify(visibilityStatus)
-    }, children);
-}
-/**
- * @module VisibilityWrapper
- */ var _default = VisibilityWrapper;
-exports["default"] = _default;
-
-},{"97c658a0a38c9755":"21dqq"}],"gCgzB":[function(require,module,exports) {
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

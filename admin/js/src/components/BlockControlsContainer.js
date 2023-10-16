@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
-import BlockControl from '$Components/BlockControl';
+import BlockControlCard from '$Components/BlockControlCard';
 import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
 import withStore from '$HOC/withStore';
 import {
@@ -90,7 +90,7 @@ function BlockControlsContainer( {
 						key={ name }
 						visibilityStatus={ visibilityStatus }
 					>
-						<BlockControl
+						<BlockControlCard
 							title={ title }
 							blockId={ name }
 							status={ active }

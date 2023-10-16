@@ -31,7 +31,7 @@ import BlockCardProInfoControl from '$Components/BlockCardProInfoControl';
  * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
  * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
  */
-function BlockControl( {
+function BlockControlCard( {
 	title,
 	blockId,
 	status,
@@ -178,7 +178,7 @@ const actionMapping = () => {
  * @module BlockControl
  */
 export default withStore(
-	withIcon( BlockControl ),
+	withIcon( BlockControlCard ),
 	selectMapping,
 	actionMapping
 );
