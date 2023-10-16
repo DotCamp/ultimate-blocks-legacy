@@ -37620,12 +37620,10 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("b5a991528cd4dfa6"));
 var _BlockControlCard = _interopRequireDefault(require("b8e47630259305db"));
-var _BlockStatusFilterControl = require("72db3cd1fd4e6f52");
 var _withStore = _interopRequireDefault(require("7adeb056d10afe38"));
 var _blocks = require("c1f3bf0e02707627");
 var _app = require("83bf9ee8271dd581");
 var _actions = require("f9b48c87aedbb427");
-var _VisibilityWrapper = _interopRequireDefault(require("627fdb5e223e1b97"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37719,13 +37717,12 @@ function _arrayWithHoles(arr) {
  *
  * @param {Object}   props                component properties
  * @param {Object}   props.blocks         menu data, will be supplied via HOC
- * @param {Object}   props.blockFilter    current filter for block status, will be supplied via HOC
  * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
  */ function BlockControlsContainer(_ref) {
-    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus;
+    var blocks = _ref.blocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus;
     var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
     /**
    * Handle block status change.
@@ -37765,12 +37762,8 @@ function _arrayWithHoles(arr) {
         "data-show-info": JSON.stringify(showInfoStatus)
     }, innerBlocks.map(function(_ref2) {
         var title = _ref2.title, name = _ref2.name, icon = _ref2.icon, active = _ref2.active, info = _ref2.info, pro = _ref2.pro;
-        var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
-        var visibilityStatus = blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
-        return /*#__PURE__*/ _react["default"].createElement(_VisibilityWrapper["default"], {
+        return /*#__PURE__*/ _react["default"].createElement(_BlockControlCard["default"], {
             key: name,
-            visibilityStatus: visibilityStatus
-        }, /*#__PURE__*/ _react["default"].createElement(_BlockControlCard["default"], {
             title: title,
             blockId: name,
             status: active,
@@ -37778,13 +37771,12 @@ function _arrayWithHoles(arr) {
             onStatusChange: handleBlockStatusChange(pro),
             info: info,
             proBlock: pro
-        }));
+        });
     }));
 }
 var selectMapping = function selectMapping(selector) {
     return {
         blocks: selector(_blocks.getBlocks),
-        blockFilter: selector(_app.getBlockFilter),
         showInfoStatus: selector(_app.getBlockInfoShowStatus),
         proStatus: selector(_app.getProStatus)
     };
@@ -37799,77 +37791,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"b5a991528cd4dfa6":"21dqq","72db3cd1fd4e6f52":"hebBQ","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","627fdb5e223e1b97":"azTGO","b8e47630259305db":"ejal0"}],"azTGO":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("97c658a0a38c9755"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Wrapper for handling visibility changes of its children.
- *
- * @param {Object}            props                  component properties
- * @param {React.ElementType} props.children         component children
- * @param {boolean}           props.visibilityStatus component visibility status
- *
- * @class
- */ function VisibilityWrapper(_ref) {
-    var children = _ref.children, visibilityStatus = _ref.visibilityStatus;
-    var wrapper = (0, _react.useRef)();
-    (0, _react.useEffect)(function() {
-        wrapper.current.addEventListener("animationend", function(_ref2) {
-            var animationName = _ref2.animationName;
-            wrapper.current.style.display = animationName === "disappear" ? "none" : "block";
-        });
-    }, []);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        ref: wrapper,
-        className: "visibility-wrapper",
-        "data-visible": JSON.stringify(visibilityStatus)
-    }, children);
-}
-/**
- * @module VisibilityWrapper
- */ var _default = VisibilityWrapper;
-exports["default"] = _default;
-
-},{"97c658a0a38c9755":"21dqq"}],"ejal0":[function(require,module,exports) {
+},{"b5a991528cd4dfa6":"21dqq","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","b8e47630259305db":"ejal0"}],"ejal0":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37885,7 +37807,6 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("f1179290dae9242c"));
 var _ToggleControl = _interopRequireDefault(require("89dfa6c744ec7db7"));
-var _MenuButton = _interopRequireDefault(require("e52a8a25be5ca2ba"));
 var _withIcon = _interopRequireDefault(require("29ed2e3a2621bd69"));
 var _app = require("1c3eba570bedba95");
 var _withStore = _interopRequireDefault(require("d493f9d6ba5cfcbe"));
@@ -37972,50 +37893,24 @@ function _arrayWithHoles(arr) {
  *
  * @class
  *
- * @param {Object}      props                     component properties
- * @param {string}      props.title               block title
- * @param {string}      props.blockId             registry id of block
- * @param {boolean}     props.status              block status
- * @param {HTMLElement} props.iconElement         icon element, will be supplied via HOC
- * @param {Function}    props.onStatusChange      callback for status change event
- * @param {Array}       props.info                information about block and its usage
- * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
- * @param {boolean}     props.proBlock            block belongs to pro version
- * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
- * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
+ * @param {Object}      props                component properties
+ * @param {string}      props.title          block title
+ * @param {string}      props.blockId        registry id of block
+ * @param {boolean}     props.status         block status
+ * @param {HTMLElement} props.iconElement    icon element, will be supplied via HOC
+ * @param {Function}    props.onStatusChange callback for status change event
+ * @param {boolean}     props.proBlock       block belongs to pro version
+ * @param {boolean}     props.proStatus      plugin pro status, will be supplied via HOC
+ * @param {Function}    props.showUpsell     set target block type for modal interface, will be supplied via HOC
  */ function BlockControlCard(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
     var initialRender = (0, _react.useRef)(true);
     var initialAnimation = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    var _useState3 = (0, _react.useState)({}), _useState4 = _slicedToArray(_useState3, 2), blockStyle = _useState4[0], setBlockStyle = _useState4[1];
-    var _useState5 = (0, _react.useState)(0), _useState6 = _slicedToArray(_useState5, 2), headerHeight = _useState6[0], setHeaderHeight = _useState6[1];
-    var headerRef = (0, _react.useRef)();
     /* useEffect block */ (0, _react.useEffect)(function() {
-        var _headerRef$current$ge = headerRef.current.getBoundingClientRect(), height = _headerRef$current$ge.height;
-        setHeaderHeight(height);
-    }, []);
-    (0, _react.useEffect)(function() {
-        setBlockStyle({
-            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
-        });
-    }, [
-        headerHeight
-    ]);
-    (0, _react.useEffect)(function() {
         if (proBlock && !proStatus) setInnerStatus(false);
     }, [
         innerStatus
-    ]);
-    (0, _react.useEffect)(function() {
-        setBlockStyle({
-            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
-        });
-        return function() {
-            if (blockInfoShowStatus !== undefined) initialAnimation.current = false;
-        };
-    }, [
-        blockInfoShowStatus
     ]);
     (0, _react.useEffect)(function() {
         if (initialRender.current) initialRender.current = false;
@@ -38023,31 +37918,23 @@ function _arrayWithHoles(arr) {
     }, [
         innerStatus
     ]);
-    /* useEffect block end */ var howToUse = null;
-    /**
-   * Main visibility calculation for how to use button.
-   *
-   * @return {boolean} visibility status
-   */ var howToUseVisibility = function howToUseVisibility() {
-        return howToUse !== null;
-    };
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        style: blockStyle,
+    /* useEffect block end */ return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-control",
         "data-enabled": JSON.stringify(innerStatus),
         "data-initial-animation": JSON.stringify(initialAnimation.current)
     }, /*#__PURE__*/ _react["default"].createElement("div", {
-        ref: headerRef,
         className: "block-title"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-left-container"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-icon"
-    }, iconElement), /*#__PURE__*/ _react["default"].createElement("span", {
+    }, iconElement), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-text"
     }, title, /*#__PURE__*/ _react["default"].createElement(_ProBlockCardTitle["default"], {
         isPro: proBlock
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+    })), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-demo"
+    }, "See Demo")), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
     }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], {
         handleClick: function handleClick(e) {
@@ -38058,24 +37945,10 @@ function _arrayWithHoles(arr) {
         onStatusChange: setInnerStatus,
         status: innerStatus,
         disabled: proBlock && !proStatus
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-info"
-    }, info.map(function(infoLine, index) {
-        return /*#__PURE__*/ _react["default"].createElement("div", {
-            className: "info-line",
-            key: index
-        }, infoLine[0].toUpperCase() + Array.from(infoLine).splice(1).join(""));
-    })), howToUseVisibility() && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-howto"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        title: "How to Use",
-        status: howToUse !== null && innerStatus,
-        onClickHandler: howToUse
-    })));
+    }))));
 }
 var selectMapping = function selectMapping(select) {
     return {
-        blockInfoShowStatus: select(_app.getBlockInfoShowStatus),
         proStatus: select(_app.getProStatus)
     };
 };
@@ -38089,7 +37962,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControlCard), selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"f1179290dae9242c":"21dqq","89dfa6c744ec7db7":"a7r96","e52a8a25be5ca2ba":"cbTU3","29ed2e3a2621bd69":"l4uaA","1c3eba570bedba95":"c28DV","d493f9d6ba5cfcbe":"kWmDy","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq"}],"a7r96":[function(require,module,exports) {
+},{"f1179290dae9242c":"21dqq","89dfa6c744ec7db7":"a7r96","29ed2e3a2621bd69":"l4uaA","1c3eba570bedba95":"c28DV","d493f9d6ba5cfcbe":"kWmDy","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

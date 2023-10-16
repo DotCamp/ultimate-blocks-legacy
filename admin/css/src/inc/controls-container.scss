@@ -3,13 +3,12 @@
 
 .controls-container {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: flex-start;
 	flex-wrap: wrap;
 	width: 100%;
 	height: fit-content;
-	margin: 30px 0;
-	border-radius: 5px;
+	gap: 28px 32px;
 
 
 	&[data-show-info="false"] .block-control {

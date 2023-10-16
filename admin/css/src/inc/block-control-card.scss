@@ -2,48 +2,52 @@
 @import '../base/themes/admin-menu-theme';
 
 .block-control {
-	@extend %box-shadow-md;
-	@extend %default-transition;
 	@extend %default-border;
 
-	overflow: hidden;
+	padding: 16px;
 	width: $block-control-width;
 	max-width: $block-control-width;
-	height: $block-control-height;
 	border-radius: $block-control-border-radius;
-	margin: $block-control-y-margin $block-control-x-margin;
 	display: grid;
-	grid-template: "title" auto "info" 1fr "howTo" auto / 1fr;
+	grid-template: "title";
+
+	@include screen-max(870px) {
+		width: 290px;
+		max-width: 290px;
+	}
+
+	@include screen-max(712px) {
+		width: 100%;
+		max-width: 100%;
+	}
 
 	&[data-initial-animation="true"] {
 		transition: none;
 	}
 
-	&[data-enabled='false'] {
-		border-color: $gray-500;
-	}
 
 	.block-title {
 		@extend %default-transition;
 		@extend %unselectable;
 
 		grid-area: title;
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr auto;
+		grid-template-rows: 1fr;
+		grid-gap: 16px;
 		justify-content: space-between;
 		align-items: center;
-		padding: $block-control-padding;
-		background-color: $block-title-bg;
-		font-size: $block-title-font-size;
-		color: $block-title-color;
 
 		.block-title-left-container {
-			display: flex;
-			justify-content: flex-start;
+			display: grid;
+			justify-content: start;
+			grid-template: "icon label" auto "icon demo" auto / auto 1fr;
 			align-items: center;
 
 			.title-icon {
 				@extend %default-transition;
 
+				grid-area: icon;
 				width: $block-title-icon-size;
 				height: $block-title-icon-size;
 				margin-right: 10px;
@@ -61,6 +65,9 @@
 			}
 
 			.title-text {
+				@extend %p2-bold;
+
+				grid-area: label;
 				text-transform: capitalize;
 
 				.pro-block-card-title-suffix {
@@ -68,10 +75,20 @@
 					font-weight: bold;
 				}
 			}
+
+			.title-demo {
+				@extend %pointer;
+				@extend %p2-regular;
+
+				grid-area: demo;
+				color: $text-faded-color;
+			}
 		}
 
 		.block-title-right-container {
 			.pro-block-card-info-button {
+				@extend %flex-center-all;
+				
 				color: $red-500;
 				background: white;
 				border-radius: 100%;
@@ -86,48 +103,23 @@
 		}
 	}
 
-	&[data-enabled='false'] .block-title {
+	&[data-enabled='false'] {
 		background-color: $gray-400;
-		color: $gray-500;
 
-	}
+		.block-title {
+			color: $gray-500;
 
-	/* stylelint-disable no-descending-specificity */
-	&[data-enabled='false'] .title-icon {
-		fill: $gray-500;
-
-		svg {
-			fill: $gray-500;
-
-			* {
+			.title-icon {
 				fill: $gray-500;
+
+				svg {
+					fill: $gray-500 !important;
+
+					* {
+						fill: $gray-500 !important;
+					}
+				}
 			}
 		}
-	}
-
-	/* stylelint-enable no-descending-specificity */
-
-	.block-info {
-		@extend %flex-center-all;
-
-		grid-area: info;
-		padding: 10px;
-		overflow: auto;
-
-		.info-line {
-			text-align: center;
-		}
-	}
-
-	&[data-enabled='false'] .block-info {
-		color: $gray-500;
-	}
-
-
-	.block-howto {
-		@extend %flex-center-all;
-
-		padding: $block-control-padding;
-		grid-area: howTo;
 	}
 }
