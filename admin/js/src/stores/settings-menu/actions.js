@@ -13,8 +13,14 @@ export const toggleBlockStatus =
 		const { toggleStatus: ajaxInfoSub } = getAjaxInfo( getState() );
 		const { url, action, nonce } = ajaxInfoSub;
 
+		if ( ! Array.isArray( blockId ) ) {
+			blockId = [ blockId ];
+		}
+
 		const formData = new FormData();
-		formData.append( 'block_name', blockId );
+
+		blockId.map( ( bId ) => formData.append( 'block_name[]', bId ) );
+
 		formData.append( 'enable', JSON.stringify( status ) );
 		formData.append( 'action', action );
 		formData.append( '_wpnonce', nonce );

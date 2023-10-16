@@ -36211,8 +36211,13 @@ var _versionControl = require("a85ccb0efb87f164");
     return function(blockId, status) {
         var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfoSub = _getAjaxInfo.toggleStatus;
         var url = ajaxInfoSub.url, action = ajaxInfoSub.action, nonce = ajaxInfoSub.nonce;
+        if (!Array.isArray(blockId)) blockId = [
+            blockId
+        ];
         var formData = new FormData();
-        formData.append("block_name", blockId);
+        blockId.map(function(bId) {
+            return formData.append("block_name[]", bId);
+        });
         formData.append("enable", JSON.stringify(status));
         formData.append("action", action);
         formData.append("_wpnonce", nonce);

@@ -243,19 +243,52 @@ class Ultimate_Blocks_Admin {
 	}
 
 	/**
+	 * Toggle block status ajax endpoint.
+	 *
+	 * @return void
+	 */
+	public function toggle_block_status() {
+		check_ajax_referer( 'toggle_block_status' );
+
+		if ( isset( $_POST['block_name'] ) && isset( $_POST['enable'] ) ) {
+			// phpcs:disable
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitization done before foreach loop below.
+			$block_name_array = $_POST['block_name'];
+			// phpcs:enable
+
+			if ( is_null( $block_name_array ) || ! is_array( $block_name_array ) ) {
+				wp_send_json_error(
+					array(
+						'error_message' => __( 'Invalid JSON object supplied for block names.', 'ultimate-blocks' ),
+					)
+				);
+			} else {
+				$enable           = sanitize_text_field( wp_unslash( $_POST['enable'] ) );
+				$block_name_array = array_map( 'sanitize_text_field', $block_name_array );
+				foreach ( $block_name_array as $block_name ) {
+					$this->toggle_block_status_individual( $block_name, $enable );
+				}
+			}
+		} else {
+			wp_send_json_error(
+				array(
+					'error_message' => __( 'Block name is not supplied', 'ultimate-blocks' ),
+				)
+			);
+		}
+	}
+
+
+	/**
 	 * Enable/Disable Block
+	 *
+	 * @param string $block_name block name.
+	 * @param bool   $enable block status.
 	 *
 	 * @return void
 	 * @since    1.0.2
 	 */
-	public function toggle_block_status() {
-
-		check_ajax_referer( 'toggle_block_status' );
-
-		$block_name = sanitize_text_field( $_POST['block_name'] );
-
-		$enable = sanitize_text_field( $_POST['enable'] );
-
+	private function toggle_block_status_individual( $block_name, $enable ) {
 		do_action( 'ub/action/block_toggle_ajax_before_exist_check', $block_name, rest_sanitize_boolean( $enable ) );
 
 		if ( ! $this->block_exists( $block_name ) ) {
