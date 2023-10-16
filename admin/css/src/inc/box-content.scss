@@ -1,4 +1,5 @@
 @import "../base/colors";
+@import "../base/common";
 @import "../base/themes/admin-menu-theme";
 
 .ub-box-content {
@@ -14,6 +15,13 @@
 	&[data-layout="horizontal"] {
 		grid-template-columns: 1fr auto;
 		grid-template-rows: auto;
+
+		@include screen-max($screen-sm2) {
+			grid-template-columns: 1fr;
+			grid-template-rows: auto auto;
+			text-align: center;
+			justify-items: center;
+		}
 	}
 
 	&[data-size="normal"] {

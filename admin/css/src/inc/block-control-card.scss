@@ -11,12 +11,12 @@
 	display: grid;
 	grid-template: "title";
 
-	@include screen-max(870px) {
+	@include screen-max($screen-md3) {
 		width: 290px;
 		max-width: 290px;
 	}
 
-	@include screen-max(712px) {
+	@include screen-max($screen-sm2) {
 		width: 100%;
 		max-width: 100%;
 	}
@@ -88,7 +88,7 @@
 		.block-title-right-container {
 			.pro-block-card-info-button {
 				@extend %flex-center-all;
-				
+
 				color: $red-500;
 				background: white;
 				border-radius: 100%;
