@@ -40,7 +40,7 @@
 		&__right-sidebar {
 			flex-basis: 100%;
 			display: flex;
-			flex-flow: row wrap;
+			flex-flow: column nowrap !important;
 			justify-content: center;
 			gap: 10px;
 

@@ -97,7 +97,8 @@
 					}
 
 					.ub-plugin-logo-text {
-						font-weight: bold;
+						@extend %weight-bold;
+
 						margin: 0 5px;
 						font-size: 1.4rem;
 					}

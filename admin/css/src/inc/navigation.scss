@@ -1,4 +1,5 @@
 @import "../base/common";
+@import "../base/themes/admin-menu-theme";
 
 .ub-menu-navigation {
 	height: 100%;
@@ -24,6 +25,10 @@
 
 		&[data-active="true"] {
 			border-color: $red-500;
+		}
+
+		&[data-active="false"] {
+			color: $text-faded-color;
 		}
 
 		&:hover[data-active="false"] {
