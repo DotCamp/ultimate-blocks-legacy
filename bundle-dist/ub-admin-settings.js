@@ -29796,18 +29796,20 @@ exports.setBlockFilter = setBlockFilter;
 var getAllAppOptions = function getAllAppOptions(state) {
     return state.app;
 };
-/**
+/* eslint-disable-next-line jsdoc/require-param */ /**
  * Get content data.
- *
- * @param {Object} state store state
- * @return {Object | null} options
  */ exports.getAllAppOptions = getAllAppOptions;
-var getContentData = function getContentData(state) {
-    return function(contentId) {
-        var _state$app$content$co;
-        return (_state$app$content$co = state.app.content[contentId]) !== null && _state$app$content$co !== void 0 ? _state$app$content$co : null;
-    };
-};
+var getContentData = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.app.content;
+    },
+    function(content, id) {
+        return id;
+    }
+], function(content, id) {
+    var _content$id;
+    return (_content$id = content[id]) !== null && _content$id !== void 0 ? _content$id : null;
+});
 /**
  * Get current block filter.
  *
@@ -36910,19 +36912,17 @@ function _arrayWithHoles(arr) {
     var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), contentTitle = _useState2[0], setTitle = _useState2[1];
     var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), mainContent = _useState4[0], setContent = _useState4[1];
     var _useState5 = (0, _react.useState)({}), _useState6 = _slicedToArray(_useState5, 2), rest = _useState6[0], setRest = _useState6[1];
+    var contentId = props.contentId, getCData = props.getCData, dataRest = _objectWithoutProperties(props, _excluded);
+    var cData = getCData(contentId);
     /**
    * useEffect hook.
    */ (0, _react.useEffect)(function() {
-        var contentId = props.contentId, getCData = props.getCData, dataRest = _objectWithoutProperties(props, _excluded);
-        if (contentId) {
-            var cData = getCData(contentId);
-            if (cData) {
-                var title = cData.title, content = cData.content;
-                setTitle(title);
-                setContent(content);
-                setRest(dataRest);
-            } else throw new _ContentNotFoundError["default"](contentId);
-        }
+        if (cData) {
+            var title = cData.title, content = cData.content;
+            setTitle(title);
+            setContent(content);
+            setRest(dataRest);
+        } else throw new _ContentNotFoundError["default"](contentId);
     }, []);
     return /*#__PURE__*/ _react["default"].createElement(_BoxContent["default"], _extends({}, rest, {
         title: contentTitle,
@@ -36932,7 +36932,11 @@ function _arrayWithHoles(arr) {
 // store select mapping
 var selectMapping = function selectMapping(selector) {
     return {
-        getCData: selector(_app.getContentData)
+        getCData: function getCData(contentId) {
+            return selector(function(state) {
+                return (0, _app.getContentData)(state, contentId);
+            });
+        }
     };
 };
 /**

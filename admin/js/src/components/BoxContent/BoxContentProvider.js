@@ -20,23 +20,20 @@ function BoxContentProvider( props ) {
 	const [ mainContent, setContent ] = useState( null );
 	const [ rest, setRest ] = useState( {} );
 
+	const { contentId, getCData, ...dataRest } = props;
+	const cData = getCData( contentId );
+
 	/**
 	 * useEffect hook.
 	 */
 	useEffect( () => {
-		const { contentId, getCData, ...dataRest } = props;
-
-		if ( contentId ) {
-			const cData = getCData( contentId );
-
-			if ( cData ) {
-				const { title, content } = cData;
-				setTitle( title );
-				setContent( content );
-				setRest( dataRest );
-			} else {
-				throw new ContentNotFoundError( contentId );
-			}
+		if ( cData ) {
+			const { title, content } = cData;
+			setTitle( title );
+			setContent( content );
+			setRest( dataRest );
+		} else {
+			throw new ContentNotFoundError( contentId );
 		}
 	}, [] );
 
@@ -50,7 +47,8 @@ function BoxContentProvider( props ) {
 // store select mapping
 const selectMapping = ( selector ) => {
 	return {
-		getCData: selector( getContentData ),
+		getCData: ( contentId ) =>
+			selector( ( state ) => getContentData( state, contentId ) ),
 	};
 };
 

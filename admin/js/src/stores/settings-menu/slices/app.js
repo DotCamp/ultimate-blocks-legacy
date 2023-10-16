@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
 import initialState from '$Stores/settings-menu/initialState';
 import { isPluginPro } from '$Stores/settings-menu/slices/pluginStatus';
@@ -87,15 +87,14 @@ export const getAllAppOptions = ( state ) => {
 	return state.app;
 };
 
+/* eslint-disable-next-line jsdoc/require-param */
 /**
  * Get content data.
- *
- * @param {Object} state store state
- * @return {Object | null} options
  */
-export const getContentData = ( state ) => ( contentId ) => {
-	return state.app.content[ contentId ] ?? null;
-};
+export const getContentData = createSelector(
+	[ ( state ) => state.app.content, ( content, id ) => id ],
+	( content, id ) => content[ id ] ?? null
+);
 
 /**
  * Get current block filter.
