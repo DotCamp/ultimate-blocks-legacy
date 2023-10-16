@@ -8,6 +8,7 @@ import {
 } from '$Components/BoxContent/BoxContent';
 import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
 import UpgradeBoxContent from '$Components/UpgradeBoxContent';
+import BlockControlsContainer from '$Components/BlockControlsContainer';
 
 /**
  * Blocks content.
@@ -33,9 +34,7 @@ function BlocksContent() {
 					title={ __( 'Deactivate All' ) }
 				/>
 			</BoxContentProvider>
-			<div>
-				<i>blocks control</i>
-			</div>
+			<BlockControlsContainer />
 			<UpgradeBoxContent alignment={ BoxContentAlign.CENTER } />
 		</div>
 	);

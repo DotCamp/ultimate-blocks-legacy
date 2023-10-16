@@ -1,0 +1,20 @@
+@import '../base/common';
+@import '../base/themes/admin-menu-theme';
+
+.controls-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	width: 100%;
+	height: fit-content;
+	margin: 30px 0;
+	border-radius: 5px;
+
+
+	&[data-show-info="false"] .block-control {
+		& > div:not(.block-title) {
+			display: none;
+		}
+	}
+}

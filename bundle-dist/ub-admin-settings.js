@@ -31732,7 +31732,7 @@ var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
 var _default = pluginStatusSlice.reducer;
 exports["default"] = _default;
 
-},{"ff3d5b2310f4f3d7":"3xPpL","acd9b64a16908024":"lL1Ef"}],"ohEvx":[function(require,module,exports) {
+},{"acd9b64a16908024":"lL1Ef","ff3d5b2310f4f3d7":"3xPpL"}],"ohEvx":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -36764,7 +36764,7 @@ function _interopRequireDefault(obj) {
  */ var _default = WelcomeContent;
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","ebd9e2ab5aeb8851":"7CyoE","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy"}],"cJGef":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","ebd9e2ab5aeb8851":"7CyoE","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy"}],"cJGef":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37544,6 +37544,7 @@ var _BoxContentProvider = _interopRequireDefault(require("5d137a308a6dc4a1"));
 var _BoxContent = require("49772c2ff883b51c");
 var _ButtonLink = _interopRequireWildcard(require("1f27831d7ce0318c"));
 var _UpgradeBoxContent = _interopRequireDefault(require("8b5f61fe76b9467a"));
+var _BlockControlsContainer = _interopRequireDefault(require("840a3345d0cfd09"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -37594,7 +37595,7 @@ function _interopRequireDefault(obj) {
         onClickHandler: function onClickHandler() {},
         type: _ButtonLink.ButtonLinkType.DEFAULT,
         title: (0, _i18n.__)("Deactivate All")
-    })), /*#__PURE__*/ _react["default"].createElement("div", null, /*#__PURE__*/ _react["default"].createElement("i", null, "blocks control")), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
+    })), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
         alignment: _BoxContent.BoxContentAlign.CENTER
     }));
 }
@@ -37603,7 +37604,751 @@ function _interopRequireDefault(obj) {
  */ var _default = BlocksContent;
 exports["default"] = _default;
 
-},{"44b754e7f33ff5d6":"21dqq","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","ccee3ff924ee68fd":"7CyoE","8b5f61fe76b9467a":"5Kpzy"}],"gCgzB":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO"}],"e69CO":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("b5a991528cd4dfa6"));
+var _BlockControl = _interopRequireDefault(require("3ffb3fee774ffe0e"));
+var _BlockStatusFilterControl = require("72db3cd1fd4e6f52");
+var _withStore = _interopRequireDefault(require("7adeb056d10afe38"));
+var _blocks = require("c1f3bf0e02707627");
+var _app = require("83bf9ee8271dd581");
+var _actions = require("f9b48c87aedbb427");
+var _VisibilityWrapper = _interopRequireDefault(require("627fdb5e223e1b97"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Block controls container.
+ *
+ * @class
+ *
+ * @param {Object}   props                component properties
+ * @param {Object}   props.blocks         menu data, will be supplied via HOC
+ * @param {Object}   props.blockFilter    current filter for block status, will be supplied via HOC
+ * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
+ * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
+ * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
+ * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
+ */ function BlockControlsContainer(_ref) {
+    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus;
+    var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
+    /**
+   * Handle block status change.
+   *
+   * @param {boolean} proBlock is calling block belongs to pro version of the plugin
+   */ var handleBlockStatusChange = function handleBlockStatusChange(proBlock) {
+        return function(blockId, status) {
+            if (proBlock && !proStatus) {
+                setBlockStatus({
+                    id: blockId,
+                    status: false
+                });
+                return;
+            }
+            setBlockStatus({
+                id: blockId,
+                status: status
+            });
+            dispatch(_actions.toggleBlockStatus)(blockId, status);
+        };
+    };
+    // useEffect hook
+    (0, _react.useEffect)(function() {
+        var sortedBlocks = _toConsumableArray(blocks).sort(function(a, b) {
+            var aName = a.title.toLowerCase();
+            var bName = b.title.toLowerCase();
+            if (aName < bName) return -1;
+            if (aName > bName) return 1;
+            return 0;
+        });
+        setInnerBlocks(sortedBlocks);
+    }, [
+        blocks
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "controls-container",
+        "data-show-info": JSON.stringify(showInfoStatus)
+    }, innerBlocks.map(function(_ref2) {
+        var title = _ref2.title, name = _ref2.name, icon = _ref2.icon, active = _ref2.active, info = _ref2.info, pro = _ref2.pro;
+        var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
+        var visibilityStatus = blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
+        return /*#__PURE__*/ _react["default"].createElement(_VisibilityWrapper["default"], {
+            key: name,
+            visibilityStatus: visibilityStatus
+        }, /*#__PURE__*/ _react["default"].createElement(_BlockControl["default"], {
+            title: title,
+            blockId: name,
+            status: active,
+            iconObject: icon,
+            onStatusChange: handleBlockStatusChange(pro),
+            info: info,
+            proBlock: pro
+        }));
+    }));
+}
+var selectMapping = function selectMapping(selector) {
+    return {
+        blocks: selector(_blocks.getBlocks),
+        blockFilter: selector(_app.getBlockFilter),
+        showInfoStatus: selector(_app.getBlockInfoShowStatus),
+        proStatus: selector(_app.getProStatus)
+    };
+};
+var actionMapping = function actionMapping() {
+    return {
+        setBlockStatus: _blocks.setBlockActiveStatus
+    };
+};
+/**
+ * @module BlockControlsContainer
+ */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
+exports["default"] = _default;
+
+},{"b5a991528cd4dfa6":"21dqq","3ffb3fee774ffe0e":"h5tMi","72db3cd1fd4e6f52":"hebBQ","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","627fdb5e223e1b97":"azTGO"}],"h5tMi":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("9eede5ed96c6db50"));
+var _ToggleControl = _interopRequireDefault(require("235790c968bb3ece"));
+var _MenuButton = _interopRequireDefault(require("3537103df4eeb6b8"));
+var _withIcon = _interopRequireDefault(require("94998323feaef35f"));
+var _app = require("ed962dd8439ee4b7");
+var _withStore = _interopRequireDefault(require("fe5fa2b15de4f5ea"));
+var _ProBlockCardTitle = _interopRequireDefault(require("f55fe8e7dfe7e8a"));
+var _BlockCardProInfoControl = _interopRequireDefault(require("a559776a028ed995"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Menu block control component.
+ *
+ * This control will be used for both enabling/disabling blocks and showing info about them.
+ *
+ * @class
+ *
+ * @param {Object}      props                     component properties
+ * @param {string}      props.title               block title
+ * @param {string}      props.blockId             registry id of block
+ * @param {boolean}     props.status              block status
+ * @param {HTMLElement} props.iconElement         icon element, will be supplied via HOC
+ * @param {Function}    props.onStatusChange      callback for status change event
+ * @param {Array}       props.info                information about block and its usage
+ * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
+ * @param {boolean}     props.proBlock            block belongs to pro version
+ * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
+ * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
+ */ function BlockControl(_ref) {
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
+    var initialRender = (0, _react.useRef)(true);
+    var initialAnimation = (0, _react.useRef)(true);
+    var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
+    var _useState3 = (0, _react.useState)({}), _useState4 = _slicedToArray(_useState3, 2), blockStyle = _useState4[0], setBlockStyle = _useState4[1];
+    var _useState5 = (0, _react.useState)(0), _useState6 = _slicedToArray(_useState5, 2), headerHeight = _useState6[0], setHeaderHeight = _useState6[1];
+    var headerRef = (0, _react.useRef)();
+    /* useEffect block */ (0, _react.useEffect)(function() {
+        var _headerRef$current$ge = headerRef.current.getBoundingClientRect(), height = _headerRef$current$ge.height;
+        setHeaderHeight(height);
+    }, []);
+    (0, _react.useEffect)(function() {
+        setBlockStyle({
+            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
+        });
+    }, [
+        headerHeight
+    ]);
+    (0, _react.useEffect)(function() {
+        if (proBlock && !proStatus) setInnerStatus(false);
+    }, [
+        innerStatus
+    ]);
+    (0, _react.useEffect)(function() {
+        setBlockStyle({
+            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
+        });
+        return function() {
+            if (blockInfoShowStatus !== undefined) initialAnimation.current = false;
+        };
+    }, [
+        blockInfoShowStatus
+    ]);
+    (0, _react.useEffect)(function() {
+        if (initialRender.current) initialRender.current = false;
+        else onStatusChange(blockId, innerStatus);
+    }, [
+        innerStatus
+    ]);
+    /* useEffect block end */ var howToUse = null;
+    /**
+   * Main visibility calculation for how to use button.
+   *
+   * @return {boolean} visibility status
+   */ var howToUseVisibility = function howToUseVisibility() {
+        return howToUse !== null;
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        style: blockStyle,
+        className: "block-control",
+        "data-enabled": JSON.stringify(innerStatus),
+        "data-initial-animation": JSON.stringify(initialAnimation.current)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        ref: headerRef,
+        className: "block-title"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-title-left-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-icon"
+    }, iconElement), /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "title-text"
+    }, title, /*#__PURE__*/ _react["default"].createElement(_ProBlockCardTitle["default"], {
+        isPro: proBlock
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-title-right-container"
+    }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], {
+        handleClick: function handleClick(e) {
+            e.preventDefault();
+            showUpsell(blockId);
+        }
+    }) : /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
+        onStatusChange: setInnerStatus,
+        status: innerStatus,
+        disabled: proBlock && !proStatus
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-info"
+    }, info.map(function(infoLine, index) {
+        return /*#__PURE__*/ _react["default"].createElement("div", {
+            className: "info-line",
+            key: index
+        }, infoLine[0].toUpperCase() + Array.from(infoLine).splice(1).join(""));
+    })), howToUseVisibility() && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "block-howto"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        title: "How to Use",
+        status: howToUse !== null && innerStatus,
+        onClickHandler: howToUse
+    })));
+}
+var selectMapping = function selectMapping(select) {
+    return {
+        blockInfoShowStatus: select(_app.getBlockInfoShowStatus),
+        proStatus: select(_app.getProStatus)
+    };
+};
+var actionMapping = function actionMapping() {
+    return {
+        showUpsell: _app.showProBlockUpsellModal
+    };
+};
+/**
+ * @module BlockControl
+ */ var _default = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping, actionMapping);
+exports["default"] = _default;
+
+},{"9eede5ed96c6db50":"21dqq","235790c968bb3ece":"a7r96","3537103df4eeb6b8":"cbTU3","94998323feaef35f":"l4uaA","ed962dd8439ee4b7":"c28DV","fe5fa2b15de4f5ea":"kWmDy","f55fe8e7dfe7e8a":"jiOgy","a559776a028ed995":"3ptTq"}],"a7r96":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("e3acc383ec34246"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Toggle control component.
+ *
+ * @class
+ * @param {Object}   props                component properties
+ * @param {boolean}  props.status         control status
+ * @param {boolean}  props.disabled       control disabled status
+ * @param {Function} props.onStatusChange status changed callback
+ */ function ToggleControl(_ref) {
+    var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange, _ref$disabled = _ref.disabled, disabled = _ref$disabled === void 0 ? false : _ref$disabled;
+    var initialRender = (0, _react.useRef)(true);
+    var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
+    (0, _react.useEffect)(function() {
+        if (initialRender.current) initialRender.current = false;
+        else onStatusChange(innerStatus);
+    }, [
+        innerStatus
+    ]);
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
+        onClick: function onClick() {
+            if (!disabled) setInnerStatus(!innerStatus);
+        },
+        className: "ub-toggle-control",
+        "data-enabled": JSON.stringify(innerStatus)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "knob"
+    })));
+}
+/**
+ * @module ToggleControl
+ */ var _default = ToggleControl;
+exports["default"] = _default;
+
+},{"e3acc383ec34246":"21dqq"}],"l4uaA":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("5165ebf1e519bb99"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Hoc for creating and adding icon element by using Gutenberg block icon attribute object.
+ *
+ * @param {React.ElementType} BaseComponent target component
+ * @return {Function} function to use as HOC
+ */ var withIcon = function withIcon(BaseComponent) {
+    return function(props) {
+        var iconElement = "x";
+        if (!props.iconObject) throw new Error("invalid type of icon object is supplied to withIcon HOC");
+        else if (typeof props.iconObject === "string") iconElement = /*#__PURE__*/ _react["default"].createElement("span", {
+            dangerouslySetInnerHTML: {
+                __html: props.iconObject
+            }
+        });
+        else if (_typeof(props.iconObject) === "object") {
+            var iconObject = props.iconObject;
+            var type = iconObject.type, iconProps = iconObject.props;
+            iconElement = /*#__PURE__*/ (0, _react.createElement)(type, iconProps);
+        }
+        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, {
+            iconElement: iconElement
+        }));
+    };
+};
+/**
+ * @module withIcon
+ */ var _default = withIcon;
+exports["default"] = _default;
+
+},{"5165ebf1e519bb99":"21dqq"}],"jiOgy":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("cdc71d453835317a"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Pro block card control title.
+ *
+ * @param {Object}  props       component properties
+ * @param {boolean} props.isPro block pro status
+ */ function ProBlockCardTitle(_ref) {
+    var isPro = _ref.isPro;
+    return isPro && /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "pro-block-card-title-suffix"
+    }, "PRO");
+}
+/**
+ * @module CouponCardProTitle
+ */ var _default = ProBlockCardTitle;
+exports["default"] = _default;
+
+},{"cdc71d453835317a":"21dqq"}],"3ptTq":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("39aebd33bd221f16"));
+var _reactFontawesome = require("6df61aa983d49f0c");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Info control button for pro block cards.
+ *
+ * @param {Object}   props             component properties
+ * @param {Function} props.handleClick click callback
+ */ function BlockCardProInfoControl(_ref) {
+    var handleClick = _ref.handleClick;
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
+        className: "pro-block-card-info-button",
+        onClick: handleClick
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-circle-info"
+    })));
+}
+/**
+ * @module BlockCardProInfoControl
+ */ var _default = BlockCardProInfoControl;
+exports["default"] = _default;
+
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"azTGO":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("97c658a0a38c9755"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Wrapper for handling visibility changes of its children.
+ *
+ * @param {Object}            props                  component properties
+ * @param {React.ElementType} props.children         component children
+ * @param {boolean}           props.visibilityStatus component visibility status
+ *
+ * @class
+ */ function VisibilityWrapper(_ref) {
+    var children = _ref.children, visibilityStatus = _ref.visibilityStatus;
+    var wrapper = (0, _react.useRef)();
+    (0, _react.useEffect)(function() {
+        wrapper.current.addEventListener("animationend", function(_ref2) {
+            var animationName = _ref2.animationName;
+            wrapper.current.style.display = animationName === "disappear" ? "none" : "block";
+        });
+    }, []);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        ref: wrapper,
+        className: "visibility-wrapper",
+        "data-visible": JSON.stringify(visibilityStatus)
+    }, children);
+}
+/**
+ * @module VisibilityWrapper
+ */ var _default = VisibilityWrapper;
+exports["default"] = _default;
+
+},{"97c658a0a38c9755":"21dqq"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
