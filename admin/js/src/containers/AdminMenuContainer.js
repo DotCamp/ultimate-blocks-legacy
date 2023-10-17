@@ -2,6 +2,7 @@
 import React from 'react';
 import MenuHeader from '$Components/MenuHeader';
 import Content from '$Components/Content';
+import UpsellModalSettingsMenu from '$Components/UpsellModalSettingsMenu';
 
 /**
  * Container for admin menu.
@@ -12,6 +13,7 @@ import Content from '$Components/Content';
 function AdminMenuContainer() {
 	return (
 		<div className={ 'ub-admin-menu-container' }>
+			<UpsellModalSettingsMenu />
 			<MenuHeader />
 			<Content />
 		</div>

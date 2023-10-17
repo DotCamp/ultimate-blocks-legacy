@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 /**
  * Block slice options
@@ -54,15 +54,18 @@ export const getBlocks = ( state ) => {
 	return state.blocks.registered;
 };
 
+/* eslint-disable-next-line jsdoc/require-param */
 /**
  * Get block object by given block type id.
- *
- * @param {Object} state store state
- * @return {Object | undefined} block object or undefined if no target block is found
  */
-export const getBlockById = ( state ) => ( blockId ) => {
-	return state.blocks.registered.find( ( { name } ) => name === blockId );
-};
+export const getBlockById = createSelector(
+	[
+		( state ) => state.blocks.registered,
+		( registered, blockId ) => blockId,
+	],
+	( registered, blockId ) =>
+		registered.find( ( { name } ) => name === blockId )
+);
 
 /**
  * @module blocksSlice

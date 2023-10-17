@@ -29691,18 +29691,19 @@ var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
 var getAjaxInfo = function getAjaxInfo(state) {
     return state.assets.ajax;
 };
-/**
+/* eslint-disable-next-line jsdoc/require-param */ /**
  * Get asset with given id.
- *
- * @param {Object} state store state
- * @return {function(string): string|number} function to get asset
  */ exports.getAjaxInfo = getAjaxInfo;
-var getAsset = function getAsset(state) {
-    return function(assetId) {
-        var _state$assets;
-        return (_state$assets = state.assets) === null || _state$assets === void 0 ? void 0 : _state$assets[assetId];
-    };
-};
+var getAsset = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.assets;
+    },
+    function(assets, assetId) {
+        return assetId;
+    }
+], function(assets, assetId) {
+    return assets === null || assets === void 0 ? void 0 : assets[assetId];
+});
 /**
  * @module assetsSlice
  */ exports.getAsset = getAsset;
@@ -31808,20 +31809,22 @@ var setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
 var getBlocks = function getBlocks(state) {
     return state.blocks.registered;
 };
-/**
+/* eslint-disable-next-line jsdoc/require-param */ /**
  * Get block object by given block type id.
- *
- * @param {Object} state store state
- * @return {Object | undefined} block object or undefined if no target block is found
  */ exports.getBlocks = getBlocks;
-var getBlockById = function getBlockById(state) {
-    return function(blockId) {
-        return state.blocks.registered.find(function(_ref2) {
-            var name = _ref2.name;
-            return name === blockId;
-        });
-    };
-};
+var getBlockById = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.blocks.registered;
+    },
+    function(registered, blockId) {
+        return blockId;
+    }
+], function(registered, blockId) {
+    return registered.find(function(_ref2) {
+        var name = _ref2.name;
+        return name === blockId;
+    });
+});
 /**
  * @module blocksSlice
  */ exports.getBlockById = getBlockById;
@@ -31891,6 +31894,7 @@ exports["default"] = void 0;
 var _react = _interopRequireDefault(require("455808d61ca3dd3"));
 var _MenuHeader = _interopRequireDefault(require("13ab014d28c1a042"));
 var _Content = _interopRequireDefault(require("46d090e981b08c24"));
+var _UpsellModalSettingsMenu = _interopRequireDefault(require("b2a4cd4db8cb175"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -31905,14 +31909,14 @@ function _interopRequireDefault(obj) {
  */ function AdminMenuContainer() {
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-admin-menu-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
+    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null), /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
 }
 /**
  * @module AdminMenuContainer
  */ var _default = AdminMenuContainer;
 exports["default"] = _default;
 
-},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G"}],"kP7QS":[function(require,module,exports) {
+},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G","b2a4cd4db8cb175":"l7D5t"}],"kP7QS":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37557,7 +37561,6 @@ var _UpgradeBoxContent = _interopRequireDefault(require("8b5f61fe76b9467a"));
 var _BlockControlsContainer = _interopRequireDefault(require("840a3345d0cfd09"));
 var _withStore = _interopRequireDefault(require("8932a746af86836e"));
 var _actions = require("202bbd36af9d5464");
-var _UpsellModalSettingsMenu = _interopRequireDefault(require("eeeccbbb1c448d64"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37636,7 +37639,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
         title: (0, _i18n.__)("Deactivate All")
     })), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
         alignment: _BoxContent.BoxContentAlign.CENTER
-    }), /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null));
+    }));
 }
 // store select mapping
 var selectMapping = function selectMapping(select) {
@@ -37655,7 +37658,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlocksContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","43840ff570ccb3b4":"ohEvx","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2","eeeccbbb1c448d64":"l7D5t"}],"e69CO":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","43840ff570ccb3b4":"ohEvx","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -38165,7 +38168,260 @@ function _interopRequireDefault(obj) {
  */ var _default = BlockCardProInfoControl;
 exports["default"] = _default;
 
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"l7D5t":[function(require,module,exports) {
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"33zwc":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("b68942abfa60c995"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Extensions content component.
+ *
+ * @class
+ */ function ExtensionsContent() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-extensions-content"
+    }, /*#__PURE__*/ _react["default"].createElement("i", null, "Coming soon..."));
+}
+/**
+ * @module ExtensionsContent
+ */ var _default = ExtensionsContent;
+exports["default"] = _default;
+
+},{"b68942abfa60c995":"21dqq"}],"gCgzB":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("1d07def39b714300"));
+var _reactFontawesome = require("5ae4c02c09b41c9b");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Hamburger menu component.
+ *
+ * @param {Object}   props              component properties
+ * @param {boolean}  props.status       menu status, whether it is open or not
+ * @param {Function} props.clickHandler click handler
+ * @param {string}   props.openIcon     open fontawesome icon
+ * @param {string}   props.closeIcon    close fontawesome icon
+ * @class
+ */ function HamburgerMenu(_ref) {
+    var _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status, clickHandler = _ref.clickHandler, _ref$openIcon = _ref.openIcon, openIcon = _ref$openIcon === void 0 ? "fa-solid fa-bars" : _ref$openIcon, _ref$closeIcon = _ref.closeIcon, closeIcon = _ref$closeIcon === void 0 ? "fa-solid fa-xmark" : _ref$closeIcon;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-hamburger-menu"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        tabIndex: 0,
+        onKeyDown: function onKeyDown(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                clickHandler();
+            }
+        },
+        role: "button",
+        className: "ub-hamburger-menu-icon-wrapper",
+        onClick: function onClick(e) {
+            e.preventDefault();
+            clickHandler();
+        }
+    }, !status ? /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-status": !status,
+        "data-menu-icon-id": "open"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: openIcon
+    })) : /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-status": status,
+        "data-menu-icon-id": "close"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: closeIcon
+    }))));
+}
+/**
+ * @module HamburgerMenu
+ */ var _default = HamburgerMenu;
+exports["default"] = _default;
+
+},{"1d07def39b714300":"21dqq","5ae4c02c09b41c9b":"clIT3"}],"12F8G":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
+var _Router = _interopRequireDefault(require("8de1b2cbd2501a64"));
+var _routes = _interopRequireDefault(require("aa3a9c83723e70f8"));
+var _Route = require("2923c6694567dc83");
+var _app = require("3a30469fb7d0d04");
+var _withStore = _interopRequireDefault(require("a56ec32b87f0edc3"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Contents of menu page.
+ *
+ * @param {Object} props                  component properties
+ * @param {string} props.currentRoutePath current route path, will be supplied via HOC
+ * @function Object() { [native code] }
+ */ function Content(_ref) {
+    var currentRoutePath = _ref.currentRoutePath;
+    return /*#__PURE__*/ _react["default"].createElement(_Router["default"], {
+        routes: (0, _Route.generateRouteArray)(_routes["default"]),
+        currentRoutePath: currentRoutePath
+    });
+}
+// select mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        currentRoutePath: selector(_app.getCurrentRoutePath)
+    };
+};
+/**
+ * @module Content
+ */ var _default = (0, _withStore["default"])(Content, selectMapping);
+exports["default"] = _default;
+
+},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","aa3a9c83723e70f8":"c1gPj","2923c6694567dc83":"1QB0k","3a30469fb7d0d04":"c28DV","a56ec32b87f0edc3":"kWmDy"}],"35sjN":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("7733be7f93cb4ab5"));
+var _Route = _interopRequireDefault(require("c443d35e86fea929"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Router for different menu content.
+ *
+ * Router children components should be Route components. Else those who are not will be ignored.
+ *
+ * If no route matches, the last route will be shown. It can be used as 404 page.
+ *
+ * @param {Object}       props                  component properties
+ * @param {Array<Route>} props.routes           routes array
+ * @param {string}       props.currentRoutePath current route path
+ */ function Router(_ref) {
+    var routes = _ref.routes, currentRoutePath = _ref.currentRoutePath;
+    var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), CurrentRouteContent = _useState2[0], setCurrentRouteContent = _useState2[1];
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        var currentRoute = routes.find(function(route) {
+            return route.getPath() === currentRoutePath;
+        });
+        if (currentRoute) setCurrentRouteContent(currentRoute.getElement());
+        else {
+            var lastRoute = routes[routes.length - 1];
+            setCurrentRouteContent(lastRoute.getElement());
+        }
+    }, [
+        currentRoutePath,
+        routes
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-router-content-wrapper",
+        "data-route-path": currentRoutePath,
+        key: currentRoutePath
+    }, CurrentRouteContent);
+}
+/**
+ * @module Router
+ */ var _default = Router;
+exports["default"] = _default;
+
+},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"l7D5t":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -38311,11 +38567,12 @@ function _typeof(obj) {
         }
         return null;
     };
+    var targetBlockObj = getBlockObject(targetBlock);
     var currentUpsellData = (0, _react.useMemo)(function() {
-        var targetBlockObj = getBlockObject(targetBlock);
         return prepareUpsellData(targetBlockObj);
     }, [
-        targetBlock
+        targetBlock,
+        targetBlockObj
     ]);
     var currentBlockIcon = (0, _react.useMemo)(function() {
         if (currentUpsellData) {
@@ -38339,8 +38596,14 @@ var selectMapping = function selectMapping(select) {
     return {
         targetBlock: select(_app.getModalTargetBlockType),
         visibility: select(_app.getModalVisibilityStatus),
-        getBlockObject: select(_blocks.getBlockById),
-        proBuyUrl: select(_assets.getAsset)("proBuyUrl")
+        getBlockObject: function getBlockObject(blockId) {
+            return select(function(state) {
+                return (0, _blocks.getBlockById)(state, blockId);
+            });
+        },
+        proBuyUrl: select(function(state) {
+            return (0, _assets.getAsset)(state, "proBuyUrl");
+        })
     };
 };
 // store action mapping
@@ -38853,260 +39116,7 @@ function ModalNavigation(_ref) {
  */ var _default = ModalNavigation;
 exports["default"] = _default;
 
-},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"33zwc":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("b68942abfa60c995"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Extensions content component.
- *
- * @class
- */ function ExtensionsContent() {
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-extensions-content"
-    }, /*#__PURE__*/ _react["default"].createElement("i", null, "Coming soon..."));
-}
-/**
- * @module ExtensionsContent
- */ var _default = ExtensionsContent;
-exports["default"] = _default;
-
-},{"b68942abfa60c995":"21dqq"}],"gCgzB":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("1d07def39b714300"));
-var _reactFontawesome = require("5ae4c02c09b41c9b");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Hamburger menu component.
- *
- * @param {Object}   props              component properties
- * @param {boolean}  props.status       menu status, whether it is open or not
- * @param {Function} props.clickHandler click handler
- * @param {string}   props.openIcon     open fontawesome icon
- * @param {string}   props.closeIcon    close fontawesome icon
- * @class
- */ function HamburgerMenu(_ref) {
-    var _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status, clickHandler = _ref.clickHandler, _ref$openIcon = _ref.openIcon, openIcon = _ref$openIcon === void 0 ? "fa-solid fa-bars" : _ref$openIcon, _ref$closeIcon = _ref.closeIcon, closeIcon = _ref$closeIcon === void 0 ? "fa-solid fa-xmark" : _ref$closeIcon;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-hamburger-menu"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        tabIndex: 0,
-        onKeyDown: function onKeyDown(e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                clickHandler();
-            }
-        },
-        role: "button",
-        className: "ub-hamburger-menu-icon-wrapper",
-        onClick: function onClick(e) {
-            e.preventDefault();
-            clickHandler();
-        }
-    }, !status ? /*#__PURE__*/ _react["default"].createElement("div", {
-        "data-status": !status,
-        "data-menu-icon-id": "open"
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: openIcon
-    })) : /*#__PURE__*/ _react["default"].createElement("div", {
-        "data-status": status,
-        "data-menu-icon-id": "close"
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: closeIcon
-    }))));
-}
-/**
- * @module HamburgerMenu
- */ var _default = HamburgerMenu;
-exports["default"] = _default;
-
-},{"1d07def39b714300":"21dqq","5ae4c02c09b41c9b":"clIT3"}],"12F8G":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
-var _Router = _interopRequireDefault(require("8de1b2cbd2501a64"));
-var _routes = _interopRequireDefault(require("aa3a9c83723e70f8"));
-var _Route = require("2923c6694567dc83");
-var _app = require("3a30469fb7d0d04");
-var _withStore = _interopRequireDefault(require("a56ec32b87f0edc3"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Contents of menu page.
- *
- * @param {Object} props                  component properties
- * @param {string} props.currentRoutePath current route path, will be supplied via HOC
- * @function Object() { [native code] }
- */ function Content(_ref) {
-    var currentRoutePath = _ref.currentRoutePath;
-    return /*#__PURE__*/ _react["default"].createElement(_Router["default"], {
-        routes: (0, _Route.generateRouteArray)(_routes["default"]),
-        currentRoutePath: currentRoutePath
-    });
-}
-// select mapping
-var selectMapping = function selectMapping(selector) {
-    return {
-        currentRoutePath: selector(_app.getCurrentRoutePath)
-    };
-};
-/**
- * @module Content
- */ var _default = (0, _withStore["default"])(Content, selectMapping);
-exports["default"] = _default;
-
-},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","aa3a9c83723e70f8":"c1gPj","2923c6694567dc83":"1QB0k","3a30469fb7d0d04":"c28DV","a56ec32b87f0edc3":"kWmDy"}],"35sjN":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
-        return typeof obj;
-    } : function(obj) {
-        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("7733be7f93cb4ab5"));
-var _Route = _interopRequireDefault(require("c443d35e86fea929"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
-    };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
-    }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-    if (null != _i) {
-        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
-        try {
-            if (_x = (_i = _i.call(arr)).next, 0 === i) {
-                if (Object(_i) !== _i) return;
-                _n = !1;
-            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-        } catch (err) {
-            _d = !0, _e = err;
-        } finally{
-            try {
-                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
-            } finally{
-                if (_d) throw _e;
-            }
-        }
-        return _arr;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Router for different menu content.
- *
- * Router children components should be Route components. Else those who are not will be ignored.
- *
- * If no route matches, the last route will be shown. It can be used as 404 page.
- *
- * @param {Object}       props                  component properties
- * @param {Array<Route>} props.routes           routes array
- * @param {string}       props.currentRoutePath current route path
- */ function Router(_ref) {
-    var routes = _ref.routes, currentRoutePath = _ref.currentRoutePath;
-    var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), CurrentRouteContent = _useState2[0], setCurrentRouteContent = _useState2[1];
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        var currentRoute = routes.find(function(route) {
-            return route.getPath() === currentRoutePath;
-        });
-        if (currentRoute) setCurrentRouteContent(currentRoute.getElement());
-        else {
-            var lastRoute = routes[routes.length - 1];
-            setCurrentRouteContent(lastRoute.getElement());
-        }
-    }, [
-        currentRoutePath,
-        routes
-    ]);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-router-content-wrapper",
-        "data-route-path": currentRoutePath,
-        key: currentRoutePath
-    }, CurrentRouteContent);
-}
-/**
- * @module Router
- */ var _default = Router;
-exports["default"] = _default;
-
-},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
