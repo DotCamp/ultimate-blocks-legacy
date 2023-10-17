@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import ToggleControl from '$Components/ToggleControl';
 import withIcon from '$HOC/withIcon';
 import ProBlockCardTitle from '$Components/ProBlockCardTitle';
@@ -32,39 +31,12 @@ function BlockControlCard( {
 	proStatus,
 	showUpsell,
 } ) {
-	const initialRender = useRef( true );
 	const initialAnimation = useRef( true );
-
-	const [ innerStatus, setInnerStatus ] = useState(
-		status === undefined ? false : status
-	);
-
-	/* useEffect block */
-
-	useEffect( () => {
-		setInnerStatus( status );
-	}, [ status ] );
-
-	useEffect( () => {
-		if ( proBlock && ! proStatus ) {
-			setInnerStatus( false );
-		}
-	}, [ innerStatus ] );
-
-	useEffect( () => {
-		if ( initialRender.current ) {
-			initialRender.current = false;
-		} else {
-			onStatusChange( blockId, innerStatus );
-		}
-	}, [ innerStatus ] );
-
-	/* useEffect block end */
 
 	return (
 		<div
 			className={ 'block-control' }
-			data-enabled={ JSON.stringify( innerStatus ) }
+			data-enabled={ JSON.stringify( status ) }
 			data-initial-animation={ JSON.stringify(
 				initialAnimation.current
 			) }
@@ -88,8 +60,10 @@ function BlockControlCard( {
 						/>
 					) : (
 						<ToggleControl
-							onStatusChange={ setInnerStatus }
-							status={ innerStatus }
+							onStatusChange={ ( newStatus ) =>
+								onStatusChange( blockId, newStatus )
+							}
+							status={ status }
 							disabled={ proBlock && ! proStatus }
 						/>
 					) }

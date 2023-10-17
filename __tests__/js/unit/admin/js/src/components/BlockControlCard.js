@@ -39,32 +39,6 @@ describe( 'BlockControlCard', () => {
 
 		expect( statusChangeSpy.calledWith( blockId, ! status ) ).to.be.ok();
 	} );
-	it( 'should toggle block status', async () => {
-		const statusChangeSpy = sinon.spy();
-		const status = true;
-
-		render(
-			<BlockControlCard
-				{ ...prepareProps( {
-					status,
-					onStatusChange: statusChangeSpy,
-				} ) }
-			/>
-		);
-		await userEvent.click( screen.getByRole( 'button' ) );
-
-		expect(
-			statusChangeSpy.calledWith( defaultProps.blockId, ! status )
-		).to.be.ok();
-
-		statusChangeSpy.resetHistory();
-
-		await userEvent.click( screen.getByRole( 'button' ) );
-
-		expect(
-			statusChangeSpy.calledWith( defaultProps.blockId, status )
-		).to.be.ok();
-	} );
 	it( 'should call showUpsell instead when target block is pro and plugin version is base', async () => {
 		const showUpsellSpy = sinon.spy();
 		render(
@@ -93,6 +67,7 @@ describe( 'BlockControlCard', () => {
 		);
 
 		await userEvent.click( screen.getByRole( 'button' ) );
+
 		expect(
 			statusChangeSpy.calledWith(
 				defaultProps.blockId,
