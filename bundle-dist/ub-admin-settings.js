@@ -37557,6 +37557,7 @@ var _UpgradeBoxContent = _interopRequireDefault(require("8b5f61fe76b9467a"));
 var _BlockControlsContainer = _interopRequireDefault(require("840a3345d0cfd09"));
 var _withStore = _interopRequireDefault(require("8932a746af86836e"));
 var _actions = require("202bbd36af9d5464");
+var _UpsellModalSettingsMenu = _interopRequireDefault(require("eeeccbbb1c448d64"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37635,7 +37636,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
         title: (0, _i18n.__)("Deactivate All")
     })), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
         alignment: _BoxContent.BoxContentAlign.CENTER
-    }));
+    }), /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null));
 }
 // store select mapping
 var selectMapping = function selectMapping(select) {
@@ -37654,7 +37655,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlocksContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","43840ff570ccb3b4":"ohEvx","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"e69CO":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","43840ff570ccb3b4":"ohEvx","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2","eeeccbbb1c448d64":"l7D5t"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -38164,7 +38165,695 @@ function _interopRequireDefault(obj) {
  */ var _default = BlockCardProInfoControl;
 exports["default"] = _default;
 
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"33zwc":[function(require,module,exports) {
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"l7D5t":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("77d3d7818e219afe"));
+var _app = require("f56de1883a511d0d");
+var _blocks = require("4f679653ecb021b9");
+var _withStore = _interopRequireDefault(require("923351f2001a1473"));
+var _UpsellModalBase = _interopRequireDefault(require("e332c8e734debb56"));
+var _assets = require("c25dc389ac9526da");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+/**
+ * Upsell modal window for settings menu.
+ *
+ * @param {Object}   props                  component properties
+ * @param {string}   props.targetBlock      target block id, will be supplied via HOC
+ * @param {boolean}  props.visibility       modal visibility status, will be supplied via HOC
+ * @param {Function} props.closeModalWindow close modal window, will be supplied via HOC
+ * @param {Function} props.getBlockObject   get block object, will be supplied via HOC
+ * @param {string}   props.proBuyUrl        url for pro buy page, will be supplied via HOC
+ */ function UpsellModalSettingsMenu(_ref) {
+    var targetBlock = _ref.targetBlock, visibility = _ref.visibility, closeModalWindow = _ref.closeModalWindow, getBlockObject = _ref.getBlockObject, proBuyUrl = _ref.proBuyUrl;
+    /**
+   * Prepare modal upsell data to be compatible with modal base component.
+   *
+   * @param {Object} blockObject block object
+   */ var prepareUpsellData = function prepareUpsellData(blockObject) {
+        if (blockObject && _typeof(blockObject) === "object") {
+            var name = blockObject.name, title = blockObject.title, info = blockObject.info, icon = blockObject.icon, screenshotUrl = blockObject.screenshotUrl;
+            return _defineProperty({}, name, {
+                name: title,
+                description: Array.isArray(info) ? info[0] : info,
+                imageUrl: screenshotUrl,
+                icon: icon
+            });
+        }
+        return null;
+    };
+    var currentUpsellData = (0, _react.useMemo)(function() {
+        var targetBlockObj = getBlockObject(targetBlock);
+        return prepareUpsellData(targetBlockObj);
+    }, [
+        targetBlock
+    ]);
+    var currentBlockIcon = (0, _react.useMemo)(function() {
+        if (currentUpsellData) {
+            var _Object$values = Object.values(currentUpsellData), _Object$values2 = _slicedToArray(_Object$values, 1), icon = _Object$values2[0].icon;
+            return icon;
+        }
+        return null;
+    }, [
+        currentUpsellData
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement(_UpsellModalBase["default"], {
+        upsellData: currentUpsellData,
+        modalVisibility: visibility,
+        closeModal: closeModalWindow,
+        proUrl: proBuyUrl,
+        targetBlockIcon: currentBlockIcon
+    });
+}
+// store select mapping
+var selectMapping = function selectMapping(select) {
+    return {
+        targetBlock: select(_app.getModalTargetBlockType),
+        visibility: select(_app.getModalVisibilityStatus),
+        getBlockObject: select(_blocks.getBlockById),
+        proBuyUrl: select(_assets.getAsset)("proBuyUrl")
+    };
+};
+// store action mapping
+var actionMapping = function actionMapping() {
+    return {
+        closeModalWindow: _app.hideProBlockUpsellModal
+    };
+};
+/**
+ * @module UpsellModal
+ */ var _default = (0, _withStore["default"])(UpsellModalSettingsMenu, selectMapping, actionMapping);
+exports["default"] = _default;
+
+},{"77d3d7818e219afe":"21dqq","f56de1883a511d0d":"c28DV","4f679653ecb021b9":"ohEvx","923351f2001a1473":"kWmDy","e332c8e734debb56":"lUoek","c25dc389ac9526da":"9SnHn"}],"lUoek":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("9d95accb31bc1a60"));
+var _i18n = require("e42a5324d5c26930");
+var _VitalizeText = _interopRequireDefault(require("a36d0a01e69a4318"));
+var _ActiveBlockIcon = _interopRequireDefault(require("805ff0c636fbd0c2"));
+var _UpsellModalContent = _interopRequireDefault(require("395f81ebd987280"));
+var _UpsellModalButton = _interopRequireWildcard(require("15339c3acdf9ced5"));
+var _ModalNavigation = _interopRequireWildcard(require("df6c9ea0fd14306e"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Upsell modal component.
+ *
+ * @param {Object}   props                  component properties
+ * @param {boolean}  props.modalVisibility  modal visibility status, will be supplied via HOC
+ * @param {Function} props.closeModal       close modal window, will be supplied via HOC
+ * @param {Object}   props.upsellData       upsell data to show, will be supplied via HOC
+ * @param {string}   props.defaultFeatureSs default feature screenshot for empty replacements, will be supplied via HOC
+ * @param {string}   props.proUrl           pro url, will be supplied via HOC
+ * @param {Object}   props.targetBlockIcon  block icon object for target block
+ * @function Object() { [native code] }
+ */ function UpsellModalBase(_ref) {
+    var modalVisibility = _ref.modalVisibility, closeModal = _ref.closeModal, upsellData = _ref.upsellData, defaultFeatureSs = _ref.defaultFeatureSs, proUrl = _ref.proUrl, targetBlockIcon = _ref.targetBlockIcon;
+    var _useState = (0, _react.useState)(0), _useState2 = _slicedToArray(_useState, 2), dataIndex = _useState2[0], setDataIndex = _useState2[1];
+    var _useState3 = (0, _react.useState)([]), _useState4 = _slicedToArray(_useState3, 2), allData = _useState4[0], setAllData = _useState4[1];
+    var _useState5 = (0, _react.useState)(null), _useState6 = _slicedToArray(_useState5, 2), currentData = _useState6[0], setCurrentData = _useState6[1];
+    /**
+   * Pre-check for increment/decrement operations.
+   *
+   * @param {number} amount amount
+   * @return {boolean} pre operation status
+   */ var preIncDecCheck = function preIncDecCheck(amount) {
+        var finalIndex = dataIndex + amount;
+        return finalIndex >= 0 && finalIndex !== allData.length;
+    };
+    /**
+   * Increment/decrement index.
+   *
+   * @param {number} amount amount
+   */ var incDecIndex = function incDecIndex(amount) {
+        var finalIndex = dataIndex + amount;
+        if (preIncDecCheck(amount)) setDataIndex(finalIndex);
+    };
+    /**
+   * Navigation button status.
+   *
+   * @param {number} amount assigned increment/decrement amount
+   * @return {boolean} status
+   */ var navStatus = function navStatus(amount) {
+        return allData.length > 1 && preIncDecCheck(amount);
+    };
+    /**
+   * Direct current page to pro url.
+   */ var directToProUrl = function directToProUrl() {
+        window.open(proUrl, "_blank");
+    };
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        if (upsellData && _typeof(upsellData) === "object") {
+            var upsellDataValues = Object.values(upsellData);
+            setAllData(upsellDataValues);
+            setCurrentData(upsellDataValues[0]);
+        }
+        setDataIndex(0);
+    }, [
+        upsellData
+    ]);
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        // reset data index on visibility changes
+        setDataIndex(0);
+    }, [
+        modalVisibility
+    ]);
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        setCurrentData(allData[dataIndex]);
+    }, [
+        dataIndex,
+        allData
+    ]);
+    return modalVisibility && currentData && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-upsells-modal-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_ModalNavigation["default"], {
+        clickHandler: function clickHandler() {
+            return incDecIndex(-1);
+        },
+        type: _ModalNavigation.navigationType.LEFT,
+        disable: !navStatus(-1)
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-upsells-modal-main-window"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-upsells-modal-header"
+    }, /*#__PURE__*/ _react["default"].createElement(_ActiveBlockIcon["default"], {
+        iconObject: targetBlockIcon
+    }), /*#__PURE__*/ _react["default"].createElement(_VitalizeText["default"], null, currentData.name)), /*#__PURE__*/ _react["default"].createElement(_UpsellModalContent["default"], {
+        ssUrl: currentData.imageUrl || defaultFeatureSs,
+        description: currentData.description
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-upsells-modal-footer"
+    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalButton["default"], {
+        clickHandler: closeModal
+    }, (0, _i18n.__)("Close", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement(_UpsellModalButton["default"], {
+        clickHandler: directToProUrl,
+        type: _UpsellModalButton.modalButtonTypes.PRIO
+    }, (0, _i18n.__)("Buy PRO", "ultimate-blocks")))), /*#__PURE__*/ _react["default"].createElement(_ModalNavigation["default"], {
+        clickHandler: function clickHandler() {
+            return incDecIndex(1);
+        },
+        type: _ModalNavigation.navigationType.RIGHT,
+        disable: !navStatus(1)
+    }));
+}
+/**
+ * @module UpsellModalBase
+ */ var _default = UpsellModalBase;
+exports["default"] = _default;
+
+},{"9d95accb31bc1a60":"21dqq","e42a5324d5c26930":"7CyoE","a36d0a01e69a4318":"iN5Mi","805ff0c636fbd0c2":"1dLch","395f81ebd987280":"fyqwX","15339c3acdf9ced5":"kgQK9","df6c9ea0fd14306e":"9tuQW"}],"iN5Mi":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("d094a43779e3387a"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Vitalize text.
+ *
+ * @param {Object}                        props          component properties
+ * @param {Array | JSX.Element | string } props.children component children
+ * @function Object() { [native code] }
+ */ function VitalizeText(_ref) {
+    var children = _ref.children;
+    return /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "ub-upsell-vitalize-text"
+    }, children);
+}
+/**
+ * @module VitalizeText
+ */ var _default = VitalizeText;
+exports["default"] = _default;
+
+},{"d094a43779e3387a":"21dqq"}],"1dLch":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = require("2ce8023ec6e51515");
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+/**
+ * Component for displaying active block's icon component.
+ *
+ * @param {Object}          props            component properties
+ * @param {Object | string} props.iconObject icon object or a string representation of it
+ * @function Object() { [native code] }
+ */ function ActiveBlockIcon(_ref) {
+    var iconObject = _ref.iconObject;
+    var iconElement = (0, _react.useMemo)(function() {
+        if (iconObject) switch(_typeof(iconObject)){
+            case "object":
+                var type = iconObject.type, props = iconObject.props;
+                return /*#__PURE__*/ (0, _react.createElement)(type, props);
+            case "string":
+                return /*#__PURE__*/ React.createElement("span", {
+                    className: "ub-active-block-icon-from-string",
+                    dangerouslySetInnerHTML: {
+                        __html: iconObject
+                    }
+                });
+            default:
+                return "?";
+        }
+        return "?";
+    }, [
+        iconObject
+    ]);
+    return /*#__PURE__*/ React.createElement("div", {
+        className: "ub-active-block-icon"
+    }, iconElement);
+}
+/**
+ * @module ActiveBlockIcon
+ */ var _default = ActiveBlockIcon;
+exports["default"] = _default;
+
+},{"2ce8023ec6e51515":"21dqq"}],"fyqwX":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("2abf63d328de5dcf"));
+var _i18n = require("33a8d9d556f77fb2");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Upsell modal content component.
+ *
+ * @param {Object} props             component properties
+ * @param {string} props.ssUrl       screenshot url
+ * @param {string} props.description content description
+ * @function Object() { [native code] }
+ */ function UpsellModalContent(_ref) {
+    var ssUrl = _ref.ssUrl, description = _ref.description;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-upsells-modal-content"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-upsells-modal-content-image"
+    }, /*#__PURE__*/ _react["default"].createElement("img", {
+        alt: (0, _i18n.__)("feature sample screenshot"),
+        src: ssUrl
+    })), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-upsells-modal-content-description"
+    }, description));
+}
+/**
+ * @module UpsellModalContent
+ */ var _default = UpsellModalContent;
+exports["default"] = _default;
+
+},{"2abf63d328de5dcf":"21dqq","33a8d9d556f77fb2":"7CyoE"}],"kgQK9":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modalButtonTypes = exports["default"] = void 0;
+var _react = _interopRequireDefault(require("33d109c6bc5182c7"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Modal button types.
+ *
+ * @type {{PRIO: string, BASIC: string}}
+ */ var modalButtonTypes = {
+    BASIC: "basic",
+    PRIO: "prio"
+};
+/**
+ * Button component for upsell modal.
+ *
+ * @param {Object}                       props              component properties
+ * @param {Array | JSX.Element | string} props.children     component children
+ * @param {Function}                     props.clickHandler button click handler
+ * @param {string}                       [props.type=basic] button type
+ * @function Object() { [native code] }
+ */ exports.modalButtonTypes = modalButtonTypes;
+function UpsellModalButton(_ref) {
+    var children = _ref.children, clickHandler = _ref.clickHandler, _ref$type = _ref.type, type = _ref$type === void 0 ? modalButtonTypes.BASIC : _ref$type;
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
+        "data-ub-upsell-button-type": type,
+        className: "ub-upsell-modal-button",
+        onClick: function onClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            clickHandler(e);
+        }
+    }, children));
+}
+/**
+ * @module UpsellModalButton
+ */ var _default = UpsellModalButton;
+exports["default"] = _default;
+
+},{"33d109c6bc5182c7":"21dqq"}],"9tuQW":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.navigationType = exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("7379d0f4387f2644"));
+var _reactFontawesome = require("9393b843392e049e");
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+    if (null != _i) {
+        var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+        try {
+            if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                if (Object(_i) !== _i) return;
+                _n = !1;
+            } else for(; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+        } catch (err) {
+            _d = !0, _e = err;
+        } finally{
+            try {
+                if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+            } finally{
+                if (_d) throw _e;
+            }
+        }
+        return _arr;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Navigation types.
+ *
+ * @type {{LEFT: string, RIGHT: string}}
+ */ var navigationType = {
+    LEFT: "fa-solid fa-caret-left",
+    RIGHT: "fa-solid fa-caret-right"
+};
+/**
+ * Modal navigation component.
+ *
+ * @param {Object}   props                 component properties
+ * @param {string}   props.type            navigation type, use `navigationType` object for available type
+ * @param {boolean}  [props.disable=false] disabled status
+ * @param {Function} props.clickHandler    click handler
+ * @function Object() { [native code] }
+ */ exports.navigationType = navigationType;
+function ModalNavigation(_ref) {
+    var type = _ref.type, _ref$disable = _ref.disable, disable = _ref$disable === void 0 ? false : _ref$disable, clickHandler = _ref.clickHandler;
+    var _useState = (0, _react.useState)(type), _useState2 = _slicedToArray(_useState, 2), finalType = _useState2[0], setType = _useState2[1];
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        var navigationKeys = Object.values(navigationType);
+        // don't let unsupported navigation types to be selected
+        if (!navigationKeys.includes(type)) setType(navigationType.LEFT);
+    }, [
+        type
+    ]);
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
+        className: "ub-upsells-modal-navigation",
+        "data-ub-nav-disabled": disable,
+        onClick: clickHandler
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: finalType
+    })));
+}
+/**
+ * @module ModalNavigation
+ */ var _default = ModalNavigation;
+exports["default"] = _default;
+
+},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"33zwc":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

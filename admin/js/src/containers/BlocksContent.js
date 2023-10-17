@@ -15,6 +15,7 @@ import UpgradeBoxContent from '$Components/UpgradeBoxContent';
 import BlockControlsContainer from '$Components/BlockControlsContainer';
 import withStore from '$HOC/withStore';
 import { toggleBlockStatus } from '$Stores/settings-menu/actions';
+import UpsellModalSettingsMenu from '$Components/UpsellModalSettingsMenu';
 
 /**
  * Blocks content.
@@ -64,6 +65,7 @@ function BlocksContent( { pluginBlocks, setBlockStatus, dispatch } ) {
 			</BoxContentProvider>
 			<BlockControlsContainer />
 			<UpgradeBoxContent alignment={ BoxContentAlign.CENTER } />
+			<UpsellModalSettingsMenu />
 		</div>
 	);
 }
