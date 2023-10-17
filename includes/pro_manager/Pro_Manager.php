@@ -1,9 +1,12 @@
 <?php
+/**
+ * Manager for handling features based on availability of pro version from base version.
+ *
+ * @package ultimate-blocks
+ */
 
 namespace Ultimate_Blocks\includes\pro_manager;
 
-use DOMDocument;
-use DOMNode;
 use Exception;
 use Freemius;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
@@ -21,13 +24,10 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Advanced_Video_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Social_Share_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Table_Of_Contents_Extension;
-use Ultimate_Blocks\includes\svg_sanitizer\DomDocumentLoadHtmlException;
 use Ultimate_Blocks\includes\svg_sanitizer\Svg_Sanitizer;
-use Ultimate_Blocks\includes\svg_sanitizer\SvgSanitizeInvalidRootElement;
 use function add_action;
 use function add_filter;
 use function do_action;
-use function get_transient;
 use function set_transient;
 
 /**
@@ -56,7 +56,7 @@ class Pro_Manager {
 	 * @return void
 	 */
 	protected function init_process() {
-		// only start this operations if pro version is not available
+		// only start this operations if pro version is not available.
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
 
@@ -67,7 +67,7 @@ class Pro_Manager {
 
 		Editor_Data_Manager::get_instance()->add_editor_data(
 			array(
-				'proStatus' => json_encode( $this->is_pro() ),
+				'proStatus' => wp_json_encode( $this->is_pro() ),
 				'assets'    => array(
 					'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/menu-icon-colored.svg',
 					'proUrl'  => 'https://ultimateblocks.com/pricing/',
@@ -79,7 +79,7 @@ class Pro_Manager {
 	/**
 	 * Add menu data.
 	 *
-	 * @param array $menu_data menu data
+	 * @param array $menu_data menu data.
 	 *
 	 * @return array menu data
 	 */
@@ -109,7 +109,7 @@ class Pro_Manager {
 			'youtubeUrl'     => 'https://www.youtube.com/@ultimateblockswp',
 		);
 
-		// merge assets
+		// merge assets.
 		$menu_data['assets'] = array_merge( $menu_data['assets'], $assets );
 
 		$this->add_menu_upsell_data( $menu_data );
@@ -120,12 +120,12 @@ class Pro_Manager {
 	/**
 	 * Add upsell data.
 	 *
-	 * @param array $menu_data menu data
+	 * @param array $menu_data menu data.
 	 *
 	 * @return void
 	 */
 	private function add_menu_upsell_data( &$menu_data ) {
-		// add base structure and default values for upsell data
+		// add base structure and default values for upsell data.
 		if ( ! isset( $menu_data['upsells'] ) ) {
 			$menu_data['upsells'] = array(
 				'blocks' => array(),
@@ -144,10 +144,10 @@ class Pro_Manager {
 		$upsell_data = array();
 
 		foreach ( $this->pro_block_upsells as $pro_upsell_class ) {
-			if ( in_array( Pro_Block_Upsell::class, class_parents( $pro_upsell_class ) ) ) {
+			if ( in_array( Pro_Block_Upsell::class, class_parents( $pro_upsell_class ), true ) ) {
 				$block_upsell_instance = new $pro_upsell_class();
 
-				// sanitize block icon
+				// sanitize block icon.
 				$svg_sanitizer = new Svg_Sanitizer( $block_upsell_instance->block_icon() );
 				try {
 					$block_icon = $svg_sanitizer->sanitize();
@@ -170,16 +170,16 @@ class Pro_Manager {
 	/**
 	 * Menu related operations.
 	 *
-	 * @param string $hook current menu hook
+	 * @param string $hook current menu hook.
 	 *
 	 * @return void
 	 */
 	public function menu_operations( $hook ) {
 		global $ub_pro_page;
 
-		// check if current page is pro dashboard page
+		// check if current page is pro dashboard page.
 		if ( $hook === $ub_pro_page ) {
-			// don't show pro admin notifications for a month
+			// don't show pro admin notifications for a month.
 			set_transient( self::DASHBOARD_SIDEBAR_NOTIFICATION_TRANSIENT_KEY, true, 60 * 60 * 24 * 30 );
 		}
 	}
@@ -190,7 +190,7 @@ class Pro_Manager {
 	 * @return boolean pro status
 	 */
 	public function is_pro() {
-		// check if ULTIMATE_BLOCKS_PRO_LICENSE is defined and its value is true
+		// check if ULTIMATE_BLOCKS_PRO_LICENSE is defined and its value is true.
 		return defined( 'ULTIMATE_BLOCKS_PRO_LICENSE' ) && ULTIMATE_BLOCKS_PRO_LICENSE;
 	}
 
@@ -243,47 +243,47 @@ class Pro_Manager {
 	 * @return array upsell data
 	 */
 	private function prepare_priority_upsell_data() {
-		// Tabbed content extension
+		// Tabbed content extension.
 		$tabbed_content_upsell      = new Tabbed_Content_Extension( 'ub/tabbed-content-block' );
 		$tabbed_content_upsell_data = $tabbed_content_upsell->get_upsell_data();
 
-		// Button extension
+		// Button extension.
 		$button_upsell      = new Button_Extension( 'ub/button' );
 		$button_upsell_data = $button_upsell->get_upsell_data();
 
-		// Content toggle extension
+		// Content toggle extension.
 		$content_toggle_upsell = new Content_Toggle_Extension( 'ub/content-toggle-block' );
 		$content_toggle_data   = $content_toggle_upsell->get_upsell_data();
 
-		// Content toggle panel extension
+		// Content toggle panel extension.
 		$content_toggle_panel_upsell = new Content_Toggle_Extension( 'ub/content-toggle-panel-block' );
 		$content_toggle_panel_data   = $content_toggle_panel_upsell->get_upsell_data();
 
-		// Divider extension
+		// Divider extension.
 		$divider_upsell      = new Divider_Extension( 'ub/divider' );
 		$divider_upsell_data = $divider_upsell->get_upsell_data();
 
-		// Expand extension
+		// Expand extension.
 		$expand_upsell      = new Expand_Extension( 'ub/expand' );
 		$expand_upsell_data = $expand_upsell->get_upsell_data();
 
-		// Image slider extension
+		// Image slider extension.
 		$image_slider_upsell      = new Image_Slider_Extension( 'ub/image-slider' );
 		$image_slider_upsell_data = $image_slider_upsell->get_upsell_data();
 
-		// Review extension
+		// Review extension.
 		$review_upsell      = new Review_Extension( 'ub/review' );
 		$review_upsell_data = $review_upsell->get_upsell_data();
 
-		// Table of contents extension
+		// Table of contents extension.
 		$table_of_contents_upsell      = new Table_Of_Contents_Extension( 'ub/table-of-contents-block' );
 		$table_of_contents_upsell_data = $table_of_contents_upsell->get_upsell_data();
 
-		// Social share extension
+		// Social share extension.
 		$social_share_upsell      = new Social_Share_Extension( 'ub/social-share' );
 		$social_share_upsell_data = $social_share_upsell->get_upsell_data();
 
-		// Advanced Video extension
+		// Advanced Video extension.
 		$advanced_video_upsell      = new Advanced_Video_Extension( 'ub/advanced-video' );
 		$advanced_video_upsell_data = $advanced_video_upsell->get_upsell_data();
 
@@ -318,7 +318,7 @@ class Pro_Manager {
 	/**
 	 * Add notification to sidebar menu title.
 	 *
-	 * @param string $original_title title
+	 * @param string $original_title title.
 	 *
 	 * @return string modified title
 	 */
