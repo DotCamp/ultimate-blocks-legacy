@@ -19,6 +19,10 @@ function ToggleControl( {
 	const [ innerStatus, setInnerStatus ] = useState( status );
 
 	useEffect( () => {
+		setInnerStatus( status );
+	}, [ status ] );
+
+	useEffect( () => {
 		if ( initialRender.current ) {
 			initialRender.current = false;
 		} else {

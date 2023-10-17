@@ -16,6 +16,9 @@ export const toggleBlockStatus =
 		if ( ! Array.isArray( blockId ) ) {
 			blockId = [ blockId ];
 		}
+		// TODO [ErdemBircan] remove for production
+		// eslint-disable-next-line no-console
+		console.log( blockId );
 
 		const formData = new FormData();
 

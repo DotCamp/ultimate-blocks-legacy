@@ -36214,6 +36214,9 @@ var _versionControl = require("a85ccb0efb87f164");
         if (!Array.isArray(blockId)) blockId = [
             blockId
         ];
+        // TODO [ErdemBircan] remove for production
+        // eslint-disable-next-line no-console
+        console.log(blockId);
         var formData = new FormData();
         blockId.map(function(bId) {
             return formData.append("block_name[]", bId);
@@ -37543,13 +37546,21 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("44b754e7f33ff5d6"));
+var _react = _interopRequireWildcard(require("44b754e7f33ff5d6"));
 var _i18n = require("ccee3ff924ee68fd");
 var _BoxContentProvider = _interopRequireDefault(require("5d137a308a6dc4a1"));
+var _blocks = require("43840ff570ccb3b4");
 var _BoxContent = require("49772c2ff883b51c");
 var _ButtonLink = _interopRequireWildcard(require("1f27831d7ce0318c"));
 var _UpgradeBoxContent = _interopRequireDefault(require("8b5f61fe76b9467a"));
 var _BlockControlsContainer = _interopRequireDefault(require("840a3345d0cfd09"));
+var _withStore = _interopRequireDefault(require("8932a746af86836e"));
+var _actions = require("202bbd36af9d5464");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -37576,16 +37587,33 @@ function _interopRequireWildcard(obj, nodeInterop) {
     if (cache) cache.set(obj, newObj);
     return newObj;
 }
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
 /**
  * Blocks content.
  *
+ * @param {Object}   props                component properties
+ * @param {Array}    props.pluginBlocks   plugin blocks, will be supplied via HOC
+ * @param {Function} props.setBlockStatus set block status, will be supplied via HOC
+ * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
  * @class
- */ function BlocksContent() {
+ */ function BlocksContent(_ref) {
+    var pluginBlocks = _ref.pluginBlocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch;
+    var pluginBlockNames = (0, _react.useRef)(pluginBlocks.map(function(_ref2) {
+        var name = _ref2.name;
+        return name;
+    }));
+    /**
+   * Toggle status of all available blocks.
+   *
+   * @param {boolean} status status to set
+   */ var toggleAllBlockStatus = function toggleAllBlockStatus(status) {
+        dispatch(_actions.toggleBlockStatus)(pluginBlockNames.current, status);
+        pluginBlockNames.current.map(function(bName) {
+            return setBlockStatus({
+                id: bName,
+                status: status
+            });
+        });
+    };
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-blocks-content"
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
@@ -37593,23 +37621,39 @@ function _interopRequireDefault(obj) {
         contentId: "globalControl",
         size: _BoxContent.BoxContentSize.JUMBO
     }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        onClickHandler: function onClickHandler() {},
+        onClickHandler: function onClickHandler() {
+            toggleAllBlockStatus(true);
+        },
         type: _ButtonLink.ButtonLinkType.DEFAULT,
         title: (0, _i18n.__)("Activate All")
     }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        onClickHandler: function onClickHandler() {},
+        onClickHandler: function onClickHandler() {
+            toggleAllBlockStatus(false);
+        },
         type: _ButtonLink.ButtonLinkType.DEFAULT,
         title: (0, _i18n.__)("Deactivate All")
     })), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
         alignment: _BoxContent.BoxContentAlign.CENTER
     }));
 }
+// store select mapping
+var selectMapping = function selectMapping(select) {
+    return {
+        pluginBlocks: select(_blocks.getBlocks)
+    };
+};
+// store action mapping
+var actionMapping = function actionMapping() {
+    return {
+        setBlockStatus: _blocks.setBlockActiveStatus
+    };
+};
 /**
  * @module BlocksContent
- */ var _default = BlocksContent;
+ */ var _default = (0, _withStore["default"])(BlocksContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO"}],"e69CO":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","43840ff570ccb3b4":"ohEvx","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37915,6 +37959,11 @@ function _arrayWithHoles(arr) {
     var initialAnimation = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
     /* useEffect block */ (0, _react.useEffect)(function() {
+        setInnerStatus(status);
+    }, [
+        status
+    ]);
+    (0, _react.useEffect)(function() {
         if (proBlock && !proStatus) setInnerStatus(false);
     }, [
         innerStatus
@@ -38055,6 +38104,11 @@ function _arrayWithHoles(arr) {
     var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange, _ref$disabled = _ref.disabled, disabled = _ref$disabled === void 0 ? false : _ref$disabled;
     var initialRender = (0, _react.useRef)(true);
     var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
+    (0, _react.useEffect)(function() {
+        setInnerStatus(status);
+    }, [
+        status
+    ]);
     (0, _react.useEffect)(function() {
         if (initialRender.current) initialRender.current = false;
         else onStatusChange(innerStatus);

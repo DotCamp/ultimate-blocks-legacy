@@ -42,6 +42,10 @@ function BlockControlCard( {
 	/* useEffect block */
 
 	useEffect( () => {
+		setInnerStatus( status );
+	}, [ status ] );
+
+	useEffect( () => {
 		if ( proBlock && ! proStatus ) {
 			setInnerStatus( false );
 		}

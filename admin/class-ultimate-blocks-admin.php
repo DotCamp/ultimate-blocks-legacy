@@ -276,6 +276,7 @@ class Ultimate_Blocks_Admin {
 				)
 			);
 		}
+		die();
 	}
 
 
@@ -374,7 +375,7 @@ class Ultimate_Blocks_Admin {
 			update_option( 'ultimate_blocks', $this->blocks() );
 		}
 
-		wp_send_json_success( get_option( 'ultimate_blocks', false ) );
+//		wp_send_json_success( get_option( 'ultimate_blocks', false ) );
 	}
 
 	/**
