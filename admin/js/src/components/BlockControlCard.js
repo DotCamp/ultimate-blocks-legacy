@@ -36,7 +36,9 @@ function BlockControlCard( {
 	return (
 		<div
 			className={ 'block-control' }
-			data-enabled={ JSON.stringify( status ) }
+			data-enabled={ JSON.stringify(
+				proBlock && ! proStatus ? false : status
+			) }
 			data-initial-animation={ JSON.stringify(
 				initialAnimation.current
 			) }

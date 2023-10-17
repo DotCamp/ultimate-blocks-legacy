@@ -37995,7 +37995,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
     var initialAnimation = (0, _react.useRef)(true);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-control",
-        "data-enabled": JSON.stringify(status),
+        "data-enabled": JSON.stringify(proBlock && !proStatus ? false : status),
         "data-initial-animation": JSON.stringify(initialAnimation.current)
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title"
