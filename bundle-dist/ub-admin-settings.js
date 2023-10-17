@@ -32324,21 +32324,21 @@ function _arrayWithHoles(arr) {
  * @function Object() { [native code] }
  */ function VersionControl(_ref) {
     var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
-    // eslint-disable-next-line no-unused-vars
-    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
-    // eslint-disable-next-line no-unused-vars
-    var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
-    var _useState5 = (0, _react.useState)(false), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
+    var _useState = (0, _react.useState)(pluginVersion), _useState2 = _slicedToArray(_useState, 2), selectedVersion = _useState2[0], setSelectedVersion = _useState2[1];
+    var _useState3 = (0, _react.useState)(false), _useState4 = _slicedToArray(_useState3, 2), popupVisibility = _useState4[0], setPopupVisibility = _useState4[1];
+    var sortedVersions = (0, _react.useMemo)(function() {
+        return allVersions.sort().reverse();
+    }, [
+        allVersions
+    ]);
     /**
-   * Calculate button disabled status.
+   * Callback for version selection.
    *
-   * @return {boolean} disabled status
-   */ // eslint-disable-next-line no-unused-vars
-    var buttonDisabledStatus = function buttonDisabledStatus() {
-        return pluginVersion === selectedVersion;
+   * @param {string} targetVersion target version
+   */ var onVersionSelect = function onVersionSelect(targetVersion) {
+        setSelectedVersion(targetVersion);
+        setPopupVisibility(true);
     };
-    var sortedVersions = allVersions.sort().reverse();
-    var versionsLength = sortedVersions.length;
     /**
    * Start version operation.
    *
@@ -32346,24 +32346,18 @@ function _arrayWithHoles(arr) {
    */ var startVersionOperation = function startVersionOperation() {
         return dispatch(_actions.rollbackToVersion)(selectedVersion);
     };
-    (0, _react.useEffect)(function() {
-        var levelBorder = versionsLength / 2;
-        var versionIndex = sortedVersions.indexOf(pluginVersion);
-        var calculatedLevel = // eslint-disable-next-line no-nested-ternary
-        versionIndex === 0 ? "none" : versionIndex > levelBorder || versionIndex < 0 ? "high" : "medium";
-        setVersionLevel(calculatedLevel);
-    }, [
-        selectedVersion
-    ]);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "version-control-container"
     }, /*#__PURE__*/ _react["default"].createElement(_HeaderVersionInfo["default"], {
-        currentVersion: pluginVersion
+        availableVersions: sortedVersions,
+        currentVersion: selectedVersion,
+        onSelect: onVersionSelect
     }), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
         target: document.body
     }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
         onCloseHandler: function onCloseHandler() {
-            return setPopupVisibility(false);
+            setSelectedVersion(pluginVersion);
+            setPopupVisibility(false);
         },
         from: pluginVersion,
         to: selectedVersion,
@@ -36218,9 +36212,6 @@ var _versionControl = require("a85ccb0efb87f164");
         if (!Array.isArray(blockId)) blockId = [
             blockId
         ];
-        // TODO [ErdemBircan] remove for production
-        // eslint-disable-next-line no-console
-        console.log(blockId);
         var formData = new FormData();
         blockId.map(function(bId) {
             return formData.append("block_name[]", bId);
@@ -36263,27 +36254,78 @@ exports.rollbackToVersion = rollbackToVersion;
 
 },{"48e349588f046c5f":"9SnHn","a85ccb0efb87f164":"6jcRk"}],"lUMLC":[function(require,module,exports) {
 "use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("f952e3330057bbdf"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
+var _react = _interopRequireWildcard(require("f952e3330057bbdf"));
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
         "default": obj
     };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
 }
 /**
  * Header version info.
  *
- * @param {Object} props                component properties
- * @param {string} props.currentVersion current version number
+ * @param {Object}        props                   component properties
+ * @param {string}        props.currentVersion    current version number
+ * @param {Array<string>} props.availableVersions available versions
+ * @param {Function}      props.onSelect          callback for version select event
  * @class
  */ function HeaderVersionInfo(_ref) {
-    var currentVersion = _ref.currentVersion;
+    var currentVersion = _ref.currentVersion, availableVersions = _ref.availableVersions, onSelect = _ref.onSelect;
+    var availableVersionsMinusCurrent = (0, _react.useMemo)(function() {
+        return availableVersions.filter(function(version) {
+            return version !== currentVersion;
+        });
+    }, [
+        availableVersions
+    ]);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-header-version-info"
-    }, currentVersion);
+    }, /*#__PURE__*/ _react["default"].createElement("select", {
+        value: currentVersion,
+        onChange: function onChange(e) {
+            return onSelect(e.target.value);
+        }
+    }, /*#__PURE__*/ _react["default"].createElement("option", {
+        disabled: true,
+        value: currentVersion
+    }, currentVersion), availableVersionsMinusCurrent.map(function(version) {
+        return /*#__PURE__*/ _react["default"].createElement("option", {
+            key: version,
+            value: version
+        }, version);
+    })));
 }
 /**
  * @module HeaderVersionInfo

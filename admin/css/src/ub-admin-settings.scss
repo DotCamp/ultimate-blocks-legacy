@@ -126,13 +126,10 @@
 						@extend %flex-center-all-row;
 
 						.ub-header-version-info {
-							@extend %pointer;
-
-							background-color: $o-gray-50;
-							border-radius: 5px;
-							color: $text-faded-color;
-							font-size: $font-pill-size;
-							padding: 4px 12px;
+							* {
+								color: $text-faded-color;
+								font-size: $font-pill-size;
+							}
 						}
 
 						.version-control-status-indicator {
@@ -413,6 +410,7 @@
 	z-index: 10000;
 	font-family: $font-family;
 	font-size: $version-control-general-font-size;
+	animation: blur-anim 0.2s ease-out forwards;
 
 	.modal-container {
 		@extend %default-border;

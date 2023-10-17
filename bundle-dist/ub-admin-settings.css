@@ -1,5 +1,5 @@
 @import "https://fonts.googleapis.com/css2?family=Inter&display=swap";
-.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .ub-header-version-info, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-pointer, .ub-upsell-modal-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation {
+.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-pointer, .ub-upsell-modal-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation {
   cursor: pointer;
 }
 
@@ -213,7 +213,7 @@
   display: flex;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .ub-header-version-info, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-pointer, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button {
+.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-pointer, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button {
   cursor: pointer;
 }
 
@@ -361,7 +361,7 @@
   font-weight: 400;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .ub-header-version-info, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer {
+.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-button-link, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer {
   cursor: pointer;
 }
 
@@ -472,7 +472,7 @@
   transition: all .2s ease-out;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .ub-header-version-info, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer, .ub-button-link {
+.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-menu-navigation .ub-menu-navigation-header-button, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer, .ub-button-link {
   cursor: pointer;
 }
 
@@ -580,7 +580,7 @@
   border-radius: 999px;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .ub-header-version-info, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer, .ub-button-link, .ub-menu-navigation .ub-menu-navigation-header-button {
+.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .ub-hamburger-menu-icon-wrapper, .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .share-node, .block-control .block-title .block-title-right-container .pro-block-card-info-button, .block-control .block-title .block-title-left-container .title-demo, .ub-upsells-modal-wrapper .ub-upsells-modal-navigation, .ub-upsell-modal-button, .ub-pointer, .ub-button-link, .ub-menu-navigation .ub-menu-navigation-header-button {
   cursor: pointer;
 }
 
@@ -846,12 +846,9 @@
   margin-left: 24px;
 }
 
-.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .ub-header-version-info {
+.ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .ub-header-version-info * {
   color: #64748b;
-  background-color: #fff3f6;
-  border-radius: 5px;
-  padding: 4px 12px;
-  font-size: .875rem;
+  font-size: .8rem;
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .version-control-container .version-control-status-indicator {
@@ -1083,6 +1080,7 @@
   font-family: Inter, sans-serif;
   font-size: rem;
   background-color: #000000b3;
+  animation: .2s ease-out forwards blur-anim;
   position: fixed;
   inset: 0;
 }
