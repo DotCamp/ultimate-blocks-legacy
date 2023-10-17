@@ -16,7 +16,7 @@ const initialState = {
 		},
 		content: contentData,
 		router: {
-			current: 'blocks',
+			current: 'welcome',
 		},
 	},
 	versionControl: {

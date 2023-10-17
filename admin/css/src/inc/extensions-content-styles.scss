@@ -1,0 +1,18 @@
+@import "../base/themes/admin-menu-theme";
+@import "../base/common";
+
+.ub-extensions-content {
+	.soon {
+		color: $text-faded-color;
+
+		.just-a-dot {
+			@extend %default-transition;
+
+			opacity: 0;
+
+			&[data-opacity="true"] {
+				opacity: 1;
+			}
+		}
+	}
+}
