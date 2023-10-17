@@ -2,7 +2,6 @@
 
 namespace Ultimate_Blocks\includes\pro_manager;
 
-
 use DOMDocument;
 use DOMNode;
 use Exception;
@@ -44,11 +43,12 @@ class Pro_Manager {
 
 	/**
 	 * List of upsells to pro only blocks.
+	 *
 	 * @var array
 	 */
-	private $pro_block_upsells = [
-		Coupon_Pro_Block::class
-	];
+	private $pro_block_upsells = array(
+		Coupon_Pro_Block::class,
+	);
 
 	/**
 	 * Main process that will be called during initialization of manager.
@@ -60,18 +60,20 @@ class Pro_Manager {
 		if ( ! $this->is_pro() ) {
 			Editor_Data_Manager::get_instance()->add_editor_data( $this->prepare_priority_upsell_data() );
 
-			add_action( 'admin_enqueue_scripts', [ $this, 'menu_operations' ], 10, 1 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'menu_operations' ), 10, 1 );
 		}
 
-		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_menu_data' ], 10, 1 );
+		add_filter( 'ub/filter/admin_settings_menu_data', array( $this, 'add_menu_data' ), 10, 1 );
 
-		Editor_Data_Manager::get_instance()->add_editor_data( [
-			'proStatus' => json_encode( $this->is_pro() ),
-			'assets'    => [
-				'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/menu-icon-colored.svg',
-				'proUrl'  => 'https://ultimateblocks.com/pricing/'
-			]
-		] );
+		Editor_Data_Manager::get_instance()->add_editor_data(
+			array(
+				'proStatus' => json_encode( $this->is_pro() ),
+				'assets'    => array(
+					'logoUrl' => trailingslashit( ULTIMATE_BLOCKS_URL ) . '/admin/images/logos/menu-icon-colored.svg',
+					'proUrl'  => 'https://ultimateblocks.com/pricing/',
+				),
+			)
+		);
 	}
 
 	/**
@@ -83,20 +85,29 @@ class Pro_Manager {
 	 */
 	public function add_menu_data( $menu_data ) {
 		if ( ! isset( $menu_data['assets'] ) ) {
-			$menu_data['assets'] = [];
+			$menu_data['assets'] = array();
 		}
 
 		if ( ! isset( $menu_data['pluginStatus'] ) ) {
-			$menu_data['pluginStatus'] = [];
+			$menu_data['pluginStatus'] = array();
 		}
 
-		$menu_data['pluginStatus'] = array_merge( $menu_data['pluginStatus'], [
-			'isPro' => $this->is_pro()
-		] );
+		$menu_data['pluginStatus'] = array_merge(
+			$menu_data['pluginStatus'],
+			array(
+				'isPro' => $this->is_pro(),
+			)
+		);
 
-		$assets = [
-			'proBuyUrl' => 'https://ultimateblocks.com/pricing/'
-		];
+		$assets = array(
+			'proBuyUrl'      => 'https://ultimateblocks.com/pricing/',
+			'youtubeVideoId' => '8FESaV5WE8A',
+			'documentsUrl'   => 'https://ultimateblocks.com/pricing/',
+			'supportUrl'     => 'https://ultimateblocks.com/community/',
+			'facebookUrl'    => 'https://www.facebook.com/UltimateBlocks',
+			'twitterUrl'     => 'https://twitter.com/Ultimate_Blocks',
+			'youtubeUrl'     => 'https://www.youtube.com/@ultimateblockswp',
+		);
 
 		// merge assets
 		$menu_data['assets'] = array_merge( $menu_data['assets'], $assets );
@@ -116,9 +127,9 @@ class Pro_Manager {
 	private function add_menu_upsell_data( &$menu_data ) {
 		// add base structure and default values for upsell data
 		if ( ! isset( $menu_data['upsells'] ) ) {
-			$menu_data['upsells'] = [
-				'blocks' => []
-			];
+			$menu_data['upsells'] = array(
+				'blocks' => array(),
+			);
 		}
 
 		$menu_data['upsells']['blocks'] = $this->prepare_pro_block_upsell_data();
@@ -130,7 +141,7 @@ class Pro_Manager {
 	 * @return array pro block data
 	 */
 	private function prepare_pro_block_upsell_data() {
-		$upsell_data = [];
+		$upsell_data = array();
 
 		foreach ( $this->pro_block_upsells as $pro_upsell_class ) {
 			if ( in_array( Pro_Block_Upsell::class, class_parents( $pro_upsell_class ) ) ) {
@@ -144,12 +155,12 @@ class Pro_Manager {
 					$block_icon = '';
 				}
 
-				$upsell_data[ $block_upsell_instance->block_name() ] = [
+				$upsell_data[ $block_upsell_instance->block_name() ] = array(
 					'label'      => $block_upsell_instance->block_label(),
 					'desc'       => $block_upsell_instance->block_description(),
 					'icon'       => $block_icon,
-					'screenshot' => $block_upsell_instance->block_upsell_screenshot()
-				];
+					'screenshot' => $block_upsell_instance->block_upsell_screenshot(),
+				);
 			}
 		}
 
@@ -175,6 +186,7 @@ class Pro_Manager {
 
 	/**
 	 * Get pro status of plugin.
+	 *
 	 * @return boolean pro status
 	 */
 	public function is_pro() {
@@ -195,26 +207,28 @@ class Pro_Manager {
 			// Include Freemius SDK.
 			require_once ULTIMATE_BLOCKS_PATH . 'library/freemius/start.php';
 
-			$ub_fs = fs_dynamic_init( [
-				'id'                  => '1798',
-				'slug'                => 'ultimate-blocks',
-				'premium_slug'        => 'ultimate-blocks-pro',
-				'type'                => 'plugin',
-				'public_key'          => 'pk_bd3d3c8e255543256632fd4bb9842',
-				'is_premium'          => false,
-				'premium_suffix'      => 'pro',
-				'has_premium_version' => false,
-				'has_paid_plans'      => false,
-				'has_addons'          => true,
-				'menu'                => [
-					'slug'       => 'ultimate-blocks-settings',
-					'first-path' => 'admin.php?page=ultimate-blocks-help',
-					'account'    => true,
-					'contact'    => true,
-					'support'    => false,
-				],
-				'secret_key'          => Env_Manager::get( 'FS_SECRET_KEY' ),
-			] );
+			$ub_fs = fs_dynamic_init(
+				array(
+					'id'                  => '1798',
+					'slug'                => 'ultimate-blocks',
+					'premium_slug'        => 'ultimate-blocks-pro',
+					'type'                => 'plugin',
+					'public_key'          => 'pk_bd3d3c8e255543256632fd4bb9842',
+					'is_premium'          => false,
+					'premium_suffix'      => 'pro',
+					'has_premium_version' => false,
+					'has_paid_plans'      => false,
+					'has_addons'          => true,
+					'menu'                => array(
+						'slug'       => 'ultimate-blocks-settings',
+						'first-path' => 'admin.php?page=ultimate-blocks-help',
+						'account'    => true,
+						'contact'    => true,
+						'support'    => false,
+					),
+					'secret_key'          => Env_Manager::get( 'FS_SECRET_KEY' ),
+				)
+			);
 
 			do_action( 'ub_fs_loaded' );
 		}
@@ -225,6 +239,7 @@ class Pro_Manager {
 
 	/**
 	 * Prepare upsell related extension data.
+	 *
 	 * @return array upsell data
 	 */
 	private function prepare_priority_upsell_data() {
@@ -272,22 +287,32 @@ class Pro_Manager {
 		$advanced_video_upsell      = new Advanced_Video_Extension( 'ub/advanced-video' );
 		$advanced_video_upsell_data = $advanced_video_upsell->get_upsell_data();
 
-		$final_upsell_extension_data = array_merge_recursive( [], $tabbed_content_upsell_data, $button_upsell_data,
-			$content_toggle_data, $content_toggle_panel_data, $divider_upsell_data, $expand_upsell_data,
+		$final_upsell_extension_data = array_merge_recursive(
+			array(),
+			$tabbed_content_upsell_data,
+			$button_upsell_data,
+			$content_toggle_data,
+			$content_toggle_panel_data,
+			$divider_upsell_data,
+			$expand_upsell_data,
 			$image_slider_upsell_data,
-			$review_upsell_data, $table_of_contents_upsell_data, $social_share_upsell_data, $advanced_video_upsell_data );
+			$review_upsell_data,
+			$table_of_contents_upsell_data,
+			$social_share_upsell_data,
+			$advanced_video_upsell_data
+		);
 
-		return [
-			'upsellExtensionData' => $final_upsell_extension_data
-		];
+		return array(
+			'upsellExtensionData' => $final_upsell_extension_data,
+		);
 	}
 
 	/**
 	 * Prepare data for pro only block upsells.
+	 *
 	 * @return void
 	 */
 	private function prepare_pro_only_block_upsell_data() {
-
 	}
 
 	/**
@@ -298,7 +323,10 @@ class Pro_Manager {
 	 * @return string modified title
 	 */
 	private function generate_title_with_notification( $original_title ) {
-		return sprintf( '%s<span class="update-plugins" style="background-color: #EAB308 !important; text-shadow: ">
-<span>💡</span></span>', $original_title );
+		return sprintf(
+			'%s<span class="update-plugins" style="background-color: #EAB308 !important; text-shadow: ">
+<span>💡</span></span>',
+			$original_title
+		);
 	}
 }

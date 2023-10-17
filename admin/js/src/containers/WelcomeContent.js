@@ -6,13 +6,29 @@ import YouTubeEmbed from '$Components/YouTubeEmbed';
 import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
 import ButtonLinkGroup from '$Components/ButtonLinkGroup';
 import UpgradeBoxContent from '$Components/UpgradeBoxContent';
+import withStore from '$HOC/withStore';
+import { getAsset } from '$Stores/settings-menu/slices/assets';
 
 /**
  * Welcome content component.
  *
+ * @param {Object} props                component properties
+ * @param {string} props.youtubeVideoId youtube video id for welcome page
+ * @param {string} props.documentsUrl   url for documents
+ * @param {string} props.supportUrl     url for support forum
+ * @param {string} props.twitterUrl     url for twitter
+ * @param {string} props.facebookUrl    url for facebook
+ * @param {string} props.youtubeUrl     url for youtube
  * @class
  */
-function WelcomeContent() {
+function WelcomeContent( {
+	youtubeVideoId,
+	documentsUrl,
+	supportUrl,
+	twitterUrl,
+	facebookUrl,
+	youtubeUrl,
+} ) {
 	return (
 		<div className={ 'ub-welcome-content' }>
 			<div className={ 'ub-welcome-content__main' }>
@@ -20,21 +36,21 @@ function WelcomeContent() {
 					size={ BoxContentSize.JUMBO }
 					contentId={ 'welcome' }
 				>
-					<YouTubeEmbed height={ 315 } videoId={ '8FESaV5WE8A' } />
+					<YouTubeEmbed height={ 315 } videoId={ youtubeVideoId } />
 				</BoxContentProvider>
 				<UpgradeBoxContent />
 			</div>
 			<div className={ 'ub-welcome-content__right-sidebar' }>
 				<BoxContentProvider contentId={ 'documentation' }>
 					<ButtonLink
-						url={ 'https://ultimateblocks.com' }
+						url={ documentsUrl }
 						title={ __( 'Visit Documents', 'ultimate-blocks' ) }
 						type={ ButtonLinkType.DEFAULT }
 					/>
 				</BoxContentProvider>
 				<BoxContentProvider contentId={ 'support' }>
 					<ButtonLink
-						url={ 'https://ultimateblocks.com/community/' }
+						url={ supportUrl }
 						title={ __( 'Support Forum', 'ultimate-blocks' ) }
 						type={ ButtonLinkType.DEFAULT }
 					/>
@@ -42,17 +58,17 @@ function WelcomeContent() {
 				<BoxContentProvider contentId={ 'community' }>
 					<ButtonLinkGroup>
 						<ButtonLink
-							url={ 'https://ultimateblocks.com' }
+							url={ facebookUrl }
 							title={ __( 'Facebook', 'ultimate-blocks' ) }
 							type={ ButtonLinkType.TEXT }
 						/>
 						<ButtonLink
-							url={ 'https://ultimateblocks.com' }
+							url={ twitterUrl }
 							title={ __( 'Twitter', 'ultimate-blocks' ) }
 							type={ ButtonLinkType.TEXT }
 						/>
 						<ButtonLink
-							url={ 'https://ultimateblocks.com' }
+							url={ youtubeUrl }
 							title={ __( 'YouTube', 'ultimate-blocks' ) }
 							type={ ButtonLinkType.TEXT }
 						/>
@@ -63,7 +79,17 @@ function WelcomeContent() {
 	);
 }
 
+// store select mapping
+const selectMapping = ( select ) => ( {
+	youtubeVideoId: select( ( state ) => getAsset( state, 'youtubeVideoId' ) ),
+	documentsUrl: select( ( state ) => getAsset( state, 'documentsUrl' ) ),
+	supportUrl: select( ( state ) => getAsset( state, 'supportUrl' ) ),
+	twitterUrl: select( ( state ) => getAsset( state, 'twitterUrl' ) ),
+	facebookUrl: select( ( state ) => getAsset( state, 'facebookUrl' ) ),
+	youtubeUrl: select( ( state ) => getAsset( state, 'youtubeUrl' ) ),
+} );
+
 /**
  * @module WelcomeContent
  */
-export default WelcomeContent;
+export default withStore( WelcomeContent, selectMapping );

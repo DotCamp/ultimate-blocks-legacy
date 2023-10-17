@@ -36738,6 +36738,8 @@ var _YouTubeEmbed = _interopRequireDefault(require("6c04239ed429d27f"));
 var _ButtonLink = _interopRequireWildcard(require("3d8cac35ab8f5ccd"));
 var _ButtonLinkGroup = _interopRequireDefault(require("63cf395549eedb3"));
 var _UpgradeBoxContent = _interopRequireDefault(require("d289a1448b74b0aa"));
+var _withStore = _interopRequireDefault(require("effff66f723e6530"));
+var _assets = require("555dd7407cde9181");
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -36772,8 +36774,16 @@ function _interopRequireDefault(obj) {
 /**
  * Welcome content component.
  *
+ * @param {Object} props                component properties
+ * @param {string} props.youtubeVideoId youtube video id for welcome page
+ * @param {string} props.documentsUrl   url for documents
+ * @param {string} props.supportUrl     url for support forum
+ * @param {string} props.twitterUrl     url for twitter
+ * @param {string} props.facebookUrl    url for facebook
+ * @param {string} props.youtubeUrl     url for youtube
  * @class
- */ function WelcomeContent() {
+ */ function WelcomeContent(_ref) {
+    var youtubeVideoId = _ref.youtubeVideoId, documentsUrl = _ref.documentsUrl, supportUrl = _ref.supportUrl, twitterUrl = _ref.twitterUrl, facebookUrl = _ref.facebookUrl, youtubeUrl = _ref.youtubeUrl;
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
@@ -36783,43 +36793,66 @@ function _interopRequireDefault(obj) {
         contentId: "welcome"
     }, /*#__PURE__*/ _react["default"].createElement(_YouTubeEmbed["default"], {
         height: 315,
-        videoId: "8FESaV5WE8A"
+        videoId: youtubeVideoId
     })), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], null)), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-welcome-content__right-sidebar"
     }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "documentation"
     }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
+        url: documentsUrl,
         title: (0, _i18n.__)("Visit Documents", "ultimate-blocks"),
         type: _ButtonLink.ButtonLinkType.DEFAULT
     })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "support"
     }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com/community/",
+        url: supportUrl,
         title: (0, _i18n.__)("Support Forum", "ultimate-blocks"),
         type: _ButtonLink.ButtonLinkType.DEFAULT
     })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
         contentId: "community"
     }, /*#__PURE__*/ _react["default"].createElement(_ButtonLinkGroup["default"], null, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
+        url: facebookUrl,
         title: (0, _i18n.__)("Facebook", "ultimate-blocks"),
         type: _ButtonLink.ButtonLinkType.TEXT
     }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
+        url: twitterUrl,
         title: (0, _i18n.__)("Twitter", "ultimate-blocks"),
         type: _ButtonLink.ButtonLinkType.TEXT
     }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
+        url: youtubeUrl,
         title: (0, _i18n.__)("YouTube", "ultimate-blocks"),
         type: _ButtonLink.ButtonLinkType.TEXT
     })))));
 }
+// store select mapping
+var selectMapping = function selectMapping(select) {
+    return {
+        youtubeVideoId: select(function(state) {
+            return (0, _assets.getAsset)(state, "youtubeVideoId");
+        }),
+        documentsUrl: select(function(state) {
+            return (0, _assets.getAsset)(state, "documentsUrl");
+        }),
+        supportUrl: select(function(state) {
+            return (0, _assets.getAsset)(state, "supportUrl");
+        }),
+        twitterUrl: select(function(state) {
+            return (0, _assets.getAsset)(state, "twitterUrl");
+        }),
+        facebookUrl: select(function(state) {
+            return (0, _assets.getAsset)(state, "facebookUrl");
+        }),
+        youtubeUrl: select(function(state) {
+            return (0, _assets.getAsset)(state, "youtubeUrl");
+        })
+    };
+};
 /**
  * @module WelcomeContent
- */ var _default = WelcomeContent;
+ */ var _default = (0, _withStore["default"])(WelcomeContent, selectMapping);
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","ebd9e2ab5aeb8851":"7CyoE","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy"}],"cJGef":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","ebd9e2ab5aeb8851":"7CyoE","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy","effff66f723e6530":"kWmDy","555dd7407cde9181":"9SnHn"}],"cJGef":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
