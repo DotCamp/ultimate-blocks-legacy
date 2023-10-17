@@ -2,6 +2,7 @@ import React from 'react';
 import Route, { generateRouteArray } from '$AdminInc/Route';
 import WelcomeContent from '$Containers/WelcomeContent';
 import BlocksContent from '$Containers/BlocksContent';
+import ExtensionsContent from '$Containers/ExtensionsContent';
 
 /**
  * Routes for admin menu.
@@ -24,7 +25,7 @@ const routes = [
 	{
 		path: 'extensions',
 		title: 'Extensions',
-		element: <div>Extensions</div>,
+		element: <ExtensionsContent />,
 	},
 	{
 		path: '404',

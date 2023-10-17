@@ -36599,6 +36599,7 @@ var _react = _interopRequireDefault(require("25b7dff849a65078"));
 var _Route = _interopRequireWildcard(require("37e7e71bbe49bcb5"));
 var _WelcomeContent = _interopRequireDefault(require("40693d5dca3c0dce"));
 var _BlocksContent = _interopRequireDefault(require("f7b143816d73deb6"));
+var _ExtensionsContent = _interopRequireDefault(require("2c70358f23f9f0e4"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -36650,7 +36651,7 @@ function _interopRequireDefault(obj) {
     {
         path: "extensions",
         title: "Extensions",
-        element: /*#__PURE__*/ _react["default"].createElement("div", null, "Extensions")
+        element: /*#__PURE__*/ _react["default"].createElement(_ExtensionsContent["default"], null)
     },
     {
         path: "404",
@@ -36669,7 +36670,7 @@ function _interopRequireDefault(obj) {
 var _default = routes;
 exports["default"] = _default;
 
-},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k","40693d5dca3c0dce":"7iM5R","f7b143816d73deb6":"RcVav"}],"7iM5R":[function(require,module,exports) {
+},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k","40693d5dca3c0dce":"7iM5R","f7b143816d73deb6":"RcVav","2c70358f23f9f0e4":"33zwc"}],"7iM5R":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -38274,7 +38275,33 @@ function _interopRequireDefault(obj) {
  */ var _default = BlockCardProInfoControl;
 exports["default"] = _default;
 
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"gCgzB":[function(require,module,exports) {
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"33zwc":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("b68942abfa60c995"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Extensions content component.
+ *
+ * @class
+ */ function ExtensionsContent() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-extensions-content"
+    }, /*#__PURE__*/ _react["default"].createElement("i", null, "Coming soon..."));
+}
+/**
+ * @module ExtensionsContent
+ */ var _default = ExtensionsContent;
+exports["default"] = _default;
+
+},{"b68942abfa60c995":"21dqq"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
