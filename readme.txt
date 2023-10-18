@@ -145,6 +145,8 @@ That's it. You're done!
 
 = 3.0.6 =
 
+* FIX: Styled List block layout is not equal frontend and editor.
+* FIX: Styled List block duplicate instance not working properly.
 * NEW: Counter block
 * PRO: IMPROVE: Content toggle blocks attributes including their parent IDs.
 * IMPROVE: Change default state of social share block.
