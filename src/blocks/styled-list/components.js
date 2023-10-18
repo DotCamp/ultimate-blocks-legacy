@@ -150,12 +150,6 @@ function EditorComponent(props) {
 
 		loadIconList();
 
-		if (
-			blockID === ""
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-
 		function convertListToBlocks(items) {
 			let blockArray = [];
 			items.forEach((item, i) => {
@@ -193,6 +187,9 @@ function EditorComponent(props) {
 			setAttributes({ list: "" });
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	function loadIconList() {
 		const iconList = Object.keys(allIcons).sort();
@@ -676,12 +673,8 @@ export function StyledListItem(props) {
 	const [useFontSize, toggleUseFontSize] = useState(false);
 
 	useEffect(() => {
-		if (
-			blockID === ""
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-	}, []);
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	function outdentItem() {
 		//outdents current item by default, but should also allow outdenting other list item blocks
