@@ -3,7 +3,6 @@ import withStore from '$HOC/withStore';
 import { getLogo } from '$Stores/settings-menu/slices/assets';
 import RightContainerItem from '$Components/RightContainerItem';
 import VersionControl from '$Components/VersionControl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navigation from '$Components/Navigation';
 import { routeObjects } from '$AdminInc/routes';
 import {
@@ -51,9 +50,6 @@ function MenuHeader( { logoUrl, currentRoutePath, setRoute } ) {
 				<div className={ 'right-container' }>
 					<RightContainerItem>
 						<VersionControl />
-					</RightContainerItem>
-					<RightContainerItem classNames={ [ 'share-node' ] }>
-						<FontAwesomeIcon icon="fa-solid fa-share-nodes" />
 					</RightContainerItem>
 				</div>
 				<HamburgerMenu

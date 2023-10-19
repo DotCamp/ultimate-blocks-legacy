@@ -31935,7 +31935,6 @@ var _withStore = _interopRequireDefault(require("a360f5480afc451d"));
 var _assets = require("66544b766e488b05");
 var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
 var _VersionControl = _interopRequireDefault(require("9b060551899412e8"));
-var _reactFontawesome = require("3ee81ce64fbd9c46");
 var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
 var _routes = require("e6bedbb7f240506c");
 var _app = require("e9c2c22a72a45548");
@@ -32050,13 +32049,7 @@ function _arrayWithHoles(arr) {
         setRoute: setRoute
     })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], {
-        classNames: [
-            "share-node"
-        ]
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-share-nodes"
-    }))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], {
         clickHandler: function clickHandler() {
             return setMenuStatus(!menuStatus);
         },
@@ -32088,7 +32081,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","3ee81ce64fbd9c46":"clIT3","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
