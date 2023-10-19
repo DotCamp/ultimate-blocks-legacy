@@ -145,10 +145,12 @@ That's it. You're done!
 
 = 3.0.6 =
 
+* FIX: Schema parsing error from how to block.
 * FIX: Styled List block layout is not equal frontend and editor.
 * FIX: Styled List block duplicate instance not working properly.
-* NEW: Counter block
+* NEW: Counter block.
 * PRO: IMPROVE: Content toggle blocks attributes including their parent IDs.
+* IMPROVE: Change social share block twitter icon to X.
 * IMPROVE: Change default state of social share block.
 * IMPROVE: Change default state of content toggle block.
 * FIX: An issue affecting content toggle block for <WordPress5.9 servers.
