@@ -1,32 +1,19 @@
 import React from 'react';
 import Router from '$Components/Router';
-import routes from '$AdminInc/routes';
-import { generateRouteArray } from '$AdminInc/Route';
-import { getCurrentRoutePath } from '$Stores/settings-menu/slices/app';
-import withStore from '$HOC/withStore';
+import RouterProvider from '$Components/RouterProvider';
 
 /**
  * Contents of menu page.
- *
- * @param {Object} props                  component properties
- * @param {string} props.currentRoutePath current route path, will be supplied via HOC
- * @function Object() { [native code] }
  */
-function Content( { currentRoutePath } ) {
+function Content() {
 	return (
-		<Router
-			routes={ generateRouteArray( routes ) }
-			currentRoutePath={ currentRoutePath }
-		/>
+		<RouterProvider>
+			<Router />
+		</RouterProvider>
 	);
 }
-
-// select mapping
-const selectMapping = ( selector ) => ( {
-	currentRoutePath: selector( getCurrentRoutePath ),
-} );
 
 /**
  * @module Content
  */
-export default withStore( Content, selectMapping );
+export default Content;

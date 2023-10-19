@@ -38439,10 +38439,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
 var _Router = _interopRequireDefault(require("8de1b2cbd2501a64"));
-var _routes = _interopRequireDefault(require("aa3a9c83723e70f8"));
-var _Route = require("2923c6694567dc83");
-var _app = require("3a30469fb7d0d04");
-var _withStore = _interopRequireDefault(require("a56ec32b87f0edc3"));
+var _RouterProvider = _interopRequireDefault(require("cdba635777f5a2b1"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -38450,29 +38447,15 @@ function _interopRequireDefault(obj) {
 }
 /**
  * Contents of menu page.
- *
- * @param {Object} props                  component properties
- * @param {string} props.currentRoutePath current route path, will be supplied via HOC
- * @function Object() { [native code] }
- */ function Content(_ref) {
-    var currentRoutePath = _ref.currentRoutePath;
-    return /*#__PURE__*/ _react["default"].createElement(_Router["default"], {
-        routes: (0, _Route.generateRouteArray)(_routes["default"]),
-        currentRoutePath: currentRoutePath
-    });
+ */ function Content() {
+    return /*#__PURE__*/ _react["default"].createElement(_RouterProvider["default"], null, /*#__PURE__*/ _react["default"].createElement(_Router["default"], null));
 }
-// select mapping
-var selectMapping = function selectMapping(selector) {
-    return {
-        currentRoutePath: selector(_app.getCurrentRoutePath)
-    };
-};
 /**
  * @module Content
- */ var _default = (0, _withStore["default"])(Content, selectMapping);
+ */ var _default = Content;
 exports["default"] = _default;
 
-},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","aa3a9c83723e70f8":"c1gPj","2923c6694567dc83":"1QB0k","3a30469fb7d0d04":"c28DV","a56ec32b87f0edc3":"kWmDy"}],"35sjN":[function(require,module,exports) {
+},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","cdba635777f5a2b1":"lum1W"}],"35sjN":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -38601,7 +38584,138 @@ function _arrayWithHoles(arr) {
  */ var _default = Router;
 exports["default"] = _default;
 
-},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"l7D5t":[function(require,module,exports) {
+},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"lum1W":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("d9506619f2f58e06"));
+var _Router = _interopRequireDefault(require("fb932ef4484bf5f0"));
+var _routes = _interopRequireDefault(require("2d995708c69aab59"));
+var _Route = require("9e862f016e23ad35");
+var _withStore = _interopRequireDefault(require("44f5d41df7305a04"));
+var _app = require("3fdcb513d5d753ed");
+var _NoRouterComponentFoundError = _interopRequireDefault(require("e6f695f331541cc4"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        "default": obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj["default"] = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+/**
+ * RouterProvider component.
+ *
+ * @param {Object}   props                  component properties
+ * @param {Router}   props.children         router component
+ * @param {string}   props.currentRoutePath current route path, will be supplied via HOC
+ * @param {Function} props.setRoutePath     set route path, will be supplied via HOC
+ * @class
+ */ function RouterProvider(_ref) {
+    var children = _ref.children, currentRoutePath = _ref.currentRoutePath, setRoutePath = _ref.setRoutePath;
+    var RouterChild = (0, _react.useMemo)(function() {
+        var Component = (children === null || children === void 0 ? void 0 : children.type) === _Router["default"] ? children.type : null;
+        if (Component === null) throw new _NoRouterComponentFoundError["default"]();
+        return Component;
+    }, []);
+    var generatedRoutes = (0, _react.useMemo)(function() {
+        return (0, _Route.generateRouteArray)(_routes["default"]);
+    }, []);
+    /**
+   * Parse url and set route path.
+   */ var parseRouteFromUrl = function parseRouteFromUrl() {
+        var url = new URL(window.location.href);
+        var urlRoute = url.searchParams.get("route");
+        if (urlRoute) setRoutePath(urlRoute);
+    };
+    /**
+   * Hook to add event listener for popstate.
+   */ (0, _react.useEffect)(function() {
+        window.addEventListener("popstate", parseRouteFromUrl);
+    }, []);
+    /**
+   * Parse url and set route path at startup.
+   */ (0, _react.useEffect)(function() {
+        parseRouteFromUrl();
+    }, []);
+    /**
+   * Add route path to url.
+   */ (0, _react.useEffect)(function() {
+        var url = new URL(window.location.href);
+        url.searchParams.set("route", currentRoutePath);
+        window.history.pushState(null, null, url.href);
+    }, [
+        currentRoutePath
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement(RouterChild, {
+        routes: generatedRoutes,
+        currentRoutePath: currentRoutePath
+    });
+}
+// store select mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        currentRoutePath: selector(_app.getCurrentRoutePath)
+    };
+};
+var actionMapping = function actionMapping() {
+    return {
+        setRoutePath: _app.setCurrentRoutePath
+    };
+};
+/**
+ * @module RouterProvider
+ */ var _default = (0, _withStore["default"])(RouterProvider, selectMapping, actionMapping);
+exports["default"] = _default;
+
+},{"d9506619f2f58e06":"21dqq","fb932ef4484bf5f0":"35sjN","2d995708c69aab59":"c1gPj","9e862f016e23ad35":"1QB0k","44f5d41df7305a04":"kWmDy","3fdcb513d5d753ed":"c28DV","e6f695f331541cc4":"iU7uY"}],"iU7uY":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+function NoRouterComponentFoundError() {
+    this.name = "NoRouterComponentFoundError";
+    this.message = "No router component found within RouterProvider. Please make sure you have passed Router component as a child of RouterProvider.";
+}
+NoRouterComponentFoundError.prototype = Error.prototype;
+var _default = NoRouterComponentFoundError;
+exports["default"] = _default;
+
+},{}],"l7D5t":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

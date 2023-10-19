@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import proxyquire from 'proxyquire';
-import HamburgerMenu from '$Components/HamburgerMenu';
 
 const mockHamburgerMenu = () => {
 	return proxyquire( require.resolve( '$Components/HamburgerMenu' ), {
@@ -17,14 +16,17 @@ describe( 'HamburgerMenu', () => {
 	it( 'should use its callback property on click', async () => {
 		const clickHandler = sinon.spy();
 
-		render( <HamburgerMenu clickHandler={ clickHandler } /> );
+		const MockedHamburgerMenu = mockHamburgerMenu();
+
+		render( <MockedHamburgerMenu clickHandler={ clickHandler } /> );
 		await userEvent.click( screen.getByRole( 'button' ) );
 		expect( clickHandler.calledOnce ).to.be.ok();
 	} );
 	it( 'should only call click handler with enter key from keyboard on focus', async () => {
 		const clickHandler = sinon.spy();
 
-		render( <HamburgerMenu clickHandler={ clickHandler } /> );
+		const MockedHamburgerMenu = mockHamburgerMenu();
+		render( <MockedHamburgerMenu clickHandler={ clickHandler } /> );
 		const hamburgerMenuOnScreen = screen.getByRole( 'button' );
 		hamburgerMenuOnScreen.focus();
 
