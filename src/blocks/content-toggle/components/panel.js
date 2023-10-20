@@ -112,7 +112,7 @@ const attributes = {
 };
 
 function ContentTogglePanel(props) {
-	const [showPanel, setPanelStatus] = useState(false);
+	const [showPanel, setPanelStatus] = useState(true);
 
 	const {
 		attributes: {
@@ -447,7 +447,7 @@ function ContentTogglePanel(props) {
 						<p class="ub-custom-id-input">
 							{__(
 								"Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.” Then, you’ll be able to link directly to this section of your page."
-							)}{" "}
+							)}
 							<a
 								href="https://wordpress.org/support/article/page-jumps/"
 								target="_blank"
