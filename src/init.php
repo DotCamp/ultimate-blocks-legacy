@@ -1357,6 +1357,8 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/advanced-video/block.php';
 // Icon
 require_once plugin_dir_path( __FILE__ ) . 'blocks/icon/block.php';
 
+// Counter
+require_once plugin_dir_path( __FILE__ ) . 'blocks/counter/block.php';
 
 /**
  * Innerblocks.

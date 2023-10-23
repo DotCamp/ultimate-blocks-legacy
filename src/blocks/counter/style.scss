@@ -1,0 +1,13 @@
+.ub_counter-container {
+	& .ub_counter {
+		&.ub_text-left {
+			text-align: left;
+		}
+		&.ub_text-center {
+			text-align: center;
+		}
+		&.ub_text-right {
+			text-align: right;
+		}
+	}
+}

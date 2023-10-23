@@ -173,9 +173,9 @@ function ub_render_how_to_block($attributes){
             foreach($section[0]['steps'] as $j => $step){
                 $stepsDisplay .= '<li class="ub_howto-step"><' . $thirdLevelTag . ' id="' . $step['anchor'] . '">'
                         . $step['title'] . '</' . $thirdLevelTag . '>' . ($step['stepPic']['url'] !== '' ? 
-                            ($step['stepPic']['caption'] === '' ? '' : '<figure>') . 
+                            (!isset($step['stepPic']['caption']) && $step['stepPic']['caption'] === '' ? '' : '<figure>') . 
                                 '<img class="ub_howto-step-image" src="' . $step['stepPic']['url'] . '">' . 
-                            ($step['stepPic']['caption'] === '' ? '' : '<figcaption>' . $step['stepPic']['caption'] . '</figcaption></figure>') : '') .
+                            (!isset($step['stepPic']['caption']) && $step['stepPic']['caption'] === '' ? '' : '<figcaption>' . $step['stepPic']['caption'] . '</figcaption></figure>') : '') .
                         ub_convert_to_paragraphs($step['direction']);
 
                 $stepsCode .= '{"@type": "HowToStep",'. PHP_EOL
