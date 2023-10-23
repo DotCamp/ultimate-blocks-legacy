@@ -53,7 +53,9 @@ function MenuHeader( { logoUrl, currentRoutePath, setRoute } ) {
 				</div>
 				<div className={ 'right-container' }>
 					<RightContainerItem>
-						<VersionControl />
+						<div className={ 'version-control-header-wrapper' }>
+							<VersionControl />
+						</div>
 						<ProFilter>
 							<AssetProvider assetIds={ [ 'proBuyUrl' ] }>
 								{ ( { proBuyUrl } ) => (
@@ -79,11 +81,16 @@ function MenuHeader( { logoUrl, currentRoutePath, setRoute } ) {
 				className={ 'dropdown-navigation' }
 				data-menu-status={ menuStatus }
 			>
-				<Navigation
-					routes={ routeObjectsMinus404 }
-					currentRoutePath={ currentRoutePath }
-					setRoute={ setRoute }
-				/>
+				<div className={ 'dropdown-drawer' }>
+					<Navigation
+						routes={ routeObjectsMinus404 }
+						currentRoutePath={ currentRoutePath }
+						setRoute={ setRoute }
+					/>
+					<div className={ 'hamburger-version-control' }>
+						<VersionControl />
+					</div>
+				</div>
 			</div>
 		</div>
 	);

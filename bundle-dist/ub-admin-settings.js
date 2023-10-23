@@ -32053,7 +32053,9 @@ function _arrayWithHoles(arr) {
         setRoute: setRoute
     })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null), /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], null, /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-header-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], null, /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
         assetIds: [
             "proBuyUrl"
         ]
@@ -32072,11 +32074,15 @@ function _arrayWithHoles(arr) {
     })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "dropdown-navigation",
         "data-menu-status": menuStatus
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "dropdown-drawer"
     }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
         routes: routeObjectsMinus404,
         currentRoutePath: currentRoutePath,
         setRoute: setRoute
-    })));
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "hamburger-version-control"
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)))));
 }
 // store select mapping
 var selectMapping = function selectMapping(select) {
