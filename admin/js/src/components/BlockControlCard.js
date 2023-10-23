@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { __ } from '@wordpress/i18n';
 import ToggleControl from '$Components/ToggleControl';
 import withIcon from '$HOC/withIcon';
 import ProBlockCardTitle from '$Components/ProBlockCardTitle';
@@ -11,15 +12,16 @@ import BlockCardProInfoControl from '$Components/BlockCardProInfoControl';
  *
  * @class
  *
- * @param {Object}      props                component properties
- * @param {string}      props.title          block title
- * @param {string}      props.blockId        registry id of block
- * @param {boolean}     props.status         block status
- * @param {HTMLElement} props.iconElement    icon element, will be supplied via HOC
- * @param {Function}    props.onStatusChange callback for status change event
- * @param {boolean}     props.proBlock       block belongs to pro version
- * @param {boolean}     props.proStatus      plugin pro status
- * @param {Function}    props.showUpsell     set target block type for modal interface
+ * @param {Object}        props                component properties
+ * @param {string}        props.title          block title
+ * @param {string}        props.blockId        registry id of block
+ * @param {boolean}       props.status         block status
+ * @param {HTMLElement}   props.iconElement    icon element, will be supplied via HOC
+ * @param {Function}      props.onStatusChange callback for status change event
+ * @param {boolean}       props.proBlock       block belongs to pro version
+ * @param {boolean}       props.proStatus      plugin pro status
+ * @param {Function}      props.showUpsell     set target block type for modal interface
+ * @param {string | null} [props.demoUrl=null] demo url for block
  */
 function BlockControlCard( {
 	title,
@@ -30,6 +32,7 @@ function BlockControlCard( {
 	proBlock,
 	proStatus,
 	showUpsell,
+	demoUrl = null,
 } ) {
 	const initialAnimation = useRef( true );
 
@@ -44,13 +47,27 @@ function BlockControlCard( {
 			) }
 		>
 			<div className={ 'block-title' }>
-				<div className={ 'block-title-left-container' }>
+				<div
+					className={ 'block-title-left-container' }
+					data-demo={ demoUrl !== null }
+				>
 					<div className={ 'title-icon' }>{ iconElement }</div>
 					<div className={ 'title-text' }>
 						{ title }
 						<ProBlockCardTitle isPro={ proBlock } />
 					</div>
-					<div className={ 'title-demo' }>See Demo</div>
+					{ demoUrl && (
+						<div className={ 'title-demo' }>
+							<a
+								href={ demoUrl }
+								target={ '_blank' }
+								rel="noreferrer"
+								className={ 'strip-anchor-styles' }
+							>
+								{ __( 'See Demo', 'ultimate-blocks' ) }
+							</a>
+						</div>
+					) }
 				</div>
 				<div className={ 'block-title-right-container' }>
 					{ proBlock && ! proStatus ? (

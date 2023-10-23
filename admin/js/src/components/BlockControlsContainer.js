@@ -12,6 +12,7 @@ import {
 	showProBlockUpsellModal,
 } from '$Stores/settings-menu/slices/app';
 import { toggleBlockStatus } from '$Stores/settings-menu/actions';
+import { getAsset } from '$Stores/settings-menu/slices/assets';
 
 /**
  * Block controls container.
@@ -25,6 +26,7 @@ import { toggleBlockStatus } from '$Stores/settings-menu/actions';
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
  * @param {Function} props.showUpsell     set target block type for modal interface
+ * @param {Object}   props.blockDemos     block demo urls, will be supplied via HOC
  */
 function BlockControlsContainer( {
 	blocks,
@@ -33,8 +35,12 @@ function BlockControlsContainer( {
 	showInfoStatus,
 	proStatus,
 	showUpsell,
+	blockDemos,
 } ) {
 	const [ innerBlocks, setInnerBlocks ] = useState( blocks );
+
+	const getBlockDemo = ( blockId ) =>
+		blockDemos[ blockId ] ? blockDemos[ blockId ] : null;
 
 	/**
 	 * Handle block status change.
@@ -88,6 +94,7 @@ function BlockControlsContainer( {
 						proBlock={ pro }
 						showUpsell={ showUpsell }
 						proStatus={ proStatus }
+						demoUrl={ getBlockDemo( name ) }
 					/>
 				);
 			} ) }
@@ -99,6 +106,7 @@ const selectMapping = ( selector ) => ( {
 	blocks: selector( getBlocks ),
 	showInfoStatus: selector( getBlockInfoShowStatus ),
 	proStatus: selector( getProStatus ),
+	blockDemos: selector( ( state ) => getAsset( state, 'blockDemos' ) ),
 } );
 
 const actionMapping = () => ( {

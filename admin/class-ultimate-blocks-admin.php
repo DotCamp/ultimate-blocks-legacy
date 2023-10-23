@@ -95,6 +95,11 @@ class Ultimate_Blocks_Admin {
 	 * @return array filtered frontend data
 	 */
 	public function add_settings_menu_data( $data ) {
+		ob_start();
+		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-demos.json';
+		$block_demos_raw = ob_get_contents();
+		ob_end_clean();
+
 		$data['assets'] = array(
 			'logo'        => trailingslashit( $this->plugin_url ) . 'admin/images/logos/menu-icon-colored.svg',
 			'ajax'        => array(
@@ -105,6 +110,7 @@ class Ultimate_Blocks_Admin {
 				),
 			),
 			'proMenuSlug' => $this->pro_menu_slug,
+			'blockDemos'  => json_decode( $block_demos_raw, true ),
 		);
 
 		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-menu-info.php';
@@ -375,7 +381,7 @@ class Ultimate_Blocks_Admin {
 			update_option( 'ultimate_blocks', $this->blocks() );
 		}
 
-//		wp_send_json_success( get_option( 'ultimate_blocks', false ) );
+		// wp_send_json_success( get_option( 'ultimate_blocks', false ) );
 	}
 
 	/**

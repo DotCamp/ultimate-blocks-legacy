@@ -37795,6 +37795,7 @@ var _withStore = _interopRequireDefault(require("7adeb056d10afe38"));
 var _blocks = require("c1f3bf0e02707627");
 var _app = require("83bf9ee8271dd581");
 var _actions = require("f9b48c87aedbb427");
+var _assets = require("8b4f97af1a44534f");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37893,9 +37894,13 @@ function _arrayWithHoles(arr) {
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
  * @param {Function} props.showUpsell     set target block type for modal interface
+ * @param {Object}   props.blockDemos     block demo urls, will be supplied via HOC
  */ function BlockControlsContainer(_ref) {
-    var blocks = _ref.blocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
+    var blocks = _ref.blocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell, blockDemos = _ref.blockDemos;
     var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
+    var getBlockDemo = function getBlockDemo(blockId) {
+        return blockDemos[blockId] ? blockDemos[blockId] : null;
+    };
     /**
    * Handle block status change.
    *
@@ -37944,7 +37949,8 @@ function _arrayWithHoles(arr) {
             info: info,
             proBlock: pro,
             showUpsell: showUpsell,
-            proStatus: proStatus
+            proStatus: proStatus,
+            demoUrl: getBlockDemo(name)
         });
     }));
 }
@@ -37952,7 +37958,10 @@ var selectMapping = function selectMapping(selector) {
     return {
         blocks: selector(_blocks.getBlocks),
         showInfoStatus: selector(_app.getBlockInfoShowStatus),
-        proStatus: selector(_app.getProStatus)
+        proStatus: selector(_app.getProStatus),
+        blockDemos: selector(function(state) {
+            return (0, _assets.getAsset)(state, "blockDemos");
+        })
     };
 };
 var actionMapping = function actionMapping() {
@@ -37966,7 +37975,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"b5a991528cd4dfa6":"21dqq","b8e47630259305db":"ejal0","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2"}],"ejal0":[function(require,module,exports) {
+},{"b5a991528cd4dfa6":"21dqq","b8e47630259305db":"ejal0","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","8b4f97af1a44534f":"9SnHn"}],"ejal0":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37981,6 +37990,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("f1179290dae9242c"));
+var _i18n = require("59be531fc8798449");
 var _ToggleControl = _interopRequireDefault(require("89dfa6c744ec7db7"));
 var _withIcon = _interopRequireDefault(require("29ed2e3a2621bd69"));
 var _ProBlockCardTitle = _interopRequireDefault(require("df9306f30da80384"));
@@ -38023,17 +38033,18 @@ function _interopRequireWildcard(obj, nodeInterop) {
  *
  * @class
  *
- * @param {Object}      props                component properties
- * @param {string}      props.title          block title
- * @param {string}      props.blockId        registry id of block
- * @param {boolean}     props.status         block status
- * @param {HTMLElement} props.iconElement    icon element, will be supplied via HOC
- * @param {Function}    props.onStatusChange callback for status change event
- * @param {boolean}     props.proBlock       block belongs to pro version
- * @param {boolean}     props.proStatus      plugin pro status
- * @param {Function}    props.showUpsell     set target block type for modal interface
+ * @param {Object}        props                component properties
+ * @param {string}        props.title          block title
+ * @param {string}        props.blockId        registry id of block
+ * @param {boolean}       props.status         block status
+ * @param {HTMLElement}   props.iconElement    icon element, will be supplied via HOC
+ * @param {Function}      props.onStatusChange callback for status change event
+ * @param {boolean}       props.proBlock       block belongs to pro version
+ * @param {boolean}       props.proStatus      plugin pro status
+ * @param {Function}      props.showUpsell     set target block type for modal interface
+ * @param {string | null} [props.demoUrl=null] demo url for block
  */ function BlockControlCard(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, _onStatusChange = _ref.onStatusChange, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, _onStatusChange = _ref.onStatusChange, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell, _ref$demoUrl = _ref.demoUrl, demoUrl = _ref$demoUrl === void 0 ? null : _ref$demoUrl;
     var initialAnimation = (0, _react.useRef)(true);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-control",
@@ -38042,16 +38053,22 @@ function _interopRequireWildcard(obj, nodeInterop) {
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-title-left-container"
+        className: "block-title-left-container",
+        "data-demo": demoUrl !== null
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-icon"
     }, iconElement), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-text"
     }, title, /*#__PURE__*/ _react["default"].createElement(_ProBlockCardTitle["default"], {
         isPro: proBlock
-    })), /*#__PURE__*/ _react["default"].createElement("div", {
+    })), demoUrl && /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-demo"
-    }, "See Demo")), /*#__PURE__*/ _react["default"].createElement("div", {
+    }, /*#__PURE__*/ _react["default"].createElement("a", {
+        href: demoUrl,
+        target: "_blank",
+        rel: "noreferrer",
+        className: "strip-anchor-styles"
+    }, (0, _i18n.__)("See Demo", "ultimate-blocks")))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
     }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], {
         handleClick: function handleClick(e) {
@@ -38071,7 +38088,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
  */ var _default = (0, _withIcon["default"])(BlockControlCard);
 exports["default"] = _default;
 
-},{"f1179290dae9242c":"21dqq","89dfa6c744ec7db7":"a7r96","29ed2e3a2621bd69":"l4uaA","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq"}],"a7r96":[function(require,module,exports) {
+},{"f1179290dae9242c":"21dqq","89dfa6c744ec7db7":"a7r96","29ed2e3a2621bd69":"l4uaA","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq","59be531fc8798449":"7CyoE"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

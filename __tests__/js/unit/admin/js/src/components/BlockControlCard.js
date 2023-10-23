@@ -75,4 +75,8 @@ describe( 'BlockControlCard', () => {
 			)
 		).to.be.ok();
 	} );
+	it( 'should not show demo link when demoUrl is not supplied', () => {
+		render( <BlockControlCard { ...defaultProps } /> );
+		expect( screen.queryByText( 'See Demo' ) ).to.be.not.ok();
+	} );
 } );

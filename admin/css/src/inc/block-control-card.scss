@@ -44,6 +44,10 @@
 			grid-template: "icon label" auto "icon demo" auto / auto 1fr;
 			align-items: center;
 
+			&[data-demo="false"] {
+				grid-template: "icon label" auto "icon label" auto / auto 1fr;
+			}
+
 			.title-icon {
 				@extend %default-transition;
 
@@ -77,11 +81,20 @@
 			}
 
 			.title-demo {
-				@extend %pointer;
 				@extend %p2-regular;
 
 				grid-area: demo;
-				color: $text-faded-color;
+
+				a {
+					@extend %default-transition;
+
+					width: fit-content;
+					color: $text-faded-color;
+
+					&:hover {
+						color: inherit;
+					}
+				}
 			}
 		}
 
