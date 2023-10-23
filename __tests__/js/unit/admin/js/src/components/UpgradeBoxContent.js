@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import proxyquire from 'proxyquire';
 import * as BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 import * as ProFilterModule from '$Components/ProFilter';
+import * as AssetProviderModule from '$Components/AssetProvider';
 
 describe( 'UpgradeBoxContent', () => {
 	it( 'should reflect given props to BoxContentProvider', () => {
@@ -12,6 +13,12 @@ describe( 'UpgradeBoxContent', () => {
 		sinon
 			.stub( ProFilterModule, 'default' )
 			.callsFake( ( { children } ) => children );
+
+		sinon
+			.stub( AssetProviderModule, 'default' )
+			.callsFake( ( { children } ) =>
+				children( { proBuyUrl: 'https://example.com' } )
+			);
 
 		sinon
 			.stub( BoxContentProvider, 'default' )
