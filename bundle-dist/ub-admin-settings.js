@@ -36731,8 +36731,7 @@ var _YouTubeEmbed = _interopRequireDefault(require("6c04239ed429d27f"));
 var _ButtonLink = _interopRequireWildcard(require("3d8cac35ab8f5ccd"));
 var _ButtonLinkGroup = _interopRequireDefault(require("63cf395549eedb3"));
 var _UpgradeBoxContent = _interopRequireDefault(require("d289a1448b74b0aa"));
-var _withStore = _interopRequireDefault(require("effff66f723e6530"));
-var _assets = require("555dd7407cde9181");
+var _AssetProvider = _interopRequireDefault(require("4fe8c31a75699a6e"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -36767,85 +36766,66 @@ function _interopRequireDefault(obj) {
 /**
  * Welcome content component.
  *
- * @param {Object} props                component properties
- * @param {string} props.youtubeVideoId youtube video id for welcome page
- * @param {string} props.documentsUrl   url for documents
- * @param {string} props.supportUrl     url for support forum
- * @param {string} props.twitterUrl     url for twitter
- * @param {string} props.facebookUrl    url for facebook
- * @param {string} props.youtubeUrl     url for youtube
  * @class
- */ function WelcomeContent(_ref) {
-    var youtubeVideoId = _ref.youtubeVideoId, documentsUrl = _ref.documentsUrl, supportUrl = _ref.supportUrl, twitterUrl = _ref.twitterUrl, facebookUrl = _ref.facebookUrl, youtubeUrl = _ref.youtubeUrl;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-welcome-content"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-welcome-content__main"
-    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
-        size: _BoxContent.BoxContentSize.JUMBO,
-        contentId: "welcome"
-    }, /*#__PURE__*/ _react["default"].createElement(_YouTubeEmbed["default"], {
-        height: 315,
-        videoId: youtubeVideoId
-    })), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], null)), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-welcome-content__right-sidebar"
-    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
-        contentId: "documentation"
-    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: documentsUrl,
-        title: (0, _i18n.__)("Visit Documents", "ultimate-blocks"),
-        type: _ButtonLink.ButtonLinkType.DEFAULT
-    })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
-        contentId: "support"
-    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: supportUrl,
-        title: (0, _i18n.__)("Support Forum", "ultimate-blocks"),
-        type: _ButtonLink.ButtonLinkType.DEFAULT
-    })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
-        contentId: "community"
-    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLinkGroup["default"], null, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: facebookUrl,
-        title: (0, _i18n.__)("Facebook", "ultimate-blocks"),
-        type: _ButtonLink.ButtonLinkType.TEXT
-    }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: twitterUrl,
-        title: (0, _i18n.__)("Twitter", "ultimate-blocks"),
-        type: _ButtonLink.ButtonLinkType.TEXT
-    }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: youtubeUrl,
-        title: (0, _i18n.__)("YouTube", "ultimate-blocks"),
-        type: _ButtonLink.ButtonLinkType.TEXT
-    })))));
+ */ function WelcomeContent() {
+    return /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+        assetIds: [
+            "youtubeVideoId",
+            "documentsUrl",
+            "supportUrl",
+            "twitterUrl",
+            "facebookUrl",
+            "youtubeUrl"
+        ]
+    }, function(_ref) {
+        var youtubeVideoId = _ref.youtubeVideoId, documentsUrl = _ref.documentsUrl, supportUrl = _ref.supportUrl, twitterUrl = _ref.twitterUrl, facebookUrl = _ref.facebookUrl, youtubeUrl = _ref.youtubeUrl;
+        return /*#__PURE__*/ _react["default"].createElement("div", {
+            className: "ub-welcome-content"
+        }, /*#__PURE__*/ _react["default"].createElement("div", {
+            className: "ub-welcome-content__main"
+        }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            size: _BoxContent.BoxContentSize.JUMBO,
+            contentId: "welcome"
+        }, /*#__PURE__*/ _react["default"].createElement(_YouTubeEmbed["default"], {
+            height: 315,
+            videoId: youtubeVideoId
+        })), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], null)), /*#__PURE__*/ _react["default"].createElement("div", {
+            className: "ub-welcome-content__right-sidebar"
+        }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            contentId: "documentation"
+        }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: documentsUrl,
+            title: (0, _i18n.__)("Visit Documents", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.DEFAULT
+        })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            contentId: "support"
+        }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: supportUrl,
+            title: (0, _i18n.__)("Support Forum", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.DEFAULT
+        })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            contentId: "community"
+        }, /*#__PURE__*/ _react["default"].createElement(_ButtonLinkGroup["default"], null, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: facebookUrl,
+            title: (0, _i18n.__)("Facebook", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.TEXT
+        }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: twitterUrl,
+            title: (0, _i18n.__)("Twitter", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.TEXT
+        }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: youtubeUrl,
+            title: (0, _i18n.__)("YouTube", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.TEXT
+        })))));
+    });
 }
-// store select mapping
-var selectMapping = function selectMapping(select) {
-    return {
-        youtubeVideoId: select(function(state) {
-            return (0, _assets.getAsset)(state, "youtubeVideoId");
-        }),
-        documentsUrl: select(function(state) {
-            return (0, _assets.getAsset)(state, "documentsUrl");
-        }),
-        supportUrl: select(function(state) {
-            return (0, _assets.getAsset)(state, "supportUrl");
-        }),
-        twitterUrl: select(function(state) {
-            return (0, _assets.getAsset)(state, "twitterUrl");
-        }),
-        facebookUrl: select(function(state) {
-            return (0, _assets.getAsset)(state, "facebookUrl");
-        }),
-        youtubeUrl: select(function(state) {
-            return (0, _assets.getAsset)(state, "youtubeUrl");
-        })
-    };
-};
 /**
  * @module WelcomeContent
- */ var _default = (0, _withStore["default"])(WelcomeContent, selectMapping);
+ */ var _default = WelcomeContent;
 exports["default"] = _default;
 
-},{"dca961e5c4865530":"21dqq","ebd9e2ab5aeb8851":"7CyoE","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy","effff66f723e6530":"kWmDy","555dd7407cde9181":"9SnHn"}],"cJGef":[function(require,module,exports) {
+},{"dca961e5c4865530":"21dqq","ebd9e2ab5aeb8851":"7CyoE","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy","4fe8c31a75699a6e":"jzub6"}],"cJGef":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37456,6 +37436,7 @@ var _BoxContentProvider = _interopRequireDefault(require("333b75359f8aeb24"));
 var _BoxContent = require("5fc542bc0160f31d");
 var _ButtonLink = _interopRequireWildcard(require("32c0cd98d40ea089"));
 var _ProFilter = _interopRequireDefault(require("e95e13826133d29b"));
+var _AssetProvider = _interopRequireDefault(require("9bd24491689bacad"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -37503,23 +37484,30 @@ function _extends() {
  * @param {Object} props component properties, will be reflected to BoxContentProvider
  * @class
  */ function UpgradeBoxContent(props) {
-    return /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], {
-        invert: true
-    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], _extends({
-        size: _BoxContent.BoxContentSize.JUMBO,
-        contentId: "upgrade"
-    }, props), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-        url: "https://ultimateblocks.com",
-        title: "GET ULTIMATE BLOCKS PRO",
-        type: _ButtonLink.ButtonLinkType.PRIMARY
-    })));
+    return /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+        assetIds: [
+            "proBuyUrl"
+        ]
+    }, function(_ref) {
+        var proBuyUrl = _ref.proBuyUrl;
+        return /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], {
+            invert: true
+        }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], _extends({
+            size: _BoxContent.BoxContentSize.JUMBO,
+            contentId: "upgrade"
+        }, props), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: proBuyUrl,
+            title: "GET ULTIMATE BLOCKS PRO",
+            type: _ButtonLink.ButtonLinkType.PRIMARY
+        })));
+    });
 }
 /**
  * @module UpgradeBoxContent
  */ var _default = UpgradeBoxContent;
 exports["default"] = _default;
 
-},{"480006c3894eb2e6":"21dqq","333b75359f8aeb24":"cJGef","5fc542bc0160f31d":"6zPRs","32c0cd98d40ea089":"dwYOq","e95e13826133d29b":"gCmn9"}],"gCmn9":[function(require,module,exports) {
+},{"480006c3894eb2e6":"21dqq","333b75359f8aeb24":"cJGef","5fc542bc0160f31d":"6zPRs","32c0cd98d40ea089":"dwYOq","e95e13826133d29b":"gCmn9","9bd24491689bacad":"jzub6"}],"gCmn9":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37605,7 +37593,53 @@ var selectMapping = function selectMapping(selector) {
  */ var _default = (0, _withStore["default"])(ProFilter, selectMapping);
 exports["default"] = _default;
 
-},{"2055ed25896b5e32":"21dqq","334986df8c04f427":"fi8Oa","d5fd30753a18d44e":"kWmDy"}],"RcVav":[function(require,module,exports) {
+},{"2055ed25896b5e32":"21dqq","334986df8c04f427":"fi8Oa","d5fd30753a18d44e":"kWmDy"}],"jzub6":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _assets = require("a33127fabd6b590d");
+var _withStore = _interopRequireDefault(require("8187984263eaefeb"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Store asset provider.
+ *
+ * Component child should be a function that will be called with the asset object.
+ *
+ * @param {Object}   props               component properties
+ * @param {Function} props.children      children function, this function will be called with the asset object
+ * @param {Function} props.getStoreAsset store asset selector, will be supplied via HC
+ * @param {Array}    props.assetIds      array of asset ids to be fetched from data store
+ * @class
+ */ function AssetProvider(_ref) {
+    var children = _ref.children, getStoreAsset = _ref.getStoreAsset, _ref$assetIds = _ref.assetIds, assetIds = _ref$assetIds === void 0 ? [] : _ref$assetIds;
+    var assetObj = assetIds.reduce(function(acc, assetId) {
+        acc[assetId] = getStoreAsset(assetId);
+        return acc;
+    }, {});
+    return children(assetObj);
+}
+// store select mapping.
+var selectMapping = function selectMapping(select) {
+    return {
+        getStoreAsset: function getStoreAsset(assetId) {
+            return select(function(state) {
+                return (0, _assets.getAsset)(state, assetId);
+            });
+        }
+    };
+};
+/**
+ * @module AssetProvider
+ */ var _default = (0, _withStore["default"])(AssetProvider, selectMapping);
+exports["default"] = _default;
+
+},{"a33127fabd6b590d":"9SnHn","8187984263eaefeb":"kWmDy"}],"RcVav":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37726,7 +37760,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlocksContent, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","43840ff570ccb3b4":"ohEvx","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"e69CO":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","43840ff570ccb3b4":"ohEvx","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -37917,7 +37951,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"b5a991528cd4dfa6":"21dqq","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","b8e47630259305db":"ejal0"}],"ejal0":[function(require,module,exports) {
+},{"b5a991528cd4dfa6":"21dqq","b8e47630259305db":"ejal0","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2"}],"ejal0":[function(require,module,exports) {
 "use strict";
 function _typeof(obj) {
     "@babel/helpers - typeof";

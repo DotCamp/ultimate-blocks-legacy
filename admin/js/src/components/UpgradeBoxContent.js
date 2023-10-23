@@ -3,6 +3,7 @@ import BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 import { BoxContentSize } from '$Components/BoxContent/BoxContent';
 import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
 import ProFilter from '$Components/ProFilter';
+import AssetProvider from '$Components/AssetProvider';
 
 /**
  * Box content for upgrade.
@@ -12,19 +13,23 @@ import ProFilter from '$Components/ProFilter';
  */
 function UpgradeBoxContent( props ) {
 	return (
-		<ProFilter invert={ true }>
-			<BoxContentProvider
-				size={ BoxContentSize.JUMBO }
-				contentId={ 'upgrade' }
-				{ ...props }
-			>
-				<ButtonLink
-					url={ 'https://ultimateblocks.com' }
-					title={ 'GET ULTIMATE BLOCKS PRO' }
-					type={ ButtonLinkType.PRIMARY }
-				/>
-			</BoxContentProvider>
-		</ProFilter>
+		<AssetProvider assetIds={ [ 'proBuyUrl' ] }>
+			{ ( { proBuyUrl } ) => (
+				<ProFilter invert={ true }>
+					<BoxContentProvider
+						size={ BoxContentSize.JUMBO }
+						contentId={ 'upgrade' }
+						{ ...props }
+					>
+						<ButtonLink
+							url={ proBuyUrl }
+							title={ 'GET ULTIMATE BLOCKS PRO' }
+							type={ ButtonLinkType.PRIMARY }
+						/>
+					</BoxContentProvider>
+				</ProFilter>
+			) }
+		</AssetProvider>
 	);
 }
 
