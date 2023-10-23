@@ -31931,6 +31931,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("af8ddc31c52e60c1"));
+var _i18n = require("9846d3c7b6ac7c1b");
 var _withStore = _interopRequireDefault(require("a360f5480afc451d"));
 var _assets = require("66544b766e488b05");
 var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
@@ -31939,6 +31940,9 @@ var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
 var _routes = require("e6bedbb7f240506c");
 var _app = require("e9c2c22a72a45548");
 var _HamburgerMenu = _interopRequireDefault(require("9079f43f327521d8"));
+var _AssetProvider = _interopRequireDefault(require("eaaf70471d024f90"));
+var _ButtonLink = _interopRequireWildcard(require("79cfd1823aff4e62"));
+var _ProFilter = _interopRequireDefault(require("18a59a4502e9f75e"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -32049,7 +32053,18 @@ function _arrayWithHoles(arr) {
         setRoute: setRoute
     })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], {
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null), /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], null, /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+        assetIds: [
+            "proBuyUrl"
+        ]
+    }, function(_ref2) {
+        var proBuyUrl = _ref2.proBuyUrl;
+        return /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: proBuyUrl,
+            title: (0, _i18n.__)("Upgrade to PRO", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.DEFAULT
+        });
+    })))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], {
         clickHandler: function clickHandler() {
             return setMenuStatus(!menuStatus);
         },
@@ -32081,7 +32096,7 @@ var actionMapping = function actionMapping() {
  */ var _default = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
 exports["default"] = _default;
 
-},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB","eaaf70471d024f90":"jzub6","79cfd1823aff4e62":"dwYOq","9846d3c7b6ac7c1b":"7CyoE","18a59a4502e9f75e":"gCmn9"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

@@ -887,6 +887,7 @@
 }
 
 .ub-admin-menu-wrapper .ub-admin-menu-container .header-wrapper .menu-header .right-container .right-container-item {
+  gap: 10px;
   height: 100%;
 }
 

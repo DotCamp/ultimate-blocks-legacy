@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import withStore from '$HOC/withStore';
 import { getLogo } from '$Stores/settings-menu/slices/assets';
 import RightContainerItem from '$Components/RightContainerItem';
@@ -10,6 +11,9 @@ import {
 	setCurrentRoutePath,
 } from '$Stores/settings-menu/slices/app';
 import HamburgerMenu from '$Components/HamburgerMenu';
+import AssetProvider from '$Components/AssetProvider';
+import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
+import ProFilter from '$Components/ProFilter';
 
 /**
  * Settings menu header element.
@@ -50,6 +54,20 @@ function MenuHeader( { logoUrl, currentRoutePath, setRoute } ) {
 				<div className={ 'right-container' }>
 					<RightContainerItem>
 						<VersionControl />
+						<ProFilter>
+							<AssetProvider assetIds={ [ 'proBuyUrl' ] }>
+								{ ( { proBuyUrl } ) => (
+									<ButtonLink
+										url={ proBuyUrl }
+										title={ __(
+											'Upgrade to PRO',
+											'ultimate-blocks'
+										) }
+										type={ ButtonLinkType.DEFAULT }
+									/>
+								) }
+							</AssetProvider>
+						</ProFilter>
 					</RightContainerItem>
 				</div>
 				<HamburgerMenu

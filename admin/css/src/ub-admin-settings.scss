@@ -115,6 +115,7 @@
 					.right-container-item {
 						@extend %flex-center-all;
 
+						gap: 10px;
 						height: 100%;
 
 						&:not(:first-child) {
