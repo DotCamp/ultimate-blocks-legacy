@@ -38401,7 +38401,7 @@ function _arrayWithHoles(arr) {
     }, []);
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-extensions-content"
-    }, /*#__PURE__*/ _react["default"].createElement("i", {
+    }, /*#__PURE__*/ _react["default"].createElement("span", {
         className: "soon"
     }, "Coming soon", opacityMap.map(function(dataVal, index) {
         return /*#__PURE__*/ _react["default"].createElement("span", {

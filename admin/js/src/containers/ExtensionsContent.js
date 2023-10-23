@@ -20,7 +20,7 @@ function ExtensionsContent() {
 
 	return (
 		<div className="ub-extensions-content">
-			<i className={ 'soon' }>
+			<span className={ 'soon' }>
 				Coming soon
 				{ opacityMap.map( ( dataVal, index ) => {
 					return (
@@ -33,7 +33,7 @@ function ExtensionsContent() {
 						</span>
 					);
 				} ) }
-			</i>
+			</span>
 		</div>
 	);
 }
