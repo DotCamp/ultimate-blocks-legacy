@@ -17,6 +17,7 @@
 
 use Ultimate_Blocks\admin\data\block_demos\Block_Demos_Data;
 use Ultimate_Blocks\admin\data\Block_Menu_Info_Data;
+use Ultimate_Blocks\admin\data\Settings_Menu_Content_Data;
 use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
 
 /**
@@ -108,6 +109,7 @@ class Ultimate_Blocks_Admin {
 			),
 			'proMenuSlug' => $this->pro_menu_slug,
 			'blockDemos'  => Block_Demos_Data::get_data(),
+			'contentData' => Settings_Menu_Content_Data::get_data(),
 		);
 
 		$data['blocks'] = array(

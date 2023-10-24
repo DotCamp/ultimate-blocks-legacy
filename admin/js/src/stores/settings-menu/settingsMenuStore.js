@@ -147,8 +147,13 @@ function createStore() {
 		return carry;
 	}, reducedBlocks );
 
+	const { contentData, ...preloadedAssets } = appData.assets;
+
 	let preloadedState = {
-		assets: appData.assets,
+		app: {
+			content: contentData,
+		},
+		assets: preloadedAssets,
 		blocks: {
 			registered: allRegistered,
 		},
