@@ -9,6 +9,7 @@ namespace Ultimate_Blocks\includes\pro_manager;
 
 use Exception;
 use Freemius;
+use Ultimate_Blocks\admin\data\Settings_Menu_Pro_Manager_Asset_Data;
 use Ultimate_Blocks\includes\common\traits\Manager_Base_Trait;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\Env_Manager;
@@ -99,15 +100,7 @@ class Pro_Manager {
 			)
 		);
 
-		$assets = array(
-			'proBuyUrl'      => 'https://ultimateblocks.com/pricing/',
-			'youtubeVideoId' => '8FESaV5WE8A',
-			'documentsUrl'   => 'https://ultimateblocks.com/pricing/',
-			'supportUrl'     => 'https://ultimateblocks.com/community/',
-			'facebookUrl'    => 'https://www.facebook.com/UltimateBlocks',
-			'twitterUrl'     => 'https://twitter.com/Ultimate_Blocks',
-			'youtubeUrl'     => 'https://www.youtube.com/@ultimateblockswp',
-		);
+		$assets = Settings_Menu_Pro_Manager_Asset_Data::get_data();
 
 		// merge assets.
 		$menu_data['assets'] = array_merge( $menu_data['assets'], $assets );
