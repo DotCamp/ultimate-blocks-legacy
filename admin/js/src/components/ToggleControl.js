@@ -15,27 +15,22 @@ function ToggleControl( {
 	onStatusChange = () => {},
 	disabled = false,
 } ) {
-	const initialRender = useRef( true );
-	const [ innerStatus, setInnerStatus ] = useState( status );
-
-	useEffect( () => {
-		if ( initialRender.current ) {
-			initialRender.current = false;
-		} else {
-			onStatusChange( innerStatus );
+	/**
+	 * Click handler for toggle component.
+	 */
+	const clickHandler = () => {
+		if ( ! disabled ) {
+			onStatusChange( ! status );
 		}
-	}, [ innerStatus ] );
+	};
 
 	return (
-		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/interactive-supports-focus
 		<div
-			onClick={ () => {
-				if ( ! disabled ) {
-					setInnerStatus( ! innerStatus );
-				}
-			} }
+			onClick={ clickHandler }
 			className={ 'ub-toggle-control' }
-			data-enabled={ JSON.stringify( innerStatus ) }
+			data-enabled={ JSON.stringify( disabled || status ) }
+			role={ 'button' }
 		>
 			<div className={ 'knob' }></div>
 		</div>
@@ -43,6 +38,6 @@ function ToggleControl( {
 }
 
 /**
- * @module ToggleControl;
+ * @module ToggleControl
  */
 export default ToggleControl;

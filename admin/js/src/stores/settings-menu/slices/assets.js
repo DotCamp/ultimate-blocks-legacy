@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 /**
  * Options for asset store slice
@@ -35,15 +35,14 @@ export const getAjaxInfo = ( state ) => {
 	return state.assets.ajax;
 };
 
+/* eslint-disable-next-line jsdoc/require-param */
 /**
  * Get asset with given id.
- *
- * @param {Object} state store state
- * @return {function(string): string|number} function to get asset
  */
-export const getAsset = ( state ) => ( assetId ) => {
-	return state.assets?.[ assetId ];
-};
+export const getAsset = createSelector(
+	[ ( state ) => state.assets, ( assets, assetId ) => assetId ],
+	( assets, assetId ) => assets?.[ assetId ]
+);
 
 /**
  * @module assetsSlice

@@ -1,33 +1,95 @@
 @import "../colors";
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@import "https://fonts.googleapis.com/css2?family=Inter&display=swap";
 
-// text
-$text-color: $gray-600;
-$font-family: 'Lato', sans-serif;
+// font
+$font-family: 'Inter', sans-serif;
+$text-color: $black;
+$text-faded-color: $o-gray-500;
+
+// font sizes
 $font-size: 1rem;
+$font-pill-size: 0.8rem;
+$phrase-font-size: 2.5rem;
 
 // block controls
 $block-control-padding: 20px;
-$block-control-width: 290px;
+$block-control-width: 350px;
 $block-control-height: 250px;
-$block-control-x-margin: 10px;
-$block-control-y-margin: 15px;
-$block-control-border-radius: 21px;
-$block-title-bg: $red-100;
-$block-title-color: #912323;
-$block-title-font-size: 1.2rem;
-$block-title-icon-size: 20px;
+$block-control-border-radius: 8px;
+$block-title-icon-size: 40px;
 
 // version control popup
-$version-control-popup-bg: rgba(0, 0, 0, 0.7);
+$version-control-popup-bg: rgb(0 0 0 / 70%);
 $versions-font-size: 2.5rem;
 $versions-icon-size: 2.5rem;
 $version-control-general-font-size: rem;
 
 // others
-$phrase-font-size: 2.5rem;
+$main-wrapper-max-width: 1120px;
+$header-height: 80px;
 $logo-height: 40px;
-$border-color: #5F1717;
+$border-color: $o-gray-200;
+
+%weight-normal {
+  font-weight: 400;
+}
+
+%weight-semi-bold {
+  font-weight: 400;
+}
+
+%weight-bold {
+  font-weight: 400;
+}
+
+%p1-regular {
+  @extend %weight-normal;
+
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+%p2-regular {
+  @extend %weight-normal;
+
+  font-size: 0.875rem;
+  line-height: 1.0625rem;
+}
+
+%p3-regular {
+  @extend %weight-normal;
+
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+}
+
+%p1-sub {
+  @extend %p1-regular;
+
+  color: $o-gray-500;
+}
+
+%p2-bold {
+  @extend %p2-regular;
+  @extend %weight-bold;
+}
+
+%p3-bold {
+  @extend %p3-regular;
+  @extend %weight-bold;
+}
 
 
+%h2-regular {
+  @extend %weight-bold;
 
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+
+%h3-regular {
+  @extend %weight-semi-bold;
+
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+}

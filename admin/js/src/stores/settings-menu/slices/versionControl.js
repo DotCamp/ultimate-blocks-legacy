@@ -1,5 +1,5 @@
-import initialState from "$Stores/settings-menu/initialState";
-import { createSlice } from "@reduxjs/toolkit";
+import initialState from '$Stores/settings-menu/initialState';
+import { createSlice } from '@reduxjs/toolkit';
 
 /**
  * Version control slice options.
@@ -15,6 +15,7 @@ const versionControlSlice = createSlice( versionControlSliceOptions );
 
 /**
  * Get plugin current version.
+ *
  * @param {Object} state store state
  * @return {string} current version
  */
@@ -24,6 +25,7 @@ export const currentVersion = ( state ) => {
 
 /**
  * Get plugin current version.
+ *
  * @param {Object} state store state
  * @return {string} current version
  */
@@ -33,6 +35,7 @@ export const versions = ( state ) => {
 
 /**
  * Get ajax operations info.
+ *
  * @param {Object} state store state
  * @return {Object} ajax info
  */

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
 import initialState from '$Stores/settings-menu/initialState';
 import { isPluginPro } from '$Stores/settings-menu/slices/pluginStatus';
@@ -12,6 +12,16 @@ const appSliceOptions = {
 	name: 'app',
 	initialState: initialState.app,
 	reducers: {
+		/**
+		 * Set current route path.
+		 *
+		 * @param {Object} state         slice state
+		 * @param {Object} props         reducer properties
+		 * @param {string} props.payload route path
+		 */
+		setCurrentRoutePath( state, { payload } ) {
+			state.router.current = payload;
+		},
 		/**
 		 * Set current filter value.
 		 *
@@ -64,6 +74,7 @@ export const {
 	toggleShowBlockInfo,
 	showProBlockUpsellModal,
 	hideProBlockUpsellModal,
+	setCurrentRoutePath,
 } = appSlice.actions;
 
 /**
@@ -75,6 +86,15 @@ export const {
 export const getAllAppOptions = ( state ) => {
 	return state.app;
 };
+
+/* eslint-disable-next-line jsdoc/require-param */
+/**
+ * Get content data.
+ */
+export const getContentData = createSelector(
+	[ ( state ) => state.app.content, ( content, id ) => id ],
+	( content, id ) => content[ id ] ?? null
+);
 
 /**
  * Get current block filter.
@@ -127,6 +147,16 @@ export const getModalTargetBlockType = ( state ) => {
  */
 export const getModalVisibilityStatus = ( state ) => {
 	return state.app.upsellPopup.show;
+};
+
+/**
+ * Get current route path.
+ *
+ * @param {Object} state store state
+ * @return {string | null} route path
+ */
+export const getCurrentRoutePath = ( state ) => {
+	return state.app.router.current;
 };
 
 /**
