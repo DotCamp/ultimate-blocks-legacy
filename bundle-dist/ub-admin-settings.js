@@ -147,11 +147,10 @@
 var _react = _interopRequireDefault(require("f86067a0c42586c2"));
 var _reactRedux = require("6bb183c41f170262");
 var _client = require("dd04af2d01c62810");
-var _AdminMenuContainer = _interopRequireDefault(require("5cdb128c8e3827eb"));
-require("600c2f9e1674370c");
-var _AdminMenuWrapper = _interopRequireDefault(require("d1ece749c706e412"));
+var _AdminMenuContainer = _interopRequireDefault(require("5eabbf090be36ca7"));
+require("b134c17004fc38d7");
+var _AdminMenuWrapper = _interopRequireDefault(require("520d72c8a439ff41"));
 var _settingsMenuStore = _interopRequireDefault(require("2da12f694a741c54"));
-var _LocalStorageProvider = _interopRequireDefault(require("d795f4bb48d1079d"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -163,10 +162,10 @@ if (mountPoint) {
     var root = (0, _client.createRoot)(mountPoint);
     root.render(/*#__PURE__*/ _react["default"].createElement(_AdminMenuWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_reactRedux.Provider, {
         store: (0, _settingsMenuStore["default"])()
-    }, /*#__PURE__*/ _react["default"].createElement(_LocalStorageProvider["default"], null, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null)))));
+    }, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null))));
 } else throw new Error("no mount point found for settings menu");
 
-},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","5cdb128c8e3827eb":"7a8vF","600c2f9e1674370c":"cBeYy","d1ece749c706e412":"do7SF","2da12f694a741c54":"7VzQu","d795f4bb48d1079d":"1Y8eP"}],"21dqq":[function(require,module,exports) {
+},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","5eabbf090be36ca7":"7a8vF","b134c17004fc38d7":"cBeYy","520d72c8a439ff41":"do7SF","2da12f694a741c54":"7VzQu"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("a569817e6ea559f6");
 
@@ -25404,8 +25403,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("455808d61ca3dd3"));
-var _MenuHeader = _interopRequireDefault(require("ac586035ebf11933"));
-var _Content = _interopRequireDefault(require("7343fefef4ac8988"));
+var _MenuHeader = _interopRequireDefault(require("13ab014d28c1a042"));
+var _Content = _interopRequireDefault(require("46d090e981b08c24"));
+var _UpsellModalSettingsMenu = _interopRequireDefault(require("b2a4cd4db8cb175"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -25420,43 +25420,128 @@ function _interopRequireDefault(obj) {
  */ function AdminMenuContainer() {
     return /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-admin-menu-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
+    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null), /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
 }
 /**
  * @module AdminMenuContainer
  */ var _default = exports["default"] = AdminMenuContainer;
 
-},{"455808d61ca3dd3":"21dqq","ac586035ebf11933":"kP7QS","7343fefef4ac8988":"12F8G"}],"kP7QS":[function(require,module,exports) {
+},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G","b2a4cd4db8cb175":"l7D5t"}],"kP7QS":[function(require,module,exports) {
 "use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("af8ddc31c52e60c1"));
-var _withStore = _interopRequireDefault(require("8e13c56b0b23f46c"));
-var _assets = require("c7228a701ce4de72");
-var _app = require("55c215141c2394e0");
-var _reactFontawesome = require("3ee81ce64fbd9c46");
-var _RightContainerItem = _interopRequireDefault(require("80af8803c24a14fe"));
-var _VersionControl = _interopRequireDefault(require("8598ffd360f8ff2b"));
+var _react = _interopRequireWildcard(require("af8ddc31c52e60c1"));
+var _i18n = require("9846d3c7b6ac7c1b");
+var _withStore = _interopRequireDefault(require("a360f5480afc451d"));
+var _assets = require("66544b766e488b05");
+var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
+var _VersionControl = _interopRequireDefault(require("9b060551899412e8"));
+var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
+var _routes = require("e6bedbb7f240506c");
+var _app = require("e9c2c22a72a45548");
+var _HamburgerMenu = _interopRequireDefault(require("9079f43f327521d8"));
+var _AssetProvider = _interopRequireDefault(require("eaaf70471d024f90"));
+var _ButtonLink = _interopRequireWildcard(require("79cfd1823aff4e62"));
+var _ProFilter = _interopRequireDefault(require("18a59a4502e9f75e"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
 /**
  * Settings menu header element.
  *
- * @param {Object}   props                      component properties
- * @param {string}   props.logoUrl              plugin logo url, will be supplied via HOC
- * @param {Function} props.toggleShowInfoStatus toggle showing block controls info, will be supplied via HOC
- * @param {boolean}  props.blockInfoShowStatus  status of showing extra block information, will be supplied via HOC
+ * @param {Object}   props                  component properties
+ * @param {string}   props.logoUrl          plugin logo url, will be supplied via HOC
+ * @param {string}   props.currentRoutePath current route path, will be supplied via HOC
+ * @param {Function} props.setRoute         set route path, will be supplied via HOC
  * @return {JSX.Element} component
- * @function Object() { [native code] }
  */ function MenuHeader(_ref) {
-    var logoUrl = _ref.logoUrl, toggleShowInfoStatus = _ref.toggleShowInfoStatus, blockInfoShowStatus = _ref.blockInfoShowStatus;
+    var logoUrl = _ref.logoUrl, currentRoutePath = _ref.currentRoutePath, setRoute = _ref.setRoute;
+    // status of hamburger menu
+    var _useState = (0, _react.useState)(false), _useState2 = _slicedToArray(_useState, 2), menuStatus = _useState2[0], setMenuStatus = _useState2[1];
+    var routeObjectsMinus404 = (0, _react.useMemo)(function() {
+        return _routes.routeObjects.slice(0, _routes.routeObjects.length - 1);
+    }, []);
     return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "header-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "menu-header"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "left-container"
@@ -25468,31 +25553,1436 @@ function _interopRequireDefault(obj) {
     }), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "ub-plugin-logo-text"
     }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-menu-navigation-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
+        routes: routeObjectsMinus404,
+        currentRoutePath: currentRoutePath,
+        setRoute: setRoute
+    })), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
-        onClick: toggleShowInfoStatus,
-        className: "blog-info-toggle",
-        "data-light-it-up": JSON.stringify(!blockInfoShowStatus)
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-lightbulb"
-    })))));
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-header-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], null, /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+        assetIds: [
+            "proBuyUrl"
+        ]
+    }, function(_ref2) {
+        var proBuyUrl = _ref2.proBuyUrl;
+        return /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: proBuyUrl,
+            title: (0, _i18n.__)("Upgrade to PRO", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.DEFAULT
+        });
+    })))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], {
+        clickHandler: function clickHandler() {
+            return setMenuStatus(!menuStatus);
+        },
+        status: menuStatus
+    })), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "dropdown-navigation",
+        "data-menu-status": menuStatus
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "dropdown-drawer"
+    }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
+        routes: routeObjectsMinus404,
+        currentRoutePath: currentRoutePath,
+        setRoute: setRoute
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "hamburger-version-control"
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)))));
 }
+// store select mapping
 var selectMapping = function selectMapping(select) {
     return {
         logoUrl: select(_assets.getLogo),
-        blockInfoShowStatus: select(_app.getBlockInfoShowStatus)
+        currentRoutePath: select(_app.getCurrentRoutePath)
     };
 };
+// store action mapping
 var actionMapping = function actionMapping() {
     return {
-        toggleShowInfoStatus: _app.toggleShowBlockInfo
+        setRoute: _app.setCurrentRoutePath
     };
 };
 /**
  * @module MenuHeader
  */ var _default = exports["default"] = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
 
-},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","55c215141c2394e0":"c28DV","3ee81ce64fbd9c46":"clIT3","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1"}],"kWmDy":[function(require,module,exports) {
+},{"af8ddc31c52e60c1":"21dqq","9846d3c7b6ac7c1b":"7CyoE","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB","eaaf70471d024f90":"jzub6","79cfd1823aff4e62":"dwYOq","18a59a4502e9f75e":"gCmn9"}],"7CyoE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "sprintf", ()=>(0, _sprintf.sprintf));
+parcelHelpers.export(exports, "defaultI18n", ()=>(0, _defaultI18NDefault.default));
+parcelHelpers.export(exports, "setLocaleData", ()=>(0, _defaultI18N.setLocaleData));
+parcelHelpers.export(exports, "resetLocaleData", ()=>(0, _defaultI18N.resetLocaleData));
+parcelHelpers.export(exports, "getLocaleData", ()=>(0, _defaultI18N.getLocaleData));
+parcelHelpers.export(exports, "subscribe", ()=>(0, _defaultI18N.subscribe));
+parcelHelpers.export(exports, "__", ()=>(0, _defaultI18N.__));
+parcelHelpers.export(exports, "_x", ()=>(0, _defaultI18N._x));
+parcelHelpers.export(exports, "_n", ()=>(0, _defaultI18N._n));
+parcelHelpers.export(exports, "_nx", ()=>(0, _defaultI18N._nx));
+parcelHelpers.export(exports, "isRTL", ()=>(0, _defaultI18N.isRTL));
+parcelHelpers.export(exports, "hasTranslation", ()=>(0, _defaultI18N.hasTranslation));
+var _sprintf = require("./sprintf");
+var _createI18N = require("./create-i18n");
+parcelHelpers.exportAll(_createI18N, exports);
+var _defaultI18N = require("./default-i18n");
+var _defaultI18NDefault = parcelHelpers.interopDefault(_defaultI18N);
+
+},{"./sprintf":"jSK0R","./create-i18n":"2IrAM","./default-i18n":"eKzAG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jSK0R":[function(require,module,exports) {
+/**
+ * External dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Returns a formatted string. If an error occurs in applying the format, the
+ * original format string is returned.
+ *
+ * @param {string} format The format of the string to generate.
+ * @param {...*}   args   Arguments to apply to the format.
+ *
+ * @see https://www.npmjs.com/package/sprintf-js
+ *
+ * @return {string} The formatted string.
+ */ parcelHelpers.export(exports, "sprintf", ()=>sprintf);
+var _memize = require("memize");
+var _memizeDefault = parcelHelpers.interopDefault(_memize);
+var _sprintfJs = require("sprintf-js");
+var _sprintfJsDefault = parcelHelpers.interopDefault(_sprintfJs);
+/**
+ * Log to console, once per message; or more precisely, per referentially equal
+ * argument set. Because Jed throws errors, we log these to the console instead
+ * to avoid crashing the application.
+ *
+ * @param {...*} args Arguments to pass to `console.error`
+ */ const logErrorOnce = (0, _memizeDefault.default)(console.error); // eslint-disable-line no-console
+function sprintf(format, ...args) {
+    try {
+        return (0, _sprintfJsDefault.default).sprintf(format, ...args);
+    } catch (error) {
+        if (error instanceof Error) logErrorOnce("sprintf error: \n\n" + error.toString());
+        return format;
+    }
+}
+
+},{"memize":"2xx6f","sprintf-js":"9lMGt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2xx6f":[function(require,module,exports) {
+/**
+ * Memize options object.
+ *
+ * @typedef MemizeOptions
+ *
+ * @property {number} [maxSize] Maximum size of the cache.
+ */ /**
+ * Internal cache entry.
+ *
+ * @typedef MemizeCacheNode
+ *
+ * @property {?MemizeCacheNode|undefined} [prev] Previous node.
+ * @property {?MemizeCacheNode|undefined} [next] Next node.
+ * @property {Array<*>}                   args   Function arguments for cache
+ *                                               entry.
+ * @property {*}                          val    Function result.
+ */ /**
+ * Properties of the enhanced function for controlling cache.
+ *
+ * @typedef MemizeMemoizedFunction
+ *
+ * @property {()=>void} clear Clear the cache.
+ */ /**
+ * Accepts a function to be memoized, and returns a new memoized function, with
+ * optional options.
+ *
+ * @template {(...args: any[]) => any} F
+ *
+ * @param {F}             fn        Function to memoize.
+ * @param {MemizeOptions} [options] Options object.
+ *
+ * @return {((...args: Parameters<F>) => ReturnType<F>) & MemizeMemoizedFunction} Memoized function.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>memize);
+function memize(fn, options) {
+    var size = 0;
+    /** @type {?MemizeCacheNode|undefined} */ var head;
+    /** @type {?MemizeCacheNode|undefined} */ var tail;
+    options = options || {};
+    function memoized() {
+        var node = head, len = arguments.length, args, i;
+        searchCache: while(node){
+            // Perform a shallow equality test to confirm that whether the node
+            // under test is a candidate for the arguments passed. Two arrays
+            // are shallowly equal if their length matches and each entry is
+            // strictly equal between the two sets. Avoid abstracting to a
+            // function which could incur an arguments leaking deoptimization.
+            // Check whether node arguments match arguments length
+            if (node.args.length !== arguments.length) {
+                node = node.next;
+                continue;
+            }
+            // Check whether node arguments match arguments values
+            for(i = 0; i < len; i++)if (node.args[i] !== arguments[i]) {
+                node = node.next;
+                continue searchCache;
+            }
+            // At this point we can assume we've found a match
+            // Surface matched node to head if not already
+            if (node !== head) {
+                // As tail, shift to previous. Must only shift if not also
+                // head, since if both head and tail, there is no previous.
+                if (node === tail) tail = node.prev;
+                // Adjust siblings to point to each other. If node was tail,
+                // this also handles new tail's empty `next` assignment.
+                /** @type {MemizeCacheNode} */ node.prev.next = node.next;
+                if (node.next) node.next.prev = node.prev;
+                node.next = head;
+                node.prev = null;
+                /** @type {MemizeCacheNode} */ head.prev = node;
+                head = node;
+            }
+            // Return immediately
+            return node.val;
+        }
+        // No cached value found. Continue to insertion phase:
+        // Create a copy of arguments (avoid leaking deoptimization)
+        args = new Array(len);
+        for(i = 0; i < len; i++)args[i] = arguments[i];
+        node = {
+            args: args,
+            // Generate the result from original function
+            val: fn.apply(null, args)
+        };
+        // Don't need to check whether node is already head, since it would
+        // have been returned above already if it was
+        // Shift existing head down list
+        if (head) {
+            head.prev = node;
+            node.next = head;
+        } else // If no head, follows that there's no tail (at initial or reset)
+        tail = node;
+        // Trim tail if we're reached max size and are pending cache insertion
+        if (size === /** @type {MemizeOptions} */ options.maxSize) {
+            tail = /** @type {MemizeCacheNode} */ tail.prev;
+            /** @type {MemizeCacheNode} */ tail.next = null;
+        } else size++;
+        head = node;
+        return node.val;
+    }
+    memoized.clear = function() {
+        head = null;
+        tail = null;
+        size = 0;
+    };
+    // Ignore reason: There's not a clear solution to create an intersection of
+    // the function with additional properties, where the goal is to retain the
+    // function signature of the incoming argument and add control properties
+    // on the return value.
+    // @ts-ignore
+    return memoized;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9lMGt":[function(require,module,exports) {
+/* global window, exports, define */ !function() {
+    "use strict";
+    var re = {
+        not_string: /[^s]/,
+        not_bool: /[^t]/,
+        not_type: /[^T]/,
+        not_primitive: /[^v]/,
+        number: /[diefg]/,
+        numeric_arg: /[bcdiefguxX]/,
+        json: /[j]/,
+        not_json: /[^j]/,
+        text: /^[^\x25]+/,
+        modulo: /^\x25{2}/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        key: /^([a-z_][a-z_\d]*)/i,
+        key_access: /^\.([a-z_][a-z_\d]*)/i,
+        index_access: /^\[(\d+)\]/,
+        sign: /^[+-]/
+    };
+    function sprintf(key) {
+        // `arguments` is not an array, but should be fine for this call
+        return sprintf_format(sprintf_parse(key), arguments);
+    }
+    function vsprintf(fmt, argv) {
+        return sprintf.apply(null, [
+            fmt
+        ].concat(argv || []));
+    }
+    function sprintf_format(parse_tree, argv) {
+        var cursor = 1, tree_length = parse_tree.length, arg, output = "", i, k, ph, pad, pad_character, pad_length, is_positive, sign;
+        for(i = 0; i < tree_length; i++){
+            if (typeof parse_tree[i] === "string") output += parse_tree[i];
+            else if (typeof parse_tree[i] === "object") {
+                ph = parse_tree[i] // convenience purposes only
+                ;
+                if (ph.keys) {
+                    arg = argv[cursor];
+                    for(k = 0; k < ph.keys.length; k++){
+                        if (arg == undefined) throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k - 1]));
+                        arg = arg[ph.keys[k]];
+                    }
+                } else if (ph.param_no) arg = argv[ph.param_no];
+                else arg = argv[cursor++];
+                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) arg = arg();
+                if (re.numeric_arg.test(ph.type) && typeof arg !== "number" && isNaN(arg)) throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg));
+                if (re.number.test(ph.type)) is_positive = arg >= 0;
+                switch(ph.type){
+                    case "b":
+                        arg = parseInt(arg, 10).toString(2);
+                        break;
+                    case "c":
+                        arg = String.fromCharCode(parseInt(arg, 10));
+                        break;
+                    case "d":
+                    case "i":
+                        arg = parseInt(arg, 10);
+                        break;
+                    case "j":
+                        arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0);
+                        break;
+                    case "e":
+                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential();
+                        break;
+                    case "f":
+                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg);
+                        break;
+                    case "g":
+                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg);
+                        break;
+                    case "o":
+                        arg = (parseInt(arg, 10) >>> 0).toString(8);
+                        break;
+                    case "s":
+                        arg = String(arg);
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "t":
+                        arg = String(!!arg);
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "T":
+                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "u":
+                        arg = parseInt(arg, 10) >>> 0;
+                        break;
+                    case "v":
+                        arg = arg.valueOf();
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "x":
+                        arg = (parseInt(arg, 10) >>> 0).toString(16);
+                        break;
+                    case "X":
+                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase();
+                        break;
+                }
+                if (re.json.test(ph.type)) output += arg;
+                else {
+                    if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
+                        sign = is_positive ? "+" : "-";
+                        arg = arg.toString().replace(re.sign, "");
+                    } else sign = "";
+                    pad_character = ph.pad_char ? ph.pad_char === "0" ? "0" : ph.pad_char.charAt(1) : " ";
+                    pad_length = ph.width - (sign + arg).length;
+                    pad = ph.width ? pad_length > 0 ? pad_character.repeat(pad_length) : "" : "";
+                    output += ph.align ? sign + arg + pad : pad_character === "0" ? sign + pad + arg : pad + sign + arg;
+                }
+            }
+        }
+        return output;
+    }
+    var sprintf_cache = Object.create(null);
+    function sprintf_parse(fmt) {
+        if (sprintf_cache[fmt]) return sprintf_cache[fmt];
+        var _fmt = fmt, match, parse_tree = [], arg_names = 0;
+        while(_fmt){
+            if ((match = re.text.exec(_fmt)) !== null) parse_tree.push(match[0]);
+            else if ((match = re.modulo.exec(_fmt)) !== null) parse_tree.push("%");
+            else if ((match = re.placeholder.exec(_fmt)) !== null) {
+                if (match[2]) {
+                    arg_names |= 1;
+                    var field_list = [], replacement_field = match[2], field_match = [];
+                    if ((field_match = re.key.exec(replacement_field)) !== null) {
+                        field_list.push(field_match[1]);
+                        while((replacement_field = replacement_field.substring(field_match[0].length)) !== ""){
+                            if ((field_match = re.key_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
+                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
+                            else throw new SyntaxError("[sprintf] failed to parse named argument key");
+                        }
+                    } else throw new SyntaxError("[sprintf] failed to parse named argument key");
+                    match[2] = field_list;
+                } else arg_names |= 2;
+                if (arg_names === 3) throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");
+                parse_tree.push({
+                    placeholder: match[0],
+                    param_no: match[1],
+                    keys: match[2],
+                    sign: match[3],
+                    pad_char: match[4],
+                    align: match[5],
+                    width: match[6],
+                    precision: match[7],
+                    type: match[8]
+                });
+            } else throw new SyntaxError("[sprintf] unexpected placeholder");
+            _fmt = _fmt.substring(match[0].length);
+        }
+        return sprintf_cache[fmt] = parse_tree;
+    }
+    exports["sprintf"] = sprintf;
+    exports["vsprintf"] = vsprintf;
+    if (typeof window !== "undefined") {
+        window["sprintf"] = sprintf;
+        window["vsprintf"] = vsprintf;
+        if (typeof define === "function" && define["amd"]) define(function() {
+            return {
+                "sprintf": sprintf,
+                "vsprintf": vsprintf
+            };
+        });
+    }
+/* eslint-enable quote-props */ }(); // eslint-disable-line
+
+},{}],"2IrAM":[function(require,module,exports) {
+/**
+ * External dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createI18n", ()=>createI18n);
+var _tannin = require("tannin");
+var _tanninDefault = parcelHelpers.interopDefault(_tannin);
+/**
+ * @typedef {Record<string,any>} LocaleData
+ */ /**
+ * Default locale data to use for Tannin domain when not otherwise provided.
+ * Assumes an English plural forms expression.
+ *
+ * @type {LocaleData}
+ */ const DEFAULT_LOCALE_DATA = {
+    "": {
+        /** @param {number} n */ plural_forms (n) {
+            return n === 1 ? 0 : 1;
+        }
+    }
+};
+/*
+ * Regular expression that matches i18n hooks like `i18n.gettext`, `i18n.ngettext`,
+ * `i18n.gettext_domain` or `i18n.ngettext_with_context` or `i18n.has_translation`.
+ */ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
+const createI18n = (initialData, initialDomain, hooks)=>{
+    /**
+   * The underlying instance of Tannin to which exported functions interface.
+   *
+   * @type {Tannin}
+   */ const tannin = new (0, _tanninDefault.default)({});
+    const listeners = new Set();
+    const notifyListeners = ()=>{
+        listeners.forEach((listener)=>listener());
+    };
+    /**
+   * Subscribe to changes of locale data.
+   *
+   * @param {SubscribeCallback} callback Subscription callback.
+   * @return {UnsubscribeCallback} Unsubscribe callback.
+   */ const subscribe = (callback)=>{
+        listeners.add(callback);
+        return ()=>listeners.delete(callback);
+    };
+    /** @type {GetLocaleData} */ const getLocaleData = (domain = "default")=>tannin.data[domain];
+    /**
+   * @param {LocaleData} [data]
+   * @param {string}     [domain]
+   */ const doSetLocaleData = (data, domain = "default")=>{
+        tannin.data[domain] = {
+            ...tannin.data[domain],
+            ...data
+        };
+        // Populate default domain configuration (supported locale date which omits
+        // a plural forms expression).
+        tannin.data[domain][""] = {
+            ...DEFAULT_LOCALE_DATA[""],
+            ...tannin.data[domain]?.[""]
+        };
+        // Clean up cached plural forms functions cache as it might be updated.
+        delete tannin.pluralForms[domain];
+    };
+    /** @type {SetLocaleData} */ const setLocaleData = (data, domain)=>{
+        doSetLocaleData(data, domain);
+        notifyListeners();
+    };
+    /** @type {AddLocaleData} */ const addLocaleData = (data, domain = "default")=>{
+        tannin.data[domain] = {
+            ...tannin.data[domain],
+            ...data,
+            // Populate default domain configuration (supported locale date which omits
+            // a plural forms expression).
+            "": {
+                ...DEFAULT_LOCALE_DATA[""],
+                ...tannin.data[domain]?.[""],
+                ...data?.[""]
+            }
+        };
+        // Clean up cached plural forms functions cache as it might be updated.
+        delete tannin.pluralForms[domain];
+        notifyListeners();
+    };
+    /** @type {ResetLocaleData} */ const resetLocaleData = (data, domain)=>{
+        // Reset all current Tannin locale data.
+        tannin.data = {};
+        // Reset cached plural forms functions cache.
+        tannin.pluralForms = {};
+        setLocaleData(data, domain);
+    };
+    /**
+   * Wrapper for Tannin's `dcnpgettext`. Populates default locale data if not
+   * otherwise previously assigned.
+   *
+   * @param {string|undefined} domain   Domain to retrieve the translated text.
+   * @param {string|undefined} context  Context information for the translators.
+   * @param {string}           single   Text to translate if non-plural. Used as
+   *                                    fallback return value on a caught error.
+   * @param {string}           [plural] The text to be used if the number is
+   *                                    plural.
+   * @param {number}           [number] The number to compare against to use
+   *                                    either the singular or plural form.
+   *
+   * @return {string} The translated string.
+   */ const dcnpgettext = (domain = "default", context, single, plural, number)=>{
+        if (!tannin.data[domain]) // Use `doSetLocaleData` to set silently, without notifying listeners.
+        doSetLocaleData(undefined, domain);
+        return tannin.dcnpgettext(domain, context, single, plural, number);
+    };
+    /** @type {GetFilterDomain} */ const getFilterDomain = (domain = "default")=>domain;
+    /** @type {__} */ const __ = (text, domain)=>{
+        let translation = dcnpgettext(domain, undefined, text);
+        if (!hooks) return translation;
+        /**
+     * Filters text with its translation.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} text        Text to translate.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext", translation, text, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_" + getFilterDomain(domain), translation, text, domain);
+    };
+    /** @type {_x} */ const _x = (text, context, domain)=>{
+        let translation = dcnpgettext(domain, context, text);
+        if (!hooks) return translation;
+        /**
+     * Filters text with its translation based on context information.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} text        Text to translate.
+     * @param {string} context     Context information for the translators.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context", translation, text, context, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context_" + getFilterDomain(domain), translation, text, context, domain);
+    };
+    /** @type {_n} */ const _n = (single, plural, number, domain)=>{
+        let translation = dcnpgettext(domain, undefined, single, plural, number);
+        if (!hooks) return translation;
+        /**
+     * Filters the singular or plural form of a string.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} single      The text to be used if the number is singular.
+     * @param {string} plural      The text to be used if the number is plural.
+     * @param {string} number      The number to compare against to use either the singular or plural form.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext", translation, single, plural, number, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_" + getFilterDomain(domain), translation, single, plural, number, domain);
+    };
+    /** @type {_nx} */ const _nx = (single, plural, number, context, domain)=>{
+        let translation = dcnpgettext(domain, context, single, plural, number);
+        if (!hooks) return translation;
+        /**
+     * Filters the singular or plural form of a string with gettext context.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} single      The text to be used if the number is singular.
+     * @param {string} plural      The text to be used if the number is plural.
+     * @param {string} number      The number to compare against to use either the singular or plural form.
+     * @param {string} context     Context information for the translators.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context", translation, single, plural, number, context, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context_" + getFilterDomain(domain), translation, single, plural, number, context, domain);
+    };
+    /** @type {IsRtl} */ const isRTL = ()=>{
+        return "rtl" === _x("ltr", "text direction");
+    };
+    /** @type {HasTranslation} */ const hasTranslation = (single, context, domain)=>{
+        const key = context ? context + "\x04" + single : single;
+        let result = !!tannin.data?.[domain !== null && domain !== void 0 ? domain : "default"]?.[key];
+        if (hooks) {
+            /**
+       * Filters the presence of a translation in the locale data.
+       *
+       * @param {boolean} hasTranslation Whether the translation is present or not..
+       * @param {string}  single         The singular form of the translated text (used as key in locale data)
+       * @param {string}  context        Context information for the translators.
+       * @param {string}  domain         Text domain. Unique identifier for retrieving translated strings.
+       */ result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation", result, single, context, domain);
+            result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation_" + getFilterDomain(domain), result, single, context, domain);
+        }
+        return result;
+    };
+    if (initialData) setLocaleData(initialData, initialDomain);
+    if (hooks) {
+        /**
+     * @param {string} hookName
+     */ const onHookAddedOrRemoved = (hookName)=>{
+            if (I18N_HOOK_REGEXP.test(hookName)) notifyListeners();
+        };
+        hooks.addAction("hookAdded", "core/i18n", onHookAddedOrRemoved);
+        hooks.addAction("hookRemoved", "core/i18n", onHookAddedOrRemoved);
+    }
+    return {
+        getLocaleData,
+        setLocaleData,
+        addLocaleData,
+        resetLocaleData,
+        subscribe,
+        __,
+        _x,
+        _n,
+        _nx,
+        isRTL,
+        hasTranslation
+    };
+};
+
+},{"tannin":"bWSIR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWSIR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Tannin);
+var _pluralForms = require("@tannin/plural-forms");
+var _pluralFormsDefault = parcelHelpers.interopDefault(_pluralForms);
+/**
+ * Tannin constructor options.
+ *
+ * @typedef {Object} TanninOptions
+ *
+ * @property {string}   [contextDelimiter] Joiner in string lookup with context.
+ * @property {Function} [onMissingKey]     Callback to invoke when key missing.
+ */ /**
+ * Domain metadata.
+ *
+ * @typedef {Object} TanninDomainMetadata
+ *
+ * @property {string}            [domain]       Domain name.
+ * @property {string}            [lang]         Language code.
+ * @property {(string|Function)} [plural_forms] Plural forms expression or
+ *                                              function evaluator.
+ */ /**
+ * Domain translation pair respectively representing the singular and plural
+ * translation.
+ *
+ * @typedef {[string,string]} TanninTranslation
+ */ /**
+ * Locale data domain. The key is used as reference for lookup, the value an
+ * array of two string entries respectively representing the singular and plural
+ * translation.
+ *
+ * @typedef {{[key:string]:TanninDomainMetadata|TanninTranslation,'':TanninDomainMetadata|TanninTranslation}} TanninLocaleDomain
+ */ /**
+ * Jed-formatted locale data.
+ *
+ * @see http://messageformat.github.io/Jed/
+ *
+ * @typedef {{[domain:string]:TanninLocaleDomain}} TanninLocaleData
+ */ /**
+ * Default Tannin constructor options.
+ *
+ * @type {TanninOptions}
+ */ var DEFAULT_OPTIONS = {
+    contextDelimiter: "\x04",
+    onMissingKey: null
+};
+/**
+ * Given a specific locale data's config `plural_forms` value, returns the
+ * expression.
+ *
+ * @example
+ *
+ * ```
+ * getPluralExpression( 'nplurals=2; plural=(n != 1);' ) === '(n != 1)'
+ * ```
+ *
+ * @param {string} pf Locale data plural forms.
+ *
+ * @return {string} Plural forms expression.
+ */ function getPluralExpression(pf) {
+    var parts, i, part;
+    parts = pf.split(";");
+    for(i = 0; i < parts.length; i++){
+        part = parts[i].trim();
+        if (part.indexOf("plural=") === 0) return part.substr(7);
+    }
+}
+function Tannin(data, options) {
+    var key;
+    /**
+	 * Jed-formatted locale data.
+	 *
+	 * @name Tannin#data
+	 * @type {TanninLocaleData}
+	 */ this.data = data;
+    /**
+	 * Plural forms function cache, keyed by plural forms string.
+	 *
+	 * @name Tannin#pluralForms
+	 * @type {Object<string,Function>}
+	 */ this.pluralForms = {};
+    /**
+	 * Effective options for instance, including defaults.
+	 *
+	 * @name Tannin#options
+	 * @type {TanninOptions}
+	 */ this.options = {};
+    for(key in DEFAULT_OPTIONS)this.options[key] = options !== undefined && key in options ? options[key] : DEFAULT_OPTIONS[key];
+}
+/**
+ * Returns the plural form index for the given domain and value.
+ *
+ * @param {string} domain Domain on which to calculate plural form.
+ * @param {number} n      Value for which plural form is to be calculated.
+ *
+ * @return {number} Plural form index.
+ */ Tannin.prototype.getPluralForm = function(domain, n) {
+    var getPluralForm = this.pluralForms[domain], config, plural, pf;
+    if (!getPluralForm) {
+        config = this.data[domain][""];
+        pf = config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
+        // string property on a key to guarantee this as metadata.
+        // @ts-ignore
+        config.plural_forms;
+        if (typeof pf !== "function") {
+            plural = getPluralExpression(config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
+            // string property on a key to guarantee this as metadata.
+            // @ts-ignore
+            config.plural_forms);
+            pf = (0, _pluralFormsDefault.default)(plural);
+        }
+        getPluralForm = this.pluralForms[domain] = pf;
+    }
+    return getPluralForm(n);
+};
+/**
+ * Translate a string.
+ *
+ * @param {string}      domain   Translation domain.
+ * @param {string|void} context  Context distinguishing terms of the same name.
+ * @param {string}      singular Primary key for translation lookup.
+ * @param {string=}     plural   Fallback value used for non-zero plural
+ *                               form index.
+ * @param {number=}     n        Value to use in calculating plural form.
+ *
+ * @return {string} Translated string.
+ */ Tannin.prototype.dcnpgettext = function(domain, context, singular, plural, n) {
+    var index, key, entry;
+    if (n === undefined) // Default to singular.
+    index = 0;
+    else // Find index by evaluating plural form for value.
+    index = this.getPluralForm(domain, n);
+    key = singular;
+    // If provided, context is prepended to key with delimiter.
+    if (context) key = context + this.options.contextDelimiter + singular;
+    entry = this.data[domain][key];
+    // Verify not only that entry exists, but that the intended index is within
+    // range and non-empty.
+    if (entry && entry[index]) return entry[index];
+    if (this.options.onMissingKey) this.options.onMissingKey(singular, domain);
+    // If entry not found, fall back to singular vs. plural with zero index
+    // representing the singular value.
+    return index === 0 ? singular : plural;
+};
+
+},{"@tannin/plural-forms":"ch17b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ch17b":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>pluralForms);
+var _compile = require("@tannin/compile");
+var _compileDefault = parcelHelpers.interopDefault(_compile);
+function pluralForms(expression) {
+    var evaluate = (0, _compileDefault.default)(expression);
+    return function(n) {
+        return +evaluate({
+            n: n
+        });
+    };
+}
+
+},{"@tannin/compile":"5dvv3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5dvv3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>compile);
+var _postfix = require("@tannin/postfix");
+var _postfixDefault = parcelHelpers.interopDefault(_postfix);
+var _evaluate = require("@tannin/evaluate");
+var _evaluateDefault = parcelHelpers.interopDefault(_evaluate);
+function compile(expression) {
+    var terms = (0, _postfixDefault.default)(expression);
+    return function(variables) {
+        return (0, _evaluateDefault.default)(terms, variables);
+    };
+}
+
+},{"@tannin/postfix":"gjJvb","@tannin/evaluate":"8I9co","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gjJvb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>postfix);
+var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
+/**
+ * Operator precedence mapping.
+ *
+ * @type {Object}
+ */ PRECEDENCE = {
+    "(": 9,
+    "!": 8,
+    "*": 7,
+    "/": 7,
+    "%": 7,
+    "+": 6,
+    "-": 6,
+    "<": 5,
+    "<=": 5,
+    ">": 5,
+    ">=": 5,
+    "==": 4,
+    "!=": 4,
+    "&&": 3,
+    "||": 2,
+    "?": 1,
+    "?:": 1
+};
+/**
+ * Characters which signal pair opening, to be terminated by terminators.
+ *
+ * @type {string[]}
+ */ OPENERS = [
+    "(",
+    "?"
+];
+/**
+ * Characters which signal pair termination, the value an array with the
+ * opener as its first member. The second member is an optional operator
+ * replacement to push to the stack.
+ *
+ * @type {string[]}
+ */ TERMINATORS = {
+    ")": [
+        "("
+    ],
+    ":": [
+        "?",
+        "?:"
+    ]
+};
+/**
+ * Pattern matching operators and openers.
+ *
+ * @type {RegExp}
+ */ PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
+function postfix(expression) {
+    var terms = [], stack = [], match, operator, term, element;
+    while(match = expression.match(PATTERN)){
+        operator = match[0];
+        // Term is the string preceding the operator match. It may contain
+        // whitespace, and may be empty (if operator is at beginning).
+        term = expression.substr(0, match.index).trim();
+        if (term) terms.push(term);
+        while(element = stack.pop()){
+            if (TERMINATORS[operator]) {
+                if (TERMINATORS[operator][0] === element) {
+                    // Substitution works here under assumption that because
+                    // the assigned operator will no longer be a terminator, it
+                    // will be pushed to the stack during the condition below.
+                    operator = TERMINATORS[operator][1] || operator;
+                    break;
+                }
+            } else if (OPENERS.indexOf(element) >= 0 || PRECEDENCE[element] < PRECEDENCE[operator]) {
+                // Push to stack if either an opener or when pop reveals an
+                // element of lower precedence.
+                stack.push(element);
+                break;
+            }
+            // For each popped from stack, push to terms.
+            terms.push(element);
+        }
+        if (!TERMINATORS[operator]) stack.push(operator);
+        // Slice matched fragment from expression to continue match.
+        expression = expression.substr(match.index + operator.length);
+    }
+    // Push remainder of operand, if exists, to terms.
+    expression = expression.trim();
+    if (expression) terms.push(expression);
+    // Pop remaining items from stack into terms.
+    return terms.concat(stack.reverse());
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8I9co":[function(require,module,exports) {
+/**
+ * Operator callback functions.
+ *
+ * @type {Object}
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>evaluate);
+var OPERATORS = {
+    "!": function(a) {
+        return !a;
+    },
+    "*": function(a, b) {
+        return a * b;
+    },
+    "/": function(a, b) {
+        return a / b;
+    },
+    "%": function(a, b) {
+        return a % b;
+    },
+    "+": function(a, b) {
+        return a + b;
+    },
+    "-": function(a, b) {
+        return a - b;
+    },
+    "<": function(a, b) {
+        return a < b;
+    },
+    "<=": function(a, b) {
+        return a <= b;
+    },
+    ">": function(a, b) {
+        return a > b;
+    },
+    ">=": function(a, b) {
+        return a >= b;
+    },
+    "==": function(a, b) {
+        return a === b;
+    },
+    "!=": function(a, b) {
+        return a !== b;
+    },
+    "&&": function(a, b) {
+        return a && b;
+    },
+    "||": function(a, b) {
+        return a || b;
+    },
+    "?:": function(a, b, c) {
+        if (a) throw b;
+        return c;
+    }
+};
+function evaluate(postfix, variables) {
+    var stack = [], i, j, args, getOperatorResult, term, value;
+    for(i = 0; i < postfix.length; i++){
+        term = postfix[i];
+        getOperatorResult = OPERATORS[term];
+        if (getOperatorResult) {
+            // Pop from stack by number of function arguments.
+            j = getOperatorResult.length;
+            args = Array(j);
+            while(j--)args[j] = stack.pop();
+            try {
+                value = getOperatorResult.apply(null, args);
+            } catch (earlyReturn) {
+                return earlyReturn;
+            }
+        } else if (variables.hasOwnProperty(term)) value = variables[term];
+        else value = +term;
+        stack.push(value);
+    }
+    return stack[0];
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eKzAG":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getLocaleData", ()=>getLocaleData);
+parcelHelpers.export(exports, "setLocaleData", ()=>setLocaleData);
+parcelHelpers.export(exports, "resetLocaleData", ()=>resetLocaleData);
+parcelHelpers.export(exports, "subscribe", ()=>subscribe);
+parcelHelpers.export(exports, "__", ()=>__);
+parcelHelpers.export(exports, "_x", ()=>_x);
+parcelHelpers.export(exports, "_n", ()=>_n);
+parcelHelpers.export(exports, "_nx", ()=>_nx);
+parcelHelpers.export(exports, "isRTL", ()=>isRTL);
+parcelHelpers.export(exports, "hasTranslation", ()=>hasTranslation);
+var _createI18N = require("./create-i18n");
+/**
+ * WordPress dependencies
+ */ var _hooks = require("@wordpress/hooks");
+const i18n = (0, _createI18N.createI18n)(undefined, undefined, (0, _hooks.defaultHooks));
+/**
+ * Default, singleton instance of `I18n`.
+ */ exports.default = i18n;
+const getLocaleData = i18n.getLocaleData.bind(i18n);
+const setLocaleData = i18n.setLocaleData.bind(i18n);
+const resetLocaleData = i18n.resetLocaleData.bind(i18n);
+const subscribe = i18n.subscribe.bind(i18n);
+const __ = i18n.__.bind(i18n);
+const _x = i18n._x.bind(i18n);
+const _n = i18n._n.bind(i18n);
+const _nx = i18n._nx.bind(i18n);
+const isRTL = i18n.isRTL.bind(i18n);
+const hasTranslation = i18n.hasTranslation.bind(i18n);
+
+},{"./create-i18n":"2IrAM","@wordpress/hooks":"8Bsjr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Bsjr":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "defaultHooks", ()=>defaultHooks);
+parcelHelpers.export(exports, "createHooks", ()=>(0, _createHooksDefault.default));
+parcelHelpers.export(exports, "addAction", ()=>addAction);
+parcelHelpers.export(exports, "addFilter", ()=>addFilter);
+parcelHelpers.export(exports, "removeAction", ()=>removeAction);
+parcelHelpers.export(exports, "removeFilter", ()=>removeFilter);
+parcelHelpers.export(exports, "hasAction", ()=>hasAction);
+parcelHelpers.export(exports, "hasFilter", ()=>hasFilter);
+parcelHelpers.export(exports, "removeAllActions", ()=>removeAllActions);
+parcelHelpers.export(exports, "removeAllFilters", ()=>removeAllFilters);
+parcelHelpers.export(exports, "doAction", ()=>doAction);
+parcelHelpers.export(exports, "applyFilters", ()=>applyFilters);
+parcelHelpers.export(exports, "currentAction", ()=>currentAction);
+parcelHelpers.export(exports, "currentFilter", ()=>currentFilter);
+parcelHelpers.export(exports, "doingAction", ()=>doingAction);
+parcelHelpers.export(exports, "doingFilter", ()=>doingFilter);
+parcelHelpers.export(exports, "didAction", ()=>didAction);
+parcelHelpers.export(exports, "didFilter", ()=>didFilter);
+parcelHelpers.export(exports, "actions", ()=>actions);
+parcelHelpers.export(exports, "filters", ()=>filters);
+var _createHooks = require("./createHooks");
+var _createHooksDefault = parcelHelpers.interopDefault(_createHooks);
+const defaultHooks = (0, _createHooksDefault.default)();
+const { addAction, addFilter, removeAction, removeFilter, hasAction, hasFilter, removeAllActions, removeAllFilters, doAction, applyFilters, currentAction, currentFilter, doingAction, doingFilter, didAction, didFilter, actions, filters } = defaultHooks;
+
+},{"./createHooks":"hhEcY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hhEcY":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Internal class for constructing hooks. Use `createHooks()` function
+ *
+ * Note, it is necessary to expose this class to make its type public.
+ *
+ * @private
+ */ parcelHelpers.export(exports, "_Hooks", ()=>_Hooks);
+var _createAddHook = require("./createAddHook");
+var _createAddHookDefault = parcelHelpers.interopDefault(_createAddHook);
+var _createRemoveHook = require("./createRemoveHook");
+var _createRemoveHookDefault = parcelHelpers.interopDefault(_createRemoveHook);
+var _createHasHook = require("./createHasHook");
+var _createHasHookDefault = parcelHelpers.interopDefault(_createHasHook);
+var _createRunHook = require("./createRunHook");
+var _createRunHookDefault = parcelHelpers.interopDefault(_createRunHook);
+var _createCurrentHook = require("./createCurrentHook");
+var _createCurrentHookDefault = parcelHelpers.interopDefault(_createCurrentHook);
+var _createDoingHook = require("./createDoingHook");
+var _createDoingHookDefault = parcelHelpers.interopDefault(_createDoingHook);
+var _createDidHook = require("./createDidHook");
+var _createDidHookDefault = parcelHelpers.interopDefault(_createDidHook);
+class _Hooks {
+    constructor(){
+        /** @type {import('.').Store} actions */ this.actions = Object.create(null);
+        this.actions.__current = [];
+        /** @type {import('.').Store} filters */ this.filters = Object.create(null);
+        this.filters.__current = [];
+        this.addAction = (0, _createAddHookDefault.default)(this, "actions");
+        this.addFilter = (0, _createAddHookDefault.default)(this, "filters");
+        this.removeAction = (0, _createRemoveHookDefault.default)(this, "actions");
+        this.removeFilter = (0, _createRemoveHookDefault.default)(this, "filters");
+        this.hasAction = (0, _createHasHookDefault.default)(this, "actions");
+        this.hasFilter = (0, _createHasHookDefault.default)(this, "filters");
+        this.removeAllActions = (0, _createRemoveHookDefault.default)(this, "actions", true);
+        this.removeAllFilters = (0, _createRemoveHookDefault.default)(this, "filters", true);
+        this.doAction = (0, _createRunHookDefault.default)(this, "actions");
+        this.applyFilters = (0, _createRunHookDefault.default)(this, "filters", true);
+        this.currentAction = (0, _createCurrentHookDefault.default)(this, "actions");
+        this.currentFilter = (0, _createCurrentHookDefault.default)(this, "filters");
+        this.doingAction = (0, _createDoingHookDefault.default)(this, "actions");
+        this.doingFilter = (0, _createDoingHookDefault.default)(this, "filters");
+        this.didAction = (0, _createDidHookDefault.default)(this, "actions");
+        this.didFilter = (0, _createDidHookDefault.default)(this, "filters");
+    }
+}
+/** @typedef {_Hooks} Hooks */ /**
+ * Returns an instance of the hooks object.
+ *
+ * @return {Hooks} A Hooks instance.
+ */ function createHooks() {
+    return new _Hooks();
+}
+exports.default = createHooks;
+
+},{"./createAddHook":"8uq0x","./createRemoveHook":"5GhVG","./createHasHook":"apZQU","./createRunHook":"aU57G","./createCurrentHook":"99Xz5","./createDoingHook":"l2l8V","./createDidHook":"hSCQx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8uq0x":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _validateNamespaceJs = require("./validateNamespace.js");
+var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback AddHook
+ *
+ * Adds the hook to the appropriate hooks container.
+ *
+ * @param {string}               hookName      Name of hook to add
+ * @param {string}               namespace     The unique namespace identifying the callback in the form `vendor/plugin/function`.
+ * @param {import('.').Callback} callback      Function to call when the hook is run
+ * @param {number}               [priority=10] Priority of this hook
+ */ /**
+ * Returns a function which, when invoked, will add a hook.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {AddHook} Function that adds a new hook.
+ */ function createAddHook(hooks, storeKey) {
+    return function addHook(hookName, namespace, callback, priority = 10) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        if (!(0, _validateNamespaceJsDefault.default)(namespace)) return;
+        if ("function" !== typeof callback) {
+            // eslint-disable-next-line no-console
+            console.error("The hook callback must be a function.");
+            return;
+        }
+        // Validate numeric priority
+        if ("number" !== typeof priority) {
+            // eslint-disable-next-line no-console
+            console.error("If specified, the hook priority must be a number.");
+            return;
+        }
+        const handler = {
+            callback,
+            priority,
+            namespace
+        };
+        if (hooksStore[hookName]) {
+            // Find the correct insert index of the new hook.
+            const handlers = hooksStore[hookName].handlers;
+            /** @type {number} */ let i;
+            for(i = handlers.length; i > 0; i--){
+                if (priority >= handlers[i - 1].priority) break;
+            }
+            if (i === handlers.length) // If append, operate via direct assignment.
+            handlers[i] = handler;
+            else // Otherwise, insert before index via splice.
+            handlers.splice(i, 0, handler);
+            // We may also be currently executing this hook.  If the callback
+            // we're adding would come after the current callback, there's no
+            // problem; otherwise we need to increase the execution index of
+            // any other runs by 1 to account for the added element.
+            hooksStore.__current.forEach((hookInfo)=>{
+                if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex++;
+            });
+        } else // This is the first hook of its type.
+        hooksStore[hookName] = {
+            handlers: [
+                handler
+            ],
+            runs: 0
+        };
+        if (hookName !== "hookAdded") hooks.doAction("hookAdded", hookName, namespace, callback, priority);
+    };
+}
+exports.default = createAddHook;
+
+},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5RkL7":[function(require,module,exports) {
+/**
+ * Validate a namespace string.
+ *
+ * @param {string} namespace The namespace to validate - should take the form
+ *                           `vendor/plugin/function`.
+ *
+ * @return {boolean} Whether the namespace is valid.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function validateNamespace(namespace) {
+    if ("string" !== typeof namespace || "" === namespace) {
+        // eslint-disable-next-line no-console
+        console.error("The namespace must be a non-empty string.");
+        return false;
+    }
+    if (!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(namespace)) {
+        // eslint-disable-next-line no-console
+        console.error("The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.");
+        return false;
+    }
+    return true;
+}
+exports.default = validateNamespace;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dkyGe":[function(require,module,exports) {
+/**
+ * Validate a hookName string.
+ *
+ * @param {string} hookName The hook name to validate. Should be a non empty string containing
+ *                          only numbers, letters, dashes, periods and underscores. Also,
+ *                          the hook name cannot begin with `__`.
+ *
+ * @return {boolean} Whether the hook name is valid.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function validateHookName(hookName) {
+    if ("string" !== typeof hookName || "" === hookName) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name must be a non-empty string.");
+        return false;
+    }
+    if (/^__/.test(hookName)) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name cannot begin with `__`.");
+        return false;
+    }
+    if (!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(hookName)) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name can only contain numbers, letters, dashes, periods and underscores.");
+        return false;
+    }
+    return true;
+}
+exports.default = validateHookName;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5GhVG":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _validateNamespaceJs = require("./validateNamespace.js");
+var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback RemoveHook
+ * Removes the specified callback (or all callbacks) from the hook with a given hookName
+ * and namespace.
+ *
+ * @param {string} hookName  The name of the hook to modify.
+ * @param {string} namespace The unique namespace identifying the callback in the
+ *                           form `vendor/plugin/function`.
+ *
+ * @return {number | undefined} The number of callbacks removed.
+ */ /**
+ * Returns a function which, when invoked, will remove a specified hook or all
+ * hooks by the given name.
+ *
+ * @param {import('.').Hooks}    hooks             Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ * @param {boolean}              [removeAll=false] Whether to remove all callbacks for a hookName,
+ *                                                 without regard to namespace. Used to create
+ *                                                 `removeAll*` functions.
+ *
+ * @return {RemoveHook} Function that removes hooks.
+ */ function createRemoveHook(hooks, storeKey, removeAll = false) {
+    return function removeHook(hookName, namespace) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        if (!removeAll && !(0, _validateNamespaceJsDefault.default)(namespace)) return;
+        // Bail if no hooks exist by this name.
+        if (!hooksStore[hookName]) return 0;
+        let handlersRemoved = 0;
+        if (removeAll) {
+            handlersRemoved = hooksStore[hookName].handlers.length;
+            hooksStore[hookName] = {
+                runs: hooksStore[hookName].runs,
+                handlers: []
+            };
+        } else {
+            // Try to find the specified callback to remove.
+            const handlers = hooksStore[hookName].handlers;
+            for(let i = handlers.length - 1; i >= 0; i--)if (handlers[i].namespace === namespace) {
+                handlers.splice(i, 1);
+                handlersRemoved++;
+                // This callback may also be part of a hook that is
+                // currently executing.  If the callback we're removing
+                // comes after the current callback, there's no problem;
+                // otherwise we need to decrease the execution index of any
+                // other runs by 1 to account for the removed element.
+                hooksStore.__current.forEach((hookInfo)=>{
+                    if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex--;
+                });
+            }
+        }
+        if (hookName !== "hookRemoved") hooks.doAction("hookRemoved", hookName, namespace);
+        return handlersRemoved;
+    };
+}
+exports.default = createRemoveHook;
+
+},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"apZQU":[function(require,module,exports) {
+/**
+ * @callback HasHook
+ *
+ * Returns whether any handlers are attached for the given hookName and optional namespace.
+ *
+ * @param {string} hookName    The name of the hook to check for.
+ * @param {string} [namespace] Optional. The unique namespace identifying the callback
+ *                             in the form `vendor/plugin/function`.
+ *
+ * @return {boolean} Whether there are handlers that are attached to the given hook.
+ */ /**
+ * Returns a function which, when invoked, will return whether any handlers are
+ * attached to a particular hook.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {HasHook} Function that returns whether any handlers are
+ *                   attached to a particular hook and optional namespace.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createHasHook(hooks, storeKey) {
+    return function hasHook(hookName, namespace) {
+        const hooksStore = hooks[storeKey];
+        // Use the namespace if provided.
+        if ("undefined" !== typeof namespace) return hookName in hooksStore && hooksStore[hookName].handlers.some((hook)=>hook.namespace === namespace);
+        return hookName in hooksStore;
+    };
+}
+exports.default = createHasHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aU57G":[function(require,module,exports) {
+/**
+ * Returns a function which, when invoked, will execute all callbacks
+ * registered to a hook of the specified type, optionally returning the final
+ * value of the call chain.
+ *
+ * @param {import('.').Hooks}    hooks                  Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ * @param {boolean}              [returnFirstArg=false] Whether each hook callback is expected to
+ *                                                      return its first argument.
+ *
+ * @return {(hookName:string, ...args: unknown[]) => undefined|unknown} Function that runs hook callbacks.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createRunHook(hooks, storeKey, returnFirstArg = false) {
+    return function runHooks(hookName, ...args) {
+        const hooksStore = hooks[storeKey];
+        if (!hooksStore[hookName]) hooksStore[hookName] = {
+            handlers: [],
+            runs: 0
+        };
+        hooksStore[hookName].runs++;
+        const handlers = hooksStore[hookName].handlers;
+        // Handle any 'all' hooks registered.
+        if ("hookAdded" !== hookName && hooksStore.all) handlers.push(...hooksStore.all.handlers);
+        if (!handlers || !handlers.length) return returnFirstArg ? args[0] : undefined;
+        const hookInfo = {
+            name: hookName,
+            currentIndex: 0
+        };
+        hooksStore.__current.push(hookInfo);
+        while(hookInfo.currentIndex < handlers.length){
+            const handler = handlers[hookInfo.currentIndex];
+            const result = handler.callback.apply(null, args);
+            if (returnFirstArg) args[0] = result;
+            hookInfo.currentIndex++;
+        }
+        hooksStore.__current.pop();
+        if (returnFirstArg) return args[0];
+        return undefined;
+    };
+}
+exports.default = createRunHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"99Xz5":[function(require,module,exports) {
+/**
+ * Returns a function which, when invoked, will return the name of the
+ * currently running hook, or `null` if no hook of the given type is currently
+ * running.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {() => string | null} Function that returns the current hook name or null.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createCurrentHook(hooks, storeKey) {
+    return function currentHook() {
+        var _hooksStore$__current;
+        const hooksStore = hooks[storeKey];
+        return (_hooksStore$__current = hooksStore.__current[hooksStore.__current.length - 1]?.name) !== null && _hooksStore$__current !== void 0 ? _hooksStore$__current : null;
+    };
+}
+exports.default = createCurrentHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l2l8V":[function(require,module,exports) {
+/**
+ * @callback DoingHook
+ * Returns whether a hook is currently being executed.
+ *
+ * @param {string} [hookName] The name of the hook to check for.  If
+ *                            omitted, will check for any hook being executed.
+ *
+ * @return {boolean} Whether the hook is being executed.
+ */ /**
+ * Returns a function which, when invoked, will return whether a hook is
+ * currently being executed.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {DoingHook} Function that returns whether a hook is currently
+ *                     being executed.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createDoingHook(hooks, storeKey) {
+    return function doingHook(hookName) {
+        const hooksStore = hooks[storeKey];
+        // If the hookName was not passed, check for any current hook.
+        if ("undefined" === typeof hookName) return "undefined" !== typeof hooksStore.__current[0];
+        // Return the __current hook.
+        return hooksStore.__current[0] ? hookName === hooksStore.__current[0].name : false;
+    };
+}
+exports.default = createDoingHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hSCQx":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback DidHook
+ *
+ * Returns the number of times an action has been fired.
+ *
+ * @param {string} hookName The hook name to check.
+ *
+ * @return {number | undefined} The number of times the hook has run.
+ */ /**
+ * Returns a function which, when invoked, will return the number of times a
+ * hook has been called.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {DidHook} Function that returns a hook's call count.
+ */ function createDidHook(hooks, storeKey) {
+    return function didHook(hookName) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        return hooksStore[hookName] && hooksStore[hookName].runs ? hooksStore[hookName].runs : 0;
+    };
+}
+exports.default = createDidHook;
+
+},{"./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kWmDy":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -25532,7 +27022,7 @@ function _typeof(o) {
  * @return {Function} HOC function
  */ var withStore = function withStore(BaseComponent) {
     var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var actionMapping = arguments.length > 2 ? arguments[2] : undefined;
+    var actionMapping = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
     return function(props) {
         // prepare selection mappings
         var selections = {};
@@ -25600,17 +27090,18 @@ var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
  */ var getAjaxInfo = exports.getAjaxInfo = function getAjaxInfo(state) {
     return state.assets.ajax;
 };
-/**
+/* eslint-disable-next-line jsdoc/require-param */ /**
  * Get asset with given id.
- *
- * @param {Object} state store state
- * @return {function(string): string|number} function to get asset
- */ var getAsset = exports.getAsset = function getAsset(state) {
-    return function(assetId) {
-        var _state$assets;
-        return (_state$assets = state.assets) === null || _state$assets === void 0 ? void 0 : _state$assets[assetId];
-    };
-};
+ */ var getAsset = exports.getAsset = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.assets;
+    },
+    function(assets, assetId) {
+        return assetId;
+    }
+], function(assets, assetId) {
+    return assets === null || assets === void 0 ? void 0 : assets[assetId];
+});
 /**
  * @module assetsSlice
  */ var _default = exports["default"] = assetsSlice.reducer;
@@ -29673,126 +31164,307 @@ var thunk = createThunkMiddleware(); // Attach the factory function so users can
 thunk.withExtraArgument = createThunkMiddleware;
 exports.default = thunk;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c28DV":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cm0ja":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
-var _toolkit = require("ab983f5a897f990a");
-var _BlockStatusFilterControl = require("7f7e6a0fd711ec7a");
-var _initialState = _interopRequireDefault(require("9a4bb996a84b7c56"));
-var _pluginStatus = require("e269b2e53b452f29");
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("faa64fc16b5af6a7"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Menu right container item.
+ *
+ * @param {Object}            props            component properties
+ * @param {React.ElementType} props.children   component children
+ * @param {Array}             props.classNames component class names
+ * @class
+ */ function RightContainerItem(_ref) {
+    var children = _ref.children, _ref$classNames = _ref.classNames, classNames = _ref$classNames === void 0 ? [] : _ref$classNames;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: [
+            "right-container-item"
+        ].concat(_toConsumableArray(classNames)).join(" ")
+    }, children);
+}
+/**
+ * @module RightContainerItem
+ */ var _default = exports["default"] = RightContainerItem;
+
+},{"faa64fc16b5af6a7":"21dqq"}],"fUke1":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("b544b5ba9b277d21"));
+var _versionControl = require("9721fb4193a9924a");
+var _withStore = _interopRequireDefault(require("ed40d2d967989b24"));
+var _VersionControlPopup = _interopRequireDefault(require("9b2395a3b4ee2d26"));
+var _Portal = _interopRequireDefault(require("d6bde676cea9749"));
+var _actions = require("9202061521dcbd56");
+var _HeaderVersionInfo = _interopRequireDefault(require("e11ae307e3589951"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Version control component.
+ *
+ * @param {Object}   props               component properties
+ * @param {string}   props.pluginVersion plugin version, will be supplied via HOC
+ * @param {Object}   props.allVersions   available versions, will be supplied via HOC
+ * @param {Function} props.dispatch      store dispatch function, will be supplied via HOC
+ * @function Object() { [native code] }
+ */ function VersionControl(_ref) {
+    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
+    var _useState = (0, _react.useState)(pluginVersion), _useState2 = _slicedToArray(_useState, 2), selectedVersion = _useState2[0], setSelectedVersion = _useState2[1];
+    var _useState3 = (0, _react.useState)(false), _useState4 = _slicedToArray(_useState3, 2), popupVisibility = _useState4[0], setPopupVisibility = _useState4[1];
+    var sortedVersions = (0, _react.useMemo)(function() {
+        return allVersions.sort().reverse();
+    }, [
+        allVersions
+    ]);
+    /**
+   * Callback for version selection.
+   *
+   * @param {string} targetVersion target version
+   */ var onVersionSelect = function onVersionSelect(targetVersion) {
+        setSelectedVersion(targetVersion);
+        setPopupVisibility(true);
+    };
+    /**
+   * Start version operation.
+   *
+   * @return {Promise} operation promise object
+   */ var startVersionOperation = function startVersionOperation() {
+        return dispatch(_actions.rollbackToVersion)(selectedVersion);
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_HeaderVersionInfo["default"], {
+        availableVersions: sortedVersions,
+        currentVersion: selectedVersion,
+        onSelect: onVersionSelect
+    }), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
+        target: document.body
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
+        onCloseHandler: function onCloseHandler() {
+            setSelectedVersion(pluginVersion);
+            setPopupVisibility(false);
+        },
+        from: pluginVersion,
+        to: selectedVersion,
+        onOperationStart: startVersionOperation
+    })));
+}
+/**
+ * Store select mapping
+ *
+ * @param {Function} select store selector
+ * @return {Object} select mapping
+ */ var selectionMapping = function selectionMapping(select) {
+    return {
+        allVersions: select(_versionControl.versions),
+        pluginVersion: select(_versionControl.currentVersion)
+    };
+};
+/**
+ * @module VersionControl
+ */ var _default = exports["default"] = (0, _withStore["default"])(VersionControl, selectionMapping);
+
+},{"b544b5ba9b277d21":"21dqq","9721fb4193a9924a":"6jcRk","ed40d2d967989b24":"kWmDy","9b2395a3b4ee2d26":"k3f3V","d6bde676cea9749":"hOoRN","9202061521dcbd56":"g3gW2","e11ae307e3589951":"lUMLC"}],"6jcRk":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
+var _initialState = _interopRequireDefault(require("9089b07959d8d215"));
+var _toolkit = require("b718c794e97d3789");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
 /**
- * App slice options
+ * Version control slice options.
  *
  * @type {Object}
- */ var appSliceOptions = {
-    name: "app",
-    initialState: _initialState["default"].app,
-    reducers: {
-        /**
-     * Set current filter value.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload filter value
-     */ setBlockFilter: function setBlockFilter(state, _ref) {
-            var payload = _ref.payload;
-            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
-            else throw new Error("invalid block filter type supplied");
+ */ var versionControlSliceOptions = {
+    name: "versionControl",
+    initialState: _initialState["default"].versionControl
+};
+var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
+/**
+ * Get plugin current version.
+ *
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var currentVersion = exports.currentVersion = function currentVersion(state) {
+    return state.versionControl.currentVersion;
+};
+/**
+ * Get plugin current version.
+ *
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var versions = exports.versions = function versions(state) {
+    return state.versionControl.versions;
+};
+/**
+ * Get ajax operations info.
+ *
+ * @param {Object} state store state
+ * @return {Object} ajax info
+ */ var ajaxInfo = exports.ajaxInfo = function ajaxInfo(state) {
+    return state.versionControl.ajax;
+};
+/**
+ * @module versionControlSlice
+ */ var _default = exports["default"] = versionControlSlice.reducer;
+
+},{"9089b07959d8d215":"3xPpL","b718c794e97d3789":"lL1Ef"}],"3xPpL":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _BlockStatusFilterControl = require("fcdfedb923f0d687");
+/**
+ * Initial store state.
+ *
+ * @type {Object}
+ */ var initialState = {
+    app: {
+        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
+        showBlockInfo: false,
+        upsellPopup: {
+            show: false,
+            targetBlock: null
         },
-        /**
-     * Toggle showing info section for block controls.
-     *
-     * @param {Object} state slice state
-     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
-            state.showBlockInfo = !state.showBlockInfo;
-        },
-        /**
-     * Show upsell modal for target block type.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload target block type
-     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref2) {
-            var payload = _ref2.payload;
-            state.upsellPopup.show = true;
-            state.upsellPopup.targetBlock = payload;
-        },
-        /**
-     * Hide upsell modal for target block type.
-     *
-     * @param {Object} state slice state
-     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
-            state.upsellPopup.show = false;
-            state.upsellPopup.targetBlock = null;
+        content: {},
+        router: {
+            current: "welcome"
         }
+    },
+    versionControl: {
+        currentVersion: "1.0.0",
+        versions: {},
+        ajax: {}
+    },
+    pluginStatus: {
+        isPro: false
     }
 };
-var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
-var _appSlice$actions = appSlice.actions, setBlockFilter = exports.setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = exports.toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = exports.showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = exports.hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal;
 /**
- * Get all application options.
- *
- * @param {Object} state store state
- * @return {Object} options
- */ var getAllAppOptions = exports.getAllAppOptions = function getAllAppOptions(state) {
-    return state.app;
-};
-/**
- * Get current block filter.
- *
- * @param {Object} state store state
- * @return {string} filter value
- */ var getBlockFilter = exports.getBlockFilter = function getBlockFilter(state) {
-    return state.app.blockFilter;
-};
-/**
- * Get block extra info show status.
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ var getBlockInfoShowStatus = exports.getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
-    return state.app.showBlockInfo;
-};
-/**
- * Get plugin pro status.
- *
- * @deprecated
- * use isPluginPro selector in pluginStatus slice for future implementations
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ var getProStatus = exports.getProStatus = function getProStatus(state) {
-    return (0, _pluginStatus.isPluginPro)(state);
-};
-/**
- * Get target block type to show in modal.
- *
- * @param {Object} state store state
- * @return {null | string} block type, null for no selected blocks
- */ var getModalTargetBlockType = exports.getModalTargetBlockType = function getModalTargetBlockType(state) {
-    return state.app.upsellPopup.targetBlock;
-};
-/**
- * Get modal visibility status.
- *
- * @param {Object} state store state
- * @return {boolean} visibility status
- */ var getModalVisibilityStatus = exports.getModalVisibilityStatus = function getModalVisibilityStatus(state) {
-    return state.app.upsellPopup.show;
-};
-/**
- * @module appSlice
- */ var _default = exports["default"] = appSlice.reducer;
+ * @module initialState
+ */ var _default = exports["default"] = initialState;
 
-},{"ab983f5a897f990a":"lL1Ef","7f7e6a0fd711ec7a":"hebBQ","9a4bb996a84b7c56":"3xPpL","e269b2e53b452f29":"fi8Oa"}],"hebBQ":[function(require,module,exports) {
+},{"fcdfedb923f0d687":"hebBQ"}],"hebBQ":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -29807,8 +31479,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = exports.FILTER_TYPES = void 0;
 var _react = _interopRequireWildcard(require("fb0ab6d663b69039"));
-var _FilterControlItem = _interopRequireDefault(require("237052af7ccbb431"));
-var _ActiveFilterIndicator = _interopRequireWildcard(require("428d6f35def36fa7"));
+var _FilterControlItem = _interopRequireDefault(require("4d10d81e89281f53"));
+var _ActiveFilterIndicator = _interopRequireWildcard(require("6b5060870366082e"));
 var _excluded = [
     "_DEFAULT"
 ];
@@ -29912,6 +31584,7 @@ function _arrayWithHoles(arr) {
 } // eslint-disable-next-line no-unused-vars
 /**
  * Filter types for blocks.
+ *
  * @type {Object}
  */ var FILTER_TYPES = exports.FILTER_TYPES = {
     ALL: "all",
@@ -29921,10 +31594,11 @@ function _arrayWithHoles(arr) {
 };
 /**
  * Control for filtering blocks depending on their enabled status.
- * @constructor
  *
- * @param {Object} props component properties
- * @param {String} props.filterVal active filter id at startup
+ * @class
+ *
+ * @param {Object}   props                          component properties
+ * @param {string}   props.filterVal                active filter id at startup
  * @param {Function} [props.onFilterChanged=()=>{}] callback for filter changed event
  */ function BlockStatusFilterControl(_ref) {
     var filterVal = _ref.filterVal, _ref$onFilterChanged = _ref.onFilterChanged, onFilterChanged = _ref$onFilterChanged === void 0 ? function() {} : _ref$onFilterChanged;
@@ -29978,7 +31652,7 @@ function _arrayWithHoles(arr) {
  * @module BlockStatusFilterControl
  */ var _default = exports["default"] = BlockStatusFilterControl;
 
-},{"fb0ab6d663b69039":"21dqq","237052af7ccbb431":"eozng","428d6f35def36fa7":"aWJJu"}],"eozng":[function(require,module,exports) {
+},{"fb0ab6d663b69039":"21dqq","4d10d81e89281f53":"eozng","6b5060870366082e":"aWJJu"}],"eozng":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -30021,13 +31695,14 @@ function _interopRequireWildcard(e, r) {
  * Filter control item.
  *
  * These items will represents different filter options parent filter control component has.
- * @constructor
  *
- * @param {Object} props component properties
- * @param {String} props.title item title
- * @param {String} props.id item id, this id represents if of the filter this component represents
- * @param {Function} props.onFilterItemSelected callback for filter item selected event
- * @param {Boolean} props.active filter active status
+ * @class
+ *
+ * @param {Object}   props                       component properties
+ * @param {string}   props.title                 item title
+ * @param {string}   props.id                    item id, this id represents if of the filter this component represents
+ * @param {Function} props.onFilterItemSelected  callback for filter item selected event
+ * @param {boolean}  props.active                filter active status
  * @param {Function} props.activeItemRefCallback callback for active item reference
  */ function FilterControlItem(_ref) {
     var title = _ref.title, id = _ref.id, onFilterItemSelected = _ref.onFilterItemSelected, active = _ref.active, activeItemRefCallback = _ref.activeItemRefCallback;
@@ -30043,12 +31718,13 @@ function _interopRequireWildcard(e, r) {
         onFilterItemSelected(id);
     };
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-    return /*#__PURE__*/ _react["default"].createElement("div", {
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    _react["default"].createElement("div", {
         ref: itemRef,
         "data-active": JSON.stringify(active),
         onClick: handleClick,
         className: "filter-control-item"
-    }, title);
+    }, title));
 }
 /**
  * @module FilterControlItem
@@ -30095,9 +31771,10 @@ function _interopRequireWildcard(e, r) {
 // eslint-disable-next-line no-unused-vars
 /**
  * Generate indicator position data.
- * @param {Number} x x position
- * @param {Number} width width
- * @returns {Object} position data
+ *
+ * @param {number} x     x position
+ * @param {number} width width
+ * @return {Object} position data
  */ var generateIndicatorData = exports.generateIndicatorData = function generateIndicatorData(x, width) {
     return {
         x: x,
@@ -30107,9 +31784,9 @@ function _interopRequireWildcard(e, r) {
 /**
  * Active item indicator for filter component.
  *
- * @param {Object} props component properties
+ * @param {Object} props                                       component properties
  * @param {Object} [props.positionData={x:0, y:0, width: 100}] position data
- * @constructor
+ * @class
  */ function ActiveFilterIndicator(_ref) {
     var _ref$positionData = _ref.positionData, positionData = _ref$positionData === void 0 ? {
         x: 0,
@@ -30117,8 +31794,9 @@ function _interopRequireWildcard(e, r) {
     } : _ref$positionData;
     /**
    * Add px to given value
-   * @param {Number} val value
-   * @returns {string} post fixed value
+   *
+   * @param {number} val value
+   * @return {string} post fixed value
    */ var toPx = function toPx(val) {
         return "".concat(val, "px");
     };
@@ -30134,14 +31812,8 @@ function _interopRequireWildcard(e, r) {
  * @module ActiveFilterIndicator
  */ var _default = exports["default"] = ActiveFilterIndicator;
 
-},{"bef92c9b301184af":"21dqq"}],"3xPpL":[function(require,module,exports) {
+},{"bef92c9b301184af":"21dqq"}],"k3f3V":[function(require,module,exports) {
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _BlockStatusFilterControl = require("865a04ed337dccab");
-var _LocalStorageProvider = require("38bf8676f7b978");
 function _typeof(o) {
     "@babel/helpers - typeof";
     return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
@@ -30150,74 +31822,14 @@ function _typeof(o) {
         return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
     }, _typeof(o);
 }
-function _defineProperty(obj, key, value) {
-    key = _toPropertyKey(key);
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _toPropertyKey(arg) {
-    var key = _toPrimitive(arg, "string");
-    return _typeof(key) === "symbol" ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-    if (_typeof(input) !== "object" || input === null) return input;
-    var prim = input[Symbol.toPrimitive];
-    if (prim !== undefined) {
-        var res = prim.call(input, hint || "default");
-        if (_typeof(res) !== "object") return res;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (hint === "string" ? String : Number)(input);
-}
-/**
- * Initial store state.
- *
- * @type {Object}
- */ var initialState = {
-    app: {
-        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
-        showBlockInfo: false,
-        upsellPopup: _defineProperty({
-            show: false,
-            targetBlock: null
-        }, _LocalStorageProvider.NO_LOCAL_STORAGE_PROP, true)
-    },
-    versionControl: {
-        currentVersion: "1.0.0",
-        versions: {},
-        ajax: {}
-    },
-    pluginStatus: {
-        isPro: false
-    }
-};
-/**
- * @module initialState
- */ var _default = exports["default"] = initialState;
-
-},{"865a04ed337dccab":"hebBQ","38bf8676f7b978":"1Y8eP"}],"1Y8eP":[function(require,module,exports) {
-"use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getLocalStorage = exports["default"] = exports.NO_LOCAL_STORAGE_PROP = void 0;
-var _react = _interopRequireWildcard(require("421e80768cf9dbf7"));
-var _withStore = _interopRequireDefault(require("c42512238b4a67cb"));
-var _app = require("3d485e567681faf5");
-var _excluded = [
-    "version"
-];
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("3accbda3a85c85e3"));
+var _reactFontawesome = require("a3e43325b30d05e5");
+var _i18n = require("9945d4bf1472bc28");
+var _MenuButton = _interopRequireWildcard(require("d5eedcb9ade3dcc8"));
 function _getRequireWildcardCache(e) {
     if ("function" != typeof WeakMap) return null;
     var r = new WeakMap(), t = new WeakMap();
@@ -30241,179 +31853,160 @@ function _interopRequireWildcard(e, r) {
     }
     return n["default"] = e, t && t.set(e, n), n;
 }
-function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {};
-    var target = _objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for(i = 0; i < sourceSymbolKeys.length; i++){
-            key = sourceSymbolKeys[i];
-            if (excluded.indexOf(key) >= 0) continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-            target[key] = source[key];
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
         }
+        return a;
     }
-    return target;
 }
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-        return typeof o;
-    } : function(o) {
-        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, _typeof(o);
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
 } // eslint-disable-next-line no-unused-vars
-// local storage key
-var storageKey = "ubMenuData";
-// local storage data version
-var localStorageVersion = "1.1";
 /**
- * Property key to check if target key will not be written to local storage
+ * Version control popup component.
  *
- * @type {string}
- */ var NO_LOCAL_STORAGE_PROP = exports.NO_LOCAL_STORAGE_PROP = "__no_local_storage";
-/**
- * Strip keys marked as not to write to local storage.
- *
- * @param {Object} data target data
- *
- * @return {Object} stripped data
- */ var stripNoLocalStorageMarked = function stripNoLocalStorageMarked(data) {
-    var stripKeys = [];
-    /**
-   * Find marked property paths
-   *
-   * @param {any}    targetObject      target object, if no object is supplied to checking will be done
-   * @param {string} currentObjectPath path to current key
-   */ function findStripPaths(targetObject) {
-        var currentObjectPath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-        if (_typeof(targetObject) === "object") {
-            if (targetObject[NO_LOCAL_STORAGE_PROP]) stripKeys.push(currentObjectPath);
-            else Object.keys(targetObject).filter(function(k) {
-                return Object.prototype.hasOwnProperty.call(targetObject, k);
-            })// eslint-disable-next-line array-callback-return
-            .map(function(tKey) {
-                findStripPaths(targetObject[tKey], "".concat(currentObjectPath === "" ? "" : "".concat(currentObjectPath, ".")).concat(tKey));
-            });
-        }
-    }
-    findStripPaths(data);
-    // eslint-disable-next-line array-callback-return
-    stripKeys.map(function(keyPath) {
-        var pathSegments = keyPath.split(".");
-        var lastSegment = pathSegments.pop();
-        var lastParentContainer = data;
-        // eslint-disable-next-line array-callback-return
-        pathSegments.map(function(pS) {
-            lastParentContainer = lastParentContainer[pS];
-        });
-        delete lastParentContainer[lastSegment];
-    });
-    return data;
-};
-/**
- * Get localStorage data for settings menu
- *
- * @return {Object} menu data
- */ var getLocalStorage = exports.getLocalStorage = function getLocalStorage() {
-    var data = localStorage.getItem(storageKey);
-    if (data) {
-        var localData = JSON.parse(data);
-        // check version of local data against current local storage version
-        // if a stale version is found, don't use it
-        if (localData.version && localData.version === localStorageVersion) {
-            var version = localData.version, rest = _objectWithoutProperties(localData, _excluded);
-            return stripNoLocalStorageMarked(rest);
-        }
-    }
-    return {};
-};
-var writeToLocalStorage = function writeToLocalStorage(callback) {
-    var dataToWrite = callback(getLocalStorage());
-    // add local storage data version
-    dataToWrite.version = localStorageVersion;
-    localStorage.setItem(storageKey, JSON.stringify(dataToWrite));
-};
-/**
- * Local storage provider.
- *
- * This component will watch store state changes and write those to localStorage.
- *
+ * @param {Object}   props                  component properties
+ * @param {string}   props.from             current version
+ * @param {string}   props.to               version to rollback
+ * @param {Function} props.onCloseHandler   close popup callback
+ * @param {Function} props.onOperationStart operation start callback
+ * @param {number}   props.reloadDelay      automatic page reload delay in milliseconds
  * @class
- *
- * @param {Object}            props          component properties
- * @param {React.ElementType} props.children component children
- * @param {Object}            props.appState store application state, will be supplied via HOC
- */ function LocalStorageProvider(_ref) {
-    var children = _ref.children, appState = _ref.appState;
-    (0, _react.useEffect)(function() {
-        writeToLocalStorage(function(currentData) {
-            currentData.app = appState;
-            return currentData;
+ */ function VersionControlPopup(_ref) {
+    var from = _ref.from, to = _ref.to, onCloseHandler = _ref.onCloseHandler, onOperationStart = _ref.onOperationStart, _ref$reloadDelay = _ref.reloadDelay, reloadDelay = _ref$reloadDelay === void 0 ? 5000 : _ref$reloadDelay;
+    var OPERATION_STATUS_TYPES = {
+        NOT_STARTED: "notStarted",
+        STARTED: "started",
+        FINISHED: "finished"
+    };
+    var RESPONSE_TYPES = {
+        OK: "ok",
+        ERROR: "error"
+    };
+    /**
+   * Generate response object.
+   *
+   * @param {string} message     message
+   * @param {string} [type='ok'] response type.
+   * @return {Object} response object
+   */ var generateResponseObject = function generateResponseObject(message) {
+        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RESPONSE_TYPES.OK;
+        return {
+            type: type,
+            message: message
+        };
+    };
+    var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
+    var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
+    var _useState5 = (0, _react.useState)(generateResponseObject("")), _useState6 = _slicedToArray(_useState5, 2), responseObject = _useState6[0], setResponseObject = _useState6[1];
+    var isDowngrade = from > to;
+    var countdownToReload = (0, _react.useRef)(reloadDelay);
+    /**
+   * Start rollback operation.
+   */ var startOperation = function startOperation() {
+        setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
+        onOperationStart().then(function(_ref2) {
+            var message = _ref2.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.OK));
+        })["catch"](function(_ref3) {
+            var message = _ref3.message;
+            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.ERROR));
+        })["finally"](function() {
+            setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
+            reloadPage();
         });
-    }, [
-        appState
-    ]);
-    return children;
-}
-var selectMapping = function selectMapping(select) {
-    return {
-        appState: select(_app.getAllAppOptions)
     };
-};
-/**
- * @module LocalStorageProvider
- */ var _default = exports["default"] = (0, _withStore["default"])(LocalStorageProvider, selectMapping);
-
-},{"421e80768cf9dbf7":"21dqq","c42512238b4a67cb":"kWmDy","3d485e567681faf5":"c28DV"}],"fi8Oa":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isPluginPro = exports["default"] = void 0;
-var _initialState = _interopRequireDefault(require("6e475e3a68ded05b"));
-var _toolkit = require("acd9b64a16908024");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
+    /**
+   * Reload page after a designated amount of time.
+   */ var reloadPage = function reloadPage() {
+        var reloadIntervalId = setInterval(function() {
+            if (countdownToReload.current <= 0) {
+                window.location.reload();
+                clearInterval(reloadIntervalId);
+            } else {
+                countdownToReload.current = countdownToReload.current - 1000;
+                setReloadCountdown(countdownToReload.current / 1000);
+            }
+        }, 1000);
     };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-popup"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "modal-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "rollback-versions"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-positive-color" : "ub-negative-color")
+    }, from), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon",
+        "data-in-progress": JSON.stringify(operationStatus === OPERATION_STATUS_TYPES.STARTED)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-icon-inner-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-right-long"
+    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-id ".concat(isDowngrade ? "ub-negative-color" : "ub-positive-color")
+    }, to)), operationStatus !== OPERATION_STATUS_TYPES.STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-content"
+    }, operationStatus === OPERATION_STATUS_TYPES.NOT_STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-warning"
+    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Older versions might be unstable. Do it on your own risk and create a backup.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-rollback-button-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        type: _MenuButton.BUTTON_TYPES.POSITIVE,
+        onClickHandler: startOperation,
+        status: true,
+        title: "Start"
+    }), /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
+        onClickHandler: onCloseHandler,
+        status: true,
+        title: "Close"
+    }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "operation-finished-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-response",
+        "data-resp-type": responseObject.type
+    }, responseObject.message), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now\u2026", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
 }
 /**
- * Plugin status slice.
- *
- * @type {Object}
- */ var pluginStatusSliceOptions = {
-    name: "pluginStatus",
-    initialState: _initialState["default"].pluginStatus,
-    reducers: {}
-};
-var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
-/**
- * Get plugin pro status.
- *
- * @param {Object} state store state
- * @return {boolean} plugin pro status
- */ var isPluginPro = exports.isPluginPro = function isPluginPro(state) {
-    return state.pluginStatus.isPro;
-};
-/**
- * @module pluginStatusSlice
- */ var _default = exports["default"] = pluginStatusSlice.reducer;
+ * @module VersionControlPopup
+ */ var _default = exports["default"] = VersionControlPopup;
 
-},{"6e475e3a68ded05b":"3xPpL","acd9b64a16908024":"lL1Ef"}],"clIT3":[function(require,module,exports) {
+},{"3accbda3a85c85e3":"21dqq","a3e43325b30d05e5":"clIT3","9945d4bf1472bc28":"7CyoE","d5eedcb9ade3dcc8":"cbTU3"}],"clIT3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FontAwesomeIcon", ()=>FontAwesomeIcon);
@@ -34098,1831 +35691,7 @@ printWarning = function(text) {
 };
 module.exports = checkPropTypes;
 
-},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"cm0ja":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("faa64fc16b5af6a7"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Menu right container item.
- *
- * @param {Object} props component properties
- * @param {React.ElementType}  props.children component children
- * @constructor
- */ function RightContainerItem(_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "right-container-item"
-    }, children);
-}
-/**
- * @module RightContainerItem
- */ var _default = exports["default"] = RightContainerItem;
-
-},{"faa64fc16b5af6a7":"21dqq"}],"fUke1":[function(require,module,exports) {
-"use strict";
-function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-        return typeof o;
-    } : function(o) {
-        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, _typeof(o);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("b544b5ba9b277d21"));
-var _reactFontawesome = require("52f863744b6b5910");
-var _versionControl = require("9b50ed6d8d094f47");
-var _withStore = _interopRequireDefault(require("c5140aba68ba460b"));
-var _VersionControlPopup = _interopRequireDefault(require("d0153d3a47ae5f0a"));
-var _Portal = _interopRequireDefault(require("e20e8ee6922534f5"));
-var _actions = require("f76e893847a676c8");
-var _i18n = require("69ee0e54dc1b6df2");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(e) {
-    if ("function" != typeof WeakMap) return null;
-    var r = new WeakMap(), t = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
-        return e ? t : r;
-    })(e);
-}
-function _interopRequireWildcard(e, r) {
-    if (!r && e && e.__esModule) return e;
-    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
-        "default": e
-    };
-    var t = _getRequireWildcardCache(r);
-    if (t && t.has(e)) return t.get(e);
-    var n = {
-        __proto__: null
-    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
-        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
-    }
-    return n["default"] = e, t && t.set(e, n), n;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(r, l) {
-    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (null != t) {
-        var e, n, i, u, a = [], f = !0, o = !1;
-        try {
-            if (i = (t = t.call(r)).next, 0 === l) {
-                if (Object(t) !== t) return;
-                f = !1;
-            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-        } catch (r) {
-            o = !0, n = r;
-        } finally{
-            try {
-                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-            } finally{
-                if (o) throw n;
-            }
-        }
-        return a;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Version control component.
- *
- * @param {Object}   props               component properties
- * @param {string}   props.pluginVersion plugin version, will be supplied via HOC
- * @param {Object}   props.allVersions   available versions, will be supplied via HOC
- * @param {Function} props.dispatch      store dispatch function, will be supplied via HOC
- * @function Object() { [native code] }
- */ function VersionControl(_ref) {
-    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
-    var _useState = (0, _react.useState)("none"), _useState2 = _slicedToArray(_useState, 2), versionLevel = _useState2[0], setVersionLevel = _useState2[1];
-    var _useState3 = (0, _react.useState)(pluginVersion), _useState4 = _slicedToArray(_useState3, 2), selectedVersion = _useState4[0], setSelectedVersion = _useState4[1];
-    var _useState5 = (0, _react.useState)(false), _useState6 = _slicedToArray(_useState5, 2), popupVisibility = _useState6[0], setPopupVisibility = _useState6[1];
-    /**
-   * Calculate button disabled status.
-   *
-   * @return {boolean} disabled status
-   */ var buttonDisabledStatus = function buttonDisabledStatus() {
-        return pluginVersion === selectedVersion;
-    };
-    var sortedVersions = allVersions.sort().reverse();
-    var versionsLength = sortedVersions.length;
-    /**
-   * Start version operation.
-   *
-   * @return {Promise} operation promise object
-   */ var startVersionOperation = function startVersionOperation() {
-        return dispatch(_actions.rollbackToVersion)(selectedVersion);
-    };
-    (0, _react.useEffect)(function() {
-        var levelBorder = versionsLength / 2;
-        var versionIndex = sortedVersions.indexOf(pluginVersion);
-        var calculatedLevel = // eslint-disable-next-line no-nested-ternary
-        versionIndex === 0 ? "none" : versionIndex > levelBorder || versionIndex < 0 ? "high" : "medium";
-        setVersionLevel(calculatedLevel);
-    }, [
-        selectedVersion
-    ]);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        "data-level": versionLevel,
-        className: "version-control-status-indicator"
-    }), /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Version Control: ", "ultimate-blocks-pro")), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-list"
-    }, /*#__PURE__*/ _react["default"].createElement("select", {
-        value: selectedVersion,
-        onChange: function onChange(e) {
-            return setSelectedVersion(e.target.value);
-        }
-    }, sortedVersions.map(function(versionId) {
-        return /*#__PURE__*/ _react["default"].createElement("option", {
-            key: versionId,
-            value: versionId
-        }, versionId);
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        onClick: function onClick() {
-            return setPopupVisibility(true);
-        },
-        className: "version-control-button",
-        "data-disabled": JSON.stringify(buttonDisabledStatus())
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-circle-chevron-left"
-    })), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
-        target: document.body
-    }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
-        onCloseHandler: function onCloseHandler() {
-            return setPopupVisibility(false);
-        },
-        from: pluginVersion,
-        to: selectedVersion,
-        onOperationStart: startVersionOperation
-    })));
-}
-/**
- * Store select mapping
- *
- * @param {Function} select store selector
- * @return {Object} select mapping
- */ var selectionMapping = function selectionMapping(select) {
-    return {
-        allVersions: select(_versionControl.versions),
-        pluginVersion: select(_versionControl.currentVersion)
-    };
-};
-/**
- * @module VersionControl
- */ var _default = exports["default"] = (0, _withStore["default"])(VersionControl, selectionMapping);
-
-},{"b544b5ba9b277d21":"21dqq","52f863744b6b5910":"clIT3","9b50ed6d8d094f47":"6jcRk","c5140aba68ba460b":"kWmDy","d0153d3a47ae5f0a":"k3f3V","e20e8ee6922534f5":"hOoRN","f76e893847a676c8":"g3gW2","69ee0e54dc1b6df2":"7CyoE"}],"6jcRk":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
-var _initialState = _interopRequireDefault(require("b44b2e09241a652"));
-var _toolkit = require("b718c794e97d3789");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Version control slice options.
- *
- * @type {Object}
- */ var versionControlSliceOptions = {
-    name: "versionControl",
-    initialState: _initialState["default"].versionControl
-};
-var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
-/**
- * Get plugin current version.
- * @param {Object} state store state
- * @return {string} current version
- */ var currentVersion = exports.currentVersion = function currentVersion(state) {
-    return state.versionControl.currentVersion;
-};
-/**
- * Get plugin current version.
- * @param {Object} state store state
- * @return {string} current version
- */ var versions = exports.versions = function versions(state) {
-    return state.versionControl.versions;
-};
-/**
- * Get ajax operations info.
- * @param {Object} state store state
- * @return {Object} ajax info
- */ var ajaxInfo = exports.ajaxInfo = function ajaxInfo(state) {
-    return state.versionControl.ajax;
-};
-/**
- * @module versionControlSlice
- */ var _default = exports["default"] = versionControlSlice.reducer;
-
-},{"b44b2e09241a652":"3xPpL","b718c794e97d3789":"lL1Ef"}],"k3f3V":[function(require,module,exports) {
-"use strict";
-function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-        return typeof o;
-    } : function(o) {
-        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, _typeof(o);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("3accbda3a85c85e3"));
-var _reactFontawesome = require("a3e43325b30d05e5");
-var _i18n = require("9945d4bf1472bc28");
-var _MenuButton = _interopRequireWildcard(require("83f559a99a61616d"));
-function _getRequireWildcardCache(e) {
-    if ("function" != typeof WeakMap) return null;
-    var r = new WeakMap(), t = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
-        return e ? t : r;
-    })(e);
-}
-function _interopRequireWildcard(e, r) {
-    if (!r && e && e.__esModule) return e;
-    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
-        "default": e
-    };
-    var t = _getRequireWildcardCache(r);
-    if (t && t.has(e)) return t.get(e);
-    var n = {
-        __proto__: null
-    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
-        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
-    }
-    return n["default"] = e, t && t.set(e, n), n;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(r, l) {
-    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (null != t) {
-        var e, n, i, u, a = [], f = !0, o = !1;
-        try {
-            if (i = (t = t.call(r)).next, 0 === l) {
-                if (Object(t) !== t) return;
-                f = !1;
-            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-        } catch (r) {
-            o = !0, n = r;
-        } finally{
-            try {
-                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-            } finally{
-                if (o) throw n;
-            }
-        }
-        return a;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Version control popup component.
- * @param {Object} props component properties
- * @param {String} props.from current version
- * @param {String} props.to version to rollback
- * @param {Function} props.onCloseHandler close popup callback
- * @param {Function} props.onOperationStart operation start callback
- * @param {Number} props.reloadDelay automatic page reload delay in milliseconds
- * @constructor
- */ function VersionControlPopup(_ref) {
-    var from = _ref.from, to = _ref.to, onCloseHandler = _ref.onCloseHandler, onOperationStart = _ref.onOperationStart, _ref$reloadDelay = _ref.reloadDelay, reloadDelay = _ref$reloadDelay === void 0 ? 5000 : _ref$reloadDelay;
-    var OPERATION_STATUS_TYPES = {
-        NOT_STARTED: "notStarted",
-        STARTED: "started",
-        FINISHED: "finished"
-    };
-    var RESPONSE_TYPES = {
-        OK: "ok",
-        ERROR: "error"
-    };
-    /**
-   * Generate response object.
-   * @param {String} message message
-   * @param {String} [type='ok'] response type.
-   * @return {Object} response object
-   */ var generateResponseObject = function generateResponseObject(message) {
-        var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RESPONSE_TYPES.OK;
-        return {
-            type: type,
-            message: message
-        };
-    };
-    var _useState = (0, _react.useState)(OPERATION_STATUS_TYPES.NOT_STARTED), _useState2 = _slicedToArray(_useState, 2), operationStatus = _useState2[0], setOperationStatus = _useState2[1];
-    var _useState3 = (0, _react.useState)(reloadDelay / 1000), _useState4 = _slicedToArray(_useState3, 2), reloadCountdown = _useState4[0], setReloadCountdown = _useState4[1];
-    var _useState5 = (0, _react.useState)(generateResponseObject("")), _useState6 = _slicedToArray(_useState5, 2), responseObject = _useState6[0], setResponseObject = _useState6[1];
-    var isDowngrade = from > to;
-    var countdownToReload = (0, _react.useRef)(reloadDelay);
-    /**
-   * Start rollback operation.
-   */ var startOperation = function startOperation() {
-        setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
-        onOperationStart().then(function(_ref2) {
-            var message = _ref2.message;
-            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.OK));
-        })["catch"](function(_ref3) {
-            var message = _ref3.message;
-            setResponseObject(generateResponseObject(message, RESPONSE_TYPES.ERROR));
-        })["finally"](function() {
-            setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
-            reloadPage();
-        });
-    };
-    /**
-   * Reload page after a designated amount of time.
-   */ var reloadPage = function reloadPage() {
-        var reloadIntervalId = setInterval(function() {
-            if (countdownToReload.current <= 0) {
-                window.location.reload();
-                clearInterval(reloadIntervalId);
-            } else {
-                countdownToReload.current = countdownToReload.current - 1000;
-                setReloadCountdown(countdownToReload.current / 1000);
-            }
-        }, 1000);
-    };
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-popup"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "modal-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "rollback-versions"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-id ".concat(isDowngrade ? "ub-positive-color" : "ub-negative-color")
-    }, from), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-icon",
-        "data-in-progress": JSON.stringify(operationStatus === OPERATION_STATUS_TYPES.STARTED)
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-icon-inner-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-right-long"
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-id ".concat(isDowngrade ? "ub-negative-color" : "ub-positive-color")
-    }, to)), operationStatus !== OPERATION_STATUS_TYPES.STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-content"
-    }, operationStatus === OPERATION_STATUS_TYPES.NOT_STARTED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-warning"
-    }, /*#__PURE__*/ _react["default"].createElement("div", null, (0, _i18n.__)("Older versions might be unstable. Do it on your own risk and create a backup.", "ultimate-blocks")), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-rollback-button-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        type: _MenuButton.BUTTON_TYPES.POSITIVE,
-        onClickHandler: startOperation,
-        status: true,
-        title: "Start"
-    }), /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        onClickHandler: onCloseHandler,
-        status: true,
-        title: "Close"
-    }))), operationStatus === OPERATION_STATUS_TYPES.FINISHED && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "operation-finished-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-response",
-        "data-resp-type": responseObject.type
-    }, responseObject.message), /*#__PURE__*/ _react["default"].createElement("div", null, reloadCountdown <= 0 ? "".concat((0, _i18n.__)("Reloading page now...", "ultimate-blocks")) : "".concat((0, _i18n.__)("Reloading page in ", "ultimate-blocks"), " ").concat(reloadCountdown, "..."))))));
-}
-/**
- * @module VersionControlPopup
- */ var _default = exports["default"] = VersionControlPopup;
-
-},{"3accbda3a85c85e3":"21dqq","a3e43325b30d05e5":"clIT3","9945d4bf1472bc28":"7CyoE","83f559a99a61616d":"cbTU3"}],"7CyoE":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "sprintf", ()=>(0, _sprintf.sprintf));
-parcelHelpers.export(exports, "defaultI18n", ()=>(0, _defaultI18NDefault.default));
-parcelHelpers.export(exports, "setLocaleData", ()=>(0, _defaultI18N.setLocaleData));
-parcelHelpers.export(exports, "resetLocaleData", ()=>(0, _defaultI18N.resetLocaleData));
-parcelHelpers.export(exports, "getLocaleData", ()=>(0, _defaultI18N.getLocaleData));
-parcelHelpers.export(exports, "subscribe", ()=>(0, _defaultI18N.subscribe));
-parcelHelpers.export(exports, "__", ()=>(0, _defaultI18N.__));
-parcelHelpers.export(exports, "_x", ()=>(0, _defaultI18N._x));
-parcelHelpers.export(exports, "_n", ()=>(0, _defaultI18N._n));
-parcelHelpers.export(exports, "_nx", ()=>(0, _defaultI18N._nx));
-parcelHelpers.export(exports, "isRTL", ()=>(0, _defaultI18N.isRTL));
-parcelHelpers.export(exports, "hasTranslation", ()=>(0, _defaultI18N.hasTranslation));
-var _sprintf = require("./sprintf");
-var _createI18N = require("./create-i18n");
-parcelHelpers.exportAll(_createI18N, exports);
-var _defaultI18N = require("./default-i18n");
-var _defaultI18NDefault = parcelHelpers.interopDefault(_defaultI18N);
-
-},{"./sprintf":"jSK0R","./create-i18n":"2IrAM","./default-i18n":"eKzAG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jSK0R":[function(require,module,exports) {
-/**
- * External dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * Returns a formatted string. If an error occurs in applying the format, the
- * original format string is returned.
- *
- * @param {string} format The format of the string to generate.
- * @param {...*}   args   Arguments to apply to the format.
- *
- * @see https://www.npmjs.com/package/sprintf-js
- *
- * @return {string} The formatted string.
- */ parcelHelpers.export(exports, "sprintf", ()=>sprintf);
-var _memize = require("memize");
-var _memizeDefault = parcelHelpers.interopDefault(_memize);
-var _sprintfJs = require("sprintf-js");
-var _sprintfJsDefault = parcelHelpers.interopDefault(_sprintfJs);
-/**
- * Log to console, once per message; or more precisely, per referentially equal
- * argument set. Because Jed throws errors, we log these to the console instead
- * to avoid crashing the application.
- *
- * @param {...*} args Arguments to pass to `console.error`
- */ const logErrorOnce = (0, _memizeDefault.default)(console.error); // eslint-disable-line no-console
-function sprintf(format, ...args) {
-    try {
-        return (0, _sprintfJsDefault.default).sprintf(format, ...args);
-    } catch (error) {
-        if (error instanceof Error) logErrorOnce("sprintf error: \n\n" + error.toString());
-        return format;
-    }
-}
-
-},{"memize":"2xx6f","sprintf-js":"9lMGt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2xx6f":[function(require,module,exports) {
-/**
- * Memize options object.
- *
- * @typedef MemizeOptions
- *
- * @property {number} [maxSize] Maximum size of the cache.
- */ /**
- * Internal cache entry.
- *
- * @typedef MemizeCacheNode
- *
- * @property {?MemizeCacheNode|undefined} [prev] Previous node.
- * @property {?MemizeCacheNode|undefined} [next] Next node.
- * @property {Array<*>}                   args   Function arguments for cache
- *                                               entry.
- * @property {*}                          val    Function result.
- */ /**
- * Properties of the enhanced function for controlling cache.
- *
- * @typedef MemizeMemoizedFunction
- *
- * @property {()=>void} clear Clear the cache.
- */ /**
- * Accepts a function to be memoized, and returns a new memoized function, with
- * optional options.
- *
- * @template {(...args: any[]) => any} F
- *
- * @param {F}             fn        Function to memoize.
- * @param {MemizeOptions} [options] Options object.
- *
- * @return {((...args: Parameters<F>) => ReturnType<F>) & MemizeMemoizedFunction} Memoized function.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>memize);
-function memize(fn, options) {
-    var size = 0;
-    /** @type {?MemizeCacheNode|undefined} */ var head;
-    /** @type {?MemizeCacheNode|undefined} */ var tail;
-    options = options || {};
-    function memoized() {
-        var node = head, len = arguments.length, args, i;
-        searchCache: while(node){
-            // Perform a shallow equality test to confirm that whether the node
-            // under test is a candidate for the arguments passed. Two arrays
-            // are shallowly equal if their length matches and each entry is
-            // strictly equal between the two sets. Avoid abstracting to a
-            // function which could incur an arguments leaking deoptimization.
-            // Check whether node arguments match arguments length
-            if (node.args.length !== arguments.length) {
-                node = node.next;
-                continue;
-            }
-            // Check whether node arguments match arguments values
-            for(i = 0; i < len; i++)if (node.args[i] !== arguments[i]) {
-                node = node.next;
-                continue searchCache;
-            }
-            // At this point we can assume we've found a match
-            // Surface matched node to head if not already
-            if (node !== head) {
-                // As tail, shift to previous. Must only shift if not also
-                // head, since if both head and tail, there is no previous.
-                if (node === tail) tail = node.prev;
-                // Adjust siblings to point to each other. If node was tail,
-                // this also handles new tail's empty `next` assignment.
-                /** @type {MemizeCacheNode} */ node.prev.next = node.next;
-                if (node.next) node.next.prev = node.prev;
-                node.next = head;
-                node.prev = null;
-                /** @type {MemizeCacheNode} */ head.prev = node;
-                head = node;
-            }
-            // Return immediately
-            return node.val;
-        }
-        // No cached value found. Continue to insertion phase:
-        // Create a copy of arguments (avoid leaking deoptimization)
-        args = new Array(len);
-        for(i = 0; i < len; i++)args[i] = arguments[i];
-        node = {
-            args: args,
-            // Generate the result from original function
-            val: fn.apply(null, args)
-        };
-        // Don't need to check whether node is already head, since it would
-        // have been returned above already if it was
-        // Shift existing head down list
-        if (head) {
-            head.prev = node;
-            node.next = head;
-        } else // If no head, follows that there's no tail (at initial or reset)
-        tail = node;
-        // Trim tail if we're reached max size and are pending cache insertion
-        if (size === /** @type {MemizeOptions} */ options.maxSize) {
-            tail = /** @type {MemizeCacheNode} */ tail.prev;
-            /** @type {MemizeCacheNode} */ tail.next = null;
-        } else size++;
-        head = node;
-        return node.val;
-    }
-    memoized.clear = function() {
-        head = null;
-        tail = null;
-        size = 0;
-    };
-    // Ignore reason: There's not a clear solution to create an intersection of
-    // the function with additional properties, where the goal is to retain the
-    // function signature of the incoming argument and add control properties
-    // on the return value.
-    // @ts-ignore
-    return memoized;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9lMGt":[function(require,module,exports) {
-/* global window, exports, define */ !function() {
-    "use strict";
-    var re = {
-        not_string: /[^s]/,
-        not_bool: /[^t]/,
-        not_type: /[^T]/,
-        not_primitive: /[^v]/,
-        number: /[diefg]/,
-        numeric_arg: /[bcdiefguxX]/,
-        json: /[j]/,
-        not_json: /[^j]/,
-        text: /^[^\x25]+/,
-        modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
-        key: /^([a-z_][a-z_\d]*)/i,
-        key_access: /^\.([a-z_][a-z_\d]*)/i,
-        index_access: /^\[(\d+)\]/,
-        sign: /^[+-]/
-    };
-    function sprintf(key) {
-        // `arguments` is not an array, but should be fine for this call
-        return sprintf_format(sprintf_parse(key), arguments);
-    }
-    function vsprintf(fmt, argv) {
-        return sprintf.apply(null, [
-            fmt
-        ].concat(argv || []));
-    }
-    function sprintf_format(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = "", i, k, ph, pad, pad_character, pad_length, is_positive, sign;
-        for(i = 0; i < tree_length; i++){
-            if (typeof parse_tree[i] === "string") output += parse_tree[i];
-            else if (typeof parse_tree[i] === "object") {
-                ph = parse_tree[i] // convenience purposes only
-                ;
-                if (ph.keys) {
-                    arg = argv[cursor];
-                    for(k = 0; k < ph.keys.length; k++){
-                        if (arg == undefined) throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k - 1]));
-                        arg = arg[ph.keys[k]];
-                    }
-                } else if (ph.param_no) arg = argv[ph.param_no];
-                else arg = argv[cursor++];
-                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) arg = arg();
-                if (re.numeric_arg.test(ph.type) && typeof arg !== "number" && isNaN(arg)) throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg));
-                if (re.number.test(ph.type)) is_positive = arg >= 0;
-                switch(ph.type){
-                    case "b":
-                        arg = parseInt(arg, 10).toString(2);
-                        break;
-                    case "c":
-                        arg = String.fromCharCode(parseInt(arg, 10));
-                        break;
-                    case "d":
-                    case "i":
-                        arg = parseInt(arg, 10);
-                        break;
-                    case "j":
-                        arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0);
-                        break;
-                    case "e":
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential();
-                        break;
-                    case "f":
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg);
-                        break;
-                    case "g":
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg);
-                        break;
-                    case "o":
-                        arg = (parseInt(arg, 10) >>> 0).toString(8);
-                        break;
-                    case "s":
-                        arg = String(arg);
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "t":
-                        arg = String(!!arg);
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "T":
-                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "u":
-                        arg = parseInt(arg, 10) >>> 0;
-                        break;
-                    case "v":
-                        arg = arg.valueOf();
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "x":
-                        arg = (parseInt(arg, 10) >>> 0).toString(16);
-                        break;
-                    case "X":
-                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase();
-                        break;
-                }
-                if (re.json.test(ph.type)) output += arg;
-                else {
-                    if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
-                        sign = is_positive ? "+" : "-";
-                        arg = arg.toString().replace(re.sign, "");
-                    } else sign = "";
-                    pad_character = ph.pad_char ? ph.pad_char === "0" ? "0" : ph.pad_char.charAt(1) : " ";
-                    pad_length = ph.width - (sign + arg).length;
-                    pad = ph.width ? pad_length > 0 ? pad_character.repeat(pad_length) : "" : "";
-                    output += ph.align ? sign + arg + pad : pad_character === "0" ? sign + pad + arg : pad + sign + arg;
-                }
-            }
-        }
-        return output;
-    }
-    var sprintf_cache = Object.create(null);
-    function sprintf_parse(fmt) {
-        if (sprintf_cache[fmt]) return sprintf_cache[fmt];
-        var _fmt = fmt, match, parse_tree = [], arg_names = 0;
-        while(_fmt){
-            if ((match = re.text.exec(_fmt)) !== null) parse_tree.push(match[0]);
-            else if ((match = re.modulo.exec(_fmt)) !== null) parse_tree.push("%");
-            else if ((match = re.placeholder.exec(_fmt)) !== null) {
-                if (match[2]) {
-                    arg_names |= 1;
-                    var field_list = [], replacement_field = match[2], field_match = [];
-                    if ((field_match = re.key.exec(replacement_field)) !== null) {
-                        field_list.push(field_match[1]);
-                        while((replacement_field = replacement_field.substring(field_match[0].length)) !== ""){
-                            if ((field_match = re.key_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
-                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
-                            else throw new SyntaxError("[sprintf] failed to parse named argument key");
-                        }
-                    } else throw new SyntaxError("[sprintf] failed to parse named argument key");
-                    match[2] = field_list;
-                } else arg_names |= 2;
-                if (arg_names === 3) throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");
-                parse_tree.push({
-                    placeholder: match[0],
-                    param_no: match[1],
-                    keys: match[2],
-                    sign: match[3],
-                    pad_char: match[4],
-                    align: match[5],
-                    width: match[6],
-                    precision: match[7],
-                    type: match[8]
-                });
-            } else throw new SyntaxError("[sprintf] unexpected placeholder");
-            _fmt = _fmt.substring(match[0].length);
-        }
-        return sprintf_cache[fmt] = parse_tree;
-    }
-    exports["sprintf"] = sprintf;
-    exports["vsprintf"] = vsprintf;
-    if (typeof window !== "undefined") {
-        window["sprintf"] = sprintf;
-        window["vsprintf"] = vsprintf;
-        if (typeof define === "function" && define["amd"]) define(function() {
-            return {
-                "sprintf": sprintf,
-                "vsprintf": vsprintf
-            };
-        });
-    }
-/* eslint-enable quote-props */ }(); // eslint-disable-line
-
-},{}],"2IrAM":[function(require,module,exports) {
-/**
- * External dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "createI18n", ()=>createI18n);
-var _tannin = require("tannin");
-var _tanninDefault = parcelHelpers.interopDefault(_tannin);
-/**
- * @typedef {Record<string,any>} LocaleData
- */ /**
- * Default locale data to use for Tannin domain when not otherwise provided.
- * Assumes an English plural forms expression.
- *
- * @type {LocaleData}
- */ const DEFAULT_LOCALE_DATA = {
-    "": {
-        /** @param {number} n */ plural_forms (n) {
-            return n === 1 ? 0 : 1;
-        }
-    }
-};
-/*
- * Regular expression that matches i18n hooks like `i18n.gettext`, `i18n.ngettext`,
- * `i18n.gettext_domain` or `i18n.ngettext_with_context` or `i18n.has_translation`.
- */ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
-const createI18n = (initialData, initialDomain, hooks)=>{
-    /**
-   * The underlying instance of Tannin to which exported functions interface.
-   *
-   * @type {Tannin}
-   */ const tannin = new (0, _tanninDefault.default)({});
-    const listeners = new Set();
-    const notifyListeners = ()=>{
-        listeners.forEach((listener)=>listener());
-    };
-    /**
-   * Subscribe to changes of locale data.
-   *
-   * @param {SubscribeCallback} callback Subscription callback.
-   * @return {UnsubscribeCallback} Unsubscribe callback.
-   */ const subscribe = (callback)=>{
-        listeners.add(callback);
-        return ()=>listeners.delete(callback);
-    };
-    /** @type {GetLocaleData} */ const getLocaleData = (domain = "default")=>tannin.data[domain];
-    /**
-   * @param {LocaleData} [data]
-   * @param {string}     [domain]
-   */ const doSetLocaleData = (data, domain = "default")=>{
-        tannin.data[domain] = {
-            ...tannin.data[domain],
-            ...data
-        };
-        // Populate default domain configuration (supported locale date which omits
-        // a plural forms expression).
-        tannin.data[domain][""] = {
-            ...DEFAULT_LOCALE_DATA[""],
-            ...tannin.data[domain]?.[""]
-        };
-        // Clean up cached plural forms functions cache as it might be updated.
-        delete tannin.pluralForms[domain];
-    };
-    /** @type {SetLocaleData} */ const setLocaleData = (data, domain)=>{
-        doSetLocaleData(data, domain);
-        notifyListeners();
-    };
-    /** @type {AddLocaleData} */ const addLocaleData = (data, domain = "default")=>{
-        tannin.data[domain] = {
-            ...tannin.data[domain],
-            ...data,
-            // Populate default domain configuration (supported locale date which omits
-            // a plural forms expression).
-            "": {
-                ...DEFAULT_LOCALE_DATA[""],
-                ...tannin.data[domain]?.[""],
-                ...data?.[""]
-            }
-        };
-        // Clean up cached plural forms functions cache as it might be updated.
-        delete tannin.pluralForms[domain];
-        notifyListeners();
-    };
-    /** @type {ResetLocaleData} */ const resetLocaleData = (data, domain)=>{
-        // Reset all current Tannin locale data.
-        tannin.data = {};
-        // Reset cached plural forms functions cache.
-        tannin.pluralForms = {};
-        setLocaleData(data, domain);
-    };
-    /**
-   * Wrapper for Tannin's `dcnpgettext`. Populates default locale data if not
-   * otherwise previously assigned.
-   *
-   * @param {string|undefined} domain   Domain to retrieve the translated text.
-   * @param {string|undefined} context  Context information for the translators.
-   * @param {string}           single   Text to translate if non-plural. Used as
-   *                                    fallback return value on a caught error.
-   * @param {string}           [plural] The text to be used if the number is
-   *                                    plural.
-   * @param {number}           [number] The number to compare against to use
-   *                                    either the singular or plural form.
-   *
-   * @return {string} The translated string.
-   */ const dcnpgettext = (domain = "default", context, single, plural, number)=>{
-        if (!tannin.data[domain]) // Use `doSetLocaleData` to set silently, without notifying listeners.
-        doSetLocaleData(undefined, domain);
-        return tannin.dcnpgettext(domain, context, single, plural, number);
-    };
-    /** @type {GetFilterDomain} */ const getFilterDomain = (domain = "default")=>domain;
-    /** @type {__} */ const __ = (text, domain)=>{
-        let translation = dcnpgettext(domain, undefined, text);
-        if (!hooks) return translation;
-        /**
-     * Filters text with its translation.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} text        Text to translate.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext", translation, text, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_" + getFilterDomain(domain), translation, text, domain);
-    };
-    /** @type {_x} */ const _x = (text, context, domain)=>{
-        let translation = dcnpgettext(domain, context, text);
-        if (!hooks) return translation;
-        /**
-     * Filters text with its translation based on context information.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} text        Text to translate.
-     * @param {string} context     Context information for the translators.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context", translation, text, context, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context_" + getFilterDomain(domain), translation, text, context, domain);
-    };
-    /** @type {_n} */ const _n = (single, plural, number, domain)=>{
-        let translation = dcnpgettext(domain, undefined, single, plural, number);
-        if (!hooks) return translation;
-        /**
-     * Filters the singular or plural form of a string.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} single      The text to be used if the number is singular.
-     * @param {string} plural      The text to be used if the number is plural.
-     * @param {string} number      The number to compare against to use either the singular or plural form.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext", translation, single, plural, number, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_" + getFilterDomain(domain), translation, single, plural, number, domain);
-    };
-    /** @type {_nx} */ const _nx = (single, plural, number, context, domain)=>{
-        let translation = dcnpgettext(domain, context, single, plural, number);
-        if (!hooks) return translation;
-        /**
-     * Filters the singular or plural form of a string with gettext context.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} single      The text to be used if the number is singular.
-     * @param {string} plural      The text to be used if the number is plural.
-     * @param {string} number      The number to compare against to use either the singular or plural form.
-     * @param {string} context     Context information for the translators.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context", translation, single, plural, number, context, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context_" + getFilterDomain(domain), translation, single, plural, number, context, domain);
-    };
-    /** @type {IsRtl} */ const isRTL = ()=>{
-        return "rtl" === _x("ltr", "text direction");
-    };
-    /** @type {HasTranslation} */ const hasTranslation = (single, context, domain)=>{
-        const key = context ? context + "\x04" + single : single;
-        let result = !!tannin.data?.[domain !== null && domain !== void 0 ? domain : "default"]?.[key];
-        if (hooks) {
-            /**
-       * Filters the presence of a translation in the locale data.
-       *
-       * @param {boolean} hasTranslation Whether the translation is present or not..
-       * @param {string}  single         The singular form of the translated text (used as key in locale data)
-       * @param {string}  context        Context information for the translators.
-       * @param {string}  domain         Text domain. Unique identifier for retrieving translated strings.
-       */ result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation", result, single, context, domain);
-            result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation_" + getFilterDomain(domain), result, single, context, domain);
-        }
-        return result;
-    };
-    if (initialData) setLocaleData(initialData, initialDomain);
-    if (hooks) {
-        /**
-     * @param {string} hookName
-     */ const onHookAddedOrRemoved = (hookName)=>{
-            if (I18N_HOOK_REGEXP.test(hookName)) notifyListeners();
-        };
-        hooks.addAction("hookAdded", "core/i18n", onHookAddedOrRemoved);
-        hooks.addAction("hookRemoved", "core/i18n", onHookAddedOrRemoved);
-    }
-    return {
-        getLocaleData,
-        setLocaleData,
-        addLocaleData,
-        resetLocaleData,
-        subscribe,
-        __,
-        _x,
-        _n,
-        _nx,
-        isRTL,
-        hasTranslation
-    };
-};
-
-},{"tannin":"bWSIR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWSIR":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>Tannin);
-var _pluralForms = require("@tannin/plural-forms");
-var _pluralFormsDefault = parcelHelpers.interopDefault(_pluralForms);
-/**
- * Tannin constructor options.
- *
- * @typedef {Object} TanninOptions
- *
- * @property {string}   [contextDelimiter] Joiner in string lookup with context.
- * @property {Function} [onMissingKey]     Callback to invoke when key missing.
- */ /**
- * Domain metadata.
- *
- * @typedef {Object} TanninDomainMetadata
- *
- * @property {string}            [domain]       Domain name.
- * @property {string}            [lang]         Language code.
- * @property {(string|Function)} [plural_forms] Plural forms expression or
- *                                              function evaluator.
- */ /**
- * Domain translation pair respectively representing the singular and plural
- * translation.
- *
- * @typedef {[string,string]} TanninTranslation
- */ /**
- * Locale data domain. The key is used as reference for lookup, the value an
- * array of two string entries respectively representing the singular and plural
- * translation.
- *
- * @typedef {{[key:string]:TanninDomainMetadata|TanninTranslation,'':TanninDomainMetadata|TanninTranslation}} TanninLocaleDomain
- */ /**
- * Jed-formatted locale data.
- *
- * @see http://messageformat.github.io/Jed/
- *
- * @typedef {{[domain:string]:TanninLocaleDomain}} TanninLocaleData
- */ /**
- * Default Tannin constructor options.
- *
- * @type {TanninOptions}
- */ var DEFAULT_OPTIONS = {
-    contextDelimiter: "\x04",
-    onMissingKey: null
-};
-/**
- * Given a specific locale data's config `plural_forms` value, returns the
- * expression.
- *
- * @example
- *
- * ```
- * getPluralExpression( 'nplurals=2; plural=(n != 1);' ) === '(n != 1)'
- * ```
- *
- * @param {string} pf Locale data plural forms.
- *
- * @return {string} Plural forms expression.
- */ function getPluralExpression(pf) {
-    var parts, i, part;
-    parts = pf.split(";");
-    for(i = 0; i < parts.length; i++){
-        part = parts[i].trim();
-        if (part.indexOf("plural=") === 0) return part.substr(7);
-    }
-}
-function Tannin(data, options) {
-    var key;
-    /**
-	 * Jed-formatted locale data.
-	 *
-	 * @name Tannin#data
-	 * @type {TanninLocaleData}
-	 */ this.data = data;
-    /**
-	 * Plural forms function cache, keyed by plural forms string.
-	 *
-	 * @name Tannin#pluralForms
-	 * @type {Object<string,Function>}
-	 */ this.pluralForms = {};
-    /**
-	 * Effective options for instance, including defaults.
-	 *
-	 * @name Tannin#options
-	 * @type {TanninOptions}
-	 */ this.options = {};
-    for(key in DEFAULT_OPTIONS)this.options[key] = options !== undefined && key in options ? options[key] : DEFAULT_OPTIONS[key];
-}
-/**
- * Returns the plural form index for the given domain and value.
- *
- * @param {string} domain Domain on which to calculate plural form.
- * @param {number} n      Value for which plural form is to be calculated.
- *
- * @return {number} Plural form index.
- */ Tannin.prototype.getPluralForm = function(domain, n) {
-    var getPluralForm = this.pluralForms[domain], config, plural, pf;
-    if (!getPluralForm) {
-        config = this.data[domain][""];
-        pf = config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
-        // string property on a key to guarantee this as metadata.
-        // @ts-ignore
-        config.plural_forms;
-        if (typeof pf !== "function") {
-            plural = getPluralExpression(config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
-            // string property on a key to guarantee this as metadata.
-            // @ts-ignore
-            config.plural_forms);
-            pf = (0, _pluralFormsDefault.default)(plural);
-        }
-        getPluralForm = this.pluralForms[domain] = pf;
-    }
-    return getPluralForm(n);
-};
-/**
- * Translate a string.
- *
- * @param {string}      domain   Translation domain.
- * @param {string|void} context  Context distinguishing terms of the same name.
- * @param {string}      singular Primary key for translation lookup.
- * @param {string=}     plural   Fallback value used for non-zero plural
- *                               form index.
- * @param {number=}     n        Value to use in calculating plural form.
- *
- * @return {string} Translated string.
- */ Tannin.prototype.dcnpgettext = function(domain, context, singular, plural, n) {
-    var index, key, entry;
-    if (n === undefined) // Default to singular.
-    index = 0;
-    else // Find index by evaluating plural form for value.
-    index = this.getPluralForm(domain, n);
-    key = singular;
-    // If provided, context is prepended to key with delimiter.
-    if (context) key = context + this.options.contextDelimiter + singular;
-    entry = this.data[domain][key];
-    // Verify not only that entry exists, but that the intended index is within
-    // range and non-empty.
-    if (entry && entry[index]) return entry[index];
-    if (this.options.onMissingKey) this.options.onMissingKey(singular, domain);
-    // If entry not found, fall back to singular vs. plural with zero index
-    // representing the singular value.
-    return index === 0 ? singular : plural;
-};
-
-},{"@tannin/plural-forms":"ch17b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ch17b":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>pluralForms);
-var _compile = require("@tannin/compile");
-var _compileDefault = parcelHelpers.interopDefault(_compile);
-function pluralForms(expression) {
-    var evaluate = (0, _compileDefault.default)(expression);
-    return function(n) {
-        return +evaluate({
-            n: n
-        });
-    };
-}
-
-},{"@tannin/compile":"5dvv3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5dvv3":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>compile);
-var _postfix = require("@tannin/postfix");
-var _postfixDefault = parcelHelpers.interopDefault(_postfix);
-var _evaluate = require("@tannin/evaluate");
-var _evaluateDefault = parcelHelpers.interopDefault(_evaluate);
-function compile(expression) {
-    var terms = (0, _postfixDefault.default)(expression);
-    return function(variables) {
-        return (0, _evaluateDefault.default)(terms, variables);
-    };
-}
-
-},{"@tannin/postfix":"gjJvb","@tannin/evaluate":"8I9co","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gjJvb":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>postfix);
-var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
-/**
- * Operator precedence mapping.
- *
- * @type {Object}
- */ PRECEDENCE = {
-    "(": 9,
-    "!": 8,
-    "*": 7,
-    "/": 7,
-    "%": 7,
-    "+": 6,
-    "-": 6,
-    "<": 5,
-    "<=": 5,
-    ">": 5,
-    ">=": 5,
-    "==": 4,
-    "!=": 4,
-    "&&": 3,
-    "||": 2,
-    "?": 1,
-    "?:": 1
-};
-/**
- * Characters which signal pair opening, to be terminated by terminators.
- *
- * @type {string[]}
- */ OPENERS = [
-    "(",
-    "?"
-];
-/**
- * Characters which signal pair termination, the value an array with the
- * opener as its first member. The second member is an optional operator
- * replacement to push to the stack.
- *
- * @type {string[]}
- */ TERMINATORS = {
-    ")": [
-        "("
-    ],
-    ":": [
-        "?",
-        "?:"
-    ]
-};
-/**
- * Pattern matching operators and openers.
- *
- * @type {RegExp}
- */ PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
-function postfix(expression) {
-    var terms = [], stack = [], match, operator, term, element;
-    while(match = expression.match(PATTERN)){
-        operator = match[0];
-        // Term is the string preceding the operator match. It may contain
-        // whitespace, and may be empty (if operator is at beginning).
-        term = expression.substr(0, match.index).trim();
-        if (term) terms.push(term);
-        while(element = stack.pop()){
-            if (TERMINATORS[operator]) {
-                if (TERMINATORS[operator][0] === element) {
-                    // Substitution works here under assumption that because
-                    // the assigned operator will no longer be a terminator, it
-                    // will be pushed to the stack during the condition below.
-                    operator = TERMINATORS[operator][1] || operator;
-                    break;
-                }
-            } else if (OPENERS.indexOf(element) >= 0 || PRECEDENCE[element] < PRECEDENCE[operator]) {
-                // Push to stack if either an opener or when pop reveals an
-                // element of lower precedence.
-                stack.push(element);
-                break;
-            }
-            // For each popped from stack, push to terms.
-            terms.push(element);
-        }
-        if (!TERMINATORS[operator]) stack.push(operator);
-        // Slice matched fragment from expression to continue match.
-        expression = expression.substr(match.index + operator.length);
-    }
-    // Push remainder of operand, if exists, to terms.
-    expression = expression.trim();
-    if (expression) terms.push(expression);
-    // Pop remaining items from stack into terms.
-    return terms.concat(stack.reverse());
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8I9co":[function(require,module,exports) {
-/**
- * Operator callback functions.
- *
- * @type {Object}
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>evaluate);
-var OPERATORS = {
-    "!": function(a) {
-        return !a;
-    },
-    "*": function(a, b) {
-        return a * b;
-    },
-    "/": function(a, b) {
-        return a / b;
-    },
-    "%": function(a, b) {
-        return a % b;
-    },
-    "+": function(a, b) {
-        return a + b;
-    },
-    "-": function(a, b) {
-        return a - b;
-    },
-    "<": function(a, b) {
-        return a < b;
-    },
-    "<=": function(a, b) {
-        return a <= b;
-    },
-    ">": function(a, b) {
-        return a > b;
-    },
-    ">=": function(a, b) {
-        return a >= b;
-    },
-    "==": function(a, b) {
-        return a === b;
-    },
-    "!=": function(a, b) {
-        return a !== b;
-    },
-    "&&": function(a, b) {
-        return a && b;
-    },
-    "||": function(a, b) {
-        return a || b;
-    },
-    "?:": function(a, b, c) {
-        if (a) throw b;
-        return c;
-    }
-};
-function evaluate(postfix, variables) {
-    var stack = [], i, j, args, getOperatorResult, term, value;
-    for(i = 0; i < postfix.length; i++){
-        term = postfix[i];
-        getOperatorResult = OPERATORS[term];
-        if (getOperatorResult) {
-            // Pop from stack by number of function arguments.
-            j = getOperatorResult.length;
-            args = Array(j);
-            while(j--)args[j] = stack.pop();
-            try {
-                value = getOperatorResult.apply(null, args);
-            } catch (earlyReturn) {
-                return earlyReturn;
-            }
-        } else if (variables.hasOwnProperty(term)) value = variables[term];
-        else value = +term;
-        stack.push(value);
-    }
-    return stack[0];
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eKzAG":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getLocaleData", ()=>getLocaleData);
-parcelHelpers.export(exports, "setLocaleData", ()=>setLocaleData);
-parcelHelpers.export(exports, "resetLocaleData", ()=>resetLocaleData);
-parcelHelpers.export(exports, "subscribe", ()=>subscribe);
-parcelHelpers.export(exports, "__", ()=>__);
-parcelHelpers.export(exports, "_x", ()=>_x);
-parcelHelpers.export(exports, "_n", ()=>_n);
-parcelHelpers.export(exports, "_nx", ()=>_nx);
-parcelHelpers.export(exports, "isRTL", ()=>isRTL);
-parcelHelpers.export(exports, "hasTranslation", ()=>hasTranslation);
-var _createI18N = require("./create-i18n");
-/**
- * WordPress dependencies
- */ var _hooks = require("@wordpress/hooks");
-const i18n = (0, _createI18N.createI18n)(undefined, undefined, (0, _hooks.defaultHooks));
-/**
- * Default, singleton instance of `I18n`.
- */ exports.default = i18n;
-const getLocaleData = i18n.getLocaleData.bind(i18n);
-const setLocaleData = i18n.setLocaleData.bind(i18n);
-const resetLocaleData = i18n.resetLocaleData.bind(i18n);
-const subscribe = i18n.subscribe.bind(i18n);
-const __ = i18n.__.bind(i18n);
-const _x = i18n._x.bind(i18n);
-const _n = i18n._n.bind(i18n);
-const _nx = i18n._nx.bind(i18n);
-const isRTL = i18n.isRTL.bind(i18n);
-const hasTranslation = i18n.hasTranslation.bind(i18n);
-
-},{"./create-i18n":"2IrAM","@wordpress/hooks":"8Bsjr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Bsjr":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "defaultHooks", ()=>defaultHooks);
-parcelHelpers.export(exports, "createHooks", ()=>(0, _createHooksDefault.default));
-parcelHelpers.export(exports, "addAction", ()=>addAction);
-parcelHelpers.export(exports, "addFilter", ()=>addFilter);
-parcelHelpers.export(exports, "removeAction", ()=>removeAction);
-parcelHelpers.export(exports, "removeFilter", ()=>removeFilter);
-parcelHelpers.export(exports, "hasAction", ()=>hasAction);
-parcelHelpers.export(exports, "hasFilter", ()=>hasFilter);
-parcelHelpers.export(exports, "removeAllActions", ()=>removeAllActions);
-parcelHelpers.export(exports, "removeAllFilters", ()=>removeAllFilters);
-parcelHelpers.export(exports, "doAction", ()=>doAction);
-parcelHelpers.export(exports, "applyFilters", ()=>applyFilters);
-parcelHelpers.export(exports, "currentAction", ()=>currentAction);
-parcelHelpers.export(exports, "currentFilter", ()=>currentFilter);
-parcelHelpers.export(exports, "doingAction", ()=>doingAction);
-parcelHelpers.export(exports, "doingFilter", ()=>doingFilter);
-parcelHelpers.export(exports, "didAction", ()=>didAction);
-parcelHelpers.export(exports, "didFilter", ()=>didFilter);
-parcelHelpers.export(exports, "actions", ()=>actions);
-parcelHelpers.export(exports, "filters", ()=>filters);
-var _createHooks = require("./createHooks");
-var _createHooksDefault = parcelHelpers.interopDefault(_createHooks);
-const defaultHooks = (0, _createHooksDefault.default)();
-const { addAction, addFilter, removeAction, removeFilter, hasAction, hasFilter, removeAllActions, removeAllFilters, doAction, applyFilters, currentAction, currentFilter, doingAction, doingFilter, didAction, didFilter, actions, filters } = defaultHooks;
-
-},{"./createHooks":"hhEcY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hhEcY":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * Internal class for constructing hooks. Use `createHooks()` function
- *
- * Note, it is necessary to expose this class to make its type public.
- *
- * @private
- */ parcelHelpers.export(exports, "_Hooks", ()=>_Hooks);
-var _createAddHook = require("./createAddHook");
-var _createAddHookDefault = parcelHelpers.interopDefault(_createAddHook);
-var _createRemoveHook = require("./createRemoveHook");
-var _createRemoveHookDefault = parcelHelpers.interopDefault(_createRemoveHook);
-var _createHasHook = require("./createHasHook");
-var _createHasHookDefault = parcelHelpers.interopDefault(_createHasHook);
-var _createRunHook = require("./createRunHook");
-var _createRunHookDefault = parcelHelpers.interopDefault(_createRunHook);
-var _createCurrentHook = require("./createCurrentHook");
-var _createCurrentHookDefault = parcelHelpers.interopDefault(_createCurrentHook);
-var _createDoingHook = require("./createDoingHook");
-var _createDoingHookDefault = parcelHelpers.interopDefault(_createDoingHook);
-var _createDidHook = require("./createDidHook");
-var _createDidHookDefault = parcelHelpers.interopDefault(_createDidHook);
-class _Hooks {
-    constructor(){
-        /** @type {import('.').Store} actions */ this.actions = Object.create(null);
-        this.actions.__current = [];
-        /** @type {import('.').Store} filters */ this.filters = Object.create(null);
-        this.filters.__current = [];
-        this.addAction = (0, _createAddHookDefault.default)(this, "actions");
-        this.addFilter = (0, _createAddHookDefault.default)(this, "filters");
-        this.removeAction = (0, _createRemoveHookDefault.default)(this, "actions");
-        this.removeFilter = (0, _createRemoveHookDefault.default)(this, "filters");
-        this.hasAction = (0, _createHasHookDefault.default)(this, "actions");
-        this.hasFilter = (0, _createHasHookDefault.default)(this, "filters");
-        this.removeAllActions = (0, _createRemoveHookDefault.default)(this, "actions", true);
-        this.removeAllFilters = (0, _createRemoveHookDefault.default)(this, "filters", true);
-        this.doAction = (0, _createRunHookDefault.default)(this, "actions");
-        this.applyFilters = (0, _createRunHookDefault.default)(this, "filters", true);
-        this.currentAction = (0, _createCurrentHookDefault.default)(this, "actions");
-        this.currentFilter = (0, _createCurrentHookDefault.default)(this, "filters");
-        this.doingAction = (0, _createDoingHookDefault.default)(this, "actions");
-        this.doingFilter = (0, _createDoingHookDefault.default)(this, "filters");
-        this.didAction = (0, _createDidHookDefault.default)(this, "actions");
-        this.didFilter = (0, _createDidHookDefault.default)(this, "filters");
-    }
-}
-/** @typedef {_Hooks} Hooks */ /**
- * Returns an instance of the hooks object.
- *
- * @return {Hooks} A Hooks instance.
- */ function createHooks() {
-    return new _Hooks();
-}
-exports.default = createHooks;
-
-},{"./createAddHook":"8uq0x","./createRemoveHook":"5GhVG","./createHasHook":"apZQU","./createRunHook":"aU57G","./createCurrentHook":"99Xz5","./createDoingHook":"l2l8V","./createDidHook":"hSCQx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8uq0x":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _validateNamespaceJs = require("./validateNamespace.js");
-var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
-var _validateHookNameJs = require("./validateHookName.js");
-var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
-/**
- * @callback AddHook
- *
- * Adds the hook to the appropriate hooks container.
- *
- * @param {string}               hookName      Name of hook to add
- * @param {string}               namespace     The unique namespace identifying the callback in the form `vendor/plugin/function`.
- * @param {import('.').Callback} callback      Function to call when the hook is run
- * @param {number}               [priority=10] Priority of this hook
- */ /**
- * Returns a function which, when invoked, will add a hook.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {AddHook} Function that adds a new hook.
- */ function createAddHook(hooks, storeKey) {
-    return function addHook(hookName, namespace, callback, priority = 10) {
-        const hooksStore = hooks[storeKey];
-        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
-        if (!(0, _validateNamespaceJsDefault.default)(namespace)) return;
-        if ("function" !== typeof callback) {
-            // eslint-disable-next-line no-console
-            console.error("The hook callback must be a function.");
-            return;
-        }
-        // Validate numeric priority
-        if ("number" !== typeof priority) {
-            // eslint-disable-next-line no-console
-            console.error("If specified, the hook priority must be a number.");
-            return;
-        }
-        const handler = {
-            callback,
-            priority,
-            namespace
-        };
-        if (hooksStore[hookName]) {
-            // Find the correct insert index of the new hook.
-            const handlers = hooksStore[hookName].handlers;
-            /** @type {number} */ let i;
-            for(i = handlers.length; i > 0; i--){
-                if (priority >= handlers[i - 1].priority) break;
-            }
-            if (i === handlers.length) // If append, operate via direct assignment.
-            handlers[i] = handler;
-            else // Otherwise, insert before index via splice.
-            handlers.splice(i, 0, handler);
-            // We may also be currently executing this hook.  If the callback
-            // we're adding would come after the current callback, there's no
-            // problem; otherwise we need to increase the execution index of
-            // any other runs by 1 to account for the added element.
-            hooksStore.__current.forEach((hookInfo)=>{
-                if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex++;
-            });
-        } else // This is the first hook of its type.
-        hooksStore[hookName] = {
-            handlers: [
-                handler
-            ],
-            runs: 0
-        };
-        if (hookName !== "hookAdded") hooks.doAction("hookAdded", hookName, namespace, callback, priority);
-    };
-}
-exports.default = createAddHook;
-
-},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5RkL7":[function(require,module,exports) {
-/**
- * Validate a namespace string.
- *
- * @param {string} namespace The namespace to validate - should take the form
- *                           `vendor/plugin/function`.
- *
- * @return {boolean} Whether the namespace is valid.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function validateNamespace(namespace) {
-    if ("string" !== typeof namespace || "" === namespace) {
-        // eslint-disable-next-line no-console
-        console.error("The namespace must be a non-empty string.");
-        return false;
-    }
-    if (!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(namespace)) {
-        // eslint-disable-next-line no-console
-        console.error("The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.");
-        return false;
-    }
-    return true;
-}
-exports.default = validateNamespace;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dkyGe":[function(require,module,exports) {
-/**
- * Validate a hookName string.
- *
- * @param {string} hookName The hook name to validate. Should be a non empty string containing
- *                          only numbers, letters, dashes, periods and underscores. Also,
- *                          the hook name cannot begin with `__`.
- *
- * @return {boolean} Whether the hook name is valid.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function validateHookName(hookName) {
-    if ("string" !== typeof hookName || "" === hookName) {
-        // eslint-disable-next-line no-console
-        console.error("The hook name must be a non-empty string.");
-        return false;
-    }
-    if (/^__/.test(hookName)) {
-        // eslint-disable-next-line no-console
-        console.error("The hook name cannot begin with `__`.");
-        return false;
-    }
-    if (!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(hookName)) {
-        // eslint-disable-next-line no-console
-        console.error("The hook name can only contain numbers, letters, dashes, periods and underscores.");
-        return false;
-    }
-    return true;
-}
-exports.default = validateHookName;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5GhVG":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _validateNamespaceJs = require("./validateNamespace.js");
-var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
-var _validateHookNameJs = require("./validateHookName.js");
-var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
-/**
- * @callback RemoveHook
- * Removes the specified callback (or all callbacks) from the hook with a given hookName
- * and namespace.
- *
- * @param {string} hookName  The name of the hook to modify.
- * @param {string} namespace The unique namespace identifying the callback in the
- *                           form `vendor/plugin/function`.
- *
- * @return {number | undefined} The number of callbacks removed.
- */ /**
- * Returns a function which, when invoked, will remove a specified hook or all
- * hooks by the given name.
- *
- * @param {import('.').Hooks}    hooks             Hooks instance.
- * @param {import('.').StoreKey} storeKey
- * @param {boolean}              [removeAll=false] Whether to remove all callbacks for a hookName,
- *                                                 without regard to namespace. Used to create
- *                                                 `removeAll*` functions.
- *
- * @return {RemoveHook} Function that removes hooks.
- */ function createRemoveHook(hooks, storeKey, removeAll = false) {
-    return function removeHook(hookName, namespace) {
-        const hooksStore = hooks[storeKey];
-        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
-        if (!removeAll && !(0, _validateNamespaceJsDefault.default)(namespace)) return;
-        // Bail if no hooks exist by this name.
-        if (!hooksStore[hookName]) return 0;
-        let handlersRemoved = 0;
-        if (removeAll) {
-            handlersRemoved = hooksStore[hookName].handlers.length;
-            hooksStore[hookName] = {
-                runs: hooksStore[hookName].runs,
-                handlers: []
-            };
-        } else {
-            // Try to find the specified callback to remove.
-            const handlers = hooksStore[hookName].handlers;
-            for(let i = handlers.length - 1; i >= 0; i--)if (handlers[i].namespace === namespace) {
-                handlers.splice(i, 1);
-                handlersRemoved++;
-                // This callback may also be part of a hook that is
-                // currently executing.  If the callback we're removing
-                // comes after the current callback, there's no problem;
-                // otherwise we need to decrease the execution index of any
-                // other runs by 1 to account for the removed element.
-                hooksStore.__current.forEach((hookInfo)=>{
-                    if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex--;
-                });
-            }
-        }
-        if (hookName !== "hookRemoved") hooks.doAction("hookRemoved", hookName, namespace);
-        return handlersRemoved;
-    };
-}
-exports.default = createRemoveHook;
-
-},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"apZQU":[function(require,module,exports) {
-/**
- * @callback HasHook
- *
- * Returns whether any handlers are attached for the given hookName and optional namespace.
- *
- * @param {string} hookName    The name of the hook to check for.
- * @param {string} [namespace] Optional. The unique namespace identifying the callback
- *                             in the form `vendor/plugin/function`.
- *
- * @return {boolean} Whether there are handlers that are attached to the given hook.
- */ /**
- * Returns a function which, when invoked, will return whether any handlers are
- * attached to a particular hook.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {HasHook} Function that returns whether any handlers are
- *                   attached to a particular hook and optional namespace.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createHasHook(hooks, storeKey) {
-    return function hasHook(hookName, namespace) {
-        const hooksStore = hooks[storeKey];
-        // Use the namespace if provided.
-        if ("undefined" !== typeof namespace) return hookName in hooksStore && hooksStore[hookName].handlers.some((hook)=>hook.namespace === namespace);
-        return hookName in hooksStore;
-    };
-}
-exports.default = createHasHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aU57G":[function(require,module,exports) {
-/**
- * Returns a function which, when invoked, will execute all callbacks
- * registered to a hook of the specified type, optionally returning the final
- * value of the call chain.
- *
- * @param {import('.').Hooks}    hooks                  Hooks instance.
- * @param {import('.').StoreKey} storeKey
- * @param {boolean}              [returnFirstArg=false] Whether each hook callback is expected to
- *                                                      return its first argument.
- *
- * @return {(hookName:string, ...args: unknown[]) => undefined|unknown} Function that runs hook callbacks.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createRunHook(hooks, storeKey, returnFirstArg = false) {
-    return function runHooks(hookName, ...args) {
-        const hooksStore = hooks[storeKey];
-        if (!hooksStore[hookName]) hooksStore[hookName] = {
-            handlers: [],
-            runs: 0
-        };
-        hooksStore[hookName].runs++;
-        const handlers = hooksStore[hookName].handlers;
-        // Handle any 'all' hooks registered.
-        if ("hookAdded" !== hookName && hooksStore.all) handlers.push(...hooksStore.all.handlers);
-        if (!handlers || !handlers.length) return returnFirstArg ? args[0] : undefined;
-        const hookInfo = {
-            name: hookName,
-            currentIndex: 0
-        };
-        hooksStore.__current.push(hookInfo);
-        while(hookInfo.currentIndex < handlers.length){
-            const handler = handlers[hookInfo.currentIndex];
-            const result = handler.callback.apply(null, args);
-            if (returnFirstArg) args[0] = result;
-            hookInfo.currentIndex++;
-        }
-        hooksStore.__current.pop();
-        if (returnFirstArg) return args[0];
-        return undefined;
-    };
-}
-exports.default = createRunHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"99Xz5":[function(require,module,exports) {
-/**
- * Returns a function which, when invoked, will return the name of the
- * currently running hook, or `null` if no hook of the given type is currently
- * running.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {() => string | null} Function that returns the current hook name or null.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createCurrentHook(hooks, storeKey) {
-    return function currentHook() {
-        var _hooksStore$__current;
-        const hooksStore = hooks[storeKey];
-        return (_hooksStore$__current = hooksStore.__current[hooksStore.__current.length - 1]?.name) !== null && _hooksStore$__current !== void 0 ? _hooksStore$__current : null;
-    };
-}
-exports.default = createCurrentHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l2l8V":[function(require,module,exports) {
-/**
- * @callback DoingHook
- * Returns whether a hook is currently being executed.
- *
- * @param {string} [hookName] The name of the hook to check for.  If
- *                            omitted, will check for any hook being executed.
- *
- * @return {boolean} Whether the hook is being executed.
- */ /**
- * Returns a function which, when invoked, will return whether a hook is
- * currently being executed.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {DoingHook} Function that returns whether a hook is currently
- *                     being executed.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createDoingHook(hooks, storeKey) {
-    return function doingHook(hookName) {
-        const hooksStore = hooks[storeKey];
-        // If the hookName was not passed, check for any current hook.
-        if ("undefined" === typeof hookName) return "undefined" !== typeof hooksStore.__current[0];
-        // Return the __current hook.
-        return hooksStore.__current[0] ? hookName === hooksStore.__current[0].name : false;
-    };
-}
-exports.default = createDoingHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hSCQx":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _validateHookNameJs = require("./validateHookName.js");
-var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
-/**
- * @callback DidHook
- *
- * Returns the number of times an action has been fired.
- *
- * @param {string} hookName The hook name to check.
- *
- * @return {number | undefined} The number of times the hook has run.
- */ /**
- * Returns a function which, when invoked, will return the number of times a
- * hook has been called.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {DidHook} Function that returns a hook's call count.
- */ function createDidHook(hooks, storeKey) {
-    return function didHook(hookName) {
-        const hooksStore = hooks[storeKey];
-        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
-        return hooksStore[hookName] && hooksStore[hookName].runs ? hooksStore[hookName].runs : 0;
-    };
-}
-exports.default = createDidHook;
-
-},{"./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cbTU3":[function(require,module,exports) {
+},{"24ba1e58d167a82c":"jZTZJ","898bc82f39d83f7c":"fqKuf"}],"cbTU3":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -35937,6 +35706,7 @@ function _interopRequireDefault(obj) {
 // eslint-disable-next-line no-unused-vars
 /**
  * Button types.
+ *
  * @type {Object}
  */ var BUTTON_TYPES = exports.BUTTON_TYPES = {
     NEGATIVE: "negative",
@@ -35945,12 +35715,12 @@ function _interopRequireDefault(obj) {
 /**
  * Menu button component.
  *
- * @param {Object} props component properties
- * @param {String} props.title button title
+ * @param {Object}   props                         component properties
+ * @param {string}   props.title                   button title
  * @param {Function} [props.onClickHandler=()=>{}] click callback
- * @param {Boolean} [props.status=false] enabled status
- * @param {String} [props.type='negative'] button type
- * @constructor
+ * @param {boolean}  [props.status=false]          enabled status
+ * @param {string}   [props.type='negative']       button type
+ * @class
  */ function MenuButton(_ref) {
     var title = _ref.title, _ref$onClickHandler = _ref.onClickHandler, onClickHandler = _ref$onClickHandler === void 0 ? function() {} : _ref$onClickHandler, _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status, _ref$type = _ref.type, type = _ref$type === void 0 ? BUTTON_TYPES.NEGATIVE : _ref$type;
     var typeClass = function typeClass() {
@@ -35995,10 +35765,10 @@ function _interopRequireDefault(obj) {
 /**
  * Portal component.
  *
- * @param {Object} props component properties
+ * @param {Object}            props          component properties
  * @param {React.ElementType} props.children component children
- * @param {Element} props.target portal parent
- * @constructor
+ * @param {Element}           props.target   portal parent
+ * @class
  */ function Portal(_ref) {
     var children = _ref.children, target = _ref.target;
     return /*#__PURE__*/ (0, _reactDom.createPortal)(children, target);
@@ -36013,20 +35783,25 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.toggleBlockStatus = exports.rollbackToVersion = void 0;
-var _assets = require("4198c81d530cb024");
-var _versionControl = require("a0e796494feca4ed");
-var _i18n = require("d87574727c29f9de");
+var _assets = require("48e349588f046c5f");
+var _versionControl = require("a85ccb0efb87f164");
 /**
  * Toggle block status.
+ *
  * @param {Function} dispatch store action dispatch function
  * @param {Function} getState store state selection function
  * @return {Function} action function
  */ var toggleBlockStatus = exports.toggleBlockStatus = function toggleBlockStatus(dispatch, getState) {
     return function(blockId, status) {
-        var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfo = _getAjaxInfo.toggleStatus;
-        var url = ajaxInfo.url, action = ajaxInfo.action, nonce = ajaxInfo.nonce;
+        var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfoSub = _getAjaxInfo.toggleStatus;
+        var url = ajaxInfoSub.url, action = ajaxInfoSub.action, nonce = ajaxInfoSub.nonce;
+        if (!Array.isArray(blockId)) blockId = [
+            blockId
+        ];
         var formData = new FormData();
-        formData.append("block_name", blockId);
+        blockId.map(function(bId) {
+            return formData.append("block_name[]", bId);
+        });
         formData.append("enable", JSON.stringify(status));
         formData.append("action", action);
         formData.append("_wpnonce", nonce);
@@ -36038,6 +35813,7 @@ var _i18n = require("d87574727c29f9de");
 };
 /**
  * Rollback plugin version.
+ *
  * @param {Function} dispatch store action dispatch function
  * @param {Function} getState store state selection function
  * @return {Function} action function
@@ -36060,38 +35836,7 @@ var _i18n = require("d87574727c29f9de");
     };
 };
 
-},{"4198c81d530cb024":"9SnHn","a0e796494feca4ed":"6jcRk","d87574727c29f9de":"7CyoE"}],"12F8G":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
-var _Router = _interopRequireDefault(require("9a2d6d0dc41c85c9"));
-var _Route = _interopRequireDefault(require("b127fa1ad03743f5"));
-var _MainContent = _interopRequireDefault(require("586edf6230ca7ca"));
-var _ProContent = _interopRequireDefault(require("e28b8717567bcc24"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Contents of menu page.
- *
- * @function Object() { [native code] }
- */ function Content() {
-    return /*#__PURE__*/ _react["default"].createElement(_Router["default"], null, /*#__PURE__*/ _react["default"].createElement(_Route["default"], {
-        pageParameter: "ultimate-blocks-settings"
-    }, /*#__PURE__*/ _react["default"].createElement(_MainContent["default"], null)), /*#__PURE__*/ _react["default"].createElement(_Route["default"], {
-        pageParameter: "ultimate-blocks-settings-pro"
-    }, /*#__PURE__*/ _react["default"].createElement(_ProContent["default"], null)));
-}
-/**
- * @module Content
- */ var _default = exports["default"] = Content;
-
-},{"65d54e961bcb15b7":"21dqq","9a2d6d0dc41c85c9":"35sjN","b127fa1ad03743f5":"cGcnR","586edf6230ca7ca":"iXkyr","e28b8717567bcc24":"8s4i0"}],"35sjN":[function(require,module,exports) {
+},{"48e349588f046c5f":"9SnHn","a85ccb0efb87f164":"6jcRk"}],"lUMLC":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -36105,8 +35850,85 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("7733be7f93cb4ab5"));
-var _Route = _interopRequireDefault(require("9b98b9a0b18edc23"));
+var _react = _interopRequireWildcard(require("f952e3330057bbdf"));
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+/**
+ * Header version info.
+ *
+ * @param {Object}        props                   component properties
+ * @param {string}        props.currentVersion    current version number
+ * @param {Array<string>} props.availableVersions available versions
+ * @param {Function}      props.onSelect          callback for version select event
+ * @class
+ */ function HeaderVersionInfo(_ref) {
+    var currentVersion = _ref.currentVersion, availableVersions = _ref.availableVersions, onSelect = _ref.onSelect;
+    var availableVersionsMinusCurrent = (0, _react.useMemo)(function() {
+        return availableVersions.filter(function(version) {
+            return version !== currentVersion;
+        });
+    }, [
+        availableVersions
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-header-version-info"
+    }, /*#__PURE__*/ _react["default"].createElement("select", {
+        value: currentVersion,
+        onChange: function onChange(e) {
+            return onSelect(e.target.value);
+        }
+    }, /*#__PURE__*/ _react["default"].createElement("option", {
+        disabled: true,
+        value: currentVersion
+    }, currentVersion), availableVersionsMinusCurrent.map(function(version) {
+        return /*#__PURE__*/ _react["default"].createElement("option", {
+            key: version,
+            value: version
+        }, version);
+    })));
+}
+/**
+ * @module HeaderVersionInfo
+ */ var _default = exports["default"] = HeaderVersionInfo;
+
+},{"f952e3330057bbdf":"21dqq"}],"26KBK":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("7a2a9df7dd1b261f"));
+var _Route = _interopRequireDefault(require("36d201ab1b1724f9"));
+var _NavigationHeaderButton = _interopRequireDefault(require("a76f8143b8f4b019"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36178,248 +36000,1584 @@ function _iterableToArrayLimit(r, l) {
 function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
 }
-// use global hook methods to broadcast and listen events on document level
-var applyFilters = wp.hooks.applyFilters;
 /**
- * Router for different menu content.
+ * Navigation component.
  *
- * Router children components should be Route components. Else those will who are not will be ignored.
- *
- * @param {Object}               props          component properties
- * @param {Array<Route> | Route} props.children component route children
- */ function Router(_ref) {
-    var children = _ref.children;
-    var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), CurrentRouteContent = _useState2[0], setCurrentRouteContent = _useState2[1];
-    // url search parameter for page property
-    var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), currentPageParameter = _useState4[0], setCurrentPageParameter = _useState4[1];
-    // filtered route children only consists of Route components
-    var _useState5 = (0, _react.useState)([]), _useState6 = _slicedToArray(_useState5, 2), routeChildren = _useState6[0], setRouteChildren = _useState6[1];
+ * @param {Object}        props                  component properties
+ * @param {Array<Route>}  props.routes           routes array
+ * @param {string | null} props.currentRoutePath current route path
+ * @param {Function}      props.setRoute         set route path
+ * @class
+ */ function Navigation(_ref) {
+    var routes = _ref.routes, currentRoutePath = _ref.currentRoutePath, setRoute = _ref.setRoute;
+    var _useState = (0, _react.useState)({}), _useState2 = _slicedToArray(_useState, 2), calculatedStyle = _useState2[0], setCalculatedStyles = _useState2[1];
     /**
    * useEffect hook.
    */ (0, _react.useEffect)(function() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var page = urlParams.get("page");
-        setCurrentPageParameter(page);
-    }, []);
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        var filteredChildren = _react["default"].Children.toArray(children).filter(function(child) {
-            return child.type === _Route["default"];
+        var style = {
+            gridTemplateColumns: "repeat(".concat(routes.length, ", minmax(0,1fr))")
+        };
+        setCalculatedStyles(style);
+    }, [
+        routes
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        style: calculatedStyle,
+        className: "ub-menu-navigation"
+    }, routes.map(function(routeObj) {
+        return /*#__PURE__*/ _react["default"].createElement(_NavigationHeaderButton["default"], {
+            key: routeObj.getPath(),
+            title: routeObj.getTitle(),
+            targetPath: routeObj.getPath(),
+            isActive: currentRoutePath === routeObj.getPath(),
+            onClickHandler: setRoute
         });
-        setRouteChildren(filteredChildren);
-    }, [
-        children
-    ]);
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        var matchedRouteContent = routeChildren.reduce(function(carry, RouteInstance) {
-            var _RouteInstance$props;
-            if ((RouteInstance === null || RouteInstance === void 0 || (_RouteInstance$props = RouteInstance.props) === null || _RouteInstance$props === void 0 ? void 0 : _RouteInstance$props.pageParameter) === currentPageParameter) {
-                var _RouteInstance$props2;
-                carry = RouteInstance === null || RouteInstance === void 0 || (_RouteInstance$props2 = RouteInstance.props) === null || _RouteInstance$props2 === void 0 ? void 0 : _RouteInstance$props2.children;
-            }
-            return carry;
-        }, null);
-        // filter matched route content
-        var finalMatchedRoute = applyFilters("ubSettingsMenuRouteMatched", matchedRouteContent, currentPageParameter);
-        setCurrentRouteContent(finalMatchedRoute);
-    }, [
-        currentPageParameter,
-        routeChildren
-    ]);
-    return CurrentRouteContent;
+    }));
 }
 /**
- * @module Router
- */ var _default = exports["default"] = Router;
+ * @module Navigation
+ */ var _default = exports["default"] = Navigation;
 
-},{"7733be7f93cb4ab5":"21dqq","9b98b9a0b18edc23":"cGcnR"}],"cGcnR":[function(require,module,exports) {
+},{"7a2a9df7dd1b261f":"21dqq","36d201ab1b1724f9":"1QB0k","a76f8143b8f4b019":"fSOK5"}],"1QB0k":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("65a9f2b8e9f9eaf2"));
+exports.generateRouteArray = exports.defaultRouteOptions = exports["default"] = void 0;
+var _react = _interopRequireDefault(require("5d270e18e6865843"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
-/**
- * @param {Object}                       props                      component properties
- * @param {Array | JSX.Element | string} props.children             component children
- * @param {string | null}                [props.pageParameter=null] url page search parameter related to this route
- */ function Route(_ref) {
-    var children = _ref.children, _ref$pageParameter = _ref.pageParameter, pageParameter = _ref$pageParameter === void 0 ? null : _ref$pageParameter;
-    return null;
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
 }
+function ownKeys(e, r) {
+    var t = Object.keys(e);
+    if (Object.getOwnPropertySymbols) {
+        var o = Object.getOwnPropertySymbols(e);
+        r && (o = o.filter(function(r) {
+            return Object.getOwnPropertyDescriptor(e, r).enumerable;
+        })), t.push.apply(t, o);
+    }
+    return t;
+}
+function _objectSpread(e) {
+    for(var r = 1; r < arguments.length; r++){
+        var t = null != arguments[r] ? arguments[r] : {};
+        r % 2 ? ownKeys(Object(t), !0).forEach(function(r) {
+            _defineProperty(e, r, t[r]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r) {
+            Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+        });
+    }
+    return e;
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
+/**
+ * Route default options.
+ *
+ * @type {Object}
+ */ var defaultRouteOptions = exports.defaultRouteOptions = {
+    path: null,
+    title: "no_title",
+    element: null
+};
+/**
+ * Route object.
+ *
+ * @param {Object} options route options
+ * @class
+ */ function Route(options) {
+    var _this = this;
+    var _defaultRouteOptions$ = _objectSpread(_objectSpread({}, defaultRouteOptions), options), path = _defaultRouteOptions$.path, title = _defaultRouteOptions$.title, element = _defaultRouteOptions$.element;
+    /**
+   * Get route path.
+   *
+   * @return {string} path
+   */ this.getPath = function() {
+        return path;
+    };
+    /**
+   * Get route title.
+   *
+   * @return {string} title
+   */ this.getTitle = function() {
+        return title;
+    };
+    /**
+   * Get route element.
+   *
+   * @return {Function} element
+   */ this.getElement = function() {
+        return element !== null && element !== void 0 ? element : /*#__PURE__*/ _react["default"].createElement("div", null, "no element defined for route [", _this.getPath(), "]");
+    };
+}
+/**
+ * Generate options array from settings objects.
+ *
+ * These settings objects should correspond to Route default options.
+ *
+ * @param {Array<Object>} optionsArray options array
+ * @return {Array<Route>} route object array
+ */ var generateRouteArray = exports.generateRouteArray = function generateRouteArray(optionsArray) {
+    return optionsArray.map(function(options) {
+        return new Route(options);
+    });
+};
 /**
  * @module Route
  */ var _default = exports["default"] = Route;
 
-},{"65a9f2b8e9f9eaf2":"21dqq"}],"iXkyr":[function(require,module,exports) {
+},{"5d270e18e6865843":"21dqq"}],"fSOK5":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("5d2ddbf58417e472"));
-var _MainContentPhrase = _interopRequireDefault(require("8ae3459855e11b74"));
-var _BlockStatusFilterControl = _interopRequireDefault(require("2e00797ed85de1fc"));
-var _app = require("6a858ee2b47a0742");
-var _withStore = _interopRequireDefault(require("ef9d048bd156dfff"));
-var _BlockControlsContainer = _interopRequireDefault(require("6c1c5810e800620a"));
-var _UpsellModalSettingsMenu = _interopRequireDefault(require("359c02ab072e372e"));
+var _react = _interopRequireDefault(require("d5e65879509d9405"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
 /**
- * Menu content component.
+ * Navigation header button component.
  *
- * @function Object() { [native code] }
- *
- * @param {Object}   props                     component properties
- * @param {string}   props.blockFilter         current block filter, will be supplied via HOC
- * @param {Function} props.setBlockFilterValue set block filter value for the app, will be supplied via HOC
- */ function MainContent(_ref) {
-    var blockFilter = _ref.blockFilter, setBlockFilterValue = _ref.setBlockFilterValue;
+ * @param {Object}   props                component properties
+ * @param {string}   props.title          button title
+ * @param {string}   props.targetPath     target path
+ * @param {Function} props.onClickHandler click handler, will call with targetPath as first argument
+ * @param {boolean}  props.isActive       button active status
+ * @class
+ */ function NavigationHeaderButton(_ref) {
+    var title = _ref.title, targetPath = _ref.targetPath, onClickHandler = _ref.onClickHandler, _ref$isActive = _ref.isActive, isActive = _ref$isActive === void 0 ? false : _ref$isActive;
+    var onClickHandlerDefault = function onClickHandlerDefault() {
+        return onClickHandler(targetPath);
+    };
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "menu-content"
-    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null), /*#__PURE__*/ _react["default"].createElement(_MainContentPhrase["default"], null), /*#__PURE__*/ _react["default"].createElement(_BlockStatusFilterControl["default"], {
-        filterVal: blockFilter,
-        onFilterChanged: setBlockFilterValue
-    }), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null));
+        "data-active": isActive,
+        "data-path": targetPath,
+        className: "ub-menu-navigation-header-button",
+        tabIndex: 0,
+        role: "button",
+        onClick: onClickHandlerDefault,
+        onKeyDown: onClickHandlerDefault
+    }, title);
 }
+/**
+ * @module NavigationHeaderButton
+ */ var _default = exports["default"] = NavigationHeaderButton;
+
+},{"d5e65879509d9405":"21dqq"}],"c1gPj":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.routeObjects = exports["default"] = void 0;
+var _react = _interopRequireDefault(require("25b7dff849a65078"));
+var _Route = _interopRequireWildcard(require("37e7e71bbe49bcb5"));
+var _WelcomeContent = _interopRequireDefault(require("40693d5dca3c0dce"));
+var _BlocksContent = _interopRequireDefault(require("f7b143816d73deb6"));
+var _ExtensionsContent = _interopRequireDefault(require("2c70358f23f9f0e4"));
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Routes for admin menu.
+ *
+ * Last route is reserved for 404 page.
+ *
+ * @type {Array} routes array
+ */ var routes = [
+    {
+        path: "welcome",
+        title: "Welcome",
+        element: /*#__PURE__*/ _react["default"].createElement(_WelcomeContent["default"], null)
+    },
+    {
+        path: "blocks",
+        title: "Blocks",
+        element: /*#__PURE__*/ _react["default"].createElement(_BlocksContent["default"], null)
+    },
+    {
+        path: "extensions",
+        title: "Extensions",
+        element: /*#__PURE__*/ _react["default"].createElement(_ExtensionsContent["default"], null)
+    },
+    {
+        path: "404",
+        title: "404",
+        element: /*#__PURE__*/ _react["default"].createElement("div", null, "404")
+    }
+];
+/**
+ * Generated route objects array.
+ *
+ * @type {Array<Route>}
+ */ var routeObjects = exports.routeObjects = (0, _Route.generateRouteArray)(routes);
+/**
+ * @module routes
+ */ var _default = exports["default"] = routes;
+
+},{"25b7dff849a65078":"21dqq","37e7e71bbe49bcb5":"1QB0k","40693d5dca3c0dce":"7iM5R","f7b143816d73deb6":"RcVav","2c70358f23f9f0e4":"33zwc"}],"7iM5R":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("dca961e5c4865530"));
+var _i18n = require("ebd9e2ab5aeb8851");
+var _BoxContentProvider = _interopRequireDefault(require("5f2023507ab10264"));
+var _BoxContent = require("a651961e91107bc2");
+var _YouTubeEmbed = _interopRequireDefault(require("6c04239ed429d27f"));
+var _ButtonLink = _interopRequireWildcard(require("3d8cac35ab8f5ccd"));
+var _ButtonLinkGroup = _interopRequireDefault(require("63cf395549eedb3"));
+var _UpgradeBoxContent = _interopRequireDefault(require("d289a1448b74b0aa"));
+var _AssetProvider = _interopRequireDefault(require("4fe8c31a75699a6e"));
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Welcome content component.
+ *
+ * @class
+ */ function WelcomeContent() {
+    return /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+        assetIds: [
+            "youtubeVideoId",
+            "documentsUrl",
+            "supportUrl",
+            "twitterUrl",
+            "facebookUrl",
+            "youtubeUrl"
+        ]
+    }, function(_ref) {
+        var youtubeVideoId = _ref.youtubeVideoId, documentsUrl = _ref.documentsUrl, supportUrl = _ref.supportUrl, twitterUrl = _ref.twitterUrl, facebookUrl = _ref.facebookUrl, youtubeUrl = _ref.youtubeUrl;
+        return /*#__PURE__*/ _react["default"].createElement("div", {
+            className: "ub-welcome-content"
+        }, /*#__PURE__*/ _react["default"].createElement("div", {
+            className: "ub-welcome-content__main"
+        }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            size: _BoxContent.BoxContentSize.JUMBO,
+            contentId: "welcome"
+        }, /*#__PURE__*/ _react["default"].createElement(_YouTubeEmbed["default"], {
+            height: 315,
+            videoId: youtubeVideoId
+        })), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], null)), /*#__PURE__*/ _react["default"].createElement("div", {
+            className: "ub-welcome-content__right-sidebar"
+        }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            contentId: "documentation"
+        }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: documentsUrl,
+            title: (0, _i18n.__)("Visit Documents", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.DEFAULT
+        })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            contentId: "support"
+        }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: supportUrl,
+            title: (0, _i18n.__)("Support Forum", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.DEFAULT
+        })), /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+            contentId: "community"
+        }, /*#__PURE__*/ _react["default"].createElement(_ButtonLinkGroup["default"], null, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: facebookUrl,
+            title: (0, _i18n.__)("Facebook", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.TEXT
+        }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: twitterUrl,
+            title: (0, _i18n.__)("Twitter", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.TEXT
+        }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: youtubeUrl,
+            title: (0, _i18n.__)("YouTube", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.TEXT
+        })))));
+    });
+}
+/**
+ * @module WelcomeContent
+ */ var _default = exports["default"] = WelcomeContent;
+
+},{"dca961e5c4865530":"21dqq","ebd9e2ab5aeb8851":"7CyoE","5f2023507ab10264":"cJGef","a651961e91107bc2":"6zPRs","6c04239ed429d27f":"bc7Se","3d8cac35ab8f5ccd":"dwYOq","63cf395549eedb3":"kKeXJ","d289a1448b74b0aa":"5Kpzy","4fe8c31a75699a6e":"jzub6"}],"cJGef":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("730e01bd5be97d72"));
+var _app = require("64466d1a627a4f4e");
+var _withStore = _interopRequireDefault(require("ab31c42385c46384"));
+var _BoxContent = _interopRequireDefault(require("ca0a15e451d0bd7e"));
+var _ContentNotFoundError = _interopRequireDefault(require("15b65ad0070fdb7f"));
+var _excluded = [
+    "contentId",
+    "getCData"
+];
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Box content provider component.
+ * Any BoxContent component property can be passed to this component. All will be reflected to generated one.
+ * Passing content related property will make this absolutely useless since it will be overwritten by fetched data.
+ *
+ * This component will fetch given data id from store and generate BoxContent component based on it.
+ *
+ * @param {Object} props                              component properties
+ * @param {string} props.contentId                    content id
+ * @param {string} [props.size=BoxContentSize.NORMAL] box content size
+ */ function BoxContentProvider(props) {
+    var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), contentTitle = _useState2[0], setTitle = _useState2[1];
+    var _useState3 = (0, _react.useState)(null), _useState4 = _slicedToArray(_useState3, 2), mainContent = _useState4[0], setContent = _useState4[1];
+    var _useState5 = (0, _react.useState)({}), _useState6 = _slicedToArray(_useState5, 2), rest = _useState6[0], setRest = _useState6[1];
+    var contentId = props.contentId, getCData = props.getCData, dataRest = _objectWithoutProperties(props, _excluded);
+    var cData = getCData(contentId);
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        if (cData) {
+            var title = cData.title, content = cData.content;
+            setTitle(title);
+            setContent(content);
+            setRest(dataRest);
+        } else throw new _ContentNotFoundError["default"](contentId);
+    }, []);
+    return /*#__PURE__*/ _react["default"].createElement(_BoxContent["default"], _extends({}, rest, {
+        title: contentTitle,
+        content: mainContent
+    }), props.children);
+}
+// store select mapping
 var selectMapping = function selectMapping(selector) {
     return {
-        blockFilter: selector(_app.getBlockFilter)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        setBlockFilterValue: _app.setBlockFilter
+        getCData: function getCData(contentId) {
+            return selector(function(state) {
+                return (0, _app.getContentData)(state, contentId);
+            });
+        }
     };
 };
 /**
- * @module MenuContent
- */ var _default = exports["default"] = (0, _withStore["default"])(MainContent, selectMapping, actionMapping);
+ * @module BoxContentProvider
+ */ var _default = exports["default"] = (0, _withStore["default"])(BoxContentProvider, selectMapping);
 
-},{"5d2ddbf58417e472":"21dqq","8ae3459855e11b74":"4cIcG","2e00797ed85de1fc":"hebBQ","6a858ee2b47a0742":"c28DV","ef9d048bd156dfff":"kWmDy","6c1c5810e800620a":"e69CO","359c02ab072e372e":"l7D5t"}],"4cIcG":[function(require,module,exports) {
+},{"730e01bd5be97d72":"21dqq","64466d1a627a4f4e":"c28DV","ab31c42385c46384":"kWmDy","ca0a15e451d0bd7e":"6zPRs","15b65ad0070fdb7f":"7XlRo"}],"c28DV":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("28e0584236cf3f46"));
-var _TextIndicate = _interopRequireDefault(require("4306d4d81d061f9c"));
-var _ContentPhrase = _interopRequireDefault(require("60dabfe10cad2e55"));
-var _LineWrapper = _interopRequireDefault(require("57fe786d24ada2bb"));
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setCurrentRoutePath = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getCurrentRoutePath = exports.getContentData = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+var _toolkit = require("ab983f5a897f990a");
+var _BlockStatusFilterControl = require("1825a520c0dd5d34");
+var _initialState = _interopRequireDefault(require("d3df904bb6381f74"));
+var _pluginStatus = require("8a1fbc2fa50671c");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
 /**
- * Content phrase component.
+ * App slice options
  *
- * @function Object() { [native code] }
- */ function MainContentPhrase() {
-    return /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Manage"), " Your", " ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Blocks"), " As"), /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, "Your ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Preferences")));
-}
+ * @type {Object}
+ */ var appSliceOptions = {
+    name: "app",
+    initialState: _initialState["default"].app,
+    reducers: {
+        /**
+     * Set current route path.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload route path
+     */ setCurrentRoutePath: function setCurrentRoutePath(state, _ref) {
+            var payload = _ref.payload;
+            state.router.current = payload;
+        },
+        /**
+     * Set current filter value.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload filter value
+     */ setBlockFilter: function setBlockFilter(state, _ref2) {
+            var payload = _ref2.payload;
+            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
+            else throw new Error("invalid block filter type supplied");
+        },
+        /**
+     * Toggle showing info section for block controls.
+     *
+     * @param {Object} state slice state
+     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
+            state.showBlockInfo = !state.showBlockInfo;
+        },
+        /**
+     * Show upsell modal for target block type.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload target block type
+     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref3) {
+            var payload = _ref3.payload;
+            state.upsellPopup.show = true;
+            state.upsellPopup.targetBlock = payload;
+        },
+        /**
+     * Hide upsell modal for target block type.
+     *
+     * @param {Object} state slice state
+     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
+            state.upsellPopup.show = false;
+            state.upsellPopup.targetBlock = null;
+        }
+    }
+};
+var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
+var _appSlice$actions = appSlice.actions, setBlockFilter = exports.setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = exports.toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = exports.showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = exports.hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal, setCurrentRoutePath = exports.setCurrentRoutePath = _appSlice$actions.setCurrentRoutePath;
 /**
- * @module MainContentPhrase
- */ var _default = exports["default"] = MainContentPhrase;
+ * Get all application options.
+ *
+ * @param {Object} state store state
+ * @return {Object} options
+ */ var getAllAppOptions = exports.getAllAppOptions = function getAllAppOptions(state) {
+    return state.app;
+};
+/* eslint-disable-next-line jsdoc/require-param */ /**
+ * Get content data.
+ */ var getContentData = exports.getContentData = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.app.content;
+    },
+    function(content, id) {
+        return id;
+    }
+], function(content, id) {
+    var _content$id;
+    return (_content$id = content[id]) !== null && _content$id !== void 0 ? _content$id : null;
+});
+/**
+ * Get current block filter.
+ *
+ * @param {Object} state store state
+ * @return {string} filter value
+ */ var getBlockFilter = exports.getBlockFilter = function getBlockFilter(state) {
+    return state.app.blockFilter;
+};
+/**
+ * Get block extra info show status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ var getBlockInfoShowStatus = exports.getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
+    return state.app.showBlockInfo;
+};
+/**
+ * Get plugin pro status.
+ *
+ * @deprecated
+ * use isPluginPro selector in pluginStatus slice for future implementations
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ var getProStatus = exports.getProStatus = function getProStatus(state) {
+    return (0, _pluginStatus.isPluginPro)(state);
+};
+/**
+ * Get target block type to show in modal.
+ *
+ * @param {Object} state store state
+ * @return {null | string} block type, null for no selected blocks
+ */ var getModalTargetBlockType = exports.getModalTargetBlockType = function getModalTargetBlockType(state) {
+    return state.app.upsellPopup.targetBlock;
+};
+/**
+ * Get modal visibility status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} visibility status
+ */ var getModalVisibilityStatus = exports.getModalVisibilityStatus = function getModalVisibilityStatus(state) {
+    return state.app.upsellPopup.show;
+};
+/**
+ * Get current route path.
+ *
+ * @param {Object} state store state
+ * @return {string | null} route path
+ */ var getCurrentRoutePath = exports.getCurrentRoutePath = function getCurrentRoutePath(state) {
+    return state.app.router.current;
+};
+/**
+ * @module appSlice
+ */ var _default = exports["default"] = appSlice.reducer;
 
-},{"28e0584236cf3f46":"21dqq","4306d4d81d061f9c":"3mATT","60dabfe10cad2e55":"fjblj","57fe786d24ada2bb":"20Yro"}],"3mATT":[function(require,module,exports) {
+},{"ab983f5a897f990a":"lL1Ef","1825a520c0dd5d34":"hebBQ","d3df904bb6381f74":"3xPpL","8a1fbc2fa50671c":"fi8Oa"}],"fi8Oa":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("c18f9f1ab85218de"));
+exports.isPluginPro = exports["default"] = void 0;
+var _initialState = _interopRequireDefault(require("ff3d5b2310f4f3d7"));
+var _toolkit = require("acd9b64a16908024");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
-// eslint-disable-next-line no-unused-vars
 /**
- * Component for indicating given text.
- * @param {Object} props component properties
- * @param {React.ElementType} children children
- * @constructor
- */ function TextIndicate(_ref) {
+ * Plugin status slice.
+ *
+ * @type {Object}
+ */ var pluginStatusSliceOptions = {
+    name: "pluginStatus",
+    initialState: _initialState["default"].pluginStatus,
+    reducers: {}
+};
+var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
+/**
+ * Get plugin pro status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} plugin pro status
+ */ var isPluginPro = exports.isPluginPro = function isPluginPro(state) {
+    return state.pluginStatus.isPro;
+};
+/**
+ * @module pluginStatusSlice
+ */ var _default = exports["default"] = pluginStatusSlice.reducer;
+
+},{"ff3d5b2310f4f3d7":"3xPpL","acd9b64a16908024":"lL1Ef"}],"6zPRs":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = exports.BoxContentSize = exports.BoxContentLayout = exports.BoxContentAlign = void 0;
+var _react = _interopRequireDefault(require("78103c840baf22d"));
+var _BoxContentTitle = _interopRequireDefault(require("9665c6054d483950"));
+var _BoxContentInc = _interopRequireDefault(require("c7520bcfa88347e3"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Box content layout types.
+ *
+ * @type {{VERTICAL: string, HORIZONTAL: string}}
+ */ var BoxContentLayout = exports.BoxContentLayout = {
+    HORIZONTAL: "horizontal",
+    VERTICAL: "vertical"
+};
+/**
+ * Box content size types.
+ *
+ * @type {{normal: string, JUMBO: string}}
+ */ var BoxContentSize = exports.BoxContentSize = {
+    JUMBO: "jumbo",
+    NORMAL: "normal"
+};
+/**
+ * Box content align types.
+ *
+ * @type {{CENTER: string, LEFT: string}}
+ */ var BoxContentAlign = exports.BoxContentAlign = {
+    LEFT: "left",
+    CENTER: "center"
+};
+/**
+ * Box content component.
+ *
+ * @param {Object}        props                                    component properties
+ * @param {string | null} props.title                              box title
+ * @param {string | null} props.content                            box content
+ * @param {string}        [props.layout=BoxContentLayout.VERTICAL] box layout, available values can be found in BoxContentLayout object
+ * @param {string}        [props.size=BoxContentLayout.NORMAL]     box size, available values can be found in BoxContentSize object
+ * @param {string}        [props.alignment=BoxContentAlign.LEFT]   box alignment, available values can be found in BoxContentAlign object
+ * @param {Function}      props.children                           component children
+ */ function BoxContent(_ref) {
+    var _ref$title = _ref.title, title = _ref$title === void 0 ? null : _ref$title, _ref$content = _ref.content, content = _ref$content === void 0 ? null : _ref$content, _ref$layout = _ref.layout, layout = _ref$layout === void 0 ? BoxContentLayout.VERTICAL : _ref$layout, _ref$size = _ref.size, size = _ref$size === void 0 ? BoxContentSize.NORMAL : _ref$size, _ref$alignment = _ref.alignment, alignment = _ref$alignment === void 0 ? BoxContentAlign.LEFT : _ref$alignment, children = _ref.children;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-box-content",
+        "data-layout": layout,
+        "data-size": size,
+        "data-alignment": alignment
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-box-content-title-inc-wrapper"
+    }, title && /*#__PURE__*/ _react["default"].createElement(_BoxContentTitle["default"], null, title), content && /*#__PURE__*/ _react["default"].createElement(_BoxContentInc["default"], null, content)), children && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-box-content-footer"
+    }, children));
+}
+/**
+ * @module BoxContent
+ */ var _default = exports["default"] = BoxContent;
+
+},{"78103c840baf22d":"21dqq","9665c6054d483950":"3DGhV","c7520bcfa88347e3":"kfGsH"}],"3DGhV":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("3fb3e9d5c9c35940"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Box content title component.
+ *
+ * @param {Object}            props          component properties
+ * @param {Function | string} props.children component children
+ * @class
+ */ function BoxContentTitle(_ref) {
     var children = _ref.children;
-    return /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "text-indicate"
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-box-content-title"
     }, children);
 }
 /**
- * @module TextIndicate
- */ var _default = exports["default"] = TextIndicate;
+ * @module BoxContentTitle
+ */ var _default = exports["default"] = BoxContentTitle;
 
-},{"c18f9f1ab85218de":"21dqq"}],"fjblj":[function(require,module,exports) {
+},{"3fb3e9d5c9c35940":"21dqq"}],"kfGsH":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("1e367e4f5689a5c7"));
+var _react = _interopRequireDefault(require("d372a6e72b3b4b4e"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
 /**
- * Content phrase component.
+ * Box content inc component.
  *
- * @param {Object}                       props          component properties
- * @param {JSX.Element | Array | string} props.children component children
- */ function ContentPhrase(_ref) {
+ * @param {Object}            props          component properties
+ * @param {Function | string} props.children component children
+ */ function BoxContentInc(_ref) {
     var children = _ref.children;
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "content-phrase"
-    }, children, " ");
+        className: "ub-box-content-inc"
+    }, children);
 }
 /**
- * @module ContentPhrase
- */ var _default = exports["default"] = ContentPhrase;
+ * @module BoxContentInc
+ */ var _default = exports["default"] = BoxContentInc;
 
-},{"1e367e4f5689a5c7":"21dqq"}],"20Yro":[function(require,module,exports) {
+},{"d372a6e72b3b4b4e":"21dqq"}],"7XlRo":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("18ce4d49cfa79fa0"));
+/**
+ * ContentNotFoundError error.
+ *
+ * @param {string} contentKey target not found content key
+ */ function ContentNotFoundError(contentKey) {
+    this.name = "ContentNotFoundError";
+    this.message = "Content not found for key: [".concat(contentKey, "]");
+}
+ContentNotFoundError.prototype = Object.create(Error.prototype);
+/**
+ * @module ContentNotFound
+ */ var _default = exports["default"] = ContentNotFoundError;
+
+},{}],"bc7Se":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("ad24d604b269b572"));
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * YouTube embed component.
+ *
+ * @param {Object}       props         component properties
+ * @param {string}       props.videoId video id
+ * @param {number |null} props.width   embed width
+ * @param {number |null} props.height  embed height
+ * @class
+ */ function YouTubeEmbed(_ref) {
+    var videoId = _ref.videoId, _ref$width = _ref.width, width = _ref$width === void 0 ? null : _ref$width, _ref$height = _ref.height, height = _ref$height === void 0 ? null : _ref$height;
+    var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), embedUrl = _useState2[0], setEmbedUrl = _useState2[1];
+    var defaults = {
+        width: "100",
+        height: "100"
+    };
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        var generatedEmbedUrl = "https://www.youtube.com/embed/".concat(videoId);
+        setEmbedUrl(generatedEmbedUrl);
+    }, []);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-youtube-embed"
+    }, /*#__PURE__*/ _react["default"].createElement("iframe", {
+        width: width || defaults.width,
+        height: height || defaults.height,
+        src: embedUrl,
+        title: "YouTube video player",
+        allow: "picture-in-picture; web-share; fullscreen"
+    }));
+}
+/**
+ * @module YouTubeEmbed
+ */ var _default = exports["default"] = YouTubeEmbed;
+
+},{"ad24d604b269b572":"21dqq"}],"dwYOq":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = exports.ButtonLinkType = void 0;
+var _react = _interopRequireWildcard(require("1a3b4cf49481b5b8"));
+var _ButtonLinkNoUrlError = _interopRequireDefault(require("8ac52384558a34b2"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+/**
+ * Button link type.
+ *
+ * @type {{TEXT: string, PRIMARY: string, DEFAULT: string}}
+ */ var ButtonLinkType = exports.ButtonLinkType = {
+    TEXT: "text",
+    DEFAULT: "default",
+    PRIMARY: "primary"
+};
+/**
+ * Button link component.
+ *
+ * @param {Object}   props                component properties
+ * @param {string}   props.url            target url
+ * @param {Function} props.onClickHandler click handler callback, if provided, url direction will be ignored
+ * @param {string}   props.type           button link type, should be one of ButtonLinkType object values
+ * @param {string}   props.title          button title
+ * @class
+ */ function ButtonLink(_ref) {
+    var title = _ref.title, _ref$url = _ref.url, url = _ref$url === void 0 ? null : _ref$url, _ref$onClickHandler = _ref.onClickHandler, onClickHandler = _ref$onClickHandler === void 0 ? null : _ref$onClickHandler, _ref$type = _ref.type, type = _ref$type === void 0 ? ButtonLinkType.DEFAULT : _ref$type;
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        if (!url && !onClickHandler) throw new _ButtonLinkNoUrlError["default"]();
+    }, []);
+    /**
+   * Redirect to component url.
+   */ var redirect = function redirect() {
+        window.open(url, "_blank");
+    };
+    /**
+   * Button clicked logic.
+   *
+   * @param {Event} e click event
+   */ var buttonClicked = function buttonClicked(e) {
+        if (onClickHandler && typeof onClickHandler === "function") onClickHandler(e);
+        else redirect();
+    };
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
+    _react["default"].createElement("div", {
+        className: "ub-button-link",
+        "data-buttonlink-type": type,
+        onClick: buttonClicked,
+        role: "button"
+    }, title));
+}
+/**
+ * @module ButtonLink
+ */ var _default = exports["default"] = ButtonLink;
+
+},{"1a3b4cf49481b5b8":"21dqq","8ac52384558a34b2":"7DSi2"}],"7DSi2":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+/**
+ * ButtonLinkNoUrlError.
+ */ function ButtonLinkNoUrlError() {
+    this.name = "ButtonLinkNoUrlError";
+    this.message = "No URL is provided for ButtonLink component.";
+}
+ButtonLinkNoUrlError.prototype = Object.create(Error.prototype);
+/**
+ * @module ContentNotFound
+ */ var _default = exports["default"] = ButtonLinkNoUrlError;
+
+},{}],"kKeXJ":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("6da5c65512b59431"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
 }
 /**
- * Line wrapper component.
+ * Button link group component.
  *
- * @param {Object}                       props          component properties
- * @param {JSX.Element | Array | string} props.children component children
- */ function LineWrapper(_ref) {
+ * @param {Object}   props          component properties
+ * @param {Function} props.children component children
+ * @class
+ */ function ButtonLinkGroup(_ref) {
     var children = _ref.children;
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "line-wrapper"
-    }, children, " ");
+        className: "ub-button-link-group"
+    }, children);
 }
 /**
- * @module LineWrapper
- */ var _default = exports["default"] = LineWrapper;
+ * @module ButtonLinkGroup
+ */ var _default = exports["default"] = ButtonLinkGroup;
 
-},{"18ce4d49cfa79fa0":"21dqq"}],"e69CO":[function(require,module,exports) {
+},{"6da5c65512b59431":"21dqq"}],"5Kpzy":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("480006c3894eb2e6"));
+var _BoxContentProvider = _interopRequireDefault(require("333b75359f8aeb24"));
+var _BoxContent = require("5fc542bc0160f31d");
+var _ButtonLink = _interopRequireWildcard(require("32c0cd98d40ea089"));
+var _ProFilter = _interopRequireDefault(require("e95e13826133d29b"));
+var _AssetProvider = _interopRequireDefault(require("9bd24491689bacad"));
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+/**
+ * Box content for upgrade.
+ *
+ * @param {Object} props component properties, will be reflected to BoxContentProvider
+ * @class
+ */ function UpgradeBoxContent(props) {
+    return /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+        assetIds: [
+            "proBuyUrl"
+        ]
+    }, function(_ref) {
+        var proBuyUrl = _ref.proBuyUrl;
+        return /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], {
+            invert: true
+        }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], _extends({
+            size: _BoxContent.BoxContentSize.JUMBO,
+            contentId: "upgrade"
+        }, props), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: proBuyUrl,
+            title: "GET ULTIMATE BLOCKS PRO",
+            type: _ButtonLink.ButtonLinkType.PRIMARY
+        })));
+    });
+}
+/**
+ * @module UpgradeBoxContent
+ */ var _default = exports["default"] = UpgradeBoxContent;
+
+},{"480006c3894eb2e6":"21dqq","333b75359f8aeb24":"cJGef","5fc542bc0160f31d":"6zPRs","32c0cd98d40ea089":"dwYOq","e95e13826133d29b":"gCmn9","9bd24491689bacad":"jzub6"}],"gCmn9":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = require("2055ed25896b5e32");
+var _pluginStatus = require("334986df8c04f427");
+var _withStore = _interopRequireDefault(require("d5fd30753a18d44e"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Component to filter its children based on pro version status of current plugin.
+ *
+ * @param {Object}                    props               component properties
+ * @param {boolean}                   props.proStatus     pro version status, will be supplied via HOC
+ * @param {Array | Function | string} props.children      component children
+ * @param {boolean}                   [props.invert=true] invert filter, if true, children will be rendered only if proStatus is false
+ * @class
+ */ function ProFilter(_ref) {
+    var proStatus = _ref.proStatus, children = _ref.children, _ref$invert = _ref.invert, invert = _ref$invert === void 0 ? true : _ref$invert;
+    var _useState = (0, _react.useState)(false), _useState2 = _slicedToArray(_useState, 2), finalStatus = _useState2[0], setFinalStatus = _useState2[1];
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        setFinalStatus(invert ? !proStatus : proStatus);
+    }, []);
+    return finalStatus && children;
+}
+// Store selection mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        proStatus: selector(_pluginStatus.isPluginPro)
+    };
+};
+/**
+ * @module ProFilter
+ */ var _default = exports["default"] = (0, _withStore["default"])(ProFilter, selectMapping);
+
+},{"2055ed25896b5e32":"21dqq","334986df8c04f427":"fi8Oa","d5fd30753a18d44e":"kWmDy"}],"jzub6":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _assets = require("a33127fabd6b590d");
+var _withStore = _interopRequireDefault(require("8187984263eaefeb"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Store asset provider.
+ *
+ * Component child should be a function that will be called with the asset object.
+ *
+ * @param {Object}   props               component properties
+ * @param {Function} props.children      children function, this function will be called with the asset object
+ * @param {Function} props.getStoreAsset store asset selector, will be supplied via HC
+ * @param {Array}    props.assetIds      array of asset ids to be fetched from data store
+ * @class
+ */ function AssetProvider(_ref) {
+    var children = _ref.children, getStoreAsset = _ref.getStoreAsset, _ref$assetIds = _ref.assetIds, assetIds = _ref$assetIds === void 0 ? [] : _ref$assetIds;
+    var assetObj = assetIds.reduce(function(acc, assetId) {
+        acc[assetId] = getStoreAsset(assetId);
+        return acc;
+    }, {});
+    return children(assetObj);
+}
+// store select mapping.
+var selectMapping = function selectMapping(select) {
+    return {
+        getStoreAsset: function getStoreAsset(assetId) {
+            return select(function(state) {
+                return (0, _assets.getAsset)(state, assetId);
+            });
+        }
+    };
+};
+/**
+ * @module AssetProvider
+ */ var _default = exports["default"] = (0, _withStore["default"])(AssetProvider, selectMapping);
+
+},{"a33127fabd6b590d":"9SnHn","8187984263eaefeb":"kWmDy"}],"RcVav":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("44b754e7f33ff5d6"));
+var _i18n = require("ccee3ff924ee68fd");
+var _BoxContentProvider = _interopRequireDefault(require("5d137a308a6dc4a1"));
+var _blocks = require("43840ff570ccb3b4");
+var _BoxContent = require("49772c2ff883b51c");
+var _ButtonLink = _interopRequireWildcard(require("1f27831d7ce0318c"));
+var _UpgradeBoxContent = _interopRequireDefault(require("8b5f61fe76b9467a"));
+var _BlockControlsContainer = _interopRequireDefault(require("840a3345d0cfd09"));
+var _withStore = _interopRequireDefault(require("8932a746af86836e"));
+var _actions = require("202bbd36af9d5464");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+/**
+ * Blocks content.
+ *
+ * @param {Object}   props                component properties
+ * @param {Array}    props.pluginBlocks   plugin blocks, will be supplied via HOC
+ * @param {Function} props.setBlockStatus set block status, will be supplied via HOC
+ * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
+ * @class
+ */ function BlocksContent(_ref) {
+    var pluginBlocks = _ref.pluginBlocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch;
+    var pluginBlockNames = (0, _react.useRef)(pluginBlocks.map(function(_ref2) {
+        var name = _ref2.name;
+        return name;
+    }));
+    /**
+   * Toggle status of all available blocks.
+   *
+   * @param {boolean} status status to set
+   */ var toggleAllBlockStatus = function toggleAllBlockStatus(status) {
+        dispatch(_actions.toggleBlockStatus)(pluginBlockNames.current, status);
+        pluginBlockNames.current.map(function(bName) {
+            return setBlockStatus({
+                id: bName,
+                status: status
+            });
+        });
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-blocks-content"
+    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        layout: _BoxContent.BoxContentLayout.HORIZONTAL,
+        contentId: "globalControl",
+        size: _BoxContent.BoxContentSize.JUMBO
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        onClickHandler: function onClickHandler() {
+            toggleAllBlockStatus(true);
+        },
+        type: _ButtonLink.ButtonLinkType.DEFAULT,
+        title: (0, _i18n.__)("Activate All")
+    }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        onClickHandler: function onClickHandler() {
+            toggleAllBlockStatus(false);
+        },
+        type: _ButtonLink.ButtonLinkType.DEFAULT,
+        title: (0, _i18n.__)("Deactivate All")
+    })), /*#__PURE__*/ _react["default"].createElement(_BlockControlsContainer["default"], null), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
+        alignment: _BoxContent.BoxContentAlign.CENTER
+    }));
+}
+// store select mapping
+var selectMapping = function selectMapping(select) {
+    return {
+        pluginBlocks: select(_blocks.getBlocks)
+    };
+};
+// store action mapping
+var actionMapping = function actionMapping() {
+    return {
+        setBlockStatus: _blocks.setBlockActiveStatus
+    };
+};
+/**
+ * @module BlocksContent
+ */ var _default = exports["default"] = (0, _withStore["default"])(BlocksContent, selectMapping, actionMapping);
+
+},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","43840ff570ccb3b4":"ohEvx","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"ohEvx":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
+var _toolkit = require("16834d59f055af3a");
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+/**
+ * Block slice options
+ *
+ * @type {Object}
+ */ var blocksSliceOptions = {
+    name: "blocks",
+    initialState: {
+        registered: []
+    },
+    reducers: {
+        /**
+     * Set active status of target block.
+     *
+     * @param {Object} state         store state
+     * @param {Object} props         action props
+     * @param {Object} props.payload action payload
+     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
+            var payload = _ref.payload;
+            var id = payload.id, status = payload.status;
+            var registered = state.registered;
+            var uRegistered = _toConsumableArray(registered);
+            var blockIndex = -1;
+            // eslint-disable-next-line array-callback-return
+            uRegistered.map(function(bObj, index) {
+                if (bObj.name === id) blockIndex = index;
+            });
+            if (blockIndex >= 0) {
+                uRegistered[blockIndex].active = status;
+                state.registered = uRegistered;
+            }
+        }
+    }
+};
+var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
+var setBlockActiveStatus = exports.setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
+/**
+ * Get registered plugin blocks.
+ *
+ * @param {Object} state store state
+ * @return {Array} blocks
+ */ var getBlocks = exports.getBlocks = function getBlocks(state) {
+    return state.blocks.registered;
+};
+/* eslint-disable-next-line jsdoc/require-param */ /**
+ * Get block object by given block type id.
+ */ var getBlockById = exports.getBlockById = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.blocks.registered;
+    },
+    function(registered, blockId) {
+        return blockId;
+    }
+], function(registered, blockId) {
+    return registered.find(function(_ref2) {
+        var name = _ref2.name;
+        return name === blockId;
+    });
+});
+/**
+ * @module blocksSlice
+ */ var _default = exports["default"] = blocksSlice.reducer;
+
+},{"16834d59f055af3a":"lL1Ef"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -36434,13 +37592,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("b5a991528cd4dfa6"));
-var _BlockControl = _interopRequireDefault(require("e07107cd8e40b547"));
-var _BlockStatusFilterControl = require("41e09f882ed3a36e");
-var _withStore = _interopRequireDefault(require("cff57247e47f94e0"));
-var _blocks = require("51bab9ad8cbd469f");
-var _app = require("26aa46f4e0966487");
-var _actions = require("8dc047c78d50bffc");
-var _VisibilityWrapper = _interopRequireDefault(require("299f2a282b479721"));
+var _BlockControlCard = _interopRequireDefault(require("b8e47630259305db"));
+var _withStore = _interopRequireDefault(require("7adeb056d10afe38"));
+var _blocks = require("c1f3bf0e02707627");
+var _app = require("83bf9ee8271dd581");
+var _actions = require("f9b48c87aedbb427");
+var _assets = require("8b4f97af1a44534f");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36531,14 +37688,18 @@ function _arrayWithHoles(arr) {
  *
  * @param {Object}   props                component properties
  * @param {Object}   props.blocks         menu data, will be supplied via HOC
- * @param {Object}   props.blockFilter    current filter for block status, will be supplied via HOC
  * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
+ * @param {Function} props.showUpsell     set target block type for modal interface
+ * @param {Object}   props.blockDemos     block demo urls, will be supplied via HOC
  */ function BlockControlsContainer(_ref) {
-    var blocks = _ref.blocks, blockFilter = _ref.blockFilter, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus;
+    var blocks = _ref.blocks, setBlockStatus = _ref.setBlockStatus, dispatch = _ref.dispatch, showInfoStatus = _ref.showInfoStatus, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell, blockDemos = _ref.blockDemos;
     var _useState = (0, _react.useState)(blocks), _useState2 = _slicedToArray(_useState, 2), innerBlocks = _useState2[0], setInnerBlocks = _useState2[1];
+    var getBlockDemo = function getBlockDemo(blockId) {
+        return blockDemos[blockId] ? blockDemos[blockId] : null;
+    };
     /**
    * Handle block status change.
    *
@@ -36577,40 +37738,42 @@ function _arrayWithHoles(arr) {
         "data-show-info": JSON.stringify(showInfoStatus)
     }, innerBlocks.map(function(_ref2) {
         var title = _ref2.title, name = _ref2.name, icon = _ref2.icon, active = _ref2.active, info = _ref2.info, pro = _ref2.pro;
-        var blockStatus = active ? _BlockStatusFilterControl.FILTER_TYPES.ENABLED : _BlockStatusFilterControl.FILTER_TYPES.DISABLED;
-        var visibilityStatus = blockFilter === _BlockStatusFilterControl.FILTER_TYPES.ALL ? true : blockStatus === blockFilter;
-        return /*#__PURE__*/ _react["default"].createElement(_VisibilityWrapper["default"], {
+        return /*#__PURE__*/ _react["default"].createElement(_BlockControlCard["default"], {
             key: name,
-            visibilityStatus: visibilityStatus
-        }, /*#__PURE__*/ _react["default"].createElement(_BlockControl["default"], {
             title: title,
             blockId: name,
             status: active,
             iconObject: icon,
             onStatusChange: handleBlockStatusChange(pro),
             info: info,
-            proBlock: pro
-        }));
+            proBlock: pro,
+            showUpsell: showUpsell,
+            proStatus: proStatus,
+            demoUrl: getBlockDemo(name)
+        });
     }));
 }
 var selectMapping = function selectMapping(selector) {
     return {
         blocks: selector(_blocks.getBlocks),
-        blockFilter: selector(_app.getBlockFilter),
         showInfoStatus: selector(_app.getBlockInfoShowStatus),
-        proStatus: selector(_app.getProStatus)
+        proStatus: selector(_app.getProStatus),
+        blockDemos: selector(function(state) {
+            return (0, _assets.getAsset)(state, "blockDemos");
+        })
     };
 };
 var actionMapping = function actionMapping() {
     return {
-        setBlockStatus: _blocks.setBlockActiveStatus
+        setBlockStatus: _blocks.setBlockActiveStatus,
+        showUpsell: _app.showProBlockUpsellModal
     };
 };
 /**
  * @module BlockControlsContainer
  */ var _default = exports["default"] = (0, _withStore["default"])(BlockControlsContainer, selectMapping, actionMapping);
 
-},{"b5a991528cd4dfa6":"21dqq","e07107cd8e40b547":"h5tMi","41e09f882ed3a36e":"hebBQ","cff57247e47f94e0":"kWmDy","51bab9ad8cbd469f":"ohEvx","26aa46f4e0966487":"c28DV","8dc047c78d50bffc":"g3gW2","299f2a282b479721":"azTGO"}],"h5tMi":[function(require,module,exports) {
+},{"b5a991528cd4dfa6":"21dqq","b8e47630259305db":"ejal0","7adeb056d10afe38":"kWmDy","c1f3bf0e02707627":"ohEvx","83bf9ee8271dd581":"c28DV","f9b48c87aedbb427":"g3gW2","8b4f97af1a44534f":"9SnHn"}],"ejal0":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -36624,14 +37787,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("9eede5ed96c6db50"));
-var _ToggleControl = _interopRequireDefault(require("1b0c26986e628874"));
-var _MenuButton = _interopRequireDefault(require("17219fdafae6194a"));
-var _withIcon = _interopRequireDefault(require("b72ddce4d4e282b6"));
-var _app = require("5b211ce3bfe7b54");
-var _withStore = _interopRequireDefault(require("52f11184f548186d"));
-var _ProBlockCardTitle = _interopRequireDefault(require("dbbae5f431af94c6"));
-var _BlockCardProInfoControl = _interopRequireDefault(require("227934c51c676839"));
+var _react = _interopRequireWildcard(require("f1179290dae9242c"));
+var _i18n = require("59be531fc8798449");
+var _ToggleControl = _interopRequireDefault(require("89dfa6c744ec7db7"));
+var _withIcon = _interopRequireDefault(require("29ed2e3a2621bd69"));
+var _ProBlockCardTitle = _interopRequireDefault(require("df9306f30da80384"));
+var _BlockCardProInfoControl = _interopRequireDefault(require("2b37ac68aa8fa84e"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -36660,49 +37821,6 @@ function _interopRequireWildcard(e, r) {
     }
     return n["default"] = e, t && t.set(e, n), n;
 }
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(r, l) {
-    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (null != t) {
-        var e, n, i, u, a = [], f = !0, o = !1;
-        try {
-            if (i = (t = t.call(r)).next, 0 === l) {
-                if (Object(t) !== t) return;
-                f = !1;
-            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-        } catch (r) {
-            o = !0, n = r;
-        } finally{
-            try {
-                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-            } finally{
-                if (o) throw n;
-            }
-        }
-        return a;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
 /**
  * Menu block control component.
  *
@@ -36710,82 +37828,42 @@ function _arrayWithHoles(arr) {
  *
  * @class
  *
- * @param {Object}      props                     component properties
- * @param {string}      props.title               block title
- * @param {string}      props.blockId             registry id of block
- * @param {boolean}     props.status              block status
- * @param {HTMLElement} props.iconElement         icon element, will be supplied via HOC
- * @param {Function}    props.onStatusChange      callback for status change event
- * @param {Array}       props.info                information about block and its usage
- * @param {boolean}     props.blockInfoShowStatus block info show status, will be supplied via HOC
- * @param {boolean}     props.proBlock            block belongs to pro version
- * @param {boolean}     props.proStatus           plugin pro status, will be supplied via HOC
- * @param {Function}    props.showUpsell          set target block type for modal interface, will be supplied via HOC
- */ function BlockControl(_ref) {
-    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, onStatusChange = _ref.onStatusChange, info = _ref.info, blockInfoShowStatus = _ref.blockInfoShowStatus, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell;
-    var initialRender = (0, _react.useRef)(true);
+ * @param {Object}        props                component properties
+ * @param {string}        props.title          block title
+ * @param {string}        props.blockId        registry id of block
+ * @param {boolean}       props.status         block status
+ * @param {HTMLElement}   props.iconElement    icon element, will be supplied via HOC
+ * @param {Function}      props.onStatusChange callback for status change event
+ * @param {boolean}       props.proBlock       block belongs to pro version
+ * @param {boolean}       props.proStatus      plugin pro status
+ * @param {Function}      props.showUpsell     set target block type for modal interface
+ * @param {string | null} [props.demoUrl=null] demo url for block
+ */ function BlockControlCard(_ref) {
+    var title = _ref.title, blockId = _ref.blockId, status = _ref.status, iconElement = _ref.iconElement, _onStatusChange = _ref.onStatusChange, proBlock = _ref.proBlock, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell, _ref$demoUrl = _ref.demoUrl, demoUrl = _ref$demoUrl === void 0 ? null : _ref$demoUrl;
     var initialAnimation = (0, _react.useRef)(true);
-    var _useState = (0, _react.useState)(status === undefined ? false : status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    var _useState3 = (0, _react.useState)({}), _useState4 = _slicedToArray(_useState3, 2), blockStyle = _useState4[0], setBlockStyle = _useState4[1];
-    var _useState5 = (0, _react.useState)(0), _useState6 = _slicedToArray(_useState5, 2), headerHeight = _useState6[0], setHeaderHeight = _useState6[1];
-    var headerRef = (0, _react.useRef)();
-    /* useEffect block */ (0, _react.useEffect)(function() {
-        var _headerRef$current$ge = headerRef.current.getBoundingClientRect(), height = _headerRef$current$ge.height;
-        setHeaderHeight(height);
-    }, []);
-    (0, _react.useEffect)(function() {
-        setBlockStyle({
-            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
-        });
-    }, [
-        headerHeight
-    ]);
-    (0, _react.useEffect)(function() {
-        if (proBlock && !proStatus) setInnerStatus(false);
-    }, [
-        innerStatus
-    ]);
-    (0, _react.useEffect)(function() {
-        setBlockStyle({
-            height: blockInfoShowStatus ? "" : "".concat(headerHeight, "px")
-        });
-        return function() {
-            if (blockInfoShowStatus !== undefined) initialAnimation.current = false;
-        };
-    }, [
-        blockInfoShowStatus
-    ]);
-    (0, _react.useEffect)(function() {
-        if (initialRender.current) initialRender.current = false;
-        else onStatusChange(blockId, innerStatus);
-    }, [
-        innerStatus
-    ]);
-    /* useEffect block end */ var howToUse = null;
-    /**
-   * Main visibility calculation for how to use button.
-   *
-   * @return {boolean} visibility status
-   */ var howToUseVisibility = function howToUseVisibility() {
-        return howToUse !== null;
-    };
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        style: blockStyle,
         className: "block-control",
-        "data-enabled": JSON.stringify(innerStatus),
+        "data-enabled": JSON.stringify(proBlock && !proStatus ? false : status),
         "data-initial-animation": JSON.stringify(initialAnimation.current)
     }, /*#__PURE__*/ _react["default"].createElement("div", {
-        ref: headerRef,
         className: "block-title"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-title-left-container"
+        className: "block-title-left-container",
+        "data-demo": demoUrl !== null
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-icon"
-    }, iconElement), /*#__PURE__*/ _react["default"].createElement("span", {
+    }, iconElement), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "title-text"
     }, title, /*#__PURE__*/ _react["default"].createElement(_ProBlockCardTitle["default"], {
         isPro: proBlock
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
+    })), demoUrl && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-demo"
+    }, /*#__PURE__*/ _react["default"].createElement("a", {
+        href: demoUrl,
+        target: "_blank",
+        rel: "noreferrer",
+        className: "strip-anchor-styles"
+    }, (0, _i18n.__)("See Demo", "ultimate-blocks")))), /*#__PURE__*/ _react["default"].createElement("div", {
         className: "block-title-right-container"
     }, proBlock && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_BlockCardProInfoControl["default"], {
         handleClick: function handleClick(e) {
@@ -36793,40 +37871,18 @@ function _arrayWithHoles(arr) {
             showUpsell(blockId);
         }
     }) : /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
-        onStatusChange: setInnerStatus,
-        status: innerStatus,
+        onStatusChange: function onStatusChange(newStatus) {
+            return _onStatusChange(blockId, newStatus);
+        },
+        status: status,
         disabled: proBlock && !proStatus
-    }))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-info"
-    }, info.map(function(infoLine, index) {
-        return /*#__PURE__*/ _react["default"].createElement("div", {
-            className: "info-line",
-            key: index
-        }, infoLine[0].toUpperCase() + Array.from(infoLine).splice(1).join(""));
-    })), howToUseVisibility() && /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "block-howto"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuButton["default"], {
-        title: "How to Use",
-        status: howToUse !== null && innerStatus,
-        onClickHandler: howToUse
-    })));
+    }))));
 }
-var selectMapping = function selectMapping(select) {
-    return {
-        blockInfoShowStatus: select(_app.getBlockInfoShowStatus),
-        proStatus: select(_app.getProStatus)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        showUpsell: _app.showProBlockUpsellModal
-    };
-};
 /**
  * @module BlockControl
- */ var _default = exports["default"] = (0, _withStore["default"])((0, _withIcon["default"])(BlockControl), selectMapping, actionMapping);
+ */ var _default = exports["default"] = (0, _withIcon["default"])(BlockControlCard);
 
-},{"9eede5ed96c6db50":"21dqq","1b0c26986e628874":"a7r96","17219fdafae6194a":"cbTU3","b72ddce4d4e282b6":"l4uaA","5b211ce3bfe7b54":"c28DV","52f11184f548186d":"kWmDy","dbbae5f431af94c6":"jiOgy","227934c51c676839":"3ptTq"}],"a7r96":[function(require,module,exports) {
+},{"f1179290dae9242c":"21dqq","59be531fc8798449":"7CyoE","89dfa6c744ec7db7":"a7r96","29ed2e3a2621bd69":"l4uaA","df9306f30da80384":"jiOgy","2b37ac68aa8fa84e":"3ptTq"}],"a7r96":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -36864,49 +37920,7 @@ function _interopRequireWildcard(e, r) {
     }
     return n["default"] = e, t && t.set(e, n), n;
 }
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(r, l) {
-    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (null != t) {
-        var e, n, i, u, a = [], f = !0, o = !1;
-        try {
-            if (i = (t = t.call(r)).next, 0 === l) {
-                if (Object(t) !== t) return;
-                f = !1;
-            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-        } catch (r) {
-            o = !0, n = r;
-        } finally{
-            try {
-                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-            } finally{
-                if (o) throw n;
-            }
-        }
-        return a;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 /**
  * Toggle control component.
  *
@@ -36917,27 +37931,23 @@ function _arrayWithHoles(arr) {
  * @param {Function} props.onStatusChange status changed callback
  */ function ToggleControl(_ref) {
     var status = _ref.status, _ref$onStatusChange = _ref.onStatusChange, onStatusChange = _ref$onStatusChange === void 0 ? function() {} : _ref$onStatusChange, _ref$disabled = _ref.disabled, disabled = _ref$disabled === void 0 ? false : _ref$disabled;
-    var initialRender = (0, _react.useRef)(true);
-    var _useState = (0, _react.useState)(status), _useState2 = _slicedToArray(_useState, 2), innerStatus = _useState2[0], setInnerStatus = _useState2[1];
-    (0, _react.useEffect)(function() {
-        if (initialRender.current) initialRender.current = false;
-        else onStatusChange(innerStatus);
-    }, [
-        innerStatus
-    ]);
-    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    /**
+   * Click handler for toggle component.
+   */ var clickHandler = function clickHandler() {
+        if (!disabled) onStatusChange(!status);
+    };
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/interactive-supports-focus
     _react["default"].createElement("div", {
-        onClick: function onClick() {
-            if (!disabled) setInnerStatus(!innerStatus);
-        },
+        onClick: clickHandler,
         className: "ub-toggle-control",
-        "data-enabled": JSON.stringify(innerStatus)
+        "data-enabled": JSON.stringify(disabled || status),
+        role: "button"
     }, /*#__PURE__*/ _react["default"].createElement("div", {
         className: "knob"
     })));
 }
 /**
- * @module ToggleControl;
+ * @module ToggleControl
  */ var _default = exports["default"] = ToggleControl;
 
 },{"e3acc383ec34246":"21dqq"}],"l4uaA":[function(require,module,exports) {
@@ -37063,110 +38073,20 @@ function _interopRequireDefault(obj) {
  * @param {Function} props.handleClick click callback
  */ function BlockCardProInfoControl(_ref) {
     var handleClick = _ref.handleClick;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/interactive-supports-focus
+    _react["default"].createElement("div", {
+        role: "button",
         className: "pro-block-card-info-button",
         onClick: handleClick
     }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: "fa-solid fa-circle-info"
-    }));
+    })));
 }
 /**
  * @module BlockCardProInfoControl
  */ var _default = exports["default"] = BlockCardProInfoControl;
 
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"ohEvx":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
-var _toolkit = require("16834d59f055af3a");
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-/**
- * Block slice options
- *
- * @type {Object}
- */ var blocksSliceOptions = {
-    name: "blocks",
-    initialState: {
-        registered: []
-    },
-    reducers: {
-        /**
-     * Set active status of target block.
-     *
-     * @param {Object} state         store state
-     * @param {Object} props         action props
-     * @param {Object} props.payload action payload
-     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
-            var payload = _ref.payload;
-            var id = payload.id, status = payload.status;
-            var registered = state.registered;
-            var uRegistered = _toConsumableArray(registered);
-            var blockIndex = -1;
-            // eslint-disable-next-line array-callback-return
-            uRegistered.map(function(bObj, index) {
-                if (bObj.name === id) blockIndex = index;
-            });
-            if (blockIndex >= 0) {
-                uRegistered[blockIndex].active = status;
-                state.registered = uRegistered;
-            }
-        }
-    }
-};
-var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
-var setBlockActiveStatus = exports.setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
-/**
- * Get registered plugin blocks.
- *
- * @param {Object} state store state
- * @return {Array} blocks
- */ var getBlocks = exports.getBlocks = function getBlocks(state) {
-    return state.blocks.registered;
-};
-/**
- * Get block object by given block type id.
- *
- * @param {Object} state store state
- * @return {Object | undefined} block object or undefined if no target block is found
- */ var getBlockById = exports.getBlockById = function getBlockById(state) {
-    return function(blockId) {
-        return state.blocks.registered.find(function(_ref2) {
-            var name = _ref2.name;
-            return name === blockId;
-        });
-    };
-};
-/**
- * @module blocksSlice
- */ var _default = exports["default"] = blocksSlice.reducer;
-
-},{"16834d59f055af3a":"lL1Ef"}],"azTGO":[function(require,module,exports) {
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"33zwc":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -37180,7 +38100,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("97c658a0a38c9755"));
+var _react = _interopRequireWildcard(require("b68942abfa60c995"));
 function _getRequireWildcardCache(e) {
     if ("function" != typeof WeakMap) return null;
     var r = new WeakMap(), t = new WeakMap();
@@ -37204,46 +38124,437 @@ function _interopRequireWildcard(e, r) {
     }
     return n["default"] = e, t && t.set(e, n), n;
 }
-// eslint-disable-next-line no-unused-vars
-/**
- * Wrapper for handling visibility changes of its children.
- *
- * @param {Object} props component properties
- * @param {React.ElementType} props.children component children
- * @param {Boolean} props.visibilityStatus component visibility status
- *
- * @constructor
- */ function VisibilityWrapper(_ref) {
-    var children = _ref.children, visibilityStatus = _ref.visibilityStatus;
-    var wrapper = (0, _react.useRef)();
-    (0, _react.useEffect)(function() {
-        wrapper.current.addEventListener("animationend", function(_ref2) {
-            var animationName = _ref2.animationName;
-            wrapper.current.style.display = animationName === "disappear" ? "none" : "block";
-        });
-    }, []);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        ref: wrapper,
-        className: "visibility-wrapper",
-        "data-visible": JSON.stringify(visibilityStatus)
-    }, children);
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
 }
 /**
- * @module VisibilityWrapper
- */ var _default = exports["default"] = VisibilityWrapper;
+ * Extensions content component.
+ */ function ExtensionsContent() {
+    var _useState = (0, _react.useState)([
+        false,
+        false,
+        false
+    ]), _useState2 = _slicedToArray(_useState, 2), opacityMap = _useState2[0], setOpacityMap = _useState2[1];
+    var currentIndex = 0;
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        setInterval(function() {
+            opacityMap[currentIndex] = !opacityMap[currentIndex];
+            setOpacityMap(_toConsumableArray(opacityMap));
+            currentIndex = (currentIndex + 1) % opacityMap.length;
+        }, 200);
+    }, []);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-extensions-content"
+    }, /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "soon"
+    }, "Coming soon", opacityMap.map(function(dataVal, index) {
+        return /*#__PURE__*/ _react["default"].createElement("span", {
+            key: index,
+            "data-opacity": dataVal,
+            className: "just-a-dot"
+        }, ".");
+    })));
+}
+/**
+ * @module ExtensionsContent
+ */ var _default = exports["default"] = ExtensionsContent;
 
-},{"97c658a0a38c9755":"21dqq"}],"l7D5t":[function(require,module,exports) {
+},{"b68942abfa60c995":"21dqq"}],"gCgzB":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("1d07def39b714300"));
+var _reactFontawesome = require("5ae4c02c09b41c9b");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Hamburger menu component.
+ *
+ * @param {Object}   props              component properties
+ * @param {boolean}  props.status       menu status, whether it is open or not
+ * @param {Function} props.clickHandler click handler
+ * @param {string}   props.openIcon     open fontawesome icon
+ * @param {string}   props.closeIcon    close fontawesome icon
+ * @class
+ */ function HamburgerMenu(_ref) {
+    var _ref$status = _ref.status, status = _ref$status === void 0 ? false : _ref$status, clickHandler = _ref.clickHandler, _ref$openIcon = _ref.openIcon, openIcon = _ref$openIcon === void 0 ? "fa-solid fa-bars" : _ref$openIcon, _ref$closeIcon = _ref.closeIcon, closeIcon = _ref$closeIcon === void 0 ? "fa-solid fa-xmark" : _ref$closeIcon;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-hamburger-menu"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        tabIndex: 0,
+        onKeyDown: function onKeyDown(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                clickHandler();
+            }
+        },
+        role: "button",
+        className: "ub-hamburger-menu-icon-wrapper",
+        onClick: function onClick(e) {
+            e.preventDefault();
+            clickHandler();
+        }
+    }, !status ? /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-status": !status,
+        "data-menu-icon-id": "open"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: openIcon
+    })) : /*#__PURE__*/ _react["default"].createElement("div", {
+        "data-status": status,
+        "data-menu-icon-id": "close"
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: closeIcon
+    }))));
+}
+/**
+ * @module HamburgerMenu
+ */ var _default = exports["default"] = HamburgerMenu;
+
+},{"1d07def39b714300":"21dqq","5ae4c02c09b41c9b":"clIT3"}],"12F8G":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("65d54e961bcb15b7"));
+var _Router = _interopRequireDefault(require("8de1b2cbd2501a64"));
+var _RouterProvider = _interopRequireDefault(require("cdba635777f5a2b1"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Contents of menu page.
+ */ function Content() {
+    return /*#__PURE__*/ _react["default"].createElement(_RouterProvider["default"], null, /*#__PURE__*/ _react["default"].createElement(_Router["default"], null));
+}
+/**
+ * @module Content
+ */ var _default = exports["default"] = Content;
+
+},{"65d54e961bcb15b7":"21dqq","8de1b2cbd2501a64":"35sjN","cdba635777f5a2b1":"lum1W"}],"35sjN":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("7733be7f93cb4ab5"));
+var _Route = _interopRequireDefault(require("c443d35e86fea929"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Router for different menu content.
+ *
+ * Router children components should be Route components. Else those who are not will be ignored.
+ *
+ * If no route matches, the last route will be shown. It can be used as 404 page.
+ *
+ * @param {Object}       props                  component properties
+ * @param {Array<Route>} props.routes           routes array
+ * @param {string}       props.currentRoutePath current route path
+ */ function Router(_ref) {
+    var routes = _ref.routes, currentRoutePath = _ref.currentRoutePath;
+    var _useState = (0, _react.useState)(null), _useState2 = _slicedToArray(_useState, 2), CurrentRouteContent = _useState2[0], setCurrentRouteContent = _useState2[1];
+    /**
+   * useEffect hook.
+   */ (0, _react.useEffect)(function() {
+        var currentRoute = routes.find(function(route) {
+            return route.getPath() === currentRoutePath;
+        });
+        if (currentRoute) setCurrentRouteContent(currentRoute.getElement());
+        else {
+            var lastRoute = routes[routes.length - 1];
+            setCurrentRouteContent(lastRoute.getElement());
+        }
+    }, [
+        currentRoutePath,
+        routes
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-router-content-wrapper",
+        "data-route-path": currentRoutePath,
+        key: currentRoutePath
+    }, CurrentRouteContent);
+}
+/**
+ * @module Router
+ */ var _default = exports["default"] = Router;
+
+},{"7733be7f93cb4ab5":"21dqq","c443d35e86fea929":"1QB0k"}],"lum1W":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("d9506619f2f58e06"));
+var _Router = _interopRequireDefault(require("fb932ef4484bf5f0"));
+var _routes = _interopRequireDefault(require("2d995708c69aab59"));
+var _Route = require("9e862f016e23ad35");
+var _withStore = _interopRequireDefault(require("44f5d41df7305a04"));
+var _app = require("3fdcb513d5d753ed");
+var _NoRouterComponentFoundError = _interopRequireDefault(require("e6f695f331541cc4"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+/**
+ * RouterProvider component.
+ *
+ * @param {Object}   props                  component properties
+ * @param {Router}   props.children         router component
+ * @param {string}   props.currentRoutePath current route path, will be supplied via HOC
+ * @param {Function} props.setRoutePath     set route path, will be supplied via HOC
+ * @class
+ */ function RouterProvider(_ref) {
+    var children = _ref.children, currentRoutePath = _ref.currentRoutePath, setRoutePath = _ref.setRoutePath;
+    var RouterChild = (0, _react.useMemo)(function() {
+        var Component = (children === null || children === void 0 ? void 0 : children.type) === _Router["default"] ? children.type : null;
+        if (Component === null) throw new _NoRouterComponentFoundError["default"]();
+        return Component;
+    }, []);
+    var generatedRoutes = (0, _react.useMemo)(function() {
+        return (0, _Route.generateRouteArray)(_routes["default"]);
+    }, []);
+    /**
+   * Parse url and set route path.
+   */ var parseRouteFromUrl = function parseRouteFromUrl() {
+        var url = new URL(window.location.href);
+        var urlRoute = url.searchParams.get("route");
+        if (urlRoute) setRoutePath(urlRoute);
+    };
+    /**
+   * Hook to add event listener for popstate.
+   */ (0, _react.useEffect)(function() {
+        window.addEventListener("popstate", parseRouteFromUrl);
+    }, []);
+    /**
+   * Parse url and set route path at startup.
+   */ (0, _react.useEffect)(function() {
+        parseRouteFromUrl();
+    }, []);
+    /**
+   * Add route path to url.
+   */ (0, _react.useEffect)(function() {
+        var url = new URL(window.location.href);
+        url.searchParams.set("route", currentRoutePath);
+        window.history.pushState(null, null, url.href);
+    }, [
+        currentRoutePath
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement(RouterChild, {
+        routes: generatedRoutes,
+        currentRoutePath: currentRoutePath
+    });
+}
+// store select mapping
+var selectMapping = function selectMapping(selector) {
+    return {
+        currentRoutePath: selector(_app.getCurrentRoutePath)
+    };
+};
+var actionMapping = function actionMapping() {
+    return {
+        setRoutePath: _app.setCurrentRoutePath
+    };
+};
+/**
+ * @module RouterProvider
+ */ var _default = exports["default"] = (0, _withStore["default"])(RouterProvider, selectMapping, actionMapping);
+
+},{"d9506619f2f58e06":"21dqq","fb932ef4484bf5f0":"35sjN","2d995708c69aab59":"c1gPj","9e862f016e23ad35":"1QB0k","44f5d41df7305a04":"kWmDy","3fdcb513d5d753ed":"c28DV","e6f695f331541cc4":"iU7uY"}],"iU7uY":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+function NoRouterComponentFoundError() {
+    this.name = "NoRouterComponentFoundError";
+    this.message = "No router component found within RouterProvider. Please make sure you have passed Router component as a child of RouterProvider.";
+}
+NoRouterComponentFoundError.prototype = Error.prototype;
+var _default = exports["default"] = NoRouterComponentFoundError;
+
+},{}],"l7D5t":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("77d3d7818e219afe"));
-var _app = require("17f1518f4b326f9f");
-var _blocks = require("5f8ac705794608a2");
-var _withStore = _interopRequireDefault(require("7b5b96d0062dc014"));
-var _UpsellModalBase = _interopRequireDefault(require("38467a7e7a604605"));
-var _assets = require("a4c1da9c67f823b");
+var _app = require("f56de1883a511d0d");
+var _blocks = require("4f679653ecb021b9");
+var _withStore = _interopRequireDefault(require("923351f2001a1473"));
+var _UpsellModalBase = _interopRequireDefault(require("e332c8e734debb56"));
+var _assets = require("c25dc389ac9526da");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -37375,11 +38686,12 @@ function _typeof(o) {
         }
         return null;
     };
+    var targetBlockObj = getBlockObject(targetBlock);
     var currentUpsellData = (0, _react.useMemo)(function() {
-        var targetBlockObj = getBlockObject(targetBlock);
         return prepareUpsellData(targetBlockObj);
     }, [
-        targetBlock
+        targetBlock,
+        targetBlockObj
     ]);
     var currentBlockIcon = (0, _react.useMemo)(function() {
         if (currentUpsellData) {
@@ -37403,8 +38715,14 @@ var selectMapping = function selectMapping(select) {
     return {
         targetBlock: select(_app.getModalTargetBlockType),
         visibility: select(_app.getModalVisibilityStatus),
-        getBlockObject: select(_blocks.getBlockById),
-        proBuyUrl: select(_assets.getAsset)("proBuyUrl")
+        getBlockObject: function getBlockObject(blockId) {
+            return select(function(state) {
+                return (0, _blocks.getBlockById)(state, blockId);
+            });
+        },
+        proBuyUrl: select(function(state) {
+            return (0, _assets.getAsset)(state, "proBuyUrl");
+        })
     };
 };
 // store action mapping
@@ -37417,7 +38735,7 @@ var actionMapping = function actionMapping() {
  * @module UpsellModal
  */ var _default = exports["default"] = (0, _withStore["default"])(UpsellModalSettingsMenu, selectMapping, actionMapping);
 
-},{"77d3d7818e219afe":"21dqq","17f1518f4b326f9f":"c28DV","5f8ac705794608a2":"ohEvx","7b5b96d0062dc014":"kWmDy","38467a7e7a604605":"lUoek","a4c1da9c67f823b":"9SnHn"}],"lUoek":[function(require,module,exports) {
+},{"77d3d7818e219afe":"21dqq","f56de1883a511d0d":"c28DV","4f679653ecb021b9":"ohEvx","923351f2001a1473":"kWmDy","e332c8e734debb56":"lUoek","c25dc389ac9526da":"9SnHn"}],"lUoek":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37902,152 +39220,7 @@ function _arrayWithHoles(arr) {
  * @module ModalNavigation
  */ var _default = exports["default"] = ModalNavigation;
 
-},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"8s4i0":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("8dd0d9c0cdd0b377"));
-var _ContentPhrase = _interopRequireDefault(require("59dc46a131e37ee7"));
-var _LineWrapper = _interopRequireDefault(require("21e5717ad6c1de1d"));
-var _TextIndicate = _interopRequireDefault(require("33bfb9cc0eb1daa4"));
-var _AnimationAppear = _interopRequireDefault(require("760f0dd3649ec9c5"));
-var _assets = require("c099935f2ce0e9ff");
-var _withStore = _interopRequireDefault(require("59887f56c035aa96"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Pro content component.
- *
- * @param {Object} props           component properties
- * @param {string} props.proBuyUrl url for pro buy page
- */ function ProContent(_ref) {
-    var proBuyUrl = _ref.proBuyUrl;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "pro-content"
-    }, /*#__PURE__*/ _react["default"].createElement(_ContentPhrase["default"], null, /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
-        delay: 100
-    }, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Best"), " Blocks Plugin")), /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
-        delay: 600
-    }, /*#__PURE__*/ _react["default"].createElement(_LineWrapper["default"], null, "Just Got Even ", /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Better.")))), /*#__PURE__*/ _react["default"].createElement(_AnimationAppear["default"], {
-        delay: 1400
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-pro-content-main"
-    }, "Get", " ", /*#__PURE__*/ _react["default"].createElement("a", {
-        className: "ub-strip-anchor",
-        href: proBuyUrl,
-        rel: "noreferrer"
-    }, /*#__PURE__*/ _react["default"].createElement(_TextIndicate["default"], null, "Ultimate Blocks Pro")), " ", "Now!")));
-}
-// store select mapping
-var selectMapping = function selectMapping(selector) {
-    return {
-        proBuyUrl: selector(_assets.getAsset)("proBuyUrl")
-    };
-};
-/**
- * @module ProContent
- */ var _default = exports["default"] = (0, _withStore["default"])(ProContent, selectMapping);
-
-},{"8dd0d9c0cdd0b377":"21dqq","59dc46a131e37ee7":"fjblj","21e5717ad6c1de1d":"20Yro","33bfb9cc0eb1daa4":"3mATT","760f0dd3649ec9c5":"i35LA","c099935f2ce0e9ff":"9SnHn","59887f56c035aa96":"kWmDy"}],"i35LA":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("93e7e03b609f21cb"));
-var _Animation = _interopRequireDefault(require("78c82fe59b9ca7c9"));
-var _excluded = [
-    "children"
-];
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {};
-    var target = _objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for(i = 0; i < sourceSymbolKeys.length; i++){
-            key = sourceSymbolKeys[i];
-            if (excluded.indexOf(key) >= 0) continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-            target[key] = source[key];
-        }
-    }
-    return target;
-}
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-/**
- * Animation appear component.
- *
- * This is a wrapper for Animation component. You can use its props for more customization.
- * `animationKeyframeName` is set to `appear` by default and will override any other value provided.
- *
- * @param {Object} props component properties
- */ function AnimationAppear(props) {
-    var children = props.children, rest = _objectWithoutProperties(props, _excluded);
-    rest.animationKeyframeName = "appear";
-    return /*#__PURE__*/ _react["default"].createElement(_Animation["default"], rest, children);
-}
-/**
- * @module AnimationAppear
- */ var _default = exports["default"] = AnimationAppear;
-
-},{"93e7e03b609f21cb":"21dqq","78c82fe59b9ca7c9":"4lfcn"}],"4lfcn":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("52a04a243eca18a4"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Component for animating its children.
- *
- * This component relies on @keyframes animations.
- *
- * @param {Object}                       props                       component properties
- * @param {JSX.Element | Array | string} props.children              component children
- * @param {string}                       props.animationKeyframeName keyframe name
- * @param {number}                       [props.duration=1000]       duration in milliseconds
- * @param {number}                       [props.delay=0]             delay in milliseconds
- */ function Animation(_ref) {
-    var children = _ref.children, animationKeyframeName = _ref.animationKeyframeName, _ref$duration = _ref.duration, duration = _ref$duration === void 0 ? 1000 : _ref$duration, _ref$delay = _ref.delay, delay = _ref$delay === void 0 ? 0 : _ref$delay;
-    return /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "ub-animation",
-        style: {
-            animation: "".concat(animationKeyframeName, " ").concat(duration, "ms ease-out ").concat(delay, "ms both")
-        }
-    }, children);
-}
-/**
- * @module Animation
- */ var _default = exports["default"] = Animation;
-
-},{"52a04a243eca18a4":"21dqq"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
+},{"7379d0f4387f2644":"21dqq","9393b843392e049e":"clIT3"}],"cBeYy":[function() {},{}],"do7SF":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -38090,9 +39263,10 @@ function _interopRequireWildcard(e, r) {
  * Admin menu wrapper.
  *
  * This component is responsible for arranging its child components inside default WordPress settings menu styles and elements.
- * @param {Object}  props component properties
- * @param {React.ElementType}  props.children child components
- * @constructor
+ *
+ * @param {Object}            props          component properties
+ * @param {React.ElementType} props.children child components
+ * @class
  */ function AdminMenuWrapper(_ref) {
     var children = _ref.children;
     (0, _react.useEffect)(function() {
@@ -38121,14 +39295,16 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("c515c572c6ab551c"));
 var _toolkit = require("953ee9eab3e8c345");
-var _assets = _interopRequireDefault(require("ccfe05c780e0df68"));
-var _app = _interopRequireDefault(require("5fdbac5a3de76904"));
-var _blocks = _interopRequireDefault(require("b60a84ccf937dbc7"));
-var _versionControl = _interopRequireDefault(require("3142590e179e9a7a"));
+var _assets = _interopRequireDefault(require("8c721e7e53326dbf"));
+var _app = _interopRequireDefault(require("4a75fc56b99646a3"));
+var _blocks = _interopRequireDefault(require("df36ccd063eba533"));
+var _versionControl = _interopRequireDefault(require("9bf24bb8ad1424ca"));
 var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
-var _initialState = _interopRequireDefault(require("2948990e65501539"));
-var _LocalStorageProvider = require("121248d6c6f26fb");
-var _pluginStatus = _interopRequireDefault(require("6f45c3ea2f5cedb9"));
+var _initialState = _interopRequireDefault(require("9016861a8b48c99a"));
+var _pluginStatus = _interopRequireDefault(require("e241a936151f11bf"));
+var _excluded = [
+    "contentData"
+];
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -38141,6 +39317,33 @@ function _typeof(o) {
     } : function(o) {
         return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
     }, _typeof(o);
+}
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
 }
 function ownKeys(e, r) {
     var t = Object.keys(e);
@@ -38273,8 +39476,12 @@ function _toPrimitive(input, hint) {
         else carry.push(current);
         return carry;
     }, reducedBlocks);
+    var _appData$assets = appData.assets, contentData = _appData$assets.contentData, preloadedAssets = _objectWithoutProperties(_appData$assets, _excluded);
     var preloadedState = {
-        assets: appData.assets,
+        app: {
+            content: contentData
+        },
+        assets: preloadedAssets,
         blocks: {
             registered: allRegistered
         },
@@ -38283,8 +39490,6 @@ function _toPrimitive(input, hint) {
     };
     // merge with default store state
     preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
-    // merge with localStorage data
-    preloadedState = (0, _deepmerge["default"])(preloadedState, (0, _LocalStorageProvider.getLocalStorage)());
     return (0, _toolkit.configureStore)({
         reducer: {
             assets: _assets["default"],
@@ -38305,7 +39510,7 @@ function _toPrimitive(input, hint) {
  * @module createStore
  */ var _default = exports["default"] = createStore;
 
-},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","61d1115f3d5c796e":"ck1Q2","2948990e65501539":"3xPpL","121248d6c6f26fb":"1Y8eP","6f45c3ea2f5cedb9":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
+},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","8c721e7e53326dbf":"9SnHn","4a75fc56b99646a3":"c28DV","df36ccd063eba533":"ohEvx","9bf24bb8ad1424ca":"6jcRk","61d1115f3d5c796e":"ck1Q2","9016861a8b48c99a":"3xPpL","e241a936151f11bf":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
 "use strict";
 var isMergeableObject = function isMergeableObject(value) {
     return isNonNullObject(value) && !isSpecial(value);
