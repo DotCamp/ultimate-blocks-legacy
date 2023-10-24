@@ -11,6 +11,25 @@ class Ultimate_Counter {
      }
 
      /**
+	 * Build the CSS style.
+	 *
+	 * @param array  $attributes The borders.
+	 * @return string The CSS style string.
+	 */
+     public function ub_get_generated_styles($attributes){
+          $counter_font_size = $attributes['counterFontSize'];
+          $label_font_size = $attributes['labelFontSize'];
+          $styles = '';
+          if(!empty($counter_font_size)){
+               $styles .= '--ub-counter-font-size:' . $counter_font_size . ';';
+          }
+          if(!empty($label_font_size)){
+               $styles .= '--ub-counter-label-font-size:' . $label_font_size . ';';
+          }
+          return $styles;
+     }
+     
+     /**
       * Render callback for the Ultimate Counter block.
       *
       * @param array $attributes The block's attributes, which control its behavior and appearance.
@@ -27,10 +46,12 @@ class Ultimate_Counter {
           $alignment = $attributes['alignment'];
           $label = $attributes['label'];
           $label_position = $attributes['labelPosition'];
+          $styles = $this->ub_get_generated_styles($attributes);
 
           $wrapper_attributes = get_block_wrapper_attributes(
                array(
-                    'class' => 'ub_counter-container'
+                    'class' => 'ub_counter-container',
+                    'style' => $styles
                )
           );
           $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . esc_html($label) . '</span></div>';

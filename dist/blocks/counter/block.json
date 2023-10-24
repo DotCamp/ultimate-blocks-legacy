@@ -10,6 +10,14 @@
     "ultimate counter"
   ],
   "attributes": {
+    "counterFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "labelFontSize": {
+      "type": "string",
+      "default": ""
+    },
     "startNumber": {
       "type": "string",
       "default": "0"
@@ -45,19 +53,6 @@
   },
   "supports": {
     "align": true,
-    "typography": {
-      "fontSize": true,
-      "lineHeight": true,
-      "__experimentalFontFamily": true,
-      "__experimentalTextDecoration": true,
-      "__experimentalFontStyle": true,
-      "__experimentalFontWeight": true,
-      "__experimentalLetterSpacing": true,
-      "__experimentalTextTransform": true,
-      "__experimentalDefaultControls": {
-        "fontSize": true
-      }
-    },
     "color": {
       "gradients": true,
       "link": true,

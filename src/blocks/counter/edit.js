@@ -7,6 +7,7 @@ import {
 } from "@wordpress/block-editor";
 
 import Inspector from "./inspector";
+import { getStyles } from "./get-styles";
 
 function Edit(props) {
 	const { attributes, setAttributes } = props;
@@ -15,6 +16,7 @@ function Edit(props) {
 		attributes;
 	const blockProps = useBlockProps({
 		className: `ub_counter-container`,
+		style: getStyles(attributes),
 	});
 
 	return (

@@ -1,4 +1,10 @@
 .ub_counter-container {
+	.ub_counter-number-wrapper {
+		font-size: var(--ub-counter-font-size);
+	}
+	.ub_counter-label-wrapper {
+		font-size: var(--ub-counter-label-font-size);
+	}
 	& .ub_counter {
 		&.ub_text-left {
 			text-align: left;

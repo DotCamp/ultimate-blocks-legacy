@@ -2327,6 +2327,14 @@ $defaultValues = array(
 					'type' => 'string',
 					'default' => '500'
 				),
+				'labelFontSize' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'counterFontSize' => array(
+					'type' => 'string',
+					'default' => ''
+				),
 				'prefix' => array(
 					'type' => 'string',
 					'default' => ''
