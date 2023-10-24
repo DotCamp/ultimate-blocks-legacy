@@ -15,6 +15,8 @@
  * @subpackage Ultimate_Blocks/admin
  */
 
+use Ultimate_Blocks\admin\data\block_demos\Block_Demos_Data;
+use Ultimate_Blocks\admin\data\Block_Menu_Info_Data;
 use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
 
 /**
@@ -95,11 +97,6 @@ class Ultimate_Blocks_Admin {
 	 * @return array filtered frontend data
 	 */
 	public function add_settings_menu_data( $data ) {
-		ob_start();
-		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-demos.json';
-		$block_demos_raw = ob_get_contents();
-		ob_end_clean();
-
 		$data['assets'] = array(
 			'logo'        => trailingslashit( $this->plugin_url ) . 'admin/images/logos/menu-icon-colored.svg',
 			'ajax'        => array(
@@ -110,14 +107,12 @@ class Ultimate_Blocks_Admin {
 				),
 			),
 			'proMenuSlug' => $this->pro_menu_slug,
-			'blockDemos'  => json_decode( $block_demos_raw, true ),
+			'blockDemos'  => Block_Demos_Data::get_data(),
 		);
-
-		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-menu-info.php';
 
 		$data['blocks'] = array(
 			'statusData' => get_option( 'ultimate_blocks', false ),
-			'info'       => $block_menu_infos,
+			'info'       => Block_Menu_Info_Data::get_data(),
 		);
 
 		return $data;
