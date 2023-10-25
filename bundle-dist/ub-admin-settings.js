@@ -166,7 +166,7 @@ if (mountPoint) {
     }, /*#__PURE__*/ _react["default"].createElement(_LocalStorageProvider["default"], null, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null)))));
 } else throw new Error("no mount point found for settings menu");
 
-},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","5cdb128c8e3827eb":"7a8vF","600c2f9e1674370c":"cBeYy","d1ece749c706e412":"do7SF","2da12f694a741c54":"7VzQu","d795f4bb48d1079d":"1Y8eP"}],"21dqq":[function(require,module,exports) {
+},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","2da12f694a741c54":"7VzQu","5cdb128c8e3827eb":"7a8vF","600c2f9e1674370c":"cBeYy","d1ece749c706e412":"do7SF","d795f4bb48d1079d":"1Y8eP"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("a569817e6ea559f6");
 
@@ -2603,7 +2603,7 @@ module.exports = require("b0f0e6b9e8349dac");
     var NUMERIC = 5; // An attribute that must be positive numeric or parse as a positive numeric.
     // When falsy, it should be removed.
     var POSITIVE_NUMERIC = 6;
-    /* eslint-disable max-len */ var ATTRIBUTE_NAME_START_CHAR = ":A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
+    /* eslint-disable max-len */ var ATTRIBUTE_NAME_START_CHAR = ":A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
     /* eslint-enable max-len */ var ATTRIBUTE_NAME_CHAR = ATTRIBUTE_NAME_START_CHAR + "\\-.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040";
     var VALID_ATTRIBUTE_NAME_REGEX = new RegExp("^[" + ATTRIBUTE_NAME_START_CHAR + "][" + ATTRIBUTE_NAME_CHAR + "]*$");
     var illegalAttributeNameCache = {};
@@ -10731,6 +10731,8 @@ module.exports = require("b0f0e6b9e8349dac");
         retryIfBlockedOn(container);
     }
     function hideInstance(instance) {
+        // TODO: Does this work for all element types? What about MathML? Should we
+        // pass host context to this method?
         instance;
         var style = instance.style;
         if (typeof style.setProperty === "function") style.setProperty("display", "none", "important");
@@ -13463,7 +13465,7 @@ module.exports = require("b0f0e6b9e8349dac");
                         knownKeys.add(key);
                         break;
                     }
-                    error("Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.", key);
+                    error("Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted \u2014 the behavior is unsupported and could change in a future version.", key);
                     break;
                 case REACT_LAZY_TYPE:
                     var payload = child._payload;
@@ -25395,123 +25397,26 @@ exports.hydrateRoot = function(c, h, o) {
     }
 };
 
-},{"aaccff5d309d9239":"j6uA9"}],"7a8vF":[function(require,module,exports) {
+},{"aaccff5d309d9239":"j6uA9"}],"7VzQu":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("455808d61ca3dd3"));
-var _MenuHeader = _interopRequireDefault(require("ac586035ebf11933"));
-var _Content = _interopRequireDefault(require("7343fefef4ac8988"));
+var _react = _interopRequireDefault(require("c515c572c6ab551c"));
+var _toolkit = require("953ee9eab3e8c345");
+var _assets = _interopRequireDefault(require("ccfe05c780e0df68"));
+var _app = _interopRequireDefault(require("5fdbac5a3de76904"));
+var _blocks = _interopRequireDefault(require("b60a84ccf937dbc7"));
+var _versionControl = _interopRequireDefault(require("3142590e179e9a7a"));
+var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
+var _initialState = _interopRequireDefault(require("2948990e65501539"));
+var _LocalStorageProvider = require("121248d6c6f26fb");
+var _pluginStatus = _interopRequireDefault(require("6f45c3ea2f5cedb9"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Container for admin menu.
- *
- * @return {JSX.Element} container component
- * @function Object() { [native code] }
- */ function AdminMenuContainer() {
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-admin-menu-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
-}
-/**
- * @module AdminMenuContainer
- */ var _default = exports["default"] = AdminMenuContainer;
-
-},{"455808d61ca3dd3":"21dqq","ac586035ebf11933":"kP7QS","7343fefef4ac8988":"12F8G"}],"kP7QS":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("af8ddc31c52e60c1"));
-var _withStore = _interopRequireDefault(require("8e13c56b0b23f46c"));
-var _assets = require("c7228a701ce4de72");
-var _app = require("55c215141c2394e0");
-var _reactFontawesome = require("3ee81ce64fbd9c46");
-var _RightContainerItem = _interopRequireDefault(require("80af8803c24a14fe"));
-var _VersionControl = _interopRequireDefault(require("8598ffd360f8ff2b"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Settings menu header element.
- *
- * @param {Object}   props                      component properties
- * @param {string}   props.logoUrl              plugin logo url, will be supplied via HOC
- * @param {Function} props.toggleShowInfoStatus toggle showing block controls info, will be supplied via HOC
- * @param {boolean}  props.blockInfoShowStatus  status of showing extra block information, will be supplied via HOC
- * @return {JSX.Element} component
- * @function Object() { [native code] }
- */ function MenuHeader(_ref) {
-    var logoUrl = _ref.logoUrl, toggleShowInfoStatus = _ref.toggleShowInfoStatus, blockInfoShowStatus = _ref.blockInfoShowStatus;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "menu-header"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "left-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "logo-container"
-    }, /*#__PURE__*/ _react["default"].createElement("img", {
-        alt: "plugin logo",
-        src: logoUrl
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-plugin-logo-text"
-    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
-        onClick: toggleShowInfoStatus,
-        className: "blog-info-toggle",
-        "data-light-it-up": JSON.stringify(!blockInfoShowStatus)
-    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: "fa-solid fa-lightbulb"
-    })))));
-}
-var selectMapping = function selectMapping(select) {
-    return {
-        logoUrl: select(_assets.getLogo),
-        blockInfoShowStatus: select(_app.getBlockInfoShowStatus)
-    };
-};
-var actionMapping = function actionMapping() {
-    return {
-        toggleShowInfoStatus: _app.toggleShowBlockInfo
-    };
-};
-/**
- * @module MenuHeader
- */ var _default = exports["default"] = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
-
-},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","55c215141c2394e0":"c28DV","3ee81ce64fbd9c46":"clIT3","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1"}],"kWmDy":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("ca9ac1a3bee33d8c"));
-var _reactRedux = require("979f6ff1f26c3159");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _extends() {
-    _extends = Object.assign ? Object.assign.bind() : function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
 }
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -25521,99 +25426,170 @@ function _typeof(o) {
         return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
     }, _typeof(o);
 }
-/**
- * HOC for adding store related properties to components
- *
- * @param {React.ElementType | Object} BaseComponent        target component
- * @param {Function | null}            [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
- * @param {Function | null}            [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
- * @return {Function} HOC function
- */ var withStore = function withStore(BaseComponent) {
-    var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var actionMapping = arguments.length > 2 ? arguments[2] : undefined;
-    return function(props) {
-        // prepare selection mappings
-        var selections = {};
-        if (selectMapping && typeof selectMapping === "function") {
-            var selectorObject = selectMapping(_reactRedux.useSelector);
-            if (_typeof(selectorObject) === "object") selections = selectorObject;
-        }
-        var dispatch = (0, _reactRedux.useDispatch)();
-        // prepare action mappings
-        var actions = {};
-        if (actionMapping && typeof actionMapping === "function") {
-            var preActionObject = actionMapping(dispatch, _reactRedux.useSelector);
-            if (preActionObject && _typeof(preActionObject) === "object") actions = Object.keys(preActionObject).filter(function(key) {
-                return Object.prototype.hasOwnProperty.call(preActionObject, key);
-            }).reduce(function(carry, current) {
-                var actionCallback = preActionObject[current];
-                if (typeof actionCallback === "function") carry[current] = function(val) {
-                    dispatch(actionCallback(val));
-                };
-                return carry;
-            }, {});
-        }
-        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, selections, actions, {
-            selector: _reactRedux.useSelector,
-            dispatch: dispatch
-        }));
-    };
-};
-/**
- * @module withStore
- */ var _default = exports["default"] = withStore;
-
-},{"ca9ac1a3bee33d8c":"21dqq","979f6ff1f26c3159":"bdVon"}],"9SnHn":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getLogo = exports.getAsset = exports.getAjaxInfo = exports["default"] = void 0;
-var _toolkit = require("b97968e375f86bd2");
-/**
- * Options for asset store slice
- *
- * @type {Object}
- */ var assetsSliceOptions = {
-    name: "assets",
-    initialState: {
-        logo: "",
-        ajax: {}
+function ownKeys(e, r) {
+    var t = Object.keys(e);
+    if (Object.getOwnPropertySymbols) {
+        var o = Object.getOwnPropertySymbols(e);
+        r && (o = o.filter(function(r) {
+            return Object.getOwnPropertyDescriptor(e, r).enumerable;
+        })), t.push.apply(t, o);
     }
-};
-var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
+    return t;
+}
+function _objectSpread(e) {
+    for(var r = 1; r < arguments.length; r++){
+        var t = null != arguments[r] ? arguments[r] : {};
+        r % 2 ? ownKeys(Object(t), !0).forEach(function(r) {
+            _defineProperty(e, r, t[r]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r) {
+            Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+        });
+    }
+    return e;
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
 /**
- * Get logo url.
+ * Prepare data for pro only block upsells.
  *
- * @param {Object} state store state
- * @return {string} logo url
- */ var getLogo = exports.getLogo = function getLogo(state) {
-    return state.assets.logo;
-};
+ * @param {Object} proOnlyBlockList pro only block list
+ *
+ * @return {Array} pro block upsell data
+ */ function prepareProOnlyBlockUpsellData(proOnlyBlockList) {
+    return Object.keys(proOnlyBlockList).filter(function(key) {
+        return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
+    }).reduce(function(carry, blockName) {
+        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon, screenshot = _proOnlyBlockList$blo.screenshot;
+        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true, screenshot));
+        return carry;
+    }, []);
+}
 /**
- * Get ajax information.
+ * Generate block info object compatible with settings menu store.
  *
- * @param {Object} state store state
- * @return {Object} ajax information
- */ var getAjaxInfo = exports.getAjaxInfo = function getAjaxInfo(state) {
-    return state.assets.ajax;
-};
-/**
- * Get asset with given id.
- *
- * @param {Object} state store state
- * @return {function(string): string|number} function to get asset
- */ var getAsset = exports.getAsset = function getAsset(state) {
-    return function(assetId) {
-        var _state$assets;
-        return (_state$assets = state.assets) === null || _state$assets === void 0 ? void 0 : _state$assets[assetId];
+ * @param {string}            name                 block registry name
+ * @param {string}            title                block title
+ * @param {string}            info                 block info
+ * @param {React.ElementType} icon                 icon element
+ * @param {boolean}           active               active status
+ * @param {boolean}           [pro=false]          block pro status
+ * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
+ * @return {Object} block info object
+ */ function generateBlockInfoObject(name, title, info, icon, active) {
+    var pro = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+    var screenshotUrl = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+    return {
+        name: name,
+        title: title,
+        info: Array.isArray(info) ? info : [
+            info
+        ],
+        icon: icon,
+        active: active,
+        pro: pro,
+        screenshotUrl: screenshotUrl
     };
-};
+}
 /**
- * @module assetsSlice
- */ var _default = exports["default"] = assetsSlice.reducer;
+ * Create settings menu store.
+ *
+ * @return {Object} store
+ */ function createStore() {
+    // eslint-disable-next-line no-undef
+    var appData = _objectSpread({}, ubAdminMenuData);
+    // eslint-disable-next-line no-undef
+    ubAdminMenuData = null;
+    // add block infos to context data
+    var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
+    var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
+        return blockData.parent === undefined && blockData.supports.inserter === undefined;
+    });
+    var _appData$blocks = appData.blocks, statusData = _appData$blocks.statusData, info = _appData$blocks.info;
+    var reducedBlocks = registeredUbBlocks.reduce(function(carry, current) {
+        var icon = current.icon, currentName = current.name, title = current.title;
+        var blockStatus = false;
+        // eslint-disable-next-line array-callback-return,no-shadow
+        statusData.map(function(_ref) {
+            var name = _ref.name, active = _ref.active;
+            if (name === currentName) blockStatus = active;
+        });
+        var blockInfo = [];
+        if (info[currentName] && Array.isArray(info[currentName])) blockInfo = info[currentName];
+        var newBlockObject = generateBlockInfoObject(currentName, title, blockInfo, icon.src, blockStatus);
+        carry.push(newBlockObject);
+        return carry;
+    }, []);
+    var proBlocks = appData.upsells.blocks;
+    var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
+    // all blocks available including upsell versions of pro blocks or pro blocks themselves
+    var allRegistered = proBlockUpsell.reduce(function(carry, current) {
+        var proBlockName = current.name;
+        //check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
+        // if not inject the upsell data to current block list
+        var registeredProBlock = carry.find(function(_ref2) {
+            var name = _ref2.name;
+            return name === proBlockName;
+        });
+        if (registeredProBlock) registeredProBlock.pro = true;
+        else carry.push(current);
+        return carry;
+    }, reducedBlocks);
+    var preloadedState = {
+        assets: appData.assets,
+        blocks: {
+            registered: allRegistered
+        },
+        versionControl: appData.versionControl,
+        pluginStatus: appData.pluginStatus
+    };
+    // merge with default store state
+    preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
+    // merge with localStorage data
+    preloadedState = (0, _deepmerge["default"])(preloadedState, (0, _LocalStorageProvider.getLocalStorage)());
+    return (0, _toolkit.configureStore)({
+        reducer: {
+            assets: _assets["default"],
+            app: _app["default"],
+            blocks: _blocks["default"],
+            versionControl: _versionControl["default"],
+            pluginStatus: _pluginStatus["default"]
+        },
+        middleware: function middleware(getDefaultMiddleware) {
+            return getDefaultMiddleware({
+                serializableCheck: false
+            });
+        },
+        preloadedState: preloadedState
+    });
+}
+/**
+ * @module createStore
+ */ var _default = exports["default"] = createStore;
 
-},{"b97968e375f86bd2":"lL1Ef"}],"lL1Ef":[function(require,module,exports) {
+},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","61d1115f3d5c796e":"ck1Q2","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","2948990e65501539":"3xPpL","121248d6c6f26fb":"1Y8eP","6f45c3ea2f5cedb9":"fi8Oa"}],"lL1Ef":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "EnhancerArray", ()=>EnhancerArray);
@@ -29671,7 +29647,148 @@ var thunk = createThunkMiddleware(); // Attach the factory function so users can
 thunk.withExtraArgument = createThunkMiddleware;
 exports.default = thunk;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c28DV":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ck1Q2":[function(require,module,exports) {
+"use strict";
+var isMergeableObject = function isMergeableObject(value) {
+    return isNonNullObject(value) && !isSpecial(value);
+};
+function isNonNullObject(value) {
+    return !!value && typeof value === "object";
+}
+function isSpecial(value) {
+    var stringValue = Object.prototype.toString.call(value);
+    return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
+}
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === "function" && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 0xeac7;
+function isReactElement(value) {
+    return value.$$typeof === REACT_ELEMENT_TYPE;
+}
+function emptyTarget(val) {
+    return Array.isArray(val) ? [] : {};
+}
+function cloneUnlessOtherwiseSpecified(value, options) {
+    return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
+}
+function defaultArrayMerge(target, source, options) {
+    return target.concat(source).map(function(element) {
+        return cloneUnlessOtherwiseSpecified(element, options);
+    });
+}
+function getMergeFunction(key, options) {
+    if (!options.customMerge) return deepmerge;
+    var customMerge = options.customMerge(key);
+    return typeof customMerge === "function" ? customMerge : deepmerge;
+}
+function getEnumerableOwnPropertySymbols(target) {
+    return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+        return Object.propertyIsEnumerable.call(target, symbol);
+    }) : [];
+}
+function getKeys(target) {
+    return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
+}
+function propertyIsOnObject(object, property) {
+    try {
+        return property in object;
+    } catch (_) {
+        return false;
+    }
+}
+// Protects from prototype poisoning and unexpected merging up the prototype chain.
+function propertyIsUnsafe(target, key) {
+    return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
+     && !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
+     && Object.propertyIsEnumerable.call(target, key) // and also unsafe if they're nonenumerable.
+    );
+}
+function mergeObject(target, source, options) {
+    var destination = {};
+    if (options.isMergeableObject(target)) getKeys(target).forEach(function(key) {
+        destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+    });
+    getKeys(source).forEach(function(key) {
+        if (propertyIsUnsafe(target, key)) return;
+        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+        else destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+    });
+    return destination;
+}
+function deepmerge(target, source, options) {
+    options = options || {};
+    options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+    options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+    // cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
+    // implementations can use it. The caller may not replace it.
+    options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+    var sourceIsArray = Array.isArray(source);
+    var targetIsArray = Array.isArray(target);
+    var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+    if (!sourceAndTargetTypesMatch) return cloneUnlessOtherwiseSpecified(source, options);
+    else if (sourceIsArray) return options.arrayMerge(target, source, options);
+    else return mergeObject(target, source, options);
+}
+deepmerge.all = function deepmergeAll(array, options) {
+    if (!Array.isArray(array)) throw new Error("first argument should be an array");
+    return array.reduce(function(prev, next) {
+        return deepmerge(prev, next, options);
+    }, {});
+};
+var deepmerge_1 = deepmerge;
+module.exports = deepmerge_1;
+
+},{}],"9SnHn":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getLogo = exports.getAsset = exports.getAjaxInfo = exports["default"] = void 0;
+var _toolkit = require("b97968e375f86bd2");
+/**
+ * Options for asset store slice
+ *
+ * @type {Object}
+ */ var assetsSliceOptions = {
+    name: "assets",
+    initialState: {
+        logo: "",
+        ajax: {}
+    }
+};
+var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
+/**
+ * Get logo url.
+ *
+ * @param {Object} state store state
+ * @return {string} logo url
+ */ var getLogo = exports.getLogo = function getLogo(state) {
+    return state.assets.logo;
+};
+/**
+ * Get ajax information.
+ *
+ * @param {Object} state store state
+ * @return {Object} ajax information
+ */ var getAjaxInfo = exports.getAjaxInfo = function getAjaxInfo(state) {
+    return state.assets.ajax;
+};
+/**
+ * Get asset with given id.
+ *
+ * @param {Object} state store state
+ * @return {function(string): string|number} function to get asset
+ */ var getAsset = exports.getAsset = function getAsset(state) {
+    return function(assetId) {
+        var _state$assets;
+        return (_state$assets = state.assets) === null || _state$assets === void 0 ? void 0 : _state$assets[assetId];
+    };
+};
+/**
+ * @module assetsSlice
+ */ var _default = exports["default"] = assetsSlice.reducer;
+
+},{"b97968e375f86bd2":"lL1Ef"}],"c28DV":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -29815,31 +29932,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _objectWithoutProperties(source, excluded) {
     if (source == null) return {};
@@ -29994,31 +30108,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("c7dc720884f60a2d"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 // eslint-disable-next-line no-unused-vars
 /**
@@ -30073,31 +30184,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.generateIndicatorData = exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("bef92c9b301184af"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 // eslint-disable-next-line no-unused-vars
 /**
@@ -30225,31 +30333,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _objectWithoutProperties(source, excluded) {
     if (source == null) return {};
@@ -30388,7 +30493,80 @@ var selectMapping = function selectMapping(select) {
  * @module LocalStorageProvider
  */ var _default = exports["default"] = (0, _withStore["default"])(LocalStorageProvider, selectMapping);
 
-},{"421e80768cf9dbf7":"21dqq","c42512238b4a67cb":"kWmDy","3d485e567681faf5":"c28DV"}],"fi8Oa":[function(require,module,exports) {
+},{"421e80768cf9dbf7":"21dqq","c42512238b4a67cb":"kWmDy","3d485e567681faf5":"c28DV"}],"kWmDy":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("ca9ac1a3bee33d8c"));
+var _reactRedux = require("979f6ff1f26c3159");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+/**
+ * HOC for adding store related properties to components
+ *
+ * @param {React.ElementType | Object} BaseComponent        target component
+ * @param {Function | null}            [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
+ * @param {Function | null}            [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
+ * @return {Function} HOC function
+ */ var withStore = function withStore(BaseComponent) {
+    var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var actionMapping = arguments.length > 2 ? arguments[2] : undefined;
+    return function(props) {
+        // prepare selection mappings
+        var selections = {};
+        if (selectMapping && typeof selectMapping === "function") {
+            var selectorObject = selectMapping(_reactRedux.useSelector);
+            if (_typeof(selectorObject) === "object") selections = selectorObject;
+        }
+        var dispatch = (0, _reactRedux.useDispatch)();
+        // prepare action mappings
+        var actions = {};
+        if (actionMapping && typeof actionMapping === "function") {
+            var preActionObject = actionMapping(dispatch, _reactRedux.useSelector);
+            if (preActionObject && _typeof(preActionObject) === "object") actions = Object.keys(preActionObject).filter(function(key) {
+                return Object.prototype.hasOwnProperty.call(preActionObject, key);
+            }).reduce(function(carry, current) {
+                var actionCallback = preActionObject[current];
+                if (typeof actionCallback === "function") carry[current] = function(val) {
+                    dispatch(actionCallback(val));
+                };
+                return carry;
+            }, {});
+        }
+        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, selections, actions, {
+            selector: _reactRedux.useSelector,
+            dispatch: dispatch
+        }));
+    };
+};
+/**
+ * @module withStore
+ */ var _default = exports["default"] = withStore;
+
+},{"ca9ac1a3bee33d8c":"21dqq","979f6ff1f26c3159":"bdVon"}],"fi8Oa":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -30423,7 +30601,241 @@ var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
  * @module pluginStatusSlice
  */ var _default = exports["default"] = pluginStatusSlice.reducer;
 
-},{"6e475e3a68ded05b":"3xPpL","acd9b64a16908024":"lL1Ef"}],"clIT3":[function(require,module,exports) {
+},{"acd9b64a16908024":"lL1Ef","6e475e3a68ded05b":"3xPpL"}],"ohEvx":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
+var _toolkit = require("16834d59f055af3a");
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+/**
+ * Block slice options
+ *
+ * @type {Object}
+ */ var blocksSliceOptions = {
+    name: "blocks",
+    initialState: {
+        registered: []
+    },
+    reducers: {
+        /**
+     * Set active status of target block.
+     *
+     * @param {Object} state         store state
+     * @param {Object} props         action props
+     * @param {Object} props.payload action payload
+     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
+            var payload = _ref.payload;
+            var id = payload.id, status = payload.status;
+            var registered = state.registered;
+            var uRegistered = _toConsumableArray(registered);
+            var blockIndex = -1;
+            // eslint-disable-next-line array-callback-return
+            uRegistered.map(function(bObj, index) {
+                if (bObj.name === id) blockIndex = index;
+            });
+            if (blockIndex >= 0) {
+                uRegistered[blockIndex].active = status;
+                state.registered = uRegistered;
+            }
+        }
+    }
+};
+var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
+var setBlockActiveStatus = exports.setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
+/**
+ * Get registered plugin blocks.
+ *
+ * @param {Object} state store state
+ * @return {Array} blocks
+ */ var getBlocks = exports.getBlocks = function getBlocks(state) {
+    return state.blocks.registered;
+};
+/**
+ * Get block object by given block type id.
+ *
+ * @param {Object} state store state
+ * @return {Object | undefined} block object or undefined if no target block is found
+ */ var getBlockById = exports.getBlockById = function getBlockById(state) {
+    return function(blockId) {
+        return state.blocks.registered.find(function(_ref2) {
+            var name = _ref2.name;
+            return name === blockId;
+        });
+    };
+};
+/**
+ * @module blocksSlice
+ */ var _default = exports["default"] = blocksSlice.reducer;
+
+},{"16834d59f055af3a":"lL1Ef"}],"6jcRk":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
+var _initialState = _interopRequireDefault(require("b44b2e09241a652"));
+var _toolkit = require("b718c794e97d3789");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Version control slice options.
+ *
+ * @type {Object}
+ */ var versionControlSliceOptions = {
+    name: "versionControl",
+    initialState: _initialState["default"].versionControl
+};
+var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
+/**
+ * Get plugin current version.
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var currentVersion = exports.currentVersion = function currentVersion(state) {
+    return state.versionControl.currentVersion;
+};
+/**
+ * Get plugin current version.
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var versions = exports.versions = function versions(state) {
+    return state.versionControl.versions;
+};
+/**
+ * Get ajax operations info.
+ * @param {Object} state store state
+ * @return {Object} ajax info
+ */ var ajaxInfo = exports.ajaxInfo = function ajaxInfo(state) {
+    return state.versionControl.ajax;
+};
+/**
+ * @module versionControlSlice
+ */ var _default = exports["default"] = versionControlSlice.reducer;
+
+},{"b718c794e97d3789":"lL1Ef","b44b2e09241a652":"3xPpL"}],"7a8vF":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("455808d61ca3dd3"));
+var _MenuHeader = _interopRequireDefault(require("ac586035ebf11933"));
+var _Content = _interopRequireDefault(require("7343fefef4ac8988"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Container for admin menu.
+ *
+ * @return {JSX.Element} container component
+ * @function Object() { [native code] }
+ */ function AdminMenuContainer() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-admin-menu-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
+}
+/**
+ * @module AdminMenuContainer
+ */ var _default = exports["default"] = AdminMenuContainer;
+
+},{"455808d61ca3dd3":"21dqq","ac586035ebf11933":"kP7QS","7343fefef4ac8988":"12F8G"}],"kP7QS":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("af8ddc31c52e60c1"));
+var _withStore = _interopRequireDefault(require("8e13c56b0b23f46c"));
+var _assets = require("c7228a701ce4de72");
+var _app = require("55c215141c2394e0");
+var _reactFontawesome = require("3ee81ce64fbd9c46");
+var _RightContainerItem = _interopRequireDefault(require("80af8803c24a14fe"));
+var _VersionControl = _interopRequireDefault(require("8598ffd360f8ff2b"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Settings menu header element.
+ *
+ * @param {Object}   props                      component properties
+ * @param {string}   props.logoUrl              plugin logo url, will be supplied via HOC
+ * @param {Function} props.toggleShowInfoStatus toggle showing block controls info, will be supplied via HOC
+ * @param {boolean}  props.blockInfoShowStatus  status of showing extra block information, will be supplied via HOC
+ * @return {JSX.Element} component
+ * @function Object() { [native code] }
+ */ function MenuHeader(_ref) {
+    var logoUrl = _ref.logoUrl, toggleShowInfoStatus = _ref.toggleShowInfoStatus, blockInfoShowStatus = _ref.blockInfoShowStatus;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "menu-header"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "left-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "logo-container"
+    }, /*#__PURE__*/ _react["default"].createElement("img", {
+        alt: "plugin logo",
+        src: logoUrl
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-plugin-logo-text"
+    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "right-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
+        onClick: toggleShowInfoStatus,
+        className: "blog-info-toggle",
+        "data-light-it-up": JSON.stringify(!blockInfoShowStatus)
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-lightbulb"
+    })))));
+}
+var selectMapping = function selectMapping(select) {
+    return {
+        logoUrl: select(_assets.getLogo),
+        blockInfoShowStatus: select(_app.getBlockInfoShowStatus)
+    };
+};
+var actionMapping = function actionMapping() {
+    return {
+        toggleShowInfoStatus: _app.toggleShowBlockInfo
+    };
+};
+/**
+ * @module MenuHeader
+ */ var _default = exports["default"] = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
+
+},{"af8ddc31c52e60c1":"21dqq","8e13c56b0b23f46c":"kWmDy","c7228a701ce4de72":"9SnHn","55c215141c2394e0":"c28DV","3ee81ce64fbd9c46":"clIT3","80af8803c24a14fe":"cm0ja","8598ffd360f8ff2b":"fUke1"}],"clIT3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FontAwesomeIcon", ()=>FontAwesomeIcon);
@@ -34164,31 +34576,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -34322,54 +34731,7 @@ function _arrayWithHoles(arr) {
  * @module VersionControl
  */ var _default = exports["default"] = (0, _withStore["default"])(VersionControl, selectionMapping);
 
-},{"b544b5ba9b277d21":"21dqq","52f863744b6b5910":"clIT3","9b50ed6d8d094f47":"6jcRk","c5140aba68ba460b":"kWmDy","d0153d3a47ae5f0a":"k3f3V","e20e8ee6922534f5":"hOoRN","f76e893847a676c8":"g3gW2","69ee0e54dc1b6df2":"7CyoE"}],"6jcRk":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
-var _initialState = _interopRequireDefault(require("b44b2e09241a652"));
-var _toolkit = require("b718c794e97d3789");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Version control slice options.
- *
- * @type {Object}
- */ var versionControlSliceOptions = {
-    name: "versionControl",
-    initialState: _initialState["default"].versionControl
-};
-var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
-/**
- * Get plugin current version.
- * @param {Object} state store state
- * @return {string} current version
- */ var currentVersion = exports.currentVersion = function currentVersion(state) {
-    return state.versionControl.currentVersion;
-};
-/**
- * Get plugin current version.
- * @param {Object} state store state
- * @return {string} current version
- */ var versions = exports.versions = function versions(state) {
-    return state.versionControl.versions;
-};
-/**
- * Get ajax operations info.
- * @param {Object} state store state
- * @return {Object} ajax info
- */ var ajaxInfo = exports.ajaxInfo = function ajaxInfo(state) {
-    return state.versionControl.ajax;
-};
-/**
- * @module versionControlSlice
- */ var _default = exports["default"] = versionControlSlice.reducer;
-
-},{"b44b2e09241a652":"3xPpL","b718c794e97d3789":"lL1Ef"}],"k3f3V":[function(require,module,exports) {
+},{"b544b5ba9b277d21":"21dqq","52f863744b6b5910":"clIT3","9b50ed6d8d094f47":"6jcRk","c5140aba68ba460b":"kWmDy","d0153d3a47ae5f0a":"k3f3V","e20e8ee6922534f5":"hOoRN","f76e893847a676c8":"g3gW2","69ee0e54dc1b6df2":"7CyoE"}],"k3f3V":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -34387,31 +34749,28 @@ var _react = _interopRequireWildcard(require("3accbda3a85c85e3"));
 var _reactFontawesome = require("a3e43325b30d05e5");
 var _i18n = require("9945d4bf1472bc28");
 var _MenuButton = _interopRequireWildcard(require("83f559a99a61616d"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -36128,31 +36487,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -36465,31 +36821,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
@@ -36659,31 +37012,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -36866,31 +37216,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("e3acc383ec34246"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -36975,31 +37322,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("5165ebf1e519bb99"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function(target) {
@@ -37105,99 +37449,7 @@ function _interopRequireDefault(obj) {
  * @module BlockCardProInfoControl
  */ var _default = exports["default"] = BlockCardProInfoControl;
 
-},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"ohEvx":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
-var _toolkit = require("16834d59f055af3a");
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-/**
- * Block slice options
- *
- * @type {Object}
- */ var blocksSliceOptions = {
-    name: "blocks",
-    initialState: {
-        registered: []
-    },
-    reducers: {
-        /**
-     * Set active status of target block.
-     *
-     * @param {Object} state         store state
-     * @param {Object} props         action props
-     * @param {Object} props.payload action payload
-     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
-            var payload = _ref.payload;
-            var id = payload.id, status = payload.status;
-            var registered = state.registered;
-            var uRegistered = _toConsumableArray(registered);
-            var blockIndex = -1;
-            // eslint-disable-next-line array-callback-return
-            uRegistered.map(function(bObj, index) {
-                if (bObj.name === id) blockIndex = index;
-            });
-            if (blockIndex >= 0) {
-                uRegistered[blockIndex].active = status;
-                state.registered = uRegistered;
-            }
-        }
-    }
-};
-var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
-var setBlockActiveStatus = exports.setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
-/**
- * Get registered plugin blocks.
- *
- * @param {Object} state store state
- * @return {Array} blocks
- */ var getBlocks = exports.getBlocks = function getBlocks(state) {
-    return state.blocks.registered;
-};
-/**
- * Get block object by given block type id.
- *
- * @param {Object} state store state
- * @return {Object | undefined} block object or undefined if no target block is found
- */ var getBlockById = exports.getBlockById = function getBlockById(state) {
-    return function(blockId) {
-        return state.blocks.registered.find(function(_ref2) {
-            var name = _ref2.name;
-            return name === blockId;
-        });
-    };
-};
-/**
- * @module blocksSlice
- */ var _default = exports["default"] = blocksSlice.reducer;
-
-},{"16834d59f055af3a":"lL1Ef"}],"azTGO":[function(require,module,exports) {
+},{"39aebd33bd221f16":"21dqq","6df61aa983d49f0c":"clIT3"}],"azTGO":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -37212,31 +37464,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("97c658a0a38c9755"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 // eslint-disable-next-line no-unused-vars
 /**
@@ -37283,31 +37532,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -37472,31 +37718,28 @@ function _interopRequireDefault(obj) {
         "default": obj
     };
 }
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -37835,31 +38078,28 @@ Object.defineProperty(exports, "__esModule", {
 exports.navigationType = exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("7379d0f4387f2644"));
 var _reactFontawesome = require("9393b843392e049e");
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -38105,31 +38345,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("7a7fd8a69bf62f03"));
-function _getRequireWildcardCache(nodeInterop) {
-    if (typeof WeakMap !== "function") return null;
-    var cacheBabelInterop = new WeakMap();
-    var cacheNodeInterop = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-    })(nodeInterop);
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-    if (!nodeInterop && obj && obj.__esModule) return obj;
-    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
-        "default": obj
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
     };
-    var cache = _getRequireWildcardCache(nodeInterop);
-    if (cache && cache.has(obj)) return cache.get(obj);
-    var newObj = {};
-    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
-        else newObj[key] = obj[key];
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
-    newObj["default"] = obj;
-    if (cache) cache.set(obj, newObj);
-    return newObj;
+    return n["default"] = e, t && t.set(e, n), n;
 }
 // eslint-disable-next-line no-unused-vars
 /**
@@ -38159,289 +38396,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
  * @module AdminMenuWrapper
  */ var _default = exports["default"] = AdminMenuWrapper;
 
-},{"7a7fd8a69bf62f03":"21dqq"}],"7VzQu":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("c515c572c6ab551c"));
-var _toolkit = require("953ee9eab3e8c345");
-var _assets = _interopRequireDefault(require("ccfe05c780e0df68"));
-var _app = _interopRequireDefault(require("5fdbac5a3de76904"));
-var _blocks = _interopRequireDefault(require("b60a84ccf937dbc7"));
-var _versionControl = _interopRequireDefault(require("3142590e179e9a7a"));
-var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
-var _initialState = _interopRequireDefault(require("2948990e65501539"));
-var _LocalStorageProvider = require("121248d6c6f26fb");
-var _pluginStatus = _interopRequireDefault(require("6f45c3ea2f5cedb9"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-        return typeof o;
-    } : function(o) {
-        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, _typeof(o);
-}
-function ownKeys(e, r) {
-    var t = Object.keys(e);
-    if (Object.getOwnPropertySymbols) {
-        var o = Object.getOwnPropertySymbols(e);
-        r && (o = o.filter(function(r) {
-            return Object.getOwnPropertyDescriptor(e, r).enumerable;
-        })), t.push.apply(t, o);
-    }
-    return t;
-}
-function _objectSpread(e) {
-    for(var r = 1; r < arguments.length; r++){
-        var t = null != arguments[r] ? arguments[r] : {};
-        r % 2 ? ownKeys(Object(t), !0).forEach(function(r) {
-            _defineProperty(e, r, t[r]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r) {
-            Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-        });
-    }
-    return e;
-}
-function _defineProperty(obj, key, value) {
-    key = _toPropertyKey(key);
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _toPropertyKey(arg) {
-    var key = _toPrimitive(arg, "string");
-    return _typeof(key) === "symbol" ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-    if (_typeof(input) !== "object" || input === null) return input;
-    var prim = input[Symbol.toPrimitive];
-    if (prim !== undefined) {
-        var res = prim.call(input, hint || "default");
-        if (_typeof(res) !== "object") return res;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (hint === "string" ? String : Number)(input);
-}
-/**
- * Prepare data for pro only block upsells.
- *
- * @param {Object} proOnlyBlockList pro only block list
- *
- * @return {Array} pro block upsell data
- */ function prepareProOnlyBlockUpsellData(proOnlyBlockList) {
-    return Object.keys(proOnlyBlockList).filter(function(key) {
-        return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
-    }).reduce(function(carry, blockName) {
-        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon, screenshot = _proOnlyBlockList$blo.screenshot;
-        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true, screenshot));
-        return carry;
-    }, []);
-}
-/**
- * Generate block info object compatible with settings menu store.
- *
- * @param {string}            name                 block registry name
- * @param {string}            title                block title
- * @param {string}            info                 block info
- * @param {React.ElementType} icon                 icon element
- * @param {boolean}           active               active status
- * @param {boolean}           [pro=false]          block pro status
- * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
- * @return {Object} block info object
- */ function generateBlockInfoObject(name, title, info, icon, active) {
-    var pro = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-    var screenshotUrl = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
-    return {
-        name: name,
-        title: title,
-        info: Array.isArray(info) ? info : [
-            info
-        ],
-        icon: icon,
-        active: active,
-        pro: pro,
-        screenshotUrl: screenshotUrl
-    };
-}
-/**
- * Create settings menu store.
- *
- * @return {Object} store
- */ function createStore() {
-    // eslint-disable-next-line no-undef
-    var appData = _objectSpread({}, ubAdminMenuData);
-    // eslint-disable-next-line no-undef
-    ubAdminMenuData = null;
-    // add block infos to context data
-    var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
-    var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
-        return blockData.parent === undefined && blockData.supports.inserter === undefined;
-    });
-    var _appData$blocks = appData.blocks, statusData = _appData$blocks.statusData, info = _appData$blocks.info;
-    var reducedBlocks = registeredUbBlocks.reduce(function(carry, current) {
-        var icon = current.icon, currentName = current.name, title = current.title;
-        var blockStatus = false;
-        // eslint-disable-next-line array-callback-return,no-shadow
-        statusData.map(function(_ref) {
-            var name = _ref.name, active = _ref.active;
-            if (name === currentName) blockStatus = active;
-        });
-        var blockInfo = [];
-        if (info[currentName] && Array.isArray(info[currentName])) blockInfo = info[currentName];
-        var newBlockObject = generateBlockInfoObject(currentName, title, blockInfo, icon.src, blockStatus);
-        carry.push(newBlockObject);
-        return carry;
-    }, []);
-    var proBlocks = appData.upsells.blocks;
-    var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
-    // all blocks available including upsell versions of pro blocks or pro blocks themselves
-    var allRegistered = proBlockUpsell.reduce(function(carry, current) {
-        var proBlockName = current.name;
-        //check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
-        // if not inject the upsell data to current block list
-        var registeredProBlock = carry.find(function(_ref2) {
-            var name = _ref2.name;
-            return name === proBlockName;
-        });
-        if (registeredProBlock) registeredProBlock.pro = true;
-        else carry.push(current);
-        return carry;
-    }, reducedBlocks);
-    var preloadedState = {
-        assets: appData.assets,
-        blocks: {
-            registered: allRegistered
-        },
-        versionControl: appData.versionControl,
-        pluginStatus: appData.pluginStatus
-    };
-    // merge with default store state
-    preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
-    // merge with localStorage data
-    preloadedState = (0, _deepmerge["default"])(preloadedState, (0, _LocalStorageProvider.getLocalStorage)());
-    return (0, _toolkit.configureStore)({
-        reducer: {
-            assets: _assets["default"],
-            app: _app["default"],
-            blocks: _blocks["default"],
-            versionControl: _versionControl["default"],
-            pluginStatus: _pluginStatus["default"]
-        },
-        middleware: function middleware(getDefaultMiddleware) {
-            return getDefaultMiddleware({
-                serializableCheck: false
-            });
-        },
-        preloadedState: preloadedState
-    });
-}
-/**
- * @module createStore
- */ var _default = exports["default"] = createStore;
-
-},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","ccfe05c780e0df68":"9SnHn","5fdbac5a3de76904":"c28DV","b60a84ccf937dbc7":"ohEvx","3142590e179e9a7a":"6jcRk","61d1115f3d5c796e":"ck1Q2","2948990e65501539":"3xPpL","121248d6c6f26fb":"1Y8eP","6f45c3ea2f5cedb9":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
-"use strict";
-var isMergeableObject = function isMergeableObject(value) {
-    return isNonNullObject(value) && !isSpecial(value);
-};
-function isNonNullObject(value) {
-    return !!value && typeof value === "object";
-}
-function isSpecial(value) {
-    var stringValue = Object.prototype.toString.call(value);
-    return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
-}
-// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
-var canUseSymbol = typeof Symbol === "function" && Symbol.for;
-var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 0xeac7;
-function isReactElement(value) {
-    return value.$$typeof === REACT_ELEMENT_TYPE;
-}
-function emptyTarget(val) {
-    return Array.isArray(val) ? [] : {};
-}
-function cloneUnlessOtherwiseSpecified(value, options) {
-    return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
-}
-function defaultArrayMerge(target, source, options) {
-    return target.concat(source).map(function(element) {
-        return cloneUnlessOtherwiseSpecified(element, options);
-    });
-}
-function getMergeFunction(key, options) {
-    if (!options.customMerge) return deepmerge;
-    var customMerge = options.customMerge(key);
-    return typeof customMerge === "function" ? customMerge : deepmerge;
-}
-function getEnumerableOwnPropertySymbols(target) {
-    return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
-        return Object.propertyIsEnumerable.call(target, symbol);
-    }) : [];
-}
-function getKeys(target) {
-    return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
-}
-function propertyIsOnObject(object, property) {
-    try {
-        return property in object;
-    } catch (_) {
-        return false;
-    }
-}
-// Protects from prototype poisoning and unexpected merging up the prototype chain.
-function propertyIsUnsafe(target, key) {
-    return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
-     && !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
-     && Object.propertyIsEnumerable.call(target, key) // and also unsafe if they're nonenumerable.
-    );
-}
-function mergeObject(target, source, options) {
-    var destination = {};
-    if (options.isMergeableObject(target)) getKeys(target).forEach(function(key) {
-        destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
-    });
-    getKeys(source).forEach(function(key) {
-        if (propertyIsUnsafe(target, key)) return;
-        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
-        else destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-    });
-    return destination;
-}
-function deepmerge(target, source, options) {
-    options = options || {};
-    options.arrayMerge = options.arrayMerge || defaultArrayMerge;
-    options.isMergeableObject = options.isMergeableObject || isMergeableObject;
-    // cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
-    // implementations can use it. The caller may not replace it.
-    options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
-    var sourceIsArray = Array.isArray(source);
-    var targetIsArray = Array.isArray(target);
-    var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
-    if (!sourceAndTargetTypesMatch) return cloneUnlessOtherwiseSpecified(source, options);
-    else if (sourceIsArray) return options.arrayMerge(target, source, options);
-    else return mergeObject(target, source, options);
-}
-deepmerge.all = function deepmergeAll(array, options) {
-    if (!Array.isArray(array)) throw new Error("first argument should be an array");
-    return array.reduce(function(prev, next) {
-        return deepmerge(prev, next, options);
-    }, {});
-};
-var deepmerge_1 = deepmerge;
-module.exports = deepmerge_1;
-
-},{}]},["eQDYk"], "eQDYk", "parcelRequire065b")
+},{"7a7fd8a69bf62f03":"21dqq"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
 
 //# sourceMappingURL=ub-admin-settings.js.map

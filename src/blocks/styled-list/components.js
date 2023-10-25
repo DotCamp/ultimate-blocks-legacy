@@ -715,6 +715,7 @@ export function StyledListItem(props) {
 		};
 	});
 	const [useFontSize, toggleUseFontSize] = useState(false);
+	const blockProps = useBlockProps();
 
 	useEffect(() => {
 		if (blockID === "") {
@@ -828,7 +829,7 @@ export function StyledListItem(props) {
 	}, [fontSize]);
 
 	return (
-		<>
+		<div {...blockProps}>
 			<BlockControls>
 				<Button
 					icon="editor-outdent"
@@ -1048,7 +1049,7 @@ export function StyledListItem(props) {
 				allowedBlocks={["ub/styled-list"]}
 				renderAppender={false}
 			/>
-		</>
+		</div>
 	);
 }
 
