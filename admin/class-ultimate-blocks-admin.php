@@ -186,6 +186,7 @@ class Ultimate_Blocks_Admin {
 				'wp-editor',
 				'wp-hooks',
 				'wp-api',
+				'lodash'
 			),
 			$this->version,
 			true
