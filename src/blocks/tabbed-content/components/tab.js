@@ -1,5 +1,5 @@
 import icon from "../icons/icon";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -86,7 +86,10 @@ registerBlockType("ub/tab-block", {
 		// }
 
 		return (
-			<div style={{ display: isActive ? "block" : "none" }}>
+			<div
+				style={{ display: isActive ? "block" : "none" }}
+				className="wp-block-ub-tabbed-content-tab-content-wrap"
+			>
 				<InnerBlocks
 					templateLock={false}
 					template={[
