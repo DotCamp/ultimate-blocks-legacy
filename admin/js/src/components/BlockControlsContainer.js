@@ -1,19 +1,18 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
-import BlockControl from '$Components/BlockControl';
-import { FILTER_TYPES } from '$Components/BlockStatusFilterControl';
+import BlockControlCard from '$Components/BlockControlCard';
 import withStore from '$HOC/withStore';
 import {
 	getBlocks,
 	setBlockActiveStatus,
 } from '$Stores/settings-menu/slices/blocks';
 import {
-	getBlockFilter,
 	getBlockInfoShowStatus,
 	getProStatus,
+	showProBlockUpsellModal,
 } from '$Stores/settings-menu/slices/app';
 import { toggleBlockStatus } from '$Stores/settings-menu/actions';
-import VisibilityWrapper from '$Components/VisibilityWrapper';
+import { getAsset } from '$Stores/settings-menu/slices/assets';
 
 /**
  * Block controls container.
@@ -22,21 +21,26 @@ import VisibilityWrapper from '$Components/VisibilityWrapper';
  *
  * @param {Object}   props                component properties
  * @param {Object}   props.blocks         menu data, will be supplied via HOC
- * @param {Object}   props.blockFilter    current filter for block status, will be supplied via HOC
  * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
  * @param {Function} props.setBlockStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.showInfoStatus status of showing extra information in block controls, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
+ * @param {Function} props.showUpsell     set target block type for modal interface
+ * @param {Object}   props.blockDemos     block demo urls, will be supplied via HOC
  */
 function BlockControlsContainer( {
 	blocks,
-	blockFilter,
 	setBlockStatus,
 	dispatch,
 	showInfoStatus,
 	proStatus,
+	showUpsell,
+	blockDemos,
 } ) {
 	const [ innerBlocks, setInnerBlocks ] = useState( blocks );
+
+	const getBlockDemo = ( blockId ) =>
+		blockDemos[ blockId ] ? blockDemos[ blockId ] : null;
 
 	/**
 	 * Handle block status change.
@@ -78,28 +82,20 @@ function BlockControlsContainer( {
 			data-show-info={ JSON.stringify( showInfoStatus ) }
 		>
 			{ innerBlocks.map( ( { title, name, icon, active, info, pro } ) => {
-				const blockStatus = active
-					? FILTER_TYPES.ENABLED
-					: FILTER_TYPES.DISABLED;
-				const visibilityStatus =
-					blockFilter === FILTER_TYPES.ALL
-						? true
-						: blockStatus === blockFilter;
 				return (
-					<VisibilityWrapper
+					<BlockControlCard
 						key={ name }
-						visibilityStatus={ visibilityStatus }
-					>
-						<BlockControl
-							title={ title }
-							blockId={ name }
-							status={ active }
-							iconObject={ icon }
-							onStatusChange={ handleBlockStatusChange( pro ) }
-							info={ info }
-							proBlock={ pro }
-						/>
-					</VisibilityWrapper>
+						title={ title }
+						blockId={ name }
+						status={ active }
+						iconObject={ icon }
+						onStatusChange={ handleBlockStatusChange( pro ) }
+						info={ info }
+						proBlock={ pro }
+						showUpsell={ showUpsell }
+						proStatus={ proStatus }
+						demoUrl={ getBlockDemo( name ) }
+					/>
 				);
 			} ) }
 		</div>
@@ -108,13 +104,14 @@ function BlockControlsContainer( {
 
 const selectMapping = ( selector ) => ( {
 	blocks: selector( getBlocks ),
-	blockFilter: selector( getBlockFilter ),
 	showInfoStatus: selector( getBlockInfoShowStatus ),
 	proStatus: selector( getProStatus ),
+	blockDemos: selector( ( state ) => getAsset( state, 'blockDemos' ) ),
 } );
 
 const actionMapping = () => ( {
 	setBlockStatus: setBlockActiveStatus,
+	showUpsell: showProBlockUpsellModal,
 } );
 
 /**

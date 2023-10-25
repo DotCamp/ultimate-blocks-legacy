@@ -1,24 +1,32 @@
-$white: #FFFFFF;
-
-$wp-gray: #CCCCCC;
+$white: #FFF;
+$black: #000;
+$wp-gray: #CCC;
 $wp-black: #2F2F2F;
-
 $gray-100: #FBFBFB;
 $gray-300: #E5E5E5;
 $gray-400: #DFDFDF;
 $gray-500: #B4A7A7;
 $gray-600: #7B6D6D;
 $gray-800: #938181;
-
 $red-100: #FFF0F0;
 $red-500: #E11B4C;
-
 $yellow-500: #EAB308;
-
 $green-500: #22C55E;
-
 $positive: $green-500;
 $negative: $red-500;
-
 $gold: #FFD700;
 $logo-color: #F64646;
+
+// overhaul colors
+// gray
+$o-gray-50: #FFF3F6;
+$neutral-gray-50: #F8FAFC;
+$o-gray-200: #E2E8F0;
+$o-gray-500: #64748B;
+
+// blue
+$o-blue-100: #BBCAF3;
+$o-blue-300: #6183E4;
+$o-blue-500: #1D4ED8;
+
+

@@ -9,11 +9,11 @@ import Animation from '$Components/Animation';
  *
  * @param {Object} props component properties
  */
-function AnimationAppear(props) {
+function AnimationAppear( props ) {
 	const { children, ...rest } = props;
 	rest.animationKeyframeName = 'appear';
 
-	return <Animation {...rest}>{children}</Animation>;
+	return <Animation { ...rest }>{ children }</Animation>;
 }
 
 /**

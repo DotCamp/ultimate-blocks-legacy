@@ -6,7 +6,6 @@ import blocksSlice from '$Stores/settings-menu/slices/blocks';
 import versionControlSlice from '$Stores/settings-menu/slices/versionControl';
 import deepmerge from 'deepmerge';
 import initialState from '$Stores/settings-menu/initialState';
-import { getLocalStorage } from '$Components/LocalStorageProvider';
 import pluginStatusSlice from '$Stores/settings-menu/slices/pluginStatus';
 
 /**
@@ -148,8 +147,13 @@ function createStore() {
 		return carry;
 	}, reducedBlocks );
 
+	const { contentData, ...preloadedAssets } = appData.assets;
+
 	let preloadedState = {
-		assets: appData.assets,
+		app: {
+			content: contentData,
+		},
+		assets: preloadedAssets,
 		blocks: {
 			registered: allRegistered,
 		},
@@ -159,9 +163,6 @@ function createStore() {
 
 	// merge with default store state
 	preloadedState = deepmerge( initialState, preloadedState );
-
-	// merge with localStorage data
-	preloadedState = deepmerge( preloadedState, getLocalStorage() );
 
 	return configureStore( {
 		reducer: {

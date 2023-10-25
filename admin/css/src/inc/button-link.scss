@@ -1,0 +1,69 @@
+@use 'sass:color';
+@import '../base/colors';
+@import '../base/themes/admin-menu-theme';
+@import '../base/common';
+
+.ub-button-link {
+	@extend %p3-bold;
+	@extend %pointer;
+	@extend %ub-click;
+
+	border-radius: 5px;
+	width: fit-content;
+	padding: 8px 12px;
+	border: 1px solid $o-blue-100;
+	color: $o-blue-500;
+
+	&[data-buttonlink-type="text"] {
+		color: $o-blue-300;
+		border: 0;
+		padding: 0;
+
+		&::before {
+			content: "|";
+			margin-right: 5px;
+		}
+
+		&:hover {
+			background-color: unset;
+			color: $o-blue-300;
+		}
+
+		&:active {
+			background-color: unset;
+		}
+	}
+
+	&[data-buttonlink-type="primary"] {
+		@extend %p2-bold;
+
+		color: $neutral-gray-50;
+		background-color: $red-500;
+		border: 0;
+
+		&:hover {
+			background-color: #F4406D;
+		}
+
+		&:active {
+			background-color: #991132;
+		}
+	}
+
+	&:hover {
+		background-color: color.adjust($o-blue-100, $lightness: -10%);
+		color: $neutral-gray-50;
+	}
+
+	&:active {
+		background-color: color.adjust($o-blue-100, $lightness: -15%);
+	}
+}
+
+.ub-button-link-group {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-flow: row wrap;
+	gap: 5px;
+}

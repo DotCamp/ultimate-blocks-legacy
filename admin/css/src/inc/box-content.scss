@@ -1,0 +1,62 @@
+@import "../base/colors";
+@import "../base/common";
+@import "../base/themes/admin-menu-theme";
+
+.ub-box-content {
+	padding: 32px 48px;
+	border: 1px solid $o-gray-200;
+	border-radius: 12px;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto auto;
+	grid-gap: 24px;
+
+
+	&[data-layout="horizontal"] {
+		grid-template-columns: 1fr auto;
+		grid-template-rows: auto;
+
+		@include screen-max($screen-sm2) {
+			grid-template-columns: 1fr;
+			grid-template-rows: auto auto;
+			text-align: center;
+			justify-items: center;
+		}
+	}
+
+	&[data-size="normal"] {
+		padding: 32px;
+		border: 1px solid $o-gray-200;
+
+		.ub-box-content-title {
+			@extend %h3-regular;
+		}
+	}
+
+	.ub-box-content-title-inc-wrapper {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto;
+		grid-gap: 8px;
+
+		.ub-box-content-title {
+			@extend %h2-regular;
+		}
+
+		.ub-box-content-inc {
+			@extend %p1-sub;
+		}
+	}
+
+	&[data-alignment="center"] {
+		text-align: center;
+		justify-items: center;
+	}
+
+	.ub-box-content-footer {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 10px;
+	}
+}

@@ -1,127 +1,263 @@
 @import "../../../src/styles/Upsell/UpsellModal";
 @import "./base/common";
 @import "./base/themes/admin-menu-theme";
+@import "./inc/welcome-content-styles";
+@import "./inc/blocks-content-styles";
+@import "./inc/box-content";
+@import "./inc/button-link";
+@import "./inc/screen-center-mark";
+@import "./inc/navigation";
+@import "./inc/controls-container";
+@import "./inc/block-control-card";
+@import "./inc/extensions-content-styles";
 
 
 .ub-admin-menu-wrapper {
 	@extend %size-full;
+
 	font-family: $font-family;
 	font-size: $font-size;
 	position: absolute;
-	background-color: $gray-300;
+	background-color: $white;
 	color: $text-color;
 	z-index: 10;
 
+	&, & * {
+		box-sizing: border-box;
+	}
+
+	.content-phrase {
+		@extend %flex-center-all;
+		@extend %unselectable;
+
+		flex-direction: column;
+		font-size: $phrase-font-size;
+		margin: 60px 0;
+
+		.line-wrapper {
+			margin: 15px 0;
+			font-weight: 400;
+		}
+	}
+
 	.ub-admin-menu-container {
 		@extend %size-full;
+
 		background-color: $white;
 		display: grid;
+		position: relative;
 		grid-template-columns: 1fr;
 		grid-template-rows: auto 1fr;
 
 		& > div {
-			padding: 0 100px 0 100px;
-			@include screen-max($screen-2xl) {
-				padding: 0 50px 0 50px;
+			padding: 0 160px;
+
+			@include screen-max($screen-xl) {
+				padding: 0 50px;
 			}
 		}
 
-		.menu-header {
-			padding-top: 10px;
-			padding-bottom: 10px;
-			@extend %box-shadow-lg;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			background-color: $gray-100;
+		.header-wrapper {
+			@extend %flex-center-all;
+			@extend %default-border;
 
-			.logo-container {
-				@extend %flex-center-all;
-				@extend %unselectable;
-				flex-direction: row;
-				height: $logo-height;
+			position: relative;
 
-				img {
-					height: 100%;
-				}
+			.menu-header {
+				display: grid;
+				width: 100%;
+				max-width: $main-wrapper-max-width;
+				position: relative;
+				grid-template: 1fr / repeat(3, minmax(0, 1fr));
+				grid-template-areas: "logo nav right";
+				align-items: center;
+				border-width: 0 0 1px;
+				height: $header-height;
+				background-color: $white;
 
-				.ub-plugin-logo-text {
-					font-weight: bold;
-					margin: 0 5px;
-					font-size: 1.6rem;
+				@include screen-max($screen-md2) {
+					grid-template-areas: "hamburger logo right";
 
-				}
-			}
+					.ub-hamburger-menu {
+						display: block !important;
+					}
 
-			.right-container {
-				@extend %flex-center-all-row;
-				height: 100%;
-
-				.right-container-item {
-					@extend %flex-center-all;
-					height: 100%;
-					padding: 0 10px;
-
-					&:not(.right-container-item:last-of-type) {
-						border-right: 2px solid $gray-300;
+					.version-control-header-wrapper {
+						display: none;
 					}
 				}
 
-				.version-control-container {
+				.logo-container {
+					@extend %flex-center-all;
+					@extend %unselectable;
+
+
+					grid-area: logo;
+					justify-content: flex-start;
+					flex-direction: row;
+					height: $logo-height;
+
+					img {
+						height: 100%;
+					}
+
+					.ub-plugin-logo-text {
+						@extend %weight-bold;
+
+						margin: 0 5px;
+						font-size: 1.4rem;
+					}
+				}
+
+				.right-container {
 					@extend %flex-center-all-row;
 
-					& > div {
-						padding: 0 5px;
-					}
+					grid-area: right;
+					justify-content: flex-end;
+					height: 100%;
 
-					.version-control-text {
-						@extend %unselectable;
-					}
+					.right-container-item {
+						@extend %flex-center-all;
 
-					.version-control-status-indicator {
-						@include size(15);
-						border-radius: 100%;
-						padding: 0 !important;
+						gap: 10px;
+						height: 100%;
 
-						&[data-level='none'] {
-							background-color: $green-500;
-						}
-
-						&[data-level='medium'] {
-							background-color: $yellow-500;
-						}
-
-						&[data-level='high'] {
-							background-color: $red-500;
+						&:not(:first-child) {
+							margin-left: 24px;
 						}
 					}
 
-					.version-control-button {
+
+					.version-control-container {
+						@extend %flex-center-all-row;
+
+						.ub-header-version-info {
+							* {
+								color: $text-faded-color;
+								font-size: $font-pill-size;
+							}
+						}
+
+						.version-control-status-indicator {
+							@include size(15);
+
+							border-radius: 100%;
+							padding: 0 !important;
+
+							&[data-level='none'] {
+								background-color: $green-500;
+							}
+
+							&[data-level='medium'] {
+								background-color: $yellow-500;
+							}
+
+							&[data-level='high'] {
+								background-color: $red-500;
+							}
+						}
+					}
+
+					.share-node {
 						@extend %pointer;
 
-						&[data-disabled='true'] {
-							color: $gray-300;
-							cursor: default;
-							pointer-events: none;
+						& svg {
+							@include size(16);
 						}
 					}
 				}
 
-				.blog-info-toggle {
-					@extend %default-transition;
-					@extend %pointer;
-					padding: 5px;
-					color: $gray-300;
+				.ub-menu-navigation-wrapper {
+					grid-area: nav;
+					height: 100%;
 
-					&[data-light-it-up='true'] {
-						color: $yellow-500;
+					@include screen-max($screen-md2) {
+						display: none;
 					}
+				}
 
-					& svg {
-						@include size(25);
+				.ub-hamburger-menu {
+					grid-area: hamburger;
+					display: none;
+
+					&-icon-wrapper {
+						@extend %pointer;
+						@extend %ub-click;
+
+						width: fit-content;
+
+						/* stylelint-disable-next-line no-descending-specificity */
+						svg {
+							@include size(20);
+
+						}
 					}
 				}
 			}
+
+			.dropdown-navigation {
+				display: none;
+
+				.dropdown-drawer {
+					@extend %default-transition;
+					@extend %shadow-md;
+
+					z-index: 10000;
+				}
+
+				@include screen-max($screen-md2) {
+					display: block;
+
+					.dropdown-drawer {
+						position: absolute;
+						height: auto;
+						left: -50%;
+						top: 100%;
+
+						.ub-menu-navigation {
+							grid-template-columns: 1fr !important;
+							border: 1px solid $border-color;
+							z-index: 10;
+
+							.ub-menu-navigation-header-button {
+								padding: 15px 10px !important;
+							}
+						}
+
+						.hamburger-version-control {
+							background-color: $white;
+
+							.ub-header-version-info {
+								select {
+									margin: 0 !important;
+									width: 100%;
+									border-radius: 0 !important;
+									border: 0 !important;
+
+									&:focus, &:active {
+										outline: 0 !important;
+										border: 0 !important;
+										box-shadow: none !important;
+									}
+								}
+							}
+						}
+					}
+
+					&[data-menu-status="true"] {
+						.dropdown-drawer {
+							left: 0 !important;
+						}
+					}
+				}
+			}
+		}
+
+		.route-404 {
+			@extend %flex-center-all;
+			@extend %size-full;
+
+			box-sizing: border-box;
 		}
 
 		.menu-content {
@@ -135,6 +271,7 @@
 			.block-status-filter-control {
 				@extend %default-border;
 				@extend %pill;
+
 				position: relative;
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
@@ -146,6 +283,7 @@
 				.active-indicator {
 					@extend %default-transition;
 					@extend %pill;
+
 					position: absolute;
 					width: 10px;
 					height: 30px;
@@ -157,6 +295,7 @@
 					@extend %flex-center-all;
 					@extend %default-transition;
 					@extend %unselectable;
+
 					cursor: pointer;
 					padding: 5px 20px;
 					text-transform: capitalize;
@@ -167,151 +306,11 @@
 					}
 				}
 			}
-
-			.controls-container {
-				display: flex;
-				justify-content: center;
-				align-items: flex-start;
-				flex-wrap: wrap;
-				width: 100%;
-				height: fit-content;
-				margin: 30px 0;
-				border-radius: 5px;
-
-				&[data-show-info="false"] .block-control {
-
-					& > div:not(.block-title) {
-						display: none;
-					}
-				}
-
-				.block-control {
-					@extend %box-shadow-md;
-					@extend %default-transition;
-					@extend %default-border;
-					overflow: hidden;
-					width: $block-control-width;
-					max-width: $block-control-width;
-					height: $block-control-height;
-					border-radius: $block-control-border-radius;
-					margin: $block-control-y-margin $block-control-x-margin;
-					display: grid;
-					grid-template-columns: 1fr;
-					grid-template-rows: auto 1fr auto;
-					grid-template-areas: "title" "info" "howTo";
-
-					&[data-initial-animation="true"] {
-						transition: none;
-					}
-
-					&[data-enabled='false'] {
-						border-color: $gray-500;
-					}
-
-					&[data-enabled='false'] .block-title {
-						background-color: $gray-400;
-						color: $gray-500;
-
-					}
-
-					&[data-enabled='false'] .title-icon {
-						fill: $gray-500;
-
-						svg {
-							fill: $gray-500;
-
-							* {
-								fill: $gray-500;
-							}
-						}
-					}
-
-					&[data-enabled='false'] .block-info {
-						color: $gray-500;
-					}
-
-					.block-info {
-						@extend %flex-center-all;
-						grid-area: info;
-						padding: 10px;
-						overflow: auto;
-
-						.info-line {
-							//@extend %flex-center-all;
-							text-align: center;
-						}
-					}
-
-					.block-title {
-						@extend %default-transition;
-						@extend %unselectable;
-						grid-area: title;
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						padding: $block-control-padding;
-						background-color: $block-title-bg;
-						font-size: $block-title-font-size;
-						color: $block-title-color;
-
-						.block-title-left-container {
-							display: flex;
-							justify-content: flex-start;
-							align-items: center;
-
-							.title-icon {
-								@extend %default-transition;
-								width: $block-title-icon-size;
-								height: $block-title-icon-size;
-								margin-right: 10px;
-
-								svg {
-									@extend %default-transition;
-									width: $block-title-icon-size;
-									height: $block-title-icon-size;
-
-									* {
-										@extend %default-transition;
-									}
-								}
-							}
-
-							.title-text {
-								text-transform: capitalize;
-
-								.pro-block-card-title-suffix {
-									margin: 0 5px;
-									font-weight: bold;
-								}
-							}
-						}
-
-						.block-title-right-container {
-							.pro-block-card-info-button {
-								color: $red-500;
-								background: white;
-								border-radius: 100%;
-								@extend %pointer;
-
-								svg {
-									@include size(25);
-									@extend %unselectable;
-								}
-							}
-						}
-					}
-
-					.block-howto {
-						@extend %flex-center-all;
-						padding: $block-control-padding;
-						grid-area: howTo;
-					}
-				}
-			}
 		}
 
 		.pro-content {
 			@extend %flex-center-all;
+
 			flex-direction: column;
 
 			.content-phrase {
@@ -320,6 +319,7 @@
 
 			.ub-pro-content-main {
 				@extend %default-transition;
+
 				font-size: 1.2rem;
 
 				&:hover {
@@ -332,6 +332,8 @@
 	.ub-toggle-control {
 		@extend %default-transition;
 		@extend %pill;
+
+		box-sizing: content-box;
 		position: relative;
 		width: 42px;
 		height: 20px;
@@ -346,6 +348,7 @@
 
 		.knob {
 			@extend %default-transition;
+
 			position: absolute;
 			left: 0;
 			width: 20px;
@@ -359,17 +362,23 @@
 		}
 	}
 
-	.content-phrase {
-		@extend %flex-center-all;
-		@extend %unselectable;
-		flex-direction: column;
-		font-size: $phrase-font-size;
-		margin: 60px 0;
 
-		.line-wrapper {
-			margin: 15px 0;
-			font-weight: 400;
+	.ub-router-content-wrapper {
+		@extend %appear-anim;
+
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		padding-top: 40px !important;
+		padding-bottom: 40px !important;
+		overflow: auto;
+
+
+		/* stylelint-disable-next-line no-descending-specificity */
+		& > div {
+			max-width: $main-wrapper-max-width;
 		}
+
 	}
 }
 
@@ -424,28 +433,34 @@
 
 .version-control-popup {
 	@extend %flex-center-all;
+
 	position: fixed;
 	inset: 0;
 	background-color: $version-control-popup-bg;
 	z-index: 10000;
 	font-family: $font-family;
 	font-size: $version-control-general-font-size;
+	animation: blur-anim 0.2s ease-out forwards;
 
 	.modal-container {
 		@extend %default-border;
+
 		background-color: $white;
 		border-radius: $block-control-border-radius;
 		overflow: hidden;
 		padding: 20px 60px;
 
+		/* stylelint-disable-next-line no-descending-specificity */
 		& > div {
 			margin: 10px 0;
 		}
 
 		.version-content {
 			@extend %flex-center-all;
+
 			margin-top: 30px;
 
+			/* stylelint-disable no-descending-specificity */
 			& > div {
 				margin-top: 20px;
 
@@ -458,13 +473,15 @@
 				}
 			}
 
+			/* stylelint-enable no-descending-specificity */
+
 			.operation-finished-wrapper {
 				.version-control-response {
 					font-weight: bold;
 					color: $positive;
 
 					&[data-resp-type='error'] {
-						@extend .ub-negative-color;
+						@extend %ub-negative-color;
 					}
 
 				}
@@ -473,7 +490,9 @@
 
 			.version-warning {
 				@extend %flex-center-all;
+
 				flex-direction: column;
+
 				@extend %unselectable;
 			}
 
@@ -487,6 +506,7 @@
 
 			.version-id {
 				@extend %unselectable;
+
 				font-size: $versions-font-size;
 				font-weight: bold;
 				margin: 0 40px;
@@ -494,15 +514,19 @@
 
 			.version-icon {
 				@extend %flex-center-all;
+
 				width: fit-content;
 				height: fit-content;
 				overflow: hidden;
 
 				&[data-in-progress='true'] .version-icon-inner-wrapper {
 					@extend %default-transition;
+
 					animation: stay-a-while-and-listen 2s ease-out infinite;
 				}
 
+
+				/* stylelint-disable no-descending-specificity */
 				.version-icon-inner-wrapper {
 					padding: 0 10px;
 				}
@@ -511,6 +535,8 @@
 					width: 2.5rem;
 					height: 2.5rem;
 				}
+
+				/* stylelint-enable no-descending-specificity */
 			}
 		}
 	}
@@ -538,6 +564,7 @@
 	@extend %flex-center-all;
 	@extend %default-transition;
 	@extend %unselectable;
+
 	padding: 10px 20px;
 	background-color: $red-500;
 	color: $white;
@@ -564,4 +591,21 @@
 .text-indicate {
 	color: $red-500;
 	font-weight: 500;
+}
+
+.ub-youtube-embed {
+	@extend %flex-center-all;
+	@extend %default-border;
+
+	border-radius: 8px;
+	overflow: hidden;
+	width: 100%;
+
+	iframe {
+		width: 100%;
+	}
+}
+
+%appear-anim {
+	animation: appear 0.2s ease-out forwards;
 }

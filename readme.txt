@@ -145,18 +145,19 @@ That's it. You're done!
 
 = 3.0.6 =
 
+* NEW: Counter block.
 * FIX: Schema parsing error from how to block.
 * FIX: Styled List block layout is not equal frontend and editor.
 * FIX: Styled List block duplicate instance not working properly.
-* NEW: Counter block.
-* PRO: IMPROVE: Make Coupon Block color clearable.
-* PRO: NEW: Add doesn't expire option in coupon block.
-* PRO: NEW: Add Coupon Type Coupon/Deal in coupon block.
-* PRO: IMPROVE: Content toggle blocks attributes including their parent IDs.
+* FIX: An issue affecting content toggle block for <WordPress5.9 servers.
+* IMPROVE: Settings menu updates.
 * IMPROVE: Change social share block twitter icon to X.
 * IMPROVE: Change default state of social share block.
-* IMPROVE: Change default state of content toggle block. 
-* FIX: An issue affecting content toggle block for <WordPress5.9 servers.
+* IMPROVE: Change default state of content toggle block.
+* PRO: NEW: Add doesn't expire option in coupon block.
+* PRO: NEW: Add Coupon Type Coupon/Deal in coupon block.
+* PRO: IMPROVE: Make Coupon Block color clearable.
+* PRO: IMPROVE: Content toggle blocks attributes including their parent IDs.
 
 = 3.0.5 =
 
