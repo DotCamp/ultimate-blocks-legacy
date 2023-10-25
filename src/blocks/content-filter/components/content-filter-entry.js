@@ -259,7 +259,7 @@ function ContentFilterEntry(props) {
 	}, [availableFilters, selectedFilters]);
 
 	return (
-		<div {...useBlockProps()} className="ub-content-filter-panel">
+		<div {...useBlockProps({ className: "ub-content-filter-panel" })}>
 			<InnerBlocks templateLock={false} />
 			<div className="ub-content-assigned-filter-tag-area">
 				{tagList

@@ -430,7 +430,7 @@ export function NewPanelContent(props) {
 
 		const { filterArray } = attributes;
 
-		block.innerBlocks.forEach((panel) =>
+		block?.innerBlocks?.forEach((panel) =>
 			updateBlockAttributes(panel.clientId, {
 				availableFilters: [
 					...filterArray.slice(0, pos),
@@ -451,7 +451,7 @@ export function NewPanelContent(props) {
 		];
 		setAttributes({ filterArray: newFilterArray });
 
-		block.innerBlocks.forEach((panel) =>
+		block?.innerBlocks?.forEach((panel) =>
 			updateBlockAttributes(panel.clientId, {
 				availableFilters: newFilterArray,
 			})
