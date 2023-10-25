@@ -277,6 +277,7 @@ export function PanelContent(props) {
 			toggleIcon,
 			border,
 			showOnlyOne,
+			defaultOpen,
 		},
 		setAttributes,
 		className,
@@ -543,6 +544,18 @@ export function PanelContent(props) {
 		}
 	}
 
+	const availablePanels = panels?.map((panel, index) => {
+		return {
+			value: panel.clientId,
+			label: `Panel ${index + 1}`,
+		};
+	});
+
+	const defaultOpenOptions = [
+		{ value: "none", label: __("None", "ultimate-blocks") },
+		...availablePanels,
+	];
+
 	return (
 		<>
 			{isSelected && (
@@ -660,6 +673,29 @@ export function PanelContent(props) {
 											onChange={onCollapseChange}
 										/>
 									</PanelRow>
+									{collapsed && (
+										<SelectControl
+											label={__("Default Open", "ultimate-blocks")}
+											options={defaultOpenOptions}
+											value={
+												panels.find((panel) => panel?.attributes?.defaultOpen)
+													?.clientId ?? "none"
+											}
+											onChange={(newId) => {
+												panels.forEach((panel) => {
+													if (panel.clientId === newId) {
+														updateBlockAttributes(panel.clientId, {
+															defaultOpen: true,
+														});
+													} else {
+														updateBlockAttributes(panel.clientId, {
+															defaultOpen: false,
+														});
+													}
+												});
+											}}
+										/>
+									)}
 									<PanelRow>
 										<label htmlFor="ub-content-toggle-mobile-state">
 											{__("Collapsed on mobile")}

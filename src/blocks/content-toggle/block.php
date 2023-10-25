@@ -65,20 +65,21 @@ function ub_render_content_toggle_panel_block( $attributes, $content, $block_obj
 	if ( isset( $block_context['parentID'] ) ) {
 		$parentID = $block_context['parentID'];
 	}
+	$should_collapsed = $collapsed && !$defaultOpen;
 
 	return '<div ' . ( $toggleID === '' ? '' : 'id="' . $toggleID . '" ' ) . 'class="' . $border_class . $classNamePrefix . '-accordion' . ( isset( $className ) ? ' ' . esc_attr( $className ) : '' ) . '"'
 			. ( $parentID === '' ? ' style="border-color: ' . $theme . ';"' : '' ) . '>
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'
 			. ( $parentID === '' ? ' style="background-color: ' . $theme . ';"' : '' ) . ( $preventCollapse ? ' aria-disabled="true"' : '' )
-			. ' aria-expanded="' . ( json_encode( ! $collapsed ) ) . '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '" tabindex="0">
+			. ' aria-expanded="' . ( json_encode( ! $should_collapsed ) ) . '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '" tabindex="0">
                     <' . $titleTag . ' class="' . $classNamePrefix . '-accordion-title ub-content-toggle-title-' . $parentID . '"'
 			. ( $parentID === '' ? ' style="color:' . $titleColor . ';"' : '' ) . '>' . $panelTitle . '</' . $titleTag . '>' .
 			( $toggleIcon === 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' . esc_attr( $toggleLocation ) .
 											'"><span class="' . $classNamePrefix . '-accordion-state-indicator ' . $icon_class .
-											( $collapsed ? '' : ' open' ) . '"></span>
+											( $should_collapsed ? '' : ' open' ) . '"></span>
                     </div>' ) .
 			'</div><div role="region" class="' . $classNamePrefix . '-accordion-content-wrap' .
-			( $collapsed ? ' ub-hide' : '' ) . '" id="ub-content-toggle-panel-' . $index . '-' . $parentID . '">' . $content
+			( $should_collapsed ? ' ub-hide' : '' ) . '" id="ub-content-toggle-panel-' . $index . '-' . $parentID . '">' . $content
 			. '</div></div>';
 }
 

@@ -523,6 +523,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'defaultOpen'        => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
 			'theme'           => array(
 				'type'    => 'string',
 				'default' => ''

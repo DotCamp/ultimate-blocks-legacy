@@ -109,6 +109,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	defaultOpen: {
+		type: "boolean",
+		default: false,
+	},
 };
 
 function ContentTogglePanel(props) {
@@ -153,7 +157,7 @@ function ContentTogglePanel(props) {
 	// }
 
 	useEffect(() => {
-		if (blockParent.attributes.titleLinkColor === "invalid") {
+		if (blockParent?.attributes?.titleLinkColor === "invalid") {
 			setPanelStatus(true);
 		}
 	}, []);
