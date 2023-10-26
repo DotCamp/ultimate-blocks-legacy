@@ -165,7 +165,7 @@ if (mountPoint) {
     }, /*#__PURE__*/ _react["default"].createElement(_AdminMenuContainer["default"], null))));
 } else throw new Error("no mount point found for settings menu");
 
-},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","5eabbf090be36ca7":"7a8vF","b134c17004fc38d7":"cBeYy","520d72c8a439ff41":"do7SF","2da12f694a741c54":"7VzQu"}],"21dqq":[function(require,module,exports) {
+},{"f86067a0c42586c2":"21dqq","6bb183c41f170262":"bdVon","dd04af2d01c62810":"lOjBx","2da12f694a741c54":"7VzQu","5eabbf090be36ca7":"7a8vF","b134c17004fc38d7":"cBeYy","520d72c8a439ff41":"do7SF"}],"21dqq":[function(require,module,exports) {
 "use strict";
 module.exports = require("a569817e6ea559f6");
 
@@ -25396,1614 +25396,28 @@ exports.hydrateRoot = function(c, h, o) {
     }
 };
 
-},{"aaccff5d309d9239":"j6uA9"}],"7a8vF":[function(require,module,exports) {
+},{"aaccff5d309d9239":"j6uA9"}],"7VzQu":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
-var _react = _interopRequireDefault(require("455808d61ca3dd3"));
-var _MenuHeader = _interopRequireDefault(require("13ab014d28c1a042"));
-var _Content = _interopRequireDefault(require("46d090e981b08c24"));
-var _UpsellModalSettingsMenu = _interopRequireDefault(require("b2a4cd4db8cb175"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-// eslint-disable-next-line no-unused-vars
-/**
- * Container for admin menu.
- *
- * @return {JSX.Element} container component
- * @function Object() { [native code] }
- */ function AdminMenuContainer() {
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-admin-menu-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null), /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
-}
-/**
- * @module AdminMenuContainer
- */ var _default = exports["default"] = AdminMenuContainer;
-
-},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G","b2a4cd4db8cb175":"l7D5t"}],"kP7QS":[function(require,module,exports) {
-"use strict";
-function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-        return typeof o;
-    } : function(o) {
-        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, _typeof(o);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("af8ddc31c52e60c1"));
-var _i18n = require("9846d3c7b6ac7c1b");
-var _withStore = _interopRequireDefault(require("a360f5480afc451d"));
-var _assets = require("66544b766e488b05");
-var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
-var _VersionControl = _interopRequireDefault(require("9b060551899412e8"));
-var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
-var _routes = require("e6bedbb7f240506c");
-var _app = require("e9c2c22a72a45548");
-var _HamburgerMenu = _interopRequireDefault(require("9079f43f327521d8"));
-var _AssetProvider = _interopRequireDefault(require("eaaf70471d024f90"));
-var _ButtonLink = _interopRequireWildcard(require("79cfd1823aff4e62"));
-var _ProFilter = _interopRequireDefault(require("18a59a4502e9f75e"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _getRequireWildcardCache(e) {
-    if ("function" != typeof WeakMap) return null;
-    var r = new WeakMap(), t = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
-        return e ? t : r;
-    })(e);
-}
-function _interopRequireWildcard(e, r) {
-    if (!r && e && e.__esModule) return e;
-    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
-        "default": e
-    };
-    var t = _getRequireWildcardCache(r);
-    if (t && t.has(e)) return t.get(e);
-    var n = {
-        __proto__: null
-    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
-        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
-    }
-    return n["default"] = e, t && t.set(e, n), n;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(r, l) {
-    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (null != t) {
-        var e, n, i, u, a = [], f = !0, o = !1;
-        try {
-            if (i = (t = t.call(r)).next, 0 === l) {
-                if (Object(t) !== t) return;
-                f = !1;
-            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-        } catch (r) {
-            o = !0, n = r;
-        } finally{
-            try {
-                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-            } finally{
-                if (o) throw n;
-            }
-        }
-        return a;
-    }
-}
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-}
-/**
- * Settings menu header element.
- *
- * @param {Object}   props                  component properties
- * @param {string}   props.logoUrl          plugin logo url, will be supplied via HOC
- * @param {string}   props.currentRoutePath current route path, will be supplied via HOC
- * @param {Function} props.setRoute         set route path, will be supplied via HOC
- * @return {JSX.Element} component
- */ function MenuHeader(_ref) {
-    var logoUrl = _ref.logoUrl, currentRoutePath = _ref.currentRoutePath, setRoute = _ref.setRoute;
-    // status of hamburger menu
-    var _useState = (0, _react.useState)(false), _useState2 = _slicedToArray(_useState, 2), menuStatus = _useState2[0], setMenuStatus = _useState2[1];
-    var routeObjectsMinus404 = (0, _react.useMemo)(function() {
-        return _routes.routeObjects.slice(0, _routes.routeObjects.length - 1);
-    }, []);
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "header-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "menu-header"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "left-container"
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "logo-container"
-    }, /*#__PURE__*/ _react["default"].createElement("img", {
-        alt: "plugin logo",
-        src: logoUrl
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-plugin-logo-text"
-    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-menu-navigation-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
-        routes: routeObjectsMinus404,
-        currentRoutePath: currentRoutePath,
-        setRoute: setRoute
-    })), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "right-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-header-wrapper"
-    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], null, /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
-        assetIds: [
-            "proBuyUrl"
-        ]
-    }, function(_ref2) {
-        var proBuyUrl = _ref2.proBuyUrl;
-        return /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
-            url: proBuyUrl,
-            title: (0, _i18n.__)("Upgrade to PRO", "ultimate-blocks"),
-            type: _ButtonLink.ButtonLinkType.DEFAULT
-        });
-    })))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], {
-        clickHandler: function clickHandler() {
-            return setMenuStatus(!menuStatus);
-        },
-        status: menuStatus
-    })), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "dropdown-navigation",
-        "data-menu-status": menuStatus
-    }, /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "dropdown-drawer"
-    }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
-        routes: routeObjectsMinus404,
-        currentRoutePath: currentRoutePath,
-        setRoute: setRoute
-    }), /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "hamburger-version-control"
-    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)))));
-}
-// store select mapping
-var selectMapping = function selectMapping(select) {
-    return {
-        logoUrl: select(_assets.getLogo),
-        currentRoutePath: select(_app.getCurrentRoutePath)
-    };
-};
-// store action mapping
-var actionMapping = function actionMapping() {
-    return {
-        setRoute: _app.setCurrentRoutePath
-    };
-};
-/**
- * @module MenuHeader
- */ var _default = exports["default"] = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
-
-},{"af8ddc31c52e60c1":"21dqq","9846d3c7b6ac7c1b":"7CyoE","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB","eaaf70471d024f90":"jzub6","79cfd1823aff4e62":"dwYOq","18a59a4502e9f75e":"gCmn9"}],"7CyoE":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "sprintf", ()=>(0, _sprintf.sprintf));
-parcelHelpers.export(exports, "defaultI18n", ()=>(0, _defaultI18NDefault.default));
-parcelHelpers.export(exports, "setLocaleData", ()=>(0, _defaultI18N.setLocaleData));
-parcelHelpers.export(exports, "resetLocaleData", ()=>(0, _defaultI18N.resetLocaleData));
-parcelHelpers.export(exports, "getLocaleData", ()=>(0, _defaultI18N.getLocaleData));
-parcelHelpers.export(exports, "subscribe", ()=>(0, _defaultI18N.subscribe));
-parcelHelpers.export(exports, "__", ()=>(0, _defaultI18N.__));
-parcelHelpers.export(exports, "_x", ()=>(0, _defaultI18N._x));
-parcelHelpers.export(exports, "_n", ()=>(0, _defaultI18N._n));
-parcelHelpers.export(exports, "_nx", ()=>(0, _defaultI18N._nx));
-parcelHelpers.export(exports, "isRTL", ()=>(0, _defaultI18N.isRTL));
-parcelHelpers.export(exports, "hasTranslation", ()=>(0, _defaultI18N.hasTranslation));
-var _sprintf = require("./sprintf");
-var _createI18N = require("./create-i18n");
-parcelHelpers.exportAll(_createI18N, exports);
-var _defaultI18N = require("./default-i18n");
-var _defaultI18NDefault = parcelHelpers.interopDefault(_defaultI18N);
-
-},{"./sprintf":"jSK0R","./create-i18n":"2IrAM","./default-i18n":"eKzAG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jSK0R":[function(require,module,exports) {
-/**
- * External dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * Returns a formatted string. If an error occurs in applying the format, the
- * original format string is returned.
- *
- * @param {string} format The format of the string to generate.
- * @param {...*}   args   Arguments to apply to the format.
- *
- * @see https://www.npmjs.com/package/sprintf-js
- *
- * @return {string} The formatted string.
- */ parcelHelpers.export(exports, "sprintf", ()=>sprintf);
-var _memize = require("memize");
-var _memizeDefault = parcelHelpers.interopDefault(_memize);
-var _sprintfJs = require("sprintf-js");
-var _sprintfJsDefault = parcelHelpers.interopDefault(_sprintfJs);
-/**
- * Log to console, once per message; or more precisely, per referentially equal
- * argument set. Because Jed throws errors, we log these to the console instead
- * to avoid crashing the application.
- *
- * @param {...*} args Arguments to pass to `console.error`
- */ const logErrorOnce = (0, _memizeDefault.default)(console.error); // eslint-disable-line no-console
-function sprintf(format, ...args) {
-    try {
-        return (0, _sprintfJsDefault.default).sprintf(format, ...args);
-    } catch (error) {
-        if (error instanceof Error) logErrorOnce("sprintf error: \n\n" + error.toString());
-        return format;
-    }
-}
-
-},{"memize":"2xx6f","sprintf-js":"9lMGt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2xx6f":[function(require,module,exports) {
-/**
- * Memize options object.
- *
- * @typedef MemizeOptions
- *
- * @property {number} [maxSize] Maximum size of the cache.
- */ /**
- * Internal cache entry.
- *
- * @typedef MemizeCacheNode
- *
- * @property {?MemizeCacheNode|undefined} [prev] Previous node.
- * @property {?MemizeCacheNode|undefined} [next] Next node.
- * @property {Array<*>}                   args   Function arguments for cache
- *                                               entry.
- * @property {*}                          val    Function result.
- */ /**
- * Properties of the enhanced function for controlling cache.
- *
- * @typedef MemizeMemoizedFunction
- *
- * @property {()=>void} clear Clear the cache.
- */ /**
- * Accepts a function to be memoized, and returns a new memoized function, with
- * optional options.
- *
- * @template {(...args: any[]) => any} F
- *
- * @param {F}             fn        Function to memoize.
- * @param {MemizeOptions} [options] Options object.
- *
- * @return {((...args: Parameters<F>) => ReturnType<F>) & MemizeMemoizedFunction} Memoized function.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>memize);
-function memize(fn, options) {
-    var size = 0;
-    /** @type {?MemizeCacheNode|undefined} */ var head;
-    /** @type {?MemizeCacheNode|undefined} */ var tail;
-    options = options || {};
-    function memoized() {
-        var node = head, len = arguments.length, args, i;
-        searchCache: while(node){
-            // Perform a shallow equality test to confirm that whether the node
-            // under test is a candidate for the arguments passed. Two arrays
-            // are shallowly equal if their length matches and each entry is
-            // strictly equal between the two sets. Avoid abstracting to a
-            // function which could incur an arguments leaking deoptimization.
-            // Check whether node arguments match arguments length
-            if (node.args.length !== arguments.length) {
-                node = node.next;
-                continue;
-            }
-            // Check whether node arguments match arguments values
-            for(i = 0; i < len; i++)if (node.args[i] !== arguments[i]) {
-                node = node.next;
-                continue searchCache;
-            }
-            // At this point we can assume we've found a match
-            // Surface matched node to head if not already
-            if (node !== head) {
-                // As tail, shift to previous. Must only shift if not also
-                // head, since if both head and tail, there is no previous.
-                if (node === tail) tail = node.prev;
-                // Adjust siblings to point to each other. If node was tail,
-                // this also handles new tail's empty `next` assignment.
-                /** @type {MemizeCacheNode} */ node.prev.next = node.next;
-                if (node.next) node.next.prev = node.prev;
-                node.next = head;
-                node.prev = null;
-                /** @type {MemizeCacheNode} */ head.prev = node;
-                head = node;
-            }
-            // Return immediately
-            return node.val;
-        }
-        // No cached value found. Continue to insertion phase:
-        // Create a copy of arguments (avoid leaking deoptimization)
-        args = new Array(len);
-        for(i = 0; i < len; i++)args[i] = arguments[i];
-        node = {
-            args: args,
-            // Generate the result from original function
-            val: fn.apply(null, args)
-        };
-        // Don't need to check whether node is already head, since it would
-        // have been returned above already if it was
-        // Shift existing head down list
-        if (head) {
-            head.prev = node;
-            node.next = head;
-        } else // If no head, follows that there's no tail (at initial or reset)
-        tail = node;
-        // Trim tail if we're reached max size and are pending cache insertion
-        if (size === /** @type {MemizeOptions} */ options.maxSize) {
-            tail = /** @type {MemizeCacheNode} */ tail.prev;
-            /** @type {MemizeCacheNode} */ tail.next = null;
-        } else size++;
-        head = node;
-        return node.val;
-    }
-    memoized.clear = function() {
-        head = null;
-        tail = null;
-        size = 0;
-    };
-    // Ignore reason: There's not a clear solution to create an intersection of
-    // the function with additional properties, where the goal is to retain the
-    // function signature of the incoming argument and add control properties
-    // on the return value.
-    // @ts-ignore
-    return memoized;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9lMGt":[function(require,module,exports) {
-/* global window, exports, define */ !function() {
-    "use strict";
-    var re = {
-        not_string: /[^s]/,
-        not_bool: /[^t]/,
-        not_type: /[^T]/,
-        not_primitive: /[^v]/,
-        number: /[diefg]/,
-        numeric_arg: /[bcdiefguxX]/,
-        json: /[j]/,
-        not_json: /[^j]/,
-        text: /^[^\x25]+/,
-        modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
-        key: /^([a-z_][a-z_\d]*)/i,
-        key_access: /^\.([a-z_][a-z_\d]*)/i,
-        index_access: /^\[(\d+)\]/,
-        sign: /^[+-]/
-    };
-    function sprintf(key) {
-        // `arguments` is not an array, but should be fine for this call
-        return sprintf_format(sprintf_parse(key), arguments);
-    }
-    function vsprintf(fmt, argv) {
-        return sprintf.apply(null, [
-            fmt
-        ].concat(argv || []));
-    }
-    function sprintf_format(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = "", i, k, ph, pad, pad_character, pad_length, is_positive, sign;
-        for(i = 0; i < tree_length; i++){
-            if (typeof parse_tree[i] === "string") output += parse_tree[i];
-            else if (typeof parse_tree[i] === "object") {
-                ph = parse_tree[i] // convenience purposes only
-                ;
-                if (ph.keys) {
-                    arg = argv[cursor];
-                    for(k = 0; k < ph.keys.length; k++){
-                        if (arg == undefined) throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k - 1]));
-                        arg = arg[ph.keys[k]];
-                    }
-                } else if (ph.param_no) arg = argv[ph.param_no];
-                else arg = argv[cursor++];
-                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) arg = arg();
-                if (re.numeric_arg.test(ph.type) && typeof arg !== "number" && isNaN(arg)) throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg));
-                if (re.number.test(ph.type)) is_positive = arg >= 0;
-                switch(ph.type){
-                    case "b":
-                        arg = parseInt(arg, 10).toString(2);
-                        break;
-                    case "c":
-                        arg = String.fromCharCode(parseInt(arg, 10));
-                        break;
-                    case "d":
-                    case "i":
-                        arg = parseInt(arg, 10);
-                        break;
-                    case "j":
-                        arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0);
-                        break;
-                    case "e":
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential();
-                        break;
-                    case "f":
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg);
-                        break;
-                    case "g":
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg);
-                        break;
-                    case "o":
-                        arg = (parseInt(arg, 10) >>> 0).toString(8);
-                        break;
-                    case "s":
-                        arg = String(arg);
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "t":
-                        arg = String(!!arg);
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "T":
-                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "u":
-                        arg = parseInt(arg, 10) >>> 0;
-                        break;
-                    case "v":
-                        arg = arg.valueOf();
-                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
-                        break;
-                    case "x":
-                        arg = (parseInt(arg, 10) >>> 0).toString(16);
-                        break;
-                    case "X":
-                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase();
-                        break;
-                }
-                if (re.json.test(ph.type)) output += arg;
-                else {
-                    if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
-                        sign = is_positive ? "+" : "-";
-                        arg = arg.toString().replace(re.sign, "");
-                    } else sign = "";
-                    pad_character = ph.pad_char ? ph.pad_char === "0" ? "0" : ph.pad_char.charAt(1) : " ";
-                    pad_length = ph.width - (sign + arg).length;
-                    pad = ph.width ? pad_length > 0 ? pad_character.repeat(pad_length) : "" : "";
-                    output += ph.align ? sign + arg + pad : pad_character === "0" ? sign + pad + arg : pad + sign + arg;
-                }
-            }
-        }
-        return output;
-    }
-    var sprintf_cache = Object.create(null);
-    function sprintf_parse(fmt) {
-        if (sprintf_cache[fmt]) return sprintf_cache[fmt];
-        var _fmt = fmt, match, parse_tree = [], arg_names = 0;
-        while(_fmt){
-            if ((match = re.text.exec(_fmt)) !== null) parse_tree.push(match[0]);
-            else if ((match = re.modulo.exec(_fmt)) !== null) parse_tree.push("%");
-            else if ((match = re.placeholder.exec(_fmt)) !== null) {
-                if (match[2]) {
-                    arg_names |= 1;
-                    var field_list = [], replacement_field = match[2], field_match = [];
-                    if ((field_match = re.key.exec(replacement_field)) !== null) {
-                        field_list.push(field_match[1]);
-                        while((replacement_field = replacement_field.substring(field_match[0].length)) !== ""){
-                            if ((field_match = re.key_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
-                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
-                            else throw new SyntaxError("[sprintf] failed to parse named argument key");
-                        }
-                    } else throw new SyntaxError("[sprintf] failed to parse named argument key");
-                    match[2] = field_list;
-                } else arg_names |= 2;
-                if (arg_names === 3) throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");
-                parse_tree.push({
-                    placeholder: match[0],
-                    param_no: match[1],
-                    keys: match[2],
-                    sign: match[3],
-                    pad_char: match[4],
-                    align: match[5],
-                    width: match[6],
-                    precision: match[7],
-                    type: match[8]
-                });
-            } else throw new SyntaxError("[sprintf] unexpected placeholder");
-            _fmt = _fmt.substring(match[0].length);
-        }
-        return sprintf_cache[fmt] = parse_tree;
-    }
-    exports["sprintf"] = sprintf;
-    exports["vsprintf"] = vsprintf;
-    if (typeof window !== "undefined") {
-        window["sprintf"] = sprintf;
-        window["vsprintf"] = vsprintf;
-        if (typeof define === "function" && define["amd"]) define(function() {
-            return {
-                "sprintf": sprintf,
-                "vsprintf": vsprintf
-            };
-        });
-    }
-/* eslint-enable quote-props */ }(); // eslint-disable-line
-
-},{}],"2IrAM":[function(require,module,exports) {
-/**
- * External dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "createI18n", ()=>createI18n);
-var _tannin = require("tannin");
-var _tanninDefault = parcelHelpers.interopDefault(_tannin);
-/**
- * @typedef {Record<string,any>} LocaleData
- */ /**
- * Default locale data to use for Tannin domain when not otherwise provided.
- * Assumes an English plural forms expression.
- *
- * @type {LocaleData}
- */ const DEFAULT_LOCALE_DATA = {
-    "": {
-        /** @param {number} n */ plural_forms (n) {
-            return n === 1 ? 0 : 1;
-        }
-    }
-};
-/*
- * Regular expression that matches i18n hooks like `i18n.gettext`, `i18n.ngettext`,
- * `i18n.gettext_domain` or `i18n.ngettext_with_context` or `i18n.has_translation`.
- */ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
-const createI18n = (initialData, initialDomain, hooks)=>{
-    /**
-   * The underlying instance of Tannin to which exported functions interface.
-   *
-   * @type {Tannin}
-   */ const tannin = new (0, _tanninDefault.default)({});
-    const listeners = new Set();
-    const notifyListeners = ()=>{
-        listeners.forEach((listener)=>listener());
-    };
-    /**
-   * Subscribe to changes of locale data.
-   *
-   * @param {SubscribeCallback} callback Subscription callback.
-   * @return {UnsubscribeCallback} Unsubscribe callback.
-   */ const subscribe = (callback)=>{
-        listeners.add(callback);
-        return ()=>listeners.delete(callback);
-    };
-    /** @type {GetLocaleData} */ const getLocaleData = (domain = "default")=>tannin.data[domain];
-    /**
-   * @param {LocaleData} [data]
-   * @param {string}     [domain]
-   */ const doSetLocaleData = (data, domain = "default")=>{
-        tannin.data[domain] = {
-            ...tannin.data[domain],
-            ...data
-        };
-        // Populate default domain configuration (supported locale date which omits
-        // a plural forms expression).
-        tannin.data[domain][""] = {
-            ...DEFAULT_LOCALE_DATA[""],
-            ...tannin.data[domain]?.[""]
-        };
-        // Clean up cached plural forms functions cache as it might be updated.
-        delete tannin.pluralForms[domain];
-    };
-    /** @type {SetLocaleData} */ const setLocaleData = (data, domain)=>{
-        doSetLocaleData(data, domain);
-        notifyListeners();
-    };
-    /** @type {AddLocaleData} */ const addLocaleData = (data, domain = "default")=>{
-        tannin.data[domain] = {
-            ...tannin.data[domain],
-            ...data,
-            // Populate default domain configuration (supported locale date which omits
-            // a plural forms expression).
-            "": {
-                ...DEFAULT_LOCALE_DATA[""],
-                ...tannin.data[domain]?.[""],
-                ...data?.[""]
-            }
-        };
-        // Clean up cached plural forms functions cache as it might be updated.
-        delete tannin.pluralForms[domain];
-        notifyListeners();
-    };
-    /** @type {ResetLocaleData} */ const resetLocaleData = (data, domain)=>{
-        // Reset all current Tannin locale data.
-        tannin.data = {};
-        // Reset cached plural forms functions cache.
-        tannin.pluralForms = {};
-        setLocaleData(data, domain);
-    };
-    /**
-   * Wrapper for Tannin's `dcnpgettext`. Populates default locale data if not
-   * otherwise previously assigned.
-   *
-   * @param {string|undefined} domain   Domain to retrieve the translated text.
-   * @param {string|undefined} context  Context information for the translators.
-   * @param {string}           single   Text to translate if non-plural. Used as
-   *                                    fallback return value on a caught error.
-   * @param {string}           [plural] The text to be used if the number is
-   *                                    plural.
-   * @param {number}           [number] The number to compare against to use
-   *                                    either the singular or plural form.
-   *
-   * @return {string} The translated string.
-   */ const dcnpgettext = (domain = "default", context, single, plural, number)=>{
-        if (!tannin.data[domain]) // Use `doSetLocaleData` to set silently, without notifying listeners.
-        doSetLocaleData(undefined, domain);
-        return tannin.dcnpgettext(domain, context, single, plural, number);
-    };
-    /** @type {GetFilterDomain} */ const getFilterDomain = (domain = "default")=>domain;
-    /** @type {__} */ const __ = (text, domain)=>{
-        let translation = dcnpgettext(domain, undefined, text);
-        if (!hooks) return translation;
-        /**
-     * Filters text with its translation.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} text        Text to translate.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext", translation, text, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_" + getFilterDomain(domain), translation, text, domain);
-    };
-    /** @type {_x} */ const _x = (text, context, domain)=>{
-        let translation = dcnpgettext(domain, context, text);
-        if (!hooks) return translation;
-        /**
-     * Filters text with its translation based on context information.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} text        Text to translate.
-     * @param {string} context     Context information for the translators.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context", translation, text, context, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context_" + getFilterDomain(domain), translation, text, context, domain);
-    };
-    /** @type {_n} */ const _n = (single, plural, number, domain)=>{
-        let translation = dcnpgettext(domain, undefined, single, plural, number);
-        if (!hooks) return translation;
-        /**
-     * Filters the singular or plural form of a string.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} single      The text to be used if the number is singular.
-     * @param {string} plural      The text to be used if the number is plural.
-     * @param {string} number      The number to compare against to use either the singular or plural form.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext", translation, single, plural, number, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_" + getFilterDomain(domain), translation, single, plural, number, domain);
-    };
-    /** @type {_nx} */ const _nx = (single, plural, number, context, domain)=>{
-        let translation = dcnpgettext(domain, context, single, plural, number);
-        if (!hooks) return translation;
-        /**
-     * Filters the singular or plural form of a string with gettext context.
-     *
-     * @param {string} translation Translated text.
-     * @param {string} single      The text to be used if the number is singular.
-     * @param {string} plural      The text to be used if the number is plural.
-     * @param {string} number      The number to compare against to use either the singular or plural form.
-     * @param {string} context     Context information for the translators.
-     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
-     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context", translation, single, plural, number, context, domain);
-        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context_" + getFilterDomain(domain), translation, single, plural, number, context, domain);
-    };
-    /** @type {IsRtl} */ const isRTL = ()=>{
-        return "rtl" === _x("ltr", "text direction");
-    };
-    /** @type {HasTranslation} */ const hasTranslation = (single, context, domain)=>{
-        const key = context ? context + "\x04" + single : single;
-        let result = !!tannin.data?.[domain !== null && domain !== void 0 ? domain : "default"]?.[key];
-        if (hooks) {
-            /**
-       * Filters the presence of a translation in the locale data.
-       *
-       * @param {boolean} hasTranslation Whether the translation is present or not..
-       * @param {string}  single         The singular form of the translated text (used as key in locale data)
-       * @param {string}  context        Context information for the translators.
-       * @param {string}  domain         Text domain. Unique identifier for retrieving translated strings.
-       */ result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation", result, single, context, domain);
-            result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation_" + getFilterDomain(domain), result, single, context, domain);
-        }
-        return result;
-    };
-    if (initialData) setLocaleData(initialData, initialDomain);
-    if (hooks) {
-        /**
-     * @param {string} hookName
-     */ const onHookAddedOrRemoved = (hookName)=>{
-            if (I18N_HOOK_REGEXP.test(hookName)) notifyListeners();
-        };
-        hooks.addAction("hookAdded", "core/i18n", onHookAddedOrRemoved);
-        hooks.addAction("hookRemoved", "core/i18n", onHookAddedOrRemoved);
-    }
-    return {
-        getLocaleData,
-        setLocaleData,
-        addLocaleData,
-        resetLocaleData,
-        subscribe,
-        __,
-        _x,
-        _n,
-        _nx,
-        isRTL,
-        hasTranslation
-    };
-};
-
-},{"tannin":"bWSIR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWSIR":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>Tannin);
-var _pluralForms = require("@tannin/plural-forms");
-var _pluralFormsDefault = parcelHelpers.interopDefault(_pluralForms);
-/**
- * Tannin constructor options.
- *
- * @typedef {Object} TanninOptions
- *
- * @property {string}   [contextDelimiter] Joiner in string lookup with context.
- * @property {Function} [onMissingKey]     Callback to invoke when key missing.
- */ /**
- * Domain metadata.
- *
- * @typedef {Object} TanninDomainMetadata
- *
- * @property {string}            [domain]       Domain name.
- * @property {string}            [lang]         Language code.
- * @property {(string|Function)} [plural_forms] Plural forms expression or
- *                                              function evaluator.
- */ /**
- * Domain translation pair respectively representing the singular and plural
- * translation.
- *
- * @typedef {[string,string]} TanninTranslation
- */ /**
- * Locale data domain. The key is used as reference for lookup, the value an
- * array of two string entries respectively representing the singular and plural
- * translation.
- *
- * @typedef {{[key:string]:TanninDomainMetadata|TanninTranslation,'':TanninDomainMetadata|TanninTranslation}} TanninLocaleDomain
- */ /**
- * Jed-formatted locale data.
- *
- * @see http://messageformat.github.io/Jed/
- *
- * @typedef {{[domain:string]:TanninLocaleDomain}} TanninLocaleData
- */ /**
- * Default Tannin constructor options.
- *
- * @type {TanninOptions}
- */ var DEFAULT_OPTIONS = {
-    contextDelimiter: "\x04",
-    onMissingKey: null
-};
-/**
- * Given a specific locale data's config `plural_forms` value, returns the
- * expression.
- *
- * @example
- *
- * ```
- * getPluralExpression( 'nplurals=2; plural=(n != 1);' ) === '(n != 1)'
- * ```
- *
- * @param {string} pf Locale data plural forms.
- *
- * @return {string} Plural forms expression.
- */ function getPluralExpression(pf) {
-    var parts, i, part;
-    parts = pf.split(";");
-    for(i = 0; i < parts.length; i++){
-        part = parts[i].trim();
-        if (part.indexOf("plural=") === 0) return part.substr(7);
-    }
-}
-function Tannin(data, options) {
-    var key;
-    /**
-	 * Jed-formatted locale data.
-	 *
-	 * @name Tannin#data
-	 * @type {TanninLocaleData}
-	 */ this.data = data;
-    /**
-	 * Plural forms function cache, keyed by plural forms string.
-	 *
-	 * @name Tannin#pluralForms
-	 * @type {Object<string,Function>}
-	 */ this.pluralForms = {};
-    /**
-	 * Effective options for instance, including defaults.
-	 *
-	 * @name Tannin#options
-	 * @type {TanninOptions}
-	 */ this.options = {};
-    for(key in DEFAULT_OPTIONS)this.options[key] = options !== undefined && key in options ? options[key] : DEFAULT_OPTIONS[key];
-}
-/**
- * Returns the plural form index for the given domain and value.
- *
- * @param {string} domain Domain on which to calculate plural form.
- * @param {number} n      Value for which plural form is to be calculated.
- *
- * @return {number} Plural form index.
- */ Tannin.prototype.getPluralForm = function(domain, n) {
-    var getPluralForm = this.pluralForms[domain], config, plural, pf;
-    if (!getPluralForm) {
-        config = this.data[domain][""];
-        pf = config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
-        // string property on a key to guarantee this as metadata.
-        // @ts-ignore
-        config.plural_forms;
-        if (typeof pf !== "function") {
-            plural = getPluralExpression(config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
-            // string property on a key to guarantee this as metadata.
-            // @ts-ignore
-            config.plural_forms);
-            pf = (0, _pluralFormsDefault.default)(plural);
-        }
-        getPluralForm = this.pluralForms[domain] = pf;
-    }
-    return getPluralForm(n);
-};
-/**
- * Translate a string.
- *
- * @param {string}      domain   Translation domain.
- * @param {string|void} context  Context distinguishing terms of the same name.
- * @param {string}      singular Primary key for translation lookup.
- * @param {string=}     plural   Fallback value used for non-zero plural
- *                               form index.
- * @param {number=}     n        Value to use in calculating plural form.
- *
- * @return {string} Translated string.
- */ Tannin.prototype.dcnpgettext = function(domain, context, singular, plural, n) {
-    var index, key, entry;
-    if (n === undefined) // Default to singular.
-    index = 0;
-    else // Find index by evaluating plural form for value.
-    index = this.getPluralForm(domain, n);
-    key = singular;
-    // If provided, context is prepended to key with delimiter.
-    if (context) key = context + this.options.contextDelimiter + singular;
-    entry = this.data[domain][key];
-    // Verify not only that entry exists, but that the intended index is within
-    // range and non-empty.
-    if (entry && entry[index]) return entry[index];
-    if (this.options.onMissingKey) this.options.onMissingKey(singular, domain);
-    // If entry not found, fall back to singular vs. plural with zero index
-    // representing the singular value.
-    return index === 0 ? singular : plural;
-};
-
-},{"@tannin/plural-forms":"ch17b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ch17b":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>pluralForms);
-var _compile = require("@tannin/compile");
-var _compileDefault = parcelHelpers.interopDefault(_compile);
-function pluralForms(expression) {
-    var evaluate = (0, _compileDefault.default)(expression);
-    return function(n) {
-        return +evaluate({
-            n: n
-        });
-    };
-}
-
-},{"@tannin/compile":"5dvv3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5dvv3":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>compile);
-var _postfix = require("@tannin/postfix");
-var _postfixDefault = parcelHelpers.interopDefault(_postfix);
-var _evaluate = require("@tannin/evaluate");
-var _evaluateDefault = parcelHelpers.interopDefault(_evaluate);
-function compile(expression) {
-    var terms = (0, _postfixDefault.default)(expression);
-    return function(variables) {
-        return (0, _evaluateDefault.default)(terms, variables);
-    };
-}
-
-},{"@tannin/postfix":"gjJvb","@tannin/evaluate":"8I9co","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gjJvb":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>postfix);
-var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
-/**
- * Operator precedence mapping.
- *
- * @type {Object}
- */ PRECEDENCE = {
-    "(": 9,
-    "!": 8,
-    "*": 7,
-    "/": 7,
-    "%": 7,
-    "+": 6,
-    "-": 6,
-    "<": 5,
-    "<=": 5,
-    ">": 5,
-    ">=": 5,
-    "==": 4,
-    "!=": 4,
-    "&&": 3,
-    "||": 2,
-    "?": 1,
-    "?:": 1
-};
-/**
- * Characters which signal pair opening, to be terminated by terminators.
- *
- * @type {string[]}
- */ OPENERS = [
-    "(",
-    "?"
+var _react = _interopRequireDefault(require("c515c572c6ab551c"));
+var _toolkit = require("953ee9eab3e8c345");
+var _assets = _interopRequireDefault(require("8c721e7e53326dbf"));
+var _app = _interopRequireDefault(require("4a75fc56b99646a3"));
+var _blocks = _interopRequireDefault(require("df36ccd063eba533"));
+var _versionControl = _interopRequireDefault(require("9bf24bb8ad1424ca"));
+var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
+var _initialState = _interopRequireDefault(require("9016861a8b48c99a"));
+var _pluginStatus = _interopRequireDefault(require("e241a936151f11bf"));
+var _excluded = [
+    "contentData"
 ];
-/**
- * Characters which signal pair termination, the value an array with the
- * opener as its first member. The second member is an optional operator
- * replacement to push to the stack.
- *
- * @type {string[]}
- */ TERMINATORS = {
-    ")": [
-        "("
-    ],
-    ":": [
-        "?",
-        "?:"
-    ]
-};
-/**
- * Pattern matching operators and openers.
- *
- * @type {RegExp}
- */ PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
-function postfix(expression) {
-    var terms = [], stack = [], match, operator, term, element;
-    while(match = expression.match(PATTERN)){
-        operator = match[0];
-        // Term is the string preceding the operator match. It may contain
-        // whitespace, and may be empty (if operator is at beginning).
-        term = expression.substr(0, match.index).trim();
-        if (term) terms.push(term);
-        while(element = stack.pop()){
-            if (TERMINATORS[operator]) {
-                if (TERMINATORS[operator][0] === element) {
-                    // Substitution works here under assumption that because
-                    // the assigned operator will no longer be a terminator, it
-                    // will be pushed to the stack during the condition below.
-                    operator = TERMINATORS[operator][1] || operator;
-                    break;
-                }
-            } else if (OPENERS.indexOf(element) >= 0 || PRECEDENCE[element] < PRECEDENCE[operator]) {
-                // Push to stack if either an opener or when pop reveals an
-                // element of lower precedence.
-                stack.push(element);
-                break;
-            }
-            // For each popped from stack, push to terms.
-            terms.push(element);
-        }
-        if (!TERMINATORS[operator]) stack.push(operator);
-        // Slice matched fragment from expression to continue match.
-        expression = expression.substr(match.index + operator.length);
-    }
-    // Push remainder of operand, if exists, to terms.
-    expression = expression.trim();
-    if (expression) terms.push(expression);
-    // Pop remaining items from stack into terms.
-    return terms.concat(stack.reverse());
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8I9co":[function(require,module,exports) {
-/**
- * Operator callback functions.
- *
- * @type {Object}
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>evaluate);
-var OPERATORS = {
-    "!": function(a) {
-        return !a;
-    },
-    "*": function(a, b) {
-        return a * b;
-    },
-    "/": function(a, b) {
-        return a / b;
-    },
-    "%": function(a, b) {
-        return a % b;
-    },
-    "+": function(a, b) {
-        return a + b;
-    },
-    "-": function(a, b) {
-        return a - b;
-    },
-    "<": function(a, b) {
-        return a < b;
-    },
-    "<=": function(a, b) {
-        return a <= b;
-    },
-    ">": function(a, b) {
-        return a > b;
-    },
-    ">=": function(a, b) {
-        return a >= b;
-    },
-    "==": function(a, b) {
-        return a === b;
-    },
-    "!=": function(a, b) {
-        return a !== b;
-    },
-    "&&": function(a, b) {
-        return a && b;
-    },
-    "||": function(a, b) {
-        return a || b;
-    },
-    "?:": function(a, b, c) {
-        if (a) throw b;
-        return c;
-    }
-};
-function evaluate(postfix, variables) {
-    var stack = [], i, j, args, getOperatorResult, term, value;
-    for(i = 0; i < postfix.length; i++){
-        term = postfix[i];
-        getOperatorResult = OPERATORS[term];
-        if (getOperatorResult) {
-            // Pop from stack by number of function arguments.
-            j = getOperatorResult.length;
-            args = Array(j);
-            while(j--)args[j] = stack.pop();
-            try {
-                value = getOperatorResult.apply(null, args);
-            } catch (earlyReturn) {
-                return earlyReturn;
-            }
-        } else if (variables.hasOwnProperty(term)) value = variables[term];
-        else value = +term;
-        stack.push(value);
-    }
-    return stack[0];
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eKzAG":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getLocaleData", ()=>getLocaleData);
-parcelHelpers.export(exports, "setLocaleData", ()=>setLocaleData);
-parcelHelpers.export(exports, "resetLocaleData", ()=>resetLocaleData);
-parcelHelpers.export(exports, "subscribe", ()=>subscribe);
-parcelHelpers.export(exports, "__", ()=>__);
-parcelHelpers.export(exports, "_x", ()=>_x);
-parcelHelpers.export(exports, "_n", ()=>_n);
-parcelHelpers.export(exports, "_nx", ()=>_nx);
-parcelHelpers.export(exports, "isRTL", ()=>isRTL);
-parcelHelpers.export(exports, "hasTranslation", ()=>hasTranslation);
-var _createI18N = require("./create-i18n");
-/**
- * WordPress dependencies
- */ var _hooks = require("@wordpress/hooks");
-const i18n = (0, _createI18N.createI18n)(undefined, undefined, (0, _hooks.defaultHooks));
-/**
- * Default, singleton instance of `I18n`.
- */ exports.default = i18n;
-const getLocaleData = i18n.getLocaleData.bind(i18n);
-const setLocaleData = i18n.setLocaleData.bind(i18n);
-const resetLocaleData = i18n.resetLocaleData.bind(i18n);
-const subscribe = i18n.subscribe.bind(i18n);
-const __ = i18n.__.bind(i18n);
-const _x = i18n._x.bind(i18n);
-const _n = i18n._n.bind(i18n);
-const _nx = i18n._nx.bind(i18n);
-const isRTL = i18n.isRTL.bind(i18n);
-const hasTranslation = i18n.hasTranslation.bind(i18n);
-
-},{"./create-i18n":"2IrAM","@wordpress/hooks":"8Bsjr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Bsjr":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "defaultHooks", ()=>defaultHooks);
-parcelHelpers.export(exports, "createHooks", ()=>(0, _createHooksDefault.default));
-parcelHelpers.export(exports, "addAction", ()=>addAction);
-parcelHelpers.export(exports, "addFilter", ()=>addFilter);
-parcelHelpers.export(exports, "removeAction", ()=>removeAction);
-parcelHelpers.export(exports, "removeFilter", ()=>removeFilter);
-parcelHelpers.export(exports, "hasAction", ()=>hasAction);
-parcelHelpers.export(exports, "hasFilter", ()=>hasFilter);
-parcelHelpers.export(exports, "removeAllActions", ()=>removeAllActions);
-parcelHelpers.export(exports, "removeAllFilters", ()=>removeAllFilters);
-parcelHelpers.export(exports, "doAction", ()=>doAction);
-parcelHelpers.export(exports, "applyFilters", ()=>applyFilters);
-parcelHelpers.export(exports, "currentAction", ()=>currentAction);
-parcelHelpers.export(exports, "currentFilter", ()=>currentFilter);
-parcelHelpers.export(exports, "doingAction", ()=>doingAction);
-parcelHelpers.export(exports, "doingFilter", ()=>doingFilter);
-parcelHelpers.export(exports, "didAction", ()=>didAction);
-parcelHelpers.export(exports, "didFilter", ()=>didFilter);
-parcelHelpers.export(exports, "actions", ()=>actions);
-parcelHelpers.export(exports, "filters", ()=>filters);
-var _createHooks = require("./createHooks");
-var _createHooksDefault = parcelHelpers.interopDefault(_createHooks);
-const defaultHooks = (0, _createHooksDefault.default)();
-const { addAction, addFilter, removeAction, removeFilter, hasAction, hasFilter, removeAllActions, removeAllFilters, doAction, applyFilters, currentAction, currentFilter, doingAction, doingFilter, didAction, didFilter, actions, filters } = defaultHooks;
-
-},{"./createHooks":"hhEcY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hhEcY":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * Internal class for constructing hooks. Use `createHooks()` function
- *
- * Note, it is necessary to expose this class to make its type public.
- *
- * @private
- */ parcelHelpers.export(exports, "_Hooks", ()=>_Hooks);
-var _createAddHook = require("./createAddHook");
-var _createAddHookDefault = parcelHelpers.interopDefault(_createAddHook);
-var _createRemoveHook = require("./createRemoveHook");
-var _createRemoveHookDefault = parcelHelpers.interopDefault(_createRemoveHook);
-var _createHasHook = require("./createHasHook");
-var _createHasHookDefault = parcelHelpers.interopDefault(_createHasHook);
-var _createRunHook = require("./createRunHook");
-var _createRunHookDefault = parcelHelpers.interopDefault(_createRunHook);
-var _createCurrentHook = require("./createCurrentHook");
-var _createCurrentHookDefault = parcelHelpers.interopDefault(_createCurrentHook);
-var _createDoingHook = require("./createDoingHook");
-var _createDoingHookDefault = parcelHelpers.interopDefault(_createDoingHook);
-var _createDidHook = require("./createDidHook");
-var _createDidHookDefault = parcelHelpers.interopDefault(_createDidHook);
-class _Hooks {
-    constructor(){
-        /** @type {import('.').Store} actions */ this.actions = Object.create(null);
-        this.actions.__current = [];
-        /** @type {import('.').Store} filters */ this.filters = Object.create(null);
-        this.filters.__current = [];
-        this.addAction = (0, _createAddHookDefault.default)(this, "actions");
-        this.addFilter = (0, _createAddHookDefault.default)(this, "filters");
-        this.removeAction = (0, _createRemoveHookDefault.default)(this, "actions");
-        this.removeFilter = (0, _createRemoveHookDefault.default)(this, "filters");
-        this.hasAction = (0, _createHasHookDefault.default)(this, "actions");
-        this.hasFilter = (0, _createHasHookDefault.default)(this, "filters");
-        this.removeAllActions = (0, _createRemoveHookDefault.default)(this, "actions", true);
-        this.removeAllFilters = (0, _createRemoveHookDefault.default)(this, "filters", true);
-        this.doAction = (0, _createRunHookDefault.default)(this, "actions");
-        this.applyFilters = (0, _createRunHookDefault.default)(this, "filters", true);
-        this.currentAction = (0, _createCurrentHookDefault.default)(this, "actions");
-        this.currentFilter = (0, _createCurrentHookDefault.default)(this, "filters");
-        this.doingAction = (0, _createDoingHookDefault.default)(this, "actions");
-        this.doingFilter = (0, _createDoingHookDefault.default)(this, "filters");
-        this.didAction = (0, _createDidHookDefault.default)(this, "actions");
-        this.didFilter = (0, _createDidHookDefault.default)(this, "filters");
-    }
-}
-/** @typedef {_Hooks} Hooks */ /**
- * Returns an instance of the hooks object.
- *
- * @return {Hooks} A Hooks instance.
- */ function createHooks() {
-    return new _Hooks();
-}
-exports.default = createHooks;
-
-},{"./createAddHook":"8uq0x","./createRemoveHook":"5GhVG","./createHasHook":"apZQU","./createRunHook":"aU57G","./createCurrentHook":"99Xz5","./createDoingHook":"l2l8V","./createDidHook":"hSCQx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8uq0x":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _validateNamespaceJs = require("./validateNamespace.js");
-var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
-var _validateHookNameJs = require("./validateHookName.js");
-var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
-/**
- * @callback AddHook
- *
- * Adds the hook to the appropriate hooks container.
- *
- * @param {string}               hookName      Name of hook to add
- * @param {string}               namespace     The unique namespace identifying the callback in the form `vendor/plugin/function`.
- * @param {import('.').Callback} callback      Function to call when the hook is run
- * @param {number}               [priority=10] Priority of this hook
- */ /**
- * Returns a function which, when invoked, will add a hook.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {AddHook} Function that adds a new hook.
- */ function createAddHook(hooks, storeKey) {
-    return function addHook(hookName, namespace, callback, priority = 10) {
-        const hooksStore = hooks[storeKey];
-        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
-        if (!(0, _validateNamespaceJsDefault.default)(namespace)) return;
-        if ("function" !== typeof callback) {
-            // eslint-disable-next-line no-console
-            console.error("The hook callback must be a function.");
-            return;
-        }
-        // Validate numeric priority
-        if ("number" !== typeof priority) {
-            // eslint-disable-next-line no-console
-            console.error("If specified, the hook priority must be a number.");
-            return;
-        }
-        const handler = {
-            callback,
-            priority,
-            namespace
-        };
-        if (hooksStore[hookName]) {
-            // Find the correct insert index of the new hook.
-            const handlers = hooksStore[hookName].handlers;
-            /** @type {number} */ let i;
-            for(i = handlers.length; i > 0; i--){
-                if (priority >= handlers[i - 1].priority) break;
-            }
-            if (i === handlers.length) // If append, operate via direct assignment.
-            handlers[i] = handler;
-            else // Otherwise, insert before index via splice.
-            handlers.splice(i, 0, handler);
-            // We may also be currently executing this hook.  If the callback
-            // we're adding would come after the current callback, there's no
-            // problem; otherwise we need to increase the execution index of
-            // any other runs by 1 to account for the added element.
-            hooksStore.__current.forEach((hookInfo)=>{
-                if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex++;
-            });
-        } else // This is the first hook of its type.
-        hooksStore[hookName] = {
-            handlers: [
-                handler
-            ],
-            runs: 0
-        };
-        if (hookName !== "hookAdded") hooks.doAction("hookAdded", hookName, namespace, callback, priority);
-    };
-}
-exports.default = createAddHook;
-
-},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5RkL7":[function(require,module,exports) {
-/**
- * Validate a namespace string.
- *
- * @param {string} namespace The namespace to validate - should take the form
- *                           `vendor/plugin/function`.
- *
- * @return {boolean} Whether the namespace is valid.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function validateNamespace(namespace) {
-    if ("string" !== typeof namespace || "" === namespace) {
-        // eslint-disable-next-line no-console
-        console.error("The namespace must be a non-empty string.");
-        return false;
-    }
-    if (!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(namespace)) {
-        // eslint-disable-next-line no-console
-        console.error("The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.");
-        return false;
-    }
-    return true;
-}
-exports.default = validateNamespace;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dkyGe":[function(require,module,exports) {
-/**
- * Validate a hookName string.
- *
- * @param {string} hookName The hook name to validate. Should be a non empty string containing
- *                          only numbers, letters, dashes, periods and underscores. Also,
- *                          the hook name cannot begin with `__`.
- *
- * @return {boolean} Whether the hook name is valid.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function validateHookName(hookName) {
-    if ("string" !== typeof hookName || "" === hookName) {
-        // eslint-disable-next-line no-console
-        console.error("The hook name must be a non-empty string.");
-        return false;
-    }
-    if (/^__/.test(hookName)) {
-        // eslint-disable-next-line no-console
-        console.error("The hook name cannot begin with `__`.");
-        return false;
-    }
-    if (!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(hookName)) {
-        // eslint-disable-next-line no-console
-        console.error("The hook name can only contain numbers, letters, dashes, periods and underscores.");
-        return false;
-    }
-    return true;
-}
-exports.default = validateHookName;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5GhVG":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _validateNamespaceJs = require("./validateNamespace.js");
-var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
-var _validateHookNameJs = require("./validateHookName.js");
-var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
-/**
- * @callback RemoveHook
- * Removes the specified callback (or all callbacks) from the hook with a given hookName
- * and namespace.
- *
- * @param {string} hookName  The name of the hook to modify.
- * @param {string} namespace The unique namespace identifying the callback in the
- *                           form `vendor/plugin/function`.
- *
- * @return {number | undefined} The number of callbacks removed.
- */ /**
- * Returns a function which, when invoked, will remove a specified hook or all
- * hooks by the given name.
- *
- * @param {import('.').Hooks}    hooks             Hooks instance.
- * @param {import('.').StoreKey} storeKey
- * @param {boolean}              [removeAll=false] Whether to remove all callbacks for a hookName,
- *                                                 without regard to namespace. Used to create
- *                                                 `removeAll*` functions.
- *
- * @return {RemoveHook} Function that removes hooks.
- */ function createRemoveHook(hooks, storeKey, removeAll = false) {
-    return function removeHook(hookName, namespace) {
-        const hooksStore = hooks[storeKey];
-        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
-        if (!removeAll && !(0, _validateNamespaceJsDefault.default)(namespace)) return;
-        // Bail if no hooks exist by this name.
-        if (!hooksStore[hookName]) return 0;
-        let handlersRemoved = 0;
-        if (removeAll) {
-            handlersRemoved = hooksStore[hookName].handlers.length;
-            hooksStore[hookName] = {
-                runs: hooksStore[hookName].runs,
-                handlers: []
-            };
-        } else {
-            // Try to find the specified callback to remove.
-            const handlers = hooksStore[hookName].handlers;
-            for(let i = handlers.length - 1; i >= 0; i--)if (handlers[i].namespace === namespace) {
-                handlers.splice(i, 1);
-                handlersRemoved++;
-                // This callback may also be part of a hook that is
-                // currently executing.  If the callback we're removing
-                // comes after the current callback, there's no problem;
-                // otherwise we need to decrease the execution index of any
-                // other runs by 1 to account for the removed element.
-                hooksStore.__current.forEach((hookInfo)=>{
-                    if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex--;
-                });
-            }
-        }
-        if (hookName !== "hookRemoved") hooks.doAction("hookRemoved", hookName, namespace);
-        return handlersRemoved;
-    };
-}
-exports.default = createRemoveHook;
-
-},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"apZQU":[function(require,module,exports) {
-/**
- * @callback HasHook
- *
- * Returns whether any handlers are attached for the given hookName and optional namespace.
- *
- * @param {string} hookName    The name of the hook to check for.
- * @param {string} [namespace] Optional. The unique namespace identifying the callback
- *                             in the form `vendor/plugin/function`.
- *
- * @return {boolean} Whether there are handlers that are attached to the given hook.
- */ /**
- * Returns a function which, when invoked, will return whether any handlers are
- * attached to a particular hook.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {HasHook} Function that returns whether any handlers are
- *                   attached to a particular hook and optional namespace.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createHasHook(hooks, storeKey) {
-    return function hasHook(hookName, namespace) {
-        const hooksStore = hooks[storeKey];
-        // Use the namespace if provided.
-        if ("undefined" !== typeof namespace) return hookName in hooksStore && hooksStore[hookName].handlers.some((hook)=>hook.namespace === namespace);
-        return hookName in hooksStore;
-    };
-}
-exports.default = createHasHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aU57G":[function(require,module,exports) {
-/**
- * Returns a function which, when invoked, will execute all callbacks
- * registered to a hook of the specified type, optionally returning the final
- * value of the call chain.
- *
- * @param {import('.').Hooks}    hooks                  Hooks instance.
- * @param {import('.').StoreKey} storeKey
- * @param {boolean}              [returnFirstArg=false] Whether each hook callback is expected to
- *                                                      return its first argument.
- *
- * @return {(hookName:string, ...args: unknown[]) => undefined|unknown} Function that runs hook callbacks.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createRunHook(hooks, storeKey, returnFirstArg = false) {
-    return function runHooks(hookName, ...args) {
-        const hooksStore = hooks[storeKey];
-        if (!hooksStore[hookName]) hooksStore[hookName] = {
-            handlers: [],
-            runs: 0
-        };
-        hooksStore[hookName].runs++;
-        const handlers = hooksStore[hookName].handlers;
-        // Handle any 'all' hooks registered.
-        if ("hookAdded" !== hookName && hooksStore.all) handlers.push(...hooksStore.all.handlers);
-        if (!handlers || !handlers.length) return returnFirstArg ? args[0] : undefined;
-        const hookInfo = {
-            name: hookName,
-            currentIndex: 0
-        };
-        hooksStore.__current.push(hookInfo);
-        while(hookInfo.currentIndex < handlers.length){
-            const handler = handlers[hookInfo.currentIndex];
-            const result = handler.callback.apply(null, args);
-            if (returnFirstArg) args[0] = result;
-            hookInfo.currentIndex++;
-        }
-        hooksStore.__current.pop();
-        if (returnFirstArg) return args[0];
-        return undefined;
-    };
-}
-exports.default = createRunHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"99Xz5":[function(require,module,exports) {
-/**
- * Returns a function which, when invoked, will return the name of the
- * currently running hook, or `null` if no hook of the given type is currently
- * running.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {() => string | null} Function that returns the current hook name or null.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createCurrentHook(hooks, storeKey) {
-    return function currentHook() {
-        var _hooksStore$__current;
-        const hooksStore = hooks[storeKey];
-        return (_hooksStore$__current = hooksStore.__current[hooksStore.__current.length - 1]?.name) !== null && _hooksStore$__current !== void 0 ? _hooksStore$__current : null;
-    };
-}
-exports.default = createCurrentHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l2l8V":[function(require,module,exports) {
-/**
- * @callback DoingHook
- * Returns whether a hook is currently being executed.
- *
- * @param {string} [hookName] The name of the hook to check for.  If
- *                            omitted, will check for any hook being executed.
- *
- * @return {boolean} Whether the hook is being executed.
- */ /**
- * Returns a function which, when invoked, will return whether a hook is
- * currently being executed.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {DoingHook} Function that returns whether a hook is currently
- *                     being executed.
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function createDoingHook(hooks, storeKey) {
-    return function doingHook(hookName) {
-        const hooksStore = hooks[storeKey];
-        // If the hookName was not passed, check for any current hook.
-        if ("undefined" === typeof hookName) return "undefined" !== typeof hooksStore.__current[0];
-        // Return the __current hook.
-        return hooksStore.__current[0] ? hookName === hooksStore.__current[0].name : false;
-    };
-}
-exports.default = createDoingHook;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hSCQx":[function(require,module,exports) {
-/**
- * Internal dependencies
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _validateHookNameJs = require("./validateHookName.js");
-var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
-/**
- * @callback DidHook
- *
- * Returns the number of times an action has been fired.
- *
- * @param {string} hookName The hook name to check.
- *
- * @return {number | undefined} The number of times the hook has run.
- */ /**
- * Returns a function which, when invoked, will return the number of times a
- * hook has been called.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {DidHook} Function that returns a hook's call count.
- */ function createDidHook(hooks, storeKey) {
-    return function didHook(hookName) {
-        const hooksStore = hooks[storeKey];
-        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
-        return hooksStore[hookName] && hooksStore[hookName].runs ? hooksStore[hookName].runs : 0;
-    };
-}
-exports.default = createDidHook;
-
-},{"./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kWmDy":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("ca9ac1a3bee33d8c"));
-var _reactRedux = require("979f6ff1f26c3159");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
     };
-}
-function _extends() {
-    _extends = Object.assign ? Object.assign.bind() : function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
 }
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -27013,100 +25427,199 @@ function _typeof(o) {
         return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
     }, _typeof(o);
 }
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+function ownKeys(e, r) {
+    var t = Object.keys(e);
+    if (Object.getOwnPropertySymbols) {
+        var o = Object.getOwnPropertySymbols(e);
+        r && (o = o.filter(function(r) {
+            return Object.getOwnPropertyDescriptor(e, r).enumerable;
+        })), t.push.apply(t, o);
+    }
+    return t;
+}
+function _objectSpread(e) {
+    for(var r = 1; r < arguments.length; r++){
+        var t = null != arguments[r] ? arguments[r] : {};
+        r % 2 ? ownKeys(Object(t), !0).forEach(function(r) {
+            _defineProperty(e, r, t[r]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r) {
+            Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+        });
+    }
+    return e;
+}
+function _defineProperty(obj, key, value) {
+    key = _toPropertyKey(key);
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _toPropertyKey(arg) {
+    var key = _toPrimitive(arg, "string");
+    return _typeof(key) === "symbol" ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+    if (_typeof(input) !== "object" || input === null) return input;
+    var prim = input[Symbol.toPrimitive];
+    if (prim !== undefined) {
+        var res = prim.call(input, hint || "default");
+        if (_typeof(res) !== "object") return res;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (hint === "string" ? String : Number)(input);
+}
 /**
- * HOC for adding store related properties to components
+ * Prepare data for pro only block upsells.
  *
- * @param {React.ElementType | Object} BaseComponent        target component
- * @param {Function | null}            [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
- * @param {Function | null}            [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
- * @return {Function} HOC function
- */ var withStore = function withStore(BaseComponent) {
-    var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var actionMapping = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-    return function(props) {
-        // prepare selection mappings
-        var selections = {};
-        if (selectMapping && typeof selectMapping === "function") {
-            var selectorObject = selectMapping(_reactRedux.useSelector);
-            if (_typeof(selectorObject) === "object") selections = selectorObject;
-        }
-        var dispatch = (0, _reactRedux.useDispatch)();
-        // prepare action mappings
-        var actions = {};
-        if (actionMapping && typeof actionMapping === "function") {
-            var preActionObject = actionMapping(dispatch, _reactRedux.useSelector);
-            if (preActionObject && _typeof(preActionObject) === "object") actions = Object.keys(preActionObject).filter(function(key) {
-                return Object.prototype.hasOwnProperty.call(preActionObject, key);
-            }).reduce(function(carry, current) {
-                var actionCallback = preActionObject[current];
-                if (typeof actionCallback === "function") carry[current] = function(val) {
-                    dispatch(actionCallback(val));
-                };
-                return carry;
-            }, {});
-        }
-        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, selections, actions, {
-            selector: _reactRedux.useSelector,
-            dispatch: dispatch
-        }));
+ * @param {Object} proOnlyBlockList pro only block list
+ *
+ * @return {Array} pro block upsell data
+ */ function prepareProOnlyBlockUpsellData(proOnlyBlockList) {
+    return Object.keys(proOnlyBlockList).filter(function(key) {
+        return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
+    }).reduce(function(carry, blockName) {
+        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon, screenshot = _proOnlyBlockList$blo.screenshot;
+        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true, screenshot));
+        return carry;
+    }, []);
+}
+/**
+ * Generate block info object compatible with settings menu store.
+ *
+ * @param {string}            name                 block registry name
+ * @param {string}            title                block title
+ * @param {string}            info                 block info
+ * @param {React.ElementType} icon                 icon element
+ * @param {boolean}           active               active status
+ * @param {boolean}           [pro=false]          block pro status
+ * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
+ * @return {Object} block info object
+ */ function generateBlockInfoObject(name, title, info, icon, active) {
+    var pro = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+    var screenshotUrl = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+    return {
+        name: name,
+        title: title,
+        info: Array.isArray(info) ? info : [
+            info
+        ],
+        icon: icon,
+        active: active,
+        pro: pro,
+        screenshotUrl: screenshotUrl
     };
-};
+}
 /**
- * @module withStore
- */ var _default = exports["default"] = withStore;
+ * Create settings menu store.
+ *
+ * @return {Object} store
+ */ function createStore() {
+    // eslint-disable-next-line no-undef
+    var appData = _objectSpread({}, ubAdminMenuData);
+    // eslint-disable-next-line no-undef
+    ubAdminMenuData = null;
+    // add block infos to context data
+    var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
+    var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
+        return blockData.parent === undefined && blockData.supports.inserter === undefined;
+    });
+    var _appData$blocks = appData.blocks, statusData = _appData$blocks.statusData, info = _appData$blocks.info;
+    var reducedBlocks = registeredUbBlocks.reduce(function(carry, current) {
+        var icon = current.icon, currentName = current.name, title = current.title;
+        var blockStatus = false;
+        // eslint-disable-next-line array-callback-return,no-shadow
+        statusData.map(function(_ref) {
+            var name = _ref.name, active = _ref.active;
+            if (name === currentName) blockStatus = active;
+        });
+        var blockInfo = [];
+        if (info[currentName] && Array.isArray(info[currentName])) blockInfo = info[currentName];
+        var newBlockObject = generateBlockInfoObject(currentName, title, blockInfo, icon.src, blockStatus);
+        carry.push(newBlockObject);
+        return carry;
+    }, []);
+    var proBlocks = appData.upsells.blocks;
+    var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
+    // all blocks available including upsell versions of pro blocks or pro blocks themselves
+    var allRegistered = proBlockUpsell.reduce(function(carry, current) {
+        var proBlockName = current.name;
+        //check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
+        // if not inject the upsell data to current block list
+        var registeredProBlock = carry.find(function(_ref2) {
+            var name = _ref2.name;
+            return name === proBlockName;
+        });
+        if (registeredProBlock) registeredProBlock.pro = true;
+        else carry.push(current);
+        return carry;
+    }, reducedBlocks);
+    var _appData$assets = appData.assets, contentData = _appData$assets.contentData, preloadedAssets = _objectWithoutProperties(_appData$assets, _excluded);
+    var preloadedState = {
+        app: {
+            content: contentData
+        },
+        assets: preloadedAssets,
+        blocks: {
+            registered: allRegistered
+        },
+        versionControl: appData.versionControl,
+        pluginStatus: appData.pluginStatus
+    };
+    // merge with default store state
+    preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
+    return (0, _toolkit.configureStore)({
+        reducer: {
+            assets: _assets["default"],
+            app: _app["default"],
+            blocks: _blocks["default"],
+            versionControl: _versionControl["default"],
+            pluginStatus: _pluginStatus["default"]
+        },
+        middleware: function middleware(getDefaultMiddleware) {
+            return getDefaultMiddleware({
+                serializableCheck: false
+            });
+        },
+        preloadedState: preloadedState
+    });
+}
+/**
+ * @module createStore
+ */ var _default = exports["default"] = createStore;
 
-},{"ca9ac1a3bee33d8c":"21dqq","979f6ff1f26c3159":"bdVon"}],"9SnHn":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getLogo = exports.getAsset = exports.getAjaxInfo = exports["default"] = void 0;
-var _toolkit = require("b97968e375f86bd2");
-/**
- * Options for asset store slice
- *
- * @type {Object}
- */ var assetsSliceOptions = {
-    name: "assets",
-    initialState: {
-        logo: "",
-        ajax: {}
-    }
-};
-var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
-/**
- * Get logo url.
- *
- * @param {Object} state store state
- * @return {string} logo url
- */ var getLogo = exports.getLogo = function getLogo(state) {
-    return state.assets.logo;
-};
-/**
- * Get ajax information.
- *
- * @param {Object} state store state
- * @return {Object} ajax information
- */ var getAjaxInfo = exports.getAjaxInfo = function getAjaxInfo(state) {
-    return state.assets.ajax;
-};
-/* eslint-disable-next-line jsdoc/require-param */ /**
- * Get asset with given id.
- */ var getAsset = exports.getAsset = (0, _toolkit.createSelector)([
-    function(state) {
-        return state.assets;
-    },
-    function(assets, assetId) {
-        return assetId;
-    }
-], function(assets, assetId) {
-    return assets === null || assets === void 0 ? void 0 : assets[assetId];
-});
-/**
- * @module assetsSlice
- */ var _default = exports["default"] = assetsSlice.reducer;
-
-},{"b97968e375f86bd2":"lL1Ef"}],"lL1Ef":[function(require,module,exports) {
+},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","61d1115f3d5c796e":"ck1Q2","8c721e7e53326dbf":"9SnHn","4a75fc56b99646a3":"c28DV","df36ccd063eba533":"ohEvx","9bf24bb8ad1424ca":"6jcRk","9016861a8b48c99a":"3xPpL","e241a936151f11bf":"fi8Oa"}],"lL1Ef":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "EnhancerArray", ()=>EnhancerArray);
@@ -31164,307 +29677,299 @@ var thunk = createThunkMiddleware(); // Attach the factory function so users can
 thunk.withExtraArgument = createThunkMiddleware;
 exports.default = thunk;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cm0ja":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ck1Q2":[function(require,module,exports) {
 "use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("faa64fc16b5af6a7"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
+var isMergeableObject = function isMergeableObject(value) {
+    return isNonNullObject(value) && !isSpecial(value);
+};
+function isNonNullObject(value) {
+    return !!value && typeof value === "object";
 }
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+function isSpecial(value) {
+    var stringValue = Object.prototype.toString.call(value);
+    return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
 }
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === "function" && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 0xeac7;
+function isReactElement(value) {
+    return value.$$typeof === REACT_ELEMENT_TYPE;
 }
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+function emptyTarget(val) {
+    return Array.isArray(val) ? [] : {};
 }
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+function cloneUnlessOtherwiseSpecified(value, options) {
+    return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
 }
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+function defaultArrayMerge(target, source, options) {
+    return target.concat(source).map(function(element) {
+        return cloneUnlessOtherwiseSpecified(element, options);
+    });
 }
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Menu right container item.
- *
- * @param {Object}            props            component properties
- * @param {React.ElementType} props.children   component children
- * @param {Array}             props.classNames component class names
- * @class
- */ function RightContainerItem(_ref) {
-    var children = _ref.children, _ref$classNames = _ref.classNames, classNames = _ref$classNames === void 0 ? [] : _ref$classNames;
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: [
-            "right-container-item"
-        ].concat(_toConsumableArray(classNames)).join(" ")
-    }, children);
+function getMergeFunction(key, options) {
+    if (!options.customMerge) return deepmerge;
+    var customMerge = options.customMerge(key);
+    return typeof customMerge === "function" ? customMerge : deepmerge;
 }
-/**
- * @module RightContainerItem
- */ var _default = exports["default"] = RightContainerItem;
-
-},{"faa64fc16b5af6a7":"21dqq"}],"fUke1":[function(require,module,exports) {
-"use strict";
-function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-        return typeof o;
-    } : function(o) {
-        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, _typeof(o);
+function getEnumerableOwnPropertySymbols(target) {
+    return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+        return Object.propertyIsEnumerable.call(target, symbol);
+    }) : [];
 }
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireWildcard(require("b544b5ba9b277d21"));
-var _versionControl = require("9721fb4193a9924a");
-var _withStore = _interopRequireDefault(require("ed40d2d967989b24"));
-var _VersionControlPopup = _interopRequireDefault(require("9b2395a3b4ee2d26"));
-var _Portal = _interopRequireDefault(require("d6bde676cea9749"));
-var _actions = require("9202061521dcbd56");
-var _HeaderVersionInfo = _interopRequireDefault(require("e11ae307e3589951"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
+function getKeys(target) {
+    return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
 }
-function _getRequireWildcardCache(e) {
-    if ("function" != typeof WeakMap) return null;
-    var r = new WeakMap(), t = new WeakMap();
-    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
-        return e ? t : r;
-    })(e);
-}
-function _interopRequireWildcard(e, r) {
-    if (!r && e && e.__esModule) return e;
-    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
-        "default": e
-    };
-    var t = _getRequireWildcardCache(r);
-    if (t && t.has(e)) return t.get(e);
-    var n = {
-        __proto__: null
-    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
-        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
-    }
-    return n["default"] = e, t && t.set(e, n), n;
-}
-function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-function _iterableToArrayLimit(r, l) {
-    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-    if (null != t) {
-        var e, n, i, u, a = [], f = !0, o = !1;
-        try {
-            if (i = (t = t.call(r)).next, 0 === l) {
-                if (Object(t) !== t) return;
-                f = !1;
-            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-        } catch (r) {
-            o = !0, n = r;
-        } finally{
-            try {
-                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-            } finally{
-                if (o) throw n;
-            }
-        }
-        return a;
+function propertyIsOnObject(object, property) {
+    try {
+        return property in object;
+    } catch (_) {
+        return false;
     }
 }
-function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-} // eslint-disable-next-line no-unused-vars
-/**
- * Version control component.
- *
- * @param {Object}   props               component properties
- * @param {string}   props.pluginVersion plugin version, will be supplied via HOC
- * @param {Object}   props.allVersions   available versions, will be supplied via HOC
- * @param {Function} props.dispatch      store dispatch function, will be supplied via HOC
- * @function Object() { [native code] }
- */ function VersionControl(_ref) {
-    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
-    var _useState = (0, _react.useState)(pluginVersion), _useState2 = _slicedToArray(_useState, 2), selectedVersion = _useState2[0], setSelectedVersion = _useState2[1];
-    var _useState3 = (0, _react.useState)(false), _useState4 = _slicedToArray(_useState3, 2), popupVisibility = _useState4[0], setPopupVisibility = _useState4[1];
-    var sortedVersions = (0, _react.useMemo)(function() {
-        return allVersions.sort().reverse();
-    }, [
-        allVersions
-    ]);
-    /**
-   * Callback for version selection.
-   *
-   * @param {string} targetVersion target version
-   */ var onVersionSelect = function onVersionSelect(targetVersion) {
-        setSelectedVersion(targetVersion);
-        setPopupVisibility(true);
-    };
-    /**
-   * Start version operation.
-   *
-   * @return {Promise} operation promise object
-   */ var startVersionOperation = function startVersionOperation() {
-        return dispatch(_actions.rollbackToVersion)(selectedVersion);
-    };
-    return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "version-control-container"
-    }, /*#__PURE__*/ _react["default"].createElement(_HeaderVersionInfo["default"], {
-        availableVersions: sortedVersions,
-        currentVersion: selectedVersion,
-        onSelect: onVersionSelect
-    }), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
-        target: document.body
-    }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
-        onCloseHandler: function onCloseHandler() {
-            setSelectedVersion(pluginVersion);
-            setPopupVisibility(false);
-        },
-        from: pluginVersion,
-        to: selectedVersion,
-        onOperationStart: startVersionOperation
-    })));
+// Protects from prototype poisoning and unexpected merging up the prototype chain.
+function propertyIsUnsafe(target, key) {
+    return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
+     && !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
+     && Object.propertyIsEnumerable.call(target, key) // and also unsafe if they're nonenumerable.
+    );
 }
-/**
- * Store select mapping
- *
- * @param {Function} select store selector
- * @return {Object} select mapping
- */ var selectionMapping = function selectionMapping(select) {
-    return {
-        allVersions: select(_versionControl.versions),
-        pluginVersion: select(_versionControl.currentVersion)
-    };
+function mergeObject(target, source, options) {
+    var destination = {};
+    if (options.isMergeableObject(target)) getKeys(target).forEach(function(key) {
+        destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+    });
+    getKeys(source).forEach(function(key) {
+        if (propertyIsUnsafe(target, key)) return;
+        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+        else destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+    });
+    return destination;
+}
+function deepmerge(target, source, options) {
+    options = options || {};
+    options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+    options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+    // cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
+    // implementations can use it. The caller may not replace it.
+    options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+    var sourceIsArray = Array.isArray(source);
+    var targetIsArray = Array.isArray(target);
+    var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+    if (!sourceAndTargetTypesMatch) return cloneUnlessOtherwiseSpecified(source, options);
+    else if (sourceIsArray) return options.arrayMerge(target, source, options);
+    else return mergeObject(target, source, options);
+}
+deepmerge.all = function deepmergeAll(array, options) {
+    if (!Array.isArray(array)) throw new Error("first argument should be an array");
+    return array.reduce(function(prev, next) {
+        return deepmerge(prev, next, options);
+    }, {});
 };
-/**
- * @module VersionControl
- */ var _default = exports["default"] = (0, _withStore["default"])(VersionControl, selectionMapping);
+var deepmerge_1 = deepmerge;
+module.exports = deepmerge_1;
 
-},{"b544b5ba9b277d21":"21dqq","9721fb4193a9924a":"6jcRk","ed40d2d967989b24":"kWmDy","9b2395a3b4ee2d26":"k3f3V","d6bde676cea9749":"hOoRN","9202061521dcbd56":"g3gW2","e11ae307e3589951":"lUMLC"}],"6jcRk":[function(require,module,exports) {
+},{}],"9SnHn":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
-var _initialState = _interopRequireDefault(require("9089b07959d8d215"));
-var _toolkit = require("b718c794e97d3789");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
+exports.getLogo = exports.getAsset = exports.getAjaxInfo = exports["default"] = void 0;
+var _toolkit = require("b97968e375f86bd2");
 /**
- * Version control slice options.
+ * Options for asset store slice
  *
  * @type {Object}
- */ var versionControlSliceOptions = {
-    name: "versionControl",
-    initialState: _initialState["default"].versionControl
-};
-var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
-/**
- * Get plugin current version.
- *
- * @param {Object} state store state
- * @return {string} current version
- */ var currentVersion = exports.currentVersion = function currentVersion(state) {
-    return state.versionControl.currentVersion;
-};
-/**
- * Get plugin current version.
- *
- * @param {Object} state store state
- * @return {string} current version
- */ var versions = exports.versions = function versions(state) {
-    return state.versionControl.versions;
-};
-/**
- * Get ajax operations info.
- *
- * @param {Object} state store state
- * @return {Object} ajax info
- */ var ajaxInfo = exports.ajaxInfo = function ajaxInfo(state) {
-    return state.versionControl.ajax;
-};
-/**
- * @module versionControlSlice
- */ var _default = exports["default"] = versionControlSlice.reducer;
-
-},{"9089b07959d8d215":"3xPpL","b718c794e97d3789":"lL1Ef"}],"3xPpL":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _BlockStatusFilterControl = require("fcdfedb923f0d687");
-/**
- * Initial store state.
- *
- * @type {Object}
- */ var initialState = {
-    app: {
-        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
-        showBlockInfo: false,
-        upsellPopup: {
-            show: false,
-            targetBlock: null
-        },
-        content: {},
-        router: {
-            current: "welcome"
-        }
-    },
-    versionControl: {
-        currentVersion: "1.0.0",
-        versions: {},
+ */ var assetsSliceOptions = {
+    name: "assets",
+    initialState: {
+        logo: "",
         ajax: {}
-    },
-    pluginStatus: {
-        isPro: false
     }
 };
+var assetsSlice = (0, _toolkit.createSlice)(assetsSliceOptions);
 /**
- * @module initialState
- */ var _default = exports["default"] = initialState;
+ * Get logo url.
+ *
+ * @param {Object} state store state
+ * @return {string} logo url
+ */ var getLogo = exports.getLogo = function getLogo(state) {
+    return state.assets.logo;
+};
+/**
+ * Get ajax information.
+ *
+ * @param {Object} state store state
+ * @return {Object} ajax information
+ */ var getAjaxInfo = exports.getAjaxInfo = function getAjaxInfo(state) {
+    return state.assets.ajax;
+};
+/* eslint-disable-next-line jsdoc/require-param */ /**
+ * Get asset with given id.
+ */ var getAsset = exports.getAsset = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.assets;
+    },
+    function(assets, assetId) {
+        return assetId;
+    }
+], function(assets, assetId) {
+    return assets === null || assets === void 0 ? void 0 : assets[assetId];
+});
+/**
+ * @module assetsSlice
+ */ var _default = exports["default"] = assetsSlice.reducer;
 
-},{"fcdfedb923f0d687":"hebBQ"}],"hebBQ":[function(require,module,exports) {
+},{"b97968e375f86bd2":"lL1Ef"}],"c28DV":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setCurrentRoutePath = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getCurrentRoutePath = exports.getContentData = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
+var _toolkit = require("ab983f5a897f990a");
+var _BlockStatusFilterControl = require("1825a520c0dd5d34");
+var _initialState = _interopRequireDefault(require("d3df904bb6381f74"));
+var _pluginStatus = require("8a1fbc2fa50671c");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * App slice options
+ *
+ * @type {Object}
+ */ var appSliceOptions = {
+    name: "app",
+    initialState: _initialState["default"].app,
+    reducers: {
+        /**
+     * Set current route path.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload route path
+     */ setCurrentRoutePath: function setCurrentRoutePath(state, _ref) {
+            var payload = _ref.payload;
+            state.router.current = payload;
+        },
+        /**
+     * Set current filter value.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload filter value
+     */ setBlockFilter: function setBlockFilter(state, _ref2) {
+            var payload = _ref2.payload;
+            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
+            else throw new Error("invalid block filter type supplied");
+        },
+        /**
+     * Toggle showing info section for block controls.
+     *
+     * @param {Object} state slice state
+     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
+            state.showBlockInfo = !state.showBlockInfo;
+        },
+        /**
+     * Show upsell modal for target block type.
+     *
+     * @param {Object} state         slice state
+     * @param {Object} props         reducer properties
+     * @param {string} props.payload target block type
+     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref3) {
+            var payload = _ref3.payload;
+            state.upsellPopup.show = true;
+            state.upsellPopup.targetBlock = payload;
+        },
+        /**
+     * Hide upsell modal for target block type.
+     *
+     * @param {Object} state slice state
+     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
+            state.upsellPopup.show = false;
+            state.upsellPopup.targetBlock = null;
+        }
+    }
+};
+var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
+var _appSlice$actions = appSlice.actions, setBlockFilter = exports.setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = exports.toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = exports.showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = exports.hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal, setCurrentRoutePath = exports.setCurrentRoutePath = _appSlice$actions.setCurrentRoutePath;
+/**
+ * Get all application options.
+ *
+ * @param {Object} state store state
+ * @return {Object} options
+ */ var getAllAppOptions = exports.getAllAppOptions = function getAllAppOptions(state) {
+    return state.app;
+};
+/* eslint-disable-next-line jsdoc/require-param */ /**
+ * Get content data.
+ */ var getContentData = exports.getContentData = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.app.content;
+    },
+    function(content, id) {
+        return id;
+    }
+], function(content, id) {
+    var _content$id;
+    return (_content$id = content[id]) !== null && _content$id !== void 0 ? _content$id : null;
+});
+/**
+ * Get current block filter.
+ *
+ * @param {Object} state store state
+ * @return {string} filter value
+ */ var getBlockFilter = exports.getBlockFilter = function getBlockFilter(state) {
+    return state.app.blockFilter;
+};
+/**
+ * Get block extra info show status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ var getBlockInfoShowStatus = exports.getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
+    return state.app.showBlockInfo;
+};
+/**
+ * Get plugin pro status.
+ *
+ * @deprecated
+ * use isPluginPro selector in pluginStatus slice for future implementations
+ *
+ * @param {Object} state store state
+ * @return {boolean} status
+ */ var getProStatus = exports.getProStatus = function getProStatus(state) {
+    return (0, _pluginStatus.isPluginPro)(state);
+};
+/**
+ * Get target block type to show in modal.
+ *
+ * @param {Object} state store state
+ * @return {null | string} block type, null for no selected blocks
+ */ var getModalTargetBlockType = exports.getModalTargetBlockType = function getModalTargetBlockType(state) {
+    return state.app.upsellPopup.targetBlock;
+};
+/**
+ * Get modal visibility status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} visibility status
+ */ var getModalVisibilityStatus = exports.getModalVisibilityStatus = function getModalVisibilityStatus(state) {
+    return state.app.upsellPopup.show;
+};
+/**
+ * Get current route path.
+ *
+ * @param {Object} state store state
+ * @return {string | null} route path
+ */ var getCurrentRoutePath = exports.getCurrentRoutePath = function getCurrentRoutePath(state) {
+    return state.app.router.current;
+};
+/**
+ * @module appSlice
+ */ var _default = exports["default"] = appSlice.reducer;
+
+},{"ab983f5a897f990a":"lL1Ef","1825a520c0dd5d34":"hebBQ","d3df904bb6381f74":"3xPpL","8a1fbc2fa50671c":"fi8Oa"}],"hebBQ":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -31812,7 +30317,2095 @@ function _interopRequireWildcard(e, r) {
  * @module ActiveFilterIndicator
  */ var _default = exports["default"] = ActiveFilterIndicator;
 
-},{"bef92c9b301184af":"21dqq"}],"k3f3V":[function(require,module,exports) {
+},{"bef92c9b301184af":"21dqq"}],"3xPpL":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _BlockStatusFilterControl = require("fcdfedb923f0d687");
+/**
+ * Initial store state.
+ *
+ * @type {Object}
+ */ var initialState = {
+    app: {
+        blockFilter: _BlockStatusFilterControl.FILTER_TYPES._DEFAULT,
+        showBlockInfo: false,
+        upsellPopup: {
+            show: false,
+            targetBlock: null
+        },
+        content: {},
+        router: {
+            current: "welcome"
+        }
+    },
+    versionControl: {
+        currentVersion: "1.0.0",
+        versions: {},
+        ajax: {}
+    },
+    pluginStatus: {
+        isPro: false
+    }
+};
+/**
+ * @module initialState
+ */ var _default = exports["default"] = initialState;
+
+},{"fcdfedb923f0d687":"hebBQ"}],"fi8Oa":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.isPluginPro = exports["default"] = void 0;
+var _initialState = _interopRequireDefault(require("ff3d5b2310f4f3d7"));
+var _toolkit = require("acd9b64a16908024");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Plugin status slice.
+ *
+ * @type {Object}
+ */ var pluginStatusSliceOptions = {
+    name: "pluginStatus",
+    initialState: _initialState["default"].pluginStatus,
+    reducers: {}
+};
+var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
+/**
+ * Get plugin pro status.
+ *
+ * @param {Object} state store state
+ * @return {boolean} plugin pro status
+ */ var isPluginPro = exports.isPluginPro = function isPluginPro(state) {
+    return state.pluginStatus.isPro;
+};
+/**
+ * @module pluginStatusSlice
+ */ var _default = exports["default"] = pluginStatusSlice.reducer;
+
+},{"acd9b64a16908024":"lL1Ef","ff3d5b2310f4f3d7":"3xPpL"}],"ohEvx":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
+var _toolkit = require("16834d59f055af3a");
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+/**
+ * Block slice options
+ *
+ * @type {Object}
+ */ var blocksSliceOptions = {
+    name: "blocks",
+    initialState: {
+        registered: []
+    },
+    reducers: {
+        /**
+     * Set active status of target block.
+     *
+     * @param {Object} state         store state
+     * @param {Object} props         action props
+     * @param {Object} props.payload action payload
+     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
+            var payload = _ref.payload;
+            var id = payload.id, status = payload.status;
+            var registered = state.registered;
+            var uRegistered = _toConsumableArray(registered);
+            var blockIndex = -1;
+            // eslint-disable-next-line array-callback-return
+            uRegistered.map(function(bObj, index) {
+                if (bObj.name === id) blockIndex = index;
+            });
+            if (blockIndex >= 0) {
+                uRegistered[blockIndex].active = status;
+                state.registered = uRegistered;
+            }
+        }
+    }
+};
+var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
+var setBlockActiveStatus = exports.setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
+/**
+ * Get registered plugin blocks.
+ *
+ * @param {Object} state store state
+ * @return {Array} blocks
+ */ var getBlocks = exports.getBlocks = function getBlocks(state) {
+    return state.blocks.registered;
+};
+/* eslint-disable-next-line jsdoc/require-param */ /**
+ * Get block object by given block type id.
+ */ var getBlockById = exports.getBlockById = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.blocks.registered;
+    },
+    function(registered, blockId) {
+        return blockId;
+    }
+], function(registered, blockId) {
+    return registered.find(function(_ref2) {
+        var name = _ref2.name;
+        return name === blockId;
+    });
+});
+/**
+ * @module blocksSlice
+ */ var _default = exports["default"] = blocksSlice.reducer;
+
+},{"16834d59f055af3a":"lL1Ef"}],"6jcRk":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.versions = exports["default"] = exports.currentVersion = exports.ajaxInfo = void 0;
+var _initialState = _interopRequireDefault(require("9089b07959d8d215"));
+var _toolkit = require("b718c794e97d3789");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Version control slice options.
+ *
+ * @type {Object}
+ */ var versionControlSliceOptions = {
+    name: "versionControl",
+    initialState: _initialState["default"].versionControl
+};
+var versionControlSlice = (0, _toolkit.createSlice)(versionControlSliceOptions);
+/**
+ * Get plugin current version.
+ *
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var currentVersion = exports.currentVersion = function currentVersion(state) {
+    return state.versionControl.currentVersion;
+};
+/**
+ * Get plugin current version.
+ *
+ * @param {Object} state store state
+ * @return {string} current version
+ */ var versions = exports.versions = function versions(state) {
+    return state.versionControl.versions;
+};
+/**
+ * Get ajax operations info.
+ *
+ * @param {Object} state store state
+ * @return {Object} ajax info
+ */ var ajaxInfo = exports.ajaxInfo = function ajaxInfo(state) {
+    return state.versionControl.ajax;
+};
+/**
+ * @module versionControlSlice
+ */ var _default = exports["default"] = versionControlSlice.reducer;
+
+},{"b718c794e97d3789":"lL1Ef","9089b07959d8d215":"3xPpL"}],"7a8vF":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("455808d61ca3dd3"));
+var _MenuHeader = _interopRequireDefault(require("13ab014d28c1a042"));
+var _Content = _interopRequireDefault(require("46d090e981b08c24"));
+var _UpsellModalSettingsMenu = _interopRequireDefault(require("b2a4cd4db8cb175"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+// eslint-disable-next-line no-unused-vars
+/**
+ * Container for admin menu.
+ *
+ * @return {JSX.Element} container component
+ * @function Object() { [native code] }
+ */ function AdminMenuContainer() {
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-admin-menu-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_UpsellModalSettingsMenu["default"], null), /*#__PURE__*/ _react["default"].createElement(_MenuHeader["default"], null), /*#__PURE__*/ _react["default"].createElement(_Content["default"], null));
+}
+/**
+ * @module AdminMenuContainer
+ */ var _default = exports["default"] = AdminMenuContainer;
+
+},{"455808d61ca3dd3":"21dqq","13ab014d28c1a042":"kP7QS","46d090e981b08c24":"12F8G","b2a4cd4db8cb175":"l7D5t"}],"kP7QS":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("af8ddc31c52e60c1"));
+var _i18n = require("9846d3c7b6ac7c1b");
+var _withStore = _interopRequireDefault(require("a360f5480afc451d"));
+var _assets = require("66544b766e488b05");
+var _RightContainerItem = _interopRequireDefault(require("79a22b8ff7adecac"));
+var _VersionControl = _interopRequireDefault(require("9b060551899412e8"));
+var _Navigation = _interopRequireDefault(require("d7f60a0f07e4af79"));
+var _routes = require("e6bedbb7f240506c");
+var _app = require("e9c2c22a72a45548");
+var _HamburgerMenu = _interopRequireDefault(require("9079f43f327521d8"));
+var _AssetProvider = _interopRequireDefault(require("eaaf70471d024f90"));
+var _ButtonLink = _interopRequireWildcard(require("79cfd1823aff4e62"));
+var _ProFilter = _interopRequireDefault(require("18a59a4502e9f75e"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+/**
+ * Settings menu header element.
+ *
+ * @param {Object}   props                  component properties
+ * @param {string}   props.logoUrl          plugin logo url, will be supplied via HOC
+ * @param {string}   props.currentRoutePath current route path, will be supplied via HOC
+ * @param {Function} props.setRoute         set route path, will be supplied via HOC
+ * @return {JSX.Element} component
+ */ function MenuHeader(_ref) {
+    var logoUrl = _ref.logoUrl, currentRoutePath = _ref.currentRoutePath, setRoute = _ref.setRoute;
+    // status of hamburger menu
+    var _useState = (0, _react.useState)(false), _useState2 = _slicedToArray(_useState, 2), menuStatus = _useState2[0], setMenuStatus = _useState2[1];
+    var routeObjectsMinus404 = (0, _react.useMemo)(function() {
+        return _routes.routeObjects.slice(0, _routes.routeObjects.length - 1);
+    }, []);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "header-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "menu-header"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "left-container"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "logo-container"
+    }, /*#__PURE__*/ _react["default"].createElement("img", {
+        alt: "plugin logo",
+        src: logoUrl
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-plugin-logo-text"
+    }, "Ultimate Blocks"))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-menu-navigation-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
+        routes: routeObjectsMinus404,
+        currentRoutePath: currentRoutePath,
+        setRoute: setRoute
+    })), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "right-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_RightContainerItem["default"], null, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-header-wrapper"
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)), /*#__PURE__*/ _react["default"].createElement(_ProFilter["default"], null, /*#__PURE__*/ _react["default"].createElement(_AssetProvider["default"], {
+        assetIds: [
+            "proBuyUrl"
+        ]
+    }, function(_ref2) {
+        var proBuyUrl = _ref2.proBuyUrl;
+        return /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+            url: proBuyUrl,
+            title: (0, _i18n.__)("Upgrade to PRO", "ultimate-blocks"),
+            type: _ButtonLink.ButtonLinkType.DEFAULT
+        });
+    })))), /*#__PURE__*/ _react["default"].createElement(_HamburgerMenu["default"], {
+        clickHandler: function clickHandler() {
+            return setMenuStatus(!menuStatus);
+        },
+        status: menuStatus
+    })), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "dropdown-navigation",
+        "data-menu-status": menuStatus
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "dropdown-drawer"
+    }, /*#__PURE__*/ _react["default"].createElement(_Navigation["default"], {
+        routes: routeObjectsMinus404,
+        currentRoutePath: currentRoutePath,
+        setRoute: setRoute
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "hamburger-version-control"
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControl["default"], null)))));
+}
+// store select mapping
+var selectMapping = function selectMapping(select) {
+    return {
+        logoUrl: select(_assets.getLogo),
+        currentRoutePath: select(_app.getCurrentRoutePath)
+    };
+};
+// store action mapping
+var actionMapping = function actionMapping() {
+    return {
+        setRoute: _app.setCurrentRoutePath
+    };
+};
+/**
+ * @module MenuHeader
+ */ var _default = exports["default"] = (0, _withStore["default"])(MenuHeader, selectMapping, actionMapping);
+
+},{"af8ddc31c52e60c1":"21dqq","9846d3c7b6ac7c1b":"7CyoE","a360f5480afc451d":"kWmDy","66544b766e488b05":"9SnHn","79a22b8ff7adecac":"cm0ja","9b060551899412e8":"fUke1","d7f60a0f07e4af79":"26KBK","e6bedbb7f240506c":"c1gPj","e9c2c22a72a45548":"c28DV","9079f43f327521d8":"gCgzB","eaaf70471d024f90":"jzub6","79cfd1823aff4e62":"dwYOq","18a59a4502e9f75e":"gCmn9"}],"7CyoE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "sprintf", ()=>(0, _sprintf.sprintf));
+parcelHelpers.export(exports, "defaultI18n", ()=>(0, _defaultI18NDefault.default));
+parcelHelpers.export(exports, "setLocaleData", ()=>(0, _defaultI18N.setLocaleData));
+parcelHelpers.export(exports, "resetLocaleData", ()=>(0, _defaultI18N.resetLocaleData));
+parcelHelpers.export(exports, "getLocaleData", ()=>(0, _defaultI18N.getLocaleData));
+parcelHelpers.export(exports, "subscribe", ()=>(0, _defaultI18N.subscribe));
+parcelHelpers.export(exports, "__", ()=>(0, _defaultI18N.__));
+parcelHelpers.export(exports, "_x", ()=>(0, _defaultI18N._x));
+parcelHelpers.export(exports, "_n", ()=>(0, _defaultI18N._n));
+parcelHelpers.export(exports, "_nx", ()=>(0, _defaultI18N._nx));
+parcelHelpers.export(exports, "isRTL", ()=>(0, _defaultI18N.isRTL));
+parcelHelpers.export(exports, "hasTranslation", ()=>(0, _defaultI18N.hasTranslation));
+var _sprintf = require("./sprintf");
+var _createI18N = require("./create-i18n");
+parcelHelpers.exportAll(_createI18N, exports);
+var _defaultI18N = require("./default-i18n");
+var _defaultI18NDefault = parcelHelpers.interopDefault(_defaultI18N);
+
+},{"./sprintf":"jSK0R","./create-i18n":"2IrAM","./default-i18n":"eKzAG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jSK0R":[function(require,module,exports) {
+/**
+ * External dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Returns a formatted string. If an error occurs in applying the format, the
+ * original format string is returned.
+ *
+ * @param {string} format The format of the string to generate.
+ * @param {...*}   args   Arguments to apply to the format.
+ *
+ * @see https://www.npmjs.com/package/sprintf-js
+ *
+ * @return {string} The formatted string.
+ */ parcelHelpers.export(exports, "sprintf", ()=>sprintf);
+var _memize = require("memize");
+var _memizeDefault = parcelHelpers.interopDefault(_memize);
+var _sprintfJs = require("sprintf-js");
+var _sprintfJsDefault = parcelHelpers.interopDefault(_sprintfJs);
+/**
+ * Log to console, once per message; or more precisely, per referentially equal
+ * argument set. Because Jed throws errors, we log these to the console instead
+ * to avoid crashing the application.
+ *
+ * @param {...*} args Arguments to pass to `console.error`
+ */ const logErrorOnce = (0, _memizeDefault.default)(console.error); // eslint-disable-line no-console
+function sprintf(format, ...args) {
+    try {
+        return (0, _sprintfJsDefault.default).sprintf(format, ...args);
+    } catch (error) {
+        if (error instanceof Error) logErrorOnce("sprintf error: \n\n" + error.toString());
+        return format;
+    }
+}
+
+},{"memize":"2xx6f","sprintf-js":"9lMGt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2xx6f":[function(require,module,exports) {
+/**
+ * Memize options object.
+ *
+ * @typedef MemizeOptions
+ *
+ * @property {number} [maxSize] Maximum size of the cache.
+ */ /**
+ * Internal cache entry.
+ *
+ * @typedef MemizeCacheNode
+ *
+ * @property {?MemizeCacheNode|undefined} [prev] Previous node.
+ * @property {?MemizeCacheNode|undefined} [next] Next node.
+ * @property {Array<*>}                   args   Function arguments for cache
+ *                                               entry.
+ * @property {*}                          val    Function result.
+ */ /**
+ * Properties of the enhanced function for controlling cache.
+ *
+ * @typedef MemizeMemoizedFunction
+ *
+ * @property {()=>void} clear Clear the cache.
+ */ /**
+ * Accepts a function to be memoized, and returns a new memoized function, with
+ * optional options.
+ *
+ * @template {(...args: any[]) => any} F
+ *
+ * @param {F}             fn        Function to memoize.
+ * @param {MemizeOptions} [options] Options object.
+ *
+ * @return {((...args: Parameters<F>) => ReturnType<F>) & MemizeMemoizedFunction} Memoized function.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>memize);
+function memize(fn, options) {
+    var size = 0;
+    /** @type {?MemizeCacheNode|undefined} */ var head;
+    /** @type {?MemizeCacheNode|undefined} */ var tail;
+    options = options || {};
+    function memoized() {
+        var node = head, len = arguments.length, args, i;
+        searchCache: while(node){
+            // Perform a shallow equality test to confirm that whether the node
+            // under test is a candidate for the arguments passed. Two arrays
+            // are shallowly equal if their length matches and each entry is
+            // strictly equal between the two sets. Avoid abstracting to a
+            // function which could incur an arguments leaking deoptimization.
+            // Check whether node arguments match arguments length
+            if (node.args.length !== arguments.length) {
+                node = node.next;
+                continue;
+            }
+            // Check whether node arguments match arguments values
+            for(i = 0; i < len; i++)if (node.args[i] !== arguments[i]) {
+                node = node.next;
+                continue searchCache;
+            }
+            // At this point we can assume we've found a match
+            // Surface matched node to head if not already
+            if (node !== head) {
+                // As tail, shift to previous. Must only shift if not also
+                // head, since if both head and tail, there is no previous.
+                if (node === tail) tail = node.prev;
+                // Adjust siblings to point to each other. If node was tail,
+                // this also handles new tail's empty `next` assignment.
+                /** @type {MemizeCacheNode} */ node.prev.next = node.next;
+                if (node.next) node.next.prev = node.prev;
+                node.next = head;
+                node.prev = null;
+                /** @type {MemizeCacheNode} */ head.prev = node;
+                head = node;
+            }
+            // Return immediately
+            return node.val;
+        }
+        // No cached value found. Continue to insertion phase:
+        // Create a copy of arguments (avoid leaking deoptimization)
+        args = new Array(len);
+        for(i = 0; i < len; i++)args[i] = arguments[i];
+        node = {
+            args: args,
+            // Generate the result from original function
+            val: fn.apply(null, args)
+        };
+        // Don't need to check whether node is already head, since it would
+        // have been returned above already if it was
+        // Shift existing head down list
+        if (head) {
+            head.prev = node;
+            node.next = head;
+        } else // If no head, follows that there's no tail (at initial or reset)
+        tail = node;
+        // Trim tail if we're reached max size and are pending cache insertion
+        if (size === /** @type {MemizeOptions} */ options.maxSize) {
+            tail = /** @type {MemizeCacheNode} */ tail.prev;
+            /** @type {MemizeCacheNode} */ tail.next = null;
+        } else size++;
+        head = node;
+        return node.val;
+    }
+    memoized.clear = function() {
+        head = null;
+        tail = null;
+        size = 0;
+    };
+    // Ignore reason: There's not a clear solution to create an intersection of
+    // the function with additional properties, where the goal is to retain the
+    // function signature of the incoming argument and add control properties
+    // on the return value.
+    // @ts-ignore
+    return memoized;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9lMGt":[function(require,module,exports) {
+/* global window, exports, define */ !function() {
+    "use strict";
+    var re = {
+        not_string: /[^s]/,
+        not_bool: /[^t]/,
+        not_type: /[^T]/,
+        not_primitive: /[^v]/,
+        number: /[diefg]/,
+        numeric_arg: /[bcdiefguxX]/,
+        json: /[j]/,
+        not_json: /[^j]/,
+        text: /^[^\x25]+/,
+        modulo: /^\x25{2}/,
+        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
+        key: /^([a-z_][a-z_\d]*)/i,
+        key_access: /^\.([a-z_][a-z_\d]*)/i,
+        index_access: /^\[(\d+)\]/,
+        sign: /^[+-]/
+    };
+    function sprintf(key) {
+        // `arguments` is not an array, but should be fine for this call
+        return sprintf_format(sprintf_parse(key), arguments);
+    }
+    function vsprintf(fmt, argv) {
+        return sprintf.apply(null, [
+            fmt
+        ].concat(argv || []));
+    }
+    function sprintf_format(parse_tree, argv) {
+        var cursor = 1, tree_length = parse_tree.length, arg, output = "", i, k, ph, pad, pad_character, pad_length, is_positive, sign;
+        for(i = 0; i < tree_length; i++){
+            if (typeof parse_tree[i] === "string") output += parse_tree[i];
+            else if (typeof parse_tree[i] === "object") {
+                ph = parse_tree[i] // convenience purposes only
+                ;
+                if (ph.keys) {
+                    arg = argv[cursor];
+                    for(k = 0; k < ph.keys.length; k++){
+                        if (arg == undefined) throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k - 1]));
+                        arg = arg[ph.keys[k]];
+                    }
+                } else if (ph.param_no) arg = argv[ph.param_no];
+                else arg = argv[cursor++];
+                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) arg = arg();
+                if (re.numeric_arg.test(ph.type) && typeof arg !== "number" && isNaN(arg)) throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg));
+                if (re.number.test(ph.type)) is_positive = arg >= 0;
+                switch(ph.type){
+                    case "b":
+                        arg = parseInt(arg, 10).toString(2);
+                        break;
+                    case "c":
+                        arg = String.fromCharCode(parseInt(arg, 10));
+                        break;
+                    case "d":
+                    case "i":
+                        arg = parseInt(arg, 10);
+                        break;
+                    case "j":
+                        arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0);
+                        break;
+                    case "e":
+                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential();
+                        break;
+                    case "f":
+                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg);
+                        break;
+                    case "g":
+                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg);
+                        break;
+                    case "o":
+                        arg = (parseInt(arg, 10) >>> 0).toString(8);
+                        break;
+                    case "s":
+                        arg = String(arg);
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "t":
+                        arg = String(!!arg);
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "T":
+                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase();
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "u":
+                        arg = parseInt(arg, 10) >>> 0;
+                        break;
+                    case "v":
+                        arg = arg.valueOf();
+                        arg = ph.precision ? arg.substring(0, ph.precision) : arg;
+                        break;
+                    case "x":
+                        arg = (parseInt(arg, 10) >>> 0).toString(16);
+                        break;
+                    case "X":
+                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase();
+                        break;
+                }
+                if (re.json.test(ph.type)) output += arg;
+                else {
+                    if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
+                        sign = is_positive ? "+" : "-";
+                        arg = arg.toString().replace(re.sign, "");
+                    } else sign = "";
+                    pad_character = ph.pad_char ? ph.pad_char === "0" ? "0" : ph.pad_char.charAt(1) : " ";
+                    pad_length = ph.width - (sign + arg).length;
+                    pad = ph.width ? pad_length > 0 ? pad_character.repeat(pad_length) : "" : "";
+                    output += ph.align ? sign + arg + pad : pad_character === "0" ? sign + pad + arg : pad + sign + arg;
+                }
+            }
+        }
+        return output;
+    }
+    var sprintf_cache = Object.create(null);
+    function sprintf_parse(fmt) {
+        if (sprintf_cache[fmt]) return sprintf_cache[fmt];
+        var _fmt = fmt, match, parse_tree = [], arg_names = 0;
+        while(_fmt){
+            if ((match = re.text.exec(_fmt)) !== null) parse_tree.push(match[0]);
+            else if ((match = re.modulo.exec(_fmt)) !== null) parse_tree.push("%");
+            else if ((match = re.placeholder.exec(_fmt)) !== null) {
+                if (match[2]) {
+                    arg_names |= 1;
+                    var field_list = [], replacement_field = match[2], field_match = [];
+                    if ((field_match = re.key.exec(replacement_field)) !== null) {
+                        field_list.push(field_match[1]);
+                        while((replacement_field = replacement_field.substring(field_match[0].length)) !== ""){
+                            if ((field_match = re.key_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
+                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) field_list.push(field_match[1]);
+                            else throw new SyntaxError("[sprintf] failed to parse named argument key");
+                        }
+                    } else throw new SyntaxError("[sprintf] failed to parse named argument key");
+                    match[2] = field_list;
+                } else arg_names |= 2;
+                if (arg_names === 3) throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");
+                parse_tree.push({
+                    placeholder: match[0],
+                    param_no: match[1],
+                    keys: match[2],
+                    sign: match[3],
+                    pad_char: match[4],
+                    align: match[5],
+                    width: match[6],
+                    precision: match[7],
+                    type: match[8]
+                });
+            } else throw new SyntaxError("[sprintf] unexpected placeholder");
+            _fmt = _fmt.substring(match[0].length);
+        }
+        return sprintf_cache[fmt] = parse_tree;
+    }
+    exports["sprintf"] = sprintf;
+    exports["vsprintf"] = vsprintf;
+    if (typeof window !== "undefined") {
+        window["sprintf"] = sprintf;
+        window["vsprintf"] = vsprintf;
+        if (typeof define === "function" && define["amd"]) define(function() {
+            return {
+                "sprintf": sprintf,
+                "vsprintf": vsprintf
+            };
+        });
+    }
+/* eslint-enable quote-props */ }(); // eslint-disable-line
+
+},{}],"2IrAM":[function(require,module,exports) {
+/**
+ * External dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createI18n", ()=>createI18n);
+var _tannin = require("tannin");
+var _tanninDefault = parcelHelpers.interopDefault(_tannin);
+/**
+ * @typedef {Record<string,any>} LocaleData
+ */ /**
+ * Default locale data to use for Tannin domain when not otherwise provided.
+ * Assumes an English plural forms expression.
+ *
+ * @type {LocaleData}
+ */ const DEFAULT_LOCALE_DATA = {
+    "": {
+        /** @param {number} n */ plural_forms (n) {
+            return n === 1 ? 0 : 1;
+        }
+    }
+};
+/*
+ * Regular expression that matches i18n hooks like `i18n.gettext`, `i18n.ngettext`,
+ * `i18n.gettext_domain` or `i18n.ngettext_with_context` or `i18n.has_translation`.
+ */ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
+const createI18n = (initialData, initialDomain, hooks)=>{
+    /**
+   * The underlying instance of Tannin to which exported functions interface.
+   *
+   * @type {Tannin}
+   */ const tannin = new (0, _tanninDefault.default)({});
+    const listeners = new Set();
+    const notifyListeners = ()=>{
+        listeners.forEach((listener)=>listener());
+    };
+    /**
+   * Subscribe to changes of locale data.
+   *
+   * @param {SubscribeCallback} callback Subscription callback.
+   * @return {UnsubscribeCallback} Unsubscribe callback.
+   */ const subscribe = (callback)=>{
+        listeners.add(callback);
+        return ()=>listeners.delete(callback);
+    };
+    /** @type {GetLocaleData} */ const getLocaleData = (domain = "default")=>tannin.data[domain];
+    /**
+   * @param {LocaleData} [data]
+   * @param {string}     [domain]
+   */ const doSetLocaleData = (data, domain = "default")=>{
+        tannin.data[domain] = {
+            ...tannin.data[domain],
+            ...data
+        };
+        // Populate default domain configuration (supported locale date which omits
+        // a plural forms expression).
+        tannin.data[domain][""] = {
+            ...DEFAULT_LOCALE_DATA[""],
+            ...tannin.data[domain]?.[""]
+        };
+        // Clean up cached plural forms functions cache as it might be updated.
+        delete tannin.pluralForms[domain];
+    };
+    /** @type {SetLocaleData} */ const setLocaleData = (data, domain)=>{
+        doSetLocaleData(data, domain);
+        notifyListeners();
+    };
+    /** @type {AddLocaleData} */ const addLocaleData = (data, domain = "default")=>{
+        tannin.data[domain] = {
+            ...tannin.data[domain],
+            ...data,
+            // Populate default domain configuration (supported locale date which omits
+            // a plural forms expression).
+            "": {
+                ...DEFAULT_LOCALE_DATA[""],
+                ...tannin.data[domain]?.[""],
+                ...data?.[""]
+            }
+        };
+        // Clean up cached plural forms functions cache as it might be updated.
+        delete tannin.pluralForms[domain];
+        notifyListeners();
+    };
+    /** @type {ResetLocaleData} */ const resetLocaleData = (data, domain)=>{
+        // Reset all current Tannin locale data.
+        tannin.data = {};
+        // Reset cached plural forms functions cache.
+        tannin.pluralForms = {};
+        setLocaleData(data, domain);
+    };
+    /**
+   * Wrapper for Tannin's `dcnpgettext`. Populates default locale data if not
+   * otherwise previously assigned.
+   *
+   * @param {string|undefined} domain   Domain to retrieve the translated text.
+   * @param {string|undefined} context  Context information for the translators.
+   * @param {string}           single   Text to translate if non-plural. Used as
+   *                                    fallback return value on a caught error.
+   * @param {string}           [plural] The text to be used if the number is
+   *                                    plural.
+   * @param {number}           [number] The number to compare against to use
+   *                                    either the singular or plural form.
+   *
+   * @return {string} The translated string.
+   */ const dcnpgettext = (domain = "default", context, single, plural, number)=>{
+        if (!tannin.data[domain]) // Use `doSetLocaleData` to set silently, without notifying listeners.
+        doSetLocaleData(undefined, domain);
+        return tannin.dcnpgettext(domain, context, single, plural, number);
+    };
+    /** @type {GetFilterDomain} */ const getFilterDomain = (domain = "default")=>domain;
+    /** @type {__} */ const __ = (text, domain)=>{
+        let translation = dcnpgettext(domain, undefined, text);
+        if (!hooks) return translation;
+        /**
+     * Filters text with its translation.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} text        Text to translate.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext", translation, text, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_" + getFilterDomain(domain), translation, text, domain);
+    };
+    /** @type {_x} */ const _x = (text, context, domain)=>{
+        let translation = dcnpgettext(domain, context, text);
+        if (!hooks) return translation;
+        /**
+     * Filters text with its translation based on context information.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} text        Text to translate.
+     * @param {string} context     Context information for the translators.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context", translation, text, context, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.gettext_with_context_" + getFilterDomain(domain), translation, text, context, domain);
+    };
+    /** @type {_n} */ const _n = (single, plural, number, domain)=>{
+        let translation = dcnpgettext(domain, undefined, single, plural, number);
+        if (!hooks) return translation;
+        /**
+     * Filters the singular or plural form of a string.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} single      The text to be used if the number is singular.
+     * @param {string} plural      The text to be used if the number is plural.
+     * @param {string} number      The number to compare against to use either the singular or plural form.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext", translation, single, plural, number, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_" + getFilterDomain(domain), translation, single, plural, number, domain);
+    };
+    /** @type {_nx} */ const _nx = (single, plural, number, context, domain)=>{
+        let translation = dcnpgettext(domain, context, single, plural, number);
+        if (!hooks) return translation;
+        /**
+     * Filters the singular or plural form of a string with gettext context.
+     *
+     * @param {string} translation Translated text.
+     * @param {string} single      The text to be used if the number is singular.
+     * @param {string} plural      The text to be used if the number is plural.
+     * @param {string} number      The number to compare against to use either the singular or plural form.
+     * @param {string} context     Context information for the translators.
+     * @param {string} domain      Text domain. Unique identifier for retrieving translated strings.
+     */ translation = /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context", translation, single, plural, number, context, domain);
+        return /** @type {string} */ /** @type {*} */ hooks.applyFilters("i18n.ngettext_with_context_" + getFilterDomain(domain), translation, single, plural, number, context, domain);
+    };
+    /** @type {IsRtl} */ const isRTL = ()=>{
+        return "rtl" === _x("ltr", "text direction");
+    };
+    /** @type {HasTranslation} */ const hasTranslation = (single, context, domain)=>{
+        const key = context ? context + "\x04" + single : single;
+        let result = !!tannin.data?.[domain !== null && domain !== void 0 ? domain : "default"]?.[key];
+        if (hooks) {
+            /**
+       * Filters the presence of a translation in the locale data.
+       *
+       * @param {boolean} hasTranslation Whether the translation is present or not..
+       * @param {string}  single         The singular form of the translated text (used as key in locale data)
+       * @param {string}  context        Context information for the translators.
+       * @param {string}  domain         Text domain. Unique identifier for retrieving translated strings.
+       */ result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation", result, single, context, domain);
+            result = /** @type { boolean } */ /** @type {*} */ hooks.applyFilters("i18n.has_translation_" + getFilterDomain(domain), result, single, context, domain);
+        }
+        return result;
+    };
+    if (initialData) setLocaleData(initialData, initialDomain);
+    if (hooks) {
+        /**
+     * @param {string} hookName
+     */ const onHookAddedOrRemoved = (hookName)=>{
+            if (I18N_HOOK_REGEXP.test(hookName)) notifyListeners();
+        };
+        hooks.addAction("hookAdded", "core/i18n", onHookAddedOrRemoved);
+        hooks.addAction("hookRemoved", "core/i18n", onHookAddedOrRemoved);
+    }
+    return {
+        getLocaleData,
+        setLocaleData,
+        addLocaleData,
+        resetLocaleData,
+        subscribe,
+        __,
+        _x,
+        _n,
+        _nx,
+        isRTL,
+        hasTranslation
+    };
+};
+
+},{"tannin":"bWSIR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWSIR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Tannin);
+var _pluralForms = require("@tannin/plural-forms");
+var _pluralFormsDefault = parcelHelpers.interopDefault(_pluralForms);
+/**
+ * Tannin constructor options.
+ *
+ * @typedef {Object} TanninOptions
+ *
+ * @property {string}   [contextDelimiter] Joiner in string lookup with context.
+ * @property {Function} [onMissingKey]     Callback to invoke when key missing.
+ */ /**
+ * Domain metadata.
+ *
+ * @typedef {Object} TanninDomainMetadata
+ *
+ * @property {string}            [domain]       Domain name.
+ * @property {string}            [lang]         Language code.
+ * @property {(string|Function)} [plural_forms] Plural forms expression or
+ *                                              function evaluator.
+ */ /**
+ * Domain translation pair respectively representing the singular and plural
+ * translation.
+ *
+ * @typedef {[string,string]} TanninTranslation
+ */ /**
+ * Locale data domain. The key is used as reference for lookup, the value an
+ * array of two string entries respectively representing the singular and plural
+ * translation.
+ *
+ * @typedef {{[key:string]:TanninDomainMetadata|TanninTranslation,'':TanninDomainMetadata|TanninTranslation}} TanninLocaleDomain
+ */ /**
+ * Jed-formatted locale data.
+ *
+ * @see http://messageformat.github.io/Jed/
+ *
+ * @typedef {{[domain:string]:TanninLocaleDomain}} TanninLocaleData
+ */ /**
+ * Default Tannin constructor options.
+ *
+ * @type {TanninOptions}
+ */ var DEFAULT_OPTIONS = {
+    contextDelimiter: "\x04",
+    onMissingKey: null
+};
+/**
+ * Given a specific locale data's config `plural_forms` value, returns the
+ * expression.
+ *
+ * @example
+ *
+ * ```
+ * getPluralExpression( 'nplurals=2; plural=(n != 1);' ) === '(n != 1)'
+ * ```
+ *
+ * @param {string} pf Locale data plural forms.
+ *
+ * @return {string} Plural forms expression.
+ */ function getPluralExpression(pf) {
+    var parts, i, part;
+    parts = pf.split(";");
+    for(i = 0; i < parts.length; i++){
+        part = parts[i].trim();
+        if (part.indexOf("plural=") === 0) return part.substr(7);
+    }
+}
+function Tannin(data, options) {
+    var key;
+    /**
+	 * Jed-formatted locale data.
+	 *
+	 * @name Tannin#data
+	 * @type {TanninLocaleData}
+	 */ this.data = data;
+    /**
+	 * Plural forms function cache, keyed by plural forms string.
+	 *
+	 * @name Tannin#pluralForms
+	 * @type {Object<string,Function>}
+	 */ this.pluralForms = {};
+    /**
+	 * Effective options for instance, including defaults.
+	 *
+	 * @name Tannin#options
+	 * @type {TanninOptions}
+	 */ this.options = {};
+    for(key in DEFAULT_OPTIONS)this.options[key] = options !== undefined && key in options ? options[key] : DEFAULT_OPTIONS[key];
+}
+/**
+ * Returns the plural form index for the given domain and value.
+ *
+ * @param {string} domain Domain on which to calculate plural form.
+ * @param {number} n      Value for which plural form is to be calculated.
+ *
+ * @return {number} Plural form index.
+ */ Tannin.prototype.getPluralForm = function(domain, n) {
+    var getPluralForm = this.pluralForms[domain], config, plural, pf;
+    if (!getPluralForm) {
+        config = this.data[domain][""];
+        pf = config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
+        // string property on a key to guarantee this as metadata.
+        // @ts-ignore
+        config.plural_forms;
+        if (typeof pf !== "function") {
+            plural = getPluralExpression(config["Plural-Forms"] || config["plural-forms"] || // Ignore reason: As known, there's no way to document the empty
+            // string property on a key to guarantee this as metadata.
+            // @ts-ignore
+            config.plural_forms);
+            pf = (0, _pluralFormsDefault.default)(plural);
+        }
+        getPluralForm = this.pluralForms[domain] = pf;
+    }
+    return getPluralForm(n);
+};
+/**
+ * Translate a string.
+ *
+ * @param {string}      domain   Translation domain.
+ * @param {string|void} context  Context distinguishing terms of the same name.
+ * @param {string}      singular Primary key for translation lookup.
+ * @param {string=}     plural   Fallback value used for non-zero plural
+ *                               form index.
+ * @param {number=}     n        Value to use in calculating plural form.
+ *
+ * @return {string} Translated string.
+ */ Tannin.prototype.dcnpgettext = function(domain, context, singular, plural, n) {
+    var index, key, entry;
+    if (n === undefined) // Default to singular.
+    index = 0;
+    else // Find index by evaluating plural form for value.
+    index = this.getPluralForm(domain, n);
+    key = singular;
+    // If provided, context is prepended to key with delimiter.
+    if (context) key = context + this.options.contextDelimiter + singular;
+    entry = this.data[domain][key];
+    // Verify not only that entry exists, but that the intended index is within
+    // range and non-empty.
+    if (entry && entry[index]) return entry[index];
+    if (this.options.onMissingKey) this.options.onMissingKey(singular, domain);
+    // If entry not found, fall back to singular vs. plural with zero index
+    // representing the singular value.
+    return index === 0 ? singular : plural;
+};
+
+},{"@tannin/plural-forms":"ch17b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ch17b":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>pluralForms);
+var _compile = require("@tannin/compile");
+var _compileDefault = parcelHelpers.interopDefault(_compile);
+function pluralForms(expression) {
+    var evaluate = (0, _compileDefault.default)(expression);
+    return function(n) {
+        return +evaluate({
+            n: n
+        });
+    };
+}
+
+},{"@tannin/compile":"5dvv3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5dvv3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>compile);
+var _postfix = require("@tannin/postfix");
+var _postfixDefault = parcelHelpers.interopDefault(_postfix);
+var _evaluate = require("@tannin/evaluate");
+var _evaluateDefault = parcelHelpers.interopDefault(_evaluate);
+function compile(expression) {
+    var terms = (0, _postfixDefault.default)(expression);
+    return function(variables) {
+        return (0, _evaluateDefault.default)(terms, variables);
+    };
+}
+
+},{"@tannin/postfix":"gjJvb","@tannin/evaluate":"8I9co","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gjJvb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>postfix);
+var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
+/**
+ * Operator precedence mapping.
+ *
+ * @type {Object}
+ */ PRECEDENCE = {
+    "(": 9,
+    "!": 8,
+    "*": 7,
+    "/": 7,
+    "%": 7,
+    "+": 6,
+    "-": 6,
+    "<": 5,
+    "<=": 5,
+    ">": 5,
+    ">=": 5,
+    "==": 4,
+    "!=": 4,
+    "&&": 3,
+    "||": 2,
+    "?": 1,
+    "?:": 1
+};
+/**
+ * Characters which signal pair opening, to be terminated by terminators.
+ *
+ * @type {string[]}
+ */ OPENERS = [
+    "(",
+    "?"
+];
+/**
+ * Characters which signal pair termination, the value an array with the
+ * opener as its first member. The second member is an optional operator
+ * replacement to push to the stack.
+ *
+ * @type {string[]}
+ */ TERMINATORS = {
+    ")": [
+        "("
+    ],
+    ":": [
+        "?",
+        "?:"
+    ]
+};
+/**
+ * Pattern matching operators and openers.
+ *
+ * @type {RegExp}
+ */ PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
+function postfix(expression) {
+    var terms = [], stack = [], match, operator, term, element;
+    while(match = expression.match(PATTERN)){
+        operator = match[0];
+        // Term is the string preceding the operator match. It may contain
+        // whitespace, and may be empty (if operator is at beginning).
+        term = expression.substr(0, match.index).trim();
+        if (term) terms.push(term);
+        while(element = stack.pop()){
+            if (TERMINATORS[operator]) {
+                if (TERMINATORS[operator][0] === element) {
+                    // Substitution works here under assumption that because
+                    // the assigned operator will no longer be a terminator, it
+                    // will be pushed to the stack during the condition below.
+                    operator = TERMINATORS[operator][1] || operator;
+                    break;
+                }
+            } else if (OPENERS.indexOf(element) >= 0 || PRECEDENCE[element] < PRECEDENCE[operator]) {
+                // Push to stack if either an opener or when pop reveals an
+                // element of lower precedence.
+                stack.push(element);
+                break;
+            }
+            // For each popped from stack, push to terms.
+            terms.push(element);
+        }
+        if (!TERMINATORS[operator]) stack.push(operator);
+        // Slice matched fragment from expression to continue match.
+        expression = expression.substr(match.index + operator.length);
+    }
+    // Push remainder of operand, if exists, to terms.
+    expression = expression.trim();
+    if (expression) terms.push(expression);
+    // Pop remaining items from stack into terms.
+    return terms.concat(stack.reverse());
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8I9co":[function(require,module,exports) {
+/**
+ * Operator callback functions.
+ *
+ * @type {Object}
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>evaluate);
+var OPERATORS = {
+    "!": function(a) {
+        return !a;
+    },
+    "*": function(a, b) {
+        return a * b;
+    },
+    "/": function(a, b) {
+        return a / b;
+    },
+    "%": function(a, b) {
+        return a % b;
+    },
+    "+": function(a, b) {
+        return a + b;
+    },
+    "-": function(a, b) {
+        return a - b;
+    },
+    "<": function(a, b) {
+        return a < b;
+    },
+    "<=": function(a, b) {
+        return a <= b;
+    },
+    ">": function(a, b) {
+        return a > b;
+    },
+    ">=": function(a, b) {
+        return a >= b;
+    },
+    "==": function(a, b) {
+        return a === b;
+    },
+    "!=": function(a, b) {
+        return a !== b;
+    },
+    "&&": function(a, b) {
+        return a && b;
+    },
+    "||": function(a, b) {
+        return a || b;
+    },
+    "?:": function(a, b, c) {
+        if (a) throw b;
+        return c;
+    }
+};
+function evaluate(postfix, variables) {
+    var stack = [], i, j, args, getOperatorResult, term, value;
+    for(i = 0; i < postfix.length; i++){
+        term = postfix[i];
+        getOperatorResult = OPERATORS[term];
+        if (getOperatorResult) {
+            // Pop from stack by number of function arguments.
+            j = getOperatorResult.length;
+            args = Array(j);
+            while(j--)args[j] = stack.pop();
+            try {
+                value = getOperatorResult.apply(null, args);
+            } catch (earlyReturn) {
+                return earlyReturn;
+            }
+        } else if (variables.hasOwnProperty(term)) value = variables[term];
+        else value = +term;
+        stack.push(value);
+    }
+    return stack[0];
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eKzAG":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getLocaleData", ()=>getLocaleData);
+parcelHelpers.export(exports, "setLocaleData", ()=>setLocaleData);
+parcelHelpers.export(exports, "resetLocaleData", ()=>resetLocaleData);
+parcelHelpers.export(exports, "subscribe", ()=>subscribe);
+parcelHelpers.export(exports, "__", ()=>__);
+parcelHelpers.export(exports, "_x", ()=>_x);
+parcelHelpers.export(exports, "_n", ()=>_n);
+parcelHelpers.export(exports, "_nx", ()=>_nx);
+parcelHelpers.export(exports, "isRTL", ()=>isRTL);
+parcelHelpers.export(exports, "hasTranslation", ()=>hasTranslation);
+var _createI18N = require("./create-i18n");
+/**
+ * WordPress dependencies
+ */ var _hooks = require("@wordpress/hooks");
+const i18n = (0, _createI18N.createI18n)(undefined, undefined, (0, _hooks.defaultHooks));
+/**
+ * Default, singleton instance of `I18n`.
+ */ exports.default = i18n;
+const getLocaleData = i18n.getLocaleData.bind(i18n);
+const setLocaleData = i18n.setLocaleData.bind(i18n);
+const resetLocaleData = i18n.resetLocaleData.bind(i18n);
+const subscribe = i18n.subscribe.bind(i18n);
+const __ = i18n.__.bind(i18n);
+const _x = i18n._x.bind(i18n);
+const _n = i18n._n.bind(i18n);
+const _nx = i18n._nx.bind(i18n);
+const isRTL = i18n.isRTL.bind(i18n);
+const hasTranslation = i18n.hasTranslation.bind(i18n);
+
+},{"./create-i18n":"2IrAM","@wordpress/hooks":"8Bsjr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Bsjr":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "defaultHooks", ()=>defaultHooks);
+parcelHelpers.export(exports, "createHooks", ()=>(0, _createHooksDefault.default));
+parcelHelpers.export(exports, "addAction", ()=>addAction);
+parcelHelpers.export(exports, "addFilter", ()=>addFilter);
+parcelHelpers.export(exports, "removeAction", ()=>removeAction);
+parcelHelpers.export(exports, "removeFilter", ()=>removeFilter);
+parcelHelpers.export(exports, "hasAction", ()=>hasAction);
+parcelHelpers.export(exports, "hasFilter", ()=>hasFilter);
+parcelHelpers.export(exports, "removeAllActions", ()=>removeAllActions);
+parcelHelpers.export(exports, "removeAllFilters", ()=>removeAllFilters);
+parcelHelpers.export(exports, "doAction", ()=>doAction);
+parcelHelpers.export(exports, "applyFilters", ()=>applyFilters);
+parcelHelpers.export(exports, "currentAction", ()=>currentAction);
+parcelHelpers.export(exports, "currentFilter", ()=>currentFilter);
+parcelHelpers.export(exports, "doingAction", ()=>doingAction);
+parcelHelpers.export(exports, "doingFilter", ()=>doingFilter);
+parcelHelpers.export(exports, "didAction", ()=>didAction);
+parcelHelpers.export(exports, "didFilter", ()=>didFilter);
+parcelHelpers.export(exports, "actions", ()=>actions);
+parcelHelpers.export(exports, "filters", ()=>filters);
+var _createHooks = require("./createHooks");
+var _createHooksDefault = parcelHelpers.interopDefault(_createHooks);
+const defaultHooks = (0, _createHooksDefault.default)();
+const { addAction, addFilter, removeAction, removeFilter, hasAction, hasFilter, removeAllActions, removeAllFilters, doAction, applyFilters, currentAction, currentFilter, doingAction, doingFilter, didAction, didFilter, actions, filters } = defaultHooks;
+
+},{"./createHooks":"hhEcY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hhEcY":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Internal class for constructing hooks. Use `createHooks()` function
+ *
+ * Note, it is necessary to expose this class to make its type public.
+ *
+ * @private
+ */ parcelHelpers.export(exports, "_Hooks", ()=>_Hooks);
+var _createAddHook = require("./createAddHook");
+var _createAddHookDefault = parcelHelpers.interopDefault(_createAddHook);
+var _createRemoveHook = require("./createRemoveHook");
+var _createRemoveHookDefault = parcelHelpers.interopDefault(_createRemoveHook);
+var _createHasHook = require("./createHasHook");
+var _createHasHookDefault = parcelHelpers.interopDefault(_createHasHook);
+var _createRunHook = require("./createRunHook");
+var _createRunHookDefault = parcelHelpers.interopDefault(_createRunHook);
+var _createCurrentHook = require("./createCurrentHook");
+var _createCurrentHookDefault = parcelHelpers.interopDefault(_createCurrentHook);
+var _createDoingHook = require("./createDoingHook");
+var _createDoingHookDefault = parcelHelpers.interopDefault(_createDoingHook);
+var _createDidHook = require("./createDidHook");
+var _createDidHookDefault = parcelHelpers.interopDefault(_createDidHook);
+class _Hooks {
+    constructor(){
+        /** @type {import('.').Store} actions */ this.actions = Object.create(null);
+        this.actions.__current = [];
+        /** @type {import('.').Store} filters */ this.filters = Object.create(null);
+        this.filters.__current = [];
+        this.addAction = (0, _createAddHookDefault.default)(this, "actions");
+        this.addFilter = (0, _createAddHookDefault.default)(this, "filters");
+        this.removeAction = (0, _createRemoveHookDefault.default)(this, "actions");
+        this.removeFilter = (0, _createRemoveHookDefault.default)(this, "filters");
+        this.hasAction = (0, _createHasHookDefault.default)(this, "actions");
+        this.hasFilter = (0, _createHasHookDefault.default)(this, "filters");
+        this.removeAllActions = (0, _createRemoveHookDefault.default)(this, "actions", true);
+        this.removeAllFilters = (0, _createRemoveHookDefault.default)(this, "filters", true);
+        this.doAction = (0, _createRunHookDefault.default)(this, "actions");
+        this.applyFilters = (0, _createRunHookDefault.default)(this, "filters", true);
+        this.currentAction = (0, _createCurrentHookDefault.default)(this, "actions");
+        this.currentFilter = (0, _createCurrentHookDefault.default)(this, "filters");
+        this.doingAction = (0, _createDoingHookDefault.default)(this, "actions");
+        this.doingFilter = (0, _createDoingHookDefault.default)(this, "filters");
+        this.didAction = (0, _createDidHookDefault.default)(this, "actions");
+        this.didFilter = (0, _createDidHookDefault.default)(this, "filters");
+    }
+}
+/** @typedef {_Hooks} Hooks */ /**
+ * Returns an instance of the hooks object.
+ *
+ * @return {Hooks} A Hooks instance.
+ */ function createHooks() {
+    return new _Hooks();
+}
+exports.default = createHooks;
+
+},{"./createAddHook":"8uq0x","./createRemoveHook":"5GhVG","./createHasHook":"apZQU","./createRunHook":"aU57G","./createCurrentHook":"99Xz5","./createDoingHook":"l2l8V","./createDidHook":"hSCQx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8uq0x":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _validateNamespaceJs = require("./validateNamespace.js");
+var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback AddHook
+ *
+ * Adds the hook to the appropriate hooks container.
+ *
+ * @param {string}               hookName      Name of hook to add
+ * @param {string}               namespace     The unique namespace identifying the callback in the form `vendor/plugin/function`.
+ * @param {import('.').Callback} callback      Function to call when the hook is run
+ * @param {number}               [priority=10] Priority of this hook
+ */ /**
+ * Returns a function which, when invoked, will add a hook.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {AddHook} Function that adds a new hook.
+ */ function createAddHook(hooks, storeKey) {
+    return function addHook(hookName, namespace, callback, priority = 10) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        if (!(0, _validateNamespaceJsDefault.default)(namespace)) return;
+        if ("function" !== typeof callback) {
+            // eslint-disable-next-line no-console
+            console.error("The hook callback must be a function.");
+            return;
+        }
+        // Validate numeric priority
+        if ("number" !== typeof priority) {
+            // eslint-disable-next-line no-console
+            console.error("If specified, the hook priority must be a number.");
+            return;
+        }
+        const handler = {
+            callback,
+            priority,
+            namespace
+        };
+        if (hooksStore[hookName]) {
+            // Find the correct insert index of the new hook.
+            const handlers = hooksStore[hookName].handlers;
+            /** @type {number} */ let i;
+            for(i = handlers.length; i > 0; i--){
+                if (priority >= handlers[i - 1].priority) break;
+            }
+            if (i === handlers.length) // If append, operate via direct assignment.
+            handlers[i] = handler;
+            else // Otherwise, insert before index via splice.
+            handlers.splice(i, 0, handler);
+            // We may also be currently executing this hook.  If the callback
+            // we're adding would come after the current callback, there's no
+            // problem; otherwise we need to increase the execution index of
+            // any other runs by 1 to account for the added element.
+            hooksStore.__current.forEach((hookInfo)=>{
+                if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex++;
+            });
+        } else // This is the first hook of its type.
+        hooksStore[hookName] = {
+            handlers: [
+                handler
+            ],
+            runs: 0
+        };
+        if (hookName !== "hookAdded") hooks.doAction("hookAdded", hookName, namespace, callback, priority);
+    };
+}
+exports.default = createAddHook;
+
+},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5RkL7":[function(require,module,exports) {
+/**
+ * Validate a namespace string.
+ *
+ * @param {string} namespace The namespace to validate - should take the form
+ *                           `vendor/plugin/function`.
+ *
+ * @return {boolean} Whether the namespace is valid.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function validateNamespace(namespace) {
+    if ("string" !== typeof namespace || "" === namespace) {
+        // eslint-disable-next-line no-console
+        console.error("The namespace must be a non-empty string.");
+        return false;
+    }
+    if (!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(namespace)) {
+        // eslint-disable-next-line no-console
+        console.error("The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.");
+        return false;
+    }
+    return true;
+}
+exports.default = validateNamespace;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dkyGe":[function(require,module,exports) {
+/**
+ * Validate a hookName string.
+ *
+ * @param {string} hookName The hook name to validate. Should be a non empty string containing
+ *                          only numbers, letters, dashes, periods and underscores. Also,
+ *                          the hook name cannot begin with `__`.
+ *
+ * @return {boolean} Whether the hook name is valid.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function validateHookName(hookName) {
+    if ("string" !== typeof hookName || "" === hookName) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name must be a non-empty string.");
+        return false;
+    }
+    if (/^__/.test(hookName)) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name cannot begin with `__`.");
+        return false;
+    }
+    if (!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(hookName)) {
+        // eslint-disable-next-line no-console
+        console.error("The hook name can only contain numbers, letters, dashes, periods and underscores.");
+        return false;
+    }
+    return true;
+}
+exports.default = validateHookName;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5GhVG":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _validateNamespaceJs = require("./validateNamespace.js");
+var _validateNamespaceJsDefault = parcelHelpers.interopDefault(_validateNamespaceJs);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback RemoveHook
+ * Removes the specified callback (or all callbacks) from the hook with a given hookName
+ * and namespace.
+ *
+ * @param {string} hookName  The name of the hook to modify.
+ * @param {string} namespace The unique namespace identifying the callback in the
+ *                           form `vendor/plugin/function`.
+ *
+ * @return {number | undefined} The number of callbacks removed.
+ */ /**
+ * Returns a function which, when invoked, will remove a specified hook or all
+ * hooks by the given name.
+ *
+ * @param {import('.').Hooks}    hooks             Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ * @param {boolean}              [removeAll=false] Whether to remove all callbacks for a hookName,
+ *                                                 without regard to namespace. Used to create
+ *                                                 `removeAll*` functions.
+ *
+ * @return {RemoveHook} Function that removes hooks.
+ */ function createRemoveHook(hooks, storeKey, removeAll = false) {
+    return function removeHook(hookName, namespace) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        if (!removeAll && !(0, _validateNamespaceJsDefault.default)(namespace)) return;
+        // Bail if no hooks exist by this name.
+        if (!hooksStore[hookName]) return 0;
+        let handlersRemoved = 0;
+        if (removeAll) {
+            handlersRemoved = hooksStore[hookName].handlers.length;
+            hooksStore[hookName] = {
+                runs: hooksStore[hookName].runs,
+                handlers: []
+            };
+        } else {
+            // Try to find the specified callback to remove.
+            const handlers = hooksStore[hookName].handlers;
+            for(let i = handlers.length - 1; i >= 0; i--)if (handlers[i].namespace === namespace) {
+                handlers.splice(i, 1);
+                handlersRemoved++;
+                // This callback may also be part of a hook that is
+                // currently executing.  If the callback we're removing
+                // comes after the current callback, there's no problem;
+                // otherwise we need to decrease the execution index of any
+                // other runs by 1 to account for the removed element.
+                hooksStore.__current.forEach((hookInfo)=>{
+                    if (hookInfo.name === hookName && hookInfo.currentIndex >= i) hookInfo.currentIndex--;
+                });
+            }
+        }
+        if (hookName !== "hookRemoved") hooks.doAction("hookRemoved", hookName, namespace);
+        return handlersRemoved;
+    };
+}
+exports.default = createRemoveHook;
+
+},{"./validateNamespace.js":"5RkL7","./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"apZQU":[function(require,module,exports) {
+/**
+ * @callback HasHook
+ *
+ * Returns whether any handlers are attached for the given hookName and optional namespace.
+ *
+ * @param {string} hookName    The name of the hook to check for.
+ * @param {string} [namespace] Optional. The unique namespace identifying the callback
+ *                             in the form `vendor/plugin/function`.
+ *
+ * @return {boolean} Whether there are handlers that are attached to the given hook.
+ */ /**
+ * Returns a function which, when invoked, will return whether any handlers are
+ * attached to a particular hook.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {HasHook} Function that returns whether any handlers are
+ *                   attached to a particular hook and optional namespace.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createHasHook(hooks, storeKey) {
+    return function hasHook(hookName, namespace) {
+        const hooksStore = hooks[storeKey];
+        // Use the namespace if provided.
+        if ("undefined" !== typeof namespace) return hookName in hooksStore && hooksStore[hookName].handlers.some((hook)=>hook.namespace === namespace);
+        return hookName in hooksStore;
+    };
+}
+exports.default = createHasHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aU57G":[function(require,module,exports) {
+/**
+ * Returns a function which, when invoked, will execute all callbacks
+ * registered to a hook of the specified type, optionally returning the final
+ * value of the call chain.
+ *
+ * @param {import('.').Hooks}    hooks                  Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ * @param {boolean}              [returnFirstArg=false] Whether each hook callback is expected to
+ *                                                      return its first argument.
+ *
+ * @return {(hookName:string, ...args: unknown[]) => undefined|unknown} Function that runs hook callbacks.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createRunHook(hooks, storeKey, returnFirstArg = false) {
+    return function runHooks(hookName, ...args) {
+        const hooksStore = hooks[storeKey];
+        if (!hooksStore[hookName]) hooksStore[hookName] = {
+            handlers: [],
+            runs: 0
+        };
+        hooksStore[hookName].runs++;
+        const handlers = hooksStore[hookName].handlers;
+        // Handle any 'all' hooks registered.
+        if ("hookAdded" !== hookName && hooksStore.all) handlers.push(...hooksStore.all.handlers);
+        if (!handlers || !handlers.length) return returnFirstArg ? args[0] : undefined;
+        const hookInfo = {
+            name: hookName,
+            currentIndex: 0
+        };
+        hooksStore.__current.push(hookInfo);
+        while(hookInfo.currentIndex < handlers.length){
+            const handler = handlers[hookInfo.currentIndex];
+            const result = handler.callback.apply(null, args);
+            if (returnFirstArg) args[0] = result;
+            hookInfo.currentIndex++;
+        }
+        hooksStore.__current.pop();
+        if (returnFirstArg) return args[0];
+        return undefined;
+    };
+}
+exports.default = createRunHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"99Xz5":[function(require,module,exports) {
+/**
+ * Returns a function which, when invoked, will return the name of the
+ * currently running hook, or `null` if no hook of the given type is currently
+ * running.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {() => string | null} Function that returns the current hook name or null.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createCurrentHook(hooks, storeKey) {
+    return function currentHook() {
+        var _hooksStore$__current;
+        const hooksStore = hooks[storeKey];
+        return (_hooksStore$__current = hooksStore.__current[hooksStore.__current.length - 1]?.name) !== null && _hooksStore$__current !== void 0 ? _hooksStore$__current : null;
+    };
+}
+exports.default = createCurrentHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l2l8V":[function(require,module,exports) {
+/**
+ * @callback DoingHook
+ * Returns whether a hook is currently being executed.
+ *
+ * @param {string} [hookName] The name of the hook to check for.  If
+ *                            omitted, will check for any hook being executed.
+ *
+ * @return {boolean} Whether the hook is being executed.
+ */ /**
+ * Returns a function which, when invoked, will return whether a hook is
+ * currently being executed.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {DoingHook} Function that returns whether a hook is currently
+ *                     being executed.
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function createDoingHook(hooks, storeKey) {
+    return function doingHook(hookName) {
+        const hooksStore = hooks[storeKey];
+        // If the hookName was not passed, check for any current hook.
+        if ("undefined" === typeof hookName) return "undefined" !== typeof hooksStore.__current[0];
+        // Return the __current hook.
+        return hooksStore.__current[0] ? hookName === hooksStore.__current[0].name : false;
+    };
+}
+exports.default = createDoingHook;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hSCQx":[function(require,module,exports) {
+/**
+ * Internal dependencies
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _validateHookNameJs = require("./validateHookName.js");
+var _validateHookNameJsDefault = parcelHelpers.interopDefault(_validateHookNameJs);
+/**
+ * @callback DidHook
+ *
+ * Returns the number of times an action has been fired.
+ *
+ * @param {string} hookName The hook name to check.
+ *
+ * @return {number | undefined} The number of times the hook has run.
+ */ /**
+ * Returns a function which, when invoked, will return the number of times a
+ * hook has been called.
+ *
+ * @param {import('.').Hooks}    hooks    Hooks instance.
+ * @param {import('.').StoreKey} storeKey
+ *
+ * @return {DidHook} Function that returns a hook's call count.
+ */ function createDidHook(hooks, storeKey) {
+    return function didHook(hookName) {
+        const hooksStore = hooks[storeKey];
+        if (!(0, _validateHookNameJsDefault.default)(hookName)) return;
+        return hooksStore[hookName] && hooksStore[hookName].runs ? hooksStore[hookName].runs : 0;
+    };
+}
+exports.default = createDidHook;
+
+},{"./validateHookName.js":"dkyGe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kWmDy":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("ca9ac1a3bee33d8c"));
+var _reactRedux = require("979f6ff1f26c3159");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign ? Object.assign.bind() : function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+/**
+ * HOC for adding store related properties to components
+ *
+ * @param {React.ElementType | Object} BaseComponent        target component
+ * @param {Function | null}            [selectMapping=null] selection mapping, this mapping will be used to inject store selectors values into component properties
+ * @param {Function | null}            [actionMapping=null] action mapping, this mapping will be used to inject store action functions into component properties
+ * @return {Function} HOC function
+ */ var withStore = function withStore(BaseComponent) {
+    var selectMapping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var actionMapping = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    return function(props) {
+        // prepare selection mappings
+        var selections = {};
+        if (selectMapping && typeof selectMapping === "function") {
+            var selectorObject = selectMapping(_reactRedux.useSelector);
+            if (_typeof(selectorObject) === "object") selections = selectorObject;
+        }
+        var dispatch = (0, _reactRedux.useDispatch)();
+        // prepare action mappings
+        var actions = {};
+        if (actionMapping && typeof actionMapping === "function") {
+            var preActionObject = actionMapping(dispatch, _reactRedux.useSelector);
+            if (preActionObject && _typeof(preActionObject) === "object") actions = Object.keys(preActionObject).filter(function(key) {
+                return Object.prototype.hasOwnProperty.call(preActionObject, key);
+            }).reduce(function(carry, current) {
+                var actionCallback = preActionObject[current];
+                if (typeof actionCallback === "function") carry[current] = function(val) {
+                    dispatch(actionCallback(val));
+                };
+                return carry;
+            }, {});
+        }
+        return /*#__PURE__*/ _react["default"].createElement(BaseComponent, _extends({}, props, selections, actions, {
+            selector: _reactRedux.useSelector,
+            dispatch: dispatch
+        }));
+    };
+};
+/**
+ * @module withStore
+ */ var _default = exports["default"] = withStore;
+
+},{"ca9ac1a3bee33d8c":"21dqq","979f6ff1f26c3159":"bdVon"}],"cm0ja":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("faa64fc16b5af6a7"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Menu right container item.
+ *
+ * @param {Object}            props            component properties
+ * @param {React.ElementType} props.children   component children
+ * @param {Array}             props.classNames component class names
+ * @class
+ */ function RightContainerItem(_ref) {
+    var children = _ref.children, _ref$classNames = _ref.classNames, classNames = _ref$classNames === void 0 ? [] : _ref$classNames;
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: [
+            "right-container-item"
+        ].concat(_toConsumableArray(classNames)).join(" ")
+    }, children);
+}
+/**
+ * @module RightContainerItem
+ */ var _default = exports["default"] = RightContainerItem;
+
+},{"faa64fc16b5af6a7":"21dqq"}],"fUke1":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("b544b5ba9b277d21"));
+var _versionControl = require("9721fb4193a9924a");
+var _withStore = _interopRequireDefault(require("ed40d2d967989b24"));
+var _VersionControlPopup = _interopRequireDefault(require("9b2395a3b4ee2d26"));
+var _Portal = _interopRequireDefault(require("d6bde676cea9749"));
+var _actions = require("9202061521dcbd56");
+var _HeaderVersionInfo = _interopRequireDefault(require("e11ae307e3589951"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(r, l) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+        var e, n, i, u, a = [], f = !0, o = !1;
+        try {
+            if (i = (t = t.call(r)).next, 0 === l) {
+                if (Object(t) !== t) return;
+                f = !1;
+            } else for(; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+        } catch (r) {
+            o = !0, n = r;
+        } finally{
+            try {
+                if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+            } finally{
+                if (o) throw n;
+            }
+        }
+        return a;
+    }
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Version control component.
+ *
+ * @param {Object}   props               component properties
+ * @param {string}   props.pluginVersion plugin version, will be supplied via HOC
+ * @param {Object}   props.allVersions   available versions, will be supplied via HOC
+ * @param {Function} props.dispatch      store dispatch function, will be supplied via HOC
+ * @function Object() { [native code] }
+ */ function VersionControl(_ref) {
+    var pluginVersion = _ref.pluginVersion, allVersions = _ref.allVersions, dispatch = _ref.dispatch;
+    var _useState = (0, _react.useState)(pluginVersion), _useState2 = _slicedToArray(_useState, 2), selectedVersion = _useState2[0], setSelectedVersion = _useState2[1];
+    var _useState3 = (0, _react.useState)(false), _useState4 = _slicedToArray(_useState3, 2), popupVisibility = _useState4[0], setPopupVisibility = _useState4[1];
+    var sortedVersions = (0, _react.useMemo)(function() {
+        return allVersions.sort().reverse();
+    }, [
+        allVersions
+    ]);
+    /**
+   * Callback for version selection.
+   *
+   * @param {string} targetVersion target version
+   */ var onVersionSelect = function onVersionSelect(targetVersion) {
+        setSelectedVersion(targetVersion);
+        setPopupVisibility(true);
+    };
+    /**
+   * Start version operation.
+   *
+   * @return {Promise} operation promise object
+   */ var startVersionOperation = function startVersionOperation() {
+        return dispatch(_actions.rollbackToVersion)(selectedVersion);
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "version-control-container"
+    }, /*#__PURE__*/ _react["default"].createElement(_HeaderVersionInfo["default"], {
+        availableVersions: sortedVersions,
+        currentVersion: selectedVersion,
+        onSelect: onVersionSelect
+    }), popupVisibility && /*#__PURE__*/ _react["default"].createElement(_Portal["default"], {
+        target: document.body
+    }, /*#__PURE__*/ _react["default"].createElement(_VersionControlPopup["default"], {
+        onCloseHandler: function onCloseHandler() {
+            setSelectedVersion(pluginVersion);
+            setPopupVisibility(false);
+        },
+        from: pluginVersion,
+        to: selectedVersion,
+        onOperationStart: startVersionOperation
+    })));
+}
+/**
+ * Store select mapping
+ *
+ * @param {Function} select store selector
+ * @return {Object} select mapping
+ */ var selectionMapping = function selectionMapping(select) {
+    return {
+        allVersions: select(_versionControl.versions),
+        pluginVersion: select(_versionControl.currentVersion)
+    };
+};
+/**
+ * @module VersionControl
+ */ var _default = exports["default"] = (0, _withStore["default"])(VersionControl, selectionMapping);
+
+},{"b544b5ba9b277d21":"21dqq","9721fb4193a9924a":"6jcRk","ed40d2d967989b24":"kWmDy","9b2395a3b4ee2d26":"k3f3V","d6bde676cea9749":"hOoRN","9202061521dcbd56":"g3gW2","e11ae307e3589951":"lUMLC"}],"k3f3V":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -36571,192 +37164,7 @@ var selectMapping = function selectMapping(selector) {
  * @module BoxContentProvider
  */ var _default = exports["default"] = (0, _withStore["default"])(BoxContentProvider, selectMapping);
 
-},{"730e01bd5be97d72":"21dqq","64466d1a627a4f4e":"c28DV","ab31c42385c46384":"kWmDy","ca0a15e451d0bd7e":"6zPRs","15b65ad0070fdb7f":"7XlRo"}],"c28DV":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.toggleShowBlockInfo = exports.showProBlockUpsellModal = exports.setCurrentRoutePath = exports.setBlockFilter = exports.hideProBlockUpsellModal = exports.getProStatus = exports.getModalVisibilityStatus = exports.getModalTargetBlockType = exports.getCurrentRoutePath = exports.getContentData = exports.getBlockInfoShowStatus = exports.getBlockFilter = exports.getAllAppOptions = exports["default"] = void 0;
-var _toolkit = require("ab983f5a897f990a");
-var _BlockStatusFilterControl = require("1825a520c0dd5d34");
-var _initialState = _interopRequireDefault(require("d3df904bb6381f74"));
-var _pluginStatus = require("8a1fbc2fa50671c");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * App slice options
- *
- * @type {Object}
- */ var appSliceOptions = {
-    name: "app",
-    initialState: _initialState["default"].app,
-    reducers: {
-        /**
-     * Set current route path.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload route path
-     */ setCurrentRoutePath: function setCurrentRoutePath(state, _ref) {
-            var payload = _ref.payload;
-            state.router.current = payload;
-        },
-        /**
-     * Set current filter value.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload filter value
-     */ setBlockFilter: function setBlockFilter(state, _ref2) {
-            var payload = _ref2.payload;
-            if (Object.values(_BlockStatusFilterControl.FILTER_TYPES).includes(payload)) state.blockFilter = payload;
-            else throw new Error("invalid block filter type supplied");
-        },
-        /**
-     * Toggle showing info section for block controls.
-     *
-     * @param {Object} state slice state
-     */ toggleShowBlockInfo: function toggleShowBlockInfo(state) {
-            state.showBlockInfo = !state.showBlockInfo;
-        },
-        /**
-     * Show upsell modal for target block type.
-     *
-     * @param {Object} state         slice state
-     * @param {Object} props         reducer properties
-     * @param {string} props.payload target block type
-     */ showProBlockUpsellModal: function showProBlockUpsellModal(state, _ref3) {
-            var payload = _ref3.payload;
-            state.upsellPopup.show = true;
-            state.upsellPopup.targetBlock = payload;
-        },
-        /**
-     * Hide upsell modal for target block type.
-     *
-     * @param {Object} state slice state
-     */ hideProBlockUpsellModal: function hideProBlockUpsellModal(state) {
-            state.upsellPopup.show = false;
-            state.upsellPopup.targetBlock = null;
-        }
-    }
-};
-var appSlice = (0, _toolkit.createSlice)(appSliceOptions);
-var _appSlice$actions = appSlice.actions, setBlockFilter = exports.setBlockFilter = _appSlice$actions.setBlockFilter, toggleShowBlockInfo = exports.toggleShowBlockInfo = _appSlice$actions.toggleShowBlockInfo, showProBlockUpsellModal = exports.showProBlockUpsellModal = _appSlice$actions.showProBlockUpsellModal, hideProBlockUpsellModal = exports.hideProBlockUpsellModal = _appSlice$actions.hideProBlockUpsellModal, setCurrentRoutePath = exports.setCurrentRoutePath = _appSlice$actions.setCurrentRoutePath;
-/**
- * Get all application options.
- *
- * @param {Object} state store state
- * @return {Object} options
- */ var getAllAppOptions = exports.getAllAppOptions = function getAllAppOptions(state) {
-    return state.app;
-};
-/* eslint-disable-next-line jsdoc/require-param */ /**
- * Get content data.
- */ var getContentData = exports.getContentData = (0, _toolkit.createSelector)([
-    function(state) {
-        return state.app.content;
-    },
-    function(content, id) {
-        return id;
-    }
-], function(content, id) {
-    var _content$id;
-    return (_content$id = content[id]) !== null && _content$id !== void 0 ? _content$id : null;
-});
-/**
- * Get current block filter.
- *
- * @param {Object} state store state
- * @return {string} filter value
- */ var getBlockFilter = exports.getBlockFilter = function getBlockFilter(state) {
-    return state.app.blockFilter;
-};
-/**
- * Get block extra info show status.
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ var getBlockInfoShowStatus = exports.getBlockInfoShowStatus = function getBlockInfoShowStatus(state) {
-    return state.app.showBlockInfo;
-};
-/**
- * Get plugin pro status.
- *
- * @deprecated
- * use isPluginPro selector in pluginStatus slice for future implementations
- *
- * @param {Object} state store state
- * @return {boolean} status
- */ var getProStatus = exports.getProStatus = function getProStatus(state) {
-    return (0, _pluginStatus.isPluginPro)(state);
-};
-/**
- * Get target block type to show in modal.
- *
- * @param {Object} state store state
- * @return {null | string} block type, null for no selected blocks
- */ var getModalTargetBlockType = exports.getModalTargetBlockType = function getModalTargetBlockType(state) {
-    return state.app.upsellPopup.targetBlock;
-};
-/**
- * Get modal visibility status.
- *
- * @param {Object} state store state
- * @return {boolean} visibility status
- */ var getModalVisibilityStatus = exports.getModalVisibilityStatus = function getModalVisibilityStatus(state) {
-    return state.app.upsellPopup.show;
-};
-/**
- * Get current route path.
- *
- * @param {Object} state store state
- * @return {string | null} route path
- */ var getCurrentRoutePath = exports.getCurrentRoutePath = function getCurrentRoutePath(state) {
-    return state.app.router.current;
-};
-/**
- * @module appSlice
- */ var _default = exports["default"] = appSlice.reducer;
-
-},{"ab983f5a897f990a":"lL1Ef","1825a520c0dd5d34":"hebBQ","d3df904bb6381f74":"3xPpL","8a1fbc2fa50671c":"fi8Oa"}],"fi8Oa":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.isPluginPro = exports["default"] = void 0;
-var _initialState = _interopRequireDefault(require("ff3d5b2310f4f3d7"));
-var _toolkit = require("acd9b64a16908024");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-/**
- * Plugin status slice.
- *
- * @type {Object}
- */ var pluginStatusSliceOptions = {
-    name: "pluginStatus",
-    initialState: _initialState["default"].pluginStatus,
-    reducers: {}
-};
-var pluginStatusSlice = (0, _toolkit.createSlice)(pluginStatusSliceOptions);
-/**
- * Get plugin pro status.
- *
- * @param {Object} state store state
- * @return {boolean} plugin pro status
- */ var isPluginPro = exports.isPluginPro = function isPluginPro(state) {
-    return state.pluginStatus.isPro;
-};
-/**
- * @module pluginStatusSlice
- */ var _default = exports["default"] = pluginStatusSlice.reducer;
-
-},{"ff3d5b2310f4f3d7":"3xPpL","acd9b64a16908024":"lL1Ef"}],"6zPRs":[function(require,module,exports) {
+},{"730e01bd5be97d72":"21dqq","64466d1a627a4f4e":"c28DV","ab31c42385c46384":"kWmDy","ca0a15e451d0bd7e":"6zPRs","15b65ad0070fdb7f":"7XlRo"}],"6zPRs":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -37483,101 +37891,7 @@ var actionMapping = function actionMapping() {
  * @module BlocksContent
  */ var _default = exports["default"] = (0, _withStore["default"])(BlocksContent, selectMapping, actionMapping);
 
-},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","43840ff570ccb3b4":"ohEvx","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"ohEvx":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.setBlockActiveStatus = exports.getBlocks = exports.getBlockById = exports["default"] = void 0;
-var _toolkit = require("16834d59f055af3a");
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-/**
- * Block slice options
- *
- * @type {Object}
- */ var blocksSliceOptions = {
-    name: "blocks",
-    initialState: {
-        registered: []
-    },
-    reducers: {
-        /**
-     * Set active status of target block.
-     *
-     * @param {Object} state         store state
-     * @param {Object} props         action props
-     * @param {Object} props.payload action payload
-     */ setBlockActiveStatus: function setBlockActiveStatus(state, _ref) {
-            var payload = _ref.payload;
-            var id = payload.id, status = payload.status;
-            var registered = state.registered;
-            var uRegistered = _toConsumableArray(registered);
-            var blockIndex = -1;
-            // eslint-disable-next-line array-callback-return
-            uRegistered.map(function(bObj, index) {
-                if (bObj.name === id) blockIndex = index;
-            });
-            if (blockIndex >= 0) {
-                uRegistered[blockIndex].active = status;
-                state.registered = uRegistered;
-            }
-        }
-    }
-};
-var blocksSlice = (0, _toolkit.createSlice)(blocksSliceOptions);
-var setBlockActiveStatus = exports.setBlockActiveStatus = blocksSlice.actions.setBlockActiveStatus;
-/**
- * Get registered plugin blocks.
- *
- * @param {Object} state store state
- * @return {Array} blocks
- */ var getBlocks = exports.getBlocks = function getBlocks(state) {
-    return state.blocks.registered;
-};
-/* eslint-disable-next-line jsdoc/require-param */ /**
- * Get block object by given block type id.
- */ var getBlockById = exports.getBlockById = (0, _toolkit.createSelector)([
-    function(state) {
-        return state.blocks.registered;
-    },
-    function(registered, blockId) {
-        return blockId;
-    }
-], function(registered, blockId) {
-    return registered.find(function(_ref2) {
-        var name = _ref2.name;
-        return name === blockId;
-    });
-});
-/**
- * @module blocksSlice
- */ var _default = exports["default"] = blocksSlice.reducer;
-
-},{"16834d59f055af3a":"lL1Ef"}],"e69CO":[function(require,module,exports) {
+},{"44b754e7f33ff5d6":"21dqq","ccee3ff924ee68fd":"7CyoE","5d137a308a6dc4a1":"cJGef","43840ff570ccb3b4":"ohEvx","49772c2ff883b51c":"6zPRs","1f27831d7ce0318c":"dwYOq","8b5f61fe76b9467a":"5Kpzy","840a3345d0cfd09":"e69CO","8932a746af86836e":"kWmDy","202bbd36af9d5464":"g3gW2"}],"e69CO":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -39287,320 +39601,6 @@ function _interopRequireWildcard(e, r) {
  * @module AdminMenuWrapper
  */ var _default = exports["default"] = AdminMenuWrapper;
 
-},{"7a7fd8a69bf62f03":"21dqq"}],"7VzQu":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("c515c572c6ab551c"));
-var _toolkit = require("953ee9eab3e8c345");
-var _assets = _interopRequireDefault(require("8c721e7e53326dbf"));
-var _app = _interopRequireDefault(require("4a75fc56b99646a3"));
-var _blocks = _interopRequireDefault(require("df36ccd063eba533"));
-var _versionControl = _interopRequireDefault(require("9bf24bb8ad1424ca"));
-var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
-var _initialState = _interopRequireDefault(require("9016861a8b48c99a"));
-var _pluginStatus = _interopRequireDefault(require("e241a936151f11bf"));
-var _excluded = [
-    "contentData"
-];
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _typeof(o) {
-    "@babel/helpers - typeof";
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
-        return typeof o;
-    } : function(o) {
-        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, _typeof(o);
-}
-function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {};
-    var target = _objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for(i = 0; i < sourceSymbolKeys.length; i++){
-            key = sourceSymbolKeys[i];
-            if (excluded.indexOf(key) >= 0) continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-            target[key] = source[key];
-        }
-    }
-    return target;
-}
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-function ownKeys(e, r) {
-    var t = Object.keys(e);
-    if (Object.getOwnPropertySymbols) {
-        var o = Object.getOwnPropertySymbols(e);
-        r && (o = o.filter(function(r) {
-            return Object.getOwnPropertyDescriptor(e, r).enumerable;
-        })), t.push.apply(t, o);
-    }
-    return t;
-}
-function _objectSpread(e) {
-    for(var r = 1; r < arguments.length; r++){
-        var t = null != arguments[r] ? arguments[r] : {};
-        r % 2 ? ownKeys(Object(t), !0).forEach(function(r) {
-            _defineProperty(e, r, t[r]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r) {
-            Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-        });
-    }
-    return e;
-}
-function _defineProperty(obj, key, value) {
-    key = _toPropertyKey(key);
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _toPropertyKey(arg) {
-    var key = _toPrimitive(arg, "string");
-    return _typeof(key) === "symbol" ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-    if (_typeof(input) !== "object" || input === null) return input;
-    var prim = input[Symbol.toPrimitive];
-    if (prim !== undefined) {
-        var res = prim.call(input, hint || "default");
-        if (_typeof(res) !== "object") return res;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (hint === "string" ? String : Number)(input);
-}
-/**
- * Prepare data for pro only block upsells.
- *
- * @param {Object} proOnlyBlockList pro only block list
- *
- * @return {Array} pro block upsell data
- */ function prepareProOnlyBlockUpsellData(proOnlyBlockList) {
-    return Object.keys(proOnlyBlockList).filter(function(key) {
-        return Object.prototype.hasOwnProperty.call(proOnlyBlockList, key);
-    }).reduce(function(carry, blockName) {
-        var _proOnlyBlockList$blo = proOnlyBlockList[blockName], info = _proOnlyBlockList$blo.desc, title = _proOnlyBlockList$blo.label, icon = _proOnlyBlockList$blo.icon, screenshot = _proOnlyBlockList$blo.screenshot;
-        carry.push(generateBlockInfoObject(blockName, title, info, icon, false, true, screenshot));
-        return carry;
-    }, []);
-}
-/**
- * Generate block info object compatible with settings menu store.
- *
- * @param {string}            name                 block registry name
- * @param {string}            title                block title
- * @param {string}            info                 block info
- * @param {React.ElementType} icon                 icon element
- * @param {boolean}           active               active status
- * @param {boolean}           [pro=false]          block pro status
- * @param {string | null}     [screenshotUrl=null] screenshot url for upsell
- * @return {Object} block info object
- */ function generateBlockInfoObject(name, title, info, icon, active) {
-    var pro = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-    var screenshotUrl = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
-    return {
-        name: name,
-        title: title,
-        info: Array.isArray(info) ? info : [
-            info
-        ],
-        icon: icon,
-        active: active,
-        pro: pro,
-        screenshotUrl: screenshotUrl
-    };
-}
-/**
- * Create settings menu store.
- *
- * @return {Object} store
- */ function createStore() {
-    // eslint-disable-next-line no-undef
-    var appData = _objectSpread({}, ubAdminMenuData);
-    // eslint-disable-next-line no-undef
-    ubAdminMenuData = null;
-    // add block infos to context data
-    var registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
-    var registeredUbBlocks = registeredBlocks.filter(function(blockData) {
-        return blockData.parent === undefined && blockData.supports.inserter === undefined;
-    });
-    var _appData$blocks = appData.blocks, statusData = _appData$blocks.statusData, info = _appData$blocks.info;
-    var reducedBlocks = registeredUbBlocks.reduce(function(carry, current) {
-        var icon = current.icon, currentName = current.name, title = current.title;
-        var blockStatus = false;
-        // eslint-disable-next-line array-callback-return,no-shadow
-        statusData.map(function(_ref) {
-            var name = _ref.name, active = _ref.active;
-            if (name === currentName) blockStatus = active;
-        });
-        var blockInfo = [];
-        if (info[currentName] && Array.isArray(info[currentName])) blockInfo = info[currentName];
-        var newBlockObject = generateBlockInfoObject(currentName, title, blockInfo, icon.src, blockStatus);
-        carry.push(newBlockObject);
-        return carry;
-    }, []);
-    var proBlocks = appData.upsells.blocks;
-    var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
-    // all blocks available including upsell versions of pro blocks or pro blocks themselves
-    var allRegistered = proBlockUpsell.reduce(function(carry, current) {
-        var proBlockName = current.name;
-        //check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
-        // if not inject the upsell data to current block list
-        var registeredProBlock = carry.find(function(_ref2) {
-            var name = _ref2.name;
-            return name === proBlockName;
-        });
-        if (registeredProBlock) registeredProBlock.pro = true;
-        else carry.push(current);
-        return carry;
-    }, reducedBlocks);
-    var _appData$assets = appData.assets, contentData = _appData$assets.contentData, preloadedAssets = _objectWithoutProperties(_appData$assets, _excluded);
-    var preloadedState = {
-        app: {
-            content: contentData
-        },
-        assets: preloadedAssets,
-        blocks: {
-            registered: allRegistered
-        },
-        versionControl: appData.versionControl,
-        pluginStatus: appData.pluginStatus
-    };
-    // merge with default store state
-    preloadedState = (0, _deepmerge["default"])(_initialState["default"], preloadedState);
-    return (0, _toolkit.configureStore)({
-        reducer: {
-            assets: _assets["default"],
-            app: _app["default"],
-            blocks: _blocks["default"],
-            versionControl: _versionControl["default"],
-            pluginStatus: _pluginStatus["default"]
-        },
-        middleware: function middleware(getDefaultMiddleware) {
-            return getDefaultMiddleware({
-                serializableCheck: false
-            });
-        },
-        preloadedState: preloadedState
-    });
-}
-/**
- * @module createStore
- */ var _default = exports["default"] = createStore;
-
-},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","8c721e7e53326dbf":"9SnHn","4a75fc56b99646a3":"c28DV","df36ccd063eba533":"ohEvx","9bf24bb8ad1424ca":"6jcRk","61d1115f3d5c796e":"ck1Q2","9016861a8b48c99a":"3xPpL","e241a936151f11bf":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
-"use strict";
-var isMergeableObject = function isMergeableObject(value) {
-    return isNonNullObject(value) && !isSpecial(value);
-};
-function isNonNullObject(value) {
-    return !!value && typeof value === "object";
-}
-function isSpecial(value) {
-    var stringValue = Object.prototype.toString.call(value);
-    return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
-}
-// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
-var canUseSymbol = typeof Symbol === "function" && Symbol.for;
-var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 0xeac7;
-function isReactElement(value) {
-    return value.$$typeof === REACT_ELEMENT_TYPE;
-}
-function emptyTarget(val) {
-    return Array.isArray(val) ? [] : {};
-}
-function cloneUnlessOtherwiseSpecified(value, options) {
-    return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
-}
-function defaultArrayMerge(target, source, options) {
-    return target.concat(source).map(function(element) {
-        return cloneUnlessOtherwiseSpecified(element, options);
-    });
-}
-function getMergeFunction(key, options) {
-    if (!options.customMerge) return deepmerge;
-    var customMerge = options.customMerge(key);
-    return typeof customMerge === "function" ? customMerge : deepmerge;
-}
-function getEnumerableOwnPropertySymbols(target) {
-    return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
-        return Object.propertyIsEnumerable.call(target, symbol);
-    }) : [];
-}
-function getKeys(target) {
-    return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
-}
-function propertyIsOnObject(object, property) {
-    try {
-        return property in object;
-    } catch (_) {
-        return false;
-    }
-}
-// Protects from prototype poisoning and unexpected merging up the prototype chain.
-function propertyIsUnsafe(target, key) {
-    return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
-     && !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
-     && Object.propertyIsEnumerable.call(target, key) // and also unsafe if they're nonenumerable.
-    );
-}
-function mergeObject(target, source, options) {
-    var destination = {};
-    if (options.isMergeableObject(target)) getKeys(target).forEach(function(key) {
-        destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
-    });
-    getKeys(source).forEach(function(key) {
-        if (propertyIsUnsafe(target, key)) return;
-        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
-        else destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-    });
-    return destination;
-}
-function deepmerge(target, source, options) {
-    options = options || {};
-    options.arrayMerge = options.arrayMerge || defaultArrayMerge;
-    options.isMergeableObject = options.isMergeableObject || isMergeableObject;
-    // cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
-    // implementations can use it. The caller may not replace it.
-    options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
-    var sourceIsArray = Array.isArray(source);
-    var targetIsArray = Array.isArray(target);
-    var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
-    if (!sourceAndTargetTypesMatch) return cloneUnlessOtherwiseSpecified(source, options);
-    else if (sourceIsArray) return options.arrayMerge(target, source, options);
-    else return mergeObject(target, source, options);
-}
-deepmerge.all = function deepmergeAll(array, options) {
-    if (!Array.isArray(array)) throw new Error("first argument should be an array");
-    return array.reduce(function(prev, next) {
-        return deepmerge(prev, next, options);
-    }, {});
-};
-var deepmerge_1 = deepmerge;
-module.exports = deepmerge_1;
-
-},{}]},["eQDYk"], "eQDYk", "parcelRequire065b")
+},{"7a7fd8a69bf62f03":"21dqq"}]},["eQDYk"], "eQDYk", "parcelRequire065b")
 
 //# sourceMappingURL=ub-admin-settings.js.map
