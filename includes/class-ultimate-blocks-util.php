@@ -1,4 +1,9 @@
 <?php
+/**
+ * Block utilities.
+ *
+ * @package ultimate-blocks
+ */
 
 /**
  * Fired during plugin activation
@@ -25,12 +30,12 @@ class Ultimate_Blocks_Util {
 	/**
 	 * Get all Blocks.
 	 *
-	 * @since    1.0.2
 	 * @return array
+	 * @since    1.0.2
 	 */
 	public static function blocks() {
 
-		return [
+		return array(
 			array(
 				'label'  => 'Advanced Heading',
 				'name'   => 'ub/advanced-heading',
@@ -55,28 +60,28 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Click To Tweet',
 				'name'   => 'ub/click-to-tweet',
 				'active' => true,
-            ),
-            array(
+			),
+			array(
 				'label'  => 'Content Filter',
 				'name'   => 'ub/content-filter-block',
 				'active' => true,
-            ),
+			),
 			array(
 				'label'  => 'Content Toggle',
 				'name'   => 'ub/content-toggle-block',
 				'active' => true,
-            ),
-            array(
-                'label'  => 'Countdown',
-                'name'   => 'ub/countdown',
-                'active' => true,
-            ),
+			),
+			array(
+				'label'  => 'Countdown',
+				'name'   => 'ub/countdown',
+				'active' => true,
+			),
 			array(
 				'label'  => 'Divider',
 				'name'   => 'ub/divider',
 				'active' => true,
-            ),
-            array(
+			),
+			array(
 				'label'  => 'Expand',
 				'name'   => 'ub/expand',
 				'active' => true,
@@ -86,42 +91,42 @@ class Ultimate_Blocks_Util {
 				'name'   => 'ub/how-to',
 				'active' => true,
 			),
-            array(
-                'label'  => 'Image Slider',
-                'name'   => 'ub/image-slider',
-                'active' => true,
-            ),
-            array(
-                'label'  => 'Post Grid',
-                'name'   => 'ub/post-grid',
-                'active' => true,
-            ),
-            array(
+			array(
+				'label'  => 'Image Slider',
+				'name'   => 'ub/image-slider',
+				'active' => true,
+			),
+			array(
+				'label'  => 'Post Grid',
+				'name'   => 'ub/post-grid',
+				'active' => true,
+			),
+			array(
 				'label'  => 'Progress Bar',
 				'name'   => 'ub/progress-bar',
 				'active' => true,
-            ),
-            array(
-                'label'  => 'Review',
-                'name'   => 'ub/review',
-                'active' => true,
-            ),
+			),
+			array(
+				'label'  => 'Review',
+				'name'   => 'ub/review',
+				'active' => true,
+			),
 			array(
 				'label'  => 'Social Share',
 				'name'   => 'ub/social-share',
 				'active' => true,
-            ),
-            array(
+			),
+			array(
 				'label'  => 'Star Rating',
 				'name'   => 'ub/star-rating-block',
 				'active' => true,
-            ),
-            array(
+			),
+			array(
 				'label'  => 'Styled Box',
 				'name'   => 'ub/styled-box',
 				'active' => true,
 			),
-            array(
+			array(
 				'label'  => 'Styled List',
 				'name'   => 'ub/styled-list',
 				'active' => true,
@@ -130,23 +135,27 @@ class Ultimate_Blocks_Util {
 				'label'  => 'Tabbed Content',
 				'name'   => 'ub/tabbed-content-block',
 				'active' => true,
-            ),
+			),
 			array(
 				'label'  => 'Table of Contents',
 				'name'   => 'ub/table-of-contents-block',
 				'active' => true,
-            ),
-            array(
+			),
+			array(
 				'label'  => 'Testimonial',
 				'name'   => 'ub/testimonial',
 				'active' => true,
-		  ),
-            array(
+			),
+			array(
 				'label'  => 'Icon',
 				'name'   => 'ub/icon',
 				'active' => true,
-		 )
-		];
+			),
+			array(
+				'label'  => 'Counter',
+				'name'   => 'ub/counter',
+				'active' => true,
+			),
+		);
 	}
-
 }
