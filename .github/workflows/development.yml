@@ -28,6 +28,7 @@ jobs:
           fi
 
   server-setup:
+    if: needs.branch-check.outputs.matched == 'true'
     uses: ./.github/workflows/server-setup-template.yml
     needs: branch-check
 
@@ -40,6 +41,7 @@ jobs:
     needs: server-setup
 
   build:
+    if: github.event_type != 'pull_request'
     name: Build plugin for development
     needs: [ php-tests , js-tests ]
     runs-on: ubuntu-latest
