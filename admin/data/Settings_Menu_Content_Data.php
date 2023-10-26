@@ -61,7 +61,7 @@ class Settings_Menu_Content_Data implements I_Plugin_Data {
 			'globalControl' => array(
 				'title'   => esc_html__( 'Global Control', 'ultimate-blocks' ),
 				'content' => esc_html__(
-					"Our plugin's global control allows users to easily enable or disable all available blocks together, simplifying block management",
+					'Global control allows users to easily enable or disable all available blocks together, simplifying block management',
 					'ultimate-blocks'
 				),
 			),
