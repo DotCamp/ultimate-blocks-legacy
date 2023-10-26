@@ -80,33 +80,6 @@ function deactivate_ultimate_blocks() {
 register_activation_hook( __FILE__, 'activate_ultimate_blocks' );
 register_deactivation_hook( __FILE__, 'deactivate_ultimate_blocks' );
 
-if ( ! function_exists( 'ub_safe_welcome_redirect' ) ) {
-
-	add_action( 'admin_init', 'ub_safe_welcome_redirect' );
-
-	function ub_safe_welcome_redirect() {
-
-		if ( ! get_transient( '_welcome_redirect_ub' ) ) {
-			return;
-		}
-
-		delete_transient( '_welcome_redirect_ub' );
-
-		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
-			return;
-		}
-
-		wp_safe_redirect( add_query_arg(
-			array(
-				'page' => 'ultimate-blocks-help'
-			),
-			admin_url( 'admin.php' )
-		) );
-
-	}
-
-}
-
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
@@ -126,13 +99,12 @@ function run_ultimate_blocks() {
 
 	$plugin = new Ultimate_Blocks();
 	$plugin->run();
-
 }
 
-// initialize env manager
+// initialize env manager.
 Env_Manager::init();
 
-// initialize license provider
+// initialize license provider.
 Pro_Manager::init_freemius();
 
 add_action( 'plugins_loaded', 'run_ultimate_blocks', 10, 1 );

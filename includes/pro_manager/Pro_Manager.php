@@ -214,7 +214,7 @@ class Pro_Manager {
 					'has_addons'          => true,
 					'menu'                => array(
 						'slug'       => 'ultimate-blocks-settings',
-						'first-path' => 'admin.php?page=ultimate-blocks-help',
+						'first-path' => 'admin.php?page=ultimate-blocks-settings&route=welcome',
 						'account'    => true,
 						'contact'    => true,
 						'support'    => false,
