@@ -147,11 +147,13 @@ That's it. You're done!
 
 * NEW: Counter block.
 * FIX: Schema parsing error from how to block.
+* FIX: Block alignment not working inside the tabbed content block.
 * FIX: Styled List block layout is not equal frontend and editor.
 * FIX: Styled List block duplicate instance not working properly.
 * FIX: An issue affecting content toggle block for <WordPress5.9 servers.
 * FIX: Content toggle block aria attributes mismatch issue.
 * IMPROVE: Settings menu updates.
+* IMPROVE: Add option to select open panel by default in content toggle block.
 * IMPROVE: Change social share block twitter icon to X.
 * IMPROVE: Change default state of social share block.
 * IMPROVE: Change default state of content toggle block.
