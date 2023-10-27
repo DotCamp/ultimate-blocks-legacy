@@ -201,7 +201,7 @@ Array.prototype.slice
 
 					panelContent.addEventListener("transitionend", function () {
 						panelContent.classList.remove("ub-toggle-transition");
-						panelContent.previousElementSibling.setAttribute(
+						panelContent.setAttribute(
 							"aria-expanded",
 							panelContent.offsetHeight !== 0
 						);
