@@ -11,9 +11,14 @@ import {
 import { useSelect, useDispatch } from "@wordpress/data";
 import { __experimentalToolsPanelItem as ToolsPanelItem } from "@wordpress/components";
 
-function SpacingControl({ label, attrKey, showByDefault = false }) {
+function SpacingControl({
+	label,
+	attrKey,
+	showByDefault = false,
+	minimumCustomValue = 0,
+}) {
 	const { clientId } = useBlockEditContext();
-	const spacingRef = useRef();
+
 	const attributes = useSelect(
 		(select) => select("core/block-editor").getSelectedBlock().attributes
 	);
@@ -37,6 +42,7 @@ function SpacingControl({ label, attrKey, showByDefault = false }) {
 				hasValue={() => !isEmpty(attributes[attrKey])}
 			>
 				<SpacingSizesControl
+					minimumCustomValue={minimumCustomValue}
 					allowReset={true}
 					label={label}
 					values={attributes[attrKey]}

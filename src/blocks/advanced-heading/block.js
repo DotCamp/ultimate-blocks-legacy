@@ -67,6 +67,10 @@ const attributes = {
 		type: "object",
 		default: {},
 	},
+	margin: {
+		type: "object",
+		default: {},
+	},
 };
 
 registerBlockType("ub/advanced-heading", {

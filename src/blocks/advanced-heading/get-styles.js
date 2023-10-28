@@ -13,13 +13,25 @@ export function getStyles(attributes) {
 		fontFamily,
 		fontWeight,
 		lineHeight,
+		margin,
 	} = attributes;
 	const paddingObj = getSpacingCss(padding);
+	const marginObj = getSpacingCss(margin);
 	let styles = {
 		paddingTop: paddingObj?.top,
 		paddingRight: paddingObj?.right,
 		paddingBottom: paddingObj?.bottom,
 		paddingLeft: paddingObj?.left,
+		marginTop: !isEmpty(marginObj?.top) ? marginObj?.top + " !important" : "",
+		marginRight: !isEmpty(marginObj?.right)
+			? marginObj?.right + " !important"
+			: " ",
+		marginBottom: !isEmpty(marginObj?.bottom)
+			? marginObj?.bottom + " !important"
+			: "",
+		marginLeft: !isEmpty(marginObj?.left)
+			? marginObj?.left + " !important"
+			: "",
 		textAlign: alignment,
 		color: textColor,
 		backgroundColor,

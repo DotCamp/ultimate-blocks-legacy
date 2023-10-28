@@ -184,6 +184,12 @@ const AdvancedHeadingEdit = ({
 					attrKey="padding"
 					label={__("Padding", "ultimate-blocks")}
 				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 			<BlockControls>
 				<DropdownMenu

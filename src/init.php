@@ -27,12 +27,17 @@ if ( ! function_exists( 'get_current_screen' ) ) {
 */
 function ub_get_advanced_heading_styles( $attributes ) {
 	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );
+	$margin = Ultimate_Blocks\includes\get_spacing_css( $attributes['margin'] );
 
 	$styles = array(
 		'padding-top'         => $padding['top'] ?? '',
 		'padding-left'        => $padding['left'] ?? '',
 		'padding-right'       => $padding['right'] ?? '',
 		'padding-bottom'      => $padding['bottom'] ?? '',
+		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
+		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
+		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
+		'margin-bottom'      => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
 	);
 
 	return Ultimate_Blocks\includes\generate_css_string( $styles );
