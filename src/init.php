@@ -10,6 +10,8 @@
 
 // Exit if accessed directly.
 use Ultimate_Blocks\includes\Editor_Data_Manager;
+use Ultimate_Blocks\includes;
+require_once dirname(__DIR__) . '/includes/class-ultimate-blocks-styles-css-generator.php';
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,7 +20,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'get_current_screen' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/screen.php' );
 }
+/**
+ * Get block styles
+*
+* @param object $attributes - block attributes.
+*/
+function ub_get_advanced_heading_styles( $attributes ) {
+	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );
 
+	$styles = array(
+		'padding-top'         => $padding['top'] ?? '',
+		'padding-left'        => $padding['left'] ?? '',
+		'padding-right'       => $padding['right'] ?? '',
+		'padding-bottom'      => $padding['bottom'] ?? '',
+	);
+
+	return Ultimate_Blocks\includes\generate_css_string( $styles );
+}
 /**
  * Check if the current page is the Gutenberg block editor.
  * @return bool
@@ -340,6 +358,8 @@ function ub_include_block_attribute_css() {
 
 					break;
 				case 'ub/advanced-heading':
+					$styles = ub_get_advanced_heading_styles($attributes);
+
 					$prefix           = '.ub_advanced_heading[data-blockid="' . $attributes['blockID'] . '"]';
 					$blockStylesheets .= $prefix . ' {' . PHP_EOL .
 										 ( $attributes['alignment'] === 'none' ? '' : 'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL ) .
@@ -350,7 +370,7 @@ function ub_include_block_attribute_css() {
 										 'text-transform: ' . $attributes['textTransform'] . ';' . PHP_EOL .
 										 'font-family: ' . ( strpos( $attributes['fontFamily'], " " ) ? '"' : '' )
 										 . $attributes['fontFamily'] . ( strpos( $attributes['fontFamily'],
-									" " ) ? '"' : '' ) . ';' . PHP_EOL .
+									" " ) ? '"' : '' ) . ';' . $styles . PHP_EOL .
 										 'font-weight: ' . $attributes['fontWeight'] . ';' . PHP_EOL .
 										 ( $attributes['lineHeight'] ? 'line-height: ' . $attributes['lineHeight'] . 'px;' . PHP_EOL : '' ) .
 										 '}';

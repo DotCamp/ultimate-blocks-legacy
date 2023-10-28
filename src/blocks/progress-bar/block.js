@@ -23,10 +23,7 @@ import {
 	ToolbarDropdownMenu,
 	ToggleControl,
 } from "@wordpress/components";
-import {
-	BorderRadiusControl,
-	CustomToggleGroupControl,
-} from "../../components";
+import { BorderRadiusControl, CustomToggleGroupControl } from "../components";
 import { getStyles } from "./get-styles";
 import HalfCircle from "./HalfCircle";
 

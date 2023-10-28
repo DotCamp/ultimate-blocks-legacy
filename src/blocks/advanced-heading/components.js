@@ -6,6 +6,8 @@ import {
 	fontFamilyOptions,
 } from "./settings-options";
 import { h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon } from "./icons";
+import { SpacingControl } from "../components";
+import { getStyles } from "./get-styles";
 
 const { __ } = wp.i18n;
 const {
@@ -82,12 +84,11 @@ const AdvancedHeadingEdit = ({
 	}, [elementRef]);
 
 	const headingIcons = [h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon];
-
+	const styles = getStyles(attributes);
 	return (
 		<>
 			<InspectorControls group="settings">
 				<PanelBody title={__("General", "ultimate-blocks")} intialOpen={true}>
-					{/* Heading Level */}
 					<p>{__("Heading Level", "ultimate-blocks")}</p>
 					<ButtonGroup aria-label={__("Heading Level", "ultimate-blocks")}>
 						{headingIcons.map((h, i) => (
@@ -105,7 +106,6 @@ const AdvancedHeadingEdit = ({
 							/>
 						))}
 					</ButtonGroup>
-					{/* Alignment */}
 					<p>{__("Heading Alignment", "ultimate-blocks")}</p>
 					<AlignmentToolbar
 						value={alignment}
@@ -116,7 +116,6 @@ const AdvancedHeadingEdit = ({
 			</InspectorControls>
 			<InspectorControls group="styles">
 				<PanelBody title={__("Colors", "ultimate-blocks")} initialOpen={true}>
-					{/* Background & Text Color */}
 					<PanelColorSettings
 						title={__("Heading Colors", "ultimate-blocks")}
 						colorSettings={[
@@ -138,7 +137,6 @@ const AdvancedHeadingEdit = ({
 					title={__("Typography", "ultimate-blocks")}
 					initialOpen={false}
 				>
-					{/* Font Size */}
 					<RangeControl
 						label={__("Font Size", "ultimate-blocks")}
 						value={fontSize}
@@ -146,21 +144,18 @@ const AdvancedHeadingEdit = ({
 						min={12}
 						max={100}
 					/>
-					{/* Text Transform */}
 					<SelectControl
 						label={__("Text Transform", "ultimate-blocks")}
 						options={textTransformOptions}
 						value={textTransform}
 						onChange={(textTransform) => setAttributes({ textTransform })}
 					/>
-					{/* Font Family */}
 					<SelectControl
 						label={__("Font Family", "ultimate-blocks")}
 						options={fontFamilyOptions}
 						value={fontsList.includes(fontFamily) ? fontFamily : "Default"}
 						onChange={(fontFamily) => setAttributes({ fontFamily })} //default doesn't work here
 					/>
-					{/* Letter Spacing */}
 					<RangeControl
 						label={__("Letter Spacing", "ultimate-blocks")}
 						value={letterSpacing}
@@ -168,14 +163,12 @@ const AdvancedHeadingEdit = ({
 						min={-2}
 						max={6}
 					/>
-					{/* Font Weight */}
 					<SelectControl
 						label={__("Font Weight", "ultimate-blocks")}
 						options={fontWeightOptions}
 						value={fontWeight}
 						onChange={(fontWeight) => setAttributes({ fontWeight })}
 					/>
-					{/* Line Height */}
 					<RangeControl
 						label={__("Line Height", "ultimate-blocks")}
 						value={lineHeight}
@@ -184,6 +177,13 @@ const AdvancedHeadingEdit = ({
 						max={120}
 					/>
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 			<BlockControls>
 				<DropdownMenu
@@ -224,17 +224,7 @@ const AdvancedHeadingEdit = ({
 				tagName={level || "h2"}
 				value={content}
 				onChange={(value) => setAttributes({ content: value })}
-				style={{
-					textAlign: alignment,
-					color: textColor,
-					backgroundColor,
-					fontSize: fontSize ? `${fontSize}px` : null,
-					letterSpacing,
-					textTransform,
-					fontFamily: fontFamily.includes(" ") ? `'${fontFamily}'` : fontFamily,
-					fontWeight,
-					lineHeight: lineHeight ? `${lineHeight}px` : null,
-				}}
+				style={styles}
 				onSplit={(contentFragment) =>
 					contentFragment
 						? createBlock("ub/advanced-heading", {

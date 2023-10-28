@@ -2,10 +2,7 @@ import React from "react";
 import { __ } from "@wordpress/i18n";
 import { InspectorControls } from "@wordpress/block-editor";
 import { PanelBody, RangeControl, TextControl } from "@wordpress/components";
-import {
-	CustomFontSizePicker,
-	CustomToggleGroupControl,
-} from "../../components";
+import { CustomFontSizePicker, CustomToggleGroupControl } from "../components";
 
 function Inspector(props) {
 	const { attributes, setAttributes } = props;
