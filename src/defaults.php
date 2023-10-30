@@ -75,6 +75,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'margin'              => array(
+				'type'    => 'array',
+				'default' => array()
+			),
+			'padding'              => array(
+				'type'    => 'array',
+				'default' => array()
+			),
 			'videoId'              => array(
 				'type'    => 'integer',
 				'default' => - 1,

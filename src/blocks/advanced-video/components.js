@@ -1,6 +1,8 @@
 import { convertFromSeconds } from "../../common";
 import { get } from "lodash";
 import { useState, useEffect } from "react";
+import { SpacingControl } from "../components";
+import { getStyles } from "./get-styles";
 const { __ } = wp.i18n;
 const { MediaUpload, MediaUploadCheck, InspectorControls, ColorPalette } =
 	wp.blockEditor || wp.editor;
@@ -672,6 +674,7 @@ export function AdvancedVideoBlock(props) {
 			autofitContainerStyle = {};
 			extraEmbeds = null;
 	}
+	const styles = getStyles(attributes);
 
 	return (
 		<>
@@ -1796,6 +1799,19 @@ export function AdvancedVideoBlock(props) {
 					)}
 				</PanelBody>
 			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
+			</InspectorControls>
 			{url === "" && (
 				<>
 					<div>{__("Select Video Source")}</div>
@@ -1889,43 +1905,46 @@ export function AdvancedVideoBlock(props) {
 						videoEmbedCode ||
 						"<p>If a valid video source is entered, the video should appear here</p>",
 				}}
-				style={Object.assign(
-					autofit ? autofitContainerStyle : { width: `${width}%` },
-					[
-						topBorderSize,
-						leftBorderSize,
-						rightBorderSize,
-						bottomBorderSize,
-					].filter((s) => s > 0).length > 0
-						? {
-								borderTop: `${topBorderSize}px ${topBorderStyle} ${topBorderColor}`,
-								borderLeft: `${leftBorderSize}px ${leftBorderStyle} ${leftBorderColor}`,
-								borderRight: `${rightBorderSize}px ${rightBorderStyle} ${rightBorderColor}`,
-								borderBottom: `${bottomBorderSize}px ${bottomBorderStyle} ${bottomBorderColor}`,
-								borderTopLeftRadius: `${topLeftRadius}px`,
-								borderTopRightRadius: `${topRightRadius}px`,
-								borderBottomLeftRadius: `${bottomLeftRadius}px`,
-								borderBottomRightRadius: `${bottomRightRadius}px`,
-						  }
-						: {},
-					shadow[0].radius > 0
-						? {
-								boxShadow: `${
-									shadow[0].radius *
-									Math.cos(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
-								}px ${
-									-shadow[0].radius *
-									Math.sin(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
-								}px ${shadow[0].blur}px ${shadow[0].spread}px rgba(${parseInt(
-									"0x" + shadow[0].color.substring(1, 3)
-								)}, ${parseInt(
-									"0x" + shadow[0].color.substring(3, 5)
-								)}, ${parseInt("0x" + shadow[0].color.substring(5, 7))}, ${
-									(100 - shadow[0].transparency) / 100
-								})`,
-						  }
-						: {}
-				)}
+				style={{
+					...Object.assign(
+						autofit ? autofitContainerStyle : { width: `${width}%` },
+						[
+							topBorderSize,
+							leftBorderSize,
+							rightBorderSize,
+							bottomBorderSize,
+						].filter((s) => s > 0).length > 0
+							? {
+									borderTop: `${topBorderSize}px ${topBorderStyle} ${topBorderColor}`,
+									borderLeft: `${leftBorderSize}px ${leftBorderStyle} ${leftBorderColor}`,
+									borderRight: `${rightBorderSize}px ${rightBorderStyle} ${rightBorderColor}`,
+									borderBottom: `${bottomBorderSize}px ${bottomBorderStyle} ${bottomBorderColor}`,
+									borderTopLeftRadius: `${topLeftRadius}px`,
+									borderTopRightRadius: `${topRightRadius}px`,
+									borderBottomLeftRadius: `${bottomLeftRadius}px`,
+									borderBottomRightRadius: `${bottomRightRadius}px`,
+							  }
+							: {},
+						shadow[0].radius > 0
+							? {
+									boxShadow: `${
+										shadow[0].radius *
+										Math.cos(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
+									}px ${
+										-shadow[0].radius *
+										Math.sin(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
+									}px ${shadow[0].blur}px ${shadow[0].spread}px rgba(${parseInt(
+										"0x" + shadow[0].color.substring(1, 3)
+									)}, ${parseInt(
+										"0x" + shadow[0].color.substring(3, 5)
+									)}, ${parseInt("0x" + shadow[0].color.substring(5, 7))}, ${
+										(100 - shadow[0].transparency) / 100
+									})`,
+							  }
+							: {}
+					),
+					...styles,
+				}}
 			/>
 			{autofit && extraEmbeds}
 			{url !== "" && (

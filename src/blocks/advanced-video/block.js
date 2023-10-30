@@ -246,6 +246,14 @@ registerBlockType("ub/advanced-video", {
 			type: "string",
 			default: "",
 		},
+		padding: {
+			type: "object",
+			default: {},
+		},
+		margin: {
+			type: "object",
+			default: {},
+		},
 	},
 	example: {
 		attributes: {

@@ -10,7 +10,7 @@
 
 // Exit if accessed directly.
 use Ultimate_Blocks\includes\Editor_Data_Manager;
-use Ultimate_Blocks\includes;
+
 require_once dirname(__DIR__) . '/includes/class-ultimate-blocks-styles-css-generator.php';
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,20 +20,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'get_current_screen' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/screen.php' );
 }
-/**
- * Get block styles
-*
-* @param object $attributes - block attributes.
-*/
-function ub_get_advanced_heading_styles( $attributes ) {
+
+function ub_get_spacing_styles( $attributes ) {
 	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );
 	$margin = Ultimate_Blocks\includes\get_spacing_css( $attributes['margin'] );
 
 	$styles = array(
-		'padding-top'         => $padding['top'] ?? '',
-		'padding-left'        => $padding['left'] ?? '',
-		'padding-right'       => $padding['right'] ?? '',
-		'padding-bottom'      => $padding['bottom'] ?? '',
+		'padding-top'         => isset($padding['top']) ? $padding['top'] : "",
+		'padding-left'        => isset($padding['left']) ? $padding['left'] : "",
+		'padding-right'       => isset($padding['right']) ? $padding['right'] : "",
+		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] : "",
 		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
 		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
 		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
@@ -42,6 +38,7 @@ function ub_get_advanced_heading_styles( $attributes ) {
 
 	return Ultimate_Blocks\includes\generate_css_string( $styles );
 }
+
 /**
  * Check if the current page is the Gutenberg block editor.
  * @return bool
@@ -259,6 +256,8 @@ function ub_include_block_attribute_css() {
 					//nothing could be done
 					break;
 				case 'ub/advanced-video':
+					$styles = ub_get_spacing_styles($attributes);
+
 					$prefix = '#ub-advanced-video-' . $attributes['blockID'];
 
 					if ( $attributes['autofit'] ) {
@@ -360,10 +359,11 @@ function ub_include_block_attribute_css() {
 													   ', ' . ( ( 100 - $attributes['shadow'][0]['transparency'] ) / 100 ) . ')' . ';' . PHP_EOL .
 													   '}';
 					}
+					$blockStylesheets .= $prefix .  '{' . $styles . '}';
 
 					break;
 				case 'ub/advanced-heading':
-					$styles = ub_get_advanced_heading_styles($attributes);
+					$styles = ub_get_spacing_styles($attributes);
 
 					$prefix           = '.ub_advanced_heading[data-blockid="' . $attributes['blockID'] . '"]';
 					$blockStylesheets .= $prefix . ' {' . PHP_EOL .
