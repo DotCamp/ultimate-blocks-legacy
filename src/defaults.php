@@ -338,6 +338,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'margin'              => array(
+				'type'    => 'array',
+				'default' => array()
+			),
+			'padding'              => array(
+				'type'    => 'array',
+				'default' => array()
+			),
 			'ub_call_to_action_headline_text' => array(
 				'type'    => 'string',
 				'default' => ''

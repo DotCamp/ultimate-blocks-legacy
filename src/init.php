@@ -477,11 +477,13 @@ function ub_include_block_attribute_css() {
 
 					break;
 				case 'ub/call-to-action-block':
+					$styles = ub_get_spacing_styles($attributes);
 					$prefix           = '#ub_call_to_action_' . $attributes['blockID'];
 					$blockStylesheets .= $prefix . '{' . PHP_EOL .
 										 'background-color: ' . $attributes['ctaBackgroundColor'] . ';' . PHP_EOL .
 										 'border-width: ' . $attributes['ctaBorderSize'] . 'px;' . PHP_EOL .
 										 'border-color: ' . $attributes['ctaBorderColor'] . ';' . PHP_EOL .
+										  $styles .
 										 '}' . PHP_EOL .
 										 $prefix . ' .ub_call_to_action_headline_text{' . PHP_EOL .
 										 'font-size: ' . $attributes['headFontSize'] . 'px;' . PHP_EOL .

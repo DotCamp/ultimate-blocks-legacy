@@ -131,6 +131,14 @@ const attributes = {
 		type: "string",
 		default: "h2",
 	},
+	padding: {
+		type: "object",
+		default: {},
+	},
+	margin: {
+		type: "object",
+		default: {},
+	},
 };
 
 registerBlockType("ub/call-to-action", {
@@ -308,7 +316,10 @@ registerBlockType("ub/call-to-action", {
 
 registerBlockType("ub/call-to-action-block", {
 	title: __("Call to Action", "ultimate-blocks"),
-	description: __("Draw attention of visitors to the important stuff with this simple yet effective Call to Action.", "ultimate-blocks"),
+	description: __(
+		"Draw attention of visitors to the important stuff with this simple yet effective Call to Action.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [
@@ -320,11 +331,12 @@ registerBlockType("ub/call-to-action-block", {
 	example: {
 		attributes: {
 			ub_call_to_action_headline_text: "Get Ultimate Blocks Now",
-			ub_cta_content_text: "Ultimate Blocks helps you create better and engaging content with Gutenberg.",
+			ub_cta_content_text:
+				"Ultimate Blocks helps you create better and engaging content with Gutenberg.",
 			ub_cta_button_text: "Download Now",
 			buttonColor: "#e11b4c",
-			buttonTextColor: "#ffffff"
-		}
+			buttonTextColor: "#ffffff",
+		},
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
