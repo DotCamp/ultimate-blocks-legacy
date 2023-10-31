@@ -458,6 +458,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '#CCCCCC'
 			),
+			'padding'   => array(
+				'type'    => 'array',
+				'default' => array()
+			),
+			'margin'   => array(
+				'type'    => 'array',
+				'default' => array()
+			),
 		)
 	),
 	'ub/content-filter-block'       => array(

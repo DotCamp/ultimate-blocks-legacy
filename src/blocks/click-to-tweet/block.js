@@ -1,7 +1,8 @@
 //Import Icon
 import icon from "./icons/icon";
 import { useEffect } from "react";
-
+import { SpacingControl } from "../components";
+import { getStyles } from "./get-styles";
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { RichText, InspectorControls, PanelColorSettings } =
@@ -42,7 +43,7 @@ function ClickToTweet(props) {
 			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
 		}
 	}, []);
-
+	const styles = getStyles(attributes);
 	return (
 		<>
 			{isSelected && (
@@ -88,10 +89,23 @@ function ClickToTweet(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
 			<div className={props.className}>
-				<div className="ub_click_to_tweet" style={{ borderColor: borderColor }}>
+				<div className="ub_click_to_tweet" style={styles}>
 					<RichText
 						style={{
 							fontSize: tweetFontSize + "px",
@@ -148,6 +162,14 @@ registerBlockType("ub/click-to-tweet", {
 		borderColor: {
 			type: "string",
 			default: "#CCCCCC",
+		},
+		padding: {
+			type: "object",
+			default: {},
+		},
+		margin: {
+			type: "object",
+			default: {},
 		},
 	},
 	example: {
