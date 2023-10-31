@@ -9,6 +9,8 @@
  */
 
 // Exit if accessed directly.
+
+use PHPUnit\Event\Runtime\PHP;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 
 require_once dirname(__DIR__) . '/includes/class-ultimate-blocks-styles-css-generator.php';
@@ -517,6 +519,7 @@ function ub_include_block_attribute_css() {
 										 '}' . PHP_EOL;
 					break;
 				case 'ub/content-filter-block':
+					$styles = ub_get_spacing_styles($attributes);
 					$prefix           = '#ub-content-filter-' . $attributes['blockID'];
 					$blockStylesheets .= $prefix . ' .ub-content-filter-tag{' . PHP_EOL .
 										 'background-color: ' . $attributes['buttonColor'] . ';' . PHP_EOL .
@@ -526,6 +529,7 @@ function ub_include_block_attribute_css() {
 										 'background-color: ' . $attributes['activeButtonColor'] . ';' . PHP_EOL .
 										 'color: ' . ( $attributes['activeButtonTextColor'] ?: 'inherit' ) . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					break;
 				case 'ub/content-toggle-block':
 					if ( $block['innerBlocks'] ) {

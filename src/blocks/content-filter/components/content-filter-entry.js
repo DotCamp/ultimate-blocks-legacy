@@ -1,11 +1,13 @@
 import icon from "../icon";
 
 import { useEffect, useState, useRef } from "react";
+import { SpacingControl } from "../../components";
+import { getStyles } from "./get-styles";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { InnerBlocks } = wp.blockEditor || wp.editor;
+const { InnerBlocks, InspectorControls } = wp.blockEditor || wp.editor;
 
 function NewDropdown(props) {
 	const wrapperRef = useRef(null);
@@ -259,44 +261,60 @@ function ContentFilterEntry(props) {
 		setTagList(tempTagList);
 	}, [availableFilters, selectedFilters]);
 
+	const styles = getStyles(attributes);
 	return (
-		<div className="ub-content-filter-panel">
-			<InnerBlocks templateLock={false} />
-			<div className="ub-content-assigned-filter-tag-area">
-				{tagList
-					.filter((tag) => tag != null && tag.hasOwnProperty("name"))
-					.map((tag) => (
-						<div className="ub-content-assigned-filter-tag">
-							<div className="ub-content-filter-tag-deselect">
-								<span
-									title={__("Deselect This Filter")}
-									onClick={() => {
-										const { categoryIndex: i, tagIndex: j } = tag;
-										let newSelectedFilters = [
-											...selectedFilters.slice(0, i),
-											Array.isArray(selectedFilters[i])
-												? [
-														...selectedFilters[i].slice(0, j),
-														false,
-														...selectedFilters[i].slice(j + 1),
-												  ]
-												: -1,
-											...selectedFilters.slice(i + 1),
-										];
+		<>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
+			</InspectorControls>
+			<div className="ub-content-filter-panel" style={styles}>
+				<InnerBlocks templateLock={false} />
+				<div className="ub-content-assigned-filter-tag-area">
+					{tagList
+						.filter((tag) => tag != null && tag.hasOwnProperty("name"))
+						.map((tag) => (
+							<div className="ub-content-assigned-filter-tag">
+								<div className="ub-content-filter-tag-deselect">
+									<span
+										title={__("Deselect This Filter")}
+										onClick={() => {
+											const { categoryIndex: i, tagIndex: j } = tag;
+											let newSelectedFilters = [
+												...selectedFilters.slice(0, i),
+												Array.isArray(selectedFilters[i])
+													? [
+															...selectedFilters[i].slice(0, j),
+															false,
+															...selectedFilters[i].slice(j + 1),
+													  ]
+													: -1,
+												...selectedFilters.slice(i + 1),
+											];
 
-										setAttributes({
-											selectedFilters: newSelectedFilters,
-										});
-									}}
-									class="dashicons dashicons-dismiss"
-								/>
+											setAttributes({
+												selectedFilters: newSelectedFilters,
+											});
+										}}
+										class="dashicons dashicons-dismiss"
+									/>
+								</div>
+								{tag.name}
 							</div>
-							{tag.name}
-						</div>
-					))}
-				<NewDropdown attributes={attributes} setAttributes={setAttributes} />
+						))}
+					<NewDropdown attributes={attributes} setAttributes={setAttributes} />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 
@@ -401,6 +419,14 @@ registerBlockType("ub/content-filter-entry-block", {
 		initiallyShow: {
 			type: "boolean",
 			default: true,
+		},
+		padding: {
+			type: "object",
+			default: {},
+		},
+		margin: {
+			type: "object",
+			default: {},
 		},
 	},
 	supports: {

@@ -4,9 +4,10 @@ const { InspectorControls, PanelColorSettings, InnerBlocks, RichText } =
 	wp.blockEditor || wp.editor;
 
 const { PanelBody, ToggleControl, RadioControl } = wp.components;
-
+import { SpacingControl } from "../../components";
 import { useEffect } from "react";
 import { upgradeButtonLabel } from "../../../common";
+import { getStyles } from "./get-styles";
 
 export function OldPanelContent(props) {
 	function editFilterArray(item, pos) {
@@ -518,7 +519,7 @@ export function NewPanelContent(props) {
 			});
 		}
 	}, []);
-
+	const styles = getStyles(attributes);
 	return (
 		<>
 			{isSelected && (
@@ -612,9 +613,22 @@ export function NewPanelContent(props) {
 							]}
 						/>
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
-			<div className="ub-content-filter-main">
+			<div className="ub-content-filter-main" style={styles}>
 				{filterArray.length > 0 &&
 					filterArray.map((f, i) => (
 						<div className="ub-content-filter-category">

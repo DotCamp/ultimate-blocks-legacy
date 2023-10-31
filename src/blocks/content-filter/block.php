@@ -1,16 +1,37 @@
 <?php
+require_once dirname(dirname(dirname(__DIR__))) . '/includes/class-ultimate-blocks-styles-css-generator.php';
 
+
+function ub_get_content_filter_panel_styles( $attributes ) {
+	$padding = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
+	$margin = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
+
+	$styles = array(
+		'padding-top'         => isset($padding['top']) ? $padding['top'] : "",
+		'padding-left'        => isset($padding['left']) ? $padding['left'] : "",
+		'padding-right'       => isset($padding['right']) ? $padding['right'] : "",
+		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] : "",
+		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
+		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
+		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
+		'margin-bottom'      => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
+	);
+
+	return Ultimate_Blocks\includes\generate_css_string( $styles );
+}
 /**
  * Enqueue frontend script for table fo contents block
  *
  * @return void
  */
 
-function ub_render_content_filter_entry_block($attributes, $content){
+ function ub_render_content_filter_entry_block($attributes, $content, $block){
     extract($attributes);
-    
+    $block_attributes  = isset($block->parsed_block['attrs']) ? $block->parsed_block['attrs'] : array();
+    $styles = ub_get_content_filter_panel_styles($block_attributes);
+
     return '<div class="ub-content-filter-panel'.(isset($className) ? ' ' . esc_attr($className) : '').
-        ($initiallyShow ? '' : ' ub-hide').'" data-selectedFilters="'.json_encode($selectedFilters).
+        ($initiallyShow ? '' : ' ub-hide').'" style="'. $styles .'" data-selectedFilters="'.json_encode($selectedFilters).
         '">'.$content.'</div>';
 }
 
@@ -38,7 +59,15 @@ function ub_register_content_filter_entry_block(){
                 'initiallyShow' => array(
                     'type' => 'boolean',
                     'default' => true
-                )
+                ),
+                'padding'   => array(
+                    'type'    => 'array',
+                    'default' => array()
+                ),
+                'margin'   => array(
+                    'type'    => 'array',
+                    'default' => array()
+                ),
             ),
                 'render_callback' => 'ub_render_content_filter_entry_block'));
         }

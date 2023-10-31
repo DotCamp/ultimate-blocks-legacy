@@ -42,6 +42,14 @@ const attributes = {
 		type: "boolean",
 		default: true,
 	},
+	padding: {
+		type: "object",
+		default: {},
+	},
+	margin: {
+		type: "object",
+		default: {},
+	},
 	matchingOption: {
 		type: "string",
 		default: "", //options: matchAny (default), matchAll
@@ -140,7 +148,10 @@ registerBlockType("ub/content-filter", {
 
 registerBlockType("ub/content-filter-block", {
 	title: __("Content Filter"),
-	description: __("Content Filter lets your visitors filter the content based on different filters.", "ultimate-blocks"),
+	description: __(
+		"Content Filter lets your visitors filter the content based on different filters.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Filtering")],
@@ -148,10 +159,18 @@ registerBlockType("ub/content-filter-block", {
 	example: {
 		attributes: {
 			filterArray: [
-				{ category: 'First Category', filters: ['Filter One', ' Filter Two'], canUseMultiple: true },
-				{ category: 'Second Category', filters: ['Filter One', ' Filter Two'], canUseMultiple: false }
-			]
-		}
+				{
+					category: "First Category",
+					filters: ["Filter One", " Filter Two"],
+					canUseMultiple: true,
+				},
+				{
+					category: "Second Category",
+					filters: ["Filter One", " Filter Two"],
+					canUseMultiple: false,
+				},
+			],
+		},
 	},
 	transforms: {
 		to: [
