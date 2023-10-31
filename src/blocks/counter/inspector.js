@@ -2,7 +2,11 @@ import React from "react";
 import { __ } from "@wordpress/i18n";
 import { InspectorControls } from "@wordpress/block-editor";
 import { PanelBody, RangeControl, TextControl } from "@wordpress/components";
-import { CustomFontSizePicker, CustomToggleGroupControl } from "../components";
+import {
+	CustomFontSizePicker,
+	CustomToggleGroupControl,
+	SpacingControl,
+} from "../components";
 
 function Inspector(props) {
 	const { attributes, setAttributes } = props;
@@ -64,6 +68,19 @@ function Inspector(props) {
 				<CustomFontSizePicker
 					attrKey={"labelFontSize"}
 					label={__("Label Font", "ultimate-blocks")}
+				/>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
 				/>
 			</InspectorControls>
 		</>

@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(dirname(dirname(__DIR__))) . '/includes/class-ultimate-blocks-styles-css-generator.php';
+
 class Ultimate_Counter {
      /**
       * Constructor
@@ -10,6 +12,27 @@ class Ultimate_Counter {
           add_action( 'init', array( $this, 'register_block' ) );
      }
 
+     public function ub_get_counter_block_styles( $attributes ) {
+          $padding = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
+          $margin = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
+          $counter_font_size = $attributes['counterFontSize'];
+          $label_font_size = $attributes['labelFontSize'];
+
+          $styles = array(
+               'padding-top'                      => isset($padding['top']) ? $padding['top'] : "",
+               'padding-left'                     => isset($padding['left']) ? $padding['left'] : "",
+               'padding-right'                    => isset($padding['right']) ? $padding['right'] : "",
+               'padding-bottom'                   => isset($padding['bottom']) ? $padding['bottom'] : "",
+               'margin-top'                       => !empty($margin['top']) ? $margin['top'] . " !important" : "",
+               'margin-left'                      => !empty($margin['left']) ? $margin['left'] . " !important" : "",
+               'margin-right'                     => !empty($margin['right']) ? $margin['right'] . " !important" : "",
+               'margin-bottom'                    => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
+               '--ub-counter-font-size'           => $counter_font_size,
+               '--ub-counter-label-font-size'     => $label_font_size
+          );
+
+	     return Ultimate_Blocks\includes\generate_css_string( $styles );
+     }
      /**
 	 * Build the CSS style.
 	 *
@@ -17,8 +40,7 @@ class Ultimate_Counter {
 	 * @return string The CSS style string.
 	 */
      public function ub_get_generated_styles($attributes){
-          $counter_font_size = $attributes['counterFontSize'];
-          $label_font_size = $attributes['labelFontSize'];
+         
           $styles = '';
           if(!empty($counter_font_size)){
                $styles .= '--ub-counter-font-size:' . $counter_font_size . ';';
@@ -37,7 +59,7 @@ class Ultimate_Counter {
       *
       * @return string The HTML markup that represents the rendered block.
       */
-     public function ub_render_counter_block($attributes, $content){
+     public function ub_render_counter_block($attributes, $content, $block){
           $start_number = $attributes['startNumber'];
           $end_number = $attributes['endNumber'];
           $prefix = $attributes['prefix'];
@@ -46,8 +68,8 @@ class Ultimate_Counter {
           $alignment = $attributes['alignment'];
           $label = $attributes['label'];
           $label_position = $attributes['labelPosition'];
-          $styles = $this->ub_get_generated_styles($attributes);
-
+          $styles = $this->ub_get_counter_block_styles($block->parsed_block['attrs']);
+          
           $wrapper_attributes = get_block_wrapper_attributes(
                array(
                     'class' => 'ub_counter-container',

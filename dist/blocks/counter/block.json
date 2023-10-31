@@ -49,6 +49,14 @@
     "labelPosition": {
       "type": "string",
       "default": "bottom"
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {
