@@ -654,6 +654,14 @@ $defaultValues = array(
 			'smallestUnit'  => array(
 				'type'    => 'string',
 				'default' => 'second'
+			),
+			'padding'  => array(
+				'type'    => 'array',
+				'default' => array()
+			),
+			'margin'  => array(
+				'type'    => 'array',
+				'default' => array()
 			)
 		)
 	),

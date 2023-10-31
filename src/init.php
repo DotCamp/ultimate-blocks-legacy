@@ -557,9 +557,11 @@ function ub_include_block_attribute_css() {
 					}
 					break;
 				case 'ub/countdown':
+					$styles = ub_get_spacing_styles($attributes);
 					$prefix           = '#ub_countdown_' . $attributes['blockID'];
 					$blockStylesheets .= $prefix . '{' . PHP_EOL .
-										 'text-align: ' . $attributes['messageAlign'] . PHP_EOL .
+										 'text-align: ' . $attributes['messageAlign'] . ';' . PHP_EOL .
+										 $styles . PHP_EOL .
 										 '}';
 
 					$timeUnits = [ "week", "day", "hour", "minute", "second" ];

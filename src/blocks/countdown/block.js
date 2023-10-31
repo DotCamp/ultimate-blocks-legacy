@@ -3,7 +3,8 @@ import icon, {
 	CircularCountdownIcon,
 	TickingCountdownIcon,
 } from "./icon";
-
+import { SpacingControl } from "../components";
+import { getStyles } from "./get-styles";
 import Timer from "./components";
 
 import { useEffect, useState } from "react";
@@ -45,17 +46,16 @@ function CountdownMain(props) {
 	} = props;
 
 	useEffect(() => {
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
 
 	const timeUnits = ["week", "day", "hour", "minute", "second"];
 
+	const styles = getStyles(props.attributes);
 	return (
-		<>
+		<div style={styles}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -100,7 +100,19 @@ function CountdownMain(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
-
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 					{style === "Circular" && (
 						<InspectorControls group="styles">
 							<PanelBody title={__("Circle style")}>
@@ -187,13 +199,16 @@ function CountdownMain(props) {
 					keepPlaceholderOnFocus={true}
 				/>
 			</>
-		</>
+		</div>
 	);
 }
 
 registerBlockType("ub/countdown", {
 	title: __("Countdown"),
-	description: __("Add a countdown in your post/pages. Comes with three different styles.", "ultimate-blocks"),
+	description: __(
+		"Add a countdown in your post/pages. Comes with three different styles.",
+		"ultimate-blocks"
+	),
 	icon: icon,
 	category: "ultimateblocks",
 	keywords: [__("Countdown"), __("Timer"), __("Ultimate Blocks")],
@@ -233,6 +248,14 @@ registerBlockType("ub/countdown", {
 		smallestUnit: {
 			type: "string",
 			default: "second",
+		},
+		padding: {
+			type: "object",
+			default: {},
+		},
+		margin: {
+			type: "object",
+			default: {},
 		},
 	},
 	example: {},
