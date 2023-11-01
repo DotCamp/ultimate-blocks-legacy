@@ -3,6 +3,10 @@
  */
 import { isUndefined, trim, isEmpty, omitBy, isNumber } from "lodash";
 /**
+ * Custom Dependencies
+ */
+import { getSpacingCss } from "../utils/styling-helpers";
+/**
  *
  * @param {Array} attributes
  *
@@ -13,6 +17,8 @@ export function getStyles(attributes) {
 	const rotation = isNumber(attributes?.iconRotation)
 		? `rotate(${attributes.iconRotation}deg)`
 		: "";
+	const paddingObj = getSpacingCss(attributes.padding);
+	const marginObj = getSpacingCss(attributes.margin);
 
 	let styles = {
 		"--ub-icon-rotation": rotation,
@@ -26,6 +32,14 @@ export function getStyles(attributes) {
 			? attributes?.iconHoverBackground
 			: attributes?.iconHoverGradientBackground,
 		"--ub-icon-justification": attributes?.justification,
+		paddingTop: paddingObj?.top,
+		paddingRight: paddingObj?.right,
+		paddingBottom: paddingObj?.bottom,
+		paddingLeft: paddingObj?.left,
+		marginTop: marginObj?.top,
+		marginRight: marginObj?.right,
+		marginBottom: marginObj?.bottom,
+		marginLeft: marginObj?.left,
 	};
 
 	return omitBy(styles, (value) => {

@@ -65,6 +65,14 @@ const attributes = {
 		type: "number",
 		default: 0,
 	},
+	padding: {
+		type: "object",
+		default: {},
+	},
+	margin: {
+		type: "object",
+		default: {},
+	},
 };
 registerPluginBlock("ub/icon", {
 	title: __("Icon", "ultimate-blocks"),

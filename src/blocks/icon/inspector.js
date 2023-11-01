@@ -8,6 +8,7 @@ import { InspectorControls, HeightControl } from "@wordpress/block-editor";
  * Custom Imports
  */
 import ColorSettings from "./components/ColorSettings";
+import { SpacingControl } from "../components";
 
 function CustomInspectorControls(props) {
 	const {
@@ -37,6 +38,19 @@ function CustomInspectorControls(props) {
 			</InspectorControls>
 			<InspectorControls group="color">
 				<ColorSettings />
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 		</>
 	);

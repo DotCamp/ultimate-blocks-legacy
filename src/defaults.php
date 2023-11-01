@@ -2315,6 +2315,14 @@ $defaultValues = array(
 				'type'    => 'array',
 				'default' => array()
 			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
 			'svgIcon'  => array(
 				'type'    => 'string',
 				'default' => ''
