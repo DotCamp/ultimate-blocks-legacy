@@ -95,6 +95,14 @@ const attributes = {
 		type: "string",
 		default: "h2",
 	},
+	padding: {
+		type: "object",
+		default: {},
+	},
+	margin: {
+		type: "object",
+		default: {},
+	},
 };
 
 export default attributes;

@@ -2,7 +2,25 @@
 /**
  * Server-side rendering for the post grid block
  */
+require_once dirname(dirname(dirname(__DIR__))) . '/includes/class-ultimate-blocks-styles-css-generator.php';
 
+function ub_get_post_grid_styles( $attributes ) {
+	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );
+	$margin = Ultimate_Blocks\includes\get_spacing_css( $attributes['margin'] );
+
+	$styles = array(
+		'padding-top'         => isset($padding['top']) ? $padding['top'] : "",
+		'padding-left'        => isset($padding['left']) ? $padding['left'] : "",
+		'padding-right'       => isset($padding['right']) ? $padding['right'] : "",
+		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] : "",
+		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
+		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
+		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
+		'margin-bottom'      => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
+	);
+
+	return Ultimate_Blocks\includes\generate_css_string( $styles );
+}
 function ub_query_post( $attributes ){
 
     /**
@@ -42,7 +60,7 @@ function ub_query_post( $attributes ){
 
 }
 
-function ub_render_post_grid_block( $attributes ){
+function ub_render_post_grid_block( $attributes, $content, $block ){
 
     /* get posts */
 
@@ -232,14 +250,16 @@ function ub_render_post_grid_block( $attributes ){
         /* Post grid section tag */
 
         $section_tag = 'section';
+        $styles = ub_get_post_grid_styles($block->parsed_block['attrs']);
 
         /* Output the post markup */
         $block_content = sprintf(
-            '<%1$s class="%2$s"><div class="%3$s">%4$s</div></%1$s>',
+            '<%1$s class="%2$s" style="%5$s"><div class="%3$s">%4$s</div></%1$s>',
             $section_tag,
             esc_attr( $class ),
             esc_attr( $grid_class ),
-            $post_grid
+            $post_grid,
+            $styles
         );
         return $block_content;
     }

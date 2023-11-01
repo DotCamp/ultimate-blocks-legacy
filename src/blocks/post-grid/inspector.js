@@ -1,18 +1,13 @@
 import PropTypes from "prop-types";
 
 import { useEffect, useState, useRef } from "react";
-
+import { SpacingControl } from "../components";
 const { __ } = wp.i18n;
 
 const { InspectorControls } = wp.blockEditor || wp.editor;
 
-const {
-	PanelBody,
-	SelectControl,
-	ToggleControl,
-	TextControl,
-	RangeControl,
-} = wp.components;
+const { PanelBody, SelectControl, ToggleControl, TextControl, RangeControl } =
+	wp.components;
 const { addQueryArgs } = wp.url;
 const { apiFetch } = wp;
 
@@ -210,314 +205,338 @@ export default function Inspector(props) {
 	);
 
 	return (
-		<InspectorControls group="settings">
-			<PanelBody title={__("General", "ultimate-blocks")}>
-				{Array.isArray(posts) && posts.length > 0 && (
-					<>
-						<SelectControl
-							label={__("Grid Type", "ultimate-blocks")}
-							options={postTypeOptions}
-							value={postLayout}
-							onChange={(postLayout) => setAttributes({ postLayout })}
-						/>
-						{"grid" === postLayout && (
-							<RangeControl
-								label={__("Columns", "ultimate-blocks")}
-								value={columns}
-								onChange={(columns) => setAttributes({ columns })}
-								min={1}
-								max={
-									!hasPosts
-										? MAX_POSTS_COLUMNS
-										: Math.min(MAX_POSTS_COLUMNS, posts.length)
-								}
-							/>
-						)}
-					</>
-				)}
-			</PanelBody>
-			<PanelBody title={__("Query", "ultimate-blocks")} initialOpen={false}>
-				<p>{__("Authors")}</p>
-				{authorArray && (
-					<div className="ub-autocomplete-container">
-						{authorsList
-							.filter((t) => authorArray.includes(t.id))
-							.map((t) => (
-								<span className="ub-autocomplete-selection">
-									{t.name}
-									<span
-										className="dashicons dashicons-dismiss"
-										onClick={() =>
-											setAttributes({
-												authorArray: authorArray.filter((sel) => sel !== t.id),
-											})
-										}
-									/>
-								</span>
-							))}
-					</div>
-				)}
-				<Autocomplete
-					className="ub-autocomplete-list"
-					list={authorsList
-						.filter((t) => !authorArray.includes(t.id))
-						.map((t) => ({ label: t.name, value: t.id }))}
-					selection={authorArray}
-					addToSelection={(item) => {
-						if (!authorArray.includes(item.value)) {
-							setAttributes({ authorArray: [...authorArray, item.value] });
-						}
-					}}
-				/>
-				<label className="components-truncate components-text components-input-control__label">
-					{__("Tags")}
-				</label>
-				{tagArray && (
-					<div className="ub-autocomplete-container">
-						{tagsList
-							.filter((t) => tagArray.includes(t.id))
-							.map((t) => (
-								<span className="ub-autocomplete-selection">
-									{t.name}
-									<span
-										className="dashicons dashicons-dismiss"
-										onClick={() => {
-											setAttributes({
-												tagArray: tagArray.filter((sel) => sel !== t.id),
-											});
-										}}
-									/>
-								</span>
-							))}
-					</div>
-				)}
-				<Autocomplete
-					className="ub-autocomplete-list"
-					list={tagsList
-						.filter((t) => !tagArray.includes(t.id))
-						.map((t) => ({ label: t.name, value: t.id }))}
-					selection={tagArray}
-					addToSelection={(item) => {
-						if (!tagArray.includes(item.value)) {
-							setAttributes({ tagArray: [...tagArray, item.value] });
-						}
-					}}
-				/>
-				<SelectControl
-					label={__("Order By", "ultimate-blocks")}
-					options={[
-						__("Newest to oldest"),
-						__("Oldest to newest"),
-						__("A → Z"),
-						__("Z → A"),
-					].map((a, i) => ({ value: i, label: a }))}
-					value={orderDropdownVal}
-					onChange={(newDropVal) => {
-						setOrderDropdownval(newDropVal);
-						setAttributes({
-							order: newDropVal % 3 === 0 ? "desc" : "asc",
-							orderBy: newDropVal > 1 ? "title" : "date",
-						});
-					}}
-				/>
-
-				<label className="components-truncate components-text components-input-control__label">
-					{__("Included Categories")}
-				</label>
-				{categoryArray && (
-					<div className="ub-autocomplete-container">
-						{categoriesList
-							.filter((c) => categoryArray.map((ca) => ca.id).includes(c.id))
-							.map((c) => (
-								<span className="ub-autocomplete-selection">
-									{c.name}
-									<span
-										className="dashicons dashicons-dismiss"
-										onClick={() =>
-											setAttributes({
-												categoryArray: categoryArray.filter(
-													(sel) => sel.id !== c.id
-												),
-											})
-										}
-									/>
-								</span>
-							))}
-					</div>
-				)}
-				<Autocomplete
-					className="ub-autocomplete-list"
-					list={categoriesList
-						.filter(
-							(cur) => !excludedCategories.some((other) => cur.id === other.id)
-						)
-						.filter(
-							(cur) => !categoryArray.some((other) => cur.id === other.id)
-						)
-						.map((c) => ({ label: c.name, value: c.id }))}
-					selection={categoryArray}
-					addToSelection={(item) => {
-						//use full object for full compatibility with querycontrols
-						if (!categoryArray.includes(item.value)) {
-							setAttributes({
-								categoryArray: [
-									...categoryArray,
-									...categoriesList.filter((cat) => cat.id === item.value),
-								],
-							});
-						}
-					}}
-				/>
-
-				<label className="components-truncate components-text components-input-control__label">
-					{__("Excluded Categories")}
-				</label>
-				{excludedCategories && (
-					<div className="ub-autocomplete-container">
-						{categoriesList
-							.filter((c) =>
-								excludedCategories.map((ca) => ca.id).includes(c.id)
-							)
-							.map((c) => (
-								<span className="ub-autocomplete-selection">
-									{c.name}
-									<span
-										className="dashicons dashicons-dismiss"
-										onClick={() => {
-											setAttributes({
-												excludedCategories: excludedCategories.filter(
-													(sel) => sel.id !== c.id
-												),
-											});
-										}}
-									/>
-								</span>
-							))}
-					</div>
-				)}
-				<Autocomplete
-					className="ub-autocomplete-list"
-					list={categoriesList
-						.filter(
-							(cur) => !excludedCategories.some((other) => cur.id === other.id)
-						)
-						.filter(
-							(cur) => !categoryArray.some((other) => cur.id === other.id)
-						)
-						.map((c) => ({ label: c.name, value: c.id }))}
-					selection={excludedCategories}
-					addToSelection={(item) => {
-						if (!excludedCategories.includes(item.value)) {
-							setAttributes({
-								excludedCategories: [
-									...excludedCategories,
-									...categoriesList.filter((cat) => cat.id === item.value),
-								],
-							});
-						}
-					}}
-				/>
-				<RangeControl
-					label={__("Number of items")}
-					value={amountPosts}
-					onChange={(amountPosts) => setAttributes({ amountPosts })}
-					min={1}
-					max={100}
-				/>
-			</PanelBody>
-			{Array.isArray(posts) && posts.length > 0 && (
-				<PanelBody title={__("Display", "ultimate-blocks")} initialOpen={false}>
-					<ToggleControl
-						label={__("Display Featured Image", "ultimate-blocks")}
-						checked={checkPostImage}
-						onChange={(checkPostImage) => setAttributes({ checkPostImage })}
-					/>
-					{checkPostImage && (
+		<>
+			<InspectorControls group="settings">
+				<PanelBody title={__("General", "ultimate-blocks")}>
+					{Array.isArray(posts) && posts.length > 0 && (
 						<>
-							<TextControl
-								label={__("Post Image Width", "ultimate-blocks")}
-								type="number"
-								min={1}
-								value={postImageWidth}
-								onChange={(val) =>
-									setAttributes({ postImageWidth: Number(val) })
-								}
+							<SelectControl
+								label={__("Grid Type", "ultimate-blocks")}
+								options={postTypeOptions}
+								value={postLayout}
+								onChange={(postLayout) => setAttributes({ postLayout })}
 							/>
-							<ToggleControl
-								label={__("Preserve Aspect Ratio", "ultimate-blocks")}
-								checked={preservePostImageAspectRatio}
-								onChange={(preservePostImageAspectRatio) =>
-									setAttributes({ preservePostImageAspectRatio })
-								}
-							/>
-							{!preservePostImageAspectRatio && (
-								<TextControl
-									label={__("Post Image Height", "ultimate-blocks")}
-									type="number"
+							{"grid" === postLayout && (
+								<RangeControl
+									label={__("Columns", "ultimate-blocks")}
+									value={columns}
+									onChange={(columns) => setAttributes({ columns })}
 									min={1}
-									value={postImageHeight}
-									onChange={(val) =>
-										setAttributes({ postImageHeight: Number(val) })
+									max={
+										!hasPosts
+											? MAX_POSTS_COLUMNS
+											: Math.min(MAX_POSTS_COLUMNS, posts.length)
 									}
 								/>
 							)}
 						</>
 					)}
-					<ToggleControl
-						label={__("Display Author", "ultimate-blocks")}
-						checked={checkPostAuthor}
-						onChange={(checkPostAuthor) => setAttributes({ checkPostAuthor })}
-					/>
-					<ToggleControl
-						label={__("Display Date", "ultimate-blocks")}
-						checked={checkPostDate}
-						onChange={(checkPostDate) => setAttributes({ checkPostDate })}
-					/>
-					<ToggleControl
-						label={__("Display Excerpt", "ultimate-blocks")}
-						checked={checkPostExcerpt}
-						onChange={(checkPostExcerpt) => setAttributes({ checkPostExcerpt })}
-					/>
-					{checkPostExcerpt && (
-						<RangeControl
-							label={__("Excerpt Length", "ultimate-blocks")}
-							value={excerptLength}
-							onChange={(value) => setAttributes({ excerptLength: value })}
-							min={0}
-							max={200}
-						/>
-					)}
-					<ToggleControl
-						label={__("Display Continue Reading Link", "ultimate-blocks")}
-						checked={checkPostLink}
-						onChange={(checkPostLink) => setAttributes({ checkPostLink })}
-					/>
-					{checkPostLink && (
-						<TextControl
-							label={__("Customize Continue Reading Text", "ultimate-blocks")}
-							type="text"
-							value={readMoreText}
-							onChange={(value) => setAttributes({ readMoreText: value })}
-						/>
-					)}
-					<ToggleControl
-						label={__("Display Title", "ultimate-blocks")}
-						checked={checkPostTitle}
-						onChange={(checkPostTitle) => setAttributes({ checkPostTitle })}
-					/>
-					{checkPostTitle && (
-						<SelectControl
-							label={__("Title tag", "ultimate-blocks")}
-							options={["h2", "h3", "h4"].map((a) => ({
-								value: a,
-								label: __(a),
-							}))}
-							value={postTitleTag}
-							onChange={(postTitleTag) => setAttributes({ postTitleTag })}
-						/>
-					)}
 				</PanelBody>
-			)}
-		</InspectorControls>
+				<PanelBody title={__("Query", "ultimate-blocks")} initialOpen={false}>
+					<p>{__("Authors")}</p>
+					{authorArray && (
+						<div className="ub-autocomplete-container">
+							{authorsList
+								.filter((t) => authorArray.includes(t.id))
+								.map((t) => (
+									<span className="ub-autocomplete-selection">
+										{t.name}
+										<span
+											className="dashicons dashicons-dismiss"
+											onClick={() =>
+												setAttributes({
+													authorArray: authorArray.filter(
+														(sel) => sel !== t.id
+													),
+												})
+											}
+										/>
+									</span>
+								))}
+						</div>
+					)}
+					<Autocomplete
+						className="ub-autocomplete-list"
+						list={authorsList
+							.filter((t) => !authorArray.includes(t.id))
+							.map((t) => ({ label: t.name, value: t.id }))}
+						selection={authorArray}
+						addToSelection={(item) => {
+							if (!authorArray.includes(item.value)) {
+								setAttributes({ authorArray: [...authorArray, item.value] });
+							}
+						}}
+					/>
+					<label className="components-truncate components-text components-input-control__label">
+						{__("Tags")}
+					</label>
+					{tagArray && (
+						<div className="ub-autocomplete-container">
+							{tagsList
+								.filter((t) => tagArray.includes(t.id))
+								.map((t) => (
+									<span className="ub-autocomplete-selection">
+										{t.name}
+										<span
+											className="dashicons dashicons-dismiss"
+											onClick={() => {
+												setAttributes({
+													tagArray: tagArray.filter((sel) => sel !== t.id),
+												});
+											}}
+										/>
+									</span>
+								))}
+						</div>
+					)}
+					<Autocomplete
+						className="ub-autocomplete-list"
+						list={tagsList
+							.filter((t) => !tagArray.includes(t.id))
+							.map((t) => ({ label: t.name, value: t.id }))}
+						selection={tagArray}
+						addToSelection={(item) => {
+							if (!tagArray.includes(item.value)) {
+								setAttributes({ tagArray: [...tagArray, item.value] });
+							}
+						}}
+					/>
+					<SelectControl
+						label={__("Order By", "ultimate-blocks")}
+						options={[
+							__("Newest to oldest"),
+							__("Oldest to newest"),
+							__("A → Z"),
+							__("Z → A"),
+						].map((a, i) => ({ value: i, label: a }))}
+						value={orderDropdownVal}
+						onChange={(newDropVal) => {
+							setOrderDropdownval(newDropVal);
+							setAttributes({
+								order: newDropVal % 3 === 0 ? "desc" : "asc",
+								orderBy: newDropVal > 1 ? "title" : "date",
+							});
+						}}
+					/>
+
+					<label className="components-truncate components-text components-input-control__label">
+						{__("Included Categories")}
+					</label>
+					{categoryArray && (
+						<div className="ub-autocomplete-container">
+							{categoriesList
+								.filter((c) => categoryArray.map((ca) => ca.id).includes(c.id))
+								.map((c) => (
+									<span className="ub-autocomplete-selection">
+										{c.name}
+										<span
+											className="dashicons dashicons-dismiss"
+											onClick={() =>
+												setAttributes({
+													categoryArray: categoryArray.filter(
+														(sel) => sel.id !== c.id
+													),
+												})
+											}
+										/>
+									</span>
+								))}
+						</div>
+					)}
+					<Autocomplete
+						className="ub-autocomplete-list"
+						list={categoriesList
+							.filter(
+								(cur) =>
+									!excludedCategories.some((other) => cur.id === other.id)
+							)
+							.filter(
+								(cur) => !categoryArray.some((other) => cur.id === other.id)
+							)
+							.map((c) => ({ label: c.name, value: c.id }))}
+						selection={categoryArray}
+						addToSelection={(item) => {
+							//use full object for full compatibility with querycontrols
+							if (!categoryArray.includes(item.value)) {
+								setAttributes({
+									categoryArray: [
+										...categoryArray,
+										...categoriesList.filter((cat) => cat.id === item.value),
+									],
+								});
+							}
+						}}
+					/>
+
+					<label className="components-truncate components-text components-input-control__label">
+						{__("Excluded Categories")}
+					</label>
+					{excludedCategories && (
+						<div className="ub-autocomplete-container">
+							{categoriesList
+								.filter((c) =>
+									excludedCategories.map((ca) => ca.id).includes(c.id)
+								)
+								.map((c) => (
+									<span className="ub-autocomplete-selection">
+										{c.name}
+										<span
+											className="dashicons dashicons-dismiss"
+											onClick={() => {
+												setAttributes({
+													excludedCategories: excludedCategories.filter(
+														(sel) => sel.id !== c.id
+													),
+												});
+											}}
+										/>
+									</span>
+								))}
+						</div>
+					)}
+					<Autocomplete
+						className="ub-autocomplete-list"
+						list={categoriesList
+							.filter(
+								(cur) =>
+									!excludedCategories.some((other) => cur.id === other.id)
+							)
+							.filter(
+								(cur) => !categoryArray.some((other) => cur.id === other.id)
+							)
+							.map((c) => ({ label: c.name, value: c.id }))}
+						selection={excludedCategories}
+						addToSelection={(item) => {
+							if (!excludedCategories.includes(item.value)) {
+								setAttributes({
+									excludedCategories: [
+										...excludedCategories,
+										...categoriesList.filter((cat) => cat.id === item.value),
+									],
+								});
+							}
+						}}
+					/>
+					<RangeControl
+						label={__("Number of items")}
+						value={amountPosts}
+						onChange={(amountPosts) => setAttributes({ amountPosts })}
+						min={1}
+						max={100}
+					/>
+				</PanelBody>
+				{Array.isArray(posts) && posts.length > 0 && (
+					<PanelBody
+						title={__("Display", "ultimate-blocks")}
+						initialOpen={false}
+					>
+						<ToggleControl
+							label={__("Display Featured Image", "ultimate-blocks")}
+							checked={checkPostImage}
+							onChange={(checkPostImage) => setAttributes({ checkPostImage })}
+						/>
+						{checkPostImage && (
+							<>
+								<TextControl
+									label={__("Post Image Width", "ultimate-blocks")}
+									type="number"
+									min={1}
+									value={postImageWidth}
+									onChange={(val) =>
+										setAttributes({ postImageWidth: Number(val) })
+									}
+								/>
+								<ToggleControl
+									label={__("Preserve Aspect Ratio", "ultimate-blocks")}
+									checked={preservePostImageAspectRatio}
+									onChange={(preservePostImageAspectRatio) =>
+										setAttributes({ preservePostImageAspectRatio })
+									}
+								/>
+								{!preservePostImageAspectRatio && (
+									<TextControl
+										label={__("Post Image Height", "ultimate-blocks")}
+										type="number"
+										min={1}
+										value={postImageHeight}
+										onChange={(val) =>
+											setAttributes({ postImageHeight: Number(val) })
+										}
+									/>
+								)}
+							</>
+						)}
+						<ToggleControl
+							label={__("Display Author", "ultimate-blocks")}
+							checked={checkPostAuthor}
+							onChange={(checkPostAuthor) => setAttributes({ checkPostAuthor })}
+						/>
+						<ToggleControl
+							label={__("Display Date", "ultimate-blocks")}
+							checked={checkPostDate}
+							onChange={(checkPostDate) => setAttributes({ checkPostDate })}
+						/>
+						<ToggleControl
+							label={__("Display Excerpt", "ultimate-blocks")}
+							checked={checkPostExcerpt}
+							onChange={(checkPostExcerpt) =>
+								setAttributes({ checkPostExcerpt })
+							}
+						/>
+						{checkPostExcerpt && (
+							<RangeControl
+								label={__("Excerpt Length", "ultimate-blocks")}
+								value={excerptLength}
+								onChange={(value) => setAttributes({ excerptLength: value })}
+								min={0}
+								max={200}
+							/>
+						)}
+						<ToggleControl
+							label={__("Display Continue Reading Link", "ultimate-blocks")}
+							checked={checkPostLink}
+							onChange={(checkPostLink) => setAttributes({ checkPostLink })}
+						/>
+						{checkPostLink && (
+							<TextControl
+								label={__("Customize Continue Reading Text", "ultimate-blocks")}
+								type="text"
+								value={readMoreText}
+								onChange={(value) => setAttributes({ readMoreText: value })}
+							/>
+						)}
+						<ToggleControl
+							label={__("Display Title", "ultimate-blocks")}
+							checked={checkPostTitle}
+							onChange={(checkPostTitle) => setAttributes({ checkPostTitle })}
+						/>
+						{checkPostTitle && (
+							<SelectControl
+								label={__("Title tag", "ultimate-blocks")}
+								options={["h2", "h3", "h4"].map((a) => ({
+									value: a,
+									label: __(a),
+								}))}
+								value={postTitleTag}
+								onChange={(postTitleTag) => setAttributes({ postTitleTag })}
+							/>
+						)}
+					</PanelBody>
+				)}
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
+			</InspectorControls>
+		</>
 	);
 }

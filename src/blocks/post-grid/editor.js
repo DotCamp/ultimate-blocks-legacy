@@ -1,6 +1,6 @@
 import FeaturedImage from "./image";
 import moment from "moment";
-
+import { getStyles } from "./get-styles";
 // Setup the block
 const { __ } = wp.i18n;
 const { decodeEntities } = wp.htmlEntities;
@@ -26,9 +26,11 @@ export default function PostGridBlock(props) {
 
 	const PostTag = postTitleTag;
 
+	const styles = getStyles(props.attributes);
 	return (
 		<section
 			className={`${className ? `${className} ` : ""}ub-block-post-grid`}
+			style={styles}
 		>
 			<div
 				className={`ub-post-grid-items ${
