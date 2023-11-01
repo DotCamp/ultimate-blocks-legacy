@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { convertFromSeconds } from "../../common";
+import { SpacingControl } from "../components";
+import { getStyles } from "./get-styles";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 
@@ -278,6 +280,19 @@ function InspectorPanel(props) {
 						/>
 					</PanelBody>
 				)}
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 		</>
 	);
@@ -974,9 +989,7 @@ export function EditorComponent(props) {
 			clipEnd: s.videoClipEnd,
 		}));
 
-	if (
-		blockID === ""
-	) {
+	if (blockID === "") {
 		setAttributes({ blockID: block.clientId });
 	}
 
@@ -1156,7 +1169,7 @@ export function EditorComponent(props) {
 			console.log("input is not a url");
 		}
 	};
-
+	const styles = getStyles(props.attributes);
 	return (
 		<>
 			<InspectorPanel
@@ -1170,7 +1183,7 @@ export function EditorComponent(props) {
 					//videoURLInput isn't being updated via updateState for now
 				}}
 			/>
-			<div className="ub_howto" id={`ub_howto-${blockID}`}>
+			<div className="ub_howto" id={`ub_howto-${blockID}`} style={styles}>
 				<RichText
 					tagName={firstLevelTag}
 					placeholder={__("How to title")}

@@ -855,6 +855,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
 			'title'               => array(
 				'type'    => 'string',
 				'default' => ''

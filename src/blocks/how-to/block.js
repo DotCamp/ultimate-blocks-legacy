@@ -176,6 +176,14 @@ const attributes = {
 		type: "string",
 		default: "h4",
 	},
+	padding: {
+		type: "object",
+		default: {},
+	},
+	margin: {
+		type: "object",
+		default: {},
+	},
 };
 
 registerBlockType("ub/how-to", {

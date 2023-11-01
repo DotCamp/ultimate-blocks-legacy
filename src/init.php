@@ -631,7 +631,10 @@ function ub_include_block_attribute_css() {
 										 '}';
 					break;
 				case 'ub/how-to':
+					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub_howto_' . $attributes['blockID'];
+					$blockStylesheets .= $prefix . '{' . $styles . '};';
+					
 					if ( $attributes['sectionListStyle'] === 'none' ) {
 						$blockStylesheets .= $prefix . ' .ub_howto-section-display,' . $prefix . ' .ub_howto-step-display,' .
 											 $prefix . ' .ub_howto-step-display .ub_howto-step{' . PHP_EOL .
