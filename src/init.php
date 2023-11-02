@@ -633,7 +633,7 @@ function ub_include_block_attribute_css() {
 				case 'ub/how-to':
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub_howto_' . $attributes['blockID'];
-					$blockStylesheets .= $prefix . '{' . $styles . '};';
+					$blockStylesheets .= $prefix . '{' . $styles . '}';
 					
 					if ( $attributes['sectionListStyle'] === 'none' ) {
 						$blockStylesheets .= $prefix . ' .ub_howto-section-display,' . $prefix . ' .ub_howto-step-display,' .
@@ -758,7 +758,7 @@ function ub_include_block_attribute_css() {
 					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];
 					$is_style_circle = isset($attributes['className']) ? strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false : "";
 					$is_style_half_circle = isset($attributes['className']) ?  strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false : "";
-					$blockStylesheets .= $prefix . '{' . $styles . '};';
+					$blockStylesheets .= $prefix . '{' . $styles . '}';
 					$blockStylesheets .= $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
 										 'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL .
@@ -948,7 +948,7 @@ function ub_include_block_attribute_css() {
 					$styles = ub_get_spacing_styles($attributes);
 					
 					$prefix           = '#ub-star-rating-' . $attributes['blockID'];
-					$blockStylesheets .= $prefix . '{' . $styles . '};';
+					$blockStylesheets .= $prefix . '{' . $styles . '}';
 
 					$blockStylesheets .= $prefix . ' .ub-star-outer-container{' . PHP_EOL .
 										 'justify-content: ' . ( $attributes['starAlign'] === 'center' ? 'center' :
@@ -964,6 +964,9 @@ function ub_include_block_attribute_css() {
 					break;
 				case 'ub/styled-box':
 					$prefix = '#ub-styled-box-' . $attributes['blockID'];
+					$styles = ub_get_spacing_styles($attributes);
+					$blockStylesheets .= $prefix . '{' . $styles . '}';
+
 					if ( $attributes['mode'] === 'notification' ) {
 						$blockStylesheets .= $prefix . '.ub-notification-box{' . PHP_EOL .
 											 'background-color: ' . $attributes['backColor'] . ';' . PHP_EOL .

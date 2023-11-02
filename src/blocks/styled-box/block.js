@@ -1,7 +1,8 @@
 import { __ } from "@wordpress/i18n";
 
 import { registerBlockType, createBlock } from "@wordpress/blocks";
-
+import { SpacingControl } from "../components";
+import { getStyles } from "./get-styles";
 import {
 	RichText,
 	BlockControls,
@@ -668,6 +669,7 @@ function StyledBox(props) {
 			setAttributes({ text: [""], textAlign: ["left"] });
 		}
 	}
+	const styles = getStyles(props.attributes);
 
 	return (
 		<div {...blockProps}>
@@ -737,9 +739,25 @@ function StyledBox(props) {
 					<InspectorControls group="styles">
 						{inspectorExtras}
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
-			<div className={`ub-styled-box ub-${mode}-box`} style={extraStyles}>
+			<div
+				className={`ub-styled-box ub-${mode}-box`}
+				style={{ ...extraStyles, ...styles }}
+			>
 				{renderedBlock}
 			</div>
 		</div>
@@ -748,7 +766,7 @@ function StyledBox(props) {
 
 registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
+	attributes: metadata.attributes,
 	example: {},
 	edit: StyledBox,
 
@@ -760,6 +778,7 @@ registerBlockType(metadata, {
 
 registerBlockType(borderBoxMetaData, {
 	icon: icon,
+	attributes: borderBoxMetaData.attributes,
 	edit: (props) => (
 		<InnerBlocks
 			templateLock={false}
@@ -775,6 +794,7 @@ registerBlockType(borderBoxMetaData, {
 
 registerBlockType(notificationBoxMetaData, {
 	icon: icon,
+	attributes: notificationBoxMetaData.attributes,
 	edit: () => (
 		<InnerBlocks
 			templateLock={false}
@@ -793,6 +813,7 @@ registerBlockType(notificationBoxMetaData, {
 
 registerBlockType(numberBoxMetaData, {
 	icon: icon,
+	attributes: numberBoxMetaData.attributes,
 	edit: () => (
 		<InnerBlocks
 			templateLock={false}
@@ -808,6 +829,7 @@ registerBlockType(numberBoxMetaData, {
 
 registerBlockType(numberBoxColumnMetaData, {
 	icon: icon,
+	attributes: numberBoxColumnMetaData.attributes,
 	edit: function (props) {
 		const { attributes, setAttributes } = props;
 		const {
