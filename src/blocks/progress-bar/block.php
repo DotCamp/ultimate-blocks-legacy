@@ -106,7 +106,7 @@ function ub_render_progress_bar_block($attributes){
 function ub_register_progress_bar_block() {
 	if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/progress-bar', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/progress-bar', array(
             'attributes' => $defaultValues['ub/progress-bar']['attributes'],
             'render_callback' => 'ub_render_progress_bar_block'));
     }

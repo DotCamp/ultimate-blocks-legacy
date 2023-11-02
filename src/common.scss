@@ -66,3 +66,10 @@
 %pointer {
 	cursor: pointer;
 }
+.ub-border-radius-control {
+	> .components-border-radius-control {
+		> .components-base-control__label {
+			display: none;
+		}
+	}
+}

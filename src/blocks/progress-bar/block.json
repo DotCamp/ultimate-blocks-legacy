@@ -1,0 +1,76 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/progress-bar",
+     "title": "Progress Bar",
+     "category": "ultimateblocks",
+     "description": "Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.",
+     "keywords": [
+          "Progress Bar",
+          "Circle",
+          "Ultimate Blocks"
+     ],
+     "attributes": {
+          "blockID": {
+               "type": "string",
+               "default": ""
+          },
+          "percentage": {
+               "type": "number",
+               "default": -1
+          },
+          "barType": {
+               "type": "string",
+               "default": "linear"
+          },
+          "detail": {
+               "type": "string",
+               "default": ""
+          },
+          "detailAlign": {
+               "type": "string",
+               "default": "left"
+          },
+          "barColor": {
+               "type": "string",
+               "default": "#2DB7F5"
+          },
+          "barBackgroundColor": {
+               "type": "string",
+               "default": "#d9d9d9"
+          },
+          "barThickness": {
+               "type": "number",
+               "default": 1
+          },
+          "circleSize": {
+               "type": "number",
+               "default": 150
+          },
+          "labelColor": {
+               "type": "string",
+               "default": ""
+          },
+          "percentagePosition": {
+               "type": "string",
+               "default": "bottom"
+          },
+          "isStripe": {
+               "type": "boolean",
+               "default": false
+          },
+          "barBorderRadius": {
+               "type": "object",
+               "default": {}
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
+          }
+     },
+     "supports": {}
+}

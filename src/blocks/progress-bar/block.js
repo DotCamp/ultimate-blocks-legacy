@@ -1,11 +1,16 @@
 import icon, { CircProgressIcon, LinearProgressIcon } from "./icons";
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks;
-const { BlockControls, InspectorControls, PanelColorSettings, RichText } =
-	wp.blockEditor || wp.editor;
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
+import {
+	BlockControls,
+	InspectorControls,
+	PanelColorSettings,
+	RichText,
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const { withSelect } = wp.data;
+import { withSelect } from "@wordpress/data";
 
 import "./blocks-styles";
 import Circle from "./Circle";
@@ -23,9 +28,14 @@ import {
 	ToolbarDropdownMenu,
 	ToggleControl,
 } from "@wordpress/components";
-import { BorderRadiusControl, CustomToggleGroupControl } from "../components";
+import {
+	BorderRadiusControl,
+	CustomToggleGroupControl,
+	SpacingControl,
+} from "../components";
 import { getStyles } from "./get-styles";
 import HalfCircle from "./HalfCircle";
+import metadata from "./block.json";
 
 function ProgressBarMain(props) {
 	const {
@@ -89,12 +99,18 @@ function ProgressBarMain(props) {
 		},
 	];
 	const styles = getStyles(props.attributes);
-	const isStyleCircle = className
-		.split(" ")
+
+	const blockClassName = className ?? props.attributes?.className ?? "";
+	const isStyleCircle = blockClassName
+		?.split(" ")
 		.includes("is-style-ub-progress-bar-circle-wrapper");
-	const isStyleHalfCircle = className
-		.split(" ")
+	const isStyleHalfCircle = blockClassName
+		?.split(" ")
 		.includes("is-style-ub-progress-bar-half-circle-wrapper");
+	const blockProps = useBlockProps({
+		className: `ub_progress-bar ${blockClassName}`,
+		style: styles,
+	});
 
 	return (
 		<>
@@ -265,9 +281,22 @@ function ProgressBarMain(props) {
 							/>
 						</InspectorControls>
 					)}
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
-			<div className={`ub_progress-bar ${className}`} style={styles}>
+			<div {...blockProps}>
 				<div className="ub_progress-bar-text">
 					<RichText
 						tagName="p"
@@ -304,70 +333,9 @@ function ProgressBarMain(props) {
 	);
 }
 
-registerBlockType("ub/progress-bar", {
-	title: __("Progress Bar"),
-	description: __(
-		"Add Cirle/Line Progress bar with this blocks. Comes with options to change thickness, color.",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon,
-	category: "ultimateblocks",
-	keywords: [__("Progress Bar"), __("Ultimate Blocks")],
-
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		percentage: {
-			type: "number",
-			default: -1,
-		},
-		barType: {
-			type: "string",
-			default: "linear", //choose between linear and circular
-		},
-		detail: {
-			type: "string",
-			default: "",
-		},
-		detailAlign: {
-			type: "string",
-			default: "left",
-		},
-		barColor: {
-			type: "string",
-			default: "#2DB7F5",
-		},
-		barBackgroundColor: {
-			type: "string",
-			default: "#d9d9d9",
-		},
-		barThickness: {
-			type: "number",
-			default: 1,
-		},
-		circleSize: {
-			type: "number",
-			default: 150,
-		},
-		labelColor: {
-			type: "string",
-			default: "",
-		},
-		percentagePosition: {
-			type: "string",
-			default: "bottom",
-		},
-		isStripe: {
-			type: "boolean",
-			default: false,
-		},
-		barBorderRadius: {
-			type: "object",
-			default: {},
-		},
-	},
+	attributes: metadata.attributes,
 	example: {
 		attributes: {
 			barColor: "#e11b4c",
