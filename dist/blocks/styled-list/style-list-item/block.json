@@ -34,6 +34,14 @@
     "fontSize": {
       "type": "number",
       "default": 0
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {

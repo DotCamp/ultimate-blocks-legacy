@@ -62,6 +62,14 @@
           "backgroundColor": {
                "type": "string",
                "default": ""
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
           }
      },
      "supports": {}

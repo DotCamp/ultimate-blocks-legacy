@@ -11,6 +11,7 @@ import listItemMetaData from "./style-list-item/block.json";
 
 registerBlockType(listMetadata, {
 	icon: icon,
+	attributes: listMetadata.attributes,
 	transforms: {
 		from: [
 			{
@@ -57,6 +58,7 @@ registerBlockType(listMetadata, {
 
 registerBlockType(listItemMetaData, {
 	icon: listItemIcon,
+	attributes: listItemMetaData.attributes,
 	edit: StyledListItem,
 	save: () => <InnerBlocks.Content />,
 });

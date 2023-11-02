@@ -2016,6 +2016,14 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'left'
             ),
+		  'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
             'blockID' => array(
                 'type' => 'string',
                 'default' => ''
@@ -2082,6 +2090,14 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'left'
             ),
+		  'padding' => array(
+		  	'type' 	=> 'array',
+		  	'default' => array()
+		  	),
+		  'margin' => array(
+		  	'type' 	=> 'array',
+		  	'default' => array()
+		  ),
             'blockID' => array(
                 'type' => 'string',
                 'default' => ''

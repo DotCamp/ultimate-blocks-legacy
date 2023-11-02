@@ -1,4 +1,5 @@
 <?php
+require_once dirname(dirname(dirname(__DIR__))) . '/includes/class-ultimate-blocks-styles-css-generator.php';
 
 function ub_render_styled_list_block($attributes, $contents){
     extract($attributes);
@@ -91,9 +92,30 @@ function ub_register_styled_list_block() {
 	}
 }
 
-function ub_render_styled_list_item_block($attributes, $contents){
+function ub_get_styled_list_item_styles( $attributes ) {
+	$padding = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
+	$margin = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
+
+	$styles = array(
+		'padding-top'         => isset($padding['top']) ? $padding['top'] : "",
+		'padding-left'        => isset($padding['left']) ? $padding['left'] : "",
+		'padding-right'       => isset($padding['right']) ? $padding['right'] : "",
+		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] : "",
+		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
+		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
+		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
+		'margin-bottom'      => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
+	);
+
+	return Ultimate_Blocks\includes\generate_css_string( $styles );
+}
+function ub_render_styled_list_item_block($attributes, $contents, $block){
     extract($attributes);
-    return '<li class="ub_styled_list_item">' . $itemText . $contents . '</li>';
+    $block_attributes  = isset($block->parsed_block['attrs']) ? $block->parsed_block['attrs'] : array();
+
+    $styles = ub_get_styled_list_item_styles($block_attributes);
+
+    return '<li class="ub_styled_list_item" style="'. $styles .'">' . $itemText . $contents . '</li>';
 }
 
 function ub_register_styled_list_item_block(){

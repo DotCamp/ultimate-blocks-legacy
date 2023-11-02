@@ -2,6 +2,7 @@ import { __ } from "@wordpress/i18n";
 import { loadPromise, models } from "@wordpress/api";
 import { createBlock } from "@wordpress/blocks";
 import { useSelect, useDispatch } from "@wordpress/data";
+import { getStyles } from "./get-styles";
 import {
 	RichText,
 	InnerBlocks,
@@ -30,6 +31,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import colorList from "./colorlist";
+import { SpacingControl } from "../components";
 
 library.add(fas, fab);
 
@@ -357,7 +359,7 @@ function EditorComponent(props) {
 	if (isRootList !== isRootOfList) {
 		setAttributes({ isRootList: isRootOfList });
 	}
-
+	const styles = getStyles(attributes);
 	return (
 		<div {...blockProps}>
 			{isSelected && isRootOfList && (
@@ -607,6 +609,19 @@ function EditorComponent(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
 			{isSelected && isRootList && (
@@ -620,7 +635,7 @@ function EditorComponent(props) {
 			<ul
 				className={isRootList ? "ub_styled_list" : "ub_styled_list_sublist"}
 				id={`ub-styled-list-${blockID}`}
-				style={isRootList ? { backgroundColor: backgroundColor } : {}}
+				style={isRootList ? styles : {}}
 			>
 				<InnerBlocks
 					template={isRootOfList ? [["ub/styled-list-item"]] : []} //initial content
@@ -718,7 +733,9 @@ export function StyledListItem(props) {
 		};
 	});
 	const [useFontSize, toggleUseFontSize] = useState(false);
-	const blockProps = useBlockProps();
+	const styles = getStyles(attributes);
+
+	const blockProps = useBlockProps({ style: styles });
 
 	useEffect(() => {
 		if (blockID === "") {
@@ -833,6 +850,19 @@ export function StyledListItem(props) {
 
 	return (
 		<div {...blockProps}>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
+			</InspectorControls>
 			<BlockControls>
 				<Button
 					icon="editor-outdent"

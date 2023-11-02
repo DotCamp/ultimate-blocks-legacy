@@ -1017,8 +1017,12 @@ function ub_include_block_attribute_css() {
 					}
 					break;
 				case 'ub/styled-list':
+					$styles = ub_get_spacing_styles($attributes);
+
 					if ( $attributes['list'] !== '' || $attributes['isRootList'] ) {
 						$prefix = '#ub_styled_list-' . $attributes['blockID'];
+						$blockStylesheets .= $prefix .  '{' . $styles . '}';
+
 						if ( $attributes['iconSize'] < 3 ) {
 							$blockStylesheets .= $prefix . ' .fa-li{' . PHP_EOL .
 												 'top: -0.1em;' . PHP_EOL .
