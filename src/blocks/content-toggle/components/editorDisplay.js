@@ -277,7 +277,6 @@ export function PanelContent(props) {
 			toggleIcon,
 			border,
 			showOnlyOne,
-			defaultOpen,
 		},
 		setAttributes,
 		className,

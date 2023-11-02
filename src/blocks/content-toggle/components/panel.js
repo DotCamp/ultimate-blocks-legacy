@@ -19,7 +19,7 @@ const {
 
 const { compose } = wp.compose;
 
-const { withDispatch, withSelect } = wp.data;
+const { withDispatch, withSelect, useSelect } = wp.data;
 
 const {
 	FormToggle,
@@ -143,6 +143,7 @@ function ContentTogglePanel(props) {
 		block,
 		blockParent,
 		blockParentId,
+		updateBlockAttributes,
 		selectBlock,
 	} = props;
 
@@ -167,6 +168,20 @@ function ContentTogglePanel(props) {
 			setPanelStatus(!collapsed);
 		}
 	}, [collapsed]);
+
+	const panels = blockParent?.innerBlocks ?? [];
+
+	const availablePanels = panels.map((panel, index) => {
+		return {
+			value: panel.clientId,
+			label: `Panel ${index + 1}`,
+		};
+	});
+
+	const defaultOpenOptions = [
+		{ value: "none", label: __("None", "ultimate-blocks") },
+		...availablePanels,
+	];
 
 	return (
 		<>
@@ -246,6 +261,29 @@ function ContentTogglePanel(props) {
 									}}
 								/>
 							</PanelRow>
+							{collapsed && (
+								<SelectControl
+									label={__("Default Open", "ultimate-blocks")}
+									options={defaultOpenOptions}
+									value={
+										panels.find((panel) => panel?.attributes?.defaultOpen)
+											?.clientId ?? "none"
+									}
+									onChange={(newId) => {
+										panels.forEach((panel) => {
+											if (panel.clientId === newId) {
+												updateBlockAttributes(panel.clientId, {
+													defaultOpen: true,
+												});
+											} else {
+												updateBlockAttributes(panel.clientId, {
+													defaultOpen: false,
+												});
+											}
+										});
+									}}
+								/>
+							)}
 							{!showOnlyOne && (
 								<PanelRow>
 									<label htmlFor="ub-content-toggle-mobile-state">
