@@ -110,6 +110,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	defaultOpen: {
+		type: "boolean",
+		default: false,
+	},
 };
 
 function ContentTogglePanel(props) {
@@ -140,6 +144,7 @@ function ContentTogglePanel(props) {
 		block,
 		blockParent,
 		blockParentId,
+		updateBlockAttributes,
 		selectBlock,
 	} = props;
 
@@ -154,7 +159,7 @@ function ContentTogglePanel(props) {
 	// }
 
 	useEffect(() => {
-		if (blockParent.attributes.titleLinkColor === "invalid") {
+		if (blockParent?.attributes?.titleLinkColor === "invalid") {
 			setPanelStatus(true);
 		}
 	}, []);
@@ -164,6 +169,20 @@ function ContentTogglePanel(props) {
 			setPanelStatus(!collapsed);
 		}
 	}, [collapsed]);
+
+	const panels = blockParent?.innerBlocks ?? [];
+
+	const availablePanels = panels.map((panel, index) => {
+		return {
+			value: panel.clientId,
+			label: `Panel ${index + 1}`,
+		};
+	});
+
+	const defaultOpenOptions = [
+		{ value: "none", label: __("None", "ultimate-blocks") },
+		...availablePanels,
+	];
 
 	return (
 		<div {...blockProps}>
@@ -243,6 +262,29 @@ function ContentTogglePanel(props) {
 									}}
 								/>
 							</PanelRow>
+							{collapsed && (
+								<SelectControl
+									label={__("Default Open", "ultimate-blocks")}
+									options={defaultOpenOptions}
+									value={
+										panels.find((panel) => panel?.attributes?.defaultOpen)
+											?.clientId ?? "none"
+									}
+									onChange={(newId) => {
+										panels.forEach((panel) => {
+											if (panel.clientId === newId) {
+												updateBlockAttributes(panel.clientId, {
+													defaultOpen: true,
+												});
+											} else {
+												updateBlockAttributes(panel.clientId, {
+													defaultOpen: false,
+												});
+											}
+										});
+									}}
+								/>
+							)}
 							{!showOnlyOne && (
 								<PanelRow>
 									<label htmlFor="ub-content-toggle-mobile-state">
@@ -448,7 +490,7 @@ function ContentTogglePanel(props) {
 						<p class="ub-custom-id-input">
 							{__(
 								"Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.” Then, you’ll be able to link directly to this section of your page."
-							)}{" "}
+							)}
 							<a
 								href="https://wordpress.org/support/article/page-jumps/"
 								target="_blank"

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
  * @return {Function} HOC function
  */
 const withStore =
-	( BaseComponent, selectMapping = null, actionMapping ) =>
+	( BaseComponent, selectMapping = null, actionMapping = null ) =>
 	( props ) => {
 		// prepare selection mappings
 		let selections = {};

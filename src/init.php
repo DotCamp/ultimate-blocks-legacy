@@ -715,7 +715,7 @@ function ub_include_block_attribute_css() {
 										 '}';
 					break;
 				case 'ub/progress-bar':
-					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];					
+					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];
 					$is_style_circle = isset($attributes['className']) ? strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false : "";
 					$is_style_half_circle = isset($attributes['className']) ?  strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false : "";
 
@@ -1199,7 +1199,7 @@ function ultimate_blocks_cgb_editor_assets() {
 			'ultimate_blocks-cgb-block-js', // Handle.
 			plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ),
 			// Block.build.js: We register the block here. Built with Webpack.
-			array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-api' ), // Dependencies, defined above.
+			array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-api', 'lodash'), // Dependencies, defined above.
 			Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
@@ -1357,6 +1357,8 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/advanced-video/block.php';
 // Icon
 require_once plugin_dir_path( __FILE__ ) . 'blocks/icon/block.php';
 
+// Counter
+require_once plugin_dir_path( __FILE__ ) . 'blocks/counter/block.php';
 
 /**
  * Innerblocks.

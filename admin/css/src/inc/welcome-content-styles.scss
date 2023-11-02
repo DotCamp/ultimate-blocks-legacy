@@ -1,0 +1,52 @@
+@import "../base/common";
+
+.ub-welcome-content {
+	display: flex;
+	align-items: flex-start;
+	gap: 32px;
+
+	&__main {
+		flex-basis: 70%;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		grid-auto-rows: auto;
+		grid-gap: 24px;
+	}
+
+	&__right-sidebar {
+		flex-basis: 30%;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		grid-auto-rows: auto;
+		grid-gap: 24px;
+	}
+
+	@include screen-max($screen-sm){
+		&__right-sidebar {
+			flex-flow: column nowrap !important;
+		}
+	}
+
+	@include screen-max($screen-md2) {
+		flex-flow: row wrap;
+
+		&__main {
+			flex-basis: 100%;
+
+		}
+
+		&__right-sidebar {
+			flex-basis: 100%;
+			display: flex;
+			flex-flow: column nowrap !important;
+			justify-content: center;
+			gap: 10px;
+
+			& > div {
+				flex-basis: 40%;
+			}
+		}
+	}
+}

@@ -48,10 +48,10 @@ function UpsellModalSettingsMenu( {
 		return null;
 	};
 
+	const targetBlockObj = getBlockObject( targetBlock );
 	const currentUpsellData = useMemo( () => {
-		const targetBlockObj = getBlockObject( targetBlock );
 		return prepareUpsellData( targetBlockObj );
-	}, [ targetBlock ] );
+	}, [ targetBlock, targetBlockObj ] );
 
 	const currentBlockIcon = useMemo( () => {
 		if ( currentUpsellData ) {
@@ -78,8 +78,9 @@ const selectMapping = ( select ) => {
 	return {
 		targetBlock: select( getModalTargetBlockType ),
 		visibility: select( getModalVisibilityStatus ),
-		getBlockObject: select( getBlockById ),
-		proBuyUrl: select( getAsset )( 'proBuyUrl' ),
+		getBlockObject: ( blockId ) =>
+			select( ( state ) => getBlockById( state, blockId ) ),
+		proBuyUrl: select( ( state ) => getAsset( state, 'proBuyUrl' ) ),
 	};
 };
 // store action mapping

@@ -1,0 +1,19 @@
+@import '../base/common';
+@import '../base/themes/admin-menu-theme';
+
+.controls-container {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	width: 100%;
+	height: fit-content;
+	gap: 28px 32px;
+
+
+	&[data-show-info="false"] .block-control {
+		& > div:not(.block-title) {
+			display: none;
+		}
+	}
+}

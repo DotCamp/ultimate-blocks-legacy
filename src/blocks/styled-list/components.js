@@ -210,6 +210,9 @@ function EditorComponent(props) {
 			setAttributes({ list: "" });
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	function loadIconList() {
 		const iconList = Object.keys(allIcons).sort();
@@ -615,7 +618,7 @@ function EditorComponent(props) {
 				</BlockControls>
 			)}
 			<ul
-				className="ub_styled_list"
+				className={isRootList ? "ub_styled_list" : "ub_styled_list_sublist"}
 				id={`ub-styled-list-${blockID}`}
 				style={isRootList ? { backgroundColor: backgroundColor } : {}}
 			>
@@ -649,7 +652,7 @@ function EditorComponent(props) {
 					#ub-styled-list-${blockID} [data-type="ub/styled-list-item"]:not(:first-child){
 						margin-top: ${itemSpacing}px;
 					}
-					#ub-styled-list-${blockID} .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="ub/styled-list-item"]:first-child{
+					#ub-styled-list-${blockID} .block-editor-inner-blocks > .block-editor-block-list__layout .ub_styled_list_sublist > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="ub/styled-list-item"]:first-child{
 						margin-top: ${itemSpacing}px;
 					}
 					#ub-styled-list-${blockID}  > .block-editor-inner-blocks > .block-editor-block-list__layout{

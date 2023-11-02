@@ -1,4 +1,9 @@
 <?php
+/**
+ * The admin-specific functionality of the plugin.
+ *
+ * @package ultimate-blocks
+ */
 
 /**
  * The admin-specific functionality of the plugin.
@@ -10,6 +15,9 @@
  * @subpackage Ultimate_Blocks/admin
  */
 
+use Ultimate_Blocks\admin\data\block_demos\Block_Demos_Data;
+use Ultimate_Blocks\admin\data\Block_Menu_Info_Data;
+use Ultimate_Blocks\admin\data\Settings_Menu_Content_Data;
 use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
 
 /**
@@ -62,6 +70,7 @@ class Ultimate_Blocks_Admin {
 
 	/**
 	 * Pro sub menu slug.
+	 *
 	 * @var string
 	 */
 	private $pro_menu_slug = 'ultimate-blocks-settings-pro';
@@ -78,35 +87,35 @@ class Ultimate_Blocks_Admin {
 		$this->plugin_path = ULTIMATE_BLOCKS_PATH;
 		$this->plugin_url  = ULTIMATE_BLOCKS_URL;
 
-		add_filter( 'ub/filter/admin_settings_menu_data', [ $this, 'add_settings_menu_data' ], 1, 1 );
+		add_filter( 'ub/filter/admin_settings_menu_data', array( $this, 'add_settings_menu_data' ), 1, 1 );
 	}
 
 	/**
 	 * Add data for admin settings menu frontend.
 	 *
-	 * @param array $data frontend data
+	 * @param array $data frontend data.
 	 *
 	 * @return array filtered frontend data
 	 */
 	public function add_settings_menu_data( $data ) {
-		$data['assets'] = [
+		$data['assets'] = array(
 			'logo'        => trailingslashit( $this->plugin_url ) . 'admin/images/logos/menu-icon-colored.svg',
-			'ajax'        => [
-				'toggleStatus' => [
-					"url"    => get_admin_url( null, 'admin-ajax.php' ),
+			'ajax'        => array(
+				'toggleStatus' => array(
+					'url'    => get_admin_url( null, 'admin-ajax.php' ),
 					'action' => 'toggle_block_status',
-					'nonce'  => wp_create_nonce( 'toggle_block_status' )
-				]
-			],
-			'proMenuSlug' => $this->pro_menu_slug
-		];
+					'nonce'  => wp_create_nonce( 'toggle_block_status' ),
+				),
+			),
+			'proMenuSlug' => $this->pro_menu_slug,
+			'blockDemos'  => Block_Demos_Data::get_data(),
+			'contentData' => Settings_Menu_Content_Data::get_data(),
+		);
 
-		require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'admin/data/block-menu-info.php';
-
-		$data['blocks'] = [
+		$data['blocks'] = array(
 			'statusData' => get_option( 'ultimate_blocks', false ),
-			'info'       => $block_menu_infos
-		];
+			'info'       => Block_Menu_Info_Data::get_data(),
+		);
 
 		return $data;
 	}
@@ -116,7 +125,7 @@ class Ultimate_Blocks_Admin {
 	 *
 	 * @since    1.0.2
 	 */
-	public function enqueue_styles( $hook ) {
+	public function enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -131,14 +140,19 @@ class Ultimate_Blocks_Admin {
 		 */
 		global $menu_page;
 
-		wp_enqueue_style( $this->plugin_name,
-			trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.css', array(), $this->version,
-			'all' );
-
+		wp_enqueue_style(
+			$this->plugin_name,
+			trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.css',
+			array(),
+			$this->version,
+			'all'
+		);
 	}
 
 	/**
 	 * Register the JavaScript for the admin area.
+	 *
+	 * @param string $hook current page hook.
 	 *
 	 * @since    1.0.2
 	 */
@@ -158,28 +172,39 @@ class Ultimate_Blocks_Admin {
 		global $menu_page;
 		global $ub_pro_page;
 
-		if ( $hook != $menu_page && $hook != $ub_pro_page ) {
+		if ( $hook !== $menu_page && $hook !== $ub_pro_page ) {
 			return;
 		}
 
-		wp_enqueue_script( $this->plugin_name . '_registered_blocks',
-			trailingslashit( $this->plugin_url ) . 'dist/blocks.build.js', [
+		wp_enqueue_script(
+			$this->plugin_name . '_registered_blocks',
+			trailingslashit( $this->plugin_url ) . 'dist/blocks.build.js',
+			array(
 				'wp-blocks',
 				'wp-i18n',
 				'wp-element',
 				'wp-editor',
 				'wp-hooks',
-				'wp-api'
-			], $this->version, true );
+				'wp-api',
+				'lodash'
+			),
+			$this->version,
+			true
+		);
 
-		// ub/action/settings_menu_block_registry action hook
+		// ub/action/settings_menu_block_registry action hook.
 		do_action( 'ub/action/settings_menu_block_registry' );
 
-		wp_enqueue_script( $this->plugin_name,
-			trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.js', [], $this->version, true );
+		wp_enqueue_script(
+			$this->plugin_name,
+			trailingslashit( $this->plugin_url ) . 'bundle-dist/ub-admin-settings.js',
+			array(),
+			$this->version,
+			true
+		);
 
-		// ub/filter/admin_settings_menu_data filter hook
-		$frontend_script_data = apply_filters( 'ub/filter/admin_settings_menu_data', [] );
+		// ub/filter/admin_settings_menu_data filter hook.
+		$frontend_script_data = apply_filters( 'ub/filter/admin_settings_menu_data', array() );
 
 		wp_localize_script( $this->plugin_name, 'ubAdminMenuData', $frontend_script_data );
 	}
@@ -192,7 +217,7 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function register_admin_menus() {
 
-		// assign global variables
+		// assign global variables.
 		global $menu_page;
 		global $menu_page_slug;
 		global $ub_pro_page;
@@ -209,19 +234,6 @@ class Ultimate_Blocks_Admin {
 			array( $this, 'main_menu_template_cb' ),
 			plugin_dir_url( __FILE__ ) . 'images/logos/menu-icon.svg'
 		);
-
-		// only add pro upsell submenu if pro is not active
-		if ( ! Pro_Manager::get_instance()->is_pro() ) {
-			// sub menu for pro related settings
-			$ub_pro_page = add_submenu_page(
-				$menu_page_slug,
-				'PRO',
-				'PRO',
-				'manage_options',
-				$this->pro_menu_slug,
-				array( $this, 'main_menu_template_cb' )
-			);
-		}
 	}
 
 	/**
@@ -231,31 +243,65 @@ class Ultimate_Blocks_Admin {
 	 * @since    1.0.2
 	 */
 	public function main_menu_template_cb() {
-
 		require_once $this->plugin_path . 'admin/templates/menus/main-menu.php';
-
 	}
+
+	/**
+	 * Toggle block status ajax endpoint.
+	 *
+	 * @return void
+	 */
+	public function toggle_block_status() {
+		check_ajax_referer( 'toggle_block_status' );
+
+		if ( isset( $_POST['block_name'] ) && isset( $_POST['enable'] ) ) {
+			// phpcs:disable
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitization done before foreach loop below.
+			$block_name_array = $_POST['block_name'];
+			// phpcs:enable
+
+			if ( is_null( $block_name_array ) || ! is_array( $block_name_array ) ) {
+				wp_send_json_error(
+					array(
+						'error_message' => __( 'Invalid JSON object supplied for block names.', 'ultimate-blocks' ),
+					)
+				);
+			} else {
+				$enable           = sanitize_text_field( wp_unslash( $_POST['enable'] ) );
+				$block_name_array = array_map( 'sanitize_text_field', $block_name_array );
+				foreach ( $block_name_array as $block_name ) {
+					$this->toggle_block_status_individual( $block_name, $enable );
+				}
+			}
+		} else {
+			wp_send_json_error(
+				array(
+					'error_message' => __( 'Block name is not supplied', 'ultimate-blocks' ),
+				)
+			);
+		}
+		die();
+	}
+
 
 	/**
 	 * Enable/Disable Block
 	 *
+	 * @param string $block_name block name.
+	 * @param bool   $enable block status.
+	 *
 	 * @return void
 	 * @since    1.0.2
 	 */
-	public function toggle_block_status() {
-
-		check_ajax_referer( 'toggle_block_status' );
-
-		$block_name = sanitize_text_field( $_POST['block_name'] );
-
-		$enable = sanitize_text_field( $_POST['enable'] );
-
+	private function toggle_block_status_individual( $block_name, $enable ) {
 		do_action( 'ub/action/block_toggle_ajax_before_exist_check', $block_name, rest_sanitize_boolean( $enable ) );
 
 		if ( ! $this->block_exists( $block_name ) ) {
-			wp_send_json_error( array(
-				'error_message' => 'Unknown block name',
-			) );
+			wp_send_json_error(
+				array(
+					'error_message' => 'Unknown block name',
+				)
+			);
 		}
 
 		$uploadDir         = dirname( dirname( dirname( __DIR__ ) ) ) . '/uploads';
@@ -279,16 +325,26 @@ class Ultimate_Blocks_Admin {
 				}
 
 				if ( $canMakeCustomFile ) {
-					$blockDirName       = strtolower( str_replace( ' ', '-',
-						trim( preg_replace( '/\(.+\)/', '', $saved_blocks[ $key ]['label'] ) )
-					) );
+					$blockDirName       = strtolower(
+						str_replace(
+							' ',
+							'-',
+							trim( preg_replace( '/\(.+\)/', '', $saved_blocks[ $key ]['label'] ) )
+						)
+					);
 					$frontStyleLocation = $blockDir . $blockDirName . '/style.css';
 					$adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
 
-					if ( file_exists( $frontStyleLocation ) && $saved_blocks[ $key ]['active'] ) { //also detect if block is enabled
+					if ( file_exists( $frontStyleLocation ) && $saved_blocks[ $key ]['active'] ) { // also detect if block is enabled
 						if ( $block['name'] == 'ub/click-to-tweet' ) {
-							fwrite( $frontStyleFile, str_replace( "src/blocks/click-to-tweet/icons", "ultimate-blocks",
-								file_get_contents( $frontStyleLocation ) ) );
+							fwrite(
+								$frontStyleFile,
+								str_replace(
+									'src/blocks/click-to-tweet/icons',
+									'ultimate-blocks',
+									file_get_contents( $frontStyleLocation )
+								)
+							);
 						} else {
 							fwrite( $frontStyleFile, file_get_contents( $frontStyleLocation ) );
 						}
@@ -298,7 +354,7 @@ class Ultimate_Blocks_Admin {
 					}
 
 					if ( $block['name'] === 'ub/styled-box' && $saved_blocks[ $key ]['active'] ) {
-						//add css for blocks phased out by styled box
+						// add css for blocks phased out by styled box
 						fwrite( $frontStyleFile, file_get_contents( $blockDir . 'feature-box' . '/style.css' ) );
 						fwrite( $frontStyleFile, file_get_contents( $blockDir . 'notification-box' . '/style.css' ) );
 						fwrite( $frontStyleFile, file_get_contents( $blockDir . 'number-box' . '/style.css' ) );
@@ -312,8 +368,10 @@ class Ultimate_Blocks_Admin {
 			if ( $canMakeCustomFile ) {
 				fclose( $frontStyleFile );
 				fclose( $adminStyleFile );
-				copy( dirname( __DIR__ ) . '/src/blocks/click-to-tweet/icons/sprite-twitter.png',
-					wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png' );
+				copy(
+					dirname( __DIR__ ) . '/src/blocks/click-to-tweet/icons/sprite-twitter.png',
+					wp_upload_dir()['basedir'] . '/ultimate-blocks/sprite-twitter.png'
+				);
 			}
 
 			update_option( 'ultimate_blocks', $saved_blocks );
@@ -321,7 +379,7 @@ class Ultimate_Blocks_Admin {
 			update_option( 'ultimate_blocks', $this->blocks() );
 		}
 
-		wp_send_json_success( get_option( 'ultimate_blocks', false ) );
+		// wp_send_json_success( get_option( 'ultimate_blocks', false ) );
 	}
 
 	/**
@@ -360,7 +418,7 @@ class Ultimate_Blocks_Admin {
 
 		$registered_blocks = get_option( 'ultimate_blocks', false );
 
-		$new_blocks = [];
+		$new_blocks = array();
 
 		if ( $registered_blocks ) {
 			foreach ( $blocks as $block ) {
@@ -442,19 +500,23 @@ class Ultimate_Blocks_Admin {
 		$datetime1    = new DateTime( $install_date );
 		$datetime2    = new DateTime( $display_date );
 		$diff_intrval = round( ( $datetime2->format( 'U' ) - $datetime1->format( 'U' ) ) / ( 60 * 60 * 24 ) );
-		if ( $diff_intrval >= 21 && get_option( 'UltimateBlocks_review_notify' ) == "no" ) {
+		if ( $diff_intrval >= 21 && get_option( 'UltimateBlocks_review_notify' ) == 'no' ) {
 			?>
 			<div class="UltimateBlocks-review-notice notice notice-info">
 				<p style="font-size: 14px;">
-					<?php _e( 'Hey,<br> I noticed that you have been using <strong>Ultimate Blocks Plugin</strong> for a while now - that’s awesome! Could you please do me a BIG favor and <b>give it a 5-star rating on WordPress</b>? Just to help us spread the word and boost our motivation. <br>~ Imtiaz Rayhan<br>~ Lead Developer, Ultimate Blocks.',
-						'ultimate-blocks' ); ?>
+					<?php
+					_e(
+						'Hey,<br> I noticed that you have been using <strong>Ultimate Blocks Plugin</strong> for a while now - that’s awesome! Could you please do me a BIG favor and <b>give it a 5-star rating on WordPress</b>? Just to help us spread the word and boost our motivation. <br>~ Imtiaz Rayhan<br>~ Lead Developer, Ultimate Blocks.',
+						'ultimate-blocks'
+					);
+					?>
 				</p>
 				<ul>
 					<li><a style="margin-right: 5px; margin-bottom: 5px;" class="button-primary"
-						   href="https://wordpress.org/support/plugin/ultimate-blocks/reviews/?filter=5#new-post"
-						   target="_blank">Sure, you deserve it.</a>
+							href="https://wordpress.org/support/plugin/ultimate-blocks/reviews/?filter=5#new-post"
+							target="_blank">Sure, you deserve it.</a>
 						<a style="margin-right: 5px;" class="UltimateBlocks_HideReview_Notice button"
-						   href="javascript:void(0);">I already did.</a>
+							href="javascript:void(0);">I already did.</a>
 						<a class="UltimateBlocks_HideReview_Notice button" href="javascript:void(0);">No, not good
 							enough.</a>
 					</li>
@@ -490,8 +552,7 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function UltimateBlocks_hide_review_notify() {
 		update_option( 'UltimateBlocks_review_notify', 'yes' );
-		echo json_encode( array( "success" ) );
+		echo json_encode( array( 'success' ) );
 		exit;
 	}
-
 }

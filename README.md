@@ -3,7 +3,9 @@
 [![WordPress plugin](https://img.shields.io/wordpress/plugin/dt/ultimate-blocks.svg?style=plastic)](https://wordpress.org/plugins/ultimate-blocks/)
 [![WordPress](https://img.shields.io/wordpress/v/ultimate-blocks.svg)](https://wordpress.org/plugins/ultimate-blocks/)
 [![WordPress plugin rating](https://img.shields.io/wordpress/plugin/r/ultimate-blocks.svg)](https://wordpress.org/support/plugin/ultimate-blocks/reviews/)
+
 [![Production Build](https://github.com/DotCamp/ultimate-blocks/actions/workflows/production.yml/badge.svg)](https://github.com/DotCamp/ultimate-blocks/actions/workflows/production.yml)
+[![Development Build](https://github.com/DotCamp/ultimate-blocks/actions/workflows/development.yml/badge.svg)](https://github.com/DotCamp/ultimate-blocks/actions/workflows/development.yml)
 
 Ultimate Blocks is a collection of custom Gutenberg blocks for bloggers and marketers. Our goal is to make it insanely easy for you to create better and engaging content with Gutenberg.
 

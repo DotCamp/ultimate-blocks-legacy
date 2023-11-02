@@ -3,7 +3,7 @@ Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, 
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 3.0.5
+Stable tag: 3.0.7-dev
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -143,8 +143,28 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.6 =
+
+* NEW: Counter block.
+* FIX: Schema parsing error from how to block.
+* FIX: Block alignment not working inside the tabbed content block.
+* FIX: Styled List block layout is not equal frontend and editor.
+* FIX: Styled List block duplicate instance not working properly.
+* FIX: An issue affecting content toggle block for <WordPress5.9 servers.
+* FIX: Content toggle block aria attributes mismatch issue.
+* IMPROVE: Settings menu updates.
+* IMPROVE: Add option to select open panel by default in content toggle block.
+* IMPROVE: Change social share block twitter icon to X.
+* IMPROVE: Change default state of social share block.
+* IMPROVE: Change default state of content toggle block.
+* PRO: NEW: Add doesn't expire option in coupon block.
+* PRO: NEW: Add Coupon Type Coupon/Deal in coupon block.
+* PRO: IMPROVE: Make Coupon Block color clearable.
+* PRO: IMPROVE: Content toggle blocks attributes including their parent IDs.
+
 = 3.0.5 =
 
+* FIX: PHP warning in how to block.
 * FIX: An issue affecting servers with PHP version <7.3.
 
 = 3.0.4 =

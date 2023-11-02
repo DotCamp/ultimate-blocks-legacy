@@ -539,6 +539,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'defaultOpen'        => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
 			'theme'           => array(
 				'type'    => 'string',
 				'default' => ''
@@ -1777,7 +1781,7 @@ $defaultValues = array(
 			),
 			'iconShape'          => array(
 				'type'    => 'string',
-				'default' => 'circle',
+				'default' => 'none',
 			),
 			'align'              => array(
 				'type'    => 'string',
@@ -1796,11 +1800,11 @@ $defaultValues = array(
 			),
 			'useCaptions'        => array(
 				'type'    => 'boolean',
-				'default' => false
+				'default' => true
 			),
 			'addOutline'         => array(
 				'type'    => 'boolean',
-				'default' => false
+				'default' => true
 			)
 		)
 	),
@@ -2358,5 +2362,49 @@ $defaultValues = array(
 				'default'	=> 0
 			),
 		)
-	)
+		),
+		'ub/counter'	 => array(
+			'attributes' => array (
+				'startNumber' => array(
+					'type' => 'string',
+					'default' => '0'
+				),
+				'endNumber' => array(
+					'type' => 'string',
+					'default' => '500'
+				),
+				'labelFontSize' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'counterFontSize' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'prefix' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'suffix' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'animationDuration' => array(
+					'type' => 'number',
+					'default' => 2
+				),
+				'alignment' => array(
+					'type' => 'string',
+					'default' => 'center'
+				),
+				'label' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'labelPosition' => array(
+					'type' => 'string',
+					'default' => 'bottom'
+				),
+			)
+		)
 );

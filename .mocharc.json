@@ -1,0 +1,8 @@
+{
+	"recursive": true,
+	"require": [
+		"@babel/register",
+		"global-jsdom/register",
+		"./__tests__/js/test-inc/hooks.js"
+	]
+}
