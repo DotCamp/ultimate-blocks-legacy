@@ -945,7 +945,11 @@ function ub_include_block_attribute_css() {
 
 					break;
 				case 'ub/star-rating-block':
+					$styles = ub_get_spacing_styles($attributes);
+					
 					$prefix           = '#ub-star-rating-' . $attributes['blockID'];
+					$blockStylesheets .= $prefix . '{' . $styles . '};';
+
 					$blockStylesheets .= $prefix . ' .ub-star-outer-container{' . PHP_EOL .
 										 'justify-content: ' . ( $attributes['starAlign'] === 'center' ? 'center' :
 									( 'flex-' . ( $attributes['starAlign'] === 'left' ? 'start' : 'end' ) ) ) . ';' . PHP_EOL .

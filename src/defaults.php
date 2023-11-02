@@ -1878,6 +1878,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
 			'starCount'       => array(
 				'type'    => 'number',
 				'default' => 5

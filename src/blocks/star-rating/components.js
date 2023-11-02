@@ -1,9 +1,19 @@
 import { Star } from "./icons";
 
-const { __ } = wp.i18n;
-const { InspectorControls, RichText, BlockControls, ColorPalette } =
-	wp.blockEditor || wp.editor;
-const { PanelBody, RangeControl, ToolbarGroup, ToolbarButton } = wp.components;
+import { SpacingControl } from "../components";
+import { __ } from "@wordpress/i18n";
+import {
+	InspectorControls,
+	RichText,
+	BlockControls,
+	ColorPalette,
+} from "@wordpress/block-editor";
+import {
+	PanelBody,
+	RangeControl,
+	ToolbarGroup,
+	ToolbarButton,
+} from "@wordpress/components";
 
 export const blockControls = (props) => {
 	const { attributes, setAttributes } = props;
@@ -111,6 +121,19 @@ export const inspectorControls = (props) => {
 						onChange={(reviewTextColor) => setAttributes({ reviewTextColor })}
 					/>
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 		</>
 	);

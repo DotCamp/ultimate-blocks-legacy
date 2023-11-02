@@ -4,7 +4,7 @@ import { registerBlockType, createBlock } from "@wordpress/blocks";
 import { useBlockProps } from "@wordpress/block-editor";
 import { compose } from "@wordpress/compose";
 import { withDispatch, withSelect, useSelect } from "@wordpress/data";
-
+import { getStyles } from "./get-styles";
 import { EmptyStar, BlockIcon, FullStar } from "./icons";
 import {
 	oldAttributes,
@@ -82,9 +82,11 @@ function StarRating(props) {
 			});
 		}
 	});
-
+	const blockProps = useBlockProps({
+		style: getStyles(props.attributes),
+	});
 	return (
-		<div {...useBlockProps()}>
+		<div {...blockProps}>
 			{isSelected && blockControls(props)}
 			{isSelected && inspectorControls(props)}
 			<div className="ub-star-rating">
@@ -165,6 +167,7 @@ registerBlockType("ub/star-rating", {
 
 registerBlockType(metadata, {
 	icon: BlockIcon,
+	attributes: metadata.attributes,
 	example: {
 		attributes: {
 			selectedStars: 4,

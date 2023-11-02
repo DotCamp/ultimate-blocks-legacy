@@ -46,6 +46,14 @@
           "starAlign": {
                "type": "string",
                "default": "left"
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
           }
      },
      "supports": {}
