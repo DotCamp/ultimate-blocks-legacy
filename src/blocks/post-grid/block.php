@@ -268,7 +268,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 function ub_register_post_grid_block() {
     if( function_exists( 'register_block_type' ) ) {
         require dirname( dirname(__DIR__) ) . '/defaults.php';
-        register_block_type( 'ub/post-grid', array(
+        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/post-grid', array(
             'attributes' => $defaultValues['ub/post-grid']['attributes'],
             'render_callback' => 'ub_render_post_grid_block'));
     }

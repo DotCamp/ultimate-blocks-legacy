@@ -6,10 +6,10 @@ import { version_1_1_4 } from "./oldVersions";
 
 import { useEffect, useState } from "react";
 
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
 
-const {
+import {
 	MediaUpload,
 	MediaPlaceholder,
 	BlockControls,
@@ -17,8 +17,9 @@ const {
 	InspectorControls,
 	mediaUpload,
 	RichText,
-} = wp.blockEditor || wp.editor;
-const {
+	useBlockProps,
+} from "@wordpress/block-editor";
+import {
 	Icon,
 	Button,
 	ToolbarGroup,
@@ -28,10 +29,10 @@ const {
 	RangeControl,
 	PanelBody,
 	SelectControl,
-} = wp.components;
+} from "@wordpress/components";
 
-const { withSelect } = wp.data;
-
+import { withSelect } from "@wordpress/data";
+import metadata from "./block.json";
 const attributes = {
 	blockID: {
 		type: "string",
@@ -182,9 +183,7 @@ function ImageSliderMain(props) {
 	const imageArray = pics;
 	const captionArray = descriptions;
 
-	if (
-		blockID === ""
-	) {
+	if (blockID === "") {
 		setAttributes({ blockID: block.clientId });
 	} else if (!showPageDots && usePagination) {
 		setAttributes({ usePagination: false });
@@ -197,7 +196,13 @@ function ImageSliderMain(props) {
 	if (paginationType !== "" && componentKey === 0) {
 		setComponentKey(componentKey + 1);
 	}
-
+	const blockProps = useBlockProps({
+		id: `ub_image_slider_${blockID}`,
+		className: "ub_image_slider",
+		style: {
+			minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
+		},
+	});
 	return (
 		<>
 			{isSelected && (
@@ -431,13 +436,7 @@ function ImageSliderMain(props) {
 				</>
 			)}
 
-			<div
-				id={`ub_image_slider_${blockID}`}
-				className="ub_image_slider"
-				style={{
-					minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
-				}}
-			>
+			<div {...blockProps}>
 				{imageArray.length === 0 ? (
 					<MediaPlaceholder
 						onSelect={(newImages) =>
@@ -599,16 +598,8 @@ function ImageSliderMain(props) {
 	);
 }
 
-registerBlockType("ub/image-slider", {
-	title: __("Image Slider"),
-	description: __(
-		"Add a lightweight, simple image slider in your post. Comes with additional settings.",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Image Slider"), __("Slideshow"), __("Ultimate Blocks")],
-	attributes,
 	example: {},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =

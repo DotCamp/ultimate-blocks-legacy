@@ -10,14 +10,14 @@ import icon from "./icons/icon";
 
 import { richTextToHTML, mergeRichTextArray } from "../../common";
 import { OldPanelContent, PanelContent } from "./components/editorDisplay";
-
+import metadata from "./block.json";
 import { version_1_1_2 } from "./oldVersions";
 
-const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
-const { compose } = wp.compose;
-const { withSelect, withDispatch } = wp.data;
-const { InnerBlocks } = wp.blockEditor || wp.editor;
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
+import { compose } from "@wordpress/compose";
+import { withSelect, withDispatch } from "@wordpress/data";
+import { InnerBlocks } from "@wordpress/block-editor";
 
 const attributes = {
 	blockID: {
@@ -214,23 +214,9 @@ registerBlockType("ub/content-toggle", {
 	],
 });
 
-registerBlockType("ub/content-toggle-block", {
-	title: __("Content Toggle"),
-	description: __(
-		"Add contents in accordions. Let visitors expand them and show the content.",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [
-		__("Content Accordion"),
-		__("Toggle Collapse"),
-		__("Ultimate Blocks"),
-		__("FAQ"),
-	],
 	example: { attributes: { titleLinkColor: "invalid" } }, //indicator for displaying in preview
-	attributes,
-
 	transforms: {
 		to: [
 			{

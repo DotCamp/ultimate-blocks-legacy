@@ -22,16 +22,10 @@ export function getStyles(attributes) {
 		paddingRight: paddingObj?.right,
 		paddingBottom: paddingObj?.bottom,
 		paddingLeft: paddingObj?.left,
-		marginTop: !isEmpty(marginObj?.top) ? marginObj?.top + " !important" : "",
-		marginRight: !isEmpty(marginObj?.right)
-			? marginObj?.right + " !important"
-			: " ",
-		marginBottom: !isEmpty(marginObj?.bottom)
-			? marginObj?.bottom + " !important"
-			: "",
-		marginLeft: !isEmpty(marginObj?.left)
-			? marginObj?.left + " !important"
-			: "",
+		marginTop: marginObj?.top,
+		marginRight: marginObj?.right,
+		marginBottom: marginObj?.bottom,
+		marginLeft: marginObj?.left,
 		textAlign: alignment,
 		color: textColor,
 		backgroundColor,

@@ -1,9 +1,9 @@
-const { __ } = wp.i18n;
-
-const { registerBlockType, createBlock } = wp.blocks;
-
-const { compose } = wp.compose;
-const { withDispatch, withSelect } = wp.data;
+import { __ } from "@wordpress/i18n";
+import metadata from "./block.json";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
+import { useBlockProps } from "@wordpress/block-editor";
+import { compose } from "@wordpress/compose";
+import { withDispatch, withSelect, useSelect } from "@wordpress/data";
 
 import { EmptyStar, BlockIcon, FullStar } from "./icons";
 import {
@@ -16,45 +16,6 @@ import {
 import { blockControls, inspectorControls, editorDisplay } from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 import { useState, useEffect } from "react";
-
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	starCount: {
-		type: "number",
-		default: 5,
-	},
-	starSize: {
-		type: "number",
-		default: 20,
-	},
-	starColor: {
-		type: "string",
-		default: "#FFB901", //previous defaut is #ffff00, new default is #ffb901, seet in uppercase to facilitate reverse compatibility
-	},
-	selectedStars: {
-		type: "number",
-		default: 0,
-	},
-	reviewText: {
-		type: "string",
-		default: "",
-	},
-	reviewTextAlign: {
-		type: "string",
-		default: "text",
-	},
-	reviewTextColor: {
-		type: "string",
-		default: "",
-	},
-	starAlign: {
-		type: "string",
-		default: "left",
-	},
-};
 
 function OldStarRating(props) {
 	const [highlightedStars, setHighlightedStars] = useState(0);
@@ -92,12 +53,26 @@ function StarRating(props) {
 	const [highlightedStars, setHighlightedStars] = useState(0);
 	const {
 		isSelected,
-		block,
-		getBlock,
-		getClientIdsWithDescendants,
 		attributes: { starColor, blockID },
 		setAttributes,
 	} = props;
+	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
+		useSelect((select) => {
+			const {
+				getBlock,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+				getBlocks,
+			} = select("core/block-editor") || select("core/editor");
+
+			return {
+				getBlock,
+				block: getBlock(props.clientId),
+				parentID: getBlockRootClientId(props.clientId),
+				getClientIdsWithDescendants,
+				getBlocks,
+			};
+		});
 
 	useEffect(() => {
 		if (blockID === "") {
@@ -109,13 +84,13 @@ function StarRating(props) {
 	});
 
 	return (
-		<>
+		<div {...useBlockProps()}>
 			{isSelected && blockControls(props)}
 			{isSelected && inspectorControls(props)}
 			<div className="ub-star-rating">
 				{editorDisplay({ ...props, highlightedStars, setHighlightedStars })}
 			</div>
-		</>
+		</div>
 	);
 }
 
@@ -188,27 +163,13 @@ registerBlockType("ub/star-rating", {
 	],
 });
 
-registerBlockType("ub/star-rating-block", {
-	title: __("Star Rating"),
-	description: __("Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.", "ultimate-blocks"),
+registerBlockType(metadata, {
 	icon: BlockIcon,
-	category: "ultimateblocks",
-	keywords: [__("star rating"), __("review"), __("Ultimate Blocks")],
-	attributes,
 	example: {
 		attributes: {
-			selectedStars: 4
-		}
+			selectedStars: 4,
+		},
 	},
-	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
-
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
-		};
-	})(StarRating),
+	edit: StarRating,
 	save: () => null,
 });

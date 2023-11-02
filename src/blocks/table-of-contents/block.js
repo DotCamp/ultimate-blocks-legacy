@@ -17,121 +17,21 @@ import {
 } from "./oldVersions";
 import { useState } from "react";
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType, createBlock } = wp.blocks;
-const { ToggleControl, PanelRow, PanelBody } = wp.components;
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
+import { ToggleControl, PanelRow, PanelBody } from "@wordpress/components";
 
-const { InspectorControls, RichText } = wp.blockEditor || wp.editor;
+import {
+	InspectorControls,
+	RichText,
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const { withDispatch, withSelect } = wp.data;
+import { withDispatch, withSelect } from "@wordpress/data";
 
-const { compose } = wp.compose;
-
+import { compose } from "@wordpress/compose";
+import metadata from "./block.json";
 import { upgradeButtonLabel, mergeRichTextArray } from "../../common";
-
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	title: {
-		type: "string",
-		default: "",
-	},
-	allowedHeaders: {
-		type: "array",
-		default: Array(6).fill(true),
-	},
-	links: {
-		type: "string",
-		default: "",
-	},
-	gaps: {
-		type: "array",
-		default: [],
-	},
-	allowToCHiding: {
-		type: "boolean",
-		default: false,
-	},
-	hideOnMobile: {
-		type: "boolean",
-		default: false,
-	},
-	showList: {
-		type: "boolean",
-		default: true,
-	},
-	numColumns: {
-		type: "number",
-		default: 1,
-	},
-	listStyle: {
-		type: "string",
-		default: "bulleted", //other options: numbered, plain
-	},
-	enableSmoothScroll: {
-		type: "boolean",
-		default: false,
-	},
-	titleAlignment: {
-		type: "string",
-		default: "left",
-	},
-	allowToLatin: {
-		type: "boolean",
-		default: false,
-	},
-	removeDiacritics: {
-		type: "boolean",
-		default: false,
-	},
-	scrollOption: {
-		type: "string",
-		default: "auto", //other options: namedelement, fixedamount, off
-	},
-	scrollOffset: {
-		type: "number",
-		default: 0,
-	},
-	scrollTarget: {
-		type: "string",
-		default: "",
-	},
-	scrollTargetType: {
-		type: "string",
-		default: "id", //other types: class, element
-	},
-	titleColor: {
-		type: "string",
-		default: "",
-	},
-	titleBackgroundColor: {
-		type: "string",
-		default: "",
-	},
-	listColor: {
-		//must override link color in both frontend and editor
-		type: "string",
-		default: "",
-	},
-	listBackgroundColor: {
-		type: "string",
-		default: "",
-	},
-	listIconColor: {
-		type: "string",
-		default: "",
-	},
-	showText: {
-		type: "string",
-		default: "show",
-	},
-	hideText: {
-		type: "string",
-		default: "hide",
-	},
-};
 
 registerBlockType("ub/table-of-contents", {
 	title: __("Table of Contents"),
@@ -302,16 +202,8 @@ registerBlockType("ub/table-of-contents", {
 	],
 });
 
-registerBlockType("ub/table-of-contents-block", {
-	title: __("Table of Contents"),
-	description: __("Give visitors a better naviation of your post with a Table of Contents.","ultimate-blocks"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Table of Contents"), __("Ultimate Blocks")],
-	attributes,
-	supports: {
-		reusable: false,
-	},
 	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
@@ -335,21 +227,19 @@ registerBlockType("ub/table-of-contents-block", {
 
 		const [canRemoveItemFocus, toggleCanRemoveItemFocus] = useState(false);
 
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
-
+		const blockProps = useBlockProps({
+			className: `ub_table-of-contents${
+				showList ? "" : " ub_table-of-contents-collapsed"
+			}`,
+			id: `ub_table-of-contents-${blockID}`,
+		});
 		return [
 			isSelected && inspectorControls(props),
 			isSelected && blockControls(props),
-			<div
-				className={`ub_table-of-contents${
-					showList ? "" : " ub_table-of-contents-collapsed"
-				}`}
-				id={`ub_table-of-contents-${blockID}`}
-			>
+			<div {...blockProps}>
 				{editorDisplay({
 					...props,
 					canRemoveItemFocus,

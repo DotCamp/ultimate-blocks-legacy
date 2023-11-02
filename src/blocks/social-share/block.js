@@ -12,7 +12,7 @@ import {
 	SortableElement,
 	arrayMove,
 } from "react-sortable-hoc";
-
+import metadata from "./block.json";
 import {
 	FacebookIcon,
 	TwitterIcon,
@@ -38,7 +38,8 @@ const iconSizes = {
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
+const { BlockControls, AlignmentToolbar, useBlockProps } =
+	wp.blockEditor || wp.editor;
 const { withSelect } = wp.data;
 
 /**
@@ -198,7 +199,7 @@ function SocialShareMain(props) {
 		getBlock,
 		getClientIdsWithDescendants,
 	} = props;
-
+	const blockProps = useBlockProps();
 	const {
 		blockID,
 		align,
@@ -242,7 +243,7 @@ function SocialShareMain(props) {
 	}, []);
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<BlockControls>
 					<AlignmentToolbar
@@ -278,108 +279,12 @@ function SocialShareMain(props) {
 					}}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }
 
-registerBlockType("ub/social-share", {
-	title: __("Social Share"),
-	description: __(
-		"Add social share buttons in your posts and pages with this block.",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("social"), __("share"), __("Ultimate Blocks")],
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		showFacebookIcon: {
-			type: "boolean",
-			default: true,
-		},
-		facebookCaption: {
-			type: "string",
-			default: "share",
-		},
-		showTwitterIcon: {
-			type: "boolean",
-			default: true,
-		},
-		twitterCaption: {
-			type: "string",
-			default: "tweet",
-		},
-		showLinkedInIcon: {
-			type: "boolean",
-			default: true,
-		},
-		linkedInCaption: {
-			type: "string",
-			default: "share",
-		},
-		showPinterestIcon: {
-			type: "boolean",
-			default: true,
-		},
-		pinterestCaption: {
-			type: "string",
-			default: "pin",
-		},
-		showRedditIcon: {
-			type: "boolean",
-			default: true,
-		},
-		redditCaption: {
-			type: "string",
-			default: "post",
-		},
-		showTumblrIcon: {
-			type: "boolean",
-			default: true,
-		},
-		tumblrCaption: {
-			type: "string",
-			default: "share",
-		},
-		iconSize: {
-			type: "string",
-			default: "normal",
-		},
-		iconShape: {
-			type: "string",
-			default: "none", //available options: square, none
-		},
-		align: {
-			type: "string",
-			default: "left",
-		},
-		iconOrder: {
-			type: "array",
-			default: [
-				"facebook",
-				"twitter",
-				"linkedin",
-				"pinterest",
-				"reddit",
-				"tumblr",
-			],
-		},
-		useCaptions: {
-			type: "boolean",
-			default: true,
-		},
-		addOutline: {
-			type: "boolean",
-			default: true, //default should be false
-		},
-		buttonColor: {
-			type: "string",
-			default: "", //when turned on, default value should be #cccccc
-		},
-	},
 	example: {},
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =

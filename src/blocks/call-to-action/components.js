@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
+import { useSelect } from "@wordpress/data";
+import { __ } from "@wordpress/i18n";
 
-const { __ } = wp.i18n;
-
-const {
+import {
 	RichText,
 	ColorPalette,
 	InspectorControls,
 	URLInput,
 	BlockControls,
 	PanelColorSettings,
-} = wp.blockEditor || wp.editor;
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const {
+import {
 	PanelBody,
 	Icon,
 	Button,
@@ -23,7 +24,7 @@ const {
 	CheckboxControl,
 	ToggleControl,
 	SelectControl,
-} = wp.components;
+} from "@wordpress/components";
 
 export const blockControls = (props) => {
 	const { editable, attributes, setAttributes } = props;
@@ -378,6 +379,7 @@ export const editorDisplay = (props) => {
 							<Icon icon="admin-links" />
 						</div>
 						<URLInput
+							__nextHasNoMarginBottom
 							autoFocus={false}
 							className="button-url"
 							value={props.attributes.url}
@@ -400,11 +402,21 @@ export function CallToAction(props) {
 	const {
 		attributes: { blockID },
 		isSelected,
-		block,
-		getBlock,
-		getClientIdsWithDescendants,
 		setAttributes,
 	} = props;
+
+	const { block, getBlock, getClientIdsWithDescendants } = useSelect(
+		(select) => {
+			const { getBlock, getClientIdsWithDescendants } =
+				select("core/block-editor") || select("core/editor");
+
+			return {
+				getBlock,
+				block: getBlock(props.clientId),
+				getClientIdsWithDescendants,
+			};
+		}
+	);
 
 	useEffect(() => {
 		if (blockID === "") {
@@ -415,12 +427,12 @@ export function CallToAction(props) {
 	const [editable, setEditable] = useState("");
 
 	return (
-		<>
+		<div {...useBlockProps()}>
 			{isSelected && blockControls({ ...props, editable, setEditable })}
 			{isSelected && inspectorControls({ ...props, editable, setEditable })}
 			<div className={props.className}>
 				{editorDisplay({ ...props, editable, setEditable })}
 			</div>
-		</>
+		</div>
 	);
 }

@@ -1,18 +1,26 @@
 // Import icon.
 import icons from "./icons";
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks;
-
-import attributes from "./attributes";
+import { __ } from "@wordpress/i18n"; // Import __() from wp.i18n
+import { registerBlockType } from "@wordpress/blocks";
+import metadata from "./block.json";
 import PostGridBlock from "./editor";
 import Inspector from "./inspector";
 
-const { withSelect } = wp.data;
-const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
-const { Placeholder, Spinner, ToolbarGroup, QueryControls } = wp.components;
-const { addQueryArgs } = wp.url;
-const { apiFetch } = wp;
+import { useSelect } from "@wordpress/data";
+import {
+	BlockControls,
+	BlockAlignmentToolbar,
+	useBlockProps,
+} from "@wordpress/block-editor";
+import {
+	Placeholder,
+	Spinner,
+	ToolbarGroup,
+	QueryControls,
+} from "@wordpress/components";
+import { addQueryArgs } from "@wordpress/url";
+import { apiFetch } from "@wordpress/api-fetch";
 const canSelectMultipleCategories =
 	QueryControls.toString().includes("selectedCategories");
 
@@ -20,20 +28,9 @@ const canSelectMultipleCategories =
 const filterObjectAttributes = (obj, condition) =>
 	Object.fromEntries(Object.entries(obj).filter(condition));
 
-export default registerBlockType("ub/post-grid", {
-	title: __("Post Grid", "ultimate-blocks"),
-	description: __(
-		"Add a list or grid of your posts. Comes with options to change categories, order and many more.",
-		"ultimate-blocks"
-	),
+export default registerBlockType(metadata, {
+	attributes: metadata.attributes,
 	icon: icons,
-	category: "ultimateblocks",
-	keywords: [
-		__("post grid", "ultimate-blocks"),
-		__("posts", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks"),
-	],
-	attributes,
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -51,52 +48,52 @@ export default registerBlockType("ub/post-grid", {
 	example: {
 		attributes: {
 			postImageWidth: 85,
-			amountPosts: 2
-		}
+			amountPosts: 2,
+		},
 	},
-	edit: withSelect((select, props) => {
+	edit: (props) => {
+		const { attributes, setAttributes } = props;
 		const {
+			postLayout,
+			wrapAlignment,
+			categories,
 			order,
 			categoryArray,
-			categories,
 			excludedCategories,
 			orderBy,
 			amountPosts,
 			offset,
 			tagArray,
 			authorArray,
-		} = props.attributes;
+		} = attributes;
+		const { posts } = useSelect((select) => {
+			const { getEntityRecords } = select("core");
+			const { getCurrentPostId } = select("core/editor");
 
-		const { getEntityRecords } = select("core");
-		const { getCurrentPostId } =
-			select("core/block--editor") || select("core/editor"); //double dashes are needed
+			const getPosts = filterObjectAttributes(
+				{
+					categories: canSelectMultipleCategories
+						? categoryArray && categoryArray.length > 0
+							? categoryArray.map((cat) => cat.id)
+							: []
+						: categories,
+					categories_exclude: excludedCategories.map((cat) => cat.id),
+					order,
+					orderby: orderBy,
+					per_page: amountPosts,
+					offset: offset,
+					exclude: [getCurrentPostId()],
+					tags: tagArray,
+					author: authorArray,
+				},
+				(value) => typeof value !== "undefined"
+			);
 
-		const getPosts = filterObjectAttributes(
-			{
-				categories: canSelectMultipleCategories
-					? categoryArray && categoryArray.length > 0
-						? categoryArray.map((cat) => cat.id)
-						: []
-					: categories,
-				categories_exclude: excludedCategories.map((cat) => cat.id),
-				order,
-				orderby: orderBy,
-				per_page: amountPosts,
-				offset: offset,
-				exclude: [getCurrentPostId()],
-				tags: tagArray,
-				author: authorArray,
-			},
-			(value) => typeof value !== "undefined"
-		);
-
-		return {
-			posts: getEntityRecords("postType", "post", getPosts),
-		};
-	})((props) => {
-		const { attributes, setAttributes, posts } = props;
-		const { postLayout, wrapAlignment, categories } = attributes;
-
+			return {
+				posts: getEntityRecords("postType", "post", getPosts),
+			};
+		});
+		const blockProps = useBlockProps();
 		const emptyPosts = Array.isArray(posts) && posts.length;
 
 		if (categories !== "" && canSelectMultipleCategories) {
@@ -153,9 +150,12 @@ export default registerBlockType("ub/post-grid", {
 				isActive: "list" === postLayout,
 			},
 		];
-
+		const postGridProps = {
+			...props,
+			posts,
+		};
 		return (
-			<>
+			<div {...blockProps}>
 				<Inspector {...props} />
 				<BlockControls>
 					<BlockAlignmentToolbar
@@ -165,9 +165,9 @@ export default registerBlockType("ub/post-grid", {
 					/>
 					<ToolbarGroup controls={toolBarButton} />
 				</BlockControls>
-				<PostGridBlock {...props} />
-			</>
+				<PostGridBlock {...postGridProps} />
+			</div>
 		);
-	}),
+	},
 	save: () => null,
 });

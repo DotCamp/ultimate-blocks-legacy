@@ -1,10 +1,10 @@
 import icon from "../icons/icon";
 import { useEffect } from "react";
-
+import metadata from "./block.json";
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
-const { InnerBlocks } = wp.blockEditor || wp.editor;
+const { InnerBlocks, useBlockProps } = wp.blockEditor || wp.editor;
 const { withSelect } = wp.data;
 
 registerBlockType("ub/tab", {
@@ -48,30 +48,8 @@ registerBlockType("ub/tab", {
 	},
 });
 
-registerBlockType("ub/tab-block", {
-	title: __("Tab"),
-	parent: __("ub/tabbed-content-block"),
-	description: __("content of tab"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	attributes: {
-		index: {
-			type: "number",
-			default: 0,
-		},
-		isActive: {
-			type: "boolean",
-			default: true,
-		},
-		parentID: {
-			type: "string",
-			default: "",
-		},
-	},
-	supports: {
-		inserter: false,
-		reusable: false,
-	},
 	edit: withSelect((select, ownProps) => ({
 		blockParentId: (
 			select("core/block-editor") || select("core/editor")
@@ -79,17 +57,16 @@ registerBlockType("ub/tab-block", {
 	}))(function (props) {
 		const { blockParentId, setAttributes } = props;
 		const { parentID, isActive } = props.attributes;
-
+		const blockProps = useBlockProps({
+			style: { display: isActive ? "block" : "none" },
+		});
 		// @deprecated
 		// if (parentID === "" || parentID !== blockParentId) {
 		// 	setAttributes({ parentID: blockParentId });
 		// }
 
 		return (
-			<div
-				style={{ display: isActive ? "block" : "none" }}
-				className="wp-block-ub-tabbed-content-tab-content-wrap"
-			>
+			<div {...blockProps}>
 				<InnerBlocks
 					templateLock={false}
 					template={[

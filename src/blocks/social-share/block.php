@@ -273,7 +273,7 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $iconShape, $caption, $has
 function ub_register_social_share_block() {
 	if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/social-share', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/social-share/block.json', array(
 			'attributes'      => $defaultValues['ub/social-share']['attributes'],
 			'render_callback' => 'ub_render_social_share_block',
 		) );

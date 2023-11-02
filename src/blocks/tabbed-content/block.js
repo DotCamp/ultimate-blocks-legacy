@@ -9,12 +9,12 @@ import icon from "./icons/icon";
 import { version_1_1_2 } from "./oldVersions";
 import { richTextToHTML } from "../../common";
 import { OldTabHolder, TabHolder } from "./components/editorDisplay";
-
-const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
-const { compose } = wp.compose;
-const { withSelect, withDispatch } = wp.data;
-const { RichText, InnerBlocks } = wp.blockEditor || wp.editor;
+import metadata from "./block.json";
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
+import { compose } from "@wordpress/compose";
+import { withSelect, withDispatch } from "@wordpress/data";
+import { RichText, InnerBlocks } from "@wordpress/block-editor";
 
 const oldAttributes = {
 	id: {
@@ -57,76 +57,6 @@ const oldAttributes = {
 				selector: ".wp-block-ub-tabbed-content-tab-title",
 			},
 		},
-	},
-};
-
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	activeControl: {
-		type: "string",
-	},
-	activeTab: {
-		type: "number",
-		default: 0,
-	},
-	theme: {
-		type: "string",
-		default: "#eeeeee",
-	},
-	normalColor: {
-		type: "string",
-		default: "",
-	},
-	titleColor: {
-		type: "string",
-		default: "#000000",
-	},
-	normalTitleColor: {
-		type: "string",
-		default: "#000000",
-	},
-	borderColor: {
-		type: "string",
-		default: "#d3d3d3",
-	},
-	tabsTitle: {
-		type: "array",
-		default: [],
-	},
-	tabsAlignment: {
-		type: "string",
-		default: "left",
-	},
-	tabsTitleAlignment: {
-		type: "array",
-		default: [],
-	},
-	tabsAnchor: {
-		type: "array",
-		default: [],
-	},
-	useAnchors: {
-		type: "boolean",
-		default: false,
-	},
-	tabVertical: {
-		type: "boolean",
-		default: false,
-	},
-	tabletTabDisplay: {
-		type: "string",
-		default: "horizontaltab",
-	},
-	mobileTabDisplay: {
-		type: "string",
-		default: "horizontaltab",
-	},
-	tabStyle: {
-		type: "string",
-		default: "tabs",
 	},
 };
 
@@ -261,16 +191,8 @@ registerBlockType("ub/tabbed-content", {
 	],
 });
 
-registerBlockType("ub/tabbed-content-block", {
-	title: __("Tabbed Content"),
-	description: __("Add tabbed content in your posts/pages with this block.", "ultimate-blocks"),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Tabbed Content"), __("Tabs"), __("Ultimate Blocks")],
-	attributes,
-	supports: {
-		align: ["wide", "full"],
-	},
 	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {

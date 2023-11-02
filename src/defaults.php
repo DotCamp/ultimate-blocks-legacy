@@ -260,8 +260,20 @@ $defaultValues = array(
 			'channelId'  => array(
 				'type'    => 'string',
 				'default' => ''
+			),
+			'shadow'	   => array(
+				'type'	=> 'array',
+				'default' => array(
+					array(
+						"angle" => 0,
+						"radius" => 0,
+						"color" => "#000000",
+						"transparency" => 0,
+						"blur" => 0,
+						"spread" => 0
+					)
+				)
 			)
-
 		)
 	),
 	'ub/button'                     => array(
@@ -329,7 +341,11 @@ $defaultValues = array(
 			'buttonWidth'          => array(
 				'type'    => 'string',
 				'default' => 'fixed'
-			)
+			),
+			'buttons'			   => array(
+				'type'	=> 'array',
+				'default' => array()
+			),
 		)
 	),
 	'ub/call-to-action-block'       => array(
@@ -474,11 +490,11 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'filterArray' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'filterArray' => array(
+				'type' => 'array',
+				'default' => array()
+			),
 			'buttonColor'           => array(
 				'type'    => 'string',
 				'default' => '#eeeeee'
@@ -614,6 +630,10 @@ $defaultValues = array(
 			'showOnlyOne'     => array(
 				'type'    => 'boolean',
 				'default' => false
+			),
+			'newBlockPosition' => array(
+				'type'    => 'string',
+				'default' => 'none'
 			)
 		)
 	),
@@ -746,6 +766,10 @@ $defaultValues = array(
 			'isVisible'   => array(
 				'type'    => 'boolean',
 				'default' => false
+			),
+			'toggleAlign'   => array(
+				'type'    => 'string',
+				'default' => 'left'
 			),
 			'parentID'    => array(
 				'type'    => 'string',
@@ -887,11 +911,11 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required tools' )
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'tools' => array(
-                'type' => 'array',
-                'default' => array(),
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'tools' => array(
+				'type' => 'array',
+				'default' => array(),
+			),
 			'toolsListStyle'      => array(
 				'type'    => 'string',
 				'default' => 'none'
@@ -908,20 +932,25 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required supplies' )
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'supplies' => array(
-                'type' => 'array',
-                'default' => array(),
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'supplies' => array(
+				'type' => 'array',
+				'default' => array(),
+			),
 			'suppliesListStyle'   => array(
 				'type'    => 'string',
 				'default' => 'none'
 			),
-			/* COMMENTED OUT TO PREVENT PHP ERRORS
-            'section' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'section' => array(
+				'type' => 'array',
+				'default' => array(
+					array(
+						'sectionName' => '',
+						'steps' => array()
+					)
+				)
+			),
 			'sectionListStyle'    => array(
 				'type'    => 'string',
 				'default' => 'none'
@@ -1046,21 +1075,21 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'pics' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'pics' => array(
+				'type' => 'array',
+				'default' => array()
+			),
 			//retained for reverse compatibility
 			'captions'         => array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			/*COMMENTED OUT TO PREVENT PHP ERRORS
-            'descriptions' => array(
-                'type' => 'array',
-                'default' => array()
-            ),*/
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'descriptions' => array(
+				'type' => 'array',
+				'default' => array()
+			),
 			'wrapsAround'      => array(
 				'type'    => 'boolean',
 				'default' => true
@@ -1423,6 +1452,10 @@ $defaultValues = array(
 	),
 	'ub/review'                     => array(
 		'attributes' => array(
+			'ID'                 => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'blockID'                 => array(
 				'type'    => 'string',
 				'default' => ''
@@ -1567,6 +1600,15 @@ $defaultValues = array(
 			'ctaNoFollow'             => array(
 				'type'    => 'boolean',
 				'default' => true
+			),
+			'parts'             	=> array(
+				'type'    => 'array',
+				'default' => array(
+					array (
+						'label' => '',
+						'value' => 0
+					)
+				)
 			),
 			'ctaOpenInNewTab'         => array(
 				'type'    => 'boolean',
@@ -1907,50 +1949,50 @@ $defaultValues = array(
 					'type' => 'string'
 				)
 			),
-			/* COMMENTED OUT TO PREVENT PHP ERRORS
-            'image' => array(
-                'type' => 'array',
-                'default' => array(
-                    array(
-                        'id' => null,
-                        'alt' => null,
-                        'url' => null
-                    )
-                )
-            ),*/
-            'foreColor' => array(
-                'type' => 'string',
-                'default' => '#000000'
-            ),
-            'backColor' => array(
-                'type' => 'string',
-                'default' => '#CCCCCC'
-            ),
-            'boxColor' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'outlineColor' => array(
-                'type' => 'string',
-                'default' => '#000000'
-            ),
-            'outlineStyle' => array(
-                'type' => 'string',
-                'default' => 'solid'
-            ),
-            'outlineThickness' => array(
-                'type' => 'number',
-                'default' => 1
-            ),
-            'outlineRoundingRadius' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'outlineRadiusUnit' => array(
-                'type' => 'string',
-                'default' => 'percent'
-            )
-        )
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			'image' => array(
+				'type' => 'array',
+				'default' => array(
+					array(
+					'id' => null,
+					'alt' => null,
+					'url' => null
+					)
+				)
+			),
+			'foreColor' => array(
+				'type' => 'string',
+				'default' => '#000000'
+			),
+			'backColor' => array(
+				'type' => 'string',
+				'default' => '#CCCCCC'
+			),
+			'boxColor' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'outlineColor' => array(
+				'type' => 'string',
+				'default' => '#000000'
+			),
+			'outlineStyle' => array(
+				'type' => 'string',
+				'default' => 'solid'
+			),
+			'outlineThickness' => array(
+				'type' => 'number',
+				'default' => 1
+			),
+			'outlineRoundingRadius' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'outlineRadiusUnit' => array(
+				'type' => 'string',
+				'default' => 'percent'
+			)
+        	)
     ),
     'ub/styled-list' => array(
         'attributes' => array(

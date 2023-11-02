@@ -1,16 +1,12 @@
-import {
-	OldPanelContent,
-	PanelContent,
-	NewPanelContent,
-} from "./components/editorDisplay";
+import { OldPanelContent, NewPanelContent } from "./components/editorDisplay";
 
-const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
-const { InnerBlocks, RichText } = wp.blockEditor || wp.editor;
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
+import { InnerBlocks, RichText } from "@wordpress/blockEditor";
 
-const { compose } = wp.compose;
-const { withDispatch, withSelect } = wp.data;
-
+import { compose } from "@wordpress/compose";
+import { withDispatch, withSelect } from "@wordpress/data";
+import metadata from "./block.json";
 import icon from "./icon";
 
 const attributes = {
@@ -146,16 +142,9 @@ registerBlockType("ub/content-filter", {
 	},
 });
 
-registerBlockType("ub/content-filter-block", {
-	title: __("Content Filter"),
-	description: __(
-		"Content Filter lets your visitors filter the content based on different filters.",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Filtering")],
-	attributes,
+	attributes: metadata.attributes,
 	example: {
 		attributes: {
 			filterArray: [
@@ -187,27 +176,7 @@ registerBlockType("ub/content-filter-block", {
 		],
 	},
 
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
-
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
-			};
-		}),
-		withDispatch((dispatch) => {
-			const { updateBlockAttributes, insertBlock } =
-				dispatch("core/block-editor") || dispatch("core/editor");
-
-			return {
-				updateBlockAttributes,
-				insertBlock,
-			};
-		}),
-	])(NewPanelContent),
+	edit: NewPanelContent,
 
 	save: () => <InnerBlocks.Content />,
 });

@@ -37,7 +37,7 @@ export default function PostGridBlock(props) {
 					postLayout === "list" ? "is-list" : `is-grid columns-${columns}`
 				}`}
 			>
-				{posts.map((post, i) => (
+				{posts?.map((post, i) => (
 					<article
 						key={i}
 						id={`post-${post.id}`}

@@ -23,7 +23,7 @@ function ub_render_advanced_video_block($attributes){
 function ub_register_advanced_video_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/advanced-video', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/advanced-video', array(
             'attributes' => $defaultValues['ub/advanced-video']['attributes'],
 			'render_callback' => 'ub_render_advanced_video_block'));
 	}

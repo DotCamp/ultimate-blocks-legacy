@@ -1,5 +1,6 @@
 import "./formats/register-formats";
 import fontsList from "./fonts";
+import { useSelect } from "@wordpress/data";
 import {
 	textTransformOptions,
 	fontWeightOptions,
@@ -9,32 +10,31 @@ import { h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon } from "./icons";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
 
-const { __ } = wp.i18n;
-const {
+import { __ } from "@wordpress/i18n";
+import {
 	InspectorControls,
 	BlockControls,
 	PanelColorSettings,
 	RichText,
+	useBlockProps,
 	AlignmentToolbar,
-} = wp.blockEditor || wp.editor;
-const {
+} from "@wordpress/block-editor";
+import {
 	PanelBody,
 	Button,
 	ButtonGroup,
 	RangeControl,
 	SelectControl,
 	DropdownMenu,
-} = wp.components;
-const { createRef, useEffect } = wp.element;
-const { createBlock } = wp.blocks;
+} from "@wordpress/components";
+import { createRef, useEffect } from "@wordpress/element";
+import { createBlock } from "@wordpress/blocks";
 
 const AdvancedHeadingEdit = ({
 	attributes,
 	setAttributes,
-	block,
-	getBlock,
-	getClientIdsWithDescendants,
 	onReplace,
+	clientId,
 }) => {
 	const {
 		blockID,
@@ -51,6 +51,13 @@ const AdvancedHeadingEdit = ({
 		lineHeight,
 	} = attributes;
 
+	const { block } = useSelect((select) => {
+		const { getBlock } = select("core/block-editor") || select("core/editor");
+
+		return {
+			block: getBlock(clientId),
+		};
+	});
 	/* set default values for the style attributes */
 	const elementRef = createRef();
 	useEffect(() => {
@@ -86,7 +93,7 @@ const AdvancedHeadingEdit = ({
 	const headingIcons = [h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon];
 	const styles = getStyles(attributes);
 	return (
-		<>
+		<div {...useBlockProps()}>
 			<InspectorControls group="settings">
 				<PanelBody title={__("General", "ultimate-blocks")} intialOpen={true}>
 					<p>{__("Heading Level", "ultimate-blocks")}</p>
@@ -242,7 +249,7 @@ const AdvancedHeadingEdit = ({
 				}
 				onReplace={onReplace}
 			/>
-		</>
+		</div>
 	);
 };
 

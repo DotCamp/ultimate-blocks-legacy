@@ -21,12 +21,16 @@ const objectsNewChange = (obj1, obj2) => {
 	return null;
 };
 
-const { __ } = wp.i18n;
-const { createBlock } = wp.blocks;
+import { __ } from "@wordpress/i18n";
+import { createBlock } from "@wordpress/blocks";
 
-const { InnerBlocks, InspectorControls, PanelColorSettings } =
-	wp.blockEditor || wp.editor;
-const {
+import {
+	InnerBlocks,
+	InspectorControls,
+	PanelColorSettings,
+	useBlockProps,
+} from "@wordpress/block-editor";
+import {
 	PanelBody,
 	PanelRow,
 	FormToggle,
@@ -34,7 +38,7 @@ const {
 	Button,
 	ButtonGroup,
 	Dropdown,
-} = wp.components;
+} from "@wordpress/components";
 
 export function OldPanelContent(props) {
 	const {
@@ -196,6 +200,7 @@ const oldColorDefaults = {
 
 export function PanelContent(props) {
 	const panels = props.block.innerBlocks;
+	const blockProps = useBlockProps();
 
 	const newArrangement = panels.map((panel) => panel.attributes.index);
 
@@ -556,7 +561,7 @@ export function PanelContent(props) {
 	];
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -945,6 +950,6 @@ export function PanelContent(props) {
 					}}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }

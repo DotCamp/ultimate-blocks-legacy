@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ub/advanced-heading",
+  "title": "Advanced Heading",
+  "category": "ultimateblocks",
+  "description": "Add advanced headings with more style and customizations.",
+  "keywords": [
+    "Heading",
+    "Advanced Heading",
+    "Ultimate Blocks"
+  ],
+  "attributes": {
+    "blockID": {
+      "type": "string",
+      "default": ""
+    },
+    "anchor": {
+      "type": "string",
+      "default": ""
+    },
+    "content": {
+      "type": "string",
+      "default": ""
+    },
+    "level": {
+      "type": "string",
+      "default": ""
+    },
+    "alignment": {
+      "type": "string",
+      "default": "none"
+    },
+    "textColor": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "fontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "letterSpacing": {
+      "type": "number",
+      "default": 0
+    },
+    "textTransform": {
+      "type": "string",
+      "default": "None"
+    },
+    "fontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "fontWeight": {
+      "type": "string",
+      "default": "Bold"
+    },
+    "lineHeight": {
+      "type": "number",
+      "default": 0
+    },
+    "highlightBgColor": {
+      "type": "string",
+      "default": "None"
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
+    }
+  },
+  "supports": {}
+}

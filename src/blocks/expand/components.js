@@ -1,18 +1,22 @@
 import { useEffect } from "react";
 import { getDescendantBlocks } from "../../common";
 
-const { __ } = wp.i18n;
-const { InnerBlocks, InspectorControls } = wp.blockEditor || wp.editor;
+import { __ } from "@wordpress/i18n";
+import {
+	InnerBlocks,
+	InspectorControls,
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const {
+import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	RangeControl,
 	TextControl,
 	ToggleControl,
-} = wp.components;
-const { useSelect } = wp.data;
+} from "@wordpress/components";
+import { useSelect } from "@wordpress/data";
 
 export function ExpandRoot(props) {
 	const {
@@ -33,7 +37,7 @@ export function ExpandRoot(props) {
 		scrollTarget,
 		scrollTargetType,
 	} = attributes;
-
+	const blockProps = useBlockProps();
 	const selectedBlockID = useSelect((select) => {
 		return (
 			select("core/block-editor") || select("core/editor")
@@ -41,9 +45,7 @@ export function ExpandRoot(props) {
 	}, []);
 
 	useEffect(() => {
-		if (
-			blockID === ""
-		) {
+		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
@@ -68,7 +70,7 @@ export function ExpandRoot(props) {
 	}
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<InspectorControls group="settings">
 					<PanelBody title={__("Scroll Settings")}>
@@ -162,6 +164,6 @@ export function ExpandRoot(props) {
 					]}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }

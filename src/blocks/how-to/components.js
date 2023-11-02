@@ -2,20 +2,25 @@ import { useEffect, useState } from "react";
 import { convertFromSeconds } from "../../common";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
+import { useSelect } from "@wordpress/data";
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
+import { __ } from "@wordpress/i18n"; // Import __() from wp.i18n
 
-const { RichText, MediaUpload, InspectorControls } =
-	wp.blockEditor || wp.editor;
+import {
+	RichText,
+	MediaUpload,
+	InspectorControls,
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const {
+import {
 	Button,
 	ToggleControl,
 	PanelBody,
 	RadioControl,
 	RangeControl,
 	SelectControl,
-} = wp.components;
+} from "@wordpress/components";
 
 function InspectorPanel(props) {
 	const {
@@ -869,7 +874,23 @@ function HowToSection(props) {
 export function EditorComponent(props) {
 	const [videoURLInput, setVideoURLInput] = useState("");
 	const [currentStep, setCurrentStep] = useState("");
+	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
+		useSelect((select) => {
+			const {
+				getBlock,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+				getBlocks,
+			} = select("core/block-editor") || select("core/editor");
 
+			return {
+				getBlock,
+				block: getBlock(props.clientId),
+				parentID: getBlockRootClientId(props.clientId),
+				getClientIdsWithDescendants,
+				getBlocks,
+			};
+		});
 	useEffect(() => {
 		const {
 			attributes: { videoURL, section },
@@ -939,9 +960,6 @@ export function EditorComponent(props) {
 			thirdLevelTag,
 		},
 		setAttributes,
-		block,
-		getBlock,
-		getClientIdsWithDescendants,
 		isSelected,
 	} = props;
 
@@ -1171,7 +1189,7 @@ export function EditorComponent(props) {
 	};
 	const styles = getStyles(props.attributes);
 	return (
-		<>
+		<div {...useBlockProps()}>
 			<InspectorPanel
 				{...props}
 				videoURLInput={videoURLInput}
@@ -1870,6 +1888,6 @@ export function EditorComponent(props) {
 					}`,
 				}}
 			/>
-		</>
+		</div>
 	);
 }

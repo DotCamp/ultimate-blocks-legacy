@@ -1,0 +1,83 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/icon",
+     "title": "Icon",
+     "category": "ultimateblocks",
+     "description": "Add HowTo Schema with sections, steps and valid schema data.",
+     "keywords": [
+          "Icon",
+          "Ultimate Blocks"
+     ],
+     "attributes": {
+          "icon": {
+               "type": "object",
+               "default": {}
+          },
+          "svgIcon": {
+               "type": "string",
+               "default": ""
+          },
+          "size": {
+               "type": "string",
+               "default": "40px"
+          },
+          "iconColor": {
+               "type": "string",
+               "default": null
+          },
+          "iconHoverColor": {
+               "type": "string",
+               "default": null
+          },
+          "iconBackground": {
+               "type": "string",
+               "default": null
+          },
+          "iconHoverBackground": {
+               "type": "string",
+               "default": null
+          },
+          "iconGradientBackground": {
+               "type": "string",
+               "default": null
+          },
+          "iconHoverGradientBackground": {
+               "type": "string",
+               "default": null
+          },
+          "justification": {
+               "type": "string",
+               "default": "center"
+          },
+          "linkUrl": {
+               "type": "string"
+          },
+          "linkRel": {
+               "type": "string"
+          },
+          "linkTarget": {
+               "type": "string"
+          },
+          "iconRotation": {
+               "type": "number",
+               "default": 0
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
+          }
+     },
+     "supports": {
+          "html": false,
+          "align": [
+               "wide",
+               "full"
+          ],
+          "anchor": true
+     }
+}

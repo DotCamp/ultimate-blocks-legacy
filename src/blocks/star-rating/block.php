@@ -33,7 +33,7 @@ function ub_render_star_rating_block($attributes){
 function ub_register_star_rating_block() {
 	if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/star-rating-block', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/star-rating', array(
             'attributes' => $defaultValues['ub/star-rating-block']['attributes'],
             'render_callback' => 'ub_render_star_rating_block'));
     }

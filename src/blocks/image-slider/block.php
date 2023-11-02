@@ -45,7 +45,7 @@ function ub_render_image_slider_block($attributes){
 function ub_register_image_slider_block(){
     if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type('ub/image-slider', array(
+        register_block_type(dirname(dirname(dirname(__DIR__))) . '/dist/blocks/image-slider/block.json', array(
             'attributes' => $defaultValues['ub/image-slider']['attributes'],
             'render_callback' => 'ub_render_image_slider_block'));
     }

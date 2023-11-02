@@ -91,7 +91,7 @@ function ub_button_add_frontend_assets() {
 function ub_register_button_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/button', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/button', array(
             'attributes' => $defaultValues['ub/button']['attributes'],
 			'render_callback' => 'ub_render_button_block'));
 	}

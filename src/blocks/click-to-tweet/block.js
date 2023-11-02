@@ -3,14 +3,17 @@ import icon from "./icons/icon";
 import { useEffect } from "react";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, PanelColorSettings } =
-	wp.blockEditor || wp.editor;
-
-const { TextControl, RangeControl, PanelBody } = wp.components;
-
-const { withSelect } = wp.data;
+import metadata from "./block.json";
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
+import {
+	RichText,
+	InspectorControls,
+	PanelColorSettings,
+	useBlockProps,
+} from "@wordpress/block-editor";
+import { TextControl, RangeControl, PanelBody } from "@wordpress/components";
+import { useSelect } from "@wordpress/data";
 
 /**
  * Register: aa Gutenberg Block.
@@ -27,25 +30,35 @@ const { withSelect } = wp.data;
  */
 
 function ClickToTweet(props) {
-	const {
-		isSelected,
-		setAttributes,
-		block,
-		getBlock,
-		getClientIdsWithDescendants,
-		attributes,
-	} = props;
+	const { isSelected, setAttributes, attributes } = props;
 
 	const { ubTweet, ubVia, tweetFontSize, tweetColor, borderColor, blockID } =
 		attributes;
+	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
+		useSelect((select) => {
+			const {
+				getBlock,
+				getBlockRootClientId,
+				getClientIdsWithDescendants,
+				getBlocks,
+			} = select("core/block-editor") || select("core/editor");
+
+			return {
+				getBlock,
+				block: getBlock(props.clientId),
+				parentID: getBlockRootClientId(props.clientId),
+				getClientIdsWithDescendants,
+				getBlocks,
+			};
+		});
 	useEffect(() => {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
 		}
 	}, []);
-	const styles = getStyles(attributes);
+	const blockProps = useBlockProps();
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -105,7 +118,7 @@ function ClickToTweet(props) {
 				</>
 			)}
 			<div className={props.className}>
-				<div className="ub_click_to_tweet" style={styles}>
+				<div className="ub_click_to_tweet" style={getStyles(attributes)}>
 					<RichText
 						style={{
 							fontSize: tweetFontSize + "px",
@@ -125,53 +138,13 @@ function ClickToTweet(props) {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 
-registerBlockType("ub/click-to-tweet", {
-	title: __("Click to Tweet"),
-	description: __(
-		"Add tweetable content with this easy to use block.",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [__("Click to tweet"), __("Twitter"), __("Ultimate Blocks")],
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		ubTweet: {
-			type: "string",
-			default: "",
-		},
-		ubVia: {
-			source: "meta",
-			meta: "ub_ctt_via",
-		},
-		tweetFontSize: {
-			type: "number",
-			default: 20,
-		},
-		tweetColor: {
-			type: "string",
-			default: "",
-		},
-		borderColor: {
-			type: "string",
-			default: "#CCCCCC",
-		},
-		padding: {
-			type: "object",
-			default: {},
-		},
-		margin: {
-			type: "object",
-			default: {},
-		},
-	},
+	attributes: metadata.attributes,
 	example: {
 		attributes: {
 			ubTweet:
@@ -186,16 +159,7 @@ registerBlockType("ub/click-to-tweet", {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
-
-		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
-		};
-	})(ClickToTweet),
+	edit: ClickToTweet,
 
 	/**
 	 * The save function defines the way in which the different attributes should be combined

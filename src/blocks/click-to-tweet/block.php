@@ -67,7 +67,7 @@ function ub_render_click_to_tweet_block( $attributes ) {
 function ub_register_click_to_tweet_block() {
 	if ( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( 'ub/click-to-tweet', array(
+		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/click-to-tweet', array(
             'attributes' => $defaultValues['ub/click-to-tweet']['attributes'],
 			'render_callback' => 'ub_render_click_to_tweet_block'));
 	}

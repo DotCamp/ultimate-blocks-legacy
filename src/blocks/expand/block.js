@@ -4,67 +4,25 @@ import icon from "./icon";
 
 import { useEffect } from "react";
 
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from "@wordpress/blocks";
+import metadata from "./block.json";
+import expandPortionMetadata from "./expand-portion/block.json";
+import {
+	RichText,
+	InnerBlocks,
+	BlockControls,
+	AlignmentToolbar,
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const { RichText, InnerBlocks, BlockControls, AlignmentToolbar } =
-	wp.blockEditor || wp.editor;
+import { withSelect, withDispatch } from "@wordpress/data";
 
-const { withSelect, withDispatch } = wp.data;
+import { compose } from "@wordpress/compose";
 
-const { compose } = wp.compose;
-
-registerBlockType("ub/expand", {
-	title: __("Expand"),
-	description: __(
-		"Expand Block lets you add expandable content. You can hide some part of your content initially. Upon clicking on ‘Show More’ it will show.",
-		"ultimate-blocks"
-	),
+registerBlockType(metadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	keywords: [
-		__("Preview"),
-		__("Hidden Content"),
-		__("Ultimate Blocks"),
-		__("Show"),
-		__("Hide"),
-		__("Toggle"),
-	],
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		initialShow: {
-			type: "boolean",
-			default: false,
-		},
-		toggleAlign: {
-			type: "string",
-			default: "left",
-		},
-		allowScroll: {
-			type: "boolean",
-			default: false,
-		},
-		scrollOption: {
-			type: "string",
-			default: "auto", //other options: namedelement, fixedamount, off
-		},
-		scrollOffset: {
-			type: "number",
-			default: 0,
-		},
-		scrollTarget: {
-			type: "string",
-			default: "",
-		},
-		scrollTargetType: {
-			type: "string",
-			default: "id", //other types: class, element
-		},
-	},
 	example: {
 		innerBlocks: [
 			{
@@ -157,7 +115,7 @@ function ExpandPortion(props) {
 		getBlockRootClientId,
 	} = props;
 	const { clickText, displayType, isVisible, toggleAlign } = attributes;
-
+	const blockProps = useBlockProps();
 	const parentBlockID = getBlockRootClientId(block.clientId);
 
 	useEffect(() => {
@@ -170,7 +128,7 @@ function ExpandPortion(props) {
 	}, []);
 
 	return (
-		<>
+		<div {...blockProps}>
 			{isSelected && (
 				<BlockControls>
 					<AlignmentToolbar
@@ -208,42 +166,12 @@ function ExpandPortion(props) {
 					)}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }
 
-registerBlockType("ub/expand-portion", {
-	title: __("Expand Portion"),
-	parent: "ub/expand",
+registerBlockType(expandPortionMetadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	supports: {
-		inserter: false,
-		reusable: false,
-		lock: false,
-	},
-	attributes: {
-		clickText: {
-			type: "string",
-			default: "",
-		},
-		displayType: {
-			type: "string",
-			default: "",
-		},
-		isVisible: {
-			type: "boolean",
-			default: true,
-		},
-		toggleAlign: {
-			type: "string",
-			default: "left",
-		},
-		parentID: {
-			type: "string",
-			default: "",
-		},
-	},
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getBlockRootClientId } =

@@ -1,72 +1,16 @@
-const { __ } = wp.i18n;
+import { __ } from "@wordpress/i18n";
 
-const { registerBlockType, createBlock } = wp.blocks;
-const { compose } = wp.compose;
-const { withSelect, withDispatch } = wp.data;
-const { InnerBlocks } = wp.blockEditor || wp.editor;
+import { registerBlockType, createBlock } from "@wordpress/blocks";
+import { compose } from "@wordpress/compose";
+import { withSelect, withDispatch } from "@wordpress/data";
+import { InnerBlocks } from "@wordpress/blockEditor";
 import icon, { listItemIcon } from "./icon";
 import EditorComponent, { StyledListItem } from "./components";
+import listMetadata from "./block.json";
+import listItemMetaData from "./style-list-item/block.json";
 
-registerBlockType("ub/styled-list", {
-	title: __("Styled List"),
-	description: __("This block lets you add a styled list in your post or pages. Instead of bullets you can use various icons as your list style type. ","ultimate-blocks"),
+registerBlockType(listMetadata, {
 	icon: icon,
-	category: "ultimateblocks",
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		list: {
-			type: "text",
-			default: "",
-		},
-		selectedIcon: {
-			type: "string",
-			default: "check",
-		},
-		alignment: {
-			type: "string",
-			default: "left",
-		},
-		iconColor: {
-			type: "string",
-			default: "#000000",
-		},
-		iconSize: {
-			type: "number",
-			default: 5,
-		},
-		fontSize: {
-			type: "number",
-			default: 0, //set to current style's font size when font size customization is enabled
-		},
-		itemSpacing: {
-			type: "number",
-			default: 0, //in pixels
-		},
-		columns: {
-			type: "number",
-			default: 1,
-		},
-		maxMobileColumns: {
-			type: "number",
-			default: 2,
-		},
-		isRootList: {
-			type: "boolean",
-			default: false,
-		},
-		textColor: {
-			type: "string",
-			default: "",
-		},
-		backgroundColor: {
-			type: "string",
-			default: "",
-		},
-	},
-	keywords: [__("List"), __("Styled List"), __("Ultimate Blocks")],
 	transforms: {
 		from: [
 			{
@@ -107,110 +51,12 @@ registerBlockType("ub/styled-list", {
 		],
 	},
 	example: {},
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const {
-				getBlock,
-				getBlockParentsByBlockName,
-				getClientIdsOfDescendants,
-				getClientIdsWithDescendants,
-			} = select("core/block-editor") || select("core/editor");
-
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getBlockParentsByBlockName,
-				getClientIdsOfDescendants,
-				getClientIdsWithDescendants,
-			};
-		}),
-		withDispatch((dispatch) => {
-			const { replaceInnerBlocks, updateBlockAttributes } =
-				dispatch("core/block-editor") || dispatch("core/editor");
-
-			return { replaceInnerBlocks, updateBlockAttributes };
-		}),
-	])(EditorComponent),
+	edit: EditorComponent,
 	save: () => <InnerBlocks.Content />,
 });
 
-registerBlockType("ub/styled-list-item", {
-	title: __("Styled List Item"),
+registerBlockType(listItemMetaData, {
 	icon: listItemIcon,
-	category: "ultimateblocks",
-	attributes: {
-		blockID: {
-			type: "string",
-			default: "",
-		},
-		itemText: {
-			type: "string",
-			default: "",
-		},
-		selectedIcon: {
-			type: "string",
-			default: "check",
-		},
-		iconColor: {
-			type: "string",
-			default: "#000000",
-		},
-		iconSize: {
-			type: "number",
-			default: 5,
-		},
-		fontSize: {
-			type: "number",
-			default: 0, //set to current style's font size when font size customization is enabled
-		},
-	},
-	supports: { inserter: false },
-
-	keywords: [__("List"), __("Styled List"), __("Ultimate Blocks")],
-	edit: compose([
-		withSelect((select, ownProps) => {
-			const {
-				getBlock,
-				getBlockIndex,
-				getBlockParents,
-				getBlockParentsByBlockName,
-				getClientIdsOfDescendants,
-				getClientIdsWithDescendants,
-				getNextBlockClientId,
-				getPreviousBlockClientId,
-			} = select("core/block-editor") || select("core/editor");
-
-			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getBlockIndex,
-				currentBlockIndex: getBlockIndex(ownProps.clientId),
-				getBlockParents,
-				listRootClientId: getBlockParents(ownProps.clientId, true)[0],
-				getBlockParentsByBlockName,
-				getClientIdsOfDescendants,
-				getClientIdsWithDescendants,
-				getNextBlockClientId,
-				getPreviousBlockClientId,
-			};
-		}),
-		withDispatch((dispatch) => {
-			const {
-				insertBlock,
-				moveBlocksToPosition,
-				removeBlock,
-				replaceBlocks,
-				updateBlockAttributes,
-			} = dispatch("core/block-editor") || dispatch("core/editor");
-
-			return {
-				insertBlock,
-				moveBlocksToPosition,
-				removeBlock,
-				replaceBlocks,
-				updateBlockAttributes,
-			};
-		}),
-	])(StyledListItem),
+	edit: StyledListItem,
 	save: () => <InnerBlocks.Content />,
 });

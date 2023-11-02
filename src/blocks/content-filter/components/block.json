@@ -1,0 +1,49 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/content-filter-entry-block",
+     "title": "Content Filter Entry",
+     "parent": [
+          "ub/content-filter-block"
+     ],
+     "category": "ultimateblocks",
+     "description": "Content Filter lets your visitors filter the content based on different filters.",
+     "keywords": [
+          "Filtering",
+          "Ultimate Blocks"
+     ],
+     "attributes": {
+          "availableFilters": {
+               "type": "array",
+               "default": []
+          },
+          "selectedFilters": {
+               "type": "array",
+               "default": []
+          },
+          "buttonColor": {
+               "type": "string",
+               "default": "#aaaaaa"
+          },
+          "buttonTextColor": {
+               "type": "string",
+               "default": "#000000"
+          },
+          "initiallyShow": {
+               "type": "boolean",
+               "default": true
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
+          }
+     },
+     "supports": {
+          "inserter": false,
+          "reusable": false
+     }
+}

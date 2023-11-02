@@ -33,12 +33,13 @@ import {
 	EditorComponent,
 } from "./components";
 import { useState } from "react";
+import metadata from "./block.json";
 
-const { withDispatch, withSelect } = wp.data;
+import { withDispatch, withSelect } from "@wordpress/data";
 
-const { compose } = wp.compose;
-const { __ } = wp.i18n;
-const { registerBlockType, createBlock } = wp.blocks;
+import { compose } from "@wordpress/compose";
+import { __ } from "@wordpress/i18n";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 
 /**
  * Register: aa Gutenberg Block.
@@ -328,40 +329,16 @@ registerBlockType("ub/button-block", {
 	],
 });
 
-registerBlockType("ub/button", {
-	title: __("Button (Improved)", "ultimate-blocks"),
-	description: __("Add amazing buttons that convert more. Comes with an option to add multiple buttons.", "ultimate-blocks"),
+registerBlockType(metadata, {
+	edit: EditorComponent,
+	save: () => null,
 	icon: icon,
-	category: "ultimateblocks",
-	attributes,
-	keywords: [
-		__("Button", "ultimate-blocks"),
-		__("Buttons", "ultimate-blocks"),
-		__("Ultimate Blocks", "ultimate-blocks"),
-	],
 	example: {
 		attributes: {
-			buttonColor: '#f01313',
-			size: 'medium'
-		}
+			buttonColor: "#f01313",
+			size: "medium",
+		},
 	},
-	edit: withSelect((select, ownProps) => {
-		const {
-			getBlock,
-			getBlockRootClientId,
-			getClientIdsWithDescendants,
-			getBlocks,
-		} = select("core/block-editor") || select("core/editor");
-
-		return {
-			getBlock,
-			block: getBlock(ownProps.clientId),
-			parentID: getBlockRootClientId(ownProps.clientId),
-			getClientIdsWithDescendants,
-			getBlocks,
-		};
-	})(EditorComponent),
-	save: () => null,
 	transforms: {
 		from: [
 			{

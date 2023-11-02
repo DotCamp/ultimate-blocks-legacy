@@ -1,0 +1,34 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "name": "ub/notification-box-block",
+     "title": "Notification Box",
+     "category": "ultimateblocks",
+     "description": "",
+     "keywords": [
+          "notification",
+          "warning info",
+          "Ultimate Blocks"
+     ],
+     "attributes": {
+          "blockID": {
+               "type": "string",
+               "default": ""
+          },
+          "ub_notify_info": {
+               "type": "string",
+               "default": ""
+          },
+          "ub_selected_notify": {
+               "type": "string",
+               "default": "ub_notify_info"
+          },
+          "align": {
+               "type": "string",
+               "default": "left"
+          }
+     },
+     "supports": {
+          "inserter": false
+     }
+}

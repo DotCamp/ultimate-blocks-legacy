@@ -5,23 +5,24 @@ import { panel_version_1_1_9 } from "../oldVersions";
 import { useState, useEffect } from "react";
 import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
 import ProManager from "$Manager/ProManager";
+import metadata from "./panel/block.json";
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
 
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
-
-const {
+import {
 	RichText,
 	InnerBlocks,
 	InspectorControls,
 	InspectorAdvancedControls,
 	PanelColorSettings,
-} = wp.blockEditor || wp.editor;
+	useBlockProps,
+} from "@wordpress/block-editor";
 
-const { compose } = wp.compose;
+import { compose } from "@wordpress/compose";
 
-const { withDispatch, withSelect, useSelect } = wp.data;
+import { withDispatch, withSelect } from "@wordpress/data";
 
-const {
+import {
 	FormToggle,
 	PanelBody,
 	PanelRow,
@@ -30,7 +31,7 @@ const {
 	Button,
 	ToggleControl,
 	Dropdown,
-} = wp.components;
+} from "@wordpress/components";
 
 const attributes = {
 	index: {
@@ -116,8 +117,8 @@ const attributes = {
 };
 
 function ContentTogglePanel(props) {
-	const [showPanel, setPanelStatus] = useState(true);
-
+	const [showPanel, setPanelStatus] = useState(false);
+	const blockProps = useBlockProps();
 	const {
 		attributes: {
 			theme,
@@ -184,7 +185,7 @@ function ContentTogglePanel(props) {
 	];
 
 	return (
-		<>
+		<div {...blockProps}>
 			<InspectorControls group="settings">
 				<PanelBody title={__("Panel Title")} initialOpen={false}>
 					<div
@@ -598,7 +599,7 @@ function ContentTogglePanel(props) {
 					/>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 
@@ -706,17 +707,8 @@ const composedEdit = compose([
 	}),
 ]);
 
-registerBlockType("ub/content-toggle-panel-block", {
-	title: __("Content Toggle Panel"),
-	parent: ["ub/content-toggle-block"],
+registerBlockType(metadata, {
 	icon,
-	category: "ultimateblocks",
-	attributes,
-	supports: {
-		inserter: false,
-		reusable: false,
-	},
-
 	edit: composedEdit(ContentTogglePanel),
 	save: () => <InnerBlocks.Content />,
 });
