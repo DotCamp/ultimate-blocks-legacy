@@ -17,7 +17,7 @@ import { compose } from "@wordpress/compose";
 
 import { withDispatch, withSelect, useSelect } from "@wordpress/data";
 import { useBlockProps } from "@wordpress/block-editor";
-
+import { getStyles } from "./get-styles";
 /**
  * Register: aa Gutenberg Block.
  *
@@ -192,6 +192,7 @@ registerBlockType("ub/testimonial-block", {
 
 registerBlockType(metadata, {
 	icon: icons.testimonial,
+	attributes: metadata.attributes,
 	example: {},
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.

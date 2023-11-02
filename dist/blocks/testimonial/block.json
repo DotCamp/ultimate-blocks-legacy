@@ -61,6 +61,14 @@
     "textSize": {
       "type": "number",
       "default": 17
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {}

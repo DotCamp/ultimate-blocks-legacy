@@ -10,6 +10,8 @@ const {
 
 const { Button, PanelBody, RangeControl, ToolbarGroup, ToolbarButton } =
 	wp.components;
+import { SpacingControl } from "../components";
+import { getStyles } from "./get-styles";
 
 import icons from "./icons";
 
@@ -58,35 +60,52 @@ export const inspectorControls = (props) => {
 
 	const { backgroundColor, textColor, textSize } = attributes;
 	return (
-		<InspectorControls group="styles">
-			<PanelBody title={__("General")}>
-				<label for="ub-testimonial-bgcolor-select">
-					{__("Background Color")}
-				</label>
-				<ColorPalette
-					id="ub-testimonial-bgcolor-select"
-					value={backgroundColor}
-					onChange={(backgroundColor) => setAttributes({ backgroundColor })}
-					allowReset
+		<>
+			<InspectorControls group="styles">
+				<PanelBody title={__("General")}>
+					<label for="ub-testimonial-bgcolor-select">
+						{__("Background Color")}
+					</label>
+					<ColorPalette
+						id="ub-testimonial-bgcolor-select"
+						value={backgroundColor}
+						onChange={(backgroundColor) => setAttributes({ backgroundColor })}
+						allowReset
+					/>
+					<label for="ub-testimonial-textcolor-select">
+						{__("Font Color")}
+					</label>
+					<ColorPalette
+						id="ub-testimonial-textcolor-select"
+						value={textColor}
+						onChange={(textColor) => setAttributes({ textColor })}
+						allowReset
+					/>
+					<RangeControl
+						label={__("Font Size")}
+						value={textSize}
+						onChange={(value) => setAttributes({ textSize: value })}
+						min={14}
+						max={200}
+						beforeIcon="editor-textcolor"
+						allowReset
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
 				/>
-				<label for="ub-testimonial-textcolor-select">{__("Font Color")}</label>
-				<ColorPalette
-					id="ub-testimonial-textcolor-select"
-					value={textColor}
-					onChange={(textColor) => setAttributes({ textColor })}
-					allowReset
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
 				/>
-				<RangeControl
-					label={__("Font Size")}
-					value={textSize}
-					onChange={(value) => setAttributes({ textSize: value })}
-					min={14}
-					max={200}
-					beforeIcon="editor-textcolor"
-					allowReset
-				/>
-			</PanelBody>
-		</InspectorControls>
+			</InspectorControls>
+		</>
 	);
 };
 
@@ -94,8 +113,6 @@ export const editorDisplay = (props) => {
 	const { isSelected, setState, attributes, setAttributes } = props;
 
 	const {
-		backgroundColor,
-		textColor,
 		textSize,
 		imgID,
 		imgURL,
@@ -107,15 +124,9 @@ export const editorDisplay = (props) => {
 		authorAlign,
 		authorRoleAlign,
 	} = attributes;
-
+	const styles = getStyles(props.attributes);
 	return (
-		<div
-			className="ub_testimonial"
-			style={{
-				backgroundColor: backgroundColor,
-				color: textColor || "inherit",
-			}}
-		>
+		<div className="ub_testimonial" style={styles}>
 			<div className="ub_testimonial_img">
 				{!imgID ? (
 					<div className="ub_testimonial_upload_button">

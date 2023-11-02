@@ -1183,10 +1183,13 @@ function ub_include_block_attribute_css() {
 					}
 					break;
 				case 'ub/testimonial':
+					$styles = ub_get_spacing_styles($attributes);
+
 					$prefix           = '#ub_testimonial_' . $attributes['blockID'];
 					$blockStylesheets .= $prefix . '{' . PHP_EOL .
 										 'background-color: ' . $attributes['backgroundColor'] . ';' . PHP_EOL .
 										 'color: ' . ( $attributes['textColor'] ?: "inherit" ) . ';' . PHP_EOL .
+										 $styles .
 										 '}' . PHP_EOL .
 										 $prefix . ' .ub_testimonial_text{' . PHP_EOL .
 										 'font-size: ' . $attributes['textSize'] . 'px;' . PHP_EOL .
