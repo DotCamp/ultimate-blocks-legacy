@@ -18,7 +18,7 @@ import {
 } from "@wordpress/block-editor";
 
 import { ToolbarGroup, ToolbarButton } from "@wordpress/components";
-
+import { getStyles } from "../get-style";
 export class OldTabHolder extends Component {
 	constructor(props) {
 		super(props);
@@ -550,6 +550,7 @@ export const TabHolder = (props) => {
 
 	const blockProps = useBlockProps({
 		className: `${className}${tabStyle === "tabs" ? "" : `-${tabStyle}`}`,
+		style: getStyles(attributes),
 	});
 	return [
 		isSelected && (

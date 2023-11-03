@@ -1111,6 +1111,8 @@ function ub_include_block_attribute_css() {
 					break;
 				case 'ub/tabbed-content-block':
 					$prefix           = '#ub-tabbed-content-' . $attributes['blockID'];
+					$styles 		   = ub_get_spacing_styles($attributes);
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap, ' .
 										 $prefix . ' .wp-block-ub-tabbed-content-tab-title-vertical-wrap{' . PHP_EOL .
 										 ( $attributes['tabStyle'] === 'underline' ? '' : 'background-color: ' . ( $attributes['normalColor'] ?: 'inherit' ) . ';' . PHP_EOL ) .
@@ -1142,8 +1144,8 @@ function ub_include_block_attribute_css() {
 					}
 					break;
 				case 'ub/table-of-contents-block':
-					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub_table-of-contents-' . $attributes['blockID'];
+					$styles = ub_get_spacing_styles($attributes);
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					if ( $attributes['listStyle'] === 'plain' ) {
 						$blockStylesheets .= $prefix . ' ul{' . PHP_EOL .

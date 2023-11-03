@@ -192,6 +192,7 @@ registerBlockType("ub/tabbed-content", {
 });
 
 registerBlockType(metadata, {
+	attributes: metadata.attributes,
 	icon: icon,
 	example: {},
 	edit: compose([

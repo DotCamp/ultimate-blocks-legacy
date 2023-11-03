@@ -77,6 +77,14 @@
     "tabStyle": {
       "type": "string",
       "default": "tabs"
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {
