@@ -5,10 +5,10 @@ import { Slider } from "./components";
 import { version_1_1_4 } from "./oldVersions";
 
 import { useEffect, useState } from "react";
-
+import { getStyles } from "./get-styles";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType } from "@wordpress/blocks";
-
+import { SpacingControl } from "../components";
 import {
 	MediaUpload,
 	MediaPlaceholder,
@@ -201,6 +201,7 @@ function ImageSliderMain(props) {
 		className: "ub_image_slider",
 		style: {
 			minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
+			...getStyles(props.attributes),
 		},
 	});
 	return (
@@ -433,6 +434,19 @@ function ImageSliderMain(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
 
@@ -601,6 +615,7 @@ function ImageSliderMain(props) {
 registerBlockType(metadata, {
 	icon: icon,
 	example: {},
+	attributes: metadata.attributes,
 	edit: withSelect((select, ownProps) => {
 		const { getBlock, getClientIdsWithDescendants } =
 			select("core/block-editor") || select("core/editor");

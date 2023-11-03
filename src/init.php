@@ -716,6 +716,8 @@ function ub_include_block_attribute_css() {
 					break;
 				case 'ub/image-slider':
 					$prefix           = '#ub_image_slider_' . $attributes['blockID'];
+					$styles = ub_get_spacing_styles($attributes);
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					$blockStylesheets .= $prefix . ' .swiper-slide img{' . PHP_EOL .
 										 'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
 										 '}' . PHP_EOL;

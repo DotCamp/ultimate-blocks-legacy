@@ -102,6 +102,14 @@
     "shadowScale": {
       "type": "number",
       "default": 0.94
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {}
