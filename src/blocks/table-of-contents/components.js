@@ -3,15 +3,16 @@ import {
 	twoColumnsIcon,
 	threeColumnsIcon,
 	plainList,
-} from './icon';
-import { Component } from 'react';
-import { getDescendantBlocks, mergeRichTextArray } from '../../common';
-import toLatin from './localToLatin';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import filterDiacritics from './removeDiacritics';
-import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
+} from "./icon";
+import { Component } from "react";
+import { getDescendantBlocks, mergeRichTextArray } from "../../common";
+import toLatin from "./localToLatin";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import filterDiacritics from "./removeDiacritics";
+import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
+import { SpacingControl } from "../components";
 
 library.add(faEye, faEyeSlash);
 
@@ -993,6 +994,19 @@ export const inspectorControls = (props) => {
 						]}
 					/>
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 		</>
 	);

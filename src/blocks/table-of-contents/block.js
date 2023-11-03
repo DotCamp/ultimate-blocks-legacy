@@ -4,6 +4,7 @@ import TableOfContents, {
 	blockControls,
 	editorDisplay,
 } from "./components";
+import { getStyles } from "./get-style";
 import {
 	version_1_0_8,
 	version_1_0_9,
@@ -204,6 +205,7 @@ registerBlockType("ub/table-of-contents", {
 
 registerBlockType(metadata, {
 	icon: icon,
+	attributes: metadata.attributes,
 	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
@@ -234,6 +236,7 @@ registerBlockType(metadata, {
 			className: `ub_table-of-contents${
 				showList ? "" : " ub_table-of-contents-collapsed"
 			}`,
+			style: getStyles(props.attributes),
 			id: `ub_table-of-contents-${blockID}`,
 		});
 		return [

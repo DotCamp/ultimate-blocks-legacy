@@ -116,6 +116,14 @@
           "hideText": {
                "type": "string",
                "default": "hide"
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
           }
      },
      "supports": {

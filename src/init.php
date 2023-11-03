@@ -1142,7 +1142,9 @@ function ub_include_block_attribute_css() {
 					}
 					break;
 				case 'ub/table-of-contents-block':
+					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub_table-of-contents-' . $attributes['blockID'];
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					if ( $attributes['listStyle'] === 'plain' ) {
 						$blockStylesheets .= $prefix . ' ul{' . PHP_EOL .
 											 'list-style: none;' . PHP_EOL .
