@@ -10,7 +10,7 @@ import {
 import { removeFromArray } from "../../common";
 import { useEffect, useState } from "react";
 import registerPluginBlock from "$Inc/registerPluginBlock";
-
+import { SpacingControl } from "../components";
 import { __ } from "@wordpress/i18n";
 import {
 	BlockControls,
@@ -448,6 +448,8 @@ function ReviewMain(props) {
 			performer,
 			videoUploadDate,
 			videoURL,
+			padding,
+			margin,
 		},
 		setAttributes,
 		isSelected,
@@ -1860,6 +1862,19 @@ function ReviewMain(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
 			{isSelected && (
@@ -1883,6 +1898,8 @@ function ReviewMain(props) {
 				</BlockControls>
 			)}
 			<ReviewBody
+				padding={padding}
+				margin={margin}
 				isSelected={isSelected}
 				authorName={authorName}
 				itemName={itemName}

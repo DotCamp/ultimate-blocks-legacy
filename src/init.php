@@ -841,6 +841,8 @@ function ub_include_block_attribute_css() {
 					break;
 				case 'ub/review':
 					$prefix           = '#ub_review_' . $attributes['blockID'];
+					$styles = ub_get_spacing_styles($attributes);
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					$blockStylesheets .= $prefix . ' .ub_review_item_name{' . PHP_EOL .
 										 'text-align: ' . $attributes['titleAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL .

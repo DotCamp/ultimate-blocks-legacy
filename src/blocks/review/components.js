@@ -4,7 +4,7 @@ const { __ } = wp.i18n;
 
 import { removeIcon } from "./icon";
 import { useEffect, useRef, useState } from "react";
-
+import { getStyles } from "./get-styles";
 export function OldStars(props) {
 	const {
 		value,
@@ -251,9 +251,9 @@ export function ReviewBody(props) {
 				newArray.length
 		);
 	};
-
+	const styles = getStyles(props);
 	return (
-		<div className="ub_review_block">
+		<div className="ub_review_block" style={styles}>
 			<RichText
 				className="ub_review_item_name"
 				placeholder={__("Title of the review")}
