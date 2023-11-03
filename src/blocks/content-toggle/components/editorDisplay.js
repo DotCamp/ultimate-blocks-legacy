@@ -39,7 +39,8 @@ import {
 	ButtonGroup,
 	Dropdown,
 } from "@wordpress/components";
-
+import { getStyles } from "../get-styles";
+import { SpacingControl } from "../../components";
 export function OldPanelContent(props) {
 	const {
 		attributes,
@@ -559,7 +560,7 @@ export function PanelContent(props) {
 		{ value: "none", label: __("None", "ultimate-blocks") },
 		...availablePanels,
 	];
-
+	const styles = getStyles(props.attributes);
 	return (
 		<div {...blockProps}>
 			{isSelected && (
@@ -935,9 +936,26 @@ export function PanelContent(props) {
 							</PanelRow>
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
-			<div className={className} id={`ub-content-toggle-${blockID}`}>
+			<div
+				className={className}
+				style={styles}
+				id={`ub-content-toggle-${blockID}`}
+			>
 				<InnerBlocks
 					templateLock={false}
 					allowedBlocks={["ub/content-toggle-panel-block"]}

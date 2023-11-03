@@ -71,6 +71,14 @@
           "showOnlyOne": {
                "type": "boolean",
                "default": false
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
           }
      },
      "supports": {}

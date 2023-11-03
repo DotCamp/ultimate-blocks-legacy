@@ -535,6 +535,8 @@ function ub_include_block_attribute_css() {
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					break;
 				case 'ub/content-toggle-block':
+					$styles = ub_get_spacing_styles($attributes);
+
 					if ( $block['innerBlocks'] ) {
 						$attributes       = array_merge( $attributes,
 								array_map( function ( $attribute ) {
@@ -542,6 +544,8 @@ function ub_include_block_attribute_css() {
 								}, $defaultValues['ub/content-toggle-panel-block']['attributes'] ),
 								$block['innerBlocks'][0]['attrs'] );
 						$prefix           = '#ub-content-toggle-' . $attributes['blockID'];
+						$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+
 						$blockStylesheets .= $prefix . ' .wp-block-ub-content-toggle-accordion{' . PHP_EOL .
 											 'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
 											 '}' . PHP_EOL .

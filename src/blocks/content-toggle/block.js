@@ -216,6 +216,7 @@ registerBlockType("ub/content-toggle", {
 
 registerBlockType(metadata, {
 	icon: icon,
+	attributes: metadata.attributes,
 	example: { attributes: { titleLinkColor: "invalid" } }, //indicator for displaying in preview
 	transforms: {
 		to: [
