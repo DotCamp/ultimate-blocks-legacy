@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(dirname(dirname(__DIR__))) . '/includes/class-ultimate-blocks-styles-css-generator.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/includes/ultimate-blocks-styles-css-generator.php';
 
 class Ultimate_Counter {
      /**

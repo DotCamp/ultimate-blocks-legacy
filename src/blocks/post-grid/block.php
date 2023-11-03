@@ -2,7 +2,7 @@
 /**
  * Server-side rendering for the post grid block
  */
-require_once dirname(dirname(dirname(__DIR__))) . '/includes/class-ultimate-blocks-styles-css-generator.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/includes/ultimate-blocks-styles-css-generator.php';
 
 function ub_get_post_grid_styles( $attributes ) {
 	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );

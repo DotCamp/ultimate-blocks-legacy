@@ -6,7 +6,7 @@ import {
 	splitArrayIntoChunks,
 	splitArray,
 } from "../../common";
-
+import { getStyles } from "./get-styles";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
@@ -18,6 +18,7 @@ import {
 	URLInput,
 	RichText,
 	ColorPalette,
+	useBlockProps,
 } from "@wordpress/block-editor";
 import {
 	PanelBody,
@@ -36,6 +37,7 @@ import {
 import { __ } from "@wordpress/i18n";
 import { loadPromise, models } from "@wordpress/api";
 import { useSelect } from "@wordpress/data";
+import { SpacingControl } from "../components";
 
 export const allIcons = Object.assign(fas, fab);
 
@@ -1240,7 +1242,10 @@ export function EditorComponent(props) {
 			}
 		}
 	}, [isSelected]);
-
+	const blockProps = useBlockProps({
+		className: `ub-buttons align-button-${align}`,
+		style: getStyles(props.attributes),
+	});
 	return (
 		<>
 			{isSelected && (
@@ -2078,10 +2083,23 @@ export function EditorComponent(props) {
 							</>
 						)}
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			}
 			{
-				<div className={`ub-buttons align-button-${align}`}>
+				<div {...blockProps}>
 					{buttons.map((b, i) => (
 						<div
 							className={`ub-button-container${

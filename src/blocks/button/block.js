@@ -55,77 +55,6 @@ import { registerBlockType, createBlock } from "@wordpress/blocks";
  *                             registered; otherwise `undefined`.
  */
 
-const attributes = {
-	blockID: {
-		type: "string",
-		default: "",
-	},
-	buttonText: {
-		type: "string",
-		default: "Button Text",
-	},
-	align: {
-		type: "string",
-		default: "",
-	},
-	url: {
-		type: "string",
-		default: "",
-	},
-	size: {
-		type: "string",
-		default: "medium",
-	},
-	buttonColor: {
-		type: "string",
-		default: "#313131",
-	},
-	buttonHoverColor: {
-		type: "string",
-		default: "#313131",
-	},
-	buttonTextColor: {
-		type: "string",
-		default: "#ffffff",
-	},
-	buttonTextHoverColor: {
-		type: "string",
-		default: "#ffffff",
-	},
-	buttonRounded: {
-		type: "boolean",
-		default: true,
-	},
-	chosenIcon: {
-		type: "string",
-		default: "",
-	},
-	iconPosition: {
-		type: "string",
-		default: "left",
-	},
-	buttonIsTransparent: {
-		type: "boolean",
-		default: false,
-	},
-	addNofollow: {
-		type: "boolean",
-		default: false,
-	},
-	openInNewTab: {
-		type: "boolean",
-		default: true,
-	},
-	buttonWidth: {
-		type: "string",
-		default: "flex",
-	},
-	buttons: {
-		type: "array",
-		default: [],
-	},
-};
-
 registerBlockType("ub/button-block", {
 	title: __("Button (Improved)", "ultimate-blocks"),
 	icon: icon,
@@ -331,6 +260,7 @@ registerBlockType("ub/button-block", {
 
 registerBlockType(metadata, {
 	edit: EditorComponent,
+	attributes: metadata.attributes,
 	save: () => null,
 	icon: icon,
 	example: {
