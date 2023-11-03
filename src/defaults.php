@@ -731,6 +731,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+					'type' 	=> 'array',
+					'default' => array()
+			),
 			'initialShow'      => array(
 				'type'    => 'boolean',
 				'default' => false

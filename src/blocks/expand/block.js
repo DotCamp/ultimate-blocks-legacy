@@ -23,6 +23,7 @@ import { compose } from "@wordpress/compose";
 
 registerBlockType(metadata, {
 	icon: icon,
+	attributes: metadata.attributes,
 	example: {
 		innerBlocks: [
 			{

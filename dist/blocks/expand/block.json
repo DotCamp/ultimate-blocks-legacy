@@ -45,6 +45,14 @@
     "scrollTargetType": {
       "type": "string",
       "default": "id"
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {}

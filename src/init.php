@@ -608,7 +608,10 @@ function ub_include_block_attribute_css() {
 					$blockStylesheets .= '}' . PHP_EOL;
 					break;
 				case 'ub/expand':
-					$blockStylesheets .= '#ub-expand-' . $attributes['blockID'] . ' .ub-expand-toggle-button{' . PHP_EOL .
+					$prefix = '#ub-expand-' . $attributes['blockID'];
+					$styles = ub_get_spacing_styles($attributes);
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . ' .ub-expand-toggle-button{' . PHP_EOL .
 										 'text-align: ' . $attributes['toggleAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
 					break;
