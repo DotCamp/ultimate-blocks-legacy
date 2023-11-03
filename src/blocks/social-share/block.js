@@ -27,6 +27,7 @@ import {
 import Inspector from "./inspector";
 
 import { useEffect, useState } from "react";
+import { getStyles } from "./get-styles";
 
 // variables
 const iconSizes = {
@@ -241,7 +242,7 @@ function SocialShareMain(props) {
 			setHasTransitioned(true);
 		}
 	}, []);
-
+	const styles = getStyles(attributes);
 	return (
 		<div {...blockProps}>
 			{isSelected && (
@@ -254,7 +255,11 @@ function SocialShareMain(props) {
 				</BlockControls>
 			)}
 			{isSelected && <Inspector {...props} />}
-			<div id="ub-social-share-block-editor" className={className}>
+			<div
+				id="ub-social-share-block-editor"
+				className={className}
+				style={styles}
+			>
 				<SortableList
 					axis="x"
 					items={iconOrder}
@@ -284,6 +289,7 @@ function SocialShareMain(props) {
 }
 
 registerBlockType(metadata, {
+	attributes: metadata.attributes,
 	icon: icon,
 	example: {},
 	edit: withSelect((select, ownProps) => {

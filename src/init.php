@@ -881,6 +881,8 @@ function ub_include_block_attribute_css() {
 					);
 					$icon_size        = $icon_sizes[ $attributes['iconSize'] ];
 					$prefix           = '#ub-social-share-' . $attributes['blockID'];
+					$styles = ub_get_spacing_styles($attributes);
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					$blockStylesheets .= $prefix . ' .social-share-icon{' . PHP_EOL .
 										 'width:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
 										 'height:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .

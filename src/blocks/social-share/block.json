@@ -69,7 +69,7 @@
           },
           "iconShape": {
                "type": "string",
-               "default": "circle"
+               "default": "none"
           },
           "align": {
                "type": "string",
@@ -88,15 +88,23 @@
           },
           "useCaptions": {
                "type": "boolean",
-               "default": false
+               "default": true
           },
           "addOutline": {
                "type": "boolean",
-               "default": false
+               "default": true
           },
           "buttonColor": {
                "type": "string",
                "default": ""
+          },
+          "padding": {
+               "type": "object",
+               "default": {}
+          },
+          "margin": {
+               "type": "object",
+               "default": {}
           }
      },
      "supports": {}

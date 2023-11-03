@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import SavedStylesInspector from '$Inc/components/SavedStyles/SavedStylesInspector';
+import { useEffect, useState } from "react";
+import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
+import { SpacingControl } from "../components";
 /**
  * Internal block libraries
  */
@@ -303,6 +304,19 @@ export default function Inspector(props) {
 						</>
 					)}
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControl
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControl
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 		</>
 	);
