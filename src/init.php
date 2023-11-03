@@ -595,7 +595,10 @@ function ub_include_block_attribute_css() {
 					}
 					break;
 				case 'ub/divider':
-					$blockStylesheets .= '#ub_divider_' . $attributes['blockID'] . '{' . PHP_EOL .
+					$prefix = '#ub_divider_' . $attributes['blockID'];
+					$styles = ub_get_spacing_styles($attributes);
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . ' .ub_divider{' . PHP_EOL .
 										 'border-top: ' . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] . ';' . PHP_EOL .
 										 'margin-top: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
 										 'margin-bottom: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .

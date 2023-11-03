@@ -26,7 +26,8 @@ import {
 	Button,
 	ButtonGroup,
 } from "@wordpress/components";
-
+import { getStyles } from "./get-styles";
+import { SpacingControl } from "../components";
 import { withSelect } from "@wordpress/data";
 
 const attributes = {
@@ -97,7 +98,7 @@ function DividerBlock(props) {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
-
+	const styles = getStyles(props.attributes);
 	return (
 		<div {...blockProps}>
 			{isSelected && (
@@ -196,9 +197,22 @@ function DividerBlock(props) {
 							></PanelColorSettings>
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="dimensions">
+						<SpacingControl
+							showByDefault
+							attrKey="padding"
+							label={__("Padding", "ultimate-blocks")}
+						/>
+						<SpacingControl
+							minimumCustomValue={-Infinity}
+							showByDefault
+							attrKey="margin"
+							label={__("Margin", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</Fragment>
 			)}
-			<div className={className}>
+			<div className={className} style={styles}>
 				<div
 					className="ub_divider"
 					style={Object.assign(
@@ -222,6 +236,7 @@ function DividerBlock(props) {
 
 registerBlockType(metadata, {
 	icon,
+	attributes: metadata.attributes,
 	example: {
 		attributes: {
 			borderSize: "4",

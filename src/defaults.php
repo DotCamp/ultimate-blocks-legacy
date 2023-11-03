@@ -699,6 +699,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+					'type' 	=> 'array',
+					'default' => array()
+			),
 			'borderSize'   => array(
 				'type'    => 'number',
 				'default' => 2
