@@ -1787,6 +1787,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'left',
 			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
 			'iconOrder'          => array(
 				'type'    => 'array',
 				'default' => array( 'facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'tumblr' ),

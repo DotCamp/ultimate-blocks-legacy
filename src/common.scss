@@ -66,3 +66,8 @@
 %pointer {
 	cursor: pointer;
 }
+.ub-justification-control {
+	display: flex;
+	justify-content: space-between;
+	grid-gap: 20px;
+}

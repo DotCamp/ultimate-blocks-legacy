@@ -94,6 +94,10 @@
                "type": "boolean",
                "default": false
           },
+          "orientation": {
+               "type": "string",
+               "default": "row"
+          },
           "buttonColor": {
                "type": "string",
                "default": ""

@@ -2,6 +2,30 @@
 	.social-share-icons {
 		display: flex;
 		flex-wrap: wrap;
+		&.orientation-icons-row {
+			flex-direction: row;
+			&.align-icons-center {
+				justify-content: center;
+			}
+			&.align-icons-left {
+				justify-content: flex-start;
+			}
+			&.align-icons-right {
+				justify-content: flex-end;
+			}
+		}
+		&.orientation-icons-column {
+			flex-direction: column;
+			&.align-icons-center {
+				align-items: center;
+			}
+			&.align-icons-left {
+				align-items: flex-start;
+			}
+			&.align-icons-right {
+				align-items: flex-end;
+			}
+		}
 		.social-share-icon {
 			display: flex;
 			align-items: center;
@@ -38,15 +62,6 @@
 			text-decoration: none;
 		}
 	}
-}
-.align-icons-center {
-	justify-content: center;
-}
-.align-icons-left {
-	justify-content: flex-start;
-}
-.align-icons-right {
-	justify-content: flex-end;
 }
 
 $site-colors: (
