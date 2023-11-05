@@ -62,7 +62,5 @@
       }
     }
   },
-  "viewScript": [
-    "ub-counter-frontend-script"
-  ]
+  "viewScript": "ub-counter-frontend-script"
 }

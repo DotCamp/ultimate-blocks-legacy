@@ -143,6 +143,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.7 =
+
+FIX: An issue affecting counter block for WordPress5.9.3
+
 = 3.0.6 =
 
 * NEW: Counter block.
