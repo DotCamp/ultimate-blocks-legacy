@@ -86,6 +86,9 @@ const AdvancedHeadingEdit = ({
 			}
 		}
 	}, [elementRef]);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block?.clientId]);
 
 	const headingIcons = [h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon];
 
