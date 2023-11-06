@@ -16,6 +16,7 @@ import {
 	InspectorAdvancedControls,
 	PanelColorSettings,
 	useBlockProps,
+	__experimentalSpacingSizesControl as SpacingSizesControl,
 } from "@wordpress/block-editor";
 
 import { compose } from "@wordpress/compose";
@@ -474,6 +475,34 @@ function ContentTogglePanel(props) {
 							)}
 						/>
 					</PanelRow>
+				</PanelBody>
+				<PanelBody
+					title={__("Dimension Settings", "ultimate-blocks")}
+					initialOpen={false}
+				>
+					<SpacingSizesControl
+						allowReset={true}
+						label={__("Padding", "ultimate-blocks")}
+						values={blockParent?.attributes?.padding}
+						sides={["top", "right", "bottom", "left"]}
+						onChange={(newValue) => {
+							updateBlockAttributes(blockParent?.clientId, {
+								padding: newValue,
+							});
+						}}
+					/>
+					<SpacingSizesControl
+						minimumCustomValue={-Infinity}
+						allowReset={true}
+						label={__("Margin", "ultimate-blocks")}
+						values={blockParent?.attributes?.margin}
+						sides={["top", "right", "bottom", "left"]}
+						onChange={(newValue) => {
+							updateBlockAttributes(blockParent?.clientId, {
+								margin: newValue,
+							});
+						}}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<InspectorAdvancedControls>

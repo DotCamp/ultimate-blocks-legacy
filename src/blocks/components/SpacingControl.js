@@ -7,7 +7,6 @@ import {
 	__experimentalSpacingSizesControl as SpacingSizesControl,
 } from "@wordpress/block-editor";
 import { useSelect, useDispatch } from "@wordpress/data";
-import { PanelBody } from "@wordpress/components";
 
 function SpacingControl({ label, attrKey, minimumCustomValue = 0 }) {
 	const { clientId } = useBlockEditContext();
