@@ -1,4 +1,6 @@
 <?php
+require_once dirname(dirname(dirname(__DIR__))) . '/includes/ultimate-blocks-styles-css-generator.php';
+
 function ub_is_undefined($value) {
     return $value === null || !isset($value) || empty($value);
 }
@@ -14,15 +16,26 @@ function ub_generate_css_string($styles) {
     return $css_string;
 }
 function ub_progress_bar_styles($attributes){
+    $padding = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
+    $margin = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
+
     $styles = [
         '--ub-bar-top-left-radius'      => isset( $attributes['barBorderRadius']['topLeft'] ) ? $attributes['barBorderRadius']['topLeft'] : '',
         '--ub-bar-top-right-radius'     => isset( $attributes['barBorderRadius']['topRight'] ) ? $attributes['barBorderRadius']['topRight'] : '',
         '--ub-bar-bottom-left-radius'   => isset( $attributes['barBorderRadius']['bottomLeft'] ) ? $attributes['barBorderRadius']['bottomLeft'] : '',
         '--ub-bar-bottom-right-radius'  => isset( $attributes['barBorderRadius']['bottomRight'] ) ? $attributes['barBorderRadius']['bottomRight'] : '',
+        '--ub-progress-bar-padding-top'      => isset($padding['top']) ? $padding['top'] : "",
+        '--ub-progress-bar-padding-right'    => isset($padding['left']) ? $padding['left'] : "",
+        '--ub-progress-bar-padding-bottom'   => isset($padding['right']) ? $padding['right'] : "",
+        '--ub-progress-bar-padding-left'     => isset($padding['bottom']) ? $padding['bottom'] : "",
+        '--ub-progress-bar-margin-top'       => isset($margin['top']) ? $margin['top']  : "",
+        '--ub-progress-bar-margin-right'     => isset($margin['left']) ? $margin['left']  : "",
+        '--ub-progress-bar-margin-bottom'    => isset($margin['right']) ? $margin['right']  : "",
+        '--ub-progress-bar-margin-left'      => isset($margin['bottom']) ? $margin['bottom']  : "",        
     ];
     return ub_generate_css_string($styles);
 }
-function ub_render_progress_bar_block($attributes){
+function ub_render_progress_bar_block($attributes, $block_content, $block){
     extract($attributes);
     $blockName = 'ub_progress-bar';
     $chosenProgressBar = '';
@@ -93,7 +106,8 @@ function ub_render_progress_bar_block($attributes){
 
         }
 
-    $block_styles = ub_progress_bar_styles($attributes);
+    $block_attributes = isset($block->parsed_block["attrs"]) ? $block->parsed_block["attrs"] : $attributes;
+    $block_styles = ub_progress_bar_styles($block_attributes);
 
     return '<div style="' . $block_styles . '" class="ub_progress-bar' . (isset($className) ? ' ' . esc_attr($className) : '').
             '"' . ($blockID === '' ? '' : ' id="ub-progress-bar-' . $blockID . '"') . '>

@@ -16,14 +16,14 @@ export function getStyles(attributes) {
 		"--ub-bar-top-right-radius": attributes?.barBorderRadius?.topRight,
 		"--ub-bar-bottom-left-radius": attributes?.barBorderRadius?.bottomLeft,
 		"--ub-bar-bottom-right-radius": attributes?.barBorderRadius?.bottomRight,
-		paddingTop: paddingObj?.top,
-		paddingRight: paddingObj?.right,
-		paddingBottom: paddingObj?.bottom,
-		paddingLeft: paddingObj?.left,
-		marginTop: marginObj?.top,
-		marginRight: marginObj?.right,
-		marginBottom: marginObj?.bottom,
-		marginLeft: marginObj?.left,
+		"--ub-progress-bar-padding-top": paddingObj?.top,
+		"--ub-progress-bar-padding-right": paddingObj?.right,
+		"--ub-progress-bar-padding-bottom": paddingObj?.bottom,
+		"--ub-progress-bar-padding-left": paddingObj?.left,
+		"--ub-progress-bar-margin-top": marginObj?.top,
+		"--ub-progress-bar-margin-right": marginObj?.right,
+		"--ub-progress-bar-margin-bottom": marginObj?.bottom,
+		"--ub-progress-bar-margin-left": marginObj?.left,
 	};
 
 	return omitBy(styles, (value) => {

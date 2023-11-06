@@ -19,14 +19,14 @@ class Ultimate_Counter {
           $label_font_size = $attributes['labelFontSize'];
 
           $styles = array(
-               'padding-top'                      => isset($padding['top']) ? $padding['top'] : "",
-               'padding-left'                     => isset($padding['left']) ? $padding['left'] : "",
-               'padding-right'                    => isset($padding['right']) ? $padding['right'] : "",
-               'padding-bottom'                   => isset($padding['bottom']) ? $padding['bottom'] : "",
-               'margin-top'                       => !empty($margin['top']) ? $margin['top'] . " !important" : "",
-               'margin-left'                      => !empty($margin['left']) ? $margin['left'] . " !important" : "",
-               'margin-right'                     => !empty($margin['right']) ? $margin['right'] . " !important" : "",
-               'margin-bottom'                    => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
+               '--ub-counter-padding-top'                      => isset($padding['top']) ? $padding['top'] : "",
+               '--ub-counter-padding-right'                     => isset($padding['left']) ? $padding['left'] : "",
+               '--ub-counter-padding-bottom'                    => isset($padding['right']) ? $padding['right'] : "",
+               '--ub-counter-padding-left'                   => isset($padding['bottom']) ? $padding['bottom'] : "",
+               '--ub-counter-margin-top'                       => isset($margin['top']) ? $margin['top']  : "",
+               '--ub-counter-margin-right'                      => isset($margin['left']) ? $margin['left']  : "",
+               '--ub-counter-margin-bottom'                     => isset($margin['right']) ? $margin['right']  : "",
+               '--ub-counter-margin-left'                    => isset($margin['bottom']) ? $margin['bottom']  : "",
                '--ub-counter-font-size'           => $counter_font_size,
                '--ub-counter-label-font-size'     => $label_font_size
           );

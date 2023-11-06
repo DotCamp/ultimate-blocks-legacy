@@ -1,8 +1,15 @@
 .ub_progress-bar {
 	overflow: auto;
-	&:not(.is-style-ub-progress-bar-circle-wrapper):not(
-			.is-style-ub-progress-bar-half-circle-wrapper
-		) {
+	padding-top: var(--ub-progress-bar-padding-top, 0px) !important;
+	padding-right: var(--ub-progress-bar-padding-right, 0px) !important;
+	padding-bottom: var(--ub-progress-bar-padding-bottom, 0px) !important;
+	padding-left: var(--ub-progress-bar-padding-left, 0px) !important;
+	margin-top: var(--ub-progress-bar-margin-top, auto) !important;
+	margin-right: var(--ub-progress-bar-margin-right, auto) !important;
+	margin-bottom: var(--ub-progress-bar-margin-bottom, auto) !important;
+	margin-left: var(--ub-progress-bar-margin-left, auto) !important;
+
+	&:not(.is-style-ub-progress-bar-circle-wrapper):not(.is-style-ub-progress-bar-half-circle-wrapper) {
 		.ub_progress-bar-container {
 			text-align: start;
 			&.ub_progress-bar-stripe {

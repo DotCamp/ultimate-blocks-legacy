@@ -19,14 +19,14 @@ export function getStyles(attributes) {
 	let styles = {
 		"--ub-counter-font-size": attributes?.counterFontSize,
 		"--ub-counter-label-font-size": attributes?.labelFontSize,
-		paddingTop: paddingObj?.top,
-		paddingRight: paddingObj?.right,
-		paddingBottom: paddingObj?.bottom,
-		paddingLeft: paddingObj?.left,
-		marginTop: marginObj?.top,
-		marginRight: marginObj?.right,
-		marginBottom: marginObj?.bottom,
-		marginLeft: marginObj?.left,
+		"--ub-counter-padding-top": paddingObj?.top,
+		"--ub-counter-padding-right": paddingObj?.right,
+		"--ub-counter-padding-bottom": paddingObj?.bottom,
+		"--ub-counter-padding-left": paddingObj?.left,
+		"--ub-counter-margin-top": marginObj?.top,
+		"--ub-counter-margin-right": marginObj?.right,
+		"--ub-counter-margin-bottom": marginObj?.bottom,
+		"--ub-counter-margin-left": marginObj?.left,
 	};
 
 	return omitBy(styles, (value) => {

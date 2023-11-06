@@ -44,6 +44,18 @@
 		}
 	}
 }
+.editor-styles-wrapper {
+	div.ub_progress-bar[id^="block-"] {
+		padding-top: var(--ub-progress-bar-padding-top, 0px) !important;
+		padding-right: var(--ub-progress-bar-padding-right, 0px) !important;
+		padding-bottom: var(--ub-progress-bar-padding-bottom, 0px) !important;
+		padding-left: var(--ub-progress-bar-padding-left, 0px) !important;
+		margin-top: var(--ub-progress-bar-margin-top, auto) !important;
+		margin-right: var(--ub-progress-bar-margin-right, auto) !important;
+		margin-bottom: var(--ub-progress-bar-margin-bottom, auto) !important;
+		margin-left: var(--ub-progress-bar-margin-left, auto) !important;
+	}
+}
 
 [data-type="ub/progress-bar"] .components-dropdown-menu {
 	background-color: #ffffff;

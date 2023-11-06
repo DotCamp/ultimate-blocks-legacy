@@ -82,14 +82,13 @@ function StarRating(props) {
 			});
 		}
 	});
-	const blockProps = useBlockProps({
-		style: getStyles(props.attributes),
-	});
+	const blockProps = useBlockProps();
+	const styles = getStyles(props.attributes);
 	return (
 		<div {...blockProps}>
 			{isSelected && blockControls(props)}
 			{isSelected && inspectorControls(props)}
-			<div className="ub-star-rating">
+			<div className="ub-star-rating" style={styles}>
 				{editorDisplay({ ...props, highlightedStars, setHighlightedStars })}
 			</div>
 		</div>

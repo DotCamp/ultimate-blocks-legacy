@@ -298,20 +298,18 @@ function Timer(props) {
 	].slice(timeUnits.indexOf(largestUnit), timeUnits.indexOf(smallestUnit) + 1);
 
 	const odometerFormat = (
-		<div>
-			<div
-				className="ub-countdown-odometer-container"
-				style={{
-					gridTemplateColumns: Array(diff).fill("1fr").join(" auto "),
-				}}
-			>
-				{odometerLabels
-					.map((e, i) => (i < odometerLabels.length - 1 ? [e, <span />] : [e]))
-					.reduce((a, b) => a.concat(b))}
-				{odometerValues
-					.map((e, i) => (i < odometerValues.length - 1 ? [e, separator] : [e]))
-					.reduce((a, b) => a.concat(b))}
-			</div>
+		<div
+			className="ub-countdown-odometer-container"
+			style={{
+				gridTemplateColumns: Array(diff).fill("1fr").join(" auto "),
+			}}
+		>
+			{odometerLabels
+				.map((e, i) => (i < odometerLabels.length - 1 ? [e, <span />] : [e]))
+				.reduce((a, b) => a.concat(b))}
+			{odometerValues
+				.map((e, i) => (i < odometerValues.length - 1 ? [e, separator] : [e]))
+				.reduce((a, b) => a.concat(b))}
 		</div>
 	);
 

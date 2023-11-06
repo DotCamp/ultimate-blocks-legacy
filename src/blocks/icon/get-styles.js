@@ -32,14 +32,14 @@ export function getStyles(attributes) {
 			? attributes?.iconHoverBackground
 			: attributes?.iconHoverGradientBackground,
 		"--ub-icon-justification": attributes?.justification,
-		paddingTop: paddingObj?.top,
-		paddingRight: paddingObj?.right,
-		paddingBottom: paddingObj?.bottom,
-		paddingLeft: paddingObj?.left,
-		marginTop: marginObj?.top,
-		marginRight: marginObj?.right,
-		marginBottom: marginObj?.bottom,
-		marginLeft: marginObj?.left,
+		"--ub-icon-padding-top": paddingObj?.top,
+		"--ub-icon-padding-right": paddingObj?.right,
+		"--ub-icon-padding-bottom": paddingObj?.bottom,
+		"--ub-icon-padding-left": paddingObj?.left,
+		"--ub-icon-margin-top": marginObj?.top,
+		"--ub-icon-margin-right": marginObj?.right,
+		"--ub-icon-margin-bottom": marginObj?.bottom,
+		"--ub-icon-margin-left": marginObj?.left,
 	};
 
 	return omitBy(styles, (value) => {

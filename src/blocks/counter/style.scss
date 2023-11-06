@@ -1,4 +1,12 @@
 .ub_counter-container {
+	padding-top: var(--ub-counter-padding-top, 0px) !important;
+	padding-right: var(--ub-counter-padding-right, 0px) !important;
+	padding-bottom: var(--ub-counter-padding-bottom, 0px) !important;
+	padding-left: var(--ub-counter-padding-left, 0px) !important;
+	margin-top: var(--ub-counter-margin-top, auto) !important;
+	margin-right: var(--ub-counter-margin-right, auto) !important;
+	margin-bottom: var(--ub-counter-margin-bottom, auto) !important;
+	margin-left: var(--ub-counter-margin-left, auto) !important;
 	.ub_counter-number-wrapper {
 		font-size: var(--ub-counter-font-size);
 	}

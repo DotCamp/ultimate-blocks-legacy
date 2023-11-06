@@ -73,7 +73,7 @@ function CountdownMain(props) {
 
 	const styles = getStyles(props.attributes);
 	return (
-		<div {...useBlockProps({ style: styles })}>
+		<div {...useBlockProps()}>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -201,7 +201,7 @@ function CountdownMain(props) {
 					</ToolbarGroup>
 				</BlockControls>
 			)}
-			<>
+			<div style={styles}>
 				<Timer
 					timerStyle={style}
 					deadline={endDate}
@@ -221,7 +221,7 @@ function CountdownMain(props) {
 					onChange={(text) => setAttributes({ expiryMessage: text })}
 					keepPlaceholderOnFocus={true}
 				/>
-			</>
+			</div>
 		</div>
 	);
 }
