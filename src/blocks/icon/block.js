@@ -12,64 +12,21 @@ import Edit from "./edit";
 import Save from "./save";
 import metadata from "./block.json";
 
-const attributes = {
-	icon: {
-		type: "object",
-		default: {},
-	},
-	svgIcon: {
-		type: "string",
-		default: "",
-	},
-	size: {
-		type: "string",
-		default: "40px",
-	},
-	iconColor: {
-		type: "string",
-		default: null,
-	},
-	iconHoverColor: {
-		type: "string",
-		default: null,
-	},
-	iconBackground: {
-		type: "string",
-		default: null,
-	},
-	iconHoverBackground: {
-		type: "string",
-		default: null,
-	},
-	iconGradientBackground: {
-		type: "string",
-		default: null,
-	},
-	iconHoverGradientBackground: {
-		type: "string",
-		default: null,
-	},
-	justification: {
-		type: "string",
-		default: "center",
-	},
-	linkUrl: {
-		type: "string",
-	},
-	linkRel: {
-		type: "string",
-	},
-	linkTarget: {
-		type: "string",
-	},
-	iconRotation: {
-		type: "number",
-		default: 0,
-	},
-};
 registerPluginBlock(metadata, {
 	icon: blockIcon,
-	attributes,
+	attributes: metadata.attributes,
 	edit: Edit,
 	save: Save,
+	example: {
+		attributes: {
+			icon: {
+				iconName: "wordpress",
+				type: "wordpress",
+			},
+			size: "84px",
+			iconColor: "#ffffff",
+			iconBackground: "#e11b4c",
+			justification: "center",
+		},
+	},
 });
