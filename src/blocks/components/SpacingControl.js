@@ -1,21 +1,15 @@
 /**
  * WordPress Dependencies
  */
-import { isEmpty } from "lodash";
 import { __ } from "@wordpress/i18n";
 import {
 	useBlockEditContext,
 	__experimentalSpacingSizesControl as SpacingSizesControl,
 } from "@wordpress/block-editor";
 import { useSelect, useDispatch } from "@wordpress/data";
-import { __experimentalToolsPanelItem as ToolsPanelItem } from "@wordpress/components";
+import { PanelBody } from "@wordpress/components";
 
-function SpacingControl({
-	label,
-	attrKey,
-	showByDefault = false,
-	minimumCustomValue = 0,
-}) {
+function SpacingControl({ label, attrKey, minimumCustomValue = 0 }) {
 	const { clientId } = useBlockEditContext();
 
 	const attributes = useSelect(
@@ -27,32 +21,18 @@ function SpacingControl({
 	};
 	return (
 		<>
-			<ToolsPanelItem
-				panelId={clientId}
-				isShownByDefault={showByDefault}
-				resetAllFilter={() => {
+			<SpacingSizesControl
+				minimumCustomValue={minimumCustomValue}
+				allowReset={true}
+				label={label}
+				values={attributes[attrKey]}
+				sides={["top", "right", "bottom", "left"]}
+				onChange={(newValue) => {
 					setAttributes({
-						[attrKey]: {},
+						[attrKey]: newValue,
 					});
 				}}
-				className={"tools-panel-item-spacing"}
-				label={label}
-				onDeselect={() => setAttributes({ [attrKey]: {} })}
-				hasValue={() => !isEmpty(attributes[attrKey])}
-			>
-				<SpacingSizesControl
-					minimumCustomValue={minimumCustomValue}
-					allowReset={true}
-					label={label}
-					values={attributes[attrKey]}
-					sides={["top", "right", "bottom", "left"]}
-					onChange={(newValue) => {
-						setAttributes({
-							[attrKey]: newValue,
-						});
-					}}
-				/>
-			</ToolsPanelItem>
+			/>
 		</>
 	);
 }
