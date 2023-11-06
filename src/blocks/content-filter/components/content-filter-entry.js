@@ -11,6 +11,7 @@ import {
 	InspectorControls,
 } from "@wordpress/block-editor";
 import { registerBlockType } from "@wordpress/blocks";
+import { PanelBody } from "@wordpress/components";
 
 function NewDropdown(props) {
 	const wrapperRef = useRef(null);
@@ -267,18 +268,23 @@ function ContentFilterEntry(props) {
 	const styles = getStyles(attributes);
 	return (
 		<>
-			<InspectorControls group="dimensions">
-				<SpacingControl
-					showByDefault
-					attrKey="padding"
-					label={__("Padding", "ultimate-blocks")}
-				/>
-				<SpacingControl
-					minimumCustomValue={-Infinity}
-					showByDefault
-					attrKey="margin"
-					label={__("Margin", "ultimate-blocks")}
-				/>
+			<InspectorControls group="styles">
+				<PanelBody
+					title={__("Dimension Settings", "ultimate-blocks")}
+					initialOpen={false}
+				>
+					<SpacingControl
+						showByDefault
+						attrKey="padding"
+						label={__("Padding", "ultimate-blocks")}
+					/>
+					<SpacingControl
+						minimumCustomValue={-Infinity}
+						showByDefault
+						attrKey="margin"
+						label={__("Margin", "ultimate-blocks")}
+					/>
+				</PanelBody>
 			</InspectorControls>
 			<div
 				{...useBlockProps({

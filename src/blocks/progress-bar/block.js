@@ -272,6 +272,22 @@ function ProgressBarMain(props) {
 								]}
 							/>
 						</PanelBody>
+						<PanelBody
+							title={__("Dimension Settings", "ultimate-blocks")}
+							initialOpen={false}
+						>
+							<SpacingControl
+								showByDefault
+								attrKey="padding"
+								label={__("Padding", "ultimate-blocks")}
+							/>
+							<SpacingControl
+								minimumCustomValue={-Infinity}
+								showByDefault
+								attrKey="margin"
+								label={__("Margin", "ultimate-blocks")}
+							/>
+						</PanelBody>
 					</InspectorControls>
 					{!isStyleCircle && !isStyleHalfCircle && (
 						<InspectorControls group="border">
@@ -281,19 +297,6 @@ function ProgressBarMain(props) {
 							/>
 						</InspectorControls>
 					)}
-					<InspectorControls group="dimensions">
-						<SpacingControl
-							showByDefault
-							attrKey="padding"
-							label={__("Padding", "ultimate-blocks")}
-						/>
-						<SpacingControl
-							minimumCustomValue={-Infinity}
-							showByDefault
-							attrKey="margin"
-							label={__("Margin", "ultimate-blocks")}
-						/>
-					</InspectorControls>
 				</>
 			)}
 			<div {...blockProps}>

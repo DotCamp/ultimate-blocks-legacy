@@ -1861,19 +1861,22 @@ function ReviewMain(props) {
 								]}
 							/>
 						</PanelBody>
-					</InspectorControls>
-					<InspectorControls group="dimensions">
-						<SpacingControl
-							showByDefault
-							attrKey="padding"
-							label={__("Padding", "ultimate-blocks")}
-						/>
-						<SpacingControl
-							minimumCustomValue={-Infinity}
-							showByDefault
-							attrKey="margin"
-							label={__("Margin", "ultimate-blocks")}
-						/>
+						<PanelBody
+							title={__("Dimension Settings", "ultimate-blocks")}
+							initialOpen={false}
+						>
+							<SpacingControl
+								showByDefault
+								attrKey="padding"
+								label={__("Padding", "ultimate-blocks")}
+							/>
+							<SpacingControl
+								minimumCustomValue={-Infinity}
+								showByDefault
+								attrKey="margin"
+								label={__("Margin", "ultimate-blocks")}
+							/>
+						</PanelBody>
 					</InspectorControls>
 				</>
 			)}
