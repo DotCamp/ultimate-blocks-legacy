@@ -232,6 +232,7 @@ const AdvancedHeadingEdit = ({
 				ref={elementRef}
 				tagName={level || "h2"}
 				value={content}
+				placeholder={__("Write heading...", "ultimate-blocks")}
 				onChange={(value) => setAttributes({ content: value })}
 				style={{
 					textAlign: alignment,
