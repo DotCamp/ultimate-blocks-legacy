@@ -47,7 +47,7 @@ function ub_render_social_share_block( $attributes ) {
 
     return '<div class="wp-block-ub-social-share'.(isset($className) ? ' ' . esc_attr($className) : '').
                 '"' . ($blockID === '' ? '' : ' id="ub-social-share-' . $blockID . '"') . '>
-		<div class="social-share-icons align-icons-' . $align . ($useCaptions && !$addOutline ? ' no-outline' : '') . '">' . $icons .
+		<div class="social-share-icons align-icons-' . $align . ' orientation-icons-' . $orientation . ($useCaptions && !$addOutline ? ' no-outline' : '') . '">' . $icons .
         '</div>
 	</div>';
 }

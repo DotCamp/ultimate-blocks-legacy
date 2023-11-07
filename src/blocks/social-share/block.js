@@ -39,7 +39,7 @@ const iconSizes = {
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
 
-const { BlockControls, AlignmentToolbar, useBlockProps } =
+const { BlockControls, useBlockProps, JustifyContentControl } =
 	wp.blockEditor || wp.editor;
 const { withSelect } = wp.data;
 
@@ -163,14 +163,14 @@ const SortableList = SortableContainer(
 		iconShape,
 		iconSize,
 		align,
+		orientation,
 		color,
 		captions,
 		useCaptions,
 		addOutline,
 	}) => (
 		<div
-			className={"social-share-icons align-icons-" + align}
-			style={{ display: "flex", flexDirection: "row" }}
+			className={`social-share-icons align-icons-${align} orientation-icons-${orientation}`}
 		>
 			{items.map((value, index) => (
 				<SortableItem
@@ -209,6 +209,7 @@ function SocialShareMain(props) {
 		buttonColor,
 		useCaptions,
 		addOutline,
+		orientation,
 	} = attributes;
 
 	const iconSize = iconSizes[attributes.iconSize];
@@ -246,13 +247,17 @@ function SocialShareMain(props) {
 	return (
 		<div {...blockProps}>
 			{isSelected && (
-				<BlockControls>
-					<AlignmentToolbar
-						value={align}
-						onChange={(newAlignment) => setAttributes({ align: newAlignment })}
-						controls={["left", "center", "right"]}
-					/>
-				</BlockControls>
+				<>
+					<BlockControls group="block">
+						<JustifyContentControl
+							allowedControls={["left", "center", "right"]}
+							value={align}
+							onChange={(next) => {
+								setAttributes({ align: next });
+							}}
+						/>
+					</BlockControls>
+				</>
 			)}
 			{isSelected && <Inspector {...props} />}
 			<div
@@ -271,6 +276,7 @@ function SocialShareMain(props) {
 					iconSize={iconSize}
 					iconShape={iconShape}
 					align={align}
+					orientation={orientation}
 					color={buttonColor}
 					useCaptions={useCaptions}
 					addOutline={addOutline}

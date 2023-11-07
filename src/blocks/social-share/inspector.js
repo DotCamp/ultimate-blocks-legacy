@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
-import { SpacingControl } from "../components";
+import { SpacingControl, CustomToggleGroupControl } from "../components";
+import { AVAILABLE_JUSTIFICATIONS, AVAILABLE_ORIENTATION } from "../../common";
 /**
  * Internal block libraries
  */
@@ -37,9 +38,26 @@ export default function Inspector(props) {
 		tumblrCaption,
 	} = attributes;
 
+	const UPDATED_JUSTIFICATION = AVAILABLE_JUSTIFICATIONS.filter(
+		(align) => align.value !== "space-between"
+	);
 	return (
 		<>
 			<InspectorControls group="settings">
+				<PanelBody>
+					<div className="ub-justification-control">
+						<CustomToggleGroupControl
+							options={UPDATED_JUSTIFICATION}
+							attributeKey="align"
+							label={__("Justification", "ultimate-blocks")}
+						/>
+						<CustomToggleGroupControl
+							options={AVAILABLE_ORIENTATION}
+							attributeKey="orientation"
+							label={__("Orientation", "ultimate-blocks")}
+						/>
+					</div>
+				</PanelBody>
 				<PanelBody title={__("Visibility")} initialOpen={false}>
 					<PanelRow>
 						<label htmlFor="facebook-icon-form-toggle">

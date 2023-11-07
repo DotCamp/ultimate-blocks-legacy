@@ -8,4 +8,12 @@ registerBlockType(metadata, {
 	edit: Edit,
 	save: () => null,
 	icon: blockIcon,
+	example: {
+		attributes: {
+			label: "Counter Label",
+			startNumber: "0",
+			endNumber: "500",
+			counterFontSize: "32px",
+		},
+	},
 });

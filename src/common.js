@@ -1,5 +1,13 @@
 const { __ } = wp.i18n;
 import { useRef, useEffect } from "react";
+import {
+	justifyLeft,
+	justifyCenter,
+	justifyRight,
+	justifySpaceBetween,
+	arrowDown,
+	arrowRight,
+} from "@wordpress/icons";
 
 export const richTextToHTML = (elem) => {
 	let outputString = "";
@@ -109,3 +117,39 @@ export const usePrevious = (value) => {
 	});
 	return ref.current;
 };
+
+export const AVAILABLE_JUSTIFICATIONS = [
+	{
+		value: "left",
+		icon: justifyLeft,
+		label: __("Justify items left", "ultimate-blocks"),
+	},
+	{
+		value: "center",
+		icon: justifyCenter,
+		label: __("Justify items center", "ultimate-blocks"),
+	},
+	{
+		value: "right",
+		icon: justifyRight,
+		label: __("Justify items right", "ultimate-blocks"),
+	},
+	{
+		value: "space-between",
+		icon: justifySpaceBetween,
+		label: __("Justify items space between", "ultimate-blocks"),
+	},
+];
+
+export const AVAILABLE_ORIENTATION = [
+	{
+		value: "row",
+		icon: arrowRight,
+		label: __("Horizontal", "ultimate-blocks"),
+	},
+	{
+		value: "column",
+		icon: arrowDown,
+		label: __("Vertical", "ultimate-blocks"),
+	},
+];

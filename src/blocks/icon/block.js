@@ -17,4 +17,16 @@ registerPluginBlock(metadata, {
 	attributes: metadata.attributes,
 	edit: Edit,
 	save: Save,
+	example: {
+		attributes: {
+			icon: {
+				iconName: "wordpress",
+				type: "wordpress",
+			},
+			size: "84px",
+			iconColor: "#ffffff",
+			iconBackground: "#e11b4c",
+			justification: "center",
+		},
+	},
 });
