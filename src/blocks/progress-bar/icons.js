@@ -1,14 +1,28 @@
 const icon = (
 	<svg
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
-		width={20}
-		height={20}
-		viewBox="0 0 455.138 455.139"
 	>
+		<rect width="24" height="24" fill="white" />
 		<path
-			d="M0,141.653v171.832h455.138V141.653H0z M432.721,291.071H22.414V164.067h410.312v127.004H432.721z M104.294,271.465H44.528 v-89.652h59.767V271.465z M193.947,271.465h-59.765v-89.652h59.765V271.465z M287.334,271.465h-59.768v-89.652h59.768V271.465z"
-			fill="#f64646"
+			fill-rule="evenodd"
+			clip-rule="evenodd"
+			d="M2 6C2 4.89543 2.89543 4 4 4H20C21.1046 4 22 4.89543 22 6V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V6ZM4 8C4 7.44772 4.44772 7 5 7H19C19.5523 7 20 7.44772 20 8V10C20 10.5523 19.5523 11 19 11H5C4.44772 11 4 10.5523 4 10V8ZM5 13C4.44772 13 4 13.4477 4 14V16C4 16.5523 4.44772 17 5 17H19C19.5523 17 20 16.5523 20 16V14C20 13.4477 19.5523 13 19 13H5Z"
+			fill="#E11B4C"
 		/>
+		<rect x="5" y="8" width="1" height="2" fill="#E11B4C" />
+		<rect x="5" y="14" width="1" height="2" fill="#E11B4C" />
+		<rect x="7" y="8" width="1" height="2" fill="#E11B4C" />
+		<rect x="7" y="14" width="1" height="2" fill="#E11B4C" />
+		<rect x="9" y="8" width="1" height="2" fill="#E11B4C" />
+		<rect x="9" y="14" width="1" height="2" fill="#E11B4C" />
+		<rect x="11" y="8" width="1" height="2" fill="#E11B4C" />
+		<rect x="11" y="14" width="1" height="2" fill="#E11B4C" />
+		<rect x="13" y="14" width="1" height="2" fill="#E11B4C" />
+		<rect x="15" y="14" width="1" height="2" fill="#E11B4C" />
 	</svg>
 );
 
