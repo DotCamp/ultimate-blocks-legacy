@@ -1,4 +1,5 @@
 import { __ } from "@wordpress/i18n";
+import { useState } from "@wordpress/element";
 import {
 	useBlockProps,
 	BlockControls,
@@ -8,10 +9,11 @@ import {
 
 import Inspector from "./inspector";
 import { getStyles } from "./get-styles";
+import { useCounter } from "./hooks/use-counter";
 
 function Edit(props) {
 	const { attributes, setAttributes } = props;
-
+	let counter = useCounter(attributes);
 	const { endNumber, prefix, suffix, alignment, label, labelPosition } =
 		attributes;
 	const blockProps = useBlockProps({
@@ -41,7 +43,7 @@ function Edit(props) {
 				)}
 				<div className="ub_counter-number-wrapper">
 					<span className="ub_counter-prefix">{prefix}</span>
-					<span className="ub_counter-number">{endNumber}</span>
+					<span className="ub_counter-number">{counter}</span>
 					<span className="ub_counter-suffix">{suffix}</span>
 				</div>
 				{labelPosition === "bottom" && (

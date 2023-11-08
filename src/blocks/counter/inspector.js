@@ -21,12 +21,14 @@ function Inspector(props) {
 					<TextControl
 						label={__("Starting Number", "ultimate-blocks")}
 						type="number"
+						min={0}
 						value={startNumber}
 						onChange={(newValue) => setAttributes({ startNumber: newValue })}
 					/>
 					<TextControl
 						label={__("Ending Number", "ultimate-blocks")}
 						type="number"
+						min={0}
 						value={endNumber}
 						onChange={(newValue) => setAttributes({ endNumber: newValue })}
 					/>
