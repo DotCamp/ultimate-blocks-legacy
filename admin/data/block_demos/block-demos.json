@@ -20,5 +20,8 @@
   "ub/styled-list": "https://ultimateblocks.com/styled-list-block/",
   "ub/tabbed-content-block": "https://ultimateblocks.com/tabbed-content-block/",
   "ub/table-of-contents-block": "https://ultimateblocks.com/table-of-contents-block/",
-  "ub/testimonial": "https://ultimateblocks.com/testimonial-block/"
+  "ub/testimonial": "https://ultimateblocks.com/testimonial-block/",
+  "ub/counter": "https://ultimateblocks.com/counter-block",
+  "ub/advanced-video": "https://ultimateblocks.com/advanced-video-block/",
+  "ub/icon": "https://ultimateblocks.com/icon-block/"
 }
