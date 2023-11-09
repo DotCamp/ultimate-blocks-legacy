@@ -1318,6 +1318,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'postType' => array(
+				'type'    => 'string',
+				'default' => 'post'
+			),
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()
