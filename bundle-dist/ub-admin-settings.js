@@ -39476,7 +39476,6 @@ function _toPrimitive(input, hint) {
         else carry.push(current);
         return carry;
     }, reducedBlocks);
-    console.log(allRegistered);
     var _appData$assets = appData.assets, contentData = _appData$assets.contentData, preloadedAssets = _objectWithoutProperties(_appData$assets, _excluded);
     var preloadedState = {
         app: {

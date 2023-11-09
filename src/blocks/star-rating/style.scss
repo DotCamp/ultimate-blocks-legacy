@@ -6,7 +6,11 @@
 .ub-star-container {
 	display: flex;
 	flex-direction: row;
-	margin: 20px 0;
+}
+.ub-star-rating {
+	.ub-review-text {
+		margin-top: 20px;
+	}
 }
 .ub-star-inner-container svg {
 	margin-top: initial;

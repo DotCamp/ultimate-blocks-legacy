@@ -1,6 +1,6 @@
-import React from 'react';
-import Router from '$Components/Router';
-import RouterProvider from '$Components/RouterProvider';
+import React from "react";
+import Router from "$Components/Router";
+import RouterProvider from "$Components/RouterProvider";
 
 /**
  * Contents of menu page.

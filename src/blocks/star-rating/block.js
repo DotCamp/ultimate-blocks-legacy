@@ -82,6 +82,9 @@ function StarRating(props) {
 			});
 		}
 	});
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const blockProps = useBlockProps();
 	const styles = getStyles(props.attributes);
 	return (
