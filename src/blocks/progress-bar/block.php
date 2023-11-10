@@ -68,7 +68,7 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
             <path class="' . $blockName . '-line-path" d="' . $progressBarPath . '" stroke="' . $barColor . '"
                 stroke-width="' . $barThickness . '"' . ($blockID === '' ? ' style="stroke-dashoffset:' .  (100 - $percentage) . 'px;"' : '') . '/>
                 ' . $stripe_element . '
-        </svg>' . $bottom_percentage;
+        </svg>' . $bottom_percentage . '</div>';
     }
     else if ($is_style_circle) {
         $circleRadius = 50 - ($barThickness + 3) / 2;
