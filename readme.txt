@@ -147,7 +147,19 @@ That's it. You're done!
 
 * FIX: An issue affecting counter block for WordPress5.9.3.
 * FIX: Advanced block duplicate instance not working properly.
+* FIX: An issue affecting counter block for WordPress5.9.3.
+* FIX: Advanced video block preview.
+* FIX: Progress bar html error.
+* FIX: Styled List block spacing in editor.
+* FIX: Star rating duplicate instance not working properly.
+* FIX: Advanced heading duplicate instance not working properly.
 * NEW: Orientation option for social share block.
+* NEW: Dimension settings for all blocks.
+* PRO: NEW: Custom post type support in Post Grid block.
+* IMPROVE: Add placeholder text in advanced heading.
+* IMPROVE: Replace all block icons with newly design icons.
+* IMPROVE: Convert block registration with block.json.
+* IMPROVE: Counter animation in editor.
 
 = 3.0.6 =
 
