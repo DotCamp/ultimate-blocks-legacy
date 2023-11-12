@@ -160,6 +160,7 @@ That's it. You're done!
 * IMPROVE: Replace all block icons with newly design icons.
 * IMPROVE: Convert block registration with block.json.
 * IMPROVE: Counter animation in editor.
+* IMPROVE: Progress bar detail position.
 
 = 3.0.6 =
 

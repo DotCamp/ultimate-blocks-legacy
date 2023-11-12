@@ -46,13 +46,24 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
     $percentage_position = $attributes['percentagePosition'];
     $is_stripe = $attributes['isStripe'];
 
-    $percentage_text = '<div class="' . $blockName . '-label"' . ($blockID === '' ? ' style="width:' . $percentage . '%;"' : '') . '>' . $percentage . '%</div>';
+    $percentage_text = '<div class="' . $blockName . '-label'. ( $percentage_position === 'top' ? ' ub_progress-bar-label-top' : '' )  . '"' . ($blockID === '' ? ' style="width:' . $percentage . '%;"' : '') . '>' . $percentage . '%</div>';
 
-    $inside_percentage = $percentage_position === 'inside' ? " ub_progress-bar-label-inside" : '';
+    $inside_percentage_class = $percentage_position === 'inside' ? " ub_progress-bar-label-inside" : '';
     $stripe_style = $is_stripe ? " ub_progress-bar-stripe" : '';
+    $detail_text = '<div class="ub_progress-bar-text"><p' . ($blockID === '' ? ' style="text-align: ' . $detailAlign . ';"' : '') . '>' . $detail . '</p></div>';
 
-    $top_percentage = $percentage_position === 'top'  ? $percentage_text : "";
-    $bottom_percentage = $percentage_position === 'bottom' || $percentage_position === 'inside' ? $percentage_text : "";
+    $top_percentage = $percentage_position === 'top'  ? 
+    '<div class="ub_progress-detail-wrapper">
+         ' . $detail_text . '
+         ' . $percentage_text . '
+    </div>' : '<div class="ub_progress-detail-wrapper">
+         ' . $detail_text . '
+    </div>';
+    $inside_percentage = $percentage_position === 'inside'  ? 
+    '<foreignObject width="100%" height="100%" viewBox="0 0 120 10" x="0" y="0">
+        ' . $percentage_text . '
+    </foreignObject>' : "";
+    $bottom_percentage = $percentage_position === 'bottom' ? $percentage_text : "";
 
     $stripe_element = $is_stripe ?
         '<foreignObject width="100%" height="100%">
@@ -62,12 +73,12 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
     if(!$is_style_circle && !$is_style_half_circle){
         $progressBarPath = 'M' . ($barThickness / 2) . ',' . ($barThickness / 2)
                             . 'L' . (100 - $barThickness / 2) . ',' . ($barThickness / 2);
-        $chosenProgressBar = '<div class="' . $blockName . '-container' . $inside_percentage . $stripe_style . '" id="' . $blockID . '">
+        $chosenProgressBar = '<div class="' . $blockName . '-container' . $inside_percentage_class . $stripe_style . '" id="' . $blockID . '">
         ' . $top_percentage . ' <svg class="' . $blockName . '-line" viewBox="0 0 100 ' . $barThickness . '" preserveAspectRatio="none">
             <path class="' . $blockName . '-line-trail" d="' . $progressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . $barThickness . '"/>
             <path class="' . $blockName . '-line-path" d="' . $progressBarPath . '" stroke="' . $barColor . '"
                 stroke-width="' . $barThickness . '"' . ($blockID === '' ? ' style="stroke-dashoffset:' .  (100 - $percentage) . 'px;"' : '') . '/>
-                ' . $stripe_element . '
+                ' . $stripe_element . $inside_percentage . '
         </svg>' . $bottom_percentage . '</div>';
     }
     else if ($is_style_circle) {
@@ -108,12 +119,10 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
 
     $block_attributes = isset($block->parsed_block["attrs"]) ? $block->parsed_block["attrs"] : $attributes;
     $block_styles = ub_progress_bar_styles($block_attributes);
-
+    
     return '<div style="' . $block_styles . '" class="ub_progress-bar' . (isset($className) ? ' ' . esc_attr($className) : '').
             '"' . ($blockID === '' ? '' : ' id="ub-progress-bar-' . $blockID . '"') . '>
-                <div class="ub_progress-bar-text">
-                <p' . ($blockID === '' ? ' style="text-align: ' . $detailAlign . ';"' : '') . '>' . $detail . '</p></div>'
-            . $chosenProgressBar
+                '. ( $is_style_circle || $is_style_half_circle ? $detail_text : "" ) . $chosenProgressBar
         . '</div>';
 }
 

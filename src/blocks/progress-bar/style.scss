@@ -12,6 +12,10 @@
 	&:not(.is-style-ub-progress-bar-circle-wrapper):not(.is-style-ub-progress-bar-half-circle-wrapper) {
 		.ub_progress-bar-container {
 			text-align: start;
+			.ub_progress-detail-wrapper {
+				display: flex;
+				align-items: center;
+			}
 			&.ub_progress-bar-stripe {
 				position: relative;
 				.ub_progress-bar-line-stripe {
@@ -40,7 +44,8 @@
 				.ub_progress-bar-label {
 					position: absolute;
 					top: 50%;
-					height: 100%;
+					font-size: 1.5px;
+					line-height: 1.2;
 					transform: translate(0%, -50%);
 				}
 			}
@@ -72,6 +77,10 @@
 			.ub_progress-bar-label {
 				text-align: right;
 				min-width: 24px;
+				&.ub_progress-bar-label-top {
+					position: absolute;
+					left: 0;
+				}
 			}
 		}
 	}

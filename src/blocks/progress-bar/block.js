@@ -82,6 +82,8 @@ function ProgressBarMain(props) {
 		labelColor,
 		percentagePosition,
 		isStripe,
+		detailAlign,
+		detail,
 	};
 
 	const percentagePositionOptions = [
@@ -300,16 +302,18 @@ function ProgressBarMain(props) {
 				</>
 			)}
 			<div {...blockProps}>
-				<div className="ub_progress-bar-text">
-					<RichText
-						tagName="p"
-						style={{ textAlign: detailAlign }}
-						placeholder={__("Progress bar description")}
-						value={detail}
-						onChange={(text) => setAttributes({ detail: text })}
-						keepPlaceholderOnFocus={true}
-					/>
-				</div>
+				{(isStyleCircle || isStyleHalfCircle) && (
+					<div className="ub_progress-bar-text">
+						<RichText
+							tagName="p"
+							style={{ textAlign: detailAlign }}
+							placeholder={__("Progress bar description")}
+							value={detail}
+							onChange={(text) => setAttributes({ detail: text })}
+							keepPlaceholderOnFocus={true}
+						/>
+					</div>
+				)}
 				{percentage > -1 && ( //linear progress bar fails to render properly unless a value of 0 or greater is inputted
 					<>
 						{!isStyleCircle && !isStyleHalfCircle && (

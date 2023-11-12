@@ -21,6 +21,8 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 
+import { __ } from "@wordpress/i18n";
+import { RichText } from "@wordpress/block-editor";
 import { useState, useEffect } from "react";
 
 export default function Line(props) {
@@ -35,6 +37,8 @@ export default function Line(props) {
 		labelColor,
 		percentagePosition,
 		isStripe,
+		detailAlign,
+		detail,
 	} = props;
 
 	useEffect(() => {
@@ -61,18 +65,30 @@ export default function Line(props) {
 		<div
 			className={`ub_progress-bar-container${insideLabelClass}${stripeStyleClass}`}
 		>
-			{percentagePosition === "top" && (
-				<div
-					className="ub_progress-bar-label"
-					style={{
-						width: `${percent}%`,
-						visibility: isActive ? "visible" : "hidden",
-						color: labelColor || "inherit",
-					}}
-				>
-					{percent}%
+			<div className="ub_progress-detail-wrapper">
+				<div className="ub_progress-bar-text">
+					<RichText
+						tagName="p"
+						style={{ textAlign: detailAlign }}
+						placeholder={__("Progress bar description")}
+						value={detail}
+						onChange={(text) => setAttributes({ detail: text })}
+						keepPlaceholderOnFocus={true}
+					/>
 				</div>
-			)}
+				{percentagePosition === "top" && (
+					<div
+						className="ub_progress-bar-label ub_progress-bar-label-top"
+						style={{
+							width: `${percent}%`,
+							visibility: isActive ? "visible" : "hidden",
+							color: labelColor || "inherit",
+						}}
+					>
+						{percent}%
+					</div>
+				)}
+			</div>
 			<svg
 				className="ub_progress-bar-line"
 				viewBox={`0 0 100 ${barThickness}`}
@@ -96,8 +112,28 @@ export default function Line(props) {
 						<div className="ub_progress-bar-line-stripe" />
 					</foreignObject>
 				)}
+				{percentagePosition === "inside" && (
+					<foreignObject
+						width="100%"
+						height="100%"
+						viewBox="0 0 120 10"
+						x="0"
+						y="0"
+					>
+						<div
+							className="ub_progress-bar-label"
+							style={{
+								width: `${percent}%`,
+								visibility: isActive ? "visible" : "hidden",
+								color: labelColor || "inherit",
+							}}
+						>
+							{percent}%
+						</div>
+					</foreignObject>
+				)}
 			</svg>
-			{(percentagePosition === "bottom" || percentagePosition === "inside") && (
+			{percentagePosition === "bottom" && (
 				<div
 					className="ub_progress-bar-label"
 					style={{
