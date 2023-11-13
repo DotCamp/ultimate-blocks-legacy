@@ -16,82 +16,73 @@ import AssetProvider from '$Components/AssetProvider';
 function WelcomeContent() {
 	return (
 		<AssetProvider
-			assetIds={ [
+			assetIds={[
 				'youtubeVideoId',
 				'documentsUrl',
 				'supportUrl',
 				'twitterUrl',
 				'facebookUrl',
 				'youtubeUrl',
-			] }
+			]}
 		>
-			{ ( {
+			{({
 				youtubeVideoId,
 				documentsUrl,
 				supportUrl,
 				twitterUrl,
 				facebookUrl,
 				youtubeUrl,
-			} ) => (
-				<div className={ 'ub-welcome-content' }>
-					<div className={ 'ub-welcome-content__main' }>
+			}) => (
+				<div className={'ub-welcome-content'}>
+					<div className={'ub-welcome-content__main'}>
 						<BoxContentProvider
-							size={ BoxContentSize.JUMBO }
-							contentId={ 'welcome' }
+							size={BoxContentSize.JUMBO}
+							contentId={'welcome'}
 						>
 							<YouTubeEmbed
-								height={ 315 }
-								videoId={ youtubeVideoId }
+								height={315}
+								videoId={youtubeVideoId}
 							/>
 						</BoxContentProvider>
 						<UpgradeBoxContent />
 					</div>
-					<div className={ 'ub-welcome-content__right-sidebar' }>
-						<BoxContentProvider contentId={ 'documentation' }>
+					<div className={'ub-welcome-content__right-sidebar'}>
+						<BoxContentProvider contentId={'documentation'}>
 							<ButtonLink
-								url={ documentsUrl }
-								title={ __(
-									'Visit Documents',
-									'ultimate-blocks'
-								) }
-								type={ ButtonLinkType.DEFAULT }
+								url={documentsUrl}
+								title={__('Visit Documents', 'ultimate-blocks')}
+								type={ButtonLinkType.DEFAULT}
 							/>
 						</BoxContentProvider>
-						<BoxContentProvider contentId={ 'support' }>
+						<BoxContentProvider contentId={'support'}>
 							<ButtonLink
-								url={ supportUrl }
-								title={ __(
-									'Support Forum',
-									'ultimate-blocks'
-								) }
-								type={ ButtonLinkType.DEFAULT }
+								url={supportUrl}
+								title={__('Support Forum', 'ultimate-blocks')}
+								type={ButtonLinkType.DEFAULT}
 							/>
 						</BoxContentProvider>
-						<BoxContentProvider contentId={ 'community' }>
+						<BoxContentProvider contentId={'community'}>
 							<ButtonLinkGroup>
 								<ButtonLink
-									url={ facebookUrl }
-									title={ __(
-										'Facebook',
-										'ultimate-blocks'
-									) }
-									type={ ButtonLinkType.TEXT }
+									url={facebookUrl}
+									title={__('Facebook', 'ultimate-blocks')}
+									type={ButtonLinkType.TEXT}
 								/>
 								<ButtonLink
-									url={ twitterUrl }
-									title={ __( 'Twitter', 'ultimate-blocks' ) }
-									type={ ButtonLinkType.TEXT }
+									url={twitterUrl}
+									title={__('Twitter', 'ultimate-blocks')}
+									type={ButtonLinkType.TEXT}
 								/>
 								<ButtonLink
-									url={ youtubeUrl }
-									title={ __( 'YouTube', 'ultimate-blocks' ) }
-									type={ ButtonLinkType.TEXT }
+									url={youtubeUrl}
+									title={__('YouTube', 'ultimate-blocks')}
+									type={ButtonLinkType.TEXT}
 								/>
 							</ButtonLinkGroup>
 						</BoxContentProvider>
 					</div>
 				</div>
-			) }
+			)}
 		</AssetProvider>
 	);
 }

@@ -7,7 +7,7 @@ import React from 'react';
  */
 function ScreenCenterMarks() {
 	return (
-		<div className={ 'ub-screen-center' }>
+		<div className={'ub-screen-center'}>
 			<div className="ub-screen-center-vertical" />
 			<div className="ub-screen-center-horizontal" />
 		</div>
