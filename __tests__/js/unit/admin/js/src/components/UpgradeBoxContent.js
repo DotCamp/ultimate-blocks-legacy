@@ -6,32 +6,30 @@ import * as BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 import * as ProFilterModule from '$Components/ProFilter';
 import * as AssetProviderModule from '$Components/AssetProvider';
 
-describe( 'UpgradeBoxContent', () => {
-	it( 'should reflect given props to BoxContentProvider', () => {
+describe('UpgradeBoxContent', () => {
+	it('should reflect given props to BoxContentProvider', () => {
 		const testMessage = 'test message';
 
 		sinon
-			.stub( ProFilterModule, 'default' )
-			.callsFake( ( { children } ) => children );
+			.stub(ProFilterModule, 'default')
+			.callsFake(({ children }) => children);
 
 		sinon
-			.stub( AssetProviderModule, 'default' )
-			.callsFake( ( { children } ) =>
-				children( { proBuyUrl: 'https://example.com' } )
+			.stub(AssetProviderModule, 'default')
+			.callsFake(({ children }) =>
+				children({ proBuyUrl: 'https://example.com' })
 			);
 
-		sinon
-			.stub( BoxContentProvider, 'default' )
-			.callsFake( ( { message } ) => {
-				return <div>{ message }</div>;
-			} );
+		sinon.stub(BoxContentProvider, 'default').callsFake(({ message }) => {
+			return <div>{message}</div>;
+		});
 
 		const UpgradeBoxContent = proxyquire(
-			require.resolve( '$Components/UpgradeBoxContent' ),
+			require.resolve('$Components/UpgradeBoxContent'),
 			{}
 		).default;
 
-		render( <UpgradeBoxContent message={ testMessage } /> );
-		expect( screen.getByText( testMessage ) ).to.be.ok();
-	} );
-} );
+		render(<UpgradeBoxContent message={testMessage} />);
+		expect(screen.getByText(testMessage)).to.be.ok();
+	});
+});

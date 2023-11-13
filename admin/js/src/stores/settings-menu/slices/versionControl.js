@@ -11,7 +11,7 @@ const versionControlSliceOptions = {
 	initialState: initialState.versionControl,
 };
 
-const versionControlSlice = createSlice( versionControlSliceOptions );
+const versionControlSlice = createSlice(versionControlSliceOptions);
 
 /**
  * Get plugin current version.
@@ -19,7 +19,7 @@ const versionControlSlice = createSlice( versionControlSliceOptions );
  * @param {Object} state store state
  * @return {string} current version
  */
-export const currentVersion = ( state ) => {
+export const currentVersion = (state) => {
 	return state.versionControl.currentVersion;
 };
 
@@ -29,7 +29,7 @@ export const currentVersion = ( state ) => {
  * @param {Object} state store state
  * @return {string} current version
  */
-export const versions = ( state ) => {
+export const versions = (state) => {
 	return state.versionControl.versions;
 };
 
@@ -39,7 +39,7 @@ export const versions = ( state ) => {
  * @param {Object} state store state
  * @return {Object} ajax info
  */
-export const ajaxInfo = ( state ) => {
+export const ajaxInfo = (state) => {
 	return state.versionControl.ajax;
 };
 

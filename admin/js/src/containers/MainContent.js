@@ -19,23 +19,23 @@ import UpsellModalSettingsMenu from '$Components/UpsellModalSettingsMenu';
  * @param {string}   props.blockFilter         current block filter, will be supplied via HOC
  * @param {Function} props.setBlockFilterValue set block filter value for the app, will be supplied via HOC
  */
-function MainContent( { blockFilter, setBlockFilterValue } ) {
+function MainContent({ blockFilter, setBlockFilterValue }) {
 	return (
-		<div className={ 'menu-content' }>
+		<div className={'menu-content'}>
 			<UpsellModalSettingsMenu />
 			<MainContentPhrase />
 			<BlockStatusFilterControl
-				filterVal={ blockFilter }
-				onFilterChanged={ setBlockFilterValue }
+				filterVal={blockFilter}
+				onFilterChanged={setBlockFilterValue}
 			/>
 			<BlockControlsContainer />
 		</div>
 	);
 }
 
-const selectMapping = ( selector ) => {
+const selectMapping = (selector) => {
 	return {
-		blockFilter: selector( getBlockFilter ),
+		blockFilter: selector(getBlockFilter),
 	};
 };
 
@@ -48,4 +48,4 @@ const actionMapping = () => {
 /**
  * @module MenuContent
  */
-export default withStore( MainContent, selectMapping, actionMapping );
+export default withStore(MainContent, selectMapping, actionMapping);

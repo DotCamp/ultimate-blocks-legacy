@@ -7,26 +7,24 @@ import React, { createElement } from 'react';
  * @param {React.ElementType} BaseComponent target component
  * @return {Function} function to use as HOC
  */
-const withIcon = ( BaseComponent ) => ( props ) => {
+const withIcon = (BaseComponent) => (props) => {
 	let iconElement = 'x';
-	if ( ! props.iconObject ) {
+	if (!props.iconObject) {
 		throw new Error(
 			'invalid type of icon object is supplied to withIcon HOC'
 		);
-	} else if ( typeof props.iconObject === 'string' ) {
+	} else if (typeof props.iconObject === 'string') {
 		iconElement = (
-			<span
-				dangerouslySetInnerHTML={ { __html: props.iconObject } }
-			></span>
+			<span dangerouslySetInnerHTML={{ __html: props.iconObject }}></span>
 		);
-	} else if ( typeof props.iconObject === 'object' ) {
+	} else if (typeof props.iconObject === 'object') {
 		const { iconObject } = props;
 		const { type, props: iconProps } = iconObject;
 
-		iconElement = createElement( type, iconProps );
+		iconElement = createElement(type, iconProps);
 	}
 
-	return <BaseComponent { ...props } iconElement={ iconElement } />;
+	return <BaseComponent {...props} iconElement={iconElement} />;
 };
 
 /**

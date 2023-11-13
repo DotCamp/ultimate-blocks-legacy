@@ -6,10 +6,8 @@ import React from 'react';
  * @param {Object}  props       component properties
  * @param {boolean} props.isPro block pro status
  */
-function ProBlockCardTitle( { isPro } ) {
-	return (
-		isPro && <span className={ 'pro-block-card-title-suffix' }>PRO</span>
-	);
+function ProBlockCardTitle({ isPro }) {
+	return isPro && <span className={'pro-block-card-title-suffix'}>PRO</span>;
 }
 
 /**
