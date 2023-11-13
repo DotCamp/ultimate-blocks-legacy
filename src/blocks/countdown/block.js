@@ -68,6 +68,9 @@ function CountdownMain(props) {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	const timeUnits = ["week", "day", "hour", "minute", "second"];
 

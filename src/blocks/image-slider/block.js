@@ -188,7 +188,9 @@ function ImageSliderMain(props) {
 	} else if (!showPageDots && usePagination) {
 		setAttributes({ usePagination: false });
 	}
-
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	if (paginationType === "") {
 		setAttributes({ paginationType: "bullets" });
 	}

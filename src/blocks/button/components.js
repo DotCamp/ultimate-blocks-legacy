@@ -916,7 +916,9 @@ export function EditorComponent(props) {
 			setAttributes({ align: "center" });
 		}
 	}
-
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	if (!isSelected && enableLinkInput) {
 		setLinkInputStatus(false);
 	}

@@ -49,6 +49,9 @@ export function ExpandRoot(props) {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	const showPreviewText = __("show more");
 

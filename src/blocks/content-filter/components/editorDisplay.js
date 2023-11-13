@@ -536,6 +536,9 @@ export function NewPanelContent(props) {
 			});
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const styles = getStyles(attributes);
 	return (
 		<div {...blockProps}>

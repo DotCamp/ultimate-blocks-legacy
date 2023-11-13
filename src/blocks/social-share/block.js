@@ -243,6 +243,9 @@ function SocialShareMain(props) {
 			setHasTransitioned(true);
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const styles = getStyles(attributes);
 	return (
 		<div {...blockProps}>

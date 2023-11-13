@@ -98,6 +98,9 @@ function DividerBlock(props) {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const styles = getStyles(props.attributes);
 	return (
 		<div {...blockProps}>

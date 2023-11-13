@@ -1013,6 +1013,9 @@ export function EditorComponent(props) {
 	if (blockID === "") {
 		setAttributes({ blockID: block.clientId });
 	}
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	const checkVideoURLInput = () => {
 		if (/^http(s)?:\/\//g.test(videoURLInput)) {

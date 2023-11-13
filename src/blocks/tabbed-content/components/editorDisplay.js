@@ -529,6 +529,9 @@ export const TabHolder = (props) => {
 		setAttributes({ blockID: props.block.clientId });
 	}
 	useEffect(() => {
+		setAttributes({ blockID: props.block.clientId });
+	}, [props.block.clientId]);
+	useEffect(() => {
 		const { attributes, setAttributes } = props;
 		const { tabsTitle, tabsTitleAlignment, tabsAnchor, useAnchors } =
 			attributes;

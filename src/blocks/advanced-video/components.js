@@ -387,7 +387,9 @@ export function AdvancedVideoBlock(props) {
 			setShadowStatus(true);
 		}
 	}, []);
-
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const currentColor =
 		currentBorder === "top"
 			? topBorderColor

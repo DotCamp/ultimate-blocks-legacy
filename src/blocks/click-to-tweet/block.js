@@ -56,6 +56,9 @@ function ClickToTweet(props) {
 			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
 		}
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const blockProps = useBlockProps();
 	return (
 		<div {...blockProps}>

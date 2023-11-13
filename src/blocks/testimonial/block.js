@@ -238,6 +238,9 @@ registerBlockType(metadata, {
 				props.setAttributes({ blockID: block.clientId });
 			}
 		}, []);
+		useEffect(() => {
+			props.setAttributes({ blockID: block.clientId });
+		}, [block.clientId]);
 
 		function setState(state) {
 			if (state.hasOwnProperty("editable")) {

@@ -5,6 +5,7 @@ import TableOfContents, {
 	editorDisplay,
 } from "./components";
 import { getStyles } from "./get-style";
+
 import {
 	version_1_0_8,
 	version_1_0_9,
@@ -29,6 +30,7 @@ import {
 } from "@wordpress/block-editor";
 
 import { withDispatch, withSelect } from "@wordpress/data";
+import { useEffect } from "@wordpress/element";
 
 import { compose } from "@wordpress/compose";
 import metadata from "./block.json";
@@ -232,6 +234,9 @@ registerBlockType(metadata, {
 		if (blockID === "") {
 			props.setAttributes({ blockID: block.clientId });
 		}
+		useEffect(() => {
+			props.setAttributes({ blockID: block.clientId });
+		}, [block.clientId]);
 		const blockProps = useBlockProps({
 			className: `ub_table-of-contents${
 				showList ? "" : " ub_table-of-contents-collapsed"

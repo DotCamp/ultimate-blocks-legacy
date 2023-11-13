@@ -118,7 +118,9 @@ function StyledBox(props) {
 			setAttributes({ outlineThickness: 1 });
 		}
 	}, []);
-
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const newValue = (arr, newLength, val = "") =>
 		newLength > arr.length
 			? [...arr, ...Array(newLength - arr.length).fill(val)]

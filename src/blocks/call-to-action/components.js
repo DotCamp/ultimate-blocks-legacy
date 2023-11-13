@@ -426,7 +426,9 @@ export function CallToAction(props) {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
-
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 	const [editable, setEditable] = useState("");
 
 	return (

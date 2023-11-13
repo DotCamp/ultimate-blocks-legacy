@@ -260,6 +260,9 @@ export function PanelContent(props) {
 			)
 		);
 	}, []);
+	useEffect(() => {
+		setAttributes({ blockID: block.clientId });
+	}, [block.clientId]);
 
 	const [oldArrangement, setOldArrangement] = useState([]);
 	const [oldAttributeValues, setOldAttributeValues] = useState([]);
