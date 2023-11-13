@@ -145,6 +145,7 @@ That's it. You're done!
 
 = 3.0.7 =
 
+* FIX: All blocks duplicate instance not working properly.
 * FIX: An issue affecting counter block for WordPress5.9.3.
 * FIX: Advanced block duplicate instance not working properly.
 * FIX: An issue affecting counter block for WordPress5.9.3.
