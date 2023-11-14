@@ -2,8 +2,8 @@
 Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
-Tested up to: 6.3
-Stable tag: 3.0.7-dev
+Tested up to: 6.4
+Stable tag: 3.0.7
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -145,23 +145,22 @@ That's it. You're done!
 
 = 3.0.7 =
 
-* FIX: All blocks duplicate instance not working properly.
-* FIX: An issue affecting counter block for WordPress5.9.3.
-* FIX: Advanced block duplicate instance not working properly.
-* FIX: An issue affecting counter block for WordPress5.9.3.
-* FIX: Advanced video block preview.
-* FIX: Progress bar html error.
-* FIX: Styled List block spacing in editor.
-* FIX: Star rating duplicate instance not working properly.
-* FIX: Advanced heading duplicate instance not working properly.
-* NEW: Orientation option for social share block.
+* NEW: Orientation option for Social Share block.
 * NEW: Dimension settings for all blocks.
 * PRO: NEW: Custom post type support in Post Grid block.
-* IMPROVE: Add placeholder text in advanced heading.
+* FIX: All blocks duplicate instance not working properly.
+* FIX: Advanced block duplicate instance not working properly.
+* FIX: An issue affecting Counter block for WordPress 5.9.3.
+* FIX: Advanced Video block preview.
+* FIX: Progress Bar html error.
+* FIX: Styled List block spacing in editor.
+* FIX: Star Rating duplicate instance not working properly.
+* FIX: Advanced Heading duplicate instance not working properly.
+* IMPROVE: Add placeholder text in Advanced Heading.
 * IMPROVE: Replace all block icons with newly design icons.
 * IMPROVE: Convert block registration with block.json.
 * IMPROVE: Counter animation in editor.
-* IMPROVE: Progress bar detail position.
+* IMPROVE: Progress Bar detail position.
 
 = 3.0.6 =
 
