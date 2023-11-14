@@ -156,7 +156,7 @@ export default registerBlockType(metadata, {
 		};
 		return (
 			<div {...blockProps}>
-				<Inspector {...props} />
+				<Inspector {...postGridProps} />
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={wrapAlignment}
