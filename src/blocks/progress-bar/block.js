@@ -84,6 +84,7 @@ function ProgressBarMain(props) {
 		isStripe,
 		detailAlign,
 		detail,
+		setAttributes,
 	};
 
 	const percentagePositionOptions = [

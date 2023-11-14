@@ -39,6 +39,7 @@ export default function Line(props) {
 		isStripe,
 		detailAlign,
 		detail,
+		setAttributes,
 	} = props;
 
 	useEffect(() => {
