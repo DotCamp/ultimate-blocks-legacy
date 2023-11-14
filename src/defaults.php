@@ -1322,6 +1322,38 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'post'
 			),
+			'paginationAlignment' => array(
+				'type'    => 'string',
+				'default' => 'left'
+			),
+			'paginationColor' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'paginationBackground' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'paginationGradient' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'activePaginationColor' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'activePaginationBackground' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'activePaginationGradient' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'pagination' => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()
