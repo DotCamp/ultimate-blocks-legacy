@@ -156,6 +156,7 @@ That's it. You're done!
 * FIX: Styled List block spacing in editor.
 * FIX: Star Rating duplicate instance not working properly.
 * FIX: Advanced Heading duplicate instance not working properly.
+* PRO: FIX: Post grid pagination not showing.
 * IMPROVE: Add placeholder text in Advanced Heading.
 * IMPROVE: Replace all block icons with newly design icons.
 * IMPROVE: Convert block registration with block.json.
