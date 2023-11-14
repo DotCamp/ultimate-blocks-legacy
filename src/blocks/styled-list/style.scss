@@ -25,17 +25,18 @@
 		background-repeat: no-repeat;
 	}
 }
-
-ul.ub_styled_list {
-	list-style-type: none;
-	margin-left: 1em;
-	padding-left: 0;
-	//display: grid;
-	//column-gap: 2em;
-	li {
-		position: relative;
-		list-style: none;
-		margin-left: 0.5em;
-		margin-right: 0.5em;
+[data-type="ub/styled-list"] {
+	> ul.ub_styled_list {
+		list-style-type: none;
+		margin-left: 1em;
+		padding-left: 0;
+		//display: grid;
+		//column-gap: 2em;
+		li {
+			position: relative;
+			list-style: none;
+			margin-left: 0.5em;
+			margin-right: 0.5em;
+		}
 	}
 }

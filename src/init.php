@@ -23,15 +23,15 @@ if ( ! function_exists( 'get_current_screen' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/screen.php' );
 }
 
-function ub_get_spacing_styles( $attributes ) {
+function ub_get_spacing_styles( $attributes, $paddingImportant = false ) {
 	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );
 	$margin = Ultimate_Blocks\includes\get_spacing_css( $attributes['margin'] );
 
 	$styles = array(
-		'padding-top'         => isset($padding['top']) ? $padding['top'] : "",
-		'padding-left'        => isset($padding['left']) ? $padding['left'] : "",
-		'padding-right'       => isset($padding['right']) ? $padding['right'] : "",
-		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] : "",
+		'padding-top'         => isset($padding['top']) ? $padding['top'] . ($paddingImportant ? " !important" : "") : "",
+		'padding-left'        => isset($padding['left']) ? $padding['left'] . ($paddingImportant ? " !important" : "") : "",
+		'padding-right'       => isset($padding['right']) ? $padding['right'] . ($paddingImportant ? " !important" : "") : "",
+		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] . ($paddingImportant ? " !important" : "") : "",
 		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
 		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
 		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
@@ -1036,7 +1036,7 @@ function ub_include_block_attribute_css() {
 					}
 					break;
 				case 'ub/styled-list':
-					$styles = ub_get_spacing_styles($attributes);
+					$styles = ub_get_spacing_styles($attributes, true);
 
 					if ( $attributes['list'] !== '' || $attributes['isRootList'] ) {
 						$prefix = '#ub_styled_list-' . $attributes['blockID'];
