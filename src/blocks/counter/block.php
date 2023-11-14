@@ -20,9 +20,9 @@ class Ultimate_Counter {
 
           $styles = array(
                '--ub-counter-padding-top'                      => isset($padding['top']) ? $padding['top'] : "",
-               '--ub-counter-padding-right'                     => isset($padding['left']) ? $padding['left'] : "",
-               '--ub-counter-padding-bottom'                    => isset($padding['right']) ? $padding['right'] : "",
-               '--ub-counter-padding-left'                   => isset($padding['bottom']) ? $padding['bottom'] : "",
+               '--ub-counter-padding-left'                     => isset($padding['left']) ? $padding['left'] : "",
+               '--ub-counter-padding-right'                    => isset($padding['right']) ? $padding['right'] : "",
+               '--ub-counter-padding-bottom'                   => isset($padding['bottom']) ? $padding['bottom'] : "",
                '--ub-counter-margin-top'                       => isset($margin['top']) ? $margin['top']  : "",
                '--ub-counter-margin-right'                      => isset($margin['left']) ? $margin['left']  : "",
                '--ub-counter-margin-bottom'                     => isset($margin['right']) ? $margin['right']  : "",
