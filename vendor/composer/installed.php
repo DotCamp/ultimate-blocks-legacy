@@ -3,7 +3,7 @@
         'name' => 'ultimate-blocks/ultimate-blocks',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '8b392cfbf78fbe1ec392003c8e1b2a9763cdb12c',
+        'reference' => 'bc7c5dd5bc9472dcc8dbc63d1e6a594acd551e10',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -58,7 +58,7 @@
         'ultimate-blocks/ultimate-blocks' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '8b392cfbf78fbe1ec392003c8e1b2a9763cdb12c',
+            'reference' => 'bc7c5dd5bc9472dcc8dbc63d1e6a594acd551e10',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
