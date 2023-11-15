@@ -202,6 +202,37 @@ const oldColorDefaults = {
 export function PanelContent(props) {
 	const panels = props.block.innerBlocks;
 	const blockProps = useBlockProps();
+	const {
+		attributes: {
+			collapsed,
+			collapsedOnMobile,
+			individualCollapse,
+			theme,
+			titleColor,
+			titleLinkColor,
+			blockID,
+			hasFAQSchema,
+			titleTag,
+			preventCollapse,
+			toggleLocation,
+			toggleColor,
+			toggleIcon,
+			border,
+			showOnlyOne,
+		},
+		setAttributes,
+		className,
+		isSelected,
+		updateBlockAttributes,
+		selectBlock,
+		insertBlock,
+		insertBlocks,
+		removeBlock,
+		selectedBlock,
+		block,
+		getClientIdsWithDescendants,
+		getBlock,
+	} = props;
 
 	const newArrangement = panels.map((panel) => panel.attributes.index);
 
@@ -261,45 +292,13 @@ export function PanelContent(props) {
 		);
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		setAttributes({ blockID: block?.clientId });
+	}, [block?.clientId]);
 
 	const [oldArrangement, setOldArrangement] = useState([]);
 	const [oldAttributeValues, setOldAttributeValues] = useState([]);
 	const [mainBlockSelected, setMainBlockSelectStatus] = useState(true);
 	const [firstPanelInserted, setFirstPanelInsertStatus] = useState(false);
-
-	const {
-		attributes: {
-			collapsed,
-			collapsedOnMobile,
-			individualCollapse,
-			theme,
-			titleColor,
-			titleLinkColor,
-			blockID,
-			hasFAQSchema,
-			titleTag,
-			preventCollapse,
-			toggleLocation,
-			toggleColor,
-			toggleIcon,
-			border,
-			showOnlyOne,
-		},
-		setAttributes,
-		className,
-		isSelected,
-		updateBlockAttributes,
-		selectBlock,
-		insertBlock,
-		insertBlocks,
-		removeBlock,
-		selectedBlock,
-		block,
-		getClientIdsWithDescendants,
-		getBlock,
-	} = props;
 
 	const newBlockTarget = panels.filter(
 		(panel) => panel.attributes.newBlockPosition !== "none"

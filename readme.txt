@@ -143,6 +143,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.8 =
+
+* FIX: Content toggle block breaking.
+
 = 3.0.7 =
 
 * NEW: Orientation option for Social Share block.
