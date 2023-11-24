@@ -44,3 +44,5 @@ import "./blocks/advanced-video/block";
 import "./blocks/icon-inner/block";
 import "./blocks/icon/block";
 import "./blocks/counter/block";
+
+import "./extensions";

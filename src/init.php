@@ -13,6 +13,7 @@
 use PHPUnit\Event\Runtime\PHP;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 
+require_once dirname(__DIR__) . '/src/extensions/extension-manager.php';
 require_once dirname(__DIR__) . '/includes/ultimate-blocks-styles-css-generator.php';
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,0 +1,61 @@
+import { __ } from "@wordpress/i18n";
+import { assign, isEmpty } from "lodash";
+import { addFilter } from "@wordpress/hooks";
+import { createHigherOrderComponent } from "@wordpress/compose";
+import Inspector from "./inspector";
+
+const isUbBlock = (blockName) => blockName.startsWith("ub/");
+const addAttributes = (settings) => {
+	if (isEmpty(settings.attributes) || !isUbBlock(settings.name)) {
+		return settings;
+	}
+	if (isUbBlock(settings.name)) {
+		settings.attributes = assign(
+			settings.attributes,
+			{
+				isHideOnDesktop: {
+					type: "object",
+					default: false,
+				},
+				isHideOnMobile: {
+					type: "object",
+					default: false,
+				},
+				isHideOnTablet: {
+					type: "object",
+					default: false,
+				},
+			},
+			{}
+		);
+	}
+
+	return settings;
+};
+
+const withAdvanceControls = createHigherOrderComponent((BlockEdit) => {
+	return (props) => {
+		if (!isUbBlock(props.name)) {
+			return <BlockEdit {...props} />;
+		}
+
+		return (
+			<>
+				<BlockEdit {...props} />
+				<Inspector {...props} />
+			</>
+		);
+	};
+}, "withAdvanceControls");
+
+addFilter(
+	"editor.BlockEdit",
+	"ultimate-blocks/with-advance-controls",
+	withAdvanceControls
+);
+
+addFilter(
+	"blocks.registerBlockType",
+	"ultimate-blocks/add-attributes",
+	addAttributes
+);
