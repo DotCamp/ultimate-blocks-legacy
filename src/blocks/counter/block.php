@@ -76,7 +76,7 @@ class Ultimate_Counter {
                     'style' => $styles
                )
           );
-          $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . esc_html($label) . '</span></div>';
+          $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . $label . '</span></div>';
           $block_content = sprintf(
                '<div %1$s>
                     <div
