@@ -661,7 +661,7 @@ $defaultValues = array(
 			),
 			'endDate'       => array(
 				'type'    => 'number',
-				'default' => time() + 86400
+				'default' => 1728565920
 			),
 			'style'         => array(
 				'type'    => 'string',
@@ -678,6 +678,14 @@ $defaultValues = array(
 			'circleColor'   => array(
 				'type'    => 'string',
 				'default' => '#2DB7F5'
+			),
+			'countdownColor'   => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'unitColor'   => array(
+				'type'    => 'string',
+				'default' => ''
 			),
 			'circleSize'    => array(
 				'type'    => 'number',

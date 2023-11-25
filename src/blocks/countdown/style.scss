@@ -181,3 +181,11 @@
 		font-size: 10px !important;
 	}
 }
+.ub-countdown-wrapper {
+	.ub-countdown-unit {
+		color: var(--ub-countdown-unit-color);
+	}
+	.ub-countdown-digit {
+		color: var(--ub-countdown-digit-color);
+	}
+}

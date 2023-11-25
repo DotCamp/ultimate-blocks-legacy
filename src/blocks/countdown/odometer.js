@@ -271,7 +271,7 @@ export function DigitDisplay(props) {
 	}, [forceRefresh]);
 
 	return (
-		<div className="ub-countdown-digit-container">
+		<div className="ub-countdown-digit-container ub-countdown-digit">
 			{incomingDigits.length === 0 &&
 				digits.map((d, i) => (
 					<div key={i} className="digit">

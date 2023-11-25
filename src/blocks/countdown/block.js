@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import metadata from "./block.json";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType } from "@wordpress/blocks";
+import { ColorSettings } from "../components/";
 import {
 	InspectorControls,
 	RichText,
@@ -60,6 +61,8 @@ function CountdownMain(props) {
 			messageAlign,
 			largestUnit,
 			smallestUnit,
+			countdownColor,
+			unitColor,
 		},
 	} = props;
 
@@ -121,21 +124,29 @@ function CountdownMain(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
-					{style === "Circular" && (
-						<InspectorControls group="styles">
-							<PanelBody title={__("Circle style")}>
-								<PanelColorSettings
-									title={__("Color")}
-									initialOpen={true}
-									colorSettings={[
-										{
+					<InspectorControls group="styles">
+						<PanelBody title={__("Circle style")}>
+							<PanelColorSettings
+								title={__("Color")}
+								initialOpen={true}
+								colorSettings={[
+									...[
+										style === "Circular" && {
 											value: circleColor,
 											onChange: (colorValue) =>
 												setAttributes({ circleColor: colorValue }),
-											label: "",
+											label: __("Circle Color"),
 										},
-									]}
-								/>
+									],
+									{
+										value: circleColor,
+										onChange: (colorValue) =>
+											setAttributes({ circleColor: colorValue }),
+										label: __("Circle Color"),
+									},
+								]}
+							/>
+							{style === "Circular" && (
 								<RangeControl
 									label={__("Size")}
 									value={circleSize}
@@ -143,9 +154,25 @@ function CountdownMain(props) {
 									min={30}
 									max={100}
 								/>
-							</PanelBody>
-						</InspectorControls>
-					)}
+							)}
+						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="color">
+						{style === "Circular" && (
+							<ColorSettings
+								attrKey="circleColor"
+								label={__("Circle Color", "ultimate-blocks")}
+							/>
+						)}
+						<ColorSettings
+							attrKey="countdownColor"
+							label={__("Countdown Color", "ultimate-blocks")}
+						/>
+						<ColorSettings
+							attrKey="unitColor"
+							label={__("Unit Color", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 					<InspectorControls group="styles">
 						<PanelBody
 							title={__("Dimension Settings", "ultimate-blocks")}
@@ -204,7 +231,7 @@ function CountdownMain(props) {
 					</ToolbarGroup>
 				</BlockControls>
 			)}
-			<div style={styles}>
+			<div className="ub-countdown-wrapper" style={styles}>
 				<Timer
 					timerStyle={style}
 					deadline={endDate}
@@ -214,6 +241,8 @@ function CountdownMain(props) {
 					smallestUnit={smallestUnit}
 					isAnimated={true}
 					forceUpdate={forceUpdate}
+					countdownColor={countdownColor}
+					unitColor={unitColor}
 					finishForcedUpdate={() => setForceUpdate(false)}
 				/>
 				<RichText
