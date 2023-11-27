@@ -771,6 +771,40 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'left'
 			),
+			  'expandButtonColor' => array(
+				  'type' => "string", 
+				  'default' => "",				
+			  ),
+			'expandButtonBgColor' => array(
+				'type' => "string", 
+				'default' => "" ,
+			) ,
+			'expandButtonBgGradient' => array(
+				'type' => "string", 
+				'default' => "" ,
+			) ,
+			'expandButtonPadding' => array(
+				'type' => "array", 
+				'default' => array(
+					'top' => "8px",
+					'right' => "30px",
+					'bottom' => "8px",
+					'left' => "30px",
+				),
+			) ,
+			'expandButtonBorder' => array(
+				'type' => "array", 
+				'default' => array() ,
+			) ,
+			'expandButtonBorderRadius' => array(
+				'type' => "array",
+				'default' => array(
+					'topLeft' => "100px",
+					'topRight' => "100px",
+					'bottomLeft' => "100px",
+					'bottomRight' => "100px",
+				),
+			),
 			'allowScroll'      => array(
 				'type'    => 'boolean',
 				'default' => false
