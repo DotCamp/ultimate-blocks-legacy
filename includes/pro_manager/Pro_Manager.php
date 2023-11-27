@@ -15,6 +15,7 @@ use Ultimate_Blocks\includes\Editor_Data_Manager;
 use Ultimate_Blocks\includes\Env_Manager;
 use Ultimate_Blocks\includes\pro_manager\base\Pro_Block_Upsell;
 use Ultimate_Blocks\includes\pro_manager\blocks\coupon\Coupon_Pro_Block;
+use Ultimate_Blocks\includes\pro_manager\blocks\timeline\Timeline_Pro_Block;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
@@ -50,6 +51,7 @@ class Pro_Manager {
 	 */
 	private $pro_block_upsells = array(
 		Coupon_Pro_Block::class,
+		Timeline_Pro_Block::class,
 	);
 
 	/**
