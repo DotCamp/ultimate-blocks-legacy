@@ -79,6 +79,10 @@ $defaultValues = array(
 				'type'    => 'array',
 				'default' => array()
 			),
+			'aspectRatio'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'padding'              => array(
 				'type'    => 'array',
 				'default' => array()

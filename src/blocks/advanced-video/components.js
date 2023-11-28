@@ -1,10 +1,14 @@
-import { convertFromSeconds } from "../../common";
-import { get } from "lodash";
+import { DEFAULT_ASPECT_RATIO_OPTIONS, convertFromSeconds } from "../../common";
+import { get, isEmpty } from "lodash";
 import { useState, useEffect } from "react";
-import { SpacingControl } from "../components";
+import { SpacingControl, UBSelectControl } from "../components";
+import { useDispatch, useSelect } from "@wordpress/data";
 import { getStyles } from "./get-styles";
-import { useSelect } from "@wordpress/data";
-const { __ } = wp.i18n;
+import AdvancedVideoPlaceholder from "./placeholder";
+import AdvancedVideoBlockControls from "./block-controls";
+import { store as noticesStore } from "@wordpress/notices";
+
+import { __ } from "@wordpress/i18n";
 const {
 	MediaUpload,
 	MediaUploadCheck,
@@ -356,6 +360,7 @@ export function AdvancedVideoBlock(props) {
 		showInTablet,
 		showInMobile,
 		isTransformed,
+		aspectRatio,
 	} = attributes;
 
 	useEffect(() => {
@@ -406,6 +411,7 @@ export function AdvancedVideoBlock(props) {
 
 	const checkVideoURLInput = () => {
 		let videoURL = videoURLInput.trim();
+
 		if (/^http(s)?:\/\//g.test(videoURL)) {
 			const youtubeMatch =
 				/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
@@ -658,14 +664,19 @@ export function AdvancedVideoBlock(props) {
 	let extraEmbeds = null;
 	switch (videoSource) {
 		case "youtube":
+			const currentAspectRatio =
+				!isEmpty(aspectRatio) && aspectRatio !== "auto"
+					? aspectRatio
+					: `${origWidth}/${origHeight}`;
 			autofitContainerStyle = Object.assign(
 				{},
-				{ aspectRatio: `${origWidth}/${origHeight}` }
+				{ aspectRatio: currentAspectRatio }
 			);
 			extraEmbeds = (
 				<style>
 					{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit-youtube iframe{
-						aspect-ratio: ${origWidth}/${origHeight}
+						aspect-ratio: ${currentAspectRatio};
+						height: auto !important;
 					}`}
 				</style>
 			);
@@ -688,7 +699,57 @@ export function AdvancedVideoBlock(props) {
 			autofitContainerStyle = {};
 			extraEmbeds = null;
 	}
+	const onSelectVideo = (media) => {
+		const newWidth = Math.min(600, media.width);
+		const newHeight = Math.round((media.height * newWidth) / media.width);
 
+		const timeUnits = media.fileLength
+			.split(":")
+			.map((t) => parseInt(t))
+			.reverse();
+
+		const conversionFactor = [1, 60, 3600, 86400];
+
+		setAttributes({
+			videoId: media.id,
+			url: media.url,
+			width: newWidth,
+			height: newHeight,
+			videoLength: timeUnits.reduce(
+				(total, curr, i) => total + curr * conversionFactor[i],
+				0
+			),
+			videoEmbedCode: `<video ${
+				showPlayerControls ? "controls" : ""
+			} width="${newWidth}" height="${newHeight}"><source src="${
+				media.url
+			}"></video>`,
+			videoSource: "local",
+		});
+	};
+	const onSelectURL = (url) => {
+		setVideoURLInput(url);
+	};
+	useEffect(() => {
+		if (!isEmpty(videoURLInput)) {
+			checkVideoURLInput();
+		}
+	}, [videoURLInput]);
+
+	const { createErrorNotice } = useDispatch(noticesStore);
+	const onUploadError = (message) => {
+		createErrorNotice(message, { type: "snackbar" });
+	};
+	const advancedVideoPlaceholderProps = {
+		onSelectVideo,
+		onSelectURL,
+		onUploadError,
+		value: videoId,
+	};
+	const advancedVideoBlockControlPropsProps = {
+		...advancedVideoPlaceholderProps,
+		url,
+	};
 	return (
 		<>
 			<InspectorControls group="settings">
@@ -835,6 +896,17 @@ export function AdvancedVideoBlock(props) {
 									</div>
 								</>
 							)}
+							{autofit && (
+								<UBSelectControl
+									onChange={(newValue) => {
+										setAttributes({ aspectRatio: newValue });
+									}}
+									value={aspectRatio}
+									options={DEFAULT_ASPECT_RATIO_OPTIONS}
+									label={__("Aspect Ratio", "ultimate-blocks")}
+								/>
+							)}
+
 							{/* SUPPORTED IN DAILYMOTION, YOUTUBE, LOCAL, DIRECT */}
 							{([
 								"local",
@@ -1828,84 +1900,12 @@ export function AdvancedVideoBlock(props) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-
+			{url !== "" && (
+				<AdvancedVideoBlockControls {...advancedVideoBlockControlPropsProps} />
+			)}
 			<div {...blockProps}>
 				{url === "" && (
-					<>
-						<div>{__("Select Video Source")}</div>
-
-						<div className="ub-advanced-video-input-choices">
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={(media) => {
-										const newWidth = Math.min(600, media.width);
-										const newHeight = Math.round(
-											(media.height * newWidth) / media.width
-										);
-
-										const timeUnits = media.fileLength
-											.split(":")
-											.map((t) => parseInt(t))
-											.reverse();
-
-										const conversionFactor = [1, 60, 3600, 86400];
-
-										setAttributes({
-											videoId: media.id,
-											url: media.url,
-											width: newWidth,
-											height: newHeight,
-											videoLength: timeUnits.reduce(
-												(total, curr, i) => total + curr * conversionFactor[i],
-												0
-											),
-											videoEmbedCode: `<video ${
-												showPlayerControls ? "controls" : ""
-											} width="${newWidth}" height="${newHeight}"><source src="${
-												media.url
-											}"></video>`,
-											videoSource: "local",
-										});
-									}}
-									allowedTypes={["video"]}
-									value={videoId}
-									render={({ open }) => (
-										<Button isPrimary icon="video-alt2" onClick={open}>
-											{__("Upload Local Video")}
-										</Button>
-									)}
-								/>
-							</MediaUploadCheck>
-
-							<Button
-								isPrimary
-								icon="embed-video"
-								onClick={() => setVideoURLStatus(!enterVideoURL)}
-							>
-								{__("Insert Video URL")}
-							</Button>
-						</div>
-						{enterVideoURL && (
-							<div className="ub-advanced-video-url-input">
-								<input
-									type="url"
-									placeholder={__("Insert Video URL")}
-									value={videoURLInput}
-									onChange={(e) => setVideoURLInput(e.target.value)}
-									onKeyDown={(e) => {
-										if (e.key === "Enter") {
-											checkVideoURLInput();
-										}
-									}}
-								/>
-								<Button
-									icon={"editor-break"}
-									label={__("Apply", "ultimate-blocks")}
-									onClick={checkVideoURLInput}
-								/>
-							</div>
-						)}
-					</>
+					<AdvancedVideoPlaceholder {...advancedVideoPlaceholderProps} />
 				)}
 				<div
 					id={`ub-advanced-video-${blockID}`}
@@ -1919,9 +1919,7 @@ export function AdvancedVideoBlock(props) {
 							: ""
 					}`}
 					dangerouslySetInnerHTML={{
-						__html:
-							videoEmbedCode ||
-							"<p>If a valid video source is entered, the video should appear here</p>",
+						__html: videoEmbedCode,
 					}}
 					style={Object.assign(
 						autofit ? autofitContainerStyle : { width: `${width}%` },
@@ -1962,64 +1960,6 @@ export function AdvancedVideoBlock(props) {
 					)}
 				/>
 				{autofit && extraEmbeds}
-				{url !== "" && (
-					<div>
-						<p>{`${__("Video URL: ")}${url}`}</p>
-						<button
-							onClick={() => {
-								setAttributes({
-									url: "",
-									videoEmbedCode: "",
-									videoId: -1,
-									videoSource: "",
-									preserveAspectRatio: false,
-									autofit: false,
-									autoplay: false,
-									showPlayerControls: true,
-									startTime: 0,
-									mute: false,
-									loop: false,
-									thumbnail: "",
-									thumbnailId: -1,
-
-									topBorderSize: 0,
-									leftBorderSize: 0,
-									rightBorderSize: 0,
-									bottomBorderSize: 0,
-
-									topBorderStyle: "",
-									leftBorderStyle: "",
-									rightBorderStyle: "",
-									bottomBorderStyle: "",
-
-									topBorderColor: "",
-									leftBorderColor: "",
-									rightBorderColor: "",
-									bottomBorderColor: "",
-
-									topLeftRadius: 0,
-									topRightRadius: 0,
-									bottomLeftRadius: 0,
-									bottomRightRadius: 0,
-
-									shadow: [Object.assign({}, shadow[0], { radius: 0 })],
-								});
-								setVideoURLInput("");
-								setStartTimeStatus(false);
-								setStartTime_d(0);
-								setStartTime_h(0);
-								setStartTime_m(0);
-								setStartTime_s(0);
-								setShadowStatus(false);
-								setCustomThumbnailStatus(false);
-								setImageURLInputStatus(false);
-								setImageURLInput("");
-							}}
-						>
-							{__("Replace")}
-						</button>
-					</div>
-				)}
 			</div>
 		</>
 	);

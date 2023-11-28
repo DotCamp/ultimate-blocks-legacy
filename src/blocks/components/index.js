@@ -4,3 +4,4 @@ export { default as CustomFontSizePicker } from "./FontSizePicker";
 export { default as SpacingControl } from "./SpacingControl";
 export { default as ColorSettings } from "./ColorSettings";
 export { default as ColorSettingsWithGradient } from "./ColorSettingsWithGradient";
+export { default as UBSelectControl } from "./SelectControl";

@@ -153,3 +153,37 @@ export const AVAILABLE_ORIENTATION = [
 		label: __("Vertical", "ultimate-blocks"),
 	},
 ];
+export const DEFAULT_ASPECT_RATIO_OPTIONS = [
+	{
+		label: __("Original", "ultimate-blocks"),
+		value: "auto",
+	},
+	{
+		label: __("Square - 1:1", "ultimate-blocks"),
+		value: "1",
+	},
+	{
+		label: __("Standard - 4:3", "ultimate-blocks"),
+		value: "4/3",
+	},
+	{
+		label: __("Portrait - 3:4", "ultimate-blocks"),
+		value: "3/4",
+	},
+	{
+		label: __("Classic - 3:2", "ultimate-blocks"),
+		value: "3/2",
+	},
+	{
+		label: __("Classic Portrait - 2:3", "ultimate-blocks"),
+		value: "2/3",
+	},
+	{
+		label: __("Wide - 16:9", "ultimate-blocks"),
+		value: "16/9",
+	},
+	{
+		label: __("Tall - 9:16", "ultimate-blocks"),
+		value: "9/16",
+	},
+];
