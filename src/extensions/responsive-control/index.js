@@ -14,15 +14,15 @@ const addAttributes = (settings) => {
 			settings.attributes,
 			{
 				isHideOnDesktop: {
-					type: "object",
+					type: "boolean",
 					default: false,
 				},
 				isHideOnMobile: {
-					type: "object",
+					type: "boolean",
 					default: false,
 				},
 				isHideOnTablet: {
-					type: "object",
+					type: "boolean",
 					default: false,
 				},
 			},

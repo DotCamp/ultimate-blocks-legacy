@@ -7,11 +7,11 @@ use function Ultimate_Blocks\includes\is_undefined;
  */
 class Ultimate_Blocks_Responsive_Control  {
     public function __construct(){
-        add_filter('register_block_type_args', array( $this, 'ub_add_settings' ), 10, 2);
-        add_filter( "render_block", array( $this, 'ub_render_responsive_control' ), 10, 2 );
+        // add_filter('register_block_type_args', array( $this, 'ub_add_settings' ), 10, 2);
+        add_filter( "render_block", array( $this, 'ub_render_responsive_control' ), 10, 3 );
     }
 
-    function ub_add_settings($args, $name){
+    public function ub_add_settings($args, $name){
         if (strpos($name, 'ub/') === 0) {
             $extra_attributes = array(
                 "isHideOnDesktop" => array(
@@ -34,16 +34,14 @@ class Ultimate_Blocks_Responsive_Control  {
         return $args;
     }
 
-    public function ub_render_responsive_control($content, $block){
+    public function ub_render_responsive_control($content, $block, $block_instance){
         // Check if the block name starts with 'ub/'
         $block_name = isset($block['blockName']) ? $block['blockName'] : "";
         if (strpos($block_name, 'ub/') !== 0) {
             return $content;
         }
 
-        // Extract attributes
         $attributes = isset($block['attrs']) ? $block['attrs'] : array();
-
         // Prepare classes based on attributes
         $classes = array();
 
