@@ -51,6 +51,10 @@
                "type": "string",
                "default": "#ffffff"
           },
+          "isFlexWrap": {
+               "type": "boolean",
+               "default": true
+          },
           "buttonRounded": {
                "type": "boolean",
                "default": true

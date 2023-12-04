@@ -881,6 +881,7 @@ export function EditorComponent(props) {
 			addNofollow,
 			openInNewTab,
 			orientation,
+			isFlexWrap,
 		},
 	} = props;
 	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
@@ -1247,8 +1248,10 @@ export function EditorComponent(props) {
 			}
 		}
 	}, [isSelected]);
+	const flexWrapClass = isFlexWrap ? " ub-flex-wrap" : "";
+
 	const blockProps = useBlockProps({
-		className: `ub-buttons align-button-${align} orientation-button-${orientation}`,
+		className: `ub-buttons align-button-${align} orientation-button-${orientation}${flexWrapClass}`,
 		style: getStyles(props.attributes),
 	});
 
@@ -1291,6 +1294,11 @@ export function EditorComponent(props) {
 									label={__("Orientation", "ultimate-blocks")}
 								/>
 							</div>
+							<ToggleControl
+								checked={isFlexWrap}
+								label={__("Allow to wrap to multiple lines", "ultimate-blocks")}
+								onChange={() => setAttributes({ isFlexWrap: !isFlexWrap })}
+							/>
 						</PanelBody>
 						{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
 							<>

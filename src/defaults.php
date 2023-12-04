@@ -326,6 +326,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '#ffffff'
 			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
 			'buttonRounded'        => array(
 				'type'    => 'boolean',
 				'default' => false

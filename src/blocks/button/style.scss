@@ -31,6 +31,9 @@
 	cursor: pointer;
 	gap: 20px;
 	transition: background-color 0.5s, color 0.5s, border 0.5s;
+	&.ub-flex-wrap {
+		flex-wrap: wrap;
+	}
 	&.orientation-button-row {
 		flex-direction: row;
 		&.align-button-center {
