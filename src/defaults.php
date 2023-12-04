@@ -2639,6 +2639,10 @@ $defaultValues = array(
 		),
 		'ub/counter'	 => array(
 			'attributes' => array (
+				'labelColor' => array(
+					'type' => 'string',
+					'default' => ''
+				),
 				'startNumber' => array(
 					'type' => 'string',
 					'default' => '0'
