@@ -16,30 +16,51 @@
 	a.ub-button-block-btn.ub-button-block-btn {
 		text-decoration: none;
 	}
-	padding: 10px 0;
-	margin: 20px 0;
 }
 
 .ub-button-full-container {
 	width: 100%;
 }
-
 .ub-button-block-main {
 	display: flex;
 	cursor: pointer;
 	transition: background-color 0.5s, color 0.5s, border 0.5s;
 }
-
-.align-button-center {
-	justify-content: center;
-}
-
-.align-button-left {
-	justify-content: flex-start;
-}
-
-.align-button-right {
-	justify-content: flex-end;
+.ub-buttons {
+	display: flex;
+	cursor: pointer;
+	gap: 20px;
+	transition: background-color 0.5s, color 0.5s, border 0.5s;
+	&.orientation-button-row {
+		flex-direction: row;
+		&.align-button-center {
+			justify-content: center;
+		}
+		&.align-button-left {
+			justify-content: flex-start;
+		}
+		&.align-button-right {
+			justify-content: flex-end;
+		}
+		&.align-button-space-between {
+			justify-content: space-between;
+		}
+	}
+	&.orientation-button-column {
+		flex-direction: column;
+		&.align-button-center {
+			align-items: center;
+		}
+		&.align-button-left {
+			align-items: flex-start;
+		}
+		&.align-button-right {
+			align-items: flex-end;
+		}
+		&.align-button-space-between {
+			justify-content: space-between;
+		}
+	}
 }
 
 .ub-button-small {
@@ -108,21 +129,6 @@
 
 .ub-buttons {
 	margin: 20px 0;
-	&.align-button- {
-		&center {
-			text-align: center;
-		}
-		&left {
-			text-align: left;
-		}
-		&right {
-			text-align: right;
-		}
-	}
-	> .ub-button-container {
-		display: inline-block;
-		margin: 0 10px;
-	}
 }
 
 @media (max-width: 599px) {

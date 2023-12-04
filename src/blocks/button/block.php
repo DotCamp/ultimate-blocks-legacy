@@ -66,7 +66,7 @@ function ub_render_button_block($attributes){
     </div></a></div>' : join('', array_map('ub_buttons_parse', $buttons)));
 
     return '<div class="' . (isset($buttons) && count($buttons) > 0 ? 'ub-buttons' : 'ub-button') . (isset($buttons) && count($buttons) > 0 ? ' align-button-' . ($align === '' ? 'center' : $align) : '')
-    .(isset($className) ? ' ' . esc_attr($className) : '') . '" ' .(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>' .$buttonDisplay . '</div>';
+    . ' orientation-button-' . $orientation . (isset($className) ? ' ' . esc_attr($className) : '') . '" ' .(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>' .$buttonDisplay . '</div>';
 }
 
 function ub_button_add_frontend_assets() {

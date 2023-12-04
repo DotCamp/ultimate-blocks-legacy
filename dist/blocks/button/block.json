@@ -19,9 +19,13 @@
       "type": "string",
       "default": "Button Text"
     },
+    "orientation": {
+      "type": "string",
+      "default": "row"
+    },
     "align": {
       "type": "string",
-      "default": ""
+      "default": "center"
     },
     "url": {
       "type": "string",

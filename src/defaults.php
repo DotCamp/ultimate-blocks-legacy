@@ -294,9 +294,13 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'Button Text'
 			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
 			'align'                => array(
 				'type'    => 'string',
-				'default' => ''
+				'default' => 'center'
 			),
 			'url'                  => array(
 				'type'    => 'string',
