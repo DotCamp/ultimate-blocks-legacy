@@ -282,6 +282,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'placeholder'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()

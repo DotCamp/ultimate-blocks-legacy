@@ -710,7 +710,7 @@ export const editorDisplay = (props) => {
 	const {
 		isSelected,
 		setAttributes,
-		attributes: { buttons, align },
+		attributes: { buttons, align, placeholder },
 		activeButtonIndex,
 		setActiveButtonIndex,
 		hoveredButton,
@@ -810,7 +810,11 @@ export const editorDisplay = (props) => {
 										)}
 									<RichText
 										className="ub-button-block-btn"
-										placeholder={__("Button Text", "ultimate-blocks")}
+										placeholder={
+											!isEmpty(placeholder)
+												? placeholder
+												: __("Button Text", "ultimate-blocks")
+										}
 										onChange={(value) =>
 											setAttributes({
 												buttons: [
