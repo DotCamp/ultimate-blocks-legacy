@@ -1196,6 +1196,14 @@ $defaultValues = array(
 				'type'    => 'number',
 				'default' => 3
 			),
+			'spaceBetween' => array(
+				'type'    => 'number',
+				'default' => 20
+			),
+			'slidesPerView' => array(
+				'type'    => 'number',
+				'default' => 1
+			),
 			'sliderHeight'     => array(
 				'type'    => 'number',
 				'default' => 250
