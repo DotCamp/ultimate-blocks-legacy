@@ -35782,9 +35782,35 @@ function _interopRequireDefault(obj) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleBlockStatus = exports.rollbackToVersion = void 0;
+exports.toggleExtensionStatus = exports.toggleBlockStatus = exports.rollbackToVersion = void 0;
 var _assets = require("48e349588f046c5f");
 var _versionControl = require("a85ccb0efb87f164");
+/**
+ * Toggle extension status.
+ *
+ * @param {Function} dispatch store action dispatch function
+ * @param {Function} getState store state selection function
+ * @return {Function} action function
+ */ var toggleExtensionStatus = exports.toggleExtensionStatus = function toggleExtensionStatus(dispatch, getState) {
+    return function(extensionId, status) {
+        var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfoSub = _getAjaxInfo.toggleExtensionStatus;
+        var url = ajaxInfoSub.url, action = ajaxInfoSub.action, nonce = ajaxInfoSub.nonce;
+        if (!Array.isArray(extensionId)) extensionId = [
+            extensionId
+        ];
+        var formData = new FormData();
+        extensionId.map(function(eId) {
+            return formData.append("extension_name[]", eId);
+        });
+        formData.append("enable", JSON.stringify(status));
+        formData.append("action", action);
+        formData.append("_wpnonce", nonce);
+        fetch(url, {
+            method: "POST",
+            body: formData
+        });
+    };
+};
 /**
  * Toggle block status.
  *
@@ -35793,7 +35819,7 @@ var _versionControl = require("a85ccb0efb87f164");
  * @return {Function} action function
  */ var toggleBlockStatus = exports.toggleBlockStatus = function toggleBlockStatus(dispatch, getState) {
     return function(blockId, status) {
-        var _getAjaxInfo = (0, _assets.getAjaxInfo)(getState()), ajaxInfoSub = _getAjaxInfo.toggleStatus;
+        var _getAjaxInfo2 = (0, _assets.getAjaxInfo)(getState()), ajaxInfoSub = _getAjaxInfo2.toggleStatus;
         var url = ajaxInfoSub.url, action = ajaxInfoSub.action, nonce = ajaxInfoSub.nonce;
         if (!Array.isArray(blockId)) blockId = [
             blockId
@@ -38100,7 +38126,128 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = void 0;
+var _i18n = require("7ac9c440b18113b1");
+var _BoxContentProvider = _interopRequireDefault(require("6c3ac9e6f653bef9"));
+var _extension = require("d35dea8521a15e5e");
+var _BoxContent = require("4c0e668074f7a37e");
+var _ButtonLink = _interopRequireWildcard(require("b60e198d7c45970a"));
+var _UpgradeBoxContent = _interopRequireDefault(require("c9bc798e021a8346"));
+var _ExtensionsControlContainer = _interopRequireDefault(require("ec52ee2ada8c54ba"));
+var _withStore = _interopRequireDefault(require("120a73334e1db439"));
+var _actions = require("9a119e22689e8e8b");
 var _react = _interopRequireWildcard(require("b68942abfa60c995"));
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
+}
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Extensions content component.
+ */ function ExtensionsContent(_ref) {
+    var pluginExtensions = _ref.pluginExtensions, setExtensionStatus = _ref.setExtensionStatus, dispatch = _ref.dispatch;
+    var pluginExtensionsNames = (0, _react.useRef)(pluginExtensions.map(function(_ref2) {
+        var name = _ref2.name;
+        return name;
+    }));
+    /**
+   * Toggle status of all available extensions.
+   *
+   * @param {boolean} status status to set
+   */ var toggleAllExtensionStatus = function toggleAllExtensionStatus(status) {
+        dispatch(_actions.toggleExtensionStatus)(pluginExtensionsNames.current, status);
+        pluginExtensionsNames.current.map(function(bName) {
+            return setExtensionStatus({
+                id: bName,
+                status: status
+            });
+        });
+    };
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "ub-extensions-content"
+    }, /*#__PURE__*/ _react["default"].createElement(_BoxContentProvider["default"], {
+        layout: _BoxContent.BoxContentLayout.HORIZONTAL,
+        contentId: "extensionGlobalControl",
+        size: _BoxContent.BoxContentSize.JUMBO
+    }, /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        onClickHandler: function onClickHandler() {
+            toggleAllExtensionStatus(true);
+        },
+        type: _ButtonLink.ButtonLinkType.DEFAULT,
+        title: (0, _i18n.__)("Activate All")
+    }), /*#__PURE__*/ _react["default"].createElement(_ButtonLink["default"], {
+        onClickHandler: function onClickHandler() {
+            toggleAllExtensionStatus(false);
+        },
+        type: _ButtonLink.ButtonLinkType.DEFAULT,
+        title: (0, _i18n.__)("Deactivate All")
+    })), /*#__PURE__*/ _react["default"].createElement(_ExtensionsControlContainer["default"], null), /*#__PURE__*/ _react["default"].createElement(_UpgradeBoxContent["default"], {
+        alignment: _BoxContent.BoxContentAlign.CENTER
+    }));
+}
+// store select mapping
+var selectMapping = function selectMapping(select) {
+    return {
+        pluginExtensions: select(_extension.getExtensions)
+    };
+};
+// store action mapping
+var actionMapping = function actionMapping() {
+    return {
+        setExtensionStatus: _extension.setExtensionActiveStatus
+    };
+};
+/**
+ * @module ExtensionsContent
+ */ var _default = exports["default"] = (0, _withStore["default"])(ExtensionsContent, selectMapping, actionMapping);
+
+},{"b68942abfa60c995":"21dqq","7ac9c440b18113b1":"7CyoE","6c3ac9e6f653bef9":"cJGef","4c0e668074f7a37e":"6zPRs","b60e198d7c45970a":"dwYOq","c9bc798e021a8346":"5Kpzy","120a73334e1db439":"kWmDy","9a119e22689e8e8b":"g3gW2","ec52ee2ada8c54ba":"6kstq","d35dea8521a15e5e":"gjBMp"}],"6kstq":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("78a77a46d05a016b"));
+var _ExtensionControlCard = _interopRequireDefault(require("9810be497d4510d8"));
+var _withStore = _interopRequireDefault(require("fa76aa48eced0428"));
+var _extension = require("c9cac776cdd3cf82");
+var _app = require("2eff4ed8cde59dae");
+var _actions = require("1c4c0d5611ec47bf");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
 function _getRequireWildcardCache(e) {
     if ("function" != typeof WeakMap) return null;
     var r = new WeakMap(), t = new WeakMap();
@@ -38178,42 +38325,354 @@ function _iterableToArrayLimit(r, l) {
 }
 function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
+} // eslint-disable-next-line no-unused-vars
+/**
+ * Block controls container.
+ *
+ * @class
+ *
+ * @param {Object}   props                component properties
+ * @param {Object}   props.extensions         menu data, will be supplied via HOC
+ * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
+ * @param {Function} props.setExtensionStatus set a block's active status, will be supplied via HOC
+ * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
+ * @param {Function} props.showUpsell     set target block type for modal interface
+ * @param {Object}   props.blockDemos     block demo urls, will be supplied via HOC
+ */ function ExtensionsControlContainer(_ref) {
+    var ubExtensions = _ref.extensions, setExtensionStatus = _ref.setExtensionStatus, dispatch = _ref.dispatch, proStatus = _ref.proStatus;
+    var _useState = (0, _react.useState)(ubExtensions), _useState2 = _slicedToArray(_useState, 2), extensions = _useState2[0], setExtensions = _useState2[1];
+    /**
+   * Handle block status change.
+   *
+   * @param {boolean} proExtension is calling block belongs to pro version of the plugin
+   */ var handleExtensionStatusChange = function handleExtensionStatusChange(proExtension) {
+        return function(extensionId, status) {
+            if (proExtension && !proStatus) {
+                setExtensionStatus({
+                    id: extensionId,
+                    status: false
+                });
+                return;
+            }
+            setExtensionStatus({
+                id: extensionId,
+                status: status
+            });
+            dispatch(_actions.toggleExtensionStatus)(extensionId, status);
+        };
+    };
+    // useEffect hook
+    (0, _react.useEffect)(function() {
+        var sortedExtensions = _toConsumableArray(ubExtensions).sort(function(a, b) {
+            var aName = a.title.toLowerCase();
+            var bName = b.title.toLowerCase();
+            if (aName < bName) return -1;
+            if (aName > bName) return 1;
+            return 0;
+        });
+        setExtensions(sortedExtensions);
+    }, [
+        ubExtensions
+    ]);
+    return /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "controls-container"
+    }, extensions.map(function(_ref2) {
+        var label = _ref2.label, name = _ref2.name, active = _ref2.active, icon = _ref2.icon, info = _ref2.info, pro = _ref2.pro;
+        return /*#__PURE__*/ _react["default"].createElement(_ExtensionControlCard["default"], {
+            key: name,
+            proStatus: proStatus,
+            title: label,
+            extensionId: name,
+            status: active,
+            onStatusChange: handleExtensionStatusChange(pro),
+            iconElement: icon,
+            info: info,
+            proBlock: pro
+        });
+    }));
+}
+var selectMapping = function selectMapping(selector) {
+    return {
+        extensions: selector(_extension.getExtensions),
+        proStatus: selector(_app.getProStatus)
+    };
+};
+var actionMapping = function actionMapping() {
+    return {
+        setExtensionStatus: _extension.setExtensionActiveStatus
+    };
+};
+/**
+ * @module ExtensionsControlContainer
+ */ var _default = exports["default"] = (0, _withStore["default"])(ExtensionsControlContainer, selectMapping, actionMapping);
+
+},{"78a77a46d05a016b":"21dqq","9810be497d4510d8":"jOgrZ","fa76aa48eced0428":"kWmDy","c9cac776cdd3cf82":"gjBMp","2eff4ed8cde59dae":"c28DV","1c4c0d5611ec47bf":"g3gW2"}],"jOgrZ":[function(require,module,exports) {
+"use strict";
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
+        return typeof o;
+    } : function(o) {
+        return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+    }, _typeof(o);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireWildcard(require("456d488fbfd9238"));
+var _i18n = require("62bd3eda9e8e463a");
+var _ToggleControl = _interopRequireDefault(require("901895383efee726"));
+var _withIcon = _interopRequireDefault(require("88a3e2138dbc023c"));
+var _ProExtensionCardTitle = _interopRequireDefault(require("69eb612a469be373"));
+var _ExtensionCardProInfoControl = _interopRequireDefault(require("f96c0f8579c5c3"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _getRequireWildcardCache(e) {
+    if ("function" != typeof WeakMap) return null;
+    var r = new WeakMap(), t = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+        return e ? t : r;
+    })(e);
+}
+function _interopRequireWildcard(e, r) {
+    if (!r && e && e.__esModule) return e;
+    if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
+        "default": e
+    };
+    var t = _getRequireWildcardCache(r);
+    if (t && t.has(e)) return t.get(e);
+    var n = {
+        __proto__: null
+    }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var u in e)if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
+    return n["default"] = e, t && t.set(e, n), n;
 }
 /**
- * Extensions content component.
- */ function ExtensionsContent() {
-    var _useState = (0, _react.useState)([
-        false,
-        false,
-        false
-    ]), _useState2 = _slicedToArray(_useState, 2), opacityMap = _useState2[0], setOpacityMap = _useState2[1];
-    var currentIndex = 0;
-    /**
-   * useEffect hook.
-   */ (0, _react.useEffect)(function() {
-        setInterval(function() {
-            opacityMap[currentIndex] = !opacityMap[currentIndex];
-            setOpacityMap(_toConsumableArray(opacityMap));
-            currentIndex = (currentIndex + 1) % opacityMap.length;
-        }, 200);
-    }, []);
+ * Menu extension control component.
+ *
+ * This control will be used for both enabling/disabling extensions and showing info about them.
+ *
+ * @class
+ *
+ * @param {Object}        props                component properties
+ * @param {string}        props.title          extension title
+ * @param {string}        props.extensionId    registry id of extension
+ * @param {boolean}       props.status         extension status
+ * @param {HTMLElement}   props.iconElement    icon element, will be supplied via HOC
+ * @param {Function}      props.onStatusChange callback for status change event
+ * @param {boolean}       props.proExtension       extension belongs to pro version
+ * @param {boolean}       props.proStatus      plugin pro status
+ * @param {Function}      props.showUpsell     set target extension type for modal interface
+ * @param {string | null} [props.demoUrl=null] demo url for extension
+ */ function ExtensionControlCard(_ref) {
+    var title = _ref.title, extensionId = _ref.extensionId, status = _ref.status, iconElement = _ref.iconElement, _onStatusChange = _ref.onStatusChange, proExtension = _ref.proExtension, proStatus = _ref.proStatus, showUpsell = _ref.showUpsell, _ref$demoUrl = _ref.demoUrl, demoUrl = _ref$demoUrl === void 0 ? null : _ref$demoUrl;
+    var initialAnimation = (0, _react.useRef)(true);
     return /*#__PURE__*/ _react["default"].createElement("div", {
-        className: "ub-extensions-content"
-    }, /*#__PURE__*/ _react["default"].createElement("span", {
-        className: "soon"
-    }, "Coming soon", opacityMap.map(function(dataVal, index) {
-        return /*#__PURE__*/ _react["default"].createElement("span", {
-            key: index,
-            "data-opacity": dataVal,
-            className: "just-a-dot"
-        }, ".");
+        className: "extension-control",
+        "data-enabled": JSON.stringify(proExtension && !proStatus ? false : status),
+        "data-initial-animation": JSON.stringify(initialAnimation.current)
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "extension-title"
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "extension-title-left-container",
+        "data-demo": demoUrl !== null
+    }, /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-icon",
+        dangerouslySetInnerHTML: {
+            __html: iconElement
+        }
+    }), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-text"
+    }, title, /*#__PURE__*/ _react["default"].createElement(_ProExtensionCardTitle["default"], {
+        isPro: proExtension
+    })), demoUrl && /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "title-demo"
+    }, /*#__PURE__*/ _react["default"].createElement("a", {
+        href: demoUrl,
+        target: "_blank",
+        rel: "noreferrer",
+        className: "strip-anchor-styles"
+    }, (0, _i18n.__)("See Demo", "ultimate-blocks")))), /*#__PURE__*/ _react["default"].createElement("div", {
+        className: "extension-title-right-container"
+    }, proExtension && !proStatus ? /*#__PURE__*/ _react["default"].createElement(_ExtensionCardProInfoControl["default"], {
+        handleClick: function handleClick(e) {
+            e.preventDefault();
+            showUpsell(extensionId);
+        }
+    }) : /*#__PURE__*/ _react["default"].createElement(_ToggleControl["default"], {
+        onStatusChange: function onStatusChange(newStatus) {
+            return _onStatusChange(extensionId, newStatus);
+        },
+        status: status,
+        disabled: proExtension && !proStatus
+    }))));
+}
+/**
+ * @module ExtensionControl
+ */ var _default = exports["default"] = ExtensionControlCard;
+
+},{"456d488fbfd9238":"21dqq","62bd3eda9e8e463a":"7CyoE","901895383efee726":"a7r96","88a3e2138dbc023c":"l4uaA","69eb612a469be373":"4dZh3","f96c0f8579c5c3":"5HQsZ"}],"4dZh3":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("b8ac99c727b3c34c"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Pro block card control title.
+ *
+ * @param {Object}  props       component properties
+ * @param {boolean} props.isPro block pro status
+ */ function ProExtensionCardTitle(_ref) {
+    var isPro = _ref.isPro;
+    return isPro && /*#__PURE__*/ _react["default"].createElement("span", {
+        className: "pro-block-card-title-suffix"
+    }, "PRO");
+}
+/**
+ * @module ProTitle
+ */ var _default = exports["default"] = ProExtensionCardTitle;
+
+},{"b8ac99c727b3c34c":"21dqq"}],"5HQsZ":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("b973c16b7514e318"));
+var _reactFontawesome = require("9da39bbc9e079c60");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+/**
+ * Info control button for pro block cards.
+ *
+ * @param {Object}   props             component properties
+ * @param {Function} props.handleClick click callback
+ */ function ExtensionControlCard(_ref) {
+    var handleClick = _ref.handleClick;
+    return(/*#__PURE__*/ // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/interactive-supports-focus
+    _react["default"].createElement("div", {
+        role: "button",
+        className: "pro-block-card-info-button",
+        onClick: handleClick
+    }, /*#__PURE__*/ _react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: "fa-solid fa-circle-info"
     })));
 }
 /**
- * @module ExtensionsContent
- */ var _default = exports["default"] = ExtensionsContent;
+ * @module ExtensionControlCard
+ */ var _default = exports["default"] = ExtensionControlCard;
 
-},{"b68942abfa60c995":"21dqq"}],"gCgzB":[function(require,module,exports) {
+},{"b973c16b7514e318":"21dqq","9da39bbc9e079c60":"clIT3"}],"gjBMp":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setExtensionActiveStatus = exports.getExtensions = exports.getExtensionById = exports["default"] = void 0;
+var _toolkit = require("c57a8e45c9ba37c6");
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+/**
+ * Extension slice options
+ *
+ * @type {Object}
+ */ var extensionsSliceOptions = {
+    name: "extensions",
+    initialState: {
+        registered: []
+    },
+    reducers: {
+        /**
+     * Set active status of target extension.
+     *
+     * @param {Object} state         store state
+     * @param {Object} props         action props
+     * @param {Object} props.payload action payload
+     */ setExtensionActiveStatus: function setExtensionActiveStatus(state, _ref) {
+            var payload = _ref.payload;
+            var id = payload.id, status = payload.status;
+            var registered = state.registered;
+            var uRegistered = _toConsumableArray(registered);
+            var extensionIndex = -1;
+            // eslint-disable-next-line array-callback-return
+            uRegistered.map(function(bObj, index) {
+                if (bObj.name === id) extensionIndex = index;
+            });
+            if (extensionIndex >= 0) {
+                uRegistered[extensionIndex].active = status;
+                state.registered = uRegistered;
+            }
+        }
+    }
+};
+var extensionsSlice = (0, _toolkit.createSlice)(extensionsSliceOptions);
+var setExtensionActiveStatus = exports.setExtensionActiveStatus = extensionsSlice.actions.setExtensionActiveStatus;
+/**
+ * Get registered plugin extensions.
+ *
+ * @param {Object} state store state
+ * @return {Array} extensions
+ */ var getExtensions = exports.getExtensions = function getExtensions(state) {
+    return state.extensions.registered;
+};
+/* eslint-disable-next-line jsdoc/require-param */ /**
+ * Get extension object by given extension type id.
+ */ var getExtensionById = exports.getExtensionById = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.extensions.registered;
+    },
+    function(registered, extensionId) {
+        return extensionId;
+    }
+], function(registered, extensionId) {
+    return registered.find(function(_ref2) {
+        var name = _ref2.name;
+        return name === extensionId;
+    });
+});
+/**
+ * @module extensionsSlice
+ */ var _default = exports["default"] = extensionsSlice.reducer;
+
+},{"c57a8e45c9ba37c6":"lL1Ef"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -39298,6 +39757,7 @@ var _toolkit = require("953ee9eab3e8c345");
 var _assets = _interopRequireDefault(require("8c721e7e53326dbf"));
 var _app = _interopRequireDefault(require("4a75fc56b99646a3"));
 var _blocks = _interopRequireDefault(require("df36ccd063eba533"));
+var _extension = _interopRequireDefault(require("e8a1ede42ee43d07"));
 var _versionControl = _interopRequireDefault(require("9bf24bb8ad1424ca"));
 var _deepmerge = _interopRequireDefault(require("61d1115f3d5c796e"));
 var _initialState = _interopRequireDefault(require("9016861a8b48c99a"));
@@ -39461,7 +39921,7 @@ function _toPrimitive(input, hint) {
         carry.push(newBlockObject);
         return carry;
     }, []);
-    var proBlocks = appData.upsells.blocks;
+    var _appData$upsells = appData.upsells, proBlocks = _appData$upsells.blocks, proExtensions = _appData$upsells.extensions;
     var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
     // all blocks available including upsell versions of pro blocks or pro blocks themselves
     var allRegistered = proBlockUpsell.reduce(function(carry, current) {
@@ -39485,6 +39945,9 @@ function _toPrimitive(input, hint) {
         blocks: {
             registered: allRegistered
         },
+        extensions: {
+            registered: appData.extensions.statusData
+        },
         versionControl: appData.versionControl,
         pluginStatus: appData.pluginStatus
     };
@@ -39495,6 +39958,7 @@ function _toPrimitive(input, hint) {
             assets: _assets["default"],
             app: _app["default"],
             blocks: _blocks["default"],
+            extensions: _extension["default"],
             versionControl: _versionControl["default"],
             pluginStatus: _pluginStatus["default"]
         },
@@ -39510,7 +39974,7 @@ function _toPrimitive(input, hint) {
  * @module createStore
  */ var _default = exports["default"] = createStore;
 
-},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","8c721e7e53326dbf":"9SnHn","4a75fc56b99646a3":"c28DV","df36ccd063eba533":"ohEvx","9bf24bb8ad1424ca":"6jcRk","61d1115f3d5c796e":"ck1Q2","9016861a8b48c99a":"3xPpL","e241a936151f11bf":"fi8Oa"}],"ck1Q2":[function(require,module,exports) {
+},{"c515c572c6ab551c":"21dqq","953ee9eab3e8c345":"lL1Ef","8c721e7e53326dbf":"9SnHn","4a75fc56b99646a3":"c28DV","df36ccd063eba533":"ohEvx","9bf24bb8ad1424ca":"6jcRk","61d1115f3d5c796e":"ck1Q2","9016861a8b48c99a":"3xPpL","e241a936151f11bf":"fi8Oa","e8a1ede42ee43d07":"gjBMp"}],"ck1Q2":[function(require,module,exports) {
 "use strict";
 var isMergeableObject = function isMergeableObject(value) {
     return isNonNullObject(value) && !isSpecial(value);

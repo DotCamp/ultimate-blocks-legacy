@@ -48,14 +48,21 @@ const withAdvanceControls = createHigherOrderComponent((BlockEdit) => {
 	};
 }, "withAdvanceControls");
 
-addFilter(
-	"editor.BlockEdit",
-	"ultimate-blocks/with-advance-controls",
-	withAdvanceControls
-);
+if (typeof ub_extensions !== "undefined") {
+	const responsiveControl = ub_extensions.find(
+		(extensions) => extensions.name === "responsive-control"
+	);
+	if (responsiveControl.active) {
+		addFilter(
+			"editor.BlockEdit",
+			"ultimate-blocks/with-advance-controls",
+			withAdvanceControls
+		);
 
-addFilter(
-	"blocks.registerBlockType",
-	"ultimate-blocks/add-attributes",
-	addAttributes
-);
+		addFilter(
+			"blocks.registerBlockType",
+			"ultimate-blocks/add-attributes",
+			addAttributes
+		);
+	}
+}

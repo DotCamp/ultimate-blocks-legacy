@@ -1278,9 +1278,8 @@ function ultimate_blocks_cgb_editor_assets() {
 			Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
-//	$editor_client_data = apply_filters( 'ub/filter/editor-client-data', [] );
-//
-//	wp_localize_script( 'ultimate_blocks-cgb-block-js', 'ubEditorClientData', $editor_client_data );
+	$extensions = get_option('ultimate_blocks_extensions');
+	wp_localize_script( 'ultimate_blocks-cgb-block-js', 'ub_extensions', $extensions );
 	Editor_Data_Manager::get_instance()->attach_editor_data( [], 'ultimate_blocks-cgb-block-js' );
 
 	wp_enqueue_script(

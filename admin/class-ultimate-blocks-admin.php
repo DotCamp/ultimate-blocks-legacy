@@ -106,6 +106,11 @@ class Ultimate_Blocks_Admin {
 					'action' => 'toggle_block_status',
 					'nonce'  => wp_create_nonce( 'toggle_block_status' ),
 				),
+				'toggleExtensionStatus' => array(
+					'url'    => get_admin_url( null, 'admin-ajax.php' ),
+					'action' => 'toggle_extension_status',
+					'nonce'  => wp_create_nonce( 'toggle_extension_status' ),
+				),
 			),
 			'proMenuSlug' => $this->pro_menu_slug,
 			'blockDemos'  => Block_Demos_Data::get_data(),
@@ -115,6 +120,9 @@ class Ultimate_Blocks_Admin {
 		$data['blocks'] = array(
 			'statusData' => get_option( 'ultimate_blocks', false ),
 			'info'       => Block_Menu_Info_Data::get_data(),
+		);
+		$data['extensions'] = array(
+			'statusData' => get_option( 'ultimate_blocks_extensions', false ),
 		);
 
 		return $data;
@@ -174,8 +182,8 @@ class Ultimate_Blocks_Admin {
 
 		if ( $hook !== $menu_page && $hook !== $ub_pro_page ) {
 			return;
-		}
-
+		}		
+		
 		wp_enqueue_script(
 			$this->plugin_name . '_registered_blocks',
 			trailingslashit( $this->plugin_url ) . 'dist/blocks.build.js',
@@ -246,6 +254,42 @@ class Ultimate_Blocks_Admin {
 		require_once $this->plugin_path . 'admin/templates/menus/main-menu.php';
 	}
 
+	/**
+	 * Toggle extension status ajax endpoint.
+	 *
+	 * @return void
+	 */
+	public function toggle_extension_status() {
+		check_ajax_referer( 'toggle_extension_status' );
+
+		if ( isset( $_POST['extension_name'] ) && isset( $_POST['enable'] ) ) {
+			// phpcs:disable
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitization done before foreach loop below.
+			$extension_name_array = $_POST['extension_name'];
+			// phpcs:enable
+
+			if ( is_null( $extension_name_array ) || ! is_array( $extension_name_array ) ) {
+				wp_send_json_error(
+					array(
+						'error_message' => __( 'Invalid JSON object supplied for extension names.', 'ultimate-blocks' ),
+					)
+				);
+			} else {
+				$enable           = sanitize_text_field( wp_unslash( $_POST['enable'] ) );
+				$extension_name_array = array_map( 'sanitize_text_field', $extension_name_array );
+				foreach ( $extension_name_array as $extension_name ) {
+					$this->toggle_extension_status_individual( $extension_name, $enable );
+				}
+			}
+		} else {
+			wp_send_json_error(
+				array(
+					'error_message' => __( 'Extension name is not supplied', 'ultimate-blocks' ),
+				)
+			);
+		}
+		die();
+	}
 	/**
 	 * Toggle block status ajax endpoint.
 	 *
@@ -381,6 +425,37 @@ class Ultimate_Blocks_Admin {
 
 		// wp_send_json_success( get_option( 'ultimate_blocks', false ) );
 	}
+	/**
+	 * Enable/Disable Extension
+	 *
+	 * @param string $extension_name extension name.
+	 * @param bool   $enable extension status.
+	 *
+	 * @return void
+	 * @since    3.0.9
+	 */
+	private function toggle_extension_status_individual( $extension_name, $enable ) {
+		do_action( 'ub/action/extension_toggle_ajax_before_exist_check', $extension_name, rest_sanitize_boolean( $enable ) );
+
+		if ( ! $this->extension_exists( $extension_name ) ) {
+			wp_send_json_error(
+				array(
+					'error_message' => 'Unknown extension name',
+				)
+			);
+		}
+		$saved_extensions = get_option( 'ultimate_blocks_extensions', false );
+		if ( $saved_extensions ) {
+			foreach ( $saved_extensions as $key => $extension ) {
+				if ( $extension['name'] === $extension_name ) {
+					$saved_extensions[ $key ]['active'] = ( $enable === 'true' );
+				}
+			}
+			update_option( 'ultimate_blocks_extensions', $saved_extensions );
+		} else {
+			update_option( 'ultimate_blocks_extensions', $this->extensions() );
+		}
+	}
 
 	/**
 	 * Insert Blocks Settings as a Js Global variable.
@@ -434,6 +509,25 @@ class Ultimate_Blocks_Admin {
 	}
 
 	/**
+	 * Check extension exists.
+	 *
+	 * @param string $name Block Name.
+	 *
+	 * @return bool
+	 * @since    3.0.9
+	 */
+	protected function extension_exists( $name ) {
+		$extensions = $this->extensions();
+
+		foreach ( $extensions as $key => $extension ) {
+			if ( $extension['name'] === $name ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	/**
 	 * Check block exists.
 	 *
 	 * @param string $name Block Name.
@@ -475,6 +569,18 @@ class Ultimate_Blocks_Admin {
 		return false;
 	}
 
+	/**
+	 * Get Plugin BLOCKS
+	 *
+	 * @return array
+	 * @since    3.0.9
+	 */
+	protected static function extensions() {
+
+		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-util.php';
+
+		return Ultimate_Blocks_Util::extensions();
+	}
 	/**
 	 * Get Plugin BLOCKS
 	 *

@@ -1,12 +1,13 @@
-import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
-import assetsSlice from '$Stores/settings-menu/slices/assets';
-import appSlice from '$Stores/settings-menu/slices/app';
-import blocksSlice from '$Stores/settings-menu/slices/blocks';
-import versionControlSlice from '$Stores/settings-menu/slices/versionControl';
-import deepmerge from 'deepmerge';
-import initialState from '$Stores/settings-menu/initialState';
-import pluginStatusSlice from '$Stores/settings-menu/slices/pluginStatus';
+import React from "react";
+import { configureStore } from "@reduxjs/toolkit";
+import assetsSlice from "$Stores/settings-menu/slices/assets";
+import appSlice from "$Stores/settings-menu/slices/app";
+import blocksSlice from "$Stores/settings-menu/slices/blocks";
+import extensionsSlice from "$Stores/settings-menu/slices/extension";
+import versionControlSlice from "$Stores/settings-menu/slices/versionControl";
+import deepmerge from "deepmerge";
+import initialState from "$Stores/settings-menu/initialState";
+import pluginStatusSlice from "$Stores/settings-menu/slices/pluginStatus";
 
 /**
  * Prepare data for pro only block upsells.
@@ -88,7 +89,7 @@ function createStore() {
 	ubAdminMenuData = null;
 
 	// add block infos to context data
-	const registeredBlocks = wp.data.select('core/blocks').getBlockTypes();
+	const registeredBlocks = wp.data.select("core/blocks").getBlockTypes();
 	const registeredUbBlocks = registeredBlocks.filter((blockData) => {
 		return (
 			blockData.parent === undefined &&
@@ -126,7 +127,7 @@ function createStore() {
 		return carry;
 	}, []);
 
-	const { blocks: proBlocks } = appData.upsells;
+	const { blocks: proBlocks, extensions: proExtensions } = appData.upsells;
 	const proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
 
 	// all blocks available including upsell versions of pro blocks or pro blocks themselves
@@ -135,9 +136,7 @@ function createStore() {
 
 		//check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
 		// if not inject the upsell data to current block list
-		const registeredProBlock = carry.find(
-			({ name }) => name === proBlockName
-		);
+		const registeredProBlock = carry.find(({ name }) => name === proBlockName);
 		if (registeredProBlock) {
 			registeredProBlock.pro = true;
 		} else {
@@ -157,6 +156,9 @@ function createStore() {
 		blocks: {
 			registered: allRegistered,
 		},
+		extensions: {
+			registered: appData.extensions.statusData,
+		},
 		versionControl: appData.versionControl,
 		pluginStatus: appData.pluginStatus,
 	};
@@ -169,6 +171,7 @@ function createStore() {
 			assets: assetsSlice,
 			app: appSlice,
 			blocks: blocksSlice,
+			extensions: extensionsSlice,
 			versionControl: versionControlSlice,
 			pluginStatus: pluginStatusSlice,
 		},

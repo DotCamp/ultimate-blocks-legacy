@@ -36,6 +36,11 @@ class Ultimate_Blocks_Activator {
 		require_once ULTIMATE_BLOCKS_PATH . 'includes/class-ultimate-blocks-util.php';
 
 		$blocks = get_option( 'ultimate_blocks', false );
+		$extensions = get_option( 'ultimate_blocks_extensions', false );
+
+		if ( ! $extensions ) {
+			update_option( 'ultimate_blocks_extensions', Ultimate_Blocks_Util::extensions() );
+		}
 
 		if ( ! $blocks ) {
 			update_option( 'ultimate_blocks', Ultimate_Blocks_Util::blocks() );

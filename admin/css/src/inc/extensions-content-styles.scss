@@ -2,22 +2,8 @@
 @import "../base/common";
 
 .ub-extensions-content {
-	@extend %flex-center-all;
 	@extend %size-full;
-
-	.soon {
-		@extend %h3-regular;
-
-		color: $text-faded-color;
-
-		.just-a-dot {
-			@extend %default-transition;
-
-			opacity: 0;
-
-			&[data-opacity="true"] {
-				opacity: 1;
-			}
-		}
-	}
+	display: flex;
+	flex-direction: column;
+	gap: 36px;
 }

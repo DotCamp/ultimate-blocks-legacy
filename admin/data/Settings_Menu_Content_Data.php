@@ -65,6 +65,13 @@ class Settings_Menu_Content_Data implements I_Plugin_Data {
 					'ultimate-blocks'
 				),
 			),
+			'extensionGlobalControl' => array(
+				'title'   => esc_html__( 'Global Control', 'ultimate-blocks' ),
+				'content' => esc_html__(
+					'Global control allows users to easily enable or disable all available extensions together, simplifying extension management',
+					'ultimate-blocks'
+				),
+			),
 		);
 	}
 }

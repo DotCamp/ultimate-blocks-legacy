@@ -1,5 +1,5 @@
-@import '../base/common';
-@import '../base/themes/admin-menu-theme';
+@import "../base/common";
+@import "../base/themes/admin-menu-theme";
 
 .block-control {
 	@extend %default-border;
@@ -24,7 +24,6 @@
 	&[data-initial-animation="true"] {
 		transition: none;
 	}
-
 
 	.block-title {
 		@extend %default-transition;
@@ -116,7 +115,7 @@
 		}
 	}
 
-	&[data-enabled='false'] {
+	&[data-enabled="false"] {
 		background-color: $gray-400;
 
 		.block-title {

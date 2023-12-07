@@ -1,44 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import { __ } from "@wordpress/i18n";
+import BoxContentProvider from "$Components/BoxContent/BoxContentProvider";
+import {
+	getExtensions,
+	setExtensionActiveStatus,
+} from "$Stores/settings-menu/slices/extension";
+import {
+	BoxContentAlign,
+	BoxContentLayout,
+	BoxContentSize,
+} from "$Components/BoxContent/BoxContent";
+import ButtonLink, { ButtonLinkType } from "$Components/ButtonLink";
+import UpgradeBoxContent from "$Components/UpgradeBoxContent";
+import ExtensionsControlContainer from "$Components/ExtensionsControlContainer";
+import withStore from "$HOC/withStore";
+import { toggleExtensionStatus } from "$Stores/settings-menu/actions";
+import React, { useRef } from "react";
 
 /**
  * Extensions content component.
  */
-function ExtensionsContent() {
-	const [opacityMap, setOpacityMap] = useState([false, false, false]);
-	let currentIndex = 0;
+function ExtensionsContent({ pluginExtensions, setExtensionStatus, dispatch }) {
+	const pluginExtensionsNames = useRef(
+		pluginExtensions.map(({ name }) => name)
+	);
 
 	/**
-	 * useEffect hook.
+	 * Toggle status of all available extensions.
+	 *
+	 * @param {boolean} status status to set
 	 */
-	useEffect(() => {
-		setInterval(() => {
-			opacityMap[currentIndex] = !opacityMap[currentIndex];
-			setOpacityMap([...opacityMap]);
-			currentIndex = (currentIndex + 1) % opacityMap.length;
-		}, 200);
-	}, []);
-
+	const toggleAllExtensionStatus = (status) => {
+		dispatch(toggleExtensionStatus)(pluginExtensionsNames.current, status);
+		pluginExtensionsNames.current.map((bName) =>
+			setExtensionStatus({ id: bName, status })
+		);
+	};
 	return (
 		<div className="ub-extensions-content">
-			<span className={'soon'}>
-				Coming soon
-				{opacityMap.map((dataVal, index) => {
-					return (
-						<span
-							key={index}
-							data-opacity={dataVal}
-							className={'just-a-dot'}
-						>
-							.
-						</span>
-					);
-				})}
-			</span>
+			<BoxContentProvider
+				layout={BoxContentLayout.HORIZONTAL}
+				contentId={"extensionGlobalControl"}
+				size={BoxContentSize.JUMBO}
+			>
+				<ButtonLink
+					onClickHandler={() => {
+						toggleAllExtensionStatus(true);
+					}}
+					type={ButtonLinkType.DEFAULT}
+					title={__("Activate All")}
+				/>
+				<ButtonLink
+					onClickHandler={() => {
+						toggleAllExtensionStatus(false);
+					}}
+					type={ButtonLinkType.DEFAULT}
+					title={__("Deactivate All")}
+				/>
+			</BoxContentProvider>
+			<ExtensionsControlContainer />
+			<UpgradeBoxContent alignment={BoxContentAlign.CENTER} />
 		</div>
 	);
 }
 
+// store select mapping
+const selectMapping = (select) => ({
+	pluginExtensions: select(getExtensions),
+});
+
+// store action mapping
+const actionMapping = () => ({
+	setExtensionStatus: setExtensionActiveStatus,
+});
+
 /**
  * @module ExtensionsContent
  */
-export default ExtensionsContent;
+export default withStore(ExtensionsContent, selectMapping, actionMapping);
