@@ -23,7 +23,7 @@ import BlockCardProInfoControl from '$Components/BlockCardProInfoControl';
  * @param {Function}      props.showUpsell     set target block type for modal interface
  * @param {string | null} [props.demoUrl=null] demo url for block
  */
-function BlockControlCard({
+function BlockControlCard( {
 	title,
 	blockId,
 	status,
@@ -33,57 +33,59 @@ function BlockControlCard({
 	proStatus,
 	showUpsell,
 	demoUrl = null,
-}) {
-	const initialAnimation = useRef(true);
+} ) {
+	const initialAnimation = useRef( true );
 
 	return (
 		<div
-			className={'block-control'}
-			data-enabled={JSON.stringify(
-				proBlock && !proStatus ? false : status
-			)}
-			data-initial-animation={JSON.stringify(initialAnimation.current)}
+			className={ 'block-control' }
+			data-enabled={ JSON.stringify(
+				proBlock && ! proStatus ? false : status
+			) }
+			data-initial-animation={ JSON.stringify(
+				initialAnimation.current
+			) }
 		>
-			<div className={'block-title'}>
+			<div className={ 'block-title' }>
 				<div
-					className={'block-title-left-container'}
-					data-demo={demoUrl !== null}
+					className={ 'block-title-left-container' }
+					data-demo={ demoUrl !== null }
 				>
-					<div className={'title-icon'}>{iconElement}</div>
-					<div className={'title-text'}>
-						{title}
-						<ProBlockCardTitle isPro={proBlock} />
+					<div className={ 'title-icon' }>{ iconElement }</div>
+					<div className={ 'title-text' }>
+						{ title }
+						<ProBlockCardTitle isPro={ proBlock } />
 					</div>
-					{demoUrl && (
-						<div className={'title-demo'}>
+					{ demoUrl && (
+						<div className={ 'title-demo' }>
 							<a
-								href={demoUrl}
-								target={'_blank'}
+								href={ demoUrl }
+								target={ '_blank' }
 								rel="noreferrer"
-								className={'strip-anchor-styles'}
+								className={ 'strip-anchor-styles' }
 							>
-								{__('See Demo', 'ultimate-blocks')}
+								{ __( 'See Demo', 'ultimate-blocks' ) }
 							</a>
 						</div>
-					)}
+					) }
 				</div>
-				<div className={'block-title-right-container'}>
-					{proBlock && !proStatus ? (
+				<div className={ 'block-title-right-container' }>
+					{ proBlock && ! proStatus ? (
 						<BlockCardProInfoControl
-							handleClick={(e) => {
+							handleClick={ ( e ) => {
 								e.preventDefault();
-								showUpsell(blockId);
-							}}
+								showUpsell( blockId );
+							} }
 						/>
 					) : (
 						<ToggleControl
-							onStatusChange={(newStatus) =>
-								onStatusChange(blockId, newStatus)
+							onStatusChange={ ( newStatus ) =>
+								onStatusChange( blockId, newStatus )
 							}
-							status={status}
-							disabled={proBlock && !proStatus}
+							status={ status }
+							disabled={ proBlock && ! proStatus }
 						/>
-					)}
+					) }
 				</div>
 			</div>
 		</div>
@@ -93,4 +95,4 @@ function BlockControlCard({
 /**
  * @module BlockControl
  */
-export default withIcon(BlockControlCard);
+export default withIcon( BlockControlCard );

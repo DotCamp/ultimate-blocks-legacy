@@ -25,60 +25,60 @@ import { toggleBlockStatus } from '$Stores/settings-menu/actions';
  * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
  * @class
  */
-function BlocksContent({ pluginBlocks, setBlockStatus, dispatch }) {
-	const pluginBlockNames = useRef(pluginBlocks.map(({ name }) => name));
+function BlocksContent( { pluginBlocks, setBlockStatus, dispatch } ) {
+	const pluginBlockNames = useRef( pluginBlocks.map( ( { name } ) => name ) );
 
 	/**
 	 * Toggle status of all available blocks.
 	 *
 	 * @param {boolean} status status to set
 	 */
-	const toggleAllBlockStatus = (status) => {
-		dispatch(toggleBlockStatus)(pluginBlockNames.current, status);
-		pluginBlockNames.current.map((bName) =>
-			setBlockStatus({ id: bName, status })
+	const toggleAllBlockStatus = ( status ) => {
+		dispatch( toggleBlockStatus )( pluginBlockNames.current, status );
+		pluginBlockNames.current.map( ( bName ) =>
+			setBlockStatus( { id: bName, status } )
 		);
 	};
 
 	return (
 		<div className="ub-blocks-content">
 			<BoxContentProvider
-				layout={BoxContentLayout.HORIZONTAL}
-				contentId={'globalControl'}
-				size={BoxContentSize.JUMBO}
+				layout={ BoxContentLayout.HORIZONTAL }
+				contentId={ 'globalControl' }
+				size={ BoxContentSize.JUMBO }
 			>
 				<ButtonLink
-					onClickHandler={() => {
-						toggleAllBlockStatus(true);
-					}}
-					type={ButtonLinkType.DEFAULT}
-					title={__('Activate All')}
+					onClickHandler={ () => {
+						toggleAllBlockStatus( true );
+					} }
+					type={ ButtonLinkType.DEFAULT }
+					title={ __( 'Activate All' ) }
 				/>
 				<ButtonLink
-					onClickHandler={() => {
-						toggleAllBlockStatus(false);
-					}}
-					type={ButtonLinkType.DEFAULT}
-					title={__('Deactivate All')}
+					onClickHandler={ () => {
+						toggleAllBlockStatus( false );
+					} }
+					type={ ButtonLinkType.DEFAULT }
+					title={ __( 'Deactivate All' ) }
 				/>
 			</BoxContentProvider>
 			<BlockControlsContainer />
-			<UpgradeBoxContent alignment={BoxContentAlign.CENTER} />
+			<UpgradeBoxContent alignment={ BoxContentAlign.CENTER } />
 		</div>
 	);
 }
 
 // store select mapping
-const selectMapping = (select) => ({
-	pluginBlocks: select(getBlocks),
-});
+const selectMapping = ( select ) => ( {
+	pluginBlocks: select( getBlocks ),
+} );
 
 // store action mapping
-const actionMapping = () => ({
+const actionMapping = () => ( {
 	setBlockStatus: setBlockActiveStatus,
-});
+} );
 
 /**
  * @module BlocksContent
  */
-export default withStore(BlocksContent, selectMapping, actionMapping);
+export default withStore( BlocksContent, selectMapping, actionMapping );

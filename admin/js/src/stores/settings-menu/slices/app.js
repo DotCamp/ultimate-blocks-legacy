@@ -19,7 +19,7 @@ const appSliceOptions = {
 		 * @param {Object} props         reducer properties
 		 * @param {string} props.payload route path
 		 */
-		setCurrentRoutePath(state, { payload }) {
+		setCurrentRoutePath( state, { payload } ) {
 			state.router.current = payload;
 		},
 		/**
@@ -29,11 +29,11 @@ const appSliceOptions = {
 		 * @param {Object} props         reducer properties
 		 * @param {string} props.payload filter value
 		 */
-		setBlockFilter(state, { payload }) {
-			if (Object.values(FILTER_TYPES).includes(payload)) {
+		setBlockFilter( state, { payload } ) {
+			if ( Object.values( FILTER_TYPES ).includes( payload ) ) {
 				state.blockFilter = payload;
 			} else {
-				throw new Error('invalid block filter type supplied');
+				throw new Error( 'invalid block filter type supplied' );
 			}
 		},
 		/**
@@ -41,8 +41,8 @@ const appSliceOptions = {
 		 *
 		 * @param {Object} state slice state
 		 */
-		toggleShowBlockInfo(state) {
-			state.showBlockInfo = !state.showBlockInfo;
+		toggleShowBlockInfo( state ) {
+			state.showBlockInfo = ! state.showBlockInfo;
 		},
 		/**
 		 * Show upsell modal for target block type.
@@ -51,7 +51,7 @@ const appSliceOptions = {
 		 * @param {Object} props         reducer properties
 		 * @param {string} props.payload target block type
 		 */
-		showProBlockUpsellModal(state, { payload }) {
+		showProBlockUpsellModal( state, { payload } ) {
 			state.upsellPopup.show = true;
 			state.upsellPopup.targetBlock = payload;
 		},
@@ -60,14 +60,14 @@ const appSliceOptions = {
 		 *
 		 * @param {Object} state slice state
 		 */
-		hideProBlockUpsellModal(state) {
+		hideProBlockUpsellModal( state ) {
 			state.upsellPopup.show = false;
 			state.upsellPopup.targetBlock = null;
 		},
 	},
 };
 
-const appSlice = createSlice(appSliceOptions);
+const appSlice = createSlice( appSliceOptions );
 
 export const {
 	setBlockFilter,
@@ -83,7 +83,7 @@ export const {
  * @param {Object} state store state
  * @return {Object} options
  */
-export const getAllAppOptions = (state) => {
+export const getAllAppOptions = ( state ) => {
 	return state.app;
 };
 
@@ -92,8 +92,8 @@ export const getAllAppOptions = (state) => {
  * Get content data.
  */
 export const getContentData = createSelector(
-	[(state) => state.app.content, (content, id) => id],
-	(content, id) => content[id] ?? null
+	[ ( state ) => state.app.content, ( content, id ) => id ],
+	( content, id ) => content[ id ] ?? null
 );
 
 /**
@@ -102,7 +102,7 @@ export const getContentData = createSelector(
  * @param {Object} state store state
  * @return {string} filter value
  */
-export const getBlockFilter = (state) => {
+export const getBlockFilter = ( state ) => {
 	return state.app.blockFilter;
 };
 
@@ -112,7 +112,7 @@ export const getBlockFilter = (state) => {
  * @param {Object} state store state
  * @return {boolean} status
  */
-export const getBlockInfoShowStatus = (state) => {
+export const getBlockInfoShowStatus = ( state ) => {
 	return state.app.showBlockInfo;
 };
 
@@ -125,8 +125,8 @@ export const getBlockInfoShowStatus = (state) => {
  * @param {Object} state store state
  * @return {boolean} status
  */
-export const getProStatus = (state) => {
-	return isPluginPro(state);
+export const getProStatus = ( state ) => {
+	return isPluginPro( state );
 };
 
 /**
@@ -135,7 +135,7 @@ export const getProStatus = (state) => {
  * @param {Object} state store state
  * @return {null | string} block type, null for no selected blocks
  */
-export const getModalTargetBlockType = (state) => {
+export const getModalTargetBlockType = ( state ) => {
 	return state.app.upsellPopup.targetBlock;
 };
 
@@ -145,7 +145,7 @@ export const getModalTargetBlockType = (state) => {
  * @param {Object} state store state
  * @return {boolean} visibility status
  */
-export const getModalVisibilityStatus = (state) => {
+export const getModalVisibilityStatus = ( state ) => {
 	return state.app.upsellPopup.show;
 };
 
@@ -155,7 +155,7 @@ export const getModalVisibilityStatus = (state) => {
  * @param {Object} state store state
  * @return {string | null} route path
  */
-export const getCurrentRoutePath = (state) => {
+export const getCurrentRoutePath = ( state ) => {
 	return state.app.router.current;
 };
 

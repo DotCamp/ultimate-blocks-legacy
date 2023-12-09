@@ -7,18 +7,18 @@ import '$Styles/ub-admin-settings.scss';
 import AdminMenuWrapper from '$Components/AdminMenuWrapper';
 import settingsMenuStore from './stores/settings-menu/settingsMenuStore';
 
-const mountPoint = document.querySelector('#ub-admin-menu');
+const mountPoint = document.querySelector( '#ub-admin-menu' );
 
-if (mountPoint) {
-	const root = createRoot(mountPoint);
+if ( mountPoint ) {
+	const root = createRoot( mountPoint );
 
 	root.render(
 		<AdminMenuWrapper>
-			<Provider store={settingsMenuStore()}>
+			<Provider store={ settingsMenuStore() }>
 				<AdminMenuContainer />
 			</Provider>
 		</AdminMenuWrapper>
 	);
 } else {
-	throw new Error('no mount point found for settings menu');
+	throw new Error( 'no mount point found for settings menu' );
 }

@@ -9,10 +9,12 @@ import React from 'react';
  * @param {Array}             props.classNames component class names
  * @class
  */
-function RightContainerItem({ children, classNames = [] }) {
+function RightContainerItem( { children, classNames = [] } ) {
 	return (
-		<div className={['right-container-item', ...classNames].join(' ')}>
-			{children}
+		<div
+			className={ [ 'right-container-item', ...classNames ].join( ' ' ) }
+		>
+			{ children }
 		</div>
 	);
 }

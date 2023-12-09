@@ -10,13 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
  * @return {Function} HOC function
  */
 const withStore =
-	(BaseComponent, selectMapping = null, actionMapping = null) =>
-	(props) => {
+	( BaseComponent, selectMapping = null, actionMapping = null ) =>
+	( props ) => {
 		// prepare selection mappings
 		let selections = {};
-		if (selectMapping && typeof selectMapping === 'function') {
-			const selectorObject = selectMapping(useSelector);
-			if (typeof selectorObject === 'object') {
+		if ( selectMapping && typeof selectMapping === 'function' ) {
+			const selectorObject = selectMapping( useSelector );
+			if ( typeof selectorObject === 'object' ) {
 				selections = selectorObject;
 			}
 		}
@@ -25,37 +25,37 @@ const withStore =
 
 		// prepare action mappings
 		let actions = {};
-		if (actionMapping && typeof actionMapping === 'function') {
-			const preActionObject = actionMapping(dispatch, useSelector);
+		if ( actionMapping && typeof actionMapping === 'function' ) {
+			const preActionObject = actionMapping( dispatch, useSelector );
 
-			if (preActionObject && typeof preActionObject === 'object') {
-				actions = Object.keys(preActionObject)
-					.filter((key) => {
+			if ( preActionObject && typeof preActionObject === 'object' ) {
+				actions = Object.keys( preActionObject )
+					.filter( ( key ) => {
 						return Object.prototype.hasOwnProperty.call(
 							preActionObject,
 							key
 						);
-					})
-					.reduce((carry, current) => {
-						const actionCallback = preActionObject[current];
-						if (typeof actionCallback === 'function') {
-							carry[current] = function (val) {
-								dispatch(actionCallback(val));
+					} )
+					.reduce( ( carry, current ) => {
+						const actionCallback = preActionObject[ current ];
+						if ( typeof actionCallback === 'function' ) {
+							carry[ current ] = function ( val ) {
+								dispatch( actionCallback( val ) );
 							};
 						}
 
 						return carry;
-					}, {});
+					}, {} );
 			}
 		}
 
 		return (
 			<BaseComponent
-				{...props}
-				{...selections}
-				{...actions}
-				selector={useSelector}
-				dispatch={dispatch}
+				{ ...props }
+				{ ...selections }
+				{ ...actions }
+				selector={ useSelector }
+				dispatch={ dispatch }
 			/>
 		);
 	};

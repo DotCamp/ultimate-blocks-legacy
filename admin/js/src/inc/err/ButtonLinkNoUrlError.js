@@ -6,7 +6,7 @@ function ButtonLinkNoUrlError() {
 	this.message = 'No URL is provided for ButtonLink component.';
 }
 
-ButtonLinkNoUrlError.prototype = Object.create(Error.prototype);
+ButtonLinkNoUrlError.prototype = Object.create( Error.prototype );
 
 /**
  * @module ContentNotFound

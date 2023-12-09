@@ -7,8 +7,8 @@ import React from 'react';
  * @param {Function} props.children component children
  * @class
  */
-function ButtonLinkGroup({ children }) {
-	return <div className={'ub-button-link-group'}>{children}</div>;
+function ButtonLinkGroup( { children } ) {
+	return <div className={ 'ub-button-link-group' }>{ children }</div>;
 }
 
 /**

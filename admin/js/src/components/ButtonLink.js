@@ -22,26 +22,26 @@ export const ButtonLinkType = {
  * @param {string}   props.title          button title
  * @class
  */
-function ButtonLink({
+function ButtonLink( {
 	title,
 	url = null,
 	onClickHandler = null,
 	type = ButtonLinkType.DEFAULT,
-}) {
+} ) {
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
-		if (!url && !onClickHandler) {
+	useEffect( () => {
+		if ( ! url && ! onClickHandler ) {
 			throw new ButtonLinkNoUrlError();
 		}
-	}, []);
+	}, [] );
 
 	/**
 	 * Redirect to component url.
 	 */
 	const redirect = () => {
-		window.open(url, '_blank');
+		window.open( url, '_blank' );
 	};
 
 	/**
@@ -49,9 +49,9 @@ function ButtonLink({
 	 *
 	 * @param {Event} e click event
 	 */
-	const buttonClicked = (e) => {
-		if (onClickHandler && typeof onClickHandler === 'function') {
-			onClickHandler(e);
+	const buttonClicked = ( e ) => {
+		if ( onClickHandler && typeof onClickHandler === 'function' ) {
+			onClickHandler( e );
 		} else {
 			redirect();
 		}
@@ -60,12 +60,12 @@ function ButtonLink({
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
 		<div
-			className={'ub-button-link'}
-			data-buttonlink-type={type}
-			onClick={buttonClicked}
-			role={'button'}
+			className={ 'ub-button-link' }
+			data-buttonlink-type={ type }
+			onClick={ buttonClicked }
+			role={ 'button' }
 		>
-			{title}
+			{ title }
 		</div>
 	);
 }

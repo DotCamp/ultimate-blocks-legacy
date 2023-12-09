@@ -9,26 +9,29 @@ import React, { useMemo } from 'react';
  * @param {Function}      props.onSelect          callback for version select event
  * @class
  */
-function HeaderVersionInfo({ currentVersion, availableVersions, onSelect }) {
+function HeaderVersionInfo( { currentVersion, availableVersions, onSelect } ) {
 	const availableVersionsMinusCurrent = useMemo(
-		() => availableVersions.filter((version) => version !== currentVersion),
-		[availableVersions]
+		() =>
+			availableVersions.filter(
+				( version ) => version !== currentVersion
+			),
+		[ availableVersions ]
 	);
 
 	return (
-		<div className={'ub-header-version-info'}>
+		<div className={ 'ub-header-version-info' }>
 			<select
-				value={currentVersion}
-				onChange={(e) => onSelect(e.target.value)}
+				value={ currentVersion }
+				onChange={ ( e ) => onSelect( e.target.value ) }
 			>
-				<option disabled={true} value={currentVersion}>
-					{currentVersion}
+				<option disabled={ true } value={ currentVersion }>
+					{ currentVersion }
 				</option>
-				{availableVersionsMinusCurrent.map((version) => (
-					<option key={version} value={version}>
-						{version}
+				{ availableVersionsMinusCurrent.map( ( version ) => (
+					<option key={ version } value={ version }>
+						{ version }
 					</option>
-				))}
+				) ) }
 			</select>
 		</div>
 	);

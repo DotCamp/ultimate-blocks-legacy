@@ -15,38 +15,38 @@ import React, { createRef, useEffect } from 'react';
  * @param {boolean}  props.active                filter active status
  * @param {Function} props.activeItemRefCallback callback for active item reference
  */
-function FilterControlItem({
+function FilterControlItem( {
 	title,
 	id,
 	onFilterItemSelected,
 	active,
 	activeItemRefCallback,
-}) {
+} ) {
 	const itemRef = createRef();
 
-	useEffect(() => {
-		if (active) {
-			activeItemRefCallback(itemRef.current);
+	useEffect( () => {
+		if ( active ) {
+			activeItemRefCallback( itemRef.current );
 		}
-	}, [active]);
+	}, [ active ] );
 
 	/**
 	 * Handle item select event.
 	 */
 	const handleClick = () => {
-		onFilterItemSelected(id);
+		onFilterItemSelected( id );
 	};
 
 	// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
 		<div
-			ref={itemRef}
-			data-active={JSON.stringify(active)}
-			onClick={handleClick}
-			className={'filter-control-item'}
+			ref={ itemRef }
+			data-active={ JSON.stringify( active ) }
+			onClick={ handleClick }
+			className={ 'filter-control-item' }
 		>
-			{title}
+			{ title }
 		</div>
 	);
 }

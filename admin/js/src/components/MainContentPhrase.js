@@ -13,7 +13,7 @@ function MainContentPhrase() {
 	return (
 		<ContentPhrase>
 			<LineWrapper>
-				<TextIndicate>Manage</TextIndicate> Your{' '}
+				<TextIndicate>Manage</TextIndicate> Your{ ' ' }
 				<TextIndicate>Blocks</TextIndicate> As
 			</LineWrapper>
 			<LineWrapper>

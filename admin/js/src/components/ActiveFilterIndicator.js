@@ -8,7 +8,7 @@ import React, { createRef, useEffect } from 'react';
  * @param {number} width width
  * @return {Object} position data
  */
-export const generateIndicatorData = (x, width) => {
+export const generateIndicatorData = ( x, width ) => {
 	return { x, width };
 };
 
@@ -19,24 +19,24 @@ export const generateIndicatorData = (x, width) => {
  * @param {Object} [props.positionData={x:0, y:0, width: 100}] position data
  * @class
  */
-function ActiveFilterIndicator({ positionData = { x: 0, width: 100 } }) {
+function ActiveFilterIndicator( { positionData = { x: 0, width: 100 } } ) {
 	/**
 	 * Add px to given value
 	 *
 	 * @param {number} val value
 	 * @return {string} post fixed value
 	 */
-	const toPx = (val) => {
-		return `${val}px`;
+	const toPx = ( val ) => {
+		return `${ val }px`;
 	};
 
 	return (
 		<div
-			style={{
-				left: toPx(positionData.x),
-				width: toPx(positionData.width),
-			}}
-			className={'active-indicator'}
+			style={ {
+				left: toPx( positionData.x ),
+				width: toPx( positionData.width ),
+			} }
+			className={ 'active-indicator' }
 		></div>
 	);
 }

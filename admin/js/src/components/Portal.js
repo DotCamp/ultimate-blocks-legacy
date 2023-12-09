@@ -10,8 +10,8 @@ import { createPortal } from 'react-dom';
  * @param {Element}           props.target   portal parent
  * @class
  */
-function Portal({ children, target }) {
-	return createPortal(children, target);
+function Portal( { children, target } ) {
+	return createPortal( children, target );
 }
 
 /**

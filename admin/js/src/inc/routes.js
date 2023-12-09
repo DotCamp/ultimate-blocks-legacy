@@ -39,7 +39,7 @@ const routes = [
  *
  * @type {Array<Route>}
  */
-export const routeObjects = generateRouteArray(routes);
+export const routeObjects = generateRouteArray( routes );
 
 /**
  * @module routes

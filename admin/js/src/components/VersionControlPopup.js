@@ -15,13 +15,13 @@ import MenuButton, { BUTTON_TYPES } from '$Components/MenuButton';
  * @param {number}   props.reloadDelay      automatic page reload delay in milliseconds
  * @class
  */
-function VersionControlPopup({
+function VersionControlPopup( {
 	from,
 	to,
 	onCloseHandler,
 	onOperationStart,
 	reloadDelay = 5000,
-}) {
+} ) {
 	const OPERATION_STATUS_TYPES = {
 		NOT_STARTED: 'notStarted',
 		STARTED: 'started',
@@ -40,106 +40,108 @@ function VersionControlPopup({
 	 * @param {string} [type='ok'] response type.
 	 * @return {Object} response object
 	 */
-	const generateResponseObject = (message, type = RESPONSE_TYPES.OK) => {
+	const generateResponseObject = ( message, type = RESPONSE_TYPES.OK ) => {
 		return {
 			type,
 			message,
 		};
 	};
 
-	const [operationStatus, setOperationStatus] = useState(
+	const [ operationStatus, setOperationStatus ] = useState(
 		OPERATION_STATUS_TYPES.NOT_STARTED
 	);
-	const [reloadCountdown, setReloadCountdown] = useState(reloadDelay / 1000);
+	const [ reloadCountdown, setReloadCountdown ] = useState(
+		reloadDelay / 1000
+	);
 
-	const [responseObject, setResponseObject] = useState(
-		generateResponseObject('')
+	const [ responseObject, setResponseObject ] = useState(
+		generateResponseObject( '' )
 	);
 
 	const isDowngrade = from > to;
 
-	const countdownToReload = useRef(reloadDelay);
+	const countdownToReload = useRef( reloadDelay );
 
 	/**
 	 * Start rollback operation.
 	 */
 	const startOperation = () => {
-		setOperationStatus(OPERATION_STATUS_TYPES.STARTED);
+		setOperationStatus( OPERATION_STATUS_TYPES.STARTED );
 		onOperationStart()
-			.then(({ message }) => {
+			.then( ( { message } ) => {
 				setResponseObject(
-					generateResponseObject(message, RESPONSE_TYPES.OK)
+					generateResponseObject( message, RESPONSE_TYPES.OK )
 				);
-			})
-			.catch(({ message }) => {
+			} )
+			.catch( ( { message } ) => {
 				setResponseObject(
-					generateResponseObject(message, RESPONSE_TYPES.ERROR)
+					generateResponseObject( message, RESPONSE_TYPES.ERROR )
 				);
-			})
-			.finally(() => {
-				setOperationStatus(OPERATION_STATUS_TYPES.FINISHED);
+			} )
+			.finally( () => {
+				setOperationStatus( OPERATION_STATUS_TYPES.FINISHED );
 				reloadPage();
-			});
+			} );
 	};
 
 	/**
 	 * Reload page after a designated amount of time.
 	 */
 	const reloadPage = () => {
-		const reloadIntervalId = setInterval(() => {
-			if (countdownToReload.current <= 0) {
+		const reloadIntervalId = setInterval( () => {
+			if ( countdownToReload.current <= 0 ) {
 				window.location.reload();
-				clearInterval(reloadIntervalId);
+				clearInterval( reloadIntervalId );
 			} else {
 				countdownToReload.current = countdownToReload.current - 1000;
-				setReloadCountdown(countdownToReload.current / 1000);
+				setReloadCountdown( countdownToReload.current / 1000 );
 			}
-		}, 1000);
+		}, 1000 );
 	};
 
 	return (
-		<div className={'version-control-popup'}>
-			<div className={'modal-container'}>
-				<div className={'rollback-versions'}>
+		<div className={ 'version-control-popup' }>
+			<div className={ 'modal-container' }>
+				<div className={ 'rollback-versions' }>
 					<div
-						className={`version-id ${
+						className={ `version-id ${
 							isDowngrade
 								? 'ub-positive-color'
 								: 'ub-negative-color'
-						}`}
+						}` }
 					>
-						{from}
+						{ from }
 					</div>
 					<div
-						className={'version-icon'}
-						data-in-progress={JSON.stringify(
+						className={ 'version-icon' }
+						data-in-progress={ JSON.stringify(
 							operationStatus === OPERATION_STATUS_TYPES.STARTED
-						)}
+						) }
 					>
-						<div className={'version-icon-inner-wrapper'}>
+						<div className={ 'version-icon-inner-wrapper' }>
 							<FontAwesomeIcon icon="fa-solid fa-right-long" />
 						</div>
 					</div>
 					<div
-						className={`version-id ${
+						className={ `version-id ${
 							isDowngrade
 								? 'ub-negative-color'
 								: 'ub-positive-color'
-						}`}
+						}` }
 					>
-						{to}
+						{ to }
 					</div>
 				</div>
-				{operationStatus !== OPERATION_STATUS_TYPES.STARTED && (
-					<div className={'version-content'}>
-						{operationStatus ===
+				{ operationStatus !== OPERATION_STATUS_TYPES.STARTED && (
+					<div className={ 'version-content' }>
+						{ operationStatus ===
 							OPERATION_STATUS_TYPES.NOT_STARTED && (
-							<div className={'version-warning'}>
+							<div className={ 'version-warning' }>
 								<div>
-									{__(
+									{ __(
 										'Older versions might be unstable. Do it on your own risk and create a backup.',
 										'ultimate-blocks'
-									)}
+									) }
 								</div>
 								<div
 									className={
@@ -147,43 +149,43 @@ function VersionControlPopup({
 									}
 								>
 									<MenuButton
-										type={BUTTON_TYPES.POSITIVE}
-										onClickHandler={startOperation}
-										status={true}
-										title={'Start'}
+										type={ BUTTON_TYPES.POSITIVE }
+										onClickHandler={ startOperation }
+										status={ true }
+										title={ 'Start' }
 									/>
 									<MenuButton
-										onClickHandler={onCloseHandler}
-										status={true}
-										title={'Close'}
+										onClickHandler={ onCloseHandler }
+										status={ true }
+										title={ 'Close' }
 									/>
 								</div>
 							</div>
-						)}
-						{operationStatus ===
+						) }
+						{ operationStatus ===
 							OPERATION_STATUS_TYPES.FINISHED && (
-							<div className={'operation-finished-wrapper'}>
+							<div className={ 'operation-finished-wrapper' }>
 								<div
-									className={'version-control-response'}
-									data-resp-type={responseObject.type}
+									className={ 'version-control-response' }
+									data-resp-type={ responseObject.type }
 								>
-									{responseObject.message}
+									{ responseObject.message }
 								</div>
 								<div>
-									{reloadCountdown <= 0
-										? `${__(
+									{ reloadCountdown <= 0
+										? `${ __(
 												'Reloading page now…',
 												'ultimate-blocks'
-										  )}`
-										: `${__(
+										  ) }`
+										: `${ __(
 												'Reloading page in ',
 												'ultimate-blocks'
-										  )} ${reloadCountdown}...`}
+										  ) } ${ reloadCountdown }...` }
 								</div>
 							</div>
-						)}
+						) }
 					</div>
-				)}
+				) }
 			</div>
 		</div>
 	);

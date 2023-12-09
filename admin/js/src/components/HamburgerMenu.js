@@ -11,38 +11,38 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  * @param {string}   props.closeIcon    close fontawesome icon
  * @class
  */
-function HamburgerMenu({
+function HamburgerMenu( {
 	status = false,
 	clickHandler,
 	openIcon = 'fa-solid fa-bars',
 	closeIcon = 'fa-solid fa-xmark',
-}) {
+} ) {
 	return (
-		<div className={'ub-hamburger-menu'}>
+		<div className={ 'ub-hamburger-menu' }>
 			<div
-				tabIndex={0}
-				onKeyDown={(e) => {
-					if (e.key === 'Enter') {
+				tabIndex={ 0 }
+				onKeyDown={ ( e ) => {
+					if ( e.key === 'Enter' ) {
 						e.preventDefault();
 						clickHandler();
 					}
-				}}
-				role={'button'}
-				className={'ub-hamburger-menu-icon-wrapper'}
-				onClick={(e) => {
+				} }
+				role={ 'button' }
+				className={ 'ub-hamburger-menu-icon-wrapper' }
+				onClick={ ( e ) => {
 					e.preventDefault();
 					clickHandler();
-				}}
+				} }
 			>
-				{!status ? (
-					<div data-status={!status} data-menu-icon-id={'open'}>
-						<FontAwesomeIcon icon={openIcon} />
+				{ ! status ? (
+					<div data-status={ ! status } data-menu-icon-id={ 'open' }>
+						<FontAwesomeIcon icon={ openIcon } />
 					</div>
 				) : (
-					<div data-status={status} data-menu-icon-id={'close'}>
-						<FontAwesomeIcon icon={closeIcon} />
+					<div data-status={ status } data-menu-icon-id={ 'close' }>
+						<FontAwesomeIcon icon={ closeIcon } />
 					</div>
-				)}
+				) }
 			</div>
 		</div>
 	);

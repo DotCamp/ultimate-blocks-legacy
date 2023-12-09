@@ -43,28 +43,28 @@ export const BoxContentAlign = {
  * @param {string}        [props.alignment=BoxContentAlign.LEFT]   box alignment, available values can be found in BoxContentAlign object
  * @param {Function}      props.children                           component children
  */
-function BoxContent({
+function BoxContent( {
 	title = null,
 	content = null,
 	layout = BoxContentLayout.VERTICAL,
 	size = BoxContentSize.NORMAL,
 	alignment = BoxContentAlign.LEFT,
 	children,
-}) {
+} ) {
 	return (
 		<div
-			className={'ub-box-content'}
-			data-layout={layout}
-			data-size={size}
-			data-alignment={alignment}
+			className={ 'ub-box-content' }
+			data-layout={ layout }
+			data-size={ size }
+			data-alignment={ alignment }
 		>
-			<div className={'ub-box-content-title-inc-wrapper'}>
-				{title && <BoxContentTitle>{title}</BoxContentTitle>}
-				{content && <BoxContentInc>{content}</BoxContentInc>}
+			<div className={ 'ub-box-content-title-inc-wrapper' }>
+				{ title && <BoxContentTitle>{ title }</BoxContentTitle> }
+				{ content && <BoxContentInc>{ content }</BoxContentInc> }
 			</div>
-			{children && (
-				<div className={'ub-box-content-footer'}>{children}</div>
-			)}
+			{ children && (
+				<div className={ 'ub-box-content-footer' }>{ children }</div>
+			) }
 		</div>
 	);
 }

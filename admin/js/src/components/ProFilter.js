@@ -11,25 +11,25 @@ import withStore from '$HOC/withStore';
  * @param {boolean}                   [props.invert=true] invert filter, if true, children will be rendered only if proStatus is false
  * @class
  */
-function ProFilter({ proStatus, children, invert = true }) {
-	const [finalStatus, setFinalStatus] = useState(false);
+function ProFilter( { proStatus, children, invert = true } ) {
+	const [ finalStatus, setFinalStatus ] = useState( false );
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
-		setFinalStatus(invert ? !proStatus : proStatus);
-	}, []);
+	useEffect( () => {
+		setFinalStatus( invert ? ! proStatus : proStatus );
+	}, [] );
 
 	return finalStatus && children;
 }
 
 // Store selection mapping
-const selectMapping = (selector) => ({
-	proStatus: selector(isPluginPro),
-});
+const selectMapping = ( selector ) => ( {
+	proStatus: selector( isPluginPro ),
+} );
 
 /**
  * @module ProFilter
  */
-export default withStore(ProFilter, selectMapping);
+export default withStore( ProFilter, selectMapping );

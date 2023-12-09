@@ -11,32 +11,32 @@ import NavigationHeaderButton from '$Components/NavigationHeaderButton';
  * @param {Function}      props.setRoute         set route path
  * @class
  */
-function Navigation({ routes, currentRoutePath, setRoute }) {
-	const [calculatedStyle, setCalculatedStyles] = useState({});
+function Navigation( { routes, currentRoutePath, setRoute } ) {
+	const [ calculatedStyle, setCalculatedStyles ] = useState( {} );
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
+	useEffect( () => {
 		const style = {
-			gridTemplateColumns: `repeat(${routes.length}, minmax(0,1fr))`,
+			gridTemplateColumns: `repeat(${ routes.length }, minmax(0,1fr))`,
 		};
-		setCalculatedStyles(style);
-	}, [routes]);
+		setCalculatedStyles( style );
+	}, [ routes ] );
 
 	return (
-		<div style={calculatedStyle} className={'ub-menu-navigation'}>
-			{routes.map((routeObj) => {
+		<div style={ calculatedStyle } className={ 'ub-menu-navigation' }>
+			{ routes.map( ( routeObj ) => {
 				return (
 					<NavigationHeaderButton
-						key={routeObj.getPath()}
-						title={routeObj.getTitle()}
-						targetPath={routeObj.getPath()}
-						isActive={currentRoutePath === routeObj.getPath()}
-						onClickHandler={setRoute}
+						key={ routeObj.getPath() }
+						title={ routeObj.getTitle() }
+						targetPath={ routeObj.getPath() }
+						isActive={ currentRoutePath === routeObj.getPath() }
+						onClickHandler={ setRoute }
 					/>
 				);
-			})}
+			} ) }
 		</div>
 	);
 }

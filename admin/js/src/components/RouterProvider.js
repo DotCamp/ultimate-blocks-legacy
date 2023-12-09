@@ -18,72 +18,72 @@ import NoRouterComponentFoundError from '$AdminInc/err/NoRouterComponentFoundErr
  * @param {Function} props.setRoutePath     set route path, will be supplied via HOC
  * @class
  */
-function RouterProvider({ children, currentRoutePath, setRoutePath }) {
-	const RouterChild = useMemo(() => {
+function RouterProvider( { children, currentRoutePath, setRoutePath } ) {
+	const RouterChild = useMemo( () => {
 		const Component = children?.type === Router ? children.type : null;
 
-		if (Component === null) {
+		if ( Component === null ) {
 			throw new NoRouterComponentFoundError();
 		}
 
 		return Component;
-	}, []);
+	}, [] );
 
-	const generatedRoutes = useMemo(() => {
-		return generateRouteArray(routes);
-	}, []);
+	const generatedRoutes = useMemo( () => {
+		return generateRouteArray( routes );
+	}, [] );
 
 	/**
 	 * Parse url and set route path.
 	 */
 	const parseRouteFromUrl = () => {
-		const url = new URL(window.location.href);
-		const urlRoute = url.searchParams.get('route');
+		const url = new URL( window.location.href );
+		const urlRoute = url.searchParams.get( 'route' );
 
-		if (urlRoute) {
-			setRoutePath(urlRoute);
+		if ( urlRoute ) {
+			setRoutePath( urlRoute );
 		}
 	};
 
 	/**
 	 * Hook to add event listener for popstate.
 	 */
-	useEffect(() => {
-		window.addEventListener('popstate', parseRouteFromUrl);
-	}, []);
+	useEffect( () => {
+		window.addEventListener( 'popstate', parseRouteFromUrl );
+	}, [] );
 
 	/**
 	 * Parse url and set route path at startup.
 	 */
-	useEffect(() => {
+	useEffect( () => {
 		parseRouteFromUrl();
-	}, []);
+	}, [] );
 
 	/**
 	 * Add route path to url.
 	 */
-	useEffect(() => {
-		const url = new URL(window.location.href);
-		url.searchParams.set('route', currentRoutePath);
-		window.history.pushState(null, null, url.href);
-	}, [currentRoutePath]);
+	useEffect( () => {
+		const url = new URL( window.location.href );
+		url.searchParams.set( 'route', currentRoutePath );
+		window.history.pushState( null, null, url.href );
+	}, [ currentRoutePath ] );
 
 	return (
 		<RouterChild
-			routes={generatedRoutes}
-			currentRoutePath={currentRoutePath}
+			routes={ generatedRoutes }
+			currentRoutePath={ currentRoutePath }
 		/>
 	);
 }
 
 // store select mapping
-const selectMapping = (selector) => ({
-	currentRoutePath: selector(getCurrentRoutePath),
-});
+const selectMapping = ( selector ) => ( {
+	currentRoutePath: selector( getCurrentRoutePath ),
+} );
 
-const actionMapping = () => ({ setRoutePath: setCurrentRoutePath });
+const actionMapping = () => ( { setRoutePath: setCurrentRoutePath } );
 
 /**
  * @module RouterProvider
  */
-export default withStore(RouterProvider, selectMapping, actionMapping);
+export default withStore( RouterProvider, selectMapping, actionMapping );

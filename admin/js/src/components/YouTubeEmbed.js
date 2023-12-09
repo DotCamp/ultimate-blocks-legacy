@@ -9,8 +9,8 @@ import React, { useEffect, useState } from 'react';
  * @param {number |null} props.height  embed height
  * @class
  */
-function YouTubeEmbed({ videoId, width = null, height = null }) {
-	const [embedUrl, setEmbedUrl] = useState(null);
+function YouTubeEmbed( { videoId, width = null, height = null } ) {
+	const [ embedUrl, setEmbedUrl ] = useState( null );
 
 	const defaults = {
 		width: '100',
@@ -20,17 +20,17 @@ function YouTubeEmbed({ videoId, width = null, height = null }) {
 	/**
 	 * useEffect hook.
 	 */
-	useEffect(() => {
-		const generatedEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
-		setEmbedUrl(generatedEmbedUrl);
-	}, []);
+	useEffect( () => {
+		const generatedEmbedUrl = `https://www.youtube.com/embed/${ videoId }`;
+		setEmbedUrl( generatedEmbedUrl );
+	}, [] );
 
 	return (
-		<div className={'ub-youtube-embed'}>
+		<div className={ 'ub-youtube-embed' }>
 			<iframe
-				width={width || defaults.width}
-				height={height || defaults.height}
-				src={embedUrl}
+				width={ width || defaults.width }
+				height={ height || defaults.height }
+				src={ embedUrl }
 				title="YouTube video player"
 				allow="picture-in-picture; web-share; fullscreen"
 			></iframe>

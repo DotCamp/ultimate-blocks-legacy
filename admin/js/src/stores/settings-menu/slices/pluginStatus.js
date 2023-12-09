@@ -12,7 +12,7 @@ const pluginStatusSliceOptions = {
 	reducers: {},
 };
 
-const pluginStatusSlice = createSlice(pluginStatusSliceOptions);
+const pluginStatusSlice = createSlice( pluginStatusSliceOptions );
 
 /**
  * Get plugin pro status.
@@ -20,7 +20,7 @@ const pluginStatusSlice = createSlice(pluginStatusSliceOptions);
  * @param {Object} state store state
  * @return {boolean} plugin pro status
  */
-export const isPluginPro = (state) => {
+export const isPluginPro = ( state ) => {
 	return state.pluginStatus.isPro;
 };
 

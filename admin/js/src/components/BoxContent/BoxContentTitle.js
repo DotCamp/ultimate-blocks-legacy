@@ -7,8 +7,8 @@ import React from 'react';
  * @param {Function | string} props.children component children
  * @class
  */
-function BoxContentTitle({ children }) {
-	return <div className={'ub-box-content-title'}>{children}</div>;
+function BoxContentTitle( { children } ) {
+	return <div className={ 'ub-box-content-title' }>{ children }</div>;
 }
 
 /**

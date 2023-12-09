@@ -15,7 +15,7 @@
 		"lint:settings-menu": "eslint ./admin/js/src/ --fix",
 		"lint:tests": "eslint ./__tests__/js --fix",
 		"lint:styles": "stylelint './admin/css/src/**/*.scss' --fix",
-		"lint": "concurrently 'npm run lint:settings-menu' 'npm run lint:tests' 'npm run lint:styles'"
+		"lint": "concurrently \"npm run lint:settings-menu\" \"npm run lint:tests\" \"npm run lint:styles\""
 	},
 	"alias": {
 		"$Containers": "./admin/js/src/containers",

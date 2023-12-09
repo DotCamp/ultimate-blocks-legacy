@@ -8,8 +8,8 @@ import React from 'react';
  * @param {React.ElementType} props.children children
  * @class
  */
-function TextIndicate({ children }) {
-	return <span className={'text-indicate'}>{children}</span>;
+function TextIndicate( { children } ) {
+	return <span className={ 'text-indicate' }>{ children }</span>;
 }
 
 /**
