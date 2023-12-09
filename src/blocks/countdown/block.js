@@ -1,11 +1,13 @@
+import { isEmpty } from "lodash";
 import icon, {
 	RegularCountdownIcon,
 	CircularCountdownIcon,
 	TickingCountdownIcon,
 } from "./icon";
-import { SpacingControl } from "../components";
-import { getStyles } from "./get-styles";
 import Timer from "./components";
+import { getStyles } from "./get-styles";
+import "./blocks-styles";
+import { ColorSettings, SpacingControl } from "../components/";
 
 import { useEffect, useState } from "react";
 import metadata from "./block.json";
@@ -60,14 +62,65 @@ function CountdownMain(props) {
 			messageAlign,
 			largestUnit,
 			smallestUnit,
+			countdownColor,
+			unitColor,
+			className: blockClassName,
 		},
 	} = props;
-
+	const blockStylesClass = [
+		{
+			id: "is-style-ub-countdown-odometer",
+			type: "Odometer",
+		},
+		{
+			id: "is-style-ub-countdown-regular",
+			type: "Regular",
+		},
+		{
+			id: "is-style-ub-countdown-circular",
+			type: "Circular",
+		},
+	];
+	const hasBlockClass = isEmpty(blockClassName)
+		? false
+		: blockClassName.split(" ").filter((blockClass) =>
+				blockStylesClass.find((styleClass) => {
+					if (styleClass.id.includes(blockClass)) {
+						return styleClass;
+					}
+				})
+		  ).length > 0;
 	useEffect(() => {
+		const appliedStyleClass = blockStylesClass.find((styleClass) => {
+			if (styleClass.type === style) {
+				return styleClass;
+			}
+		});
+
+		if (!hasBlockClass) {
+			setAttributes({
+				className: isEmpty(blockClassName)
+					? appliedStyleClass.id
+					: blockClassName + " " + appliedStyleClass.id,
+				style: appliedStyleClass.type,
+			});
+		}
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
+	useEffect(() => {
+		const appliedStyleClass = hasBlockClass
+			? blockStylesClass.filter((styleClass) =>
+					blockClassName
+						.split(" ")
+						.find((blockClass) => styleClass.id.includes(blockClass))
+			  )
+			: [];
+		if (hasBlockClass && appliedStyleClass.length > 0) {
+			setAttributes({ style: appliedStyleClass[0].type });
+		}
+	}, [blockClassName]);
 	useEffect(() => {
 		setAttributes({ blockID: block.clientId });
 	}, [block.clientId]);
@@ -121,31 +174,22 @@ function CountdownMain(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
-					{style === "Circular" && (
-						<InspectorControls group="styles">
-							<PanelBody title={__("Circle style")}>
-								<PanelColorSettings
-									title={__("Color")}
-									initialOpen={true}
-									colorSettings={[
-										{
-											value: circleColor,
-											onChange: (colorValue) =>
-												setAttributes({ circleColor: colorValue }),
-											label: "",
-										},
-									]}
-								/>
-								<RangeControl
-									label={__("Size")}
-									value={circleSize}
-									onChange={(circleSize) => setAttributes({ circleSize })}
-									min={30}
-									max={100}
-								/>
-							</PanelBody>
-						</InspectorControls>
-					)}
+					<InspectorControls group="color">
+						{style === "Circular" && (
+							<ColorSettings
+								attrKey="circleColor"
+								label={__("Circle Color", "ultimate-blocks")}
+							/>
+						)}
+						<ColorSettings
+							attrKey="countdownColor"
+							label={__("Countdown Color", "ultimate-blocks")}
+						/>
+						<ColorSettings
+							attrKey="unitColor"
+							label={__("Unit Color", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 					<InspectorControls group="styles">
 						<PanelBody
 							title={__("Dimension Settings", "ultimate-blocks")}
@@ -169,26 +213,6 @@ function CountdownMain(props) {
 			{isSelected && (
 				<BlockControls>
 					<ToolbarGroup>
-						<ToolbarButton
-							isPrimary={style === "Regular"}
-							icon={RegularCountdownIcon}
-							label={__("Regular")}
-							onClick={() => setAttributes({ style: "Regular" })}
-						/>
-						<ToolbarButton
-							isPrimary={style === "Circular"}
-							icon={CircularCountdownIcon}
-							label={__("Circular")}
-							onClick={() => setAttributes({ style: "Circular" })}
-						/>
-						<ToolbarButton
-							isPrimary={style === "Odometer"}
-							icon={TickingCountdownIcon}
-							label={__("Odometer")}
-							onClick={() => setAttributes({ style: "Odometer" })}
-						/>
-					</ToolbarGroup>
-					<ToolbarGroup>
 						{["left", "center", "right", "justify"].map((a) => (
 							<ToolbarButton
 								icon={`editor-${a === "justify" ? a : "align" + a}`}
@@ -204,7 +228,7 @@ function CountdownMain(props) {
 					</ToolbarGroup>
 				</BlockControls>
 			)}
-			<div style={styles}>
+			<div className="ub-countdown-wrapper" style={styles}>
 				<Timer
 					timerStyle={style}
 					deadline={endDate}
@@ -214,6 +238,8 @@ function CountdownMain(props) {
 					smallestUnit={smallestUnit}
 					isAnimated={true}
 					forceUpdate={forceUpdate}
+					countdownColor={countdownColor}
+					unitColor={unitColor}
 					finishForcedUpdate={() => setForceUpdate(false)}
 				/>
 				<RichText

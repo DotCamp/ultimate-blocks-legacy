@@ -29,8 +29,16 @@ function Timer(props) {
 	/*timeLeft: this.remainingTime(),
 	numberChange: Array(5).fill("none"), //one for each of the following: week, day, hour, minute, second
 	forceRefresh: false,*/
-	const { color, size, largestUnit, smallestUnit, timerStyle, forceUpdate } =
-		props;
+	const {
+		color,
+		size,
+		largestUnit,
+		smallestUnit,
+		timerStyle,
+		forceUpdate,
+		countdownColor,
+		unitColor,
+	} = props;
 
 	const remainingTime = () => props.deadline - Math.floor(Date.now() / 1000);
 
@@ -172,17 +180,40 @@ function Timer(props) {
 	const defaultFormat = (
 		<p>
 			{[
-				`${weeks} ${__("weeks", "ultimate-blocks")}`,
-				`${days} ${__("days", "ultimate-blocks")}`,
-				`${hours} ${__("hours", "ultimate-blocks")}`,
-				`${minutes} ${__("minutes", "ultimate-blocks")}`,
-				`${seconds} ${__("seconds", "ultimate-blocks")}`,
-			]
-				.slice(
-					timeUnits.indexOf(largestUnit),
-					timeUnits.indexOf(smallestUnit) + 1
-				)
-				.join(" ")}
+				<>
+					<span className="ub-countdown-digit">{weeks + " "}</span>
+					<span className="ub-countdown-unit">
+						{__("weeks", "ultimate-blocks") + " "}
+					</span>
+				</>,
+				<>
+					<span className="ub-countdown-digit">{days + " "}</span>
+					<span className="ub-countdown-unit">
+						{__("days", "ultimate-blocks") + " "}
+					</span>
+				</>,
+				<>
+					<span className="ub-countdown-digit">{hours + " "}</span>
+					<span className="ub-countdown-unit">
+						{__("hours", "ultimate-blocks") + " "}
+					</span>
+				</>,
+				<>
+					<span className="ub-countdown-digit">{minutes + " "}</span>
+					<span className="ub-countdown-unit">
+						{__("minutes", "ultimate-blocks") + " "}
+					</span>
+				</>,
+				<>
+					<span className="ub-countdown-digit">{seconds + " "}</span>
+					<span className="ub-countdown-unit">
+						{__("seconds", "ultimate-blocks") + " "}
+					</span>
+				</>,
+			].slice(
+				timeUnits.indexOf(largestUnit),
+				timeUnits.indexOf(smallestUnit) + 1
+			)}
 		</p>
 	);
 
@@ -195,11 +226,11 @@ function Timer(props) {
 	].slice(timeUnits.indexOf(largestUnit), timeUnits.indexOf(smallestUnit) + 1);
 
 	const circularFormatLabels = [
-		<p>{__("Weeks", "ultimate-blocks")}</p>,
-		<p>{__("Days", "ultimate-blocks")}</p>,
-		<p>{__("Hours", "ultimate-blocks")}</p>,
-		<p>{__("Minutes", "ultimate-blocks")}</p>,
-		<p>{__("Seconds", "ultimate-blocks")}</p>,
+		<p className="ub-countdown-unit">{__("Weeks", "ultimate-blocks")}</p>,
+		<p className="ub-countdown-unit">{__("Days", "ultimate-blocks")}</p>,
+		<p className="ub-countdown-unit">{__("Hours", "ultimate-blocks")}</p>,
+		<p className="ub-countdown-unit">{__("Minutes", "ultimate-blocks")}</p>,
+		<p className="ub-countdown-unit">{__("Seconds", "ultimate-blocks")}</p>,
 	].slice(timeUnits.indexOf(largestUnit), timeUnits.indexOf(smallestUnit) + 1);
 
 	const circularFormat = (
@@ -215,11 +246,15 @@ function Timer(props) {
 	const separator = <span className="ub-countdown-separator">:</span>;
 
 	const odometerLabels = [
-		<span>{__("Weeks", "ultimate-blocks")}</span>,
-		<span>{__("Days", "ultimate-blocks")}</span>,
-		<span>{__("Hours", "ultimate-blocks")}</span>,
-		<span>{__("Minutes", "ultimate-blocks")}</span>,
-		<span>{__("Seconds", "ultimate-blocks")}</span>,
+		<span className="ub-countdown-unit">{__("Weeks", "ultimate-blocks")}</span>,
+		<span className="ub-countdown-unit">{__("Days", "ultimate-blocks")}</span>,
+		<span className="ub-countdown-unit">{__("Hours", "ultimate-blocks")}</span>,
+		<span className="ub-countdown-unit">
+			{__("Minutes", "ultimate-blocks")}
+		</span>,
+		<span className="ub-countdown-unit">
+			{__("Seconds", "ultimate-blocks")}
+		</span>,
 	].slice(timeUnits.indexOf(largestUnit), timeUnits.indexOf(smallestUnit) + 1);
 
 	const odometerValues = [

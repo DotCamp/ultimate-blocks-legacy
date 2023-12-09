@@ -46,6 +46,10 @@
       "type": "string",
       "default": ""
     },
+    "labelColor": {
+      "type": "string",
+      "default": null
+    },
     "labelPosition": {
       "type": "string",
       "default": "bottom"

@@ -82,16 +82,19 @@
 		}
 	}
 }
-
 .wp-block-ub-icon {
-	padding-top: var(--ub-icon-padding-top, 0px) !important;
-	padding-right: var(--ub-icon-padding-right, 0px) !important;
-	padding-bottom: var(--ub-icon-padding-bottom, 0px) !important;
-	padding-left: var(--ub-icon-padding-left, 0px) !important;
-	margin-top: var(--ub-icon-margin-top, auto) !important;
-	margin-right: var(--ub-icon-margin-right, auto) !important;
-	margin-bottom: var(--ub-icon-margin-bottom, auto) !important;
-	margin-left: var(--ub-icon-margin-left, auto) !important;
+	&.has-ub-icon-padding {
+		padding-top: var(--ub-icon-padding-top, 0px) !important;
+		padding-right: var(--ub-icon-padding-right, 0px) !important;
+		padding-bottom: var(--ub-icon-padding-bottom, 0px) !important;
+		padding-left: var(--ub-icon-padding-left, 0px) !important;
+	}
+	&.has-ub-icon-margin {
+		margin-top: var(--ub-icon-margin-top) !important;
+		margin-right: var(--ub-icon-margin-right) !important;
+		margin-bottom: var(--ub-icon-margin-bottom) !important;
+		margin-left: var(--ub-icon-margin-left) !important;
+	}
 	.ub_icon {
 		display: flex;
 		justify-content: var(--ub-icon-justification);

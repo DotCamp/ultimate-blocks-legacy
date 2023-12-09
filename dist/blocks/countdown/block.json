@@ -17,7 +17,7 @@
     },
     "endDate": {
       "type": "number",
-      "default": 1696943520
+      "default": 1728565920
     },
     "style": {
       "type": "string",
@@ -34,6 +34,14 @@
     "circleColor": {
       "type": "string",
       "default": "#2DB7F5"
+    },
+    "countdownColor": {
+      "type": "string",
+      "default": null
+    },
+    "unitColor": {
+      "type": "string",
+      "default": null
     },
     "circleSize": {
       "type": "number",

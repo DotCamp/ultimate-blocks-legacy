@@ -38223,7 +38223,101 @@ var actionMapping = function actionMapping() {
  * @module ExtensionsContent
  */ var _default = exports["default"] = (0, _withStore["default"])(ExtensionsContent, selectMapping, actionMapping);
 
-},{"b68942abfa60c995":"21dqq","7ac9c440b18113b1":"7CyoE","6c3ac9e6f653bef9":"cJGef","4c0e668074f7a37e":"6zPRs","b60e198d7c45970a":"dwYOq","c9bc798e021a8346":"5Kpzy","120a73334e1db439":"kWmDy","9a119e22689e8e8b":"g3gW2","ec52ee2ada8c54ba":"6kstq","d35dea8521a15e5e":"gjBMp"}],"6kstq":[function(require,module,exports) {
+},{"b68942abfa60c995":"21dqq","7ac9c440b18113b1":"7CyoE","6c3ac9e6f653bef9":"cJGef","d35dea8521a15e5e":"gjBMp","4c0e668074f7a37e":"6zPRs","b60e198d7c45970a":"dwYOq","c9bc798e021a8346":"5Kpzy","ec52ee2ada8c54ba":"6kstq","120a73334e1db439":"kWmDy","9a119e22689e8e8b":"g3gW2"}],"gjBMp":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setExtensionActiveStatus = exports.getExtensions = exports.getExtensionById = exports["default"] = void 0;
+var _toolkit = require("c57a8e45c9ba37c6");
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+/**
+ * Extension slice options
+ *
+ * @type {Object}
+ */ var extensionsSliceOptions = {
+    name: "extensions",
+    initialState: {
+        registered: []
+    },
+    reducers: {
+        /**
+     * Set active status of target extension.
+     *
+     * @param {Object} state         store state
+     * @param {Object} props         action props
+     * @param {Object} props.payload action payload
+     */ setExtensionActiveStatus: function setExtensionActiveStatus(state, _ref) {
+            var payload = _ref.payload;
+            var id = payload.id, status = payload.status;
+            var registered = state.registered;
+            var uRegistered = _toConsumableArray(registered);
+            var extensionIndex = -1;
+            // eslint-disable-next-line array-callback-return
+            uRegistered.map(function(bObj, index) {
+                if (bObj.name === id) extensionIndex = index;
+            });
+            if (extensionIndex >= 0) {
+                uRegistered[extensionIndex].active = status;
+                state.registered = uRegistered;
+            }
+        }
+    }
+};
+var extensionsSlice = (0, _toolkit.createSlice)(extensionsSliceOptions);
+var setExtensionActiveStatus = exports.setExtensionActiveStatus = extensionsSlice.actions.setExtensionActiveStatus;
+/**
+ * Get registered plugin extensions.
+ *
+ * @param {Object} state store state
+ * @return {Array} extensions
+ */ var getExtensions = exports.getExtensions = function getExtensions(state) {
+    return state.extensions.registered;
+};
+/* eslint-disable-next-line jsdoc/require-param */ /**
+ * Get extension object by given extension type id.
+ */ var getExtensionById = exports.getExtensionById = (0, _toolkit.createSelector)([
+    function(state) {
+        return state.extensions.registered;
+    },
+    function(registered, extensionId) {
+        return extensionId;
+    }
+], function(registered, extensionId) {
+    return registered.find(function(_ref2) {
+        var name = _ref2.name;
+        return name === extensionId;
+    });
+});
+/**
+ * @module extensionsSlice
+ */ var _default = exports["default"] = extensionsSlice.reducer;
+
+},{"c57a8e45c9ba37c6":"lL1Ef"}],"6kstq":[function(require,module,exports) {
 "use strict";
 function _typeof(o) {
     "@babel/helpers - typeof";
@@ -38578,101 +38672,7 @@ function _interopRequireDefault(obj) {
  * @module ExtensionControlCard
  */ var _default = exports["default"] = ExtensionControlCard;
 
-},{"b973c16b7514e318":"21dqq","9da39bbc9e079c60":"clIT3"}],"gjBMp":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.setExtensionActiveStatus = exports.getExtensions = exports.getExtensionById = exports["default"] = void 0;
-var _toolkit = require("c57a8e45c9ba37c6");
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-/**
- * Extension slice options
- *
- * @type {Object}
- */ var extensionsSliceOptions = {
-    name: "extensions",
-    initialState: {
-        registered: []
-    },
-    reducers: {
-        /**
-     * Set active status of target extension.
-     *
-     * @param {Object} state         store state
-     * @param {Object} props         action props
-     * @param {Object} props.payload action payload
-     */ setExtensionActiveStatus: function setExtensionActiveStatus(state, _ref) {
-            var payload = _ref.payload;
-            var id = payload.id, status = payload.status;
-            var registered = state.registered;
-            var uRegistered = _toConsumableArray(registered);
-            var extensionIndex = -1;
-            // eslint-disable-next-line array-callback-return
-            uRegistered.map(function(bObj, index) {
-                if (bObj.name === id) extensionIndex = index;
-            });
-            if (extensionIndex >= 0) {
-                uRegistered[extensionIndex].active = status;
-                state.registered = uRegistered;
-            }
-        }
-    }
-};
-var extensionsSlice = (0, _toolkit.createSlice)(extensionsSliceOptions);
-var setExtensionActiveStatus = exports.setExtensionActiveStatus = extensionsSlice.actions.setExtensionActiveStatus;
-/**
- * Get registered plugin extensions.
- *
- * @param {Object} state store state
- * @return {Array} extensions
- */ var getExtensions = exports.getExtensions = function getExtensions(state) {
-    return state.extensions.registered;
-};
-/* eslint-disable-next-line jsdoc/require-param */ /**
- * Get extension object by given extension type id.
- */ var getExtensionById = exports.getExtensionById = (0, _toolkit.createSelector)([
-    function(state) {
-        return state.extensions.registered;
-    },
-    function(registered, extensionId) {
-        return extensionId;
-    }
-], function(registered, extensionId) {
-    return registered.find(function(_ref2) {
-        var name = _ref2.name;
-        return name === extensionId;
-    });
-});
-/**
- * @module extensionsSlice
- */ var _default = exports["default"] = extensionsSlice.reducer;
-
-},{"c57a8e45c9ba37c6":"lL1Ef"}],"gCgzB":[function(require,module,exports) {
+},{"b973c16b7514e318":"21dqq","9da39bbc9e079c60":"clIT3"}],"gCgzB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true

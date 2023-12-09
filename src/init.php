@@ -269,11 +269,13 @@ function ub_include_block_attribute_css() {
 											 '}';
 						switch ( $attributes['videoSource'] ) {
 							case 'youtube':
+								$current_aspect_ratio = !empty($attributes['aspectRatio']) && $attributes['aspectRatio'] !== 'auto' ?  $attributes['aspectRatio'] : $attributes['origWidth'] . '/' . $attributes['origHeight'];
 								$blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-youtube{' .
-													 'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
+													 'aspect-ratio: ' . $current_aspect_ratio . ';' . 
 													 '}' .
 													 $prefix . ' .ub-advanced-video-autofit-youtube > iframe{' .
-													 'aspect-ratio: ' . $attributes['origWidth'] . '/' . $attributes['origHeight'] . ';' .
+													 'aspect-ratio: ' . $current_aspect_ratio . ';' .
+													 'height: auto !important;' .
 													 '}';
 								break;
 							case 'vimeo':

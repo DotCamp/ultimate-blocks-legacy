@@ -162,6 +162,8 @@ function ImageSliderMain(props) {
 			shadow,
 			shadowOffset,
 			shadowScale,
+			slidesPerView,
+			spaceBetween,
 		},
 		setAttributes,
 		isSelected,
@@ -249,6 +251,28 @@ function ImageSliderMain(props) {
 				<>
 					<InspectorControls group="settings">
 						<PanelBody title={__("Slider Settings")}>
+							<RangeControl
+								min={1}
+								max={6}
+								allowReset
+								value={slidesPerView}
+								resetFallbackValue={1}
+								label={__("Slides Per View", "ultimate-blocks")}
+								onChange={(newValue) =>
+									setAttributes({ slidesPerView: newValue })
+								}
+							/>
+							<RangeControl
+								min={0}
+								max={500}
+								allowReset
+								value={spaceBetween}
+								resetFallbackValue={20}
+								label={__("Space Between", "ultimate-blocks")}
+								onChange={(newValue) =>
+									setAttributes({ spaceBetween: newValue })
+								}
+							/>
 							<ToggleControl
 								label={__("Wrap around")}
 								checked={wrapsAround}
@@ -488,6 +512,8 @@ function ImageSliderMain(props) {
 							paginationType={usePagination ? paginationType : "none"}
 							autoplay={autoplays ? autoplayDuration : 0}
 							transition={transition}
+							slidesPerView={slidesPerView}
+							spaceBetween={spaceBetween}
 							slides={[
 								...imageArray.map((c, i) => (
 									<figure>

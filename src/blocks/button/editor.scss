@@ -9,6 +9,35 @@
 .wp-block-ub-button-block {
 	margin: 0 auto;
 }
+.ub-buttons {
+	&.orientation-button-row {
+		.ub-add-button {
+			align-self: center;
+		}
+	}
+	&.orientation-button-column {
+		&.align-button-center {
+			.ub-add-button {
+				align-self: center;
+			}
+		}
+		&.align-button-left {
+			.ub-add-button {
+				align-self: flex-start;
+			}
+		}
+		&.align-button-right {
+			.ub-add-button {
+				align-self: flex-end;
+			}
+		}
+		&.align-button-space-between {
+			.ub-add-button {
+				align-self: flex-start;
+			}
+		}
+	}
+}
 
 .ub_button_url_input {
 	display: flex;

@@ -6,6 +6,7 @@ import {
 	CustomFontSizePicker,
 	CustomToggleGroupControl,
 	SpacingControl,
+	ColorSettings,
 } from "../components";
 
 function Inspector(props) {
@@ -61,6 +62,12 @@ function Inspector(props) {
 						]}
 					/>
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="color">
+				<ColorSettings
+					attrKey="labelColor"
+					label={__("Label Color", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 			<InspectorControls group="typography">
 				<CustomFontSizePicker

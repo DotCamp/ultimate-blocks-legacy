@@ -79,6 +79,10 @@ $defaultValues = array(
 				'type'    => 'array',
 				'default' => array()
 			),
+			'aspectRatio'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'padding'              => array(
 				'type'    => 'array',
 				'default' => array()
@@ -282,6 +286,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'placeholder'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()
@@ -294,9 +302,13 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'Button Text'
 			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
 			'align'                => array(
 				'type'    => 'string',
-				'default' => ''
+				'default' => 'center'
 			),
 			'url'                  => array(
 				'type'    => 'string',
@@ -321,6 +333,10 @@ $defaultValues = array(
 			'buttonTextHoverColor' => array(
 				'type'    => 'string',
 				'default' => '#ffffff'
+			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
 			),
 			'buttonRounded'        => array(
 				'type'    => 'boolean',
@@ -661,7 +677,7 @@ $defaultValues = array(
 			),
 			'endDate'       => array(
 				'type'    => 'number',
-				'default' => time() + 86400
+				'default' => 1728565920
 			),
 			'style'         => array(
 				'type'    => 'string',
@@ -678,6 +694,14 @@ $defaultValues = array(
 			'circleColor'   => array(
 				'type'    => 'string',
 				'default' => '#2DB7F5'
+			),
+			'countdownColor'   => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'unitColor'   => array(
+				'type'    => 'string',
+				'default' => ''
 			),
 			'circleSize'    => array(
 				'type'    => 'number',
@@ -762,6 +786,40 @@ $defaultValues = array(
 			'toggleAlign'      => array(
 				'type'    => 'string',
 				'default' => 'left'
+			),
+			  'expandButtonColor' => array(
+				  'type' => "string", 
+				  'default' => "",				
+			  ),
+			'expandButtonBgColor' => array(
+				'type' => "string", 
+				'default' => "" ,
+			) ,
+			'expandButtonBgGradient' => array(
+				'type' => "string", 
+				'default' => "" ,
+			) ,
+			'expandButtonPadding' => array(
+				'type' => "array", 
+				'default' => array(
+					'top' => "8px",
+					'right' => "30px",
+					'bottom' => "8px",
+					'left' => "30px",
+				),
+			) ,
+			'expandButtonBorder' => array(
+				'type' => "array", 
+				'default' => array() ,
+			) ,
+			'expandButtonBorderRadius' => array(
+				'type' => "array",
+				'default' => array(
+					'topLeft' => "100px",
+					'topRight' => "100px",
+					'bottomLeft' => "100px",
+					'bottomRight' => "100px",
+				),
 			),
 			'allowScroll'      => array(
 				'type'    => 'boolean',
@@ -1145,6 +1203,14 @@ $defaultValues = array(
 			'autoplayDuration' => array(
 				'type'    => 'number',
 				'default' => 3
+			),
+			'spaceBetween' => array(
+				'type'    => 'number',
+				'default' => 20
+			),
+			'slidesPerView' => array(
+				'type'    => 'number',
+				'default' => 1
 			),
 			'sliderHeight'     => array(
 				'type'    => 'number',
@@ -2589,6 +2655,10 @@ $defaultValues = array(
 		),
 		'ub/counter'	 => array(
 			'attributes' => array (
+				'labelColor' => array(
+					'type' => 'string',
+					'default' => ''
+				),
 				'startNumber' => array(
 					'type' => 'string',
 					'default' => '0'

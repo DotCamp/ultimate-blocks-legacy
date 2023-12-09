@@ -78,3 +78,33 @@ $fixed-border-style: 1px dashed gray;
 		display: block;
 	}
 }
+.wp-block-ub-advanced-video {
+	// Show Placeholder style on-select.
+	&.is-selected .components-placeholder {
+		// Block UI appearance.
+		border: none;
+
+		// @todo: this should eventually be overridden by a custom border-radius set in the inspector.
+
+		> svg {
+			opacity: 0;
+		}
+
+		.components-placeholder__illustration {
+			display: none;
+		}
+
+		&::before {
+			opacity: 0;
+		}
+	}
+
+	// Remove the transition while we still have a legacy placeholder style.
+	// Otherwise the content jumps between the 1px placeholder border, and any inherited custom
+	// parent border that may get applied when you deselect.
+	.components-placeholder__label,
+	.components-placeholder__instructions,
+	.components-button {
+		transition: none;
+	}
+}

@@ -75,7 +75,7 @@ function Circle(props) {
 				/>
 			</svg>
 			<div
-				className="ub_countdown_circle_label"
+				className="ub_countdown_circle_label ub-countdown-digit"
 				style={{ visibility: isActive ? "visible" : "hidden" }}
 			>
 				{amount}

@@ -23,7 +23,7 @@ function ub_filterJsonldString($string){
     return str_replace("\'", "'", wp_filter_nohtml_kses($string));
 }
 
-function ub_render_review_block($attributes){
+function ub_render_review_block($attributes, $block_content, $block_instance){
     require_once dirname(dirname(__DIR__)) . '/common.php';
 
     extract($attributes);
@@ -47,18 +47,34 @@ function ub_render_review_block($attributes){
                                 $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_stars", "ub_review_star_filter-")
                                 : ub_generatePercentageBar($item['value'], $blockID . '-' . $key, $activePercentBarColor, $percentBarColor ?: '#d9d9d9')  ) . '</div>';
     }
+    $button_block = !empty($block_instance->parsed_block['innerBlocks']) ? $block_instance->parsed_block['innerBlocks'][0] : array();
+    $buttons = isset($button_block['attrs']['buttons']) ? $button_block['attrs']['buttons'] : array();
+    // var_dump($buttons); 
+    $offers = array();
 
-    $offerCode = '"offers":{
+    foreach ($buttons as $button) {
+        $offer = array(
+            "@type" => "Offer",
+            "url" => esc_url($button['url']),
+            "priceCurrency" => ub_filterJsonldString($offerCurrency),
+            "price" => ub_filterJsonldString($offerPrice),
+        );
+        if($offerExpiry > 0){
+            array_merge($offer, array('priceValidUntil'=>date("Y-m-d", $offerExpiry)));
+        }
+
+        $offers[] = $offer;
+    }
+
+    $all_buttons_offer = json_encode($offers, JSON_UNESCAPED_SLASHES);
+    $aggregate_offer = '{
         "@type": "' . $offerType . '",
         "priceCurrency": "' . ub_filterJsonldString($offerCurrency) . '",' .
-            ($offerType === 'AggregateOffer' ?
-                '"lowPrice": "' . $offerLowPrice . '",
-                "highPrice": "' . $offerHighPrice . '",
-                "offerCount": "' . absint($offerCount) . '"'
-            : '"price": "' . $offerPrice . '",
-                "url": "' . esc_url($callToActionURL) . '"' .
-                ($offerExpiry > 0 ? (', "priceValidUntil": "' . date("Y-m-d", $offerExpiry) . '"') : '')).
-    '}';
+        '"lowPrice": "' . $offerLowPrice . '",
+        "highPrice": "' . $offerHighPrice . '",
+        "offerCount": "' . absint($offerCount) . '"
+    }';
+    $offerCode = '"offers":' . ($offerType === 'AggregateOffer' ? $aggregate_offer : $all_buttons_offer );
 
     $itemExtras = '';
 
@@ -175,13 +191,13 @@ function ub_render_review_block($attributes){
             '</div>
         </div>
         <div class="ub_review_cta_panel">' .
-        ($enableCTA && $callToActionURL !== '' ? '<div class="ub_review_cta_main">
+        ($enableCTA  ? '<div class="ub_review_cta_main">
             <a href="' . esc_url($callToActionURL) .
                 '" ' . ($ctaOpenInNewTab ? 'target="_blank" ' : '') . 'rel="' . ($ctaNoFollow ? 'nofollow ' : '') . ($ctaIsSponsored ? 'sponsored ': '') . 'noopener noreferrer"' .
                     ($blockID === '' ? '  style="color: ' . $callToActionForeColor . ';"' : '') . '>
                 <button class="ub_review_cta_btn"' . ($blockID === '' ? ' style="background-color: ' . $callToActionBackColor
                 . '; border-color: ' . $callToActionForeColor . '; color: ' . $callToActionForeColor . ';"' : '') . '>' .
-                    ($callToActionText === '' ? 'Click here' : $callToActionText) . '</button></a></div>' : '') .
+                    ($callToActionText === '' ? 'Click here' : $callToActionText) . '</button></a> ' . $block_content . '</div>' : '') .
                 '</div></div>' . $schema_json_ld
     . '</div>';
 }

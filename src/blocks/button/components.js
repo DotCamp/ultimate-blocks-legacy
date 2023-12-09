@@ -19,6 +19,7 @@ import {
 	RichText,
 	ColorPalette,
 	useBlockProps,
+	JustifyContentControl,
 } from "@wordpress/block-editor";
 import {
 	PanelBody,
@@ -37,7 +38,8 @@ import {
 import { __ } from "@wordpress/i18n";
 import { loadPromise, models } from "@wordpress/api";
 import { useSelect } from "@wordpress/data";
-import { SpacingControl } from "../components";
+import { SpacingControl, CustomToggleGroupControl } from "../components";
+import { AVAILABLE_JUSTIFICATIONS, AVAILABLE_ORIENTATION } from "../../common";
 
 export const allIcons = Object.assign(fas, fab);
 
@@ -708,7 +710,7 @@ export const editorDisplay = (props) => {
 	const {
 		isSelected,
 		setAttributes,
-		attributes: { buttons, align },
+		attributes: { buttons, align, placeholder },
 		activeButtonIndex,
 		setActiveButtonIndex,
 		hoveredButton,
@@ -808,7 +810,11 @@ export const editorDisplay = (props) => {
 										)}
 									<RichText
 										className="ub-button-block-btn"
-										placeholder={__("Button Text", "ultimate-blocks")}
+										placeholder={
+											!isEmpty(placeholder)
+												? placeholder
+												: __("Button Text", "ultimate-blocks")
+										}
 										onChange={(value) =>
 											setAttributes({
 												buttons: [
@@ -878,6 +884,8 @@ export function EditorComponent(props) {
 			iconPosition,
 			addNofollow,
 			openInNewTab,
+			orientation,
+			isFlexWrap,
 		},
 	} = props;
 	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
@@ -1244,31 +1252,58 @@ export function EditorComponent(props) {
 			}
 		}
 	}, [isSelected]);
+	const flexWrapClass = isFlexWrap ? " ub-flex-wrap" : "";
+
 	const blockProps = useBlockProps({
-		className: `ub-buttons align-button-${align}`,
+		className: `ub-buttons align-button-${align} orientation-button-${orientation}${flexWrapClass}`,
 		style: getStyles(props.attributes),
 	});
+
 	return (
 		<>
 			{isSelected && (
-				<BlockControls>
-					<BlockAlignmentToolbar
-						value={align}
-						onChange={(newAlignment) => setAttributes({ align: newAlignment })}
-						controls={["left", "center", "right"]}
-					/>
-					<ToolbarGroup>
-						<ToolbarButton
-							icon="admin-links"
-							label={__("Add button link")}
-							onClick={() => setLinkInputStatus(true)}
+				<>
+					<BlockControls group="block">
+						<JustifyContentControl
+							value={align}
+							onChange={(next) => {
+								setAttributes({ align: next });
+							}}
 						/>
-					</ToolbarGroup>
-				</BlockControls>
+					</BlockControls>
+					<BlockControls>
+						<ToolbarGroup>
+							<ToolbarButton
+								icon="admin-links"
+								label={__("Add button link")}
+								onClick={() => setLinkInputStatus(true)}
+							/>
+						</ToolbarGroup>
+					</BlockControls>
+				</>
 			)}
 			{
 				<>
 					<InspectorControls group="settings">
+						<PanelBody title={__("Layout", "ultimate-blocks")}>
+							<div className="ub-justification-control">
+								<CustomToggleGroupControl
+									options={AVAILABLE_JUSTIFICATIONS}
+									attributeKey="align"
+									label={__("Justification", "ultimate-blocks")}
+								/>
+								<CustomToggleGroupControl
+									options={AVAILABLE_ORIENTATION}
+									attributeKey="orientation"
+									label={__("Orientation", "ultimate-blocks")}
+								/>
+							</div>
+							<ToggleControl
+								checked={isFlexWrap}
+								label={__("Allow to wrap to multiple lines", "ultimate-blocks")}
+								onChange={() => setAttributes({ isFlexWrap: !isFlexWrap })}
+							/>
+						</PanelBody>
 						{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
 							<>
 								<PanelBody
@@ -2320,6 +2355,7 @@ export function EditorComponent(props) {
 						</div>
 					))}
 					<button
+						className="ub-add-button"
 						onClick={() => {
 							setAttributes({
 								buttons: [...buttons, defaultButtonProps],

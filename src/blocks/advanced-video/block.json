@@ -224,6 +224,10 @@
                "type": "object",
                "default": {}
           },
+          "aspectRatio": {
+               "type": "string",
+               "default": ""
+          },
           "margin": {
                "type": "object",
                "default": {}

@@ -1,5 +1,15 @@
 <?php
+function ub_countdown_styles($attributes){
+    $unit_color = $attributes['unitColor'];
+    $countdown_color = $attributes['countdownColor'];
 
+    $styles = array(
+        "--ub-countdown-unit-color" => $unit_color,
+		"--ub-countdown-digit-color" => $countdown_color,
+    );
+
+	return Ultimate_Blocks\includes\generate_css_string( $styles );
+}
 function ub_filter_time_display($timeArray, $largestUnit, $smallestUnit){
     $timeUnits = ["week", "day", "hour", "minute", "second"];
     return array_slice($timeArray, array_search($largestUnit, $timeUnits), 
@@ -30,11 +40,11 @@ function ub_render_countdown_block($attributes){
 
     $weeks = ($timeLeft - $days * 86400 - $hours * 3600 - $minutes * 60 - $seconds) / 604800;
 
-    $defaultFormatValues = ['<span class="ub_countdown_week">' . $weeks . '</span> ' . __( 'weeks', 'ultimate-blocks' ),
-    '<span class="ub_countdown_day">' . $days . '</span> ' . __('days', 'ultimate-blocks'),
-    '<span class="ub_countdown_hour">' . $hours . '</span> ' . __( 'hours', 'ultimate-blocks' ),
-    '<span class="ub_countdown_minute">' . $minutes . '</span> ' . __( 'minutes', 'ultimate-blocks' ),
-    '<span class="ub_countdown_second">' . $seconds . '</span> ' . __( 'seconds', 'ultimate-blocks' )];
+    $defaultFormatValues = ['<span class="ub_countdown_week ub-countdown-digit">' . $weeks . '</span> <span class="ub-countdown-unit">' . __( 'weeks', 'ultimate-blocks' ),
+    '</span> <span class="ub_countdown_day ub-countdown-digit">' . $days . '</span> <span class="ub-countdown-unit">' . __('days', 'ultimate-blocks'),
+    '</span> <span class="ub_countdown_hour ub-countdown-digit">' . $hours . '</span> <span class="ub-countdown-unit">' . __( 'hours', 'ultimate-blocks' ),
+    '</span> <span class="ub_countdown_minute ub-countdown-digit">' . $minutes . '</span> <span class="ub-countdown-unit">' . __( 'minutes', 'ultimate-blocks' ),
+    '</span> <span class="ub_countdown_second ub-countdown-digit">' . $seconds . '</span> <span class="ub-countdown-unit">' . __( 'seconds', 'ultimate-blocks' ) . '</span>',];
 
     $defaultFormat = implode(' ', ub_filter_time_display($defaultFormatValues, $largestUnit, $smallestUnit) );
 
@@ -48,7 +58,7 @@ function ub_render_countdown_block($attributes){
                             <path class="' . $prefix . 'path" d="'.$circlePath.'" stroke="' . $color .
                                 '" stroke-width="3" style="stroke-dasharray: ' . $value * 219.911/$limit . 'px, 219.911px;"></path>
                         </svg>
-                        <div class="' . $prefix . 'label ub_countdown_' . $label . '">' . $value . '</div>
+                        <div class="' . $prefix . 'label ub_countdown_' . $label . ' ub-countdown-digit">' . $value . '</div>
                     </div>';
         }
     }
@@ -59,11 +69,11 @@ function ub_render_countdown_block($attributes){
     ub_generateCircle("minute", $minutes, 60, $circleColor, $circleSize),
     ub_generateCircle("second", $seconds, 60, $circleColor, $circleSize)];
 
-    $circularFormatLabels =  [ '<p>'.__( 'Weeks', 'ultimate-blocks' ).'</p>',
-    '<p>'.__( 'Days', 'ultimate-blocks' ).'</p>',
-    '<p>'.__( 'Hours', 'ultimate-blocks' ).'</p>',
-    '<p>'.__( 'Minutes', 'ultimate-blocks' ).'</p>',
-    '<p>'.__( 'Seconds', 'ultimate-blocks' ).'</p>'];
+    $circularFormatLabels =  [ '<p class="ub-countdown-unit">'.__( 'Weeks', 'ultimate-blocks' ).'</p>',
+    '<p class="ub-countdown-unit">'.__( 'Days', 'ultimate-blocks' ).'</p>',
+    '<p class="ub-countdown-unit">'.__( 'Hours', 'ultimate-blocks' ).'</p>',
+    '<p class="ub-countdown-unit">'.__( 'Minutes', 'ultimate-blocks' ).'</p>',
+    '<p class="ub-countdown-unit">'.__( 'Seconds', 'ultimate-blocks' ).'</p>'];
     
     $circularFormat = '<div class="ub_countdown_circular_container">'.
                 implode('', ub_filter_time_display($circularFormatValues, $largestUnit, $smallestUnit)  ).
@@ -90,17 +100,17 @@ function ub_render_countdown_block($attributes){
         }
     }
 
-    $odometerValues = ['<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_week">' . implode(ub_generateDigitArray($weeks)) .'</div>', 
-        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_day">' . implode(ub_generateDigitArray($days, $largestUnit === 'day' ? 0 : 6) ) . '</div>',
-        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_hour">' . implode(ub_generateDigitArray($hours, $largestUnit === 'hour' ? 0 : 23) )  . '</div>',
-        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_minute">' . implode(ub_generateDigitArray($minutes, 59) ) . '</div>',
-        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_second">' . implode(ub_generateDigitArray($seconds, 59) ). '</div>'];
+    $odometerValues = ['<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_week ub-countdown-digit">' . implode(ub_generateDigitArray($weeks)) .'</div>', 
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_day ub-countdown-digit">' . implode(ub_generateDigitArray($days, $largestUnit === 'day' ? 0 : 6) ) . '</div>',
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_hour ub-countdown-digit">' . implode(ub_generateDigitArray($hours, $largestUnit === 'hour' ? 0 : 23) )  . '</div>',
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_minute ub-countdown-digit">' . implode(ub_generateDigitArray($minutes, 59) ) . '</div>',
+        '<div class="ub-countdown-odometer ub-countdown-digit-container ub_countdown_second ub-countdown-digit">' . implode(ub_generateDigitArray($seconds, 59) ). '</div>'];
 
-    $odometerLabels = ['<span>'.__( 'Weeks', 'ultimate-blocks' ).'</span>',
-        '<span>'.__( 'Days', 'ultimate-blocks' ).'</span>',
-        '<span>'.__( 'Hours', 'ultimate-blocks' ).'</span>',
-        '<span>'.__( 'Minutes', 'ultimate-blocks' ).'</span>',
-        '<span>'.__( 'Seconds', 'ultimate-blocks' ).'</span>'];
+    $odometerLabels = ['<span class="ub-countdown-unit">'.__( 'Weeks', 'ultimate-blocks' ).'</span>',
+        '<span class="ub-countdown-unit">'.__( 'Days', 'ultimate-blocks' ).'</span>',
+        '<span class="ub-countdown-unit">'.__( 'Hours', 'ultimate-blocks' ).'</span>',
+        '<span class="ub-countdown-unit">'.__( 'Minutes', 'ultimate-blocks' ).'</span>',
+        '<span class="ub-countdown-unit">'.__( 'Seconds', 'ultimate-blocks' ).'</span>'];
 
     $odometerFormat = '<div class="ub-countdown-odometer-container">'.
         implode('<span></span>', ub_filter_time_display($odometerLabels, $largestUnit, $smallestUnit)).
@@ -118,9 +128,9 @@ function ub_render_countdown_block($attributes){
     else{
         $selectedFormat = $odometerFormat;
     }
-
+    $styles = ub_countdown_styles($attributes);
     if($timeLeft > 0){
-        return '<div '.($blockID === ''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown'.
+        return '<div style="' . $styles . '" '.($blockID === ''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown ub-countdown-wrapper'.
                 (isset($className)?' '.esc_attr($className):'').
                 '" data-expirymessage="'.$expiryMessage.'" data-enddate="'.$endDate
                 .'" data-largestUnit="'.$largestUnit.'" data-smallestunit="'.$smallestUnit.'">

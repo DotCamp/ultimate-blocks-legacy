@@ -1,5 +1,6 @@
 import icon from "./icon";
 
+import save from "./save";
 import { ReviewBody } from "./components";
 import {
 	version_1_1_2,
@@ -1308,51 +1309,6 @@ function ReviewMain(props) {
 							{enableCTA && (
 								<>
 									<PanelRow>
-										<label htmlFor="ub-review-cta-nofollow">
-											{__("Add nofollow")}
-										</label>
-										<FormToggle
-											id="ub-review-cta-nofollow"
-											label={__("Add nofollow")}
-											checked={ctaNoFollow}
-											onChange={() =>
-												setAttributes({
-													ctaNoFollow: !ctaNoFollow,
-												})
-											}
-										/>
-									</PanelRow>
-									<PanelRow>
-										<label htmlFor="ub-review-cta-openinnewtab">
-											{__("Open link in new tab")}
-										</label>
-										<FormToggle
-											id="ub-review-cta-openinnewtab"
-											label={__("Open link in new tab")}
-											checked={ctaOpenInNewTab}
-											onChange={() =>
-												setAttributes({
-													ctaOpenInNewTab: !ctaOpenInNewTab,
-												})
-											}
-										/>
-									</PanelRow>
-									<PanelRow>
-										<label htmlFor="ub-review-cta-issponsored">
-											{__("Mark link as sponsored")}
-										</label>
-										<FormToggle
-											id="ub-review-cta-issponsored"
-											label={__("Mark link as sponsored")}
-											checked={ctaIsSponsored}
-											onChange={() =>
-												setAttributes({
-													ctaIsSponsored: !ctaIsSponsored,
-												})
-											}
-										/>
-									</PanelRow>
-									<PanelRow>
 										<label>{__("Alignment")}</label>
 										<ButtonGroup>
 											{["left", "center", "right"].map((a) => (
@@ -1368,37 +1324,6 @@ function ReviewMain(props) {
 											))}
 										</ButtonGroup>
 									</PanelRow>
-									<PanelRow>
-										<label htmlFor="ub-review-cta-changefontsize">
-											{__("Change font size")}
-										</label>
-										<FormToggle
-											id="ub-review-cta-changefontsize"
-											label={__("Change font size")}
-											checked={setCTAFontSize}
-											onChange={() => {
-												toggleSetCTAFontSize(!setCTAFontSize);
-												if (setCTAFontSize) {
-													setAttributes({
-														callToActionFontSize: 0,
-													});
-												}
-											}}
-										/>
-									</PanelRow>
-									{setCTAFontSize && (
-										<RangeControl
-											label={__("Font size")}
-											value={callToActionFontSize}
-											onChange={(callToActionFontSize) =>
-												setAttributes({
-													callToActionFontSize,
-												})
-											}
-											min={6}
-											max={50}
-										/>
-									)}
 								</>
 							)}
 						</PanelBody>
@@ -1830,36 +1755,6 @@ function ReviewMain(props) {
 									]}
 								/>
 							)}
-							<PanelColorSettings
-								title={__("Button Colors")}
-								initialOpen={false}
-								colorSettings={[
-									{
-										value: callToActionBackColor,
-										onChange: (colorValue) =>
-											setAttributes({
-												callToActionBackColor: colorValue,
-											}),
-										label: __("Button Background"),
-									},
-									{
-										value: callToActionBorderColor,
-										onChange: (colorValue) =>
-											setAttributes({
-												callToActionBorderColor: colorValue,
-											}),
-										label: __("Button Border Color"),
-									},
-									{
-										value: callToActionForeColor,
-										onChange: (colorValue) =>
-											setAttributes({
-												callToActionForeColor: colorValue,
-											}),
-										label: __("Button Text Color"),
-									},
-								]}
-							/>
 						</PanelBody>
 						<PanelBody
 							title={__("Dimension Settings", "ultimate-blocks")}
@@ -1942,6 +1837,9 @@ function ReviewMain(props) {
 				imageSize={imageSize}
 				ctaFontSize={callToActionFontSize}
 				measureCTAFontSize={setCTAFontSize}
+				ctaOpenInNewTab={ctaOpenInNewTab}
+				ctaIsSponsored={ctaIsSponsored}
+				block={block}
 			/>
 		</div>
 	);
@@ -1963,7 +1861,7 @@ registerPluginBlock(metadata, {
 			};
 		}),
 	])(ReviewMain),
-	save: () => null,
+	save,
 	deprecated: [
 		updateFrom(version_1_1_2),
 		updateFrom(version_1_1_4),
