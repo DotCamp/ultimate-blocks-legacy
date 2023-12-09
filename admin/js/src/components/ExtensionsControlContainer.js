@@ -19,8 +19,6 @@ import { toggleExtensionStatus } from "$Stores/settings-menu/actions";
  * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
  * @param {Function} props.setExtensionStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
- * @param {Function} props.showUpsell     set target block type for modal interface
- * @param {Object}   props.blockDemos     block demo urls, will be supplied via HOC
  */
 function ExtensionsControlContainer({
 	extensions: ubExtensions,

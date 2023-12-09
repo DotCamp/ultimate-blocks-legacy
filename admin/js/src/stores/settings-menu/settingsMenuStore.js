@@ -127,7 +127,7 @@ function createStore() {
 		return carry;
 	}, []);
 
-	const { blocks: proBlocks, extensions: proExtensions } = appData.upsells;
+	const { blocks: proBlocks } = appData.upsells;
 	const proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
 
 	// all blocks available including upsell versions of pro blocks or pro blocks themselves

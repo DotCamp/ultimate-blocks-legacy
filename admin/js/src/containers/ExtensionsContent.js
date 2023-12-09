@@ -18,6 +18,10 @@ import React, { useRef } from "react";
 
 /**
  * Extensions content component.
+ *
+ * @param {Array} pluginExtensions	All extension.
+ * @param {Function} setExtensionActiveStatus Set the extension status active or inactive.
+ * @param {Function} dispatch Function to update store state.
  */
 function ExtensionsContent({ pluginExtensions, setExtensionStatus, dispatch }) {
 	const pluginExtensionsNames = useRef(

@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { __ } from "@wordpress/i18n";
 import ToggleControl from "$Components/ToggleControl";
-import withIcon from "$HOC/withIcon";
 import ProExtensionCardTitle from "$Components/ProExtensionCardTitle";
 import ExtensionCardProInfoControl from "$Components/ExtensionCardProInfoControl";
 
