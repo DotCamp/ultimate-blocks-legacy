@@ -17,7 +17,7 @@ export const defaultRouteOptions = {
  * @param {Object} options route options
  * @class
  */
-function Route( options ) {
+function Route(options) {
 	const { path, title, element } = { ...defaultRouteOptions, ...options };
 	/**
 	 * Get route path.
@@ -39,7 +39,7 @@ function Route( options ) {
 	 * @return {Function} element
 	 */
 	this.getElement = () =>
-		element ?? <div>no element defined for route [{ this.getPath() }]</div>;
+		element ?? <div>no element defined for route [{this.getPath()}]</div>;
 }
 
 /**
@@ -50,8 +50,8 @@ function Route( options ) {
  * @param {Array<Object>} optionsArray options array
  * @return {Array<Route>} route object array
  */
-export const generateRouteArray = ( optionsArray ) => {
-	return optionsArray.map( ( options ) => new Route( options ) );
+export const generateRouteArray = (optionsArray) => {
+	return optionsArray.map((options) => new Route(options));
 };
 
 /**

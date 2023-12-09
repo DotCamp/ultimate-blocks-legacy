@@ -10,26 +10,26 @@ import React, { useEffect, useRef } from 'react';
  *
  * @class
  */
-function VisibilityWrapper( { children, visibilityStatus } ) {
+function VisibilityWrapper({ children, visibilityStatus }) {
 	const wrapper = useRef();
 
-	useEffect( () => {
+	useEffect(() => {
 		wrapper.current.addEventListener(
 			'animationend',
-			( { animationName } ) => {
+			({ animationName }) => {
 				wrapper.current.style.display =
 					animationName === 'disappear' ? 'none' : 'block';
 			}
 		);
-	}, [] );
+	}, []);
 
 	return (
 		<div
-			ref={ wrapper }
-			className={ 'visibility-wrapper' }
-			data-visible={ JSON.stringify( visibilityStatus ) }
+			ref={wrapper}
+			className={'visibility-wrapper'}
+			data-visible={JSON.stringify(visibilityStatus)}
 		>
-			{ children }
+			{children}
 		</div>
 	);
 }

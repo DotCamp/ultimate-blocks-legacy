@@ -19,13 +19,13 @@ import HeaderVersionInfo from '$Components/HeaderVersionInfo';
  * @param {Function} props.dispatch      store dispatch function, will be supplied via HOC
  * @function Object() { [native code] }
  */
-function VersionControl( { pluginVersion, allVersions, dispatch } ) {
-	const [ selectedVersion, setSelectedVersion ] = useState( pluginVersion );
-	const [ popupVisibility, setPopupVisibility ] = useState( false );
+function VersionControl({ pluginVersion, allVersions, dispatch }) {
+	const [selectedVersion, setSelectedVersion] = useState(pluginVersion);
+	const [popupVisibility, setPopupVisibility] = useState(false);
 
 	const sortedVersions = useMemo(
 		() => allVersions.sort().reverse(),
-		[ allVersions ]
+		[allVersions]
 	);
 
 	/**
@@ -33,9 +33,9 @@ function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 	 *
 	 * @param {string} targetVersion target version
 	 */
-	const onVersionSelect = ( targetVersion ) => {
-		setSelectedVersion( targetVersion );
-		setPopupVisibility( true );
+	const onVersionSelect = (targetVersion) => {
+		setSelectedVersion(targetVersion);
+		setPopupVisibility(true);
 	};
 
 	/**
@@ -44,29 +44,29 @@ function VersionControl( { pluginVersion, allVersions, dispatch } ) {
 	 * @return {Promise} operation promise object
 	 */
 	const startVersionOperation = () => {
-		return dispatch( rollbackToVersion )( selectedVersion );
+		return dispatch(rollbackToVersion)(selectedVersion);
 	};
 
 	return (
-		<div className={ 'version-control-container' }>
+		<div className={'version-control-container'}>
 			<HeaderVersionInfo
-				availableVersions={ sortedVersions }
-				currentVersion={ selectedVersion }
-				onSelect={ onVersionSelect }
+				availableVersions={sortedVersions}
+				currentVersion={selectedVersion}
+				onSelect={onVersionSelect}
 			/>
-			{ popupVisibility && (
-				<Portal target={ document.body }>
+			{popupVisibility && (
+				<Portal target={document.body}>
 					<VersionControlPopup
-						onCloseHandler={ () => {
-							setSelectedVersion( pluginVersion );
-							setPopupVisibility( false );
-						} }
-						from={ pluginVersion }
-						to={ selectedVersion }
-						onOperationStart={ startVersionOperation }
+						onCloseHandler={() => {
+							setSelectedVersion(pluginVersion);
+							setPopupVisibility(false);
+						}}
+						from={pluginVersion}
+						to={selectedVersion}
+						onOperationStart={startVersionOperation}
 					/>
 				</Portal>
-			) }
+			)}
 		</div>
 	);
 }
@@ -77,14 +77,14 @@ function VersionControl( { pluginVersion, allVersions, dispatch } ) {
  * @param {Function} select store selector
  * @return {Object} select mapping
  */
-const selectionMapping = ( select ) => {
+const selectionMapping = (select) => {
 	return {
-		allVersions: select( versions ),
-		pluginVersion: select( currentVersion ),
+		allVersions: select(versions),
+		pluginVersion: select(currentVersion),
 	};
 };
 
 /**
  * @module VersionControl
  */
-export default withStore( VersionControl, selectionMapping );
+export default withStore(VersionControl, selectionMapping);

@@ -20,13 +20,13 @@ import { toggleExtensionStatus } from '$Stores/settings-menu/actions';
  * @param {Function} props.setExtensionStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.proStatus          plugin pro status, will be supplied via HOC
  */
-function ExtensionsControlContainer( {
+function ExtensionsControlContainer({
 	extensions: ubExtensions,
 	setExtensionStatus,
 	dispatch,
 	proStatus,
-} ) {
-	const [ extensions, setExtensions ] = useState( ubExtensions );
+}) {
+	const [extensions, setExtensions] = useState(ubExtensions);
 
 	/**
 	 * Handle block status change.
@@ -34,64 +34,64 @@ function ExtensionsControlContainer( {
 	 * @param {boolean} proExtension is calling block belongs to pro version of the plugin
 	 */
 	const handleExtensionStatusChange =
-		( proExtension ) => ( extensionId, status ) => {
-			if ( proExtension && ! proStatus ) {
-				setExtensionStatus( { id: extensionId, status: false } );
+		(proExtension) => (extensionId, status) => {
+			if (proExtension && !proStatus) {
+				setExtensionStatus({ id: extensionId, status: false });
 				return;
 			}
 
-			setExtensionStatus( { id: extensionId, status } );
-			dispatch( toggleExtensionStatus )( extensionId, status );
+			setExtensionStatus({ id: extensionId, status });
+			dispatch(toggleExtensionStatus)(extensionId, status);
 		};
 
 	// useEffect hook
-	useEffect( () => {
-		const sortedExtensions = [ ...ubExtensions ].sort( ( a, b ) => {
+	useEffect(() => {
+		const sortedExtensions = [...ubExtensions].sort((a, b) => {
 			const aName = a.title.toLowerCase();
 			const bName = b.title.toLowerCase();
 
-			if ( aName < bName ) {
+			if (aName < bName) {
 				return -1;
 			}
-			if ( aName > bName ) {
+			if (aName > bName) {
 				return 1;
 			}
 
 			return 0;
-		} );
+		});
 
-		setExtensions( sortedExtensions );
-	}, [ ubExtensions ] );
+		setExtensions(sortedExtensions);
+	}, [ubExtensions]);
 
 	return (
-		<div className={ 'controls-container' }>
-			{ extensions.map( ( { label, name, active, icon, info, pro } ) => {
+		<div className={'controls-container'}>
+			{extensions.map(({ label, name, active, icon, info, pro }) => {
 				return (
 					<ExtensionControlCard
-						key={ name }
-						proStatus={ proStatus }
-						title={ label }
-						extensionId={ name }
-						status={ active }
-						onStatusChange={ handleExtensionStatusChange( pro ) }
-						iconElement={ icon }
-						info={ info }
-						proBlock={ pro }
+						key={name}
+						proStatus={proStatus}
+						title={label}
+						extensionId={name}
+						status={active}
+						onStatusChange={handleExtensionStatusChange(pro)}
+						iconElement={icon}
+						info={info}
+						proBlock={pro}
 					/>
 				);
-			} ) }
+			})}
 		</div>
 	);
 }
 
-const selectMapping = ( selector ) => ( {
-	extensions: selector( getExtensions ),
-	proStatus: selector( getProStatus ),
-} );
+const selectMapping = (selector) => ({
+	extensions: selector(getExtensions),
+	proStatus: selector(getProStatus),
+});
 
-const actionMapping = () => ( {
+const actionMapping = () => ({
 	setExtensionStatus: setExtensionActiveStatus,
-} );
+});
 
 /**
  * @module ExtensionsControlContainer

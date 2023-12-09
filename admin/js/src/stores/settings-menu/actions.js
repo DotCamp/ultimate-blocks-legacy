@@ -9,30 +9,26 @@ import { ajaxInfo } from '$Stores/settings-menu/slices/versionControl';
  * @return {Function} action function
  */
 export const toggleExtensionStatus =
-	( dispatch, getState ) => ( extensionId, status ) => {
-		const { toggleExtensionStatus: ajaxInfoSub } = getAjaxInfo(
-			getState()
-		);
+	(dispatch, getState) => (extensionId, status) => {
+		const { toggleExtensionStatus: ajaxInfoSub } = getAjaxInfo(getState());
 		const { url, action, nonce } = ajaxInfoSub;
 
-		if ( ! Array.isArray( extensionId ) ) {
-			extensionId = [ extensionId ];
+		if (!Array.isArray(extensionId)) {
+			extensionId = [extensionId];
 		}
 
 		const formData = new FormData();
 
-		extensionId.map( ( eId ) =>
-			formData.append( 'extension_name[]', eId )
-		);
+		extensionId.map((eId) => formData.append('extension_name[]', eId));
 
-		formData.append( 'enable', JSON.stringify( status ) );
-		formData.append( 'action', action );
-		formData.append( '_wpnonce', nonce );
+		formData.append('enable', JSON.stringify(status));
+		formData.append('action', action);
+		formData.append('_wpnonce', nonce);
 
-		fetch( url, {
+		fetch(url, {
 			method: 'POST',
 			body: formData,
-		} );
+		});
 	};
 /**
  * Toggle block status.
@@ -41,28 +37,27 @@ export const toggleExtensionStatus =
  * @param {Function} getState store state selection function
  * @return {Function} action function
  */
-export const toggleBlockStatus =
-	( dispatch, getState ) => ( blockId, status ) => {
-		const { toggleStatus: ajaxInfoSub } = getAjaxInfo( getState() );
-		const { url, action, nonce } = ajaxInfoSub;
+export const toggleBlockStatus = (dispatch, getState) => (blockId, status) => {
+	const { toggleStatus: ajaxInfoSub } = getAjaxInfo(getState());
+	const { url, action, nonce } = ajaxInfoSub;
 
-		if ( ! Array.isArray( blockId ) ) {
-			blockId = [ blockId ];
-		}
+	if (!Array.isArray(blockId)) {
+		blockId = [blockId];
+	}
 
-		const formData = new FormData();
+	const formData = new FormData();
 
-		blockId.map( ( bId ) => formData.append( 'block_name[]', bId ) );
+	blockId.map((bId) => formData.append('block_name[]', bId));
 
-		formData.append( 'enable', JSON.stringify( status ) );
-		formData.append( 'action', action );
-		formData.append( '_wpnonce', nonce );
+	formData.append('enable', JSON.stringify(status));
+	formData.append('action', action);
+	formData.append('_wpnonce', nonce);
 
-		fetch( url, {
-			method: 'POST',
-			body: formData,
-		} );
-	};
+	fetch(url, {
+		method: 'POST',
+		body: formData,
+	});
+};
 
 /**
  * Rollback plugin version.
@@ -71,26 +66,26 @@ export const toggleBlockStatus =
  * @param {Function} getState store state selection function
  * @return {Function} action function
  */
-export const rollbackToVersion = ( dispatch, getState ) => ( version ) => {
-	const { url, action, nonce } = ajaxInfo( getState() ).versionRollback;
+export const rollbackToVersion = (dispatch, getState) => (version) => {
+	const { url, action, nonce } = ajaxInfo(getState()).versionRollback;
 
 	const formData = new FormData();
-	formData.append( 'action', action );
-	formData.append( 'nonce', nonce );
-	formData.append( 'version', version );
+	formData.append('action', action);
+	formData.append('nonce', nonce);
+	formData.append('version', version);
 
-	return fetch( url, {
+	return fetch(url, {
 		method: 'POST',
 		body: formData,
-	} )
-		.then( ( resp ) => {
+	})
+		.then((resp) => {
 			return resp.json();
-		} )
-		.then( ( data ) => {
-			if ( data.error ) {
-				throw new Error( data.error );
+		})
+		.then((data) => {
+			if (data.error) {
+				throw new Error(data.error);
 			}
 
 			return data;
-		} );
+		});
 };

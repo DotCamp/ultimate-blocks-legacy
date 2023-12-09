@@ -21,16 +21,16 @@ export const BUTTON_TYPES = {
  * @param {string}   [props.type='negative']       button type
  * @class
  */
-function MenuButton( {
+function MenuButton({
 	title,
 	onClickHandler = () => {},
 	status = false,
 	type = BUTTON_TYPES.NEGATIVE,
-} ) {
+}) {
 	const typeClass = () => {
 		let buttonClass = '';
 
-		switch ( type ) {
+		switch (type) {
 			case BUTTON_TYPES.NEGATIVE: {
 				buttonClass = 'ub-negative-bg';
 				break;
@@ -47,15 +47,15 @@ function MenuButton( {
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
 		<div
-			onClick={ () => {
-				if ( status ) {
+			onClick={() => {
+				if (status) {
 					onClickHandler();
 				}
-			} }
-			className={ `ub-menu-button ${ typeClass() }` }
-			data-enabled={ JSON.stringify( status ) }
+			}}
+			className={`ub-menu-button ${typeClass()}`}
+			data-enabled={JSON.stringify(status)}
 		>
-			{ title }
+			{title}
 		</div>
 	);
 }
