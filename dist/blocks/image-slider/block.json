@@ -15,6 +15,14 @@
       "type": "string",
       "default": ""
     },
+    "slidesPerView": {
+      "type": "number",
+      "default": 1
+    },
+    "spaceBetween": {
+      "type": "number",
+      "default": 20
+    },
     "images": {
       "type": "string",
       "default": "[]"

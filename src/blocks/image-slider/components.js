@@ -11,6 +11,8 @@ export function Slider(props) {
 	const currentSlides = props.slides;
 
 	const customProps = {
+		slidesPerView: props.slidesPerView,
+		spaceBetween: props.spaceBetween,
 		initialSlide: props.initialSlide,
 		loop: props.wrapAround,
 		simulateTouch: props.draggable,

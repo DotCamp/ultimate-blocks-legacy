@@ -1,5 +1,18 @@
 <?php
 
+
+
+function ub_render_icon_block($attributes, $block_content, $block_instance){
+	$attrs = $block_instance->parsed_block['attrs'];
+	if(!empty($attrs['margin'])){
+		$block_content = str_replace('class="wp-block-ub-icon', 'class="wp-block-ub-icon has-ub-icon-margin', $block_content);
+	}
+	if(!empty($attrs['padding'])){
+		$block_content = str_replace('class="wp-block-ub-icon', 'class="wp-block-ub-icon has-ub-icon-padding', $block_content);
+	}
+	return $block_content;
+}
+
 /**
  * Register icon.
  * @return void
@@ -12,7 +25,7 @@ function register_icon_block() {
 
 		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/icon', [
 			'attributes'      => $defaultValues[ $block_type_id ]['attributes'],
-			'render_callback' => null
+			'render_callback' => 'ub_render_icon_block'
 		] );
 
 	}

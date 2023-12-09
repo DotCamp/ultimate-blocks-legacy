@@ -17,6 +17,7 @@ export function getStyles(attributes) {
 	const marginObj = getSpacingCss(margin);
 
 	let styles = {
+		"--ub-counter-label-color": attributes?.labelColor,
 		"--ub-counter-font-size": attributes?.counterFontSize,
 		"--ub-counter-label-font-size": attributes?.labelFontSize,
 		"--ub-counter-padding-top": paddingObj?.top,

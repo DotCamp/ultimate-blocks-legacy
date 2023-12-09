@@ -286,6 +286,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'placeholder'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()
@@ -298,9 +302,13 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'Button Text'
 			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
 			'align'                => array(
 				'type'    => 'string',
-				'default' => ''
+				'default' => 'center'
 			),
 			'url'                  => array(
 				'type'    => 'string',
@@ -325,6 +333,10 @@ $defaultValues = array(
 			'buttonTextHoverColor' => array(
 				'type'    => 'string',
 				'default' => '#ffffff'
+			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
 			),
 			'buttonRounded'        => array(
 				'type'    => 'boolean',
@@ -1191,6 +1203,14 @@ $defaultValues = array(
 			'autoplayDuration' => array(
 				'type'    => 'number',
 				'default' => 3
+			),
+			'spaceBetween' => array(
+				'type'    => 'number',
+				'default' => 20
+			),
+			'slidesPerView' => array(
+				'type'    => 'number',
+				'default' => 1
 			),
 			'sliderHeight'     => array(
 				'type'    => 'number',
@@ -2635,6 +2655,10 @@ $defaultValues = array(
 		),
 		'ub/counter'	 => array(
 			'attributes' => array (
+				'labelColor' => array(
+					'type' => 'string',
+					'default' => ''
+				),
 				'startNumber' => array(
 					'type' => 'string',
 					'default' => '0'

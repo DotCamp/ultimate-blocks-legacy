@@ -1,6 +1,12 @@
-const { RichText, MediaUpload, URLInput } = wp.blockEditor || wp.editor;
-const { Button, Dashicon } = wp.components;
-const { __ } = wp.i18n;
+import { isEmpty } from "lodash";
+import {
+	RichText,
+	MediaUpload,
+	URLInput,
+	InnerBlocks,
+} from "@wordpress/block-editor";
+import { Button, Dashicon } from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
 
 import { removeIcon } from "./icon";
 import { useEffect, useRef, useState } from "react";
@@ -205,6 +211,10 @@ export function ReviewBody(props) {
 		measureCTAFontSize,
 		imageSize,
 		ctaFontSize,
+		ctaOpenInNewTab,
+		ctaNoFollow,
+		ctaIsSponsored,
+		block,
 	} = props;
 
 	const { titleAlign, authorAlign, descriptionAlign } = alignments;
@@ -252,6 +262,7 @@ export function ReviewBody(props) {
 		);
 	};
 	const styles = getStyles(props);
+	const has_button_block = block.innerBlocks.length > 0;
 	return (
 		<div className="ub_review_block" style={styles}>
 			<RichText
@@ -559,48 +570,85 @@ export function ReviewBody(props) {
 				<div className="ub_review_cta_panel">
 					<div
 						className="ub_review_cta_main"
-						style={{ justifyContent: ctaAlignment }}
+						style={{
+							justifyContent: ctaAlignment,
+						}}
 					>
 						{enableCTA && (
-							<div //do not merge into RichText child
-								className="ub_review_cta_btn"
-								style={{
-									backgroundColor: callToActionBackColor,
-									borderColor: callToActionBorderColor,
-									fontSize: ctaFontSize > 0 ? `${ctaFontSize}px` : null,
-								}}
-								ref={ctaButton}
-							>
-								<RichText
-									style={{
-										color: callToActionForeColor || "inherit",
-									}}
-									placeholder={__("Call to action")}
-									value={callToActionText}
-									onChange={(text) =>
-										setAttributes({
-											callToActionText: text,
-										})
-									}
-									unstableOnFocus={() => setEditable("")}
-								/>
-							</div>
+							<InnerBlocks
+								renderAppender={
+									has_button_block ? false : InnerBlocks.ButtonBlockAppender
+								}
+								allowedBlocks={["ub/button"]}
+								template={[
+									[
+										"ub/button",
+										{
+											chosenIcon: "",
+											placeholder: "Call To Action",
+											buttonText: "Button Text",
+											align: ctaAlignment,
+											buttons: [
+												{
+													buttonText: !isEmpty(callToActionText)
+														? callToActionText
+														: "Call To Action",
+													chosenIcon: "",
+													buttonColor: !isEmpty(callToActionBackColor)
+														? callToActionBackColor
+														: "#E11B4C",
+													buttonTextColor: callToActionForeColor || "#FFFFFF",
+													url: callToActionURL,
+													openInNewTab: ctaOpenInNewTab,
+													addSponsored: ctaIsSponsored,
+													addNoFollow: ctaNoFollow,
+													size: "medium",
+													buttonHoverColor: !isEmpty(callToActionBackColor)
+														? callToActionBackColor
+														: "#E11B4C",
+													buttonTextHoverColor: "#ffffff",
+													buttonRounded: true,
+													buttonRadius: 10,
+													buttonRadiusUnit: "px",
+													topLeftRadius: 10,
+													topLeftRadiusUnit: "px",
+													topRightRadius: 10,
+													topRightRadiusUnit: "px",
+													bottomLeftRadius: 10,
+													bottomLeftRadiusUnit: "px",
+													bottomRightRadius: 10,
+													bottomRightRadiusUnit: "px",
+													iconPosition: "left",
+													iconSize: 0,
+													iconUnit: "px",
+													buttonIsTransparent: false,
+													buttonWidth: "flex",
+												},
+											],
+											buttonColor: "#313131",
+											buttonHoverColor: "#313131",
+											buttonIsTransparent: false,
+											buttonRounded: true,
+											buttonTextColor: "#ffffff",
+											buttonTextHoverColor: "#ffffff",
+											buttonWidth: "flex",
+											iconPosition: "left",
+											isFlexWrap: true,
+											margin: {},
+											openInNewTab: ctaOpenInNewTab,
+											addSponsored: ctaIsSponsored,
+											addNoFollow: ctaNoFollow,
+											orientation: "row",
+											padding: {},
+											size: "medium",
+											url: "",
+										},
+									],
+								]}
+							/>
 						)}
 					</div>
 				</div>
-				{isSelected && enableCTA && (
-					<div className="ub_review_link_input">
-						<div className="ub-icon-holder">
-							<Dashicon icon={"admin-links"} />
-						</div>
-						<URLInput
-							autoFocus={false}
-							style={{ width: "200px" }} //inline style used to override gutenberg's default style
-							value={callToActionURL}
-							onChange={(text) => setAttributes({ callToActionURL: text })}
-						/>
-					</div>
-				)}
 			</div>
 		</div>
 	);
