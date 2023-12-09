@@ -52,3 +52,19 @@ export function getStyles(attributes) {
 		);
 	});
 }
+
+export function getClasses(attributes) {
+	const isValueEmpty = (style) => {
+		return (
+			isUndefined(style) ||
+			style === false ||
+			trim(style) === "" ||
+			trim(style) === "undefined undefined undefined" ||
+			isEmpty(style)
+		);
+	};
+	return {
+		"has-ub-icon-margin": !isValueEmpty(attributes.margin),
+		"has-ub-icon-padding": !isValueEmpty(attributes.padding),
+	};
+}
