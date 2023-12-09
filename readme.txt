@@ -143,6 +143,23 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.9 =
+
+* FIX: Counter block hyperlink converting in html.
+* FIX: Icon block alignment and not showing properly within the row block.
+* NEW: Responsive Control extension.
+* NEW: Separate label color for the counter block.
+* NEW: Countdown unit and digit color.
+* NEW: Justification and orientation option in the button block.
+* NEW: Columns and space between option in the image slider block.
+* NEW: Multiple cta buttons can be added in the review block.
+* NEW: Aspect ratio in the advanced video block.
+* IMPROVE: Set Countdown default date.
+* IMPROVE: Move countdown styles with styles api.
+* IMPROVE: Move button styles in expand block with styles api.
+* IMPROVE: Change initial view of advanced video block with placeholder.
+* PRO: NEW: Timeline block.
+
 = 3.0.8 =
 
 * FIX: Content toggle block breaking.
