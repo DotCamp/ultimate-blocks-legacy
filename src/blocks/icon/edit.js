@@ -9,7 +9,7 @@ import { Modal } from "@wordpress/components";
  * Custom Imports
  */
 import { ultimateIcons } from "./icons";
-import { getStyles } from "./get-styles";
+import { getClasses, getStyles } from "./get-styles";
 import CustomInspectorControls from "./inspector";
 import CustomBlockControls from "./block-controls";
 import Placeholder from "./components/Placeholder";
@@ -29,6 +29,7 @@ function Edit(props) {
 	const hasSVGIcon = !isEmpty(svgIcon);
 	const blockProps = useBlockProps({
 		style: getStyles(props.attributes),
+		className: getClasses(props.attributes),
 	});
 	const finalIcon = hasIcon
 		? ultimateIcons
