@@ -1,20 +1,20 @@
-import { __ } from "@wordpress/i18n";
-import BoxContentProvider from "$Components/BoxContent/BoxContentProvider";
+import { __ } from '@wordpress/i18n';
+import BoxContentProvider from '$Components/BoxContent/BoxContentProvider';
 import {
 	getExtensions,
 	setExtensionActiveStatus,
-} from "$Stores/settings-menu/slices/extension";
+} from '$Stores/settings-menu/slices/extension';
 import {
 	BoxContentAlign,
 	BoxContentLayout,
 	BoxContentSize,
-} from "$Components/BoxContent/BoxContent";
-import ButtonLink, { ButtonLinkType } from "$Components/ButtonLink";
-import UpgradeBoxContent from "$Components/UpgradeBoxContent";
-import ExtensionsControlContainer from "$Components/ExtensionsControlContainer";
-import withStore from "$HOC/withStore";
-import { toggleExtensionStatus } from "$Stores/settings-menu/actions";
-import React, { useRef } from "react";
+} from '$Components/BoxContent/BoxContent';
+import ButtonLink, { ButtonLinkType } from '$Components/ButtonLink';
+import UpgradeBoxContent from '$Components/UpgradeBoxContent';
+import ExtensionsControlContainer from '$Components/ExtensionsControlContainer';
+import withStore from '$HOC/withStore';
+import { toggleExtensionStatus } from '$Stores/settings-menu/actions';
+import React, { useRef } from 'react';
 
 /**
  * Extensions content component.
@@ -45,7 +45,7 @@ function ExtensionsContent(props) {
 		<div className="ub-extensions-content">
 			<BoxContentProvider
 				layout={BoxContentLayout.HORIZONTAL}
-				contentId={"extensionGlobalControl"}
+				contentId={'extensionGlobalControl'}
 				size={BoxContentSize.JUMBO}
 			>
 				<ButtonLink
@@ -53,14 +53,14 @@ function ExtensionsContent(props) {
 						toggleAllExtensionStatus(true);
 					}}
 					type={ButtonLinkType.DEFAULT}
-					title={__("Activate All")}
+					title={__('Activate All')}
 				/>
 				<ButtonLink
 					onClickHandler={() => {
 						toggleAllExtensionStatus(false);
 					}}
 					type={ButtonLinkType.DEFAULT}
-					title={__("Deactivate All")}
+					title={__('Deactivate All')}
 				/>
 			</BoxContentProvider>
 			<ExtensionsControlContainer />
