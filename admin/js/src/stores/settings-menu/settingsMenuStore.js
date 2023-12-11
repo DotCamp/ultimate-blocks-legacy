@@ -16,18 +16,18 @@ import pluginStatusSlice from '$Stores/settings-menu/slices/pluginStatus';
  *
  * @return {Array} pro block upsell data
  */
-function prepareProOnlyBlockUpsellData( proOnlyBlockList ) {
-	return Object.keys( proOnlyBlockList )
-		.filter( ( key ) =>
-			Object.prototype.hasOwnProperty.call( proOnlyBlockList, key )
+function prepareProOnlyBlockUpsellData(proOnlyBlockList) {
+	return Object.keys(proOnlyBlockList)
+		.filter((key) =>
+			Object.prototype.hasOwnProperty.call(proOnlyBlockList, key)
 		)
-		.reduce( ( carry, blockName ) => {
+		.reduce((carry, blockName) => {
 			const {
 				desc: info,
 				label: title,
 				icon,
 				screenshot,
-			} = proOnlyBlockList[ blockName ];
+			} = proOnlyBlockList[blockName];
 
 			carry.push(
 				generateBlockInfoObject(
@@ -42,7 +42,7 @@ function prepareProOnlyBlockUpsellData( proOnlyBlockList ) {
 			);
 
 			return carry;
-		}, [] );
+		}, []);
 }
 
 /**
@@ -69,7 +69,7 @@ function generateBlockInfoObject(
 	return {
 		name,
 		title,
-		info: Array.isArray( info ) ? info : [ info ],
+		info: Array.isArray(info) ? info : [info],
 		icon,
 		active,
 		pro,
@@ -89,29 +89,29 @@ function createStore() {
 	ubAdminMenuData = null;
 
 	// add block infos to context data
-	const registeredBlocks = wp.data.select( 'core/blocks' ).getBlockTypes();
-	const registeredUbBlocks = registeredBlocks.filter( ( blockData ) => {
+	const registeredBlocks = wp.data.select('core/blocks').getBlockTypes();
+	const registeredUbBlocks = registeredBlocks.filter((blockData) => {
 		return (
 			blockData.parent === undefined &&
 			blockData.supports.inserter === undefined
 		);
-	} );
+	});
 
 	const { statusData, info } = appData.blocks;
-	const reducedBlocks = registeredUbBlocks.reduce( ( carry, current ) => {
+	const reducedBlocks = registeredUbBlocks.reduce((carry, current) => {
 		const { icon, name: currentName, title } = current;
 
 		let blockStatus = false;
 		// eslint-disable-next-line array-callback-return,no-shadow
-		statusData.map( ( { name, active } ) => {
-			if ( name === currentName ) {
+		statusData.map(({ name, active }) => {
+			if (name === currentName) {
 				blockStatus = active;
 			}
-		} );
+		});
 
 		let blockInfo = [];
-		if ( info[ currentName ] && Array.isArray( info[ currentName ] ) ) {
-			blockInfo = info[ currentName ];
+		if (info[currentName] && Array.isArray(info[currentName])) {
+			blockInfo = info[currentName];
 		}
 
 		const newBlockObject = generateBlockInfoObject(
@@ -122,31 +122,31 @@ function createStore() {
 			blockStatus
 		);
 
-		carry.push( newBlockObject );
+		carry.push(newBlockObject);
 
 		return carry;
-	}, [] );
+	}, []);
 
 	const { blocks: proBlocks } = appData.upsells;
-	const proBlockUpsell = prepareProOnlyBlockUpsellData( proBlocks );
+	const proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
 
 	// all blocks available including upsell versions of pro blocks or pro blocks themselves
-	const allRegistered = proBlockUpsell.reduce( ( carry, current ) => {
+	const allRegistered = proBlockUpsell.reduce((carry, current) => {
 		const { name: proBlockName } = current;
 
 		//check if pro block name is already in reduced lists which will tell us it is already registered by pro version of plugin, so we will only add pro property to block object
 		// if not inject the upsell data to current block list
 		const registeredProBlock = carry.find(
-			( { name } ) => name === proBlockName
+			({ name }) => name === proBlockName
 		);
-		if ( registeredProBlock ) {
+		if (registeredProBlock) {
 			registeredProBlock.pro = true;
 		} else {
-			carry.push( current );
+			carry.push(current);
 		}
 
 		return carry;
-	}, reducedBlocks );
+	}, reducedBlocks);
 
 	const { contentData, ...preloadedAssets } = appData.assets;
 
@@ -166,9 +166,9 @@ function createStore() {
 	};
 
 	// merge with default store state
-	preloadedState = deepmerge( initialState, preloadedState );
+	preloadedState = deepmerge(initialState, preloadedState);
 
-	return configureStore( {
+	return configureStore({
 		reducer: {
 			assets: assetsSlice,
 			app: appSlice,
@@ -177,12 +177,12 @@ function createStore() {
 			versionControl: versionControlSlice,
 			pluginStatus: pluginStatusSlice,
 		},
-		middleware: ( getDefaultMiddleware ) =>
-			getDefaultMiddleware( {
+		middleware: (getDefaultMiddleware) =>
+			getDefaultMiddleware({
 				serializableCheck: false,
-			} ),
+			}),
 		preloadedState,
-	} );
+	});
 }
 
 /**

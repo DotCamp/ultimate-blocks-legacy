@@ -10,25 +10,25 @@ import React from 'react';
  * @param {boolean}  props.isActive       button active status
  * @class
  */
-function NavigationHeaderButton( {
+function NavigationHeaderButton({
 	title,
 	targetPath,
 	onClickHandler,
 	isActive = false,
-} ) {
-	const onClickHandlerDefault = () => onClickHandler( targetPath );
+}) {
+	const onClickHandlerDefault = () => onClickHandler(targetPath);
 
 	return (
 		<div
-			data-active={ isActive }
-			data-path={ targetPath }
-			className={ 'ub-menu-navigation-header-button' }
-			tabIndex={ 0 }
-			role={ 'button' }
-			onClick={ onClickHandlerDefault }
-			onKeyDown={ onClickHandlerDefault }
+			data-active={isActive}
+			data-path={targetPath}
+			className={'ub-menu-navigation-header-button'}
+			tabIndex={0}
+			role={'button'}
+			onClick={onClickHandlerDefault}
+			onKeyDown={onClickHandlerDefault}
 		>
-			{ title }
+			{title}
 		</div>
 	);
 }

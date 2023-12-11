@@ -11,24 +11,24 @@ import AssetProvider from '$Components/AssetProvider';
  * @param {Object} props component properties, will be reflected to BoxContentProvider
  * @class
  */
-function UpgradeBoxContent( props ) {
+function UpgradeBoxContent(props) {
 	return (
-		<AssetProvider assetIds={ [ 'proBuyUrl' ] }>
-			{ ( { proBuyUrl } ) => (
-				<ProFilter invert={ true }>
+		<AssetProvider assetIds={['proBuyUrl']}>
+			{({ proBuyUrl }) => (
+				<ProFilter invert={true}>
 					<BoxContentProvider
-						size={ BoxContentSize.JUMBO }
-						contentId={ 'upgrade' }
-						{ ...props }
+						size={BoxContentSize.JUMBO}
+						contentId={'upgrade'}
+						{...props}
 					>
 						<ButtonLink
-							url={ proBuyUrl }
-							title={ 'GET ULTIMATE BLOCKS PRO' }
-							type={ ButtonLinkType.PRIMARY }
+							url={proBuyUrl}
+							title={'GET ULTIMATE BLOCKS PRO'}
+							type={ButtonLinkType.PRIMARY}
 						/>
 					</BoxContentProvider>
 				</ProFilter>
-			) }
+			)}
 		</AssetProvider>
 	);
 }

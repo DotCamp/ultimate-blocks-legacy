@@ -11,20 +11,20 @@ import React from 'react';
  * @param {number}                       [props.duration=1000]       duration in milliseconds
  * @param {number}                       [props.delay=0]             delay in milliseconds
  */
-function Animation( {
+function Animation({
 	children,
 	animationKeyframeName,
 	duration = 1000,
 	delay = 0,
-} ) {
+}) {
 	return (
 		<span
-			className={ 'ub-animation' }
-			style={ {
-				animation: `${ animationKeyframeName } ${ duration }ms ease-out ${ delay }ms both`,
-			} }
+			className={'ub-animation'}
+			style={{
+				animation: `${animationKeyframeName} ${duration}ms ease-out ${delay}ms both`,
+			}}
 		>
-			{ children }
+			{children}
 		</span>
 	);
 }

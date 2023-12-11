@@ -18,29 +18,29 @@ const extensionsSliceOptions = {
 		 * @param {Object} props         action props
 		 * @param {Object} props.payload action payload
 		 */
-		setExtensionActiveStatus( state, { payload } ) {
+		setExtensionActiveStatus(state, { payload }) {
 			const { id, status } = payload;
 
 			const registered = state.registered;
-			const uRegistered = [ ...registered ];
+			const uRegistered = [...registered];
 
 			let extensionIndex = -1;
 			// eslint-disable-next-line array-callback-return
-			uRegistered.map( ( bObj, index ) => {
-				if ( bObj.name === id ) {
+			uRegistered.map((bObj, index) => {
+				if (bObj.name === id) {
 					extensionIndex = index;
 				}
-			} );
+			});
 
-			if ( extensionIndex >= 0 ) {
-				uRegistered[ extensionIndex ].active = status;
+			if (extensionIndex >= 0) {
+				uRegistered[extensionIndex].active = status;
 				state.registered = uRegistered;
 			}
 		},
 	},
 };
 
-const extensionsSlice = createSlice( extensionsSliceOptions );
+const extensionsSlice = createSlice(extensionsSliceOptions);
 
 export const { setExtensionActiveStatus } = extensionsSlice.actions;
 
@@ -50,7 +50,7 @@ export const { setExtensionActiveStatus } = extensionsSlice.actions;
  * @param {Object} state store state
  * @return {Array} extensions
  */
-export const getExtensions = ( state ) => {
+export const getExtensions = (state) => {
 	return state.extensions.registered;
 };
 
@@ -60,11 +60,11 @@ export const getExtensions = ( state ) => {
  */
 export const getExtensionById = createSelector(
 	[
-		( state ) => state.extensions.registered,
-		( registered, extensionId ) => extensionId,
+		(state) => state.extensions.registered,
+		(registered, extensionId) => extensionId,
 	],
-	( registered, extensionId ) =>
-		registered.find( ( { name } ) => name === extensionId )
+	(registered, extensionId) =>
+		registered.find(({ name }) => name === extensionId)
 );
 
 /**

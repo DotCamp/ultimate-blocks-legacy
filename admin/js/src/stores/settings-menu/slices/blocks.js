@@ -18,29 +18,29 @@ const blocksSliceOptions = {
 		 * @param {Object} props         action props
 		 * @param {Object} props.payload action payload
 		 */
-		setBlockActiveStatus( state, { payload } ) {
+		setBlockActiveStatus(state, { payload }) {
 			const { id, status } = payload;
 
 			const registered = state.registered;
-			const uRegistered = [ ...registered ];
+			const uRegistered = [...registered];
 
 			let blockIndex = -1;
 			// eslint-disable-next-line array-callback-return
-			uRegistered.map( ( bObj, index ) => {
-				if ( bObj.name === id ) {
+			uRegistered.map((bObj, index) => {
+				if (bObj.name === id) {
 					blockIndex = index;
 				}
-			} );
+			});
 
-			if ( blockIndex >= 0 ) {
-				uRegistered[ blockIndex ].active = status;
+			if (blockIndex >= 0) {
+				uRegistered[blockIndex].active = status;
 				state.registered = uRegistered;
 			}
 		},
 	},
 };
 
-const blocksSlice = createSlice( blocksSliceOptions );
+const blocksSlice = createSlice(blocksSliceOptions);
 
 export const { setBlockActiveStatus } = blocksSlice.actions;
 
@@ -50,7 +50,7 @@ export const { setBlockActiveStatus } = blocksSlice.actions;
  * @param {Object} state store state
  * @return {Array} blocks
  */
-export const getBlocks = ( state ) => {
+export const getBlocks = (state) => {
 	return state.blocks.registered;
 };
 
@@ -59,12 +59,8 @@ export const getBlocks = ( state ) => {
  * Get block object by given block type id.
  */
 export const getBlockById = createSelector(
-	[
-		( state ) => state.blocks.registered,
-		( registered, blockId ) => blockId,
-	],
-	( registered, blockId ) =>
-		registered.find( ( { name } ) => name === blockId )
+	[(state) => state.blocks.registered, (registered, blockId) => blockId],
+	(registered, blockId) => registered.find(({ name }) => name === blockId)
 );
 
 /**

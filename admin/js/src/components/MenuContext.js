@@ -6,7 +6,7 @@ import React, { createContext, useEffect, useState } from 'react';
  *
  * @type {React.Context<{}>}
  */
-export const CreatedMenuContext = createContext( {} );
+export const CreatedMenuContext = createContext({});
 
 /**
  * Menu context component.
@@ -18,23 +18,23 @@ export const CreatedMenuContext = createContext( {} );
  * @param {React.ReactNode} props.children     component children
  * @class
  */
-function MenuContext( { children, startupValue } ) {
-	const setFilterValue = ( val ) => {
-		setContextObject( {
+function MenuContext({ children, startupValue }) {
+	const setFilterValue = (val) => {
+		setContextObject({
 			...contextObject,
 			app: { ...contextObject.app, blockFilter: val },
-		} );
+		});
 	};
 
 	startupValue.actions = {
 		setFilterValue,
 	};
 
-	const [ contextObject, setContextObject ] = useState( startupValue );
+	const [contextObject, setContextObject] = useState(startupValue);
 
 	return (
-		<CreatedMenuContext.Provider value={ contextObject }>
-			{ children }
+		<CreatedMenuContext.Provider value={contextObject}>
+			{children}
 		</CreatedMenuContext.Provider>
 	);
 }

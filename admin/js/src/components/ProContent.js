@@ -12,31 +12,31 @@ import withStore from '$HOC/withStore';
  * @param {Object} props           component properties
  * @param {string} props.proBuyUrl url for pro buy page
  */
-function ProContent( { proBuyUrl } ) {
+function ProContent({ proBuyUrl }) {
 	return (
-		<div className={ 'pro-content' }>
+		<div className={'pro-content'}>
 			<ContentPhrase>
-				<AnimationAppear delay={ 100 }>
+				<AnimationAppear delay={100}>
 					<LineWrapper>
 						<TextIndicate>Best</TextIndicate> Blocks Plugin
 					</LineWrapper>
 				</AnimationAppear>
-				<AnimationAppear delay={ 600 }>
+				<AnimationAppear delay={600}>
 					<LineWrapper>
 						Just Got Even <TextIndicate>Better.</TextIndicate>
 					</LineWrapper>
 				</AnimationAppear>
 			</ContentPhrase>
-			<AnimationAppear delay={ 1400 }>
-				<div className={ 'ub-pro-content-main' }>
-					Get{ ' ' }
+			<AnimationAppear delay={1400}>
+				<div className={'ub-pro-content-main'}>
+					Get{' '}
 					<a
-						className={ 'ub-strip-anchor' }
-						href={ proBuyUrl }
+						className={'ub-strip-anchor'}
+						href={proBuyUrl}
 						rel="noreferrer"
 					>
 						<TextIndicate>Ultimate Blocks Pro</TextIndicate>
-					</a>{ ' ' }
+					</a>{' '}
 					Now!
 				</div>
 			</AnimationAppear>
@@ -45,13 +45,13 @@ function ProContent( { proBuyUrl } ) {
 }
 
 // store select mapping
-const selectMapping = ( selector ) => {
+const selectMapping = (selector) => {
 	return {
-		proBuyUrl: selector( getAsset )( 'proBuyUrl' ),
+		proBuyUrl: selector(getAsset)('proBuyUrl'),
 	};
 };
 
 /**
  * @module ProContent
  */
-export default withStore( ProContent, selectMapping );
+export default withStore(ProContent, selectMapping);

@@ -12,7 +12,7 @@ import UpsellModalSettingsMenu from '$Components/UpsellModalSettingsMenu';
  */
 function AdminMenuContainer() {
 	return (
-		<div className={ 'ub-admin-menu-container' }>
+		<div className={'ub-admin-menu-container'}>
 			<UpsellModalSettingsMenu />
 			<MenuHeader />
 			<Content />

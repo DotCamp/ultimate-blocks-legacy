@@ -15,44 +15,44 @@ import ContentNotFoundError from '$AdminInc/err/ContentNotFoundError';
  * @param {string} props.contentId                    content id
  * @param {string} [props.size=BoxContentSize.NORMAL] box content size
  */
-function BoxContentProvider( props ) {
-	const [ contentTitle, setTitle ] = useState( null );
-	const [ mainContent, setContent ] = useState( null );
-	const [ rest, setRest ] = useState( {} );
+function BoxContentProvider(props) {
+	const [contentTitle, setTitle] = useState(null);
+	const [mainContent, setContent] = useState(null);
+	const [rest, setRest] = useState({});
 
 	const { contentId, getCData, ...dataRest } = props;
-	const cData = getCData( contentId );
+	const cData = getCData(contentId);
 
 	/**
 	 * useEffect hook.
 	 */
-	useEffect( () => {
-		if ( cData ) {
+	useEffect(() => {
+		if (cData) {
 			const { title, content } = cData;
-			setTitle( title );
-			setContent( content );
-			setRest( dataRest );
+			setTitle(title);
+			setContent(content);
+			setRest(dataRest);
 		} else {
-			throw new ContentNotFoundError( contentId );
+			throw new ContentNotFoundError(contentId);
 		}
-	}, [] );
+	}, []);
 
 	return (
-		<BoxContent { ...rest } title={ contentTitle } content={ mainContent }>
-			{ props.children }
+		<BoxContent {...rest} title={contentTitle} content={mainContent}>
+			{props.children}
 		</BoxContent>
 	);
 }
 
 // store select mapping
-const selectMapping = ( selector ) => {
+const selectMapping = (selector) => {
 	return {
-		getCData: ( contentId ) =>
-			selector( ( state ) => getContentData( state, contentId ) ),
+		getCData: (contentId) =>
+			selector((state) => getContentData(state, contentId)),
 	};
 };
 
 /**
  * @module BoxContentProvider
  */
-export default withStore( BoxContentProvider, selectMapping );
+export default withStore(BoxContentProvider, selectMapping);
