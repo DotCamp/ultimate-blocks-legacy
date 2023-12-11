@@ -38166,10 +38166,15 @@ function _interopRequireDefault(obj) {
 }
 /**
  * Extensions content component.
- */ function ExtensionsContent(_ref) {
-    var pluginExtensions = _ref.pluginExtensions, setExtensionStatus = _ref.setExtensionStatus, dispatch = _ref.dispatch;
-    var pluginExtensionsNames = (0, _react.useRef)(pluginExtensions.map(function(_ref2) {
-        var name = _ref2.name;
+ *
+ * @param {Object}   props                          Components Props.
+ * @param {Array}    props.pluginExtensions         All extension.
+ * @param {Function} props.setExtensionActiveStatus Set the extension status active or inactive.
+ * @param {Function} props.dispatch                 Function to update store state.
+ */ function ExtensionsContent(props) {
+    var _props$pluginExtensio = props.pluginExtensions, pluginExtensions = _props$pluginExtensio === void 0 ? [] : _props$pluginExtensio, setExtensionStatus = props.setExtensionStatus, dispatch = props.dispatch;
+    var pluginExtensionsNames = (0, _react.useRef)(pluginExtensions.map(function(_ref) {
+        var name = _ref.name;
         return name;
     }));
     /**
@@ -38425,13 +38430,11 @@ function _arrayWithHoles(arr) {
  *
  * @class
  *
- * @param {Object}   props                component properties
+ * @param {Object}   props                    component properties
  * @param {Object}   props.extensions         menu data, will be supplied via HOC
- * @param {Function} props.dispatch       store action dispatch function, will be supplied via HOC
+ * @param {Function} props.dispatch           store action dispatch function, will be supplied via HOC
  * @param {Function} props.setExtensionStatus set a block's active status, will be supplied via HOC
- * @param {boolean}  props.proStatus      plugin pro status, will be supplied via HOC
- * @param {Function} props.showUpsell     set target block type for modal interface
- * @param {Object}   props.blockDemos     block demo urls, will be supplied via HOC
+ * @param {boolean}  props.proStatus          plugin pro status, will be supplied via HOC
  */ function ExtensionsControlContainer(_ref) {
     var ubExtensions = _ref.extensions, setExtensionStatus = _ref.setExtensionStatus, dispatch = _ref.dispatch, proStatus = _ref.proStatus;
     var _useState = (0, _react.useState)(ubExtensions), _useState2 = _slicedToArray(_useState, 2), extensions = _useState2[0], setExtensions = _useState2[1];
@@ -38517,7 +38520,6 @@ exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("456d488fbfd9238"));
 var _i18n = require("62bd3eda9e8e463a");
 var _ToggleControl = _interopRequireDefault(require("901895383efee726"));
-var _withIcon = _interopRequireDefault(require("88a3e2138dbc023c"));
 var _ProExtensionCardTitle = _interopRequireDefault(require("69eb612a469be373"));
 var _ExtensionCardProInfoControl = _interopRequireDefault(require("f96c0f8579c5c3"));
 function _interopRequireDefault(obj) {
@@ -38561,7 +38563,7 @@ function _interopRequireWildcard(e, r) {
  * @param {boolean}       props.status         extension status
  * @param {HTMLElement}   props.iconElement    icon element, will be supplied via HOC
  * @param {Function}      props.onStatusChange callback for status change event
- * @param {boolean}       props.proExtension       extension belongs to pro version
+ * @param {boolean}       props.proExtension   extension belongs to pro version
  * @param {boolean}       props.proStatus      plugin pro status
  * @param {Function}      props.showUpsell     set target extension type for modal interface
  * @param {string | null} [props.demoUrl=null] demo url for extension
@@ -38612,7 +38614,7 @@ function _interopRequireWildcard(e, r) {
  * @module ExtensionControl
  */ var _default = exports["default"] = ExtensionControlCard;
 
-},{"456d488fbfd9238":"21dqq","62bd3eda9e8e463a":"7CyoE","901895383efee726":"a7r96","88a3e2138dbc023c":"l4uaA","69eb612a469be373":"4dZh3","f96c0f8579c5c3":"5HQsZ"}],"4dZh3":[function(require,module,exports) {
+},{"456d488fbfd9238":"21dqq","62bd3eda9e8e463a":"7CyoE","901895383efee726":"a7r96","69eb612a469be373":"4dZh3","f96c0f8579c5c3":"5HQsZ"}],"4dZh3":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -39921,7 +39923,7 @@ function _toPrimitive(input, hint) {
         carry.push(newBlockObject);
         return carry;
     }, []);
-    var _appData$upsells = appData.upsells, proBlocks = _appData$upsells.blocks, proExtensions = _appData$upsells.extensions;
+    var proBlocks = appData.upsells.blocks;
     var proBlockUpsell = prepareProOnlyBlockUpsellData(proBlocks);
     // all blocks available including upsell versions of pro blocks or pro blocks themselves
     var allRegistered = proBlockUpsell.reduce(function(carry, current) {

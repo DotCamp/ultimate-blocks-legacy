@@ -3,7 +3,7 @@
 class Ultimate_Blocks_Extension_Manager{
      public function __construct() {
           require_once dirname(__DIR__) . '/extensions/responsive-control/class-responsive-control.php';
-          $this->enqueue_assets();
+          add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
      }
 
      public function enqueue_assets(){

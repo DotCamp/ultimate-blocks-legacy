@@ -480,8 +480,33 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function on_admin_init() {
 		$this->register_new_blocks();
+		$this->update_new_extensions();
 	}
 
+	/**
+	 * Update Extensions Settings as a Js Global variable.
+	 *
+	 * @return void
+	 * @since    3.0.9
+	 */
+	public function update_new_extensions(){
+		$extensions = $this->extensions();
+		$registered_extensions = get_option( 'ultimate_blocks_extensions', false );
+
+		$new_extensions = array();
+
+		if ( $registered_extensions ) {
+			foreach ( $extensions as $extension ) {
+				if ( ! $this->is_extension_registered( $extension['name'], $registered_extensions ) ) {
+					$new_extensions[] = $extension;
+				}
+			}
+			$registered_extensions = array_merge( $registered_extensions, $new_extensions );
+			update_option( 'ultimate_blocks_extensions', $registered_extensions );
+		} else {
+			update_option( 'ultimate_blocks_extensions', $extensions );
+		}
+	}
 	/**
 	 * Insert Blocks Settings as a Js Global variable.
 	 *
@@ -548,6 +573,25 @@ class Ultimate_Blocks_Admin {
 		return false;
 	}
 
+	/**
+	 * Check extensions is registered.
+	 *
+	 * @param string $name Extension Name.
+	 *
+	 * @return bool
+	 * @since    3.0.9
+	 */
+	protected function is_extension_registered( $name, $registered_extensions ) {
+		$extensions = $registered_extensions;
+
+		foreach ( $extensions as $key => $extension ) {
+			if ( $extension['name'] === $name ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 	/**
 	 * Check block is registered.
 	 *
