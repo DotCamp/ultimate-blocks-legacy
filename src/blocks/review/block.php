@@ -49,7 +49,7 @@ function ub_render_review_block($attributes, $block_content, $block_instance){
     }
     $button_block = !empty($block_instance->parsed_block['innerBlocks']) ? $block_instance->parsed_block['innerBlocks'][0] : array();
     $buttons = isset($button_block['attrs']['buttons']) ? $button_block['attrs']['buttons'] : array();
-    // var_dump($buttons); 
+
     $offers = array();
 
     foreach ($buttons as $button) {
@@ -191,13 +191,7 @@ function ub_render_review_block($attributes, $block_content, $block_instance){
             '</div>
         </div>
         <div class="ub_review_cta_panel">' .
-        ($enableCTA  ? '<div class="ub_review_cta_main">
-            <a href="' . esc_url($callToActionURL) .
-                '" ' . ($ctaOpenInNewTab ? 'target="_blank" ' : '') . 'rel="' . ($ctaNoFollow ? 'nofollow ' : '') . ($ctaIsSponsored ? 'sponsored ': '') . 'noopener noreferrer"' .
-                    ($blockID === '' ? '  style="color: ' . $callToActionForeColor . ';"' : '') . '>
-                <button class="ub_review_cta_btn"' . ($blockID === '' ? ' style="background-color: ' . $callToActionBackColor
-                . '; border-color: ' . $callToActionForeColor . '; color: ' . $callToActionForeColor . ';"' : '') . '>' .
-                    ($callToActionText === '' ? 'Click here' : $callToActionText) . '</button></a> ' . $block_content . '</div>' : '') .
+        ($enableCTA  ? '<div class="ub_review_cta_main">' . $block_content . '</div>' : '') .
                 '</div></div>' . $schema_json_ld
     . '</div>';
 }
