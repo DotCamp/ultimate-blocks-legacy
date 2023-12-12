@@ -25,8 +25,8 @@ if ( ! function_exists( 'get_current_screen' ) ) {
 }
 
 function ub_get_spacing_styles( $attributes, $paddingImportant = false ) {
-	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );
-	$margin = Ultimate_Blocks\includes\get_spacing_css( $attributes['margin'] );
+	$padding = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
+	$margin = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
 
 	$styles = array(
 		'padding-top'         => isset($padding['top']) ? $padding['top'] . ($paddingImportant ? " !important" : "") : "",
