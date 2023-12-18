@@ -8,7 +8,7 @@ Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
- Create Better Content With The Block Editor. Custom Blocks for Bloggers and Content Marketers.
+Create Better Content With The Block Editor. Custom Blocks for Bloggers and Content Marketers.
 
 == Description ==
 
