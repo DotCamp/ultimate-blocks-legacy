@@ -71,7 +71,7 @@ function ub_render_content_toggle_panel_block( $attributes, $content, $block_obj
 			. ( $parentID === '' ? ' style="border-color: ' . $theme . ';"' : '' ) . '>
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'
 			. ( $parentID === '' ? ' style="background-color: ' . $theme . ';"' : '' ) . ( $preventCollapse ? ' aria-disabled="true"' : '' )
-			.  '" aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '" tabindex="0">
+			.  ' aria-controls="ub-content-toggle-panel-' . $index . '-' . $parentID . '" tabindex="0">
                     <' . $titleTag . ' class="' . $classNamePrefix . '-accordion-title ub-content-toggle-title-' . $parentID . '"'
 			. ( $parentID === '' ? ' style="color:' . $titleColor . ';"' : '' ) . '>' . $panelTitle . '</' . $titleTag . '>' .
 			( $toggleIcon === 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' . esc_attr( $toggleLocation ) .
