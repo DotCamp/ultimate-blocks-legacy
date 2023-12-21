@@ -78,7 +78,7 @@ function ub_render_content_toggle_panel_block( $attributes, $content, $block_obj
 											'"><span class="' . $classNamePrefix . '-accordion-state-indicator ' . $icon_class .
 											( $should_collapsed ? '' : ' open' ) . '"></span>
                     </div>' ) .
-			'</div><div role="region" '. 'aria-expanded="'. (json_encode(! $should_collapsed)) .'" class="' . $classNamePrefix . '-accordion-content-wrap' .
+			'</div><div role="region" aria-expanded="'. (json_encode(! $should_collapsed)) .'" class="' . $classNamePrefix . '-accordion-content-wrap' .
 			( $should_collapsed ? ' ub-hide' : '' ) . '" id="ub-content-toggle-panel-' . $index . '-' . $parentID . '">' . $content
 			. '</div></div>';
 }
