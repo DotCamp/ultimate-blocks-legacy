@@ -64,9 +64,27 @@ function ub_render_button_block($attributes){
         .'"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg></span>': '')
         .'<span class="ub-button-block-btn">' . $buttonText . '</span>
     </div></a></div>' : join('', array_map('ub_buttons_parse', $buttons)));
-
-    return '<div class="' . (isset($buttons) && count($buttons) > 0 ? 'ub-buttons' : 'ub-button') . (isset($buttons) && count($buttons) > 0 ? ' align-button-' . ($align === '' ? 'center' : $align) : '')
-    . ' orientation-button-' . $orientation . ($isFlexWrap ? " ub-flex-wrap" : '') . (isset($className) ? ' ' . esc_attr($className) : '') . '" ' .(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>' .$buttonDisplay . '</div>';
+    $classes = array();
+    if(isset($buttons) && count($buttons) > 0){
+        $classes[] = 'ub-buttons';
+        if($align === ''){
+            $classes[] = 'align-button-center';
+        } else{
+            $classes[] = 'align-button-' . $align . '';
+        }
+    } else {
+        $classes[] = 'ub-button';
+    }
+    $classes[] = 'orientation-button-' . $orientation . '';
+    if($isFlexWrap){
+        $classes[] = 'ub-flex-wrap';
+    }
+    $block_attributes = get_block_wrapper_attributes(
+            array(
+                'class' => implode(" ", $classes)
+            )
+    );
+    return '<div '. $block_attributes . ' ' .(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>' .$buttonDisplay . '</div>';
 }
 
 function ub_button_add_frontend_assets() {
