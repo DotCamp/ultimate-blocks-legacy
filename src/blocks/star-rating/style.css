@@ -1,1 +1,1 @@
-.ub-star-outer-container{display:flex}.ub-star-inner-container,.ub-star-container{display:flex;flex-direction:row}.ub-star-rating .ub-review-text{margin-top:20px}.ub-star-inner-container svg{margin-top:initial}
+.ub-star-outer-container{display:flex}.ub-star-inner-container,.ub-star-container{display:flex;flex-direction:row}.ub-star-rating .ub-review-text{margin-top:20px;font-size:var(--ub-star-rating-font-size)}.ub-star-inner-container svg{margin-top:initial}

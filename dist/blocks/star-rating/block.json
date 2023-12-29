@@ -19,6 +19,10 @@
       "type": "number",
       "default": 5
     },
+    "textFontSize": {
+      "type": "string",
+      "default": ""
+    },
     "starSize": {
       "type": "number",
       "default": 20

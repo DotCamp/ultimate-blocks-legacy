@@ -1,6 +1,6 @@
 import { Star } from "./icons";
 
-import { SpacingControl } from "../components";
+import { CustomFontSizePicker, SpacingControl } from "../components";
 import { __ } from "@wordpress/i18n";
 import {
 	InspectorControls,
@@ -80,6 +80,12 @@ export const inspectorControls = (props) => {
 						beforeIcon="star-half"
 					/>
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="typography">
+				<CustomFontSizePicker
+					attrKey="textFontSize"
+					label={__("Text Font Size", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 			<InspectorControls group="styles">
 				<PanelBody title={__("General")} initialOpen={true}>

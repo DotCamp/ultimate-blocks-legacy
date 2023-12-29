@@ -2040,6 +2040,10 @@ $defaultValues = array(
 	),
 	'ub/star-rating-block'          => array(
 		'attributes' => array(
+			'textFontSize'         => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'blockID'         => array(
 				'type'    => 'string',
 				'default' => ''

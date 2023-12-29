@@ -149,6 +149,7 @@ That's it. You're done!
 * FIX: Button block spacing.
 * PRO: FIX: Coupon block spacing.
 * NEW: Option to hide navigation arrow in the Image slider block.
+* NEW: Star Rating block review text font size.
 
 = 3.0.9 =
 
