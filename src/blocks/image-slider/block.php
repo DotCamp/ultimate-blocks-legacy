@@ -28,7 +28,7 @@ function ub_render_image_slider_block($attributes){
         : 'id="ub_image_slider_' . $blockID . '"').
         ' data-swiper-data=\'{"spaceBetween":' . $spaceBetween . ',"slidesPerView":' . $slidesPerView . ',"loop":' . json_encode($wrapsAround) .
             ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . $paginationType . '"'.($paginationType === 'bullets' ? ', "clickable":true' :'') . '}
-            ,"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"},  "keyboard": { "enabled": true },
+            ,' . ($useNavigation ? '"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"},' : '') . ' "keyboard": { "enabled": true },
             "effect": "' . $transition . '"'
             . ($transition === 'fade' ? ',"fadeEffect":{"crossFade": true}' : '')
             . ($transition === 'coverflow' ? ',"coverflowEffect":{"slideShadows":' . json_encode($slideShadows) . ', "rotate": ' . $rotate . ', "stretch": ' . $stretch . ', "depth": ' . $depth . ', "modifier": ' . $modifier . '}' : '')
@@ -38,7 +38,7 @@ function ub_render_image_slider_block($attributes){
             . (!$isDraggable ? ',"simulateTouch":false' : '') . '}\'>' .
         '<div class="swiper-wrapper">' . $gallery
         . '</div><div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div> <div class="swiper-button-next"></div>
+       ' . ($useNavigation ? '<div class="swiper-button-prev"></div> <div class="swiper-button-next"></div>' : "") . '
         </div>';
 }
 

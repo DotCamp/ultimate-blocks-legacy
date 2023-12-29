@@ -144,6 +144,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.0 =
+* FIX: Button block spacing.
+* NEW: Option to hide navigation arrow in the Image slider block.
+
 = 3.0.9 =
 
 * FIX: Counter block hyperlink converting in html.

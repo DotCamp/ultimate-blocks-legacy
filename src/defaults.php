@@ -1220,6 +1220,10 @@ $defaultValues = array(
 				'type'    => 'boolean',
 				'default' => true
 			),
+			'useNavigation'    => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
 			'usePagination'    => array(
 				'type'    => 'boolean',
 				'default' => true

@@ -30,7 +30,7 @@ export function Slider(props) {
 
 	return (
 		<Swiper
-			navigation
+			navigation={props.useNavigation}
 			{...customProps}
 			onSlideChange={() => {
 				if (currentSwiper) {

@@ -67,6 +67,10 @@
       "type": "boolean",
       "default": true
     },
+    "useNavigation": {
+      "type": "boolean",
+      "default": true
+    },
     "paginationType": {
       "type": "string",
       "default": ""

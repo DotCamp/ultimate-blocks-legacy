@@ -7,16 +7,16 @@ Array.prototype.slice
 		);
 
 		instance
-			.getElementsByClassName("swiper-button-next")[0]
-			.addEventListener("keydown", (e) => {
+			?.getElementsByClassName("swiper-button-next")[0]
+			?.addEventListener("keydown", (e) => {
 				if (e.key === " ") {
 					e.preventDefault();
 				}
 			});
 
 		instance
-			.getElementsByClassName("swiper-button-prev")[0]
-			.addEventListener("keydown", (e) => {
+			?.getElementsByClassName("swiper-button-prev")[0]
+			?.addEventListener("keydown", (e) => {
 				if (e.key === " ") {
 					e.preventDefault();
 				}

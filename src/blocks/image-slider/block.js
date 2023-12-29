@@ -164,6 +164,7 @@ function ImageSliderMain(props) {
 			shadowScale,
 			slidesPerView,
 			spaceBetween,
+			useNavigation,
 		},
 		setAttributes,
 		isSelected,
@@ -286,6 +287,14 @@ function ImageSliderMain(props) {
 								checked={isDraggable}
 								onChange={() => {
 									setAttributes({ isDraggable: !isDraggable });
+									setComponentKey(componentKey + 1);
+								}}
+							/>
+							<ToggleControl
+								label={__("Use Navigation Arrows", "ultimate-blocks")}
+								checked={useNavigation}
+								onChange={() => {
+									setAttributes({ useNavigation: !useNavigation });
 									setComponentKey(componentKey + 1);
 								}}
 							/>
@@ -509,6 +518,7 @@ function ImageSliderMain(props) {
 							draggable={isDraggable}
 							wrapAround={wrapsAround}
 							pageDots={showPageDots}
+							useNavigation={useNavigation}
 							paginationType={usePagination ? paginationType : "none"}
 							autoplay={autoplays ? autoplayDuration : 0}
 							transition={transition}
