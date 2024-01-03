@@ -128,16 +128,16 @@ function ub_render_countdown_block($attributes){
     else{
         $selectedFormat = $odometerFormat;
     }
-    $styles = ub_countdown_styles($attributes);
+
     if($timeLeft > 0){
-        return '<div style="' . $styles . '" '.($blockID === ''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="ub-countdown ub-countdown-wrapper'.
+        return '<div style="' . $styles . '" '.($blockID === ''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="wp-block-ub-countdown ub-countdown ub-countdown-wrapper'.
                 (isset($className)?' '.esc_attr($className):'').
                 '" data-expirymessage="'.$expiryMessage.'" data-enddate="'.$endDate
                 .'" data-largestUnit="'.$largestUnit.'" data-smallestunit="'.$smallestUnit.'">
             '.$selectedFormat
             .'</div>';
     }
-    else return '<div class="ub-countdown'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
+    else return '<div class="wp-block-ub-count-down ub-countdown'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
         ($blockID === ''?'style="text-align:'.$messageAlign.';' :'id="ub_countdown_'.$blockID.'"').'>'.$expiryMessage.'</div>';
 }
 

@@ -3,7 +3,7 @@
 function ub_render_testimonial_block($attributes){
     extract($attributes);
     return '<div>
-    <div class="ub_testimonial'.(isset($className) ? ' ' . esc_attr($className) : '').
+    <div class="wp-block-ub-testimonial ub_testimonial'.(isset($className) ? ' ' . esc_attr($className) : '').
             '"'.($blockID === '' ? 'style= "background-color: ' . $backgroundColor . '; color: ' . $textColor . ';"'
                 :' id="ub_testimonial_' . $blockID . '"') . '>
         <div class="ub_testimonial_img">

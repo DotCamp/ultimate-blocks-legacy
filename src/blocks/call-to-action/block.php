@@ -2,8 +2,14 @@
 
 function ub_render_call_to_action_block($attributes){
     extract($attributes);
-    return '<div class="ub_call_to_action' . (isset($className) ? ' ' . esc_attr($className) : '') .
-                '"' . ($blockID !== '' ? ' id="ub_call_to_action_' . $blockID . '"' :
+    $classes = array( 'ub_call_to_action' );
+
+    $block_wrapper_attributes = get_block_wrapper_attributes(
+		array(
+			'class' => implode(' ', $classes),
+		)
+    );
+    return '<div ' . $block_wrapper_attributes . ' ' . ($blockID !== '' ? ' id="ub_call_to_action_' . $blockID . '"' :
                 'style="background-color: ' . $ctaBackgroundColor . '; border-width: ' . $ctaBorderSize . 'px; border-color: ' . $ctaBorderColor . '"' ) . '>
                 <div class="ub_call_to_action_headline">
                     <' . ($useHeadingTag ? $selectedHeadingTag : 'p') . ' class="ub_call_to_action_headline_text"' . ($blockID === '' ?

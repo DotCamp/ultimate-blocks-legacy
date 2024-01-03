@@ -227,7 +227,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
         wp_reset_postdata();
 
         /* Build the block classes */
-        $class = "ub-block-post-grid align". $attributes['wrapAlignment'];
+        $class = "wp-block-ub-post-grid ub-block-post-grid align". $attributes['wrapAlignment'];
 
         if ( isset( $attributes['className'] ) ) {
             $class .= ' ' . $attributes['className'];

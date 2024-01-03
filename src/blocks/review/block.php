@@ -170,7 +170,7 @@ function ub_render_review_block($attributes, $block_content, $block_instance){
 
 	$schema_json_ld = ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">' .$schema_json_content . '</script>')) : '');
 
-    return '<div class="ub_review_block' . (isset($className) ? ' ' . esc_attr($className) : '') .
+    return '<div class="wp-block-ub-review ub_review_block' . (isset($className) ? ' ' . esc_attr($className) : '') .
                 '" id="ub_review_' . $blockID . '">
         <p class="ub_review_item_name"' . ($blockID === '' ? ' style="text-align: ' . $titleAlign . ';"' : '') . '>' .
             $itemName . '</p><p class="ub_review_author_name"' .

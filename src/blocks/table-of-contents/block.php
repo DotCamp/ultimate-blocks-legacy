@@ -104,7 +104,7 @@ function ub_render_table_of_contents_block($attributes){
         $targetType = '.';
     }
 
-    return '<div class="ub_table-of-contents' . (isset($className) ? ' ' . esc_attr($className) : '')
+    return '<div class="wp-block-ub-table-of-contents-block ub_table-of-contents' . (isset($className) ? ' ' . esc_attr($className) : '')
                 . (!$showList ? ' ub_table-of-contents-collapsed' : '' ) .
                 '" data-showtext="' . ($showText ?: __('show', 'ultimate-blocks') ) . '" data-hidetext="' . ($hideText ?: __('hide', 'ultimate-blocks'))
                 . '" data-scrolltype="' . $scrollOption . '"' . ($scrollOption === 'fixedamount' ? ' data-scrollamount="' . $scrollOffset . '"' : '')

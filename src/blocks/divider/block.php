@@ -2,7 +2,7 @@
 
 function ub_render_divider_block($attributes){
     extract($attributes);
-    return '<div id="ub_divider_' . $blockID.'"><hr class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
+    return '<div id="ub_divider_' . $blockID.'" class="wp-block-ub-divider"><hr class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
     ($blockID === '' ? 'style="border-top: ' . $borderSize . 'px ' . $borderStyle . ' ' . $borderColor . '; margin-top: ' . $borderHeight . 'px; margin-bottom: ' . $borderHeight . 'px;"' :'') . '></hr></div>';
 }
 

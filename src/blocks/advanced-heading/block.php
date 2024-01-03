@@ -2,7 +2,16 @@
 
 function ub_render_advanced_heading_block($attributes){
     extract($attributes);
-	return '<' . $level . ' class="ub_advanced_heading" id="' . ($anchor ?: 'ub-advanced-heading-'. $blockID) . '" data-blockid="' . $blockID . '">' . $content . '</' . $level . '>';
+    $classes = array('ub_advanced_heading');
+    $ids = array();
+    $ids[] = 'ub-advanced-heading-'. $blockID;
+    $block_wrapper_attributes = get_block_wrapper_attributes(
+		array(
+			'class' => implode(' ', $classes),
+			'id'    => implode(' ', $ids)
+		)
+    );
+	return '<' . $level . ' ' . $block_wrapper_attributes . ' data-blockid="' . $blockID . '">' . $content . '</' . $level . '>';
 }
 
 function ub_register_advanced_heading_block() {

@@ -2,9 +2,17 @@
 function ub_render_advanced_video_block($attributes){
     require_once dirname(dirname(__DIR__)) . '/common.php';
     extract($attributes);
+    $classes = array( 'ub-advanced-video-container' );
+    $ids = array( 'ub-advanced-video-'.$blockID.'' );
 
+    $block_wrapper_attributes = get_block_wrapper_attributes(
+		array(
+			'class' => implode(' ', $classes),
+			'id'    => implode(' ', $ids)
+		)
+    );
     //enclosing div needed to prevent embedded video from trying to use the full height of the screen
-    return '<div id="ub-advanced-video-'.$blockID.'" class="ub-advanced-video-container">' .
+    return '<div ' . $block_wrapper_attributes . ' >' .
 
     (!in_array($videoSource, ['local', 'unknown', 'videopress']) && $thumbnail !== '' ?
     ('<div class="ub-advanced-video-thumbnail" style="height:' . $height .'px; width:' . $width . '%;">' .

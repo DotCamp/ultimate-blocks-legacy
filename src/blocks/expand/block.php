@@ -37,7 +37,7 @@ function ub_render_expand_block($attributes, $content){
             $scrollTargetPrefix = '';
     }
 
-    return '<div class="ub-expand '.(isset($className) ? ' ' . esc_attr($className) : '')
+    return '<div class="wp-block-ub-expand ub-expand '.(isset($className) ? ' ' . esc_attr($className) : '')
     
     .'" id="ub-expand-'.$blockID.'"' .  ($allowScroll ? (' data-scroll-type="' . $scrollOption . '"' . ($scrollOption === 'fixedamount' ? ' data-scroll-amount="' . $scrollOffset . '"' : '')
     . ($scrollOption === 'namedelement' ? ' data-scroll-target="' . $scrollTargetPrefix . $scrollTarget . '"' : '')) : '' ) . '>'.$content.'</div>';

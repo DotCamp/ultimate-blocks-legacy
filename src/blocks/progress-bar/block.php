@@ -120,7 +120,7 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
     $block_attributes = isset($block->parsed_block["attrs"]) ? $block->parsed_block["attrs"] : $attributes;
     $block_styles = ub_progress_bar_styles($block_attributes);
     
-    return '<div style="' . $block_styles . '" class="ub_progress-bar' . (isset($className) ? ' ' . esc_attr($className) : '').
+    return '<div style="' . $block_styles . '" class="wp-block-ub-progress-bar ub_progress-bar' . (isset($className) ? ' ' . esc_attr($className) : '').
             '"' . ($blockID === '' ? '' : ' id="ub-progress-bar-' . $blockID . '"') . '>
                 '. ( $is_style_circle || $is_style_half_circle ? $detail_text : "" ) . $chosenProgressBar
         . '</div>';

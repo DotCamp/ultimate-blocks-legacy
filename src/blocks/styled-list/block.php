@@ -76,7 +76,7 @@ function ub_render_styled_list_block($attributes, $contents){
 
     }
     else{
-        return '<div class="ub_styled_list ' . (isset($className) ? ' ' . esc_attr($className) : '') .'"'
+        return '<div class="wp-block-ub-styled-list ub_styled_list ' . (isset($className) ? ' ' . esc_attr($className) : '') .'"'
         . ($blockID === '' ? '' : ' id="ub_styled_list-' . $blockID . '"').
         '><ul class="fa-ul">' . $listItems . '</ul></div>';
     }

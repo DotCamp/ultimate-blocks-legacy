@@ -269,7 +269,7 @@ function ub_render_how_to_block($attributes){
     . $stepsCode . ',"yield": "' . str_replace("\'", "'", wp_filter_nohtml_kses($howToYield)) . '",
     "image": "' . $finalImageURL . '"' . '}</script>';
 
-    return '<div class="ub_howto" id="ub_howto_' . $blockID . '"><' . $firstLevelTag . '>'
+    return '<div class="wp-block-ub-how-to ub_howto" id="ub_howto_' . $blockID . '"><' . $firstLevelTag . '>'
                 . $title . '</' . $firstLevelTag . '>' . ub_convert_to_paragraphs($introduction) . $header . 
                 ($advancedMode ? ($videoURL === '' ? '' : $videoEmbedCode) 
                 . '<p>' . $costDisplayText . $costDisplay . '</p>'

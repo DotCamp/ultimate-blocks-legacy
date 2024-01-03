@@ -40,11 +40,11 @@ function ub_render_click_to_tweet_block( $attributes ) {
 
     $output = '';
     if($blockID === ''){
-        $output .= sprintf('<div class="ub_click_to_tweet%1$s" style="border-color: %2$s;">', (isset($className) ? ' ' . esc_attr($className) : ''), $borderColor );
+        $output .= sprintf('<div class="wp-block-ub-click-to-tweet ub_click_to_tweet%1$s" style="border-color: %2$s;">', (isset($className) ? ' ' . esc_attr($className) : ''), $borderColor );
         $output .= sprintf( '<div class="ub_tweet" style="font-size: %1$spx; color: %2$s">', $tweetFontSize, $tweetColor );
     }
     else{
-        $output .= sprintf('<div class="ub_click_to_tweet%1$s" id="%2$s">', (isset($className) ? ' ' . esc_attr($className) : ''), esc_attr('ub_click_to_tweet_' . $blockID ));
+        $output .= sprintf('<div class="wp-block-ub-click-to-tweet ub_click_to_tweet%1$s" id="%2$s">', (isset($className) ? ' ' . esc_attr($className) : ''), esc_attr('ub_click_to_tweet_' . $blockID ));
         $output .= sprintf( '<div class="ub_tweet">');
     }
 

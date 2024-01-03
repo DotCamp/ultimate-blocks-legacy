@@ -99,7 +99,7 @@ function ub_render_styled_box_block($attributes, $content){
         $renderedBlock = $content;
     }
 
-    return '<div class="ub-styled-box ub-'.$mode.'-box'.(isset($className) ? ' ' . esc_attr($className) : '')
+    return '<div class="wp-block-ub-styled-box ub-styled-box ub-'.$mode.'-box'.(isset($className) ? ' ' . esc_attr($className) : '')
             .'" id="ub-styled-box-'.$blockID.'">'.
                 $renderedBlock.'</div>';
 }

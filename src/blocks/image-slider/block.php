@@ -23,7 +23,7 @@ function ub_render_image_slider_block($attributes){
             . ($captionArray[$key]['link'] === '' ? '' : '</a>') . ' </figcaption></figure>';
     }
 
-    return '<div class="ub_image_slider swiper-container' . (isset($className) ? ' ' . esc_attr($className) : '') .
+    return '<div class="wp-block-ub-image-slider ub_image_slider swiper-container' . (isset($className) ? ' ' . esc_attr($className) : '') .
         '" ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? $sliderHeight : 200) . 'px;"'
         : 'id="ub_image_slider_' . $blockID . '"').
         ' data-swiper-data=\'{"spaceBetween":' . $spaceBetween . ',"slidesPerView":' . $slidesPerView . ',"loop":' . json_encode($wrapsAround) .

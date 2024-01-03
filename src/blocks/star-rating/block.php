@@ -17,7 +17,7 @@ function ub_render_star_rating_block($attributes){
         }, $stars);
     }
 
-    return '<div class="ub-star-rating' . (isset($className) ? ' ' . esc_attr($className) : '') .
+    return '<div class="wp-block-ub-star-rating ub-star-rating' . (isset($className) ? ' ' . esc_attr($className) : '') .
             '"' . ($blockID === '' ? '' : ' id="ub-star-rating-' . $blockID . '"') . '>
                 <div class="ub-star-outer-container"' .
                     ($blockID === '' ? '  style="justify-content:' . ($starAlign === 'center' ? 'center' :
