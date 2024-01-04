@@ -2,7 +2,8 @@ import { DEFAULT_ASPECT_RATIO_OPTIONS, convertFromSeconds } from "../../common";
 import { get, isEmpty } from "lodash";
 import { useState, useEffect } from "react";
 import { SpacingControl, UBSelectControl } from "../components";
-import { useDispatch, useSelect } from "@wordpress/data";
+import { useDispatch, useSelect, select } from "@wordpress/data";
+import { store as coreStore } from "@wordpress/core-data";
 import { getStyles } from "./get-styles";
 import AdvancedVideoPlaceholder from "./placeholder";
 import AdvancedVideoBlockControls from "./block-controls";
@@ -441,6 +442,10 @@ export function AdvancedVideoBlock(props) {
 			);
 
 			const facebookVideoMatch = facebookVideoRegex.exec(videoURL);
+			const tiktokMatch =
+				/^(?:https?:\/\/)?(?:www\.)?tiktok\.com\/(?:\w+\/)?@[\w.-]+\/video\/\d+/g.exec(
+					videoURL
+				);
 
 			if (youtubeMatch) {
 				fetch(
@@ -634,6 +639,29 @@ export function AdvancedVideoBlock(props) {
 					videoSource: "facebook",
 					preserveAspectRatio: false,
 				});
+			} else if (tiktokMatch) {
+				fetch(`https://www.tiktok.com/oembed?url=${tiktokMatch[0]}`)
+					.then((response) => {
+						if (response.ok) {
+							response.json().then((data) => {
+								const newWidth = Math.min(600, data.width);
+								const newHeight = Math.round(
+									(data.height * newWidth) / data.width
+								);
+								setAttributes({
+									url: tiktokMatch[0],
+									videoEmbedCode: data.html,
+									videoSource: "tiktok",
+									height: newHeight,
+									width: newWidth,
+								});
+							});
+						}
+					})
+					.catch((err) => {
+						console.log("tiktok input error");
+						console.log(err);
+					});
 			} else {
 				console.log(
 					"site not supported. presume it's a direct link to a video"
