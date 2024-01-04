@@ -1130,13 +1130,13 @@ function ub_include_block_attribute_css() {
 					$styles 		   = ub_get_spacing_styles($attributes);
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title > .wp-block-ub-tabbed-content-tab-title-wrap, ' .
-										 $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title > .wp-block-ub-tabbed-content-tab-title-vertical-wrap{' . PHP_EOL .
+										 $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title-vertical-tab > .wp-block-ub-tabbed-content-tab-title-vertical-wrap{' . PHP_EOL .
 										 ( $attributes['tabStyle'] === 'underline' ? '' : 'background-color: ' . ( $attributes['normalColor'] ?: 'inherit' ) . ';' . PHP_EOL ) .
 										 ( ( $attributes['tabStyle'] === 'tabs' ? 'border-color: lightgrey;' : 'border: none;' ) . PHP_EOL ) .
 										 'color: ' . ( $attributes['normalTitleColor'] ?: 'inherit' ) . ';' . PHP_EOL .
 										 '}' . PHP_EOL .
 										 $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title > .wp-block-ub-tabbed-content-tab-title-wrap.active, ' .
-										 $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title > .wp-block-ub-tabbed-content-tab-title-vertical-wrap.active,' .
+										 $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title-vertical-tab > .wp-block-ub-tabbed-content-tab-title-vertical-wrap.active,' .
 										 $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title > .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
 										 ( $attributes['tabStyle'] === 'underline' ? 'border-bottom: 5px solid ' . $attributes['titleColor'] . ';' . PHP_EOL :
 												 'background-color: ' . $attributes['theme'] . ';' . PHP_EOL ) .
