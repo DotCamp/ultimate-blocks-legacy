@@ -1156,6 +1156,10 @@ $defaultValues = array(
 	),
 	'ub/image-slider'               => array(
 		'attributes' => array(
+			'align'          => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'blockID'          => array(
 				'type'    => 'string',
 				'default' => ''

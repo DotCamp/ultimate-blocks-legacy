@@ -22,9 +22,17 @@ function ub_render_image_slider_block($attributes){
             . $captionArray[$key]['text']
             . ($captionArray[$key]['link'] === '' ? '' : '</a>') . ' </figcaption></figure>';
     }
+    $classes = array( 'ub_image_slider', 'swiper-container' );
+    if( !empty($align) ){
+        $classes[] = 'align' . $align;
+    }
 
-    return '<div class="wp-block-ub-image-slider ub_image_slider swiper-container' . (isset($className) ? ' ' . esc_attr($className) : '') .
-        '" ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? $sliderHeight : 200) . 'px;"'
+    $wrapper_attributes = get_block_wrapper_attributes(
+        array(
+            'class' => implode(' ', $classes)
+        )
+    );
+    return '<div ' . $wrapper_attributes .  ' ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? $sliderHeight : 200) . 'px;"'
         : 'id="ub_image_slider_' . $blockID . '"').
         ' data-swiper-data=\'{"spaceBetween":' . $spaceBetween . ',"slidesPerView":' . $slidesPerView . ',"loop":' . json_encode($wrapsAround) .
             ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . $paginationType . '"'.($paginationType === 'bullets' ? ', "clickable":true' :'') . '}

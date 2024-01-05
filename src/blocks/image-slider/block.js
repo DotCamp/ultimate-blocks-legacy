@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import icon, { editGallery } from "./icon";
 
 import { Slider } from "./components";
@@ -18,6 +19,7 @@ import {
 	mediaUpload,
 	RichText,
 	useBlockProps,
+	BlockAlignmentToolbar,
 } from "@wordpress/block-editor";
 import {
 	Icon,
@@ -165,6 +167,7 @@ function ImageSliderMain(props) {
 			slidesPerView,
 			spaceBetween,
 			useNavigation,
+			align,
 		},
 		setAttributes,
 		isSelected,
@@ -201,9 +204,13 @@ function ImageSliderMain(props) {
 	if (paginationType !== "" && componentKey === 0) {
 		setComponentKey(componentKey + 1);
 	}
+	let classes = ["ub_image_slider"];
+	if (!isEmpty(align)) {
+		classes.push("align" + align);
+	}
 	const blockProps = useBlockProps({
 		id: `ub_image_slider_${blockID}`,
-		className: "ub_image_slider",
+		className: classes.join(" "),
 		style: {
 			minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
 			...getStyles(props.attributes),
@@ -213,6 +220,11 @@ function ImageSliderMain(props) {
 		<>
 			{isSelected && (
 				<BlockControls>
+					<BlockAlignmentToolbar
+						value={align}
+						controls={["full", "wide"]}
+						onChange={(newAlign) => setAttributes({ align: newAlign })}
+					/>
 					{imageArray.length > 0 && (
 						<ToolbarGroup>
 							<MediaUpload
