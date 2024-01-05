@@ -149,6 +149,8 @@ That's it. You're done!
 * NEW: Tiktok url support for advanced video block.
 * FIX: Add wp-block block on frontend in all block.
 * PRO: FIX: Icon not showing on frontend in the tabbed content vertical tab.
+* PRO: FIX: Display Author not hiding the author in editor in the post grid block.
+
 
 = 3.1.0 =
 
