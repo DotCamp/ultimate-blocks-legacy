@@ -152,7 +152,7 @@ That's it. You're done!
 * FIX: Progress bar inside percentage position not working.
 * PRO: FIX: Icon not showing on frontend in the tabbed content vertical tab.
 * PRO: FIX: Display Author not hiding the author in editor in the post grid block.
-
+* PRO: FIX: Use Content toggle panel in table of contents block.
 
 = 3.1.0 =
 
