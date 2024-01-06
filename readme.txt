@@ -149,6 +149,7 @@ That's it. You're done!
 * NEW: Align full option in image slider block.
 * NEW: Tiktok url support for advanced video block.
 * FIX: Add wp-block block on frontend in all block.
+* FIX: Progress bar inside percentage position not working.
 * PRO: FIX: Icon not showing on frontend in the tabbed content vertical tab.
 * PRO: FIX: Display Author not hiding the author in editor in the post grid block.
 

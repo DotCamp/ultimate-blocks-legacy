@@ -45,9 +45,16 @@
 				.ub_progress-bar-label {
 					position: absolute;
 					top: 50%;
-					font-size: 1.5px;
-					line-height: 1.2;
+					font-size: var(--ub-progress-bar-label-font-size);
+					line-height: 1;
 					transform: translate(0%, -50%);
+					display: flex;
+					justify-content: flex-end;
+					align-items: center;
+					p {
+						margin: 0;
+						line-height: 5;
+					}
 				}
 			}
 			.ub_progress-bar-line {

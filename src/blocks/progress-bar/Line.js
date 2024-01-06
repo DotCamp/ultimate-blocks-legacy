@@ -129,7 +129,7 @@ export default function Line(props) {
 								color: labelColor || "inherit",
 							}}
 						>
-							{percent}%
+							<p>{percent}%</p>
 						</div>
 					</foreignObject>
 				)}

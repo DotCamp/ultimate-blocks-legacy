@@ -24,6 +24,7 @@ export function getStyles(attributes) {
 		"--ub-progress-bar-margin-right": marginObj?.right,
 		"--ub-progress-bar-margin-bottom": marginObj?.bottom,
 		"--ub-progress-bar-margin-left": marginObj?.left,
+		"--ub-progress-bar-label-font-size": attributes["barThickness"] + 5 + "%",
 	};
 
 	return omitBy(styles, (value) => {
