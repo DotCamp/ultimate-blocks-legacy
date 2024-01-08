@@ -16,7 +16,7 @@ import { PanelColorSettings, useBlockProps } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-import { InspectorControls, ColorPalette } from "@wordpress/blockEditor";
+import { InspectorControls, HeightControl } from "@wordpress/block-editor";
 import metadata from "./block.json";
 import {
 	PanelBody,
@@ -27,8 +27,9 @@ import {
 	ButtonGroup,
 } from "@wordpress/components";
 import { getStyles } from "./get-styles";
-import { SpacingControl } from "../components";
+import { CustomToggleGroupControl, SpacingControl } from "../components";
 import { withSelect } from "@wordpress/data";
+import { AVAILABLE_JUSTIFICATIONS } from "../../common";
 
 const attributes = {
 	blockID: {
@@ -84,6 +85,8 @@ function DividerBlock(props) {
 			borderHeight,
 			width,
 			alignment,
+			orientation,
+			lineHeight,
 		},
 		isSelected,
 		setAttributes,
@@ -92,7 +95,9 @@ function DividerBlock(props) {
 		getBlock,
 		getClientIdsWithDescendants,
 	} = props;
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: `ub-divider-orientation-${orientation}`,
+	});
 	useEffect(() => {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
@@ -102,6 +107,18 @@ function DividerBlock(props) {
 		setAttributes({ blockID: block.clientId });
 	}, [block.clientId]);
 	const styles = getStyles(props.attributes);
+	const borderName = orientation === "horizontal" ? "borderTop" : "borderLeft";
+	const dividerStyle =
+		orientation === "horizontal"
+			? {
+					marginTop: borderHeight + "px",
+					marginBottom: borderHeight + "px",
+					width: width + "%",
+			  }
+			: {
+					width: "fit-content",
+					height: lineHeight,
+			  };
 	return (
 		<div {...blockProps}>
 			{isSelected && (
@@ -114,45 +131,71 @@ function DividerBlock(props) {
 								onChange={(value) => setAttributes({ borderSize: value })}
 								min={1}
 								max={20}
+								resetFallbackValue={2}
 								beforeIcon="minus"
 								allowReset
 							/>
 
-							<RangeControl
-								label={__("Height")}
-								value={borderHeight}
-								onChange={(value) => setAttributes({ borderHeight: value })}
-								min={10}
-								max={200}
-								beforeIcon="minus"
-								allowReset
+							{orientation === "horizontal" && (
+								<>
+									<RangeControl
+										label={__("Height")}
+										value={borderHeight}
+										onChange={(value) => setAttributes({ borderHeight: value })}
+										min={10}
+										max={200}
+										resetFallbackValue={20}
+										beforeIcon="minus"
+										allowReset
+									/>
+									<RangeControl
+										label={__("Width")}
+										value={width}
+										onChange={(value) => setAttributes({ width: value })}
+										min={0}
+										max={100}
+										resetFallbackValue={100}
+										allowReset
+									/>
+								</>
+							)}
+							{orientation === "vertical" && (
+								<>
+									<HeightControl
+										label={__("Line Height")}
+										value={lineHeight}
+										onChange={(value) => setAttributes({ lineHeight: value })}
+										allowReset
+									/>
+									<br></br>
+								</>
+							)}
+							<CustomToggleGroupControl
+								isAdaptiveWidth
+								options={[
+									{
+										label: __("Horizontal", "ultimate-blocks"),
+										value: "horizontal",
+									},
+									{
+										label: __("Vertical", "ultimate-blocks"),
+										value: "vertical",
+									},
+								]}
+								attributeKey="orientation"
+								label={__("Orientation", "ultimate-blocks")}
 							/>
-							<RangeControl
-								label={__("Width")}
-								value={width}
-								onChange={(value) => setAttributes({ width: value })}
-								min={0}
-								max={100}
-								allowReset
-							/>
-							<PanelRow>
-								<p>{__("Alignment")}</p>
-								{width < 100 && (
-									<ButtonGroup>
-										{["left", "center", "right"].map((a) => (
-											<Button
-												icon={`align-${a}`}
-												isPressed={alignment === a}
-												onClick={() =>
-													setAttributes({
-														alignment: a,
-													})
-												}
-											/>
-										))}
-									</ButtonGroup>
-								)}
-							</PanelRow>
+							{(width < 100 || orientation === "vertical") && (
+								<CustomToggleGroupControl
+									isAdaptiveWidth
+									options={AVAILABLE_JUSTIFICATIONS.slice(
+										0,
+										AVAILABLE_JUSTIFICATIONS.length - 1
+									)}
+									attributeKey="alignment"
+									label={__("Alignment", "ultimate-blocks")}
+								/>
+							)}
 						</PanelBody>
 					</InspectorControls>
 					<InspectorControls group="styles">
@@ -223,10 +266,8 @@ function DividerBlock(props) {
 					className="ub_divider"
 					style={Object.assign(
 						{
-							borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
-							marginTop: borderHeight + "px",
-							marginBottom: borderHeight + "px",
-							width: width + "%",
+							[borderName]: `${borderSize}px ${borderStyle} ${borderColor}`,
+							...dividerStyle,
 						},
 						alignment === "left"
 							? { marginLeft: "0" }

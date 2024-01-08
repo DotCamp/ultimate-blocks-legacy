@@ -2,8 +2,11 @@
 
 function ub_render_divider_block($attributes){
     extract($attributes);
-    return '<div id="ub_divider_' . $blockID.'" class="wp-block-ub-divider"><hr class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
-    ($blockID === '' ? 'style="border-top: ' . $borderSize . 'px ' . $borderStyle . ' ' . $borderColor . '; margin-top: ' . $borderHeight . 'px; margin-bottom: ' . $borderHeight . 'px;"' :'') . '></hr></div>';
+    $divider_style = $orientation === 'horizontal' ?
+        'margin-top: ' . $borderHeight . 'px; margin-bottom: ' . $borderHeight . 'px;"' :
+        'width:fit-content; height:'. $lineHeight .'';
+    return '<div id="ub_divider_' . $blockID.'" class="wp-block-ub-divider ub-divider-orientation-'. $orientation .'"><hr class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
+    ($blockID === '' ? 'style="'.($orientation === 'horizontal' ? 'border-top' : 'border-left').': ' . $borderSize . 'px ' . $borderStyle . ' ' . $borderColor . ';'. $divider_style .'' :'') . '></hr></div>';
 }
 
 function ub_register_divider_block(){

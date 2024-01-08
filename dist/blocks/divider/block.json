@@ -11,6 +11,14 @@
     "Ultimate Blocks"
   ],
   "attributes": {
+    "lineHeight": {
+      "type": "string",
+      "default": "300px"
+    },
+    "orientation": {
+      "type": "string",
+      "default": "horizontal"
+    },
     "blockID": {
       "type": "string",
       "default": ""

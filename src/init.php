@@ -604,12 +604,16 @@ function ub_include_block_attribute_css() {
 				case 'ub/divider':
 					$prefix = '#ub_divider_' . $attributes['blockID'];
 					$styles = ub_get_spacing_styles($attributes);
+					$orientation = isset($attributes['orientation']) ? $attributes['orientation'] : 'horizontal';
+					$divider_style = $orientation === 'horizontal' ?
+						 'margin-top: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
+						'margin-bottom: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
+						'width: ' . $attributes['width'] . '%;' . PHP_EOL :
+						'width:fit-content; height:'. $attributes['lineHeight'] .';';
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					$blockStylesheets .= $prefix . ' .ub_divider{' . PHP_EOL .
-										 'border-top: ' . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] . ';' . PHP_EOL .
-										 'margin-top: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
-										 'margin-bottom: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
-										 'width: ' . $attributes['width'] . '%;' . PHP_EOL;
+										($orientation === 'horizontal' ? 'border-top:' : 'border-left:') . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] . ';' . PHP_EOL . 
+										$divider_style;
 
 					if ( $attributes['alignment'] !== 'center' ) {
 						$blockStylesheets .= 'margin-' . $attributes['alignment'] . ': 0 !important;' . PHP_EOL;

@@ -727,6 +727,14 @@ $defaultValues = array(
 	),
 	'ub/divider'                    => array(
 		'attributes' => array(
+			'lineHeight'      => array(
+				'type'    => 'string',
+				'default' => '300px'
+			),
+			'orientation'      => array(
+				'type'    => 'string',
+				'default' => 'horizontal'
+			),
 			'blockID'      => array(
 				'type'    => 'string',
 				'default' => ''

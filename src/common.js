@@ -122,22 +122,22 @@ export const AVAILABLE_JUSTIFICATIONS = [
 	{
 		value: "left",
 		icon: justifyLeft,
-		label: __("Justify items left", "ultimate-blocks"),
+		label: __("Left", "ultimate-blocks"),
 	},
 	{
 		value: "center",
 		icon: justifyCenter,
-		label: __("Justify items center", "ultimate-blocks"),
+		label: __("Center", "ultimate-blocks"),
 	},
 	{
 		value: "right",
 		icon: justifyRight,
-		label: __("Justify items right", "ultimate-blocks"),
+		label: __("Right", "ultimate-blocks"),
 	},
 	{
 		value: "space-between",
 		icon: justifySpaceBetween,
-		label: __("Justify items space between", "ultimate-blocks"),
+		label: __("Space between", "ultimate-blocks"),
 	},
 ];
 
