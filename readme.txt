@@ -155,6 +155,7 @@ That's it. You're done!
 * PRO: FIX: Icon not showing on frontend in the tabbed content vertical tab.
 * PRO: FIX: Display Author not hiding the author in editor in the post grid block.
 * PRO: FIX: Use Content toggle panel in table of contents block.
+* PRO: FIX: Toggle Show image thumbnails twice breaks the Image slider block.
 
 = 3.1.0 =
 
