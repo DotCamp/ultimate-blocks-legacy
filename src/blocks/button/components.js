@@ -20,6 +20,7 @@ import {
 	ColorPalette,
 	useBlockProps,
 	JustifyContentControl,
+	__experimentalBorderRadiusControl as WPBorderRadiusControl,
 } from "@wordpress/block-editor";
 import {
 	PanelBody,
@@ -34,12 +35,15 @@ import {
 	ToolbarGroup,
 	ToolbarButton,
 	TabPanel,
+	BaseControl,
+	__experimentalToolsPanelItem as ToolsPanelItem,
 } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { loadPromise, models } from "@wordpress/api";
 import { useSelect } from "@wordpress/data";
 import { SpacingControl, CustomToggleGroupControl } from "../components";
 import { AVAILABLE_JUSTIFICATIONS, AVAILABLE_ORIENTATION } from "../../common";
+import { splitBorderRadius } from "../utils/styling-helpers";
 
 export const allIcons = Object.assign(fas, fab);
 
@@ -54,6 +58,12 @@ export const defaultButtonProps = {
 	buttonTextColor: "#ffffff",
 	buttonTextHoverColor: "#ffffff",
 	buttonRounded: true,
+	borderRadius: {
+		topLeft: "10px",
+		topRight: "10px",
+		bottomLeft: "10px",
+		bottomRight: "10px",
+	},
 	buttonRadius: 10, //retained for compatibility
 	buttonRadiusUnit: "px", //retained for compatibility
 
@@ -866,6 +876,7 @@ export function EditorComponent(props) {
 	const {
 		isSelected,
 		setAttributes,
+		clientId,
 		attributes: {
 			blockID,
 			buttons,
@@ -886,6 +897,7 @@ export function EditorComponent(props) {
 			openInNewTab,
 			orientation,
 			isFlexWrap,
+			isBorderComponentChanged,
 		},
 	} = props;
 	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
@@ -1242,7 +1254,29 @@ export function EditorComponent(props) {
 			}
 		}
 	}, []);
-
+	useEffect(() => {
+		if (!isBorderComponentChanged) {
+			const newButtons = buttons.map((b) => {
+				b.topLeftRadiusUnit = b.buttonRadiusUnit;
+				b.topRightRadiusUnit = b.buttonRadiusUnit;
+				b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
+				b.bottomRightRadiusUnit = b.buttonRadiusUnit;
+				return {
+					...b,
+					borderRadius: {
+						topLeft: b.topLeftRadius + b.topLeftRadiusUnit,
+						topRight: b.topRightRadius + b.topRightRadiusUnit,
+						bottomLeft: b.bottomLeftRadius + b.bottomLeftRadiusUnit,
+						bottomRight: b.bottomRightRadius + b.bottomRightRadiusUnit,
+					},
+				};
+			});
+			setAttributes({
+				isBorderComponentChanged: true,
+				buttons: newButtons,
+			});
+		}
+	}, []);
 	useEffect(() => {
 		if (hasApiAccess) {
 			if (isSelected) {
@@ -1730,393 +1764,6 @@ export function EditorComponent(props) {
 										}
 									</TabPanel>
 								</PanelBody>
-								<PanelBody
-									title={__("Border", "ultimate-blocks")}
-									initialOpen={false}
-								>
-									<ToggleControl
-										label={__("Rounded", "ultimate-blocks")}
-										checked={buttons[activeButtonIndex].buttonRounded}
-										onChange={() => {
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, activeButtonIndex),
-													Object.assign({}, buttons[activeButtonIndex], {
-														buttonRounded:
-															!buttons[activeButtonIndex].buttonRounded,
-													}),
-													...buttons.slice(activeButtonIndex + 1),
-												],
-											});
-											setCurrentCorner("all");
-										}}
-									/>
-									{buttons[activeButtonIndex].buttonRounded && (
-										<>
-											<div className="ub-indicator-grid">
-												{/* FIRST ROW */}
-												<div
-													className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-right-border"
-													style={{
-														borderTop: `2px solid ${
-															currentCorner === "topleft" ? "blue" : "black"
-														}`,
-														borderLeft: `2px solid ${
-															currentCorner === "topleft" ? "blue" : "black"
-														}`,
-													}}
-													onClick={() => setCurrentCorner("topleft")}
-												/>
-												<div className="ub-indicator-grid-cell" />
-												<div
-													className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-left-border"
-													style={{
-														borderTop: `2px solid ${
-															currentCorner === "topright" ? "blue" : "black"
-														}`,
-														borderRight: `2px solid ${
-															currentCorner === "topright" ? "blue" : "black"
-														}`,
-													}}
-													onClick={() => setCurrentCorner("topright")}
-												></div>
-												{/* SECOND ROW */}
-												<div className="ub-indicator-grid-cell" />
-												<div
-													className="ub-indicator-grid-cell"
-													style={{
-														border: `2px solid ${
-															currentCorner === "all" ? "blue" : "black"
-														}`,
-													}}
-													onClick={() => {
-														if (currentCorner !== "all") {
-															let commonRadius = 0;
-															let commonUnit = "px";
-
-															switch (currentCorner) {
-																case "topleft":
-																	commonRadius =
-																		buttons[activeButtonIndex].topLeftRadius;
-																	commonUnit =
-																		buttons[activeButtonIndex]
-																			.topLeftRadiusUnit;
-																	break;
-																case "topright":
-																	commonRadius =
-																		buttons[activeButtonIndex].topRightRadius;
-																	commonUnit =
-																		buttons[activeButtonIndex]
-																			.topRightRadiusUnit;
-																	break;
-																case "bottomleft":
-																	commonRadius =
-																		buttons[activeButtonIndex].bottomLeftRadius;
-																	commonUnit =
-																		buttons[activeButtonIndex]
-																			.bottomLeftRadiusUnit;
-																	break;
-																case "bottomright":
-																	commonRadius =
-																		buttons[activeButtonIndex]
-																			.bottomRightRadius;
-																	commonUnit =
-																		buttons[activeButtonIndex]
-																			.bottomLeftRadiusUnit;
-																	break;
-															}
-
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			topLeftRadius: commonRadius,
-																			topRightRadius: commonRadius,
-																			bottomLeftRadius: commonRadius,
-																			bottomRightRadius: commonRadius,
-																			topLeftRadiusUnit: commonUnit,
-																			topRightRadiusUnit: commonUnit,
-																			bottomLeftRadiusUnit: commonUnit,
-																			bottomRightRadiusUnit: commonUnit,
-																		}
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															});
-														}
-														setCurrentCorner("all");
-													}}
-												></div>
-												<div className="ub-indicator-grid-cell" />
-												{/* THIRD ROW */}
-												<div
-													className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-right-border"
-													style={{
-														borderBottom: `2px solid ${
-															currentCorner === "bottomleft" ? "blue" : "black"
-														}`,
-														borderLeft: `2px solid ${
-															currentCorner === "bottomleft" ? "blue" : "black"
-														}`,
-													}}
-													onClick={() => setCurrentCorner("bottomleft")}
-												/>
-												<div className="ub-indicator-grid-cell" />
-												<div
-													className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-left-border"
-													style={{
-														borderBottom: `2px solid ${
-															currentCorner === "bottomright" ? "blue" : "black"
-														}`,
-														borderRight: `2px solid ${
-															currentCorner === "bottomright" ? "blue" : "black"
-														}`,
-													}}
-													onClick={() => setCurrentCorner("bottomright")}
-												></div>
-											</div>
-											<div id="ub-button-radius-panel">
-												<RangeControl
-													label={__("Button Radius")}
-													value={
-														currentCorner === "topleft"
-															? buttons[activeButtonIndex].topLeftRadius
-															: currentCorner === "topright"
-															? buttons[activeButtonIndex].topRightRadius
-															: currentCorner === "bottomleft"
-															? buttons[activeButtonIndex].bottomLeftRadius
-															: buttons[activeButtonIndex].bottomRightRadius
-													}
-													onChange={(value) => {
-														switch (currentCorner) {
-															case "topleft":
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				topLeftRadius: value,
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																});
-																break;
-															case "topright":
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				topRightRadius: value,
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																});
-																break;
-															case "bottomleft":
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				bottomLeftRadius: value,
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																});
-																break;
-															case "bottomright":
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				bottomRightRadius: value,
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																});
-																break;
-															default:
-															case "all":
-																setAttributes({
-																	buttons: [
-																		...buttons.slice(0, activeButtonIndex),
-																		Object.assign(
-																			{},
-																			buttons[activeButtonIndex],
-																			{
-																				buttonRadius: value,
-																				topLeftRadius: value,
-																				topRightRadius: value,
-																				bottomLeftRadius: value,
-																				bottomRightRadius: value,
-																			}
-																		),
-																		...buttons.slice(activeButtonIndex + 1),
-																	],
-																});
-																break;
-														}
-													}}
-													min={1}
-													max={100}
-													step={
-														(currentCorner === "topleft"
-															? buttons[activeButtonIndex].topLeftRadiusUnit
-															: currentCorner === "topright"
-															? buttons[activeButtonIndex].topRightRadiusUnit
-															: currentCorner === "bottomleft"
-															? buttons[activeButtonIndex].bottomLeftRadiusUnit
-															: buttons[activeButtonIndex]
-																	.bottomRightRadiusUnit) === "em"
-															? 0.1
-															: 1
-													}
-												/>
-												<ButtonGroup
-													aria-label={__(
-														"Button Radius Unit",
-														"ultimate-blocks"
-													)}
-												>
-													{["px", "%", "em"].map((b) => (
-														<Button
-															isLarge
-															isPrimary={
-																currentCorner === "topleft"
-																	? buttons[activeButtonIndex]
-																			.topLeftRadiusUnit === b
-																	: currentCorner === "topright"
-																	? buttons[activeButtonIndex]
-																			.topRightRadiusUnit === b
-																	: currentCorner === "bottomleft"
-																	? buttons[activeButtonIndex]
-																			.bottomLeftRadiusUnit === b
-																	: buttons[activeButtonIndex]
-																			.bottomRightRadiusUnit === b
-															}
-															aria-pressed={
-																currentCorner === "topleft"
-																	? buttons[activeButtonIndex]
-																			.topLeftRadiusUnit === b
-																	: currentCorner === "topright"
-																	? buttons[activeButtonIndex]
-																			.topRightRadiusUnit === b
-																	: currentCorner === "bottomleft"
-																	? buttons[activeButtonIndex]
-																			.bottomLeftRadiusUnit === b
-																	: buttons[activeButtonIndex]
-																			.bottomRightRadiusUnit === b
-															}
-															onClick={() => {
-																switch (currentCorner) {
-																	case "topleft":
-																		setAttributes({
-																			buttons: [
-																				...buttons.slice(0, activeButtonIndex),
-																				Object.assign(
-																					{},
-																					buttons[activeButtonIndex],
-																					{
-																						topLeftRadiusUnit: b,
-																					}
-																				),
-																				...buttons.slice(activeButtonIndex + 1),
-																			],
-																		});
-																		break;
-																	case "topright":
-																		setAttributes({
-																			buttons: [
-																				...buttons.slice(0, activeButtonIndex),
-																				Object.assign(
-																					{},
-																					buttons[activeButtonIndex],
-																					{
-																						topRightRadiusUnit: b,
-																					}
-																				),
-																				...buttons.slice(activeButtonIndex + 1),
-																			],
-																		});
-																		break;
-																	case "bottomleft":
-																		setAttributes({
-																			buttons: [
-																				...buttons.slice(0, activeButtonIndex),
-																				Object.assign(
-																					{},
-																					buttons[activeButtonIndex],
-																					{
-																						bottomLeftRadiusUnit: b,
-																					}
-																				),
-																				...buttons.slice(activeButtonIndex + 1),
-																			],
-																		});
-																		break;
-																	case "bottomright":
-																		setAttributes({
-																			buttons: [
-																				...buttons.slice(0, activeButtonIndex),
-																				Object.assign(
-																					{},
-																					buttons[activeButtonIndex],
-																					{
-																						bottomRightRadiusUnit: b,
-																					}
-																				),
-																				...buttons.slice(activeButtonIndex + 1),
-																			],
-																		});
-																		break;
-																	default:
-																	case "all":
-																		setAttributes({
-																			buttons: [
-																				...buttons.slice(0, activeButtonIndex),
-																				Object.assign(
-																					{},
-																					buttons[activeButtonIndex],
-																					{
-																						buttonRadiusUnit: b,
-																						topLeftRadiusUnit: b,
-																						topRightRadiusUnit: b,
-																						bottomLeftRadiusUnit: b,
-																						bottomRightRadiusUnit: b,
-																					}
-																				),
-																				...buttons.slice(activeButtonIndex + 1),
-																			],
-																		});
-																		break;
-																}
-															}}
-														>
-															{b}
-														</Button>
-													))}
-												</ButtonGroup>
-											</div>
-										</>
-									)}
-								</PanelBody>
 							</>
 						)}
 						<PanelBody
@@ -2136,6 +1783,61 @@ export function EditorComponent(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
+					{!isEmpty(buttons[activeButtonIndex]) && (
+						<InspectorControls group="border">
+							<ToolsPanelItem
+								panelId={clientId}
+								isShownByDefault
+								resetAllFilter={() =>
+									setAttributes({
+										buttons: [
+											...buttons.slice(0, activeButtonIndex),
+											Object.assign({}, buttons[activeButtonIndex], {
+												borderRadius: {},
+											}),
+											...buttons.slice(activeButtonIndex + 1),
+										],
+									})
+								}
+								label={__("Button Radius", "ultimate-blocks")}
+								hasValue={() =>
+									!isEmpty(buttons[activeButtonIndex]["borderRadius"])
+								}
+								onDeselect={() => {
+									setAttributes({
+										buttons: [
+											...buttons.slice(0, activeButtonIndex),
+											Object.assign({}, buttons[activeButtonIndex], {
+												borderRadius: {},
+											}),
+											...buttons.slice(activeButtonIndex + 1),
+										],
+									});
+								}}
+							>
+								<BaseControl.VisualLabel as="legend">
+									{__("Button Radius", "ultimate-blocks")}
+								</BaseControl.VisualLabel>
+								<div className="ub-border-radius-control">
+									<WPBorderRadiusControl
+										values={buttons[activeButtonIndex]["borderRadius"]}
+										onChange={(newBorderRadius) => {
+											const splitted = splitBorderRadius(newBorderRadius);
+											setAttributes({
+												buttons: [
+													...buttons.slice(0, activeButtonIndex),
+													Object.assign({}, buttons[activeButtonIndex], {
+														borderRadius: splitted,
+													}),
+													...buttons.slice(activeButtonIndex + 1),
+												],
+											});
+										}}
+									/>
+								</div>
+							</ToolsPanelItem>
+						</InspectorControls>
+					)}
 				</>
 			}
 			{
@@ -2193,26 +1895,10 @@ export function EditorComponent(props) {
 											: b.buttonIsTransparent
 											? b.buttonColor
 											: b.buttonTextColor || "inherit",
-									borderRadius: b.buttonRounded
-										? [
-												...new Set([
-													b.topLeftRadius,
-													b.topRightRadius,
-													b.bottomLeftRadius,
-													b.bottomRightRadius,
-												]),
-										  ].length === 1 &&
-										  [
-												...new Set([
-													b.topLeftRadiusUnit,
-													b.topRightRadiusUnit,
-													b.bottomLeftRadiusUnit,
-													b.bottomRightRadiusUnit,
-												]),
-										  ].length === 1
-											? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
-											: `${b.topLeftRadius}${b.topLeftRadiusUnit} ${b.topRightRadius}${b.topRightRadiusUnit} ${b.bottomRightRadius}${b.bottomRightRadiusUnit} ${b.bottomLeftRadius}${b.bottomLeftRadiusUnit}`
-										: "0",
+									borderTopLeftRadius: b?.borderRadius?.topLeft,
+									borderTopRightRadius: b?.borderRadius?.topRight,
+									borderBottomLeftRadius: b?.borderRadius?.bottomLeft,
+									borderBottomRightRadius: b?.borderRadius?.bottomRight,
 									borderStyle: b.buttonIsTransparent ? "solid" : "none",
 									borderColor: b.buttonIsTransparent
 										? hoveredButton === i

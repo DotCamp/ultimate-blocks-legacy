@@ -98,6 +98,10 @@
     "margin": {
       "type": "object",
       "default": {}
+    },
+    "isBorderComponentChanged": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {}
