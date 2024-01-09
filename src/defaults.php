@@ -75,6 +75,14 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'border'              => array(
+				'type'    => 'array',
+				'default' => array()
+			),
+			'borderRadius'              => array(
+				'type'    => 'array',
+				'default' => array()
+			),
 			'margin'              => array(
 				'type'    => 'array',
 				'default' => array()

@@ -146,6 +146,7 @@ That's it. You're done!
 
 = 3.1.1 =
 
+* IMPROVE: Border control in advanced video block.
 * NEW: Vertical orientation for the divider block.
 * NEW: Align full option in image slider block.
 * NEW: Tiktok url support for advanced video block.

@@ -13,6 +13,8 @@
 use PHPUnit\Event\Runtime\PHP;
 use Ultimate_Blocks\includes\Editor_Data_Manager;
 
+use function Ultimate_Blocks\includes\get_border_css;
+
 require_once dirname(__DIR__) . '/src/extensions/extension-manager.php';
 require_once dirname(__DIR__) . '/includes/ultimate-blocks-styles-css-generator.php';
 
@@ -301,26 +303,17 @@ function ub_include_block_attribute_css() {
 												 '}';
 						}
 					}
+					$blockStylesheets .= $prefix . '{' .
+											 ( !empty($attributes['border'])  ? 'border-top: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'top' ) . ';' : '' ) .
+											 ( !empty($attributes['border'])  ? 'border-left: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'left' ) . ';' : '' ) .
+											 ( !empty($attributes['border'])  ? 'border-right: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'right' ) . ';' : '' ) .
+											 ( !empty($attributes['border'])  ? 'border-bottom: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'bottom' ) . ';' : '' ) .
 
-					if ( json_encode( array_unique( array(
-									$attributes['topBorderSize'],
-									$attributes['leftBorderSize'],
-									$attributes['rightBorderSize'],
-									$attributes['bottomBorderSize']
-							) ) ) !== '[0]' ) {
-
-						$blockStylesheets .= $prefix . '{' .
-											 ( $attributes['topBorderSize'] > 0 ? 'border-top: ' . $attributes['topBorderSize'] . 'px ' . $attributes['topBorderStyle'] . ' ' . $attributes['topBorderColor'] . ';' . PHP_EOL : '' ) .
-											 ( $attributes['leftBorderSize'] > 0 ? 'border-left: ' . $attributes['leftBorderSize'] . 'px ' . $attributes['leftBorderStyle'] . ' ' . $attributes['leftBorderColor'] . ';' . PHP_EOL : '' ) .
-											 ( $attributes['rightBorderSize'] > 0 ? 'border-right: ' . $attributes['rightBorderSize'] . 'px ' . $attributes['rightBorderStyle'] . ' ' . $attributes['rightBorderColor'] . ';' . PHP_EOL : '' ) .
-											 ( $attributes['bottomBorderSize'] > 0 ? 'border-bottom: ' . $attributes['bottomBorderSize'] . 'px ' . $attributes['bottomBorderStyle'] . ' ' . $attributes['bottomBorderColor'] . ';' . PHP_EOL : '' ) .
-
-											 ( $attributes['topLeftRadius'] > 0 ? 'border-top-left-radius: ' . $attributes['topLeftRadius'] . 'px;' . PHP_EOL : '' ) .
-											 ( $attributes['topRightRadius'] > 0 ? 'border-top-right-radius: ' . $attributes['topRightRadius'] . 'px;' . PHP_EOL : '' ) .
-											 ( $attributes['bottomLeftRadius'] > 0 ? 'border-bottom-left-radius: ' . $attributes['bottomLeftRadius'] . 'px;' . PHP_EOL : '' ) .
-											 ( $attributes['bottomRightRadius'] > 0 ? 'border-bottom-right-radius: ' . $attributes['bottomRightRadius'] . 'px;' . PHP_EOL : '' ) .
+											 ( !empty( $attributes['borderRadius']['topLeft'] ) ? 'border-top-left-radius: ' . $attributes['borderRadius']['topLeft'] . ';': "" ) .
+											 ( !empty( $attributes['borderRadius']['topRight'] ) ? 'border-top-right-radius: ' . $attributes['borderRadius']['topRight'] . ';': "" ) .
+											 ( !empty( $attributes['borderRadius']['bottomLeft'] ) ? 'border-bottom-left-radius: ' . $attributes['borderRadius']['bottomLeft'] . ';': "" ) .
+											 ( !empty( $attributes['borderRadius']['bottomRight'] ) ? 'border-bottom-right-radius: ' . $attributes['borderRadius']['bottomRight'] . ';': "" ) .
 											 '}';
-					}
 					//if one of showInDesktop, showInTablet, showInMobile
 					if ( in_array( false, [
 							$attributes['showInDesktop'],

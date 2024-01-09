@@ -1,3 +1,5 @@
+import { isEmpty } from "lodash";
+import { __experimentalHasSplitBorders as hasSplitBorders } from "@wordpress/components";
 /**
  * Checks is given value is a spacing preset.
  *
@@ -43,4 +45,68 @@ export function getSpacingCss(object) {
 		}
 	}
 	return css;
+}
+
+/**
+ * Function that's help you to generate splitted or non splitted border CSS.
+ * @param {object} object border attributes
+ *
+ * @return {{ css:object }} A css object
+ */
+export const getBorderCSS = (object) => {
+	let css = {};
+
+	if (!hasSplitBorders(object)) {
+		css["top"] = object;
+		css["right"] = object;
+		css["bottom"] = object;
+		css["left"] = object;
+		return css;
+	}
+	return object;
+};
+/**
+ *  Check values are mixed.
+ * @param {any} values - value string or object
+ * @returns true | false
+ */
+export function hasMixedValues(values = {}) {
+	return typeof values === "string";
+}
+export function splitBorderRadius(value) {
+	const isValueMixed = hasMixedValues(value);
+	const splittedBorderRadius = {
+		topLeft: value,
+		topRight: value,
+		bottomLeft: value,
+		bottomRight: value,
+	};
+	return isValueMixed ? splittedBorderRadius : value;
+}
+
+export function getSingleSideBorderValue(border, side) {
+	const hasWidth = !isEmpty(border[side]?.width);
+	return `${border[side]?.width ?? ""} ${
+		hasWidth && isEmpty(border[side]?.style)
+			? "solid"
+			: border[side]?.style ?? ""
+	} ${
+		hasWidth && isEmpty(border[side]?.color)
+			? "#000000"
+			: border[side]?.color ?? ""
+	}`;
+}
+
+export function getBorderVariablesCss(border, slug) {
+	const borderInFourDimension = getBorderCSS(border);
+	const borderSides = ["top", "right", "bottom", "left"];
+	let borders = {};
+	for (let i = 0; i < borderSides.length; i++) {
+		const side = borderSides[i];
+		const sideProperty = [`--ub-${slug}-border-${side}`];
+		const sideValue = getSingleSideBorderValue(borderInFourDimension, side);
+		borders[sideProperty] = sideValue;
+	}
+
+	return borders;
 }

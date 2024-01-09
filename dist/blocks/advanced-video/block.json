@@ -231,6 +231,18 @@
     "margin": {
       "type": "object",
       "default": {}
+    },
+    "borderRadius": {
+      "type": "object",
+      "default": {}
+    },
+    "border": {
+      "type": "object",
+      "default": {}
+    },
+    "isBorderComponentChanged": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {}
