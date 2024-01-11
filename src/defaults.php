@@ -769,7 +769,7 @@ $defaultValues = array(
 			),
 			'borderHeight' => array(
 				'type'    => 'number',
-				'default' => 20
+				'default' => 2
 			),
 			'width'        => array(
 				'type'    => 'number',

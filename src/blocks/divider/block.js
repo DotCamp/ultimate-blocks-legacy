@@ -144,7 +144,7 @@ function DividerBlock(props) {
 										onChange={(value) => setAttributes({ borderHeight: value })}
 										min={10}
 										max={200}
-										resetFallbackValue={20}
+										resetFallbackValue={2}
 										beforeIcon="minus"
 										allowReset
 									/>

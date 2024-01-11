@@ -146,6 +146,7 @@ That's it. You're done!
 
 = 3.1.1 =
 
+* IMPROVE: Top and bottom space is not same in divider block.
 * IMPROVE: Border control in button block.
 * IMPROVE: Border control in advanced video block.
 * NEW: Vertical orientation for the divider block.

@@ -37,7 +37,7 @@
     },
     "borderHeight": {
       "type": "number",
-      "default": 20
+      "default": 2
     },
     "width": {
       "type": "number",
