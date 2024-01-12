@@ -7,8 +7,7 @@ use function Ultimate_Blocks\includes\is_undefined;
  */
 class Ultimate_Blocks_Responsive_Control  {
     public function __construct(){
-        // add_filter('register_block_type_args', array( $this, 'ub_add_settings' ), 10, 2);
-        add_filter( "render_block", array( $this, 'ub_render_responsive_control' ), 10, 3 );
+        add_filter( "render_block", array( $this, 'ub_render_responsive_control' ), 10, 2 );
     }
 
     public function ub_add_settings($args, $name){
@@ -34,7 +33,7 @@ class Ultimate_Blocks_Responsive_Control  {
         return $args;
     }
 
-    public function ub_render_responsive_control($content, $block, $block_instance){
+    public function ub_render_responsive_control($content, $block){
         // Check if the block name starts with 'ub/'
         $block_name = isset($block['blockName']) ? $block['blockName'] : "";
         if (strpos($block_name, 'ub/') !== 0) {

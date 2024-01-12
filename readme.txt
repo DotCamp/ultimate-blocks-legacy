@@ -153,6 +153,7 @@ That's it. You're done!
 * NEW: Align full option in image slider block.
 * NEW: Tiktok url support for advanced video block.
 * FIX: Add wp-block block on frontend in all block.
+* FIX: ArgumentCount PHP Error.
 * FIX: Progress bar inside percentage position not working.
 * PRO: FIX: Opposite text breaking in timeline block.
 * PRO: FIX: Icon not showing on frontend in the tabbed content vertical tab.
