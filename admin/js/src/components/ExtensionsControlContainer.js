@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from 'react';
-import ExtensionControlCard from '$Components/ExtensionControlCard';
-import withStore from '$HOC/withStore';
+import React, { useEffect, useState } from "react";
+import ExtensionControlCard from "$Components/ExtensionControlCard";
+import withStore from "$HOC/withStore";
 import {
 	getExtensions,
 	setExtensionActiveStatus,
-} from '$Stores/settings-menu/slices/extension';
-import { getProStatus } from '$Stores/settings-menu/slices/app';
-import { toggleExtensionStatus } from '$Stores/settings-menu/actions';
+} from "$Stores/settings-menu/slices/extension";
+import { getProStatus } from "$Stores/settings-menu/slices/app";
+import { toggleExtensionStatus } from "$Stores/settings-menu/actions";
 
 /**
  * Block controls container.
@@ -46,8 +46,8 @@ function ExtensionsControlContainer({
 	// useEffect hook
 	useEffect(() => {
 		const sortedExtensions = [...ubExtensions].sort((a, b) => {
-			const aName = a.title.toLowerCase();
-			const bName = b.title.toLowerCase();
+			const aName = a?.title?.toLowerCase() ?? a?.label?.toLowerCase();
+			const bName = b?.title?.toLowerCase() ?? b?.label?.toLowerCase();
 
 			if (aName < bName) {
 				return -1;
@@ -63,7 +63,7 @@ function ExtensionsControlContainer({
 	}, [ubExtensions]);
 
 	return (
-		<div className={'controls-container'}>
+		<div className={"controls-container"}>
 			{extensions.map(({ label, name, active, icon, info, pro }) => {
 				return (
 					<ExtensionControlCard

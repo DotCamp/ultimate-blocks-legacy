@@ -10,28 +10,6 @@ class Ultimate_Blocks_Responsive_Control  {
         add_filter( "render_block", array( $this, 'ub_render_responsive_control' ), 10, 2 );
     }
 
-    public function ub_add_settings($args, $name){
-        if (strpos($name, 'ub/') === 0) {
-            $extra_attributes = array(
-                "isHideOnDesktop" => array(
-                    "type" => "boolean",
-                    "default" => false
-                ),
-                "isHideOnTablet" => array(
-                    "type" => "boolean",
-                    "default" => false
-                ),
-                "isHideOnMobile" => array(
-                    "type" => "boolean",
-                    "default" => false
-                )
-            );
-
-            $args['attributes'] = array_merge($args['attributes'], $extra_attributes);
-        }
-
-        return $args;
-    }
 
     public function ub_render_responsive_control($content, $block){
         // Check if the block name starts with 'ub/'
