@@ -14,7 +14,7 @@ function Inspector(props) {
 	useEffect(handleCSS, []);
 	useEffect(handleCSS, [ubCustomCSS, className]);
 	return (
-		<InspectorControls>
+		<InspectorControls group="styles">
 			<PanelBody title={__("Custom CSS")} initialOpen={false}>
 				<CodeEditor
 					mode="css"

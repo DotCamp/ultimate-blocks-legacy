@@ -170,25 +170,26 @@ class Ultimate_Blocks_Custom_CSS  {
           return preg_replace('/(\bselector\b)/', '#' . $block_id, $css);
      }
 
-    public function ub_render_custom_css($content, $block){
-          // Check if the block name starts with 'ub/'
-          $block_name = isset($block['blockName']) ? $block['blockName'] : "";
-          if (strpos($block_name, 'ub/') !== 0) {
-               return $content;
-          }
-
-		$block_id      = $this->generate_ub_block_id($content, $block); 
-          $pattern = '/<(\w+)[^>]*(?:\s+id=["\']([^"\']*)["\'])?[^>]*>/i';
-		// Replace the first occurrence with a new id attribute
-		$updated_content = preg_replace($pattern, '<$1 id="' . $block_id . '"$2>', $content, 1);
-		// Check if the preg_replace was successful
-		if ($updated_content === null) {
-			// Handle any potential error, e.g., log or throw an exception
-			// For now, returning the original content
+    	public function ub_render_custom_css($content, $block) {
+		// Check if the block name starts with 'ub/'
+		$block_name = isset($block['blockName']) ? $block['blockName'] : "";
+		if (strpos($block_name, 'ub/') !== 0) {
 			return $content;
 		}
 
+		$block_id = $this->generate_ub_block_id($content, $block);
+		$updated_content = $content;
+
+		// Pattern to match the first element and capture existing attributes
+		preg_match('/(<[^>]+)/', $content, $matches_first_element);
+		if(isset($matches_first_element[0]) && !empty($matches_first_element[0])){
+			$pattern = '/id=("|\')(.*?)("|\')/i';
+			preg_match($pattern, $matches_first_element[0], $matches);
+			if (!isset($matches[2])) {
+				$updated_content = preg_replace('/(<[^>]+)/', '$1 id="' . $block_id . '"', $content, 1);
+			}
+		}
 		return $updated_content;
-     }
+	}
 }
 new Ultimate_Blocks_Custom_CSS();
