@@ -422,10 +422,51 @@ function ub_include_block_attribute_css() {
 													 'color: ' . ( $attributes['buttons'][ $key ]['buttonTextColor'] ?: 'inherit' ) . ';' . PHP_EOL .
 													 'border: none;';
 							}
-							$blockStylesheets .=  ( !empty( $attributes['buttons'][$key]['borderRadius']['topLeft'] ) ? 'border-top-left-radius: ' . $attributes['buttons'][$key]['borderRadius']['topLeft'] . ';': "" ) .
-											 ( !empty( $attributes['buttons'][$key]['borderRadius']['topRight'] ) ? 'border-top-right-radius: ' . $attributes['buttons'][$key]['borderRadius']['topRight'] . ';': "" ) .
-											 ( !empty( $attributes['buttons'][$key]['borderRadius']['bottomLeft'] ) ? 'border-bottom-left-radius: ' . $attributes['buttons'][$key]['borderRadius']['bottomLeft'] . ';': "" ) .
-											 ( !empty( $attributes['buttons'][$key]['borderRadius']['bottomRight'] ) ? 'border-bottom-right-radius: ' . $attributes['buttons'][$key]['borderRadius']['bottomRight'] . ';': "" );
+							if(isset($attributes['isBorderComponentChanged']) && $attributes['isBorderComponentChanged']){
+								$blockStylesheets .=  ( !empty( $attributes['buttons'][$key]['borderRadius']['topLeft'] ) ? 'border-top-left-radius: ' . $attributes['buttons'][$key]['borderRadius']['topLeft'] . ';': "" ) .
+												 ( !empty( $attributes['buttons'][$key]['borderRadius']['topRight'] ) ? 'border-top-right-radius: ' . $attributes['buttons'][$key]['borderRadius']['topRight'] . ';': "" ) .
+												 ( !empty( $attributes['buttons'][$key]['borderRadius']['bottomLeft'] ) ? 'border-bottom-left-radius: ' . $attributes['buttons'][$key]['borderRadius']['bottomLeft'] . ';': "" ) .
+												 ( !empty( $attributes['buttons'][$key]['borderRadius']['bottomRight'] ) ? 'border-bottom-right-radius: ' . $attributes['buttons'][$key]['borderRadius']['bottomRight'] . ';': "" );
+							} else{
+								if ( $attributes['buttons'][ $key ]['buttonRounded'] ) {
+									if ( array_key_exists( 'topLeftRadius',
+													$button ) && array_key_exists( 'topLeftRadiusUnit', $button ) &&
+										array_key_exists( 'topRightRadius',
+												$button ) && array_key_exists( 'topRightRadiusUnit', $button ) &&
+										array_key_exists( 'bottomLeftRadius',
+												$button ) && array_key_exists( 'bottomLeftRadiusUnit', $button ) &&
+										array_key_exists( 'bottomRightRadius',
+												$button ) && array_key_exists( 'bottomRightRadiusUnit', $button ) ) {
+										if ( count( array_unique( [
+														$button['topLeftRadius'],
+														$button['topRightRadius'],
+														$button['bottomLeftRadius'],
+														$button['bottomRightRadius']
+												] ) ) === 1
+											&& count( array_unique( [
+														$button['topLeftRadiusUnit'],
+														$button['topRightRadiusUnit'],
+														$button['bottomLeftRadiusUnit'],
+														$button['bottomRightRadiusUnit']
+												] ) ) === 1 ) {
+											$blockStylesheets .= 'border-radius: ' . $button['topLeftRadius'] . $button['topLeftRadiusUnit'] . ';';
+										} else {
+											$blockStylesheets .= 'border-radius: ' . $button['topLeftRadius'] . $button['topLeftRadiusUnit'] . ' ' . $button['topRightRadius'] . $button['topRightRadiusUnit'] . ' ' .
+																$button['bottomRightRadius'] . $button['bottomRightRadiusUnit'] . ' ' . $button['bottomLeftRadius'] . $button['bottomLeftRadiusUnit'] . ';';
+										}
+									} else {
+										$blockStylesheets .= 'border-radius: ' . ( array_key_exists( 'buttonRadius',
+														$attributes['buttons'][ $key ] ) && $attributes['buttons'][ $key ]['buttonRadius'] ? $attributes['buttons'][ $key ]['buttonRadius'] : '60' )
+															. ( array_key_exists( 'buttonRadiusUnit',
+														$attributes['buttons'][ $key ] ) && $attributes['buttons'][ $key ]['buttonRadiusUnit'] ? $attributes['buttons'][ $key ]['buttonRadiusUnit'] : 'px' ) . ';' . PHP_EOL;
+									}
+
+								} else {
+									$blockStylesheets .= 'border-radius: 0;' . PHP_EOL;
+								}
+
+								
+							}
 
 							$blockStylesheets .= '}' . PHP_EOL .
 												 $prefix . ' .ub-button-container:nth-child(' . ( $key + 1 ) . ') a:hover{' . PHP_EOL;
