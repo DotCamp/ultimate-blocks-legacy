@@ -174,11 +174,11 @@ function VersionControlPopup({
 										? `${__(
 												'Reloading page now…',
 												'ultimate-blocks'
-										  )}`
+											)}`
 										: `${__(
 												'Reloading page in ',
 												'ultimate-blocks'
-										  )} ${reloadCountdown}...`}
+											)} ${reloadCountdown}...`}
 								</div>
 							</div>
 						)}
