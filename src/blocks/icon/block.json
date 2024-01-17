@@ -70,6 +70,14 @@
           "margin": {
                "type": "object",
                "default": {}
+          },
+          "borderRadius": {
+               "type": "object",
+               "default": {}
+          },
+          "border": {
+               "type": "object",
+               "default": {}
           }
      },
      "supports": {
