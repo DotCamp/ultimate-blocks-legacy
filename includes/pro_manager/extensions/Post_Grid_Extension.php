@@ -32,6 +32,10 @@ class Post_Grid_Extension extends Pro_Extension_Upsell {
 				__( 'Post Type', 'ultimate-blocks' ),
 				__( 'Select Custom Post type.' )
 			],
+			'pagination'         => [
+				__( 'Pagination', 'ultimate-blocks' ),
+				__( 'Add pagination for the grid block.' )
+			],
 		];
 
 		return Saved_Styles_Common::inject_upsell_data( $base_data );
@@ -51,11 +55,18 @@ class Post_Grid_Extension extends Pro_Extension_Upsell {
 				[ __( 'Post', 'ultimate-blocks' ), __( 'Page', 'ultimate-blocks' ) ]
                 ),
 		];
+		$pagination = [
+			Pro_Editor_Control_Data::generate_toggle_control_data( 'pagination',
+				__( 'Pagination', 'ultimate-blocks' )
+                ),
+		];
 
 
 		return [
 			Pro_Editor_Control_Data::generate_panel_data( 'postType', __( 'Query', 'ultimate-blocks' ),
 				$post_type ),
+			Pro_Editor_Control_Data::generate_panel_data( 'pagination', __( 'Pagination', 'ultimate-blocks' ),
+				$pagination ),
 		];
 	}
 }
