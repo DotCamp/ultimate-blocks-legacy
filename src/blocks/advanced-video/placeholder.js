@@ -11,7 +11,7 @@ const placeholder = (content) => {
 			icon={icon}
 			label={__("Select Video Source", "ultimate-blocks")}
 			instructions={__(
-				"Upload a video file, pick one from your media library, or add one with a URL."
+				"Upload a video file, pick one from your media library, or add one with a URL.",
 			)}
 		>
 			{content}
