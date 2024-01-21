@@ -150,6 +150,7 @@ That's it. You're done!
 * FIX: Video uploading in advanced video block.
 * IMPROVE: Add upsell for post grid pagination.
 * IMPROVE: Color component in button (improved) block.
+* IMPROVE: Icon control in all blocks.
 * NEW: Border and Radius option in icon block.
 
 = 3.1.1 =
