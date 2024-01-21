@@ -270,7 +270,7 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 				newEmbedCode,
 			);
 
-		if (embedArgs[2]) {
+		if (!isEmpty(embedArgs[2])) {
 			newEmbedCode = newEmbedCode.replace(
 				embedArgs[1],
 				embedArgs[1].replace(
