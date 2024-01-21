@@ -63,7 +63,7 @@ registerBlockType("ub/call-to-action", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -96,14 +96,14 @@ registerBlockType("ub/call-to-action", {
 								"ub/call-to-action-block",
 								Object.assign(otherAttributes, {
 									ub_call_to_action_headline_text: mergeRichTextArray(
-										ub_call_to_action_headline_text
+										ub_call_to_action_headline_text,
 									),
 									ub_cta_content_text: mergeRichTextArray(ub_cta_content_text),
 
 									ub_cta_button_text: mergeRichTextArray(ub_cta_button_text),
 									url: url,
-								})
-							)
+								}),
+							),
 						);
 					}}
 				>
@@ -212,7 +212,8 @@ registerBlockType("ub/call-to-action", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	attributes: metadata.attributes,
 	example: {

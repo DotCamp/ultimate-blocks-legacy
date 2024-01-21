@@ -6,8 +6,8 @@ import metadata from "./block.json";
 import icon from "./icon";
 import { AdvancedVideoBlock } from "./components";
 
-registerBlockType(metadata, {
-	attributes: metadata.attributes,
+registerBlockType(metadata.name, {
+	...metadata,
 	icon,
 	example: {
 		attributes: {

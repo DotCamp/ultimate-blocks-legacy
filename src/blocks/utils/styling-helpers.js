@@ -1,5 +1,16 @@
 import { isEmpty } from "lodash";
-import { __experimentalHasSplitBorders as hasSplitBorders } from "@wordpress/components";
+
+function hasSplitBorders(border = {}) {
+	const sides = ["top", "right", "bottom", "left"];
+
+	for (const side in border) {
+		if (sides.includes(side)) {
+			return true;
+		}
+	}
+
+	return false;
+}
 /**
  * Checks is given value is a spacing preset.
  *

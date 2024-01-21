@@ -50,7 +50,7 @@ registerBlockType("ub/table-of-contents", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -88,7 +88,7 @@ registerBlockType("ub/table-of-contents", {
 						<PanelRow>
 							<label htmlFor="ub_toc_toggle_display">
 								{__(
-									"Allow users to toggle the visibility of the table of contents"
+									"Allow users to toggle the visibility of the table of contents",
 								)}
 							</label>
 							<ToggleControl
@@ -128,8 +128,8 @@ registerBlockType("ub/table-of-contents", {
 								"ub/table-of-contents-block",
 								Object.assign(otherAttributes, {
 									title: mergeRichTextArray(title),
-								})
-							)
+								}),
+							),
 						);
 					}}
 				>
@@ -205,7 +205,8 @@ registerBlockType("ub/table-of-contents", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	attributes: metadata.attributes,
 	example: {},

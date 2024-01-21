@@ -148,7 +148,8 @@ function ClickToTweet(props) {
 	);
 }
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	attributes: metadata.attributes,
 	example: {

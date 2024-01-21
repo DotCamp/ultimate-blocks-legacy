@@ -48,7 +48,8 @@ registerBlockType("ub/tab", {
 	},
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	edit: withSelect((select, ownProps) => ({
 		blockParentId: (

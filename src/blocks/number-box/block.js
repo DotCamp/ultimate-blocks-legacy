@@ -66,7 +66,7 @@ registerBlockType("ub/number-box", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -98,7 +98,7 @@ registerBlockType("ub/number-box", {
 
 						if (parseInt(column) >= 2) {
 							currentNumbers.push(
-								mergeRichTextArray(attributes.columnTwoNumber)
+								mergeRichTextArray(attributes.columnTwoNumber),
 							);
 							currentTitles.push(mergeRichTextArray(attributes.columnTwoTitle));
 							currentTitleAligns.push(attributes.title2Align);
@@ -107,10 +107,10 @@ registerBlockType("ub/number-box", {
 						}
 						if (parseInt(column) === 3) {
 							currentNumbers.push(
-								mergeRichTextArray(attributes.columnThreeNumber)
+								mergeRichTextArray(attributes.columnThreeNumber),
 							);
 							currentTitles.push(
-								mergeRichTextArray(attributes.columnThreeTitle)
+								mergeRichTextArray(attributes.columnThreeTitle),
 							);
 							currentTitleAligns.push(attributes.title3Align);
 							currentTexts.push(mergeRichTextArray(attributes.columnThreeBody));
@@ -129,7 +129,7 @@ registerBlockType("ub/number-box", {
 								backColor: attributes.numberBackground,
 								foreColor: attributes.numberColor,
 								outlineColor: attributes.borderColor,
-							})
+							}),
 						);
 					}}
 				>
@@ -286,7 +286,8 @@ registerBlockType("ub/number-box", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	transforms: {
 		to: [
@@ -304,7 +305,7 @@ registerBlockType(metadata, {
 		const blockProps = useBlockProps();
 
 		const block = useSelect((select) =>
-			select("core/block-editor").getBlock(props.clientId)
+			select("core/block-editor").getBlock(props.clientId),
 		);
 		const { replaceBlock } = useDispatch("core/bock-editor");
 

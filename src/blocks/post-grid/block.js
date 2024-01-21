@@ -28,7 +28,8 @@ const canSelectMultipleCategories =
 const filterObjectAttributes = (obj, condition) =>
 	Object.fromEntries(Object.entries(obj).filter(condition));
 
-export default registerBlockType(metadata, {
+export default registerBlockType(metadata.name, {
+	...metadata,
 	attributes: metadata.attributes,
 	icon: icons,
 	/**
@@ -86,7 +87,7 @@ export default registerBlockType(metadata, {
 					tags: tagArray,
 					author: authorArray,
 				},
-				(value) => typeof value !== "undefined"
+				(value) => typeof value !== "undefined",
 			);
 
 			return {
@@ -105,7 +106,7 @@ export default registerBlockType(metadata, {
 				.then((categoriesList) => {
 					setAttributes({
 						categoryArray: categoriesList.filter(
-							(c) => c.id === Number(categories)
+							(c) => c.id === Number(categories),
 						),
 						categories: "",
 					});

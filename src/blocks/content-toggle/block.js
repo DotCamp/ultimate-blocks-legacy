@@ -181,7 +181,7 @@ registerBlockType("ub/content-toggle", {
 								panelContent.push(
 									createBlock("core/paragraph", {
 										content: paragraph,
-									})
+									}),
 								);
 							} else if (paragraph.type === "br") {
 								if (a.content[i - 1].type === "br") {
@@ -191,7 +191,7 @@ registerBlockType("ub/content-toggle", {
 								panelContent.push(
 									createBlock("core/paragraph", {
 										content: richTextToHTML(paragraph),
-									})
+									}),
 								);
 							}
 						});
@@ -204,7 +204,7 @@ registerBlockType("ub/content-toggle", {
 								collapsed: attributes.collapsed,
 								panelTitle: mergeRichTextArray(a.title),
 							},
-							panelContent
+							panelContent,
 						);
 					}),
 				];
@@ -214,7 +214,8 @@ registerBlockType("ub/content-toggle", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	attributes: metadata.attributes,
 	example: { attributes: { titleLinkColor: "invalid" } }, //indicator for displaying in preview
@@ -227,7 +228,9 @@ registerBlockType(metadata, {
 					createBlock(
 						"core/group",
 						{},
-						innerBlocks.map((i) => createBlock("core/group", {}, i.innerBlocks))
+						innerBlocks.map((i) =>
+							createBlock("core/group", {}, i.innerBlocks),
+						),
 					),
 			},
 		],

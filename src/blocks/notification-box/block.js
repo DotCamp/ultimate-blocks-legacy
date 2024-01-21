@@ -63,7 +63,7 @@ registerBlockType("ub/notification-box", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -103,7 +103,7 @@ registerBlockType("ub/notification-box", {
 								backColor: secondColor,
 								foreColor: firstColor,
 								outlineColor: firstColor,
-							})
+							}),
 						);
 					}}
 				>
@@ -161,7 +161,8 @@ registerBlockType("ub/notification-box", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	transforms: {
 		to: [
@@ -177,7 +178,7 @@ registerBlockType(metadata, {
 		const blockProps = useBlockProps();
 
 		const block = useSelect((select) =>
-			select("core/block-editor").getBlock(props.clientId)
+			select("core/block-editor").getBlock(props.clientId),
 		);
 		const { replaceBlock } = useDispatch("core/bock-editor");
 		if (attributes.blockID === "") {

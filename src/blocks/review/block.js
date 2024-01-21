@@ -1198,7 +1198,7 @@ function ReviewMain(props) {
 	}
 
 	const schemaDefaults = Object.keys(
-		Object.assign({}, defaultAttributes)
+		Object.assign({}, defaultAttributes),
 	).reduce((defaults, attr) => {
 		if (unusedDefaults.includes(attr)) {
 			defaults[attr] = defaultAttributes[attr].default;
@@ -1216,7 +1216,7 @@ function ReviewMain(props) {
 			}
 			return defaults;
 		},
-		{}
+		{},
 	);
 
 	if (Object.keys(unusedAttributes).length) {
@@ -1264,9 +1264,9 @@ function ReviewMain(props) {
 										`Value for ${
 											parser.parseFromString(
 												parts[editedStar].label,
-												"text/html"
+												"text/html",
 											).body.textContent || "current feature"
-										}`
+										}`,
 									)}
 									value={parts[editedStar].value}
 									onChange={(newValue) => {
@@ -1287,7 +1287,7 @@ function ReviewMain(props) {
 							)}
 							<p>
 								{__(
-									"This lets you set the value for whichever feature list item you are currently editing."
+									"This lets you set the value for whichever feature list item you are currently editing.",
 								)}
 							</p>
 						</PanelBody>
@@ -1439,7 +1439,7 @@ function ReviewMain(props) {
 												(a) => ({
 													label: a,
 													value: a,
-												})
+												}),
 											)}
 										/>
 									)}
@@ -1559,13 +1559,13 @@ function ReviewMain(props) {
 										onChange={(newDate) =>
 											setAttributes({
 												reviewPublicationDate: Math.floor(
-													Date.parse(newDate) / 1000
+													Date.parse(newDate) / 1000,
 												),
 											})
 										}
 									/>
 									{["Event", "Product", "SoftwareApplication"].includes(
-										itemType
+										itemType,
 									) && (
 										<PanelBody title={__("Offer")}>
 											<SelectControl
@@ -1635,7 +1635,7 @@ function ReviewMain(props) {
 																offerExpiry: offerExpiry
 																	? 0
 																	: 60 *
-																	  (10080 + Math.ceil(Date.now() / 60000)), //default to one week from Date.now() when enabled
+																		(10080 + Math.ceil(Date.now() / 60000)), //default to one week from Date.now() when enabled
 															})
 														}
 													/>
@@ -1645,7 +1645,7 @@ function ReviewMain(props) {
 															onChange={(newDate) =>
 																setAttributes({
 																	offerExpiry: Math.floor(
-																		Date.parse(newDate) / 1000
+																		Date.parse(newDate) / 1000,
 																	),
 																})
 															}
@@ -1665,7 +1665,7 @@ function ReviewMain(props) {
 													/>
 													<TextControl
 														label={__(
-															`Lowest Available Price (${offerCurrency})`
+															`Lowest Available Price (${offerCurrency})`,
 														)}
 														value={offerLowPriceRaw}
 														onChange={(val) => {
@@ -1679,7 +1679,7 @@ function ReviewMain(props) {
 													/>
 													<TextControl
 														label={__(
-															`Highest Available Price (${offerCurrency})`
+															`Highest Available Price (${offerCurrency})`,
 														)}
 														value={offerHighPriceRaw}
 														onChange={(val) => {
@@ -1785,7 +1785,7 @@ function ReviewMain(props) {
 									label={__(
 										(a !== "justify" ? "Align " : "") +
 											a[0].toUpperCase() +
-											a.slice(1)
+											a.slice(1),
 									)}
 									isActive={getCurrentAlignment(editable) === a}
 									onClick={() => setAlignment(editable, a)}
@@ -1845,7 +1845,8 @@ function ReviewMain(props) {
 	);
 }
 
-registerPluginBlock(metadata, {
+registerPluginBlock(metadata.name, {
+	...metadata,
 	icon,
 	example: {},
 	attributes: metadata.attributes,

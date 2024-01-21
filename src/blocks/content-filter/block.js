@@ -70,7 +70,7 @@ registerBlockType("ub/content-filter", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => {
@@ -96,7 +96,7 @@ registerBlockType("ub/content-filter", {
 		} = props.attributes;
 
 		const currentSelection = filterArray.map((f) =>
-			f.canUseMultiple ? Array(f.filters.length).fill(false) : -1
+			f.canUseMultiple ? Array(f.filters.length).fill(false) : -1,
 		);
 		return (
 			<div data-currentSelection={JSON.stringify(currentSelection)}>
@@ -142,7 +142,8 @@ registerBlockType("ub/content-filter", {
 	},
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	attributes: metadata.attributes,
 	example: {
@@ -170,7 +171,9 @@ registerBlockType(metadata, {
 					createBlock(
 						"core/group",
 						{},
-						innerBlocks.map((i) => createBlock("core/group", {}, i.innerBlocks))
+						innerBlocks.map((i) =>
+							createBlock("core/group", {}, i.innerBlocks),
+						),
 					),
 			},
 		],

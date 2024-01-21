@@ -114,11 +114,11 @@ function DividerBlock(props) {
 					marginTop: borderHeight + "px",
 					marginBottom: borderHeight + "px",
 					width: width + "%",
-			  }
+				}
 			: {
 					width: "fit-content",
 					height: lineHeight,
-			  };
+				};
 	return (
 		<div {...blockProps}>
 			{isSelected && (
@@ -190,7 +190,7 @@ function DividerBlock(props) {
 									isAdaptiveWidth
 									options={AVAILABLE_JUSTIFICATIONS.slice(
 										0,
-										AVAILABLE_JUSTIFICATIONS.length - 1
+										AVAILABLE_JUSTIFICATIONS.length - 1,
 									)}
 									attributeKey="alignment"
 									label={__("Alignment", "ultimate-blocks")}
@@ -272,8 +272,8 @@ function DividerBlock(props) {
 						alignment === "left"
 							? { marginLeft: "0" }
 							: alignment === "right"
-							? { marginRight: "0" }
-							: {}
+								? { marginRight: "0" }
+								: {},
 					)}
 				/>
 			</div>
@@ -281,7 +281,8 @@ function DividerBlock(props) {
 	);
 }
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon,
 	attributes: metadata.attributes,
 	example: {
@@ -321,8 +322,8 @@ registerBlockType(metadata, {
 						"style" in attributes
 							? {
 									borderColor: attributes.style.color.background,
-							  }
-							: {}
+								}
+							: {},
 					),
 			},
 		],

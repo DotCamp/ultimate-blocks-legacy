@@ -518,7 +518,7 @@ function ContentTogglePanel(props) {
 						</PanelRow>
 						<p class="ub-custom-id-input">
 							{__(
-								"Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.” Then, you’ll be able to link directly to this section of your page."
+								"Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.” Then, you’ll be able to link directly to this section of your page.",
 							)}
 							<a
 								href="https://wordpress.org/support/article/page-jumps/"
@@ -736,7 +736,8 @@ const composedEdit = compose([
 	}),
 ]);
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon,
 	edit: composedEdit(ContentTogglePanel),
 	save: () => <InnerBlocks.Content />,
