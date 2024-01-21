@@ -271,9 +271,9 @@ function ub_get_tumblr_icon( $attributes, $icon_size, $iconShape, $caption, $has
  * @return void
  */
 function ub_register_social_share_block() {
-	if( function_exists( 'register_block_type' ) ) {
+	if( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/social-share/block.json', array(
+		register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/social-share/block.json', array(
 			'attributes'      => $defaultValues['ub/social-share']['attributes'],
 			'render_callback' => 'ub_render_social_share_block',
 		) );

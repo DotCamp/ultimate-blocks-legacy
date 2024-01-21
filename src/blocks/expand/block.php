@@ -12,9 +12,9 @@ function ub_render_expand_portion_block($attributes, $content){
 }
 
 function ub_register_expand_portion_block($attributes){
-    if ( function_exists( 'register_block_type' ) ) {
+    if ( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/expand/expand-portion/block.json', array(
+        register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/expand/expand-portion/block.json', array(
             'attributes' => $defaultValues['ub/expand-portion']['attributes'],
 			'render_callback' => 'ub_render_expand_portion_block'));
 	}
@@ -44,9 +44,9 @@ function ub_render_expand_block($attributes, $content){
 }
 
 function ub_register_expand_block($attributes){
-    if ( function_exists( 'register_block_type' ) ) {
+    if ( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/expand/block.json', array(
+        register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/expand/block.json', array(
             'attributes' => $defaultValues['ub/expand']['attributes'],
 			'render_callback' => 'ub_render_expand_block'));
 	}

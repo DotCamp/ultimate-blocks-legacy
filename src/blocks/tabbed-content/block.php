@@ -19,9 +19,9 @@ if ( !class_exists( 'ub_simple_html_dom_node' ) ) {
 }
 
 function ub_register_tab_block(){
-    if(function_exists('register_block_type')){
+    if(function_exists('register_block_type_from_metadata')){
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/tabbed-content/components/block.json', array(
+        register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/tabbed-content/components/block.json', array(
             'attributes' => $defaultValues['ub/tab-block']['attributes'],
             'render_callback' =>  'ub_render_tab_block'));
     }
@@ -102,9 +102,9 @@ function ub_render_tabbed_content_block($attributes, $contents){
 }
 
 function ub_register_tabbed_content_block(){
-    if(function_exists('register_block_type')){
+    if(function_exists('register_block_type_from_metadata')){
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/tabbed-content/block.json', array(
+        register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/tabbed-content/block.json', array(
             'attributes' => $defaultValues['ub/tabbed-content-block']['attributes'],
             'render_callback' =>  'ub_render_tabbed_content_block'));
     }

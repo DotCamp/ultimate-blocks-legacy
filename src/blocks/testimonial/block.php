@@ -27,9 +27,9 @@ function ub_render_testimonial_block($attributes){
 }
 
 function ub_register_testimonial_block() {
-	if( function_exists( 'register_block_type' ) ) {
+	if( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type(dirname(dirname(dirname(__DIR__))) . '/dist/blocks/testimonial', array(
+		register_block_type_from_metadata(dirname(dirname(dirname(__DIR__))) . '/dist/blocks/testimonial', array(
             'attributes' =>$defaultValues['ub/testimonial']['attributes'],
             'render_callback' => 'ub_render_testimonial_block'));
     }

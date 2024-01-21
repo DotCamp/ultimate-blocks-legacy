@@ -18,12 +18,12 @@ function ub_render_icon_block($attributes, $block_content, $block_instance){
  * @return void
  */
 function register_icon_block() {
-	if ( function_exists( 'register_block_type' ) ) {
+	if ( function_exists( 'register_block_type_from_metadata' ) ) {
 		require( trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'src/defaults.php' );
 
 		$block_type_id = 'ub/icon';
 
-		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/icon', [
+		register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/icon', [
 			'attributes'      => $defaultValues[ $block_type_id ]['attributes'],
 			'render_callback' => 'ub_render_icon_block'
 		] );

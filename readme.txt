@@ -144,6 +144,14 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.2 =
+
+* FIX: PHP errors and warning for WP 5.7.3 and PHP 7.4.33.
+* FIX: Video uploading in advanced video block.
+* IMPROVE: Add upsell for post grid pagination.
+* IMPROVE: Color component in button (improved) block.
+* NEW: Border and Radius option in icon block.
+
 = 3.1.1 =
 
 * IMPROVE: Top and bottom space is not same in divider block.

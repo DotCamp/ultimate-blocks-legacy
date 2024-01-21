@@ -283,9 +283,9 @@ function ub_render_how_to_block($attributes){
 }
 
 function ub_register_how_to_block(){
-    if ( function_exists( 'register_block_type' ) ) {
+    if ( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type(dirname(dirname(dirname(__DIR__))) . '/dist/blocks/how-to', array(
+        register_block_type_from_metadata(dirname(dirname(dirname(__DIR__))) . '/dist/blocks/how-to', array(
             'attributes' => $defaultValues['ub/how-to']['attributes'],
             'render_callback' => 'ub_render_how_to_block'));
     }
