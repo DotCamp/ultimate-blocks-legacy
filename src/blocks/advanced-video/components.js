@@ -817,14 +817,16 @@ export function AdvancedVideoBlock(props) {
 		if (!isEmpty(videoURLInput)) {
 			checkVideoURLInput();
 
-			setAttributes({
-				videoEmbedCode: adjustVideoStart(
-					videoSource,
-					videoEmbedCode,
-					startTime,
-					startTime,
-				),
-			});
+			if (videoSource !== "tiktok") {
+				setAttributes({
+					videoEmbedCode: adjustVideoStart(
+						videoSource,
+						videoEmbedCode,
+						startTime,
+						startTime,
+					),
+				});
+			}
 		}
 	}, [videoURLInput]);
 
