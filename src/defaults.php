@@ -2104,6 +2104,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'isShowReviewText' => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
 			'starAlign'       => array(
 				'type'    => 'string',
 				'default' => 'left'

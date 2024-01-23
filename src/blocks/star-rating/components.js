@@ -13,6 +13,7 @@ import {
 	RangeControl,
 	ToolbarGroup,
 	ToolbarButton,
+	ToggleControl,
 } from "@wordpress/components";
 
 export const blockControls = (props) => {
@@ -37,7 +38,7 @@ export const blockControls = (props) => {
 						label={__(
 							(a !== "justify" ? "Align " : "") +
 								a[0].toUpperCase() +
-								a.slice(1)
+								a.slice(1),
 						)}
 						isActive={reviewTextAlign === a}
 						onClick={() => setAttributes({ reviewTextAlign: a })}
@@ -51,8 +52,14 @@ export const blockControls = (props) => {
 export const inspectorControls = (props) => {
 	const { attributes, setAttributes } = props;
 
-	const { starCount, starSize, starColor, selectedStars, reviewTextColor } =
-		attributes;
+	const {
+		starCount,
+		starSize,
+		starColor,
+		selectedStars,
+		reviewTextColor,
+		isShowReviewText,
+	} = attributes;
 	return (
 		<>
 			<InspectorControls group="settings">
@@ -78,6 +85,13 @@ export const inspectorControls = (props) => {
 						max={starCount}
 						step={0.1}
 						beforeIcon="star-half"
+					/>
+					<ToggleControl
+						label={__("Show Review Text", "ultimate-blocks")}
+						checked={isShowReviewText}
+						onChange={() =>
+							setAttributes({ isShowReviewText: !isShowReviewText })
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -161,6 +175,7 @@ export const editorDisplay = (props) => {
 		reviewTextColor,
 		reviewTextAlign,
 		starAlign,
+		isShowReviewText,
 	} = props.attributes;
 	return (
 		<>
@@ -208,24 +223,26 @@ export const editorDisplay = (props) => {
 					))}
 				</div>
 			</div>
-			<RichText
-				tagName="div"
-				className="ub-review-text"
-				placeholder={__("The text of the review goes here")}
-				value={reviewText}
-				style={{
-					textAlign: reviewTextAlign,
-					color: reviewTextColor || "inherit",
-				}}
-				onChange={(text) => setAttributes({ reviewText: text })}
-				keepPlaceholderOnFocus={true}
-				allowedFormats={[
-					"core/bold",
-					"core/italic",
-					"core/strikethrough",
-					"core/link",
-				]}
-			/>
+			{isShowReviewText && (
+				<RichText
+					tagName="div"
+					className="ub-review-text"
+					placeholder={__("The text of the review goes here")}
+					value={reviewText}
+					style={{
+						textAlign: reviewTextAlign,
+						color: reviewTextColor || "inherit",
+					}}
+					onChange={(text) => setAttributes({ reviewText: text })}
+					keepPlaceholderOnFocus={true}
+					allowedFormats={[
+						"core/bold",
+						"core/italic",
+						"core/strikethrough",
+						"core/link",
+					]}
+				/>
+			)}
 		</>
 	);
 };

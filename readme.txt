@@ -151,6 +151,8 @@ That's it. You're done!
 * IMPROVE: Add upsell for post grid pagination.
 * IMPROVE: Color component in button (improved) block.
 * IMPROVE: Icon control in all blocks.
+* IMPROVE: Styled List additional panel opened by default.
+* NEW: Option to hide review text in the star rating block.
 * NEW: Border and Radius option in icon block.
 
 = 3.1.1 =
