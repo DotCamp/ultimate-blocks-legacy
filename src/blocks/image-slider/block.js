@@ -212,7 +212,7 @@ function ImageSliderMain(props) {
 		id: `ub_image_slider_${blockID}`,
 		className: classes.join(" "),
 		style: {
-			minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
+			minHeight: `${30 + (imageArray.length ? sliderHeight : 200)}px`,
 			...getStyles(props.attributes),
 		},
 	});

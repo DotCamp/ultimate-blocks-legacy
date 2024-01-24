@@ -149,9 +149,11 @@ That's it. You're done!
 * FIX: Empty color option in table of content.
 * FIX: PHP errors and warning for WP 5.7.3 and PHP 7.4.33.
 * FIX: Video uploading in advanced video block.
+* PRO: FIX: Changing image slider height with arrow breaks the block.
 * PRO: FIX: Background color not showing in the table of contents.
 * PRO: IMPROVE: Move current icon option in layout panel in the table of content.
 * IMPROVE: Add upsell for post grid pagination.
+* IMPROVE: Showing Pagination outside the image in the image slider.
 * IMPROVE: Color component in button (improved) block.
 * IMPROVE: Icon control in all blocks.
 * IMPROVE: Styled List additional panel opened by default.
