@@ -146,6 +146,7 @@ That's it. You're done!
 
 = 3.1.2 =
 
+* FIX: Empty color option in table of content block.
 * FIX: PHP errors and warning for WP 5.7.3 and PHP 7.4.33.
 * FIX: Video uploading in advanced video block.
 * IMPROVE: Add upsell for post grid pagination.
