@@ -55,8 +55,9 @@ registerBlockType(metadata.name, {
 		blockParentId: (
 			select("core/block-editor") || select("core/editor")
 		).getBlockRootClientId(ownProps.clientId),
+		block: select("core/block-editor").getBlock(ownProps.clientId),
 	}))(function (props) {
-		const { blockParentId, setAttributes } = props;
+		const { blockParentId, setAttributes, block } = props;
 		const { parentID, isActive } = props.attributes;
 		const blockProps = useBlockProps({
 			style: { display: isActive ? "block" : "none" },
@@ -65,18 +66,15 @@ registerBlockType(metadata.name, {
 		// if (parentID === "" || parentID !== blockParentId) {
 		// 	setAttributes({ parentID: blockParentId });
 		// }
-
+		const hasInnerBlocks = block?.innerBlocks?.length > 0;
 		return (
 			<div {...blockProps}>
 				<InnerBlocks
 					templateLock={false}
-					template={[
-						[
-							"core/paragraph",
-							{ placeholder: " " }, //blank string still results into Wordpress displaying default placeholder
-						],
-					]}
-					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
+					template={[["core/paragraph"]]}
+					renderAppender={() =>
+						hasInnerBlocks ? false : <InnerBlocks.ButtonBlockAppender />
+					}
 				/>
 			</div>
 		);

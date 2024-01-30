@@ -158,6 +158,7 @@ That's it. You're done!
 * IMPROVE: Color component in button (improved) block.
 * IMPROVE: Icon control in all blocks.
 * IMPROVE: Styled List additional panel opened by default.
+* IMPROVE: Renderappender in tabbed content block.
 * NEW: Option to hide review text in the star rating block.
 * NEW: Border and Radius option in icon block.
 
