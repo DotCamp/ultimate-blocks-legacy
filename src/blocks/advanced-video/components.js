@@ -817,7 +817,7 @@ export function AdvancedVideoBlock(props) {
 		if (!isEmpty(videoURLInput)) {
 			checkVideoURLInput();
 
-			if (videoSource !== "tiktok") {
+			if (!isEmpty(videoSource) && videoSource !== "tiktok") {
 				setAttributes({
 					videoEmbedCode: adjustVideoStart(
 						videoSource,
