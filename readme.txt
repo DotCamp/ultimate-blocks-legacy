@@ -146,6 +146,7 @@ That's it. You're done!
 
 = 3.1.2 =
 
+* FIX: Default Open option is not working content toggle block.
 * FIX: Empty color option in table of content.
 * FIX: PHP errors and warning for WP 5.7.3 and PHP 7.4.33.
 * FIX: Video uploading in advanced video block.
@@ -161,6 +162,7 @@ That's it. You're done!
 * IMPROVE: Renderappender in tabbed content block.
 * NEW: Option to hide review text in the star rating block.
 * NEW: Border and Radius option in icon block.
+* NEW: Custom CSS Extension.
 
 = 3.1.1 =
 

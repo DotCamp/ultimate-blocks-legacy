@@ -35,6 +35,10 @@
       "type": "boolean",
       "default": false
     },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": false
+    },
     "hasFAQSchema": {
       "type": "boolean",
       "default": false
