@@ -105,7 +105,15 @@
 			height: var(--ub-icon-size, 40px);
 			background: var(--ub-icon-bg-color);
 			transform: var(--ub-icon-rotation);
-
+			border-top-right-radius: var(--ub-icon-top-right-radius);
+			border-top-left-radius: var(--ub-icon-top-left-radius);
+			border-bottom-left-radius: var(--ub-icon-bottom-left-radius);
+			border-bottom-right-radius: var(--ub-icon-bottom-right-radius);
+			border-left: var(--ub-icon-border-left);
+			border-right: var(--ub-icon-border-right);
+			border-top: var(--ub-icon-border-top);
+			border-bottom: var(--ub-icon-border-bottom);
+			box-sizing: content-box;
 			&:hover {
 				fill: var(--ub-icon-hover-color, var(--ub-icon-color));
 				background: var(--ub-icon-bg-hover-color, var(--ub-icon-bg-color));

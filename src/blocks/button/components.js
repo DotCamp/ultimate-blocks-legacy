@@ -10,6 +10,7 @@ import { getStyles } from "./get-styles";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
+import { IconControl } from "../../../library/ub-common/Components";
 
 import {
 	BlockControls,
@@ -41,9 +42,14 @@ import {
 import { __ } from "@wordpress/i18n";
 import { loadPromise, models } from "@wordpress/api";
 import { useSelect } from "@wordpress/data";
-import { SpacingControl, CustomToggleGroupControl } from "../components";
+import {
+	SpacingControl,
+	CustomToggleGroupControl,
+	TabsPanelControl,
+} from "../components";
 import { AVAILABLE_JUSTIFICATIONS, AVAILABLE_ORIENTATION } from "../../common";
 import { splitBorderRadius } from "../utils/styling-helpers";
+import ColorSettings from "./components/ButtonColorSettings";
 
 export const allIcons = Object.assign(fas, fab);
 
@@ -143,7 +149,7 @@ export const inspectorControls = (props) => {
 
 	const iconListPage = splitArrayIntoChunks(
 		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
-		20
+		20,
 	);
 
 	const normalColorPanels = buttons.length && activeButtonIndex > -1 && (
@@ -406,10 +412,10 @@ export const inspectorControls = (props) => {
 											generateIcon(
 												allIcons[
 													`fa${dashesToCamelcase(
-														buttons[activeButtonIndex].chosenIcon
+														buttons[activeButtonIndex].chosenIcon,
 													)}`
 												],
-												35
+												35,
 											)
 										}
 										label={__("Open icon selection dialog", "ultimate-blocks")}
@@ -452,7 +458,7 @@ export const inspectorControls = (props) => {
 													onClick={() => {
 														if (iconSearchResultsPage > 0) {
 															setIconSearchResultsPage(
-																iconSearchResultsPage - 1
+																iconSearchResultsPage - 1,
 															);
 														}
 													}}
@@ -469,7 +475,7 @@ export const inspectorControls = (props) => {
 															iconListPage.length - 1
 														) {
 															setIconSearchResultsPage(
-																iconSearchResultsPage + 1
+																iconSearchResultsPage + 1,
 															);
 														}
 													}}
@@ -747,7 +753,7 @@ export const editorDisplay = (props) => {
 											setActiveButtonIndex(
 												activeButtonIndex > i
 													? activeButtonIndex - 1
-													: Math.min(activeButtonIndex, buttons.length - 2)
+													: Math.min(activeButtonIndex, buttons.length - 2),
 											);
 											setAttributes({
 												buttons: [
@@ -765,8 +771,8 @@ export const editorDisplay = (props) => {
 									b.buttonWidth === "full"
 										? "ub-button-full-width"
 										: b.buttonWidth === "flex"
-										? `ub-button-flex-${b.size}`
-										: ""
+											? `ub-button-flex-${b.size}`
+											: ""
 								}`}
 								onMouseEnter={() => setHoveredButton(i)}
 								onMouseLeave={() => setHoveredButton(-1)}
@@ -775,16 +781,16 @@ export const editorDisplay = (props) => {
 									backgroundColor: b.buttonIsTransparent
 										? "transparent"
 										: hoveredButton === i
-										? b.buttonHoverColor
-										: b.buttonColor,
+											? b.buttonHoverColor
+											: b.buttonColor,
 									color:
 										hoveredButton === i
 											? b.buttonIsTransparent
 												? b.buttonHoverColor
 												: b.buttonTextHoverColor || "inherit"
 											: b.buttonIsTransparent
-											? b.buttonColor
-											: b.buttonTextColor || "inherit",
+												? b.buttonColor
+												: b.buttonTextColor || "inherit",
 									borderRadius: b.buttonRounded
 										? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
 										: "0",
@@ -809,12 +815,12 @@ export const editorDisplay = (props) => {
 								>
 									{b.chosenIcon !== "" &&
 										allIcons.hasOwnProperty(
-											`fa${dashesToCamelcase(b.chosenIcon)}`
+											`fa${dashesToCamelcase(b.chosenIcon)}`,
 										) && (
 											<div className="ub-button-icon-holder">
 												{generateIcon(
 													allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
-													presetIconSize[b.size]
+													presetIconSize[b.size],
 												)}
 											</div>
 										)}
@@ -958,26 +964,14 @@ export function EditorComponent(props) {
 
 	const iconListPage = splitArrayIntoChunks(
 		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
-		20
+		20,
 	);
 
-	const normalColorPanels = buttons.length && activeButtonIndex > -1 && (
+	const normalStateColors = (
 		<>
-			<p>
-				{__("Button Color", "ultimate-blocks")}
-				{buttons[activeButtonIndex]?.buttonColor && (
-					<span
-						class="component-color-indicator"
-						aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonColor})`}
-						style={{
-							background: buttons[activeButtonIndex]?.buttonColor,
-						}}
-					/>
-				)}
-			</p>
-			<ColorPalette
+			<ColorSettings
 				value={buttons[activeButtonIndex]?.buttonColor}
-				onChange={(colorValue) =>
+				onValueChange={(colorValue) =>
 					setAttributes({
 						buttons: [
 							...buttons.slice(0, activeButtonIndex),
@@ -988,57 +982,61 @@ export function EditorComponent(props) {
 						],
 					})
 				}
+				onValueReset={() => {
+					console.log([
+						...buttons.slice(0, activeButtonIndex),
+						Object.assign({}, buttons[activeButtonIndex], {
+							buttonColor: "",
+						}),
+						...buttons.slice(activeButtonIndex + 1),
+					]);
+					setAttributes({
+						buttons: [
+							...buttons.slice(0, activeButtonIndex),
+							Object.assign({}, buttons[activeButtonIndex], {
+								buttonColor: "",
+							}),
+							...buttons.slice(activeButtonIndex + 1),
+						],
+					});
+				}}
+				label={__("Button Color", "ultimate-blocks")}
 			/>
 			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
-				<>
-					<p>
-						{__("Button Text Color", "ultimate-blocks")}
-						{buttons[activeButtonIndex]?.buttonTextColor && (
-							<span
-								class="component-color-indicator"
-								aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonTextColor})`}
-								style={{
-									background: buttons[activeButtonIndex]?.buttonTextColor,
-								}}
-							/>
-						)}
-					</p>
-					<ColorPalette
-						value={buttons[activeButtonIndex]?.buttonTextColor}
-						onChange={(colorValue) =>
-							setAttributes({
-								buttons: [
-									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonTextColor: colorValue,
-									}),
-									...buttons.slice(activeButtonIndex + 1),
-								],
-							})
-						}
-					/>
-				</>
+				<ColorSettings
+					value={buttons[activeButtonIndex]?.buttonTextColor}
+					onValueChange={(colorValue) =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonTextColor: colorValue,
+								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+					onValueReset={() =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonTextColor: "",
+								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+					label={__("Button Text Color", "ultimate-blocks")}
+				/>
 			)}
 		</>
 	);
-
-	const hoverColorPanels = buttons.length && activeButtonIndex > -1 && (
+	const hoverStateColors = (
 		<>
-			<p>
-				{__("Button Color", "ultimate-blocks")}
-				{buttons[activeButtonIndex]?.buttonHoverColor && (
-					<span
-						class="component-color-indicator"
-						aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonHoverColor})`}
-						style={{
-							background: buttons[activeButtonIndex]?.buttonHoverColor,
-						}}
-					/>
-				)}
-			</p>
-			<ColorPalette
+			<ColorSettings
 				value={buttons[activeButtonIndex]?.buttonHoverColor}
-				onChange={(colorValue) =>
+				onValueChange={(colorValue) =>
 					setAttributes({
 						buttons: [
 							...buttons.slice(0, activeButtonIndex),
@@ -1049,36 +1047,46 @@ export function EditorComponent(props) {
 						],
 					})
 				}
+				onValueReset={() =>
+					setAttributes({
+						buttons: [
+							...buttons.slice(0, activeButtonIndex),
+							Object.assign({}, buttons[activeButtonIndex], {
+								buttonHoverColor: "",
+							}),
+							...buttons.slice(activeButtonIndex + 1),
+						],
+					})
+				}
+				label={__("Button Color", "ultimate-blocks")}
 			/>
 			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
-				<>
-					<p>
-						{__("Button Text Color", "ultimate-blocks")}
-						{buttons[activeButtonIndex]?.buttonTextHoverColor && (
-							<span
-								class="component-color-indicator"
-								aria-label={`(Color: ${buttons[activeButtonIndex]?.buttonTextHoverColor})`}
-								style={{
-									background: buttons[activeButtonIndex]?.buttonTextHoverColor,
-								}}
-							/>
-						)}
-					</p>
-					<ColorPalette
-						value={buttons[activeButtonIndex]?.buttonTextHoverColor}
-						onChange={(colorValue) =>
-							setAttributes({
-								buttons: [
-									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonTextHoverColor: colorValue,
-									}),
-									...buttons.slice(activeButtonIndex + 1),
-								],
-							})
-						}
-					/>
-				</>
+				<ColorSettings
+					value={buttons[activeButtonIndex]?.buttonTextHoverColor}
+					onValueChange={(colorValue) =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonTextHoverColor: colorValue,
+								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+					onValueReset={() =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonTextHoverColor: "",
+								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+					label={__("Button Text Color", "ultimate-blocks")}
+				/>
 			)}
 		</>
 	);
@@ -1101,7 +1109,7 @@ export function EditorComponent(props) {
 						.map((f) => ({
 							name: f.name,
 							selectionTime: f.selectionTime.filter(
-								(t) => t >= currentTime - 1209600
+								(t) => t >= currentTime - 1209600,
 							),
 						}))
 						.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
@@ -1122,7 +1130,7 @@ export function EditorComponent(props) {
 
 					[icons, otherIcons] = splitArray(
 						iconList.map((name) => allIcons[name]),
-						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
+						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName),
 					);
 
 					const frequentIconNames = frequentIcons.map((i) => i.name);
@@ -1130,7 +1138,7 @@ export function EditorComponent(props) {
 					icons.sort(
 						(a, b) =>
 							frequentIconNames.indexOf(a.iconName) -
-							frequentIconNames.indexOf(b.iconName)
+							frequentIconNames.indexOf(b.iconName),
 					);
 
 					setAvailableIcons([...icons, ...otherIcons]);
@@ -1172,14 +1180,14 @@ export function EditorComponent(props) {
 		let icons = []; //most recent selection should always be first element of array
 		let otherIcons = [];
 		[icons, otherIcons] = splitArray(availableIcons, (icon) =>
-			iconPrefs.map((i) => i.name).includes(icon.iconName)
+			iconPrefs.map((i) => i.name).includes(icon.iconName),
 		);
 
 		const iconPrefsName = iconPrefs.map((i) => i.name);
 
 		icons.sort(
 			(a, b) =>
-				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName)
+				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName),
 		);
 
 		setRecentSelection("");
@@ -1198,7 +1206,7 @@ export function EditorComponent(props) {
 		setAvailableIcons(
 			Object.keys(allIcons)
 				.sort()
-				.map((name) => allIcons[name])
+				.map((name) => allIcons[name]),
 		);
 
 		loadIconList();
@@ -1255,7 +1263,7 @@ export function EditorComponent(props) {
 		}
 	}, []);
 	useEffect(() => {
-		if (!isBorderComponentChanged) {
+		if (!isBorderComponentChanged && buttons.length > 0) {
 			const newButtons = buttons.map((b) => {
 				b.topLeftRadiusUnit = b.buttonRadiusUnit;
 				b.topRightRadiusUnit = b.buttonRadiusUnit;
@@ -1410,134 +1418,22 @@ export function EditorComponent(props) {
 									title={__("Icon", "ultimate-blocks")}
 									initialOpen={true}
 								>
-									<div className="ub-button-grid">
-										<p>{__("Selected icon", "ultimate-blocks")}</p>
-										<div className="ub-button-grid-selector">
-											<Dropdown
-												position="bottom right"
-												renderToggle={({ isOpen, onToggle }) => (
-													<Button
-														className="ub-button-icon-select"
-														icon={
-															buttons[activeButtonIndex].chosenIcon !== "" &&
-															generateIcon(
-																allIcons[
-																	`fa${dashesToCamelcase(
-																		buttons[activeButtonIndex].chosenIcon
-																	)}`
-																],
-																35
-															)
-														}
-														label={__(
-															"Open icon selection dialog",
-															"ultimate-blocks"
-														)}
-														onClick={onToggle}
-														aria-expanded={isOpen}
-													/>
-												)}
-												renderContent={() => (
-													<div>
-														<input
-															type="text"
-															value={iconSearchTerm}
-															onChange={(e) => {
-																setIconSearchTerm(e.target.value);
-																setIconSearchResultsPage(0);
-															}}
-														/>
-														{iconSearchTerm === "" && (
-															<Button
-																className="ub-button-available-icon"
-																onClick={() => {
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					chosenIcon: "",
-																				}
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
-																		],
-																	});
-																	setRecentSelection("");
-																}}
-															>
-																{__("No icon", "ultimate-blocks")}
-															</Button>
-														)}
-														<br />
-														{iconListPage.length > 0 && (
-															<div>
-																<button
-																	onClick={() => {
-																		if (iconSearchResultsPage > 0) {
-																			setIconSearchResultsPage(
-																				iconSearchResultsPage - 1
-																			);
-																		}
-																	}}
-																>
-																	&lt;
-																</button>
-																<span>
-																	{iconSearchResultsPage + 1}/
-																	{iconListPage.length}
-																</span>
-																<button
-																	onClick={() => {
-																		if (
-																			iconSearchResultsPage <
-																			iconListPage.length - 1
-																		) {
-																			setIconSearchResultsPage(
-																				iconSearchResultsPage + 1
-																			);
-																		}
-																	}}
-																>
-																	&gt;
-																</button>
-															</div>
-														)}
-														{iconListPage.length > 0 &&
-															iconListPage[iconSearchResultsPage].map((i) => (
-																<Button
-																	className="ub-button-available-icon"
-																	icon={generateIcon(i, 35)}
-																	label={i.iconName}
-																	onClick={() => {
-																		setAttributes({
-																			buttons: [
-																				...buttons.slice(0, activeButtonIndex),
-																				Object.assign(
-																					{},
-																					buttons[activeButtonIndex],
-																					{
-																						chosenIcon: i.iconName,
-																					}
-																				),
-																				...buttons.slice(activeButtonIndex + 1),
-																			],
-																		});
-																		setRecentSelection(i.iconName);
-																		setSelectionTime(~~(Date.now() / 1000));
-																	}}
-																/>
-															))}
-													</div>
-												)}
-												onToggle={(isOpen) => {
-													if (!isOpen && recentSelection && hasApiAccess) {
-														updateIconList();
-													}
-												}}
-											/>
-										</div>
+									<div style={{ gridColumn: "1/-1" }}>
+										<IconControl
+											onIconSelect={(val) => {
+												setAttributes({
+													buttons: [
+														...buttons.slice(0, activeButtonIndex),
+														Object.assign({}, buttons[activeButtonIndex], {
+															chosenIcon: val,
+														}),
+														...buttons.slice(activeButtonIndex + 1),
+													],
+												});
+											}}
+											label={__("Icon", "ultimate-blocks-pro")}
+											selectedIcon={buttons[activeButtonIndex].chosenIcon}
+										/>
 									</div>
 									<RadioControl
 										className="ub-button-icon-position"
@@ -1590,7 +1486,7 @@ export function EditorComponent(props) {
 															Object.assign(
 																{},
 																buttons[activeButtonIndex],
-																newAttributes
+																newAttributes,
 															),
 															...buttons.slice(activeButtonIndex + 1),
 														],
@@ -1616,7 +1512,7 @@ export function EditorComponent(props) {
 																		buttons[activeButtonIndex],
 																		{
 																			iconSize: value,
-																		}
+																		},
 																	),
 																	...buttons.slice(activeButtonIndex + 1),
 																],
@@ -1626,7 +1522,7 @@ export function EditorComponent(props) {
 													<ButtonGroup
 														aria-label={__(
 															"Button Size Unit",
-															"ultimate-blocks"
+															"ultimate-blocks",
 														)}
 													>
 														{["px", "em"].map((b) => (
@@ -1647,7 +1543,7 @@ export function EditorComponent(props) {
 																				buttons[activeButtonIndex],
 																				{
 																					iconUnit: b,
-																				}
+																				},
 																			),
 																			...buttons.slice(activeButtonIndex + 1),
 																		],
@@ -1711,7 +1607,7 @@ export function EditorComponent(props) {
 											const plusButton = el.querySelector("button");
 
 											const textEditor = el.querySelector(
-												'div[role="textbox"]'
+												'div[role="textbox"]',
 											);
 											if (textEditor) {
 												// disable in-place text editor
@@ -1725,7 +1621,7 @@ export function EditorComponent(props) {
 									}}
 								/>
 								<PanelBody
-									title={__("Colors", "ultimate-blocks")}
+									title={__("Button Styling", "ultimate-blocks")}
 									initialOpen={true}
 								>
 									<ToggleControl
@@ -1744,25 +1640,6 @@ export function EditorComponent(props) {
 											})
 										}
 									/>
-									<TabPanel
-										className="ub-tab-panels"
-										tabs={[
-											{
-												name: "buttoncolor",
-												title: __("Normal"),
-											},
-											{
-												name: "buttonhovercolor",
-												title: __("Hover"),
-											},
-										]}
-									>
-										{(tab) =>
-											tab.name === "buttoncolor"
-												? normalColorPanels
-												: hoverColorPanels
-										}
-									</TabPanel>
 								</PanelBody>
 							</>
 						)}
@@ -1783,6 +1660,24 @@ export function EditorComponent(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
+					{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
+						<InspectorControls group="color">
+							<TabsPanelControl
+								tabs={[
+									{
+										name: "normalState",
+										title: __("Normal", "ultimate-blocks"),
+										component: normalStateColors,
+									},
+									{
+										name: "hoverState",
+										title: __("Hover", "ultimate-blocks"),
+										component: hoverStateColors,
+									},
+								]}
+							/>
+						</InspectorControls>
+					)}
 					{!isEmpty(buttons[activeButtonIndex]) && (
 						<InspectorControls group="border">
 							<ToolsPanelItem
@@ -1856,7 +1751,7 @@ export function EditorComponent(props) {
 											setActiveButtonIndex(
 												activeButtonIndex > i
 													? activeButtonIndex - 1
-													: Math.min(activeButtonIndex, buttons.length - 2)
+													: Math.min(activeButtonIndex, buttons.length - 2),
 											);
 
 											setAttributes({
@@ -1875,8 +1770,8 @@ export function EditorComponent(props) {
 									b.buttonWidth === "full"
 										? "ub-button-full-width"
 										: b.buttonWidth === "flex"
-										? `ub-button-flex-${b.size}`
-										: ""
+											? `ub-button-flex-${b.size}`
+											: ""
 								}`}
 								onMouseEnter={() => setHoveredButton(i)}
 								onMouseLeave={() => setHoveredButton(-1)}
@@ -1885,16 +1780,16 @@ export function EditorComponent(props) {
 									backgroundColor: b.buttonIsTransparent
 										? "transparent"
 										: hoveredButton === i
-										? b.buttonHoverColor
-										: b.buttonColor,
+											? b.buttonHoverColor
+											: b.buttonColor,
 									color:
 										hoveredButton === i
 											? b.buttonIsTransparent
 												? b.buttonHoverColor
 												: b.buttonTextHoverColor || "inherit"
 											: b.buttonIsTransparent
-											? b.buttonColor
-											: b.buttonTextColor || "inherit",
+												? b.buttonColor
+												: b.buttonTextColor || "inherit",
 									borderTopLeftRadius: b?.borderRadius?.topLeft,
 									borderTopRightRadius: b?.borderRadius?.topRight,
 									borderBottomLeftRadius: b?.borderRadius?.bottomLeft,
@@ -1920,13 +1815,13 @@ export function EditorComponent(props) {
 								>
 									{b.chosenIcon !== "" &&
 										allIcons.hasOwnProperty(
-											`fa${dashesToCamelcase(b.chosenIcon)}`
+											`fa${dashesToCamelcase(b.chosenIcon)}`,
 										) && (
 											<div className="ub-button-icon-holder">
 												{generateIcon(
 													allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
 													b.iconSize || presetIconSize[b.size],
-													b.iconUnit || "px"
+													b.iconUnit || "px",
 												)}
 											</div>
 										)}

@@ -21,7 +21,8 @@ import { withSelect, withDispatch } from "@wordpress/data";
 
 import { compose } from "@wordpress/compose";
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	attributes: metadata.attributes,
 	example: {
@@ -142,7 +143,7 @@ function ExpandPortion(props) {
 							getBlock(parentBlockID).innerBlocks.forEach((innerBlock) =>
 								updateBlockAttributes(innerBlock.clientId, {
 									toggleAlign: newAlignment,
-								})
+								}),
 							);
 						}}
 						controls={["left", "center", "right"]}
@@ -163,7 +164,7 @@ function ExpandPortion(props) {
 					value={clickText}
 					onChange={(value) => setAttributes({ clickText: value })}
 					placeholder={__(
-						`Text for show ${displayType === "full" ? "less" : "more"} button`
+						`Text for show ${displayType === "full" ? "less" : "more"} button`,
 					)}
 				/>
 			</div>
@@ -171,7 +172,8 @@ function ExpandPortion(props) {
 	);
 }
 
-registerBlockType(expandPortionMetadata, {
+registerBlockType(expandPortionMetadata.name, {
+	...expandPortionMetadata,
 	icon: icon,
 	edit: compose([
 		withSelect((select, ownProps) => {

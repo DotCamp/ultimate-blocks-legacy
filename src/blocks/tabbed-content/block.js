@@ -167,7 +167,7 @@ registerBlockType("ub/tabbed-content", {
 								tabContent.push(
 									createBlock("core/paragraph", {
 										content: paragraph,
-									})
+									}),
 								);
 							} else if (paragraph.type === "br") {
 								if (t.content[i - 1].type === "br") {
@@ -177,7 +177,7 @@ registerBlockType("ub/tabbed-content", {
 								tabContent.push(
 									createBlock("core/paragraph", {
 										content: richTextToHTML(paragraph),
-									})
+									}),
 								);
 							}
 						});
@@ -191,7 +191,8 @@ registerBlockType("ub/tabbed-content", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	attributes: metadata.attributes,
 	icon: icon,
 	example: {},

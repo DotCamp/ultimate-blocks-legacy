@@ -212,7 +212,7 @@ function ImageSliderMain(props) {
 		id: `ub_image_slider_${blockID}`,
 		className: classes.join(" "),
 		style: {
-			minHeight: `${20 + (imageArray.length ? sliderHeight : 200)}px`,
+			minHeight: `${30 + (imageArray.length ? sliderHeight : 200)}px`,
 			...getStyles(props.attributes),
 		},
 	});
@@ -247,7 +247,7 @@ function ImageSliderMain(props) {
 													text: img.caption,
 													link: "",
 													id: img.id,
-											  }
+												},
 									);
 
 									setAttributes({
@@ -364,7 +364,7 @@ function ImageSliderMain(props) {
 									(o) => ({
 										label: __(o),
 										value: o,
-									})
+									}),
 								)}
 								onChange={(transition) => {
 									setAttributes({ transition });
@@ -569,7 +569,7 @@ function ImageSliderMain(props) {
 																	id: img.id,
 																	text: img.text,
 																	link: "",
-																}))
+																})),
 															),
 														}),
 												})
@@ -595,7 +595,7 @@ function ImageSliderMain(props) {
 									onChange={(text) => {
 										const currentItem = Object.assign(
 											{},
-											descriptions[activeSlide]
+											descriptions[activeSlide],
 										);
 
 										setAttributes({
@@ -639,7 +639,7 @@ function ImageSliderMain(props) {
 									onChange={(link) => {
 										const currentItem = Object.assign(
 											{},
-											captionArray[activeSlide]
+											captionArray[activeSlide],
 										);
 
 										setAttributes({
@@ -665,7 +665,8 @@ function ImageSliderMain(props) {
 	);
 }
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	example: {},
 	attributes: metadata.attributes,

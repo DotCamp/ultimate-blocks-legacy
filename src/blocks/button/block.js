@@ -79,7 +79,7 @@ registerBlockType("ub/button-block", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -170,8 +170,8 @@ registerBlockType("ub/button-block", {
 								"ub/button",
 								Object.assign(otherAttributes, {
 									buttonText: mergeRichTextArray(attributes.buttonText),
-								})
-							)
+								}),
+							),
 						);
 					}}
 				>
@@ -240,7 +240,7 @@ registerBlockType("ub/button-block", {
 								<span className="ub-button-icon-holder">
 									{generateIcon(
 										allIcons[`fa${dashesToCamelcase(chosenIcon)}`],
-										presetIconSize[size]
+										presetIconSize[size],
 									)}
 								</span>
 							)}
@@ -258,7 +258,8 @@ registerBlockType("ub/button-block", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	edit: EditorComponent,
 	attributes: metadata.attributes,
 	save: () => null,
@@ -354,7 +355,7 @@ registerBlockType(metadata, {
 						}
 
 						const oldButtonStyle = window.getComputedStyle(
-							document.querySelector(`#block-${ib.clientId}>div`)
+							document.querySelector(`#block-${ib.clientId}>div`),
 						);
 
 						const isUsingOutline =
@@ -373,7 +374,7 @@ registerBlockType(metadata, {
 								buttonIsTransparent: isUsingOutline,
 								url: ib.attributes.url,
 							},
-							radiusSettings
+							radiusSettings,
 						);
 
 						return JSON.parse(JSON.stringify(buttonAttributes)); //prevent old buttonAttributes values from overwriting new ones

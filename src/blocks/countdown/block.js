@@ -88,8 +88,8 @@ function CountdownMain(props) {
 					if (styleClass.id.includes(blockClass)) {
 						return styleClass;
 					}
-				})
-		  ).length > 0;
+				}),
+			).length > 0;
 	useEffect(() => {
 		const appliedStyleClass = blockStylesClass.find((styleClass) => {
 			if (styleClass.type === style) {
@@ -114,8 +114,8 @@ function CountdownMain(props) {
 			? blockStylesClass.filter((styleClass) =>
 					blockClassName
 						.split(" ")
-						.find((blockClass) => styleClass.id.includes(blockClass))
-			  )
+						.find((blockClass) => styleClass.id.includes(blockClass)),
+				)
 			: [];
 		if (hasBlockClass && appliedStyleClass.length > 0) {
 			setAttributes({ style: appliedStyleClass[0].type });
@@ -219,7 +219,7 @@ function CountdownMain(props) {
 								label={__(
 									(a !== "justify" ? "Align " : "") +
 										a[0].toUpperCase() +
-										a.slice(1)
+										a.slice(1),
 								)}
 								isActive={messageAlign === a}
 								onClick={() => setAttributes({ messageAlign: a })}
@@ -255,7 +255,8 @@ function CountdownMain(props) {
 	);
 }
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	attributes: metadata.attributes,
 	icon: icon,
 	category: "ultimateblocks",

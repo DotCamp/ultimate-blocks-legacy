@@ -341,7 +341,8 @@ function ProgressBarMain(props) {
 	);
 }
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon,
 	attributes: metadata.attributes,
 	example: {

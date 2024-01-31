@@ -5,7 +5,7 @@ import { isUndefined, trim, isEmpty, omitBy, isNumber } from "lodash";
 /**
  * Custom Dependencies
  */
-import { getSpacingCss } from "../utils/styling-helpers";
+import { getBorderVariablesCss, getSpacingCss } from "../utils/styling-helpers";
 /**
  *
  * @param {Array} attributes
@@ -19,7 +19,7 @@ export function getStyles(attributes) {
 		: "";
 	const paddingObj = getSpacingCss(attributes.padding);
 	const marginObj = getSpacingCss(attributes.margin);
-
+	const border = getBorderVariablesCss(attributes.border, "icon");
 	let styles = {
 		"--ub-icon-rotation": rotation,
 		"--ub-icon-size": attributes?.size,
@@ -40,6 +40,11 @@ export function getStyles(attributes) {
 		"--ub-icon-margin-right": marginObj?.right,
 		"--ub-icon-margin-bottom": marginObj?.bottom,
 		"--ub-icon-margin-left": marginObj?.left,
+		"--ub-icon-top-left-radius": attributes.borderRadius?.topLeft,
+		"--ub-icon-top-right-radius": attributes.borderRadius?.topRight,
+		"--ub-icon-bottom-left-radius": attributes.borderRadius?.bottomLeft,
+		"--ub-icon-bottom-right-radius": attributes.borderRadius?.bottomRight,
+		...border,
 	};
 
 	return omitBy(styles, (value) => {

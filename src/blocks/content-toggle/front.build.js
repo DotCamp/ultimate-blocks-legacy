@@ -121,7 +121,6 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
       "important" //just in case blocks from other plugins use !important
       );
     }
-
     Array.prototype.slice.call(toggleContainer.children).map(function (p) {
       return p.children[0];
     }).filter(function (toggle) {

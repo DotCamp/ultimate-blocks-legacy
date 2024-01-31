@@ -97,13 +97,13 @@ function NewDropdown(props) {
 													? [
 															...selectedFilters[item.category].slice(
 																0,
-																item.index
+																item.index,
 															),
 															!selectedFilters[item.category][item.index],
 															...selectedFilters[item.category].slice(
-																item.index + 1
+																item.index + 1,
 															),
-													  ]
+														]
 													: item.index,
 												...selectedFilters.slice(item.category + 1),
 											],
@@ -137,7 +137,7 @@ function OldContentFilterEntry(props) {
 				newSelectedFilters.push(
 					category.canUseMultiple
 						? Array(category.filters.length).fill(false)
-						: -1
+						: -1,
 				);
 			});
 
@@ -156,7 +156,7 @@ function OldContentFilterEntry(props) {
 							name: availableFilters[i].filters[a.index],
 							categoryIndex: i,
 							tagIndex: a.index,
-						})
+						}),
 					);
 			} else
 				tempTagList.push(
@@ -165,8 +165,8 @@ function OldContentFilterEntry(props) {
 								name: availableFilters[i].filters[selection],
 								categoryIndex: i,
 								tagIndex: selection,
-						  }
-						: null
+							}
+						: null,
 				);
 		});
 
@@ -193,7 +193,7 @@ function OldContentFilterEntry(props) {
 														...selectedFilters[i].slice(0, j),
 														false,
 														...selectedFilters[i].slice(j + 1),
-												  ]
+													]
 												: -1,
 											...selectedFilters.slice(i + 1),
 										];
@@ -229,7 +229,7 @@ function ContentFilterEntry(props) {
 				newSelectedFilters.push(
 					category.canUseMultiple
 						? Array(category.filters.length).fill(false)
-						: -1
+						: -1,
 				);
 			});
 
@@ -248,7 +248,7 @@ function ContentFilterEntry(props) {
 							name: availableFilters[i].filters[a.index],
 							categoryIndex: i,
 							tagIndex: a.index,
-						})
+						}),
 					);
 			} else
 				tempTagList.push(
@@ -257,8 +257,8 @@ function ContentFilterEntry(props) {
 								name: availableFilters[i].filters[selection],
 								categoryIndex: i,
 								tagIndex: selection,
-						  }
-						: null
+							}
+						: null,
 				);
 		});
 
@@ -310,7 +310,7 @@ function ContentFilterEntry(props) {
 															...selectedFilters[i].slice(0, j),
 															false,
 															...selectedFilters[i].slice(j + 1),
-													  ]
+														]
 													: -1,
 												...selectedFilters.slice(i + 1),
 											];
@@ -377,7 +377,7 @@ registerBlockType("ub/content-filter-entry", {
 							name: availableFilters[i].filters[a.index],
 							categoryIndex: i,
 							tagIndex: a.index,
-						})
+						}),
 					);
 			} else if (selection > -1) {
 				tagList.push({
@@ -408,7 +408,8 @@ registerBlockType("ub/content-filter-entry", {
 	},
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	attributes: metadata.attributes,
 	icon: icon,
 	edit: ContentFilterEntry,

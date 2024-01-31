@@ -71,7 +71,7 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 					[
 						regexPart,
 						'(\\?[A-Za-z_]+=[^&"#\\s]+(?:(?:&[A-Za-z_]+=[^&#"\\s]+)*))?(?:#[^&#"\\s]+)?',
-					].join("")
+					].join(""),
 				);
 
 				const embedArgs = embedRegex.exec(embedCode);
@@ -83,25 +83,25 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 					if (timecodeCanBeRemoved) {
 						newEmbedCode = embedCode.replace(
 							embedArgs[0],
-							`${timecodeCanBeRemoved[1]}#${arg}`
+							`${timecodeCanBeRemoved[1]}#${arg}`,
 						);
 					} else {
 						newEmbedCode = embedCode.replace(
 							embedArgs[0],
-							`${embedArgs[0]}#${arg}`
+							`${embedArgs[0]}#${arg}`,
 						);
 					}
 				} else if (embedArgs && embedArgs[1]) {
 					if (!embedArgs[1].includes(arg)) {
 						newEmbedCode = embedCode.replace(
 							embedArgs[1],
-							`${embedArgs[1]}&${arg}`
+							`${embedArgs[1]}&${arg}`,
 						);
 					}
 				} else {
 					newEmbedCode = embedCode.replace(
 						embedArgs[0],
-						`${embedArgs[0]}?${arg}`
+						`${embedArgs[0]}?${arg}`,
 					);
 				}
 			} else {
@@ -109,7 +109,7 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 
 				newEmbedCode = embedCode.replace(
 					videoTag[0],
-					videoTag[0].replace("<video", `<video ${arg}`)
+					videoTag[0].replace("<video", `<video ${arg}`),
 				);
 			}
 		}
@@ -146,7 +146,7 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 						arg,
 						"))",
 					].join(""),
-					"g"
+					"g",
 				);
 
 				const embedArgs = embedRegex.exec(newEmbedCode);
@@ -154,12 +154,12 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 					//embedargs cannot be used. use another regex code. vimeo scenario
 					const vimeoTimeCode =
 						/https:\/\/player\.vimeo\.com\/video\/[0-9]+(\?[A-Za-z_]+=[^&"\s]+(?:(?:&[A-Za-z_]+=[^&"\s]+)*))?/.exec(
-							newEmbedCode
+							newEmbedCode,
 						);
 
 					newEmbedCode = newEmbedCode.replace(
 						vimeoTimeCode[1],
-						vimeoTimeCode[1].replace(/#t=.+/, "")
+						vimeoTimeCode[1].replace(/#t=.+/, ""),
 					);
 				} else {
 					if (embedArgs[1].includes(arg)) {
@@ -174,12 +174,12 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 
 							newEmbedCode = embedCode.replace(
 								embedArgs[1],
-								embedArgs[1].replace(fullArg, "")
+								embedArgs[1].replace(fullArg, ""),
 							);
 						} else {
 							newEmbedCode = embedCode.replace(
 								embedArgs[0],
-								embedArgs[0].replace(`?${arg}`, "")
+								embedArgs[0].replace(`?${arg}`, ""),
 							);
 						}
 					}
@@ -187,14 +187,14 @@ function editEmbedArgs(source, embedCode, mode, arg, isTimeCode = false) {
 			} else {
 				const videoControlsRegex = new RegExp(
 					`<video(?: .+)* ${arg}(?: .+?)*?>`,
-					"g"
+					"g",
 				);
 
 				const videoControlsMatch = videoControlsRegex.exec(embedCode);
 
 				newEmbedCode = embedCode.replace(
 					videoControlsMatch[0],
-					videoControlsMatch[0].replace(` ${arg}`, "")
+					videoControlsMatch[0].replace(` ${arg}`, ""),
 				);
 			}
 		}
@@ -248,7 +248,7 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 			embedCode,
 			startTime > 0 ? "add" : "remove",
 			startTime > 0 ? startCode : makeTimeCode(prevStartTime),
-			true
+			true,
 		);
 	} else if (["youtube", "dailymotion"].includes(source)) {
 		if (prevStartTime > 0) {
@@ -256,7 +256,7 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 				source,
 				embedCode,
 				"remove",
-				`start=${prevStartTime}`
+				`start=${prevStartTime}`,
 			);
 		}
 
@@ -267,21 +267,21 @@ function adjustVideoStart(source, embedCode, startTime, prevStartTime = 0) {
 		//case handler for local/direct
 		const embedArgs =
 			/<source (?:[^"=\s]+=".+?" )*(src="[^#"]+(#t=[0-9]+)?")/.exec(
-				newEmbedCode
+				newEmbedCode,
 			);
 
-		if (embedArgs[2]) {
+		if (!isEmpty(embedArgs[2])) {
 			newEmbedCode = newEmbedCode.replace(
 				embedArgs[1],
 				embedArgs[1].replace(
 					embedArgs[2],
-					startTime > 0 ? `#t=${startTime}` : ""
-				)
+					startTime > 0 ? `#t=${startTime}` : "",
+				),
 			);
 		} else {
 			newEmbedCode = newEmbedCode.replace(
 				embedArgs[1],
-				embedArgs[1].replace(/"$/g, `#t=${startTime}"`)
+				embedArgs[1].replace(/"$/g, `#t=${startTime}"`),
 			);
 		}
 	}
@@ -298,7 +298,7 @@ function editThumbnail(source, embedCode, mode, thumbnailURL) {
 export function AdvancedVideoBlock(props) {
 	const [enterVideoURL, setVideoURLStatus] = useState(false);
 	const [videoURLInput, setVideoURLInput] = useState(
-		props.attributes.url ?? ""
+		props.attributes.url ?? "",
 	);
 	const [allowCustomStartTime, setStartTimeStatus] = useState(false);
 	const [useCustomThumbnail, setCustomThumbnailStatus] = useState(false);
@@ -442,19 +442,6 @@ export function AdvancedVideoBlock(props) {
 	useEffect(() => {
 		setAttributes({ blockID: block.clientId });
 	}, [block.clientId]);
-	const currentColor =
-		currentBorder === "top"
-			? topBorderColor
-			: currentBorder === "left"
-			? leftBorderColor
-			: currentBorder === "right"
-			? rightBorderColor
-			: bottomBorderColor;
-
-	const hasBorder =
-		[topBorderSize, rightBorderSize, bottomBorderSize, leftBorderSize].filter(
-			(s) => s > 0
-		).length > 0;
 
 	const checkVideoURLInput = () => {
 		let videoURL = videoURLInput.trim();
@@ -462,19 +449,19 @@ export function AdvancedVideoBlock(props) {
 		if (/^http(s)?:\/\//g.test(videoURL)) {
 			const youtubeMatch =
 				/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
-					videoURL
+					videoURL,
 				);
 			const vimeoMatch =
 				/^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
-					videoURL
+					videoURL,
 				);
 			const dailyMotionMatch =
 				/^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
-					videoURL
+					videoURL,
 				);
 			const videoPressMatch =
 				/^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
-					videoURL
+					videoURL,
 				);
 
 			const facebookVideoRegex = new RegExp(
@@ -484,46 +471,46 @@ export function AdvancedVideoBlock(props) {
 					"?\\.?facebook\\.com\\/(?:(?:watch\\/\\?v=)|(?:[A-Za-z0-9.]+\\/videos\\/))[0-9]+)", //main fb video url, second part (both watch/?v=[postid] and [userid/pageid]/videos/[postid] variants)
 					"|fb\\.watch\\/[A-Za-z0-9_]+)\\/?", //fb.watch variant
 				].join(""),
-				"g"
+				"g",
 			);
 
 			const facebookVideoMatch = facebookVideoRegex.exec(videoURL);
 			const tiktokMatch =
 				/^(?:https?:\/\/)?(?:www\.)?tiktok\.com\/(?:\w+\/)?@[\w.-]+\/video\/\d+/g.exec(
-					videoURL
+					videoURL,
 				);
 
 			if (youtubeMatch) {
 				fetch(
-					`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
+					`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`,
 				)
 					.then((response) => {
 						response.json().then((data) => {
 							if (data.items.length) {
 								let timePeriods = data.items[0].contentDetails.duration.match(
-									/(\d{1,2}(?:W|D|H|M|S))/g
+									/(\d{1,2}(?:W|D|H|M|S))/g,
 								);
 								const videoHeight = get(
 									data.items[0],
 									"snippet.thumbnails.maxres.height",
-									get(data.items[0], "snippet.thumbnails.high.height", height)
+									get(data.items[0], "snippet.thumbnails.high.height", height),
 								);
 								const videoWidth = get(
 									data.items[0],
 									"snippet.thumbnails.maxres.width",
-									get(data.items[0], "snippet.thumbnails.high.width", width)
+									get(data.items[0], "snippet.thumbnails.high.width", width),
 								);
 								let embedCode = data.items[0].player.embedHtml;
 								embedCode = embedCode.replace(
 									/height="[0-9]+%?"/,
-									`height="${videoHeight}"`
+									`height="${videoHeight}"`,
 								);
 								embedCode = embedCode.replace(
 									/width="[0-9]+%?"/,
-									`width="${videoWidth}"`
+									`width="${videoWidth}"`,
 								);
 								const parsedCode = /<iframe width="(\d+)" height="(\d+)/.exec(
-									embedCode
+									embedCode,
 								);
 
 								setAttributes({
@@ -571,7 +558,7 @@ export function AdvancedVideoBlock(props) {
 								.then((data) => {
 									const newWidth = Math.min(600, data[0].width);
 									const newHeight = Math.round(
-										(data[0].height * newWidth) / data[0].width
+										(data[0].height * newWidth) / data[0].width,
 									);
 
 									setAttributes({
@@ -584,8 +571,8 @@ export function AdvancedVideoBlock(props) {
 									});
 									fetch(
 										`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
-											data[0].url
-										)}&width=${newWidth}&height=${newHeight}`
+											data[0].url,
+										)}&width=${newWidth}&height=${newHeight}`,
 									)
 										.then((response) => {
 											response.json().then((data) => {
@@ -614,14 +601,14 @@ export function AdvancedVideoBlock(props) {
 					});
 			} else if (dailyMotionMatch) {
 				fetch(
-					`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cheight%2Cwidth%2Cduration`
+					`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cheight%2Cwidth%2Cduration`,
 				)
 					.then((response) => {
 						if (response.ok) {
 							response.json().then((data) => {
 								const newWidth = Math.min(600, data.width);
 								const newHeight = Math.round(
-									(data.height * newWidth) / data.width
+									(data.height * newWidth) / data.width,
 								);
 
 								setAttributes({
@@ -645,14 +632,14 @@ export function AdvancedVideoBlock(props) {
 					});
 			} else if (videoPressMatch) {
 				fetch(
-					`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
+					`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`,
 				)
 					.then((response) => {
 						if (response.ok) {
 							response.json().then((data) => {
 								const newWidth = Math.min(600, data.width);
 								const newHeight = Math.round(
-									(data.height * newWidth) / data.width
+									(data.height * newWidth) / data.width,
 								);
 
 								setAttributes({
@@ -678,7 +665,7 @@ export function AdvancedVideoBlock(props) {
 				setAttributes({
 					url: videoURL,
 					videoEmbedCode: `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
-						videoURL
+						videoURL,
 					)}&width=600&show_text=false&height=600&appId" width="600" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
 					width: 600,
 					height: 600,
@@ -692,7 +679,7 @@ export function AdvancedVideoBlock(props) {
 							response.json().then((data) => {
 								const newWidth = Math.min(600, data.width);
 								const newHeight = Math.round(
-									(data.height * newWidth) / data.width
+									(data.height * newWidth) / data.width,
 								);
 								setAttributes({
 									url: tiktokMatch[0],
@@ -710,7 +697,7 @@ export function AdvancedVideoBlock(props) {
 					});
 			} else {
 				console.log(
-					"site not supported. presume it's a direct link to a video"
+					"site not supported. presume it's a direct link to a video",
 				);
 
 				setAttributes({
@@ -744,7 +731,7 @@ export function AdvancedVideoBlock(props) {
 					: `${origWidth}/${origHeight}`;
 			autofitContainerStyle = Object.assign(
 				{},
-				{ aspectRatio: currentAspectRatio }
+				{ aspectRatio: currentAspectRatio },
 			);
 			extraEmbeds = (
 				<style>
@@ -758,14 +745,14 @@ export function AdvancedVideoBlock(props) {
 		case "vimeo":
 			autofitContainerStyle = Object.assign(
 				{},
-				{ padding: `${(origHeight / origWidth) * 100}% 0 0 0` }
+				{ padding: `${(origHeight / origWidth) * 100}% 0 0 0` },
 			);
 			extraEmbeds = <script src="https://player.vimeo.com/api/player.js" />;
 			break;
 		case "dailymotion":
 			autofitContainerStyle = Object.assign(
 				{},
-				{ paddingBottom: `${(origHeight / origWidth) * 100}%` }
+				{ paddingBottom: `${(origHeight / origWidth) * 100}%` },
 			);
 			extraEmbeds = null;
 			break;
@@ -776,23 +763,45 @@ export function AdvancedVideoBlock(props) {
 	const onSelectVideo = (media) => {
 		const newWidth = Math.min(600, media.width);
 		const newHeight = Math.round((media.height * newWidth) / media.width);
-
-		const timeUnits = media.fileLength
-			.split(":")
-			.map((t) => parseInt(t))
-			.reverse();
-
+		let timeUnits = [0];
 		const conversionFactor = [1, 60, 3600, 86400];
 
+		if (!isEmpty(media?.fileLength)) {
+			timeUnits = media.fileLength
+				.split(":")
+				.map((t) => parseInt(t))
+				.reverse();
+			setAttributes({
+				videoLength: timeUnits.reduce(
+					(total, curr, i) => total + curr * conversionFactor[i],
+					0,
+				),
+			});
+		} else {
+			const videoElement = document.createElement("video");
+			videoElement.src = media.url;
+
+			videoElement.addEventListener("loadedmetadata", () => {
+				const duration = videoElement.duration;
+				timeUnits = duration
+					.toString()
+					.split(":")
+					.map((t) => parseInt(t))
+					.reverse();
+				videoElement.remove();
+				setAttributes({
+					videoLength: timeUnits.reduce(
+						(total, curr, i) => total + curr * conversionFactor[i],
+						0,
+					),
+				});
+			});
+		}
 		setAttributes({
 			videoId: media.id,
 			url: media.url,
 			width: newWidth,
 			height: newHeight,
-			videoLength: timeUnits.reduce(
-				(total, curr, i) => total + curr * conversionFactor[i],
-				0
-			),
 			videoEmbedCode: `<video ${
 				showPlayerControls ? "controls" : ""
 			} width="${newWidth}" height="${newHeight}"><source src="${
@@ -807,6 +816,17 @@ export function AdvancedVideoBlock(props) {
 	useEffect(() => {
 		if (!isEmpty(videoURLInput)) {
 			checkVideoURLInput();
+
+			if (!isEmpty(videoSource) && videoSource !== "tiktok") {
+				setAttributes({
+					videoEmbedCode: adjustVideoStart(
+						videoSource,
+						videoEmbedCode,
+						startTime,
+						startTime,
+					),
+				});
+			}
 		}
 	}, [videoURLInput]);
 
@@ -847,7 +867,7 @@ export function AdvancedVideoBlock(props) {
 															preserveAspectRatio
 																? Math.round((width * origHeight) / origWidth)
 																: height
-														}%"`
+														}%"`,
 													),
 												});
 
@@ -874,31 +894,31 @@ export function AdvancedVideoBlock(props) {
 
 											newVideoEmbedCode = newVideoEmbedCode.replace(
 												/width="[0-9]+"/,
-												`width="${newWidth}%"`
+												`width="${newWidth}%"`,
 											);
 											if (videoSource === "facebook") {
 												newVideoEmbedCode = newVideoEmbedCode.replace(
 													/&width=[0-9]+/,
-													`width="${newWidth}%"`
+													`width="${newWidth}%"`,
 												);
 											}
 
 											if (preserveAspectRatio) {
 												//get ratio between current width and current height, then recalculate height according to ratio
 												const newHeight = Math.round(
-													(height * newWidth) / width
+													(height * newWidth) / width,
 												);
 												setAttributes({
 													height: newHeight,
 												});
 												newVideoEmbedCode = newVideoEmbedCode.replace(
 													/height="[\d.]+"/,
-													`height="${newHeight}%"`
+													`height="${newHeight}%"`,
 												);
 												if (videoSource === "facebook") {
 													newVideoEmbedCode = newVideoEmbedCode.replace(
 														/&height=[\d.]+/,
-														`height="${newHeight}%"`
+														`height="${newHeight}%"`,
 													);
 												}
 											}
@@ -916,13 +936,13 @@ export function AdvancedVideoBlock(props) {
 
 												newVideoEmbedCode = newVideoEmbedCode.replace(
 													/height="[\d.]+%?"/,
-													`height="${height}"`
+													`height="${height}"`,
 												);
 
 												if (videoSource === "facebook") {
 													newVideoEmbedCode = newVideoEmbedCode.replace(
 														/&height=[\d.]+%?/,
-														`height="${height}"`
+														`height="${height}"`,
 													);
 												}
 												setAttributes({
@@ -947,17 +967,17 @@ export function AdvancedVideoBlock(props) {
 													!["facebook", "unknown"].includes(videoSource)
 												) {
 													const newHeight = Math.round(
-														(origHeight * width) / origWidth
+														(origHeight * width) / origWidth,
 													);
 
 													let newVideoEmbedCode = videoEmbedCode.replace(
 														/height="[0-9]+"/,
-														`height="${newHeight}"`
+														`height="${newHeight}"`,
 													);
 													if (videoSource === "facebook") {
 														newVideoEmbedCode = newVideoEmbedCode.replace(
 															/&height=[0-9]+/,
-															`height="${newHeight}"`
+															`height="${newHeight}"`,
 														);
 													}
 													setAttributes({
@@ -1007,7 +1027,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															showPlayerControls ? "remove" : "add",
-															"controls"
+															"controls",
 														),
 													});
 													break;
@@ -1018,7 +1038,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															showPlayerControls ? "add" : "remove",
-															"controls=0"
+															"controls=0",
 														),
 													});
 													break;
@@ -1028,7 +1048,7 @@ export function AdvancedVideoBlock(props) {
 															"dailymotion",
 															videoEmbedCode,
 															showPlayerControls ? "add" : "remove",
-															"controls=false"
+															"controls=false",
 														),
 													});
 													break;
@@ -1060,7 +1080,7 @@ export function AdvancedVideoBlock(props) {
 																	videoSource,
 																	videoEmbedCode,
 																	autoplay ? "remove" : "add",
-																	"autoplay"
+																	"autoplay",
 																),
 															});
 															break;
@@ -1072,7 +1092,7 @@ export function AdvancedVideoBlock(props) {
 																	videoSource,
 																	videoEmbedCode,
 																	autoplay ? "remove" : "add",
-																	"autoplay=1"
+																	"autoplay=1",
 																),
 															});
 															if (!autoplay) {
@@ -1090,7 +1110,7 @@ export function AdvancedVideoBlock(props) {
 																	"dailymotion",
 																	videoEmbedCode,
 																	autoplay ? "remove" : "add",
-																	"autoplay=true"
+																	"autoplay=true",
 																),
 															});
 															break;
@@ -1115,7 +1135,7 @@ export function AdvancedVideoBlock(props) {
 																videoSource,
 																videoEmbedCode,
 																0,
-																startTime
+																startTime,
 															),
 														});
 														setStartTime_d(0);
@@ -1160,7 +1180,7 @@ export function AdvancedVideoBlock(props) {
 																videoSource,
 																videoEmbedCode,
 																startPoint,
-																startTime
+																startTime,
 															),
 														});
 													}
@@ -1195,7 +1215,7 @@ export function AdvancedVideoBlock(props) {
 																videoSource,
 																videoEmbedCode,
 																startPoint,
-																startTime
+																startTime,
 															),
 														});
 													}
@@ -1229,7 +1249,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															startPoint,
-															startTime
+															startTime,
 														);
 														setAttributes({
 															startTime: startPoint,
@@ -1252,7 +1272,6 @@ export function AdvancedVideoBlock(props) {
 													startTime_h * 3600 +
 													startTime_m * 60 +
 													s;
-
 												if (
 													startPoint < videoLength &&
 													s % 1 === 0 &&
@@ -1266,7 +1285,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															startPoint,
-															startTime
+															startTime,
 														),
 													});
 												}
@@ -1276,7 +1295,7 @@ export function AdvancedVideoBlock(props) {
 								</>
 							)}
 							{["youtube", "local", "unknown", "videopress", "vimeo"].includes(
-								videoSource
+								videoSource,
 							) && (
 								<div className="ub-labelled-toggle">
 									<p>{__("Loop")}</p>
@@ -1293,21 +1312,21 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															loop ? "remove" : "add",
-															"loop"
+															"loop",
 														),
 													});
 													break;
 												case "youtube":
 													let videoId =
 														/https:\/\/www\.youtube\.com\/watch\?v=((?:\w|-){11})/.exec(
-															url
+															url,
 														)[1];
 
 													let newEmbedCode = editEmbedArgs(
 														videoSource,
 														videoEmbedCode,
 														loop ? "remove" : "add",
-														"loop=1"
+														"loop=1",
 													);
 
 													setAttributes({
@@ -1315,7 +1334,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															newEmbedCode,
 															loop ? "remove" : "add",
-															`playlist=${videoId}`
+															`playlist=${videoId}`,
 														),
 													});
 													break;
@@ -1325,7 +1344,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															loop ? "remove" : "add",
-															"loop=true"
+															"loop=true",
 														),
 													});
 													break;
@@ -1358,7 +1377,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															mute ? "remove" : "add",
-															"muted"
+															"muted",
 														),
 													});
 													break;
@@ -1368,7 +1387,7 @@ export function AdvancedVideoBlock(props) {
 															"vimeo",
 															videoEmbedCode,
 															mute ? "remove" : "add",
-															"muted=1"
+															"muted=1",
 														),
 													});
 													break;
@@ -1378,7 +1397,7 @@ export function AdvancedVideoBlock(props) {
 															"dailymotion",
 															videoEmbedCode,
 															mute ? "remove" : "add",
-															"mute=true"
+															"mute=true",
 														),
 													});
 													break;
@@ -1404,7 +1423,7 @@ export function AdvancedVideoBlock(props) {
 														videoSource,
 														videoEmbedCode,
 														"remove",
-														thumbnail
+														thumbnail,
 													),
 												});
 												setImageURLInputStatus(false);
@@ -1441,7 +1460,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															"add",
-															imageURLInput
+															imageURLInput,
 														),
 													});
 													setImageURLInput("");
@@ -1462,7 +1481,7 @@ export function AdvancedVideoBlock(props) {
 															videoSource,
 															videoEmbedCode,
 															"add",
-															img.url
+															img.url,
 														),
 													});
 												}}
@@ -1490,7 +1509,7 @@ export function AdvancedVideoBlock(props) {
 													videoSource,
 													videoEmbedCode,
 													"remove",
-													thumbnail
+													thumbnail,
 												),
 											});
 											setCustomThumbnailStatus(true);
@@ -1667,7 +1686,7 @@ export function AdvancedVideoBlock(props) {
 									["youtube", "dailymotion", "vimeo"].includes(videoSource)
 										? `-${videoSource}`
 										: ""
-							  }`
+								}`
 							: ""
 					}`}
 					dangerouslySetInnerHTML={{
@@ -1679,15 +1698,15 @@ export function AdvancedVideoBlock(props) {
 							borderTop: getSingleSideBorderValue(getBorderCSS(border), "top"),
 							borderLeft: getSingleSideBorderValue(
 								getBorderCSS(border),
-								"left"
+								"left",
 							),
 							borderRight: getSingleSideBorderValue(
 								getBorderCSS(border),
-								"right"
+								"right",
 							),
 							borderBottom: getSingleSideBorderValue(
 								getBorderCSS(border),
-								"top"
+								"top",
 							),
 							borderTopLeftRadius: borderRadius?.topLeft,
 							borderTopRightRadius: borderRadius?.topRight,
@@ -1703,14 +1722,14 @@ export function AdvancedVideoBlock(props) {
 										-shadow[0].radius *
 										Math.sin(((450 - shadow[0].angle) % 360) * (Math.PI / 180))
 									}px ${shadow[0].blur}px ${shadow[0].spread}px rgba(${parseInt(
-										"0x" + shadow[0].color.substring(1, 3)
+										"0x" + shadow[0].color.substring(1, 3),
 									)}, ${parseInt(
-										"0x" + shadow[0].color.substring(3, 5)
+										"0x" + shadow[0].color.substring(3, 5),
 									)}, ${parseInt("0x" + shadow[0].color.substring(5, 7))}, ${
 										(100 - shadow[0].transparency) / 100
 									})`,
-							  }
-							: {}
+								}
+							: {},
 					)}
 				/>
 				{autofit && extraEmbeds}

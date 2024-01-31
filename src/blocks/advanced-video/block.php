@@ -27,20 +27,18 @@ function ub_render_advanced_video_block($attributes){
         ($thumbnail !== '' && !in_array($videoSource, ['local', 'unknown', 'videopress']) ? ' hidden' : '') . '>'
     . $videoEmbedCode . ($autofit && $videoSource === 'vimeo' ? '<script src="https://player.vimeo.com/api/player.js"></script>' : '') . '</div></div>';
 }
-function ub_enqueue_advanced_video_assets() {
-  wp_enqueue_script(
+
+function ub_register_advanced_video_block() {
+    wp_register_script(
         'ub-tiktok-script',
          plugins_url( 'advanced-video/tiktok-script.js', dirname( __FILE__ ) ),
         array('jquery'),
         uniqid(),
         true
     );
-}
-add_action( 'admin_enqueue_scripts', 'ub_enqueue_advanced_video_assets' );
-function ub_register_advanced_video_block() {
-	if ( function_exists( 'register_block_type' ) ) {
+	if ( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/advanced-video', array(
+		register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/advanced-video', array(
             'attributes' => $defaultValues['ub/advanced-video']['attributes'],
 			'render_callback' => 'ub_render_advanced_video_block'));
 	}

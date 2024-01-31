@@ -58,6 +58,10 @@
     "margin": {
       "type": "object",
       "default": {}
+    },
+    "isShowReviewText": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {}

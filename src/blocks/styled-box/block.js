@@ -149,14 +149,14 @@ function StyledBox(props) {
 										createBlock("ub/styled-box-numbered-box-column"),
 									].slice(0, i + 1 - block.innerBlocks.length),
 									block.innerBlocks.length,
-									block.clientId
+									block.clientId,
 								);
 							}
 							if (i + 1 < block.innerBlocks.length) {
 								removeBlocks(
 									block.innerBlocks
 										.map((i) => i.clientId)
-										.slice(i + 1 - block.innerBlocks.length)
+										.slice(i + 1 - block.innerBlocks.length),
 								);
 							}
 						} else {
@@ -390,8 +390,8 @@ function StyledBox(props) {
 							number: String(n),
 							title: title[i],
 						},
-						[createBlock("core/paragraph", { content: text[i] })]
-					)
+						[createBlock("core/paragraph", { content: text[i] })],
+					),
 				);
 
 				replaceInnerBlocks(block.clientId, convertedBlocks);
@@ -402,7 +402,7 @@ function StyledBox(props) {
 						title: "",
 					}),
 					0,
-					block.clientId
+					block.clientId,
 				);
 			}
 		}
@@ -448,7 +448,7 @@ function StyledBox(props) {
 							) {
 								updateBlockAttributes(
 									block.innerBlocks.map((i) => i.clientId),
-									{ backColor: colorValue }
+									{ backColor: colorValue },
 								);
 							}
 						},
@@ -466,7 +466,7 @@ function StyledBox(props) {
 							) {
 								updateBlockAttributes(
 									block.innerBlocks.map((i) => i.clientId),
-									{ numberColor: colorValue }
+									{ numberColor: colorValue },
 								);
 							}
 						},
@@ -483,7 +483,7 @@ function StyledBox(props) {
 							) {
 								updateBlockAttributes(
 									block.innerBlocks.map((i) => i.clientId),
-									{ borderColor: colorValue }
+									{ borderColor: colorValue },
 								);
 							}
 						},
@@ -686,11 +686,11 @@ function StyledBox(props) {
 									label={__(
 										(a !== "justify" ? "Align " : "") +
 											a[0].toUpperCase() +
-											a.slice(1)
+											a.slice(1),
 									)}
 									onClick={() => {
 										const columnNum = parseInt(
-											editable.slice(editable.length - 1)
+											editable.slice(editable.length - 1),
 										);
 										if (editable.includes("title")) {
 											setAttributes({
@@ -769,7 +769,8 @@ function StyledBox(props) {
 	);
 }
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	attributes: metadata.attributes,
 	example: {},
@@ -781,7 +782,8 @@ registerBlockType(metadata, {
 		) : null,
 });
 
-registerBlockType(borderBoxMetaData, {
+registerBlockType(borderBoxMetaData.name, {
+	...borderBoxMetaData,
 	icon: icon,
 	attributes: borderBoxMetaData.attributes,
 	edit: (props) => (
@@ -797,7 +799,8 @@ registerBlockType(borderBoxMetaData, {
 	save: () => <InnerBlocks.Content {...useBlockProps.save()} />,
 });
 
-registerBlockType(notificationBoxMetaData, {
+registerBlockType(notificationBoxMetaData.name, {
+	...notificationBoxMetaData,
 	icon: icon,
 	attributes: notificationBoxMetaData.attributes,
 	edit: () => (
@@ -816,7 +819,8 @@ registerBlockType(notificationBoxMetaData, {
 	save: () => <InnerBlocks.Content {...useBlockProps.save()} />,
 });
 
-registerBlockType(numberBoxMetaData, {
+registerBlockType(numberBoxMetaData.name, {
+	...numberBoxMetaData,
 	icon: icon,
 	attributes: numberBoxMetaData.attributes,
 	edit: () => (
@@ -832,7 +836,8 @@ registerBlockType(numberBoxMetaData, {
 	save: () => <InnerBlocks.Content {...useBlockProps.save()} />,
 });
 
-registerBlockType(numberBoxColumnMetaData, {
+registerBlockType(numberBoxColumnMetaData.name, {
+	...numberBoxColumnMetaData,
 	icon: icon,
 	attributes: numberBoxColumnMetaData.attributes,
 	edit: function (props) {
@@ -896,8 +901,8 @@ registerBlockType(numberBoxColumnMetaData, {
 					number: String(
 						getBlockIndex(
 							block.clientId,
-							getBlockRootClientId(block.clientId)
-						) + 1
+							getBlockRootClientId(block.clientId),
+						) + 1,
 					),
 				});
 			}
@@ -919,8 +924,8 @@ registerBlockType(numberBoxColumnMetaData, {
 						placeholder={__(
 							getBlockIndex(
 								block.clientId,
-								getBlockRootClientId(block.clientId)
-							) + 1
+								getBlockRootClientId(block.clientId),
+							) + 1,
 						)}
 						className="ub-number-display"
 						style={{ color: numberColor }}

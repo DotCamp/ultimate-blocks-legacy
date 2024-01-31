@@ -54,7 +54,7 @@ function convertOldStyledList(list) {
 
 			closingTagLocs.forEach((tagLoc) => {
 				pairs[pairs.findLastIndex((a) => a[0] < tagLoc && a.length === 1)].push(
-					tagLoc
+					tagLoc,
 				);
 			});
 		}
@@ -67,10 +67,10 @@ function convertOldStyledList(list) {
 
 		list.forEach((item, i) => {
 			const subitems = list.filter(
-				(li) => li[0] > list[i][0] && li[1] < list[i][1]
+				(li) => li[0] > list[i][0] && li[1] < list[i][1],
 			);
 			const parentItems = list.filter(
-				(li) => li[0] < list[i][0] && li[1] > list[i][1]
+				(li) => li[0] < list[i][0] && li[1] > list[i][1],
 			);
 
 			if (!parentItems.length) {
@@ -98,9 +98,9 @@ function convertOldStyledList(list) {
 						item[0] + 4,
 						Math.min(
 							item[1],
-							...openingUlLocs.filter((ul) => ul > item[0] && ul < item[1])
-						)
-					)
+							...openingUlLocs.filter((ul) => ul > item[0] && ul < item[1]),
+						),
+					),
 				);
 			}
 		});
@@ -166,7 +166,7 @@ function EditorComponent(props) {
 		setAvailableIcons(
 			Object.keys(allIcons)
 				.sort()
-				.map((name) => allIcons[name])
+				.map((name) => allIcons[name]),
 		);
 
 		loadIconList();
@@ -189,8 +189,8 @@ function EditorComponent(props) {
 							{ itemText: item },
 							childBlocks.length > 0
 								? [createBlock("ub/styled-list", {}, childBlocks)]
-								: []
-						)
+								: [],
+						),
 					);
 				}
 			});
@@ -234,7 +234,7 @@ function EditorComponent(props) {
 						.map((f) => ({
 							name: f.name,
 							selectionTime: f.selectionTime.filter(
-								(t) => t >= currentTime - 1209600
+								(t) => t >= currentTime - 1209600,
 							),
 						}))
 						.filter((f) => f.selectionTime.length); //then remove entries with empty selectionTime arrays
@@ -255,7 +255,7 @@ function EditorComponent(props) {
 
 					[icons, otherIcons] = splitArray(
 						iconList.map((name) => allIcons[name]),
-						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName)
+						(icon) => frequentIcons.map((i) => i.name).includes(icon.iconName),
 					);
 
 					const frequentIconNames = frequentIcons.map((i) => i.name);
@@ -263,7 +263,7 @@ function EditorComponent(props) {
 					icons.sort(
 						(a, b) =>
 							frequentIconNames.indexOf(a.iconName) -
-							frequentIconNames.indexOf(b.iconName)
+							frequentIconNames.indexOf(b.iconName),
 					);
 
 					setAvailableIcons([...icons, ...otherIcons]);
@@ -305,14 +305,14 @@ function EditorComponent(props) {
 		let icons = []; //most recent selection should always be first element of array
 		let otherIcons = [];
 		[icons, otherIcons] = splitArray(availableIcons, (icon) =>
-			iconPrefs.map((i) => i.name).includes(icon.iconName)
+			iconPrefs.map((i) => i.name).includes(icon.iconName),
 		);
 
 		const iconPrefsName = iconPrefs.map((i) => i.name);
 
 		icons.sort(
 			(a, b) =>
-				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName)
+				iconPrefsName.indexOf(a.iconName) - iconPrefsName.indexOf(b.iconName),
 		);
 
 		setRecentSelection("");
@@ -338,7 +338,7 @@ function EditorComponent(props) {
 	}, [isSelected]);
 
 	const listItemBlocks = getClientIdsOfDescendants([block.clientId]).filter(
-		(ID) => getBlock(ID).name === "ub/styled-list-item"
+		(ID) => getBlock(ID).name === "ub/styled-list-item",
 	);
 
 	function setAttributesToAllItems(newAttributes) {
@@ -347,7 +347,7 @@ function EditorComponent(props) {
 
 	const iconListPage = splitArrayIntoChunks(
 		availableIcons.filter((i) => i.iconName.includes(iconSearchTerm)),
-		24
+		24,
 	);
 
 	const isRootOfList =
@@ -421,7 +421,7 @@ function EditorComponent(props) {
 														onClick={() => {
 															if (iconSearchResultsPage > 0) {
 																setIconSearchResultsPage(
-																	iconSearchResultsPage - 1
+																	iconSearchResultsPage - 1,
 																);
 															}
 														}}
@@ -438,7 +438,7 @@ function EditorComponent(props) {
 																iconListPage.length - 1
 															) {
 																setIconSearchResultsPage(
-																	iconSearchResultsPage + 1
+																	iconSearchResultsPage + 1,
 																);
 															}
 														}}
@@ -492,7 +492,7 @@ function EditorComponent(props) {
 							/>
 						</PanelBody>
 
-						<PanelBody title={__("Additional")} initialOpen={false}>
+						<PanelBody title={__("Additional")} initialOpen={true}>
 							<p>{__("Number of columns")}</p>
 							<RangeControl
 								value={columns}
@@ -585,10 +585,10 @@ function EditorComponent(props) {
 											iconColor.toLowerCase() in colorList
 												? colorList[iconColor.toLowerCase()]
 												: getComputedStyle(
-														document.documentElement
-												  ).getPropertyValue(
-														iconColor.substring(4, iconColor.length - 1)
-												  );
+														document.documentElement,
+													).getPropertyValue(
+														iconColor.substring(4, iconColor.length - 1),
+													);
 
 										setAttributes({ iconColor: newIconColor });
 										setAttributesToAllItems({ iconColor: newIconColor });
@@ -657,12 +657,12 @@ function EditorComponent(props) {
                     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${
 											allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
 										} ${
-							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
-						}' color='${
-							iconColor ? `%23${iconColor.slice(1)}` : "inherit"
-						}'><path fill='currentColor' d='${
-							allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
-						}'></path></svg>");
+											allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
+										}' color='${
+											iconColor ? `%23${iconColor.slice(1)}` : "inherit"
+										}'><path fill='currentColor' d='${
+											allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
+										}'></path></svg>");
 					}
 					#ub-styled-list-${blockID} li{
 						color: ${textColor};
@@ -751,9 +751,9 @@ export function StyledListItem(props) {
 
 		const ancestorItemsAndLists = getBlockParents(
 			listRootClientId,
-			true
+			true,
 		).filter((b) =>
-			["ub/styled-list", "ub/styled-list-item"].includes(getBlock(b).name)
+			["ub/styled-list", "ub/styled-list-item"].includes(getBlock(b).name),
 		);
 
 		const listRoot = getBlock(listRootClientId);
@@ -766,7 +766,7 @@ export function StyledListItem(props) {
 
 				ancestorItemsAndLists[1], //get block id of parent list of current parent list block
 
-				getBlockIndex(ancestorItemsAndLists[0]) + 1 //ensure indented item moves to just after the parent item of the parent list
+				getBlockIndex(ancestorItemsAndLists[0]) + 1, //ensure indented item moves to just after the parent item of the parent list
 			);
 
 			if (currentBlockIndex < listRoot.innerBlocks.length - 1) {
@@ -782,7 +782,7 @@ export function StyledListItem(props) {
 
 						blockTarget.innerBlocks[0].clientId,
 
-						blockTarget.innerBlocks[0].clientId.length
+						blockTarget.innerBlocks[0].clientId.length,
 					);
 				} else {
 					if (itemBlocksToTransfer.length === listRoot.innerBlocks.length - 1) {
@@ -792,7 +792,7 @@ export function StyledListItem(props) {
 							[listRootClientId],
 							ancestorItemsAndLists[0],
 							block.clientId,
-							0
+							0,
 						);
 					} else {
 						///middle item of list gets outdented
@@ -800,7 +800,7 @@ export function StyledListItem(props) {
 						insertBlock(
 							createBlock("ub/styled-list", {}, []),
 							0,
-							block.clientId
+							block.clientId,
 						);
 
 						setTimeout(() => {
@@ -811,7 +811,7 @@ export function StyledListItem(props) {
 
 								getBlock(block.clientId).innerBlocks[0].clientId,
 
-								0
+								0,
 							);
 						}, 20);
 					}
@@ -838,12 +838,12 @@ export function StyledListItem(props) {
 	useEffect(() => {
 		if (fontSize === -1) {
 			const listItemBlocks = getClientIdsOfDescendants([parents[0]]).filter(
-				(ID) => getBlock(ID).name === "ub/styled-list-item"
+				(ID) => getBlock(ID).name === "ub/styled-list-item",
 			);
 
 			updateBlockAttributes([parents[0], ...listItemBlocks], {
 				fontSize: parseInt(
-					getComputedStyle(listItemRef.current).fontSize.slice(0, -2)
+					getComputedStyle(listItemRef.current).fontSize.slice(0, -2),
 				),
 			});
 		} else {
@@ -891,7 +891,7 @@ export function StyledListItem(props) {
 							insertBlock(
 								createBlock("ub/styled-list", {}, []),
 								0,
-								getPreviousBlockClientId(block.clientId)
+								getPreviousBlockClientId(block.clientId),
 							);
 						}
 
@@ -905,7 +905,7 @@ export function StyledListItem(props) {
 									.innerBlocks[0].clientId, //get block id of newly-created list subblock
 
 								getBlock(getPreviousBlockClientId(block.clientId))
-									.innerBlocks[0].innerBlocks.length //ensure indented item moves to bottom of destination list
+									.innerBlocks[0].innerBlocks.length, //ensure indented item moves to bottom of destination list
 							);
 						}, 20);
 					}}
@@ -947,7 +947,7 @@ export function StyledListItem(props) {
 								[targetBlock], //present
 								block.innerBlocks[0].clientId, //present
 								listRootClientId, //
-								currentBlockIndex + 1 //get target position
+								currentBlockIndex + 1, //get target position
 							);
 
 							if (
@@ -957,7 +957,7 @@ export function StyledListItem(props) {
 									[block.innerBlocks[0].clientId], //present
 									block.clientId, //present
 									targetBlock, //
-									0 //get target position
+									0, //get target position
 								);
 							} else {
 								removeBlock(getBlock(block.clientId).innerBlocks[0].clientId);
@@ -984,23 +984,23 @@ export function StyledListItem(props) {
 								block.clientId,
 								getBlockParents(block.clientId, true).filter((b) =>
 									["ub/styled-list", "ub/styled-list-item"].includes(
-										getBlock(b).name
-									)
-								)
+										getBlock(b).name,
+									),
+								),
 							);
 
 							if (![null, ""].includes(targetBlock)) {
 								const parentLists = getBlockParents(
 									block.clientId,
-									true
+									true,
 								).filter((b) => getBlock(b).name === "ub/styled-list");
 
 								if (
 									getBlock(parentLists[0]).innerBlocks.filter(
-										(i) => i.clientId === targetBlock
+										(i) => i.clientId === targetBlock,
 									).length > 0 ||
 									getBlock(
-										parentLists[parentLists.length - 1]
+										parentLists[parentLists.length - 1],
 									).innerBlocks.filter((i) => i.clientId === targetBlock)
 										.length > 0
 								) {
@@ -1017,20 +1017,20 @@ export function StyledListItem(props) {
 												[getBlock(targetBlock).innerBlocks[0].clientId], //present
 												targetBlock, //source
 												block.clientId, //destination
-												0 //get target position
+												0, //get target position
 											);
 										} else {
 											const targetListItem = getBlock(
-												getPreviousBlockClientId(targetBlock)
+												getPreviousBlockClientId(targetBlock),
 											);
 
 											moveBlocksToPosition(
 												getBlock(targetBlock).innerBlocks[0].innerBlocks.map(
-													(ib) => ib.clientId
+													(ib) => ib.clientId,
 												),
 												getBlock(targetBlock).innerBlocks[0].clientId,
 												targetListItem.innerBlocks[0].clientId,
-												targetListItem.innerBlocks[0].innerBlocks.length
+												targetListItem.innerBlocks[0].innerBlocks.length,
 											);
 										}
 									}
@@ -1052,7 +1052,7 @@ export function StyledListItem(props) {
 							};
 
 							const targetBlock = findLastDescendant(
-								getPreviousBlockClientId()
+								getPreviousBlockClientId(),
 							);
 
 							updateBlockAttributes(targetBlock, {
@@ -1066,7 +1066,7 @@ export function StyledListItem(props) {
 									block.innerBlocks.map((ib) => ib.clientId),
 									block.clientId,
 									targetBlock,
-									getBlock(targetBlock).innerBlocks.length
+									getBlock(targetBlock).innerBlocks.length,
 								);
 							}
 

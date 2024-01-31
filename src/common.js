@@ -16,8 +16,8 @@ export const richTextToHTML = (elem) => {
 		elem.type === "a"
 			? ` href='${elem.props.href}' rel='${elem.props.rel}' target='${elem.props.target}'`
 			: elem.type === "img"
-			? ` style='${elem.props.style}' class='${elem.props.class}' src='${elem.props.src}' alt='${elem.props.alt}'`
-			: ""
+				? ` style='${elem.props.style}' class='${elem.props.class}' src='${elem.props.src}' alt='${elem.props.alt}'`
+				: ""
 	}>`;
 
 	elem.props.children.forEach((child) => {
@@ -51,7 +51,7 @@ export const generateIcon = (selectedIcon, size, unit = "px") => (
 );
 
 export const upgradeButtonLabel = __(
-	"We have made some improvements to this block. Click here to upgrade the block. You will not lose any content."
+	"We have made some improvements to this block. Click here to upgrade the block. You will not lose any content.",
 );
 
 export const getDescendantBlocks = (rootBlock) => {
@@ -67,12 +67,14 @@ export const getDescendantBlocks = (rootBlock) => {
 
 export const objectsMatch = (obj, source) =>
 	Object.keys(source).every(
-		(key) => obj.hasOwnProperty(key) && obj[key] === source[key]
+		(key) => obj.hasOwnProperty(key) && obj[key] === source[key],
 	);
 
 export const removeFromArray = (arr, removedElems) =>
 	arr.filter((a) =>
-		Array.isArray(removedElems) ? !removedElems.includes(a) : a !== removedElems
+		Array.isArray(removedElems)
+			? !removedElems.includes(a)
+			: a !== removedElems,
 	);
 
 export const splitArrayIntoChunks = (inputArray, chunkSize) =>

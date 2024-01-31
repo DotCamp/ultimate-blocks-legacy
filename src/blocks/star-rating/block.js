@@ -36,8 +36,8 @@ function OldStarRating(props) {
 								"ub/star-rating-block",
 								Object.assign(otherAttributes, {
 									reviewText: mergeRichTextArray(reviewText),
-								})
-							)
+								}),
+							),
 						);
 					}}
 				>
@@ -111,7 +111,7 @@ registerBlockType("ub/star-rating", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -167,7 +167,8 @@ registerBlockType("ub/star-rating", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: BlockIcon,
 	attributes: metadata.attributes,
 	example: {

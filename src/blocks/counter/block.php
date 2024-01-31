@@ -119,7 +119,7 @@ class Ultimate_Counter {
 			Ultimate_Blocks_Constants::plugin_version(),
 			true
           );
-          register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/counter', array(
+          register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/counter', array(
                'attributes' => $defaultValues['ub/counter']['attributes'],
                'render_callback' => array($this, 'ub_render_counter_block')
           ));

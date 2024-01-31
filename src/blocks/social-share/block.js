@@ -130,7 +130,7 @@ const SortableItem = SortableElement(
 								border: `1px solid ${iconDetails[icon].bgColor}`,
 								margin: "5px",
 								paddingRight: "5px",
-						  }
+							}
 						: null
 				}
 			>
@@ -154,7 +154,7 @@ const SortableItem = SortableElement(
 				<span style={{ color: iconDetails[icon].bgColor }}>{caption}</span>
 			</div>
 		);
-	}
+	},
 );
 
 const SortableList = SortableContainer(
@@ -185,7 +185,7 @@ const SortableList = SortableContainer(
 				/>
 			))}
 		</div>
-	)
+	),
 );
 
 function SocialShareMain(props) {
@@ -297,7 +297,8 @@ function SocialShareMain(props) {
 	);
 }
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	attributes: metadata.attributes,
 	icon: icon,
 	example: {},

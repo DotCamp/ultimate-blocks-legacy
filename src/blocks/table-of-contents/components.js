@@ -104,7 +104,7 @@ class TableOfContents extends Component {
 					} else if (block.name === "themeisle-blocks/advanced-heading") {
 						if (
 							["h1", "h2", "h3", "h4", "h5", "h6"].includes(
-								block.attributes.tag
+								block.attributes.tag,
 							)
 						) {
 							newBlock.attributes = Object.assign(blockAttributes, {
@@ -123,7 +123,7 @@ class TableOfContents extends Component {
 					} else if (block.name === "generateblocks/headline") {
 						if (
 							["h1", "h2", "h3", "h4", "h5", "h6"].includes(
-								newBlock.attributes.element
+								newBlock.attributes.element,
 							)
 						) {
 							newBlock.attributes = Object.assign(
@@ -134,7 +134,7 @@ class TableOfContents extends Component {
 										: blockAttributes.content,
 									level: Number(blockAttributes.element.charAt(1)),
 									anchor: blockAttributes.elementId,
-								}
+								},
 							);
 							//also set elementID to generated anchor value
 							headings.push(newBlock);
@@ -147,7 +147,7 @@ class TableOfContents extends Component {
 									content: blockAttributes.panelTitle,
 									level: Number(blockAttributes.titleTag.charAt(1)),
 									anchor: blockAttributes.toggleID,
-								}
+								},
 							);
 
 							headings.push(newBlock);
@@ -168,7 +168,7 @@ class TableOfContents extends Component {
 									"ub/advanced-heading",
 								].includes(block.name) ||
 								(block.name === "ub/content-toggle-panel-block" &&
-									block.attributes.useToggleInToC)
+									block.attributes.useToggleInToC),
 						);
 
 						if (internalHeadings.length > 0) {
@@ -205,14 +205,14 @@ class TableOfContents extends Component {
 											: 0;
 										if (Array.isArray(h.attributes.content)) {
 											h.attributes.content = mergeRichTextArray(
-												h.attributes.content
+												h.attributes.content,
 											);
 										}
 										break;
 									case "ub/content-toggle-panel-block":
 										h.attributes.content = h.attributes.panelTitle;
 										h.attributes.level = Number(
-											blockAttributes.titleTag.charAt(1)
+											blockAttributes.titleTag.charAt(1),
 										);
 										h.attributes.anchor = h.attributes.toggleID;
 
@@ -246,7 +246,7 @@ class TableOfContents extends Component {
 				Object.assign(header.attributes, {
 					clientId: header.clientId,
 					blockName: header.name,
-				})
+				}),
 			);
 
 			headers.forEach((heading, key) => {
@@ -260,7 +260,7 @@ class TableOfContents extends Component {
 							: (this.props.allowToLatin
 									? toLatin("all", heading.content.toString())
 									: heading.content.toString()
-							  )
+								)
 									.toLowerCase()
 									.replace(/( |<.+?>|&nbsp;)/g, "-")
 					}`;
@@ -272,7 +272,7 @@ class TableOfContents extends Component {
 					if (removeDiacritics) {
 						heading.anchor = filterDiacritics(heading.anchor).replace(
 							/[\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF]/g,
-							""
+							"",
 						);
 					}
 
@@ -350,7 +350,7 @@ class TableOfContents extends Component {
 						let hasMismatch = false;
 
 						this.state.headers.some(
-							(h, i) => h.clientId !== newHeaders[i].clientId
+							(h, i) => h.clientId !== newHeaders[i].clientId,
 						);
 
 						if (checkIDs && hasMismatch) {
@@ -439,7 +439,7 @@ class TableOfContents extends Component {
 				}
 				let replacements = JSON.parse(JSON.stringify(replacementHeaders)).sort(
 					(a, b) =>
-						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
+						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1,
 				);
 
 				if (mismatchLocs.length < 1) {
@@ -448,7 +448,7 @@ class TableOfContents extends Component {
 							disabled: headers[newIDs.indexOf(headers[i].clientId)].disabled,
 							customContent:
 								headers[newIDs.indexOf(headers[i].clientId)].customContent,
-						})
+						}),
 					);
 				}
 
@@ -467,7 +467,7 @@ class TableOfContents extends Component {
 
 					insertionSpots.forEach((index, i) => {
 						const currentHeader = replacementHeaders.filter(
-							(nh) => nh.clientId === diff[i]
+							(nh) => nh.clientId === diff[i],
 						)[0];
 						currentHeaders.splice(index, 0, currentHeader);
 					});
@@ -545,7 +545,7 @@ class TableOfContents extends Component {
 			const revisedHeaders = JSON.parse(JSON.stringify(this.state.headers));
 
 			const currentlyEditedHeader = revisedHeaders.filter(
-				(h) => h.clientId === currentlyEditedItem
+				(h) => h.clientId === currentlyEditedItem,
 			)[0];
 
 			if (
@@ -575,7 +575,7 @@ class TableOfContents extends Component {
 								value={item.customContent}
 								onChange={(e) => {
 									const revisedHeaders = JSON.parse(
-										JSON.stringify(this.state.headers)
+										JSON.stringify(this.state.headers),
 									);
 									revisedHeaders[item.index].customContent = e.target.value;
 									this.setState({ headers: revisedHeaders });
@@ -601,14 +601,14 @@ class TableOfContents extends Component {
 									<button
 										onClick={() => {
 											const revisedHeaders = JSON.parse(
-												JSON.stringify(this.state.headers)
+												JSON.stringify(this.state.headers),
 											);
 
 											if (!revisedHeaders[item.index].customContent) {
 												revisedHeaders[item.index].customContent =
 													revisedHeaders[item.index].content.replace(
 														/<.+?>/g,
-														""
+														"",
 													);
 												this.setState({ headers: revisedHeaders });
 											}
@@ -621,7 +621,7 @@ class TableOfContents extends Component {
 								<button
 									onClick={() => {
 										const revisedHeaders = JSON.parse(
-											JSON.stringify(this.state.headers)
+											JSON.stringify(this.state.headers),
 										);
 										revisedHeaders[item.index].disabled =
 											!revisedHeaders[item.index].disabled;
@@ -716,6 +716,35 @@ export const inspectorControls = (props) => {
 	const { updateBlockAttributes } =
 		dispatch("core/block-editor") || dispatch("core/editor");
 	const { getBlocks } = select("core/block-editor") || select("core/editor");
+	const createColorSetting = (
+		value,
+		label,
+		onChange = (newValue) => setAttributes({ [label]: newValue }),
+	) => ({
+		value,
+		onChange,
+		label: __(label),
+	});
+
+	const getColorSettings = () => {
+		const settings = [
+			createColorSetting(titleColor, "Title Color"),
+			createColorSetting(titleBackgroundColor, "Title Background Color"),
+			createColorSetting(listColor, "List Color"),
+			createColorSetting(listBackgroundColor, "List Background Color"),
+			...(listStyle !== "plain"
+				? [
+						createColorSetting(
+							listIconColor,
+							listStyle === "numbered"
+								? "Item number color"
+								: "List icon color",
+						),
+					]
+				: []),
+		];
+		return settings.filter((setting) => Object.keys(setting).length > 0);
+	};
 
 	return (
 		<>
@@ -902,7 +931,7 @@ export const inspectorControls = (props) => {
 							checked={enableSmoothScroll}
 							onChange={() => {
 								const tocInstances = getBlocks().filter(
-									(block) => block.name === "ub/table-of-contents-block"
+									(block) => block.name === "ub/table-of-contents-block",
 								);
 								tocInstances.forEach((instance) => {
 									updateBlockAttributes(instance.clientId, {
@@ -955,43 +984,7 @@ export const inspectorControls = (props) => {
 					<PanelColorSettings
 						title={__("Color Settings")}
 						initialOpen={false}
-						colorSettings={[
-							{
-								value: titleColor,
-								onChange: (titleColor) => setAttributes({ titleColor }),
-								label: __("Title Color"),
-							},
-							{
-								value: titleBackgroundColor,
-								onChange: (titleBackgroundColor) =>
-									setAttributes({ titleBackgroundColor }),
-								label: __("Title Background Color"),
-							},
-							{
-								value: listColor,
-								onChange: (listColor) => setAttributes({ listColor }),
-								label: __("List Color"),
-							},
-							{
-								value: listBackgroundColor,
-								onChange: (listBackgroundColor) =>
-									setAttributes({ listBackgroundColor }),
-								label: __("List Background Color"),
-							},
-							...[
-								listStyle !== "plain"
-									? {
-											value: listIconColor,
-											onChange: (listIconColor) =>
-												setAttributes({ listIconColor }),
-											label:
-												listStyle === "numbered"
-													? __("Item number color")
-													: __("List icon color"),
-									  }
-									: [],
-							],
-						]}
+						colorSettings={getColorSettings()}
 					/>
 				</PanelBody>
 				<PanelBody

@@ -128,9 +128,9 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
 }
 
 function ub_register_progress_bar_block() {
-	if( function_exists( 'register_block_type' ) ) {
+	if( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-		register_block_type( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/progress-bar', array(
+		register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/progress-bar', array(
             'attributes' => $defaultValues['ub/progress-bar']['attributes'],
             'render_callback' => 'ub_render_progress_bar_block'));
     }

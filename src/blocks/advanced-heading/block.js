@@ -4,7 +4,8 @@ import transforms from "./transforms";
 import metadata from "./block.json";
 const { registerBlockType } = wp.blocks;
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon,
 	transforms,
 	attributes: metadata.attributes,

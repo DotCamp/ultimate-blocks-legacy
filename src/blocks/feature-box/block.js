@@ -55,7 +55,7 @@ registerBlockType("ub/feature-box", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -98,7 +98,7 @@ registerBlockType("ub/feature-box", {
 
 						if (parseInt(column) === 3) {
 							currentTitles.push(
-								mergeRichTextArray(attributes.columnThreeTitle)
+								mergeRichTextArray(attributes.columnThreeTitle),
 							);
 							currentTitleAligns.push(attributes.title3Align);
 							currentTexts.push(mergeRichTextArray(attributes.columnThreeBody));
@@ -119,7 +119,7 @@ registerBlockType("ub/feature-box", {
 								text: currentTexts,
 								textAlign: currentTextAligns,
 								image: currentImages,
-							})
+							}),
 						);
 					}}
 				>
@@ -234,7 +234,8 @@ registerBlockType("ub/feature-box", {
 	],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icon,
 	transforms: {
 		to: [
@@ -253,7 +254,7 @@ registerBlockType(metadata, {
 		const blockProps = useBlockProps();
 		const [editable, setEditable] = useState("");
 		const block = useSelect((select) =>
-			select("core/block-editor").getBlock(props.clientId)
+			select("core/block-editor").getBlock(props.clientId),
 		);
 		const { replaceBlock } = useDispatch("core/bock-editor");
 

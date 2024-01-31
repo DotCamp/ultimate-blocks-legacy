@@ -52,7 +52,7 @@ registerBlockType("ub/testimonial-block", {
 	edit: compose([
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
-				ownProps.clientId
+				ownProps.clientId,
 			),
 		})),
 		withDispatch((dispatch) => ({
@@ -99,15 +99,15 @@ registerBlockType("ub/testimonial-block", {
 									"ub/testimonial",
 									Object.assign(otherAttributes, {
 										ub_testimonial_author: mergeRichTextArray(
-											ub_testimonial_author
+											ub_testimonial_author,
 										),
 										ub_testimonial_author_role: mergeRichTextArray(
-											ub_testimonial_author_role
+											ub_testimonial_author_role,
 										),
 										ub_testimonial_text:
 											mergeRichTextArray(ub_testimonial_text),
-									})
-								)
+									}),
+								),
 							);
 						}}
 					>
@@ -190,7 +190,8 @@ registerBlockType("ub/testimonial-block", {
 	deprecated: [updateFrom(version_1_1_2), updateFrom(version_1_1_5)],
 });
 
-registerBlockType(metadata, {
+registerBlockType(metadata.name, {
+	...metadata,
 	icon: icons.testimonial,
 	attributes: metadata.attributes,
 	example: {},

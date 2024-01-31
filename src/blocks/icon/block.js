@@ -12,7 +12,8 @@ import Edit from "./edit";
 import Save from "./save";
 import metadata from "./block.json";
 
-registerPluginBlock(metadata, {
+registerPluginBlock(metadata.name, {
+	...metadata,
 	icon: blockIcon,
 	attributes: metadata.attributes,
 	edit: Edit,

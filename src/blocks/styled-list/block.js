@@ -9,7 +9,8 @@ import EditorComponent, { StyledListItem } from "./components";
 import listMetadata from "./block.json";
 import listItemMetaData from "./style-list-item/block.json";
 
-registerBlockType(listMetadata, {
+registerBlockType(listMetadata.name, {
+	...listMetadata,
 	icon: icon,
 	attributes: listMetadata.attributes,
 	transforms: {
@@ -34,17 +35,17 @@ registerBlockType(listMetadata, {
 												createBlock(
 													"ub/styled-list",
 													attributes,
-													convertSubitems(subitem.innerBlocks[0].innerBlocks)
+													convertSubitems(subitem.innerBlocks[0].innerBlocks),
 												),
-										  ]
-										: []
-								)
+											]
+										: [],
+								),
 							);
 
 						return createBlock(
 							"ub/styled-list",
 							attributes,
-							convertSubitems(innerBlocks)
+							convertSubitems(innerBlocks),
 						);
 					}
 				},
@@ -56,7 +57,8 @@ registerBlockType(listMetadata, {
 	save: () => <InnerBlocks.Content />,
 });
 
-registerBlockType(listItemMetaData, {
+registerBlockType(listItemMetaData.name, {
+	...listItemMetaData,
 	icon: listItemIcon,
 	attributes: listItemMetaData.attributes,
 	edit: StyledListItem,
