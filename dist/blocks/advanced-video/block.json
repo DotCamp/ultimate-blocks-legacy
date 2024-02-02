@@ -245,6 +245,5 @@
       "default": false
     }
   },
-  "supports": {},
-  "editorScript": "ub-tiktok-script"
+  "supports": {}
 }
