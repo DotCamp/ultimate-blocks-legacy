@@ -29,13 +29,6 @@ function ub_render_advanced_video_block($attributes){
 }
 
 function ub_register_advanced_video_block() {
-    wp_register_script(
-        'ub-tiktok-script',
-         plugins_url( 'advanced-video/tiktok-script.js', dirname( __FILE__ ) ),
-        array('jquery'),
-        uniqid(),
-        true
-    );
 	if ( function_exists( 'register_block_type_from_metadata' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
 		register_block_type_from_metadata( dirname(dirname(dirname(__DIR__))) . '/dist/blocks/advanced-video', array(
