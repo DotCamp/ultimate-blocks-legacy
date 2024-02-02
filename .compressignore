@@ -13,7 +13,7 @@ composer.lock
 **/*.map
 admin/js/src/
 src/__development/
-src/**/!(front.build|swiper-bundle|scrollby-polyfill).js
+src/**/!(front.build|swiper-bundle|scrollby-polyfill|tiktok-script).js
 vendor/bin/
 __tests__/
 phpunit.xml
