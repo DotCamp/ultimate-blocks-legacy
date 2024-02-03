@@ -1,4 +1,4 @@
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom';
 import { ManagerBase } from '$Library/ub-common/Inc';
 import UpsellMain from '$Inc/components/Upsell/UpsellMain';
 import { createHigherOrderComponent } from '@wordpress/compose';
@@ -22,8 +22,10 @@ class UpsellManager extends ManagerBase {
 
 			document.body.appendChild(containerFragment);
 
-			const container = document.querySelector('#ubUpsellContainer');
-			render(<UpsellMain />, container);
+			const container = createRoot(
+				document.querySelector('#ubUpsellContainer')
+			);
+			container.render(<UpsellMain />);
 		});
 	}
 
