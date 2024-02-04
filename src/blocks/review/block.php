@@ -139,7 +139,7 @@ function ub_render_review_block($attributes, $block_content, $block_instance){
         break;
     }
 
-	$schema_json_content = '{
+    $schema_json_content = '{
         "@context": "http://schema.org/",
         "@type": "Review",' .
         ($useSummary ? '"reviewBody": "' . ub_filterJsonldString($summaryDescription) . '",' : '') .
@@ -153,7 +153,7 @@ function ub_render_review_block($attributes, $block_content, $block_instance){
         '},
         "reviewRating":{
             "@type": "Rating",
-            "ratingValue": "' . ($average % 1 === 0 ? $average : number_format($average, 1, '.', '')) . '",
+            "ratingValue": "' . ((int)$average % 1 === 0 ? $average : number_format($average, 1, '.', '')) . '",
             "bestRating": "' . ($valueType === 'star' ? $starCount : '100') . '"
         },
         "author":{
