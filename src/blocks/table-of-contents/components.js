@@ -716,26 +716,21 @@ export const inspectorControls = (props) => {
 	const { updateBlockAttributes } =
 		dispatch("core/block-editor") || dispatch("core/editor");
 	const { getBlocks } = select("core/block-editor") || select("core/editor");
-	const createColorSetting = (
-		value,
-		label,
-		onChange = (newValue) => setAttributes({ [label]: newValue }),
-	) => ({
-		value,
-		onChange,
+	const createColorSetting = (attrKey, label) => ({
+		value: attributes[attrKey],
+		onChange: (newValue) => setAttributes({ [attrKey]: newValue }),
 		label: __(label),
 	});
-
 	const getColorSettings = () => {
 		const settings = [
-			createColorSetting(titleColor, "Title Color"),
-			createColorSetting(titleBackgroundColor, "Title Background Color"),
-			createColorSetting(listColor, "List Color"),
-			createColorSetting(listBackgroundColor, "List Background Color"),
+			createColorSetting("titleColor", "Title Color", "titleColor"),
+			createColorSetting("titleBackgroundColor", "Title Background Color"),
+			createColorSetting("listColor", "List Color"),
+			createColorSetting("listBackgroundColor", "List Background Color"),
 			...(listStyle !== "plain"
 				? [
 						createColorSetting(
-							listIconColor,
+							"listIconColor",
 							listStyle === "numbered"
 								? "Item number color"
 								: "List icon color",
@@ -743,6 +738,7 @@ export const inspectorControls = (props) => {
 					]
 				: []),
 		];
+
 		return settings.filter((setting) => Object.keys(setting).length > 0);
 	};
 
@@ -1143,10 +1139,10 @@ export const editorDisplay = (props) => {
 			{
 				<style
 					dangerouslySetInnerHTML={{
-						__html: `#ub_table-of-contents-${blockID} .ub_table-of-contents-container li{
+						__html: `#block-${blockID} .ub_table-of-contents-container li{
 							color: ${listIconColor};
 						}
-						#ub_table-of-contents-${blockID} .ub_table-of-contents-container a{
+						#block-${blockID} .ub_table-of-contents-container a{
 							color: ${listColor};
 						}`,
 					}}
