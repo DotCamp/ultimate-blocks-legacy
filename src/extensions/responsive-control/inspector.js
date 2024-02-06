@@ -8,7 +8,11 @@ function Inspector(props) {
 	const { isHideOnDesktop, isHideOnTablet, isHideOnMobile } = attributes;
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Responsive Control")} icon={desktop}>
+			<PanelBody
+				title={__("Responsive Control")}
+				icon={desktop}
+				initialOpen={false}
+			>
 				<ToggleControl
 					checked={isHideOnDesktop}
 					label={__("Hide On Desktop", "ultimate-blocks")}
