@@ -448,7 +448,7 @@ export function AdvancedVideoBlock(props) {
 
 		if (/^http(s)?:\/\//g.test(videoURL)) {
 			const youtubeMatch =
-				/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
+				/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))((\w|-){11})(?:\S+)?$/g.exec(
 					videoURL,
 				);
 			const vimeoMatch =

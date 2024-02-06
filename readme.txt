@@ -148,6 +148,7 @@ That's it. You're done!
 
 * IMPROVE: Separated normal and hover colors in icon block.
 * IMPROVE: Advanced heading initially without bold.
+* IMPROVE: Shorts support in the advanced video block.
 
 = 3.1.2 =
 
