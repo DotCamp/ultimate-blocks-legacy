@@ -7,14 +7,39 @@ import { InspectorControls, HeightControl } from "@wordpress/block-editor";
 /**
  * Custom Imports
  */
-import ColorSettings from "./components/ColorSettings";
-import { BorderControl, SpacingControl } from "../components";
+import {
+	BorderControl,
+	ColorSettings,
+	ColorSettingsWithGradient,
+	SpacingControl,
+	TabsPanelControl,
+} from "../components";
 
 function CustomInspectorControls(props) {
 	const {
 		setAttributes,
 		attributes: { size, iconRotation },
 	} = props;
+	const normalStateColors = (
+		<>
+			<ColorSettings attrKey="iconColor" label={__("Icon Color")} />
+			<ColorSettingsWithGradient
+				attrBackgroundKey="iconBackground"
+				attrGradientKey="iconGradientBackground"
+				label={__("Icon Background")}
+			/>
+		</>
+	);
+	const hoverStateColors = (
+		<>
+			<ColorSettings attrKey="iconHoverColor" label={__("Icon Color")} />
+			<ColorSettingsWithGradient
+				attrBackgroundKey="iconHoverBackground"
+				attrGradientKey="iconHoverGradientBackground"
+				label={__("Icon Background")}
+			/>
+		</>
+	);
 	return (
 		<>
 			<InspectorControls>
@@ -37,7 +62,20 @@ function CustomInspectorControls(props) {
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="color">
-				<ColorSettings />
+				<TabsPanelControl
+					tabs={[
+						{
+							name: "normalState",
+							title: __("Normal", "ultimate-blocks"),
+							component: normalStateColors,
+						},
+						{
+							name: "hoverState",
+							title: __("Hover", "ultimate-blocks"),
+							component: hoverStateColors,
+						},
+					]}
+				/>
 			</InspectorControls>
 			<InspectorControls group="border">
 				<BorderControl

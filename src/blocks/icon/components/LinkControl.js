@@ -16,13 +16,7 @@ function CustomLinkControl({ attributes, setAttributes }) {
 	const opensInNewTab = linkTarget === "_blank";
 
 	const NEW_TAB_REL = "noreferrer noopener";
-	function onKeyDown(event) {
-		if (isKeyboardEvent.primary(event, "k")) {
-			startEditing(event);
-		} else if (isKeyboardEvent.primaryShift(event, "k")) {
-			unlink();
-		}
-	}
+
 	function startEditing(event) {
 		event.preventDefault();
 		setIsEditingURL(true);
