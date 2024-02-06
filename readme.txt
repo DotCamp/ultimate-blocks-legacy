@@ -147,6 +147,7 @@ That's it. You're done!
 = 3.1.3 =
 
 * IMPROVE: Separated normal and hover colors in icon block.
+* IMPROVE: Advanced heading initially without bold.
 
 = 3.1.2 =
 

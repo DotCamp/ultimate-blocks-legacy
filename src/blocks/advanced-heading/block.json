@@ -57,7 +57,7 @@
           },
           "fontWeight": {
                "type": "string",
-               "default": "Bold"
+               "default": "Normal"
           },
           "lineHeight": {
                "type": "number",

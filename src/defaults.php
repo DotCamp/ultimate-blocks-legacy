@@ -49,7 +49,7 @@ $defaultValues = array(
 			),
 			'fontWeight'       => array(
 				'type'    => 'string',
-				'default' => 'Bold',
+				'default' => 'Normal',
 			),
 			'lineHeight'       => array(
 				'type'    => 'number',
