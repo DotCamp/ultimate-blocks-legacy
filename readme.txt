@@ -144,6 +144,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.3 =
+
+* IMPROVE: Separated normal and hover colors in icon block.
+
 = 3.1.2 =
 
 * FIX: Default Open option is not working content toggle block.
