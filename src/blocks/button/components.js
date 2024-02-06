@@ -1865,8 +1865,12 @@ export function EditorComponent(props) {
 												<URLInput
 													autoFocus={false}
 													className="button-url"
+													disableSuggestions={
+														buttons[i]?.url?.startsWith("#") ||
+														isEmpty(buttons[i]?.url?.trim())
+													}
 													value={buttons[i].url}
-													onChange={(value) =>
+													onChange={(value) => {
 														setAttributes({
 															buttons: [
 																...buttons.slice(0, i),
@@ -1875,8 +1879,8 @@ export function EditorComponent(props) {
 																}),
 																...buttons.slice(i + 1),
 															],
-														})
-													}
+														});
+													}}
 												/>
 												<Button
 													icon={"editor-break"}
