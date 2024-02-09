@@ -1,4 +1,5 @@
 import { __ } from "@wordpress/i18n";
+import { isEmpty } from "lodash";
 import { loadPromise, models } from "@wordpress/api";
 import { createBlock } from "@wordpress/blocks";
 import { useSelect, useDispatch } from "@wordpress/data";
@@ -11,6 +12,7 @@ import {
 	AlignmentToolbar,
 	BlockControls,
 	useBlockProps,
+	JustifyContentControl,
 } from "@wordpress/block-editor";
 import {
 	Button,
@@ -18,7 +20,9 @@ import {
 	PanelBody,
 	RangeControl,
 	ToggleControl,
+	ToolbarGroup,
 } from "@wordpress/components";
+import classnames from "classnames";
 
 import {
 	dashesToCamelcase,
@@ -145,7 +149,7 @@ function EditorComponent(props) {
 	const { replaceInnerBlocks, updateBlockAttributes } =
 		useDispatch("core/block-editor");
 	const { isSelected, attributes, setAttributes } = props;
-	const blockProps = useBlockProps();
+
 	const {
 		blockID,
 		list,
@@ -160,8 +164,13 @@ function EditorComponent(props) {
 		columns,
 		maxMobileColumns,
 		alignment,
+		listAlignment,
 	} = attributes;
-
+	const blockProps = useBlockProps({
+		className: classnames({
+			[`ub-list-alignment-${listAlignment}`]: !isEmpty(listAlignment),
+		}),
+	});
 	useEffect(() => {
 		setAvailableIcons(
 			Object.keys(allIcons)
@@ -633,6 +642,15 @@ function EditorComponent(props) {
 						value={alignment}
 						onChange={(value) => setAttributes({ alignment: value })}
 					/>
+					<ToolbarGroup>
+						<JustifyContentControl
+							value={attributes.listAlignment}
+							allowedControls={["left", "center", "right"]}
+							onChange={(next) => {
+								setAttributes({ listAlignment: next });
+							}}
+						/>
+					</ToolbarGroup>
 				</BlockControls>
 			)}
 			<ul
@@ -678,7 +696,23 @@ function EditorComponent(props) {
 					}
 					#ub-styled-list-${blockID} {
 						text-align: ${alignment};
-					}`,
+					}
+					.ub-list-alignment-left #ub-styled-list-${blockID} .block-editor-inner-blocks > .block-editor-block-list__layout{
+						width: fit-content;
+						margin-right: auto;
+						margin-left: 0;
+					}
+					.ub-list-alignment-center #ub-styled-list-${blockID} .block-editor-inner-blocks > .block-editor-block-list__layout{
+						width: fit-content;
+						margin-right: auto;
+						margin-left: auto;
+					}
+					.ub-list-alignment-right #ub-styled-list-${blockID} .block-editor-inner-blocks > .block-editor-block-list__layout{
+						width: fit-content;
+						margin-right: 0;
+						margin-left: auto;
+					}
+					`,
 					}}
 				/>
 			)}

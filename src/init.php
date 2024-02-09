@@ -1064,7 +1064,21 @@ function ub_include_block_attribute_css() {
 												 'top: 3px;' . PHP_EOL .
 												 '}' . PHP_EOL;
 						}
-
+						$blockStylesheets .= $prefix . '.ub-list-alignment-left > .ub-block-list__layout{
+							width: fit-content;
+							margin-right: auto;
+							margin-left: 0;
+						}';
+						$blockStylesheets .= $prefix . '.ub-list-alignment-center > .ub-block-list__layout{
+							width: fit-content;
+							margin-right: auto;
+							margin-left: auto;
+						}';
+						$blockStylesheets .= $prefix . '.ub-list-alignment-right > .ub-block-list__layout{
+							width: fit-content;
+							margin-right: 0;
+							margin-left: auto;
+						}';
 						$iconData = Ultimate_Blocks_IconSet::generate_fontawesome_icon( $attributes['selectedIcon'] );
 
 						$blockStylesheets .= $prefix . '{' . PHP_EOL .
