@@ -151,6 +151,7 @@ That's it. You're done!
 * IMPROVE: Advanced heading initially without bold.
 * IMPROVE: Shorts support in the advanced video block.
 * FIX: Shadow in the advanced video block.
+* FIX: Image alignment inside the tabbed content block.
 * FIX: Autoplay in the advanced video block youtube.
 * PRO: FIX: German umlauts (ä,ö,ü) not showing correctly on frontend.
 

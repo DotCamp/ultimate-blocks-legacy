@@ -56,7 +56,8 @@
 	}
 }
 .wp-block-ub-tabbed-content-tabs-content {
-	.wp-block-ub-tabbed-content-tab-content-wrap {
+	.wp-block-ub-tabbed-content-tab-content-wrap,
+	.wp-block-ub-tab-block {
 		> .block-editor-inner-blocks {
 			> .block-editor-block-list__layout {
 				> .alignright {
