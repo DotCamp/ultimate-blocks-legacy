@@ -1086,6 +1086,42 @@ export function AdvancedVideoBlock(props) {
 															break;
 
 														case "youtube":
+															let srcRegex =
+																/<iframe[^>]*src=["']([^"']*)["'][^>]*>/;
+
+															let match = videoEmbedCode.match(srcRegex);
+															if (!autoplay) {
+																if (match) {
+																	let modifiedSrc = match[1] + "?autoplay=1";
+																	let updatedVideoEmbedCode =
+																		videoEmbedCode.replace(
+																			match[1],
+																			modifiedSrc,
+																		);
+																	setAttributes({
+																		videoEmbedCode: editEmbedArgs(
+																			videoSource,
+																			updatedVideoEmbedCode,
+																			autoplay ? "remove" : "add",
+																			"autoplay=1",
+																		),
+																	});
+																}
+															} else {
+																if (match) {
+																	let updatedVideoEmbedCode =
+																		videoEmbedCode.replace("?autoplay=1", "");
+																	setAttributes({
+																		videoEmbedCode: editEmbedArgs(
+																			videoSource,
+																			updatedVideoEmbedCode,
+																			autoplay ? "remove" : "add",
+																			"autoplay=1",
+																		),
+																	});
+																}
+															}
+															break;
 														case "vimeo":
 															setAttributes({
 																videoEmbedCode: editEmbedArgs(
