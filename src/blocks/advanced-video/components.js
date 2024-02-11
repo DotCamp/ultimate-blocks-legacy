@@ -761,11 +761,11 @@ export function AdvancedVideoBlock(props) {
 			extraEmbeds = null;
 	}
 	const onSelectVideo = (media) => {
-		const newWidth = Math.min(600, media.width);
-		const newHeight = Math.round((media.height * newWidth) / media.width);
+		const newWidth = media.width;
+		const newHeight = media.height;
 		let timeUnits = [0];
 		const conversionFactor = [1, 60, 3600, 86400];
-
+		console.log({ media, newHeight, newWidth });
 		if (!isEmpty(media?.fileLength)) {
 			timeUnits = media.fileLength
 				.split(":")

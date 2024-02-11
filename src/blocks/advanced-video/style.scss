@@ -13,6 +13,9 @@
 }
 
 .ub-advanced-video-embed {
+	video {
+		max-width: 100%;
+	}
 	&.ub-advanced-video-autofit-youtube {
 		width: 100%;
 		> iframe {

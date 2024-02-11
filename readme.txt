@@ -146,6 +146,7 @@ That's it. You're done!
 
 = 3.1.3 =
 
+* IMPROVE: Make default width for the uploaded video.
 * IMPROVE: Separated normal and hover colors in icon block.
 * IMPROVE: Advanced heading initially without bold.
 * IMPROVE: Shorts support in the advanced video block.
