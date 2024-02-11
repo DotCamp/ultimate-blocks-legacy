@@ -344,18 +344,21 @@ function ub_include_block_attribute_css() {
 					}
 
 					if ( array_key_exists( 'shadow', $attributes ) && $attributes['shadow'][0]['radius'] > 0 ) {
-						$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' . PHP_EOL .
-													   'box-shadow: ' . ( $attributes['shadow'][0]['radius'] * cos( deg2rad( 450 - $attributes['shadow'][0]['angle'] ) % 360 ) ) . 'px ' .
-													   ( - $attributes['shadow'][0]['radius'] * sin( deg2rad( 450 - $attributes['shadow'][0]['angle'] ) % 360 ) ) . 'px ' .
-													   $attributes['shadow'][0]['blur'] . 'px ' . $attributes['shadow'][0]['spread'] . 'px ' .
-													   'rgba(' . ( hexdec( substr( $attributes['shadow'][0]['color'], 1,
-										2 ) ) ) .
-													   ', ' . hexdec( substr( $attributes['shadow'][0]['color'], 3,
-										2 ) ) .
-													   ', ' . hexdec( substr( $attributes['shadow'][0]['color'], 5,
-										2 ) ) .
-													   ', ' . ( ( 100 - $attributes['shadow'][0]['transparency'] ) / 100 ) . ')' . ';' . PHP_EOL .
-													   '}';
+					$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' . PHP_EOL .
+										'box-shadow: ' . (
+											$attributes['shadow'][0]['radius'] * cos(deg2rad((450 - $attributes['shadow'][0]['angle']) % 360))
+										) . 'px ' .
+										(
+											-($attributes['shadow'][0]['radius'] * sin(deg2rad((450 - $attributes['shadow'][0]['angle']) % 360)))
+										) . 'px ' .
+										$attributes['shadow'][0]['blur'] . 'px ' . $attributes['shadow'][0]['spread'] . 'px ' .
+										'rgba(' .
+										hexdec(substr($attributes['shadow'][0]['color'], 1, 2)) . ', ' .
+										hexdec(substr($attributes['shadow'][0]['color'], 3, 2)) . ', ' .
+										hexdec(substr($attributes['shadow'][0]['color'], 5, 2)) . ', ' .
+										((100 - $attributes['shadow'][0]['transparency']) / 100) .
+										')' . ';' . PHP_EOL .
+										'}';
 					}
 					$blockStylesheets .= $prefix .  '{' . $styles . '}';
 
