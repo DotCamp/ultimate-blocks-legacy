@@ -9,33 +9,22 @@
 .wp-block-ub-button-block {
 	margin: 0 auto;
 }
-.ub-buttons {
-	&.orientation-button-row {
-		.ub-add-button {
-			align-self: center;
+.wp-block-ub-single-button {
+	border-left: var(--ub-button-border-left);
+	border-right: var(--ub-button-border-right);
+	border-top: var(--ub-button-border-top);
+	border-bottom: var(--ub-button-border-bottom);
+	color: var(--ub-button-text-color);
+	background: var(--ub-button-bg-color);
+	&.is-style-outline {
+		border-style: solid;
+		&:hover {
+			border-color: var(--ub-button-hover-text-color);
 		}
 	}
-	&.orientation-button-column {
-		&.align-button-center {
-			.ub-add-button {
-				align-self: center;
-			}
-		}
-		&.align-button-left {
-			.ub-add-button {
-				align-self: flex-start;
-			}
-		}
-		&.align-button-right {
-			.ub-add-button {
-				align-self: flex-end;
-			}
-		}
-		&.align-button-space-between {
-			.ub-add-button {
-				align-self: flex-start;
-			}
-		}
+	&:hover {
+		color: var(--ub-button-hover-text-color);
+		background: var(--ub-button-hover-bg-color);
 	}
 }
 

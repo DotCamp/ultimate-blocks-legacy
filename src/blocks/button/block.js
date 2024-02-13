@@ -40,6 +40,7 @@ import { withDispatch, withSelect } from "@wordpress/data";
 import { compose } from "@wordpress/compose";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType, createBlock } from "@wordpress/blocks";
+import "./block-styles";
 
 /**
  * Register: aa Gutenberg Block.

@@ -288,11 +288,51 @@ $defaultValues = array(
 			)
 		)
 	),
-	'ub/button'                     => array(
+	"ub/button" => array(
+		"attributes" => array(
+			'blockID'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
+			'align'                => array(
+				'type'    => 'string',
+				'default' => 'center'
+			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
+			'buttons'			   => array(
+				'type'	=> 'array',
+				'default' => array()
+			),
+		)
+	),
+	'ub/single-button'                     => array(
 		'attributes' => array(
 			'blockID'              => array(
 				'type'    => 'string',
 				'default' => ''
+			),
+			'iconSize'              => array(
+				'type'    => 'number',
+				'default' => 0
+			),
+			'iconUnit'              => array(
+				'type'    => 'string',
+				'default' => 'px'
 			),
 			'placeholder'              => array(
 				'type'    => 'string',
@@ -301,6 +341,19 @@ $defaultValues = array(
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()
+			),
+			'border' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'borderRadius' => array(
+				'type' 	=> 'array',
+				'default' => array(
+					'topLeft' => "10px",
+					'topRight' => "10px",
+					'bottomLeft' => "10px",
+					'bottomRight' => "10px",
+				)
 			),
 			'margin' => array(
 				'type' 	=> 'array',
@@ -366,17 +419,17 @@ $defaultValues = array(
 				'type'    => 'boolean',
 				'default' => false
 			),
+			'addSponsored'          => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
 			'openInNewTab'         => array(
 				'type'    => 'boolean',
 				'default' => true
 			),
 			'buttonWidth'          => array(
 				'type'    => 'string',
-				'default' => 'fixed'
-			),
-			'buttons'			   => array(
-				'type'	=> 'array',
-				'default' => array()
+				'default' => 'flex'
 			),
 		)
 	),

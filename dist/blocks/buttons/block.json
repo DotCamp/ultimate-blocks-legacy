@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ub/button",
+  "title": "Buttons",
+  "category": "ultimateblocks",
+  "description": "Add amazing buttons that convert more. Comes with an option to add multiple buttons.",
+  "keywords": [
+    "Button",
+    "Buttons",
+    "Ultimate Blocks"
+  ],
+  "attributes": {
+    "blockID": {
+      "type": "string",
+      "default": ""
+    },
+    "orientation": {
+      "type": "string",
+      "default": "row"
+    },
+    "align": {
+      "type": "string",
+      "default": "center"
+    },
+    "isFlexWrap": {
+      "type": "boolean",
+      "default": true
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
+    },
+    "borderRadius": {
+      "type": "object",
+      "default": {}
+    },
+    "border": {
+      "type": "object",
+      "default": {}
+    },
+    "buttons": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "supports": {}
+}

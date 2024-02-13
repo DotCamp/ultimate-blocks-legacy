@@ -381,112 +381,39 @@ function ub_include_block_attribute_css() {
 										 ( $attributes['lineHeight'] ? 'line-height: ' . $attributes['lineHeight'] . 'px;' . PHP_EOL : '' ) .
 										 '}';
 					break;
-				case 'ub/button':
+				case 'ub/single-button':
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub-button-' . $attributes['blockID'];
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
-					
-					if ( ! array_key_exists( 'buttons', $attributes ) || count( $attributes['buttons'] ) === 0 ) {
-						$blockStylesheets .= $prefix . ' a{' . PHP_EOL;
-						if ( $attributes['buttonIsTransparent'] ) {
-							$blockStylesheets .= 'background-color: transparent;' . PHP_EOL .
-												 'color: ' . $attributes['buttonColor'] . ';' . PHP_EOL .
-												 'border: 3px solid ' . $attributes['buttonColor'] . ';';
-						} else {
-							$blockStylesheets .= 'background-color: ' . $attributes['buttonColor'] . ';' . PHP_EOL .
-												 'color: ' . $attributes['buttonTextColor'] . ';' . PHP_EOL .
-												 'border: none;';
-						}
-						$blockStylesheets .= 'border-radius: ' . ( $attributes['buttonRounded'] ? '60' : '0' ) . 'px;' . PHP_EOL .
-											 '}' . PHP_EOL .
-
-											 $prefix . ' a:hover{' . PHP_EOL;
-						if ( $attributes['buttonIsTransparent'] ) {
-							$blockStylesheets .= 'color: ' . $attributes['buttonHoverColor'] . ';' . PHP_EOL .
-												 'border: 3px solid ' . $attributes['buttonHoverColor'] . ';';
-						} else {
-							$blockStylesheets .= 'background-color: ' . $attributes['buttonHoverColor'] . ';' . PHP_EOL .
-												 'color: ' . $attributes['buttonTextHoverColor'] . ';' . PHP_EOL .
-												 'border: none;';
-						}
-						$blockStylesheets .= '}' . PHP_EOL .
-											 $prefix . ' .ub-button-content-holder{' . PHP_EOL .
-											 'flex-direction: ' . ( $attributes['iconPosition'] === 'left' ? 'row' : 'row-reverse' ) . ';' . PHP_EOL .
-											 '}' . PHP_EOL;
+					$borders_css  = ( !empty($attributes['border'])  ? 'border-top: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'top' ) . ';' : '' ) .
+													( !empty($attributes['border'])  ? 'border-left: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'left' ) . ';' : '' ) .
+													( !empty($attributes['border'])  ? 'border-right: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'right' ) . ';' : '' ) .
+													( !empty($attributes['border'])  ? 'border-bottom: ' . Ultimate_Blocks\includes\get_single_side_border_value( get_border_css( $attributes['border'] ), 'bottom' ) . ';' : '' ) ;
+					$blockStylesheets .= $prefix . ' a{'  	. PHP_EOL . $styles . PHP_EOL . $borders_css . "}"; 
+					$blockStylesheets .= $prefix . ' a{' . PHP_EOL;
+					if ( $attributes['buttonIsTransparent'] ) {
+						$blockStylesheets .= 'background-color: transparent;' . PHP_EOL .
+												'color: ' . $attributes['buttonColor'] . ';';
 					} else {
-						foreach ( $attributes['buttons'] as $key => $button ) {
-							$blockStylesheets .= $prefix . ' .ub-button-container:nth-child(' . ( $key + 1 ) . ') a{' . PHP_EOL;
-							if ( $attributes['buttons'][ $key ]['buttonIsTransparent'] ) {
-								$blockStylesheets .= 'background-color: transparent;' . PHP_EOL .
-													 'color: ' . $attributes['buttons'][ $key ]['buttonColor'] . ';' . PHP_EOL .
-													 'border: 3px solid ' . $attributes['buttons'][ $key ]['buttonColor'] . ';';
-							} else {
-								$blockStylesheets .= 'background-color: ' . $attributes['buttons'][ $key ]['buttonColor'] . ';' . PHP_EOL .
-													 'color: ' . ( $attributes['buttons'][ $key ]['buttonTextColor'] ?: 'inherit' ) . ';' . PHP_EOL .
-													 'border: none;';
-							}
-							if(isset($attributes['isBorderComponentChanged']) && $attributes['isBorderComponentChanged']){
-								$blockStylesheets .=  ( !empty( $attributes['buttons'][$key]['borderRadius']['topLeft'] ) ? 'border-top-left-radius: ' . $attributes['buttons'][$key]['borderRadius']['topLeft'] . ';': "" ) .
-												 ( !empty( $attributes['buttons'][$key]['borderRadius']['topRight'] ) ? 'border-top-right-radius: ' . $attributes['buttons'][$key]['borderRadius']['topRight'] . ';': "" ) .
-												 ( !empty( $attributes['buttons'][$key]['borderRadius']['bottomLeft'] ) ? 'border-bottom-left-radius: ' . $attributes['buttons'][$key]['borderRadius']['bottomLeft'] . ';': "" ) .
-												 ( !empty( $attributes['buttons'][$key]['borderRadius']['bottomRight'] ) ? 'border-bottom-right-radius: ' . $attributes['buttons'][$key]['borderRadius']['bottomRight'] . ';': "" );
-							} else{
-								if ( $attributes['buttons'][ $key ]['buttonRounded'] ) {
-									if ( array_key_exists( 'topLeftRadius',
-													$button ) && array_key_exists( 'topLeftRadiusUnit', $button ) &&
-										array_key_exists( 'topRightRadius',
-												$button ) && array_key_exists( 'topRightRadiusUnit', $button ) &&
-										array_key_exists( 'bottomLeftRadius',
-												$button ) && array_key_exists( 'bottomLeftRadiusUnit', $button ) &&
-										array_key_exists( 'bottomRightRadius',
-												$button ) && array_key_exists( 'bottomRightRadiusUnit', $button ) ) {
-										if ( count( array_unique( [
-														$button['topLeftRadius'],
-														$button['topRightRadius'],
-														$button['bottomLeftRadius'],
-														$button['bottomRightRadius']
-												] ) ) === 1
-											&& count( array_unique( [
-														$button['topLeftRadiusUnit'],
-														$button['topRightRadiusUnit'],
-														$button['bottomLeftRadiusUnit'],
-														$button['bottomRightRadiusUnit']
-												] ) ) === 1 ) {
-											$blockStylesheets .= 'border-radius: ' . $button['topLeftRadius'] . $button['topLeftRadiusUnit'] . ';';
-										} else {
-											$blockStylesheets .= 'border-radius: ' . $button['topLeftRadius'] . $button['topLeftRadiusUnit'] . ' ' . $button['topRightRadius'] . $button['topRightRadiusUnit'] . ' ' .
-																$button['bottomRightRadius'] . $button['bottomRightRadiusUnit'] . ' ' . $button['bottomLeftRadius'] . $button['bottomLeftRadiusUnit'] . ';';
-										}
-									} else {
-										$blockStylesheets .= 'border-radius: ' . ( array_key_exists( 'buttonRadius',
-														$attributes['buttons'][ $key ] ) && $attributes['buttons'][ $key ]['buttonRadius'] ? $attributes['buttons'][ $key ]['buttonRadius'] : '60' )
-															. ( array_key_exists( 'buttonRadiusUnit',
-														$attributes['buttons'][ $key ] ) && $attributes['buttons'][ $key ]['buttonRadiusUnit'] ? $attributes['buttons'][ $key ]['buttonRadiusUnit'] : 'px' ) . ';' . PHP_EOL;
-									}
-
-								} else {
-									$blockStylesheets .= 'border-radius: 0;' . PHP_EOL;
-								}
-
-								
-							}
-
-							$blockStylesheets .= '}' . PHP_EOL .
-												 $prefix . ' .ub-button-container:nth-child(' . ( $key + 1 ) . ') a:hover{' . PHP_EOL;
-							if ( $attributes['buttons'][ $key ]['buttonIsTransparent'] ) {
-								$blockStylesheets .= 'color: ' . $attributes['buttons'][ $key ]['buttonHoverColor'] . ';' . PHP_EOL .
-													 'border: 3px solid ' . $attributes['buttons'][ $key ]['buttonHoverColor'] . ';';
-							} else {
-								$blockStylesheets .= 'background-color: ' . $attributes['buttons'][ $key ]['buttonHoverColor'] . ';' . PHP_EOL .
-													 'color: ' . $attributes['buttons'][ $key ]['buttonTextHoverColor'] . ';' . PHP_EOL .
-													 'border: none;';
-							}
-							$blockStylesheets .= '}' . PHP_EOL .
-												 $prefix . ' .ub-button-container:nth-child(' . ( $key + 1 ) . ') .ub-button-content-holder{' . PHP_EOL .
-												 'flex-direction: ' . ( $attributes['buttons'][ $key ]['iconPosition'] === 'left' ? 'row' : 'row-reverse' ) . ';' . PHP_EOL .
-												 '}' . PHP_EOL;
-						}
+						$blockStylesheets .= 'background-color: ' . $attributes['buttonColor'] . ';' . PHP_EOL .
+												'color: ' . ( $attributes['buttonTextColor'] ?: 'inherit' ) . ';';
 					}
+						$blockStylesheets .=  ( !empty( $attributes['borderRadius']['topLeft'] ) ? 'border-top-left-radius: ' . $attributes['borderRadius']['topLeft'] . ';': "" ) .
+											( !empty( $attributes['borderRadius']['topRight'] ) ? 'border-top-right-radius: ' . $attributes['borderRadius']['topRight'] . ';': "" ) .
+											( !empty( $attributes['borderRadius']['bottomLeft'] ) ? 'border-bottom-left-radius: ' . $attributes['borderRadius']['bottomLeft'] . ';': "" ) .
+											( !empty( $attributes['borderRadius']['bottomRight'] ) ? 'border-bottom-right-radius: ' . $attributes['borderRadius']['bottomRight'] . ';': "" );
+					$blockStylesheets .= '}' . PHP_EOL .
+											$prefix . ' a:hover{' . PHP_EOL;
+					if ( $attributes['buttonIsTransparent'] ) {
+						$blockStylesheets .= 'color: ' . $attributes['buttonHoverColor'] . ';' . PHP_EOL .
+												'border-color: ' . $attributes['buttonHoverColor'] . ';';
+					} else {
+						$blockStylesheets .= 'background-color: ' . $attributes['buttonHoverColor'] . ';' . PHP_EOL .
+												'color: ' . $attributes['buttonTextHoverColor'] . ';';
+					}
+					$blockStylesheets .= '}' . PHP_EOL .
+											$prefix . ' .ub-button-container .ub-button-content-holder{' . PHP_EOL .
+											'flex-direction: ' . ( $attributes['iconPosition'] === 'left' ? 'row' : 'row-reverse' ) . ';' . PHP_EOL .
+											'}' . PHP_EOL;
 
 					break;
 				case 'ub/call-to-action-block':
@@ -1394,6 +1321,9 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/table-of-contents/block.php';
 
 // Button Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/button/block.php';
+
+// Buttons Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/buttons/block.php';
 
 // Content Filter Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/content-filter/block.php';

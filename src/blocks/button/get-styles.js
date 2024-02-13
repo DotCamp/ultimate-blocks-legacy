@@ -1,10 +1,21 @@
 import { omitBy, isUndefined, trim, isEmpty } from "lodash";
-import { getSpacingCss } from "../utils/styling-helpers";
+import { getBorderVariablesCss, getSpacingCss } from "../utils/styling-helpers";
 
 export function getStyles(attributes) {
-	const { padding, margin } = attributes;
+	const {
+		padding,
+		margin,
+		borderRadius,
+		buttonColor,
+		buttonHoverColor,
+		buttonTextColor,
+		buttonTextHoverColor,
+		buttonIsTransparent,
+		border,
+	} = attributes;
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
+	const borderValues = getBorderVariablesCss(border, "button");
 
 	let styles = {
 		paddingTop: paddingObj?.top,
@@ -15,6 +26,21 @@ export function getStyles(attributes) {
 		marginRight: marginObj?.right,
 		marginBottom: marginObj?.bottom,
 		marginLeft: marginObj?.left,
+		"--ub-button-bg-color": buttonIsTransparent ? "transparent" : buttonColor,
+		"--ub-button-text-color": buttonIsTransparent
+			? buttonColor
+			: buttonTextColor,
+		borderTopLeftRadius: borderRadius?.topLeft,
+		borderTopRightRadius: borderRadius?.topRight,
+		borderBottomLeftRadius: borderRadius?.bottomLeft,
+		borderBottomRightRadius: borderRadius?.bottomRight,
+		"--ub-button-hover-bg-color": buttonIsTransparent
+			? "transparent"
+			: buttonHoverColor,
+		"--ub-button-hover-text-color": buttonIsTransparent
+			? buttonHoverColor
+			: buttonTextHoverColor,
+		...borderValues,
 	};
 
 	return omitBy(
@@ -24,6 +50,6 @@ export function getStyles(attributes) {
 			isEmpty(value) ||
 			isUndefined(value) ||
 			trim(value) === "" ||
-			trim(value) === "undefined undefined undefined"
+			trim(value) === "undefined undefined undefined",
 	);
 }

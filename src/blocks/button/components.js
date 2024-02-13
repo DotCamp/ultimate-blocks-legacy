@@ -20,7 +20,6 @@ import {
 	RichText,
 	ColorPalette,
 	useBlockProps,
-	JustifyContentControl,
 	__experimentalBorderRadiusControl as WPBorderRadiusControl,
 } from "@wordpress/block-editor";
 import {
@@ -42,12 +41,7 @@ import {
 import { __ } from "@wordpress/i18n";
 import { loadPromise, models } from "@wordpress/api";
 import { useSelect } from "@wordpress/data";
-import {
-	SpacingControl,
-	CustomToggleGroupControl,
-	TabsPanelControl,
-} from "../components";
-import { AVAILABLE_JUSTIFICATIONS, AVAILABLE_ORIENTATION } from "../../common";
+import { BorderControl, SpacingControl, TabsPanelControl } from "../components";
 import { splitBorderRadius } from "../utils/styling-helpers";
 import ColorSettings from "./components/ButtonColorSettings";
 
@@ -885,7 +879,6 @@ export function EditorComponent(props) {
 		clientId,
 		attributes: {
 			blockID,
-			buttons,
 			align,
 			buttonText,
 			url,
@@ -895,15 +888,15 @@ export function EditorComponent(props) {
 			buttonTextColor,
 			buttonTextHoverColor,
 			buttonIsTransparent,
-			buttonRounded,
 			buttonWidth,
 			chosenIcon,
 			iconPosition,
 			addNofollow,
 			openInNewTab,
-			orientation,
-			isFlexWrap,
-			isBorderComponentChanged,
+			iconSize,
+			addSponsored,
+			iconUnit,
+			className,
 		},
 	} = props;
 	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
@@ -924,16 +917,13 @@ export function EditorComponent(props) {
 			};
 		});
 	const [availableIcons, setAvailableIcons] = useState([]);
-	const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
 	const [enableLinkInput, setLinkInputStatus] = useState(false);
-	const [hoveredButton, setHoveredButton] = useState(-1);
 	const [iconChoices, setIconChoices] = useState([]);
 	const [iconSearchTerm, setIconSearchTerm] = useState("");
 	const [iconSearchResultsPage, setIconSearchResultsPage] = useState(0);
 	const [recentSelection, setRecentSelection] = useState("");
 	const [hasApiAccess, setApiStatus] = useState(false);
 	const [selectionTime, setSelectionTime] = useState(-1);
-	const [currentCorner, setCurrentCorner] = useState("all");
 
 	if (blockID === "") {
 		setAttributes({ blockID: block.clientId, align: "center" });
@@ -948,6 +938,25 @@ export function EditorComponent(props) {
 	if (!isSelected && enableLinkInput) {
 		setLinkInputStatus(false);
 	}
+	const splittedClassNames = !isEmpty(className) ? className : [];
+	useEffect(() => {
+		if (
+			buttonIsTransparent &&
+			!splittedClassNames.includes("is-style-outline")
+		) {
+			splittedClassNames.push("is-style-outline");
+			setAttributes({ className: splittedClassNames.join(" ") });
+		}
+	}, []);
+	useEffect(() => {
+		if (splittedClassNames.length > 0) {
+			if (splittedClassNames.includes("is-style-fill")) {
+				setAttributes({ buttonIsTransparent: false });
+			} else {
+				setAttributes({ buttonIsTransparent: true });
+			}
+		}
+	}, [className]);
 
 	const BUTTON_SIZES = {
 		small: __("S", "ultimate-blocks"),
@@ -970,61 +979,30 @@ export function EditorComponent(props) {
 	const normalStateColors = (
 		<>
 			<ColorSettings
-				value={buttons[activeButtonIndex]?.buttonColor}
+				value={buttonColor}
 				onValueChange={(colorValue) =>
 					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonColor: colorValue,
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
+						buttonColor: colorValue,
 					})
 				}
 				onValueReset={() => {
-					console.log([
-						...buttons.slice(0, activeButtonIndex),
-						Object.assign({}, buttons[activeButtonIndex], {
-							buttonColor: "",
-						}),
-						...buttons.slice(activeButtonIndex + 1),
-					]);
 					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonColor: "",
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
+						buttonColor: "",
 					});
 				}}
 				label={__("Button Color", "ultimate-blocks")}
 			/>
-			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
+			{!buttonIsTransparent && (
 				<ColorSettings
-					value={buttons[activeButtonIndex]?.buttonTextColor}
+					value={buttonTextColor}
 					onValueChange={(colorValue) =>
 						setAttributes({
-							buttons: [
-								...buttons.slice(0, activeButtonIndex),
-								Object.assign({}, buttons[activeButtonIndex], {
-									buttonTextColor: colorValue,
-								}),
-								...buttons.slice(activeButtonIndex + 1),
-							],
+							buttonTextColor: colorValue,
 						})
 					}
 					onValueReset={() =>
 						setAttributes({
-							buttons: [
-								...buttons.slice(0, activeButtonIndex),
-								Object.assign({}, buttons[activeButtonIndex], {
-									buttonTextColor: "",
-								}),
-								...buttons.slice(activeButtonIndex + 1),
-							],
+							buttonTextColor: "",
 						})
 					}
 					label={__("Button Text Color", "ultimate-blocks")}
@@ -1035,54 +1013,30 @@ export function EditorComponent(props) {
 	const hoverStateColors = (
 		<>
 			<ColorSettings
-				value={buttons[activeButtonIndex]?.buttonHoverColor}
+				value={buttonHoverColor}
 				onValueChange={(colorValue) =>
 					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonHoverColor: colorValue,
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
+						buttonHoverColor: colorValue,
 					})
 				}
 				onValueReset={() =>
 					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonHoverColor: "",
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
+						buttonHoverColor: "",
 					})
 				}
 				label={__("Button Color", "ultimate-blocks")}
 			/>
-			{!buttons[activeButtonIndex]?.buttonIsTransparent && (
+			{!buttonIsTransparent && (
 				<ColorSettings
-					value={buttons[activeButtonIndex]?.buttonTextHoverColor}
+					value={buttonTextHoverColor}
 					onValueChange={(colorValue) =>
 						setAttributes({
-							buttons: [
-								...buttons.slice(0, activeButtonIndex),
-								Object.assign({}, buttons[activeButtonIndex], {
-									buttonTextHoverColor: colorValue,
-								}),
-								...buttons.slice(activeButtonIndex + 1),
-							],
+							buttonTextHoverColor: colorValue,
 						})
 					}
 					onValueReset={() =>
 						setAttributes({
-							buttons: [
-								...buttons.slice(0, activeButtonIndex),
-								Object.assign({}, buttons[activeButtonIndex], {
-									buttonTextHoverColor: "",
-								}),
-								...buttons.slice(activeButtonIndex + 1),
-							],
+							buttonTextHoverColor: "",
 						})
 					}
 					label={__("Button Text Color", "ultimate-blocks")}
@@ -1210,81 +1164,8 @@ export function EditorComponent(props) {
 		);
 
 		loadIconList();
-
-		if (buttons.length === 0) {
-			setAttributes({
-				buttons: [
-					Object.assign({}, defaultButtonProps, {
-						buttonText,
-						url,
-						size,
-						buttonColor,
-						buttonHoverColor,
-						buttonTextColor,
-						buttonTextHoverColor,
-						buttonRounded,
-						chosenIcon,
-						iconPosition,
-						buttonIsTransparent,
-						addNofollow,
-						openInNewTab,
-						buttonWidth,
-					}),
-				],
-			});
-		} else {
-			let newButtons = JSON.parse(JSON.stringify(buttons));
-			let cornersNotSet = false;
-
-			newButtons.forEach((b) => {
-				if (!b.hasOwnProperty("topLeftRadius")) {
-					if (!cornersNotSet) {
-						cornersNotSet = true;
-					}
-
-					b.topLeftRadius = b.buttonRadius;
-					b.topRightRadius = b.buttonRadius;
-					b.bottomLeftRadius = b.buttonRadius;
-					b.bottomRightRadius = b.buttonRadius;
-
-					b.topLeftRadiusUnit = b.buttonRadiusUnit;
-					b.topRightRadiusUnit = b.buttonRadiusUnit;
-					b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
-					b.bottomRightRadiusUnit = b.buttonRadiusUnit;
-
-					b.iconSize = 0;
-					b.iconUnit = "px";
-				}
-			});
-
-			if (cornersNotSet) {
-				setAttributes({ buttons: JSON.parse(JSON.stringify(newButtons)) });
-			}
-		}
 	}, []);
-	useEffect(() => {
-		if (!isBorderComponentChanged && buttons.length > 0) {
-			const newButtons = buttons.map((b) => {
-				b.topLeftRadiusUnit = b.buttonRadiusUnit;
-				b.topRightRadiusUnit = b.buttonRadiusUnit;
-				b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
-				b.bottomRightRadiusUnit = b.buttonRadiusUnit;
-				return {
-					...b,
-					borderRadius: {
-						topLeft: b.topLeftRadius + b.topLeftRadiusUnit,
-						topRight: b.topRightRadius + b.topRightRadiusUnit,
-						bottomLeft: b.bottomLeftRadius + b.bottomLeftRadiusUnit,
-						bottomRight: b.bottomRightRadius + b.bottomRightRadiusUnit,
-					},
-				};
-			});
-			setAttributes({
-				isBorderComponentChanged: true,
-				buttons: newButtons,
-			});
-		}
-	}, []);
+
 	useEffect(() => {
 		if (hasApiAccess) {
 			if (isSelected) {
@@ -1294,10 +1175,15 @@ export function EditorComponent(props) {
 			}
 		}
 	}, [isSelected]);
-	const flexWrapClass = isFlexWrap ? " ub-flex-wrap" : "";
 
 	const blockProps = useBlockProps({
-		className: `ub-buttons align-button-${align} orientation-button-${orientation}${flexWrapClass}`,
+		className: `ub-button ub-button-block-main ub-button-${size} ${
+			buttonWidth === "full"
+				? "ub-button-full-width"
+				: buttonWidth === "flex"
+					? `ub-button-flex-${size}`
+					: ""
+		}`,
 		style: getStyles(props.attributes),
 	});
 
@@ -1305,14 +1191,6 @@ export function EditorComponent(props) {
 		<>
 			{isSelected && (
 				<>
-					<BlockControls group="block">
-						<JustifyContentControl
-							value={align}
-							onChange={(next) => {
-								setAttributes({ align: next });
-							}}
-						/>
-					</BlockControls>
 					<BlockControls>
 						<ToolbarGroup>
 							<ToolbarButton
@@ -1327,322 +1205,193 @@ export function EditorComponent(props) {
 			{
 				<>
 					<InspectorControls group="settings">
-						<PanelBody title={__("Layout", "ultimate-blocks")}>
-							<div className="ub-justification-control">
-								<CustomToggleGroupControl
-									options={AVAILABLE_JUSTIFICATIONS}
-									attributeKey="align"
-									label={__("Justification", "ultimate-blocks")}
-								/>
-								<CustomToggleGroupControl
-									options={AVAILABLE_ORIENTATION}
-									attributeKey="orientation"
-									label={__("Orientation", "ultimate-blocks")}
-								/>
-							</div>
-							<ToggleControl
-								checked={isFlexWrap}
-								label={__("Allow to wrap to multiple lines", "ultimate-blocks")}
-								onChange={() => setAttributes({ isFlexWrap: !isFlexWrap })}
-							/>
-						</PanelBody>
-						{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
-							<>
-								<PanelBody
-									title={__("Size", "ultimate-blocks")}
-									initialOpen={true}
-								>
-									<div className="ub-button-group">
-										<ButtonGroup
-											aria-label={__("Button Size", "ultimate-blocks")}
-										>
-											{Object.keys(BUTTON_SIZES).map((b) => (
-												<Button
-													isLarge
-													isPrimary={buttons[activeButtonIndex].size === b}
-													aria-pressed={buttons[activeButtonIndex].size === b}
-													onClick={() =>
-														setAttributes({
-															buttons: [
-																...buttons.slice(0, activeButtonIndex),
-																Object.assign({}, buttons[activeButtonIndex], {
-																	size: b,
-																}),
-																...buttons.slice(activeButtonIndex + 1),
-															],
-														})
-													}
-												>
-													{BUTTON_SIZES[b]}
-												</Button>
-											))}
-										</ButtonGroup>
-									</div>
-								</PanelBody>
-								<PanelBody
-									title={__("Width", "ultimate-blocks")}
-									initialOpen={true}
-								>
-									<div className="ub-button-group">
-										<ButtonGroup
-											aria-label={__("Button Width", "ultimate-blocks")}
-										>
-											{Object.keys(BUTTON_WIDTHS).map((b) => (
-												<Button
-													isLarge
-													isPrimary={
-														buttons[activeButtonIndex].buttonWidth === b
-													}
-													aria-pressed={
-														buttons[activeButtonIndex].buttonWidth === b
-													}
-													onClick={() =>
-														setAttributes({
-															buttons: [
-																...buttons.slice(0, activeButtonIndex),
-																Object.assign({}, buttons[activeButtonIndex], {
-																	buttonWidth: b,
-																}),
-																...buttons.slice(activeButtonIndex + 1),
-															],
-														})
-													}
-												>
-													{BUTTON_WIDTHS[b]}
-												</Button>
-											))}
-										</ButtonGroup>
-									</div>
-								</PanelBody>
-								<PanelBody
-									title={__("Icon", "ultimate-blocks")}
-									initialOpen={true}
-								>
-									<div style={{ gridColumn: "1/-1" }}>
-										<IconControl
-											onIconSelect={(val) => {
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, activeButtonIndex),
-														Object.assign({}, buttons[activeButtonIndex], {
-															chosenIcon: val,
-														}),
-														...buttons.slice(activeButtonIndex + 1),
-													],
-												});
-											}}
-											label={__("Icon", "ultimate-blocks-pro")}
-											selectedIcon={buttons[activeButtonIndex].chosenIcon}
-										/>
-									</div>
-									<RadioControl
-										className="ub-button-icon-position"
-										label={__("Icon position")}
-										selected={buttons[activeButtonIndex].iconPosition}
-										options={[
-											{
-												label: __("Left", "ultimate-blocks"),
-												value: "left",
-											},
-											{
-												label: __("Right", "ultimate-blocks"),
-												value: "right",
-											},
-										]}
-										onChange={(pos) =>
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, activeButtonIndex),
-													Object.assign({}, buttons[activeButtonIndex], {
-														iconPosition: pos,
-													}),
-													...buttons.slice(activeButtonIndex + 1),
-												],
-											})
-										}
-									/>
-									{buttons[activeButtonIndex].chosenIcon !== "" && (
-										<>
-											<ToggleControl
-												label={__("Change icon size", "ultimate-blocks")}
-												checked={buttons[activeButtonIndex].iconSize > 0}
-												onChange={(isOn) => {
-													let newAttributes = { iconUnit: "px" };
-
-													if (isOn) {
-														newAttributes = Object.assign({}, newAttributes, {
-															iconSize:
-																presetIconSize[buttons[activeButtonIndex].size],
-														});
-													} else {
-														newAttributes = Object.assign({}, newAttributes, {
-															iconSize: 0,
-														});
-													}
-
+						<>
+							<PanelBody
+								title={__("Size", "ultimate-blocks")}
+								initialOpen={true}
+							>
+								<div className="ub-button-group">
+									<ButtonGroup
+										aria-label={__("Button Size", "ultimate-blocks")}
+									>
+										{Object.keys(BUTTON_SIZES).map((b) => (
+											<Button
+												isLarge
+												isPrimary={size === b}
+												aria-pressed={size === b}
+												onClick={() =>
 													setAttributes({
-														buttons: [
-															...buttons.slice(0, activeButtonIndex),
-															Object.assign(
-																{},
-																buttons[activeButtonIndex],
-																newAttributes,
-															),
-															...buttons.slice(activeButtonIndex + 1),
-														],
+														size: b,
+													})
+												}
+											>
+												{BUTTON_SIZES[b]}
+											</Button>
+										))}
+									</ButtonGroup>
+								</div>
+							</PanelBody>
+							<PanelBody
+								title={__("Width", "ultimate-blocks")}
+								initialOpen={true}
+							>
+								<div className="ub-button-group">
+									<ButtonGroup
+										aria-label={__("Button Width", "ultimate-blocks")}
+									>
+										{Object.keys(BUTTON_WIDTHS).map((b) => (
+											<Button
+												isLarge
+												isPrimary={buttonWidth === b}
+												aria-pressed={buttonWidth === b}
+												onClick={() =>
+													setAttributes({
+														buttonWidth: b,
+													})
+												}
+											>
+												{BUTTON_WIDTHS[b]}
+											</Button>
+										))}
+									</ButtonGroup>
+								</div>
+							</PanelBody>
+							<PanelBody
+								title={__("Icon", "ultimate-blocks")}
+								initialOpen={true}
+							>
+								<div style={{ gridColumn: "1/-1" }}>
+									<IconControl
+										onIconSelect={(val) => {
+											setAttributes({
+												chosenIcon: val,
+											});
+										}}
+										label={__("Icon", "ultimate-blocks-pro")}
+										selectedIcon={chosenIcon}
+									/>
+								</div>
+								<RadioControl
+									className="ub-button-icon-position"
+									label={__("Icon position")}
+									selected={iconPosition}
+									options={[
+										{
+											label: __("Left", "ultimate-blocks"),
+											value: "left",
+										},
+										{
+											label: __("Right", "ultimate-blocks"),
+											value: "right",
+										},
+									]}
+									onChange={(pos) =>
+										setAttributes({
+											iconPosition: pos,
+										})
+									}
+								/>
+								{chosenIcon !== "" && (
+									<>
+										<ToggleControl
+											label={__("Change icon size", "ultimate-blocks")}
+											checked={iconSize > 0}
+											onChange={(isOn) => {
+												let newAttributes = { iconUnit: "px" };
+
+												if (isOn) {
+													newAttributes = Object.assign({}, newAttributes, {
+														iconSize: presetIconSize[size],
 													});
-												}}
-											/>
-											{buttons[activeButtonIndex].iconSize > 0 && (
-												<div id="ub-button-radius-panel">
-													<RangeControl
-														label={__("Icon size")}
-														value={buttons[activeButtonIndex].iconSize}
-														step={
-															buttons[activeButtonIndex].iconUnit === "em"
-																? 0.1
-																: 1
-														}
-														onChange={(value) =>
-															setAttributes({
-																buttons: [
-																	...buttons.slice(0, activeButtonIndex),
-																	Object.assign(
-																		{},
-																		buttons[activeButtonIndex],
-																		{
-																			iconSize: value,
-																		},
-																	),
-																	...buttons.slice(activeButtonIndex + 1),
-																],
-															})
-														}
-													/>
-													<ButtonGroup
-														aria-label={__(
-															"Button Size Unit",
-															"ultimate-blocks",
-														)}
-													>
-														{["px", "em"].map((b) => (
-															<Button
-																isLarge
-																isPrimary={
-																	b === buttons[activeButtonIndex].iconUnit
-																}
-																aria-pressed={
-																	b === buttons[activeButtonIndex].iconUnit
-																}
-																onClick={() =>
-																	setAttributes({
-																		buttons: [
-																			...buttons.slice(0, activeButtonIndex),
-																			Object.assign(
-																				{},
-																				buttons[activeButtonIndex],
-																				{
-																					iconUnit: b,
-																				},
-																			),
-																			...buttons.slice(activeButtonIndex + 1),
-																		],
-																	})
-																}
-															>
-																{b}
-															</Button>
-														))}
-													</ButtonGroup>
-												</div>
-											)}
-										</>
-									)}
-								</PanelBody>
-							</>
-						)}
+												} else {
+													newAttributes = Object.assign({}, newAttributes, {
+														iconSize: 0,
+													});
+												}
+
+												setAttributes(newAttributes);
+											}}
+										/>
+										{iconSize > 0 && (
+											<div id="ub-button-radius-panel">
+												<RangeControl
+													label={__("Icon size")}
+													value={iconSize}
+													step={iconUnit === "em" ? 0.1 : 1}
+													onChange={(value) =>
+														setAttributes({
+															iconSize: value,
+														})
+													}
+												/>
+												<ButtonGroup
+													aria-label={__("Button Size Unit", "ultimate-blocks")}
+												>
+													{["px", "em"].map((b) => (
+														<Button
+															isLarge
+															isPrimary={b === iconUnit}
+															aria-pressed={b === iconUnit}
+															onClick={() =>
+																setAttributes({
+																	iconUnit: b,
+																})
+															}
+														>
+															{b}
+														</Button>
+													))}
+												</ButtonGroup>
+											</div>
+										)}
+									</>
+								)}
+							</PanelBody>
+						</>
 					</InspectorControls>
 					<InspectorControls group="styles">
-						{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
-							<>
-								<SavedStylesInspector
-									attributes={buttons[activeButtonIndex]}
-									defaultAttributes={(() => {
-										// eslint-disable-next-line no-unused-vars
-										const { buttonText, url, ...rest } = defaultButtonProps;
+						<>
+							<SavedStylesInspector
+								attributes={props.attributes}
+								defaultAttributes={(() => {
+									// eslint-disable-next-line no-unused-vars
+									const { buttonText, url, ...rest } = props.attributes;
 
-										return rest;
-									})()}
-									attributesToSave={(() => {
-										// eslint-disable-next-line no-unused-vars
-										const { buttonText, url, ...rest } = defaultButtonProps;
-										return Object.keys(rest).filter((key) => {
-											return Object.prototype.hasOwnProperty.call(rest, key);
-										});
-									})()}
-									setAttribute={(styleObject) => {
-										setAttributes({
-											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												{
-													...buttons[activeButtonIndex],
-													...styleObject,
-												},
-												...buttons.slice(activeButtonIndex + 1),
-											],
-										});
-									}}
-									previewAttributeCallback={(attr, styleName) => {
-										return {
-											buttons: [
-												{
-													...attr,
-													buttonText: styleName,
-												},
-											],
-										};
-									}}
-									previewElementCallback={(el) => {
-										if (el && typeof el.querySelector === "function") {
-											const plusButton = el.querySelector("button");
+									return rest;
+								})()}
+								attributesToSave={(() => {
+									// eslint-disable-next-line no-unused-vars
+									const { buttonText, url, ...rest } = props.attributes;
+									return Object.keys(rest).filter((key) => {
+										return Object.prototype.hasOwnProperty.call(rest, key);
+									});
+								})()}
+								setAttribute={(styleObject) => {
+									setAttributes(styleObject);
+								}}
+								previewAttributeCallback={(attr, styleName) => {
+									return {
+										...attr,
+										buttonText: styleName,
+									};
+								}}
+								previewElementCallback={(el) => {
+									if (el && typeof el.querySelector === "function") {
+										const plusButton = el.querySelector("button");
 
-											const textEditor = el.querySelector(
-												'div[role="textbox"]',
-											);
-											if (textEditor) {
-												// disable in-place text editor
-												textEditor.setAttribute("contenteditable", false);
-											}
-
-											el.removeChild(plusButton);
+										const textEditor = el.querySelector('div[role="textbox"]');
+										if (textEditor) {
+											// disable in-place text editor
+											textEditor.setAttribute("contenteditable", false);
 										}
 
-										return el;
-									}}
-								/>
-								<PanelBody
-									title={__("Button Styling", "ultimate-blocks")}
-									initialOpen={true}
-								>
-									<ToggleControl
-										label={__("Transparent", "ultimate-blocks")}
-										checked={buttons[activeButtonIndex]?.buttonIsTransparent}
-										onChange={() =>
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, activeButtonIndex),
-													Object.assign({}, buttons[activeButtonIndex], {
-														buttonIsTransparent:
-															!buttons[activeButtonIndex]?.buttonIsTransparent,
-													}),
-													...buttons.slice(activeButtonIndex + 1),
-												],
-											})
-										}
-									/>
-								</PanelBody>
-							</>
-						)}
+										el.removeChild(plusButton);
+									}
+
+									return el;
+								}}
+							/>
+						</>
 						<PanelBody
 							title={__("Dimension Settings", "ultimate-blocks")}
 							initialOpen={false}
@@ -1660,298 +1409,133 @@ export function EditorComponent(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
-					{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (
-						<InspectorControls group="color">
-							<TabsPanelControl
-								tabs={[
-									{
-										name: "normalState",
-										title: __("Normal", "ultimate-blocks"),
-										component: normalStateColors,
-									},
-									{
-										name: "hoverState",
-										title: __("Hover", "ultimate-blocks"),
-										component: hoverStateColors,
-									},
-								]}
-							/>
-						</InspectorControls>
-					)}
-					{!isEmpty(buttons[activeButtonIndex]) && (
-						<InspectorControls group="border">
-							<ToolsPanelItem
-								panelId={clientId}
-								isShownByDefault
-								resetAllFilter={() =>
-									setAttributes({
-										buttons: [
-											...buttons.slice(0, activeButtonIndex),
-											Object.assign({}, buttons[activeButtonIndex], {
-												borderRadius: {},
-											}),
-											...buttons.slice(activeButtonIndex + 1),
-										],
-									})
-								}
-								label={__("Button Radius", "ultimate-blocks")}
-								hasValue={() =>
-									!isEmpty(buttons[activeButtonIndex]["borderRadius"])
-								}
-								onDeselect={() => {
-									setAttributes({
-										buttons: [
-											...buttons.slice(0, activeButtonIndex),
-											Object.assign({}, buttons[activeButtonIndex], {
-												borderRadius: {},
-											}),
-											...buttons.slice(activeButtonIndex + 1),
-										],
-									});
-								}}
-							>
-								<BaseControl.VisualLabel as="legend">
-									{__("Button Radius", "ultimate-blocks")}
-								</BaseControl.VisualLabel>
-								<div className="ub-border-radius-control">
-									<WPBorderRadiusControl
-										values={buttons[activeButtonIndex]["borderRadius"]}
-										onChange={(newBorderRadius) => {
-											const splitted = splitBorderRadius(newBorderRadius);
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, activeButtonIndex),
-													Object.assign({}, buttons[activeButtonIndex], {
-														borderRadius: splitted,
-													}),
-													...buttons.slice(activeButtonIndex + 1),
-												],
-											});
-										}}
-									/>
-								</div>
-							</ToolsPanelItem>
-						</InspectorControls>
-					)}
+					<InspectorControls group="color">
+						<TabsPanelControl
+							tabs={[
+								{
+									name: "normalState",
+									title: __("Normal", "ultimate-blocks"),
+									component: normalStateColors,
+								},
+								{
+									name: "hoverState",
+									title: __("Hover", "ultimate-blocks"),
+									component: hoverStateColors,
+								},
+							]}
+						/>
+					</InspectorControls>
+					<InspectorControls group="border">
+						<BorderControl
+							showDefaultBorder
+							showDefaultBorderRadius
+							attrBorderKey="border"
+							attrBorderRadiusKey="borderRadius"
+							borderLabel={__("Border", "ultimate-blocks")}
+							borderRadiusLabel={__("Border Radius", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			}
-			{
+			<>
 				<div {...blockProps}>
-					{buttons.map((b, i) => (
-						<div
-							className={`ub-button-container${
-								b.buttonWidth === "full" ? " ub-button-full-container" : ""
-							}`}
-						>
-							{buttons.length > 1 && (
-								<div className="ub-button-delete">
-									<span
-										title={__("Delete This Button")}
-										onClick={() => {
-											setActiveButtonIndex(
-												activeButtonIndex > i
-													? activeButtonIndex - 1
-													: Math.min(activeButtonIndex, buttons.length - 2),
-											);
-
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, i),
-													...buttons.slice(i + 1),
-												],
-											});
-										}}
-										class="dashicons dashicons-dismiss"
-									/>
-								</div>
-							)}
-							<div
-								className={`ub-button-block-main ub-button-${b.size} ${
-									b.buttonWidth === "full"
-										? "ub-button-full-width"
-										: b.buttonWidth === "flex"
-											? `ub-button-flex-${b.size}`
-											: ""
-								}`}
-								onMouseEnter={() => setHoveredButton(i)}
-								onMouseLeave={() => setHoveredButton(-1)}
-								onClick={() => setActiveButtonIndex(i)}
-								style={{
-									backgroundColor: b.buttonIsTransparent
-										? "transparent"
-										: hoveredButton === i
-											? b.buttonHoverColor
-											: b.buttonColor,
-									color:
-										hoveredButton === i
-											? b.buttonIsTransparent
-												? b.buttonHoverColor
-												: b.buttonTextHoverColor || "inherit"
-											: b.buttonIsTransparent
-												? b.buttonColor
-												: b.buttonTextColor || "inherit",
-									borderTopLeftRadius: b?.borderRadius?.topLeft,
-									borderTopRightRadius: b?.borderRadius?.topRight,
-									borderBottomLeftRadius: b?.borderRadius?.bottomLeft,
-									borderBottomRightRadius: b?.borderRadius?.bottomRight,
-									borderStyle: b.buttonIsTransparent ? "solid" : "none",
-									borderColor: b.buttonIsTransparent
-										? hoveredButton === i
-											? b.buttonHoverColor
-											: b.buttonColor
-										: null,
-									boxShadow:
-										isSelected && activeButtonIndex === i
-											? "0 10px 8px 0 rgba(0, 0, 0, 0.2), 0 -10px 8px 0 rgba(0, 0, 0, 0.2)"
-											: null,
-								}}
-							>
-								<div
-									className="ub-button-content-holder"
-									style={{
-										flexDirection:
-											b.iconPosition === "left" ? "row" : "row-reverse",
-									}}
-								>
-									{b.chosenIcon !== "" &&
-										allIcons.hasOwnProperty(
-											`fa${dashesToCamelcase(b.chosenIcon)}`,
-										) && (
-											<div className="ub-button-icon-holder">
-												{generateIcon(
-													allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
-													b.iconSize || presetIconSize[b.size],
-													b.iconUnit || "px",
-												)}
-											</div>
-										)}
-									<RichText
-										className="ub-button-block-btn"
-										placeholder={__("Button Text", "ultimate-blocks")}
-										onChange={(value) =>
-											setAttributes({
-												buttons: [
-													...buttons.slice(0, i),
-													Object.assign({}, buttons[i], {
-														buttonText: value,
-													}),
-													...buttons.slice(i + 1),
-												],
-											})
-										}
-										unstableOnFocus={() => setActiveButtonIndex(i)}
-										value={b.buttonText}
-										allowedFormats={[
-											"core/bold",
-											"core/italic",
-											"core/strikethrough",
-										]}
-										keepPlaceholderOnFocus={true}
-									/>
-								</div>
-							</div>
-							{activeButtonIndex === i && enableLinkInput && (
-								<Popover>
-									<OutsideAlerter
-										className="ub_button_popover"
-										visibilityTrigger={enableLinkInput}
-										hideLinkInput={() => setLinkInputStatus(false)}
-									>
-										<div className="ub_button_url_input">
-											<form
-												onSubmit={(event) => event.preventDefault()}
-												className={`editor-format-toolbar__link-modal-line ub_button_input_box flex-container`}
-											>
-												<URLInput
-													autoFocus={false}
-													className="button-url"
-													disableSuggestions={
-														buttons[i]?.url?.startsWith("#") ||
-														isEmpty(buttons[i]?.url?.trim())
-													}
-													value={buttons[i].url}
-													onChange={(value) => {
-														setAttributes({
-															buttons: [
-																...buttons.slice(0, i),
-																Object.assign({}, buttons[i], {
-																	url: value,
-																}),
-																...buttons.slice(i + 1),
-															],
-														});
-													}}
-												/>
-												<Button
-													icon={"editor-break"}
-													label={__("Apply", "ultimate-blocks")}
-													type={"submit"}
-												/>
-											</form>
-										</div>
-										<CheckboxControl
-											label={__("Open Link in New Tab", "ultimate-blocks")}
-											checked={buttons[i].openInNewTab}
-											onChange={() =>
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, i),
-														Object.assign({}, buttons[i], {
-															openInNewTab: !buttons[i].openInNewTab,
-														}),
-														...buttons.slice(i + 1),
-													],
-												})
-											}
-										/>
-										<CheckboxControl
-											label={__("Add Nofollow to Link", "ultimate-blocks")}
-											checked={buttons[i].addNofollow}
-											onChange={() =>
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, i),
-														Object.assign({}, buttons[i], {
-															addNofollow: !buttons[i].addNofollow,
-														}),
-														...buttons.slice(i + 1),
-													],
-												})
-											}
-										/>
-										<CheckboxControl
-											label={__("Mark link as sponsored", "ultimate-blocks")}
-											checked={buttons[i].addSponsored}
-											onChange={() =>
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, i),
-														Object.assign({}, buttons[i], {
-															addSponsored: !buttons[i].addSponsored,
-														}),
-														...buttons.slice(i + 1),
-													],
-												})
-											}
-										/>
-									</OutsideAlerter>
-								</Popover>
-							)}
-						</div>
-					))}
-					<button
-						className="ub-add-button"
-						onClick={() => {
-							setAttributes({
-								buttons: [...buttons, defaultButtonProps],
-							});
-							setActiveButtonIndex(buttons.length);
+					<div
+						className="ub-button-content-holder"
+						style={{
+							flexDirection: iconPosition === "left" ? "row" : "row-reverse",
 						}}
 					>
-						+
-					</button>
+						{chosenIcon !== "" &&
+							allIcons.hasOwnProperty(`fa${dashesToCamelcase(chosenIcon)}`) && (
+								<div className="ub-button-icon-holder">
+									{generateIcon(
+										allIcons[`fa${dashesToCamelcase(chosenIcon)}`],
+										iconSize || presetIconSize[size],
+										iconUnit || "px",
+									)}
+								</div>
+							)}
+						<RichText
+							className="ub-button-block-btn"
+							placeholder={__("Button Text", "ultimate-blocks")}
+							onChange={(value) =>
+								setAttributes({
+									buttonText: value,
+								})
+							}
+							value={buttonText}
+							allowedFormats={[
+								"core/bold",
+								"core/italic",
+								"core/strikethrough",
+							]}
+							keepPlaceholderOnFocus={true}
+						/>
+					</div>
 				</div>
-			}
+				{enableLinkInput && (
+					<Popover>
+						<OutsideAlerter
+							className="ub_button_popover"
+							visibilityTrigger={enableLinkInput}
+							hideLinkInput={() => setLinkInputStatus(false)}
+						>
+							<div className="ub_button_url_input">
+								<form
+									onSubmit={(event) => event.preventDefault()}
+									className={`editor-format-toolbar__link-modal-line ub_button_input_box flex-container`}
+								>
+									<URLInput
+										autoFocus={false}
+										className="button-url"
+										disableSuggestions={
+											url?.startsWith("#") || isEmpty(url?.trim())
+										}
+										value={url}
+										onChange={(value) => {
+											setAttributes({
+												url: value,
+											});
+										}}
+									/>
+									<Button
+										icon={"editor-break"}
+										label={__("Apply", "ultimate-blocks")}
+										type={"submit"}
+									/>
+								</form>
+							</div>
+							<CheckboxControl
+								label={__("Open Link in New Tab", "ultimate-blocks")}
+								checked={openInNewTab}
+								onChange={() =>
+									setAttributes({
+										openInNewTab: !openInNewTab,
+									})
+								}
+							/>
+							<CheckboxControl
+								label={__("Add Nofollow to Link", "ultimate-blocks")}
+								checked={addNofollow}
+								onChange={() =>
+									setAttributes({
+										addNofollow: !addNofollow,
+									})
+								}
+							/>
+							<CheckboxControl
+								label={__("Mark link as sponsored", "ultimate-blocks")}
+								checked={addSponsored}
+								onChange={() =>
+									setAttributes({
+										addSponsored: !addSponsored,
+									})
+								}
+							/>
+						</OutsideAlerter>
+					</Popover>
+				)}
+			</>
 		</>
 	);
 }

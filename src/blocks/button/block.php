@@ -7,26 +7,15 @@
  */
 
 
-function ub_buttons_parse($b){
+
+
+function ub_render_button_block($attributes){
     require_once dirname(dirname(__DIR__)) . '/common.php';
-
-    //defaults
-    $buttonWidth = 'fixed' ;
-    $url = '';
-    $openInNewTab = true;
-    $addNofollow = true;
-    $addSponsored = false;
-    $size = 'medium';
-    $iconSize = 0;
-    $chosenIcon = '';
-    $buttonText = 'Button Text';
-    $iconUnit = 'px';
-
-    extract($b); //should overwrite the values above if they exist in the array
+    extract($attributes);
 
     $presetIconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
 
-    return '<div class="ub-button-container' . ($buttonWidth === 'full' ? ' ub-button-full-container' : '') . '">
+    $buttonDisplay = '
     <a href="' . esc_url($url) . '" target="' . ($openInNewTab ? '_blank' : '_self') . '"
     rel="noopener noreferrer' . ($addNofollow ? ' nofollow' : '') . ($addSponsored ? ' sponsored' : '') . '"
     class="ub-button-block-main ub-button-' . $size .
@@ -41,44 +30,9 @@ function ub_buttons_parse($b){
         . '"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg>'
         . '</span>': '')
         .'<span class="ub-button-block-btn">' . $buttonText . '</span>
-    </div></a></div>';
-}
+    </div></a>';
 
-
-function ub_render_button_block($attributes){
-    require_once dirname(dirname(__DIR__)) . '/common.php';
-    extract($attributes);
-
-    $iconSize = array('small' => 25, 'medium' => 30, 'large' => 35, 'larger' => 40);
-
-    $buttonDisplay = (!isset($buttons) || count($buttons) === 0 ? '<div class="ub-button-container align-button-' . $align . (isset($className) ? ' ' . esc_attr($className) : '') . '"' . (!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . $blockID . '"') . '>
-    <a href="' . esc_url($url) . '" target="' . ($openInNewTab ? '_blank' : '_self') . '"
-    rel="noopener noreferrer' . ($addNofollow ? ' nofollow' : '').'"
-    class="ub-button-block-main ub-button-' . $size .
-    ($buttonWidth === 'full' ? ' ub-button-full-width' :
-        ($buttonWidth === 'flex' ? ' ub-button-flex-' . $size : '')) . '">
-    <div class="ub-button-content-holder">' .
-        ($chosenIcon !== '' ? '<span class="ub-button-icon-holder"><svg xmlns="http://www.w3.org/2000/svg"
-        height="' . $iconSize[$size] . '", width="' . $iconSize[$size] . '"
-        viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
-        .'"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg></span>': '')
-        .'<span class="ub-button-block-btn">' . $buttonText . '</span>
-    </div></a></div>' : join('', array_map('ub_buttons_parse', $buttons)));
-    $classes = array();
-    if(isset($buttons) && count($buttons) > 0){
-        $classes[] = 'ub-buttons';
-        if($align === ''){
-            $classes[] = 'align-button-center';
-        } else{
-            $classes[] = 'align-button-' . $align . '';
-        }
-    } else {
-        $classes[] = 'ub-button';
-    }
-    $classes[] = 'orientation-button-' . $orientation . '';
-    if($isFlexWrap){
-        $classes[] = 'ub-flex-wrap';
-    }
+    $classes = array('ub-button');
     $block_attributes = get_block_wrapper_attributes(
             array(
                 'class' => implode(" ", $classes)
