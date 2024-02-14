@@ -2214,6 +2214,10 @@ $defaultValues = array(
     ),
     'ub/styled-list' => array(
         'attributes' => array(
+            'listAlignment' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'alignment' => array(
                 'type' => 'string',
                 'default' => 'left'

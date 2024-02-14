@@ -146,6 +146,7 @@ That's it. You're done!
 
 = 3.1.3 =
 
+* IMPROVE: Separated Styled list and list item alignment.
 * IMPROVE: Make default width for the uploaded video.
 * IMPROVE: Separated normal and hover colors in icon block.
 * IMPROVE: Advanced heading initially without bold.
@@ -154,6 +155,7 @@ That's it. You're done!
 * FIX: Image alignment inside the tabbed content block.
 * FIX: Autoplay in the advanced video block youtube.
 * PRO: FIX: German umlauts (ä,ö,ü) not showing correctly on frontend.
+* PRO: NEW: Ajax functionality for the post grid pagination.
 
 = 3.1.2 =
 

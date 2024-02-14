@@ -64,15 +64,15 @@ function ub_render_styled_list_block($attributes, $contents){
             $listItems = ub_makeList($key, $item, $iconColor, $iconSize);
         }
     }
-
+    $list_alignment_class = !empty($listAlignment) ? "ub-list-alignment-" . $listAlignment : "";
     if($list === ''){
         return '<ul class="' . ($isRootList ?
-                            ('ub_styled_list' . (
+                            ('wp-block-ub-styled-list ub_styled_list ' . $list_alignment_class . (
                                     isset($className) ? ' ' . esc_attr($className)
                                     : '') .'"'
                          . ($blockID === '' ? '' : ' id="ub_styled_list-' . $blockID . '"'))
                          : 'ub_styled_list_sublist"').
-        '>' . $contents . '</ul>';
+        '><div class="ub-block-list__layout">' . $contents . '</div></ul>';
 
     }
     else{

@@ -27,6 +27,10 @@
                "type": "string",
                "default": "left"
           },
+          "listAlignment": {
+               "type": "string",
+               "default": ""
+          },
           "iconColor": {
                "type": "string",
                "default": "#000000"
