@@ -35,7 +35,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import colorList from "./colorlist";
-import { SpacingControl } from "../components";
+import { ColorSettings, SpacingControl } from "../components";
 
 library.add(fas, fab);
 
@@ -571,52 +571,24 @@ function EditorComponent(props) {
 							)}
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="color">
+						<ColorSettings
+							label={__("Icon color", "ultimate-blocks")}
+							attrKey="iconColor"
+							onAttributesUpdate={(updatedAttributes) =>
+								setAttributesToAllItems(updatedAttributes)
+							}
+						/>
+						<ColorSettings
+							label={__("List Text Color", "ultimate-blocks")}
+							attrKey="textColor"
+						/>
+						<ColorSettings
+							label={__("List Background Color", "ultimate-blocks")}
+							attrKey="backgroundColor"
+						/>
+					</InspectorControls>
 					<InspectorControls group="styles">
-						<PanelBody title={__("Color")}>
-							{/* PANELCONTROLSETTINGS HAS NO WAY FOR RESETTING COLOR TO BLANK */}
-							<p>
-								{__("Icon color")}
-								<span
-									id="ub-styled-list-selected-color"
-									class="component-color-indicator"
-									aria-label={`(Color: ${iconColor})`}
-									style={{ background: iconColor }}
-								/>
-							</p>
-							<ColorPalette
-								value={iconColor}
-								onChange={(iconColor) => {
-									if (iconColor.match(/#[0-9a-f]{6}/gi)) {
-										setAttributes({ iconColor });
-										setAttributesToAllItems({ iconColor });
-									} else {
-										const newIconColor =
-											iconColor.toLowerCase() in colorList
-												? colorList[iconColor.toLowerCase()]
-												: getComputedStyle(
-														document.documentElement,
-													).getPropertyValue(
-														iconColor.substring(4, iconColor.length - 1),
-													);
-
-										setAttributes({ iconColor: newIconColor });
-										setAttributesToAllItems({ iconColor: newIconColor });
-									}
-								}}
-							/>
-							<p>{__("List Text Color")}</p>
-							<ColorPalette
-								value={textColor}
-								onChange={(textColor) => setAttributes({ textColor })}
-							/>
-							<p>{__("List Background Color")}</p>
-							<ColorPalette
-								value={backgroundColor}
-								onChange={(backgroundColor) =>
-									setAttributes({ backgroundColor })
-								}
-							/>
-						</PanelBody>
 						<PanelBody
 							title={__("Dimension Settings", "ultimate-blocks")}
 							initialOpen={false}

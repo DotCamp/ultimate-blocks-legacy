@@ -15,17 +15,20 @@ import {
  * @param {object} props - Color settings with gradients props
  * @param {string} props.label - Component Label
  * @param {string} props.attrKey - Attribute key for color
+ * @param {Function} props.onAttributesUpdate - CallBack Function that fires when attributes are updated default is null
  *
  */
 function ColorSettings(props) {
 	const { clientId } = useBlockEditContext();
 	const { updateBlockAttributes } = useDispatch("core/block-editor");
-
+	const { onAttributesUpdate = () => null } = props;
 	const attributes = useSelect((select) => {
 		return select("core/block-editor").getBlockAttributes(clientId);
 	});
-	const setAttributes = (newAttributes) =>
+	const setAttributes = (newAttributes) => {
 		updateBlockAttributes(clientId, newAttributes);
+		onAttributesUpdate(newAttributes);
+	};
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
 	const { defaultColors } = useSelect((select) => {
 		return {

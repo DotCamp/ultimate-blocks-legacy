@@ -1113,7 +1113,7 @@ function ub_include_block_attribute_css() {
 													 $prefix . ' .ub_styled_list_item:not(:first-child){' .
 													 'margin-top: ' . $attributes['itemSpacing'] . 'px;' .
 													 '}' .
-													 $prefix . ' .ub_styled_list_sublist > .ub_styled_list_item:first-child{' .
+													 $prefix . ' .ub_styled_list_sublist > .ub-block-list__layout > .ub_styled_list_item:first-child{' .
 													 'margin-top: ' . $attributes['itemSpacing'] . 'px;';
 							}
 						}
