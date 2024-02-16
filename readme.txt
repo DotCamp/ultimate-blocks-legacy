@@ -144,6 +144,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.4 =
+
+* IMPROVE: Add toggle color option on main content toggle block.
+
 = 3.1.3 =
 
 * IMPROVE: Separated Styled list and list item alignment.

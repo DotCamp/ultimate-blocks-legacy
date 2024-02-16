@@ -66,18 +66,18 @@ export function OldPanelContent(props) {
 	const panels = props.block.innerBlocks;
 
 	const newArrangement = JSON.stringify(
-		panels.map((panel) => panel.attributes.index)
+		panels.map((panel) => panel.attributes.index),
 	);
 
 	const newBlockTarget = panels.filter(
-		(panel) => panel.attributes.newBlockPosition !== "none"
+		(panel) => panel.attributes.newBlockPosition !== "none",
 	);
 
 	const onThemeChange = (value) => {
 		setAttributes({ theme: value });
 
 		panels.forEach((panel) =>
-			updateBlockAttributes(panel.clientId, { theme: value })
+			updateBlockAttributes(panel.clientId, { theme: value }),
 		);
 	};
 
@@ -85,7 +85,7 @@ export function OldPanelContent(props) {
 		setAttributes({ titleColor: value });
 
 		panels.forEach((panel) =>
-			updateBlockAttributes(panel.clientId, { titleColor: value })
+			updateBlockAttributes(panel.clientId, { titleColor: value }),
 		);
 	};
 
@@ -94,7 +94,7 @@ export function OldPanelContent(props) {
 		panels.forEach((panel) =>
 			updateBlockAttributes(panel.clientId, {
 				collapsed: !panel.attributes.collapsed,
-			})
+			}),
 		);
 	};
 
@@ -108,7 +108,7 @@ export function OldPanelContent(props) {
 				titleColor: titleColor,
 			}),
 			newBlockPosition === "below" ? index + 1 : index,
-			block.clientId
+			block.clientId,
 		);
 		updateBlockAttributes(newBlockTarget[0].clientId, {
 			newBlockPosition: "none",
@@ -125,7 +125,7 @@ export function OldPanelContent(props) {
 				updateBlockAttributes(panel.clientId, {
 					index: i,
 					parent: block.clientId,
-				})
+				}),
 			);
 			setOldArrangement(newArrangement);
 		}
@@ -175,10 +175,10 @@ export function OldPanelContent(props) {
 											panelTitle: innerBlock.attributes.panelTitle,
 											newBlockPosition: innerBlock.attributes.newBlockPosition,
 										},
-										innerBlock.innerBlocks
-									)
-								)
-							)
+										innerBlock.innerBlocks,
+									),
+								),
+							),
 						);
 					}}
 				>
@@ -270,7 +270,7 @@ export function PanelContent(props) {
 		//blockid initialization
 		if (blockID === "") {
 			setAttributes(
-				Object.assign({ blockID: block.clientId }, newColorDefaults)
+				Object.assign({ blockID: block.clientId }, newColorDefaults),
 			);
 		}
 
@@ -286,9 +286,9 @@ export function PanelContent(props) {
 						parentID,
 						toggleID,
 						...others
-					} = panel.attributes
-				) => others)()
-			)
+					} = panel.attributes,
+				) => others)(),
+			),
 		);
 	}, []);
 	useEffect(() => {
@@ -301,14 +301,14 @@ export function PanelContent(props) {
 	const [firstPanelInserted, setFirstPanelInsertStatus] = useState(false);
 
 	const newBlockTarget = panels.filter(
-		(panel) => panel.attributes.newBlockPosition !== "none"
+		(panel) => panel.attributes.newBlockPosition !== "none",
 	);
 
 	const onThemeChange = (value) => {
 		setAttributes({ theme: value });
 
 		panels.forEach((panel) =>
-			updateBlockAttributes(panel.clientId, { theme: value })
+			updateBlockAttributes(panel.clientId, { theme: value }),
 		);
 	};
 
@@ -316,30 +316,35 @@ export function PanelContent(props) {
 		setAttributes({ titleColor: value });
 
 		panels.forEach((panel) =>
-			updateBlockAttributes(panel.clientId, { titleColor: value })
+			updateBlockAttributes(panel.clientId, { titleColor: value }),
 		);
 	};
 
 	const onLinkColorChange = (value) => {
 		setAttributes({ titleLinkColor: value });
 		panels.forEach((panel) =>
-			updateBlockAttributes(panel.clientId, { titleLinkColor: value })
+			updateBlockAttributes(panel.clientId, { titleLinkColor: value }),
 		);
 	};
-
+	const onToggleColorChange = (value) => {
+		setAttributes({ toggleColor: value });
+		panels.forEach((panel) =>
+			updateBlockAttributes(panel.clientId, { toggleColor: value }),
+		);
+	};
 	const onCollapseChange = () => {
 		setAttributes({ collapsed: !collapsed });
 		panels.forEach((panel) =>
 			updateBlockAttributes(panel.clientId, {
 				collapsed: !panel.attributes.collapsed,
-			})
+			}),
 		);
 		if (!collapsed) {
 			setAttributes({ preventCollapse: false });
 			panels.forEach((panel) =>
 				updateBlockAttributes(panel.clientId, {
 					preventCollapse: false,
-				})
+				}),
 			);
 		}
 	};
@@ -350,7 +355,7 @@ export function PanelContent(props) {
 			updateBlockAttributes(panel.clientId, {
 				preventCollapse: !panel.attributes.preventCollapse,
 				...(!preventCollapse && { collapsed: false }),
-			})
+			}),
 		);
 	};
 
@@ -367,7 +372,7 @@ export function PanelContent(props) {
 	//Detect if one of the child blocks has received a command to add another child block
 	let presets = Object.assign(
 		{},
-		blockID ? oldColorDefaults : newColorDefaults
+		blockID ? oldColorDefaults : newColorDefaults,
 	);
 
 	useEffect(() => {
@@ -387,7 +392,7 @@ export function PanelContent(props) {
 					showOnlyOne,
 				}),
 				newBlockPosition === "below" ? index + 1 : index,
-				block.clientId
+				block.clientId,
 			);
 			updateBlockAttributes(newBlockTarget[0].clientId, {
 				newBlockPosition: "none",
@@ -421,12 +426,12 @@ export function PanelContent(props) {
 							//needs to be created separately to prevent duplicates
 							createBlock(
 								"ub/content-toggle-panel-block",
-								defaultPanelSettings
+								defaultPanelSettings,
 							),
 						],
 						0,
 						block.clientId,
-						false
+						false,
 					);
 				}, 40);
 			}
@@ -458,7 +463,7 @@ export function PanelContent(props) {
 				index: i,
 				// @deprecated
 				// parent: block.clientId,
-			})
+			}),
 		);
 		setOldArrangement(newArrangement);
 	} else if (mainBlockSelected) {
@@ -493,15 +498,15 @@ export function PanelContent(props) {
 					parentID,
 					toggleID,
 					...others
-				} = panel.attributes
-			) => others)()
+				} = panel.attributes,
+			) => others)(),
 		);
 
 		if (newAttributeValues.length > 0) {
 			if (newAttributeValues.length === oldAttributeValues.length) {
 				if (
 					!newAttributeValues.every((entry, i) =>
-						objectsMatch(entry, oldAttributeValues[i])
+						objectsMatch(entry, oldAttributeValues[i]),
 					)
 				) {
 					//add exception for changing collapsed to matching for index when showOnlyOne is changed to true
@@ -513,7 +518,7 @@ export function PanelContent(props) {
 
 					const newChange = objectsNewChange(
 						oldAttributeValues[changedPanel],
-						newAttributeValues[changedPanel]
+						newAttributeValues[changedPanel],
 					);
 
 					if (
@@ -529,8 +534,8 @@ export function PanelContent(props) {
 								Object.assign(
 									{},
 									newChange,
-									i !== changedPanel ? { collapsed: true } : null
-								)
+									i !== changedPanel ? { collapsed: true } : null,
+								),
 							);
 						});
 						setAttributes(Object.assign({ collapsed: false }, newChange));
@@ -591,7 +596,7 @@ export function PanelContent(props) {
 									onChange={(titleTag) => {
 										setAttributes({ titleTag });
 										panels.forEach((panel) =>
-											updateBlockAttributes(panel.clientId, { titleTag })
+											updateBlockAttributes(panel.clientId, { titleTag }),
 										);
 									}}
 								/>
@@ -623,7 +628,7 @@ export function PanelContent(props) {
 													collapsed: panels[0].attributes.collapsed,
 												}),
 												...(individualCollapse && { preventCollapse: false }),
-											})
+											}),
 										);
 									}}
 								/>
@@ -642,7 +647,7 @@ export function PanelContent(props) {
 											panels.forEach((panel) =>
 												updateBlockAttributes(panel.clientId, {
 													showOnlyOne: !showOnlyOne,
-												})
+												}),
 											);
 											if (showOnlyOne) {
 												//value before setAttributes still in use
@@ -654,13 +659,13 @@ export function PanelContent(props) {
 													updateBlockAttributes(panel.clientId, {
 														collapsed: false,
 														preventCollapse: false,
-													})
+													}),
 												);
 											} else {
 												panels.forEach((panel, i) =>
 													updateBlockAttributes(panel.clientId, {
 														collapsed: i !== 0,
-													})
+													}),
 												);
 											}
 										}}
@@ -764,7 +769,7 @@ export function PanelContent(props) {
 										panels.forEach((panel) =>
 											updateBlockAttributes(panel.clientId, {
 												hasFAQSchema: !panel.attributes.hasFAQSchema,
-											})
+											}),
 										);
 									}}
 								/>
@@ -794,7 +799,7 @@ export function PanelContent(props) {
 									return (
 										Object.prototype.hasOwnProperty.call(
 											props.attributes,
-											key
+											key,
 										) && !excludeList.includes(key)
 									);
 								});
@@ -828,6 +833,11 @@ export function PanelContent(props) {
 										onChange: onLinkColorChange,
 										label: __("Title link Color"),
 									},
+									{
+										value: toggleColor,
+										onChange: onToggleColorChange,
+										label: __("Toggle Icon Color"),
+									},
 								]}
 							/>
 							<PanelRow>
@@ -843,7 +853,7 @@ export function PanelContent(props) {
 										panels.forEach((panel) =>
 											updateBlockAttributes(panel.clientId, {
 												border: !panel.attributes.border,
-											})
+											}),
 										)
 									}
 								/>
@@ -866,7 +876,7 @@ export function PanelContent(props) {
 											if (
 												Object.prototype.hasOwnProperty.call(
 													toggleIconPositions,
-													p
+													p,
 												)
 											) {
 												return (
@@ -879,7 +889,7 @@ export function PanelContent(props) {
 															panels.forEach((panel) =>
 																updateBlockAttributes(panel.clientId, {
 																	toggleLocation: p,
-																})
+																}),
 															);
 														}}
 													>
@@ -919,7 +929,7 @@ export function PanelContent(props) {
 																panels.forEach((panel) =>
 																	updateBlockAttributes(panel.clientId, {
 																		toggleIcon: i,
-																	})
+																	}),
 																);
 															}}
 														>
