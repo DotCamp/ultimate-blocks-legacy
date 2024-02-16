@@ -245,5 +245,7 @@
       "default": false
     }
   },
-  "supports": {}
+  "supports": {
+    "align": true
+  }
 }
