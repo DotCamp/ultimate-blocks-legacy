@@ -149,6 +149,7 @@ That's it. You're done!
 * IMPROVE: Add toggle color option on main content toggle block.
 * IMPROVE: Remove bottom white space when add a border in the advanced video block.
 * NEW: Alignment option in advanced video.
+* NEW: Equal Height option in post grid.
 
 = 3.1.3 =
 

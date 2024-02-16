@@ -1,6 +1,11 @@
 @import "../../common";
 
 .ub-block-post-grid {
+	&.is-equal-height {
+		.ub-post-grid-items {
+			align-items: flex-start;
+		}
+	}
 	margin: 0 0 1.2em 0;
 	position: relative;
 	.is-grid {

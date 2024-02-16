@@ -19,7 +19,7 @@ function Autocomplete(props) {
 	const listItem = useRef(null);
 
 	const filteredList = props.list.filter(
-		(i) => i.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+		(i) => i.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
 	);
 	useEffect(() => {
 		listItem.current = Array(props.list.length);
@@ -131,6 +131,7 @@ export default function Inspector(props) {
 			postTitleTag,
 			authorArray,
 			tagArray,
+			isEqualHeight,
 		},
 		setAttributes,
 		posts,
@@ -201,7 +202,7 @@ export default function Inspector(props) {
 			...accumulator,
 			[category.name]: category,
 		}),
-		{}
+		{},
 	);
 
 	return (
@@ -231,6 +232,11 @@ export default function Inspector(props) {
 							)}
 						</>
 					)}
+					<ToggleControl
+						label={__("Equal Height", "ultimate-blocks-pro")}
+						checked={isEqualHeight}
+						onChange={() => setAttributes({ isEqualHeight: !isEqualHeight })}
+					/>
 				</PanelBody>
 				<PanelBody title={__("Query", "ultimate-blocks")} initialOpen={false}>
 					<p>{__("Authors")}</p>
@@ -246,7 +252,7 @@ export default function Inspector(props) {
 											onClick={() =>
 												setAttributes({
 													authorArray: authorArray.filter(
-														(sel) => sel !== t.id
+														(sel) => sel !== t.id,
 													),
 												})
 											}
@@ -334,7 +340,7 @@ export default function Inspector(props) {
 											onClick={() =>
 												setAttributes({
 													categoryArray: categoryArray.filter(
-														(sel) => sel.id !== c.id
+														(sel) => sel.id !== c.id,
 													),
 												})
 											}
@@ -348,10 +354,10 @@ export default function Inspector(props) {
 						list={categoriesList
 							.filter(
 								(cur) =>
-									!excludedCategories.some((other) => cur.id === other.id)
+									!excludedCategories.some((other) => cur.id === other.id),
 							)
 							.filter(
-								(cur) => !categoryArray.some((other) => cur.id === other.id)
+								(cur) => !categoryArray.some((other) => cur.id === other.id),
 							)
 							.map((c) => ({ label: c.name, value: c.id }))}
 						selection={categoryArray}
@@ -375,7 +381,7 @@ export default function Inspector(props) {
 						<div className="ub-autocomplete-container">
 							{categoriesList
 								.filter((c) =>
-									excludedCategories.map((ca) => ca.id).includes(c.id)
+									excludedCategories.map((ca) => ca.id).includes(c.id),
 								)
 								.map((c) => (
 									<span className="ub-autocomplete-selection">
@@ -385,7 +391,7 @@ export default function Inspector(props) {
 											onClick={() => {
 												setAttributes({
 													excludedCategories: excludedCategories.filter(
-														(sel) => sel.id !== c.id
+														(sel) => sel.id !== c.id,
 													),
 												});
 											}}
@@ -399,10 +405,10 @@ export default function Inspector(props) {
 						list={categoriesList
 							.filter(
 								(cur) =>
-									!excludedCategories.some((other) => cur.id === other.id)
+									!excludedCategories.some((other) => cur.id === other.id),
 							)
 							.filter(
-								(cur) => !categoryArray.some((other) => cur.id === other.id)
+								(cur) => !categoryArray.some((other) => cur.id === other.id),
 							)
 							.map((c) => ({ label: c.name, value: c.id }))}
 						selection={excludedCategories}

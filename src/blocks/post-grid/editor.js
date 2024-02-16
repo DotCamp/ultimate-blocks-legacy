@@ -19,17 +19,19 @@ export default function PostGridBlock(props) {
 			postLayout,
 			columns,
 			postTitleTag,
+			isEqualHeight,
 		},
 		className,
 		posts,
 	} = props;
 
 	const PostTag = postTitleTag;
+	const equalHeightClass = isEqualHeight ? " is-equal-height " : "";
 
 	const styles = getStyles(props.attributes);
 	return (
 		<section
-			className={`${className ? `${className} ` : ""}ub-block-post-grid`}
+			className={`${className ? `${className} ` : ""}${equalHeightClass}ub-block-post-grid`}
 			style={styles}
 		>
 			<div
@@ -96,7 +98,7 @@ export default function PostGridBlock(props) {
 											dangerouslySetInnerHTML={{
 												__html: cateExcerpt(
 													post.excerpt.rendered,
-													excerptLength
+													excerptLength,
 												),
 											}}
 										/>

@@ -47,6 +47,10 @@
       "type": "number",
       "default": 55
     },
+    "isEqualHeight": {
+      "type": "boolean",
+      "default": true
+    },
     "checkPostLink": {
       "type": "boolean",
       "default": true

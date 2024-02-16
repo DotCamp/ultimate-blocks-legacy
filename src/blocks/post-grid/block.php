@@ -250,16 +250,18 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
         /* Post grid section tag */
 
         $section_tag = 'section';
+        $is_equal_height = isset($attributes['isEqualHeight']) && $attributes['isEqualHeight']  ? " is-equal-height " : "";
         $styles = ub_get_post_grid_styles($block->parsed_block['attrs']);
 
         /* Output the post markup */
         $block_content = sprintf(
-            '<%1$s class="%2$s" style="%5$s"><div class="%3$s">%4$s</div></%1$s>',
+            '<%1$s class="%2$s%6$s" style="%5$s"><div class="%3$s">%4$s</div></%1$s>',
             $section_tag,
             esc_attr( $class ),
             esc_attr( $grid_class ),
             $post_grid,
-            $styles
+            $styles,
+            $is_equal_height
         );
         return $block_content;
     }

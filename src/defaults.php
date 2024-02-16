@@ -1440,6 +1440,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'isEqualHeight' => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
 			'pagination' => array(
 				'type'    => 'boolean',
 				'default' => false
