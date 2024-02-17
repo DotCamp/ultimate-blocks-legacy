@@ -146,6 +146,7 @@ That's it. You're done!
 
 = 3.1.4 =
 
+* IMPROVE: Make center default alignment of progress bar.
 * IMPROVE: Remove responsive settings from advanced video block.
 * IMPROVE: Add toggle color option on main content toggle block.
 * IMPROVE: Remove bottom white space when add a border in the advanced video block.

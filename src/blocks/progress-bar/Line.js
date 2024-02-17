@@ -40,6 +40,7 @@ export default function Line(props) {
 		detailAlign,
 		detail,
 		setAttributes,
+		alignment,
 	} = props;
 
 	useEffect(() => {
@@ -66,7 +67,10 @@ export default function Line(props) {
 		<div
 			className={`ub_progress-bar-container${insideLabelClass}${stripeStyleClass}`}
 		>
-			<div className="ub_progress-detail-wrapper">
+			<div
+				className="ub_progress-detail-wrapper"
+				style={{ justifyContent: alignment }}
+			>
 				<div className="ub_progress-bar-text">
 					<RichText
 						tagName="p"

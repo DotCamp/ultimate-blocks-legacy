@@ -85,6 +85,7 @@ function ProgressBarMain(props) {
 		detailAlign,
 		detail,
 		setAttributes,
+		alignment: detailAlign,
 	};
 
 	const percentagePositionOptions = [
@@ -321,18 +322,10 @@ function ProgressBarMain(props) {
 							<Line {...progressBarAttributes} />
 						)}
 						{isStyleCircle && (
-							<Circle
-								{...progressBarAttributes}
-								alignment={detailAlign}
-								size={circleSize}
-							/>
+							<Circle {...progressBarAttributes} size={circleSize} />
 						)}
 						{isStyleHalfCircle && (
-							<HalfCircle
-								{...progressBarAttributes}
-								alignment={detailAlign}
-								size={circleSize}
-							/>
+							<HalfCircle {...progressBarAttributes} size={circleSize} />
 						)}
 					</>
 				)}

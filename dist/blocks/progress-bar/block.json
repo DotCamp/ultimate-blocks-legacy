@@ -29,7 +29,7 @@
     },
     "detailAlign": {
       "type": "string",
-      "default": "left"
+      "default": "center"
     },
     "barColor": {
       "type": "string",

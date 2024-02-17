@@ -1596,7 +1596,7 @@ $defaultValues = array(
 			),
 			'detailAlign'        => array(
 				'type'    => 'string',
-				'default' => 'left'
+				'default' => 'center'
 			),
 			'barColor'           => array(
 				'type'    => 'string',
