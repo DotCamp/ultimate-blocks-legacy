@@ -8,8 +8,18 @@
 	margin-right: var(--ub-progress-bar-margin-right, auto) !important;
 	margin-bottom: var(--ub-progress-bar-margin-bottom, auto) !important;
 	margin-left: var(--ub-progress-bar-margin-left, auto) !important;
-
-	&:not(.is-style-ub-progress-bar-circle-wrapper):not(.is-style-ub-progress-bar-half-circle-wrapper) {
+	&:not(.rounded-circle) {
+		.ub_progress-bar-container {
+			.ub_progress-bar-circle {
+				.ub_progress-bar-circle-path {
+					stroke-linecap: butt !important;
+				}
+			}
+		}
+	}
+	&:not(.is-style-ub-progress-bar-circle-wrapper):not(
+			.is-style-ub-progress-bar-half-circle-wrapper
+		) {
 		.ub_progress-bar-container {
 			text-align: start;
 			.ub_progress-detail-wrapper {
@@ -73,7 +83,9 @@
 				}
 				.ub_progress-bar-line-path {
 					stroke-dasharray: 100px, 100px;
-					transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear 0s;
+					transition:
+						stroke-dashoffset 0.3s ease 0s,
+						stroke 0.3s linear 0s;
 					fill-opacity: 0;
 					stroke-linecap: square;
 					border-top-left-radius: var(--ub-bar-top-left-radius);
@@ -106,14 +118,18 @@
 
 			.ub_progress-bar-circle-trail {
 				stroke-dashoffset: 0px;
-				transition: stroke-dashoffset 0.3s ease 0s,
-					stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s;
+				transition:
+					stroke-dashoffset 0.3s ease 0s,
+					stroke-dasharray 0.3s ease 0s,
+					stroke 0.3s ease 0s;
 				fill-opacity: 0;
 			}
 			.ub_progress-bar-circle-path {
 				stroke-dashoffset: 0px;
-				transition: stroke-dashoffset 0.3s ease 0s,
-					stroke-dasharray 0.3s ease 0s, stroke 0.3s ease 0s,
+				transition:
+					stroke-dashoffset 0.3s ease 0s,
+					stroke-dasharray 0.3s ease 0s,
+					stroke 0.3s ease 0s,
 					stroke-width 0.06s ease 0.3s;
 				fill-opacity: 0;
 			}

@@ -67,6 +67,10 @@
                "type": "object",
                "default": {}
           },
+          "isCircleRounded": {
+               "type": "boolean",
+               "default": true
+          },
           "margin": {
                "type": "object",
                "default": {}

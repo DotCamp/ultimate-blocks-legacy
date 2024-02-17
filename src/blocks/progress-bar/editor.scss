@@ -54,6 +54,15 @@
 		margin-right: var(--ub-progress-bar-margin-right, auto) !important;
 		margin-bottom: var(--ub-progress-bar-margin-bottom, auto) !important;
 		margin-left: var(--ub-progress-bar-margin-left, auto) !important;
+		&:not(.rounded-circle) {
+			.ub_progress-bar-container {
+				.ub_progress-bar-circle {
+					.ub_progress-bar-circle-path {
+						stroke-linecap: butt;
+					}
+				}
+			}
+		}
 	}
 }
 

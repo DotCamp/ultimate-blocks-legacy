@@ -1625,6 +1625,10 @@ $defaultValues = array(
 			'isStripe'         	 => array(
 				'type'    => 'boolean',
 				'default' => false
+			),
+			'isCircleRounded'    => array(
+				'type'    => 'boolean',
+				'default' => true
 			)
 		)
 	),

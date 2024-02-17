@@ -53,6 +53,7 @@ function ProgressBarMain(props) {
 			percentagePosition,
 			barBorderRadius,
 			isStripe,
+			isCircleRounded,
 		},
 		isSelected,
 		setAttributes,
@@ -111,8 +112,12 @@ function ProgressBarMain(props) {
 	const isStyleHalfCircle = blockClassName
 		?.split(" ")
 		.includes("is-style-ub-progress-bar-half-circle-wrapper");
+	const finalClassNames = ["ub_progress-bar", blockClassName];
+	if ((isStyleCircle || isStyleHalfCircle) && isCircleRounded) {
+		finalClassNames.push("rounded-circle");
+	}
 	const blockProps = useBlockProps({
-		className: `ub_progress-bar ${blockClassName}`,
+		className: finalClassNames.join(" "),
 		style: styles,
 	});
 
@@ -120,26 +125,6 @@ function ProgressBarMain(props) {
 		<>
 			{isSelected && (
 				<BlockControls>
-					{/* 
-					 Convert into styles api
-					<ToolbarGroup>
-						<ToolbarButton
-							isPressed={barType === "linear"}
-							showTooltip={true}
-							label={__("Horizontal")}
-							onClick={() => setAttributes({ barType: "linear" })}
-						>
-							<LinearProgressIcon />
-						</ToolbarButton>
-						<ToolbarButton
-							isPressed={barType === "circular"}
-							showTooltip={true}
-							label={__("Circular")}
-							onClick={() => setAttributes({ barType: "circular" })}
-						>
-							<CircProgressIcon />
-						</ToolbarButton>
-					</ToolbarGroup> */}
 					<ToolbarGroup>
 						<div className={"ub_progress_bar_range_toolbar_wrapper"}>
 							<RangeControl
@@ -178,33 +163,6 @@ function ProgressBarMain(props) {
 				<>
 					<InspectorControls group="settings">
 						<PanelBody title={__("General")}>
-							{/* 
-							 Convert into styles api
-							<PanelRow>
-								<p>{__("Progress Bar Type")}</p>
-								<ButtonGroup>
-									<Button
-										isPressed={barType === "linear"}
-										showTooltip={true}
-										label={__("Horizontal")}
-										onClick={() => setAttributes({ barType: "linear" })}
-									>
-										<LinearProgressIcon size={30} />
-									</Button>
-									<Button
-										isPressed={barType === "circular"}
-										showTooltip={true}
-										label={__("Circular")}
-										onClick={() =>
-											setAttributes({
-												barType: "circular",
-											})
-										}
-									>
-										<CircProgressIcon size={30} />
-									</Button>
-								</ButtonGroup>
-							</PanelRow> */}
 							<br />
 							{!isStyleCircle && !isStyleHalfCircle && (
 								<CustomToggleGroupControl
@@ -238,7 +196,8 @@ function ProgressBarMain(props) {
 								value={barThickness}
 								onChange={(value) => setAttributes({ barThickness: value })}
 								min={1}
-								max={5}
+								max={100}
+								step={0.1}
 								allowReset
 							/>
 							{(isStyleCircle || isStyleHalfCircle) && (
@@ -251,6 +210,13 @@ function ProgressBarMain(props) {
 									allowReset
 								/>
 							)}
+							<ToggleControl
+								checked={isCircleRounded}
+								label={__("Rounded", "ultimate-blocks")}
+								onChange={() =>
+									setAttributes({ isCircleRounded: !isCircleRounded })
+								}
+							/>
 							<PanelColorSettings
 								title={__("Color")}
 								initialOpen={false}
