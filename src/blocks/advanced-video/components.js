@@ -374,6 +374,7 @@ export function AdvancedVideoBlock(props) {
 		isBorderComponentChanged,
 		border,
 		borderRadius,
+		isResponsiveSettingsRemoved,
 	} = attributes;
 	useEffect(() => {
 		if (!isBorderComponentChanged) {
@@ -408,6 +409,19 @@ export function AdvancedVideoBlock(props) {
 					},
 				},
 			});
+		}
+		if (typeof ub_extensions !== "undefined") {
+			const responsiveControl = ub_extensions.find(
+				(extensions) => extensions.name === "responsive-control",
+			);
+			if (!isResponsiveSettingsRemoved && responsiveControl.active) {
+				setAttributes({
+					isResponsiveSettingsRemoved: true,
+					isHideOnDesktop: !showInDesktop,
+					isHideOnTablet: !showInTablet,
+					isHideOnMobile: !showInMobile,
+				});
+			}
 		}
 	}, []);
 	useEffect(() => {
@@ -1557,33 +1571,6 @@ export function AdvancedVideoBlock(props) {
 									</button>
 								</>
 							)}
-						</PanelBody>
-						<PanelBody title={__("Responsive Settings")} initialOpen={false}>
-							<p>{__("Toggle visibility For Devices")}</p>
-							<Button
-								isPrimary={showInDesktop}
-								isSecondary={!showInDesktop}
-								icon="desktop"
-								showTooltip={true}
-								label={"Desktop"}
-								onClick={() => setAttributes({ showInDesktop: !showInDesktop })}
-							/>
-							<Button
-								isPrimary={showInTablet}
-								isSecondary={!showInTablet}
-								icon="tablet"
-								showTooltip={true}
-								label={"Tablet"}
-								onClick={() => setAttributes({ showInTablet: !showInTablet })}
-							/>
-							<Button
-								isPrimary={showInMobile}
-								isSecondary={!showInMobile}
-								icon="smartphone"
-								showTooltip={true}
-								label={"Mobile"}
-								onClick={() => setAttributes({ showInMobile: !showInMobile })}
-							/>
 						</PanelBody>
 					</>
 				)}

@@ -314,34 +314,6 @@ function ub_include_block_attribute_css() {
 											 ( !empty( $attributes['borderRadius']['bottomLeft'] ) ? 'border-bottom-left-radius: ' . $attributes['borderRadius']['bottomLeft'] . ';': "" ) .
 											 ( !empty( $attributes['borderRadius']['bottomRight'] ) ? 'border-bottom-right-radius: ' . $attributes['borderRadius']['bottomRight'] . ';': "" ) .
 											 '}';
-					//if one of showInDesktop, showInTablet, showInMobile
-					if ( in_array( false, [
-							$attributes['showInDesktop'],
-							$attributes['showInTablet'],
-							$attributes['showInMobile']
-					] ) ) {
-						if ( ! $attributes['showInDesktop'] ) {
-							$blockStylesheets .= '@media (min-width: 1024px){' . PHP_EOL .
-												 $prefix . '{' . PHP_EOL .
-												 'display: none;' . PHP_EOL .
-												 '}' . PHP_EOL .
-												 '}' . PHP_EOL;
-						}
-						if ( ! $attributes['showInTablet'] ) {
-							$blockStylesheets .= '@media (min-width: 800px) and (max-width: 1023px){' . PHP_EOL .
-												 $prefix . '{' . PHP_EOL .
-												 'display: none;' . PHP_EOL .
-												 '}' . PHP_EOL .
-												 '}' . PHP_EOL;
-						}
-						if ( ! $attributes['showInMobile'] ) {
-							$blockStylesheets .= '@media (max-width: 799px){' . PHP_EOL .
-												 $prefix . '{' . PHP_EOL .
-												 'display: none;' . PHP_EOL .
-												 '}' . PHP_EOL .
-												 '}' . PHP_EOL;
-						}
-					}
 
 					if ( array_key_exists( 'shadow', $attributes ) && $attributes['shadow'][0]['radius'] > 0 ) {
 					$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' . PHP_EOL .
