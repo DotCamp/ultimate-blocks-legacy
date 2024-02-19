@@ -80,6 +80,14 @@ $fixed-border-style: 1px dashed gray;
 }
 .wp-block-ub-advanced-video {
 	// Show Placeholder style on-select.
+	.ub-advanced-video__interactive-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0;
+	}
 	&.is-selected .components-placeholder {
 		// Block UI appearance.
 		border: none;

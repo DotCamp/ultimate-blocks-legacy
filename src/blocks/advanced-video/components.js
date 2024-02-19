@@ -1756,6 +1756,9 @@ export function AdvancedVideoBlock(props) {
 					)}
 				/>
 				{autofit && extraEmbeds}
+				{!props.isSelected && (
+					<div className="ub-advanced-video__interactive-overlay" />
+				)}
 			</div>
 		</>
 	);
