@@ -153,6 +153,7 @@ That's it. You're done!
 * IMPROVE: Remove bottom white space when add a border in the advanced video block.
 * NEW: Alignment option in advanced video.
 * NEW: Equal Height option in post grid.
+* FIX: Image alignment inside the toggle content.
 
 = 3.1.3 =
 
