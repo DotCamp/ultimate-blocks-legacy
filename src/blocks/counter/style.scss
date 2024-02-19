@@ -15,14 +15,26 @@
 		color: var(--ub-counter-label-color);
 	}
 	& .ub_counter {
+		.ub_counter-number-wrapper {
+			display: flex;
+		}
 		&.ub_text-left {
 			text-align: left;
+			.ub_counter-number-wrapper {
+				justify-content: flex-start;
+			}
 		}
 		&.ub_text-center {
 			text-align: center;
+			.ub_counter-number-wrapper {
+				justify-content: center;
+			}
 		}
 		&.ub_text-right {
 			text-align: right;
+			.ub_counter-number-wrapper {
+				justify-content: flex-end;
+			}
 		}
 	}
 }

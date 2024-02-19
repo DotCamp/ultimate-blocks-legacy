@@ -6,11 +6,11 @@ class UltimateBlocksCounter {
 		this.stopCounter = parseInt(this.container.dataset.end_num, 10);
 		this.animationDuration = parseInt(
 			this.container.dataset.animation_duration,
-			10
+			10,
 		);
 		this.frameDuration = 1000 / 60;
 		this.totalFrames = Math.round(
-			(this.animationDuration * 1000) / this.frameDuration
+			(this.animationDuration * 1000) / this.frameDuration,
 		);
 		this.easeOutQuad = (t) => t * (2 - t);
 		this.initialize();
