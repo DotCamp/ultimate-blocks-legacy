@@ -17,6 +17,24 @@
 	&.no-border {
 		border: 0 !important;
 	}
+	.wp-block-ub-content-toggle-accordion-content-wrap {
+		> .alignright {
+			float: right;
+			margin-inline-start: 2em;
+			margin-inline-end: 0;
+		}
+
+		> .alignleft {
+			float: left;
+			margin-inline-start: 0;
+			margin-inline-end: 2em;
+		}
+
+		> .aligncenter {
+			margin-inline-start: auto;
+			margin-inline-end: auto;
+		}
+	}
 	.wp-block-ub-content-toggle-accordion-title {
 		padding: 10px 10px 10px 25px;
 		margin: 0;
@@ -66,6 +84,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+
 			&.left {
 				order: -1;
 			}

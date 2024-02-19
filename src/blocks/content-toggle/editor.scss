@@ -5,6 +5,28 @@
  * which makes it higher in priority.
  */
 
+.wp-block-ub-content-toggle-accordion-content-wrap {
+	> .block-editor-inner-blocks {
+		> .block-editor-block-list__layout {
+			> .alignright {
+				float: right;
+				margin-inline-start: 2em;
+				margin-inline-end: 0;
+			}
+
+			> .alignleft {
+				float: left;
+				margin-inline-start: 0;
+				margin-inline-end: 2em;
+			}
+
+			> .aligncenter {
+				margin-inline-start: auto;
+				margin-inline-end: auto;
+			}
+		}
+	}
+}
 .wp-block-ub-content-toggle {
 	&-block {
 		padding: 3px 0;
