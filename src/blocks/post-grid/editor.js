@@ -60,7 +60,7 @@ export default function PostGridBlock(props) {
 									/>
 								</div>
 							) : null}
-							<div className="ub_block-post-grid-text">
+							<div className="ub-block-post-grid-text">
 								<header className="ub_block-post-grid-header">
 									{checkPostTitle && (
 										<PostTag className="ub-block-post-grid-title">
@@ -95,6 +95,7 @@ export default function PostGridBlock(props) {
 								<div className="ub-block-post-grid-excerpt">
 									{checkPostExcerpt && (
 										<div
+											className="ub-block-post-grid-excerpt-text"
 											dangerouslySetInnerHTML={{
 												__html: cateExcerpt(
 													post.excerpt.rendered,

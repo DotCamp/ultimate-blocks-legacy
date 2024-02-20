@@ -1452,6 +1452,98 @@ $defaultValues = array(
 				'type' 	=> 'array',
 				'default' => array()
 			),
+			'contentPadding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'linkPadding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'postTitleColorHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'authorColorHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'dateColorHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'excerptColorHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'linkColorHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'linkBackgroundColorHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'linkBackgroundGradientHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'postBackgroundColorHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'postBackgroundGradientHover' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'postTitleColor' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'authorColor' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'dateColor' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'excerptColor' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'linkColor' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'linkBackgroundColor' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'linkBackgroundGradient' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'postBackgroundColor' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'postBackgroundGradient' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'postBorderRadius' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'linkBorderRadius' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'imageBorderRadius' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
 			'margin' => array(
 				'type' 	=> 'array',
 				'default' => array()

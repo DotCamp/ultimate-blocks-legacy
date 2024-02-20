@@ -4,23 +4,6 @@
  */
 require_once dirname(dirname(dirname(__DIR__))) . '/includes/ultimate-blocks-styles-css-generator.php';
 
-function ub_get_post_grid_styles( $attributes ) {
-	$padding = Ultimate_Blocks\includes\get_spacing_css( $attributes['padding'] );
-	$margin = Ultimate_Blocks\includes\get_spacing_css( $attributes['margin'] );
-
-	$styles = array(
-		'padding-top'         => isset($padding['top']) ? $padding['top'] : "",
-		'padding-left'        => isset($padding['left']) ? $padding['left'] : "",
-		'padding-right'       => isset($padding['right']) ? $padding['right'] : "",
-		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] : "",
-		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
-		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
-		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
-		'margin-bottom'      => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
-	);
-
-	return Ultimate_Blocks\includes\generate_css_string( $styles );
-}
 function ub_query_post( $attributes ){
 
     /**
@@ -196,7 +179,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
             }
 
             if ( isset( $attributes['checkPostExcerpt'] ) && $attributes['checkPostExcerpt'] ) {
-                $post_grid .= wp_kses_post( $excerpt );
+                $post_grid .= sprintf('<div class="ub-block-post-grid-excerpt-text">%1$s</div>', wp_kses_post( $excerpt ));
             }
 
             /* Get the read more link */
@@ -251,16 +234,14 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 
         $section_tag = 'section';
         $is_equal_height = isset($attributes['isEqualHeight']) && $attributes['isEqualHeight']  ? " is-equal-height " : "";
-        $styles = ub_get_post_grid_styles($block->parsed_block['attrs']);
 
         /* Output the post markup */
         $block_content = sprintf(
-            '<%1$s class="%2$s%6$s" style="%5$s"><div class="%3$s">%4$s</div></%1$s>',
+            '<%1$s class="%2$s%5$s"><div class="%3$s">%4$s</div></%1$s>',
             $section_tag,
             esc_attr( $class ),
             esc_attr( $grid_class ),
             $post_grid,
-            $styles,
             $is_equal_height
         );
         return $block_content;

@@ -153,6 +153,9 @@ That's it. You're done!
 * IMPROVE: Remove bottom white space when add a border in the advanced video block.
 * NEW: Alignment option in advanced video.
 * NEW: Equal Height option in post grid.
+* NEW: Colors Option for (Title, Author, Date, Excerpt, Link, Post) in post grid.
+* NEW: Spacing Option for (Link, Content) in post grid.
+* NEW: Border Radius Option for (Link, Post, Image) in post grid.
 * FIX: Image alignment inside the toggle content.
 
 = 3.1.3 =

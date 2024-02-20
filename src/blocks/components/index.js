@@ -7,3 +7,4 @@ export { default as ColorSettingsWithGradient } from "./ColorSettingsWithGradien
 export { default as UBSelectControl } from "./SelectControl";
 export { default as BorderControl } from "./BorderControl";
 export { default as TabsPanelControl } from "./TabsPanelControl";
+export { default as SpacingControlWithToolsPanel } from "./SpacingControlWithToolsPanel";

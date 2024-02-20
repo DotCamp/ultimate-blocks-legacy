@@ -1,7 +1,13 @@
 import PropTypes from "prop-types";
 
 import { useEffect, useState, useRef } from "react";
-import { SpacingControl } from "../components";
+import {
+	BorderControl,
+	ColorSettings,
+	ColorSettingsWithGradient,
+	SpacingControlWithToolsPanel,
+	TabsPanelControl,
+} from "../components";
 const { __ } = wp.i18n;
 
 const { InspectorControls } = wp.blockEditor || wp.editor;
@@ -204,7 +210,74 @@ export default function Inspector(props) {
 		}),
 		{},
 	);
-
+	const normalStateColors = (
+		<>
+			<ColorSettings
+				attrKey="postTitleColor"
+				label={__("Title Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="authorColor"
+				label={__("Author Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="dateColor"
+				label={__("Date Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="excerptColor"
+				label={__("Excerpt Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="linkColor"
+				label={__("Link Color", "ultimate-blocks")}
+			/>
+			<ColorSettingsWithGradient
+				attrBackgroundKey="linkBackgroundColor"
+				attrGradientKey="linkBackgroundGradient"
+				label={__("Link Background", "ultimate-blocks")}
+			/>
+			<ColorSettingsWithGradient
+				attrBackgroundKey="postBackgroundColor"
+				attrGradientKey="postBackgroundGradient"
+				label={__("Post Background", "ultimate-blocks")}
+			/>
+		</>
+	);
+	const hoverStateColors = (
+		<>
+			<ColorSettings
+				attrKey="postTitleColorHover"
+				label={__("Title Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="authorColorHover"
+				label={__("Author Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="dateColorHover"
+				label={__("Date Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="excerptColorHover"
+				label={__("Excerpt Color", "ultimate-blocks")}
+			/>
+			<ColorSettings
+				attrKey="linkColorHover"
+				label={__("Link Color", "ultimate-blocks")}
+			/>
+			<ColorSettingsWithGradient
+				attrBackgroundKey="linkBackgroundColorHover"
+				attrGradientKey="linkBackgroundGradientHover"
+				label={__("Link Background", "ultimate-blocks")}
+			/>
+			<ColorSettingsWithGradient
+				attrBackgroundKey="postBackgroundColorHover"
+				attrGradientKey="postBackgroundGradientHover"
+				label={__("Post Background", "ultimate-blocks")}
+			/>
+		</>
+	);
 	return (
 		<>
 			<InspectorControls group="settings">
@@ -530,23 +603,64 @@ export default function Inspector(props) {
 					</PanelBody>
 				)}
 			</InspectorControls>
-			<InspectorControls group="styles">
-				<PanelBody
-					title={__("Dimension Settings", "ultimate-blocks")}
-					initialOpen={false}
-				>
-					<SpacingControl
-						showByDefault
-						attrKey="padding"
-						label={__("Padding", "ultimate-blocks")}
-					/>
-					<SpacingControl
-						minimumCustomValue={-Infinity}
-						showByDefault
-						attrKey="margin"
-						label={__("Margin", "ultimate-blocks")}
-					/>
-				</PanelBody>
+			<InspectorControls group="color">
+				<TabsPanelControl
+					tabs={[
+						{
+							name: "normalState",
+							title: __("Normal", "ultimate-blocks"),
+							component: normalStateColors,
+						},
+						{
+							name: "hoverState",
+							title: __("Hover", "ultimate-blocks"),
+							component: hoverStateColors,
+						},
+					]}
+				/>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<SpacingControlWithToolsPanel
+					showByDefault
+					attrKey="padding"
+					label={__("Padding", "ultimate-blocks")}
+				/>
+				<SpacingControlWithToolsPanel
+					minimumCustomValue={-Infinity}
+					showByDefault
+					attrKey="margin"
+					label={__("Margin", "ultimate-blocks")}
+				/>
+				<SpacingControlWithToolsPanel
+					showByDefault
+					attrKey="contentPadding"
+					label={__("Content Padding", "ultimate-blocks")}
+				/>
+				<SpacingControlWithToolsPanel
+					showByDefault
+					attrKey="linkPadding"
+					label={__("Link Padding", "ultimate-blocks")}
+				/>
+			</InspectorControls>
+			<InspectorControls group="border">
+				<BorderControl
+					isShowBorder={false}
+					showDefaultBorderRadius
+					attrBorderRadiusKey="imageBorderRadius"
+					borderRadiusLabel={__("Image Border Radius", "ultimate-blocks")}
+				/>
+				<BorderControl
+					isShowBorder={false}
+					showDefaultBorderRadius
+					attrBorderRadiusKey="postBorderRadius"
+					borderRadiusLabel={__("Post Border Radius", "ultimate-blocks")}
+				/>
+				<BorderControl
+					isShowBorder={false}
+					showDefaultBorderRadius
+					attrBorderRadiusKey="linkBorderRadius"
+					borderRadiusLabel={__("Link Border Radius", "ultimate-blocks")}
+				/>
 			</InspectorControls>
 		</>
 	);
