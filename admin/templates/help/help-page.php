@@ -25,7 +25,7 @@
 		<?php esc_html_e( "Plus, it's SEO-friendly, so your content stays fresh and easy to find.", "ultimate-blocks");?></p>
 		<p><?php esc_html_e( "Say hello to a better online presence with Ultimate Blocks!", "ultimate-blocks");?></p>
 		<p><?php esc_html_e( "Here's a short video showing how you can get started with Ultimate Blocks.", "ultimate-blocks");?></p>
-		<iframe class="ub-welcome-youtube-video" src="https://www.youtube.com/embed/SDnYi50Vxus" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+		<iframe class="ub-welcome-youtube-video" src="https://www.youtube.com/embed/I1LEsUvxGDc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         <h2><span class="color-red"><?php esc_html_e( '22 awesome blocks.', 'ultimate-blocks' ); ?></span> <?php esc_html_e( 'More in the making...', 'ultimate-blocks' ); ?></h2>
         <div class="ub-button-wrap ultimate-blocks-clear">
             <div class="left">

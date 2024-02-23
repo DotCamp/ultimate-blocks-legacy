@@ -22,7 +22,7 @@ class Settings_Menu_Pro_Manager_Asset_Data implements I_Plugin_Data {
 	public static function get_data() {
 		return array(
 			'proBuyUrl'      => 'https://ultimateblocks.com/pricing/',
-			'youtubeVideoId' => 'SDnYi50Vxus',
+			'youtubeVideoId' => 'I1LEsUvxGDc',
 			'documentsUrl'   => 'https://ultimateblocks.com/docs/',
 			'supportUrl'     => 'https://ultimateblocks.com/community/',
 			'facebookUrl'    => 'https://www.facebook.com/UltimateBlocks',
