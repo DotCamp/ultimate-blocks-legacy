@@ -2,7 +2,7 @@ import { omitBy, isUndefined, trim, isEmpty } from "lodash";
 import { getSpacingCss } from "../utils/styling-helpers";
 
 export function getStyles(attributes) {
-	const { padding, margin } = attributes;
+	const { padding, margin, contentColor, contentBackground } = attributes;
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
 
@@ -15,6 +15,8 @@ export function getStyles(attributes) {
 		marginRight: marginObj?.right,
 		marginBottom: marginObj?.bottom,
 		marginLeft: marginObj?.left,
+		"--ub-tab-content-color": contentColor,
+		"--ub-tab-content-background": contentBackground,
 	};
 
 	return omitBy(
@@ -24,6 +26,6 @@ export function getStyles(attributes) {
 			isEmpty(value) ||
 			isUndefined(value) ||
 			trim(value) === "" ||
-			trim(value) === "undefined undefined undefined"
+			trim(value) === "undefined undefined undefined",
 	);
 }

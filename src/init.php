@@ -1194,6 +1194,12 @@ function ub_include_block_attribute_css() {
 				case 'ub/tabbed-content-block':
 					$prefix           = '#ub-tabbed-content-' . $attributes['blockID'];
 					$styles 		   = ub_get_spacing_styles($attributes);
+					if(isset($attributes['contentColor'])){
+						$styles .= '--ub-tab-content-color:'. $attributes['contentColor'] .';';
+					}
+					if(isset($attributes['contentBackground'])){
+						$styles .= '--ub-tab-content-background:'. $attributes['contentBackground'] .';';
+					}
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title > .wp-block-ub-tabbed-content-tab-title-wrap, ' .
 										 $prefix . ' > .wp-block-ub-tabbed-content-tab-holder > .wp-block-ub-tabbed-content-tabs-title-vertical-tab > .wp-block-ub-tabbed-content-tab-title-vertical-wrap{' . PHP_EOL .

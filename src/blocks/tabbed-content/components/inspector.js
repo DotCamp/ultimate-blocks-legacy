@@ -4,10 +4,10 @@ import {
 	accordionIcon,
 } from "../icons/icon";
 import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
-import { SpacingControl } from "../../components";
+import { ColorSettings, SpacingControl } from "../../components";
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { InspectorControls } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
 	PanelRow,
@@ -31,10 +31,6 @@ export default class Inspector extends Component {
 		const { attributes, setAttributes } = this.props;
 		const {
 			activeTab,
-			theme,
-			normalColor,
-			titleColor,
-			normalTitleColor,
 			tabVertical,
 			tabletTabDisplay,
 			mobileTabDisplay,
@@ -43,29 +39,6 @@ export default class Inspector extends Component {
 			useAnchors,
 			tabStyle,
 		} = attributes;
-
-		const tabColorPanels = [
-			{
-				value: normalColor,
-				onChange: (value) => setAttributes({ normalColor: value }),
-				label: __("Tab Color"),
-			},
-			{
-				value: theme,
-				onChange: (value) => setAttributes({ theme: value }),
-				label: __("Active Tab Color"),
-			},
-			{
-				value: normalTitleColor,
-				onChange: (value) => setAttributes({ normalTitleColor: value }),
-				label: __("Tab Title Color"),
-			},
-			{
-				value: titleColor,
-				onChange: (value) => setAttributes({ titleColor: value }),
-				label: __("Active Tab Title Color"),
-			},
-		];
 
 		return (
 			<>
@@ -108,7 +81,7 @@ export default class Inspector extends Component {
 									})
 								}
 								help={__(
-									"Add an anchor text to let the contents of the active tab be accessed directly through a link"
+									"Add an anchor text to let the contents of the active tab be accessed directly through a link",
 								)}
 							/>
 						)}
@@ -146,8 +119,8 @@ export default class Inspector extends Component {
 							if (!isVertical) {
 								const horizontalTabs = Array.from(
 									el.querySelectorAll(
-										".wp-block-ub-tabbed-content-tabs-title .wp-block-ub-tabbed-content-tab-title-wrap"
-									)
+										".wp-block-ub-tabbed-content-tabs-title .wp-block-ub-tabbed-content-tab-title-wrap",
+									),
 								);
 
 								if (horizontalTabs.length > 0) {
@@ -157,19 +130,19 @@ export default class Inspector extends Component {
 							} else {
 								const verticalTabs = Array.from(
 									el.querySelectorAll(
-										".wp-block-ub-tabbed-content-tabs-title-vertical-tab .wp-block-ub-tabbed-content-tab-title-vertical-wrap"
-									)
+										".wp-block-ub-tabbed-content-tabs-title-vertical-tab .wp-block-ub-tabbed-content-tab-title-vertical-wrap",
+									),
 								);
 
 								if (verticalTabs.length > 0) {
 									const verticalTabAddButton = verticalTabs.pop();
 									verticalTabAddButton.parentNode.removeChild(
-										verticalTabAddButton
+										verticalTabAddButton,
 									);
 								}
 
 								const verticalTabHolder = el.querySelector(
-									".vertical-tab-width"
+									".vertical-tab-width",
 								);
 
 								if (verticalTabHolder) {
@@ -178,31 +151,19 @@ export default class Inspector extends Component {
 							}
 
 							const tabContentContainer = el.querySelector(
-								".block-editor-inner-blocks"
+								".block-editor-inner-blocks",
 							);
 
 							if (tabContentContainer) {
 								tabContentContainer.innerHTML = `<p>${__(
 									"Tab Content",
-									"ultimate-blocks-pro"
+									"ultimate-blocks-pro",
 								)}</p>`;
 							}
 
 							return el;
 						}}
 					/>
-					<PanelBody title={__("Tab Style")} initialOpen={true}>
-						<PanelColorSettings
-							title={__("Tab Colors")}
-							initialOpen={true}
-							colorSettings={
-								tabStyle === "underline" &&
-								![tabletTabDisplay, mobileTabDisplay].includes("accordion")
-									? tabColorPanels.slice(2)
-									: tabColorPanels
-							}
-						/>
-					</PanelBody>
 					<PanelBody title={__("Tab Layout")} initialOpen={false}>
 						<PanelRow>
 							<label>{__("Mode")}</label>
@@ -356,6 +317,39 @@ export default class Inspector extends Component {
 							label={__("Margin", "ultimate-blocks")}
 						/>
 					</PanelBody>
+				</InspectorControls>
+				<InspectorControls group="color">
+					{!(
+						tabStyle === "underline" &&
+						![tabletTabDisplay, mobileTabDisplay].includes("accordion")
+					) && (
+						<>
+							<ColorSettings
+								attrKey="normalColor"
+								label={__("Tab Color", "ultimate-blocks")}
+							/>
+							<ColorSettings
+								attrKey="theme"
+								label={__("Active Tab Color", "ultimate-blocks")}
+							/>
+						</>
+					)}
+					<ColorSettings
+						attrKey="normalTitleColor"
+						label={__("Tab Title Color", "ultimate-blocks")}
+					/>
+					<ColorSettings
+						attrKey="titleColor"
+						label={__("Active Tab Title Color", "ultimate-blocks")}
+					/>
+					<ColorSettings
+						attrKey="contentColor"
+						label={__("Content Color", "ultimate-blocks")}
+					/>
+					<ColorSettings
+						attrKey="contentBackground"
+						label={__("Content Background", "ultimate-blocks")}
+					/>
 				</InspectorControls>
 			</>
 		);

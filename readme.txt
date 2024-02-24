@@ -151,6 +151,7 @@ That's it. You're done!
 * IMPROVE: Remove responsive settings from advanced video block.
 * IMPROVE: Add toggle color option on main content toggle block.
 * IMPROVE: Remove bottom white space when add a border in the advanced video block.
+* NEW: Content color and background color option in tabbed content.
 * NEW: Alignment option in advanced video.
 * NEW: Equal Height option in post grid.
 * NEW: Colors Option for (Title, Author, Date, Excerpt, Link, Post) in post grid.

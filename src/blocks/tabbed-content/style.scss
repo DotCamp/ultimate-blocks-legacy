@@ -24,6 +24,8 @@
 	margin-top: 30px;
 	margin-bottom: 30px;
 	.wp-block-ub-tabbed-content-tabs-content {
+		color: var(--ub-tab-content-color);
+		background: var(--ub-tab-content-background);
 		.wp-block-ub-tabbed-content-tab-content-wrap {
 			> .alignright {
 				float: right;

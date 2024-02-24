@@ -2452,6 +2452,14 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'contentColor' => array(
+                'type' => 'string',
+                'default' => null
+            ),
+            'contentBackground' => array(
+                'type' => 'string',
+                'default' => null
+            ),
 		  'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()
