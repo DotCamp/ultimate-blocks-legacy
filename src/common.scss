@@ -82,3 +82,11 @@
 	grid-column: 1 / -1;
 	margin-top: 0px !important;
 }
+
+.block-editor-block-inspector {
+	.ub-date-time-picker {
+		.components-base-control {
+			margin-bottom: 8px !important;
+		}
+	}
+}

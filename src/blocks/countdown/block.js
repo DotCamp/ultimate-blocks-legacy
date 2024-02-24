@@ -134,14 +134,16 @@ function CountdownMain(props) {
 				<>
 					<InspectorControls group="settings">
 						<PanelBody title={__("Timer expiration")}>
-							<DateTimePicker
-								currentDate={endDate * 1000}
-								onChange={(value) => {
-									setAttributes({
-										endDate: Math.floor(Date.parse(value) / 1000),
-									});
-								}}
-							/>
+							<div className="ub-date-time-picker">
+								<DateTimePicker
+									currentDate={endDate * 1000}
+									onChange={(value) => {
+										setAttributes({
+											endDate: Math.floor(Date.parse(value) / 1000),
+										});
+									}}
+								/>
+							</div>
 						</PanelBody>
 						<PanelBody title={__("Displaying unit")} initialOpen={false}>
 							<SelectControl
