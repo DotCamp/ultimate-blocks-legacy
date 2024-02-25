@@ -1,6 +1,6 @@
 === Ultimate Blocks - WordPress Blocks Plugin ===
 Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, alexius08
-Tags: block, blocks, gutenberg blocks, gutenberg, block editor
+Tags: blocks, gutenberg blocks, gutenberg, block editor, free
 Requires at least: 5.8
 Tested up to: 6.4
 Stable tag: 3.1.4-dev
@@ -14,7 +14,7 @@ Create Better Content With The Block Editor. Custom Blocks for Bloggers and Cont
 
 [Get Pro](https://ultimateblocks.com/pricing/) | [Documentation](https://ultimateblocks.com/docs/)
 
-Ultimate Blocks is a powerhouse for bloggers and content marketers using WordPress. It's not just a plugin, it's a toolkit to skyrocket user engagement and simplify content creation.
+Ultimate Blocks is a free powerhouse for bloggers and content marketers using WordPress. It's not just a plugin, it's a toolkit to skyrocket user engagement and simplify content creation.
 
 With Ultimate Blocks, you're not just adding functionalities; you're crafting experiences.
 
