@@ -80,7 +80,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
     $mobileTabStyle = substr($mobileTabDisplay, 0, strlen($mobileTabDisplay) - 3);
     $tabletTabStyle = substr($tabletTabDisplay, 0, strlen($tabletTabDisplay) - 3);
 
-    return '<div class="' . $blockName . ($tabStyle !== 'tabs' ? '-' . $tabStyle : '') . ' ' . $blockName . '-holder' . ($tabVertical ? ' vertical-holder' : '')
+    return '<div class="wp-block-ub-tabbed-content-block ' . $blockName . ($tabStyle !== 'tabs' ? '-' . $tabStyle : '') . ' ' . $blockName . '-holder' . ($tabVertical ? ' vertical-holder' : '')
             . (isset($className) ? ' ' . esc_attr($className) : '') . (isset($align) ? ' align' . $align : '') 
             . ($mobileTabDisplay !== 'accordion' ? ' ' . $blockName . '-' . $mobileTabStyle . '-holder-mobile' : '')
             . ($tabletTabDisplay !== 'accordion' ? ' ' . $blockName . '-' . $tabletTabStyle . '-holder-tablet' : '')
