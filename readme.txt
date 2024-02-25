@@ -120,6 +120,12 @@ Button block with more customization options and controls.
 **Divider Block**
 Add custom divider between your blocks. Customize the color, size, everything.
 
+## Other tools from us
+
+[Tableberg](https://wordpress.org/plugins/tableberg/): The Best WordPress Block Table Plugin to create beautiful and responsive tables.
+
+[GroundWP](https://wordpress.org/themes/groundwp/): Lightweight and Minimal Block Theme for efficient Full-Site Editing.
+
 == Frequently Asked Questions ==
 
 = Installation Instructions =
