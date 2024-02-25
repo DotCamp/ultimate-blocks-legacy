@@ -1,5 +1,5 @@
 === Ultimate Blocks - WordPress Blocks Plugin ===
-Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, alexius08, wpleaders1, wpcdplugin, wptb
+Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, alexius08
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.8
 Tested up to: 6.4
