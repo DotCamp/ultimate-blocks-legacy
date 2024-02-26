@@ -164,6 +164,7 @@ That's it. You're done!
 * NEW: Spacing Option for (Link, Content) in post grid.
 * NEW: Border Radius Option for (Link, Post, Image) in post grid.
 * FIX: Image alignment inside the toggle content.
+* PRO: FIX: Show more button not working when fade is enable expand block.
 * PRO: NEW: Show taxonomy like badge in post grid.
 
 = 3.1.3 =
