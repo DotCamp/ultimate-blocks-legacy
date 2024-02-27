@@ -10,8 +10,14 @@
 	position: relative;
 	.ub-post-grid-items {
 		align-items: flex-start;
+		row-gap: var(--ub-post-grid-row-gap, 32px);
+		column-gap: var(--ub-post-grid-column-gap, 32px);
 		article {
 			overflow: hidden;
+			padding-top: var(--ub-post-grid-post-padding-top);
+			padding-right: var(--ub-post-grid-post-padding-right);
+			padding-bottom: var(--ub-post-grid-post-padding-bottom);
+			padding-left: var(--ub-post-grid-post-padding-left);
 			background: var(--ub-post-grid-post-background);
 			&:hover {
 				background: var(
@@ -41,14 +47,11 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr;
-		grid-gap: 0 2em;
 		@media all and (-ms-high-contrast: none) {
 			display: block;
 		}
 		article {
-			margin-bottom: 2.5em;
 			min-width: 0;
-			padding: 0;
 			@media all and (-ms-high-contrast: none) {
 				padding-left: 10px;
 				padding-right: 10px;
@@ -194,21 +197,17 @@
 		margin-bottom: 0;
 	}
 	.is-list {
+		display: grid;
 		article {
 			display: grid;
 			grid-template-columns: 30% 1fr;
 			grid-template-rows: 1fr;
 			grid-gap: 0 2em;
-			padding: 0;
 			@media all and (-ms-high-contrast: none) {
 				display: block;
 			}
 			&:before {
 				display: none;
-			}
-			&:not(:last-child) {
-				margin-bottom: 5%;
-				padding-bottom: 5%;
 			}
 			&:not(.has-post-thumbnail) {
 				grid-template-columns: 1fr;

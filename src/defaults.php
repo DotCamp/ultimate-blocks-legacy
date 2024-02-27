@@ -1404,6 +1404,14 @@ $defaultValues = array(
 	),
 	'ub/post-grid'                  => array(
 		'attributes' => array(
+			'rowGap'                      => array(
+				'type'    => 'string',
+				'default' => '32px'
+			),
+			'columnGap'                      => array(
+				'type'    => 'string',
+				'default' => '32px'
+			),
 			'blockID'                      => array(
 				'type'    => 'string',
 				'default' => ''
@@ -1453,6 +1461,10 @@ $defaultValues = array(
 				'default' => array()
 			),
 			'contentPadding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'postPadding' => array(
 				'type' 	=> 'array',
 				'default' => array()
 			),

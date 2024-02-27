@@ -8,14 +8,17 @@ import {
 	SpacingControlWithToolsPanel,
 	TabsPanelControl,
 } from "../components";
-const { __ } = wp.i18n;
-
-const { InspectorControls } = wp.blockEditor || wp.editor;
-
-const { PanelBody, SelectControl, ToggleControl, TextControl, RangeControl } =
-	wp.components;
-const { addQueryArgs } = wp.url;
-const { apiFetch } = wp;
+import { __ } from "@wordpress/i18n";
+import { InspectorControls, HeightControl } from "@wordpress/block-editor";
+import {
+	PanelBody,
+	SelectControl,
+	ToggleControl,
+	TextControl,
+	RangeControl,
+} from "@wordpress/components";
+import { addQueryArgs } from "@wordpress/url";
+import apiFetch from "@wordpress/api-fetch";
 
 const MAX_POSTS_COLUMNS = 3;
 
@@ -138,6 +141,8 @@ export default function Inspector(props) {
 			authorArray,
 			tagArray,
 			isEqualHeight,
+			rowGap,
+			columnGap,
 		},
 		setAttributes,
 		posts,
@@ -309,6 +314,16 @@ export default function Inspector(props) {
 						label={__("Equal Height", "ultimate-blocks-pro")}
 						checked={isEqualHeight}
 						onChange={() => setAttributes({ isEqualHeight: !isEqualHeight })}
+					/>
+					<HeightControl
+						label={__("Row Gap", "ultimate-blocks-pro")}
+						value={rowGap}
+						onChange={(newValue) => setAttributes({ rowGap: newValue })}
+					/>
+					<HeightControl
+						label={__("Column Gap", "ultimate-blocks-pro")}
+						value={columnGap}
+						onChange={(newValue) => setAttributes({ columnGap: newValue })}
 					/>
 				</PanelBody>
 				<PanelBody title={__("Query", "ultimate-blocks")} initialOpen={false}>
@@ -640,6 +655,11 @@ export default function Inspector(props) {
 					showByDefault
 					attrKey="linkPadding"
 					label={__("Link Padding", "ultimate-blocks")}
+				/>
+				<SpacingControlWithToolsPanel
+					showByDefault
+					attrKey="postPadding"
+					label={__("Post Padding", "ultimate-blocks")}
 				/>
 			</InspectorControls>
 			<InspectorControls group="border">

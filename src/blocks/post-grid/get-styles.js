@@ -2,11 +2,12 @@ import { omitBy, isUndefined, trim, isEmpty } from "lodash";
 import { getSpacingCss } from "../utils/styling-helpers";
 
 export function getStyles(attributes) {
-	const { padding, margin } = attributes;
-	const paddingObj = getSpacingCss(padding);
-	const marginObj = getSpacingCss(margin);
+	const paddingObj = getSpacingCss(attributes.padding);
+	const marginObj = getSpacingCss(attributes.margin);
 	const contentPadding = getSpacingCss(attributes.contentPadding);
 	const linkPadding = getSpacingCss(attributes.linkPadding);
+	const postPadding = getSpacingCss(attributes.postPadding);
+
 	const imageBorderRadius = {
 		"--ub-post-grid-image-top-left-radius":
 			attributes.imageBorderRadius?.topLeft,
@@ -73,6 +74,12 @@ export function getStyles(attributes) {
 		"--ub-post-grid-link-padding-right": linkPadding?.right,
 		"--ub-post-grid-link-padding-bottom": linkPadding?.bottom,
 		"--ub-post-grid-link-padding-left": linkPadding?.left,
+		"--ub-post-grid-post-padding-top": postPadding?.top,
+		"--ub-post-grid-post-padding-right": postPadding?.right,
+		"--ub-post-grid-post-padding-bottom": postPadding?.bottom,
+		"--ub-post-grid-post-padding-left": postPadding?.left,
+		"--ub-post-grid-row-gap": attributes.rowGap,
+		"--ub-post-grid-column-gap": attributes.columnGap,
 		paddingTop: paddingObj?.top,
 		paddingRight: paddingObj?.right,
 		paddingBottom: paddingObj?.bottom,

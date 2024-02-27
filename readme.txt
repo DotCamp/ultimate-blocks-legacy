@@ -161,7 +161,8 @@ That's it. You're done!
 * NEW: Alignment option in advanced video.
 * NEW: Equal Height option in post grid.
 * NEW: Colors Option for (Title, Author, Date, Excerpt, Link, Post) in post grid.
-* NEW: Spacing Option for (Link, Content) in post grid.
+* NEW: Spacing Option for (Link, Content, Post) in post grid.
+* NEW: Row and Column gap in post grid.
 * NEW: Border Radius Option for (Link, Post, Image) in post grid.
 * FIX: Upload video height issue advanced video block.
 * FIX: Image alignment inside the toggle content.

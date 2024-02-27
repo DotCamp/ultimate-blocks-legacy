@@ -99,6 +99,14 @@
       "type": "number",
       "default": 0
     },
+    "rowGap": {
+      "type": "string",
+      "default": "32px"
+    },
+    "columnGap": {
+      "type": "string",
+      "default": "32px"
+    },
     "order": {
       "type": "string",
       "default": "desc"
@@ -208,6 +216,10 @@
       "default": {}
     },
     "contentPadding": {
+      "type": "object",
+      "default": {}
+    },
+    "postPadding": {
       "type": "object",
       "default": {}
     },
