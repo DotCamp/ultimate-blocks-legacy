@@ -166,6 +166,7 @@ That's it. You're done!
 * NEW: Border Radius Option for (Link, Post, Image) in post grid.
 * FIX: Upload video height issue advanced video block.
 * FIX: Image alignment inside the toggle content.
+* PRO: FIX: Review block colors styling not working on frontend.
 * PRO: FIX: Show more button not working when fade is enable expand block.
 * PRO: NEW: Show taxonomy like badge in post grid.
 
