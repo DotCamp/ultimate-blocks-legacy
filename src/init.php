@@ -406,6 +406,14 @@ function ub_include_block_attribute_css() {
 										')' . ';' . PHP_EOL .
 										'}';
 					}
+					if(isset($attributes['autofit']) && !$attributes['autofit']){
+						$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' . 
+							'width:' . $attributes['width'] . '%;'  
+							 . '}';
+						$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed video{
+							width: 100%;
+						}';
+					}
 					$blockStylesheets .= $prefix .  '{' . $styles . '}';
 
 					break;

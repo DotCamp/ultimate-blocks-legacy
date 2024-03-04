@@ -79,6 +79,42 @@ $fixed-border-style: 1px dashed gray;
 	}
 }
 .wp-block-ub-advanced-video {
+	&.alignright {
+		.ub-advanced-video-container {
+			float: right;
+			video {
+				float: right;
+			}
+			.ub-advanced-video-channel-details {
+				clear: both;
+				text-align: right;
+			}
+		}
+	}
+
+	&.alignleft {
+		.ub-advanced-video-container {
+			float: left;
+			video {
+				float: left;
+			}
+			.ub-advanced-video-channel-details {
+				clear: both;
+				text-align: left;
+			}
+		}
+	}
+
+	&.aligncenter {
+		.ub-advanced-video-container {
+			margin-inline-start: auto;
+			text-align: center;
+			margin-inline-end: auto;
+			.ub-advanced-video-channel-details {
+				text-align: center;
+			}
+		}
+	}
 	// Show Placeholder style on-select.
 	.ub-advanced-video__interactive-overlay {
 		position: absolute;

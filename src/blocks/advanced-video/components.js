@@ -718,8 +718,6 @@ export function AdvancedVideoBlock(props) {
 					url: videoURL,
 					videoEmbedCode: `<video controls width="500" height="500"><source src="${videoURLInput}"></video>`,
 					videoSource: "unknown",
-					width: 500,
-					height: 500,
 					preserveAspectRatio: false,
 				});
 				setVideoURLInput("");
