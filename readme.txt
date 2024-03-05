@@ -153,6 +153,7 @@ That's it. You're done!
 = 3.1.4 =
 
 * IMPROVE: Change default counter, and label font size in the counter block.
+* FIX: Counter bug when change animation.
 
 = 3.1.4 =
 

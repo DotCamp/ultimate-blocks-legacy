@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "@wordpress/element";
 
 export function useCounter(attributes) {
-	const [counter, setCounter] = useState(0);
 	const { startNumber, endNumber, animationDuration: duration } = attributes;
+	const [counter, setCounter] = useState(0);
 	const interval = useRef(null);
 	useEffect(() => {
+		setCounter(parseInt(startNumber ?? "0", 10));
 		if (interval.current !== null) {
 			clearInterval(interval.current);
 		}
@@ -16,14 +17,16 @@ export function useCounter(attributes) {
 		const easeOutQuad = (t) => t * (2 - t);
 		let frame = 0;
 		const countTo = stopCounter - startCount;
-
 		interval.current = setInterval(() => {
 			frame++;
 
 			const progress = easeOutQuad(frame / totalFrames);
 			const currentCount = Math.round(countTo * progress) + startCount;
 
-			if (parseInt(counter, 10) !== currentCount) {
+			if (
+				parseInt(counter, 10) !== currentCount ||
+				parseInt(counter, 10) >= currentCount
+			) {
 				setCounter(currentCount);
 			}
 
