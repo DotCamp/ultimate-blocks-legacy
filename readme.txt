@@ -152,6 +152,10 @@ That's it. You're done!
 
 = 3.1.4 =
 
+* IMPROVE: Change default counter, and label font size in the counter block.
+
+= 3.1.4 =
+
 * IMPROVE: Increase bar thickness progress bar.
 * IMPROVE: Make center default alignment of progress bar.
 * IMPROVE: Remove responsive settings from advanced video block.

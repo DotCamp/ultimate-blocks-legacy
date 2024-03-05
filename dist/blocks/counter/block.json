@@ -12,11 +12,11 @@
   "attributes": {
     "counterFontSize": {
       "type": "string",
-      "default": ""
+      "default": "48px"
     },
     "labelFontSize": {
       "type": "string",
-      "default": ""
+      "default": "16px"
     },
     "startNumber": {
       "type": "string",

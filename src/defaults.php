@@ -2825,11 +2825,11 @@ $defaultValues = array(
 				),
 				'labelFontSize' => array(
 					'type' => 'string',
-					'default' => ''
+					'default' => '16px'
 				),
 				'counterFontSize' => array(
 					'type' => 'string',
-					'default' => ''
+					'default' => '48px'
 				),
 				'prefix' => array(
 					'type' => 'string',
