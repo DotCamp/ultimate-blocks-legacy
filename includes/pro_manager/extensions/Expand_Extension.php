@@ -33,6 +33,11 @@ class Expand_Extension extends Pro_Extension_Upsell {
 				__( "Minimize and expand your content with a smooth, visually pleasing transition.",
 					'ultimate-blocks' )
 			],
+			'buttonStyle' => [
+				__( 'Button Style', 'ultimate-blocks' ),
+				__( "Enhance user engagement and interaction by using a Button style.",
+					'ultimate-blocks' )
+			],
 		];
 	}
 
@@ -48,10 +53,19 @@ class Expand_Extension extends Pro_Extension_Upsell {
 			Pro_Editor_Control_Data::generate_toggle_control_data( 'fade',
 				__( 'Fade when minimized', 'ultimate-blocks' ) ),
 		];
+		$button_style_panel = [
+			Pro_Editor_Control_Data::generate_button_group_control_data( 'buttonStyle',[
+				__( 'Default', 'ultimate-blocks' ),
+				__( 'Button', 'ultimate-blocks' ),
+			] ),
+		];
 
 		return [
 			Pro_Editor_Control_Data::generate_panel_data( 'scrollPanel', __( 'Scroll Settings', 'ultimate-blocks' ),
 				$panel_content ),
+			Pro_Editor_Control_Data::generate_panel_data( 'buttonStyle',
+				__( 'Styles', 'ultimate-blocks' ),
+				$button_style_panel )
 		];
 	}
 }
