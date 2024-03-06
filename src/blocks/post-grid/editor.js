@@ -128,5 +128,9 @@ export default function PostGridBlock(props) {
 
 // cate excerpt
 function cateExcerpt(str, no_words) {
-	return str.split(" ").splice(0, no_words).join(" ");
+	if (str && str.split(" ").length > no_words) {
+		return str.split(" ").splice(0, no_words).join(" ") + "...";
+	} else {
+		return str.split(" ").splice(0, no_words).join(" ");
+	}
 }
