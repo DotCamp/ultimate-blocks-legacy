@@ -154,6 +154,7 @@ That's it. You're done!
 
 * IMPROVE: Change default counter, and label font size in the counter block.
 * FIX: Counter bug when change animation.
+* FIX: Image slider not showing properly in row block
 * PRO: NEW: Load more pagination in post grid.
 * PRO: FIX: Schema indexing error Bad escape sequence in string in review block.
 

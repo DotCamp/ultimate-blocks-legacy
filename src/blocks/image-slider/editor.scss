@@ -1,5 +1,7 @@
 @import "../../common";
-
+.wp-block-ub-image-slider {
+	width: 100%;
+}
 div[data-block] > .ub_image_slider {
 	display: block;
 	.components-placeholder {
