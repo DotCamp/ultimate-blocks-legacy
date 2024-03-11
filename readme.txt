@@ -150,7 +150,7 @@ That's it. You're done!
 
 == Changelog ==
 
-= 3.1.4 =
+= 3.1.5 =
 
 * NEW: Number settings (Show Number, Number Prefix, Number Suffix) in the progress bar block.
 * IMPROVE: Change default counter, and label font size in the counter block.
