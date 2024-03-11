@@ -12,6 +12,9 @@ export default function HalfCircle(props) {
 		labelColor,
 		alignment,
 		size,
+		showNumber,
+		numberPrefix,
+		numberSuffix,
 	} = props;
 
 	useEffect(() => {
@@ -44,7 +47,7 @@ export default function HalfCircle(props) {
 				},
 				["left", "right"].includes(alignment)
 					? { float: alignment }
-					: { margin: "auto" }
+					: { margin: "auto" },
 			)}
 		>
 			<svg
@@ -73,15 +76,19 @@ export default function HalfCircle(props) {
 					}}
 				/>
 			</svg>
-			<div
-				className="ub_progress-bar-label"
-				style={{
-					visibility: isActive ? "visible" : "hidden",
-					color: labelColor || "inherit",
-				}}
-			>
-				{percent}%
-			</div>
+			{showNumber && (
+				<div
+					className="ub_progress-bar-label"
+					style={{
+						visibility: isActive ? "visible" : "hidden",
+						color: labelColor || "inherit",
+					}}
+				>
+					<span className="ub-progress-number-prefix">{numberPrefix}</span>
+					<span className="ub-progress-number-value">{percent}</span>
+					<span className="ub-progress-number-suffix">{numberSuffix}</span>
+				</div>
+			)}
 		</div>
 	);
 }

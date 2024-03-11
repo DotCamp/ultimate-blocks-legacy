@@ -47,9 +47,21 @@
                "type": "number",
                "default": 150
           },
+          "showNumber": {
+               "type": "boolean",
+               "default": true
+          },
           "labelColor": {
                "type": "string",
                "default": ""
+          },
+          "numberPrefix": {
+               "type": "string",
+               "default": ""
+          },
+          "numberSuffix": {
+               "type": "string",
+               "default": "%"
           },
           "percentagePosition": {
                "type": "string",

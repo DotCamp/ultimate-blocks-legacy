@@ -41,6 +41,9 @@ export default function Line(props) {
 		detail,
 		setAttributes,
 		alignment,
+		showNumber,
+		numberPrefix,
+		numberSuffix,
 	} = props;
 
 	useEffect(() => {
@@ -81,7 +84,7 @@ export default function Line(props) {
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
-				{percentagePosition === "top" && (
+				{showNumber && percentagePosition === "top" && (
 					<div
 						className="ub_progress-bar-label ub_progress-bar-label-top"
 						style={{
@@ -90,7 +93,9 @@ export default function Line(props) {
 							color: labelColor || "inherit",
 						}}
 					>
-						{percent}%
+						<span className="ub-progress-number-prefix">{numberPrefix}</span>
+						<span className="ub-progress-number-value">{percent}</span>
+						<span className="ub-progress-number-suffix">{numberSuffix}</span>
 					</div>
 				)}
 			</div>
@@ -117,7 +122,7 @@ export default function Line(props) {
 						<div className="ub_progress-bar-line-stripe" />
 					</foreignObject>
 				)}
-				{percentagePosition === "inside" && (
+				{showNumber && percentagePosition === "inside" && (
 					<foreignObject
 						width="100%"
 						height="100%"
@@ -133,12 +138,20 @@ export default function Line(props) {
 								color: labelColor || "inherit",
 							}}
 						>
-							<p>{percent}%</p>
+							<p>
+								<span className="ub-progress-number-prefix">
+									{numberPrefix}
+								</span>
+								<span className="ub-progress-number-value">{percent}</span>
+								<span className="ub-progress-number-suffix">
+									{numberSuffix}
+								</span>
+							</p>
 						</div>
 					</foreignObject>
 				)}
 			</svg>
-			{percentagePosition === "bottom" && (
+			{showNumber && percentagePosition === "bottom" && (
 				<div
 					className="ub_progress-bar-label"
 					style={{
@@ -147,7 +160,9 @@ export default function Line(props) {
 						color: labelColor || "inherit",
 					}}
 				>
-					{percent}%
+					<span className="ub-progress-number-prefix">{numberPrefix}</span>
+					<span className="ub-progress-number-value">{percent}</span>
+					<span className="ub-progress-number-suffix">{numberSuffix}</span>
 				</div>
 			)}
 		</div>

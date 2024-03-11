@@ -1678,6 +1678,18 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'numberPrefix'            => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'numberSuffix'            => array(
+				'type'    => 'string',
+				'default' => '%'
+			),
+			'showNumber'            => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()

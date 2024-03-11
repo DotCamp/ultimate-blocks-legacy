@@ -54,6 +54,9 @@ function ProgressBarMain(props) {
 			barBorderRadius,
 			isStripe,
 			isCircleRounded,
+			showNumber,
+			numberPrefix,
+			numberSuffix,
 		},
 		isSelected,
 		setAttributes,
@@ -87,6 +90,9 @@ function ProgressBarMain(props) {
 		detail,
 		setAttributes,
 		alignment: detailAlign,
+		showNumber,
+		numberPrefix,
+		numberSuffix,
 	};
 
 	const percentagePositionOptions = [
@@ -162,7 +168,7 @@ function ProgressBarMain(props) {
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
-						<PanelBody title={__("General")}>
+						<PanelBody title={__("General", "ultimate-blocks")}>
 							<br />
 							{!isStyleCircle && !isStyleHalfCircle && (
 								<CustomToggleGroupControl
@@ -186,6 +192,27 @@ function ProgressBarMain(props) {
 								min={0}
 								max={100}
 								allowReset
+							/>
+						</PanelBody>
+						<PanelBody title={__("Number Settings", "ultimate-blocks")}>
+							<ToggleControl
+								checked={showNumber}
+								label={__("Show Number", "ultimate-blocks")}
+								onChange={() => setAttributes({ showNumber: !showNumber })}
+							/>
+							<TextControl
+								label={__("Number Prefix", "ultimate-blocks")}
+								value={numberPrefix}
+								onChange={(newValue) =>
+									setAttributes({ numberPrefix: newValue })
+								}
+							/>
+							<TextControl
+								label={__("Number Suffix", "ultimate-blocks")}
+								value={numberSuffix}
+								onChange={(newValue) =>
+									setAttributes({ numberSuffix: newValue })
+								}
 							/>
 						</PanelBody>
 					</InspectorControls>

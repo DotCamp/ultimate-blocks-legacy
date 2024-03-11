@@ -1,5 +1,4 @@
 .ub_progress-bar {
-	overflow: auto;
 	padding-top: var(--ub-progress-bar-padding-top, 0px) !important;
 	padding-right: var(--ub-progress-bar-padding-right, 0px) !important;
 	padding-bottom: var(--ub-progress-bar-padding-bottom, 0px) !important;
@@ -97,6 +96,11 @@
 			.ub_progress-bar-label {
 				text-align: right;
 				min-width: 24px;
+				p {
+					margin: 0;
+					display: flex;
+					justify-content: flex-end;
+				}
 				&.ub_progress-bar-label-top {
 					position: absolute;
 					left: 0;
@@ -112,6 +116,8 @@
 			transform: translateY(-50%);
 			margin: auto;
 			text-align: center !important;
+			display: flex;
+			justify-content: center;
 		}
 		.ub_progress-bar-circle {
 			position: absolute;
@@ -135,8 +141,11 @@
 			}
 		}
 	}
-	.ub_progress-bar-text p {
-		margin: 0;
+	.ub_progress-bar-text {
+		z-index: 1;
+		p {
+			margin: 0;
+		}
 	}
 }
 @keyframes progressAnimation {

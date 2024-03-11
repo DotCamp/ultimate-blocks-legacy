@@ -47,30 +47,40 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
     $percentage_position = $attributes['percentagePosition'];
     $is_stripe = $attributes['isStripe'];
 
-    $percentage_text = '<div class="' . $blockName . '-label'. ( $percentage_position === 'top' ? ' ub_progress-bar-label-top' : '' )  . '"' . ($blockID === '' ? ' style="width:' . $percentage . '%;"' : '') . '><p>' . $percentage . '%</p></div>';
-
-    $inside_percentage_class = $percentage_position === 'inside' ? " ub_progress-bar-label-inside" : '';
-    $stripe_style = $is_stripe ? " ub_progress-bar-stripe" : '';
-    $detail_text = '<div class="ub_progress-bar-text"><p' . ($blockID === '' ? ' style="text-align: ' . $detailAlign . ';"' : '') . '>' . $detail . '</p></div>';
-
-    $top_percentage = $percentage_position === 'top'  ? 
+    
+    $show_number                = isset($attributes['showNumber']) ? $attributes['showNumber'] : true;
+    $number_prefix              = isset($attributes['numberPrefix']) ? $attributes['numberPrefix'] : '';
+    $number_suffix              = isset($attributes['numberSuffix']) ? $attributes['numberSuffix'] : '%';
+    $inside_percentage_class    = $percentage_position === 'inside' ? " ub_progress-bar-label-inside" : '';
+    $stripe_style               = $is_stripe ? " ub_progress-bar-stripe" : '';
+    $detail_text                = '<div class="ub_progress-bar-text"><p' . ($blockID === '' ? ' style="text-align: ' . $detailAlign . ';"' : '') . '>' . $detail . '</p></div>';
+    $percentage_text            = '<div class="' . $blockName . '-label'. ( $percentage_position === 'top' ? ' ub_progress-bar-label-top' : '' )  . '"' . ($blockID === '' ? ' style="width:' . $percentage . '%;"' : '') . '><p>
+                                    <span class="ub-progress-number-prefix">' . $number_prefix . '</span>
+                                    <span class="ub-progress-number-value">' . $percentage . '</span>
+                                    <span class="ub-progress-number-suffix">' . $number_suffix . '</span>
+                                  </p></div>';
+    
+    $top_percentage = $show_number && $percentage_position === 'top'  ? 
     '<div class="ub_progress-detail-wrapper">
          ' . $detail_text . '
          ' . $percentage_text . '
     </div>' : '<div class="ub_progress-detail-wrapper">
          ' . $detail_text . '
     </div>';
-    $inside_percentage = $percentage_position === 'inside'  ? 
+    $inside_percentage = $show_number && $percentage_position === 'inside'  ? 
     '<foreignObject width="100%" height="100%" viewBox="0 0 120 10" x="0" y="0">
         ' . $percentage_text . '
     </foreignObject>' : "";
-    $bottom_percentage = $percentage_position === 'bottom' ? $percentage_text : "";
+    $bottom_percentage = $show_number && $percentage_position === 'bottom' ? $percentage_text : "";
 
     $stripe_element = $is_stripe ?
         '<foreignObject width="100%" height="100%">
 			<div class="ub_progress-bar-line-stripe" ></div>
 		</foreignObject>' : '';
-
+    $circle_percentage = $show_number ? '<div class="' . $blockName . '-label">
+                                    <span class="ub-progress-number-prefix">' . $number_prefix . '</span>
+                                    <span class="ub-progress-number-value">' . $percentage . '</span>
+                                    <span class="ub-progress-number-suffix">' . $number_suffix . '</span></div>' : '';
     if(!$is_style_circle && !$is_style_half_circle){
         $progressBarPath = 'M' . ($barThickness / 2) . ',' . ($barThickness / 2)
                             . 'L' . (100 - $barThickness / 2) . ',' . ($barThickness / 2);
@@ -98,7 +108,7 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
                 stroke-width="' . ($barThickness + 2) . '" stroke-linecap="butt"'.
                 ($blockID === '' ? ' style="stroke-dasharray: ' . $strokeArcLength . 'px, ' . $circlePathLength . 'px"':'').'/>
         </svg>
-        <div class="' . $blockName . '-label">' . $percentage . '%</div></div>';
+       '. $circle_percentage .'</div>';
     } else if ($is_style_half_circle){
         $halfCircleRadius = 50 - ($barThickness + 2) / 2;
         $halfCirclePathLength = $halfCircleRadius * M_PI;
@@ -114,7 +124,7 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
                     stroke-width="' . ($barThickness + 2) . '" stroke-linecap="butt"'.
                     ($blockID === '' ? ' style="stroke-dasharray: ' . $halfCircleStrokeArcLength . 'px, ' . $halfCirclePathLength . 'px"':'').'/>
             </svg>
-            <div class="' . $blockName . '-label">' . $percentage . '%</div></div>';
+          ' . $circle_percentage . '</div>';
 
         }
     $classes = array( 'wp-block-ub-progress-bar', 'ub_progress-bar' );
