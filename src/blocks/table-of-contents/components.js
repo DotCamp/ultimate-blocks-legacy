@@ -315,6 +315,7 @@ class TableOfContents extends Component {
 				Array.isArray(this.state.headers) && this.state.headers.length > 0;
 
 			const newHeaders = headers.map((header, i) => ({
+				blockName: header.blockName,
 				clientId: header.clientId,
 				content: header.content,
 				level: header.level,

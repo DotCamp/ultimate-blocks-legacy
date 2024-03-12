@@ -62,7 +62,11 @@ function ub_render_table_of_contents_block($attributes){
                     $anchor = '#' . str_replace("themeisle-otter ", "", $item["anchor"]);
                 }
                 else{
-                    $anchor = '#' . $item["anchor"];
+                    if(isset($item['blockName']) && 'ub/advanced-heading' === $item['blockName']){
+                        $anchor = '#ub-advanced-heading-' . $item["clientId"];
+                    } else {
+                        $anchor = '#' . $item["anchor"];
+                    }
                 }
 
                 if(count($currentGaps) > $num && get_query_var('page') !== $currentGaps[$num]){

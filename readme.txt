@@ -155,6 +155,7 @@ That's it. You're done!
 * NEW: Number settings (Show Number, Number Prefix, Number Suffix) in the progress bar block.
 * IMPROVE: Change default counter, and label font size in the counter block.
 * FIX: Counter bug when change animation.
+* FIX: Advanced heading not working in table of content.
 * FIX: Image slider not showing properly in row block
 * PRO: NEW: Load more pagination in post grid.
 * PRO: FIX: Schema indexing error Bad escape sequence in string in review block.
