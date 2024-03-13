@@ -40,7 +40,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
 
     foreach ($contents as $key => $content) {
         if($useAnchors){
-            if($tabsAnchor[$key] !== ''){
+            if(isset($tabsAnchor[$key]) && $tabsAnchor[$key] !== ''){
                 $content->{'data-tab-anchor'} = $tabsAnchor[$key];
             }
         }
