@@ -156,6 +156,7 @@ That's it. You're done!
 * IMPROVE: Change default counter, and label font size in the counter block.
 * FIX: Counter bug when change animation.
 * FIX: Attribute schema validating warning in styled list.
+* FIX: Countdown styling not working on frontend.
 * FIX: Advanced heading not working in table of content.
 * FIX: Image slider not showing properly in row block.
 * FIX: Anchor issue in tabbed content block.

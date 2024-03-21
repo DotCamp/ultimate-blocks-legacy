@@ -128,7 +128,7 @@ function ub_render_countdown_block($attributes){
     else{
         $selectedFormat = $odometerFormat;
     }
-
+    $styles = ub_countdown_styles($attributes);
     if($timeLeft > 0){
         return '<div style="' . $styles . '" '.($blockID === ''?'': 'id="ub_countdown_'.$blockID.'"' ).'class="wp-block-ub-countdown ub-countdown ub-countdown-wrapper'.
                 (isset($className)?' '.esc_attr($className):'').
