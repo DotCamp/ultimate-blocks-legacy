@@ -2359,7 +2359,7 @@ $defaultValues = array(
                 'default' => ''
             ),
             'list' => array(
-                'type' => 'text',
+                'type' => 'string',
                 'default' => '' //phased out, formerly <li>Item 1</li><li>Item 2</li><li>Item 3</li>'
             ),
             'listItem' => array(
