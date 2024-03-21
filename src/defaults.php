@@ -96,7 +96,7 @@ $defaultValues = array(
 				'default' => array()
 			),
 			'videoId'              => array(
-				'type'    => 'integer',
+				'type'    => 'number',
 				'default' => - 1,
 			),
 			'videoSource'          => array(
@@ -1073,7 +1073,7 @@ $defaultValues = array(
 				)
 			),
 			'totalTimeText'       => array(
-				'type'    => 'text',
+				'type'    => 'string',
 				'default' => __( 'Total time: ' )
 			),
 			'cost'                => array(

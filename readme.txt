@@ -155,7 +155,7 @@ That's it. You're done!
 * NEW: Number settings (Show Number, Number Prefix, Number Suffix) in the progress bar block.
 * IMPROVE: Change default counter, and label font size in the counter block.
 * FIX: Counter bug when change animation.
-* FIX: Attribute schema validating warning in styled list.
+* FIX: Attribute schema validating warning in (styled list, advanced video, how to).
 * FIX: Countdown styling not working on frontend.
 * FIX: Advanced heading not working in table of content.
 * FIX: Image slider not showing properly in row block.
