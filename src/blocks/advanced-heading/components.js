@@ -93,6 +93,17 @@ const AdvancedHeadingEdit = ({
 		setAttributes({ blockID: block.clientId });
 	}, [block?.clientId]);
 
+	// Clean up the content from img and script tags.
+	useEffect(() => {
+		const imgTagRegex = /<img[^>]+>/i;
+		const imgTagCleaned = content.replace(imgTagRegex, '');
+
+		const scriptTagRegex = /<script[^>]*?>.*?<\/script>/is;
+		const allCleaned = imgTagCleaned.replace(scriptTagRegex, '');
+
+		setAttributes({ content: allCleaned });
+	}, []);
+
 	const headingIcons = [h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon];
 	const styles = getStyles(attributes);
 	return (
