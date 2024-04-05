@@ -1,13 +1,16 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from 'react';
-import ExtensionControlCard from '$Components/ExtensionControlCard';
-import withStore from '$HOC/withStore';
+import React, { useEffect, useState } from "react";
+import ExtensionControlCard from "$Components/ExtensionControlCard";
+import withStore from "$HOC/withStore";
 import {
 	getExtensions,
 	setExtensionActiveStatus,
-} from '$Stores/settings-menu/slices/extension';
-import { getProStatus } from '$Stores/settings-menu/slices/app';
-import { toggleExtensionStatus } from '$Stores/settings-menu/actions';
+} from "$Stores/settings-menu/slices/extension";
+import {
+	getProStatus,
+	showProBlockUpsellModal,
+} from "$Stores/settings-menu/slices/app";
+import { toggleExtensionStatus } from "$Stores/settings-menu/actions";
 
 /**
  * Block controls container.
@@ -24,6 +27,7 @@ function ExtensionsControlContainer({
 	extensions: ubExtensions,
 	setExtensionStatus,
 	dispatch,
+	showUpsell,
 	proStatus,
 }) {
 	const [extensions, setExtensions] = useState(ubExtensions);
@@ -63,7 +67,7 @@ function ExtensionsControlContainer({
 	}, [ubExtensions]);
 
 	return (
-		<div className={'controls-container'}>
+		<div className={"controls-container"}>
 			{extensions.map(({ label, name, active, icon, info, pro }) => {
 				return (
 					<ExtensionControlCard
@@ -74,8 +78,9 @@ function ExtensionsControlContainer({
 						status={active}
 						onStatusChange={handleExtensionStatusChange(pro)}
 						iconElement={icon}
+						showUpsell={showUpsell}
 						info={info}
-						proBlock={pro}
+						proExtension={pro}
 					/>
 				);
 			})}
@@ -89,6 +94,7 @@ const selectMapping = (selector) => ({
 });
 
 const actionMapping = () => ({
+	showUpsell: showProBlockUpsellModal,
 	setExtensionStatus: setExtensionActiveStatus,
 });
 
@@ -98,5 +104,5 @@ const actionMapping = () => ({
 export default withStore(
 	ExtensionsControlContainer,
 	selectMapping,
-	actionMapping
+	actionMapping,
 );
