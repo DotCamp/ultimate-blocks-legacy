@@ -38991,9 +38991,10 @@ function _typeof(o) {
    * @param {Object} blockObject block object
    */ var prepareUpsellData = function prepareUpsellData(blockObject) {
         if (blockObject && _typeof(blockObject) === "object") {
-            var name = blockObject.name, title = blockObject.title, info = blockObject.info, icon = blockObject.icon, screenshotUrl = blockObject.screenshotUrl;
+            var _ref2;
+            var name = blockObject.name, title = blockObject.title, info = blockObject.info, icon = blockObject.icon, screenshotUrl = blockObject.screenshotUrl, label = blockObject.label;
             return _defineProperty({}, name, {
-                name: title,
+                name: (_ref2 = title !== null && title !== void 0 ? title : label) !== null && _ref2 !== void 0 ? _ref2 : "",
                 description: Array.isArray(info) ? info[0] : info,
                 imageUrl: screenshotUrl,
                 icon: icon
