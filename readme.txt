@@ -150,6 +150,12 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.6 =
+
+* FIX: Security issue in heading block.
+* PRO: NEW: Horizontal timeline in the timeline block.
+* PRO: NEW: Block Visibility Extension.
+
 = 3.1.5 =
 
 * NEW: Number settings (Show Number, Number Prefix, Number Suffix) in the progress bar block.

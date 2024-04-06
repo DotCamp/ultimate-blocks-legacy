@@ -38280,6 +38280,7 @@ function _arrayWithHoles(arr) {
  * @param {Object}   props                    component properties
  * @param {Object}   props.extensions         menu data, will be supplied via HOC
  * @param {Function} props.dispatch           store action dispatch function, will be supplied via HOC
+ * @param {Function} props.showUpsell         set target extension type for modal interface
  * @param {Function} props.setExtensionStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.proStatus          plugin pro status, will be supplied via HOC
  */ function ExtensionsControlContainer(_ref) {
@@ -38974,13 +38975,14 @@ function _typeof(o) {
 /**
  * Upsell modal window for settings menu.
  *
- * @param {Object}   props                  		component properties
- * @param {string}   props.targetBlock      		target block id, will be supplied via HOC
- * @param {boolean}  props.visibility       		modal visibility status, will be supplied via HOC
- * @param {Function} props.closeModalWindow 		close modal window, will be supplied via HOC
- * @param {Function} props.getBlockObject   		get block object, will be supplied via HOC
- * @param {Function} props.getExtensionObject  	get extension object, will be supplied via HOC
- * @param {string}   props.proBuyUrl        		url for pro buy page, will be supplied via HOC
+ * @param {Object}   props                    component properties
+ * @param {string}   props.targetBlock        target block id, will be supplied via HOC
+ * @param {boolean}  props.visibility         modal visibility status, will be supplied via HOC
+ * @param {Function} props.closeModalWindow   close modal window, will be supplied via HOC
+ * @param {Function} props.getBlockObject     get block object, will be supplied via HOC
+ * @param {Function} props.getExtensionObject get extension object, will be supplied via HOC
+ * @param {string}   props.proBuyUrl          url for pro buy page, will be supplied via HOC
+ * @param {string}   props.currentRoutePath   provides the current router
  */ function UpsellModalSettingsMenu(_ref) {
     var targetBlock = _ref.targetBlock, visibility = _ref.visibility, closeModalWindow = _ref.closeModalWindow, getBlockObject = _ref.getBlockObject, getExtensionObject = _ref.getExtensionObject, proBuyUrl = _ref.proBuyUrl, currentRoutePath = _ref.currentRoutePath;
     /**
