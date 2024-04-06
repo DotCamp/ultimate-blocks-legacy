@@ -1,43 +1,52 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import {
 	getModalTargetBlockType,
 	getModalVisibilityStatus,
 	hideProBlockUpsellModal,
-} from '$Stores/settings-menu/slices/app';
-import { getBlockById } from '$Stores/settings-menu/slices/blocks';
-import withStore from '$HOC/withStore';
-import UpsellModalBase from '$EditorComponents/Upsell/UpsellModalBase';
-import { getAsset } from '$Stores/settings-menu/slices/assets';
+	getCurrentRoutePath,
+} from "$Stores/settings-menu/slices/app";
+import { getBlockById } from "$Stores/settings-menu/slices/blocks";
+import { getExtensionById } from "$Stores/settings-menu/slices/extension";
+import withStore from "$HOC/withStore";
+import UpsellModalBase from "$EditorComponents/Upsell/UpsellModalBase";
+import { getAsset } from "$Stores/settings-menu/slices/assets";
 
 /**
  * Upsell modal window for settings menu.
  *
- * @param {Object}   props                  component properties
- * @param {string}   props.targetBlock      target block id, will be supplied via HOC
- * @param {boolean}  props.visibility       modal visibility status, will be supplied via HOC
- * @param {Function} props.closeModalWindow close modal window, will be supplied via HOC
- * @param {Function} props.getBlockObject   get block object, will be supplied via HOC
- * @param {string}   props.proBuyUrl        url for pro buy page, will be supplied via HOC
+ * @param {Object}   props                  		component properties
+ * @param {string}   props.targetBlock      		target block id, will be supplied via HOC
+ * @param {boolean}  props.visibility       		modal visibility status, will be supplied via HOC
+ * @param {Function} props.closeModalWindow 		close modal window, will be supplied via HOC
+ * @param {Function} props.getBlockObject   		get block object, will be supplied via HOC
+ * @param {Function} props.getExtensionObject  	get extension object, will be supplied via HOC
+ * @param {string}   props.proBuyUrl        		url for pro buy page, will be supplied via HOC
  */
 function UpsellModalSettingsMenu({
 	targetBlock,
 	visibility,
 	closeModalWindow,
 	getBlockObject,
+	getExtensionObject,
 	proBuyUrl,
+	currentRoutePath,
 }) {
+	/**
+	 * Parse url and set route path.
+	 */
+
 	/**
 	 * Prepare modal upsell data to be compatible with modal base component.
 	 *
 	 * @param {Object} blockObject block object
 	 */
 	const prepareUpsellData = (blockObject) => {
-		if (blockObject && typeof blockObject === 'object') {
-			const { name, title, info, icon, screenshotUrl } = blockObject;
+		if (blockObject && typeof blockObject === "object") {
+			const { name, title, info, icon, screenshotUrl, label } = blockObject;
 
 			return {
 				[name]: {
-					name: title,
+					name: title ?? label ?? "",
 					description: Array.isArray(info) ? info[0] : info,
 					imageUrl: screenshotUrl,
 					icon,
@@ -47,8 +56,10 @@ function UpsellModalSettingsMenu({
 
 		return null;
 	};
-
-	const targetBlockObj = getBlockObject(targetBlock);
+	const targetBlockObj =
+		currentRoutePath === "extensions"
+			? getExtensionObject(targetBlock)
+			: getBlockObject(targetBlock);
 	const currentUpsellData = useMemo(() => {
 		return prepareUpsellData(targetBlockObj);
 	}, [targetBlock, targetBlockObj]);
@@ -80,7 +91,10 @@ const selectMapping = (select) => {
 		visibility: select(getModalVisibilityStatus),
 		getBlockObject: (blockId) =>
 			select((state) => getBlockById(state, blockId)),
-		proBuyUrl: select((state) => getAsset(state, 'proBuyUrl')),
+		getExtensionObject: (blockId) =>
+			select((state) => getExtensionById(state, blockId)),
+		proBuyUrl: select((state) => getAsset(state, "proBuyUrl")),
+		currentRoutePath: select(getCurrentRoutePath),
 	};
 };
 // store action mapping
