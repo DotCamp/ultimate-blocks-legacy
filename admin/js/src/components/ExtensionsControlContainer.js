@@ -1,16 +1,16 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from "react";
-import ExtensionControlCard from "$Components/ExtensionControlCard";
-import withStore from "$HOC/withStore";
+import React, { useEffect, useState } from 'react';
+import ExtensionControlCard from '$Components/ExtensionControlCard';
+import withStore from '$HOC/withStore';
 import {
 	getExtensions,
 	setExtensionActiveStatus,
-} from "$Stores/settings-menu/slices/extension";
+} from '$Stores/settings-menu/slices/extension';
 import {
 	getProStatus,
 	showProBlockUpsellModal,
-} from "$Stores/settings-menu/slices/app";
-import { toggleExtensionStatus } from "$Stores/settings-menu/actions";
+} from '$Stores/settings-menu/slices/app';
+import { toggleExtensionStatus } from '$Stores/settings-menu/actions';
 
 /**
  * Block controls container.
@@ -20,6 +20,7 @@ import { toggleExtensionStatus } from "$Stores/settings-menu/actions";
  * @param {Object}   props                    component properties
  * @param {Object}   props.extensions         menu data, will be supplied via HOC
  * @param {Function} props.dispatch           store action dispatch function, will be supplied via HOC
+ * @param {Function} props.showUpsell         set target extension type for modal interface
  * @param {Function} props.setExtensionStatus set a block's active status, will be supplied via HOC
  * @param {boolean}  props.proStatus          plugin pro status, will be supplied via HOC
  */
@@ -67,7 +68,7 @@ function ExtensionsControlContainer({
 	}, [ubExtensions]);
 
 	return (
-		<div className={"controls-container"}>
+		<div className={'controls-container'}>
 			{extensions.map(({ label, name, active, icon, info, pro }) => {
 				return (
 					<ExtensionControlCard
@@ -104,5 +105,5 @@ const actionMapping = () => ({
 export default withStore(
 	ExtensionsControlContainer,
 	selectMapping,
-	actionMapping,
+	actionMapping
 );

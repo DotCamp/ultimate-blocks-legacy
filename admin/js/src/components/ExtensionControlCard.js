@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
-import { __ } from "@wordpress/i18n";
-import ToggleControl from "$Components/ToggleControl";
-import ProExtensionCardTitle from "$Components/ProExtensionCardTitle";
-import ExtensionCardProInfoControl from "$Components/ExtensionCardProInfoControl";
+import React, { useRef } from 'react';
+import { __ } from '@wordpress/i18n';
+import ToggleControl from '$Components/ToggleControl';
+import ProExtensionCardTitle from '$Components/ProExtensionCardTitle';
+import ExtensionCardProInfoControl from '$Components/ExtensionCardProInfoControl';
 
 /**
  * Menu extension control component.
@@ -37,37 +37,39 @@ function ExtensionControlCard({
 
 	return (
 		<div
-			className={"extension-control"}
-			data-enabled={JSON.stringify(proExtension && !proStatus ? false : status)}
+			className={'extension-control'}
+			data-enabled={JSON.stringify(
+				proExtension && !proStatus ? false : status
+			)}
 			data-initial-animation={JSON.stringify(initialAnimation.current)}
 		>
-			<div className={"extension-title"}>
+			<div className={'extension-title'}>
 				<div
-					className={"extension-title-left-container"}
+					className={'extension-title-left-container'}
 					data-demo={demoUrl !== null}
 				>
 					<div
-						className={"title-icon"}
+						className={'title-icon'}
 						dangerouslySetInnerHTML={{ __html: iconElement }}
 					></div>
-					<div className={"title-text"}>
+					<div className={'title-text'}>
 						{title}
 						<ProExtensionCardTitle isPro={proExtension} />
 					</div>
 					{demoUrl && (
-						<div className={"title-demo"}>
+						<div className={'title-demo'}>
 							<a
 								href={demoUrl}
-								target={"_blank"}
+								target={'_blank'}
 								rel="noreferrer"
-								className={"strip-anchor-styles"}
+								className={'strip-anchor-styles'}
 							>
-								{__("See Demo", "ultimate-blocks")}
+								{__('See Demo', 'ultimate-blocks')}
 							</a>
 						</div>
 					)}
 				</div>
-				<div className={"extension-title-right-container"}>
+				<div className={'extension-title-right-container'}>
 					{proExtension && !proStatus ? (
 						<ExtensionCardProInfoControl
 							handleClick={(e) => {
