@@ -491,21 +491,8 @@ class Ultimate_Blocks_Admin {
 	 */
 	public function update_new_extensions(){
 		$extensions = $this->extensions();
-		$registered_extensions = get_option( 'ultimate_blocks_extensions', false );
-
-		$new_extensions = array();
-
-		if ( $registered_extensions ) {
-			foreach ( $extensions as $extension ) {
-				if ( ! $this->is_extension_registered( $extension['name'], $registered_extensions ) ) {
-					$new_extensions[] = $extension;
-				}
-			}
-			$registered_extensions = array_merge( $registered_extensions, $new_extensions );
-			update_option( 'ultimate_blocks_extensions', $registered_extensions );
-		} else {
-			update_option( 'ultimate_blocks_extensions', $extensions );
-		}
+		
+		update_option( 'ultimate_blocks_extensions', $extensions );
 	}
 	/**
 	 * Insert Blocks Settings as a Js Global variable.
