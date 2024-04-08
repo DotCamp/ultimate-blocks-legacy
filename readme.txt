@@ -150,6 +150,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.7 =
+
+* FIX: Button (Improved) breaks when select empty icon.
+
 = 3.1.6 =
 
 * FIX: Security issue in heading block.
