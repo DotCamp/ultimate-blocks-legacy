@@ -1421,15 +1421,27 @@ export function EditorComponent(props) {
 									<div style={{ gridColumn: "1/-1" }}>
 										<IconControl
 											onIconSelect={(val) => {
-												setAttributes({
-													buttons: [
-														...buttons.slice(0, activeButtonIndex),
-														Object.assign({}, buttons[activeButtonIndex], {
-															chosenIcon: val,
-														}),
-														...buttons.slice(activeButtonIndex + 1),
-													],
-												});
+												if (val) {
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																chosenIcon: val,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													});
+												} else {
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																chosenIcon: "",
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													});
+												}
 											}}
 											label={__("Icon", "ultimate-blocks-pro")}
 											selectedIcon={buttons[activeButtonIndex].chosenIcon}
