@@ -20,7 +20,7 @@ function ub_getSiblings(element, criteria) {
   return criteria ? children.filter(criteria) : children;
 }
 Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-tag")).forEach(function (instance) {
-  var blockProper = instance.closest(".wp-block-ub-content-filter");
+  var blockProper = instance.closest(".wp-block-ub-content-filter-block");
   var initialSelection = blockProper.getAttribute("data-currentselection");
   instance.addEventListener("click", function () {
     var _this = this;

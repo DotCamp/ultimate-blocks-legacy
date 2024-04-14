@@ -7,9 +7,16 @@ import {
 	InnerBlocks,
 	RichText,
 	useBlockProps,
+	BlockControls,
+	JustifyContentControl,
 } from "@wordpress/block-editor";
 
-import { PanelBody, ToggleControl, RadioControl } from "@wordpress/components";
+import {
+	PanelBody,
+	ToggleControl,
+	RadioControl,
+	ToolbarGroup,
+} from "@wordpress/components";
 
 import { SpacingControl } from "../../components";
 import { useEffect } from "react";
@@ -45,7 +52,7 @@ export function OldPanelContent(props) {
 					item,
 					...filterArray.slice(pos + 1),
 				],
-			})
+			}),
 		);
 	}
 
@@ -64,7 +71,7 @@ export function OldPanelContent(props) {
 		block.innerBlocks.forEach((panel) =>
 			updateBlockAttributes(panel.clientId, {
 				availableFilters: newFilterArray,
-			})
+			}),
 		);
 	}
 
@@ -89,7 +96,7 @@ export function OldPanelContent(props) {
 	const newChildBlock = createBlock("ub/content-filter-entry", {
 		availableFilters: filterArray,
 		selectedFilters: filterArray.map((category) =>
-			category.canUseMultiple ? Array(category.filters.length).fill(false) : -1
+			category.canUseMultiple ? Array(category.filters.length).fill(false) : -1,
 		),
 		buttonTextColor: buttonTextColor,
 		buttonColor: buttonColor,
@@ -105,19 +112,19 @@ export function OldPanelContent(props) {
 		selectedFilterArr,
 		currentSelection,
 		filterCategoryIndex,
-		deletedFilterPos
+		deletedFilterPos,
 	) => [
 		...selectedFilterArr.slice(0, filterCategoryIndex),
 		currentSelection.canUseMultiple
 			? [
 					...selectedFilterArr[filterCategoryIndex].slice(0, deletedFilterPos),
 					...selectedFilterArr[filterCategoryIndex].slice(deletedFilterPos + 1),
-			  ]
+				]
 			: selectedFilterArr[filterCategoryIndex] === deletedFilterPos
-			? -1
-			: selectedFilterArr[filterCategoryIndex] > deletedFilterPos
-			? (selectedFilterArr[filterCategoryIndex] - 1).toString()
-			: selectedFilterArr[filterCategoryIndex],
+				? -1
+				: selectedFilterArr[filterCategoryIndex] > deletedFilterPos
+					? (selectedFilterArr[filterCategoryIndex] - 1).toString()
+					: selectedFilterArr[filterCategoryIndex],
 		...selectedFilterArr.slice(filterCategoryIndex + 1),
 	];
 
@@ -137,7 +144,7 @@ export function OldPanelContent(props) {
 								block.innerBlocks.forEach((panel) =>
 									updateBlockAttributes(panel.clientId, {
 										buttonColor: colorValue,
-									})
+									}),
 								);
 							},
 							label: __("Filter Tag Color"),
@@ -151,7 +158,7 @@ export function OldPanelContent(props) {
 								block.innerBlocks.forEach((panel) =>
 									updateBlockAttributes(panel.clientId, {
 										buttonTextColor: colorValue,
-									})
+									}),
 								);
 							},
 							label: __("Filter Tag Text Color"),
@@ -220,10 +227,10 @@ export function OldPanelContent(props) {
 										buttonColor,
 										buttonTextColor,
 									},
-									innerBlock.innerBlocks
-								)
-							)
-						)
+									innerBlock.innerBlocks,
+								),
+							),
+						),
 					);
 				}}
 			>
@@ -243,7 +250,7 @@ export function OldPanelContent(props) {
 												...panel.attributes.selectedFilters.slice(0, i),
 												...panel.attributes.selectedFilters.slice(i + 1),
 											],
-										})
+										}),
 									);
 								}}
 								class="dashicons dashicons-dismiss"
@@ -287,7 +294,7 @@ export function OldPanelContent(props) {
 														panel.attributes.selectedFilters,
 														current,
 														i,
-														j
+														j,
 													),
 												});
 											});
@@ -359,7 +366,7 @@ export function OldPanelContent(props) {
 													: -1,
 												...panel.attributes.selectedFilters.slice(i + 1),
 											],
-										})
+										}),
 									);
 								}}
 							/>
@@ -383,7 +390,7 @@ export function OldPanelContent(props) {
 					block.innerBlocks.forEach((panel) =>
 						updateBlockAttributes(panel.clientId, {
 							selectedFilters: [...panel.attributes.selectedFilters, -1],
-						})
+						}),
 					);
 				}}
 			>
@@ -401,7 +408,7 @@ export function OldPanelContent(props) {
 							insertBlock(
 								newChildBlock,
 								block.innerBlocks.length,
-								block.clientId
+								block.clientId,
 							)
 						}
 					>
@@ -439,7 +446,7 @@ export function NewPanelContent(props) {
 					item,
 					...filterArray.slice(pos + 1),
 				],
-			})
+			}),
 		);
 	}
 
@@ -456,7 +463,7 @@ export function NewPanelContent(props) {
 		block?.innerBlocks?.forEach((panel) =>
 			updateBlockAttributes(panel.clientId, {
 				availableFilters: newFilterArray,
-			})
+			}),
 		);
 	}
 
@@ -493,7 +500,7 @@ export function NewPanelContent(props) {
 	const newChildBlock = createBlock("ub/content-filter-entry-block", {
 		availableFilters: filterArray,
 		selectedFilters: filterArray.map((category) =>
-			category.canUseMultiple ? Array(category.filters.length).fill(false) : -1
+			category.canUseMultiple ? Array(category.filters.length).fill(false) : -1,
 		),
 		buttonTextColor: buttonTextColor,
 		buttonColor: buttonColor,
@@ -511,19 +518,19 @@ export function NewPanelContent(props) {
 		selectedFilterArr,
 		currentSelection,
 		filterCategoryIndex,
-		deletedFilterPos
+		deletedFilterPos,
 	) => [
 		...selectedFilterArr.slice(0, filterCategoryIndex),
 		currentSelection.canUseMultiple
 			? [
 					...selectedFilterArr[filterCategoryIndex].slice(0, deletedFilterPos),
 					...selectedFilterArr[filterCategoryIndex].slice(deletedFilterPos + 1),
-			  ]
+				]
 			: selectedFilterArr[filterCategoryIndex] === deletedFilterPos
-			? -1
-			: selectedFilterArr[filterCategoryIndex] > deletedFilterPos
-			? (selectedFilterArr[filterCategoryIndex] - 1).toString()
-			: selectedFilterArr[filterCategoryIndex],
+				? -1
+				: selectedFilterArr[filterCategoryIndex] > deletedFilterPos
+					? (selectedFilterArr[filterCategoryIndex] - 1).toString()
+					: selectedFilterArr[filterCategoryIndex],
 		...selectedFilterArr.slice(filterCategoryIndex + 1),
 	];
 
@@ -542,6 +549,16 @@ export function NewPanelContent(props) {
 	const styles = getStyles(attributes);
 	return (
 		<div {...blockProps}>
+			<BlockControls>
+				<ToolbarGroup>
+					<JustifyContentControl
+						value={attributes.filterButtonAlignment}
+						onChange={(next) => {
+							setAttributes({ filterButtonAlignment: next });
+						}}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
 			{isSelected && (
 				<>
 					<InspectorControls group="settings">
@@ -601,7 +618,7 @@ export function NewPanelContent(props) {
 										block.innerBlocks.forEach((panel) =>
 											updateBlockAttributes(panel.clientId, {
 												buttonColor: colorValue,
-											})
+											}),
 										);
 									},
 									label: __("Filter Tag Color"),
@@ -613,7 +630,7 @@ export function NewPanelContent(props) {
 										block.innerBlocks.forEach((panel) =>
 											updateBlockAttributes(panel.clientId, {
 												buttonTextColor: colorValue,
-											})
+											}),
 										);
 									},
 									label: __("Filter Tag Text Color"),
@@ -666,7 +683,7 @@ export function NewPanelContent(props) {
 													...panel.attributes.selectedFilters.slice(0, i),
 													...panel.attributes.selectedFilters.slice(i + 1),
 												],
-											})
+											}),
 										);
 									}}
 									class="dashicons dashicons-dismiss"
@@ -685,84 +702,90 @@ export function NewPanelContent(props) {
 									}}
 								/>
 							</div>
-							{f.filters.map((filter, j) => (
-								<div
-									className="ub-content-filter-tag"
-									style={{
-										backgroundColor: buttonColor,
-										color: buttonTextColor || "inherit",
-									}}
-								>
-									<div className="ub-content-filter-tag-top">
-										<span
-											title={__("Delete This Filter")}
-											onClick={() => {
+							<div className="ub-content-filter-buttons-wrapper">
+								{f.filters.map((filter, j) => (
+									<div
+										className="ub-content-filter-tag"
+										style={{
+											backgroundColor: buttonColor,
+											color: buttonTextColor || "inherit",
+										}}
+									>
+										<div className="ub-content-filter-tag-top">
+											<span
+												title={__("Delete This Filter")}
+												onClick={() => {
+													let current = Object.assign({}, f);
+													current.filters = [
+														...current.filters.slice(0, j),
+														...current.filters.slice(j + 1),
+													];
+													editFilterArray(current, i);
+													block.innerBlocks.forEach((panel) => {
+														updateBlockAttributes(panel.clientId, {
+															availableFilters: newAvailableFilters(current, i),
+															selectedFilters: newSelectedFilters(
+																panel.attributes.selectedFilters,
+																current,
+																i,
+																j,
+															),
+														});
+													});
+												}}
+												class="dashicons dashicons-dismiss"
+											/>
+										</div>
+										<RichText
+											placeholder="filter name"
+											value={filter}
+											onChange={(newVal) => {
 												let current = Object.assign({}, f);
 												current.filters = [
 													...current.filters.slice(0, j),
+													newVal,
 													...current.filters.slice(j + 1),
 												];
+
 												editFilterArray(current, i);
-												block.innerBlocks.forEach((panel) => {
-													updateBlockAttributes(panel.clientId, {
-														availableFilters: newAvailableFilters(current, i),
-														selectedFilters: newSelectedFilters(
-															panel.attributes.selectedFilters,
-															current,
-															i,
-															j
-														),
-													});
-												});
+												editAvailableFilters(current, i);
 											}}
-											class="dashicons dashicons-dismiss"
 										/>
 									</div>
-									<RichText
-										placeholder="filter name"
-										value={filter}
-										onChange={(newVal) => {
-											let current = Object.assign({}, f);
-											current.filters = [
-												...current.filters.slice(0, j),
-												newVal,
-												...current.filters.slice(j + 1),
-											];
+								))}
+								<button
+									style={{
+										backgroundColor: buttonColor,
+										color: buttonTextColor || "inherit",
+										minWidth: "45px",
+									}}
+									onClick={() => {
+										let current = Object.assign({}, f);
+										current.filters.push("");
+										editFilterArray(current, i);
+										block.innerBlocks.forEach((panel) => {
+											let childBlockAttributes = {
+												availableFilters: newAvailableFilters(current, i),
+											};
 
-											editFilterArray(current, i);
-											editAvailableFilters(current, i);
-										}}
-									/>
-								</div>
-							))}
-							<button
-								style={{
-									backgroundColor: buttonColor,
-									color: buttonTextColor || "inherit",
-								}}
-								onClick={() => {
-									let current = Object.assign({}, f);
-									current.filters.push("");
-									editFilterArray(current, i);
-									block.innerBlocks.forEach((panel) => {
-										let childBlockAttributes = {
-											availableFilters: newAvailableFilters(current, i),
-										};
+											if (current.canUseMultiple) {
+												childBlockAttributes.selectedFilters = [
+													...panel.attributes.selectedFilters.slice(0, i),
+													[...panel.attributes.selectedFilters[i], false],
+													...panel.attributes.selectedFilters.slice(i + 1),
+												];
+											}
 
-										if (current.canUseMultiple) {
-											childBlockAttributes.selectedFilters = [
-												...panel.attributes.selectedFilters.slice(0, i),
-												[...panel.attributes.selectedFilters[i], false],
-												...panel.attributes.selectedFilters.slice(i + 1),
-											];
-										}
-
-										updateBlockAttributes(panel.clientId, childBlockAttributes);
-									});
-								}}
-							>
-								+
-							</button>
+											updateBlockAttributes(
+												panel.clientId,
+												childBlockAttributes,
+											);
+										});
+									}}
+								>
+									+
+								</button>
+							</div>
 							<br />
 							<label className="ub-content-filter-checkbox">
 								<input
@@ -785,9 +808,9 @@ export function NewPanelContent(props) {
 																.fill(false)
 																.map((_, j) => j === selectedFilters[i])
 														: selectedFilters[i].filter((f) => f === true)
-																.length > 1
-														? -1
-														: selectedFilters[i].findIndex((f) => f === true),
+																	.length > 1
+															? -1
+															: selectedFilters[i].findIndex((f) => f === true),
 													...selectedFilters.slice(i + 1),
 												],
 											});
@@ -814,7 +837,7 @@ export function NewPanelContent(props) {
 						block.innerBlocks.forEach((panel) =>
 							updateBlockAttributes(panel.clientId, {
 								selectedFilters: [...panel.attributes.selectedFilters, -1],
-							})
+							}),
 						);
 					}}
 				>
@@ -832,7 +855,7 @@ export function NewPanelContent(props) {
 								insertBlock(
 									newChildBlock,
 									block.innerBlocks.length,
-									block.clientId
+									block.clientId,
 								)
 							}
 						>

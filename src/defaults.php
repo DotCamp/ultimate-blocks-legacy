@@ -522,6 +522,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'filterButtonAlignment' => array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
 			'filterArray' => array(
 				'type' => 'array',

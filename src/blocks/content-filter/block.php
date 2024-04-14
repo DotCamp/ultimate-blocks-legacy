@@ -88,14 +88,15 @@ function ub_render_content_filter_block($attributes, $content){
         $filterList .= '<div class="ub-content-filter-category"
         data-canUseMultiple="' . json_encode($filterGroup['canUseMultiple']) . '">
         <div class="ub-content-filter-category-name">' . $filterGroup['category'] . '</div>';
-
+        $filters = '<div class="ub-content-filter-buttons-wrapper">';
         foreach($filterGroup['filters'] as $key2 => $tag){
-            $filterList .= '<div data-tagIsSelected="false" data-categoryNumber="' . $key1 . '"
+            $filters .= '<div data-tagIsSelected="false" data-categoryNumber="' . $key1 . '"
             data-filterNumber="' . $key2 . '" ' . ($blockID === '' ? 'data-normalColor="' . $buttonColor . '" data-normalTextColor="' . $buttonTextColor .
             '" data-activeColor="' . $activeButtonColor . '" data-activeTextColor="' . $activeButtonTextColor .
             '"style="background-color: ' . $buttonColor.'; color: ' . $buttonTextColor . '"' : '') . ' class="ub-content-filter-tag">' .
             $tag.'</div>';
         }
+        $filterList .= $filters . '</div>';
         $filterList .= '</div>';
     }
 
@@ -104,8 +105,13 @@ $currentSelection = array_map(function($category){
                                 array_fill(0, count($category['filters']), false) :
                                 -1);
                     }, (array)$filterArray);
-
-return '<div class="wp-block-ub-content-filter'.(isset($className) ? ' ' . esc_attr($className) : '').
+     $classes = array();
+    $block_attributes = get_block_wrapper_attributes(
+            array(
+                'class' => implode(" ", $classes)
+            )
+    );
+return '<div ' . $block_attributes .
         '"'. ($blockID === '' ? : ' id="ub-content-filter-' . $blockID . '"') .
         ' data-currentSelection="'.json_encode($currentSelection).
         '" data-initiallyShowAll="'.json_encode($initiallyShowAll).

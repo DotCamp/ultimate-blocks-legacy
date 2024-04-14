@@ -586,6 +586,7 @@ function ub_include_block_attribute_css() {
 				case 'ub/content-filter-block':
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix           = '#ub-content-filter-' . $attributes['blockID'];
+					$filter_buttons_alignment = isset($attributes['filterButtonAlignment']) ? $attributes['filterButtonAlignment'] : 'left';
 					$blockStylesheets .= $prefix . ' .ub-content-filter-tag{' . PHP_EOL .
 										 'background-color: ' . $attributes['buttonColor'] . ';' . PHP_EOL .
 										 'color: ' . ( $attributes['buttonTextColor'] ?: 'inherit' ) . ';' . PHP_EOL .
@@ -594,7 +595,9 @@ function ub_include_block_attribute_css() {
 										 'background-color: ' . $attributes['activeButtonColor'] . ';' . PHP_EOL .
 										 'color: ' . ( $attributes['activeButtonTextColor'] ?: 'inherit' ) . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles
+							. '--ub-content-filter-buttons-justification:' . $filter_buttons_alignment . ';' 
+						. PHP_EOL . "}"; 
 					break;
 				case 'ub/content-toggle-block':
 					$styles = ub_get_spacing_styles($attributes);

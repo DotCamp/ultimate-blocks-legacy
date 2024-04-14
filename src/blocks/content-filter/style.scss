@@ -1,10 +1,15 @@
 @import "../../common";
 
+.wp-block-ub-content-filter-block {
+	.ub-content-filter-buttons-wrapper {
+		display: flex;
+		justify-content: var(--ub-content-filter-buttons-justification);
+		gap: 20px;
+	}
+}
 .ub-content-filter-tag {
-	display: inline-block;
 	min-height: 32px;
 	min-width: 100px;
-	margin: 5px 10px 5px 0;
 	padding: 8px;
 	border-radius: 3px;
 	text-align: center;

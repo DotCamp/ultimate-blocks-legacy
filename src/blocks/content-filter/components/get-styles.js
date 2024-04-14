@@ -2,7 +2,7 @@ import { omitBy, isUndefined, trim, isEmpty } from "lodash";
 import { getSpacingCss } from "../../utils/styling-helpers";
 
 export function getStyles(attributes) {
-	const { padding, margin } = attributes;
+	const { padding, margin, filterButtonAlignment } = attributes;
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
 
@@ -15,6 +15,7 @@ export function getStyles(attributes) {
 		marginRight: !isEmpty(marginObj?.right) ? marginObj?.right : " ",
 		marginBottom: !isEmpty(marginObj?.bottom) ? marginObj?.bottom : "",
 		marginLeft: !isEmpty(marginObj?.left) ? marginObj?.left : "",
+		"--ub-content-filter-buttons-justification": filterButtonAlignment,
 	};
 
 	return omitBy(
@@ -24,6 +25,6 @@ export function getStyles(attributes) {
 			isEmpty(value) ||
 			isUndefined(value) ||
 			trim(value) === "" ||
-			trim(value) === "undefined undefined undefined"
+			trim(value) === "undefined undefined undefined",
 	);
 }

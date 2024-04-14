@@ -26,14 +26,14 @@ function ub_getSiblings(element, criteria) {
 Array.prototype.slice
 	.call(document.getElementsByClassName("ub-content-filter-tag"))
 	.forEach((instance) => {
-		const blockProper = instance.closest(".wp-block-ub-content-filter");
+		const blockProper = instance.closest(".wp-block-ub-content-filter-block");
 		const initialSelection = blockProper.getAttribute("data-currentselection");
 
 		instance.addEventListener("click", function () {
 			const isOldVersion = this.getAttribute("data-activecolor");
 			this.setAttribute(
 				"data-tagisselected",
-				JSON.stringify(!JSON.parse(this.getAttribute("data-tagisselected")))
+				JSON.stringify(!JSON.parse(this.getAttribute("data-tagisselected"))),
 			);
 			if (isOldVersion) {
 				this.style.backgroundColor = this.getAttribute("data-activecolor");
@@ -42,7 +42,7 @@ Array.prototype.slice
 				this.classList.toggle("ub-selected");
 			}
 			const categoryIndex = JSON.parse(
-				this.getAttribute("data-categorynumber")
+				this.getAttribute("data-categorynumber"),
 			);
 			const filterIndex = JSON.parse(this.getAttribute("data-filternumber"));
 
@@ -51,7 +51,7 @@ Array.prototype.slice
 					!JSON.parse(this.parentElement.getAttribute("data-canusemultiple"))
 				) {
 					ub_getSiblings(this, (elem) =>
-						elem.classList.contains("ub-content-filter-tag")
+						elem.classList.contains("ub-content-filter-tag"),
 					).forEach((sibling) => {
 						sibling.setAttribute("data-tagisselected", "false");
 						if (isOldVersion) {
@@ -72,22 +72,22 @@ Array.prototype.slice
 				}
 			}
 			let newSelection = JSON.parse(
-				blockProper.getAttribute("data-currentselection")
+				blockProper.getAttribute("data-currentselection"),
 			);
 			if (Array.isArray(newSelection[categoryIndex])) {
 				newSelection[categoryIndex][filterIndex] = JSON.parse(
-					this.getAttribute("data-tagisselected")
+					this.getAttribute("data-tagisselected"),
 				);
 			} else {
 				newSelection[categoryIndex] = JSON.parse(
-					this.getAttribute("data-tagisselected")
+					this.getAttribute("data-tagisselected"),
 				)
 					? filterIndex
 					: -1;
 			}
 			blockProper.setAttribute(
 				"data-currentselection",
-				JSON.stringify(newSelection)
+				JSON.stringify(newSelection),
 			);
 
 			const matchingOption = blockProper.getAttribute("data-matchingoption");
@@ -96,10 +96,10 @@ Array.prototype.slice
 				.call(blockProper.querySelectorAll(":scope > .ub-content-filter-panel"))
 				.forEach((instance) => {
 					const panelData = JSON.parse(
-						instance.getAttribute("data-selectedfilters")
+						instance.getAttribute("data-selectedfilters"),
 					);
 					const mainData = JSON.parse(
-						blockProper.getAttribute("data-currentselection")
+						blockProper.getAttribute("data-currentselection"),
 					);
 
 					let hasMatchedAll = true;
@@ -165,7 +165,7 @@ Array.prototype.slice
 							.forEach((slider) => {
 								const swiper = new Swiper(
 									`#${slider.id}`,
-									JSON.parse(slider.dataset.swiperData)
+									JSON.parse(slider.dataset.swiperData),
 								);
 							});
 

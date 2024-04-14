@@ -154,6 +154,7 @@ That's it. You're done!
 
 * FIX: Button (Improved) breaks when select empty icon.
 * FIX: Table of content not getting nested toggle content block.
+* NEW: Alignment control for the filter buttons in content filter block.
 
 = 3.1.6 =
 
