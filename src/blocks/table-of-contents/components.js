@@ -82,6 +82,7 @@ class TableOfContents extends Component {
 			const rootBlocks = (
 				select("core/block-editor") || select("core/editor")
 			).getBlocks();
+
 			rootBlocks.forEach((block) => {
 				if (block.name === "core/heading") {
 					headings.push(block);
@@ -170,7 +171,6 @@ class TableOfContents extends Component {
 								(block.name === "ub/content-toggle-panel-block" &&
 									block.attributes.useToggleInToC),
 						);
-
 						if (internalHeadings.length > 0) {
 							internalHeadings = internalHeadings.map((h) => {
 								switch (h.name) {
@@ -212,7 +212,7 @@ class TableOfContents extends Component {
 									case "ub/content-toggle-panel-block":
 										h.attributes.content = h.attributes.panelTitle;
 										h.attributes.level = Number(
-											blockAttributes.titleTag.charAt(1),
+											h.attributes.titleTag.charAt(1),
 										);
 										h.attributes.anchor = h.attributes.toggleID;
 
