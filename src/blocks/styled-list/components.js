@@ -23,6 +23,7 @@ import {
 	ToolbarGroup,
 } from "@wordpress/components";
 import classnames from "classnames";
+import { IconControl, IconSizePicker } from "$Library/ub-common/Components";
 
 import {
 	dashesToCamelcase,
@@ -752,6 +753,7 @@ export function StyledListItem(props) {
 		}
 	}, []);
 
+	const listRoot = getBlock(listRootClientId);
 	function outdentItem() {
 		//outdents current item by default, but should also allow outdenting other list item blocks
 
@@ -761,8 +763,6 @@ export function StyledListItem(props) {
 		).filter((b) =>
 			["ub/styled-list", "ub/styled-list-item"].includes(getBlock(b).name),
 		);
-
-		const listRoot = getBlock(listRootClientId);
 
 		if (ancestorItemsAndLists.length > 1) {
 			moveBlocksToPosition(
@@ -856,9 +856,32 @@ export function StyledListItem(props) {
 			toggleUseFontSize(fontSize > 0);
 		}
 	}, [fontSize]);
-
+	const rootIcon = listRoot?.attributes?.selectedIcon;
 	return (
 		<div {...blockProps}>
+			<InspectorControls>
+				<PanelBody title={__("Icon", "ultimate-blocks")} initialOpen={true}>
+					<IconControl
+						selectedIcon={selectedIcon}
+						label={__("Icon", "ultimate-blocks")}
+						onIconSelect={(newIcon) => {
+							if (newIcon) {
+								setAttributes({ selectedIcon: newIcon });
+							} else {
+								setAttributes({ selectedIcon: "" });
+							}
+						}}
+					/>
+					<RangeControl
+						value={iconSize}
+						onChange={(iconSize) => {
+							setAttributes({ iconSize });
+						}}
+						min={1}
+						max={10}
+					/>
+				</PanelBody>
+			</InspectorControls>
 			<InspectorControls group="styles">
 				<PanelBody
 					title={__("Dimension Settings", "ultimate-blocks")}
@@ -1096,6 +1119,27 @@ export function StyledListItem(props) {
 				allowedBlocks={["ub/styled-list"]}
 				renderAppender={false}
 			/>
+			{rootIcon !== selectedIcon && selectedIcon !== "" && (
+				<style
+					dangerouslySetInnerHTML={{
+						__html: `#ub-styled-list-item-${blockID}::before{
+					top: ${iconSize >= 5 ? 3 : iconSize < 3 ? 2 : 0}px !important;
+					height:${(4 + iconSize) / 10}em !important;
+					width:${(4 + iconSize) / 10}em !important;
+					background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${
+						allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[0]
+					} ${
+						allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[1]
+					}' color='${
+						iconColor ? `%23${iconColor.slice(1)}` : "inherit"
+					}'><path fill='currentColor' d='${
+						allIcons[`fa${dashesToCamelcase(selectedIcon)}`].icon[4]
+					}'></path></svg>") !important;
+						}
+					`,
+					}}
+				/>
+			)}
 		</div>
 	);
 }

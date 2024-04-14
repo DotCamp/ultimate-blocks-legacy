@@ -36,7 +36,7 @@ export const mergeRichTextArray = (input) =>
 export const dashesToCamelcase = (str) =>
 	str
 		.split("-")
-		.map((s) => s[0].toUpperCase() + s.slice(1))
+		.map((s) => s[0]?.toUpperCase() + s?.slice(1))
 		.join("");
 
 export const generateIcon = (selectedIcon, size, unit = "px") => (
