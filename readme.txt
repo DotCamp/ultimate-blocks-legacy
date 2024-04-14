@@ -153,6 +153,7 @@ That's it. You're done!
 = 3.1.7 =
 
 * FIX: Button (Improved) breaks when select empty icon.
+* FIX: Table of content not getting nested toggle content block.
 
 = 3.1.6 =
 
