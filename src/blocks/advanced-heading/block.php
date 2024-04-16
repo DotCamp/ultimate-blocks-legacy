@@ -16,7 +16,9 @@ function ub_render_advanced_heading_block( $attributes ) {
 	$cleaned_content = preg_replace( '/<img[^>]+>/i', '', $content );
 	$cleaned_content = preg_replace( '/<script[^>]*?>.*?<\/script>/is', '', $cleaned_content );
 
-	return '<' . $level . ' ' . $block_wrapper_attributes . ' data-blockid="' . $blockID . '">' . $cleaned_content . '</' . $level . '>';
+	$final_content = '<' . $level . ' ' . $block_wrapper_attributes . ' data-blockid="' . $blockID . '">' . $cleaned_content . '</' . $level . '>';
+
+	return wp_kses_post( $final_content );
 }
 
 function ub_register_advanced_heading_block() {
