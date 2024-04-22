@@ -438,7 +438,8 @@ function ub_include_block_attribute_css() {
 				case 'ub/button':
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub-button-' . $attributes['blockID'];
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$block_spacing = isset($attributes['blockSpacing']['all']) ? '--ub-button-improved-block-spacing:' . $attributes['blockSpacing']['all'] . ';': "";
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . $block_spacing . PHP_EOL . "}"; 
 					
 					if ( ! array_key_exists( 'buttons', $attributes ) || count( $attributes['buttons'] ) === 0 ) {
 						$blockStylesheets .= $prefix . ' a{' . PHP_EOL;

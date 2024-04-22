@@ -1670,6 +1670,12 @@ export function EditorComponent(props) {
 								attrKey="margin"
 								label={__("Margin", "ultimate-blocks")}
 							/>
+							<SpacingControl
+								showByDefault
+								sides={["all"]}
+								attrKey="blockSpacing"
+								label={__("Block Spacing", "ultimate-blocks")}
+							/>
 						</PanelBody>
 					</InspectorControls>
 					{isSelected && buttons.length > 0 && activeButtonIndex > -1 && (

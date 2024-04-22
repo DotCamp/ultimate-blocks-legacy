@@ -8,11 +8,16 @@ import {
 } from "@wordpress/block-editor";
 import { useSelect, useDispatch } from "@wordpress/data";
 
-function SpacingControl({ label, attrKey, minimumCustomValue = 0 }) {
+function SpacingControl({
+	label,
+	attrKey,
+	minimumCustomValue = 0,
+	sides = ["top", "right", "bottom", "left"],
+}) {
 	const { clientId } = useBlockEditContext();
 
 	const attributes = useSelect(
-		(select) => select("core/block-editor").getSelectedBlock().attributes
+		(select) => select("core/block-editor").getSelectedBlock().attributes,
 	);
 	const { updateBlockAttributes } = useDispatch("core/block-editor");
 	const setAttributes = (newAttributes) => {
@@ -25,7 +30,7 @@ function SpacingControl({ label, attrKey, minimumCustomValue = 0 }) {
 				allowReset={true}
 				label={label}
 				values={attributes[attrKey]}
-				sides={["top", "right", "bottom", "left"]}
+				sides={sides}
 				onChange={(newValue) => {
 					setAttributes({
 						[attrKey]: newValue,

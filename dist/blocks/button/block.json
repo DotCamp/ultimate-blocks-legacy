@@ -99,6 +99,10 @@
       "type": "object",
       "default": {}
     },
+    "blockSpacing": {
+      "type": "object",
+      "default": {}
+    },
     "isBorderComponentChanged": {
       "type": "boolean",
       "default": false

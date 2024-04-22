@@ -150,6 +150,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.8 =
+
+* NEW: Block Spacing in button block.
+
 = 3.1.7 =
 
 * FIX: Advanced heading generated block security checks.

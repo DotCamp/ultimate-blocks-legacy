@@ -5,7 +5,7 @@ export function getStyles(attributes) {
 	const { padding, margin } = attributes;
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
-
+	const blockSpacing = attributes.blockSpacing?.all ?? "";
 	let styles = {
 		paddingTop: paddingObj?.top,
 		paddingRight: paddingObj?.right,
@@ -15,6 +15,7 @@ export function getStyles(attributes) {
 		marginRight: marginObj?.right,
 		marginBottom: marginObj?.bottom,
 		marginLeft: marginObj?.left,
+		"--ub-button-improved-block-spacing": blockSpacing,
 	};
 
 	return omitBy(
@@ -24,6 +25,6 @@ export function getStyles(attributes) {
 			isEmpty(value) ||
 			isUndefined(value) ||
 			trim(value) === "" ||
-			trim(value) === "undefined undefined undefined"
+			trim(value) === "undefined undefined undefined",
 	);
 }
