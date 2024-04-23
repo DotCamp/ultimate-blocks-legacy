@@ -1,4 +1,4 @@
-import { select } from '@wordpress/data';
+import { select } from "@wordpress/data";
 
 /**
  * Get block upsell data
@@ -10,6 +10,30 @@ import { select } from '@wordpress/data';
  */
 const getBlockUpsellData = (state, blockType) => {
 	return state.upsells.extensionData[blockType];
+};
+
+/**
+ * Get block upsell data
+ *
+ * @param {Object} state     store state
+ * @param {string} blockType block type
+ *
+ * @return {Object | Array} block upsell data
+ */
+const getProExtensionsUpsellData = (state, blockType) => {
+	const extensionsUpsellData = state.upsells.extensionData;
+	let result = [];
+
+	// Iterate through the keys of the object
+	for (let key in extensionsUpsellData) {
+		// Check if the key starts with the specified prefix
+		if (key.startsWith("ub-extension/")) {
+			// If the key matches, add the object to the result array
+			result.push(extensionsUpsellData[key]);
+		}
+	}
+
+	return result;
 };
 
 /**
@@ -50,16 +74,33 @@ const selectors = {
 	 */
 	getUpsellDataActiveBlock(state, featureId = null) {
 		const currentBlockType =
-			select('core/block-editor').getSelectedBlock()?.name;
+			select("core/block-editor").getSelectedBlock()?.name;
 
-		if (currentBlockType) {
+		if (currentBlockType && currentBlockType.startsWith("ub/")) {
 			const blockUpsellData = getBlockUpsellData(state, currentBlockType);
+			const extensionsUpsellData = getProExtensionsUpsellData(state);
 
-			if (blockUpsellData && blockUpsellData.featureData) {
+			if (
+				blockUpsellData &&
+				blockUpsellData.featureData &&
+				!extensionsUpsellData
+			) {
 				const { featureData } = blockUpsellData;
-				return featureId
-					? { featureId: featureData[featureId] }
-					: featureData;
+				return featureId ? { featureId: featureData[featureId] } : featureData;
+			} else {
+				const { featureData } = blockUpsellData;
+
+				const extensionsFeaturedData = {};
+				extensionsUpsellData.forEach((obj) => {
+					if (obj.featureData) {
+						for (const key in obj.featureData) {
+							if (key !== "savedStylesMain") {
+								extensionsFeaturedData[key] = obj.featureData[key];
+							}
+						}
+					}
+				});
+				return { ...featureData, ...extensionsFeaturedData };
 			}
 		}
 
@@ -74,13 +115,20 @@ const selectors = {
 	 */
 	getUpsellDummyControlDataActiveBlock(state) {
 		const currentBlockType =
-			select('core/block-editor').getSelectedBlock()?.name;
+			select("core/block-editor").getSelectedBlock()?.name;
 
-		if (currentBlockType) {
+		if (currentBlockType && currentBlockType.startsWith("ub/")) {
 			const blockUpsellData = getBlockUpsellData(state, currentBlockType);
+			const extensionsUpsellData = getProExtensionsUpsellData(state);
 
-			if (blockUpsellData) {
+			if (blockUpsellData && !extensionsUpsellData) {
 				return blockUpsellData.dummyControlsData;
+			} else {
+				const extensionsDummyData = [];
+				extensionsUpsellData.forEach((data) => {
+					extensionsDummyData.push(...data.dummyControlsData);
+				});
+				return [...blockUpsellData.dummyControlsData, ...extensionsDummyData];
 			}
 		}
 
@@ -140,8 +188,8 @@ const selectors = {
 	 * @return {Object} icon object
 	 */
 	getActiveBlockIconObject() {
-		const { getBlockType } = select('core/blocks');
-		const { getSelectedBlock } = select('core/block-editor');
+		const { getBlockType } = select("core/blocks");
+		const { getSelectedBlock } = select("core/block-editor");
 
 		const blockOptions = getBlockType(getSelectedBlock()?.name);
 
@@ -154,7 +202,7 @@ const selectors = {
 	 * @return {boolean} production mode status
 	 */
 	inProduction(state) {
-		return state.mode === 'production';
+		return state.mode === "production";
 	},
 };
 

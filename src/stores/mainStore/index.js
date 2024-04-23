@@ -1,9 +1,9 @@
-import { createReduxStore, register, dispatch, select } from '@wordpress/data';
-import { FrontendDataManager, ManagerBase } from '$Library/ub-common/Inc';
-import reducer from './reducer';
-import selectors from './selectors';
-import actions from './actions';
-import deepmerge from 'deepmerge';
+import { createReduxStore, register, dispatch, select } from "@wordpress/data";
+import { FrontendDataManager, ManagerBase } from "$Library/ub-common/Inc";
+import reducer from "./reducer";
+import selectors from "./selectors";
+import actions from "./actions";
+import deepmerge from "deepmerge";
 
 /**
  * Main store for plugin.
@@ -54,12 +54,13 @@ class MainStore extends ManagerBase {
 		this.storeName = storeName;
 
 		const blockAttributes =
-			FrontendDataManager.getDataProperty('blockAttributes');
+			FrontendDataManager.getDataProperty("blockAttributes");
 		const upsellExtensionData = FrontendDataManager.getDataProperty(
-			'upsellExtensionData'
+			"upsellExtensionData",
 		);
-		const proStatus = FrontendDataManager.getDataProperty('proStatus');
-		const assets = FrontendDataManager.getDataProperty('assets');
+
+		const proStatus = FrontendDataManager.getDataProperty("proStatus");
+		const assets = FrontendDataManager.getDataProperty("assets");
 
 		this.#registerStore({
 			upsells: {

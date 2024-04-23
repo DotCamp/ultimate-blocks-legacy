@@ -1,6 +1,6 @@
-import ACTION_TYPES from './types';
-import { addFilter, applyFilters } from '@wordpress/hooks';
-import { select } from '@wordpress/data';
+import ACTION_TYPES from "./types";
+import { addFilter, applyFilters } from "@wordpress/hooks";
+import { select } from "@wordpress/data";
 
 /**
  * Store actions.
@@ -17,7 +17,7 @@ const actions = (storeName) => {
 	 * @return {string} generated hook name
 	 */
 	const preparePluginHookName = (hookName, hookType) => {
-		const availableHookTypes = ['action', 'filter'];
+		const availableHookTypes = ["action", "filter"];
 
 		let finalHookType = availableHookTypes[0];
 		if (availableHookTypes.includes(hookType)) {
@@ -25,8 +25,8 @@ const actions = (storeName) => {
 		}
 
 		return `${storeName.toLowerCase()}_${finalHookType}-${hookName.replaceAll(
-			'/',
-			'_'
+			"/",
+			"_",
 		)}`;
 	};
 
@@ -40,11 +40,11 @@ const actions = (storeName) => {
 		 * @return {Object} action object
 		 */
 		applyPluginFilter(filterName, filterData, callback) {
-			const finalFilterName = preparePluginHookName(filterName, 'filter');
+			const finalFilterName = preparePluginHookName(filterName, "filter");
 
 			const finalData = applyFilters(finalFilterName, filterData);
 
-			if (typeof callback === 'function') {
+			if (typeof callback === "function") {
 				callback(finalData);
 			}
 
@@ -60,11 +60,11 @@ const actions = (storeName) => {
 		 * @return {Object} action object
 		 */
 		addPluginFilter(filterName, callback) {
-			const finalFilterName = preparePluginHookName(filterName, 'filter');
+			const finalFilterName = preparePluginHookName(filterName, "filter");
 
-			if (typeof callback !== 'function') {
+			if (typeof callback !== "function") {
 				throw new Error(
-					`invalid callback type supplied for filter ${filterName}`
+					`invalid callback type supplied for filter ${filterName}`,
 				);
 			}
 
@@ -152,8 +152,7 @@ export const showExtensionInfo =
 
 		// if no target block is supplied, current active block will be used
 		if (!targetBlockType) {
-			targetBlockType =
-				select('core/block-editor').getSelectedBlock()?.name;
+			targetBlockType = select("core/block-editor").getSelectedBlock()?.name;
 		}
 
 		setTargetExtensionForInfoShow(extensionFeatureId);

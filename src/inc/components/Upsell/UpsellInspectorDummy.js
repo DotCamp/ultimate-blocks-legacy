@@ -1,7 +1,7 @@
-import React from 'react';
-import UpsellProPanel from '$Inc/components/Upsell/UpsellProPanel';
-import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
-import UpsellControlSelector from '$Inc/components/Upsell/Controls/UpsellControlSelector';
+import React from "react";
+import UpsellProPanel from "$Inc/components/Upsell/UpsellProPanel";
+import connectWithMainStore from "$BlockStores/mainStore/hoc/connectWithMainStore";
+import UpsellControlSelector from "$Inc/components/Upsell/Controls/UpsellControlSelector";
 
 /**
  * Upsell dummy inspector wrapper for side panel.
@@ -19,10 +19,7 @@ function UpsellInspectorDummy({ controlsData, proStatus }) {
 		controlsData.length > 0 && (
 			<UpsellProPanel>
 				{controlsData.map((data) => (
-					<UpsellControlSelector
-						key={data.featureId}
-						controlData={data}
-					/>
+					<UpsellControlSelector key={data.featureId} controlData={data} />
 				))}
 			</UpsellProPanel>
 		)
