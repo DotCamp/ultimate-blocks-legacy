@@ -153,6 +153,7 @@ That's it. You're done!
 = 3.1.8 =
 
 * NEW: Block Spacing in button block.
+* FIX: Slides per view not working properly in the frontend in image slider block.
 
 = 3.1.7 =
 

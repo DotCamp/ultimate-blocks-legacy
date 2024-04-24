@@ -803,7 +803,7 @@ function ub_include_block_attribute_css() {
 										 'min-height: ' . (35 + $attributes['sliderHeight']) . 'px;' . PHP_EOL .
 										 '}' . PHP_EOL;
 					$blockStylesheets .= $prefix . ' .swiper-slide img{' . PHP_EOL .
-										 'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
+										 'height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
 										 '}' . PHP_EOL;
 					break;
 				case 'ub/notification-box-block':
