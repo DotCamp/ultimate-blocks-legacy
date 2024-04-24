@@ -82,20 +82,20 @@ const selectors = {
 
 			if (
 				blockUpsellData &&
-				blockUpsellData.featureData &&
+				blockUpsellData?.featureData &&
 				!extensionsUpsellData
 			) {
 				const { featureData } = blockUpsellData;
 				return featureId ? { featureId: featureData[featureId] } : featureData;
 			} else {
-				const { featureData } = blockUpsellData;
+				const featureData = blockUpsellData?.featureData ?? [];
 
 				const extensionsFeaturedData = {};
 				extensionsUpsellData.forEach((obj) => {
-					if (obj.featureData) {
-						for (const key in obj.featureData) {
+					if (obj?.featureData) {
+						for (const key in obj?.featureData) {
 							if (key !== "savedStylesMain") {
-								extensionsFeaturedData[key] = obj.featureData[key];
+								extensionsFeaturedData[key] = obj?.featureData[key];
 							}
 						}
 					}
@@ -120,15 +120,15 @@ const selectors = {
 		if (currentBlockType && currentBlockType.startsWith("ub/")) {
 			const blockUpsellData = getBlockUpsellData(state, currentBlockType);
 			const extensionsUpsellData = getProExtensionsUpsellData(state);
-
 			if (blockUpsellData && !extensionsUpsellData) {
-				return blockUpsellData.dummyControlsData;
+				return blockUpsellData?.dummyControlsData;
 			} else {
+				const dummyControlsData = blockUpsellData?.dummyControlsData ?? [];
 				const extensionsDummyData = [];
 				extensionsUpsellData.forEach((data) => {
-					extensionsDummyData.push(...data.dummyControlsData);
+					extensionsDummyData.push(...(data?.dummyControlsData ?? []));
 				});
-				return [...blockUpsellData.dummyControlsData, ...extensionsDummyData];
+				return [...dummyControlsData, ...extensionsDummyData];
 			}
 		}
 
