@@ -154,6 +154,7 @@ That's it. You're done!
 
 * NEW: Block Spacing in button block.
 * FIX: Slides per view not working properly in the frontend in image slider block.
+* IMPROVE: Add flex wrap on content filter buttons.
 
 = 3.1.7 =
 

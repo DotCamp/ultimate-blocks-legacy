@@ -4,6 +4,7 @@
 	.ub-content-filter-buttons-wrapper {
 		display: flex;
 		justify-content: var(--ub-content-filter-buttons-justification);
+		flex-wrap: wrap;
 		gap: 20px;
 	}
 }
