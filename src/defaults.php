@@ -288,6 +288,151 @@ $defaultValues = array(
 			)
 		)
 	),
+	"ub/buttons" => array(
+		"attributes" => array(
+			'blockID'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
+			'align'                => array(
+				'type'    => 'string',
+				'default' => 'center'
+			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
+			'buttons'			   => array(
+				'type'	=> 'array',
+				'default' => array()
+			),
+		)
+	),
+	'ub/single-button'                     => array(
+		'attributes' => array(
+			'blockID'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'iconSize'              => array(
+				'type'    => 'number',
+				'default' => 0
+			),
+			'iconUnit'              => array(
+				'type'    => 'string',
+				'default' => 'px'
+			),
+			'placeholder'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'border' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'borderRadius' => array(
+				'type' 	=> 'array',
+				'default' => array(
+					'topLeft' => "10px",
+					'topRight' => "10px",
+					'bottomLeft' => "10px",
+					'bottomRight' => "10px",
+				)
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'buttonText'           => array(
+				'type'    => 'string',
+				'default' => 'Button Text'
+			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
+			'align'                => array(
+				'type'    => 'string',
+				'default' => 'center'
+			),
+			'url'                  => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'size'                 => array(
+				'type'    => 'string',
+				'default' => 'medium'
+			),
+			'buttonColor'          => array(
+				'type'    => 'string',
+				'default' => '#313131'
+			),
+			'buttonHoverColor'     => array(
+				'type'    => 'string',
+				'default' => '#313131'
+			),
+			'buttonTextColor'      => array(
+				'type'    => 'string',
+				'default' => '#ffffff'
+			),
+			'buttonTextHoverColor' => array(
+				'type'    => 'string',
+				'default' => '#ffffff'
+			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
+			'buttonRounded'        => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'chosenIcon'           => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'iconPosition'         => array(
+				'type'    => 'string',
+				'default' => 'left'
+			),
+			'buttonIsTransparent'  => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'addNofollow'          => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'addSponsored'          => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'openInNewTab'         => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
+			'buttonWidth'          => array(
+				'type'    => 'string',
+				'default' => 'flex'
+			),
+		)
+	),
 	'ub/button'                     => array(
 		'attributes' => array(
 			'blockID'              => array(
