@@ -87,6 +87,8 @@ function DividerBlock(props) {
 			alignment,
 			orientation,
 			lineHeight,
+			dividerWidth,
+			isWidthControlChanged,
 		},
 		isSelected,
 		setAttributes,
@@ -102,6 +104,9 @@ function DividerBlock(props) {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
+		if (!isWidthControlChanged) {
+			setAttributes({ dividerWidth: `${width}%`, isWidthControlChanged: true });
+		}
 	}, []);
 	useEffect(() => {
 		setAttributes({ blockID: block.clientId });
@@ -113,7 +118,7 @@ function DividerBlock(props) {
 			? {
 					marginTop: borderHeight + "px",
 					marginBottom: borderHeight + "px",
-					width: width + "%",
+					width: dividerWidth,
 				}
 			: {
 					width: "fit-content",
@@ -148,15 +153,13 @@ function DividerBlock(props) {
 										beforeIcon="minus"
 										allowReset
 									/>
-									<RangeControl
-										label={__("Width")}
-										value={width}
-										onChange={(value) => setAttributes({ width: value })}
-										min={0}
-										max={100}
-										resetFallbackValue={100}
+									<HeightControl
+										label={__("Width", "ultimate-blocks-pro")}
+										value={dividerWidth}
+										onChange={(value) => setAttributes({ dividerWidth: value })}
 										allowReset
 									/>
+									<br></br>
 								</>
 							)}
 							{orientation === "vertical" && (
@@ -185,7 +188,7 @@ function DividerBlock(props) {
 								attributeKey="orientation"
 								label={__("Orientation", "ultimate-blocks")}
 							/>
-							{(width < 100 || orientation === "vertical") && (
+							{orientation === "vertical" && (
 								<CustomToggleGroupControl
 									isAdaptiveWidth
 									options={AVAILABLE_JUSTIFICATIONS.slice(
