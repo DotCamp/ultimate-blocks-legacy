@@ -152,10 +152,11 @@ That's it. You're done!
 
 = 3.1.8 =
 
-* NEW: Block Spacing in button block.
 * FIX: Slides per view not working properly in the frontend in image slider block.
-* IMPROVE: Add flex wrap on content filter buttons.
+* FIX: Uncaught Error on content toggle block.
+* NEW: Block Spacing in button block.
 * NEW: Icon spacing in divider block.
+* IMPROVE: Add flex wrap on content filter buttons.
 * IMPROVE: Width control in divider block.
 
 = 3.1.7 =

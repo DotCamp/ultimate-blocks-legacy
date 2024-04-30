@@ -165,9 +165,11 @@ function ub_content_toggle_filter( $block_content, $block ) {
 				$block_content
 			)
 		);
-
-		$panel = $parsedBlockContent->find( '.toggleroot>.wp-block-ub-content-toggle-accordion>.wp-block-ub-content-toggle-accordion-content-wrap' );
-
+		$panel = array();
+		
+		if( !empty($parsedBlockContent) && gettype($parsedBlockContent) !== "boolean" ){
+			$panel = $parsedBlockContent->find( '.toggleroot>.wp-block-ub-content-toggle-accordion>.wp-block-ub-content-toggle-accordion-content-wrap' );
+		}
 		foreach ( $panel as $elem ) {
 			// look for possible nested content toggles and remove existing ones
 			foreach ( $elem->find( '.wp-block-ub-content-toggle' ) as $nestedToggle ) {
