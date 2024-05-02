@@ -40,9 +40,9 @@ import "./blocks/post-grid/block";
 import "./blocks/how-to/block";
 import "./blocks/advanced-heading/block";
 import "./blocks/advanced-video/block";
-
 import "./blocks/icon-inner/block";
 import "./blocks/icon/block";
 import "./blocks/counter/block";
+import "./blocks/image/block";
 
 import "./extensions";

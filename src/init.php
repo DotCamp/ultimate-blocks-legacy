@@ -1545,6 +1545,9 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/icon/block.php';
 // Counter
 require_once plugin_dir_path( __FILE__ ) . 'blocks/counter/block.php';
 
+// Image
+require_once plugin_dir_path( __FILE__ ) . 'blocks/image/block.php';
+
 /**
  * Innerblocks.
  */

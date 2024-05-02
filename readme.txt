@@ -156,6 +156,7 @@ That's it. You're done!
 * FIX: Uncaught Error on content toggle block.
 * PRO: FIX: Post grid block breaks when change the post type.
 * NEW: Block Spacing in button block.
+* NEW: Image block.
 * PRO: NEW: Icon spacing in divider block.
 * IMPROVE: Add flex wrap on content filter buttons.
 * IMPROVE: Width control in divider block.

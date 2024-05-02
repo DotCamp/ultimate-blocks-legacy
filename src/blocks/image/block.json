@@ -1,0 +1,85 @@
+{
+     "$schema": "https://schemas.wp.org/trunk/block.json",
+     "apiVersion": 3,
+     "title": "Image",
+     "name": "ub/image",
+     "category": "ultimateblocks",
+     "description": "Ultimate blocks image",
+     "attributes": {
+          "media": {
+               "type": "object",
+               "default": {}
+          },
+          "height": {
+               "type": "string",
+               "default": ""
+          },
+          "width": {
+               "type": "string",
+               "default": ""
+          },
+          "align": {
+               "type": "string",
+               "default": ""
+          },
+          "alt": {
+               "type": "string",
+               "default": ""
+          },
+          "aspectRatio": {
+               "type": "string",
+               "default": ""
+          },
+          "scale": {
+               "type": "string",
+               "default": ""
+          },
+          "sizeSlug": {
+               "type": "string",
+               "default": "large"
+          },
+          "caption": {
+               "type": "string",
+               "default": ""
+          },
+          "href": {
+               "type": "string",
+               "default": ""
+          },
+          "linkClass": {
+               "type": "string",
+               "default": ""
+          },
+          "linkDestination": {
+               "type": "string",
+               "default": ""
+          },
+          "rel": {
+               "type": "string",
+               "default": ""
+          },
+          "linkTarget": {
+               "type": "string",
+               "default": ""
+          },
+          "border": {
+               "type": "object",
+               "default": {}
+          },
+          "borderRadius": {
+               "type": "object",
+               "default": {}
+          }
+     },
+     "supports": {
+          "anchor": true,
+          "filter": {
+               "duotone": true
+          },
+          "selectors": {
+               "filter": {
+                    "duotone": ".wp-block-ub-image img, .wp-block-ub-image .components-placeholder"
+               }
+          }
+     }
+}

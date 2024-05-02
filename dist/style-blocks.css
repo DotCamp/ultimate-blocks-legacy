@@ -1,0 +1,51 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/@wordpress/scripts/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/@wordpress/scripts/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/blocks/image/style.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-ub-image {
+  line-height: 1;
+}
+.wp-block-ub-image.is-style-rounded img {
+  border-radius: 9999px;
+}
+.wp-block-ub-image.is-style-framed img {
+  border: 4px solid #000000;
+}
+.wp-block-ub-image img {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.wp-block-ub-image.alignwide img, .wp-block-ub-image.alignfull img {
+  width: 100%;
+  height: auto;
+}
+.wp-block-ub-image.aligncenter {
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: center;
+}
+.wp-block-ub-image figcaption {
+  margin-bottom: 1em;
+  margin-top: 0.5em;
+}
+.wp-block-ub-image.is-selected .components-placeholder.has-illustration {
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #1e1e1e;
+}
+.wp-block-ub-image.is-selected .components-placeholder.has-illustration::before {
+  opacity: 0;
+}
+.wp-block-ub-image.is-selected .components-placeholder__illustration {
+  display: none;
+}
+
+.ub-width-height-control {
+  display: flex;
+  gap: 10px;
+  grid-column: 1/-1;
+}
+
+.ub-custom-border-radius-control .components-base-control__label {
+  display: none;
+}
+
+/*# sourceMappingURL=style-blocks.css.map*/
