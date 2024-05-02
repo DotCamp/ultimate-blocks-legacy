@@ -1,6 +1,11 @@
 .wp-block-ub-image {
 	&.is-style-rounded {
 		img {
+			border-radius: 10px;
+		}
+	}
+	&.is-style-circle {
+		img {
 			border-radius: 9999px;
 		}
 	}

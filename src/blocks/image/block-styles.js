@@ -11,6 +11,10 @@ const styles = [
 		label: __("Rounded", "ultimate-blocks"),
 	},
 	{
+		name: "circle",
+		label: __("Circle", "ultimate-blocks"),
+	},
+	{
 		name: "framed",
 		label: __("Framed", "ultimate-blocks"),
 	},

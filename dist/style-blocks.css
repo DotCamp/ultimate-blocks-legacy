@@ -5,6 +5,9 @@
   line-height: 1;
 }
 .wp-block-ub-image.is-style-rounded img {
+  border-radius: 10px;
+}
+.wp-block-ub-image.is-style-circle img {
   border-radius: 9999px;
 }
 .wp-block-ub-image.is-style-framed img {
