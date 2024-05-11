@@ -126,7 +126,13 @@ const selectors = {
 				const dummyControlsData = blockUpsellData?.dummyControlsData ?? [];
 				const extensionsDummyData = [];
 				extensionsUpsellData.forEach((data) => {
-					extensionsDummyData.push(...(data?.dummyControlsData ?? []));
+					const updatedData = data?.dummyControlsData?.map((dummyData) => {
+						const updatedDummyData = dummyData;
+						updatedDummyData["isExtension"] = true;
+						return dummyData;
+					});
+
+					extensionsDummyData.push(...(updatedData ?? []));
 				});
 				return [...dummyControlsData, ...extensionsDummyData];
 			}

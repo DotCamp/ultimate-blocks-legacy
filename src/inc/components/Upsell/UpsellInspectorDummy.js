@@ -12,17 +12,37 @@ import UpsellControlSelector from "$Inc/components/Upsell/Controls/UpsellControl
  * @function Object() { [native code] }
  */
 function UpsellInspectorDummy({ controlsData, proStatus }) {
+	const hasControlData =
+		controlsData && Array.isArray(controlsData) && controlsData.length > 0;
+	const blocksData = hasControlData
+		? controlsData.filter((data) => !data.isExtension)
+		: [];
+	const extensionData = hasControlData
+		? controlsData.filter((data) => data.isExtension)
+		: [];
 	return (
-		!proStatus &&
-		controlsData &&
-		Array.isArray(controlsData) &&
-		controlsData.length > 0 && (
-			<UpsellProPanel>
-				{controlsData.map((data) => (
-					<UpsellControlSelector key={data.featureId} controlData={data} />
-				))}
-			</UpsellProPanel>
-		)
+		<>
+			{!proStatus &&
+				blocksData &&
+				Array.isArray(blocksData) &&
+				blocksData.length > 0 && (
+					<UpsellProPanel>
+						{blocksData.map((data) => (
+							<UpsellControlSelector key={data.featureId} controlData={data} />
+						))}
+					</UpsellProPanel>
+				)}
+			{!proStatus &&
+				extensionData &&
+				Array.isArray(extensionData) &&
+				extensionData.length > 0 && (
+					<UpsellProPanel isExtension>
+						{extensionData.map((data) => (
+							<UpsellControlSelector key={data.featureId} controlData={data} />
+						))}
+					</UpsellProPanel>
+				)}
+		</>
 	);
 }
 
