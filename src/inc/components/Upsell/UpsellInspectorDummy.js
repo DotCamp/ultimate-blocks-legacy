@@ -2,6 +2,7 @@ import React from "react";
 import UpsellProPanel from "$Inc/components/Upsell/UpsellProPanel";
 import connectWithMainStore from "$BlockStores/mainStore/hoc/connectWithMainStore";
 import UpsellControlSelector from "$Inc/components/Upsell/Controls/UpsellControlSelector";
+import { PanelBody } from "@wordpress/components";
 
 /**
  * Upsell dummy inspector wrapper for side panel.
@@ -35,13 +36,14 @@ function UpsellInspectorDummy({ controlsData, proStatus }) {
 			{!proStatus &&
 				extensionData &&
 				Array.isArray(extensionData) &&
-				extensionData.length > 0 && (
-					<UpsellProPanel isExtension>
-						{extensionData.map((data) => (
+				extensionData.length > 0 &&
+				extensionData.map((data) => {
+					return (
+						<div className={"ub-upsell-pro-panel"}>
 							<UpsellControlSelector key={data.featureId} controlData={data} />
-						))}
-					</UpsellProPanel>
-				)}
+						</div>
+					);
+				})}
 		</>
 	);
 }

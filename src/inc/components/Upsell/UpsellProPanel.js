@@ -12,17 +12,19 @@ import connectWithMainStore from "$BlockStores/mainStore/hoc/connectWithMainStor
  * @function Object() { [native code] }
  */
 function UpsellProPanel({ proStatus, children, isExtension = false }) {
-	console.log(isExtension);
 	return (
-		!proStatus && (
-			<PanelBody
-				className={"ub-upsell-pro-panel"}
-				initialOpen={false}
-				title={isExtension ? "PRO Extensions" : __("PRO", "ultimate-blocks")}
-			>
-				{children}
-			</PanelBody>
-		)
+		<>
+			{!proStatus && !isExtension && (
+				<PanelBody
+					className={"ub-upsell-pro-panel"}
+					initialOpen={false}
+					title={__("PRO", "ultimate-blocks")}
+				>
+					{children}
+				</PanelBody>
+			)}
+			{!proStatus && !isExtension && children}
+		</>
 	);
 }
 
