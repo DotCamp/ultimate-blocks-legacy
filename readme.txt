@@ -150,6 +150,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.1.9 =
+
+* NEW: Alignment option in table of content block.
+
 = 3.1.8 =
 
 * FIX: Slides per view not working properly in the frontend in image slider block.

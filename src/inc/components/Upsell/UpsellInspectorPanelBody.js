@@ -1,6 +1,6 @@
-import React from 'react';
-import { PanelBody } from '@wordpress/components';
-import UpsellControlSelector from '$Inc/components/Upsell/Controls/UpsellControlSelector';
+import React from "react";
+import { PanelBody } from "@wordpress/components";
+import UpsellControlSelector from "$Inc/components/Upsell/Controls/UpsellControlSelector";
 
 /**
  * General inspector panel body dedicated only to hold upsell controls.
@@ -14,10 +14,7 @@ function UpsellInspectorPanelBody({ label, contentData }) {
 	return (
 		<PanelBody initialOpen={false} title={label}>
 			{contentData.map((data) => (
-				<UpsellControlSelector
-					key={data.featureId}
-					controlData={data}
-				/>
+				<UpsellControlSelector key={data.featureId} controlData={data} />
 			))}
 		</PanelBody>
 	);

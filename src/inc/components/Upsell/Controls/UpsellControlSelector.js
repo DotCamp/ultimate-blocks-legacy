@@ -1,10 +1,10 @@
-import React from 'react';
-import UpsellInspectorPanelBody from '$Inc/components/Upsell/UpsellInspectorPanelBody';
-import UpsellToggleControl from '$Inc/components/Upsell/Controls/UpsellToggleControl';
-import UpsellSelectControl from '$Inc/components/Upsell/Controls/UpsellSelectControl';
-import UpsellColorControl from '$Inc/components/Upsell/Controls/UpsellColorControl';
-import UpsellIconControl from '$Inc/components/Upsell/Controls/UpsellIconControl';
-import UpsellButtonGroupControl from '$Inc/components/Upsell/Controls/UpsellButtonGroupControl';
+import React from "react";
+import UpsellInspectorPanelBody from "$Inc/components/Upsell/UpsellInspectorPanelBody";
+import UpsellToggleControl from "$Inc/components/Upsell/Controls/UpsellToggleControl";
+import UpsellSelectControl from "$Inc/components/Upsell/Controls/UpsellSelectControl";
+import UpsellColorControl from "$Inc/components/Upsell/Controls/UpsellColorControl";
+import UpsellIconControl from "$Inc/components/Upsell/Controls/UpsellIconControl";
+import UpsellButtonGroupControl from "$Inc/components/Upsell/Controls/UpsellButtonGroupControl";
 
 /**
  *	Dummy control types.
@@ -12,12 +12,12 @@ import UpsellButtonGroupControl from '$Inc/components/Upsell/Controls/UpsellButt
  * @type {{PANEL: string, TOGGLE: string, SELECT: string}}
  */
 const DUMMY_CONTROL_TYPES = {
-	PANEL: 'panel',
-	TOGGLE: 'toggle',
-	SELECT: 'select',
-	COLOR: 'color',
-	ICON: 'icon',
-	BUTTON_GROUP: 'button_group',
+	PANEL: "panel",
+	TOGGLE: "toggle",
+	SELECT: "select",
+	COLOR: "color",
+	ICON: "icon",
+	BUTTON_GROUP: "button_group",
 };
 
 /**
@@ -56,10 +56,7 @@ function UpsellControlSelector({ controlData }) {
 				TargetDummyControl = null;
 				break;
 		}
-
-		return TargetDummyControl ? (
-			<TargetDummyControl {...propsRest} />
-		) : null;
+		return TargetDummyControl ? <TargetDummyControl {...propsRest} /> : null;
 	};
 
 	return renderDummyControl();

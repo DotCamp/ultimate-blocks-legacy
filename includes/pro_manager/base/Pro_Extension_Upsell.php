@@ -124,13 +124,13 @@ abstract class Pro_Extension_Upsell {
 				}
 			} else {
 				$matches = [];
-				preg_match( '/^ub\/(.+)$/', $this->block_id, $matches );
-
+				preg_match( '/^(ub|ub-extension)\/(.+)$/', $this->block_id, $matches );
+				
 				// automatically search for a fitting image file under asset folders
-				if ( isset( $matches[1] ) ) {
-					$target_extension_upsell_dir_name = $matches[1];
+				if ( isset( $matches[2] ) ) {
+					$target_extension_upsell_dir_name = $matches[2];
 					$allowed_file_extensions          = [ 'png', 'gif' ];
-
+					
 					foreach ( $allowed_file_extensions as $extension ) {
 						$relative_path_to_file = sprintf( '%s/img/%s/%s.%s',
 							self::UB_PRO_EXTENSION_ASSET_RELATIVE_PATH, $target_extension_upsell_dir_name,
