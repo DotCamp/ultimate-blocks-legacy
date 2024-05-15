@@ -1,132 +1,136 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/table-of-contents-block",
-     "title": "Table of Contents",
-     "category": "ultimateblocks",
-     "description": "Give visitors a better naviation of your post with a Table of Contents.",
-     "keywords": [
-          "Table of Contents",
-          "Ultimate Blocks"
-     ],
-     "attributes": {
-          "blockID": {
-               "type": "string",
-               "default": ""
-          },
-          "title": {
-               "type": "string",
-               "default": ""
-          },
-          "allowedHeaders": {
-               "type": "array",
-               "default": [
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true
-               ]
-          },
-          "links": {
-               "type": "string",
-               "default": ""
-          },
-          "gaps": {
-               "type": "array",
-               "default": []
-          },
-          "allowToCHiding": {
-               "type": "boolean",
-               "default": false
-          },
-          "hideOnMobile": {
-               "type": "boolean",
-               "default": false
-          },
-          "showList": {
-               "type": "boolean",
-               "default": true
-          },
-          "numColumns": {
-               "type": "number",
-               "default": 1
-          },
-          "listStyle": {
-               "type": "string",
-               "default": "bulleted"
-          },
-          "enableSmoothScroll": {
-               "type": "boolean",
-               "default": false
-          },
-          "titleAlignment": {
-               "type": "string",
-               "default": "left"
-          },
-          "allowToLatin": {
-               "type": "boolean",
-               "default": false
-          },
-          "removeDiacritics": {
-               "type": "boolean",
-               "default": false
-          },
-          "scrollOption": {
-               "type": "string",
-               "default": "auto"
-          },
-          "scrollOffset": {
-               "type": "number",
-               "default": 0
-          },
-          "scrollTarget": {
-               "type": "string",
-               "default": ""
-          },
-          "scrollTargetType": {
-               "type": "string",
-               "default": "id"
-          },
-          "titleColor": {
-               "type": "string",
-               "default": ""
-          },
-          "titleBackgroundColor": {
-               "type": "string",
-               "default": ""
-          },
-          "listColor": {
-               "type": "string",
-               "default": ""
-          },
-          "listBackgroundColor": {
-               "type": "string",
-               "default": ""
-          },
-          "listIconColor": {
-               "type": "string",
-               "default": ""
-          },
-          "showText": {
-               "type": "string",
-               "default": "show"
-          },
-          "hideText": {
-               "type": "string",
-               "default": "hide"
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          }
-     },
-     "supports": {
-          "reusable": false
-     }
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/table-of-contents-block",
+	"title": "Table of Contents",
+	"category": "ultimateblocks",
+	"description": "Give visitors a better naviation of your post with a Table of Contents.",
+	"keywords": [
+		"Table of Contents",
+		"Ultimate Blocks"
+	],
+	"attributes": {
+		"blockID": {
+			"type": "string",
+			"default": ""
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"allowedHeaders": {
+			"type": "array",
+			"default": [
+				true,
+				true,
+				true,
+				true,
+				true,
+				true
+			]
+		},
+		"links": {
+			"type": "string",
+			"default": ""
+		},
+		"gaps": {
+			"type": "array",
+			"default": []
+		},
+		"allowToCHiding": {
+			"type": "boolean",
+			"default": false
+		},
+		"hideOnMobile": {
+			"type": "boolean",
+			"default": false
+		},
+		"showList": {
+			"type": "boolean",
+			"default": true
+		},
+		"numColumns": {
+			"type": "number",
+			"default": 1
+		},
+		"listStyle": {
+			"type": "string",
+			"default": "bulleted"
+		},
+		"enableSmoothScroll": {
+			"type": "boolean",
+			"default": false
+		},
+		"titleAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"allowToLatin": {
+			"type": "boolean",
+			"default": false
+		},
+		"removeDiacritics": {
+			"type": "boolean",
+			"default": false
+		},
+		"scrollOption": {
+			"type": "string",
+			"default": "auto"
+		},
+		"scrollOffset": {
+			"type": "number",
+			"default": 0
+		},
+		"scrollTarget": {
+			"type": "string",
+			"default": ""
+		},
+		"scrollTargetType": {
+			"type": "string",
+			"default": "id"
+		},
+		"titleColor": {
+			"type": "string",
+			"default": ""
+		},
+		"titleBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"listColor": {
+			"type": "string",
+			"default": ""
+		},
+		"listBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"listIconColor": {
+			"type": "string",
+			"default": ""
+		},
+		"showText": {
+			"type": "string",
+			"default": "show"
+		},
+		"hideText": {
+			"type": "string",
+			"default": "hide"
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"align": [
+			"wide",
+			"full"
+		]
+	}
 }

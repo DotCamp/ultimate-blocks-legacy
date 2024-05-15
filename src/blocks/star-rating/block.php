@@ -4,7 +4,7 @@ function ub_render_star_rating_block($attributes){
     require_once dirname(dirname(__DIR__)) . '/common.php';
 
     extract($attributes);
-    
+
     $stars = ub_generateStarDisplay($selectedStars, $starCount, $blockID,
     'none', $starColor, $starColor, "", "ub_star_rating_filter-", $starSize);
 
@@ -24,7 +24,7 @@ function ub_render_star_rating_block($attributes){
                     ('flex-' . $starAlign === 'left' ? 'start' : 'end')) . ';"' : '').'>
                     <div class="ub-star-inner-container">'.$stars.'</div>
                 </div>'.
-                ($reviewText === '' || false === $isShowReviewText ? '' : '<div class="ub-review-text"' . ($blockID === '' ? ' style="text-align:' . $reviewTextAlign . ';"' : '') . '>' . 
+                ($reviewText === '' || false === $isShowReviewText ? '' : '<div class="ub-review-text"' . ($blockID === '' ? ' style="text-align:' . $reviewTextAlign . ';"' : '') . '>' .
                     $reviewText
                 . '</div>') .
             '</div>';
