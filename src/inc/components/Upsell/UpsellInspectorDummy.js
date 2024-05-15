@@ -1,7 +1,8 @@
-import React from 'react';
-import UpsellProPanel from '$Inc/components/Upsell/UpsellProPanel';
-import connectWithMainStore from '$BlockStores/mainStore/hoc/connectWithMainStore';
-import UpsellControlSelector from '$Inc/components/Upsell/Controls/UpsellControlSelector';
+import React from "react";
+import UpsellProPanel from "$Inc/components/Upsell/UpsellProPanel";
+import connectWithMainStore from "$BlockStores/mainStore/hoc/connectWithMainStore";
+import UpsellControlSelector from "$Inc/components/Upsell/Controls/UpsellControlSelector";
+import { PanelBody } from "@wordpress/components";
 
 /**
  * Upsell dummy inspector wrapper for side panel.
@@ -12,20 +13,38 @@ import UpsellControlSelector from '$Inc/components/Upsell/Controls/UpsellControl
  * @function Object() { [native code] }
  */
 function UpsellInspectorDummy({ controlsData, proStatus }) {
+	const hasControlData =
+		controlsData && Array.isArray(controlsData) && controlsData.length > 0;
+	const blocksData = hasControlData
+		? controlsData.filter((data) => !data.isExtension)
+		: [];
+	const extensionData = hasControlData
+		? controlsData.filter((data) => data.isExtension)
+		: [];
 	return (
-		!proStatus &&
-		controlsData &&
-		Array.isArray(controlsData) &&
-		controlsData.length > 0 && (
-			<UpsellProPanel>
-				{controlsData.map((data) => (
-					<UpsellControlSelector
-						key={data.featureId}
-						controlData={data}
-					/>
-				))}
-			</UpsellProPanel>
-		)
+		<>
+			{!proStatus &&
+				blocksData &&
+				Array.isArray(blocksData) &&
+				blocksData.length > 0 && (
+					<UpsellProPanel>
+						{blocksData.map((data) => (
+							<UpsellControlSelector key={data.featureId} controlData={data} />
+						))}
+					</UpsellProPanel>
+				)}
+			{!proStatus &&
+				extensionData &&
+				Array.isArray(extensionData) &&
+				extensionData.length > 0 &&
+				extensionData.map((data) => {
+					return (
+						<div className={"ub-upsell-pro-panel"}>
+							<UpsellControlSelector key={data.featureId} controlData={data} />
+						</div>
+					);
+				})}
+		</>
 	);
 }
 

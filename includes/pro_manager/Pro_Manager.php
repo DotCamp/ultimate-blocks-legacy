@@ -27,6 +27,7 @@ use Ultimate_Blocks\includes\pro_manager\extensions\Social_Share_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Tabbed_Content_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Table_Of_Contents_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Post_Grid_Extension;
+use Ultimate_Blocks\includes\pro_manager\extensions\Visibility_Control_Extension;
 use Ultimate_Blocks\includes\svg_sanitizer\Svg_Sanitizer;
 use function add_action;
 use function add_filter;
@@ -287,6 +288,10 @@ class Pro_Manager {
 		$post_grid_upsell      = new Post_Grid_Extension( 'ub/post-grid' );
 		$post_grid_upsell_data = $post_grid_upsell->get_upsell_data();
 
+		// Visibility Control extension.
+		$visibility_control_upsell      = new Visibility_Control_Extension( 'ub-extension/visibility-control' );
+		$visibility_control_upsell_data = $visibility_control_upsell->get_upsell_data();
+
 		$final_upsell_extension_data = array_merge_recursive(
 			array(),
 			$tabbed_content_upsell_data,
@@ -300,7 +305,8 @@ class Pro_Manager {
 			$table_of_contents_upsell_data,
 			$social_share_upsell_data,
 			$advanced_video_upsell_data,
-			$post_grid_upsell_data
+			$post_grid_upsell_data,
+			$visibility_control_upsell_data
 		);
 
 		return array(
