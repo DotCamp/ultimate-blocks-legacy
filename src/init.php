@@ -669,10 +669,11 @@ function ub_include_block_attribute_css() {
 					$prefix = '#ub_divider_' . $attributes['blockID'];
 					$styles = ub_get_spacing_styles($attributes);
 					$orientation = isset($attributes['orientation']) ? $attributes['orientation'] : 'horizontal';
+					$divider_width = isset($attributes['isDividerWidthChanged']) && $attributes['isDividerWidthChanged'] && isset($attributes['dividerWidth']) ? $attributes['dividerWidth'] : $attributes['width'];
 					$divider_style = $orientation === 'horizontal' ?
 						 'margin-top: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
 						'margin-bottom: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
-						'width: ' . $attributes['width'] . '%;' . PHP_EOL :
+						'width: ' . $divider_width . '%;' . PHP_EOL :
 						'width:fit-content; height:'. $attributes['lineHeight'] .';';
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
 					$blockStylesheets .= $prefix . ' .ub_divider{' . PHP_EOL .
@@ -803,7 +804,7 @@ function ub_include_block_attribute_css() {
 										 'min-height: ' . (35 + $attributes['sliderHeight']) . 'px;' . PHP_EOL .
 										 '}' . PHP_EOL;
 					$blockStylesheets .= $prefix . ' .swiper-slide img{' . PHP_EOL .
-										 'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
+										 'height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
 										 '}' . PHP_EOL;
 					break;
 				case 'ub/notification-box-block':
@@ -845,11 +846,8 @@ function ub_include_block_attribute_css() {
 					$prefix           = '#ub-progress-bar-' . $attributes['blockID'];
 					$is_style_circle = isset($attributes['className']) ? strpos($attributes['className'], "is-style-ub-progress-bar-circle-wrapper") !== false : "";
 					$is_style_half_circle = isset($attributes['className']) ?  strpos($attributes['className'], "is-style-ub-progress-bar-half-circle-wrapper") !== false : "";
-					$blockStylesheets .= $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
-										 'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
-										 '}' . PHP_EOL .
-										 $prefix . ' .ub_progress-bar-text p{' . PHP_EOL .
-										 'text-align: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
+					$blockStylesheets .= $prefix . ' .ub_progress-detail-wrapper{' . PHP_EOL .
+										 'justify-content: ' . $attributes['detailAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
 
 					if ( !$is_style_circle && !$is_style_half_circle ) {

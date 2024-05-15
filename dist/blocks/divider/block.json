@@ -54,6 +54,14 @@
     "margin": {
       "type": "object",
       "default": {}
+    },
+    "dividerWidth": {
+      "type": "string",
+      "default": "100%"
+    },
+    "isWidthControlChanged": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {}
