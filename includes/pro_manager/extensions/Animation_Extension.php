@@ -30,7 +30,7 @@ class Animation_Extension extends Pro_Extension_Upsell {
 		$base_data = [
 			'animation' => [
 				__( 'Animation', 'ultimate-blocks' ),
-				__( 'Block Animation.',
+				__( 'Use animations on your blocks to make them even more engaging.',
 					'ultimate-blocks' )
 			]
 		];
