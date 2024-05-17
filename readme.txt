@@ -154,6 +154,8 @@ That's it. You're done!
 
 * NEW: Alignment option in table of content block.
 * NEW: Summary title and title font size in review block.
+* PRO: FIX: Horizontal Timeline not working properly on block insert.
+* PRO: FIX: Image alignment in Horizontal Timeline.
 
 = 3.1.8 =
 
