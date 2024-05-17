@@ -452,7 +452,7 @@ function ReviewMain(props) {
 			padding,
 			margin,
 			summaryTitleFontSize,
-			titleFontSize,
+			mainTitleFontSize,
 		},
 		setAttributes,
 		isSelected,
@@ -1781,7 +1781,7 @@ function ReviewMain(props) {
 							label={__("Summary Title Font", "ultimate-blocks")}
 						/>
 						<CustomFontSizePicker
-							attrKey={"titleFontSize"}
+							attrKey={"mainTitleFontSize"}
 							label={__("Title Font", "ultimate-blocks")}
 						/>
 					</InspectorControls>
@@ -1853,7 +1853,7 @@ function ReviewMain(props) {
 				ctaIsSponsored={ctaIsSponsored}
 				block={block}
 				summaryTitleFontSize={summaryTitleFontSize}
-				titleFontSize={titleFontSize}
+				mainTitleFontSize={mainTitleFontSize}
 			/>
 		</div>
 	);

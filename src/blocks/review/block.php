@@ -2,11 +2,11 @@
 
 function ub_generate_review_block_styling($attributes){
 	$summary_title_font_size	= isset($attributes['summaryTitleFontSize']) ? $attributes['summaryTitleFontSize'] : "";
-	$title_font_size 			= isset($attributes['titleFontSize']) ? $attributes['titleFontSize'] : "";
+	$main_title_font_size 			= isset($attributes['mainTitleFontSize']) ? $attributes['mainTitleFontSize'] : "";
 
 	$styles = array(
 		"--ub-review-summary-title-font-size"	=> $summary_title_font_size,
-		"--ub-review-title-font-size"			=> $title_font_size,
+		"--ub-review-title-font-size"			=> $main_title_font_size,
 	);
 
 	$css = Ultimate_Blocks\includes\generate_css_string($styles);
