@@ -18,6 +18,14 @@
       "type": "string",
       "default": ""
     },
+    "summaryTitleFontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontSize": {
+      "type": "string",
+      "default": ""
+    },
     "authorName": {
       "type": "string",
       "default": ""

@@ -153,6 +153,7 @@ That's it. You're done!
 = 3.1.9 =
 
 * NEW: Alignment option in table of content block.
+* NEW: Summary title and title font size in review block.
 
 = 3.1.8 =
 

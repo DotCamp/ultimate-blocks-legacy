@@ -11,7 +11,7 @@ import {
 import { removeFromArray } from "../../common";
 import { useEffect, useState } from "react";
 import registerPluginBlock from "$Inc/registerPluginBlock";
-import { SpacingControl } from "../components";
+import { CustomFontSizePicker, SpacingControl } from "../components";
 import { __ } from "@wordpress/i18n";
 import {
 	BlockControls,
@@ -451,6 +451,8 @@ function ReviewMain(props) {
 			videoURL,
 			padding,
 			margin,
+			summaryTitleFontSize,
+			titleFontSize,
 		},
 		setAttributes,
 		isSelected,
@@ -1773,6 +1775,16 @@ function ReviewMain(props) {
 							/>
 						</PanelBody>
 					</InspectorControls>
+					<InspectorControls group="typography">
+						<CustomFontSizePicker
+							attrKey={"summaryTitleFontSize"}
+							label={__("Summary Title Font", "ultimate-blocks")}
+						/>
+						<CustomFontSizePicker
+							attrKey={"titleFontSize"}
+							label={__("Title Font", "ultimate-blocks")}
+						/>
+					</InspectorControls>
 				</>
 			)}
 			{isSelected && (
@@ -1840,6 +1852,8 @@ function ReviewMain(props) {
 				ctaOpenInNewTab={ctaOpenInNewTab}
 				ctaIsSponsored={ctaIsSponsored}
 				block={block}
+				summaryTitleFontSize={summaryTitleFontSize}
+				titleFontSize={titleFontSize}
 			/>
 		</div>
 	);

@@ -347,7 +347,7 @@ function ub_include_block_attribute_css() {
 							case 'youtube':
 								$current_aspect_ratio = !empty($attributes['aspectRatio']) && $attributes['aspectRatio'] !== 'auto' ?  $attributes['aspectRatio'] : $attributes['origWidth'] . '/' . $attributes['origHeight'];
 								$blockStylesheets .= $prefix . ' .ub-advanced-video-autofit-youtube{' .
-													 'aspect-ratio: ' . $current_aspect_ratio . ';' . 
+													 'aspect-ratio: ' . $current_aspect_ratio . ';' .
 													 '}' .
 													 $prefix . ' .ub-advanced-video-autofit-youtube > iframe{' .
 													 'aspect-ratio: ' . $current_aspect_ratio . ';' .
@@ -407,8 +407,8 @@ function ub_include_block_attribute_css() {
 										'}';
 					}
 					if(isset($attributes['autofit']) && !$attributes['autofit']){
-						$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' . 
-							'width:' . $attributes['width'] . '%;'  
+						$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' .
+							'width:' . $attributes['width'] . '%;'
 							 . '}';
 						$blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed video{
 							width: 100%;
@@ -439,8 +439,8 @@ function ub_include_block_attribute_css() {
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub-button-' . $attributes['blockID'];
 					$block_spacing = isset($attributes['blockSpacing']['all']) ? '--ub-button-improved-block-spacing:' . $attributes['blockSpacing']['all'] . ';': "";
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . $block_spacing . PHP_EOL . "}"; 
-					
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . $block_spacing . PHP_EOL . "}";
+
 					if ( ! array_key_exists( 'buttons', $attributes ) || count( $attributes['buttons'] ) === 0 ) {
 						$blockStylesheets .= $prefix . ' a{' . PHP_EOL;
 						if ( $attributes['buttonIsTransparent'] ) {
@@ -523,7 +523,7 @@ function ub_include_block_attribute_css() {
 									$blockStylesheets .= 'border-radius: 0;' . PHP_EOL;
 								}
 
-								
+
 							}
 
 							$blockStylesheets .= '}' . PHP_EOL .
@@ -597,8 +597,8 @@ function ub_include_block_attribute_css() {
 										 'color: ' . ( $attributes['activeButtonTextColor'] ?: 'inherit' ) . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles
-							. '--ub-content-filter-buttons-justification:' . $filter_buttons_alignment . ';' 
-						. PHP_EOL . "}"; 
+							. '--ub-content-filter-buttons-justification:' . $filter_buttons_alignment . ';'
+						. PHP_EOL . "}";
 					break;
 				case 'ub/content-toggle-block':
 					$styles = ub_get_spacing_styles($attributes);
@@ -611,7 +611,7 @@ function ub_include_block_attribute_css() {
 								}, $defaultValues['ub/content-toggle-panel-block']['attributes'] ),
 								$block['innerBlocks'][0]['attrs'] );
 
-						$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+						$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 
 						$blockStylesheets .= $prefix . ' .wp-block-ub-content-toggle-accordion{' . PHP_EOL .
 											 'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
@@ -675,9 +675,9 @@ function ub_include_block_attribute_css() {
 						'margin-bottom: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
 						'width: ' . $divider_width . '%;' . PHP_EOL :
 						'width:fit-content; height:'. $attributes['lineHeight'] .';';
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . ' .ub_divider{' . PHP_EOL .
-										($orientation === 'horizontal' ? 'border-top:' : 'border-left:') . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] . ';' . PHP_EOL . 
+										($orientation === 'horizontal' ? 'border-top:' : 'border-left:') . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] . ';' . PHP_EOL .
 										$divider_style;
 
 					if ( $attributes['alignment'] !== 'center' ) {
@@ -689,7 +689,7 @@ function ub_include_block_attribute_css() {
 				case 'ub/expand':
 					$prefix = '#ub-expand-' . $attributes['blockID'];
 					$styles = ub_get_spacing_styles($attributes);
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . ' .ub-expand-toggle-button{' . PHP_EOL .
 										 'text-align: ' . $attributes['toggleAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
@@ -719,7 +719,7 @@ function ub_include_block_attribute_css() {
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub_howto_' . $attributes['blockID'];
 					$blockStylesheets .= $prefix . '{' . $styles . '}';
-					
+
 					if ( $attributes['sectionListStyle'] === 'none' ) {
 						$blockStylesheets .= $prefix . ' .ub_howto-section-display,' . $prefix . ' .ub_howto-step-display,' .
 											 $prefix . ' .ub_howto-step-display .ub_howto-step{' . PHP_EOL .
@@ -799,7 +799,7 @@ function ub_include_block_attribute_css() {
 				case 'ub/image-slider':
 					$prefix           = '#ub_image_slider_' . $attributes['blockID'];
 					$styles = ub_get_spacing_styles($attributes);
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . '{'  . PHP_EOL .
 										 'min-height: ' . (35 + $attributes['sliderHeight']) . 'px;' . PHP_EOL .
 										 '}' . PHP_EOL;
@@ -921,9 +921,10 @@ function ub_include_block_attribute_css() {
 					$blockStylesheets .= '}';
 					break;
 				case 'ub/review':
-					$prefix           = '#ub_review_' . $attributes['blockID'];
+					$prefix			 = '#ub_review_' . $attributes['blockID'];
+					$block_styling		= ub_generate_review_block_styling($attributes);
 					$styles = ub_get_spacing_styles($attributes);
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . $block_styling . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . ' .ub_review_item_name{' . PHP_EOL .
 										 'text-align: ' . $attributes['titleAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL .
@@ -965,7 +966,7 @@ function ub_include_block_attribute_css() {
 					$icon_size        = $icon_sizes[ $attributes['iconSize'] ];
 					$prefix           = '#ub-social-share-' . $attributes['blockID'];
 					$styles = ub_get_spacing_styles($attributes);
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					$blockStylesheets .= $prefix . ' .social-share-icon{' . PHP_EOL .
 										 'width:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
 										 'height:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
@@ -1034,7 +1035,7 @@ function ub_include_block_attribute_css() {
 					break;
 				case 'ub/star-rating-block':
 					$styles = ub_get_spacing_styles($attributes);
-					
+
 					$prefix           = '#ub-star-rating-' . $attributes['blockID'];
 					$blockStylesheets .= $prefix . '{' . $styles . '--ub-star-rating-font-size:'. $attributes['textFontSize'] . '' . '}';
 
@@ -1266,7 +1267,7 @@ function ub_include_block_attribute_css() {
 				case 'ub/table-of-contents-block':
 					$prefix = '#ub_table-of-contents-' . $attributes['blockID'];
 					$styles = ub_get_spacing_styles($attributes);
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					if ( $attributes['listStyle'] === 'plain' ) {
 						$blockStylesheets .= $prefix . ' ul{' . PHP_EOL .
 											 'list-style: none;' . PHP_EOL .
@@ -1339,7 +1340,7 @@ function ub_include_block_attribute_css() {
 				case 'ub/post-grid':
 					$prefix = '#ub-post-grid-' . $attributes['blockID'];
 					$styles = ub_get_post_grid_styles($attributes);
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}"; 
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					break;
 			}
 		}

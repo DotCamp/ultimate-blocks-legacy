@@ -95,14 +95,14 @@
 }
 
 .ub_review_item_name {
-	font-size: 28px !important;
+	font-size: var(--ub-review-title-font-size, 28px);
 	margin: 0 !important;
 	font-weight: 600 !important;
 }
 
 .ub_review_summary_title {
 	margin: 23px 0 13px 0 !important;
-	font-size: 24px !important;
+	font-size: var(--ub-review-summary-title-font-size, 24px);
 	font-weight: 600 !important;
 }
 
@@ -157,7 +157,9 @@
 		}
 		&_path {
 			stroke-dasharray: 100px, 100px;
-			transition: stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear 0s;
+			transition:
+				stroke-dashoffset 0.3s ease 0s,
+				stroke 0.3s linear 0s;
 			fill-opacity: 0;
 			stroke-linecap: round;
 		}
@@ -167,6 +169,5 @@
 .ub_review_cta_main {
 	display: flex;
 }
-
 
 @import "responsive";

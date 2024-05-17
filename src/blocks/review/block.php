@@ -1,5 +1,19 @@
 <?php
 
+function ub_generate_review_block_styling($attributes){
+	$summary_title_font_size	= isset($attributes['summaryTitleFontSize']) ? $attributes['summaryTitleFontSize'] : "";
+	$title_font_size 			= isset($attributes['titleFontSize']) ? $attributes['titleFontSize'] : "";
+
+	$styles = array(
+		"--ub-review-summary-title-font-size"	=> $summary_title_font_size,
+		"--ub-review-title-font-size"			=> $title_font_size,
+	);
+
+	$css = Ultimate_Blocks\includes\generate_css_string($styles);
+
+	return $css;
+}
+
 function ub_generatePercentageBar($value, $id, $activeColor, $inactiveColor ){
     $percentBar = "M 0.5,0.5 L 99.5,0.5";
     return '<div class="ub_review_percentage">
