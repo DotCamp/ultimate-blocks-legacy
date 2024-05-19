@@ -43,7 +43,7 @@ import {
 	SpacingControl,
 	TabsPanelControl,
 } from "../../components";
-import ColorSettings from "./components/ButtonColorSettings";
+import { ColorSettings, ColorSettingsWithGradient } from "../../components";
 
 export const allIcons = Object.assign(fas, fab);
 
@@ -199,33 +199,14 @@ export function EditorComponent(props) {
 
 	const normalStateColors = (
 		<>
-			<ColorSettings
-				value={buttonColor}
-				onValueChange={(colorValue) =>
-					setAttributes({
-						buttonColor: colorValue,
-					})
-				}
-				onValueReset={() => {
-					setAttributes({
-						buttonColor: "",
-					});
-				}}
+			<ColorSettingsWithGradient
+				attrBackgroundKey={"buttonColor"}
+				attrGradientKey={"buttonGradientColor"}
 				label={__("Button Color", "ultimate-blocks")}
 			/>
 			{!buttonIsTransparent && (
 				<ColorSettings
-					value={buttonTextColor}
-					onValueChange={(colorValue) =>
-						setAttributes({
-							buttonTextColor: colorValue,
-						})
-					}
-					onValueReset={() =>
-						setAttributes({
-							buttonTextColor: "",
-						})
-					}
+					attrKey={"buttonTextColor"}
 					label={__("Button Text Color", "ultimate-blocks")}
 				/>
 			)}
@@ -233,33 +214,14 @@ export function EditorComponent(props) {
 	);
 	const hoverStateColors = (
 		<>
-			<ColorSettings
-				value={buttonHoverColor}
-				onValueChange={(colorValue) =>
-					setAttributes({
-						buttonHoverColor: colorValue,
-					})
-				}
-				onValueReset={() =>
-					setAttributes({
-						buttonHoverColor: "",
-					})
-				}
+			<ColorSettingsWithGradient
+				attrBackgroundKey={"buttonHoverColor"}
+				attrGradientKey={"buttonHoverGradientColor"}
 				label={__("Button Color", "ultimate-blocks")}
 			/>
 			{!buttonIsTransparent && (
 				<ColorSettings
-					value={buttonTextHoverColor}
-					onValueChange={(colorValue) =>
-						setAttributes({
-							buttonTextHoverColor: colorValue,
-						})
-					}
-					onValueReset={() =>
-						setAttributes({
-							buttonTextHoverColor: "",
-						})
-					}
+					attrKey={"buttonTextHoverColor"}
 					label={__("Button Text Color", "ultimate-blocks")}
 				/>
 			)}

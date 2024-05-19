@@ -31,7 +31,7 @@ function ub_render_buttons_block($attributes, $block_content){
             )
     );
 
-    return '<div '. $block_attributes .  '>' . $block_content . '</div>';
+	return '<div '. $block_attributes .  '>' . $block_content . '</div>';
 }
 
 function ub_register_buttons_block() {

@@ -381,11 +381,19 @@ $defaultValues = array(
 			),
 			'buttonColor'          => array(
 				'type'    => 'string',
-				'default' => '#313131'
+				'default' => null
 			),
 			'buttonHoverColor'     => array(
 				'type'    => 'string',
-				'default' => '#313131'
+				'default' => null
+			),
+			'buttonGradientColor'          => array(
+				'type'    => 'string',
+				'default' => null
+			),
+			'buttonHoverGradientColor'     => array(
+				'type'    => 'string',
+				'default' => null
 			),
 			'buttonTextColor'      => array(
 				'type'    => 'string',
@@ -671,7 +679,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'filterArray' => array(
 				'type' => 'array',
 				'default' => array()
@@ -953,19 +961,19 @@ $defaultValues = array(
 				'default' => 'left'
 			),
 			  'expandButtonColor' => array(
-				  'type' => "string", 
-				  'default' => "",				
+				  'type' => "string",
+				  'default' => "",
 			  ),
 			'expandButtonBgColor' => array(
-				'type' => "string", 
+				'type' => "string",
 				'default' => "" ,
 			) ,
 			'expandButtonBgGradient' => array(
-				'type' => "string", 
+				'type' => "string",
 				'default' => "" ,
 			) ,
 			'expandButtonPadding' => array(
-				'type' => "array", 
+				'type' => "array",
 				'default' => array(
 					'top' => "8px",
 					'right' => "30px",
@@ -974,7 +982,7 @@ $defaultValues = array(
 				),
 			) ,
 			'expandButtonBorder' => array(
-				'type' => "array", 
+				'type' => "array",
 				'default' => array() ,
 			) ,
 			'expandButtonBorderRadius' => array(
@@ -1166,7 +1174,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required tools' )
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'tools' => array(
 				'type' => 'array',
 				'default' => array(),
@@ -1187,7 +1195,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required supplies' )
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'supplies' => array(
 				'type' => 'array',
 				'default' => array(),
@@ -1196,7 +1204,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'none'
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'section' => array(
 				'type' => 'array',
 				'default' => array(
@@ -1342,7 +1350,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'pics' => array(
 				'type' => 'array',
 				'default' => array()
@@ -1352,7 +1360,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'descriptions' => array(
 				'type' => 'array',
 				'default' => array()
@@ -2440,7 +2448,7 @@ $defaultValues = array(
 					'type' => 'string'
 				)
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'image' => array(
 				'type' => 'array',
 				'default' => array(

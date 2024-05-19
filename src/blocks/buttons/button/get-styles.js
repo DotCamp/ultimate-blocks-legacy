@@ -15,6 +15,8 @@ export function getStyles(attributes) {
 		buttonTextHoverColor,
 		buttonIsTransparent,
 		border,
+		buttonGradientColor,
+		buttonHoverGradientColor,
 	} = attributes;
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
@@ -29,7 +31,11 @@ export function getStyles(attributes) {
 		marginRight: marginObj?.right,
 		marginBottom: marginObj?.bottom,
 		marginLeft: marginObj?.left,
-		"--ub-button-bg-color": buttonIsTransparent ? "transparent" : buttonColor,
+		"--ub-button-bg-color": buttonIsTransparent
+			? "transparent"
+			: isEmpty(buttonColor)
+				? buttonGradientColor
+				: buttonColor,
 		"--ub-button-text-color": buttonIsTransparent
 			? buttonColor
 			: buttonTextColor,
@@ -39,7 +45,9 @@ export function getStyles(attributes) {
 		borderBottomRightRadius: borderRadius?.bottomRight,
 		"--ub-button-hover-bg-color": buttonIsTransparent
 			? "transparent"
-			: buttonHoverColor,
+			: isEmpty(buttonHoverColor)
+				? buttonHoverGradientColor
+				: buttonHoverColor,
 		"--ub-button-hover-text-color": buttonIsTransparent
 			? buttonHoverColor
 			: buttonTextHoverColor,

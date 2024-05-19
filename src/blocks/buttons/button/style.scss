@@ -4,15 +4,35 @@
  * CSS for both Frontend+Backend.
  */
 
+.wp-block-ub-single-button {
+	border-left: var(--ub-button-border-left);
+	border-right: var(--ub-button-border-right);
+	border-top: var(--ub-button-border-top);
+	border-bottom: var(--ub-button-border-bottom);
+	color: var(--ub-button-text-color, #ffffff);
+	background: var(--ub-button-bg-color, #313131);
+	border-top-left-radius: var(--ub-button-top-left-radius, 10px);
+	border-top-right-radius: var(--ub-button-top-right-radius, 10px);
+	border-bottom-left-radius: var(--ub-button-bottom-left-radius, 10px);
+	border-bottom-right-radius: var(--ub-button-bottom-right-radius, 10px);
+	&.is-style-outline {
+		border-style: solid;
+		&:hover {
+			border-color: var(--ub-button-hover-text-color, #313131);
+		}
+	}
+	&:hover {
+		color: var(--ub-button-hover-text-color);
+		background: var(--ub-button-hover-bg-color, #313131);
+	}
+}
 .wp-block-ub-button-block {
 	margin: 30px auto;
 	max-width: 100%;
 }
 .wp-block-ub-single-button {
 	display: flex;
-	a {
-		text-decoration: none;
-	}
+	text-decoration: none;
 }
 
 .ub-button-full-container {

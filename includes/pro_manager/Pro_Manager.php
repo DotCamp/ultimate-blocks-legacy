@@ -17,6 +17,8 @@ use Ultimate_Blocks\includes\pro_manager\base\Pro_Block_Upsell;
 use Ultimate_Blocks\includes\pro_manager\blocks\coupon\Coupon_Pro_Block;
 use Ultimate_Blocks\includes\pro_manager\blocks\timeline\Timeline_Pro_Block;
 use Ultimate_Blocks\includes\pro_manager\extensions\Button_Extension;
+use Ultimate_Blocks\includes\pro_manager\extensions\Buttons_Extension;
+use Ultimate_Blocks\includes\pro_manager\extensions\Single_Button_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Content_Toggle_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Divider_Extension;
 use Ultimate_Blocks\includes\pro_manager\extensions\Expand_Extension;
@@ -247,6 +249,14 @@ class Pro_Manager {
 		$button_upsell      = new Button_Extension( 'ub/button' );
 		$button_upsell_data = $button_upsell->get_upsell_data();
 
+		// Buttons extension.
+		$buttons_upsell      = new Buttons_Extension( 'ub/buttons' );
+		$buttons_upsell_data = $buttons_upsell->get_upsell_data();
+
+		// Single Button extension.
+		$single_button_upsell      = new Single_Button_Extension( 'ub/single-button' );
+		$single_button_upsell_data = $single_button_upsell->get_upsell_data();
+
 		// Content toggle extension.
 		$content_toggle_upsell = new Content_Toggle_Extension( 'ub/content-toggle-block' );
 		$content_toggle_data   = $content_toggle_upsell->get_upsell_data();
@@ -300,7 +310,9 @@ class Pro_Manager {
 			$table_of_contents_upsell_data,
 			$social_share_upsell_data,
 			$advanced_video_upsell_data,
-			$post_grid_upsell_data
+			$post_grid_upsell_data,
+			$buttons_upsell_data,
+			$single_button_upsell_data
 		);
 
 		return array(

@@ -44,11 +44,19 @@
     },
     "buttonColor": {
       "type": "string",
-      "default": "#313131"
+      "default": null
     },
     "buttonHoverColor": {
       "type": "string",
-      "default": "#313131"
+      "default": null
+    },
+    "buttonGradientColor": {
+      "type": "string",
+      "default": null
+    },
+    "buttonHoverGradientColor": {
+      "type": "string",
+      "default": null
     },
     "buttonTextColor": {
       "type": "string",
