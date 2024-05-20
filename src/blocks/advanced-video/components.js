@@ -509,6 +509,7 @@ export function AdvancedVideoBlock(props) {
 									"snippet.thumbnails.maxres.height",
 									get(data.items[0], "snippet.thumbnails.high.height", height),
 								);
+
 								const videoWidth = get(
 									data.items[0],
 									"snippet.thumbnails.maxres.width",
@@ -535,9 +536,7 @@ export function AdvancedVideoBlock(props) {
 									origWidth: parseInt(parsedCode[1]),
 									origHeight: parseInt(parsedCode[2]),
 									width: Math.min(100, parsedCode[1]),
-									height:
-										(parsedCode[2] * Math.min(200, parsedCode[1])) /
-										parsedCode[1],
+									height: parsedCode[2],
 									videoLength: timePeriods.reduce((sum, part) => {
 										let multiplier = {
 											W: 604800,
