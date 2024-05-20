@@ -1232,6 +1232,10 @@ $defaultValues = array(
 				'type'    => 'number',
 				'default' => 20
 			),
+			'speed' => array(
+				'type'    => 'number',
+				'default' => 300
+			),
 			'slidesPerView' => array(
 				'type'    => 'number',
 				'default' => 1

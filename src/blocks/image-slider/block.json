@@ -1,132 +1,136 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/image-slider",
-     "title": "Image Slider",
-     "category": "ultimateblocks",
-     "description": "Add a lightweight, simple image slider in your post. Comes with additional settings.",
-     "keywords": [
-          "Image Slider",
-          "Slideshow",
-          "Ultimate Blocks"
-     ],
-     "attributes": {
-          "blockID": {
-               "type": "string",
-               "default": ""
-          },
-          "slidesPerView": {
-               "type": "number",
-               "default": 1
-          },
-          "spaceBetween": {
-               "type": "number",
-               "default": 20
-          },
-          "images": {
-               "type": "string",
-               "default": "[]"
-          },
-          "pics": {
-               "type": "array",
-               "default": []
-          },
-          "captions": {
-               "type": "string",
-               "default": "[]"
-          },
-          "descriptions": {
-               "type": "array",
-               "default": []
-          },
-          "wrapsAround": {
-               "type": "boolean",
-               "default": true
-          },
-          "isDraggable": {
-               "type": "boolean",
-               "default": false
-          },
-          "autoplays": {
-               "type": "boolean",
-               "default": false
-          },
-          "autoplayDuration": {
-               "type": "number",
-               "default": 3
-          },
-          "sliderHeight": {
-               "type": "number",
-               "default": 250
-          },
-          "showPageDots": {
-               "type": "boolean",
-               "default": true
-          },
-          "usePagination": {
-               "type": "boolean",
-               "default": true
-          },
-          "useNavigation": {
-               "type": "boolean",
-               "default": true
-          },
-          "paginationType": {
-               "type": "string",
-               "default": ""
-          },
-          "transition": {
-               "type": "string",
-               "default": "slide"
-          },
-          "slideShadows": {
-               "type": "boolean",
-               "default": true
-          },
-          "rotate": {
-               "type": "number",
-               "default": 50
-          },
-          "stretch": {
-               "type": "number",
-               "default": 0
-          },
-          "depth": {
-               "type": "number",
-               "default": 100
-          },
-          "modifier": {
-               "type": "number",
-               "default": 1
-          },
-          "limitRotation": {
-               "type": "boolean",
-               "default": true
-          },
-          "shadow": {
-               "type": "boolean",
-               "default": true
-          },
-          "shadowOffset": {
-               "type": "number",
-               "defaut": 20
-          },
-          "shadowScale": {
-               "type": "number",
-               "default": 0.94
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          },
-          "align": {
-               "type": "string",
-               "default": ""
-          }
-     },
-     "supports": {}
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/image-slider",
+	"title": "Image Slider",
+	"category": "ultimateblocks",
+	"description": "Add a lightweight, simple image slider in your post. Comes with additional settings.",
+	"keywords": [
+		"Image Slider",
+		"Slideshow",
+		"Ultimate Blocks"
+	],
+	"attributes": {
+		"blockID": {
+			"type": "string",
+			"default": ""
+		},
+		"slidesPerView": {
+			"type": "number",
+			"default": 1
+		},
+		"speed": {
+			"type": "number",
+			"default": 300
+		},
+		"spaceBetween": {
+			"type": "number",
+			"default": 20
+		},
+		"images": {
+			"type": "string",
+			"default": "[]"
+		},
+		"pics": {
+			"type": "array",
+			"default": []
+		},
+		"captions": {
+			"type": "string",
+			"default": "[]"
+		},
+		"descriptions": {
+			"type": "array",
+			"default": []
+		},
+		"wrapsAround": {
+			"type": "boolean",
+			"default": true
+		},
+		"isDraggable": {
+			"type": "boolean",
+			"default": false
+		},
+		"autoplays": {
+			"type": "boolean",
+			"default": false
+		},
+		"autoplayDuration": {
+			"type": "number",
+			"default": 3
+		},
+		"sliderHeight": {
+			"type": "number",
+			"default": 250
+		},
+		"showPageDots": {
+			"type": "boolean",
+			"default": true
+		},
+		"usePagination": {
+			"type": "boolean",
+			"default": true
+		},
+		"useNavigation": {
+			"type": "boolean",
+			"default": true
+		},
+		"paginationType": {
+			"type": "string",
+			"default": ""
+		},
+		"transition": {
+			"type": "string",
+			"default": "slide"
+		},
+		"slideShadows": {
+			"type": "boolean",
+			"default": true
+		},
+		"rotate": {
+			"type": "number",
+			"default": 50
+		},
+		"stretch": {
+			"type": "number",
+			"default": 0
+		},
+		"depth": {
+			"type": "number",
+			"default": 100
+		},
+		"modifier": {
+			"type": "number",
+			"default": 1
+		},
+		"limitRotation": {
+			"type": "boolean",
+			"default": true
+		},
+		"shadow": {
+			"type": "boolean",
+			"default": true
+		},
+		"shadowOffset": {
+			"type": "number",
+			"defaut": 20
+		},
+		"shadowScale": {
+			"type": "number",
+			"default": 0.94
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		},
+		"align": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {}
 }
