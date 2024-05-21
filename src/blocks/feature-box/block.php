@@ -4,19 +4,19 @@ function ub_render_feature_box_block($attributes){
     extract($attributes);
 
     $column1 = '<div class="ub_feature_1">
-    <img class="ub_feature_one_img" src="' . $imgOneURL . '" alt="' . $imgOneAlt . '"/>
-    <p class="ub_feature_one_title"'.($blockID===''?' style="text-align: '.$title1Align.';"':'').'>' . $columnOneTitle . '</p>
-    <p class="ub_feature_one_body"'.($blockID===''?' style="text-align: '.$body1Align.';"':'').'>' . $columnOneBody . '</p></div>';
+    <img class="ub_feature_one_img" src="' . esc_url($imgOneURL) . '" alt="' . esc_attr($imgOneAlt) . '"/>
+    <p class="ub_feature_one_title"'.($blockID===''?' style="text-align: '. esc_attr($title1Align) .';"':'').'>' . esc_html($columnOneTitle) . '</p>
+    <p class="ub_feature_one_body"'.($blockID===''?' style="text-align: '. esc_attr($body1Align) .';"':'').'>' . esc_html($columnOneBody) . '</p></div>';
 
     $column2 = '<div class="ub_feature_2">
-    <img class="ub_feature_two_img" src="' . $imgTwoURL . '" alt="' . $imgTwoAlt . '"/>
-    <p class="ub_feature_two_title"'.($blockID===''?' style="text-align: '.$title2Align.';"':'').'>' . $columnTwoTitle . '</p>
-    <p class="ub_feature_two_body"'.($blockID===''?' style="text-align: '.$body2Align.';"':'').'>' . $columnTwoBody . '</p></div>';
+    <img class="ub_feature_two_img" src="' . esc_url($imgTwoURL) . '" alt="' . esc_attr($imgTwoAlt) . '"/>
+    <p class="ub_feature_two_title"'.($blockID===''?' style="text-align: '. esc_attr($title2Align) .';"':'').'>' . esc_html($columnTwoTitle) . '</p>
+    <p class="ub_feature_two_body"'.($blockID===''?' style="text-align: '. esc_attr($body2Align) .';"':'').'>' . esc_html($columnTwoBody) . '</p></div>';
 
     $column3 = '<div class="ub_feature_3">
-    <img class="ub_feature_three_img" src="'.$imgThreeURL.'" alt="' . $imgThreeAlt . '"/>
-    <p class="ub_feature_three_title"'.($blockID===''?' style="text-align: '.$title3Align.';"':'').'>' . $columnThreeTitle . '</p>
-    <p class="ub_feature_three_body"'.($blockID===''?' style="text-align: '.$body3Align.';"':'').'>' . $columnThreeBody . '</p></div>';
+    <img class="ub_feature_three_img" src="'. esc_url($imgThreeURL) .'" alt="' . esc_attr($imgThreeAlt) . '"/>
+    <p class="ub_feature_three_title"'.($blockID===''?' style="text-align: '. esc_attr($title3Align) .';"':'').'>' . esc_html($columnThreeTitle) . '</p>
+    <p class="ub_feature_three_body"'.($blockID===''?' style="text-align: '. esc_attr($body3Align) .';"':'').'>' . esc_html($columnThreeBody) . '</p></div>';
 
     $columns = $column1;
 
@@ -27,8 +27,8 @@ function ub_render_feature_box_block($attributes){
         $columns .= $column3;
     }
 
-    return '<div class="ub_feature_box column_'.$column.(isset($className) ? ' ' . esc_attr($className) : '').'"'
-        .($blockID===''?: ' id="ub_feature_box_'.$blockID.'"').'>'.
+    return '<div class="ub_feature_box column_'. esc_attr($column) .(isset($className) ? ' ' . esc_attr($className) : '').'"'
+        .($blockID===''?: ' id="ub_feature_box_'. esc_attr($blockID) .'"').'>'.
     $columns.'</div>';
 }
 

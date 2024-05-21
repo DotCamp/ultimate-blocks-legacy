@@ -5,7 +5,7 @@ require_once dirname(dirname(dirname(__DIR__))) . '/includes/ultimate-blocks-sty
 class Ultimate_Counter {
      /**
       * Constructor
-      * 
+      *
       * @return void
       */
      public function __construct(){
@@ -28,9 +28,9 @@ class Ultimate_Counter {
                '--ub-counter-margin-right'           => isset($margin['left']) ? $margin['left']  : "",
                '--ub-counter-margin-bottom'          => isset($margin['right']) ? $margin['right']  : "",
                '--ub-counter-margin-left'            => isset($margin['bottom']) ? $margin['bottom']  : "",
-               '--ub-counter-font-size'              => $counter_font_size,
-               '--ub-counter-label-font-size'        => $label_font_size,
-               '--ub-counter-label-color'            => $label_color
+               '--ub-counter-font-size'              => esc_attr($counter_font_size),
+               '--ub-counter-label-font-size'        => esc_attr($label_font_size),
+               '--ub-counter-label-color'            => esc_attr($label_color)
           );
 
 	     return Ultimate_Blocks\includes\generate_css_string( $styles );
@@ -42,17 +42,17 @@ class Ultimate_Counter {
 	 * @return string The CSS style string.
 	 */
      public function ub_get_generated_styles($attributes){
-         
+
           $styles = '';
           if(!empty($counter_font_size)){
-               $styles .= '--ub-counter-font-size:' . $counter_font_size . ';';
+               $styles .= '--ub-counter-font-size:' . esc_attr($counter_font_size) . ';';
           }
           if(!empty($label_font_size)){
-               $styles .= '--ub-counter-label-font-size:' . $label_font_size . ';';
+               $styles .= '--ub-counter-label-font-size:' . esc_attr($label_font_size) . ';';
           }
           return $styles;
      }
-     
+
      /**
       * Render callback for the Ultimate Counter block.
       *
@@ -71,14 +71,14 @@ class Ultimate_Counter {
           $label = $attributes['label'];
           $label_position = $attributes['labelPosition'];
           $styles = $this->ub_get_counter_block_styles($block->parsed_block['attrs']);
-          
+
           $wrapper_attributes = get_block_wrapper_attributes(
                array(
                     'class' => 'ub_counter-container',
                     'style' => $styles
                )
           );
-          $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . $label . '</span></div>';
+          $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . esc_html($label) . '</span></div>';
           $block_content = sprintf(
                '<div %1$s>
                     <div
@@ -103,8 +103,8 @@ class Ultimate_Counter {
                esc_attr( $animation_duration ), // 5
                esc_html( $prefix ), // 6
                esc_html( $suffix ), // 7
-               $label_position === 'top' ? $label_markup : "", //8 
-               $label_position === 'bottom' ? $label_markup : "" //9 
+               $label_position === 'top' ? $label_markup : "", //8
+               $label_position === 'bottom' ? $label_markup : "" //9
           );
 
           return $block_content;
@@ -124,6 +124,6 @@ class Ultimate_Counter {
                'render_callback' => array($this, 'ub_render_counter_block')
           ));
      }
-     
+
 }
 new Ultimate_Counter();

@@ -2,12 +2,12 @@
 
 function ub_render_expand_portion_block($attributes, $content){
     extract($attributes);
-    return '<div class="ub-expand-portion ub-expand-' . $displayType .
+    return '<div class="ub-expand-portion ub-expand-' . esc_attr($displayType) .
         ($displayType === 'full' ? ' ub-hide' : '').
         (isset($className) ? ' ' . esc_attr($className) : '') . '">' .
-        $content.
+        esc_html($content) .
         '<a class="ub-expand-toggle-button" role="button" aria-expanded="false" aria-controls="'.
-            ($parentID === '' ? '' : "ub-expand-full-" . $parentID).'" tabindex="0">' . $clickText . '</a>'
+            ($parentID === '' ? '' : "ub-expand-full-" . esc_attr($parentID) ).'" tabindex="0">' . esc_html($clickText) . '</a>'
         . '</div>';
 }
 
@@ -38,9 +38,9 @@ function ub_render_expand_block($attributes, $content){
     }
 
     return '<div class="wp-block-ub-expand ub-expand '.(isset($className) ? ' ' . esc_attr($className) : '')
-    
-    .'" id="ub-expand-'.$blockID.'"' .  ($allowScroll ? (' data-scroll-type="' . $scrollOption . '"' . ($scrollOption === 'fixedamount' ? ' data-scroll-amount="' . $scrollOffset . '"' : '')
-    . ($scrollOption === 'namedelement' ? ' data-scroll-target="' . $scrollTargetPrefix . $scrollTarget . '"' : '')) : '' ) . '>'.$content.'</div>';
+
+    .'" id="ub-expand-'. esc_attr($blockID) .'"' .  ($allowScroll ? (' data-scroll-type="' . esc_attr($scrollOption) . '"' . ($scrollOption === 'fixedamount' ? ' data-scroll-amount="' . esc_attr($scrollOffset) . '"' : '')
+    . ($scrollOption === 'namedelement' ? ' data-scroll-target="' . $scrollTargetPrefix . esc_attr($scrollTarget) . '"' : '')) : '' ) . '>'. esc_html($content) .'</div>';
 }
 
 function ub_register_expand_block($attributes){

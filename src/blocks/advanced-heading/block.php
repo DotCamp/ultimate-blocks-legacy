@@ -4,7 +4,7 @@ function ub_render_advanced_heading_block( $attributes ) {
 	extract( $attributes );
 	$classes                  = array( 'ub_advanced_heading' );
 	$ids                      = array();
-	$ids[]                    = 'ub-advanced-heading-' . $blockID;
+	$ids[]                    = 'ub-advanced-heading-' . esc_attr($blockID);
 	$block_wrapper_attributes = get_block_wrapper_attributes(
 		array(
 			'class' => implode( ' ', $classes ),
@@ -16,7 +16,7 @@ function ub_render_advanced_heading_block( $attributes ) {
 	$cleaned_content = preg_replace( '/<img[^>]+>/i', '', $content );
 	$cleaned_content = preg_replace( '/<script[^>]*?>.*?<\/script>/is', '', $cleaned_content );
 
-	$final_content = '<' . $level . ' ' . $block_wrapper_attributes . ' data-blockid="' . $blockID . '">' . $cleaned_content . '</' . $level . '>';
+	$final_content = '<' . esc_attr($level) . ' ' . $block_wrapper_attributes . ' data-blockid="' . esc_attr($blockID) . '">' . $cleaned_content . '</' . esc_attr($level) . '>';
 
 	return wp_kses_post( $final_content );
 }

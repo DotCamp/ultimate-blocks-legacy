@@ -3,10 +3,10 @@
 function ub_render_divider_block($attributes){
     extract($attributes);
     $divider_style = $orientation === 'horizontal' ?
-        'margin-top: ' . $borderHeight . 'px; margin-bottom: ' . $borderHeight . 'px;"' :
-        'width:fit-content; height:'. $lineHeight .'';
-    return '<div id="ub_divider_' . $blockID.'" class="wp-block-ub-divider ub-divider-orientation-'. $orientation .'"><hr class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
-    ($blockID === '' ? 'style="'.($orientation === 'horizontal' ? 'border-top' : 'border-left').': ' . $borderSize . 'px ' . $borderStyle . ' ' . $borderColor . ';'. $divider_style .'' :'') . '></hr></div>';
+        'margin-top: ' . esc_attr($borderHeight) . 'px; margin-bottom: ' . esc_attr($borderHeight) . 'px;"' :
+        'width:fit-content; height:'. esc_attr($lineHeight) .'';
+    return '<div id="ub_divider_' . esc_attr($blockID) .'" class="wp-block-ub-divider ub-divider-orientation-'. esc_attr($orientation) .'"><hr class="ub_divider'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
+    ($blockID === '' ? 'style="'.($orientation === 'horizontal' ? 'border-top' : 'border-left').': ' . esc_attr($borderSize) . 'px ' . esc_attr($borderStyle) . ' ' . esc_attr($borderColor) . ';'. $divider_style .'' :'') . '></hr></div>';
 }
 
 function ub_register_divider_block(){
