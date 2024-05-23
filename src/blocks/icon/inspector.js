@@ -18,26 +18,37 @@ import {
 function CustomInspectorControls(props) {
 	const {
 		setAttributes,
-		attributes: { size, iconRotation },
+		attributes: { size, iconRotation, className },
 	} = props;
+	const blockClassName = className ?? props.attributes?.className ?? "";
+	const isStyleCircleOutline = blockClassName
+		?.split(" ")
+		.includes("is-style-circle-outline");
+	const isStyleSquareOutline = blockClassName
+		?.split(" ")
+		.includes("is-style-square-outline");
 	const normalStateColors = (
 		<>
 			<ColorSettings attrKey="iconColor" label={__("Icon Color")} />
-			<ColorSettingsWithGradient
-				attrBackgroundKey="iconBackground"
-				attrGradientKey="iconGradientBackground"
-				label={__("Icon Background")}
-			/>
+			{!isStyleCircleOutline && !isStyleSquareOutline && (
+				<ColorSettingsWithGradient
+					attrBackgroundKey="iconBackground"
+					attrGradientKey="iconGradientBackground"
+					label={__("Icon Background")}
+				/>
+			)}
 		</>
 	);
 	const hoverStateColors = (
 		<>
 			<ColorSettings attrKey="iconHoverColor" label={__("Icon Color")} />
-			<ColorSettingsWithGradient
-				attrBackgroundKey="iconHoverBackground"
-				attrGradientKey="iconHoverGradientBackground"
-				label={__("Icon Background")}
-			/>
+			{!isStyleCircleOutline && !isStyleSquareOutline && (
+				<ColorSettingsWithGradient
+					attrBackgroundKey="iconHoverBackground"
+					attrGradientKey="iconHoverGradientBackground"
+					label={__("Icon Background")}
+				/>
+			)}
 		</>
 	);
 	return (
