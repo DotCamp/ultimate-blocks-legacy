@@ -9985,7 +9985,7 @@ class Ultimate_Blocks_IconSet{
 			"xing-square" => "square-xing",
 			"youtube-square" => "square-youtube"
 		);
-		
+
 		if(array_key_exists($iconName, $fontAwesomeIcon)){
 			return $fontAwesomeIcon[$iconName];
 		}
@@ -10001,13 +10001,13 @@ class Ultimate_Blocks_IconSet{
 if(!function_exists('ub_checkInnerBlocks')){
     function ub_checkInnerBlocks( $block ) {
         static $currentBlocks = [];
-        
+
         $currentBlockArray = [$block];
-    
+
         if( $block['blockName'] == 'core/block' ) { //reusable block
 			$currentBlockArray = parse_blocks( get_post_field( 'post_content', $block['attrs']['ref'] ) );
         }
-    
+
 		foreach($currentBlockArray as $current){
 			if( $current['blockName'] != '' ) {
 				array_push( $currentBlocks, $current );
@@ -10047,15 +10047,15 @@ if(!function_exists('ub_generateStarDisplay')){
 		$starRoute = "m0.75,56.89914l56.02207,0l17.31126,-56.14914l17.31126,56.14914l56.02206,0l-45.32273,34.70168l17.31215,56.14914l-45.32274,-34.70262l-45.32274,34.70262l17.31215,-56.14914l-45.32274,-34.70168z";
 
 		foreach(range(0, $limit - 1) as $current){
-			$stars .= '<svg xmlns="http://www.w3.org/2000/svg" height="' . $size . '" width="' . $size . '" viewBox="0 0 150 150">
-			<defs><mask id="' . $maskName . $id . '-' . $current
+			$stars .= '<svg xmlns="http://www.w3.org/2000/svg" height="' . esc_attr($size) . '" width="' . esc_attr($size) . '" viewBox="0 0 150 150">
+			<defs><mask id="' . $maskName . esc_attr($id) . '-' . $current
 			. '"><rect height="150" width="' . ($value - $current > 0 ?
 				($value - $current < 1 ? $value - $current : 1) : 0) * 150
 			. '" y="0" x="0" fill="#fff"/></mask></defs> <path fill="' . $inactiveStarColor . '" stroke-width="2.5"
 			d="' . $starRoute . '"
-			stroke="' . $starOutlineColor . '"/><path class="star" id="star' . $current .
-			'" mask="url(#' . $maskName . $id . '-' . $current . ')" fill="' . $activeStarColor . '" strokeWidth="2.5"
-			d="' . $starRoute . '" stroke="' . $starOutlineColor . '"/>
+			stroke="' . esc_attr($starOutlineColor) . '"/><path class="star" id="star' . $current .
+			'" mask="url(#' . $maskName . esc_attr($id) . '-' . $current . ')" fill="' . esc_attr($activeStarColor) . '" strokeWidth="2.5"
+			d="' . $starRoute . '" stroke="' . esc_attr($starOutlineColor) . '"/>
 			</svg>';
 		}
 

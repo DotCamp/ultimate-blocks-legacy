@@ -16,15 +16,15 @@ function ub_render_image_slider_block($attributes){
 
     foreach($imageArray as $key => $image){
         $gallery .= '<figure class="swiper-slide">
-        <img src="' . $image['url'] . '" alt="' . esc_html($image['alt']) . '"' .
-            ($blockID === '' ? ' style="height: ' . $sliderHeight . 'px;"' : '') . '>' .
+        <img src="' . esc_url($image['url']) . '" alt="' . esc_attr($image['alt']) . '"' .
+            ($blockID === '' ? ' style="height: ' . esc_attr($sliderHeight) . 'px;"' : '') . '>' .
             '<figcaption class="ub_image_slider_image_caption">' . ($captionArray[$key]['link'] === '' ? '' : '<a href="' . esc_url($captionArray[$key]['link']) . '">')
-            . $captionArray[$key]['text']
+            . esc_html($captionArray[$key]['text'])
             . ($captionArray[$key]['link'] === '' ? '' : '</a>') . ' </figcaption></figure>';
     }
     $classes = array( 'ub_image_slider', 'swiper-container' );
     if( !empty($align) ){
-        $classes[] = 'align' . $align;
+        $classes[] = 'align' . esc_attr($align) ;
     }
 
     $wrapper_attributes = get_block_wrapper_attributes(
@@ -32,15 +32,15 @@ function ub_render_image_slider_block($attributes){
             'class' => implode(' ', $classes)
         )
     );
-    return '<div ' . $wrapper_attributes .  ' ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? $sliderHeight : 200) . 'px;"'
-        : 'id="ub_image_slider_' . $blockID . '"').
-        ' data-swiper-data=\'{"spaceBetween":' . $spaceBetween . ',"slidesPerView":' . $slidesPerView . ',"loop":' . json_encode($wrapsAround) .
-            ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . $paginationType . '"'.($paginationType === 'bullets' ? ', "clickable":true' :'') . '}
+    return '<div ' . $wrapper_attributes .  ' ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? esc_attr($sliderHeight) : 200) . 'px;"'
+        : 'id="ub_image_slider_' . esc_attr($blockID) . '"').
+        ' data-swiper-data=\'{"spaceBetween":' . esc_attr($spaceBetween) . ',"slidesPerView":' . esc_attr($slidesPerView) . ',"loop":' . json_encode($wrapsAround) .
+            ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . esc_attr($paginationType) . '"'.($paginationType === 'bullets' ? ', "clickable":true' :'') . '}
             ,' . ($useNavigation ? '"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"},' : '') . ' "keyboard": { "enabled": true },
-            "effect": "' . $transition . '"'
+            "effect": "' . esc_attr($transition) . '"'
             . ($transition === 'fade' ? ',"fadeEffect":{"crossFade": true}' : '')
-            . ($transition === 'coverflow' ? ',"coverflowEffect":{"slideShadows":' . json_encode($slideShadows) . ', "rotate": ' . $rotate . ', "stretch": ' . $stretch . ', "depth": ' . $depth . ', "modifier": ' . $modifier . '}' : '')
-            . ($transition === 'cube' ? ',"cubeEffect":{"slideShadows":' . json_encode($slideShadows) . ', "shadow":' . json_encode($shadow) . ', "shadowOffset":' . $shadowOffset . ', "shadowScale":' . $shadowScale . '}' : '')
+            . ($transition === 'coverflow' ? ',"coverflowEffect":{"slideShadows":' . json_encode($slideShadows) . ', "rotate": ' . esc_attr($rotate) . ', "stretch": ' . esc_attr($stretch) . ', "depth": ' . esc_attr($depth) . ', "modifier": ' . esc_attr($modifier) . '}' : '')
+            . ($transition === 'cube' ? ',"cubeEffect":{"slideShadows":' . json_encode($slideShadows) . ', "shadow":' . json_encode($shadow) . ', "shadowOffset":' . esc_attr($shadowOffset) . ', "shadowScale":' . esc_attr($shadowScale) . '}' : '')
             . ($transition === 'flip' ? ', "flipEffect":{"slideShadows":' . json_encode($slideShadows) . ', "limitRotation": ' . json_encode($limitRotation) . '}' : '')
             . ($autoplays ? ',"autoplay":{"delay": '. ($autoplayDuration * 1000) . '}' : '')
             . (!$isDraggable ? ',"simulateTouch":false' : '') . '}\'>' .

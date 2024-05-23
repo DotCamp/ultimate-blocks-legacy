@@ -17,7 +17,7 @@ function ub_query_post( $attributes ){
     $includedCategories = isset($attributes['categories']) && $attributes['categories'] != '' ? $attributes['categories'] :
                     (isset($attributes['categoryArray']) ?
                         join(',',array_map(function($c){return $c['id'];}, $attributes['categoryArray'])) : '');
-    
+
     $excludedCategories = isset($attributes['excludedCategories']) ?
                 join(',',array_map(function($c){return $c['id'];}, $attributes['excludedCategories'])) : '';
 
@@ -210,10 +210,10 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
         wp_reset_postdata();
 
         /* Build the block classes */
-        $class = "wp-block-ub-post-grid ub-block-post-grid align". $attributes['wrapAlignment'];
+        $class = "wp-block-ub-post-grid ub-block-post-grid align". esc_attr($attributes['wrapAlignment']) ;
 
         if ( isset( $attributes['className'] ) ) {
-            $class .= ' ' . $attributes['className'];
+            $class .= ' ' . esc_attr($attributes['className']) ;
         }
 
         /* Layout orientation class */
@@ -227,7 +227,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 
         /* Grid columns class */
         if ( isset( $attributes['columns'] ) && 'grid' === $attributes['postLayout'] ) {
-            $grid_class .= ' columns-' . $attributes['columns'];
+            $grid_class .= ' columns-' . esc_attr($attributes['columns']) ;
         }
 
         /* Post grid section tag */
@@ -242,7 +242,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
             esc_attr( $class ),
             esc_attr( $grid_class ),
             $post_grid,
-            $is_equal_height
+            esc_attr($is_equal_height)
         );
         return $block_content;
     }

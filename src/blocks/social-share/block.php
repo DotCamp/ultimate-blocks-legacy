@@ -46,8 +46,8 @@ function ub_render_social_share_block( $attributes ) {
 	}
 
     return '<div class="wp-block-ub-social-share'.(isset($className) ? ' ' . esc_attr($className) : '').
-                '"' . ($blockID === '' ? '' : ' id="ub-social-share-' . $blockID . '"') . '>
-		<div class="social-share-icons align-icons-' . $align . ' orientation-icons-' . $orientation . ($useCaptions && !$addOutline ? ' no-outline' : '') . '">' . $icons .
+                '"' . ($blockID === '' ? '' : ' id="ub-social-share-' . esc_attr($blockID) . '"') . '>
+		<div class="social-share-icons align-icons-' . esc_attr($align) . ' orientation-icons-' . esc_attr($orientation) . ($useCaptions && !$addOutline ? ' no-outline' : '') . '">' . $icons .
         '</div>
 	</div>';
 }
@@ -64,17 +64,17 @@ function ub_render_social_share_block( $attributes ) {
 function ub_prepare_social_share_icon($icon, $iconShape, $siteName, $link, $caption, $hasOutline){
 	if($hasOutline){
 		return '<a aria-label="' . $siteName . '-logo" target="_blank" rel="nofollow" href="' . esc_url($link) . '" class="ub-social-share-' . $siteName . '-container">
-		<span class="social-share-icon ub-social-share-' . $siteName . ($iconShape === 'none' ? '' : ' ' . $iconShape) . '">' .
+		<span class="social-share-icon ub-social-share-' . $siteName . ($iconShape === 'none' ? '' : ' ' . esc_attr($iconShape)) . '">' .
 		   $icon .
 		'</span>' .
-		( $caption ? ('<span>' . $caption . '</span>') : '' ) . '</a>';
+		( $caption ? ('<span>' . esc_html($caption) . '</span>') : '' ) . '</a>';
 	}
 	else{
 		return ($caption ? ('<div class="ub-social-share-' . $siteName . '-container">') : '') .
 		'<a aria-label="' . $siteName . '-logo" target="_blank" rel="nofollow" href="' . esc_url($link) . '" class="social-share-icon ub-social-share-' . $siteName . ' ' . ($caption ? ' ' : 'ub-social-share-standalone-icon ') .
-			($iconShape === 'none' ? '' : ' ' . $iconShape) . '">'
-        	. $icon . '</a>' . 
-		( $caption ? '<span><a aria-label="' . $siteName . '-logo" target="_blank" href="' . esc_url($link) . '">' . $caption . '</a></span></div>' : '' );
+			($iconShape === 'none' ? '' : ' ' . esc_attr($iconShape) ) . '">'
+        	. $icon . '</a>' .
+		( $caption ? '<span><a aria-label="' . $siteName . '-logo" target="_blank" href="' . esc_url($link) . '">' . esc_html($caption) . '</a></span></div>' : '' );
 	}
 }
 
