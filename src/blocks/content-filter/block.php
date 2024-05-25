@@ -30,9 +30,9 @@ function ub_get_content_filter_panel_styles( $attributes ) {
     $block_attributes  = isset($block->parsed_block['attrs']) ? $block->parsed_block['attrs'] : array();
     $styles = ub_get_content_filter_panel_styles($block_attributes);
 
-    return '<div class="ub-content-filter-panel'.(isset($className) ? ' ' . esc_attr($className) : '').
-        ($initiallyShow ? '' : ' ub-hide').'" style="'. esc_attr($styles) .'" data-selectedFilters="'.json_encode($selectedFilters).
-        '">'. esc_html($content) .'</div>';
+    return '<div class="ub-content-filter-panel'.(isset($className) ? ' ' . $className : '').
+        ($initiallyShow ? '' : ' ub-hide').'" style="'. $styles .'" data-selectedFilters="'.json_encode($selectedFilters).
+        '">'. $content .'</div>';
 }
 
 function ub_register_content_filter_entry_block(){
@@ -90,8 +90,8 @@ function ub_render_content_filter_block($attributes, $content){
         <div class="ub-content-filter-category-name">' . esc_html($filterGroup['category']) . '</div>';
         $filters = '<div class="ub-content-filter-buttons-wrapper">';
         foreach($filterGroup['filters'] as $key2 => $tag){
-            $filters .= '<div data-tagIsSelected="false" data-categoryNumber="' . esc_attr($key1) . '"
-            data-filterNumber="' . esc_attr($key2) . '" ' . ($blockID === '' ? 'data-normalColor="' . esc_attr($buttonColor) . '" data-normalTextColor="' . esc_attr($buttonTextColor) .
+            $filters .= '<div data-tagIsSelected="false" data-categoryNumber="' . $key1 . '"
+            data-filterNumber="' . $key2 . '" ' . ($blockID === '' ? 'data-normalColor="' . esc_attr($buttonColor) . '" data-normalTextColor="' . esc_attr($buttonTextColor) .
             '" data-activeColor="' . esc_attr($activeButtonColor) . '" data-activeTextColor="' . esc_attr($activeButtonTextColor) .
             '"style="background-color: ' . esc_attr($buttonColor) .'; color: ' . esc_attr($buttonTextColor) . '"' : '') . ' class="ub-content-filter-tag">' .
             esc_html($tag) . '</div>';
@@ -111,12 +111,12 @@ $currentSelection = array_map(function($category){
                 'class' => implode(" ", $classes)
             )
     );
-return '<div ' . esc_attr($block_attributes) .
+return '<div ' . $block_attributes .
         '"'. ($blockID === '' ? : ' id="ub-content-filter-' . esc_attr($blockID) . '"') .
         ' data-currentSelection="'.json_encode($currentSelection).
         '" data-initiallyShowAll="'.json_encode($initiallyShowAll).
         '" data-matchingOption="'. esc_attr($matchingOption) .'">'.
-    esc_html($filterList) . esc_html($content) . '</div>';
+    $filterList . $content . '</div>';
 }
 
 function ub_register_content_filter_block(){

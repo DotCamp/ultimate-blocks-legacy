@@ -46,11 +46,11 @@ if ( ! class_exists( 'ub_simple_html_dom_node' ) ) {
 function ub_render_content_toggle_block( $attributes, $content ) {
 	extract( $attributes );
 
-	return '<div class="wp-block-ub-content-toggle' . ( isset( $className ) ? ' ' . esc_attr( $className ) : '' )
+	return '<div class="wp-block-ub-content-toggle' . ( isset( $className ) ? ' ' .  $className  : '' )
 			. '" ' . ( $blockID === '' ? '' : 'id="ub-content-toggle-' . esc_attr($blockID) . '"' ) .
 			( $preventCollapse ? ' data-preventcollapse="true"' : '' ) .
 			( $showOnlyOne ? ' data-showonlyone="true"' : '' ) . ' data-mobilecollapse="' . json_encode( $collapsedOnMobile ) . '" data-desktopcollapse="' . json_encode( $collapsed ) . '">'
-			. esc_html($content) . '</div>';
+			. $content . '</div>';
 }
 
 function ub_render_content_toggle_panel_block( $attributes, $content, $block_object ) {
@@ -67,19 +67,19 @@ function ub_render_content_toggle_panel_block( $attributes, $content, $block_obj
 	}
 	$should_collapsed = $collapsed && ! $defaultOpen;
 
-	return '<div ' . ( $toggleID === '' ? '' : 'id="' . esc_attr($toggleID) . '" ' ) . 'class="' . esc_attr($border_class) . $classNamePrefix . '-accordion' . ( isset( $className ) ? ' ' . esc_attr( $className ) : '' ) . '"'
+	return '<div ' . ( $toggleID === '' ? '' : 'id="' . esc_attr($toggleID) . '" ' ) . 'class="' . $border_class . $classNamePrefix . '-accordion' . ( isset( $className ) ? ' ' .  $className  : '' ) . '"'
 			. ( $parentID === '' ? ' style="border-color: ' . esc_attr($theme) . ';"' : '' ) . '>
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'
 			. ( $parentID === '' ? ' style="background-color: ' . esc_attr($theme) . ';"' : '' ) . ( $preventCollapse ? ' aria-disabled="true"' : '' )
 			.  '" aria-controls="ub-content-toggle-panel-' . esc_attr($index) . '-' . esc_attr($parentID) . '" tabindex="0">
                     <' . esc_attr($titleTag) . ' class="' . $classNamePrefix . '-accordion-title ub-content-toggle-title-' . esc_attr($parentID) . '"'
 			. ( $parentID === '' ? ' style="color:' . esc_attr($titleColor) . ';"' : '' ) . '>' . esc_html($panelTitle) . '</' . esc_attr($titleTag) . '>' .
-			( $toggleIcon === 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' . esc_attr( $toggleLocation ) .
+			( $toggleIcon === 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' .  esc_attr($toggleLocation)  .
 											'"><span class="' . $classNamePrefix . '-accordion-state-indicator ' . esc_attr($icon_class) .
 											( $should_collapsed ? '' : ' open' ) . '"></span>
                     </div>' ) .
 			'</div><div role="region" '. 'aria-expanded="'. (json_encode(! $should_collapsed)) .'" class="' . $classNamePrefix . '-accordion-content-wrap' .
-			( $should_collapsed ? ' ub-hide' : '' ) . '" id="ub-content-toggle-panel-' . esc_attr($index) . '-' . esc_attr($parentID) . '">' . esc_html($content)
+			( $should_collapsed ? ' ub-hide' : '' ) . '" id="ub-content-toggle-panel-' . esc_attr($index) . '-' . esc_attr($parentID) . '">' . $content
 			. '</div></div>';
 }
 

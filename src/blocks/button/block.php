@@ -84,7 +84,7 @@ function ub_render_button_block($attributes){
                 'class' => esc_attr(implode(" ", $classes))
             )
     );
-    return '<div '. esc_attr($block_attributes) . ' ' .(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . esc_attr($blockID) . '"') . '>' . esc_html($buttonDisplay) . '</div>';
+    return '<div '. esc_attr($block_attributes) . ' ' .(!isset($blockID) || $blockID === '' ? ' ': ' id="ub-button-' . esc_attr($blockID) . '"') . '>' . $buttonDisplay . '</div>';
 }
 
 function ub_button_add_frontend_assets() {

@@ -6,10 +6,10 @@ function ub_render_call_to_action_block($attributes){
 
     $block_wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => esc_attr(implode(' ', $classes)),
+			'class' => implode(' ', $classes),
 		)
     );
-    return '<div ' . esc_attr($block_wrapper_attributes) . ' ' . ($blockID !== '' ? ' id="ub_call_to_action_' . esc_attr($blockID) . '"' :
+    return '<div ' . $block_wrapper_attributes . ' ' . ($blockID !== '' ? ' id="ub_call_to_action_' . esc_attr($blockID) . '"' :
                 'style="background-color: ' . esc_attr($ctaBackgroundColor) . '; border-width: ' . esc_attr($ctaBorderSize) . 'px; border-color: ' . esc_attr($ctaBorderColor) . '"' ) . '>
                 <div class="ub_call_to_action_headline">
                     <' . ($useHeadingTag ? esc_attr($selectedHeadingTag) : 'p') . ' class="ub_call_to_action_headline_text"' . ($blockID === '' ?
@@ -24,7 +24,7 @@ function ub_render_call_to_action_block($attributes){
                         .'" rel="' . ($addNofollow ? 'nofollow ' : '') . ($linkIsSponsored ? 'sponsored ' : '') . 'noopener noreferrer"
                         class="ub_cta_button"' . ($blockID === '' ? ' style="background-color: ' . esc_attr($buttonColor) . '; width: ' . esc_attr($buttonWidth) . 'px;"' : '') . '>
                         <p class="ub_cta_button_text"' . ($blockID === '' ? ' style="color: ' .
-                        esc_attr($buttonTextColor) . '; font-size: ' . esc_attr($buttonFontSize) . 'px;"' : '') . '>' .
+                        $buttonTextColor . '; font-size: ' . esc_attr($buttonFontSize) . 'px;"' : '') . '>' .
                             esc_html($ub_cta_button_text) . '</p></a></div></div>';
 }
 
