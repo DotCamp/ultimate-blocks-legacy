@@ -438,7 +438,8 @@ function ub_include_block_attribute_css() {
 				case 'ub/button':
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub-button-' . $attributes['blockID'];
-					$block_spacing = isset($attributes['blockSpacing']['all']) ? '--ub-button-improved-block-spacing:' . $attributes['blockSpacing']['all'] . ';': "";
+					$block_spacing_value = Ultimate_Blocks\includes\spacing_preset_css_var(isset($attributes['blockSpacing']['all']) ? $attributes['blockSpacing']['all'] : "");
+					$block_spacing =  '--ub-button-improved-block-spacing:' . $block_spacing_value . ';';
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . $block_spacing . PHP_EOL . "}";
 
 					if ( ! array_key_exists( 'buttons', $attributes ) || count( $attributes['buttons'] ) === 0 ) {
@@ -542,6 +543,22 @@ function ub_include_block_attribute_css() {
 												 '}' . PHP_EOL;
 						}
 					}
+
+					break;
+				case 'ub/buttons':
+					$styles = ub_get_spacing_styles($attributes);
+					$prefix = '#ub-buttons-' . $attributes['blockID'];
+					$block_spacing_value = Ultimate_Blocks\includes\spacing_preset_css_var(isset($attributes['blockSpacing']['all']) ? $attributes['blockSpacing']['all'] : '');
+					$block_spacing = !empty($block_spacing_value) ? '--ub-button-improved-block-spacing:' . $block_spacing_value . ';' : "";
+
+					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . $block_spacing . PHP_EOL . '}';
+					break;
+				case 'ub/single-button':
+					$styles = ub_get_spacing_styles($attributes);
+					$prefix = '#ub-button-' . $attributes['blockID'];
+					$block_styling = ub_get_single_button_styles($attributes);
+
+					$blockStylesheets .= $prefix . ' {'  	. PHP_EOL . $styles . PHP_EOL . $block_styling . '}';
 
 					break;
 				case 'ub/call-to-action-block':
@@ -1542,6 +1559,12 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/icon/block.php';
 
 // Counter
 require_once plugin_dir_path( __FILE__ ) . 'blocks/counter/block.php';
+
+// New Button Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/buttons/block.php';
+
+// New Single Button Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/buttons/button/block.php';
 
 /**
  * Innerblocks.

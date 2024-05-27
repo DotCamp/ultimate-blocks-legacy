@@ -1,0 +1,184 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ub/single-button",
+  "title": "Button",
+  "category": "ultimateblocks",
+  "description": "Add amazing buttons that convert more. Comes with an option to add multiple buttons.",
+  "keywords": [
+    "Button",
+    "Buttons",
+    "Ultimate Blocks"
+  ],
+  "parent": [
+    "ub/buttons"
+  ],
+  "attributes": {
+    "blockID": {
+      "type": "string",
+      "default": ""
+    },
+    "placeholder": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Button Text"
+    },
+    "orientation": {
+      "type": "string",
+      "default": "row"
+    },
+    "align": {
+      "type": "string",
+      "default": "center"
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "size": {
+      "type": "string",
+      "default": "medium"
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": null
+    },
+    "buttonHoverColor": {
+      "type": "string",
+      "default": null
+    },
+    "buttonGradientColor": {
+      "type": "string",
+      "default": null
+    },
+    "buttonHoverGradientColor": {
+      "type": "string",
+      "default": null
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "buttonTextHoverColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "isFlexWrap": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonRounded": {
+      "type": "boolean",
+      "default": true
+    },
+    "chosenIcon": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "left"
+    },
+    "buttonIsTransparent": {
+      "type": "boolean",
+      "default": false
+    },
+    "addNofollow": {
+      "type": "boolean",
+      "default": false
+    },
+    "addSponsored": {
+      "type": "boolean",
+      "default": false
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": true
+    },
+    "buttonWidth": {
+      "type": "string",
+      "default": "flex"
+    },
+    "buttons": {
+      "type": "array",
+      "default": []
+    },
+    "padding": {
+      "type": "object",
+      "default": {}
+    },
+    "margin": {
+      "type": "object",
+      "default": {}
+    },
+    "isBorderComponentChanged": {
+      "type": "boolean",
+      "default": false
+    },
+    "borderRadius": {
+      "type": "object",
+      "default": {
+        "topLeft": "10px",
+        "topRight": "10px",
+        "bottomLeft": "10px",
+        "bottomRight": "10px"
+      }
+    },
+    "border": {
+      "type": "object",
+      "default": {}
+    },
+    "buttonRadius": {
+      "type": "number",
+      "default": 10
+    },
+    "buttonRadiusUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "topLeftRadius": {
+      "type": "number",
+      "default": 10
+    },
+    "topLeftRadiusUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "topRightRadius": {
+      "type": "number",
+      "default": 10
+    },
+    "topRightRadiusUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "bottomLeftRadius": {
+      "type": "number",
+      "default": 10
+    },
+    "bottomLeftRadiusUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "bottomRightRadius": {
+      "type": "number",
+      "default": 10
+    },
+    "bottomRightRadiusUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "iconSize": {
+      "type": "number",
+      "default": 0
+    },
+    "iconUnit": {
+      "type": "string",
+      "default": "px"
+    }
+  },
+  "supports": {}
+}

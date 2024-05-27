@@ -52,6 +52,11 @@ class Ultimate_Blocks_Util {
 				'active' => true,
 			),
 			array(
+				'label'  => 'Buttons',
+				'name'   => 'ub/buttons',
+				'active' => true,
+			),
+			array(
 				'label'  => 'Call To Action',
 				'name'   => 'ub/call-to-action-block',
 				'active' => true,
