@@ -30,8 +30,7 @@ class Visibility_Control_Extension extends Pro_Extension_Upsell {
 		$base_data = [
 			'visibilityControl' => [
 				__( 'Visibility Control', 'ultimate-blocks' ),
-				__( 'Control the block visibility.',
-					'ultimate-blocks' )
+				__( 'Control Visibility of blocks based on conditions like user roles, dates and many more.', 'ultimate-blocks' )
 			]
 		];
 

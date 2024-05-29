@@ -90,7 +90,7 @@ function get_single_side_border_value( $border, $side ) {
      $style = isset($border[ $side ]['style']) ? $border[ $side ]['style'] : '';
      $color = isset($border[ $side ]['color']) ? $border[ $side ]['color'] : '';
 
-     return "{$width} " . ( $width && empty( $border[ $side ]['style'] ) ? 'solid ' : $style ) . (!empty($width) && empty($color) ? "#000000" : $color);
+     return "{$width} " . ( $width && empty( $border[ $side ]['style'] ) ? 'solid ' : $style ) . (!empty($width) && empty($color) ? "" : $color);
 }
 /**
  * Check if border has split borders.

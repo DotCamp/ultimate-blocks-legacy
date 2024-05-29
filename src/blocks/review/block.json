@@ -1,331 +1,339 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/review",
-     "title": "Review",
-     "category": "ultimateblocks",
-     "description": "Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.",
-     "keywords": [
-          "Review",
-          "Ultimate Blocks"
-     ],
-     "attributes": {
-          "ID": {
-               "type": "string",
-               "default": ""
-          },
-          "blockID": {
-               "type": "string",
-               "default": ""
-          },
-          "authorName": {
-               "type": "string",
-               "default": ""
-          },
-          "itemName": {
-               "type": "string",
-               "default": ""
-          },
-          "itemType": {
-               "type": "string",
-               "default": "Product"
-          },
-          "itemPage": {
-               "type": "string",
-               "default": ""
-          },
-          "itemSubtype": {
-               "type": "string",
-               "default": ""
-          },
-          "itemSubsubtype": {
-               "type": "string",
-               "default": ""
-          },
-          "valueType": {
-               "type": "string",
-               "default": "star"
-          },
-          "items": {
-               "type": "string",
-               "default": "[{\"label\":\"\",\"value\":0}]"
-          },
-          "description": {
-               "type": "string",
-               "default": ""
-          },
-          "descriptionAlign": {
-               "type": "string",
-               "default": "left"
-          },
-          "imgPosition": {
-               "type": "string",
-               "default": "right"
-          },
-          "imgURL": {
-               "type": "string",
-               "default": ""
-          },
-          "imgID": {
-               "type": "number"
-          },
-          "imgAlt": {
-               "type": "string",
-               "default": ""
-          },
-          "parts": {
-               "type": "array",
-               "default": [
-                    {
-                         "label": "",
-                         "value": 0
-                    }
-               ]
-          },
-          "starCount": {
-               "type": "number",
-               "default": 5
-          },
-          "useSummary": {
-               "type": "boolean",
-               "default": true
-          },
-          "summaryTitle": {
-               "type": "string",
-               "default": "Summary"
-          },
-          "summaryDescription": {
-               "type": "string",
-               "default": ""
-          },
-          "callToActionText": {
-               "type": "string",
-               "default": ""
-          },
-          "callToActionFontSize": {
-               "type": "number",
-               "default": 0
-          },
-          "callToActionURL": {
-               "type": "string",
-               "default": ""
-          },
-          "callToActionBackColor": {
-               "type": "string",
-               "default": "#e11b4c"
-          },
-          "callToActionBorderColor": {
-               "type": "string",
-               "default": "#ffffff"
-          },
-          "callToActionForeColor": {
-               "type": "string",
-               "default": "#ffffff"
-          },
-          "inactiveStarColor": {
-               "type": "string",
-               "default": "#888888"
-          },
-          "activeStarColor": {
-               "type": "string",
-               "default": ""
-          },
-          "activePercentBarColor": {
-               "type": "string",
-               "default": ""
-          },
-          "percentBarColor": {
-               "type": "string",
-               "default": ""
-          },
-          "titleAlign": {
-               "type": "string",
-               "default": "left"
-          },
-          "authorAlign": {
-               "type": "string",
-               "default": "left"
-          },
-          "enableCTA": {
-               "type": "boolean",
-               "default": true
-          },
-          "ctaNoFollow": {
-               "type": "boolean",
-               "default": true
-          },
-          "ctaOpenInNewTab": {
-               "type": "boolean",
-               "default": true
-          },
-          "ctaIsSponsored": {
-               "type": "boolean",
-               "default": false
-          },
-          "ctaAlignment": {
-               "type": "string",
-               "default": "left"
-          },
-          "enableReviewSchema": {
-               "type": "boolean",
-               "default": true
-          },
-          "enableImage": {
-               "type": "boolean",
-               "default": false
-          },
-          "enableDescription": {
-               "type": "boolean",
-               "default": false
-          },
-          "starOutlineColor": {
-               "type": "string",
-               "default": ""
-          },
-          "imageSize": {
-               "type": "number",
-               "default": 100
-          },
-          "brand": {
-               "type": "string",
-               "default": ""
-          },
-          "sku": {
-               "type": "string",
-               "default": ""
-          },
-          "identifier": {
-               "type": "string",
-               "default": ""
-          },
-          "identifierType": {
-               "type": "string",
-               "default": "gtin"
-          },
-          "offerType": {
-               "type": "string",
-               "default": "Offer"
-          },
-          "offerStatus": {
-               "type": "string",
-               "default": "InStock"
-          },
-          "offerHighPrice": {
-               "type": "number",
-               "default": 0
-          },
-          "offerLowPrice": {
-               "type": "number",
-               "default": 0
-          },
-          "offerCount": {
-               "type": "number",
-               "default": 0
-          },
-          "offerPrice": {
-               "type": "number",
-               "default": 0
-          },
-          "offerCurrency": {
-               "type": "string",
-               "default": "USD"
-          },
-          "offerExpiry": {
-               "type": "number",
-               "default": 0
-          },
-          "usePhysicalAddress": {
-               "type": "boolean",
-               "default": true
-          },
-          "address": {
-               "type": "string",
-               "default": ""
-          },
-          "addressName": {
-               "type": "string",
-               "default": ""
-          },
-          "url": {
-               "type": "string",
-               "default": ""
-          },
-          "reviewPublisher": {
-               "type": "string",
-               "default": ""
-          },
-          "reviewPublicationDate": {
-               "type": "number",
-               "default": 1697219842
-          },
-          "bookAuthorName": {
-               "type": "string",
-               "default": ""
-          },
-          "isbn": {
-               "type": "string",
-               "default": ""
-          },
-          "cuisines": {
-               "type": "array",
-               "default": []
-          },
-          "phoneNumber": {
-               "type": "string",
-               "default": ""
-          },
-          "priceRange": {
-               "type": "string",
-               "default": ""
-          },
-          "appCategory": {
-               "type": "string",
-               "default": ""
-          },
-          "operatingSystem": {
-               "type": "string",
-               "default": ""
-          },
-          "provider": {
-               "type": "string",
-               "default": ""
-          },
-          "eventStartDate": {
-               "type": "number",
-               "default": 1697306280
-          },
-          "eventEndDate": {
-               "type": "number",
-               "default": 0
-          },
-          "eventPage": {
-               "type": "string",
-               "default": ""
-          },
-          "organizer": {
-               "type": "string",
-               "default": ""
-          },
-          "performer": {
-               "type": "string",
-               "default": ""
-          },
-          "videoUploadDate": {
-               "type": "number",
-               "default": 1697219842
-          },
-          "videoURL": {
-               "type": "string",
-               "default": ""
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          }
-     },
-     "supports": {}
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/review",
+	"title": "Review",
+	"category": "ultimateblocks",
+	"description": "Add a review block with product name, features, summary, button and star rating. It is Schema Markup enabled.",
+	"keywords": [
+		"Review",
+		"Ultimate Blocks"
+	],
+	"attributes": {
+		"ID": {
+			"type": "string",
+			"default": ""
+		},
+		"blockID": {
+			"type": "string",
+			"default": ""
+		},
+		"summaryTitleFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"mainTitleFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"authorName": {
+			"type": "string",
+			"default": ""
+		},
+		"itemName": {
+			"type": "string",
+			"default": ""
+		},
+		"itemType": {
+			"type": "string",
+			"default": "Product"
+		},
+		"itemPage": {
+			"type": "string",
+			"default": ""
+		},
+		"itemSubtype": {
+			"type": "string",
+			"default": ""
+		},
+		"itemSubsubtype": {
+			"type": "string",
+			"default": ""
+		},
+		"valueType": {
+			"type": "string",
+			"default": "star"
+		},
+		"items": {
+			"type": "string",
+			"default": "[{\"label\":\"\",\"value\":0}]"
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"descriptionAlign": {
+			"type": "string",
+			"default": "left"
+		},
+		"imgPosition": {
+			"type": "string",
+			"default": "right"
+		},
+		"imgURL": {
+			"type": "string",
+			"default": ""
+		},
+		"imgID": {
+			"type": "number"
+		},
+		"imgAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"parts": {
+			"type": "array",
+			"default": [
+				{
+					"label": "",
+					"value": 0
+				}
+			]
+		},
+		"starCount": {
+			"type": "number",
+			"default": 5
+		},
+		"useSummary": {
+			"type": "boolean",
+			"default": true
+		},
+		"summaryTitle": {
+			"type": "string",
+			"default": "Summary"
+		},
+		"summaryDescription": {
+			"type": "string",
+			"default": ""
+		},
+		"callToActionText": {
+			"type": "string",
+			"default": ""
+		},
+		"callToActionFontSize": {
+			"type": "number",
+			"default": 0
+		},
+		"callToActionURL": {
+			"type": "string",
+			"default": ""
+		},
+		"callToActionBackColor": {
+			"type": "string",
+			"default": "#e11b4c"
+		},
+		"callToActionBorderColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"callToActionForeColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"inactiveStarColor": {
+			"type": "string",
+			"default": "#888888"
+		},
+		"activeStarColor": {
+			"type": "string",
+			"default": ""
+		},
+		"activePercentBarColor": {
+			"type": "string",
+			"default": ""
+		},
+		"percentBarColor": {
+			"type": "string",
+			"default": ""
+		},
+		"titleAlign": {
+			"type": "string",
+			"default": "left"
+		},
+		"authorAlign": {
+			"type": "string",
+			"default": "left"
+		},
+		"enableCTA": {
+			"type": "boolean",
+			"default": true
+		},
+		"ctaNoFollow": {
+			"type": "boolean",
+			"default": true
+		},
+		"ctaOpenInNewTab": {
+			"type": "boolean",
+			"default": true
+		},
+		"ctaIsSponsored": {
+			"type": "boolean",
+			"default": false
+		},
+		"ctaAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"enableReviewSchema": {
+			"type": "boolean",
+			"default": true
+		},
+		"enableImage": {
+			"type": "boolean",
+			"default": false
+		},
+		"enableDescription": {
+			"type": "boolean",
+			"default": false
+		},
+		"starOutlineColor": {
+			"type": "string",
+			"default": ""
+		},
+		"imageSize": {
+			"type": "number",
+			"default": 100
+		},
+		"brand": {
+			"type": "string",
+			"default": ""
+		},
+		"sku": {
+			"type": "string",
+			"default": ""
+		},
+		"identifier": {
+			"type": "string",
+			"default": ""
+		},
+		"identifierType": {
+			"type": "string",
+			"default": "gtin"
+		},
+		"offerType": {
+			"type": "string",
+			"default": "Offer"
+		},
+		"offerStatus": {
+			"type": "string",
+			"default": "InStock"
+		},
+		"offerHighPrice": {
+			"type": "number",
+			"default": 0
+		},
+		"offerLowPrice": {
+			"type": "number",
+			"default": 0
+		},
+		"offerCount": {
+			"type": "number",
+			"default": 0
+		},
+		"offerPrice": {
+			"type": "number",
+			"default": 0
+		},
+		"offerCurrency": {
+			"type": "string",
+			"default": "USD"
+		},
+		"offerExpiry": {
+			"type": "number",
+			"default": 0
+		},
+		"usePhysicalAddress": {
+			"type": "boolean",
+			"default": true
+		},
+		"address": {
+			"type": "string",
+			"default": ""
+		},
+		"addressName": {
+			"type": "string",
+			"default": ""
+		},
+		"url": {
+			"type": "string",
+			"default": ""
+		},
+		"reviewPublisher": {
+			"type": "string",
+			"default": ""
+		},
+		"reviewPublicationDate": {
+			"type": "number",
+			"default": 1697219842
+		},
+		"bookAuthorName": {
+			"type": "string",
+			"default": ""
+		},
+		"isbn": {
+			"type": "string",
+			"default": ""
+		},
+		"cuisines": {
+			"type": "array",
+			"default": []
+		},
+		"phoneNumber": {
+			"type": "string",
+			"default": ""
+		},
+		"priceRange": {
+			"type": "string",
+			"default": ""
+		},
+		"appCategory": {
+			"type": "string",
+			"default": ""
+		},
+		"operatingSystem": {
+			"type": "string",
+			"default": ""
+		},
+		"provider": {
+			"type": "string",
+			"default": ""
+		},
+		"eventStartDate": {
+			"type": "number",
+			"default": 1697306280
+		},
+		"eventEndDate": {
+			"type": "number",
+			"default": 0
+		},
+		"eventPage": {
+			"type": "string",
+			"default": ""
+		},
+		"organizer": {
+			"type": "string",
+			"default": ""
+		},
+		"performer": {
+			"type": "string",
+			"default": ""
+		},
+		"videoUploadDate": {
+			"type": "number",
+			"default": 1697219842
+		},
+		"videoURL": {
+			"type": "string",
+			"default": ""
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"supports": {}
 }

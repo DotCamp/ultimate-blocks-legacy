@@ -3,7 +3,7 @@ Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, 
 Tags: blocks, gutenberg blocks, gutenberg, block editor, free
 Requires at least: 5.8
 Tested up to: 6.5
-Stable tag: 3.1.8-dev
+Stable tag: 3.1.9-dev
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -149,6 +149,17 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 3.1.9 =
+
+* FIX: Letter spacing not working in editor advanced heading block.
+* NEW: Buttons block with inner blocks.
+* NEW: Square Fill, Square Outline, Circle Fill, Circle Outline styles in the icon block.
+* NEW: Alignment option in table of content block.
+* NEW: Summary title and title font size in review block.
+* NEW: Slider speed to make slider work smoothly in image slider.
+* PRO: FIX: Horizontal Timeline not working properly on block insert.
+* PRO: FIX: Image alignment in Horizontal Timeline.
 
 = 3.1.8 =
 

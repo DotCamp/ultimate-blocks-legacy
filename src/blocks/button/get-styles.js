@@ -1,11 +1,15 @@
 import { omitBy, isUndefined, trim, isEmpty } from "lodash";
-import { getSpacingCss } from "../utils/styling-helpers";
+import {
+	getSpacingCss,
+	getSpacingPresetCssVar,
+} from "../utils/styling-helpers";
 
 export function getStyles(attributes) {
 	const { padding, margin } = attributes;
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
-	const blockSpacing = attributes.blockSpacing?.all ?? "";
+	const blockSpacing =
+		getSpacingPresetCssVar(attributes.blockSpacing?.all) ?? "";
 	let styles = {
 		paddingTop: paddingObj?.top,
 		paddingRight: paddingObj?.right,

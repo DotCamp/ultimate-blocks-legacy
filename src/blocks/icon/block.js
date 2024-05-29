@@ -11,6 +11,7 @@ import { blockIcon } from "./icons/block-icon";
 import Edit from "./edit";
 import Save from "./save";
 import metadata from "./block.json";
+import "./blocks-styles";
 
 registerPluginBlock(metadata.name, {
 	...metadata,

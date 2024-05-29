@@ -107,13 +107,20 @@ function ub_render_table_of_contents_block($attributes){
     else if ($scrollTargetType === 'class'){
         $targetType = '.';
     }
-
-    return '<div class="wp-block-ub-table-of-contents-block ub_table-of-contents' . (isset($className) ? ' ' . esc_attr($className) : '')
-                . (!$showList ? ' ub_table-of-contents-collapsed' : '' ) .
+	$classes                  = array( 'wp-block-ub-table-of-contents-block', 'ub_table-of-contents' );
+	if(!$showList){
+		$classes[] = 'ub_table-of-contents-collapsed';
+	}
+	$block_wrapper_attributes = get_block_wrapper_attributes(
+		array(
+			'class' => implode( ' ', $classes ),
+			'id'    => $blockID === '' ? '' : 'ub_table-of-contents-' . $blockID . '',
+		)
+	);
+    return '<div ' . $block_wrapper_attributes .
                 '" data-showtext="' . ($showText ?: __('show', 'ultimate-blocks') ) . '" data-hidetext="' . ($hideText ?: __('hide', 'ultimate-blocks'))
                 . '" data-scrolltype="' . esc_attr($scrollOption) . '"' . ($scrollOption === 'fixedamount' ? ' data-scrollamount="' . esc_attr($scrollOffset) . '"' : '')
-                . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . esc_attr($scrollTarget) . '"' : '')
-                . ($blockID === '' ? '' : ' id="ub_table-of-contents-' . esc_attr($blockID) . '"') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
+                . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . esc_attr($scrollTarget) . '"' : '') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
                     data-initiallyshow="' . json_encode($showList) . '">'.
                 (('<div class="ub_table-of-contents-header-container"><div class="ub_table-of-contents-header">
                     <div class="ub_table-of-contents-title">'. esc_html($title) . '</div>' .

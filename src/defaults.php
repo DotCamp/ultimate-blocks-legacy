@@ -288,6 +288,159 @@ $defaultValues = array(
 			)
 		)
 	),
+	"ub/buttons" => array(
+		"attributes" => array(
+			'blockID'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
+			'align'                => array(
+				'type'    => 'string',
+				'default' => 'center'
+			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
+			'buttons'			   => array(
+				'type'	=> 'array',
+				'default' => array()
+			),
+		)
+	),
+	'ub/single-button'                     => array(
+		'attributes' => array(
+			'blockID'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'iconSize'              => array(
+				'type'    => 'number',
+				'default' => 0
+			),
+			'iconUnit'              => array(
+				'type'    => 'string',
+				'default' => 'px'
+			),
+			'placeholder'              => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'padding' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'border' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'borderRadius' => array(
+				'type' 	=> 'array',
+				'default' => array(
+					'topLeft' => "10px",
+					'topRight' => "10px",
+					'bottomLeft' => "10px",
+					'bottomRight' => "10px",
+				)
+			),
+			'margin' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
+			'buttonText'           => array(
+				'type'    => 'string',
+				'default' => 'Button Text'
+			),
+			'orientation'              => array(
+				'type'    => 'string',
+				'default' => 'row',
+			),
+			'align'                => array(
+				'type'    => 'string',
+				'default' => 'center'
+			),
+			'url'                  => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'size'                 => array(
+				'type'    => 'string',
+				'default' => 'medium'
+			),
+			'buttonColor'          => array(
+				'type'    => 'string',
+				'default' => null
+			),
+			'buttonHoverColor'     => array(
+				'type'    => 'string',
+				'default' => null
+			),
+			'buttonGradientColor'          => array(
+				'type'    => 'string',
+				'default' => null
+			),
+			'buttonHoverGradientColor'     => array(
+				'type'    => 'string',
+				'default' => null
+			),
+			'buttonTextColor'      => array(
+				'type'    => 'string',
+				'default' => '#ffffff'
+			),
+			'buttonTextHoverColor' => array(
+				'type'    => 'string',
+				'default' => '#ffffff'
+			),
+			'isFlexWrap'        => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
+			'buttonRounded'        => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'chosenIcon'           => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'iconPosition'         => array(
+				'type'    => 'string',
+				'default' => 'left'
+			),
+			'buttonIsTransparent'  => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'addNofollow'          => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'addSponsored'          => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
+			'openInNewTab'         => array(
+				'type'    => 'boolean',
+				'default' => true
+			),
+			'buttonWidth'          => array(
+				'type'    => 'string',
+				'default' => 'flex'
+			),
+		)
+	),
 	'ub/button'                     => array(
 		'attributes' => array(
 			'blockID'              => array(
@@ -526,7 +679,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'filterArray' => array(
 				'type' => 'array',
 				'default' => array()
@@ -808,19 +961,19 @@ $defaultValues = array(
 				'default' => 'left'
 			),
 			  'expandButtonColor' => array(
-				  'type' => "string", 
-				  'default' => "",				
+				  'type' => "string",
+				  'default' => "",
 			  ),
 			'expandButtonBgColor' => array(
-				'type' => "string", 
+				'type' => "string",
 				'default' => "" ,
 			) ,
 			'expandButtonBgGradient' => array(
-				'type' => "string", 
+				'type' => "string",
 				'default' => "" ,
 			) ,
 			'expandButtonPadding' => array(
-				'type' => "array", 
+				'type' => "array",
 				'default' => array(
 					'top' => "8px",
 					'right' => "30px",
@@ -829,7 +982,7 @@ $defaultValues = array(
 				),
 			) ,
 			'expandButtonBorder' => array(
-				'type' => "array", 
+				'type' => "array",
 				'default' => array() ,
 			) ,
 			'expandButtonBorderRadius' => array(
@@ -1021,7 +1174,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required tools' )
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'tools' => array(
 				'type' => 'array',
 				'default' => array(),
@@ -1042,7 +1195,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => __( 'Required supplies' )
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'supplies' => array(
 				'type' => 'array',
 				'default' => array(),
@@ -1051,7 +1204,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => 'none'
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'section' => array(
 				'type' => 'array',
 				'default' => array(
@@ -1197,7 +1350,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'pics' => array(
 				'type' => 'array',
 				'default' => array()
@@ -1207,7 +1360,7 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => '[]'
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'descriptions' => array(
 				'type' => 'array',
 				'default' => array()
@@ -1231,6 +1384,10 @@ $defaultValues = array(
 			'spaceBetween' => array(
 				'type'    => 'number',
 				'default' => 20
+			),
+			'speed' => array(
+				'type'    => 'number',
+				'default' => 300
 			),
 			'slidesPerView' => array(
 				'type'    => 'number',
@@ -1766,6 +1923,14 @@ $defaultValues = array(
 				'type' 	=> 'array',
 				'default' => array()
 			),
+			'summaryTitleFontSize'  => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'titleFontSize'	=> array(
+				'type'    => 'string',
+				'default' => ''
+			),
 			'blockID'                 => array(
 				'type'    => 'string',
 				'default' => ''
@@ -2295,7 +2460,7 @@ $defaultValues = array(
 					'type' => 'string'
 				)
 			),
-			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK. 
+			// UNCOMMENTED OUT, IN JS BLOCK GET UNDEFINED AND BREAK.
 			'image' => array(
 				'type' => 'array',
 				'default' => array(

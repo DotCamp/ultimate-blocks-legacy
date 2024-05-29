@@ -1,4 +1,4 @@
-import { omitBy, isUndefined, trim, isEmpty } from "lodash";
+import { omitBy, isUndefined, trim, isEmpty, isNumber } from "lodash";
 import { getSpacingCss } from "../utils/styling-helpers";
 
 export function getStyles(attributes) {
@@ -17,6 +17,7 @@ export function getStyles(attributes) {
 	} = attributes;
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
+
 	let styles = {
 		paddingTop: paddingObj?.top,
 		paddingRight: paddingObj?.right,
@@ -30,7 +31,7 @@ export function getStyles(attributes) {
 		color: textColor,
 		backgroundColor,
 		fontSize: fontSize ? `${fontSize}px` : null,
-		letterSpacing,
+		letterSpacing: isNumber(letterSpacing) ? `${letterSpacing}px` : "",
 		textTransform,
 		fontFamily: fontFamily.includes(" ") ? `'${fontFamily}'` : fontFamily,
 		fontWeight,
@@ -44,6 +45,6 @@ export function getStyles(attributes) {
 			isEmpty(value) ||
 			isUndefined(value) ||
 			trim(value) === "" ||
-			trim(value) === "undefined undefined undefined"
+			trim(value) === "undefined undefined undefined",
 	);
 }

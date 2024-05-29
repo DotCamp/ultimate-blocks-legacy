@@ -47,7 +47,7 @@ class Advanced_Video_Extension extends Pro_Extension_Upsell {
 	public function add_editor_dummy_control_data() {
 		$channel_details = [
 			Pro_Editor_Control_Data::generate_toggle_control_data( 'channelDetails',
-				__( 'Channel Details', 'ultimate-blocks' ) ),
+				__( 'Show Subscribe Button', 'ultimate-blocks' ) ),
 		];
 
 

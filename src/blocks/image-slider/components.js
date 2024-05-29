@@ -13,6 +13,7 @@ export function Slider(props) {
 	const customProps = {
 		slidesPerView: props.slidesPerView,
 		spaceBetween: props.spaceBetween,
+		speed: props.speed,
 		initialSlide: props.initialSlide,
 		loop: props.wrapAround,
 		simulateTouch: props.draggable,
@@ -41,7 +42,7 @@ export function Slider(props) {
 			onSwiper={(swiper) => initializeSwiper(swiper)} //might break
 		>
 			{currentSlides.map(
-				(slide) => slide && <SwiperSlide>{slide}</SwiperSlide>
+				(slide) => slide && <SwiperSlide>{slide}</SwiperSlide>,
 			)}
 		</Swiper>
 	);

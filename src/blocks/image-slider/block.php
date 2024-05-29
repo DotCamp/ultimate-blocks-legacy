@@ -34,7 +34,7 @@ function ub_render_image_slider_block($attributes){
     );
     return '<div ' . $wrapper_attributes .  ' ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? esc_attr($sliderHeight) : 200) . 'px;"'
         : 'id="ub_image_slider_' . esc_attr($blockID) . '"').
-        ' data-swiper-data=\'{"spaceBetween":' . esc_attr($spaceBetween) . ',"slidesPerView":' . esc_attr($slidesPerView) . ',"loop":' . json_encode($wrapsAround) .
+        ' data-swiper-data=\'{"speed":' . esc_attr($speed) . ',"spaceBetween":' . esc_attr($spaceBetween) . ',"slidesPerView":' . esc_attr($slidesPerView) . ',"loop":' . json_encode($wrapsAround) .
             ',"pagination":{"el": ' . ($usePagination ? '".swiper-pagination"' : 'null') . ' , "type": "' . esc_attr($paginationType) . '"'.($paginationType === 'bullets' ? ', "clickable":true' :'') . '}
             ,' . ($useNavigation ? '"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"},' : '') . ' "keyboard": { "enabled": true },
             "effect": "' . esc_attr($transition) . '"'

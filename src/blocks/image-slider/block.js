@@ -168,6 +168,7 @@ function ImageSliderMain(props) {
 			spaceBetween,
 			useNavigation,
 			align,
+			speed,
 		},
 		setAttributes,
 		isSelected,
@@ -285,6 +286,16 @@ function ImageSliderMain(props) {
 								onChange={(newValue) =>
 									setAttributes({ spaceBetween: newValue })
 								}
+							/>
+							<RangeControl
+								min={50}
+								max={5000}
+								allowReset
+								value={speed}
+								step={50}
+								resetFallbackValue={300}
+								label={__("Speed", "ultimate-blocks")}
+								onChange={(newValue) => setAttributes({ speed: newValue })}
 							/>
 							<ToggleControl
 								label={__("Wrap around")}
@@ -530,6 +541,7 @@ function ImageSliderMain(props) {
 							draggable={isDraggable}
 							wrapAround={wrapsAround}
 							pageDots={showPageDots}
+							speed={speed}
 							useNavigation={useNavigation}
 							paginationType={usePagination ? paginationType : "none"}
 							autoplay={autoplays ? autoplayDuration : 0}

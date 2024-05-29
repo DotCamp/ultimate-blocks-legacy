@@ -127,6 +127,10 @@
     }
   },
   "supports": {
-    "reusable": false
+    "reusable": false,
+    "align": [
+      "wide",
+      "full"
+    ]
   }
 }
