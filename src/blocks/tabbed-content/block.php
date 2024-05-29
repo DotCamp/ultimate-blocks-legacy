@@ -10,7 +10,7 @@ function ub_render_tab_block($attributes, $contents){
     extract($attributes);
     return '<div role="tabpanel" class="wp-block-ub-tabbed-content-tab-content-wrap '.
         ($isActive ? 'active' : 'ub-hide') . (isset($className) ? ' ' . esc_attr($className) : '') . '"
-        id="ub-tabbed-content-' . $parentID . '-panel-' . $index . '" aria-labelledby="ub-tabbed-content-' . $parentID . '-tab-' . $index . '" tabindex="0">'
+        id="ub-tabbed-content-' . esc_attr($parentID) . '-panel-' . esc_attr($index) . '" aria-labelledby="ub-tabbed-content-' . esc_attr($parentID) . '-tab-' . esc_attr($index) . '" tabindex="0">'
         . $contents . '</div>';
 }
 
@@ -41,7 +41,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
     foreach ($contents as $key => $content) {
         if($useAnchors){
             if(isset($tabsAnchor[$key]) && $tabsAnchor[$key] !== ''){
-                $content->{'data-tab-anchor'} = $tabsAnchor[$key];
+                $content->{'data-tab-anchor'} = esc_attr($tabsAnchor[$key]);
             }
         }
         $tabContent = $content->outertext;
@@ -51,13 +51,13 @@ function ub_render_tabbed_content_block($attributes, $contents){
         else{
             $accordionIsActive = false;
         }
-        
+
         if($tabletTabDisplay === 'accordion' || $mobileTabDisplay === 'accordion'){
             $content = '<div class="' . $blockName . '-accordion-toggle'.
             ($accordionIsActive ? ' active' : '') .
             ($tabletTabDisplay === 'accordion' ? ' ub-tablet-display' : '') .
             ($mobileTabDisplay === 'accordion' ? ' ub-mobile-display' : '') .
-            '">' . $tabsTitle[$key] . '</div>' . $tabContent;
+            '">' . esc_html($tabsTitle[$key]) . '</div>' . $tabContent;
             array_push($tabContents, $content);
         }
         else{
@@ -66,31 +66,31 @@ function ub_render_tabbed_content_block($attributes, $contents){
     }
 
     foreach($tabsTitle as $key=>$title){
-        $tabs .= '<div role="tab" id="ub-tabbed-content-' . $blockID . '-tab-' . $key . '" aria-controls="ub-tabbed-content-' . $blockID . '-panel-' . $key . '"
+        $tabs .= '<div role="tab" id="ub-tabbed-content-' . esc_attr($blockID) . '-tab-' . esc_attr($key) . '" aria-controls="ub-tabbed-content-' . esc_attr($blockID) . '-panel-' . esc_attr($key) . '"
             aria-selected="' . json_encode($activeTab === $key) . '" class = "' . $blockName . '-tab-title-' . ($tabVertical ? 'vertical-' : '') . 'wrap'
         . ($mobileTabDisplay === 'verticaltab' ? ' ' . $blockName . '-tab-title-mobile-vertical-wrap' : '')
         . ($tabletTabDisplay === 'verticaltab' ? ' ' . $blockName . '-tab-title-tablet-vertical-wrap' : '')
             .($activeTab === $key ? ' active' : '') . '"'.
-            ($blockID === '' ? ' style="background-color: ' . ($activeTab === $key ? $theme : 'initial')
-            . '; border-color: ' . ($activeTab === $key ? $theme : 'lightgrey') .
-            '; color: ' . ($activeTab === $key ? $titleColor : '#000000') . ';"' : '' ). ' tabindex="-1">
-            <div class="' . $blockName . '-tab-title">' . $title . '</div></div>';
+            ($blockID === '' ? ' style="background-color: ' . ($activeTab === $key ? esc_attr($theme) : 'initial')
+            . '; border-color: ' . ($activeTab === $key ? esc_attr($theme) : 'lightgrey') .
+            '; color: ' . ($activeTab === $key ? esc_attr($titleColor) : '#000000') . ';"' : '' ). ' tabindex="-1">
+            <div class="' . $blockName . '-tab-title">' . esc_html($title) . '</div></div>';
     }
 
     $mobileTabStyle = substr($mobileTabDisplay, 0, strlen($mobileTabDisplay) - 3);
     $tabletTabStyle = substr($tabletTabDisplay, 0, strlen($tabletTabDisplay) - 3);
 
-    return '<div class="wp-block-ub-tabbed-content-block ' . $blockName . ($tabStyle !== 'tabs' ? '-' . $tabStyle : '') . ' ' . $blockName . '-holder' . ($tabVertical ? ' vertical-holder' : '')
-            . (isset($className) ? ' ' . esc_attr($className) : '') . (isset($align) ? ' align' . $align : '') 
+    return '<div class="wp-block-ub-tabbed-content-block ' . $blockName . ($tabStyle !== 'tabs' ? '-' . esc_attr($tabStyle) : '') . ' ' . $blockName . '-holder' . ($tabVertical ? ' vertical-holder' : '')
+            . (isset($className) ? ' ' . esc_attr($className) : '') . (isset($align) ? ' align' . $align : '')
             . ($mobileTabDisplay !== 'accordion' ? ' ' . $blockName . '-' . $mobileTabStyle . '-holder-mobile' : '')
             . ($tabletTabDisplay !== 'accordion' ? ' ' . $blockName . '-' . $tabletTabStyle . '-holder-tablet' : '')
-            . '"' .($blockID === '' ? '' : ' id="ub-tabbed-content-' . $blockID . '"')
-             . ($mobileTabDisplay === 'accordion' || $tabletTabDisplay === 'accordion' ? ' data-active-tabs="[' . $activeTab . ']"' : '') . '>
+            . '"' .($blockID === '' ? '' : ' id="ub-tabbed-content-' . esc_attr($blockID) . '"')
+             . ($mobileTabDisplay === 'accordion' || $tabletTabDisplay === 'accordion' ? ' data-active-tabs="[' . esc_attr($activeTab) . ']"' : '') . '>
                 <div class="' . $blockName . '-tab-holder' . ($tabVertical ? ' vertical-tab-width' : '')
                 . ($mobileTabDisplay !== 'accordion' ? ' ' . $mobileTabStyle. '-tab-width-mobile' : '')
                 . ($tabletTabDisplay !== 'accordion' ? ' ' . $tabletTabStyle . '-tab-width-tablet' : '') . '">
                     <div role="tablist" class="' . $blockName . '-tabs-title' . ($tabVertical ? '-vertical-tab' : '')
-                    . ($mobileTabDisplay === 'accordion' ? ' ub-mobile-hide' : ' ' . $blockName . '-tabs-title-mobile-' . $mobileTabStyle . '-tab' ) 
+                    . ($mobileTabDisplay === 'accordion' ? ' ub-mobile-hide' : ' ' . $blockName . '-tabs-title-mobile-' . $mobileTabStyle . '-tab' )
                     . ($tabletTabDisplay === 'accordion' ? ' ub-tablet-hide' : ' ' . $blockName . '-tabs-title-tablet-' . $tabletTabStyle . '-tab') . '">' .
                     $tabs . '</div></div>
                 <div class="' . $blockName . '-tabs-content' . ($tabVertical ? ' vertical-content-width ' : '')

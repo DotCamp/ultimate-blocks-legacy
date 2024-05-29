@@ -40,8 +40,8 @@ function ub_render_click_to_tweet_block( $attributes ) {
 
     $output = '';
     if($blockID === ''){
-        $output .= sprintf('<div class="wp-block-ub-click-to-tweet ub_click_to_tweet%1$s" style="border-color: %2$s;">', (isset($className) ? ' ' . esc_attr($className) : ''), $borderColor );
-        $output .= sprintf( '<div class="ub_tweet" style="font-size: %1$spx; color: %2$s">', $tweetFontSize, $tweetColor );
+        $output .= sprintf('<div class="wp-block-ub-click-to-tweet ub_click_to_tweet%1$s" style="border-color: %2$s;">', (isset($className) ? ' ' . esc_attr($className) : ''), esc_attr($borderColor) );
+        $output .= sprintf( '<div class="ub_tweet" style="font-size: %1$spx; color: %2$s">', esc_attr($tweetFontSize), esc_attr($tweetColor) );
     }
     else{
         $output .= sprintf('<div class="wp-block-ub-click-to-tweet ub_click_to_tweet%1$s" id="%2$s">', (isset($className) ? ' ' . esc_attr($className) : ''), esc_attr('ub_click_to_tweet_' . $blockID ));
@@ -53,7 +53,7 @@ function ub_render_click_to_tweet_block( $attributes ) {
 	$output .= sprintf( '<div class="ub_click_tweet">' );
 	$output .= sprintf( '<span>');
 	$output .= sprintf( '<i></i>');
-	$output .= sprintf( '<a target="_blank" href="%1$s">' . __( 'Click to Tweet', 'ultimate-blocks' ) . '</a>',  $url  );
+	$output .= sprintf( '<a target="_blank" href="%1$s">' . __( 'Click to Tweet', 'ultimate-blocks' ) . '</a>',  esc_url($url)  );
 	$output .= sprintf( '</span>');
 	$output .= sprintf( '</div>');
     $output .= sprintf( '</div>');

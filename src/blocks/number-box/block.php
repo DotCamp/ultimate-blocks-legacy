@@ -3,28 +3,28 @@
 function ub_render_number_box_block($attributes){
     extract($attributes);
 
-    $column1 = '<div class="ub_number_1"'.($blockID===''?' style="border-color: '.$borderColor.';"':'').'>
-        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '.$numberBackground.';"':'').'>
-            <p class="ub_number_one_number"'.($blockID===''?' style="color: '.$numberColor.';"':'').'>'.$columnOneNumber.'</p>
+    $column1 = '<div class="ub_number_1"'.($blockID===''?' style="border-color: '. esc_attr($borderColor) .';"':'').'>
+        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '. esc_attr($numberBackground) .';"':'').'>
+            <p class="ub_number_one_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. esc_html($columnOneNumber) .'</p>
         </div>
-        <p class="ub_number_one_title"'.($blockID===''?' style="text-align: '.$title1Align.';"':'').'>'.$columnOneTitle.'</p>
-        <p class="ub_number_one_body"'.($blockID===''?' style="text-align: '.$body1Align.';"':'').'>'.$columnOneBody.'</p>
+        <p class="ub_number_one_title"'.($blockID===''?' style="text-align: '. esc_attr($title1Align) .';"':'').'>'. esc_html($columnOneTitle) .'</p>
+        <p class="ub_number_one_body"'.($blockID===''?' style="text-align: '. esc_attr($body1Align) .';"':'').'>'. esc_html($columnOneBody) .'</p>
     </div>';
 
-    $column2 = '<div class="ub_number_2"'.($blockID===''?' style="border-color: '.$borderColor.';"':'').'>
-        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '.$numberBackground.';"':'').'>
-            <p class="ub_number_two_number"'.($blockID===''?' style="color: '.$numberColor.';"':'').'>'.$columnTwoNumber.'</p>
+    $column2 = '<div class="ub_number_2"'.($blockID===''?' style="border-color: '. esc_attr($borderColor) .';"':'').'>
+        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '. esc_attr($numberBackground) .';"':'').'>
+            <p class="ub_number_two_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. esc_html($columnTwoNumber) .'</p>
         </div>
-        <p class="ub_number_two_title"'.($blockID===''?' style="text-align: '.$title2Align.';"':'').'>'.$columnTwoTitle.'</p>
-        <p class="ub_number_two_body"'.($blockID===''?' style="text-align: '.$body2Align.';"':'').'>'.$columnTwoBody.'</p>
+        <p class="ub_number_two_title"'.($blockID===''?' style="text-align: '. esc_attr($title2Align) .';"':'').'>'. esc_html($columnTwoTitle) .'</p>
+        <p class="ub_number_two_body"'.($blockID===''?' style="text-align: '. esc_attr($body2Align) .';"':'').'>'. esc_html($columnTwoBody) .'</p>
     </div>';
 
-    $column3 = '<div class="ub_number_3"'.($blockID===''?' style="border-color: '.$borderColor.';"':'').'>
-        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '.$numberBackground.';"':'').'>
-            <p class="ub_number_three_number"'.($blockID===''?' style="color: '.$numberColor.';"':'').'>'.$columnThreeNumber.'</p>
+    $column3 = '<div class="ub_number_3"'.($blockID===''?' style="border-color: '. esc_attr($borderColor) .';"':'').'>
+        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '. esc_html($numberBackground) .';"':'').'>
+            <p class="ub_number_three_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. esc_html($columnThreeNumber) .'</p>
         </div>
-        <p class="ub_number_three_title"'.($blockID===''?' style="text-align: '.$title3Align.';"':'').'>'.$columnThreeTitle.'</p>
-        <p class="ub_number_three_body"'.($blockID===''?' style="text-align: '.$body3Align.';"':'').'>'.$columnThreeBody.'</p>
+        <p class="ub_number_three_title"'.($blockID===''?' style="text-align: '. esc_attr($title3Align) .';"':'').'>'. esc_html($columnThreeTitle) .'</p>
+        <p class="ub_number_three_body"'.($blockID===''?' style="text-align: '. esc_attr($body3Align) .';"':'').'>'. esc_html($columnThreeBody) .'</p>
     </div>';
 
     $columns = $column1;
@@ -36,8 +36,8 @@ function ub_render_number_box_block($attributes){
         $columns .= $column3;
     }
 
-    return '<div class="ub_number_box column_'.$column.(isset($className) ? ' ' . esc_attr($className) : '').
-            '"'.($blockID===''?'':' id="ub-number-box-'.$blockID.'"').'>'.$columns.'</div>';
+    return '<div class="ub_number_box column_'. esc_attr($column) .(isset($className) ? ' ' . esc_attr($className) : '').
+            '"'.($blockID===''?'':' id="ub-number-box-'. esc_attr($blockID) .'"').'>'. $columns .'</div>';
 }
 
 function ub_register_number_box_block() {

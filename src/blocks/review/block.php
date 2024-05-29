@@ -20,16 +20,16 @@ function ub_generatePercentageBar($value, $id, $activeColor, $inactiveColor ){
             <svg class="ub_review_percentage_bar" viewBox="0 0 100 1" preserveAspectRatio="none" height="10">
                 <path
                     class="ub_review_percentage_bar_trail"
-                    d="' . $percentBar . '" stroke="' . $inactiveColor . '"
+                    d="' . $percentBar . '" stroke="' . esc_attr($inactiveColor) . '"
                     stroke-width="1"
                 ></path>
                 <path
                     class="ub_review_percentage_bar_path"
-                    d="' . $percentBar . '" stroke="' . $activeColor . '"
+                    d="' . $percentBar . '" stroke="' . esc_attr($activeColor) . '"
                     stroke-width="1" stroke-dashoffset="' . (100 - $value) . 'px"
                 ></path>
             </svg>
-            <div>' . $value . '%</div>
+            <div>' . esc_html($value) . '%</div>
     </div>';
 }
 
@@ -185,20 +185,20 @@ function ub_render_review_block($attributes, $block_content, $block_instance){
 	$schema_json_ld = ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">' .$schema_json_content . '</script>')) : '');
 
     return '<div class="wp-block-ub-review ub_review_block' . (isset($className) ? ' ' . esc_attr($className) : '') .
-                '" id="ub_review_' . $blockID . '">
-        <p class="ub_review_item_name"' . ($blockID === '' ? ' style="text-align: ' . $titleAlign . ';"' : '') . '>' .
-            $itemName . '</p><p class="ub_review_author_name"' .
-            ($blockID === '' ? ' style="text-align: ' . $authorAlign . ';"' : '') . '>' . $authorName . '</p>' .
+                '" id="ub_review_' . esc_attr($blockID) . '">
+        <p class="ub_review_item_name"' . ($blockID === '' ? ' style="text-align: ' . esc_attr($titleAlign) . ';"' : '') . '>' .
+            esc_html($itemName) . '</p><p class="ub_review_author_name"' .
+            ($blockID === '' ? ' style="text-align: ' . esc_attr($authorAlign) . ';"' : '') . '>' . esc_html($authorName) . '</p>' .
         (($enableImage || $enableDescription) && ($imgURL !== '' || $description !== '') ?
-        '<div class="ub_review_description_container ub_review_' . $imgPosition . '_image">' .
-            (!$enableImage || $imgURL === '' ? '' : '<img class="ub_review_image" src="' . $imgURL . '" alt = "' . $imgAlt . '">') .
-            (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . $description . '</div>') .
+        '<div class="ub_review_description_container ub_review_' . esc_attr($imgPosition) . '_image">' .
+            (!$enableImage || $imgURL === '' ? '' : '<img class="ub_review_image" src="' . esc_url($imgURL) . '" alt = "' . esc_attr($imgAlt) . '">') .
+            (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . esc_html($description) . '</div>') .
         '</div>' : '').
             $ratings
     .'<div class="ub_review_summary">' .
-        ($useSummary ? '<p class="ub_review_summary_title">' . $summaryTitle . '</p>' : '') .
+        ($useSummary ? '<p class="ub_review_summary_title">' . esc_html($summaryTitle) . '</p>' : '') .
         '<div class="ub_review_overall_value">' .
-            ($useSummary ? '<p>' . $summaryDescription . '</p>' : '') .
+            ($useSummary ? '<p>' . esc_html($summaryDescription) . '</p>' : '') .
             '<div class="ub_review_average"><span class="ub_review_rating">' . $average . ($valueType === 'percent' ? '%':'') . '</span>' .
             ($valueType === 'star' ? ub_generateStarDisplay($average, $starCount, $blockID . '-average',
             $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars", "ub_review_star_filter-") : '' ).

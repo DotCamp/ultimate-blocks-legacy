@@ -4,23 +4,23 @@ function ub_render_testimonial_block($attributes){
     extract($attributes);
     return '<div>
     <div class="wp-block-ub-testimonial ub_testimonial'.(isset($className) ? ' ' . esc_attr($className) : '').
-            '"'.($blockID === '' ? 'style= "background-color: ' . $backgroundColor . '; color: ' . $textColor . ';"'
-                :' id="ub_testimonial_' . $blockID . '"') . '>
+            '"'.($blockID === '' ? 'style= "background-color: ' . esc_attr($backgroundColor) . '; color: ' . esc_attr($textColor) . ';"'
+                :' id="ub_testimonial_' . esc_attr($blockID) . '"') . '>
         <div class="ub_testimonial_img">
-            <img src="' . $imgURL . '" alt="' . $imgAlt . '" height="100" width="100" />
+            <img src="' . esc_url($imgURL) . '" alt="' . esc_attr($imgAlt) . '" height="100" width="100" />
         </div>
         <div class="ub_testimonial_content">
             <p class="ub_testimonial_text"'.
-                ($blockID === '' ? ' style="font-size: ' . $textSize.'px; text-align: ' . $textAlign . ';"' : '') . '>'.
-                $ub_testimonial_text . '</p>
+                ($blockID === '' ? ' style="font-size: ' . esc_attr($textSize) .'px; text-align: ' . esc_attr($textAlign) . ';"' : '') . '>'.
+                esc_html($ub_testimonial_text) . '</p>
         </div>
         <div class="ub_testimonial_sign">
             <p class="ub_testimonial_author"'.
-                ($blockID === '' ? ' style="font-size: ' . $textSize . 'px; text-align: ' . $authorAlign.';"' : '') . '>'.
-                $ub_testimonial_author.'</p>
+                ($blockID === '' ? ' style="font-size: ' . esc_attr($textSize) . 'px; text-align: ' . esc_attr($authorAlign) .';"' : '') . '>'.
+                esc_html($ub_testimonial_author) .'</p>
             <p class="ub_testimonial_author_role"'.
-                ($blockID === '' ? ' style="font-size: ' . $textSize . 'px; text-align: ' . $authorRoleAlign . ';"' : '') . '>'.
-                $ub_testimonial_author_role . '</p>
+                ($blockID === '' ? ' style="font-size: ' . esc_attr($textSize) . 'px; text-align: ' . esc_attr($authorRoleAlign) . ';"' : '') . '>'.
+                esc_html($ub_testimonial_author_role) . '</p>
         </div>
     </div>
 </div>';

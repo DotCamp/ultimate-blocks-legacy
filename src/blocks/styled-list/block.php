@@ -30,27 +30,27 @@ function ub_render_styled_list_block($attributes, $contents){
                 }
             }
         }
-    
+
         while(count($sortedItems) > 1 &&
             $sortedItems[count($sortedItems) - 1][0]['indent'] > $sortedItems[count($sortedItems) - 2][0]['indent']){
             array_push($sortedItems[count($sortedItems) - 2], array_pop($sortedItems));
         }
-    
+
         $sortedItems = $sortedItems[0];
-    
+
         if (!function_exists('ub_makeList')) {
             function ub_makeList($num, $item, $color, $size){
                 static $outputString = '';
                 if($num === 0 && $outputString != ''){
                     $outputString = '';
                 }
-                if (isset($item['indent'])){                
+                if (isset($item['indent'])){
                     $outputString .= '<li>'.($item['text'] === '' ? '<br/>' : $item['text']) . '</li>';
                 }
                 else{
                     $outputString = substr_replace($outputString, '<ul class="fa-ul">',
                         strrpos($outputString, '</li>'), strlen('</li>'));
-    
+
                     forEach($item as $key => $subItem){
                         ub_makeList($key+1, $subItem, $color, $size);
                     }
@@ -59,26 +59,26 @@ function ub_render_styled_list_block($attributes, $contents){
                 return $outputString;
             }
         }
-    
+
         foreach($sortedItems as $key => $item){
             $listItems = ub_makeList($key, $item, $iconColor, $iconSize);
         }
     }
-    $list_alignment_class = !empty($listAlignment) ? "ub-list-alignment-" . $listAlignment : "";
+    $list_alignment_class = !empty($listAlignment) ? "ub-list-alignment-" . esc_attr($listAlignment) : "";
     if($list === ''){
         return '<ul class="' . ($isRootList ?
                             ('wp-block-ub-styled-list ub_styled_list ' . $list_alignment_class . (
                                     isset($className) ? ' ' . esc_attr($className)
                                     : '') .'"'
-                         . ($blockID === '' ? '' : ' id="ub_styled_list-' . $blockID . '"'))
+                         . ($blockID === '' ? '' : ' id="ub_styled_list-' . esc_attr($blockID) . '"'))
                          : 'ub_styled_list_sublist"').
         '><div class="ub-block-list__layout">' . $contents . '</div></ul>';
 
     }
     else{
         return '<div class="wp-block-ub-styled-list ub_styled_list ' . (isset($className) ? ' ' . esc_attr($className) : '') .'"'
-        . ($blockID === '' ? '' : ' id="ub_styled_list-' . $blockID . '"').
-        '><ul class="fa-ul">' . $listItems . '</ul></div>';
+        . ($blockID === '' ? '' : ' id="ub_styled_list-' . esc_attr($blockID) . '"').
+        '><ul class="fa-ul">' . esc_html($listItems) . '</ul></div>';
     }
 
 }
@@ -97,14 +97,14 @@ function ub_get_styled_list_item_styles( $attributes ) {
 	$margin = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
 
 	$styles = array(
-		'padding-top'         => isset($padding['top']) ? $padding['top'] : "",
-		'padding-left'        => isset($padding['left']) ? $padding['left'] : "",
-		'padding-right'       => isset($padding['right']) ? $padding['right'] : "",
-		'padding-bottom'      => isset($padding['bottom']) ? $padding['bottom'] : "",
-		'margin-top'         => !empty($margin['top']) ? $margin['top'] . " !important" : "",
-		'margin-left'        => !empty($margin['left']) ? $margin['left'] . " !important" : "",
-		'margin-right'       => !empty($margin['right']) ? $margin['right'] . " !important" : "",
-		'margin-bottom'      => !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
+		'padding-top'         => isset($padding['top']) ? esc_attr($padding['top']) : "",
+		'padding-left'        => isset($padding['left']) ? esc_attr($padding['left']) : "",
+		'padding-right'       => isset($padding['right']) ? esc_attr($padding['right']) : "",
+		'padding-bottom'      => isset($padding['bottom']) ? esc_attr($padding['bottom']) : "",
+		'margin-top'         => !empty($margin['top']) ? esc_attr($margin['top']) . " !important" : "",
+		'margin-left'        => !empty($margin['left']) ? esc_attr($margin['left']) . " !important" : "",
+		'margin-right'       => !empty($margin['right']) ? esc_attr($margin['right']) . " !important" : "",
+		'margin-bottom'      => !empty($margin['bottom']) ? esc_attr($margin['bottom']) . " !important" : "",
 	);
 
 	return Ultimate_Blocks\includes\generate_css_string( $styles );
@@ -115,7 +115,7 @@ function ub_render_styled_list_item_block($attributes, $contents, $block){
 
     $styles = ub_get_styled_list_item_styles($block_attributes);
 
-    return '<li class="ub_styled_list_item" style="'. $styles .'">' . $itemText . $contents . '</li>';
+    return '<li class="ub_styled_list_item" style="'. $styles .'">' . esc_html($itemText) . esc_html($contents) . '</li>';
 }
 
 function ub_register_styled_list_item_block(){

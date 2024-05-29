@@ -3,9 +3,9 @@
 function ub_render_notification_box_block($attributes){
     extract($attributes);
     return '<div>
-    <div class="wp-block-ub-notification-box '.$ub_selected_notify.
-        (isset($className) ? ' ' . esc_attr($className) : '').'"'.($blockID===''? :' id="ub-notification-box-'.$blockID.'"').'>
-        <p class="ub_notify_text"'.($blockID===''?' style="text-align: '.$align.';"':'').'>'.$ub_notify_info.'</p>
+    <div class="wp-block-ub-notification-box '. esc_attr($ub_selected_notify) .
+        (isset($className) ? ' ' . esc_attr($className) : '').'"'.($blockID===''? :' id="ub-notification-box-'. esc_attr($blockID) .'"').'>
+        <p class="ub_notify_text"'.($blockID===''?' style="text-align: '. esc_attr($align) .';"':'').'>'. esc_html($ub_notify_info) .'</p>
     </div>
 </div>';
 }

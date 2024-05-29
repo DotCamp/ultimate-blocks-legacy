@@ -18,14 +18,14 @@ function ub_render_star_rating_block($attributes){
     }
 
     return '<div class="wp-block-ub-star-rating ub-star-rating' . (isset($className) ? ' ' . esc_attr($className) : '') .
-            '"' . ($blockID === '' ? '' : ' id="ub-star-rating-' . $blockID . '"') . '>
+            '"' . ($blockID === '' ? '' : ' id="ub-star-rating-' . esc_attr($blockID) . '"') . '>
                 <div class="ub-star-outer-container"' .
                     ($blockID === '' ? '  style="justify-content:' . ($starAlign === 'center' ? 'center' :
                     ('flex-' . $starAlign === 'left' ? 'start' : 'end')) . ';"' : '').'>
                     <div class="ub-star-inner-container">'.$stars.'</div>
                 </div>'.
-                ($reviewText === '' || false === $isShowReviewText ? '' : '<div class="ub-review-text"' . ($blockID === '' ? ' style="text-align:' . $reviewTextAlign . ';"' : '') . '>' .
-                    $reviewText
+                ($reviewText === '' || false === $isShowReviewText ? '' : '<div class="ub-review-text"' . ($blockID === '' ? ' style="text-align:' . esc_attr($reviewTextAlign) . ';"' : '') . '>' .
+                    esc_html($reviewText)
                 . '</div>') .
             '</div>';
 }
