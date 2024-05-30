@@ -152,6 +152,7 @@ That's it. You're done!
 
 = 3.1.9 =
 
+* FIX: Inner content toggle not working when search is used.
 * FIX: Letter spacing not working in editor advanced heading block.
 * NEW: Buttons block with inner blocks.
 * NEW: Square Fill, Square Outline, Circle Fill, Circle Outline styles in the icon block.
