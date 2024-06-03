@@ -25,7 +25,7 @@ function ub_render_star_rating_block($attributes){
                     <div class="ub-star-inner-container">'.$stars.'</div>
                 </div>'.
                 ($reviewText === '' || false === $isShowReviewText ? '' : '<div class="ub-review-text"' . ($blockID === '' ? ' style="text-align:' . esc_attr($reviewTextAlign) . ';"' : '') . '>' .
-                    esc_html($reviewText)
+                    wp_filter_nohtml_kses($reviewText)
                 . '</div>') .
             '</div>';
 }

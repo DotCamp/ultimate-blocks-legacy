@@ -5,18 +5,18 @@ function ub_render_feature_box_block($attributes){
 
     $column1 = '<div class="ub_feature_1">
     <img class="ub_feature_one_img" src="' . esc_url($imgOneURL) . '" alt="' . esc_attr($imgOneAlt) . '"/>
-    <p class="ub_feature_one_title"'.($blockID===''?' style="text-align: '. esc_attr($title1Align) .';"':'').'>' . esc_html($columnOneTitle) . '</p>
-    <p class="ub_feature_one_body"'.($blockID===''?' style="text-align: '. esc_attr($body1Align) .';"':'').'>' . esc_html($columnOneBody) . '</p></div>';
+    <p class="ub_feature_one_title"'.($blockID===''?' style="text-align: '. esc_attr($title1Align) .';"':'').'>' . wp_filter_nohtml_kses($columnOneTitle) . '</p>
+    <p class="ub_feature_one_body"'.($blockID===''?' style="text-align: '. esc_attr($body1Align) .';"':'').'>' . wp_filter_nohtml_kses($columnOneBody) . '</p></div>';
 
     $column2 = '<div class="ub_feature_2">
     <img class="ub_feature_two_img" src="' . esc_url($imgTwoURL) . '" alt="' . esc_attr($imgTwoAlt) . '"/>
-    <p class="ub_feature_two_title"'.($blockID===''?' style="text-align: '. esc_attr($title2Align) .';"':'').'>' . esc_html($columnTwoTitle) . '</p>
-    <p class="ub_feature_two_body"'.($blockID===''?' style="text-align: '. esc_attr($body2Align) .';"':'').'>' . esc_html($columnTwoBody) . '</p></div>';
+    <p class="ub_feature_two_title"'.($blockID===''?' style="text-align: '. esc_attr($title2Align) .';"':'').'>' . wp_filter_nohtml_kses($columnTwoTitle) . '</p>
+    <p class="ub_feature_two_body"'.($blockID===''?' style="text-align: '. esc_attr($body2Align) .';"':'').'>' . wp_filter_nohtml_kses($columnTwoBody) . '</p></div>';
 
     $column3 = '<div class="ub_feature_3">
     <img class="ub_feature_three_img" src="'. esc_url($imgThreeURL) .'" alt="' . esc_attr($imgThreeAlt) . '"/>
-    <p class="ub_feature_three_title"'.($blockID===''?' style="text-align: '. esc_attr($title3Align) .';"':'').'>' . esc_html($columnThreeTitle) . '</p>
-    <p class="ub_feature_three_body"'.($blockID===''?' style="text-align: '. esc_attr($body3Align) .';"':'').'>' . esc_html($columnThreeBody) . '</p></div>';
+    <p class="ub_feature_three_title"'.($blockID===''?' style="text-align: '. esc_attr($title3Align) .';"':'').'>' . wp_filter_nohtml_kses($columnThreeTitle) . '</p>
+    <p class="ub_feature_three_body"'.($blockID===''?' style="text-align: '. esc_attr($body3Align) .';"':'').'>' . wp_filter_nohtml_kses($columnThreeBody) . '</p></div>';
 
     $columns = $column1;
 

@@ -12,15 +12,15 @@ function ub_render_testimonial_block($attributes){
         <div class="ub_testimonial_content">
             <p class="ub_testimonial_text"'.
                 ($blockID === '' ? ' style="font-size: ' . esc_attr($textSize) .'px; text-align: ' . esc_attr($textAlign) . ';"' : '') . '>'.
-                esc_html($ub_testimonial_text) . '</p>
+                wp_filter_nohtml_kses($ub_testimonial_text) . '</p>
         </div>
         <div class="ub_testimonial_sign">
             <p class="ub_testimonial_author"'.
                 ($blockID === '' ? ' style="font-size: ' . esc_attr($textSize) . 'px; text-align: ' . esc_attr($authorAlign) .';"' : '') . '>'.
-                esc_html($ub_testimonial_author) .'</p>
+                wp_filter_nohtml_kses($ub_testimonial_author) .'</p>
             <p class="ub_testimonial_author_role"'.
                 ($blockID === '' ? ' style="font-size: ' . esc_attr($textSize) . 'px; text-align: ' . esc_attr($authorRoleAlign) . ';"' : '') . '>'.
-                esc_html($ub_testimonial_author_role) . '</p>
+                wp_filter_nohtml_kses($ub_testimonial_author_role) . '</p>
         </div>
     </div>
 </div>';

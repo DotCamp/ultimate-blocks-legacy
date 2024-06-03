@@ -73,7 +73,7 @@ function ub_render_content_toggle_panel_block( $attributes, $content, $block_obj
 			. ( $parentID === '' ? ' style="background-color: ' . esc_attr($theme) . ';"' : '' ) . ( $preventCollapse ? ' aria-disabled="true"' : '' )
 			.  '" aria-controls="ub-content-toggle-panel-' . esc_attr($index) . '-' . esc_attr($parentID) . '" tabindex="0">
                     <' . esc_attr($titleTag) . ' class="' . $classNamePrefix . '-accordion-title ub-content-toggle-title-' . esc_attr($parentID) . '"'
-			. ( $parentID === '' ? ' style="color:' . esc_attr($titleColor) . ';"' : '' ) . '>' . esc_html($panelTitle) . '</' . esc_attr($titleTag) . '>' .
+			. ( $parentID === '' ? ' style="color:' . esc_attr($titleColor) . ';"' : '' ) . '>' . wp_filter_nohtml_kses($panelTitle) . '</' . esc_attr($titleTag) . '>' .
 			( $toggleIcon === 'none' ? '' : '<div class="' . $classNamePrefix . '-accordion-toggle-wrap ' .  esc_attr($toggleLocation)  .
 											'"><span class="' . $classNamePrefix . '-accordion-state-indicator ' . esc_attr($icon_class) .
 											( $should_collapsed ? '' : ' open' ) . '"></span>

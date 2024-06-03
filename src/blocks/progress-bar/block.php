@@ -52,11 +52,11 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
     $number_suffix              = isset($attributes['numberSuffix']) ? $attributes['numberSuffix'] : '%';
     $inside_percentage_class    = $percentage_position === 'inside' ? " ub_progress-bar-label-inside" : '';
     $stripe_style               = $is_stripe ? " ub_progress-bar-stripe" : '';
-    $detail_text                = '<div class="ub_progress-bar-text"><p' . ($blockID === '' ? ' style="justify-content: ' . esc_attr($detailAlign) . ';"' : '') . '>' . esc_html($detail) . '</p></div>';
+    $detail_text                = '<div class="ub_progress-bar-text"><p' . ($blockID === '' ? ' style="justify-content: ' . esc_attr($detailAlign) . ';"' : '') . '>' . wp_filter_nohtml_kses($detail) . '</p></div>';
     $percentage_text            = '<div class="' . $blockName . '-label'. ( $percentage_position === 'top' ? ' ub_progress-bar-label-top' : '' )  . '"' . ($blockID === '' ? ' style="width:' . esc_attr($percentage) . '%;"' : '') . '><p>
-                                    <span class="ub-progress-number-prefix">' . esc_html($number_prefix) . '</span>
-                                    <span class="ub-progress-number-value">' . esc_html($percentage) . '</span>
-                                    <span class="ub-progress-number-suffix">' . esc_html($number_suffix) . '</span>
+                                    <span class="ub-progress-number-prefix">' . wp_filter_nohtml_kses($number_prefix) . '</span>
+                                    <span class="ub-progress-number-value">' . wp_filter_nohtml_kses($percentage) . '</span>
+                                    <span class="ub-progress-number-suffix">' . wp_filter_nohtml_kses($number_suffix) . '</span>
                                   </p></div>';
 
     $top_percentage = $show_number && $percentage_position === 'top'  ?
@@ -77,9 +77,9 @@ function ub_render_progress_bar_block($attributes, $block_content, $block){
 			<div class="ub_progress-bar-line-stripe" ></div>
 		</foreignObject>' : '';
     $circle_percentage = $show_number ? '<div class="' . $blockName . '-label">
-                                    <span class="ub-progress-number-prefix">' . esc_html($number_prefix) . '</span>
-                                    <span class="ub-progress-number-value">' . esc_html($percentage) . '</span>
-                                    <span class="ub-progress-number-suffix">' . esc_html($number_suffix) . '</span></div>' : '';
+                                    <span class="ub-progress-number-prefix">' . wp_filter_nohtml_kses($number_prefix) . '</span>
+                                    <span class="ub-progress-number-value">' . wp_filter_nohtml_kses($percentage) . '</span>
+                                    <span class="ub-progress-number-suffix">' . wp_filter_nohtml_kses($number_suffix) . '</span></div>' : '';
     if(!$is_style_circle && !$is_style_half_circle){
         $progressBarPath = 'M' . ($barThickness / 2) . ',' . ($barThickness / 2)
                             . 'L' . (100 - $barThickness / 2) . ',' . ($barThickness / 2);

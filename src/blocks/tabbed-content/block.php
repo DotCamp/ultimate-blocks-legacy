@@ -57,7 +57,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
             ($accordionIsActive ? ' active' : '') .
             ($tabletTabDisplay === 'accordion' ? ' ub-tablet-display' : '') .
             ($mobileTabDisplay === 'accordion' ? ' ub-mobile-display' : '') .
-            '">' . esc_html($tabsTitle[$key]) . '</div>' . $tabContent;
+            '">' . wp_filter_nohtml_kses($tabsTitle[$key]) . '</div>' . $tabContent;
             array_push($tabContents, $content);
         }
         else{
@@ -74,7 +74,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
             ($blockID === '' ? ' style="background-color: ' . ($activeTab === $key ? esc_attr($theme) : 'initial')
             . '; border-color: ' . ($activeTab === $key ? esc_attr($theme) : 'lightgrey') .
             '; color: ' . ($activeTab === $key ? esc_attr($titleColor) : '#000000') . ';"' : '' ). ' tabindex="-1">
-            <div class="' . $blockName . '-tab-title">' . esc_html($title) . '</div></div>';
+            <div class="' . $blockName . '-tab-title">' . wp_filter_nohtml_kses($title) . '</div></div>';
     }
 
     $mobileTabStyle = substr($mobileTabDisplay, 0, strlen($mobileTabDisplay) - 3);

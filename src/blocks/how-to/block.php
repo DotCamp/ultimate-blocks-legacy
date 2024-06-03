@@ -41,7 +41,7 @@ function ub_convert_to_paragraphs($string){
     }
     else{
         $string = explode('<br>', $string);
-        $string = array_map(function($p){return '<p>' . esc_html($p) . '</p>';}, $string);
+        $string = array_map(function($p){return '<p>' . wp_filter_nohtml_kses($p) . '</p>';}, $string);
         return implode('', $string);
     }
 }
@@ -56,12 +56,12 @@ function ub_render_how_to_block($attributes){
 
     $suppliesCode = '"supply": [';
     if($advancedMode && $includeSuppliesList){
-        $header .= '<' . esc_attr($secondLevelTag) . '>' . esc_html($suppliesIntro) . '</' . esc_attr($secondLevelTag) . '>';
+        $header .= '<' . esc_attr($secondLevelTag) . '>' . wp_filter_nohtml_kses($suppliesIntro) . '</' . esc_attr($secondLevelTag) . '>';
         if(isset($supplies) && count($supplies) > 0){
             $header .=  $suppliesListStyle === 'ordered' ? '<ol' : '<ul';
             $header .= ' class="ub_howto-supplies-list">';
             foreach($supplies as $i => $s){
-                $header .= '<li>' . esc_html($s['name']) . ($s['imageURL'] === '' ? '' :
+                $header .= '<li>' . wp_filter_nohtml_kses($s['name']) . ($s['imageURL'] === '' ? '' :
                             '<br><img src="' . esc_url($s['imageURL']) . '"/>') . '</li>';
                 if($i > 0){
                     $suppliesCode .= ',';
@@ -77,12 +77,12 @@ function ub_render_how_to_block($attributes){
     $toolsCode = '"tool": [';
 
     if($advancedMode && $includeToolsList){
-        $header .= '<' . esc_attr($secondLevelTag) . '>' . esc_html($toolsIntro) . '</' . esc_attr($secondLevelTag) . '>';
+        $header .= '<' . esc_attr($secondLevelTag) . '>' . wp_filter_nohtml_kses($toolsIntro) . '</' . esc_attr($secondLevelTag) . '>';
         if(isset($tools) && count($tools) > 0){
             $header .= $toolsListStyle === 'ordered' ? '<ol' : '<ul';
             $header .= ' class="ub_howto-tools-list">';
             foreach($tools as $i => $t){
-                $header .= '<li>' . esc_html($t['name']) . ($t['imageURL'] === '' ? '' :
+                $header .= '<li>' . wp_filter_nohtml_kses($t['name']) . ($t['imageURL'] === '' ? '' :
                             '<br><img src="' . esc_url($t['imageURL']) . '"/>') . '</li>';
                 if($i > 0){
                     $toolsCode .= ',';
@@ -97,7 +97,7 @@ function ub_render_how_to_block($attributes){
 
     $costDisplay = $showUnitFirst ? $costCurrency . ' ' . $cost : $cost . ' ' . $costCurrency;
 
-    $timeDisplay = '<div><' . esc_attr($secondLevelTag) . '>' . esc_html($timeIntro) . '</' . esc_attr($secondLevelTag) . '>';
+    $timeDisplay = '<div><' . esc_attr($secondLevelTag) . '>' . wp_filter_nohtml_kses($timeIntro) . '</' . esc_attr($secondLevelTag) . '>';
 
     $totalTimeDisplay = '';
 
@@ -107,7 +107,7 @@ function ub_render_how_to_block($attributes){
         }
     }
 
-    $timeDisplay .= '<p>' . esc_html($totalTimeText) . esc_html($totalTimeDisplay)  . '</div>';
+    $timeDisplay .= '<p>' . wp_filter_nohtml_kses($totalTimeText) . wp_filter_nohtml_kses($totalTimeDisplay)  . '</div>';
 
     $ISOTotalTime = generateISODurationCode($totalTime);
 
@@ -118,7 +118,7 @@ function ub_render_how_to_block($attributes){
         $stepsDisplay = ($sectionListStyle === 'ordered' ? '<ol' : '<ul') .
                             ' class="ub_howto-section-display">';
         foreach($section as $i => $s){
-            $stepsDisplay .= '<li class="ub_howto-section"><' . esc_attr($secondLevelTag) . '>' . esc_html($s['sectionName']) . '</' . esc_attr($secondLevelTag) . '>' .
+            $stepsDisplay .= '<li class="ub_howto-section"><' . esc_attr($secondLevelTag) . '>' . wp_filter_nohtml_kses($s['sectionName']) . '</' . esc_attr($secondLevelTag) . '>' .
             ($sectionListStyle === 'ordered' ? '<ol' : '<ul') . ' class="ub_howto-step-display">';
             $stepsCode .= '{"@type": "HowToSection",' . PHP_EOL
                         . '"name": "'. str_replace("\'", "'", wp_filter_nohtml_kses($s['sectionName'])) . '",' . PHP_EOL
@@ -270,14 +270,14 @@ function ub_render_how_to_block($attributes){
     "image": "' . esc_url($finalImageURL) . '"' . '}</script>';
 
     return '<div class="wp-block-ub-how-to ub_howto" id="ub_howto_' . esc_attr($blockID) . '"><' . esc_attr($firstLevelTag) . '>'
-                . esc_html($title) . '</' . esc_attr($firstLevelTag) . '>' . ub_convert_to_paragraphs($introduction) . $header .
+                . wp_filter_nohtml_kses($title) . '</' . esc_attr($firstLevelTag) . '>' . ub_convert_to_paragraphs($introduction) . $header .
                 ($advancedMode ? ($videoURL === '' ? '' : $videoEmbedCode)
-                . '<p>' . esc_html($costDisplayText) . esc_html($costDisplay) . '</p>'
+                . '<p>' . wp_filter_nohtml_kses($costDisplayText) . wp_filter_nohtml_kses($costDisplay) . '</p>'
                 . $timeDisplay : '') . $stepsDisplay .
-                '<div class="ub_howto-yield"><' . esc_attr($secondLevelTag) . '>' . esc_html($resultIntro) . '</' . esc_attr($secondLevelTag) . '>' .
+                '<div class="ub_howto-yield"><' . esc_attr($secondLevelTag) . '>' . wp_filter_nohtml_kses($resultIntro) . '</' . esc_attr($secondLevelTag) . '>' .
                 ($finalImageURL === '' ? '' : (!isset($finalImageCaption) || $finalImageCaption === '' ? '' : '<figure class="ub_howto-yield-image-container">') .
                     '<img class="ub_howto-yield-image" src="' . esc_url($finalImageURL) . '">' .
-                    (!isset($finalImageCaption) || $finalImageCaption === '' ? '' : '<figcaption>' . esc_html($finalImageCaption) . '</figcaption></figure>')) .
+                    (!isset($finalImageCaption) || $finalImageCaption === '' ? '' : '<figcaption>' . wp_filter_nohtml_kses($finalImageCaption) . '</figcaption></figure>')) .
                 ub_convert_to_paragraphs($howToYield) . '</div>
             </div>' . $JSONLD;
 }

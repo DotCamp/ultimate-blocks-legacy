@@ -5,26 +5,26 @@ function ub_render_number_box_block($attributes){
 
     $column1 = '<div class="ub_number_1"'.($blockID===''?' style="border-color: '. esc_attr($borderColor) .';"':'').'>
         <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '. esc_attr($numberBackground) .';"':'').'>
-            <p class="ub_number_one_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. esc_html($columnOneNumber) .'</p>
+            <p class="ub_number_one_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. wp_filter_nohtml_kses($columnOneNumber) .'</p>
         </div>
-        <p class="ub_number_one_title"'.($blockID===''?' style="text-align: '. esc_attr($title1Align) .';"':'').'>'. esc_html($columnOneTitle) .'</p>
-        <p class="ub_number_one_body"'.($blockID===''?' style="text-align: '. esc_attr($body1Align) .';"':'').'>'. esc_html($columnOneBody) .'</p>
+        <p class="ub_number_one_title"'.($blockID===''?' style="text-align: '. esc_attr($title1Align) .';"':'').'>'. wp_filter_nohtml_kses($columnOneTitle) .'</p>
+        <p class="ub_number_one_body"'.($blockID===''?' style="text-align: '. esc_attr($body1Align) .';"':'').'>'. wp_filter_nohtml_kses($columnOneBody) .'</p>
     </div>';
 
     $column2 = '<div class="ub_number_2"'.($blockID===''?' style="border-color: '. esc_attr($borderColor) .';"':'').'>
         <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '. esc_attr($numberBackground) .';"':'').'>
-            <p class="ub_number_two_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. esc_html($columnTwoNumber) .'</p>
+            <p class="ub_number_two_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. wp_filter_nohtml_kses($columnTwoNumber) .'</p>
         </div>
-        <p class="ub_number_two_title"'.($blockID===''?' style="text-align: '. esc_attr($title2Align) .';"':'').'>'. esc_html($columnTwoTitle) .'</p>
-        <p class="ub_number_two_body"'.($blockID===''?' style="text-align: '. esc_attr($body2Align) .';"':'').'>'. esc_html($columnTwoBody) .'</p>
+        <p class="ub_number_two_title"'.($blockID===''?' style="text-align: '. esc_attr($title2Align) .';"':'').'>'. wp_filter_nohtml_kses($columnTwoTitle) .'</p>
+        <p class="ub_number_two_body"'.($blockID===''?' style="text-align: '. esc_attr($body2Align) .';"':'').'>'. wp_filter_nohtml_kses($columnTwoBody) .'</p>
     </div>';
 
     $column3 = '<div class="ub_number_3"'.($blockID===''?' style="border-color: '. esc_attr($borderColor) .';"':'').'>
-        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '. esc_html($numberBackground) .';"':'').'>
-            <p class="ub_number_three_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. esc_html($columnThreeNumber) .'</p>
+        <div class="ub_number_box_number"'.($blockID===''?' style="background-color: '. wp_filter_nohtml_kses($numberBackground) .';"':'').'>
+            <p class="ub_number_three_number"'.($blockID===''?' style="color: '. esc_attr($numberColor) .';"':'').'>'. wp_filter_nohtml_kses($columnThreeNumber) .'</p>
         </div>
-        <p class="ub_number_three_title"'.($blockID===''?' style="text-align: '. esc_attr($title3Align) .';"':'').'>'. esc_html($columnThreeTitle) .'</p>
-        <p class="ub_number_three_body"'.($blockID===''?' style="text-align: '. esc_attr($body3Align) .';"':'').'>'. esc_html($columnThreeBody) .'</p>
+        <p class="ub_number_three_title"'.($blockID===''?' style="text-align: '. esc_attr($title3Align) .';"':'').'>'. wp_filter_nohtml_kses($columnThreeTitle) .'</p>
+        <p class="ub_number_three_body"'.($blockID===''?' style="text-align: '. esc_attr($body3Align) .';"':'').'>'. wp_filter_nohtml_kses($columnThreeBody) .'</p>
     </div>';
 
     $columns = $column1;

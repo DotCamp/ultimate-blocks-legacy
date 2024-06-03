@@ -19,10 +19,10 @@ function ub_render_styled_box_numbered_box_column($attributes, $content){
     extract($attributes);
     return '<div class="ub-number-panel">
         <div class="ub-number-container">
-            <p class="ub-number-display">' . esc_html($number) . '</p>
+            <p class="ub-number-display">' . wp_filter_nohtml_kses($number) . '</p>
         </div>
-        <p class="ub-number-box-title">' . esc_html($title) . '</p>
-        <div class="ub-number-box-body">' . esc_html($content) . '</div>
+        <p class="ub-number-box-title">' . wp_filter_nohtml_kses($title) . '</p>
+        <div class="ub-number-box-body">' . wp_filter_nohtml_kses($content) . '</div>
     </div>';
 }
 
@@ -66,15 +66,15 @@ function ub_render_styled_box_block($attributes, $content){
     extract($attributes);
     $renderedBlock = '';
     if($mode === 'notification' && $text[0] != ''){
-        $renderedBlock = '<div class="ub-notification-text">'. esc_html($text[0]) .'</div>';
+        $renderedBlock = '<div class="ub-notification-text">'. wp_filter_nohtml_kses($text[0]) .'</div>';
     }
     else if($mode === 'feature'){
         foreach(range(0, count($text)-1) as $i){
             $renderedBlock .= '<div class="ub-feature">'.
                 ($image[$i]['url'] === '' ? '' :
                     '<img class="ub-feature-img" src="'. esc_url($image[$i]['url']) .'"/>').
-                    '<p class="ub-feature-title">'. esc_html($title[$i]) .'</p>
-                    <p class="ub-feature-body">'. esc_html($text[$i]) .'</p>
+                    '<p class="ub-feature-title">'. wp_filter_nohtml_kses($title[$i]) .'</p>
+                    <p class="ub-feature-body">'. wp_filter_nohtml_kses($text[$i]) .'</p>
             </div>';
         }
     }
@@ -84,10 +84,10 @@ function ub_render_styled_box_block($attributes, $content){
             foreach(range(0, count($text)-1) as $i){
                 $renderedBlock .= '<div class="ub-number-panel">
                     <div class="ub-number-container">
-                        <p class="ub-number-display">'. esc_html($number[$i]) .'</p>
+                        <p class="ub-number-display">'. wp_filter_nohtml_kses($number[$i]) .'</p>
                     </div>
-                    <p class="ub-number-box-title">'. esc_html($title[$i]) .'</p>
-                    <p class="ub-number-box-body">'. esc_html($text[$i]) .'</p>
+                    <p class="ub-number-box-title">'. wp_filter_nohtml_kses($title[$i]) .'</p>
+                    <p class="ub-number-box-body">'. wp_filter_nohtml_kses($text[$i]) .'</p>
                 </div>';
             }
         }

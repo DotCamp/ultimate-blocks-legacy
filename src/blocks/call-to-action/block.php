@@ -14,18 +14,18 @@ function ub_render_call_to_action_block($attributes){
                 <div class="ub_call_to_action_headline">
                     <' . ($useHeadingTag ? esc_attr($selectedHeadingTag) : 'p') . ' class="ub_call_to_action_headline_text"' . ($blockID === '' ?
                     ' style="font-size: ' . esc_attr($headFontSize) . 'px; color: ' . esc_attr($headColor) . '; text-align: ' . esc_attr($headAlign) . ';"' : '') . '>' .
-                        esc_html($ub_call_to_action_headline_text) . '</' . ($useHeadingTag ? esc_attr($selectedHeadingTag) : 'p') . '></div>
+                        wp_filter_nohtml_kses($ub_call_to_action_headline_text) . '</' . ($useHeadingTag ? esc_attr($selectedHeadingTag) : 'p') . '></div>
                 <div class="ub_call_to_action_content">
                     <p class="ub_cta_content_text"' .
                         ($blockID === '' ? ' style="font-size: ' . esc_attr($contentFontSize) . 'px; color: ' . esc_attr($contentColor) . '; text-align: ' . esc_attr($contentAlign) . ';"' : '') . '>' .
-                         esc_html($ub_cta_content_text) . '</p></div>
+                         wp_filter_nohtml_kses($ub_cta_content_text) . '</p></div>
                 <div class="ub_call_to_action_button">
                     <a href="' . esc_url($url) . '" target="_' . ($openInNewTab ? 'blank' : 'self' )
                         .'" rel="' . ($addNofollow ? 'nofollow ' : '') . ($linkIsSponsored ? 'sponsored ' : '') . 'noopener noreferrer"
                         class="ub_cta_button"' . ($blockID === '' ? ' style="background-color: ' . esc_attr($buttonColor) . '; width: ' . esc_attr($buttonWidth) . 'px;"' : '') . '>
                         <p class="ub_cta_button_text"' . ($blockID === '' ? ' style="color: ' .
                         $buttonTextColor . '; font-size: ' . esc_attr($buttonFontSize) . 'px;"' : '') . '>' .
-                            esc_html($ub_cta_button_text) . '</p></a></div></div>';
+                            wp_filter_nohtml_kses($ub_cta_button_text) . '</p></a></div></div>';
 }
 
 function ub_register_call_to_action_block() {

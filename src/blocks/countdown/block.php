@@ -138,7 +138,7 @@ function ub_render_countdown_block($attributes){
             .'</div>';
     }
     else return '<div class="wp-block-ub-count-down ub-countdown'.(isset($className) ? ' ' . esc_attr($className) : '').'" '.
-        ($blockID === ''?'style="text-align:'. esc_attr($messageAlign) .';' :'id="ub_countdown_'. esc_attr($blockID) .'"').'>'. esc_html($expiryMessage) .'</div>';
+        ($blockID === ''?'style="text-align:'. esc_attr($messageAlign) .';' :'id="ub_countdown_'. esc_attr($blockID) .'"').'>'. wp_filter_nohtml_kses($expiryMessage) .'</div>';
 }
 
 function ub_register_countdown_block() {

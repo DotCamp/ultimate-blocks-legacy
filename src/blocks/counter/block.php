@@ -78,7 +78,7 @@ class Ultimate_Counter {
                     'style' => $styles
                )
           );
-          $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . esc_html($label) . '</span></div>';
+          $label_markup = '<div class="ub_counter-label-wrapper"><span class="ub_counter-label">' . wp_filter_nohtml_kses($label) . '</span></div>';
           $block_content = sprintf(
                '<div %1$s>
                     <div
@@ -101,8 +101,8 @@ class Ultimate_Counter {
                esc_attr( $start_number ), // 3
                esc_attr( $end_number ), // 4
                esc_attr( $animation_duration ), // 5
-               esc_html( $prefix ), // 6
-               esc_html( $suffix ), // 7
+               wp_filter_nohtml_kses( $prefix ), // 6
+               wp_filter_nohtml_kses( $suffix ), // 7
                $label_position === 'top' ? $label_markup : "", //8
                $label_position === 'bottom' ? $label_markup : "" //9
           );
