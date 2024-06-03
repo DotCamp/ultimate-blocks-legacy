@@ -438,8 +438,7 @@ function ub_include_block_attribute_css() {
 				case 'ub/button':
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub-button-' . $attributes['blockID'];
-					$block_spacing_value = Ultimate_Blocks\includes\spacing_preset_css_var(isset($attributes['blockSpacing']['all']) ? $attributes['blockSpacing']['all'] : "");
-					$block_spacing =  '--ub-button-improved-block-spacing:' . $block_spacing_value . ';';
+					$block_spacing = !Ultimate_Blocks\includes\is_undefined( $attributes['blockSpacing'] ) ? '--ub-button-improved-block-spacing:' . Ultimate_Blocks\includes\spacing_preset_css_var($attributes['blockSpacing']['all'])  . ';': "";
 					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . $block_spacing . PHP_EOL . "}";
 
 					if ( ! array_key_exists( 'buttons', $attributes ) || count( $attributes['buttons'] ) === 0 ) {

@@ -451,6 +451,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'blockSpacing' => array(
+				'type' 	=> 'array',
+				'default' => array()
+			),
 			'padding' => array(
 				'type' 	=> 'array',
 				'default' => array()
