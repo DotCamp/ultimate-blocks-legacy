@@ -152,6 +152,7 @@ That's it. You're done!
 
 = 3.1.9 =
 
+* FIX: Steps not saving in the how to block.
 * FIX: Security issues in blocks.
 * FIX: Inner content toggle not working when search is used.
 * FIX: Letter spacing not working in editor advanced heading block.

@@ -519,6 +519,10 @@ $defaultValues = array(
 				'type'    => 'boolean',
 				'default' => false
 			),
+			'isBorderComponentChanged'  => array(
+				'type'    => 'boolean',
+				'default' => false
+			),
 			'addNofollow'          => array(
 				'type'    => 'boolean',
 				'default' => false

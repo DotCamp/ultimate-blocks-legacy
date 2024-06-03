@@ -103,7 +103,7 @@ function InspectorPanel(props) {
 								newSection.forEach((ns, i) =>
 									ns.steps.forEach((s, j) => {
 										s.anchor = `section${i}step${j}`;
-									})
+									}),
 								);
 								if (currentStep !== "") {
 									updateState({ currentStep: `section-0-${currentStep}` });
@@ -330,7 +330,7 @@ const ListWrapper = (props) => {
 
 function HowToStep(props) {
 	const [startTime, setStartTime] = useState(
-		Object.assign({}, defaultTimeDisplay)
+		Object.assign({}, defaultTimeDisplay),
 	);
 	const [endTime, setEndTime] = useState(Object.assign({}, defaultTimeDisplay));
 	const [validTimeInput, setTimeValidationStatus] = useState(true);
@@ -374,8 +374,8 @@ function HowToStep(props) {
 					(c) =>
 						c.anchor !== clipId &&
 						((videoClipStart > c.clipStart && videoClipStart < c.clipEnd) ||
-							(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd))
-				).length === 0
+							(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd)),
+				).length === 0,
 			);
 		}
 	}, []);
@@ -390,8 +390,8 @@ function HowToStep(props) {
 					(c) =>
 						c.anchor !== clipId &&
 						((videoClipStart > c.clipStart && videoClipStart < c.clipEnd) ||
-							(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd))
-				).length === 0
+							(videoClipEnd > c.clipStart && videoClipEnd < c.clipEnd)),
+				).length === 0,
 		);
 	}, [videoClipStart, videoClipEnd]);
 
@@ -746,6 +746,7 @@ function HowToSection(props) {
 		blockIsSelected,
 		updateState,
 		currentStep,
+		addSection,
 	} = props;
 
 	return (
@@ -790,7 +791,7 @@ function HowToSection(props) {
 						deleteStep={() => {
 							let newSteps = [...steps.slice(0, i), ...steps.slice(i + 1)];
 							newSteps.forEach(
-								(step, j) => (step.anchor = `section${sectionNum}step${j}`)
+								(step, j) => (step.anchor = `section${sectionNum}step${j}`),
 							);
 							editSection({
 								sectionName,
@@ -809,7 +810,7 @@ function HowToSection(props) {
 									...steps.slice(i + 1),
 								];
 								newSteps.forEach(
-									(step, j) => (step.anchor = `section${sectionNum}step${j}`)
+									(step, j) => (step.anchor = `section${sectionNum}step${j}`),
 								);
 								editSection({ sectionName, steps: newSteps });
 								//set value of currentStep to recently-moved step
@@ -827,7 +828,7 @@ function HowToSection(props) {
 									...steps.slice(i + 2),
 								];
 								newSteps.forEach(
-									(step, j) => (step.anchor = `section${sectionNum}step${j}`)
+									(step, j) => (step.anchor = `section${sectionNum}step${j}`),
 								);
 								editSection({ sectionName, steps: newSteps });
 								updateState({
@@ -844,7 +845,7 @@ function HowToSection(props) {
 			<Button
 				className="ub_howto-button-default"
 				onClick={() => {
-					editSection({
+					addSection({
 						sectionName,
 						steps: [
 							...steps,
@@ -984,8 +985,8 @@ export function EditorComponent(props) {
 					hasVideoClip: false,
 					videoClipStart: 0,
 					videoClipEnd: 0,
-				})
-			)
+				}),
+			),
 		);
 
 		setAttributes({
@@ -995,7 +996,7 @@ export function EditorComponent(props) {
 			videoUploadDate: 0,
 			videoThumbnailURL: "",
 			videoEmbedCode: `<p>${__(
-				"When insertion is successful, video should appear here"
+				"When insertion is successful, video should appear here",
 			)}</p>`,
 			videoDuration: 0,
 		});
@@ -1021,29 +1022,29 @@ export function EditorComponent(props) {
 		if (/^http(s)?:\/\//g.test(videoURLInput)) {
 			const youtubeMatch =
 				/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
-					videoURLInput
+					videoURLInput,
 				);
 			const vimeoMatch =
 				/^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
-					videoURLInput
+					videoURLInput,
 				);
 			const dailyMotionMatch =
 				/^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
-					videoURLInput
+					videoURLInput,
 				);
 			const videoPressMatch =
 				/^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
-					videoURLInput
+					videoURLInput,
 				);
 			if (youtubeMatch) {
 				fetch(
-					`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
+					`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`,
 				)
 					.then((response) => {
 						response.json().then((data) => {
 							if (data.items.length) {
 								let timePeriods = data.items[0].contentDetails.duration.match(
-									/(\d{1,2}(?:W|D|H|M|S))/g
+									/(\d{1,2}(?:W|D|H|M|S))/g,
 								);
 								setAttributes({
 									videoURL: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
@@ -1053,7 +1054,7 @@ export function EditorComponent(props) {
 										Date.parse(data.items[0].snippet.publishedAt) / 1000,
 									videoThumbnailURL: `https://i.ytimg.com/vi/${youtubeMatch[1]}/default.jpg`,
 									videoEmbedCode: decodeURIComponent(
-										data.items[0].player.embedHtml
+										data.items[0].player.embedHtml,
 									),
 									videoDuration: timePeriods.reduce((sum, part) => {
 										let multiplier = {
@@ -1098,8 +1099,8 @@ export function EditorComponent(props) {
 									});
 									fetch(
 										`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
-											data[0].url
-										)}`
+											data[0].url,
+										)}`,
 									)
 										.then((response) => {
 											response.json().then((data) => {
@@ -1129,7 +1130,7 @@ export function EditorComponent(props) {
 					});
 			} else if (dailyMotionMatch) {
 				fetch(
-					`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cduration`
+					`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cduration`,
 				)
 					.then((response) => {
 						if (response.ok) {
@@ -1157,7 +1158,7 @@ export function EditorComponent(props) {
 					});
 			} else if (videoPressMatch) {
 				fetch(
-					`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
+					`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`,
 				)
 					.then((response) => {
 						if (response.ok) {
@@ -1194,6 +1195,19 @@ export function EditorComponent(props) {
 		}
 	};
 	const styles = getStyles(props.attributes);
+	const updateStep = (sectionIndex, stepIndex, newStep) => {
+		const newSections = section.map((sec, idx) => {
+			if (idx === sectionIndex) {
+				const newSteps = sec.steps.map((step, i) => {
+					return i === stepIndex ? { ...step, ...newStep } : step;
+				});
+				return { ...sec, steps: newSteps };
+			}
+			return sec;
+		});
+
+		setAttributes({ section: newSections });
+	};
 	return (
 		<div {...useBlockProps()}>
 			<InspectorPanel
@@ -1618,19 +1632,7 @@ export function EditorComponent(props) {
 									videoURL={videoURL}
 									videoDuration={videoDuration}
 									selectStep={() => setCurrentStep(`step-${i}`)}
-									editStep={(newStep) => {
-										setAttributes({
-											section: [
-												Object.assign(section[0], {
-													steps: [
-														...section[0].steps.slice(0, i),
-														Object.assign(section[0].steps[i], newStep),
-														...section[0].steps.slice(i + 1),
-													],
-												}),
-											],
-										});
-									}}
+									editStep={(newStep) => updateStep(0, i, newStep)}
 									deleteStep={() => {
 										let newSection = [
 											Object.assign(section[0], {
@@ -1852,34 +1854,34 @@ export function EditorComponent(props) {
 									.map((s, i) =>
 										s.steps
 											.map((st) =>
-												(({ width, float }) => ({ width, float }))(st.stepPic)
+												(({ width, float }) => ({ width, float }))(st.stepPic),
 											)
 											.map((img, j) =>
 												img.width > 0
 													? `#ub_howto-${blockID} .ub_howto-section:nth-child(${
 															i + 1
-													  }) .ub_howto-step:nth-child(${
+														}) .ub_howto-step:nth-child(${
 															j + 1
-													  }) figure { width: ${img.width}px; float: ${
+														}) figure { width: ${img.width}px; float: ${
 															img.float
-													  };}`
-													: ""
+														};}`
+													: "",
 											)
-											.join("")
+											.join(""),
 									)
 									.join("")
 							: section[0].steps
 									.map((s) =>
-										(({ width, float }) => ({ width, float }))(s.stepPic)
+										(({ width, float }) => ({ width, float }))(s.stepPic),
 									)
 									.map((img, i) =>
 										img.width > 0
 											? `#ub_howto-${blockID} .ub_howto-step:nth-child(${
 													i + 1
-											  }) figure { width: ${img.width}px; float: ${
+												}) figure { width: ${img.width}px; float: ${
 													img.float
-											  };}`
-											: ""
+												};}`
+											: "",
 									)
 									.join("")
 					}
