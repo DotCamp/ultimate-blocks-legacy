@@ -25,7 +25,7 @@ function ub_render_single_button_block($attributes){
         'viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
         . '"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg>'
         . '</span>': '')
-        .'<span class="ub-button-block-btn">' . wp_filter_nohtml_kses($buttonText) . '</span>
+        .'<span class="ub-button-block-btn">' . wp_kses_post($buttonText) . '</span>
     </div></a>';
 
     $classes = array('ub-button');

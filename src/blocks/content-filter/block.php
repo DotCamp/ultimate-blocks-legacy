@@ -87,14 +87,14 @@ function ub_render_content_filter_block($attributes, $content){
     foreach((array)$newFilterArray as $key1 => $filterGroup){
         $filterList .= '<div class="ub-content-filter-category"
         data-canUseMultiple="' . json_encode($filterGroup['canUseMultiple']) . '">
-        <div class="ub-content-filter-category-name">' . wp_filter_nohtml_kses($filterGroup['category']) . '</div>';
+        <div class="ub-content-filter-category-name">' . wp_kses_post($filterGroup['category']) . '</div>';
         $filters = '<div class="ub-content-filter-buttons-wrapper">';
         foreach($filterGroup['filters'] as $key2 => $tag){
             $filters .= '<div data-tagIsSelected="false" data-categoryNumber="' . $key1 . '"
             data-filterNumber="' . $key2 . '" ' . ($blockID === '' ? 'data-normalColor="' . esc_attr($buttonColor) . '" data-normalTextColor="' . esc_attr($buttonTextColor) .
             '" data-activeColor="' . esc_attr($activeButtonColor) . '" data-activeTextColor="' . esc_attr($activeButtonTextColor) .
             '"style="background-color: ' . esc_attr($buttonColor) .'; color: ' . esc_attr($buttonTextColor) . '"' : '') . ' class="ub-content-filter-tag">' .
-            wp_filter_nohtml_kses($tag) . '</div>';
+            wp_kses_post($tag) . '</div>';
         }
         $filterList .= $filters . '</div>';
         $filterList .= '</div>';

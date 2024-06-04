@@ -123,7 +123,7 @@ function ub_render_table_of_contents_block($attributes){
                 . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . esc_attr($scrollTarget) . '"' : '') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
                     data-initiallyshow="' . json_encode($showList) . '">'.
                 (('<div class="ub_table-of-contents-header-container"><div class="ub_table-of-contents-header">
-                    <div class="ub_table-of-contents-title">'. wp_filter_nohtml_kses($title) . '</div>' .
+                    <div class="ub_table-of-contents-title">'. wp_kses_post($title) . '</div>' .
                     ($allowToCHiding ?
                     '<div class="ub_table-of-contents-header-toggle">
                         <div class="ub_table-of-contents-toggle">

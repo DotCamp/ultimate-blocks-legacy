@@ -62,7 +62,7 @@ function ub_render_button_block($attributes){
         height="' . esc_attr($iconSize[$size]) . '", width="' . esc_attr($iconSize[$size]) . '"
         viewBox="0, 0, ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[0] . ', ' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[1]
         .'"><path fill="currentColor" d="' . Ultimate_Blocks_IconSet::generate_fontawesome_icon($chosenIcon)[2] . '"></svg></span>': '')
-        .'<span class="ub-button-block-btn">' . wp_filter_nohtml_kses($buttonText) . '</span>
+        .'<span class="ub-button-block-btn">' . wp_kses_post($buttonText) . '</span>
     </div></a></div>' : join('', array_map('ub_buttons_parse', $buttons)));
     $classes = array();
     if(isset($buttons) && count($buttons) > 0){

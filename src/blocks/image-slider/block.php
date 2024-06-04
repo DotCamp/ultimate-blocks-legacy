@@ -19,7 +19,7 @@ function ub_render_image_slider_block($attributes){
         <img src="' . esc_url($image['url']) . '" alt="' . esc_attr($image['alt']) . '"' .
             ($blockID === '' ? ' style="height: ' . esc_attr($sliderHeight) . 'px;"' : '') . '>' .
             '<figcaption class="ub_image_slider_image_caption">' . ($captionArray[$key]['link'] === '' ? '' : '<a href="' . esc_url($captionArray[$key]['link']) . '">')
-            . wp_filter_nohtml_kses($captionArray[$key]['text'])
+            . wp_kses_post($captionArray[$key]['text'])
             . ($captionArray[$key]['link'] === '' ? '' : '</a>') . ' </figcaption></figure>';
     }
     $classes = array( 'ub_image_slider', 'swiper-container' );

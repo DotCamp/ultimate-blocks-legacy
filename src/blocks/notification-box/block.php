@@ -5,7 +5,7 @@ function ub_render_notification_box_block($attributes){
     return '<div>
     <div class="wp-block-ub-notification-box '. esc_attr($ub_selected_notify) .
         (isset($className) ? ' ' . esc_attr($className) : '').'"'.($blockID===''? :' id="ub-notification-box-'. esc_attr($blockID) .'"').'>
-        <p class="ub_notify_text"'.($blockID===''?' style="text-align: '. esc_attr($align) .';"':'').'>'. wp_filter_nohtml_kses($ub_notify_info) .'</p>
+        <p class="ub_notify_text"'.($blockID===''?' style="text-align: '. esc_attr($align) .';"':'').'>'. wp_kses_post($ub_notify_info) .'</p>
     </div>
 </div>';
 }

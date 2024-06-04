@@ -78,7 +78,7 @@ function ub_render_styled_list_block($attributes, $contents){
     else{
         return '<div class="wp-block-ub-styled-list ub_styled_list ' . (isset($className) ? ' ' . esc_attr($className) : '') .'"'
         . ($blockID === '' ? '' : ' id="ub_styled_list-' . esc_attr($blockID) . '"').
-        '><ul class="fa-ul">' . wp_filter_nohtml_kses($listItems) . '</ul></div>';
+        '><ul class="fa-ul">' . wp_kses_post($listItems) . '</ul></div>';
     }
 
 }
@@ -115,7 +115,7 @@ function ub_render_styled_list_item_block($attributes, $contents, $block){
 
     $styles = ub_get_styled_list_item_styles($block_attributes);
 
-    return '<li class="ub_styled_list_item" style="'. $styles .'">' . wp_filter_nohtml_kses($itemText) . wp_filter_nohtml_kses($contents) . '</li>';
+    return '<li class="ub_styled_list_item" style="'. $styles .'">' . wp_kses_post($itemText) . wp_kses_post($contents) . '</li>';
 }
 
 function ub_register_styled_list_item_block(){

@@ -29,12 +29,12 @@ function ub_generatePercentageBar($value, $id, $activeColor, $inactiveColor ){
                     stroke-width="1" stroke-dashoffset="' . (100 - $value) . 'px"
                 ></path>
             </svg>
-            <div>' . wp_filter_nohtml_kses($value) . '%</div>
+            <div>' . wp_kses_post($value) . '%</div>
     </div>';
 }
 
 function ub_filterJsonldString($string){
-    return str_replace("\'", "'", wp_filter_nohtml_kses($string));
+    return str_replace("\'", "'", wp_kses_post($string));
 }
 
 function ub_render_review_block($attributes, $block_content, $block_instance){
@@ -187,18 +187,18 @@ function ub_render_review_block($attributes, $block_content, $block_instance){
     return '<div class="wp-block-ub-review ub_review_block' . (isset($className) ? ' ' . esc_attr($className) : '') .
                 '" id="ub_review_' . esc_attr($blockID) . '">
         <p class="ub_review_item_name"' . ($blockID === '' ? ' style="text-align: ' . esc_attr($titleAlign) . ';"' : '') . '>' .
-            wp_filter_nohtml_kses($itemName) . '</p><p class="ub_review_author_name"' .
-            ($blockID === '' ? ' style="text-align: ' . esc_attr($authorAlign) . ';"' : '') . '>' . wp_filter_nohtml_kses($authorName) . '</p>' .
+            wp_kses_post($itemName) . '</p><p class="ub_review_author_name"' .
+            ($blockID === '' ? ' style="text-align: ' . esc_attr($authorAlign) . ';"' : '') . '>' . wp_kses_post($authorName) . '</p>' .
         (($enableImage || $enableDescription) && ($imgURL !== '' || $description !== '') ?
         '<div class="ub_review_description_container ub_review_' . esc_attr($imgPosition) . '_image">' .
             (!$enableImage || $imgURL === '' ? '' : '<img class="ub_review_image" src="' . esc_url($imgURL) . '" alt = "' . esc_attr($imgAlt) . '">') .
-            (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . wp_filter_nohtml_kses($description) . '</div>') .
+            (!$enableDescription || $description === '' ? '' : '<div class="ub_review_description">' . wp_kses_post($description) . '</div>') .
         '</div>' : '').
             $ratings
     .'<div class="ub_review_summary">' .
-        ($useSummary ? '<p class="ub_review_summary_title">' . wp_filter_nohtml_kses($summaryTitle) . '</p>' : '') .
+        ($useSummary ? '<p class="ub_review_summary_title">' . wp_kses_post($summaryTitle) . '</p>' : '') .
         '<div class="ub_review_overall_value">' .
-            ($useSummary ? '<p>' . wp_filter_nohtml_kses($summaryDescription) . '</p>' : '') .
+            ($useSummary ? '<p>' . wp_kses_post($summaryDescription) . '</p>' : '') .
             '<div class="ub_review_average"><span class="ub_review_rating">' . $average . ($valueType === 'percent' ? '%':'') . '</span>' .
             ($valueType === 'star' ? ub_generateStarDisplay($average, $starCount, $blockID . '-average',
             $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars", "ub_review_star_filter-") : '' ).
