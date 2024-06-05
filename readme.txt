@@ -154,6 +154,7 @@ That's it. You're done!
 
 * FIX: Steps not saving in the how to block.
 * FIX: Security issues in blocks.
+* FIX: Progress bar percentage position inside not showing properly.
 * FIX: Inner content toggle not working when search is used.
 * FIX: Letter spacing not working in editor advanced heading block.
 * NEW: Buttons block with inner blocks.
