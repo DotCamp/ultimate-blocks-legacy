@@ -158,6 +158,7 @@ That's it. You're done!
 * FIX: Inner content toggle not working when search is used.
 * FIX: Letter spacing not working in editor advanced heading block.
 * NEW: Buttons block with inner blocks.
+* NEW: Gradient background color option in new button block.
 * NEW: Square Fill, Square Outline, Circle Fill, Circle Outline styles in the icon block.
 * NEW: Alignment option in table of content block.
 * NEW: Summary title and title font size in review block.
