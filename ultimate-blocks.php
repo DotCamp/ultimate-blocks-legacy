@@ -5,7 +5,7 @@
  * Description: Custom Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
  * Author: Ultimate Blocks
  * Author URI: https://ultimateblocks.com/
- * Version: 3.1.9
+ * Version: 3.2.0
  * License: GPL3+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: ultimate-blocks
