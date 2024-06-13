@@ -150,6 +150,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.2.0 =
+
+* FIX: Aspect Ratio not working on uploaded video in advanced video block.
+
 = 3.1.9 =
 
 * FIX: Steps not saving in the how to block.

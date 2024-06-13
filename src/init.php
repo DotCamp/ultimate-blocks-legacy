@@ -364,6 +364,15 @@ function ub_include_block_attribute_css() {
 													 'padding-bottom: ' . ( $attributes['origHeight'] / $attributes['origWidth'] * 100 ) . '%;' .
 													 '}';
 								break;
+							case 'unknown':
+								$local_aspect_ratio = !empty($attributes['aspectRatio']) && $attributes['aspectRatio'] !== 'auto' ?  $attributes['aspectRatio'] : $attributes['origWidth'] . '/' . $attributes['origHeight'];
+								$blockStylesheets .=	$prefix . ' .ub-advanced-video-embed > video{' .
+														'aspect-ratio: ' . $local_aspect_ratio . ';' .
+														'height: auto !important;
+														object-fit: cover;
+														' .
+													 '}';
+								break;
 							default:
 								$blockStylesheets .= '';
 						}

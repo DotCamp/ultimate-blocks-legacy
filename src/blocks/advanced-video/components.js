@@ -767,6 +767,21 @@ export function AdvancedVideoBlock(props) {
 			);
 			extraEmbeds = null;
 			break;
+		case "unknown":
+			const localAspectRatio =
+				!isEmpty(aspectRatio) && aspectRatio !== "auto"
+					? aspectRatio
+					: `${origWidth}/${origHeight}`;
+			extraEmbeds = (
+				<style>
+					{`#ub-advanced-video-${blockID}.ub-advanced-video-autofit video{
+						aspect-ratio: ${localAspectRatio};
+						height: auto !important;
+						object-fit:cover;
+					}`}
+				</style>
+			);
+			break;
 		default:
 			autofitContainerStyle = {};
 			extraEmbeds = null;
@@ -776,7 +791,7 @@ export function AdvancedVideoBlock(props) {
 		const newHeight = media.height;
 		let timeUnits = [0];
 		const conversionFactor = [1, 60, 3600, 86400];
-		console.log({ media, newHeight, newWidth });
+
 		if (!isEmpty(media?.fileLength)) {
 			timeUnits = media.fileLength
 				.split(":")
