@@ -153,6 +153,7 @@ That's it. You're done!
 = 3.2.0 =
 
 * FIX: Aspect Ratio not working on uploaded video in advanced video block.
+* FIX: Content Toggle not working properly.
 
 = 3.1.9 =
 

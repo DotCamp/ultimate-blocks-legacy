@@ -11,6 +11,10 @@
 }
 
 .wp-block-ub-content-toggle-accordion {
+	.ub-content-initialized {
+		opacity: 0;
+		position: absolute;
+	}
 	position: relative;
 	border: 1px solid lightsalmon;
 	margin-bottom: 10px;

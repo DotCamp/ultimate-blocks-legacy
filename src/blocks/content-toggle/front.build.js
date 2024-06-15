@@ -67,6 +67,16 @@ var togglePanel = function togglePanel(target) {
       panelContent.style.height = "";
     }
   }, 20);
+  panelContent.addEventListener("transitionend", function () {
+    panelContent.classList.remove("ub-toggle-transition");
+    panelContent.setAttribute("aria-expanded", panelContent.offsetHeight !== 0);
+    if (panelContent.offsetHeight === 0) {
+      panelContent.classList.add("ub-hide");
+    } else {
+      panelContent.removeAttribute("style");
+    }
+    panelContent.classList.remove("ub-hiding");
+  });
   panelContent.querySelectorAll(".wp-block-embed iframe").forEach(function (embeddedContent) {
     embeddedContent.style.removeProperty("width");
     embeddedContent.style.removeProperty("height");
@@ -113,17 +123,6 @@ var attachTogglePanelEvents = function attachTogglePanelEvents() {
           e.stopImmediatePropagation();
           togglePanel(instance);
         });
-        panelContent.addEventListener("transitionend", function () {
-          panelContent.classList.remove("ub-toggle-transition");
-          panelContent.setAttribute("aria-expanded", panelContent.offsetHeight !== 0);
-          if (panelContent.offsetHeight === 0) {
-            panelContent.classList.add("ub-hide");
-          } else {
-            panelContent.removeAttribute("style");
-          }
-          panelContent.classList.remove("ub-hiding");
-        });
-        panelContent.removeAttribute("style");
       });
       if (parentIsHidden) {
         toggleContainer.parentElement.style.display = "none";

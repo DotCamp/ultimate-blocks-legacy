@@ -89,6 +89,19 @@ const togglePanel = (target) => {
 		}
 	}, 20);
 
+	panelContent.addEventListener("transitionend", () => {
+		panelContent.classList.remove("ub-toggle-transition");
+		panelContent.setAttribute("aria-expanded", panelContent.offsetHeight !== 0);
+
+		if (panelContent.offsetHeight === 0) {
+			panelContent.classList.add("ub-hide");
+		} else {
+			panelContent.removeAttribute("style");
+		}
+
+		panelContent.classList.remove("ub-hiding");
+	});
+
 	panelContent
 		.querySelectorAll(".wp-block-embed iframe")
 		.forEach((embeddedContent) => {
@@ -168,24 +181,6 @@ const attachTogglePanelEvents = () => {
 							e.stopImmediatePropagation();
 							togglePanel(instance);
 						});
-
-						panelContent.addEventListener("transitionend", () => {
-							panelContent.classList.remove("ub-toggle-transition");
-							panelContent.setAttribute(
-								"aria-expanded",
-								panelContent.offsetHeight !== 0,
-							);
-
-							if (panelContent.offsetHeight === 0) {
-								panelContent.classList.add("ub-hide");
-							} else {
-								panelContent.removeAttribute("style");
-							}
-
-							panelContent.classList.remove("ub-hiding");
-						});
-
-						panelContent.removeAttribute("style");
 					});
 
 				if (parentIsHidden) {
