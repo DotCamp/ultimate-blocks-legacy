@@ -154,6 +154,7 @@ That's it. You're done!
 
 * FIX: Aspect Ratio not working on uploaded video in advanced video block.
 * FIX: Content Toggle not working properly.
+* FIX: Howto step image height showing incorrectly.
 
 = 3.1.9 =
 
