@@ -1,6 +1,12 @@
 {
   "version": "3.2.0-dev",
+<<<<<<< HEAD
   "mode": "development",
   "size": "7.55mb",
   "date": "2024-06-25T09:38:37.208Z"
+=======
+  "mode": "production",
+  "size": "7.17mb",
+  "date": "2024-06-25T07:09:02.841Z"
+>>>>>>> master
 }
