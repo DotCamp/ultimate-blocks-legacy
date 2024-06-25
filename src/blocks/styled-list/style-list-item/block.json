@@ -1,50 +1,50 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/styled-list-item",
-     "title": "Styled List Item",
-     "category": "ultimateblocks",
-     "description": "This block lets you add a styled list in your post or pages. Instead of bullets you can use various icons as your list style type. ",
-     "keywords": [
-          "List",
-          "Styled List",
-          "Ultimate Blocks"
-     ],
-     "attributes": {
-          "blockID": {
-               "type": "string",
-               "default": ""
-          },
-          "itemText": {
-               "type": "string",
-               "default": ""
-          },
-          "selectedIcon": {
-               "type": "string",
-               "default": "check"
-          },
-          "iconColor": {
-               "type": "string",
-               "default": "#000000"
-          },
-          "iconSize": {
-               "type": "number",
-               "default": 5
-          },
-          "fontSize": {
-               "type": "number",
-               "default": 0
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          }
-     },
-     "supports": {
-          "inserter": false
-     }
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/styled-list-item",
+	"title": "Styled List Item",
+	"category": "ultimateblocks",
+	"description": "This block lets you add a styled list in your post or pages. Instead of bullets you can use various icons as your list style type. ",
+	"keywords": [
+		"List",
+		"Styled List",
+		"Ultimate Blocks"
+	],
+	"attributes": {
+		"blockID": {
+			"type": "string",
+			"default": ""
+		},
+		"itemText": {
+			"type": "string",
+			"default": ""
+		},
+		"selectedIcon": {
+			"type": "string",
+			"default": "check"
+		},
+		"iconColor": {
+			"type": "string",
+			"default": "#000000"
+		},
+		"iconSize": {
+			"type": "number",
+			"default": 5
+		},
+		"fontSize": {
+			"type": "number",
+			"default": 0
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"supports": {
+		"inserter": false
+	}
 }

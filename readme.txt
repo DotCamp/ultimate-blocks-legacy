@@ -155,6 +155,7 @@ That's it. You're done!
 * FIX: Aspect Ratio not working on uploaded video in advanced video block.
 * FIX: Content Toggle not working properly.
 * FIX: Howto step image height showing incorrectly.
+* FIX: Styled List Item icon change to default on add new item by pressing enter.
 
 = 3.1.9 =
 

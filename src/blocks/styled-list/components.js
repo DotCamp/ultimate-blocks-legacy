@@ -954,6 +954,7 @@ export function StyledListItem(props) {
 					return createBlock("ub/styled-list-item", {
 						filteredAttributes,
 						blockID: "",
+						selectedIcon: selectedIcon,
 						itemText: itemFragment,
 					});
 				}}
