@@ -54,6 +54,16 @@ function ub_render_how_to_block($attributes){
 
     $timeUnits = ["second", "minute", "hour", "day", "week", "month", "year"];
 
+	if (!in_array($firstLevelTag, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong'])) {
+		$firstLevelTag = 'h2';
+	}
+	if (!in_array($secondLevelTag, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong'])) {
+		$secondLevelTag = 'h3';
+	}
+	if (!in_array($thirdLevelTag, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong'])) {
+		$thirdLevelTag = 'h4';
+	}
+
     $suppliesCode = '"supply": [';
     if($advancedMode && $includeSuppliesList){
         $header .= '<' . esc_attr($secondLevelTag) . '>' . wp_kses_post($suppliesIntro) . '</' . esc_attr($secondLevelTag) . '>';

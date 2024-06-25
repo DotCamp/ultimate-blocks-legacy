@@ -67,6 +67,10 @@ function ub_render_content_toggle_panel_block( $attributes, $content, $block_obj
 	}
 	$should_collapsed = $collapsed && ! $defaultOpen;
 
+	if (!in_array($titleTag, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'])) {
+		$titleTag = 'p';
+	}
+
 	return '<div ' . ( $toggleID === '' ? '' : 'id="' . esc_attr($toggleID) . '" ' ) . 'class="' . $border_class . $classNamePrefix . '-accordion' . ( isset( $className ) ? ' ' .  $className  : '' ) . '"'
 			. ( $parentID === '' ? ' style="border-color: ' . esc_attr($theme) . ';"' : '' ) . '>
                 <div class="' . $classNamePrefix . '-accordion-title-wrap"'

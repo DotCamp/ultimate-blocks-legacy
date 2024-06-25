@@ -16,6 +16,10 @@ function ub_render_advanced_heading_block( $attributes ) {
 	$cleaned_content = preg_replace( '/<img[^>]+>/i', '', $content );
 	$cleaned_content = preg_replace( '/<script[^>]*?>.*?<\/script>/is', '', $cleaned_content );
 
+	if (!in_array($level, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])) {
+		$level = 'h1';
+	}
+
 	$final_content = '<' . esc_attr($level) . ' ' . $block_wrapper_attributes . ' data-blockid="' . esc_attr($blockID) . '">' . $cleaned_content . '</' . esc_attr($level) . '>';
 
 	return wp_kses_post( $final_content );

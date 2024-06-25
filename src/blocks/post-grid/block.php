@@ -112,6 +112,10 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
                     $post_title_tag = 'h2';
                 }
 
+                if (!in_array($post_title_tag, ['h2', 'h3', 'h4'])) {
+                    $post_title_tag = 'h2';
+                }
+
                 $post_grid .= sprintf(
                     '<%3$s class="ub-block-post-grid-title"><a href="%1$s" rel="bookmark">%2$s</a></%3$s>',
                     esc_url( get_permalink( $post_id ) ),

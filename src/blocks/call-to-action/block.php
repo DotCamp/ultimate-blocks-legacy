@@ -9,6 +9,11 @@ function ub_render_call_to_action_block($attributes){
 			'class' => implode(' ', $classes),
 		)
     );
+
+	if (!in_array($selectedHeadingTag, ['h2', 'h3', 'h4', 'h5', 'h6'])) {
+		$selectedHeadingTag = 'h2';
+	}
+
     return '<div ' . $block_wrapper_attributes . ' ' . ($blockID !== '' ? ' id="ub_call_to_action_' . esc_attr($blockID) . '"' :
                 'style="background-color: ' . esc_attr($ctaBackgroundColor) . '; border-width: ' . esc_attr($ctaBorderSize) . 'px; border-color: ' . esc_attr($ctaBorderColor) . '"' ) . '>
                 <div class="ub_call_to_action_headline">
