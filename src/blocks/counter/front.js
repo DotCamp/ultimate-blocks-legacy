@@ -13,7 +13,6 @@ class UltimateBlocksCounter {
 			(this.animationDuration * 1000) / this.frameDuration,
 		);
 		this.easeOutQuad = (t) => t * (2 - t);
-		this.initialize();
 	}
 	initialize() {
 		this.updateCounter();
@@ -41,5 +40,21 @@ class UltimateBlocksCounter {
 
 window.addEventListener("DOMContentLoaded", () => {
 	const container = document.querySelectorAll(".ub_counter");
-	container.forEach((wrapper) => new UltimateBlocksCounter(wrapper));
+	const observerOptions = {
+		root: null,
+		rootMargin: "0px",
+		threshold: 0.1,
+	};
+
+	const observer = new IntersectionObserver((entries, observer) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				const wrapper = entry.target;
+				new UltimateBlocksCounter(wrapper).initialize();
+				observer.unobserve(wrapper); // Unobserve after initializing to avoid re-triggering
+			}
+		});
+	}, observerOptions);
+
+	container.forEach((wrapper) => observer.observe(wrapper));
 });

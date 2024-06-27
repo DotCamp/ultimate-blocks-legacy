@@ -150,6 +150,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.2.1 =
+
+* IMPROVE: Run counter when it visible on the screen in the counter block.
+
 = 3.2.0 =
 
 * FIX: Aspect Ratio not working on uploaded video in advanced video block.

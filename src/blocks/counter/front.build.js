@@ -19,7 +19,6 @@ var UltimateBlocksCounter = /*#__PURE__*/function () {
     this.easeOutQuad = function (t) {
       return t * (2 - t);
     };
-    this.initialize();
   }
   return _createClass(UltimateBlocksCounter, [{
     key: "initialize",
@@ -48,7 +47,21 @@ var UltimateBlocksCounter = /*#__PURE__*/function () {
 }();
 window.addEventListener("DOMContentLoaded", function () {
   var container = document.querySelectorAll(".ub_counter");
+  var observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.1
+  };
+  var observer = new IntersectionObserver(function (entries, observer) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var wrapper = entry.target;
+        new UltimateBlocksCounter(wrapper).initialize();
+        observer.unobserve(wrapper); // Unobserve after initializing to avoid re-triggering
+      }
+    });
+  }, observerOptions);
   container.forEach(function (wrapper) {
-    return new UltimateBlocksCounter(wrapper);
+    return observer.observe(wrapper);
   });
 });
