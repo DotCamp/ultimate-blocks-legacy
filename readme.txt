@@ -153,6 +153,7 @@ That's it. You're done!
 = 3.2.1 =
 
 * IMPROVE: Run counter when it visible on the screen in the counter block.
+* IMPROVE: Image width in image slider.
 
 = 3.2.0 =
 
