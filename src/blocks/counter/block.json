@@ -1,78 +1,82 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/counter",
-     "title": "Counter",
-     "category": "ultimateblocks",
-     "description": "Add animated number counters to display statistics and milestones.",
-     "keywords": [
-          "counter",
-          "ultimate counter"
-     ],
-     "attributes": {
-          "counterFontSize": {
-               "type": "string",
-               "default": "48px"
-          },
-          "labelFontSize": {
-               "type": "string",
-               "default": "16px"
-          },
-          "startNumber": {
-               "type": "string",
-               "default": "0"
-          },
-          "endNumber": {
-               "type": "string",
-               "default": "500"
-          },
-          "prefix": {
-               "type": "string",
-               "default": ""
-          },
-          "suffix": {
-               "type": "string",
-               "default": ""
-          },
-          "animationDuration": {
-               "type": "number",
-               "default": 2
-          },
-          "alignment": {
-               "type": "string",
-               "default": "center"
-          },
-          "label": {
-               "type": "string",
-               "default": ""
-          },
-          "labelColor": {
-               "type": "string",
-               "default": null
-          },
-          "labelPosition": {
-               "type": "string",
-               "default": "bottom"
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          }
-     },
-     "supports": {
-          "align": true,
-          "color": {
-               "gradients": true,
-               "link": true,
-               "__experimentalDefaultControls": {
-                    "background": true,
-                    "text": true
-               }
-          }
-     },
-     "viewScript": "ub-counter-frontend-script"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/counter",
+	"title": "Counter",
+	"category": "ultimateblocks",
+	"description": "Add animated number counters to display statistics and milestones.",
+	"keywords": [
+		"counter",
+		"ultimate counter"
+	],
+	"attributes": {
+		"gap": {
+			"type": "object",
+			"default": {}
+		},
+		"counterFontSize": {
+			"type": "string",
+			"default": "48px"
+		},
+		"labelFontSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"startNumber": {
+			"type": "string",
+			"default": "0"
+		},
+		"endNumber": {
+			"type": "string",
+			"default": "500"
+		},
+		"prefix": {
+			"type": "string",
+			"default": ""
+		},
+		"suffix": {
+			"type": "string",
+			"default": ""
+		},
+		"animationDuration": {
+			"type": "number",
+			"default": 2
+		},
+		"alignment": {
+			"type": "string",
+			"default": "center"
+		},
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"labelColor": {
+			"type": "string",
+			"default": null
+		},
+		"labelPosition": {
+			"type": "string",
+			"default": "bottom"
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"supports": {
+		"align": true,
+		"color": {
+			"gradients": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		}
+	},
+	"viewScript": "ub-counter-frontend-script"
 }

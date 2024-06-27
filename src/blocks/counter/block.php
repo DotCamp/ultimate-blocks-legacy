@@ -18,6 +18,7 @@ class Ultimate_Counter {
           $counter_font_size = $attributes['counterFontSize'];
           $label_font_size = $attributes['labelFontSize'];
           $label_color = $attributes['labelColor'];
+		$gap = isset($attributes['gap']['all']) ?  Ultimate_Blocks\includes\spacing_preset_css_var($attributes['gap']['all']) : "";
 
           $styles = array(
                '--ub-counter-padding-top'            => isset($padding['top']) ? $padding['top'] : "",
@@ -28,9 +29,10 @@ class Ultimate_Counter {
                '--ub-counter-margin-right'           => isset($margin['left']) ? $margin['left']  : "",
                '--ub-counter-margin-bottom'          => isset($margin['right']) ? $margin['right']  : "",
                '--ub-counter-margin-left'            => isset($margin['bottom']) ? $margin['bottom']  : "",
-               '--ub-counter-font-size'              => esc_attr($counter_font_size),
-               '--ub-counter-label-font-size'        => esc_attr($label_font_size),
-               '--ub-counter-label-color'            => esc_attr($label_color)
+               '--ub-counter-font-size'              => $counter_font_size,
+               '--ub-counter-label-color'            => $label_color,
+               '--ub-counter-label-font-size'        => $label_font_size,
+               '--ub-counter-gap'            	   => $gap
           );
 
 	     return Ultimate_Blocks\includes\generate_css_string( $styles );

@@ -10,6 +10,10 @@
     "ultimate counter"
   ],
   "attributes": {
+    "gap": {
+      "type": "object",
+      "default": {}
+    },
     "counterFontSize": {
       "type": "string",
       "default": "48px"

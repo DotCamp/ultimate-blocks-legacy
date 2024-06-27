@@ -3044,6 +3044,10 @@ $defaultValues = array(
 					'type' => 'string',
 					'default' => 'bottom'
 				),
+				'gap' => array(
+					'type' 	=> 'array',
+					'default' => array()
+				),
 				'padding' => array(
 					'type' 	=> 'array',
 					'default' => array()

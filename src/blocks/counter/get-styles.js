@@ -2,7 +2,10 @@
  * WordPress Dependencies
  */
 import { isUndefined, trim, isEmpty, omitBy } from "lodash";
-import { getSpacingCss } from "../utils/styling-helpers";
+import {
+	getSpacingCss,
+	getSpacingPresetCssVar,
+} from "../utils/styling-helpers";
 /**
  *
  * @param {Array} attributes
@@ -15,7 +18,7 @@ export function getStyles(attributes) {
 
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
-
+	const gap = getSpacingPresetCssVar(attributes.gap?.all) ?? "";
 	let styles = {
 		"--ub-counter-label-color": attributes?.labelColor,
 		"--ub-counter-font-size": attributes?.counterFontSize,
@@ -28,6 +31,7 @@ export function getStyles(attributes) {
 		"--ub-counter-margin-right": marginObj?.right,
 		"--ub-counter-margin-bottom": marginObj?.bottom,
 		"--ub-counter-margin-left": marginObj?.left,
+		"--ub-counter-gap": gap,
 	};
 
 	return omitBy(styles, (value) => {

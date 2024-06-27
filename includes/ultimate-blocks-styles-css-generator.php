@@ -58,7 +58,7 @@ function get_spacing_css( $object ) {
       * @param string $value - value.
       */
 function is_undefined( $value ) {
-          return null === $value || ! isset( $value ) || empty( $value );
+          return !isset( $value ) || null === $value   || empty( $value );
      }
 
 /**
